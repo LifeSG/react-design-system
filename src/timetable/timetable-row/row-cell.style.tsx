@@ -9,7 +9,7 @@ interface BlockStyleProps {
     $width: number;
     $status: CellType;
     $bgColour: string;
-    $clickableCell?: boolean;
+    $isClickable?: boolean;
 }
 
 interface BlockContainerProps {
@@ -45,7 +45,7 @@ export const Block = styled.div<BlockStyleProps>`
     border-radius: 4px;
     box-sizing: border-box;
     padding: 4px;
-    ${({ $status, $bgColour, $clickableCell }) => {
+    ${({ $status, $bgColour, $isClickable }) => {
         switch ($status) {
             case "blocked":
                 return css`
@@ -55,27 +55,27 @@ export const Block = styled.div<BlockStyleProps>`
                         #ecefef 6px 12px
                     );
                     &:hover {
-                        cursor: ${$clickableCell ? "pointer" : "not-allowed"};
+                        cursor: ${$isClickable ? "pointer" : "not-allowed"};
                     }
                 `;
             case "filled":
                 return css`
                     background: ${$bgColour};
                     &:hover {
-                        cursor: ${$clickableCell ? "pointer" : "default"};
+                        cursor: ${$isClickable ? "pointer" : "default"};
                     }
                 `;
-            case "default":
+            case "disabled":
                 return css`
+                    background: ${Color.Neutral[6]};
                     &:hover {
-                        cursor: ${$clickableCell ? "pointer" : "default"};
+                        cursor: ${$isClickable ? "pointer" : "not-allowed"};
                     }
                 `;
             default:
                 return css`
-                    background: ${Color.Neutral[6]};
                     &:hover {
-                        cursor: not-allowed;
+                        cursor: ${$isClickable ? "pointer" : "default"};
                     }
                 `;
         }

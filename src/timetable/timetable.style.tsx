@@ -17,14 +17,7 @@ interface RowHeaderColumnProps {
 
 interface TimeTableContainerProps {
     $loading: boolean;
-    $width: string;
-    $height: string;
     $allRecordsLoaded: boolean;
-}
-
-interface EmptyTableContainerProps {
-    $width: string;
-    $height: string;
 }
 
 interface RowColumnHeaderProps {
@@ -48,17 +41,19 @@ interface LoaderProps {
     $isEmptyContent: boolean;
 }
 
-export const EmptyTableContainer = styled.div<EmptyTableContainerProps>`
+export const EmptyTableContainer = styled.div`
     display: grid;
+    overflow: scroll;
+    position: relative;
     grid-template-columns: 252px auto;
-    min-height: 600px; // REVIEW
-    min-width: 1000px; // REVIEW
-    height: ${(props) => props.$height};
-    width: ${(props) => props.$width};
 `;
 
 export const EmptyTableRowHeader = styled.div`
     display: flex;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1;
     height: fit-content;
     grid-column: 1 / -1;
     border-bottom: 1px solid ${Color.Neutral[5]};
@@ -69,11 +64,7 @@ export const TimeTableContainer = styled.div<TimeTableContainerProps>`
     overflow: scroll;
     position: relative;
     grid-template-columns: 252px fit-content(100%);
-    height: ${(props) => props.$height};
-    width: ${(props) => props.$width};
     padding-bottom: ${(props) => (props.$allRecordsLoaded ? "0" : "128px")};
-    min-height: 600px; // REVIEW
-    min-width: 900px; // REVIEW
     ${(props) => {
         if (props.$loading) {
             return css`

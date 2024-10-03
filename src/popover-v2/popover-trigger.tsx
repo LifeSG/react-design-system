@@ -27,6 +27,8 @@ export const PopoverTrigger = ({
     position = "top",
     zIndex,
     rootNode,
+    customOffset,
+    delay,
     onPopoverAppear,
     onPopoverDismiss,
     ...otherProps
@@ -45,7 +47,7 @@ export const PopoverTrigger = ({
         placement: position,
         whileElementsMounted: autoUpdate,
         middleware: [
-            offset(otherProps.offset ?? 16),
+            offset(customOffset ?? 16),
             flip(),
             shift({
                 limiter: limitShift(),
@@ -72,8 +74,8 @@ export const PopoverTrigger = ({
         enabled: trigger === "hover",
         // short window to enter the floating element without it closing
         delay: {
-            open: otherProps?.delay?.open ?? 0,
-            close: otherProps?.delay?.close ?? 500,
+            open: delay?.open ?? 0,
+            close: delay?.close ?? 500,
         },
     });
 

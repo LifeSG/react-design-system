@@ -2,7 +2,8 @@ import dayjs from "dayjs";
 import React, { MutableRefObject } from "react";
 import { PopoverTrigger, PopoverV2TriggerProps } from "../../popover-v2";
 import { DateHelper } from "../../util";
-import { ROW_CELL_GAP, ROW_INTERVAL, RowCellData } from "../types";
+import { ROW_CELL_GAP, ROW_INTERVAL } from "../const";
+import { TimeTableRowCellData } from "../types";
 import {
     Block,
     BlockContainer,
@@ -13,11 +14,10 @@ import {
     Wrapper,
 } from "./row-cell.style";
 
-interface RowCellProps extends RowCellData {
+interface RowCellProps extends TimeTableRowCellData {
     containerRef: MutableRefObject<HTMLDivElement>;
     intervalWidth: number;
     rowBarColor: string;
-    onCellClick?: (data: RowCellData, e: React.MouseEvent) => void;
 }
 
 const Component = ({
@@ -31,7 +31,7 @@ const Component = ({
     rowBarColor,
     containerRef,
     customPopover,
-    onCellClick,
+    onClick,
 }: RowCellProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -44,13 +44,15 @@ const Component = ({
     const adjustedCellWidth = isNotAvailable
         ? totalCellWidth - ROW_CELL_GAP
         : totalCellWidth;
+    const isClickable =
+        !!onClick || (customPopover && customPopover.trigger === "click");
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handleCellClick = (event: React.MouseEvent) => {
-        if (status && status !== "blocked" && onCellClick) {
-            onCellClick(
+        if (onClick) {
+            onClick(
                 {
                     id,
                     startTime,
@@ -99,7 +101,7 @@ const Component = ({
         const popoverTriggerProps: PopoverV2TriggerProps = {
             position: "bottom-start",
             rootNode: containerRef,
-            offset: customPopover.offset,
+            customOffset: customPopover.offset,
             children: child,
             trigger: customPopover.trigger,
             delay: customPopover.delay,
@@ -125,7 +127,7 @@ const Component = ({
                         $width={adjustedCellWidth}
                         $status={status}
                         $bgColour={rowBarColor}
-                        $clickableCell={!!handleCellClick && !!customPopover}
+                        $isClickable={isClickable}
                         onClick={handleCellClick}
                     >
                         {title && (

@@ -33,7 +33,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "rowData",
                 mandatory: true,
                 description: "The data used to render each unique rows",
-                propTypes: ["RowData[]"],
+                propTypes: ["TimeTableRowData[]"],
             },
             {
                 name: "isLoading",
@@ -139,18 +139,6 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["(currentDate: string) => void"],
             },
-            {
-                name: "onNameClick",
-                description:
-                    "The callback function to trigger when the row header name has been clicked.",
-                propTypes: ["(rowData: RowData, e: React.MouseEvent) => void"],
-            },
-            {
-                name: "onCellClick",
-                description:
-                    "The callback function to trigger when a cell has been clicked.",
-                propTypes: ["(data: RowCellData, e: React.MouseEvent) => void"],
-            },
         ],
     },
     {
@@ -179,7 +167,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "RowData",
+        name: "TimeTableRowData",
         attributes: [
             {
                 name: "id",
@@ -188,8 +176,8 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The identifier for this row. This can be useful if you
                         intend to utilise the <code>onNameClick</code>callback,
-                        as the <code>RowData</code>will get passed to the
-                        callback.
+                        as the <code>TimeTableRowData</code>will get passed to
+                        the callback.
                     </>
                 ),
                 propTypes: ["string"],
@@ -205,7 +193,7 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description:
                     "The array of row cells to be rendered in this row of data.",
-                propTypes: ["RowCellData[]"],
+                propTypes: ["TimeTableRowCellData[]"],
             },
             {
                 name: "subtitle",
@@ -246,10 +234,18 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["string"],
             },
+            {
+                name: "onRowNameClick",
+                description:
+                    "The callback function to trigger when the row header name has been clicked.",
+                propTypes: [
+                    "(rowData: TimeTableRowData, e: React.MouseEvent) => void",
+                ],
+            },
         ],
     },
     {
-        name: "RowCellData",
+        name: "TimeTableRowCellData",
         attributes: [
             {
                 name: "id",
@@ -257,9 +253,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         The identifier for this cell. This can be useful if you
-                        intend to utilise the <code>onCellClick</code>callback,
-                        as the <code>RowCellData</code>will get passed to the
-                        callback.
+                        intend to utilise the <code>onClick</code>callback, as
+                        the <code>TimeTableRowCellData</code>will get passed to
+                        the callback.
                     </>
                 ),
                 propTypes: ["string"],
@@ -282,10 +278,6 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The status of this cell, which determines the style it
                         will be rendered in.
-                        <br />
-                        <b>NOTE</b>: undefined or blocked cells will have mouse
-                        disabled hover interaction and will not trigger the
-                        <code>onCellClick</code>callback.
                     </>
                 ),
                 propTypes: [`"filled"`, `"blocked"`, `"default"`],
@@ -312,6 +304,14 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["CustomPopoverProps"],
+            },
+            {
+                name: "onClick",
+                description:
+                    "The callback function to trigger when a cell has been clicked.",
+                propTypes: [
+                    "(data: TimeTableRowCellData, e: React.MouseEvent) => void",
+                ],
             },
         ],
     },

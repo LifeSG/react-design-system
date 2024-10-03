@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
 import { TimeTable } from "../../src/timetable/timetable";
-import { RowData, TimeTableProps } from "../../src/timetable/types";
+import { TimeTableProps, TimeTableRowData } from "../../src/timetable/types";
 import { lazyLoad } from "../../stories/timetable/mock-data";
 
 describe("TimeTable", () => {
@@ -15,7 +15,7 @@ describe("TimeTable", () => {
         minDate: date.add(-11, "month").format("YYYY-MM-DD"),
         totalRecords: 10,
         rowData: [],
-        onNameClick: function (rowData: RowData): void {
+        onNameClick: function (rowData: TimeTableRowData): void {
             alert(`Clicked on ${JSON.stringify(rowData)}`);
         },
         emptyContent: {
@@ -67,8 +67,8 @@ describe("TimeTable", () => {
                 rowData={[]}
                 isLoading={false}
                 emptyContent={timeTableMockData.emptyContent}
-                onRightArrowClick={onRightArrowClick}
-                onLeftArrowClick={onLeftArrowClick}
+                onNextDayClick={onRightArrowClick}
+                onPreviousDayClick={onLeftArrowClick}
             />
         );
         const leftBtn = screen.getByTestId("date-navigator-left-arrow-btn");
@@ -158,13 +158,13 @@ describe("TimeTable", () => {
                             content: "hello world123",
                             delay: { open: 0, close: 0 },
                         },
+                        outsideOpHoursCellCustomPopover: {
+                            trigger: "hover",
+                            content: "skibididiidi ohio",
+                            delay: { open: 0, close: 0 },
+                        },
                     },
                 ]}
-                outsideOpHoursCellCustomPopover={{
-                    trigger: "hover",
-                    content: "skibididiidi ohio",
-                    delay: { open: 0, close: 0 },
-                }}
                 isLoading={false}
                 emptyContent={timeTableMockData.emptyContent}
             />
@@ -207,6 +207,7 @@ describe("TimeTable", () => {
                         name: "Test",
                         rowMinTime: "08:00:00",
                         rowMaxTime: "09:00:00",
+                        onRowNameClick: onNameClick,
                         rowCells: [
                             {
                                 id: "1",
@@ -219,7 +220,6 @@ describe("TimeTable", () => {
                 ]}
                 isLoading={false}
                 emptyContent={timeTableMockData.emptyContent}
-                onNameClick={onNameClick}
             />
         );
         const rowHeaderName = screen.getByTestId("1-row-header-title");

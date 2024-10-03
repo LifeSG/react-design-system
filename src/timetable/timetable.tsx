@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { PopoverV2TriggerProps } from "../popover-v2";
 import { CalendarHelper } from "../util";
+import { ROW_BAR_COLOR_SEQUENCE, ROW_INTERVAL } from "./const";
 import { TimeTableNavigator } from "./timetable-navigator/timetable-navigator";
 import { RowBar } from "./timetable-row/row-bar";
 import { StyledPopoverContent } from "./timetable-row/row-cell.style";
@@ -26,35 +27,36 @@ import {
     StyledPopoverTrigger,
     TimeTableContainer,
 } from "./timetable.style";
-import {
-    CustomPopoverProps,
-    ROW_BAR_COLOR_SEQUENCE,
-    ROW_INTERVAL,
-    RowData,
-    TimeTableProps,
-} from "./types";
+import { CustomPopoverProps, TimeTableProps, TimeTableRowData } from "./types";
 
 export const TimeTable = ({
     date,
+    emptyContent,
     rowData,
     isLoading,
     minTime = "00:00",
     maxTime = "23:00",
+    minDate,
+    maxDate,
+    totalRecords,
     onPage,
-    ...optionalProps
-}: TimeTableProps) => {
+    onRefresh,
+    onNextDayClick,
+    onPreviousDayClick,
+    ...otherProps
+}: TimeTableProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const testId = otherProps["data-testid"] || "timetable-container-id";
     const timetableMinTime = CalendarHelper.roundToNearestHour(minTime);
     const timetableMaxTime = CalendarHelper.roundToNearestHour(maxTime, true);
     const hourlyIntervals = CalendarHelper.generateHourlyIntervals(
         timetableMinTime,
         timetableMaxTime
     );
-    const isEmptyContent = optionalProps.totalRecords === 0 || isEmpty(rowData);
-    const allRecordsLoaded =
-        isEmptyContent || rowData.length === optionalProps.totalRecords;
+    const isEmptyContent = totalRecords === 0 || isEmpty(rowData);
+    const allRecordsLoaded = isEmptyContent || rowData.length === totalRecords;
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const contentContainerRef = useRef<HTMLDivElement>(null);
     const [isScrolledX, setIsScrolledX] = useState<boolean>(false);
@@ -65,7 +67,6 @@ export const TimeTable = ({
     // =============================================================================
     // EFFECTS
     // =============================================================================
-
     useEffect(() => {
         const handleScroll = throttle(() => {
             if (tableContainerRef.current) {
@@ -130,9 +131,12 @@ export const TimeTable = ({
         refreshRate: 50,
     });
 
-    const handleRowNameClick = (data: RowData, event: React.MouseEvent) => {
-        if (optionalProps.onNameClick) {
-            optionalProps.onNameClick(data, event);
+    const handleRowNameClick = (
+        data: TimeTableRowData,
+        event: React.MouseEvent
+    ) => {
+        if (data.onRowNameClick) {
+            data.onRowNameClick(data, event);
         }
     };
 
@@ -166,7 +170,10 @@ export const TimeTable = ({
         );
     };
 
-    const buildPopoverTrigger = (data: RowData, child: JSX.Element) => {
+    const buildPopoverTrigger = (
+        data: TimeTableRowData,
+        child: JSX.Element
+    ) => {
         if (!data.rowHeaderCustomPopover) {
             return child;
         }
@@ -174,7 +181,7 @@ export const TimeTable = ({
         const popoverTriggerProps: PopoverV2TriggerProps = {
             position: "bottom-start",
             rootNode: tableContainerRef,
-            offset: data.rowHeaderCustomPopover.offset,
+            customOffset: data.rowHeaderCustomPopover.offset,
             children: child,
             trigger: data.rowHeaderCustomPopover.trigger,
             delay: data.rowHeaderCustomPopover.delay,
@@ -223,12 +230,11 @@ export const TimeTable = ({
                                 key={`${data.id}-row-header`}
                             >
                                 <ClickableRowHeaderTitle
-                                    $isClickable={!!optionalProps.onNameClick}
+                                    $isClickable={!!data.onRowNameClick}
                                     onClick={(event: React.MouseEvent) =>
                                         handleRowNameClick(data, event)
                                     }
                                     weight="semibold"
-                                    id={`${data.id}-row-header-title-id`}
                                     data-testid={`${data.id}-row-header-title`}
                                 >
                                     {data.name}
@@ -237,7 +243,6 @@ export const TimeTable = ({
                                 <RowHeaderSubtitle
                                     weight="bold"
                                     $show={!!data.subtitle}
-                                    id={`${data.id}-row-header-subtitle-id`}
                                     data-testid={`${data.id}-row-header-subtitle`}
                                 >
                                     {data.subtitle}
@@ -266,7 +271,6 @@ export const TimeTable = ({
             return (
                 <ColumnHeader
                     key={`${columnHeader}-column-key`}
-                    id={`${columnHeader}-column-id`}
                     data-testid={`${columnHeader}-column`}
                 >
                     <ColumnHeaderTitle weight={"semibold"}>
@@ -285,20 +289,15 @@ export const TimeTable = ({
                 ref={contentContainerRef}
                 $numOfRows={rowData.length}
             >
-                {rowData.map((data, _) => {
+                {rowData.map((data, index) => {
                     return (
                         <RowBar
-                            key={`${data.id}-row-bar`}
-                            data-testid={`${data.id}-row-bar`}
+                            key={`${index}-row-bar`}
                             timetableMinTime={timetableMinTime}
                             timetableMaxTime={timetableMaxTime}
                             rowBarColor={getColorFromSequence()}
                             intervalWidth={intervalWidth}
-                            onCellClick={optionalProps.onCellClick}
                             containerRef={contentContainerRef}
-                            outsideOpHoursCellCustomPopover={
-                                optionalProps.outsideOpHoursCellCustomPopover
-                            }
                             {...data}
                         />
                     );
@@ -326,26 +325,25 @@ export const TimeTable = ({
 
     if (isEmptyContent) {
         return (
-            <EmptyTableContainer
-                className="empty-container"
-                $width={optionalProps.width}
-                $height={optionalProps.height}
-            >
+            <EmptyTableContainer className="empty-container" {...otherProps}>
                 <EmptyTableRowHeader>
                     <TimeTableNavigator
                         selectedDate={date}
                         isLoading={isLoading || loadMore}
                         tableContainerRef={tableContainerRef}
-                        {...optionalProps}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        totalRecords={totalRecords}
+                        onLeftArrowClick={onPreviousDayClick}
+                        onRightArrowClick={onNextDayClick}
+                        onRefresh={onRefresh}
                     />
                 </EmptyTableRowHeader>
                 {!isLoading ? (
                     <NoResultsFound
                         type="no-item-found"
-                        illustrationScheme={
-                            optionalProps.emptyContent.illustrationScheme
-                        }
-                        description={optionalProps.emptyContent.description}
+                        illustrationScheme={emptyContent?.illustrationScheme}
+                        description={emptyContent?.description}
                     />
                 ) : (
                     <Loader $isEmptyContent={isEmptyContent}></Loader>
@@ -357,11 +355,9 @@ export const TimeTable = ({
     return (
         <TimeTableContainer
             ref={tableContainerRef}
-            id="timetable-container-id"
-            data-testid="timetable-container-id"
+            data-testid={testId}
+            {...otherProps}
             $loading={isLoading}
-            $height={optionalProps.height}
-            $width={optionalProps.width}
             $allRecordsLoaded={allRecordsLoaded || !onPage}
         >
             <RowColumnHeader
@@ -372,7 +368,12 @@ export const TimeTable = ({
                     selectedDate={date}
                     isLoading={isLoading || loadMore}
                     tableContainerRef={tableContainerRef}
-                    {...optionalProps}
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    totalRecords={totalRecords}
+                    onLeftArrowClick={onPreviousDayClick}
+                    onRightArrowClick={onNextDayClick}
+                    onRefresh={onRefresh}
                 />
             </RowColumnHeader>
             <RowHeaderColumn

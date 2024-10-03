@@ -1,33 +1,27 @@
 import { PopoverV2TriggerType } from "../popover-v2";
 import { ResourceScheme } from "../theme";
 
-export const ROW_BAR_COLOR_SEQUENCE = [
-    "#FFE6BB",
-    "#D8EFEB",
-    "#E6EAFE",
-    "#FAE4E5",
-    "#D3EEFC",
-] as const; // Assert to be a readonly tuple
-export const ROW_CELL_GAP = 2;
-export const ROW_INTERVAL = 15;
-export type RowBarColors = (typeof ROW_BAR_COLOR_SEQUENCE)[number];
-export type CellType = "filled" | "blocked" | "default";
+export type CellType = "filled" | "blocked" | "default" | "disabled";
 
 interface EmptyContentProps {
     description: string;
     illustrationScheme: ResourceScheme;
 }
 
-export interface RowData {
-    id: string;
+export interface TimeTableRowData {
+    id?: string | undefined;
     name: string;
-    rowCells: RowCellData[];
+    rowCells: TimeTableRowCellData[];
     subtitle?: string | JSX.Element | undefined;
-    rowHeaderCustomPopover?: CustomPopoverProps;
+    rowHeaderCustomPopover?: CustomPopoverProps | undefined;
+    outsideOpHoursCellCustomPopover?: CustomPopoverProps | undefined;
     // HH:mm format, defaults to minTime
-    rowMinTime?: string;
+    rowMinTime?: string | undefined;
     // HH:mm format, defaults to maxTime
-    rowMaxTime?: string;
+    rowMaxTime?: string | undefined;
+    onRowNameClick?:
+        | ((rowData: TimeTableRowData, e: React.MouseEvent) => void)
+        | undefined;
 }
 
 export interface CustomPopoverProps {
@@ -35,41 +29,44 @@ export interface CustomPopoverProps {
     content: string | JSX.Element;
     width?: string | undefined;
     padding?: string | undefined;
-    delay?: { open: number; close: number } | undefined;
+    delay?:
+        | { open?: number | undefined; close?: number | undefined }
+        | undefined;
     offset?: number | undefined;
 }
 
 export interface TimeTableProps {
+    id?: string | undefined;
+    className?: string | undefined;
+    "data-testid"?: string | undefined;
     date: string;
-    emptyContent: EmptyContentProps;
-    rowData: RowData[];
-    isLoading: boolean;
+    emptyContent?: EmptyContentProps | undefined;
+    rowData: TimeTableRowData[];
+    isLoading?: boolean | undefined;
     // HH:mm format
-    minTime?: string;
+    minTime?: string | undefined;
     // HH:mm format
-    maxTime?: string;
+    maxTime?: string | undefined;
     minDate?: string | undefined;
     maxDate?: string | undefined;
     totalRecords?: number | undefined;
-    width?: string | undefined;
-    height?: string | undefined;
-    outsideOpHoursCellCustomPopover?: CustomPopoverProps | undefined;
-    onRefresh?: () => void;
-    onPage?: () => void;
-    onLeftArrowClick?: (currentDate: string) => void;
-    onRightArrowClick?: (currentDate: string) => void;
-    onNameClick?: (rowData: RowData, e: React.MouseEvent) => void;
-    onCellClick?: (data: RowCellData, e: React.MouseEvent) => void;
+    onRefresh?: (() => void) | undefined;
+    onPage?: (() => void) | undefined;
+    onPreviousDayClick?: ((currentDate: string) => void) | undefined;
+    onNextDayClick?: ((currentDate: string) => void) | undefined;
 }
 
-export interface RowCellData {
-    id: string;
+export interface TimeTableRowCellData {
+    id?: string | undefined;
     // HH:mm format
     startTime: string;
     // HH:mm format
     endTime: string;
-    status?: CellType | undefined;
+    status: CellType;
     title?: string | undefined;
     subtitle?: string | undefined;
     customPopover?: CustomPopoverProps | undefined;
+    onClick?:
+        | ((data: TimeTableRowCellData, e: React.MouseEvent) => void)
+        | undefined;
 }

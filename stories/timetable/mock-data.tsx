@@ -1,11 +1,10 @@
 import { Person2Icon, PinIcon } from "@lifesg/react-icons";
 import dayjs, { Dayjs } from "dayjs";
 import styled from "styled-components";
-import { Color } from "../../src/color";
 import { Text } from "../../src/text";
 import { CellType, TimeTableProps } from "../../src/timetable/types";
-import timeTableEvenDays from "./timetable-data-even-days.json";
-import timeTableOddDays from "./timetable-data-odd-days.json";
+import { evenDaysData } from "./new-even-days";
+import { oddDaysData } from "./new-odd-days";
 import lazyLoadData from "./timetable-lazy-load-data.json";
 
 export const StyledHoverContent = styled.div`
@@ -20,37 +19,12 @@ const cellTypeMap: Record<string, CellType> = {
     DEFAULT: "default",
 };
 
-const mapper = (resource) => {
-    return {
-        id: resource.id,
-        name: resource.title,
-        rowMinTime: resource.timelines[0].startTime,
-        rowMaxTime: resource.timelines[0].endTime,
-        subtitle: (
-            <>
-                <Person2Icon />
-                {resource.capacity}
-            </>
-        ),
-        rowCells: resource.timelines[0].slots.map((slot) => {
-            return {
-                id: slot.id,
-                startTime: slot.startTime,
-                endTime: slot.endTime,
-                title: slot.title,
-                subtitle: slot.label,
-                status: cellTypeMap[slot.status],
-            };
-        }),
-    };
-};
-
 const fetchRowData = (date: Dayjs) => {
     const isEven = date.day() % 2 === 0;
     if (isEven) {
-        return timeTableEvenDays.resources.map((resource) => mapper(resource));
+        return evenDaysData;
     }
-    return timeTableOddDays.resources.map((resource) => mapper(resource));
+    return oddDaysData;
 };
 
 export const getTimeTableData = (currentDate?: string): TimeTableProps => {
@@ -111,61 +85,6 @@ export const lazyLoad = (page: number) => {
                     title: slot.label,
                     subtitle: slot.label,
                     status: cellTypeMap[slot.status],
-                    ...(slot.status === "OCCUPIED" && {
-                        filledBlockClickContent: (
-                            <div
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    rowGap: "2rem",
-                                    padding: "16px, 16px, 32px, 32px",
-                                }}
-                            >
-                                <div>
-                                    <Text.H3 weight={"semibold"}>
-                                        {resource.title}
-                                    </Text.H3>
-                                    <Text.H4 weight={"semibold"}>
-                                        {dayjs().format("D MMM YYYY, ddd")}{" "}
-                                        {`${dayjs(
-                                            slot.startTime,
-                                            "HH:mm"
-                                        ).format("HH:mma")} - ${dayjs(
-                                            slot.endTime,
-                                            "HH:mm"
-                                        ).format("HH:mma")}`}
-                                    </Text.H4>
-                                </div>
-                                <div>
-                                    <Text.H5
-                                        style={{
-                                            color: `${Color.Neutral[3]}`,
-                                        }}
-                                    >
-                                        Booking owner
-                                    </Text.H5>
-                                    <Text.Body>{slot.label}</Text.Body>
-                                    <a
-                                        onClick={() =>
-                                            alert("email copied to clipboard")
-                                        }
-                                    >
-                                        name@gmail.com
-                                    </a>
-                                </div>
-                                <div>
-                                    <Text.H5
-                                        style={{
-                                            color: `${Color.Neutral[3]}`,
-                                        }}
-                                    >
-                                        Booking title
-                                    </Text.H5>
-                                    <Text.Body>{slot.title}</Text.Body>
-                                </div>
-                            </div>
-                        ),
-                    }),
                 };
             }),
         };

@@ -2,10 +2,16 @@ import { PinIcon } from "@lifesg/react-icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { Color, PopoverV2TriggerType, Text } from "../../src";
+import {
+    Color,
+    PopoverV2TriggerType,
+    Text,
+    TimeTableRowCellData,
+    TimeTableRowData,
+} from "../../src";
 import { TimeTable } from "../../src/timetable/timetable";
-import { RowCellData, RowData } from "../../src/timetable/types";
 import { StyledHoverContent, getTimeTableData, lazyLoad } from "./mock-data";
+import styled from "styled-components";
 
 type Component = typeof TimeTable;
 
@@ -16,20 +22,20 @@ const meta: Meta<Component> = {
 
 export default meta;
 
+const StyledTimeTable = styled(TimeTable)`
+    width: 900px;
+    height: 500px;
+`;
+
 export const Default: StoryObj<Component> = {
     render: () => {
         return (
-            <>
-                <TimeTable
-                    {...getTimeTableData()}
-                    totalRecords={undefined}
-                    height="650px"
-                    width="900px"
-                    rowData={getTimeTableData().rowData.slice(0, 8)}
-                    date={""}
-                    isLoading={false}
-                />
-            </>
+            <StyledTimeTable
+                {...getTimeTableData()}
+                rowData={getTimeTableData().rowData.slice(0, 8)}
+                date={""}
+                isLoading={false}
+            />
         );
     },
 };
@@ -42,7 +48,7 @@ export const TimeTableWithNavigation: StoryObj<Component> = {
         const [date, setDate] = useState(timeTableData.date);
         const [loading, setLoading] = useState(timeTableData.isLoading);
 
-        const onLeftArrowClick = (currentDate: string) => {
+        const onPreviousDayClick = (currentDate: string) => {
             const newDate = dayjs(currentDate)
                 .add(-1, "day")
                 .format("YYYY-MM-DD");
@@ -54,7 +60,7 @@ export const TimeTableWithNavigation: StoryObj<Component> = {
             }, 1000);
         };
 
-        const onRightArrowClick = (currentDate: string) => {
+        const onNextDayClick = (currentDate: string) => {
             const newDate = dayjs(currentDate)
                 .add(1, "day")
                 .format("YYYY-MM-DD");
@@ -66,32 +72,21 @@ export const TimeTableWithNavigation: StoryObj<Component> = {
             }, 1000);
         };
 
-        const onCellClick = (data: RowCellData) => {
-            alert(
-                `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-            );
-        };
-
         return (
-            <>
-                <TimeTable
-                    {...timeTableData}
-                    height="650px"
-                    width="900px"
-                    date={date}
-                    minDate={dayjs(timeTableData.date)
-                        .subtract(2, "days")
-                        .format("YYYY-MM-DD")}
-                    maxDate={dayjs(timeTableData.date)
-                        .add(2, "days")
-                        .format("YYYY-MM-DD")}
-                    rowData={results}
-                    isLoading={loading}
-                    onRightArrowClick={onRightArrowClick}
-                    onLeftArrowClick={onLeftArrowClick}
-                    onCellClick={onCellClick}
-                />
-            </>
+            <StyledTimeTable
+                {...timeTableData}
+                date={date}
+                minDate={dayjs(timeTableData.date)
+                    .subtract(2, "days")
+                    .format("YYYY-MM-DD")}
+                maxDate={dayjs(timeTableData.date)
+                    .add(2, "days")
+                    .format("YYYY-MM-DD")}
+                rowData={results}
+                isLoading={loading}
+                onNextDayClick={onNextDayClick}
+                onPreviousDayClick={onPreviousDayClick}
+            />
         );
     },
 };
@@ -111,7 +106,7 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
             }, 2000);
         }, [page]);
 
-        const onLeftArrowClick = (currentDate: string) => {
+        const onPreviousDayClick = (currentDate: string) => {
             const newDate = dayjs(currentDate)
                 .add(-1, "day")
                 .format("YYYY-MM-DD");
@@ -123,7 +118,7 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
             }, 1000);
         };
 
-        const onRightArrowClick = (currentDate: string) => {
+        const onNextDayClick = (currentDate: string) => {
             const newDate = dayjs(currentDate)
                 .add(1, "day")
                 .format("YYYY-MM-DD");
@@ -143,73 +138,40 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
             }, 5000);
         };
 
-        const onCellClick = (data: RowCellData) => {
-            alert(
-                `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-            );
-        };
-
         return (
-            <>
-                <TimeTable
-                    {...timeTableData}
-                    date={date}
-                    minDate={dayjs(timeTableData.date)
-                        .subtract(2, "days")
-                        .format("YYYY-MM-DD")}
-                    maxDate={dayjs(timeTableData.date)
-                        .add(2, "days")
-                        .format("YYYY-MM-DD")}
-                    height="650px"
-                    width="900px"
-                    rowData={results}
-                    isLoading={loading}
-                    onRefresh={onRefresh}
-                    onPage={() => setPage(page + 1)}
-                    totalRecords={50}
-                    onCellClick={onCellClick}
-                    onRightArrowClick={onRightArrowClick}
-                    onLeftArrowClick={onLeftArrowClick}
-                />
-            </>
+            <StyledTimeTable
+                {...timeTableData}
+                date={date}
+                minDate={dayjs(timeTableData.date)
+                    .subtract(2, "days")
+                    .format("YYYY-MM-DD")}
+                maxDate={dayjs(timeTableData.date)
+                    .add(2, "days")
+                    .format("YYYY-MM-DD")}
+                rowData={results}
+                isLoading={loading}
+                onRefresh={onRefresh}
+                onPage={() => setPage(page + 1)}
+                totalRecords={50}
+                onNextDayClick={onNextDayClick}
+                onPreviousDayClick={onPreviousDayClick}
+            />
         );
     },
 };
 
 export const TimeTableWithNoPopoverContent: StoryObj<Component> = {
     render: () => {
-        const onCellClick = (data: RowCellData) => {
-            alert(
-                `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-            );
-        };
-        return (
-            <>
-                <TimeTable
-                    {...getTimeTableData()}
-                    height="650px"
-                    width="900px"
-                    onCellClick={onCellClick}
-                />
-            </>
-        );
+        return <StyledTimeTable {...getTimeTableData()} />;
     },
 };
 
 export const TimeTableWithStyledPopovers: StoryObj<Component> = {
     render: () => {
-        const onCellClick = (data: RowCellData) => {
-            if (data.status === "filled") return;
-            alert(
-                `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-            );
-        };
-
-        const onNameClick = (rowData: RowData, e: React.MouseEvent) => {
-            alert(`Clicked on row header for ${rowData.name}`);
-        };
-
-        const buildCustomPopover = (row: RowData, cell: RowCellData) => {
+        const buildCustomPopover = (
+            row: TimeTableRowData,
+            cell: TimeTableRowCellData
+        ) => {
             switch (cell.status) {
                 case "filled": {
                     return {
@@ -321,31 +283,18 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
             };
         });
 
-        return (
-            <>
-                <TimeTable
-                    {...getTimeTableData()}
-                    height="650px"
-                    width="900px"
-                    rowData={rowData}
-                    onCellClick={onCellClick}
-                    onNameClick={onNameClick}
-                />
-            </>
-        );
+        return <StyledTimeTable {...getTimeTableData()} rowData={rowData} />;
     },
 };
 
 export const TimeTableWithEmptyContent: StoryObj<Component> = {
     render: () => {
         return (
-            <>
-                <TimeTable
-                    {...getTimeTableData()}
-                    totalRecords={0}
-                    rowData={[]}
-                />
-            </>
+            <StyledTimeTable
+                {...getTimeTableData()}
+                totalRecords={0}
+                rowData={[]}
+            />
         );
     },
 };

@@ -1,23 +1,21 @@
 import dayjs from "dayjs";
 import { MutableRefObject } from "react";
+import { RowBarColors } from "../const";
 import {
     CustomPopoverProps,
-    RowBarColors,
-    RowCellData,
-    RowData,
+    TimeTableRowCellData,
+    TimeTableRowData,
 } from "../types";
 import { RowCellContainer } from "./row-bar.style";
 import { RowCell } from "./row-cell";
 
-interface RowBarProps extends RowData {
+interface RowBarProps extends TimeTableRowData {
     timetableMinTime: string;
     timetableMaxTime: string;
     intervalWidth: number;
     containerRef: MutableRefObject<HTMLDivElement>;
     rowBarColor: RowBarColors;
     outsideOpHoursCellCustomPopover?: CustomPopoverProps | undefined;
-    "data-testid"?: string | undefined;
-    onCellClick?: (data: RowCellData, e: React.MouseEvent) => void;
 }
 
 export const RowBar = ({
@@ -30,12 +28,14 @@ export const RowBar = ({
     rowBarColor,
     intervalWidth,
     containerRef,
-    ...optionalProps
+    outsideOpHoursCellCustomPopover,
+    ...otherProps
 }: RowBarProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const rowCellArray: RowCellData[] = [];
+    const testId = otherProps["data-testid"] || `${id}-row`;
+    const rowCellArray: TimeTableRowCellData[] = [];
 
     // ===========================================================================
     // HELPER FUNCTIONS
@@ -55,7 +55,7 @@ export const RowBar = ({
             startTime: timetableMinTime,
             endTime: rowMinTime,
             status: "blocked",
-            customPopover: optionalProps.outsideOpHoursCellCustomPopover,
+            customPopover: outsideOpHoursCellCustomPopover,
         });
     }
 
@@ -77,7 +77,7 @@ export const RowBar = ({
                     id,
                     startTime: curr.format("HH:mm").toString(),
                     endTime: nextHour.format("HH:mm").toString(),
-                    status: undefined,
+                    status: "disabled",
                 });
                 curr = nextHour;
             } else {
@@ -85,7 +85,7 @@ export const RowBar = ({
                     id,
                     startTime: curr.format("HH:mm").toString(),
                     endTime: nextSlotStartTime.format("HH:mm").toString(),
-                    status: undefined,
+                    status: "disabled",
                 });
                 curr = nextSlotStartTime;
             }
@@ -99,12 +99,12 @@ export const RowBar = ({
             startTime: rowMaxTime,
             endTime: timetableMaxTime,
             status: "blocked",
-            customPopover: optionalProps.outsideOpHoursCellCustomPopover,
+            customPopover: outsideOpHoursCellCustomPopover,
         });
     }
 
     return (
-        <RowCellContainer data-testid={optionalProps["data-testid"]}>
+        <RowCellContainer data-testid={testId} {...otherProps}>
             {rowCellArray.map((cell, index) => {
                 return (
                     <RowCell
@@ -113,7 +113,6 @@ export const RowBar = ({
                         intervalWidth={intervalWidth}
                         rowBarColor={rowBarColor}
                         containerRef={containerRef}
-                        onCellClick={optionalProps.onCellClick}
                     />
                 );
             })}
