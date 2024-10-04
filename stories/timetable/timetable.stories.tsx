@@ -2,6 +2,7 @@ import { PinIcon } from "@lifesg/react-icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 import {
     Color,
     PopoverV2TriggerType,
@@ -11,7 +12,7 @@ import {
 } from "../../src";
 import { TimeTable } from "../../src/timetable/timetable";
 import { StyledHoverContent, getTimeTableData, lazyLoad } from "./mock-data";
-import styled from "styled-components";
+import { timetableDefaultData } from "./timetable-default-data";
 
 type Component = typeof TimeTable;
 
@@ -24,17 +25,19 @@ export default meta;
 
 const StyledTimeTable = styled(TimeTable)`
     width: 900px;
-    height: 500px;
+    height: 400px;
 `;
 
 export const Default: StoryObj<Component> = {
     render: () => {
+        const date = dayjs().format("YYYY-MM-DD");
+
         return (
             <StyledTimeTable
-                {...getTimeTableData()}
-                rowData={getTimeTableData().rowData.slice(0, 8)}
-                date={""}
-                isLoading={false}
+                date={date}
+                minTime={"06:00"}
+                maxTime={"23:00"}
+                rowData={timetableDefaultData}
             />
         );
     },
@@ -157,12 +160,6 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
                 onPreviousDayClick={onPreviousDayClick}
             />
         );
-    },
-};
-
-export const TimeTableWithNoPopoverContent: StoryObj<Component> = {
-    render: () => {
-        return <StyledTimeTable {...getTimeTableData()} />;
     },
 };
 

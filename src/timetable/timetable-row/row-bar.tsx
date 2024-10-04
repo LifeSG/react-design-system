@@ -64,7 +64,7 @@ export const RowBar = ({
         rowCellArray.push(cell);
 
         const nextSlotStartTime = dayjs(
-            rowCells[index + 1]?.startTime,
+            rowCells[index + 1]?.startTime || rowMaxTime, // Get next cell start time, if next cell don't exist, use current row max time
             "HH:mm"
         );
         const parsedEndTime = dayjs(endTime, "HH:mm");

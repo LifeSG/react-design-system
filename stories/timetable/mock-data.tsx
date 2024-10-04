@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { Text } from "../../src/text";
 import { CellType, TimeTableProps } from "../../src/timetable/types";
 import { evenDaysData } from "./timetable-even-days-data";
-import { oddDaysData } from "./timetable-odd-days-data";
 import lazyLoadData from "./timetable-lazy-load-data.json";
+import { oddDaysData } from "./timetable-odd-days-data";
 
 export const StyledHoverContent = styled.div`
     display: flex;
@@ -32,18 +32,14 @@ export const getTimeTableData = (currentDate?: string): TimeTableProps => {
 
     return {
         date: date.format("YYYY-MM-DD"),
-        minTime: "06:20:00",
-        maxTime: "22:00:00",
-        maxDate: date.add(1, "month").format("YYYY-MM-DD"),
-        minDate: date.add(-11, "month").format("YYYY-MM-DD"),
-        totalRecords: 10,
+        minTime: "06:00:00",
+        maxTime: "23:00:00",
         rowData: fetchRowData(date),
         emptyContent: {
             illustrationScheme: "bookingsg",
             description:
                 "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page.",
         },
-        isLoading: false,
     };
 };
 
@@ -82,7 +78,7 @@ export const lazyLoad = (page: number) => {
                     id: slot.id,
                     startTime: slot.startTime,
                     endTime: slot.endTime,
-                    title: slot.label,
+                    title: slot.title,
                     subtitle: slot.label,
                     status: cellTypeMap[slot.status],
                 };

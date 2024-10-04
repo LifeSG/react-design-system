@@ -3,10 +3,9 @@ import { CellType, TimeTableRowCellData, TimeTableRowData } from "../../src";
 
 export const oddDaysData = [
     {
-        id: "9l4P1dOr16",
         name: "Apple",
-        rowMinTime: "08:00:00",
-        rowMaxTime: "22:30:00",
+        rowMinTime: "08:00",
+        rowMaxTime: "22:00",
         subtitle: (
             <>
                 <Person2Icon />
@@ -18,179 +17,155 @@ export const oddDaysData = [
         },
         rowCells: [
             {
-                id: "9l4P1dOr16",
                 startTime: "08:00",
                 endTime: "08:45",
-                status: "default" as CellType,
+                status: "filled" as CellType,
+                title: "title",
+                subtitle: "subtitle",
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "9l4P1dOr16",
-                startTime: "08:45:00",
-                endTime: "09:30:00",
+                startTime: "08:45",
+                endTime: "09:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "9l4P1dOr16",
-                startTime: "11:00:00",
-                endTime: "11:45:00",
+                startTime: "09:30",
+                endTime: "10:00",
+                status: "blocked" as CellType,
+            },
+            {
+                startTime: "10:00",
+                endTime: "11:00",
+                status: "blocked" as CellType,
+            },
+            {
+                startTime: "11:00",
+                endTime: "11:45",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "RBP5g87Em6",
-                startTime: "12:00:00",
-                endTime: "13:00:00",
-                title: "Weekly Huddle #7",
-                subtitle: "Shawn TAY (GOVTECH)",
+                startTime: "12:00",
+                endTime: "14:00",
+                title: "title",
+                subtitle: "subtitle",
                 status: "filled" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "9l4P1dOr16",
-                startTime: "13:00:00",
-                endTime: "13:45:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "9l4P1dOr16",
-                startTime: "13:45:00",
-                endTime: "14:30:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "9l4P1dOr16",
-                startTime: "14:30:00",
-                endTime: "15:15:00",
+                startTime: "14:30",
+                endTime: "15:15",
                 status: "filled" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "9l4P1dOr16",
-                startTime: "16:45:00",
-                endTime: "17:15:00",
+                startTime: "16:45",
+                endTime: "17:15",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "9l4P1dOr16",
-                startTime: "17:15:00",
-                endTime: "18:00:00",
+                startTime: "17:15",
+                endTime: "18:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "9l4P1dOr16",
-                startTime: "18:00:00",
-                endTime: "18:45:00",
+                startTime: "18:00",
+                endTime: "18:45",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "9l4P1dOr16",
-                startTime: "18:45:00",
-                endTime: "19:30:00",
+                startTime: "18:45",
+                endTime: "19:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "9l4P1dOr16",
-                startTime: "19:30:00",
-                endTime: "20:15:00",
+                startTime: "19:30",
+                endTime: "20:15",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "9l4P1dOr16",
-                startTime: "20:15:00",
-                endTime: "21:00:00",
+                startTime: "20:15",
+                endTime: "21:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "9l4P1dOr16",
-                startTime: "21:00:00",
-                endTime: "21:45:00",
+                startTime: "21:00",
+                endTime: "21:45",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "9l4P1dOr16",
-                startTime: "21:45:00",
-                endTime: "22:00:00",
+                startTime: "21:45",
+                endTime: "22:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
         ],
     },
     {
-        id: "Dy3E3vRQY0",
         name: "Avocado",
-        rowMinTime: "08:00:00",
-        rowMaxTime: "22:00:00",
+        rowMinTime: "08:00",
+        rowMaxTime: "22:00",
         subtitle: (
             <>
                 <Person2Icon />
@@ -202,320 +177,225 @@ export const oddDaysData = [
         },
         rowCells: [
             {
-                id: "Dy3E3vRQY0",
-                startTime: "08:00:00",
-                endTime: "08:30:00",
+                startTime: "08:00",
+                endTime: "08:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "08:30:00",
-                endTime: "09:00:00",
+                startTime: "08:30",
+                endTime: "09:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "09:00:00",
-                endTime: "09:30:00",
-                status: "default" as CellType,
+                startTime: "09:00",
+                endTime: "11:00",
+                title: "title",
+                subtitle: "subtitle",
+                status: "filled" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "09:30:00",
-                endTime: "10:00:00",
+                startTime: "11:00",
+                endTime: "11:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "10:00:00",
-                endTime: "10:30:00",
+                startTime: "11:30",
+                endTime: "12:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "10:30:00",
-                endTime: "11:00:00",
+                startTime: "12:00",
+                endTime: "12:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "11:00:00",
-                endTime: "11:30:00",
+                startTime: "12:30",
+                endTime: "13:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "11:30:00",
-                endTime: "12:00:00",
+                startTime: "14:00",
+                endTime: "14:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "12:00:00",
-                endTime: "12:30:00",
+                startTime: "14:30",
+                endTime: "15:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "12:30:00",
-                endTime: "13:00:00",
-                status: "default" as CellType,
+                startTime: "15:00",
+                endTime: "16:30",
+                title: "title",
+                subtitle: "subtitle",
+                status: "filled" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "13:00:00",
-                endTime: "13:30:00",
+                startTime: "16:30",
+                endTime: "17:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "13:30:00",
-                endTime: "14:00:00",
+                startTime: "17:00",
+                endTime: "17:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "14:00:00",
-                endTime: "14:30:00",
+                startTime: "17:30",
+                endTime: "18:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "14:30:00",
-                endTime: "15:00:00",
+                startTime: "18:00",
+                endTime: "18:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "15:00:00",
-                endTime: "15:30:00",
+                startTime: "18:30",
+                endTime: "19:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "15:30:00",
-                endTime: "16:00:00",
+                startTime: "19:00",
+                endTime: "19:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "16:00:00",
-                endTime: "16:30:00",
+                startTime: "19:30",
+                endTime: "20:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "16:30:00",
-                endTime: "17:00:00",
+                startTime: "20:00",
+                endTime: "20:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "17:00:00",
-                endTime: "17:30:00",
+                startTime: "20:30",
+                endTime: "21:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "17:30:00",
-                endTime: "18:00:00",
+                startTime: "21:00",
+                endTime: "21:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "Dy3E3vRQY0",
-                startTime: "18:00:00",
-                endTime: "18:30:00",
+                startTime: "21:30",
+                endTime: "22:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "Dy3E3vRQY0",
-                startTime: "18:30:00",
-                endTime: "19:00:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "Dy3E3vRQY0",
-                startTime: "19:00:00",
-                endTime: "19:30:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "Dy3E3vRQY0",
-                startTime: "19:30:00",
-                endTime: "20:00:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "Dy3E3vRQY0",
-                startTime: "20:00:00",
-                endTime: "20:30:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "Dy3E3vRQY0",
-                startTime: "20:30:00",
-                endTime: "21:00:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "Dy3E3vRQY0",
-                startTime: "21:00:00",
-                endTime: "21:30:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "Dy3E3vRQY0",
-                startTime: "21:30:00",
-                endTime: "22:00:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
         ],
     },
     {
-        id: "GN9P0vME6K",
         name: "Banana",
-        rowMinTime: "08:00:00",
-        rowMaxTime: "22:00:00",
+        rowMinTime: "08:00",
+        rowMaxTime: "22:00",
         subtitle: (
             <>
                 <Person2Icon />
@@ -527,320 +407,206 @@ export const oddDaysData = [
         },
         rowCells: [
             {
-                id: "GN9P0vME6K",
-                startTime: "08:00:00",
-                endTime: "08:30:00",
+                startTime: "08:00",
+                endTime: "08:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "08:30:00",
-                endTime: "09:00:00",
+                startTime: "08:30",
+                endTime: "09:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "09:00:00",
-                endTime: "09:30:00",
+                startTime: "09:00",
+                endTime: "09:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "09:30:00",
-                endTime: "10:00:00",
+                startTime: "09:30",
+                endTime: "10:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "10:00:00",
-                endTime: "10:30:00",
+                startTime: "10:00",
+                endTime: "13:00",
+                status: "blocked" as CellType,
+            },
+            {
+                startTime: "13:00",
+                endTime: "13:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "10:30:00",
-                endTime: "11:00:00",
+                startTime: "13:30",
+                endTime: "14:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "11:00:00",
-                endTime: "11:30:00",
+                startTime: "14:00",
+                endTime: "14:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "11:30:00",
-                endTime: "12:00:00",
+                startTime: "14:30",
+                endTime: "15:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "12:00:00",
-                endTime: "12:30:00",
-                status: "default" as CellType,
+                startTime: "15:00",
+                endTime: "17:00",
+                status: "blocked" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "12:30:00",
-                endTime: "13:00:00",
+                startTime: "17:00",
+                endTime: "17:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "13:00:00",
-                endTime: "13:30:00",
+                startTime: "17:30",
+                endTime: "18:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "13:30:00",
-                endTime: "14:00:00",
+                startTime: "18:00",
+                endTime: "18:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "14:00:00",
-                endTime: "14:30:00",
+                startTime: "18:30",
+                endTime: "19:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "14:30:00",
-                endTime: "15:00:00",
+                startTime: "19:00",
+                endTime: "19:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "15:00:00",
-                endTime: "15:30:00",
+                startTime: "19:30",
+                endTime: "20:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "15:30:00",
-                endTime: "16:00:00",
+                startTime: "20:00",
+                endTime: "20:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "16:00:00",
-                endTime: "16:30:00",
+                startTime: "20:30",
+                endTime: "21:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "16:30:00",
-                endTime: "17:00:00",
+                startTime: "21:00",
+                endTime: "21:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vME6K",
-                startTime: "17:00:00",
-                endTime: "17:30:00",
+                startTime: "21:30",
+                endTime: "22:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "GN9P0vME6K",
-                startTime: "17:30:00",
-                endTime: "18:00:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "GN9P0vME6K",
-                startTime: "18:00:00",
-                endTime: "18:30:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "GN9P0vME6K",
-                startTime: "18:30:00",
-                endTime: "19:00:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "GN9P0vME6K",
-                startTime: "19:00:00",
-                endTime: "19:30:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "GN9P0vME6K",
-                startTime: "19:30:00",
-                endTime: "20:00:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "GN9P0vME6K",
-                startTime: "20:00:00",
-                endTime: "20:30:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "GN9P0vME6K",
-                startTime: "20:30:00",
-                endTime: "21:00:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "GN9P0vME6K",
-                startTime: "21:00:00",
-                endTime: "21:30:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "GN9P0vME6K",
-                startTime: "21:30:00",
-                endTime: "22:00:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
         ],
     },
     {
-        id: "mx0ExmWr9Y",
         name: "Cantaloupe",
-        rowMinTime: "08:00:00",
-        rowMaxTime: "22:00:00",
+        rowMinTime: "08:00",
+        rowMaxTime: "22:00",
         subtitle: (
             <>
                 <Person2Icon />
@@ -852,166 +618,151 @@ export const oddDaysData = [
         },
         rowCells: [
             {
-                id: "mx0ExmWr9Y",
-                startTime: "08:00:00",
-                endTime: "09:00:00",
+                startTime: "08:00",
+                endTime: "09:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "mx0ExmWr9Y",
-                startTime: "09:00:00",
-                endTime: "10:00:00",
+                startTime: "09:00",
+                endTime: "10:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "mx0ExmWr9Y",
-                startTime: "10:00:00",
-                endTime: "11:00:00",
+                startTime: "10:00",
+                endTime: "11:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "mx0ExmWr9Y",
-                startTime: "11:00:00",
-                endTime: "12:00:00",
+                startTime: "11:00",
+                endTime: "12:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "mx0ExmWr9Y",
-                startTime: "12:00:00",
-                endTime: "13:00:00",
+                startTime: "12:00",
+                endTime: "13:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "mx0ExmWr9Y",
-                startTime: "13:00:00",
-                endTime: "14:00:00",
+                startTime: "13:00",
+                endTime: "14:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "mx0ExmWr9Y",
-                startTime: "14:00:00",
-                endTime: "15:00:00",
+                startTime: "14:00",
+                endTime: "15:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "mx0ExmWr9Y",
-                startTime: "15:00:00",
-                endTime: "16:00:00",
+                startTime: "15:00",
+                endTime: "16:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "mx0ExmWr9Y",
-                startTime: "16:00:00",
-                endTime: "17:00:00",
+                startTime: "16:00",
+                endTime: "17:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "mx0ExmWr9Y",
-                startTime: "17:00:00",
-                endTime: "18:00:00",
+                startTime: "17:00",
+                endTime: "18:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "mx0ExmWr9Y",
-                startTime: "18:00:00",
-                endTime: "19:00:00",
+                startTime: "18:00",
+                endTime: "19:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "mx0ExmWr9Y",
-                startTime: "19:00:00",
-                endTime: "20:00:00",
+                startTime: "19:00",
+                endTime: "20:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "mx0ExmWr9Y",
-                startTime: "20:00:00",
-                endTime: "21:00:00",
+                startTime: "20:00",
+                endTime: "21:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "mx0ExmWr9Y",
-                startTime: "21:00:00",
-                endTime: "22:00:00",
+                startTime: "21:00",
+                endTime: "22:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
         ],
     },
     {
-        id: "An0rbeOElJ",
         name: "Cherry",
-        rowMinTime: "08:00:00",
-        rowMaxTime: "22:00:00",
+        rowMinTime: "08:00",
+        rowMaxTime: "22:00",
         subtitle: (
             <>
                 <Person2Icon />
@@ -1023,320 +774,263 @@ export const oddDaysData = [
         },
         rowCells: [
             {
-                id: "An0rbeOElJ",
-                startTime: "08:00:00",
-                endTime: "08:30:00",
-                status: "default" as CellType,
+                startTime: "08:00",
+                endTime: "08:30",
+                status: "filled" as CellType,
+                title: "title",
+                subtitle: "subtitle",
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "08:30:00",
-                endTime: "09:00:00",
-                status: "default" as CellType,
+                startTime: "08:30",
+                endTime: "09:00",
+                status: "filled" as CellType,
+                title: "title",
+                subtitle: "subtitle",
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "09:00:00",
-                endTime: "09:30:00",
-                status: "default" as CellType,
+                startTime: "09:00",
+                endTime: "09:15",
+                status: "filled" as CellType,
+                title: "title",
+                subtitle: "subtitle",
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "09:30:00",
-                endTime: "10:00:00",
-                status: "default" as CellType,
+                startTime: "09:15",
+                endTime: "09:30",
+                status: "filled" as CellType,
+                title: "title",
+                subtitle: "subtitle",
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "10:00:00",
-                endTime: "10:30:00",
-                status: "default" as CellType,
+                startTime: "09:30",
+                endTime: "09:45",
+                status: "filled" as CellType,
+                title: "title",
+                subtitle: "subtitle",
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "10:30:00",
-                endTime: "11:00:00",
-                status: "default" as CellType,
+                startTime: "09:45",
+                endTime: "10:00",
+                status: "filled" as CellType,
+                title: "title",
+                subtitle: "subtitle",
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "11:00:00",
-                endTime: "11:30:00",
+                startTime: "10:00",
+                endTime: "10:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "11:30:00",
-                endTime: "12:00:00",
+                startTime: "10:30",
+                endTime: "11:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "12:00:00",
-                endTime: "12:30:00",
+                startTime: "11:00",
+                endTime: "11:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "12:30:00",
-                endTime: "13:00:00",
+                startTime: "11:30",
+                endTime: "12:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "13:00:00",
-                endTime: "13:30:00",
+                startTime: "15:00",
+                endTime: "15:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "13:30:00",
-                endTime: "14:00:00",
+                startTime: "15:30",
+                endTime: "16:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "14:00:00",
-                endTime: "14:30:00",
+                startTime: "16:00",
+                endTime: "16:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "14:30:00",
-                endTime: "15:00:00",
+                startTime: "16:30",
+                endTime: "17:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "15:00:00",
-                endTime: "15:30:00",
+                startTime: "17:00",
+                endTime: "17:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "15:30:00",
-                endTime: "16:00:00",
+                startTime: "17:30",
+                endTime: "18:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "16:00:00",
-                endTime: "16:30:00",
+                startTime: "18:00",
+                endTime: "18:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "16:30:00",
-                endTime: "17:00:00",
+                startTime: "18:30",
+                endTime: "19:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "17:00:00",
-                endTime: "17:30:00",
+                startTime: "19:00",
+                endTime: "19:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "17:30:00",
-                endTime: "18:00:00",
+                startTime: "19:30",
+                endTime: "20:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "18:00:00",
-                endTime: "18:30:00",
+                startTime: "20:00",
+                endTime: "20:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "18:30:00",
-                endTime: "19:00:00",
+                startTime: "20:30",
+                endTime: "21:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "19:00:00",
-                endTime: "19:30:00",
+                startTime: "21:00",
+                endTime: "21:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "An0rbeOElJ",
-                startTime: "19:30:00",
-                endTime: "20:00:00",
+                startTime: "21:30",
+                endTime: "22:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "An0rbeOElJ",
-                startTime: "20:00:00",
-                endTime: "20:30:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "An0rbeOElJ",
-                startTime: "20:30:00",
-                endTime: "21:00:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "An0rbeOElJ",
-                startTime: "21:00:00",
-                endTime: "21:30:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
-                    );
-                },
-            },
-            {
-                id: "An0rbeOElJ",
-                startTime: "21:30:00",
-                endTime: "22:00:00",
-                status: "default" as CellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
         ],
     },
     {
-        id: "GN9P0vDE6K",
         name: "Dragonfruit",
-        rowMinTime: "08:00:00",
-        rowMaxTime: "22:00:00",
+        rowMinTime: "08:00",
+        rowMaxTime: "22:00",
         subtitle: (
             <>
                 <Person2Icon />
@@ -1348,320 +1042,291 @@ export const oddDaysData = [
         },
         rowCells: [
             {
-                id: "GN9P0vDE6K",
-                startTime: "08:00:00",
-                endTime: "08:30:00",
+                startTime: "08:00",
+                endTime: "08:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "08:30:00",
-                endTime: "09:00:00",
+                startTime: "08:30",
+                endTime: "09:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "09:00:00",
-                endTime: "09:30:00",
+                startTime: "09:00",
+                endTime: "09:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "09:30:00",
-                endTime: "10:00:00",
+                startTime: "09:30",
+                endTime: "10:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "10:00:00",
-                endTime: "10:30:00",
+                startTime: "10:00",
+                endTime: "10:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "10:30:00",
-                endTime: "11:00:00",
+                startTime: "10:30",
+                endTime: "11:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "11:00:00",
-                endTime: "11:30:00",
+                startTime: "11:00",
+                endTime: "11:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "11:30:00",
-                endTime: "12:00:00",
+                startTime: "11:30",
+                endTime: "12:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "12:00:00",
-                endTime: "12:30:00",
+                startTime: "12:00",
+                endTime: "12:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "12:30:00",
-                endTime: "13:00:00",
+                startTime: "12:30",
+                endTime: "13:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "13:00:00",
-                endTime: "13:30:00",
+                startTime: "13:00",
+                endTime: "13:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "13:30:00",
-                endTime: "14:00:00",
+                startTime: "13:30",
+                endTime: "14:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "14:00:00",
-                endTime: "14:30:00",
+                startTime: "14:00",
+                endTime: "14:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "14:30:00",
-                endTime: "15:00:00",
+                startTime: "14:30",
+                endTime: "15:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "15:00:00",
-                endTime: "15:30:00",
+                startTime: "15:00",
+                endTime: "15:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "15:30:00",
-                endTime: "16:00:00",
+                startTime: "15:30",
+                endTime: "16:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "16:00:00",
-                endTime: "16:30:00",
+                startTime: "16:00",
+                endTime: "16:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "16:30:00",
-                endTime: "17:00:00",
+                startTime: "16:30",
+                endTime: "17:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "17:00:00",
-                endTime: "17:30:00",
+                startTime: "17:00",
+                endTime: "17:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "17:30:00",
-                endTime: "18:00:00",
+                startTime: "17:30",
+                endTime: "18:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "18:00:00",
-                endTime: "18:30:00",
+                startTime: "18:00",
+                endTime: "18:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "18:30:00",
-                endTime: "19:00:00",
+                startTime: "18:30",
+                endTime: "19:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "19:00:00",
-                endTime: "19:30:00",
+                startTime: "19:00",
+                endTime: "19:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "19:30:00",
-                endTime: "20:00:00",
+                startTime: "19:30",
+                endTime: "20:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "20:00:00",
-                endTime: "20:30:00",
+                startTime: "20:00",
+                endTime: "20:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "20:30:00",
-                endTime: "21:00:00",
+                startTime: "20:30",
+                endTime: "21:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "21:00:00",
-                endTime: "21:30:00",
+                startTime: "21:00",
+                endTime: "21:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "GN9P0vDE6K",
-                startTime: "21:30:00",
-                endTime: "22:00:00",
+                startTime: "21:30",
+                endTime: "22:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
         ],
     },
     {
-        id: "vK4rGewQ02",
         name: "Durian",
-        rowMinTime: "08:00:00",
-        rowMaxTime: "22:00:00",
+        rowMinTime: "08:00",
+        rowMaxTime: "22:00",
         subtitle: (
             <>
                 <Person2Icon />
@@ -1673,320 +1338,291 @@ export const oddDaysData = [
         },
         rowCells: [
             {
-                id: "vK4rGewQ02",
-                startTime: "08:00:00",
-                endTime: "08:30:00",
+                startTime: "08:00",
+                endTime: "08:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "08:30:00",
-                endTime: "09:00:00",
+                startTime: "08:30",
+                endTime: "09:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "09:00:00",
-                endTime: "09:30:00",
+                startTime: "09:00",
+                endTime: "09:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "09:30:00",
-                endTime: "10:00:00",
+                startTime: "09:30",
+                endTime: "10:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "10:00:00",
-                endTime: "10:30:00",
+                startTime: "10:00",
+                endTime: "10:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "10:30:00",
-                endTime: "11:00:00",
+                startTime: "10:30",
+                endTime: "11:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "11:00:00",
-                endTime: "11:30:00",
+                startTime: "11:00",
+                endTime: "11:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "11:30:00",
-                endTime: "12:00:00",
+                startTime: "11:30",
+                endTime: "12:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "12:00:00",
-                endTime: "12:30:00",
+                startTime: "12:00",
+                endTime: "12:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "12:30:00",
-                endTime: "13:00:00",
+                startTime: "12:30",
+                endTime: "13:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "13:00:00",
-                endTime: "13:30:00",
+                startTime: "13:00",
+                endTime: "13:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "13:30:00",
-                endTime: "14:00:00",
+                startTime: "13:30",
+                endTime: "14:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "14:00:00",
-                endTime: "14:30:00",
+                startTime: "14:00",
+                endTime: "14:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "14:30:00",
-                endTime: "15:00:00",
+                startTime: "14:30",
+                endTime: "15:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "15:00:00",
-                endTime: "15:30:00",
+                startTime: "15:00",
+                endTime: "15:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "15:30:00",
-                endTime: "16:00:00",
+                startTime: "15:30",
+                endTime: "16:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "16:00:00",
-                endTime: "16:30:00",
+                startTime: "16:00",
+                endTime: "16:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "16:30:00",
-                endTime: "17:00:00",
+                startTime: "16:30",
+                endTime: "17:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "17:00:00",
-                endTime: "17:30:00",
+                startTime: "17:00",
+                endTime: "17:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "17:30:00",
-                endTime: "18:00:00",
+                startTime: "17:30",
+                endTime: "18:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "18:00:00",
-                endTime: "18:30:00",
+                startTime: "18:00",
+                endTime: "18:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "18:30:00",
-                endTime: "19:00:00",
+                startTime: "18:30",
+                endTime: "19:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "19:00:00",
-                endTime: "19:30:00",
+                startTime: "19:00",
+                endTime: "19:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "19:30:00",
-                endTime: "20:00:00",
+                startTime: "19:30",
+                endTime: "20:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "20:00:00",
-                endTime: "20:30:00",
+                startTime: "20:00",
+                endTime: "20:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "20:30:00",
-                endTime: "21:00:00",
+                startTime: "20:30",
+                endTime: "21:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "21:00:00",
-                endTime: "21:30:00",
+                startTime: "21:00",
+                endTime: "21:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGewQ02",
-                startTime: "21:30:00",
-                endTime: "22:00:00",
+                startTime: "21:30",
+                endTime: "22:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
         ],
     },
     {
-        id: "0B8E719Pbp",
-        name: "Executive room 1",
-        rowMinTime: "08:00:00",
-        rowMaxTime: "22:00:00",
+        name: "Elderberry",
+        rowMinTime: "08:00",
+        rowMaxTime: "22:00",
         subtitle: (
             <>
                 <Person2Icon />
@@ -1998,166 +1634,151 @@ export const oddDaysData = [
         },
         rowCells: [
             {
-                id: "0B8E719Pbp",
-                startTime: "08:00:00",
-                endTime: "09:00:00",
+                startTime: "08:00",
+                endTime: "09:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "0B8E719Pbp",
-                startTime: "09:00:00",
-                endTime: "10:00:00",
+                startTime: "09:00",
+                endTime: "10:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "0B8E719Pbp",
-                startTime: "10:00:00",
-                endTime: "11:00:00",
+                startTime: "10:00",
+                endTime: "11:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "0B8E719Pbp",
-                startTime: "11:00:00",
-                endTime: "12:00:00",
+                startTime: "11:00",
+                endTime: "12:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "0B8E719Pbp",
-                startTime: "12:00:00",
-                endTime: "13:00:00",
+                startTime: "12:00",
+                endTime: "13:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "0B8E719Pbp",
-                startTime: "13:00:00",
-                endTime: "14:00:00",
+                startTime: "13:00",
+                endTime: "14:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "0B8E719Pbp",
-                startTime: "14:00:00",
-                endTime: "15:00:00",
+                startTime: "14:00",
+                endTime: "15:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "0B8E719Pbp",
-                startTime: "15:00:00",
-                endTime: "16:00:00",
+                startTime: "15:00",
+                endTime: "16:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "0B8E719Pbp",
-                startTime: "16:00:00",
-                endTime: "17:00:00",
+                startTime: "16:00",
+                endTime: "17:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "0B8E719Pbp",
-                startTime: "17:00:00",
-                endTime: "18:00:00",
+                startTime: "17:00",
+                endTime: "18:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "0B8E719Pbp",
-                startTime: "18:00:00",
-                endTime: "19:00:00",
+                startTime: "18:00",
+                endTime: "19:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "0B8E719Pbp",
-                startTime: "19:00:00",
-                endTime: "20:00:00",
+                startTime: "19:00",
+                endTime: "20:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "0B8E719Pbp",
-                startTime: "20:00:00",
-                endTime: "21:00:00",
+                startTime: "20:00",
+                endTime: "21:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "0B8E719Pbp",
-                startTime: "21:00:00",
-                endTime: "22:00:00",
+                startTime: "21:00",
+                endTime: "22:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
         ],
     },
     {
-        id: "vK4rGoMr02",
-        name: "Executive room 6",
-        rowMinTime: "08:00:00",
-        rowMaxTime: "22:00:00",
+        name: "Fig",
+        rowMinTime: "08:00",
+        rowMaxTime: "22:00",
         subtitle: (
             <>
                 <Person2Icon />
@@ -2169,166 +1790,151 @@ export const oddDaysData = [
         },
         rowCells: [
             {
-                id: "vK4rGoMr02",
-                startTime: "08:00:00",
-                endTime: "09:00:00",
+                startTime: "08:00",
+                endTime: "09:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGoMr02",
-                startTime: "09:00:00",
-                endTime: "10:00:00",
+                startTime: "09:00",
+                endTime: "10:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGoMr02",
-                startTime: "10:00:00",
-                endTime: "11:00:00",
+                startTime: "10:00",
+                endTime: "11:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGoMr02",
-                startTime: "11:00:00",
-                endTime: "12:00:00",
+                startTime: "11:00",
+                endTime: "12:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGoMr02",
-                startTime: "12:00:00",
-                endTime: "13:00:00",
+                startTime: "12:00",
+                endTime: "13:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGoMr02",
-                startTime: "13:00:00",
-                endTime: "14:00:00",
+                startTime: "13:00",
+                endTime: "14:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGoMr02",
-                startTime: "14:00:00",
-                endTime: "15:00:00",
+                startTime: "14:00",
+                endTime: "15:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGoMr02",
-                startTime: "15:00:00",
-                endTime: "16:00:00",
+                startTime: "15:00",
+                endTime: "16:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGoMr02",
-                startTime: "16:00:00",
-                endTime: "17:00:00",
+                startTime: "16:00",
+                endTime: "17:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGoMr02",
-                startTime: "17:00:00",
-                endTime: "18:00:00",
+                startTime: "17:00",
+                endTime: "18:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGoMr02",
-                startTime: "18:00:00",
-                endTime: "19:00:00",
+                startTime: "18:00",
+                endTime: "19:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGoMr02",
-                startTime: "19:00:00",
-                endTime: "20:00:00",
+                startTime: "19:00",
+                endTime: "20:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGoMr02",
-                startTime: "20:00:00",
-                endTime: "21:00:00",
+                startTime: "20:00",
+                endTime: "21:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "vK4rGoMr02",
-                startTime: "21:00:00",
-                endTime: "22:00:00",
+                startTime: "21:00",
+                endTime: "22:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
         ],
     },
     {
-        id: "YRVPVjVPGe",
         name: "Grape",
-        rowMinTime: "08:00:00",
-        rowMaxTime: "22:00:00",
+        rowMinTime: "08:00",
+        rowMaxTime: "22:00",
         subtitle: (
             <>
                 <Person2Icon />
@@ -2340,310 +1946,282 @@ export const oddDaysData = [
         },
         rowCells: [
             {
-                id: "YRVPVjVPGe",
-                startTime: "08:00:00",
-                endTime: "08:30:00",
+                startTime: "08:00",
+                endTime: "08:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "08:30:00",
-                endTime: "09:00:00",
+                startTime: "08:30",
+                endTime: "09:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "09:00:00",
-                endTime: "09:30:00",
+                startTime: "09:00",
+                endTime: "09:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "09:30:00",
-                endTime: "10:00:00",
+                startTime: "09:30",
+                endTime: "10:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "10:00:00",
-                endTime: "10:30:00",
+                startTime: "10:00",
+                endTime: "10:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "10:30:00",
-                endTime: "11:00:00",
+                startTime: "10:30",
+                endTime: "11:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "11:00:00",
-                endTime: "11:30:00",
+                startTime: "11:00",
+                endTime: "11:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "11:30:00",
-                endTime: "12:00:00",
+                startTime: "11:30",
+                endTime: "12:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "12:00:00",
-                endTime: "12:30:00",
+                startTime: "12:00",
+                endTime: "12:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "12:30:00",
-                endTime: "13:00:00",
+                startTime: "12:30",
+                endTime: "13:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "13:00:00",
-                endTime: "13:30:00",
+                startTime: "13:00",
+                endTime: "13:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "13:30:00",
-                endTime: "14:00:00",
+                startTime: "13:30",
+                endTime: "14:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "14:00:00",
-                endTime: "14:30:00",
+                startTime: "14:00",
+                endTime: "14:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "14:30:00",
-                endTime: "15:00:00",
+                startTime: "14:30",
+                endTime: "15:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "15:00:00",
-                endTime: "15:30:00",
+                startTime: "15:00",
+                endTime: "15:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "15:30:00",
-                endTime: "16:00:00",
+                startTime: "15:30",
+                endTime: "16:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "16:00:00",
-                endTime: "16:30:00",
+                startTime: "16:00",
+                endTime: "16:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "16:30:00",
-                endTime: "17:00:00",
+                startTime: "16:30",
+                endTime: "17:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "17:00:00",
-                endTime: "17:30:00",
+                startTime: "17:00",
+                endTime: "17:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "17:30:00",
-                endTime: "18:00:00",
+                startTime: "17:30",
+                endTime: "18:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "18:00:00",
-                endTime: "18:30:00",
+                startTime: "18:00",
+                endTime: "18:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "18:30:00",
-                endTime: "19:00:00",
+                startTime: "18:30",
+                endTime: "19:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "19:00:00",
-                endTime: "19:30:00",
+                startTime: "19:00",
+                endTime: "19:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "19:30:00",
-                endTime: "20:00:00",
+                startTime: "19:30",
+                endTime: "20:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "20:00:00",
-                endTime: "20:30:00",
+                startTime: "20:00",
+                endTime: "20:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "20:30:00",
-                endTime: "21:00:00",
+                startTime: "20:30",
+                endTime: "21:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "21:00:00",
-                endTime: "21:30:00",
+                startTime: "21:00",
+                endTime: "21:30",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
             {
-                id: "YRVPVjVPGe",
-                startTime: "21:30:00",
-                endTime: "22:00:00",
+                startTime: "21:30",
+                endTime: "22:00",
                 status: "default" as CellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
-                        `Clicked on cell for ${data.id}, start: ${data.startTime}, end: ${data.endTime}, should redirect user to booking form with these data`
+                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },

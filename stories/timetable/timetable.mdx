@@ -15,14 +15,15 @@ A component that displays a timetable to view a schedule for a specific day
 import { TimeTable } from "@lifesg/react-design-system/timetable";
 ```
 
+> This component auto generates blocked cells based on the difference in start/end time between each row and the overall timetable, and disabled cells when there are missing gaps between each row cell's start/end time.
+
 <Canvas of={TimeTableStories.Default} />
 
 <Secondary>TimeTable with navigation arrows</Secondary>
-The timetable is using the `DateNavigator` component when `onRightArrowClick` and
-`onLeftArrowClick` props are passed in.
+Date navigational arrows can be interacted with when `onNextDayClick` and `onPreviousDayClick`
+props are passed in.
 
-You may use `minDate` and `maxDate` to specify
-how far in the future or past the timetable can be viewed until.
+You may use `minDate` and `maxDate` to limit the range of date navigation
 
 _(In this example,
 the user can only view the timetable 2 days before today and 2 days after today)_
@@ -31,27 +32,26 @@ the user can only view the timetable 2 days before today and 2 days after today)
 
 <Secondary>Lazy Load</Secondary>
 
-Clicking onto the refresh icon on the top left-hand corner will trigger a refresh on the component level.
+Optional `onRefresh` and `totalRecords` props can also be passed in to show the total count and for refreshing results.
 
-Lazy load is also enabled if `onPage` callback is passed in
+This is especially useful when lazy loading is enabled through the `onPage` callback.
 
 <Canvas of={TimeTableStories.TimeTableWithLazyLoad} />
 
-<Secondary>Customisable popover width and padding</Secondary>
+<Secondary>With popover interactions</Secondary>
 
-You may choose to customise the padding and width of the popover for filled and disabled cells through `filledCellPopoverSize` and `blockedCellPopoverSize` respectively
+Custom popovers can be added onto row header names and row cells.
+There is also the flexibility to have custom popovers on auto generated blocked cells through the `outsideOpHoursCellCustomPopover` prop.
 
-Do note that if the custom popover trigger is set to click, it will override the behaviour with the onClick callback for each cell
+However, auto generated disabled cells will not have any popover interaction.
+
+Do note that if the custom popover trigger is set to click, it could conflict with the onClick callback for each cell.
 
 <Canvas of={TimeTableStories.TimeTableWithStyledPopovers} />
 
-<Secondary>TimeTable with no popover content</Secondary>
-
-If there's no `blockedCellHoverContent` or `filledBlockClickContent` provided, the popover will not appear
-
-<Canvas of={TimeTableStories.TimeTableWithNoPopoverContent} />
-
 <Secondary>No results found</Secondary>
+
+`emptyContent` can be passed in to control what to show when there are no results to display.
 
 <Canvas of={TimeTableStories.TimeTableWithEmptyContent} />
 
