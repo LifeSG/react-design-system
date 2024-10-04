@@ -96,9 +96,8 @@ export const TimeTableWithNavigation: StoryObj<Component> = {
 
 export const TimeTableWithLazyLoad: StoryObj<Component> = {
     render: () => {
-        const timeTableData = getTimeTableData();
         const [results, setResults] = useState([]);
-        const [date, setDate] = useState(timeTableData.date);
+        const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, setLoading] = useState(false);
         const [page, setPage] = useState(1);
 
@@ -110,6 +109,7 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
         }, [page]);
 
         const onPreviousDayClick = (currentDate: string) => {
+            setPage(1);
             const newDate = dayjs(currentDate)
                 .add(-1, "day")
                 .format("YYYY-MM-DD");
@@ -122,6 +122,7 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
         };
 
         const onNextDayClick = (currentDate: string) => {
+            setPage(1);
             const newDate = dayjs(currentDate)
                 .add(1, "day")
                 .format("YYYY-MM-DD");
@@ -135,6 +136,7 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
 
         const onRefresh = () => {
             setLoading(true);
+            setPage(1);
             setTimeout(() => {
                 setResults(lazyLoad(1));
                 setLoading(false);
@@ -143,14 +145,11 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
 
         return (
             <StyledTimeTable
-                {...timeTableData}
                 date={date}
-                minDate={dayjs(timeTableData.date)
-                    .subtract(2, "days")
-                    .format("YYYY-MM-DD")}
-                maxDate={dayjs(timeTableData.date)
-                    .add(2, "days")
-                    .format("YYYY-MM-DD")}
+                minTime="06:00"
+                maxTime="20:00"
+                minDate={dayjs(date).subtract(2, "days").format("YYYY-MM-DD")}
+                maxDate={dayjs(date).add(2, "days").format("YYYY-MM-DD")}
                 rowData={results}
                 isLoading={loading}
                 onRefresh={onRefresh}
