@@ -1,6 +1,6 @@
 import { css } from "styled-components";
 
-import { getFontSpecValues } from "../../font-spec/theme-helper";
+import { getFontSpec } from "../../font-spec/theme-helper";
 import { FontSpecSet } from "../../font-spec/types";
 import { FontSet } from "../types";
 
@@ -10,11 +10,11 @@ const generateFontCSS = (
     lineHeightKey: keyof FontSpecSet,
     letterSpacingKey: keyof FontSpecSet
 ) => css`
-    font-family: ${getFontSpecValues("font-family")};
-    font-size: ${getFontSpecValues(fontSizeKey)};
-    font-weight: ${getFontSpecValues(fontWeightKey)};
-    line-height: ${getFontSpecValues(lineHeightKey)};
-    letter-spacing: ${getFontSpecValues(letterSpacingKey)};
+    font-family: ${getFontSpec("font-family")};
+    font-size: ${getFontSpec(fontSizeKey)};
+    font-weight: ${getFontSpec(fontWeightKey)};
+    line-height: ${getFontSpec(lineHeightKey)};
+    letter-spacing: ${getFontSpec(letterSpacingKey)};
 `;
 
 export const LifeSgFontSet: FontSet = {

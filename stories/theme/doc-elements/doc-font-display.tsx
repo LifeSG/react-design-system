@@ -1,7 +1,7 @@
 import { Font } from "src/theme";
 import { FontSet, FontSpecSet, ThemeSpec } from "src/theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
-import { getFontSpecValues } from "../../../src/theme/font-spec/theme-helper";
+import { getFontSpec } from "../../../src/theme/font-spec/theme-helper";
 
 interface FontCollectionProps {
     tokens: (keyof FontSet)[];
@@ -17,9 +17,9 @@ const FontCollection = ({
     letterSpacingToken,
 }: FontCollectionProps) => {
     const theme = useTheme();
-    const fontSize = getFontSpecValues(fontSizeToken)({ theme });
-    const lineHeight = getFontSpecValues(lineHeightToken)({ theme });
-    const letterSpacing = getFontSpecValues(letterSpacingToken)({ theme });
+    const fontSize = getFontSpec(fontSizeToken)({ theme });
+    const lineHeight = getFontSpec(lineHeightToken)({ theme });
+    const letterSpacing = getFontSpec(letterSpacingToken)({ theme });
 
     return (
         <Row key={fontSizeToken}>
