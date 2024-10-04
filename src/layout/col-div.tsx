@@ -1,11 +1,14 @@
 import React from "react";
-import { ColDivProps, DivRef } from "./types";
+import { ColDivProps } from "./types";
 import { StyledDiv } from "./col-div.style";
 import { BreakpointValues } from "../theme/breakpoint/theme-helper";
 import { ThemeSpec } from "../theme/types";
 import { useTheme } from "styled-components";
 
-const Component = (props: ColDivProps, ref: DivRef): JSX.Element => {
+const Component = (
+    props: ColDivProps,
+    ref: React.Ref<HTMLDivElement>
+): JSX.Element => {
     const theme = useTheme() as ThemeSpec;
 
     const {
