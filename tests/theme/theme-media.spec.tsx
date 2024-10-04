@@ -19,7 +19,7 @@ describe("MediaQuery Helper Function Test", () => {
     const mockTheme: ThemeSpec = {
         colourScheme: "lifesg",
         fontScheme: "lifesg",
-        motion: "lifesg",
+        motionScheme: "lifesg",
         borderScheme: "lifesg",
         spacingScheme: "lifesg",
         radiusScheme: "lifesg",

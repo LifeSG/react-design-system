@@ -60,7 +60,7 @@ export interface ThemeSpecOptions {
 export interface ThemeSpec {
     colourScheme: ColourScheme;
     fontScheme: FontScheme;
-    motion: MotionScheme;
+    motionScheme: MotionScheme;
     borderScheme: BorderScheme;
     spacingScheme: SpacingScheme;
     radiusScheme: RadiusScheme;

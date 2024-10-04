@@ -1,0 +1,18 @@
+import { Meta } from "@storybook/blocks";
+import { LifeSGTheme } from "src/theme";
+import { MotionDisplay } from "../doc-elements";
+
+<Meta title="Foundations/Motion/LifeSG" />
+
+# LifeSG animation
+
+This is the motion set used when the `motionScheme` is `"lifesg"`.
+
+```tsx
+const theme: ThemeSpec = {
+    motionScheme: "lifesg",
+    // ...other specifications
+};
+```
+
+<MotionDisplay theme={LifeSGTheme} />

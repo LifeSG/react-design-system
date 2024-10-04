@@ -14,7 +14,7 @@ describe("Colour Themeing Test", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "bookingsg",
             fontScheme: "lifesg",
-            motion: "lifesg",
+            motionScheme: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
@@ -41,7 +41,7 @@ describe("Colour Themeing Test", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
-            motion: "lifesg",
+            motionScheme: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
@@ -73,7 +73,7 @@ describe("Colour Themeing Test", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
-            motion: "lifesg",
+            motionScheme: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",

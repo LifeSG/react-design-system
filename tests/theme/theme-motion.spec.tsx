@@ -13,7 +13,7 @@ describe("StyledAnimationTest", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
-            motion: "lifesg",
+            motionScheme: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
@@ -39,7 +39,7 @@ describe("StyledAnimationTest", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
-            motion: "lifesg",
+            motionScheme: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",

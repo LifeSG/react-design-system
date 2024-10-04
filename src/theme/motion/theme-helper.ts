@@ -1,6 +1,6 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { MotionScheme, ThemeCollectionSpec } from "../types";
-import { LifeSgMotionSet } from "./specs/lifesg-animation-set";
+import { LifeSgMotionSet } from "./specs/lifesg-motion-set";
 import { MotionCollectionsMap, MotionSet } from "./types";
 
 const MotionSpec: ThemeCollectionSpec<MotionCollectionsMap, MotionScheme> = {
@@ -13,7 +13,10 @@ const MotionSpec: ThemeCollectionSpec<MotionCollectionsMap, MotionScheme> = {
 export const getMotion = (key: keyof MotionSet) => {
     return (props: StyledComponentProps): string => {
         const theme = props.theme;
-        const motionSet: MotionSet = getCollection(MotionSpec, theme.motion);
+        const motionSet: MotionSet = getCollection(
+            MotionSpec,
+            theme.motionScheme
+        );
 
         if (theme.overrides && theme.overrides.motion) {
             return getValue(motionSet, key, theme.overrides.motion);
