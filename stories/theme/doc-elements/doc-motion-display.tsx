@@ -1,12 +1,12 @@
-import { AnimationSet, ThemeSpec } from "src/theme/types";
+import { MotionSet, ThemeSpec } from "src/theme/types";
 import styled, { ThemeProvider, keyframes, useTheme } from "styled-components";
-import { getAnimation } from "../../../src/theme/animation/theme-helper";
+import { getMotion } from "../../../src/theme/motion/theme-helper";
 
-interface AnimationDisplayProps {
+interface MotionDisplayProps {
     theme: ThemeSpec;
 }
 
-export const AnimationDisplay = ({ theme }: AnimationDisplayProps) => {
+export const MotionDisplay = ({ theme }: MotionDisplayProps) => {
     return (
         <ThemeProvider theme={theme}>
             <Display>
@@ -70,14 +70,14 @@ export const AnimationDisplay = ({ theme }: AnimationDisplayProps) => {
     );
 };
 
-interface AnimationCollectionProps {
-    token: keyof AnimationSet;
+interface MotionCollectionProps {
+    token: keyof MotionSet;
     children: React.ReactNode;
 }
 
-const DurationCollection = ({ token, children }: AnimationCollectionProps) => {
+const DurationCollection = ({ token, children }: MotionCollectionProps) => {
     const theme = useTheme();
-    const value = getAnimation(token)({ theme });
+    const value = getMotion(token)({ theme });
 
     return (
         <Row key={token}>
@@ -90,9 +90,9 @@ const DurationCollection = ({ token, children }: AnimationCollectionProps) => {
     );
 };
 
-const TimingCollection = ({ token, children }: AnimationCollectionProps) => {
+const TimingCollection = ({ token, children }: MotionCollectionProps) => {
     const theme = useTheme();
-    const value = getAnimation(token)({ theme });
+    const value = getMotion(token)({ theme });
 
     return (
         <Row key={token}>
@@ -102,9 +102,9 @@ const TimingCollection = ({ token, children }: AnimationCollectionProps) => {
             <div>{value}</div>
             <div>
                 <div>{children}</div>
-                <AnimationContainer>
-                    <AnimationCircle $timing={value} />
-                </AnimationContainer>
+                <MotionContainer>
+                    <MotionCircle $timing={value} />
+                </MotionContainer>
             </div>
         </Row>
     );
@@ -113,7 +113,7 @@ const TimingCollection = ({ token, children }: AnimationCollectionProps) => {
 // =============================================================================
 // STYLE INTERFACE
 // =============================================================================
-interface AnimationProps {
+interface MotionProps {
     $timing: string;
 }
 
@@ -151,7 +151,7 @@ const HeaderRow = styled(Row)`
     border-bottom: 1px solid #dde1e2;
 `;
 
-const AnimationContainer = styled.div`
+const MotionContainer = styled.div`
     position: relative;
     margin-top: 1rem;
     height: 1rem;
@@ -163,7 +163,7 @@ const slideAnimation = keyframes`
     100% { left: calc(100% - 1rem); }
 `;
 
-const AnimationCircle = styled.div<AnimationProps>`
+const MotionCircle = styled.div<MotionProps>`
     position: absolute;
     height: 1rem;
     width: 1rem;

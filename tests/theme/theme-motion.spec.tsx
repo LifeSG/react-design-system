@@ -1,20 +1,19 @@
 import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
 import { render } from "@testing-library/react";
-import { Animation } from "../../src";
+import { Motion } from "../../src";
 import { ThemeSpec } from "../../src/theme/types";
 
-const StyledAnimationTest = styled.div`
-    transition: transform ${Animation["duration-500"]},
-        ${Animation["ease-default"]};
+const StyledMotionTest = styled.div`
+    transition: transform ${Motion["duration-500"]}, ${Motion["ease-default"]};
 `;
 
-describe("StyledAnimationTest", () => {
-    it("should apply correct animation styles based on the theme", () => {
+describe("StyledMotionTest", () => {
+    it("should apply correct motion styles based on the theme", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
-            animationScheme: "lifesg",
+            motionScheme: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
@@ -26,27 +25,27 @@ describe("StyledAnimationTest", () => {
 
         const { container } = render(
             <ThemeProvider theme={mockTheme}>
-                <StyledAnimationTest />
+                <StyledMotionTest />
             </ThemeProvider>
         );
 
         expect(container.firstChild).toHaveStyleRule(
             "transition",
-            `transform ${duration}, ${easing}`
+            `transform ${duration},${easing}`
         );
     });
 
-    it("should apply correct animation styles when overriding animation token", () => {
+    it("should apply correct motion styles when overriding motion token", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
-            animationScheme: "lifesg",
+            motionScheme: "lifesg",
             borderScheme: "lifesg",
             spacingScheme: "lifesg",
             radiusScheme: "lifesg",
             breakpointScheme: "lifesg",
             overrides: {
-                animation: {
+                motion: {
                     "duration-500": "700ms",
                     "ease-default": "cubic-bezier(0.25,0.1,0.25,1)",
                 },
@@ -58,13 +57,13 @@ describe("StyledAnimationTest", () => {
 
         const { container } = render(
             <ThemeProvider theme={overrideTheme}>
-                <StyledAnimationTest />
+                <StyledMotionTest />
             </ThemeProvider>
         );
 
         expect(container.firstChild).toHaveStyleRule(
             "transition",
-            `transform ${duration}, ${easing}`
+            `transform ${duration},${easing}`
         );
     });
 });
