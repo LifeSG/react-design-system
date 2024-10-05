@@ -23,8 +23,8 @@ export const getFontSpec = (key: keyof FontSpecSet) => {
             theme.fontScheme
         );
 
-        if (theme.overrides && theme.overrides.fontspec) {
-            return getValue(fontSpecSet, key, theme.overrides.fontspec);
+        if (theme.overrides && theme.overrides.fontSpec) {
+            return getValue(fontSpecSet, key, theme.overrides.fontSpec);
         } else {
             return fontSpecSet[key];
         }

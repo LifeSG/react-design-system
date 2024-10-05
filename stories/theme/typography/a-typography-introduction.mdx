@@ -9,7 +9,7 @@ import { DocInfo, DocNote } from "stories/storybook-common";
 import { FontSpec, Font } from "@lifesg/react-design-system/theme";
 ```
 
-The **fontspec** tokens define these font styling properties:
+The **font spec** tokens define these font styling properties:
 
 -   font family
 -   font size
@@ -17,7 +17,7 @@ The **fontspec** tokens define these font styling properties:
 -   line height
 -   letter spacing
 
-A **font** token is a combination of these font tokens.
+A **font** token is a combination of these font spec tokens.
 
 ## Collections
 
@@ -31,7 +31,7 @@ A **font** token is a combination of these font tokens.
 ## Usage
 
 <DocInfo storybookLink={"../?path=/docs/core-typography--docs"}>
-    In most cases, you can simply use the `Font` component to render text
+    In most cases, you can simply use the `Typography` component to render text
     elements
 </DocInfo>
 
@@ -60,10 +60,10 @@ const Icon = styled.svg`
 
 ## Overriding
 
-When you modify a fontspec token, any font token referring to it will also
+When you modify a font spec token, any font token referring to it will also
 reflect the new specification.
 
-FontSpec tokens should be `rem`-based to scale with the user's preferred font size.
+Font spec tokens should be `rem`-based to scale with the user's preferred font size.
 
 While not recommended, font tokens can be overridden separately. You are
 responsible for ensuring all relevant properties are included.
@@ -74,7 +74,7 @@ import { LifeSGTheme } from "@lifesg/react-design-system/theme";
 const customTheme: ThemeSpec = {
     ...LifeSGTheme,
     overrides: {
-        fontspec: {
+        fontSpec: {
             "header-size-xxl": "5rem", // specify a custom value
         },
         font: {

@@ -48,13 +48,13 @@ export type BreakpointScheme = "lifesg";
 export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;
     semanticColour?: SemanticColourSetOptions | undefined;
-    fontspec?: FontSpecSetOptions | undefined;
+    fontSpec?: FontSpecSetOptions | undefined;
+    font?: FontSetOptions | undefined;
     motion?: MotionSetOptions | undefined;
     spacing?: SpacingSetOptions | undefined;
     border?: BorderSetOptions | undefined;
     radius?: RadiusSetOptions | undefined;
     breakpoint?: BreakpointSetOptions | undefined;
-    font?: FontSetOptions | undefined;
 }
 
 export interface ThemeSpec {

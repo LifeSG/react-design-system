@@ -86,7 +86,7 @@ describe("StyledFontTests", () => {
         );
     });
 
-    it("should apply correct fontspec styles based on the theme", () => {
+    it("should apply correct font spec styles based on the theme", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
