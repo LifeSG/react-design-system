@@ -17,35 +17,35 @@ export const StyledContainer = styled.div<StyleProps>`
     ${(props) => {
         if (props.$stretch) {
             return css`
-                padding: 0 ${Breakpoint["xxl-margin"]};
+                padding: 0 ${Breakpoint["xxl-margin"]}px;
             `;
         } else {
             return css`
-                padding: 0 ${Breakpoint["xxl-margin"]};
+                padding: 0 ${Breakpoint["xxl-margin"]}px;
                 max-width: 1440px;
 
                 ${MediaQuery.MaxWidth.xl} {
-                    padding: 0 ${Breakpoint["xl-margin"]};
+                    padding: 0 ${Breakpoint["xl-margin"]}px;
                 }
 
                 ${MediaQuery.MaxWidth.lg} {
-                    padding: 0 ${Breakpoint["lg-margin"]};
+                    padding: 0 ${Breakpoint["lg-margin"]}px;
                 }
 
                 ${MediaQuery.MaxWidth.md} {
-                    padding: 0 ${Breakpoint["md-margin"]};
+                    padding: 0 ${Breakpoint["md-margin"]}px;
                 }
 
                 ${MediaQuery.MaxWidth.sm} {
-                    padding: 0 ${Breakpoint["sm-margin"]};
+                    padding: 0 ${Breakpoint["sm-margin"]}px;
                 }
 
                 ${MediaQuery.MaxWidth.xs} {
-                    padding: 0 ${Breakpoint["xs-margin"]};
+                    padding: 0 ${Breakpoint["xs-margin"]}px;
                 }
 
                 ${MediaQuery.MaxWidth.xxs} {
-                    padding: 0 ${Breakpoint["xxs-margin"]};
+                    padding: 0 ${Breakpoint["xxs-margin"]}px;
                 }
             `;
         }
@@ -55,7 +55,7 @@ export const StyledContainer = styled.div<StyleProps>`
         switch (props.$type) {
             case "grid":
                 return css`
-                    column-gap: ${Breakpoint["xxl-gutter"]};
+                    column-gap: ${Breakpoint["xxl-gutter"]}px;
                     display: grid;
                     grid-template-columns: repeat(
                         ${Breakpoint["xxl-column"]},
@@ -63,7 +63,7 @@ export const StyledContainer = styled.div<StyleProps>`
                     );
 
                     ${MediaQuery.MaxWidth.xl} {
-                        column-gap: ${Breakpoint["xl-gutter"]};
+                        column-gap: ${Breakpoint["xl-gutter"]}px;
                         grid-template-columns: repeat(
                             ${Breakpoint["xl-column"]},
                             minmax(0, 1fr)
@@ -71,7 +71,7 @@ export const StyledContainer = styled.div<StyleProps>`
                     }
 
                     ${MediaQuery.MaxWidth.lg} {
-                        column-gap: ${Breakpoint["lg-gutter"]};
+                        column-gap: ${Breakpoint["lg-gutter"]}px;
                         grid-template-columns: repeat(
                             ${Breakpoint["lg-column"]},
                             minmax(0, 1fr)
@@ -79,7 +79,7 @@ export const StyledContainer = styled.div<StyleProps>`
                     }
 
                     ${MediaQuery.MaxWidth.md} {
-                        column-gap: ${Breakpoint["md-gutter"]};
+                        column-gap: ${Breakpoint["md-gutter"]}px;
                         grid-template-columns: repeat(
                             ${Breakpoint["md-column"]},
                             minmax(0, 1fr)
@@ -87,7 +87,7 @@ export const StyledContainer = styled.div<StyleProps>`
                     }
 
                     ${MediaQuery.MaxWidth.sm} {
-                        column-gap: ${Breakpoint["sm-gutter"]};
+                        column-gap: ${Breakpoint["sm-gutter"]}px;
                         grid-template-columns: repeat(
                             ${Breakpoint["sm-column"]},
                             minmax(0, 1fr)
@@ -95,7 +95,7 @@ export const StyledContainer = styled.div<StyleProps>`
                     }
 
                     ${MediaQuery.MaxWidth.xs} {
-                        column-gap: ${Breakpoint["xs-gutter"]};
+                        column-gap: ${Breakpoint["xs-gutter"]}px;
                         grid-template-columns: repeat(
                             ${Breakpoint["xs-column"]},
                             minmax(0, 1fr)
@@ -103,7 +103,7 @@ export const StyledContainer = styled.div<StyleProps>`
                     }
 
                     ${MediaQuery.MaxWidth.xxs} {
-                        column-gap: ${Breakpoint["xss-gutter"]};
+                        column-gap: ${Breakpoint["xss-gutter"]}px;
                         grid-template-columns: repeat(
                             ${Breakpoint["xss-column"]},
                             minmax(0, 1fr)
