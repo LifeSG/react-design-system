@@ -39,7 +39,7 @@ const preview: Preview = {
                         "Typography",
                         "Breakpoint",
                         "Spacing",
-                        "Animation",
+                        "Motion",
                     ],
                     "Core",
                     ["Typography", "Icon"],

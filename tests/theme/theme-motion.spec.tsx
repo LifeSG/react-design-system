@@ -4,12 +4,12 @@ import { render } from "@testing-library/react";
 import { Motion } from "../../src";
 import { ThemeSpec } from "../../src/theme/types";
 
-const StyledAnimationTest = styled.div`
+const StyledMotionTest = styled.div`
     transition: transform ${Motion["duration-500"]}, ${Motion["ease-default"]};
 `;
 
-describe("StyledAnimationTest", () => {
-    it("should apply correct animation styles based on the theme", () => {
+describe("StyledMotionTest", () => {
+    it("should apply correct motion styles based on the theme", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
@@ -25,7 +25,7 @@ describe("StyledAnimationTest", () => {
 
         const { container } = render(
             <ThemeProvider theme={mockTheme}>
-                <StyledAnimationTest />
+                <StyledMotionTest />
             </ThemeProvider>
         );
 
@@ -35,7 +35,7 @@ describe("StyledAnimationTest", () => {
         );
     });
 
-    it("should apply correct animation styles when overriding animation token", () => {
+    it("should apply correct motion styles when overriding motion token", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
@@ -57,7 +57,7 @@ describe("StyledAnimationTest", () => {
 
         const { container } = render(
             <ThemeProvider theme={overrideTheme}>
-                <StyledAnimationTest />
+                <StyledMotionTest />
             </ThemeProvider>
         );
 
