@@ -1,0 +1,52 @@
+import { Meta } from "@storybook/blocks";
+import { DocInfo, DocNote } from "stories/storybook-common";
+
+<Meta title="Foundations/Border/Introduction" />
+
+# Border
+
+```tsx
+import { Border } from "@lifesg/react-design-system/theme";
+```
+
+The **border** tokens define the style and width of element borders.
+
+## Collections
+
+[LifeSG](/docs/foundations-border-lifesg--docs)
+
+## Usage
+
+Apply the tokens when defining borders.
+
+```tsx
+import { Border } from "@lifesg/react-design-system/theme";
+import styled, { css } from "styled-components";
+
+const SolidBorder = styled.div`
+    border: ${Border["width-010"]} ${Border.solid};
+`;
+
+const DashedBorder = styled.div`
+    ${Border["dashed-default"]};
+`;
+```
+
+## Overriding
+
+Even though you will rarely need to override the border style properties, the
+ability to do so is supported.
+
+```tsx
+import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+
+const customTheme: ThemeSpec = {
+    ...LifeSGTheme,
+    overrides: {
+        border: {
+            "width-010": 10, // specify a custom pixel-based value
+            solid: "dotted", // specify a custom border style
+        },
+    },
+};
+```
