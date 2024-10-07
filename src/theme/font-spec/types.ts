@@ -42,21 +42,21 @@ export type FontSpecSet = {
 
     // Body sizes
     "body-size-baseline": string;
-    "body-size-lg": string;
     "body-size-md": string;
     "body-size-sm": string;
+    "body-size-xs": string;
 
     // Body line heights
     "body-lh-baseline": string;
-    "body-lh-lg": string;
     "body-lh-md": string;
     "body-lh-sm": string;
+    "body-lh-xs": string;
 
     // Body letter spacing
     "body-ls-baseline": string;
-    "body-ls-lg": string;
     "body-ls-md": string;
     "body-ls-sm": string;
+    "body-ls-xs": string;
 
     // Form label sizes
     "formlabel-size-baseline": string;

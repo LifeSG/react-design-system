@@ -38,9 +38,9 @@ export namespace Typography {
     };
 
     export const BodyBL = createBody("body-baseline", "BodyBL");
-    export const BodyLG = createBody("body-lg", "BodyLG");
     export const BodyMD = createBody("body-md", "BodyMD");
     export const BodySM = createBody("body-sm", "BodySM");
+    export const BodyXS = createBody("body-xs", "BodyXS");
 
     const createLinkComponent = (
         textStyle: TypographySizeType,
@@ -76,8 +76,8 @@ export namespace Typography {
 
     export const LinkBL = createLinkComponent("body-baseline", "LinkBL");
     export const LinkMD = createLinkComponent("body-md", "LinkMD");
-    export const LinkLG = createLinkComponent("body-lg", "LinkLG");
     export const LinkSM = createLinkComponent("body-sm", "LinkSM");
+    export const LinkXS = createLinkComponent("body-xs", "LinkXS");
 }
 
 const StyledExternalIcon = styled(ExternalIcon)`
