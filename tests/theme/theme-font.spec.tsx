@@ -3,18 +3,18 @@ import { render } from "@testing-library/react";
 
 import { ThemeSpec } from "../../src/theme/types";
 import "jest-styled-components";
-import { Font, Typography } from "../../src";
+import { Font, FontSpec } from "../../src";
 
-const StyledTypographyTest = styled.div`
-    ${Typography["header-xxl-bold"]};
+const StyledFontTest = styled.div`
+    ${Font["header-xxl-bold"]};
 `;
 
-const StyledFontSet = styled.div`
-    font-size: ${Font["header-size-xs"]};
+const StyledFontSpecSet = styled.div`
+    font-size: ${FontSpec["header-size-xs"]};
 `;
 
-describe("StyledTypographyTest", () => {
-    it("should apply correct typography styles based on the theme", () => {
+describe("StyledFontTests", () => {
+    it("should apply correct font styles based on the theme", () => {
         const mockTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
@@ -32,7 +32,7 @@ describe("StyledTypographyTest", () => {
 
         const { container } = render(
             <ThemeProvider theme={mockTheme}>
-                <StyledTypographyTest />
+                <StyledFontTest />
             </ThemeProvider>
         );
 
@@ -45,7 +45,7 @@ describe("StyledTypographyTest", () => {
         );
     });
 
-    it("should apply correct typography styles when overriding typography token", () => {
+    it("should apply correct font styles when overriding font token", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
@@ -55,7 +55,7 @@ describe("StyledTypographyTest", () => {
             radiusScheme: "lifesg",
             breakpointScheme: "lifesg",
             overrides: {
-                typography: {
+                font: {
                     "header-xxl-bold": {
                         "font-size": "4rem",
                         "font-weight": "800",
@@ -73,7 +73,7 @@ describe("StyledTypographyTest", () => {
 
         const { container } = render(
             <ThemeProvider theme={overrideTheme}>
-                <StyledTypographyTest />
+                <StyledFontTest />
             </ThemeProvider>
         );
 
@@ -86,7 +86,7 @@ describe("StyledTypographyTest", () => {
         );
     });
 
-    it("should apply correct font styles based on the theme", () => {
+    it("should apply correct font spec styles based on the theme", () => {
         const overrideTheme: ThemeSpec = {
             colourScheme: "lifesg",
             fontScheme: "lifesg",
@@ -101,7 +101,7 @@ describe("StyledTypographyTest", () => {
 
         const { container } = render(
             <ThemeProvider theme={overrideTheme}>
-                <StyledFontSet />
+                <StyledFontSpecSet />
             </ThemeProvider>
         );
 

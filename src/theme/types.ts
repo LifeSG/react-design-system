@@ -1,7 +1,7 @@
 import { PrimitiveColourSetOptions } from "./colour-primitive/types";
 import { SemanticColourSetOptions } from "./colour-semantic/types";
-import { TypographySetOptions } from "./typography/types";
 import { FontSetOptions } from "./font/types";
+import { FontSpecSetOptions } from "./font-spec/types";
 import { MotionSetOptions } from "./motion/types";
 import { BorderSetOptions } from "./border/types";
 import { SpacingSetOptions } from "./spacing/types";
@@ -17,9 +17,9 @@ export type {
     SemanticColourSetOptions,
 } from "./colour-semantic/types";
 
-export type { FontSet, FontSetOptions } from "./font/types";
+export type { FontSpecSet, FontSpecSetOptions } from "./font-spec/types";
 
-export type { TypographySet, TypographySetOptions } from "./typography/types";
+export type { FontSet, FontSetOptions } from "./font/types";
 
 export type { MotionSet, MotionSetOptions } from "./motion/types";
 
@@ -48,13 +48,13 @@ export type BreakpointScheme = "lifesg";
 export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;
     semanticColour?: SemanticColourSetOptions | undefined;
+    fontSpec?: FontSpecSetOptions | undefined;
     font?: FontSetOptions | undefined;
     motion?: MotionSetOptions | undefined;
     spacing?: SpacingSetOptions | undefined;
     border?: BorderSetOptions | undefined;
     radius?: RadiusSetOptions | undefined;
     breakpoint?: BreakpointSetOptions | undefined;
-    typography?: TypographySetOptions | undefined;
 }
 
 export interface ThemeSpec {

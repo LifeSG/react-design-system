@@ -1,25 +1,25 @@
-import { Typography } from "src/theme";
-import { FontSet, ThemeSpec, TypographySet } from "src/theme/types";
+import { Font } from "src/theme";
+import { FontSet, FontSpecSet, ThemeSpec } from "src/theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
-import { getFontValues } from "../../../src/theme/font/theme-helper";
+import { getFontSpec } from "../../../src/theme/font-spec/theme-helper";
 
-interface TypographyCollectionProps {
-    tokens: (keyof TypographySet)[];
-    fontSizeToken: keyof FontSet;
-    lineHeightToken: keyof FontSet;
-    letterSpacingToken: keyof FontSet;
+interface FontCollectionProps {
+    tokens: (keyof FontSet)[];
+    fontSizeToken: keyof FontSpecSet;
+    lineHeightToken: keyof FontSpecSet;
+    letterSpacingToken: keyof FontSpecSet;
 }
 
-const TypographyCollection = ({
+const FontCollection = ({
     tokens,
     fontSizeToken,
     lineHeightToken,
     letterSpacingToken,
-}: TypographyCollectionProps) => {
+}: FontCollectionProps) => {
     const theme = useTheme();
-    const fontSize = getFontValues(fontSizeToken)({ theme });
-    const lineHeight = getFontValues(lineHeightToken)({ theme });
-    const letterSpacing = getFontValues(letterSpacingToken)({ theme });
+    const fontSize = getFontSpec(fontSizeToken)({ theme });
+    const lineHeight = getFontSpec(lineHeightToken)({ theme });
+    const letterSpacing = getFontSpec(letterSpacingToken)({ theme });
 
     return (
         <Row key={fontSizeToken}>
@@ -39,11 +39,11 @@ const TypographyCollection = ({
     );
 };
 
-interface TypographyDisplayProps {
+interface FontDisplayProps {
     theme: ThemeSpec;
 }
 
-export const TypographyDisplay = ({ theme }: TypographyDisplayProps) => {
+export const FontDisplay = ({ theme }: FontDisplayProps) => {
     return (
         <ThemeProvider theme={theme}>
             <Display>
@@ -53,7 +53,7 @@ export const TypographyDisplay = ({ theme }: TypographyDisplayProps) => {
                     <div>Line height</div>
                     <div>Letter spacing</div>
                 </HeaderRow>
-                <TypographyCollection
+                <FontCollection
                     tokens={[
                         "header-xxl-light",
                         "header-xxl-regular",
@@ -64,7 +64,7 @@ export const TypographyDisplay = ({ theme }: TypographyDisplayProps) => {
                     lineHeightToken="header-lh-xxl"
                     letterSpacingToken="header-ls-xxl"
                 />
-                <TypographyCollection
+                <FontCollection
                     tokens={[
                         "header-xl-light",
                         "header-xl-regular",
@@ -75,7 +75,7 @@ export const TypographyDisplay = ({ theme }: TypographyDisplayProps) => {
                     lineHeightToken="header-lh-xl"
                     letterSpacingToken="header-ls-xl"
                 />
-                <TypographyCollection
+                <FontCollection
                     tokens={[
                         "header-lg-light",
                         "header-lg-regular",
@@ -86,7 +86,7 @@ export const TypographyDisplay = ({ theme }: TypographyDisplayProps) => {
                     lineHeightToken="header-lh-lg"
                     letterSpacingToken="header-ls-lg"
                 />
-                <TypographyCollection
+                <FontCollection
                     tokens={[
                         "header-md-light",
                         "header-md-regular",
@@ -97,7 +97,7 @@ export const TypographyDisplay = ({ theme }: TypographyDisplayProps) => {
                     lineHeightToken="header-lh-md"
                     letterSpacingToken="header-ls-md"
                 />
-                <TypographyCollection
+                <FontCollection
                     tokens={[
                         "header-sm-light",
                         "header-sm-regular",
@@ -108,7 +108,7 @@ export const TypographyDisplay = ({ theme }: TypographyDisplayProps) => {
                     lineHeightToken="header-lh-sm"
                     letterSpacingToken="header-ls-sm"
                 />
-                <TypographyCollection
+                <FontCollection
                     tokens={[
                         "header-xs-light",
                         "header-xs-regular",
@@ -119,7 +119,7 @@ export const TypographyDisplay = ({ theme }: TypographyDisplayProps) => {
                     lineHeightToken="header-lh-xs"
                     letterSpacingToken="header-ls-xs"
                 />
-                <TypographyCollection
+                <FontCollection
                     tokens={[
                         "body-baseline-light",
                         "body-baseline-regular",
@@ -130,7 +130,7 @@ export const TypographyDisplay = ({ theme }: TypographyDisplayProps) => {
                     lineHeightToken="body-lh-baseline"
                     letterSpacingToken="body-ls-baseline"
                 />
-                <TypographyCollection
+                <FontCollection
                     tokens={[
                         "body-lg-light",
                         "body-lg-regular",
@@ -141,7 +141,7 @@ export const TypographyDisplay = ({ theme }: TypographyDisplayProps) => {
                     lineHeightToken="body-lh-lg"
                     letterSpacingToken="body-ls-lg"
                 />
-                <TypographyCollection
+                <FontCollection
                     tokens={[
                         "body-md-light",
                         "body-md-regular",
@@ -152,7 +152,7 @@ export const TypographyDisplay = ({ theme }: TypographyDisplayProps) => {
                     lineHeightToken="body-lh-md"
                     letterSpacingToken="body-ls-md"
                 />
-                <TypographyCollection
+                <FontCollection
                     tokens={[
                         "body-sm-light",
                         "body-sm-regular",
@@ -163,13 +163,13 @@ export const TypographyDisplay = ({ theme }: TypographyDisplayProps) => {
                     lineHeightToken="body-lh-sm"
                     letterSpacingToken="body-ls-sm"
                 />
-                <TypographyCollection
+                <FontCollection
                     tokens={["formlabel-baseline-semibold"]}
                     fontSizeToken="body-size-baseline"
                     lineHeightToken="body-lh-baseline"
                     letterSpacingToken="body-ls-baseline"
                 />
-                <TypographyCollection
+                <FontCollection
                     tokens={["formlabel-lg-semibold"]}
                     fontSizeToken="body-size-lg"
                     lineHeightToken="body-lh-lg"
@@ -218,6 +218,6 @@ const HeaderRow = styled(Row)`
 `;
 
 const TextPreview = styled.div<TextPreviewProps>`
-    ${(props) => Typography[props.$token](props)}
+    ${(props) => Font[props.$token](props)}
     margin-right: 3rem;
 `;

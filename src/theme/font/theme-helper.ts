@@ -1,7 +1,7 @@
-import { StyledComponentProps, getCollection } from "../helpers";
+import { CSSProp } from "styled-components";
+import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { FontScheme, ThemeCollectionSpec } from "../types";
 import { LifeSgFontSet } from "./specs/lifesg-font-set";
-import { getValue } from "../helpers";
 import { FontCollectionMap, FontSet } from "./types";
 
 const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
@@ -15,70 +15,77 @@ const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
     defaultValue: "lifesg",
 };
 
-export const getFontValues = (key: keyof FontSet) => {
-    return (props: StyledComponentProps): string => {
+export const getFont = (key: keyof FontSet) => {
+    return (props: StyledComponentProps): CSSProp | string => {
         const theme = props.theme;
         const fontSet: FontSet = getCollection(FontSpec, theme.fontScheme);
 
-        if (theme.overrides && theme.overrides.font) {
-            return getValue(fontSet, key, theme.overrides.font);
-        } else {
-            return fontSet[key];
-        }
+        // Check for an override
+        const fontValue =
+            theme.overrides && theme.overrides.font
+                ? getValue(fontSet, key, theme.overrides.font)
+                : fontSet[key];
+
+        // If function, resolve with props
+        return typeof fontValue === "function"
+            ? (fontValue as (props: any) => string)(props)
+            : fontValue;
     };
 };
 
 export const FontValues: {
-    [key in keyof FontSet]: (props: StyledComponentProps) => string;
+    [key in keyof FontSet]: (props: StyledComponentProps) => CSSProp;
 } = {
-    "header-size-xxl": getFontValues("header-size-xxl"),
-    "header-size-xl": getFontValues("header-size-xl"),
-    "header-size-lg": getFontValues("header-size-lg"),
-    "header-size-md": getFontValues("header-size-md"),
-    "header-size-sm": getFontValues("header-size-sm"),
-    "header-size-xs": getFontValues("header-size-xs"),
+    "header-xxl-light": getFont("header-xxl-light"),
+    "header-xxl-regular": getFont("header-xxl-regular"),
+    "header-xxl-semibold": getFont("header-xxl-semibold"),
+    "header-xxl-bold": getFont("header-xxl-bold"),
 
-    "header-lh-xxl": getFontValues("header-lh-xxl"),
-    "header-lh-xl": getFontValues("header-lh-xl"),
-    "header-lh-lg": getFontValues("header-lh-lg"),
-    "header-lh-md": getFontValues("header-lh-md"),
-    "header-lh-sm": getFontValues("header-lh-sm"),
-    "header-lh-xs": getFontValues("header-lh-xs"),
+    "header-xl-light": getFont("header-xl-light"),
+    "header-xl-regular": getFont("header-xl-regular"),
+    "header-xl-semibold": getFont("header-xl-semibold"),
+    "header-xl-bold": getFont("header-xl-bold"),
 
-    "header-ls-xxl": getFontValues("header-ls-xxl"),
-    "header-ls-xl": getFontValues("header-ls-xl"),
-    "header-ls-lg": getFontValues("header-ls-lg"),
-    "header-ls-md": getFontValues("header-ls-md"),
-    "header-ls-sm": getFontValues("header-ls-sm"),
-    "header-ls-xs": getFontValues("header-ls-xs"),
+    "header-lg-light": getFont("header-lg-light"),
+    "header-lg-regular": getFont("header-lg-regular"),
+    "header-lg-semibold": getFont("header-lg-semibold"),
+    "header-lg-bold": getFont("header-lg-bold"),
 
-    "weight-light": getFontValues("weight-light"),
-    "weight-regular": getFontValues("weight-regular"),
-    "weight-semibold": getFontValues("weight-semibold"),
-    "weight-bold": getFontValues("weight-bold"),
-    "font-family": getFontValues("font-family"),
+    "header-md-light": getFont("header-md-light"),
+    "header-md-regular": getFont("header-md-regular"),
+    "header-md-semibold": getFont("header-md-semibold"),
+    "header-md-bold": getFont("header-md-bold"),
 
-    "body-size-baseline": getFontValues("body-size-baseline"),
-    "body-size-lg": getFontValues("body-size-lg"),
-    "body-size-md": getFontValues("body-size-md"),
-    "body-size-sm": getFontValues("body-size-sm"),
+    "header-sm-light": getFont("header-sm-light"),
+    "header-sm-regular": getFont("header-sm-regular"),
+    "header-sm-semibold": getFont("header-sm-semibold"),
+    "header-sm-bold": getFont("header-sm-bold"),
 
-    "body-lh-baseline": getFontValues("body-lh-baseline"),
-    "body-lh-lg": getFontValues("body-lh-lg"),
-    "body-lh-md": getFontValues("body-lh-md"),
-    "body-lh-sm": getFontValues("body-lh-sm"),
+    "header-xs-light": getFont("header-xs-light"),
+    "header-xs-regular": getFont("header-xs-regular"),
+    "header-xs-semibold": getFont("header-xs-semibold"),
+    "header-xs-bold": getFont("header-xs-bold"),
 
-    "body-ls-baseline": getFontValues("body-ls-baseline"),
-    "body-ls-lg": getFontValues("body-ls-lg"),
-    "body-ls-md": getFontValues("body-ls-md"),
-    "body-ls-sm": getFontValues("body-ls-sm"),
+    "body-baseline-light": getFont("body-baseline-light"),
+    "body-baseline-regular": getFont("body-baseline-regular"),
+    "body-baseline-semibold": getFont("body-baseline-semibold"),
+    "body-baseline-bold": getFont("body-baseline-bold"),
 
-    "formlabel-size-baseline": getFontValues("formlabel-size-baseline"),
-    "formlabel-size-lg": getFontValues("formlabel-size-lg"),
+    "body-lg-light": getFont("body-lg-light"),
+    "body-lg-regular": getFont("body-lg-regular"),
+    "body-lg-semibold": getFont("body-lg-semibold"),
+    "body-lg-bold": getFont("body-lg-bold"),
 
-    "formlabel-lh-baseline": getFontValues("formlabel-lh-baseline"),
-    "formlabel-lh-lg": getFontValues("formlabel-lh-lg"),
+    "body-md-light": getFont("body-md-light"),
+    "body-md-regular": getFont("body-md-regular"),
+    "body-md-semibold": getFont("body-md-semibold"),
+    "body-md-bold": getFont("body-md-bold"),
 
-    "formlabel-ls-baseline": getFontValues("formlabel-ls-baseline"),
-    "formlabel-ls-lg": getFontValues("formlabel-ls-lg"),
+    "body-sm-light": getFont("body-sm-light"),
+    "body-sm-regular": getFont("body-sm-regular"),
+    "body-sm-semibold": getFont("body-sm-semibold"),
+    "body-sm-bold": getFont("body-sm-bold"),
+
+    "formlabel-baseline-semibold": getFont("formlabel-baseline-semibold"),
+    "formlabel-lg-semibold": getFont("formlabel-lg-semibold"),
 };

@@ -4,11 +4,11 @@ import { MediaQuery as MediaQueryValues } from "./breakpoint/media-query-helper"
 import { BreakpointValues } from "./breakpoint/theme-helper";
 import { PrimitiveColour } from "./colour-primitive/theme-helper";
 import { ColourSemantic } from "./colour-semantic/theme-helper";
-import { FontValues } from "./font/theme-helper";
+import { FontSpecValues } from "./font-spec/theme-helper";
 import { RadiusValues } from "./radius/theme-helper";
 import { SpacingValues } from "./spacing/theme-helper";
 import { ThemeSpec } from "./types";
-import { TypographyValues } from "./typography/theme-helper";
+import { FontValues } from "./font/theme-helper";
 
 // =============================================================================
 // TOKENS
@@ -19,9 +19,9 @@ export const Colour = {
     Primitive: PrimitiveColour,
 };
 
-export const Font = FontValues;
+export const FontSpec = FontSpecValues;
 
-export const Typography = TypographyValues;
+export const Font = FontValues;
 
 export const Motion = MotionValues;
 

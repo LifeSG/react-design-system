@@ -1,55 +1,273 @@
+import { css } from "styled-components";
+
+import { getFontSpec } from "../../font-spec/theme-helper";
+import { FontSpecSet } from "../../font-spec/types";
 import { FontSet } from "../types";
 
-// Pending for different font styling
+const generateFontCSS = (
+    fontSizeKey: keyof FontSpecSet,
+    fontWeightKey: keyof FontSpecSet,
+    lineHeightKey: keyof FontSpecSet,
+    letterSpacingKey: keyof FontSpecSet
+) => css`
+    font-family: ${getFontSpec("font-family")};
+    font-size: ${getFontSpec(fontSizeKey)};
+    font-weight: ${getFontSpec(fontWeightKey)};
+    line-height: ${getFontSpec(lineHeightKey)};
+    letter-spacing: ${getFontSpec(letterSpacingKey)};
+`;
+
 export const LifeSgFontSet: FontSet = {
-    "header-size-xxl": "3rem",
-    "header-size-xl": "2.5rem",
-    "header-size-lg": "2rem",
-    "header-size-md": "1.625rem",
-    "header-size-sm": "1.375rem",
-    "header-size-xs": "1.125rem",
-
-    "header-lh-xxl": "3.5rem",
-    "header-lh-xl": "3rem",
-    "header-lh-lg": "2.5rem",
-    "header-lh-md": "2.25rem",
-    "header-lh-sm": "1.75rem",
-    "header-lh-xs": "1.625rem",
-
-    "header-ls-xxl": "-0.056rem",
-    "header-ls-xl": "-0.032rem",
-    "header-ls-lg": "-0.032rem",
-    "header-ls-md": "0rem",
-    "header-ls-sm": "0rem",
-    "header-ls-xs": "0rem",
-
-    "weight-light": "300",
-    "weight-regular": "400",
-    "weight-semibold": "600",
-    "weight-bold": "700",
-    "font-family": "Open Sans",
-
-    "body-size-baseline": "1.125rem",
-    "body-size-lg": "1rem",
-    "body-size-md": "0.875rem",
-    "body-size-sm": "0.75rem",
-
-    "body-lh-baseline": "1.625rem",
-    "body-lh-lg": "1.5rem",
-    "body-lh-md": "1.6rem",
-    "body-lh-sm": "1.2rem",
-
-    "body-ls-baseline": "0rem",
-    "body-ls-lg": "0.014rem",
-    "body-ls-md": "0.012rem",
-    "body-ls-sm": "0.012rem",
-
-    "formlabel-size-baseline": "1rem",
-    "formlabel-size-lg": "1.125rem",
-
-    "formlabel-lh-baseline": "1.5rem",
-    "formlabel-lh-lg": "1.625rem",
-
-    "formlabel-ls-baseline": "0.014rem",
-    "formlabel-ls-lg": "0rem",
+    "header-xxl-light": generateFontCSS(
+        "header-size-xxl",
+        "weight-light",
+        "header-lh-xxl",
+        "header-ls-xxl"
+    ),
+    "header-xxl-regular": generateFontCSS(
+        "header-size-xxl",
+        "weight-regular",
+        "header-lh-xxl",
+        "header-ls-xxl"
+    ),
+    "header-xxl-semibold": generateFontCSS(
+        "header-size-xxl",
+        "weight-semibold",
+        "header-lh-xxl",
+        "header-ls-xxl"
+    ),
+    "header-xxl-bold": generateFontCSS(
+        "header-size-xxl",
+        "weight-bold",
+        "header-lh-xxl",
+        "header-ls-xxl"
+    ),
+    "header-xl-light": generateFontCSS(
+        "header-size-xl",
+        "weight-light",
+        "header-lh-xl",
+        "header-ls-xl"
+    ),
+    "header-xl-regular": generateFontCSS(
+        "header-size-xl",
+        "weight-regular",
+        "header-lh-xl",
+        "header-ls-xl"
+    ),
+    "header-xl-semibold": generateFontCSS(
+        "header-size-xl",
+        "weight-semibold",
+        "header-lh-xl",
+        "header-ls-xl"
+    ),
+    "header-xl-bold": generateFontCSS(
+        "header-size-xl",
+        "weight-bold",
+        "header-lh-xl",
+        "header-ls-xl"
+    ),
+    "header-lg-light": generateFontCSS(
+        "header-size-lg",
+        "weight-light",
+        "header-lh-lg",
+        "header-ls-lg"
+    ),
+    "header-lg-regular": generateFontCSS(
+        "header-size-lg",
+        "weight-regular",
+        "header-lh-lg",
+        "header-ls-lg"
+    ),
+    "header-lg-semibold": generateFontCSS(
+        "header-size-lg",
+        "weight-semibold",
+        "header-lh-lg",
+        "header-ls-lg"
+    ),
+    "header-lg-bold": generateFontCSS(
+        "header-size-lg",
+        "weight-bold",
+        "header-lh-lg",
+        "header-ls-lg"
+    ),
+    "header-md-light": generateFontCSS(
+        "header-size-md",
+        "weight-light",
+        "header-lh-md",
+        "header-ls-md"
+    ),
+    "header-md-regular": generateFontCSS(
+        "header-size-md",
+        "weight-regular",
+        "header-lh-md",
+        "header-ls-md"
+    ),
+    "header-md-semibold": generateFontCSS(
+        "header-size-md",
+        "weight-semibold",
+        "header-lh-md",
+        "header-ls-md"
+    ),
+    "header-md-bold": generateFontCSS(
+        "header-size-md",
+        "weight-bold",
+        "header-lh-md",
+        "header-ls-md"
+    ),
+    "header-sm-light": generateFontCSS(
+        "header-size-sm",
+        "weight-light",
+        "header-lh-sm",
+        "header-ls-sm"
+    ),
+    "header-sm-regular": generateFontCSS(
+        "header-size-sm",
+        "weight-regular",
+        "header-lh-sm",
+        "header-ls-sm"
+    ),
+    "header-sm-semibold": generateFontCSS(
+        "header-size-sm",
+        "weight-semibold",
+        "header-lh-sm",
+        "header-ls-sm"
+    ),
+    "header-sm-bold": generateFontCSS(
+        "header-size-sm",
+        "weight-bold",
+        "header-lh-sm",
+        "header-ls-sm"
+    ),
+    "header-xs-light": generateFontCSS(
+        "header-size-xs",
+        "weight-light",
+        "header-lh-xs",
+        "header-ls-xs"
+    ),
+    "header-xs-regular": generateFontCSS(
+        "header-size-xs",
+        "weight-regular",
+        "header-lh-xs",
+        "header-ls-xs"
+    ),
+    "header-xs-semibold": generateFontCSS(
+        "header-size-xs",
+        "weight-semibold",
+        "header-lh-xs",
+        "header-ls-xs"
+    ),
+    "header-xs-bold": generateFontCSS(
+        "header-size-xs",
+        "weight-bold",
+        "header-lh-xs",
+        "header-ls-xs"
+    ),
+    "body-baseline-light": generateFontCSS(
+        "body-size-baseline",
+        "weight-light",
+        "body-lh-baseline",
+        "body-ls-baseline"
+    ),
+    "body-baseline-regular": generateFontCSS(
+        "body-size-baseline",
+        "weight-regular",
+        "body-lh-baseline",
+        "body-ls-baseline"
+    ),
+    "body-baseline-semibold": generateFontCSS(
+        "body-size-baseline",
+        "weight-semibold",
+        "body-lh-baseline",
+        "body-ls-baseline"
+    ),
+    "body-baseline-bold": generateFontCSS(
+        "body-size-baseline",
+        "weight-bold",
+        "body-lh-baseline",
+        "body-ls-baseline"
+    ),
+    "body-lg-light": generateFontCSS(
+        "body-size-lg",
+        "weight-light",
+        "body-lh-lg",
+        "body-ls-lg"
+    ),
+    "body-lg-regular": generateFontCSS(
+        "body-size-lg",
+        "weight-regular",
+        "body-lh-lg",
+        "body-ls-lg"
+    ),
+    "body-lg-semibold": generateFontCSS(
+        "body-size-lg",
+        "weight-semibold",
+        "body-lh-lg",
+        "body-ls-lg"
+    ),
+    "body-lg-bold": generateFontCSS(
+        "body-size-lg",
+        "weight-bold",
+        "body-lh-lg",
+        "body-ls-lg"
+    ),
+    "body-md-light": generateFontCSS(
+        "body-size-md",
+        "weight-light",
+        "body-lh-md",
+        "body-ls-md"
+    ),
+    "body-md-regular": generateFontCSS(
+        "body-size-md",
+        "weight-regular",
+        "body-lh-md",
+        "body-ls-md"
+    ),
+    "body-md-semibold": generateFontCSS(
+        "body-size-md",
+        "weight-semibold",
+        "body-lh-md",
+        "body-ls-md"
+    ),
+    "body-md-bold": generateFontCSS(
+        "body-size-md",
+        "weight-bold",
+        "body-lh-md",
+        "body-ls-md"
+    ),
+    "body-sm-light": generateFontCSS(
+        "body-size-sm",
+        "weight-light",
+        "body-lh-sm",
+        "body-ls-sm"
+    ),
+    "body-sm-regular": generateFontCSS(
+        "body-size-sm",
+        "weight-regular",
+        "body-lh-sm",
+        "body-ls-sm"
+    ),
+    "body-sm-semibold": generateFontCSS(
+        "body-size-sm",
+        "weight-semibold",
+        "body-lh-sm",
+        "body-ls-sm"
+    ),
+    "body-sm-bold": generateFontCSS(
+        "body-size-sm",
+        "weight-bold",
+        "body-lh-sm",
+        "body-ls-sm"
+    ),
+    "formlabel-baseline-semibold": generateFontCSS(
+        "formlabel-size-baseline",
+        "weight-semibold",
+        "formlabel-lh-baseline",
+        "formlabel-ls-baseline"
+    ),
+    "formlabel-lg-semibold": generateFontCSS(
+        "formlabel-size-lg",
+        "weight-semibold",
+        "formlabel-lh-lg",
+        "formlabel-ls-lg"
+    ),
 };

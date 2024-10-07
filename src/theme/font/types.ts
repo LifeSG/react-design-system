@@ -1,3 +1,4 @@
+import { CSSProp } from "styled-components";
 import { FontScheme } from "../types";
 
 export type FontCollectionMap = {
@@ -6,67 +7,69 @@ export type FontCollectionMap = {
 
 export type FontSetOptions = Partial<FontSet>;
 
+export type TypographySizeType =
+    | "header-xxl"
+    | "header-xl"
+    | "header-lg"
+    | "header-md"
+    | "header-sm"
+    | "header-xs"
+    | "body-baseline"
+    | "body-lg"
+    | "body-md"
+    | "body-sm";
+
 export type FontSet = {
-    // Header sizes
-    "header-size-xxl": string;
-    "header-size-xl": string;
-    "header-size-lg": string;
-    "header-size-md": string;
-    "header-size-sm": string;
-    "header-size-xs": string;
+    "header-xxl-light": CSSProp | string;
+    "header-xxl-regular": CSSProp | string;
+    "header-xxl-semibold": CSSProp | string;
+    "header-xxl-bold": CSSProp | string;
 
-    // Header line heights
-    "header-lh-xxl": string;
-    "header-lh-xl": string;
-    "header-lh-lg": string;
-    "header-lh-md": string;
-    "header-lh-sm": string;
-    "header-lh-xs": string;
+    "header-xl-light": CSSProp | string;
+    "header-xl-regular": CSSProp | string;
+    "header-xl-semibold": CSSProp | string;
+    "header-xl-bold": CSSProp | string;
 
-    // Header letter spacing
-    "header-ls-xxl": string;
-    "header-ls-xl": string;
-    "header-ls-lg": string;
-    "header-ls-md": string;
-    "header-ls-sm": string;
-    "header-ls-xs": string;
+    "header-lg-light": CSSProp | string;
+    "header-lg-regular": CSSProp | string;
+    "header-lg-semibold": CSSProp | string;
+    "header-lg-bold": CSSProp | string;
 
-    // Font weights
-    "weight-light": string;
-    "weight-regular": string;
-    "weight-semibold": string;
-    "weight-bold": string;
+    "header-md-light": CSSProp | string;
+    "header-md-regular": CSSProp | string;
+    "header-md-semibold": CSSProp | string;
+    "header-md-bold": CSSProp | string;
 
-    // Font family
-    "font-family": string;
+    "header-sm-light": CSSProp | string;
+    "header-sm-regular": CSSProp | string;
+    "header-sm-semibold": CSSProp | string;
+    "header-sm-bold": CSSProp | string;
 
-    // Body sizes
-    "body-size-baseline": string;
-    "body-size-lg": string;
-    "body-size-md": string;
-    "body-size-sm": string;
+    "header-xs-light": CSSProp | string;
+    "header-xs-regular": CSSProp | string;
+    "header-xs-semibold": CSSProp | string;
+    "header-xs-bold": CSSProp | string;
 
-    // Body line heights
-    "body-lh-baseline": string;
-    "body-lh-lg": string;
-    "body-lh-md": string;
-    "body-lh-sm": string;
+    "body-baseline-light": CSSProp | string;
+    "body-baseline-regular": CSSProp | string;
+    "body-baseline-semibold": CSSProp | string;
+    "body-baseline-bold": CSSProp | string;
 
-    // Body letter spacing
-    "body-ls-baseline": string;
-    "body-ls-lg": string;
-    "body-ls-md": string;
-    "body-ls-sm": string;
+    "body-lg-light": CSSProp | string;
+    "body-lg-regular": CSSProp | string;
+    "body-lg-semibold": CSSProp | string;
+    "body-lg-bold": CSSProp | string;
 
-    // Form label sizes
-    "formlabel-size-baseline": string;
-    "formlabel-size-lg": string;
+    "body-md-light": CSSProp | string;
+    "body-md-regular": CSSProp | string;
+    "body-md-semibold": CSSProp | string;
+    "body-md-bold": CSSProp | string;
 
-    // Form label line heights
-    "formlabel-lh-baseline": string;
-    "formlabel-lh-lg": string;
+    "body-sm-light": CSSProp | string;
+    "body-sm-regular": CSSProp | string;
+    "body-sm-semibold": CSSProp | string;
+    "body-sm-bold": CSSProp | string;
 
-    // Form label letter spacing
-    "formlabel-ls-baseline": string;
-    "formlabel-ls-lg": string;
+    "formlabel-baseline-semibold": CSSProp | string;
+    "formlabel-lg-semibold": CSSProp | string;
 };
