@@ -71,11 +71,6 @@ export const FontValues: {
     "body-baseline-semibold": getFont("body-baseline-semibold"),
     "body-baseline-bold": getFont("body-baseline-bold"),
 
-    "body-lg-light": getFont("body-lg-light"),
-    "body-lg-regular": getFont("body-lg-regular"),
-    "body-lg-semibold": getFont("body-lg-semibold"),
-    "body-lg-bold": getFont("body-lg-bold"),
-
     "body-md-light": getFont("body-md-light"),
     "body-md-regular": getFont("body-md-regular"),
     "body-md-semibold": getFont("body-md-semibold"),
@@ -85,6 +80,11 @@ export const FontValues: {
     "body-sm-regular": getFont("body-sm-regular"),
     "body-sm-semibold": getFont("body-sm-semibold"),
     "body-sm-bold": getFont("body-sm-bold"),
+
+    "body-xs-light": getFont("body-xs-light"),
+    "body-xs-regular": getFont("body-xs-regular"),
+    "body-xs-semibold": getFont("body-xs-semibold"),
+    "body-xs-bold": getFont("body-xs-bold"),
 
     "formlabel-baseline-semibold": getFont("formlabel-baseline-semibold"),
     "formlabel-lg-semibold": getFont("formlabel-lg-semibold"),

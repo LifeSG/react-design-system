@@ -186,30 +186,6 @@ export const LifeSgFontSet: FontSet = {
         "body-lh-baseline",
         "body-ls-baseline"
     ),
-    "body-lg-light": generateFontCSS(
-        "body-size-lg",
-        "weight-light",
-        "body-lh-lg",
-        "body-ls-lg"
-    ),
-    "body-lg-regular": generateFontCSS(
-        "body-size-lg",
-        "weight-regular",
-        "body-lh-lg",
-        "body-ls-lg"
-    ),
-    "body-lg-semibold": generateFontCSS(
-        "body-size-lg",
-        "weight-semibold",
-        "body-lh-lg",
-        "body-ls-lg"
-    ),
-    "body-lg-bold": generateFontCSS(
-        "body-size-lg",
-        "weight-bold",
-        "body-lh-lg",
-        "body-ls-lg"
-    ),
     "body-md-light": generateFontCSS(
         "body-size-md",
         "weight-light",
@@ -257,6 +233,30 @@ export const LifeSgFontSet: FontSet = {
         "weight-bold",
         "body-lh-sm",
         "body-ls-sm"
+    ),
+    "body-xs-light": generateFontCSS(
+        "body-size-xs",
+        "weight-light",
+        "body-lh-xs",
+        "body-ls-xs"
+    ),
+    "body-xs-regular": generateFontCSS(
+        "body-size-xs",
+        "weight-regular",
+        "body-lh-xs",
+        "body-ls-xs"
+    ),
+    "body-xs-semibold": generateFontCSS(
+        "body-size-xs",
+        "weight-semibold",
+        "body-lh-xs",
+        "body-ls-xs"
+    ),
+    "body-xs-bold": generateFontCSS(
+        "body-size-xs",
+        "weight-bold",
+        "body-lh-xs",
+        "body-ls-xs"
     ),
     "formlabel-baseline-semibold": generateFontCSS(
         "formlabel-size-baseline",

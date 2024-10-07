@@ -62,19 +62,19 @@ export const FontSpecValues: {
     "font-family": getFontSpec("font-family"),
 
     "body-size-baseline": getFontSpec("body-size-baseline"),
-    "body-size-lg": getFontSpec("body-size-lg"),
     "body-size-md": getFontSpec("body-size-md"),
     "body-size-sm": getFontSpec("body-size-sm"),
+    "body-size-xs": getFontSpec("body-size-xs"),
 
     "body-lh-baseline": getFontSpec("body-lh-baseline"),
-    "body-lh-lg": getFontSpec("body-lh-lg"),
     "body-lh-md": getFontSpec("body-lh-md"),
     "body-lh-sm": getFontSpec("body-lh-sm"),
+    "body-lh-xs": getFontSpec("body-lh-xs"),
 
     "body-ls-baseline": getFontSpec("body-ls-baseline"),
-    "body-ls-lg": getFontSpec("body-ls-lg"),
     "body-ls-md": getFontSpec("body-ls-md"),
     "body-ls-sm": getFontSpec("body-ls-sm"),
+    "body-ls-xs": getFontSpec("body-ls-xs"),
 
     "formlabel-size-baseline": getFontSpec("formlabel-size-baseline"),
     "formlabel-size-lg": getFontSpec("formlabel-size-lg"),

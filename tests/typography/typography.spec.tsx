@@ -17,16 +17,16 @@ describe("Typography Components", () => {
     };
 
     describe("Body Text", () => {
-        it("renders BodyLG with correct text", () => {
+        it("renders BodyMD with correct text", () => {
             const { getByText } = render(
                 <ThemeProvider theme={mockTheme}>
-                    <Typography.BodyLG weight="semibold" inline>
-                        This is large body text
-                    </Typography.BodyLG>
+                    <Typography.BodyMD weight="semibold" inline>
+                        This is medium body text
+                    </Typography.BodyMD>
                 </ThemeProvider>
             );
 
-            expect(getByText("This is large body text")).toBeInTheDocument();
+            expect(getByText("This is medium body text")).toBeInTheDocument();
         });
     });
 

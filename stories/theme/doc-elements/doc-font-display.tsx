@@ -132,17 +132,6 @@ export const FontDisplay = ({ theme }: FontDisplayProps) => {
                 />
                 <FontCollection
                     tokens={[
-                        "body-lg-light",
-                        "body-lg-regular",
-                        "body-lg-semibold",
-                        "body-lg-bold",
-                    ]}
-                    fontSizeToken="body-size-lg"
-                    lineHeightToken="body-lh-lg"
-                    letterSpacingToken="body-ls-lg"
-                />
-                <FontCollection
-                    tokens={[
                         "body-md-light",
                         "body-md-regular",
                         "body-md-semibold",
@@ -164,16 +153,27 @@ export const FontDisplay = ({ theme }: FontDisplayProps) => {
                     letterSpacingToken="body-ls-sm"
                 />
                 <FontCollection
+                    tokens={[
+                        "body-xs-light",
+                        "body-xs-regular",
+                        "body-xs-semibold",
+                        "body-xs-bold",
+                    ]}
+                    fontSizeToken="body-size-xs"
+                    lineHeightToken="body-lh-xs"
+                    letterSpacingToken="body-ls-xs"
+                />
+                <FontCollection
                     tokens={["formlabel-baseline-semibold"]}
-                    fontSizeToken="body-size-baseline"
-                    lineHeightToken="body-lh-baseline"
-                    letterSpacingToken="body-ls-baseline"
+                    fontSizeToken="formlabel-size-baseline"
+                    lineHeightToken="formlabel-lh-baseline"
+                    letterSpacingToken="formlabel-ls-baseline"
                 />
                 <FontCollection
                     tokens={["formlabel-lg-semibold"]}
-                    fontSizeToken="body-size-lg"
-                    lineHeightToken="body-lh-lg"
-                    letterSpacingToken="body-ls-lg"
+                    fontSizeToken="formlabel-size-lg"
+                    lineHeightToken="formlabel-lh-lg"
+                    letterSpacingToken="formlabel-ls-lg"
                 />
             </Display>
         </ThemeProvider>

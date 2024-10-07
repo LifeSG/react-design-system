@@ -15,9 +15,9 @@ export type TypographySizeType =
     | "header-sm"
     | "header-xs"
     | "body-baseline"
-    | "body-lg"
     | "body-md"
-    | "body-sm";
+    | "body-sm"
+    | "body-xs";
 
 export type FontSet = {
     "header-xxl-light": CSSProp | string;
@@ -55,11 +55,6 @@ export type FontSet = {
     "body-baseline-semibold": CSSProp | string;
     "body-baseline-bold": CSSProp | string;
 
-    "body-lg-light": CSSProp | string;
-    "body-lg-regular": CSSProp | string;
-    "body-lg-semibold": CSSProp | string;
-    "body-lg-bold": CSSProp | string;
-
     "body-md-light": CSSProp | string;
     "body-md-regular": CSSProp | string;
     "body-md-semibold": CSSProp | string;
@@ -69,6 +64,11 @@ export type FontSet = {
     "body-sm-regular": CSSProp | string;
     "body-sm-semibold": CSSProp | string;
     "body-sm-bold": CSSProp | string;
+
+    "body-xs-light": CSSProp | string;
+    "body-xs-regular": CSSProp | string;
+    "body-xs-semibold": CSSProp | string;
+    "body-xs-bold": CSSProp | string;
 
     "formlabel-baseline-semibold": CSSProp | string;
     "formlabel-lg-semibold": CSSProp | string;
