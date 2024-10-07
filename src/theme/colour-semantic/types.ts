@@ -53,10 +53,12 @@ export type SemanticColourSet = {
     "icon-error-strong": SemanticColourValue;
     "icon-info": SemanticColourValue;
     "icon-inverse": SemanticColourValue;
+    "icon-primary-inverse": SemanticColourValue;
 
     // border
     border: SemanticColourValue;
     "border-strong": SemanticColourValue;
+    "border-stronger": SemanticColourValue;
     "border-primary": SemanticColourValue;
     "border-primary-subtle": SemanticColourValue;
 
@@ -121,6 +123,7 @@ export type SemanticColourSet = {
     "bg-primary-hover": SemanticColourValue;
     "bg-primary-subtlest-hover": SemanticColourValue;
     "bg-primary-subtlest-selected": SemanticColourValue;
+    "bg-available": SemanticColourValue;
 
     // overlay
     "overlay-strong": SemanticColourValue;

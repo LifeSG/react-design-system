@@ -46,10 +46,12 @@ export const LifeSGColourSet: SemanticColourSet = {
     "icon-error-strong": getPrimitiveColour("error-40"),
     "icon-info": getPrimitiveColour("info-50"),
     "icon-inverse": getPrimitiveColour("white"),
+    "icon-primary-inverse": "#FEAB10",
 
     // border
     border: getPrimitiveColour("neutral-90"),
     "border-strong": getPrimitiveColour("neutral-70"),
+    "border-stronger": getPrimitiveColour("neutral-30"),
     "border-primary": getPrimitiveColour("primary-50"),
     "border-primary-subtle": getPrimitiveColour("primary-60"),
 
@@ -114,9 +116,10 @@ export const LifeSGColourSet: SemanticColourSet = {
     "bg-primary-hover": getPrimitiveColour("primary-40"),
     "bg-primary-subtlest-hover": getPrimitiveColour("primary-90"),
     "bg-primary-subtlest-selected": getPrimitiveColour("primary-90"),
+    "bg-available": "#6DD0A1",
 
     // overlay
-    "overlay-strong": "rgba(40, 40, 40, 0.95)",
+    "overlay-strong": "rgba(40, 40, 40, 0.85)",
     "overlay-subtle": "rgba(40, 40, 40, 0.20)",
 
     // hyperlink
