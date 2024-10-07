@@ -130,6 +130,7 @@ export const SemanticColourDisplay = ({
                         "icon-error-strong",
                         "icon-info",
                         "icon-inverse",
+                        "icon-primary-inverse",
                     ]}
                 />
             </Display>
@@ -140,6 +141,7 @@ export const SemanticColourDisplay = ({
                     tokens={[
                         "border",
                         "border-strong",
+                        "border-stronger",
                         "border-primary",
                         "border-primary-subtle",
                     ]}
@@ -204,6 +206,7 @@ export const SemanticColourDisplay = ({
                         "bg-primary-hover",
                         "bg-primary-subtlest-hover",
                         "bg-primary-subtlest-selected",
+                        "bg-available",
                     ]}
                 />
                 <SemanticColourPalette

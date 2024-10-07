@@ -85,10 +85,12 @@ export const ColourSemantic = {
     "icon-error-strong": getSemanticColour("icon-error-strong"),
     "icon-info": getSemanticColour("icon-info"),
     "icon-inverse": getSemanticColour("icon-inverse"),
+    "icon-primary-inverse": getSemanticColour("icon-primary-inverse"),
 
     // border
     border: getSemanticColour("border"),
     "border-strong": getSemanticColour("border-strong"),
+    "border-stronger": getSemanticColour("border-stronger"),
     "border-primary": getSemanticColour("border-primary"),
     "border-primary-subtle": getSemanticColour("border-primary-subtle"),
 
@@ -155,6 +157,7 @@ export const ColourSemantic = {
     "bg-primary-subtlest-selected": getSemanticColour(
         "bg-primary-subtlest-selected"
     ),
+    "bg-available": getSemanticColour("bg-available"),
 
     // overlay
     "overlay-strong": getSemanticColour("overlay-strong"),
