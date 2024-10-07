@@ -1,4 +1,4 @@
-import { AnimationValues } from "./animation/theme-helper";
+import { MotionValues } from "./motion/theme-helper";
 import { BorderValues } from "./border/theme-helper";
 import { MediaQuery as MediaQueryValues } from "./breakpoint/media-query-helper";
 import { BreakpointValues } from "./breakpoint/theme-helper";
@@ -23,7 +23,7 @@ export const FontSpec = FontSpecValues;
 
 export const Font = FontValues;
 
-export const Animation = AnimationValues;
+export const Motion = MotionValues;
 
 export const Border = BorderValues;
 
@@ -42,7 +42,7 @@ export const MediaQuery = MediaQueryValues;
 export const LifeSGTheme: ThemeSpec = {
     colourScheme: "lifesg",
     fontScheme: "lifesg",
-    animationScheme: "lifesg",
+    motionScheme: "lifesg",
     borderScheme: "lifesg",
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
@@ -52,7 +52,7 @@ export const LifeSGTheme: ThemeSpec = {
 export const BookingSGTheme: ThemeSpec = {
     colourScheme: "bookingsg",
     fontScheme: "bookingsg",
-    animationScheme: "lifesg",
+    motionScheme: "lifesg",
     borderScheme: "lifesg",
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
@@ -62,7 +62,7 @@ export const BookingSGTheme: ThemeSpec = {
 export const CCubeTheme: ThemeSpec = {
     colourScheme: "ccube",
     fontScheme: "ccube",
-    animationScheme: "lifesg",
+    motionScheme: "lifesg",
     borderScheme: "lifesg",
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
@@ -72,7 +72,7 @@ export const CCubeTheme: ThemeSpec = {
 export const MyLegacyTheme: ThemeSpec = {
     colourScheme: "mylegacy",
     fontScheme: "mylegacy",
-    animationScheme: "lifesg",
+    motionScheme: "lifesg",
     borderScheme: "lifesg",
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
@@ -82,7 +82,7 @@ export const MyLegacyTheme: ThemeSpec = {
 export const RBSTheme: ThemeSpec = {
     colourScheme: "rbs",
     fontScheme: "rbs",
-    animationScheme: "lifesg",
+    motionScheme: "lifesg",
     borderScheme: "lifesg",
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
