@@ -165,9 +165,9 @@ export const FontDisplay = ({ theme }: FontDisplayProps) => {
                 />
                 <FontCollection
                     tokens={["formlabel-baseline-semibold"]}
-                    fontSizeToken="body-size-baseline"
-                    lineHeightToken="body-lh-baseline"
-                    letterSpacingToken="body-ls-baseline"
+                    fontSizeToken="formlabel-size-baseline"
+                    lineHeightToken="formlabel-lh-baseline"
+                    letterSpacingToken="formlabel-ls-baseline"
                 />
                 <FontCollection
                     tokens={["formlabel-lg-semibold"]}
