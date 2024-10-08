@@ -46,18 +46,27 @@ export const LoadingState: StoryObj<Component> = {
     render: () => {
         const today = dayjs().toString();
         const [selectedDate, setSelectedDate] = useState<string>(today);
+        const [loading, setLoading] = useState<boolean>(false);
 
         const onLeftArrowClick = (currentDate: string) => {
             setSelectedDate(dayjs(currentDate).subtract(1, "day").toString());
+            loadData();
         };
 
         const onRightArrowClick = (currentDate: string) => {
             setSelectedDate(dayjs(currentDate).add(1, "day").toString());
+            loadData();
         };
+
+        const loadData = () => {
+            setLoading(true);
+            setTimeout(() => setLoading(false), 1000);
+        };
+
         return (
             <DateNavigator
                 selectedDate={selectedDate}
-                isLoading
+                loading={loading}
                 onLeftArrowClick={onLeftArrowClick}
                 onRightArrowClick={onRightArrowClick}
             />

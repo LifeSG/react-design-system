@@ -9,7 +9,8 @@ import { PropsTable } from "./props-table";
 
 <Secondary>Overview</Secondary>
 
-A component that displays the current date and day, with optional callbacks for navigating the dates.
+A component that displays the current date and day, with support for navigating
+the dates.
 
 ```tsx
 import { DateNavigator } from "@lifesg/react-design-system/date-navigator";
@@ -17,21 +18,24 @@ import { DateNavigator } from "@lifesg/react-design-system/date-navigator";
 
 <Canvas of={DateNavigatorStories.Default} />
 
-<Secondary>With Navigation</Secondary>
+<Heading3>With navigation</Heading3>
 
-With the optional callbacks defined for left right arrow button clicks, the buttons will appear and the behavior of these button depends on the implementation.
+Navigation buttons can be enabled by specifying the `onLeftArrowClick` and
+`onRightArrowClick` callbacks.
 
 <Canvas of={DateNavigatorStories.WithNavigation} />
 
-<Secondary>Loading State</Secondary>
+<Heading3>Loading state</Heading3>
 
-If there is a need to disable button clicks due to loading states, there is an optional prop to to do so.
+You can specify the `loading` prop to disable date navigation while asynchronous
+tasks are running.
 
 <Canvas of={DateNavigatorStories.LoadingState} />
 
-<Secondary>With date range</Secondary>
+<Heading3>With date range</Heading3>
 
-If min and max date props are passed in, the component will disable the corresponding navigation buttons when the current date falls out of the range.
+The corresponding navigation button is disabled when the current date is \<=
+`minDate` or \>= `maxDate`.
 
 <Canvas of={DateNavigatorStories.WithMinAndMaxDate} />
 

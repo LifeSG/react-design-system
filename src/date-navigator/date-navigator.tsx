@@ -15,7 +15,12 @@ import { DateNavigatorProps } from "./types";
 
 export const DateNavigator = ({
     selectedDate,
-    ...optionalProps
+    minDate,
+    maxDate,
+    loading,
+    onLeftArrowClick,
+    onRightArrowClick,
+    ...otherProps
 }: DateNavigatorProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -30,32 +35,25 @@ export const DateNavigator = ({
         : DateHelper.toDayjs(selectedDate).format("dddd");
 
     // =============================================================================
-    // EVENT HANDLERS
+    // HELPER FUNCTIONS
     // =============================================================================
     const isLeftArrowDisabled = () => {
-        if (!optionalProps.minDate) {
+        if (!minDate) {
             return false;
         }
         return (
-            CalendarHelper.isDisabledDay(
-                date,
-                undefined,
-                optionalProps.minDate
-            ) || DateHelper.isSame(date, optionalProps.minDate)
+            CalendarHelper.isDisabledDay(date, undefined, minDate) ||
+            DateHelper.isSame(date, minDate)
         );
     };
 
     const isRightArrowDisabled = () => {
-        if (!optionalProps.maxDate) {
+        if (!maxDate) {
             return false;
         }
         return (
-            CalendarHelper.isDisabledDay(
-                date,
-                undefined,
-                undefined,
-                optionalProps.maxDate
-            ) || DateHelper.isSame(date, optionalProps.maxDate)
+            CalendarHelper.isDisabledDay(date, undefined, undefined, maxDate) ||
+            DateHelper.isSame(date, maxDate)
         );
     };
 
@@ -63,49 +61,41 @@ export const DateNavigator = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <Container
-            id="date-navigator-container-id"
-            className={optionalProps.className}
-            data-testid={optionalProps["data-testid"]}
-        >
-            {optionalProps.onLeftArrowClick && (
+        <Container {...otherProps}>
+            {onLeftArrowClick && (
                 <HeaderArrowButton
-                    id="date-navigator-left-arrow-btn-id"
                     data-testid="date-navigator-left-arrow-btn"
-                    disabled={optionalProps.isLoading || isLeftArrowDisabled()}
+                    disabled={loading || isLeftArrowDisabled()}
                     focusHighlight={false}
-                    tabIndex={-1}
-                    onClick={() => optionalProps.onLeftArrowClick(selectedDate)}
+                    focusOutline="browser"
+                    aria-label="Previous day"
+                    onClick={() => onLeftArrowClick(selectedDate)}
                 >
                     <ArrowLeft />
                 </HeaderArrowButton>
             )}
-            <Wrapper id="date-navigator-display-wrapper-id">
+            <Wrapper>
                 <StyledDateText
-                    id="date-navigator-date-text-id"
                     data-testid="date-navigator-date-text"
                     weight={"semibold"}
                 >
                     {dateText}
                 </StyledDateText>
                 <StyledDayText
-                    id="date-navigator-day-text-id"
                     data-testid="date-navigator-day-text"
                     weight={"bold"}
                 >
                     {dayText}
                 </StyledDayText>
             </Wrapper>
-            {optionalProps.onRightArrowClick && (
+            {onRightArrowClick && (
                 <HeaderArrowButton
-                    id="date-navigator-right-arrow-btn-id"
                     data-testid="date-navigator-right-arrow-btn"
-                    disabled={optionalProps.isLoading || isRightArrowDisabled()}
+                    disabled={loading || isRightArrowDisabled()}
                     focusHighlight={false}
-                    tabIndex={-1}
-                    onClick={() =>
-                        optionalProps.onRightArrowClick(selectedDate)
-                    }
+                    focusOutline="browser"
+                    aria-label="Next day"
+                    onClick={() => onRightArrowClick(selectedDate)}
                 >
                     <ArrowRight />
                 </HeaderArrowButton>

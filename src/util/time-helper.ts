@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { StringHelper } from "./string-helper";
 
 // =============================================================================
@@ -27,6 +28,46 @@ interface TimeValuesPlain {
 // HELPER FUNCTIONS
 // =============================================================================
 export namespace TimeHelper {
+    /**
+     * Rounds time to the nearest hour, e.g 6:30 will be clamped to 6:00
+     * @param time the input time in HH:mm format
+     * @param toNextHour to clamp to next hour instead, e.g. 6:30 will be clamped to 7:00
+     * @returns
+     */
+    export const roundToNearestHour = (time: string, toNextHour?: boolean) => {
+        const formattedTime = dayjs(time, "HH:mm");
+        const roundedTime =
+            formattedTime.minute() === 0
+                ? formattedTime
+                : toNextHour
+                ? formattedTime.minute(0).add(1, "hour")
+                : formattedTime.minute(0);
+        return roundedTime.format("HH:mm");
+    };
+
+    export const generateHourlyIntervals = (
+        startTime: string,
+        endTime: string,
+        generatedFormat = "ha"
+    ) => {
+        const format = "HH:mm";
+        let start = dayjs(startTime, format);
+        let end = dayjs(endTime, format);
+
+        if (start.isSame(end)) {
+            end = end.add(1, "day");
+        }
+
+        const intervals: string[] = [];
+
+        while (start.isBefore(end)) {
+            intervals.push(start.format(generatedFormat));
+            start = start.add(1, "hour");
+        }
+
+        return intervals;
+    };
+
     export const getTimeValues = (
         format: TimeFormat,
         value?: string
