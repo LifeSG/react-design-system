@@ -3,11 +3,11 @@ import { Color } from "../../color";
 import { PopoverTrigger } from "../../popover-v2";
 import { PopoverCard } from "../../popover-v2/popover.styles";
 import { Text } from "../../text";
-import { CellType } from "../types";
+import { TimeTableCellType } from "../types";
 
 interface BlockStyleProps {
     $width: number;
-    $status: CellType;
+    $status: TimeTableCellType;
     $bgColour: string;
     $isClickable?: boolean;
 }

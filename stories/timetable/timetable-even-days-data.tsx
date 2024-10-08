@@ -1,9 +1,13 @@
 import { Person2Icon } from "@lifesg/react-icons";
-import { CellType, TimeTableRowCellData, TimeTableRowData } from "../../src";
+import {
+    TimeTableCellType,
+    TimeTableRowCellData,
+    TimeTableRowData,
+} from "../../src";
 
 export const evenDaysData = [
     {
-        name: "Roti Prata",
+        name: "Roti Prata oh ya be ya som ba leh yah roti prata char kway teow",
         rowMinTime: "08:00:00",
         rowMaxTime: "16:30:00",
         subtitle: (
@@ -21,7 +25,7 @@ export const evenDaysData = [
                 endTime: "08:15:00",
                 title: "title",
                 subtitle: "subtitle",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -33,7 +37,7 @@ export const evenDaysData = [
                 endTime: "08:30:00",
                 title: "title",
                 subtitle: "subtitle",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -45,7 +49,7 @@ export const evenDaysData = [
                 endTime: "08:45:00",
                 title: "title",
                 subtitle: "subtitle",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -57,7 +61,7 @@ export const evenDaysData = [
                 endTime: "09:00:00",
                 title: "title",
                 subtitle: "subtitle",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -69,7 +73,7 @@ export const evenDaysData = [
                 endTime: "10:30:00",
                 title: "title",
                 subtitle: "subtitle",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -81,7 +85,7 @@ export const evenDaysData = [
                 endTime: "11:00:00",
                 title: "title",
                 subtitle: "subtitle",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -93,7 +97,7 @@ export const evenDaysData = [
                 endTime: "11:30:00",
                 title: "title",
                 subtitle: "subtitle",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -105,7 +109,7 @@ export const evenDaysData = [
                 endTime: "16:30:00",
                 title: "title",
                 subtitle: "subtitle",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -131,7 +135,7 @@ export const evenDaysData = [
             {
                 startTime: "08:00:00",
                 endTime: "12:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -143,7 +147,7 @@ export const evenDaysData = [
                 endTime: "16:00:00",
                 title: "title",
                 subtitle: "subtitle",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -153,7 +157,7 @@ export const evenDaysData = [
             {
                 startTime: "16:00:00",
                 endTime: "20:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -179,7 +183,7 @@ export const evenDaysData = [
             {
                 startTime: "08:00:00",
                 endTime: "09:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -189,7 +193,7 @@ export const evenDaysData = [
             {
                 startTime: "09:00:00",
                 endTime: "10:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -199,7 +203,7 @@ export const evenDaysData = [
             {
                 startTime: "10:00:00",
                 endTime: "11:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -209,7 +213,7 @@ export const evenDaysData = [
             {
                 startTime: "11:00:00",
                 endTime: "13:00:00",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -219,7 +223,7 @@ export const evenDaysData = [
             {
                 startTime: "13:00:00",
                 endTime: "14:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -229,7 +233,7 @@ export const evenDaysData = [
             {
                 startTime: "14:00:00",
                 endTime: "15:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -239,7 +243,7 @@ export const evenDaysData = [
             {
                 startTime: "15:00:00",
                 endTime: "16:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -249,7 +253,7 @@ export const evenDaysData = [
             {
                 startTime: "16:00:00",
                 endTime: "17:00:00",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -259,7 +263,7 @@ export const evenDaysData = [
             {
                 startTime: "17:00:00",
                 endTime: "18:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -269,7 +273,7 @@ export const evenDaysData = [
             {
                 startTime: "18:00:00",
                 endTime: "19:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -279,7 +283,7 @@ export const evenDaysData = [
             {
                 startTime: "19:00:00",
                 endTime: "20:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -289,7 +293,7 @@ export const evenDaysData = [
             {
                 startTime: "20:00:00",
                 endTime: "21:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -315,7 +319,7 @@ export const evenDaysData = [
             {
                 startTime: "10:00",
                 endTime: "12:00",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -325,7 +329,7 @@ export const evenDaysData = [
             {
                 startTime: "15:00",
                 endTime: "17:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -351,7 +355,7 @@ export const evenDaysData = [
             {
                 startTime: "08:00",
                 endTime: "08:30",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -361,7 +365,7 @@ export const evenDaysData = [
             {
                 startTime: "08:30",
                 endTime: "09:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -371,7 +375,7 @@ export const evenDaysData = [
             {
                 startTime: "09:00",
                 endTime: "09:30",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -381,7 +385,7 @@ export const evenDaysData = [
             {
                 startTime: "09:30",
                 endTime: "10:00",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -391,7 +395,7 @@ export const evenDaysData = [
             {
                 startTime: "10:00",
                 endTime: "10:30",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -401,7 +405,7 @@ export const evenDaysData = [
             {
                 startTime: "10:30",
                 endTime: "11:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -411,7 +415,7 @@ export const evenDaysData = [
             {
                 startTime: "13:00",
                 endTime: "13:30",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -421,7 +425,7 @@ export const evenDaysData = [
             {
                 startTime: "13:30",
                 endTime: "14:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -431,7 +435,7 @@ export const evenDaysData = [
             {
                 startTime: "14:00",
                 endTime: "14:30",
-                status: "blocked" as CellType,
+                status: "blocked" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -441,7 +445,7 @@ export const evenDaysData = [
             {
                 startTime: "14:30",
                 endTime: "15:00",
-                status: "blocked" as CellType,
+                status: "blocked" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -451,7 +455,7 @@ export const evenDaysData = [
             {
                 startTime: "15:00",
                 endTime: "15:30",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -461,7 +465,7 @@ export const evenDaysData = [
             {
                 startTime: "15:30",
                 endTime: "16:00",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -471,7 +475,7 @@ export const evenDaysData = [
             {
                 startTime: "16:00",
                 endTime: "16:30",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -481,7 +485,7 @@ export const evenDaysData = [
             {
                 startTime: "16:30",
                 endTime: "17:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -491,7 +495,7 @@ export const evenDaysData = [
             {
                 startTime: "17:00",
                 endTime: "17:30",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -501,7 +505,7 @@ export const evenDaysData = [
             {
                 startTime: "17:30",
                 endTime: "18:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -527,7 +531,7 @@ export const evenDaysData = [
             {
                 startTime: "08:00",
                 endTime: "09:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -537,7 +541,7 @@ export const evenDaysData = [
             {
                 startTime: "09:00",
                 endTime: "10:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -547,7 +551,7 @@ export const evenDaysData = [
             {
                 startTime: "10:00",
                 endTime: "11:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -557,7 +561,7 @@ export const evenDaysData = [
             {
                 startTime: "11:00",
                 endTime: "12:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -569,7 +573,7 @@ export const evenDaysData = [
                 endTime: "14:00",
                 title: "title",
                 subtitle: "subtitle",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -581,7 +585,7 @@ export const evenDaysData = [
                 endTime: "15:00",
                 title: "title",
                 subtitle: "subtitle",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -591,7 +595,7 @@ export const evenDaysData = [
             {
                 startTime: "15:00",
                 endTime: "16:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -601,7 +605,7 @@ export const evenDaysData = [
             {
                 startTime: "16:00",
                 endTime: "17:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -611,7 +615,7 @@ export const evenDaysData = [
             {
                 startTime: "17:00",
                 endTime: "18:00",
-                status: "blocked" as CellType,
+                status: "blocked" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -622,7 +626,7 @@ export const evenDaysData = [
                 startTime: "18:00",
                 endTime: "19:00",
                 subtitle: "",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -632,7 +636,7 @@ export const evenDaysData = [
             {
                 startTime: "19:00",
                 endTime: "20:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -642,7 +646,7 @@ export const evenDaysData = [
             {
                 startTime: "20:00",
                 endTime: "21:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -652,7 +656,7 @@ export const evenDaysData = [
             {
                 startTime: "21:00",
                 endTime: "22:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -678,7 +682,7 @@ export const evenDaysData = [
             {
                 startTime: "08:00:00",
                 endTime: "08:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -688,7 +692,7 @@ export const evenDaysData = [
             {
                 startTime: "08:15:00",
                 endTime: "08:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -698,7 +702,7 @@ export const evenDaysData = [
             {
                 startTime: "08:30:00",
                 endTime: "08:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -708,7 +712,7 @@ export const evenDaysData = [
             {
                 startTime: "08:45:00",
                 endTime: "09:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -718,7 +722,7 @@ export const evenDaysData = [
             {
                 startTime: "09:00:00",
                 endTime: "09:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -728,7 +732,7 @@ export const evenDaysData = [
             {
                 startTime: "09:15:00",
                 endTime: "09:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -738,7 +742,7 @@ export const evenDaysData = [
             {
                 startTime: "09:30:00",
                 endTime: "09:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -748,7 +752,7 @@ export const evenDaysData = [
             {
                 startTime: "09:45:00",
                 endTime: "10:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -758,7 +762,7 @@ export const evenDaysData = [
             {
                 startTime: "10:00:00",
                 endTime: "10:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -768,7 +772,7 @@ export const evenDaysData = [
             {
                 startTime: "10:15:00",
                 endTime: "10:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -778,7 +782,7 @@ export const evenDaysData = [
             {
                 startTime: "10:30:00",
                 endTime: "10:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -788,7 +792,7 @@ export const evenDaysData = [
             {
                 startTime: "10:45:00",
                 endTime: "11:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -798,7 +802,7 @@ export const evenDaysData = [
             {
                 startTime: "11:00:00",
                 endTime: "11:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -808,7 +812,7 @@ export const evenDaysData = [
             {
                 startTime: "11:15:00",
                 endTime: "11:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -818,7 +822,7 @@ export const evenDaysData = [
             {
                 startTime: "11:30:00",
                 endTime: "11:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -828,7 +832,7 @@ export const evenDaysData = [
             {
                 startTime: "11:45:00",
                 endTime: "12:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -838,7 +842,7 @@ export const evenDaysData = [
             {
                 startTime: "12:00:00",
                 endTime: "13:00:00",
-                status: "blocked" as CellType,
+                status: "blocked" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -848,7 +852,7 @@ export const evenDaysData = [
             {
                 startTime: "13:00:00",
                 endTime: "13:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -858,7 +862,7 @@ export const evenDaysData = [
             {
                 startTime: "13:15:00",
                 endTime: "13:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -868,7 +872,7 @@ export const evenDaysData = [
             {
                 startTime: "13:30:00",
                 endTime: "13:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -878,7 +882,7 @@ export const evenDaysData = [
             {
                 startTime: "13:45:00",
                 endTime: "14:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -888,7 +892,7 @@ export const evenDaysData = [
             {
                 startTime: "14:00:00",
                 endTime: "14:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -898,7 +902,7 @@ export const evenDaysData = [
             {
                 startTime: "14:15:00",
                 endTime: "14:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -908,7 +912,7 @@ export const evenDaysData = [
             {
                 startTime: "14:30:00",
                 endTime: "14:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -918,7 +922,7 @@ export const evenDaysData = [
             {
                 startTime: "14:45:00",
                 endTime: "15:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -930,7 +934,7 @@ export const evenDaysData = [
                 endTime: "16:30:00",
                 title: "title",
                 subtitle: "subtitle",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -940,7 +944,7 @@ export const evenDaysData = [
             {
                 startTime: "16:30:00",
                 endTime: "16:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -950,7 +954,7 @@ export const evenDaysData = [
             {
                 startTime: "16:45:00",
                 endTime: "17:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -960,7 +964,7 @@ export const evenDaysData = [
             {
                 startTime: "17:00:00",
                 endTime: "17:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -970,7 +974,7 @@ export const evenDaysData = [
             {
                 startTime: "17:15:00",
                 endTime: "17:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -980,7 +984,7 @@ export const evenDaysData = [
             {
                 startTime: "17:30:00",
                 endTime: "17:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -990,7 +994,7 @@ export const evenDaysData = [
             {
                 startTime: "17:45:00",
                 endTime: "18:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1019,7 +1023,7 @@ export const evenDaysData = [
                 title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
                 subtitle:
                     "a very long text that spans across the entire universe beyond the horizon into the blackhole transcending time and space",
-                status: "filled" as CellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1029,7 +1033,7 @@ export const evenDaysData = [
             {
                 startTime: "16:30:00",
                 endTime: "16:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1039,7 +1043,7 @@ export const evenDaysData = [
             {
                 startTime: "16:45:00",
                 endTime: "17:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1049,7 +1053,7 @@ export const evenDaysData = [
             {
                 startTime: "17:00:00",
                 endTime: "17:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1059,7 +1063,7 @@ export const evenDaysData = [
             {
                 startTime: "17:15:00",
                 endTime: "17:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1069,7 +1073,7 @@ export const evenDaysData = [
             {
                 startTime: "17:30:00",
                 endTime: "17:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1079,7 +1083,7 @@ export const evenDaysData = [
             {
                 startTime: "17:45:00",
                 endTime: "18:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1105,7 +1109,7 @@ export const evenDaysData = [
             {
                 startTime: "08:00",
                 endTime: "09:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1115,7 +1119,7 @@ export const evenDaysData = [
             {
                 startTime: "09:00",
                 endTime: "10:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1125,7 +1129,7 @@ export const evenDaysData = [
             {
                 startTime: "10:00",
                 endTime: "11:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1135,7 +1139,7 @@ export const evenDaysData = [
             {
                 startTime: "11:00",
                 endTime: "12:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1145,7 +1149,7 @@ export const evenDaysData = [
             {
                 startTime: "13:00",
                 endTime: "14:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1155,7 +1159,7 @@ export const evenDaysData = [
             {
                 startTime: "14:00",
                 endTime: "15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1165,7 +1169,7 @@ export const evenDaysData = [
             {
                 startTime: "15:00",
                 endTime: "16:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1175,7 +1179,7 @@ export const evenDaysData = [
             {
                 startTime: "16:00",
                 endTime: "17:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1185,7 +1189,7 @@ export const evenDaysData = [
             {
                 startTime: "17:00",
                 endTime: "18:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1195,7 +1199,7 @@ export const evenDaysData = [
             {
                 startTime: "18:00",
                 endTime: "19:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1205,7 +1209,7 @@ export const evenDaysData = [
             {
                 startTime: "19:00",
                 endTime: "20:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1215,7 +1219,7 @@ export const evenDaysData = [
             {
                 startTime: "20:00",
                 endTime: "21:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1225,7 +1229,7 @@ export const evenDaysData = [
             {
                 startTime: "21:00",
                 endTime: "22:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1251,7 +1255,7 @@ export const evenDaysData = [
             {
                 startTime: "08:00:00",
                 endTime: "08:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1261,7 +1265,7 @@ export const evenDaysData = [
             {
                 startTime: "08:15:00",
                 endTime: "08:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1271,7 +1275,7 @@ export const evenDaysData = [
             {
                 startTime: "08:30:00",
                 endTime: "08:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1281,7 +1285,7 @@ export const evenDaysData = [
             {
                 startTime: "08:45:00",
                 endTime: "09:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1291,7 +1295,7 @@ export const evenDaysData = [
             {
                 startTime: "09:00:00",
                 endTime: "09:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1301,7 +1305,7 @@ export const evenDaysData = [
             {
                 startTime: "09:15:00",
                 endTime: "09:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1311,7 +1315,7 @@ export const evenDaysData = [
             {
                 startTime: "09:30:00",
                 endTime: "09:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1321,7 +1325,7 @@ export const evenDaysData = [
             {
                 startTime: "09:45:00",
                 endTime: "10:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1331,7 +1335,7 @@ export const evenDaysData = [
             {
                 startTime: "10:00:00",
                 endTime: "10:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1341,7 +1345,7 @@ export const evenDaysData = [
             {
                 startTime: "10:15:00",
                 endTime: "10:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1351,7 +1355,7 @@ export const evenDaysData = [
             {
                 startTime: "10:30:00",
                 endTime: "10:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1361,7 +1365,7 @@ export const evenDaysData = [
             {
                 startTime: "10:45:00",
                 endTime: "11:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1371,7 +1375,7 @@ export const evenDaysData = [
             {
                 startTime: "11:00:00",
                 endTime: "11:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1381,7 +1385,7 @@ export const evenDaysData = [
             {
                 startTime: "11:15:00",
                 endTime: "11:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1391,7 +1395,7 @@ export const evenDaysData = [
             {
                 startTime: "11:30:00",
                 endTime: "11:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1401,7 +1405,7 @@ export const evenDaysData = [
             {
                 startTime: "11:45:00",
                 endTime: "12:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1411,7 +1415,7 @@ export const evenDaysData = [
             {
                 startTime: "12:00:00",
                 endTime: "13:00:00",
-                status: "blocked" as CellType,
+                status: "blocked" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1421,7 +1425,7 @@ export const evenDaysData = [
             {
                 startTime: "13:00:00",
                 endTime: "13:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1431,7 +1435,7 @@ export const evenDaysData = [
             {
                 startTime: "13:15:00",
                 endTime: "13:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1441,7 +1445,7 @@ export const evenDaysData = [
             {
                 startTime: "13:30:00",
                 endTime: "13:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1451,7 +1455,7 @@ export const evenDaysData = [
             {
                 startTime: "13:45:00",
                 endTime: "14:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1461,7 +1465,7 @@ export const evenDaysData = [
             {
                 startTime: "14:00:00",
                 endTime: "14:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1471,7 +1475,7 @@ export const evenDaysData = [
             {
                 startTime: "14:15:00",
                 endTime: "14:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1481,7 +1485,7 @@ export const evenDaysData = [
             {
                 startTime: "14:30:00",
                 endTime: "14:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1491,7 +1495,7 @@ export const evenDaysData = [
             {
                 startTime: "14:45:00",
                 endTime: "15:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1501,7 +1505,7 @@ export const evenDaysData = [
             {
                 startTime: "15:00:00",
                 endTime: "15:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1511,7 +1515,7 @@ export const evenDaysData = [
             {
                 startTime: "15:15:00",
                 endTime: "15:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1521,7 +1525,7 @@ export const evenDaysData = [
             {
                 startTime: "15:30:00",
                 endTime: "15:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1531,7 +1535,7 @@ export const evenDaysData = [
             {
                 startTime: "15:45:00",
                 endTime: "16:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1541,7 +1545,7 @@ export const evenDaysData = [
             {
                 startTime: "16:00:00",
                 endTime: "16:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1551,7 +1555,7 @@ export const evenDaysData = [
             {
                 startTime: "16:15:00",
                 endTime: "16:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1561,7 +1565,7 @@ export const evenDaysData = [
             {
                 startTime: "16:30:00",
                 endTime: "16:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1571,7 +1575,7 @@ export const evenDaysData = [
             {
                 startTime: "16:45:00",
                 endTime: "17:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1581,7 +1585,7 @@ export const evenDaysData = [
             {
                 startTime: "17:00:00",
                 endTime: "17:15:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1591,7 +1595,7 @@ export const evenDaysData = [
             {
                 startTime: "17:15:00",
                 endTime: "17:30:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1601,7 +1605,7 @@ export const evenDaysData = [
             {
                 startTime: "17:30:00",
                 endTime: "17:45:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
@@ -1611,7 +1615,7 @@ export const evenDaysData = [
             {
                 startTime: "17:45:00",
                 endTime: "18:00:00",
-                status: "default" as CellType,
+                status: "default" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`

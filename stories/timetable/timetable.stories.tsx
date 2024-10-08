@@ -4,12 +4,14 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
+    Card,
     Color,
     PopoverV2TriggerType,
     Text,
     TimeTableRowCellData,
     TimeTableRowData,
 } from "../../src";
+import { applyHtmlContentStyle } from "../../src/shared/html-content/html-content";
 import { TimeTable } from "../../src/timetable/timetable";
 import { StyledHoverContent, getTimeTableData, lazyLoad } from "./mock-data";
 import { timetableDefaultData } from "./timetable-default-data";
@@ -98,13 +100,14 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
     render: () => {
         const [results, setResults] = useState([]);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
-        const [loading, setLoading] = useState(false);
+        const [loading, setLoading] = useState(true);
         const [page, setPage] = useState(1);
 
         useEffect(() => {
             setTimeout(() => {
                 const results = lazyLoad(page);
                 setResults((prev) => [...prev, ...results]);
+                setLoading(false);
             }, 2000);
         }, [page]);
 
@@ -164,6 +167,14 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
 
 export const TimeTableWithStyledPopovers: StoryObj<Component> = {
     render: () => {
+        const StyledCustomPopoverCard = styled(Card)`
+            display: flex;
+            flex-direction: column;
+            row-gap: 2rem;
+            width: 400px;
+            padding: 3rem;
+            ${applyHtmlContentStyle({ textSize: "BodySmall" })}
+        `;
         const buildCustomPopover = (
             row: TimeTableRowData,
             cell: TimeTableRowCellData
@@ -173,14 +184,8 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                     return {
                         customPopover: {
                             trigger: "hover" as PopoverV2TriggerType,
-                            content: (
-                                <div
-                                    style={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        rowGap: "2rem",
-                                    }}
-                                >
+                            content: () => (
+                                <StyledCustomPopoverCard>
                                     <div>
                                         <Text.H3 weight={"semibold"}>
                                             {row.name}
@@ -202,7 +207,7 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                                                 color: `${Color.Neutral[3]}`,
                                             }}
                                         >
-                                            Booking owner
+                                            E-mail
                                         </Text.H5>
                                         <Text.Body>{cell.subtitle}</Text.Body>
                                         <a
@@ -221,14 +226,12 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                                                 color: `${Color.Neutral[3]}`,
                                             }}
                                         >
-                                            Booking title
+                                            Title
                                         </Text.H5>
                                         <Text.Body>{cell.title}</Text.Body>
                                     </div>
-                                </div>
+                                </StyledCustomPopoverCard>
                             ),
-                            width: "400px",
-                            padding: "3rem",
                             offset: 0,
                             delay: { open: 1250, close: 1250 },
                         },
@@ -238,7 +241,7 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
                     return {
                         customPopover: {
                             trigger: "hover" as PopoverV2TriggerType,
-                            content: "Available",
+                            content: () => <Card>Available</Card>,
                             offset: 0,
                             delay: { open: 0, close: 0 },
                         },
@@ -250,23 +253,23 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
         const rowData = getTimeTableData().rowData.map((row) => {
             return {
                 ...row,
-                rowHeaderCustomPopover: {
+                rowHeaderPopover: {
                     trigger: "hover" as PopoverV2TriggerType,
-                    content: (
-                        <>
+                    content: () => (
+                        <Card>
                             <Text.Body weight={"regular"}>{row.name}</Text.Body>
                             <StyledHoverContent>
                                 <PinIcon />
                                 Eclipse
                             </StyledHoverContent>
-                        </>
+                        </Card>
                     ),
                     offset: 0,
                     delay: { open: 500, close: 0 },
                 },
-                outsideOpHoursCellCustomPopover: {
+                outOfRangeCellPopover: {
                     trigger: "hover" as PopoverV2TriggerType,
-                    content: "Outside operating hours",
+                    content: () => <Card>Outside operating hours</Card>,
                     offset: 0,
                     delay: { open: 0, close: 0 },
                 },

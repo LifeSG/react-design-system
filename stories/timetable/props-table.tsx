@@ -86,14 +86,14 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "outsideOpHoursCellCustomPopover",
+                name: "outOfRangeCellPopover",
                 description: (
                     <>
                         The props for rendering any custom popover for the
                         automatically filled <code>blocked</code>cells.
                     </>
                 ),
-                propTypes: ["CustomPopoverProps"],
+                propTypes: ["TimeTablePopoverProps"],
             },
             {
                 name: "onRefresh",
@@ -201,10 +201,10 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string", "JSX.Element"],
             },
             {
-                name: "rowHeaderCustomPopover",
+                name: "rowHeaderPopover",
                 description:
                     "The props for rendering any custom popover for this row header",
-                propTypes: ["CustomPopoverProps"],
+                propTypes: ["TimeTablePopoverProps"],
             },
             {
                 name: "rowMinTime",
@@ -303,7 +303,7 @@ const DATA: ApiTableSectionProps[] = [
                         <code>trigger=click</code> for this cell.
                     </>
                 ),
-                propTypes: ["CustomPopoverProps"],
+                propTypes: ["TimeTablePopoverProps"],
             },
             {
                 name: "onClick",
@@ -316,7 +316,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "CustomPopoverProps",
+        name: "TimeTablePopoverProps",
         attributes: [
             {
                 name: "trigger",

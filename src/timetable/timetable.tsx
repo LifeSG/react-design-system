@@ -6,7 +6,6 @@ import { CalendarHelper } from "../util";
 import { ROW_BAR_COLOR_SEQUENCE, ROW_INTERVAL } from "./const";
 import { TimeTableNavigator } from "./timetable-navigator/timetable-navigator";
 import { RowBar } from "./timetable-row/row-bar";
-import { StyledPopoverContent } from "./timetable-row/row-cell.style";
 import {
     ClickableRowHeaderTitle,
     ColumnHeader,
@@ -27,7 +26,7 @@ import {
     StyledPopoverTrigger,
     TimeTableContainer,
 } from "./timetable.style";
-import { CustomPopoverProps, TimeTableProps, TimeTableRowData } from "./types";
+import { TimeTableProps, TimeTableRowData } from "./types";
 
 export const TimeTable = ({
     date,
@@ -158,35 +157,22 @@ export const TimeTable = ({
         };
     })();
 
-    const buildPopoverContent = (customPopoverProps: CustomPopoverProps) => {
-        return (
-            <StyledPopoverContent
-                $padding={customPopoverProps.padding}
-                $width={customPopoverProps.width}
-                data-testid={`row-header-popover-card`}
-            >
-                {customPopoverProps.content}
-            </StyledPopoverContent>
-        );
-    };
-
     const buildPopoverTrigger = (
         data: TimeTableRowData,
         child: JSX.Element
     ) => {
-        if (!data.rowHeaderCustomPopover) {
+        if (!data.rowHeaderPopover) {
             return child;
         }
 
         const popoverTriggerProps: PopoverV2TriggerProps = {
             position: "bottom-start",
             rootNode: tableContainerRef,
-            customOffset: data.rowHeaderCustomPopover.offset,
+            customOffset: data.rowHeaderPopover.offset,
             children: child,
-            trigger: data.rowHeaderCustomPopover.trigger,
-            delay: data.rowHeaderCustomPopover.delay,
-            popoverContent: () =>
-                buildPopoverContent(data.rowHeaderCustomPopover),
+            trigger: data.rowHeaderPopover.trigger,
+            delay: data.rowHeaderPopover.delay,
+            popoverContent: data.rowHeaderPopover.content,
         };
 
         return (

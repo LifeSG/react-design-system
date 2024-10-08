@@ -153,12 +153,12 @@ describe("TimeTable", () => {
                                 },
                             },
                         ],
-                        rowHeaderCustomPopover: {
+                        rowHeaderPopover: {
                             trigger: "hover",
                             content: "hello world123",
                             delay: { open: 0, close: 0 },
                         },
-                        outsideOpHoursCellCustomPopover: {
+                        outOfRangeCellPopover: {
                             trigger: "hover",
                             content: "skibididiidi ohio",
                             delay: { open: 0, close: 0 },
@@ -178,25 +178,22 @@ describe("TimeTable", () => {
 
         fireEvent.mouseEnter(firstRowHeader);
         expect(screen.queryByText("hello world123")).toBeVisible();
-        expect(
-            screen.queryByTestId("row-header-popover-card")
-        ).toBeInTheDocument();
+        expect(screen.queryByTestId("popover")).toBeInTheDocument();
+        fireEvent.mouseLeave(firstRowHeader);
 
         fireEvent.mouseEnter(blockedCell);
         expect(screen.queryByText("skibididiidi ohio")).toBeVisible();
-        expect(
-            screen.queryByTestId("blocked-popover-card")
-        ).toBeInTheDocument();
+        expect(screen.queryByTestId("popover")).toBeInTheDocument();
+        fireEvent.mouseLeave(blockedCell);
 
         fireEvent.mouseEnter(filledCell);
         expect(screen.queryByText("beeeboobeebooo")).toBeVisible();
-        expect(
-            screen.queryByTestId("blocked-popover-card")
-        ).toBeInTheDocument();
+        expect(screen.queryByTestId("popover")).toBeInTheDocument();
+        fireEvent.mouseLeave(filledCell);
     });
 
     it("should trigger onNameClick if row header name are clicked", () => {
-        const onNameClick = jest.fn();
+        const onRowNameClick = jest.fn();
 
         render(
             <TimeTable
@@ -207,7 +204,7 @@ describe("TimeTable", () => {
                         name: "Test",
                         rowMinTime: "08:00:00",
                         rowMaxTime: "09:00:00",
-                        onRowNameClick: onNameClick,
+                        onRowNameClick: onRowNameClick,
                         rowCells: [
                             {
                                 id: "1",
@@ -225,7 +222,7 @@ describe("TimeTable", () => {
         const rowHeaderName = screen.getByTestId("1-row-header-title");
 
         fireEvent.click(rowHeaderName);
-        expect(onNameClick).toHaveBeenCalledTimes(1);
+        expect(onRowNameClick).toHaveBeenCalledTimes(1);
     });
 
     it("should have show empty content display if no rowData is passed into TimeTable", () => {

@@ -24,7 +24,11 @@ export const TimeTableNavigator = ({
     selectedDate,
     isLoading,
     tableContainerRef,
-    ...optionalProps
+    totalRecords,
+    onLeftArrowClick,
+    onRightArrowClick,
+    onRefresh,
+    ...otherProps
 }: TimeTableNavigatorProps) => {
     // =============================================================================
     // EVENT HANDLERS
@@ -36,43 +40,41 @@ export const TimeTableNavigator = ({
         }
     };
 
-    const onRefresh = () => {
-        if (!optionalProps.onRefresh) return;
+    const handleRefresh = () => {
+        if (!onRefresh) return;
         scrollToTop();
-        optionalProps.onRefresh();
+        onRefresh();
     };
 
     const handleRightArrowClick = (date: string) => {
         scrollToTop();
-        optionalProps.onRightArrowClick(date);
+        onRightArrowClick(date);
     };
 
     const handleLeftArrowClick = (date: string) => {
         scrollToTop();
-        optionalProps.onLeftArrowClick(date);
+        onLeftArrowClick(date);
     };
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderRecordsSection = () => {
-        if (optionalProps.totalRecords === undefined) return <></>;
+        if (totalRecords === undefined) return <></>;
         return (
-            <NavigationHeaderSubtitleWrapper id="timetable-records-wrapper-id">
+            <NavigationHeaderSubtitleWrapper>
                 <StyledResultText
-                    id="timetable-records-results-id"
                     data-testid="timetable-records-results"
                     weight={"semibold"}
                 >
-                    {optionalProps.totalRecords} results found
+                    {totalRecords} results found
                 </StyledResultText>
-                {optionalProps.onRefresh && (
+                {onRefresh && (
                     <StyledRefreshButton
-                        id="timetable-records-refresh-btn-id"
                         data-testid="timetable-records-refresh-btn"
                         styleType="light"
                         sizeType="small"
                         disabled={isLoading}
-                        onClick={onRefresh}
+                        onClick={handleRefresh}
                         $isLoading={isLoading}
                     >
                         <RefreshIcon />
@@ -83,21 +85,17 @@ export const TimeTableNavigator = ({
     };
 
     return (
-        <NavigationHeaderWrapper id="timetable-navigation-header-wrapper-id">
+        <NavigationHeaderWrapper>
             {
                 <DateNavigator
                     selectedDate={selectedDate}
                     isLoading={isLoading}
-                    {...optionalProps}
+                    {...otherProps}
                     onRightArrowClick={
-                        optionalProps.onRightArrowClick
-                            ? handleRightArrowClick
-                            : undefined
+                        onRightArrowClick ? handleRightArrowClick : undefined
                     }
                     onLeftArrowClick={
-                        optionalProps.onLeftArrowClick
-                            ? handleLeftArrowClick
-                            : undefined
+                        onLeftArrowClick ? handleLeftArrowClick : undefined
                     }
                 />
             }

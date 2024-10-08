@@ -1,11 +1,7 @@
 import dayjs from "dayjs";
 import { MutableRefObject } from "react";
 import { RowBarColors } from "../const";
-import {
-    CustomPopoverProps,
-    TimeTableRowCellData,
-    TimeTableRowData,
-} from "../types";
+import { TimeTableRowCellData, TimeTableRowData } from "../types";
 import { RowCellContainer } from "./row-bar.style";
 import { RowCell } from "./row-cell";
 
@@ -15,7 +11,6 @@ interface RowBarProps extends TimeTableRowData {
     intervalWidth: number;
     containerRef: MutableRefObject<HTMLDivElement>;
     rowBarColor: RowBarColors;
-    outsideOpHoursCellCustomPopover?: CustomPopoverProps | undefined;
 }
 
 export const RowBar = ({
@@ -28,7 +23,7 @@ export const RowBar = ({
     rowBarColor,
     intervalWidth,
     containerRef,
-    outsideOpHoursCellCustomPopover,
+    outOfRangeCellPopover,
     ...otherProps
 }: RowBarProps) => {
     // =============================================================================
@@ -55,7 +50,7 @@ export const RowBar = ({
             startTime: timetableMinTime,
             endTime: rowMinTime,
             status: "blocked",
-            customPopover: outsideOpHoursCellCustomPopover,
+            customPopover: outOfRangeCellPopover,
         });
     }
 
@@ -99,7 +94,7 @@ export const RowBar = ({
             startTime: rowMaxTime,
             endTime: timetableMaxTime,
             status: "blocked",
-            customPopover: outsideOpHoursCellCustomPopover,
+            customPopover: outOfRangeCellPopover,
         });
     }
 

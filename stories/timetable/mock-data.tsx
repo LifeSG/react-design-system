@@ -2,7 +2,7 @@ import { Person2Icon, PinIcon } from "@lifesg/react-icons";
 import dayjs, { Dayjs } from "dayjs";
 import styled from "styled-components";
 import { Text } from "../../src/text";
-import { CellType, TimeTableProps } from "../../src/timetable/types";
+import { TimeTableCellType, TimeTableProps } from "../../src/timetable/types";
 import { evenDaysData } from "./timetable-even-days-data";
 import lazyLoadData from "./timetable-lazy-load-data.json";
 import { oddDaysData } from "./timetable-odd-days-data";
@@ -13,7 +13,7 @@ export const StyledHoverContent = styled.div`
     column-gap: 5px;
 `;
 
-const cellTypeMap: Record<string, CellType> = {
+const cellTypeMap: Record<string, TimeTableCellType> = {
     OCCUPIED: "filled",
     DISABLED: "blocked",
     DEFAULT: "default",

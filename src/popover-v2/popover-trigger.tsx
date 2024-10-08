@@ -42,6 +42,7 @@ export const PopoverTrigger = ({
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
     });
+
     const { refs, floatingStyles, context } = useFloating({
         open: visible,
         placement: position,

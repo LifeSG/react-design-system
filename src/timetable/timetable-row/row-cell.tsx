@@ -10,7 +10,6 @@ import {
     BlockDescription,
     BlockTitle,
     Gap,
-    StyledPopoverContent,
     Wrapper,
 } from "./row-cell.style";
 
@@ -85,18 +84,6 @@ const Component = ({
         return wrapper(children);
     };
 
-    const buildPopoverContent = (content: string | JSX.Element) => {
-        return (
-            <StyledPopoverContent
-                $padding={customPopover.padding}
-                $width={customPopover.width}
-                data-testid={`${status}-popover-card`}
-            >
-                {content}
-            </StyledPopoverContent>
-        );
-    };
-
     const buildPopoverTrigger = (child: JSX.Element) => {
         const popoverTriggerProps: PopoverV2TriggerProps = {
             position: "bottom-start",
@@ -105,7 +92,7 @@ const Component = ({
             children: child,
             trigger: customPopover.trigger,
             delay: customPopover.delay,
-            popoverContent: () => buildPopoverContent(customPopover.content),
+            popoverContent: customPopover.content,
         };
 
         return (

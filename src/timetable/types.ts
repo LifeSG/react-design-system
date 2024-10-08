@@ -1,7 +1,7 @@
 import { PopoverV2TriggerType } from "../popover-v2";
 import { ResourceScheme } from "../theme";
 
-export type CellType = "filled" | "blocked" | "default" | "disabled";
+export type TimeTableCellType = "filled" | "blocked" | "default" | "disabled";
 
 interface EmptyContentProps {
     description: string;
@@ -13,8 +13,8 @@ export interface TimeTableRowData {
     name: string;
     rowCells: TimeTableRowCellData[];
     subtitle?: string | JSX.Element | undefined;
-    rowHeaderCustomPopover?: CustomPopoverProps | undefined;
-    outsideOpHoursCellCustomPopover?: CustomPopoverProps | undefined;
+    rowHeaderPopover?: TimeTablePopoverProps | undefined;
+    outOfRangeCellPopover?: TimeTablePopoverProps | undefined;
     // HH:mm format, defaults to minTime
     rowMinTime?: string | undefined;
     // HH:mm format, defaults to maxTime
@@ -24,9 +24,9 @@ export interface TimeTableRowData {
         | undefined;
 }
 
-export interface CustomPopoverProps {
+export interface TimeTablePopoverProps {
     trigger: PopoverV2TriggerType;
-    content: string | JSX.Element;
+    content: string | JSX.Element | (() => React.ReactNode);
     width?: string | undefined;
     padding?: string | undefined;
     delay?:
@@ -62,10 +62,10 @@ export interface TimeTableRowCellData {
     startTime: string;
     // HH:mm format
     endTime: string;
-    status: CellType;
+    status: TimeTableCellType;
     title?: string | undefined;
     subtitle?: string | undefined;
-    customPopover?: CustomPopoverProps | undefined;
+    customPopover?: TimeTablePopoverProps | undefined;
     onClick?:
         | ((data: TimeTableRowCellData, e: React.MouseEvent) => void)
         | undefined;
