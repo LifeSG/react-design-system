@@ -36,13 +36,10 @@ const Component = ({
     // CONST, STATE, REF
     // =============================================================================
     const isOnTheHour = dayjs(endTime, "HH:mm").get("minutes") === 0;
-    const isNotAvailable = status !== "default" || !status;
     const numberOfIntervals =
         DateHelper.getTimeDiffInMinutes(startTime, endTime) / ROW_INTERVAL;
     const totalCellWidth = numberOfIntervals * intervalWidth;
-    const adjustedCellWidth = isNotAvailable
-        ? totalCellWidth - ROW_CELL_GAP
-        : totalCellWidth;
+    const adjustedCellWidth = totalCellWidth - ROW_CELL_GAP;
     const isClickable =
         !!onClick || (customPopover && customPopover.trigger === "click");
 
@@ -126,7 +123,7 @@ const Component = ({
                             </BlockDescription>
                         )}
                     </Block>
-                    {isNotAvailable && <Gap />}
+                    {<Gap />}
                 </Wrapper>
             </BlockContainer>
         </ConditionalCellWrapper>

@@ -75,6 +75,9 @@ export const Block = styled.div<BlockStyleProps>`
             default:
                 return css`
                     &:hover {
+                        background-color: ${$isClickable
+                            ? Color.Accent.Light[5]
+                            : ""};
                         cursor: ${$isClickable ? "pointer" : "default"};
                     }
                 `;
