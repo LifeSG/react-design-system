@@ -25,7 +25,7 @@ export const expectedOutputCode = `
 import { Layout } from "@lifesg/react-design-system/layout";
 
 <div>
-    <Layout.ColDiv xlCols={12} lgCols={8} smCols={4}>
+    <Layout.ColDiv xlCols={12} mdCols={8} xxsCols={4}>
         <TextComponent>{children}</TextComponent>
         <Layout.Container>
             {content}

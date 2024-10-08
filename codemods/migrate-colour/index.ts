@@ -36,7 +36,7 @@ export default function transformer(file: FileInfo, api: API, options: any) {
     let isv2ColorImport = false;
 
     // Determine which Colour mapping to use
-    const color_mapping =
+    const colorMapping =
         COLOR_MAPPINGS[options.mapping] || COLOR_MAPPINGS.lifesg;
 
     //Update Colour usage post mapping
@@ -53,9 +53,9 @@ export default function transformer(file: FileInfo, api: API, options: any) {
     };
 
     source.find(j.ImportDeclaration).forEach((path) => {
-        const import_path = path.node.source.value;
+        const importPath = path.node.source.value;
 
-        if (import_path === IMPORT_PATHS.V2_COLOR) {
+        if (importPath === IMPORT_PATHS.V2_COLOR) {
             isv2ColorImport = true;
 
             // Update imports
@@ -95,7 +95,7 @@ export default function transformer(file: FileInfo, api: API, options: any) {
         source.find(j.MemberExpression).forEach((path) => {
             let currentPath = path.node;
             const propertyNameParts: string[] = [];
-            let index: any = null;
+            let index: number | null = null;
             let startsWithColour = false;
 
             while (j.MemberExpression.check(currentPath)) {
@@ -103,7 +103,12 @@ export default function transformer(file: FileInfo, api: API, options: any) {
                 const object = currentPath.object;
 
                 if (j.Literal.check(property)) {
-                    index = property.value;
+                    const value = property.value;
+                    if (typeof value === "number") {
+                        index = value;
+                    } else {
+                        index = null;
+                    }
                 } else if (j.Identifier.check(property)) {
                     propertyNameParts.unshift(property.name);
                 }
@@ -126,7 +131,7 @@ export default function transformer(file: FileInfo, api: API, options: any) {
                     property_name += `[${index}]`;
                 }
 
-                const newColorValue = color_mapping[property_name];
+                const newColorValue = colorMapping[property_name];
                 if (newColorValue) {
                     replaceWithColorPrimitive(path, newColorValue);
                 }

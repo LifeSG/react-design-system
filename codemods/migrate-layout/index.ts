@@ -65,7 +65,9 @@ export default function transformer(file: FileInfo, api: API, options: any) {
             if (
                 j.JSXMemberExpression.check(name) &&
                 j.JSXIdentifier.check(name.object) &&
-                name.object.name === IMPORT_SPECIFIERS.LAYOUT
+                name.object.name === IMPORT_SPECIFIERS.LAYOUT &&
+                j.JSXIdentifier.check(name.property) &&
+                name.property.name === "ColDiv"
             ) {
                 if (attributes && attributes.length > 0) {
                     attributes.forEach((attribute) => {
