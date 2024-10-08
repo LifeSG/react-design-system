@@ -73,6 +73,12 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                 defaultValue: "true",
             },
             {
+                name: "stretch",
+                description:
+                    "Specifies if contents should take up the full width of the section",
+                propTypes: ["boolean"],
+            },
+            {
                 name: "onMask",
                 description: "Called when the mask icon is clicked",
                 propTypes: ["(item: UneditableSectionItemProps) => void"],
@@ -201,6 +207,16 @@ const SECTION_DATA: ApiTableSectionProps[] = [
                         </a>
                     </>
                 ),
+            },
+            {
+                name: "stretch",
+                description: (
+                    <>
+                        Specifies if contents should take up the full width of
+                        the <code>UneditableSection</code>
+                    </>
+                ),
+                propTypes: ["boolean"],
             },
         ],
     },
