@@ -94,23 +94,3 @@ export const BlockDescription = styled(Text.XSmall)`
     overflow: hidden;
     white-space: nowrap;
 `;
-
-export const StyledPopoverTrigger = styled(PopoverTrigger)`
-    padding: 0;
-    max-height: 62px;
-    &:hover {
-        cursor: pointer;
-    }
-`;
-
-interface StyledPopoverContentProps {
-    $width?: string;
-    $padding?: string;
-}
-
-export const StyledPopoverContent = styled(
-    PopoverCard
-)<StyledPopoverContentProps>`
-    width: ${(props) => props.$width ?? ""};
-    padding: ${(props) => props.$padding ?? ""};
-`;

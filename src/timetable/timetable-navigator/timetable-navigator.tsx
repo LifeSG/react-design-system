@@ -10,7 +10,7 @@ import {
 
 interface TimeTableNavigatorProps {
     selectedDate: string;
-    isLoading: boolean;
+    loading: boolean;
     tableContainerRef: MutableRefObject<HTMLDivElement>;
     minDate?: string | undefined;
     maxDate?: string | undefined;
@@ -22,7 +22,7 @@ interface TimeTableNavigatorProps {
 
 export const TimeTableNavigator = ({
     selectedDate,
-    isLoading,
+    loading,
     tableContainerRef,
     totalRecords,
     onLeftArrowClick,
@@ -73,9 +73,9 @@ export const TimeTableNavigator = ({
                         data-testid="timetable-records-refresh-btn"
                         styleType="light"
                         sizeType="small"
-                        disabled={isLoading}
+                        disabled={loading}
                         onClick={handleRefresh}
-                        $isLoading={isLoading}
+                        $loading={loading}
                     >
                         <RefreshIcon />
                     </StyledRefreshButton>
@@ -89,7 +89,7 @@ export const TimeTableNavigator = ({
             {
                 <DateNavigator
                     selectedDate={selectedDate}
-                    isLoading={isLoading}
+                    loading={loading}
                     {...otherProps}
                     onRightArrowClick={
                         onRightArrowClick ? handleRightArrowClick : undefined

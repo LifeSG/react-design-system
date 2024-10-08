@@ -2,7 +2,7 @@ import { isEmpty, throttle } from "lodash";
 import { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { PopoverV2TriggerProps } from "../popover-v2";
-import { CalendarHelper } from "../util";
+import { TimeHelper } from "../util/time-helper";
 import { ROW_BAR_COLOR_SEQUENCE, ROW_INTERVAL } from "./const";
 import { TimeTableNavigator } from "./timetable-navigator/timetable-navigator";
 import { RowBar } from "./timetable-row/row-bar";
@@ -32,7 +32,7 @@ export const TimeTable = ({
     date,
     emptyContent,
     rowData,
-    isLoading,
+    loading,
     minTime = "00:00",
     maxTime = "23:00",
     minDate,
@@ -48,9 +48,9 @@ export const TimeTable = ({
     // CONST, STATE, REF
     // =============================================================================
     const testId = otherProps["data-testid"] || "timetable-container-id";
-    const timetableMinTime = CalendarHelper.roundToNearestHour(minTime);
-    const timetableMaxTime = CalendarHelper.roundToNearestHour(maxTime, true);
-    const hourlyIntervals = CalendarHelper.generateHourlyIntervals(
+    const timetableMinTime = TimeHelper.roundToNearestHour(minTime);
+    const timetableMaxTime = TimeHelper.roundToNearestHour(maxTime, true);
+    const hourlyIntervals = TimeHelper.generateHourlyIntervals(
         timetableMinTime,
         timetableMaxTime
     );
@@ -80,7 +80,7 @@ export const TimeTable = ({
             const isEndReached =
                 Math.ceil(scrollTop + clientHeight) >= scrollHeight;
             const shouldLoadMore =
-                isEndReached && !allRecordsLoaded && onPage && !isLoading;
+                isEndReached && !allRecordsLoaded && onPage && !loading;
 
             if (shouldLoadMore) {
                 setLoadMore(true);
@@ -99,7 +99,7 @@ export const TimeTable = ({
                 tableContainer.removeEventListener("scroll", handleScroll);
             }
         };
-    }, [allRecordsLoaded, loadMore, isLoading, onPage]);
+    }, [allRecordsLoaded, loadMore, loading, onPage]);
 
     useEffect(() => {
         setLoadMore(false);
@@ -243,7 +243,7 @@ export const TimeTable = ({
     };
 
     const renderRowHeaderColumnLazyLoad = () => {
-        if (isLoading || !loadMore) return;
+        if (loading || !loadMore) return;
         return (
             <RowHeader $isScrolled={isScrolledX}>
                 <LoadingBar />
@@ -268,7 +268,7 @@ export const TimeTable = ({
     };
 
     const renderRowBarData = () => {
-        if (isLoading) return <Loader $isEmptyContent={isEmptyContent} />;
+        if (loading) return <Loader $isEmptyContent={isEmptyContent} />;
         return (
             <ContentContainer
                 data-testid="content-container-id"
@@ -294,7 +294,7 @@ export const TimeTable = ({
     };
 
     const renderRowDataLazyLoad = () => {
-        if (isLoading || !loadMore) return;
+        if (loading || !loadMore) return;
         return (
             <LoadingWrapper data-testid="lazy-loader">
                 {hourlyIntervals.map((_, index) => (
@@ -315,7 +315,7 @@ export const TimeTable = ({
                 <EmptyTableRowHeader>
                     <TimeTableNavigator
                         selectedDate={date}
-                        isLoading={isLoading || loadMore}
+                        loading={loading || loadMore}
                         tableContainerRef={tableContainerRef}
                         minDate={minDate}
                         maxDate={maxDate}
@@ -325,7 +325,7 @@ export const TimeTable = ({
                         onRefresh={onRefresh}
                     />
                 </EmptyTableRowHeader>
-                {!isLoading ? (
+                {!loading ? (
                     <NoResultsFound
                         type="no-item-found"
                         illustrationScheme={emptyContent?.illustrationScheme}
@@ -343,7 +343,7 @@ export const TimeTable = ({
             ref={tableContainerRef}
             data-testid={testId}
             {...otherProps}
-            $loading={isLoading}
+            $loading={loading}
             $allRecordsLoaded={allRecordsLoaded || !onPage}
         >
             <RowColumnHeader
@@ -352,7 +352,7 @@ export const TimeTable = ({
             >
                 <TimeTableNavigator
                     selectedDate={date}
-                    isLoading={isLoading || loadMore}
+                    loading={loading || loadMore}
                     tableContainerRef={tableContainerRef}
                     minDate={minDate}
                     maxDate={maxDate}

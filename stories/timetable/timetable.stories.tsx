@@ -51,7 +51,7 @@ export const TimeTableWithNavigation: StoryObj<Component> = {
 
         const [results, setResults] = useState(getTimeTableData().rowData);
         const [date, setDate] = useState(timeTableData.date);
-        const [loading, setLoading] = useState(timeTableData.isLoading);
+        const [loading, setLoading] = useState(timeTableData.loading);
 
         const onPreviousDayClick = (currentDate: string) => {
             const newDate = dayjs(currentDate)
@@ -88,7 +88,7 @@ export const TimeTableWithNavigation: StoryObj<Component> = {
                     .add(2, "days")
                     .format("YYYY-MM-DD")}
                 rowData={results}
-                isLoading={loading}
+                loading={loading}
                 onNextDayClick={onNextDayClick}
                 onPreviousDayClick={onPreviousDayClick}
             />
@@ -154,7 +154,7 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
                 minDate={dayjs(date).subtract(2, "days").format("YYYY-MM-DD")}
                 maxDate={dayjs(date).add(2, "days").format("YYYY-MM-DD")}
                 rowData={results}
-                isLoading={loading}
+                loading={loading}
                 onRefresh={onRefresh}
                 onPage={() => setPage(page + 1)}
                 totalRecords={50}

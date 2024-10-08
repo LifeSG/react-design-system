@@ -27,8 +27,6 @@ export interface TimeTableRowData {
 export interface TimeTablePopoverProps {
     trigger: PopoverV2TriggerType;
     content: string | JSX.Element | (() => React.ReactNode);
-    width?: string | undefined;
-    padding?: string | undefined;
     delay?:
         | { open?: number | undefined; close?: number | undefined }
         | undefined;
@@ -42,7 +40,7 @@ export interface TimeTableProps {
     date: string;
     emptyContent?: EmptyContentProps | undefined;
     rowData: TimeTableRowData[];
-    isLoading?: boolean | undefined;
+    loading?: boolean | undefined;
     // HH:mm format
     minTime?: string | undefined;
     // HH:mm format

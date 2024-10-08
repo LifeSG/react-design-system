@@ -1,19 +1,39 @@
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
+const TIME_FORMAT = (
+    <>
+        string-based <code>HH:mm</code> format
+    </>
+);
+const DATE_FORMAT = (
+    <>
+        string-based <code>YYYY-MM-DD</code> format
+    </>
+);
 const DATA: ApiTableSectionProps[] = [
     {
         name: "TimeTableProps",
         attributes: [
             {
+                name: "id",
+                description: "The identifier of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "className",
+                description: "The class selector of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier of the component",
+                propTypes: ["string"],
+            },
+            {
                 name: "date",
                 mandatory: true,
-                description: (
-                    <>
-                        The date string to display, any format that is
-                        acceptable by <code>Dayjs</code>will work.
-                    </>
-                ),
+                description: <>The current displayed date in {DATE_FORMAT}</>,
                 propTypes: ["string"],
             },
             {
@@ -36,7 +56,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["TimeTableRowData[]"],
             },
             {
-                name: "isLoading",
+                name: "loading",
                 mandatory: true,
                 description:
                     "The loading toggle to render the loading animation.",
@@ -44,23 +64,41 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "minTime",
-                description:
-                    "The start time of this time table in HH:mm format.",
+                description: (
+                    <>
+                        The start time of this time table in {TIME_FORMAT}{" "}
+                        format.
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
                 name: "maxTime",
-                description: "The end time of this time table in HH:mm format.",
+                description: (
+                    <>
+                        The end time of this time table in {TIME_FORMAT} format.
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
                 name: "minDate",
-                description: "The minimum date allowed for date navigation.",
+                description: (
+                    <>
+                        The minimum date allowed for navigation in {DATE_FORMAT}{" "}
+                        (inclusive)
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
                 name: "maxDate",
-                description: "The maximum date allowed for date navigation,",
+                description: (
+                    <>
+                        The maximum date allowed for navigation in {DATE_FORMAT}{" "}
+                        (inclusive)
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
@@ -74,26 +112,6 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["number"],
-            },
-            {
-                name: "width",
-                description: "The width of this time table component.",
-                propTypes: ["string"],
-            },
-            {
-                name: "height",
-                description: "The height of this time table component.",
-                propTypes: ["string"],
-            },
-            {
-                name: "outOfRangeCellPopover",
-                description: (
-                    <>
-                        The props for rendering any custom popover for the
-                        automatically filled <code>blocked</code>cells.
-                    </>
-                ),
-                propTypes: ["TimeTablePopoverProps"],
             },
             {
                 name: "onRefresh",
@@ -114,7 +132,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["() => void"],
             },
             {
-                name: "onLeftArrowClick",
+                name: "onPreviousDayClick",
                 description: (
                     <>
                         The callback function to trigger when the left arrow has
@@ -127,7 +145,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(currentDate: string) => void"],
             },
             {
-                name: "onRightArrowClick",
+                name: "onNextDayClick",
                 description: (
                     <>
                         The callback function to trigger when the right arrow
@@ -207,10 +225,20 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["TimeTablePopoverProps"],
             },
             {
+                name: "outOfRangeCellPopover",
+                description: (
+                    <>
+                        The props for rendering any custom popover for the
+                        automatically filled <code>blocked</code>cells.
+                    </>
+                ),
+                propTypes: ["TimeTablePopoverProps"],
+            },
+            {
                 name: "rowMinTime",
                 description: (
                     <>
-                        The starting time for this row in HH:mm format. <br />
+                        The starting time for this row in {TIME_FORMAT}. <br />
                         Defaults to <code>minTime</code>from
                         <code>TimeTableProps</code>.<br />
                         This component will automatically fill
@@ -224,7 +252,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "rowMaxTime",
                 description: (
                     <>
-                        The ending time for this row in HH:mm format. <br />
+                        The ending time in for this row in {TIME_FORMAT}. <br />
                         Defaults to <code>maxTime</code>from
                         <code>TimeTableProps</code>.<br />
                         This component will automatically fill
@@ -263,13 +291,17 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "startTime",
                 mandatory: true,
-                description: "The starting time of this cell. In HH:mm format.",
+                description: (
+                    <>The starting time of this cell. In {TIME_FORMAT}.</>
+                ),
                 propTypes: ["string"],
             },
             {
                 name: "endTime",
                 mandatory: true,
-                description: "The ending time of this cell. In HH:mm format.",
+                description: (
+                    <>The ending time of this cell. In {TIME_FORMAT}.</>
+                ),
                 propTypes: ["string"],
             },
             {
@@ -328,19 +360,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "content",
                 mandatory: true,
                 description: "The content to be rendered within the popover.",
-                propTypes: ["string", "JSX.Element"],
-            },
-            {
-                name: "width",
-                description:
-                    "The custom width for this popover, can be in any units (px/rem..)",
-                propTypes: ["string"],
-            },
-            {
-                name: "padding",
-                description:
-                    "The custom padding for this popover, can be in any units (px/rem..)",
-                propTypes: ["string"],
+                propTypes: ["string", "JSX.Element", "(() => React.ReactNode"],
             },
             {
                 name: "delay",

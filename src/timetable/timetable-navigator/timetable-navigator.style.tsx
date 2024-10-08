@@ -10,11 +10,11 @@ const spin = keyframes`
     }
 `;
 
-export const StyledRefreshButton = styled(IconButton)<{ $isLoading: boolean }>`
+export const StyledRefreshButton = styled(IconButton)<{ $loading: boolean }>`
     color: ${Color.Neutral[3]};
     svg {
         ${(props) => {
-            if (props.$isLoading) {
+            if (props.$loading) {
                 return css`
                     animation: ${spin} 4s linear infinite;
                 `;

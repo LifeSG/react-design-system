@@ -48,7 +48,7 @@ describe("TimeTable", () => {
                 minDate={timeTableMockData.minTime}
                 maxDate={timeTableMockData.maxDate}
                 rowData={[]}
-                isLoading={false}
+                loading={false}
                 emptyContent={timeTableMockData.emptyContent}
             />
         );
@@ -65,7 +65,7 @@ describe("TimeTable", () => {
                 minDate={timeTableMockData.minTime}
                 maxDate={timeTableMockData.maxDate}
                 rowData={[]}
-                isLoading={false}
+                loading={false}
                 emptyContent={timeTableMockData.emptyContent}
                 onNextDayClick={onRightArrowClick}
                 onPreviousDayClick={onLeftArrowClick}
@@ -100,7 +100,7 @@ describe("TimeTable", () => {
                         ],
                     },
                 ]}
-                isLoading={false}
+                loading={false}
                 emptyContent={timeTableMockData.emptyContent}
             />
         );
@@ -165,7 +165,7 @@ describe("TimeTable", () => {
                         },
                     },
                 ]}
-                isLoading={false}
+                loading={false}
                 emptyContent={timeTableMockData.emptyContent}
             />
         );
@@ -215,7 +215,7 @@ describe("TimeTable", () => {
                         ],
                     },
                 ]}
-                isLoading={false}
+                loading={false}
                 emptyContent={timeTableMockData.emptyContent}
             />
         );
@@ -230,7 +230,7 @@ describe("TimeTable", () => {
             <TimeTable
                 date={timeTableMockData.date}
                 rowData={[]}
-                isLoading={false}
+                loading={false}
                 emptyContent={timeTableMockData.emptyContent}
             />
         );
@@ -247,7 +247,7 @@ describe("TimeTable", () => {
                 maxDate={timeTableMockData.maxDate}
                 rowData={lazyLoad(1)}
                 totalRecords={20}
-                isLoading={false}
+                loading={false}
                 emptyContent={timeTableMockData.emptyContent}
                 onPage={() => lazyLoad(2)}
             />
