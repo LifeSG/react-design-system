@@ -187,6 +187,7 @@ export const ClickableRowHeaderTitle = styled(Text.H5)<{
     display: inline-block;
     text-overflow: ellipsis;
     overflow: hidden;
+    width: 100%;
     white-space: nowrap;
     color: ${Color.Primary};
     :hover {

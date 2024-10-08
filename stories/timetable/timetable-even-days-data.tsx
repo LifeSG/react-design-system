@@ -7,7 +7,7 @@ import {
 
 export const evenDaysData = [
     {
-        name: "Roti Prata oh ya be ya som ba leh yah roti prata char kway teow",
+        name: "Onion and Cheese Roti Prata",
         rowMinTime: "08:00:00",
         rowMaxTime: "16:30:00",
         subtitle: (
