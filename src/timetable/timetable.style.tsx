@@ -125,8 +125,8 @@ export const RowHeaderColumn = styled.div<RowHeaderColumnProps>`
 export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
     display: grid;
     position: sticky;
-    grid-column: 2 / 2;
-    grid-row: 1 / 1;
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
     top: 0;
     z-index: 1;
     background-color: white;
