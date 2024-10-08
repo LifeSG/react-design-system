@@ -4,6 +4,11 @@ import { Color } from "../color";
 import { ErrorDisplay } from "../error-display";
 import { PopoverTrigger } from "../popover-v2";
 import { Text } from "../text";
+import {
+    MIN_HOURLY_INTERVAL_WIDTH,
+    ROW_HEADER_WIDTH,
+    ROW_HEIGHT,
+} from "./const";
 
 interface ColumnHeaderRowProps {
     $numOfColumns: number;
@@ -45,7 +50,7 @@ export const EmptyTableContainer = styled.div`
     display: grid;
     overflow: scroll;
     position: relative;
-    grid-template-columns: 252px auto;
+    grid-template-columns: ${ROW_HEADER_WIDTH}px auto;
 `;
 
 export const EmptyTableRowHeader = styled.div`
@@ -63,7 +68,7 @@ export const TimeTableContainer = styled.div<TimeTableContainerProps>`
     display: grid;
     overflow: scroll;
     position: relative;
-    grid-template-columns: 252px fit-content(100%);
+    grid-template-columns: ${ROW_HEADER_WIDTH}px fit-content(100%);
     padding-bottom: ${(props) => (props.$allRecordsLoaded ? "0" : "128px")};
     ${(props) => {
         if (props.$loading) {
@@ -82,7 +87,7 @@ export const RowColumnHeader = styled.div<RowColumnHeaderProps>`
     top: 0;
     left: 0;
     background-color: white;
-    width: 252px;
+    width: ${ROW_HEADER_WIDTH}px;
     z-index: 2;
     border-bottom: 1px solid ${Color.Neutral[5]};
     ${(props) => {
@@ -110,11 +115,11 @@ export const RowColumnHeader = styled.div<RowColumnHeaderProps>`
 export const RowHeaderColumn = styled.div<RowHeaderColumnProps>`
     display: grid;
     position: sticky;
-    grid-column: 1 / 1;
+    grid-column: 1 / 2;
     left: 0;
     z-index: 1;
     background-color: white;
-    grid-template-rows: repeat(${(props) => props.$numOfRows}, 68px);
+    grid-template-rows: repeat(${(props) => props.$numOfRows}, ${ROW_HEIGHT}px);
 `;
 
 export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
@@ -139,7 +144,7 @@ export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
 `;
 
 export const ColumnHeader = styled.div`
-    min-width: 84px;
+    min-width: ${MIN_HOURLY_INTERVAL_WIDTH}px;
     align-content: end;
     margin-bottom: 0.25rem;
 `;
@@ -150,7 +155,7 @@ export const ColumnHeaderTitle = styled(Text.H6)`
 
 export const ContentContainer = styled.div<ContentContainerPopoverProps>`
     display: grid;
-    grid-template-rows: repeat(${(props) => props.$numOfRows}, 68px);
+    grid-template-rows: repeat(${(props) => props.$numOfRows}, ${ROW_HEIGHT}px);
 `;
 
 export const RowHeader = styled.div<RowHeaderProps>`
@@ -161,8 +166,8 @@ export const RowHeader = styled.div<RowHeaderProps>`
     position: sticky;
     left: 0;
     background-color: white;
-    width: 252px;
-    height: 68px;
+    width: ${ROW_HEADER_WIDTH}px;
+    height: ${ROW_HEIGHT}px;
     text-align: right;
     padding: 0 1rem 0 2rem;
     border-bottom: 1px solid ${Color.Neutral[5]};

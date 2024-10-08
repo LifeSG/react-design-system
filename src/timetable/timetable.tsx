@@ -3,7 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { PopoverV2TriggerProps } from "../popover-v2";
 import { TimeHelper } from "../util/time-helper";
-import { ROW_BAR_COLOR_SEQUENCE, ROW_INTERVAL } from "./const";
+import {
+    MIN_INTERVAL_WIDTH,
+    ROW_BAR_COLOR_SEQUENCE,
+    ROW_HEADER_WIDTH,
+    ROW_INTERVAL,
+} from "./const";
 import { TimeTableNavigator } from "./timetable-navigator/timetable-navigator";
 import { RowBar } from "./timetable-row/row-bar";
 import {
@@ -108,17 +113,25 @@ export const TimeTable = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
+    /**
+     * Handles when the TimeTable component is resized.
+     *
+     * @remarks
+     * When the component is resized, we recalculate the width of each interval
+     * in the Timetable. We do this by dividing the width of the container by
+     * the number of intervals per row bar. We also make sure that the width
+     * of each interval is at least 21px, otherwise it becomes too small.
+     */
     const handleResize = () => {
         if (tableContainerRef.current) {
             const numberOfIntervalsPerRowBar = Math.ceil(
                 (hourlyIntervals.length * 60) / ROW_INTERVAL
             );
             const tableContainerWidth =
-                tableContainerRef.current.clientWidth - 252;
+                tableContainerRef.current.clientWidth - ROW_HEADER_WIDTH;
+            const calcWidth = tableContainerWidth / numberOfIntervalsPerRowBar;
             const width =
-                tableContainerWidth / numberOfIntervalsPerRowBar > 21
-                    ? tableContainerWidth / numberOfIntervalsPerRowBar
-                    : 21;
+                calcWidth > MIN_INTERVAL_WIDTH ? calcWidth : MIN_INTERVAL_WIDTH;
             setIntervalWidth(width);
         }
     };

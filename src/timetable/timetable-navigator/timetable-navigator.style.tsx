@@ -2,6 +2,7 @@ import styled, { css, keyframes } from "styled-components";
 import { Color } from "../../color";
 import { IconButton } from "../../icon-button";
 import { Text } from "../../text";
+import { ROW_HEADER_WIDTH } from "../const";
 
 const spin = keyframes`
     100% {
@@ -24,7 +25,7 @@ export const StyledRefreshButton = styled(IconButton)<{ $loading: boolean }>`
 `;
 
 export const NavigationHeaderWrapper = styled.div`
-    width: 252px;
+    width: ${ROW_HEADER_WIDTH}px;
     padding-bottom: 1rem;
 `;
 

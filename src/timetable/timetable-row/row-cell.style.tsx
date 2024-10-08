@@ -1,7 +1,5 @@
 import styled, { css } from "styled-components";
 import { Color } from "../../color";
-import { PopoverTrigger } from "../../popover-v2";
-import { PopoverCard } from "../../popover-v2/popover.styles";
 import { Text } from "../../text";
 import { TimeTableCellType } from "../types";
 
@@ -41,7 +39,6 @@ export const Gap = styled.div`
 export const Block = styled.div<BlockStyleProps>`
     height: 100%;
     width: ${({ $width }) => `${$width}px`};
-    font-size: 11px;
     border-radius: 4px;
     box-sizing: border-box;
     padding: 4px;
@@ -92,7 +89,7 @@ export const BlockTitle = styled(Text.H6)`
 `;
 
 export const BlockDescription = styled(Text.XSmall)`
-    color: #686868;
+    color: ${Color.Neutral[3]};
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
