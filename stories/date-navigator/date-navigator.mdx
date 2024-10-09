@@ -1,4 +1,5 @@
 import { Canvas, Meta } from "@storybook/blocks";
+import { Alert } from "src/alert";
 import { Heading3, Secondary, Title } from "../storybook-common";
 import * as DateNavigatorStories from "./date-navigator.stories";
 import { PropsTable } from "./props-table";
@@ -6,6 +7,11 @@ import { PropsTable } from "./props-table";
 <Meta of={DateNavigatorStories} />
 
 <Title>DateNavigator</Title>
+
+<Alert type="warning">
+    This component is still a work in progress. The UI and props are subject to
+    change.
+</Alert>
 
 <Secondary>Overview</Secondary>
 
