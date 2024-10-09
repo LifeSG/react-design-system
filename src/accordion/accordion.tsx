@@ -15,7 +15,7 @@ const AccordionBase = ({
     enableExpandAll = true,
     initialDisplay = "expand-all",
     showTitleInMobile = false,
-    className,
+    ...otherProps
 }: AccordionProps): JSX.Element => {
     const [expandAll, setExpandAll] = useState<boolean>(
         initialDisplay === "expand-all"
@@ -64,7 +64,7 @@ const AccordionBase = ({
 
     return (
         <AccordionContext.Provider value={expandAll}>
-            <Content className={className}>
+            <Content {...otherProps}>
                 {renderTitleWrapper()}
                 {children}
             </Content>
