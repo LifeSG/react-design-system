@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormSelectStories from "./form-select.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormSelectStories} />
 
-<Title>Form.Select</Title>
+# Form.Select
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A field that provides a set of options for a user to select.
 
@@ -17,43 +16,43 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormSelectStories.Select} />
 
-<Heading3>With custom list item display</Heading3>
+## With custom list item display
 
 You are able to customise the display of the dropdown list items as well as the selected option.
 
 <Canvas of={FormSelectStories.WithCustomListItemDisplay} />
 
-<Heading3>With search capabilities</Heading3>
+## With search capabilities
 
 <Canvas of={FormSelectStories.WithSearch} />
 
-<Heading3>With custom call to action at the bottom of dropdown list</Heading3>
+## With custom call to action at the bottom of dropdown list
 
 You are also able to specify a custom call to action component at the bottom
 of the list.
 
 <Canvas of={FormSelectStories.WithCustomCallToAction} />
 
-<Heading3>Label truncation</Heading3>
+## Label truncation
 
 <Canvas of={FormSelectStories.LabelTruncation} />
 
-<Heading3>Load state display</Heading3>
+## Load state display
 
 <Canvas of={FormSelectStories.LoadState} />
 
-<Heading3>Rendering in grid layouts</Heading3>
+## Rendering in grid layouts
 
 You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--docs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormSelectStories.RenderingInGridLayout} />
 
-<Heading3>Small variant</Heading3>
+## Small variant
 
 <Canvas of={FormSelectStories.SmallVariant} />
 
-<Heading3>Using the field as a standalone</Heading3>
+## Using the field as a standalone
 
 In the case that you require the select field as a standalone, you can do this.
 
@@ -63,6 +62,6 @@ import { InputSelect } from "@lifesg/react-design-system/input-select";
 
 <Canvas of={FormSelectStories.StandaloneUsage} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

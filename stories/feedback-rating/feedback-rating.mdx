@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Secondary, Title } from "../storybook-common";
 import * as FeedbackRatingStories from "./feedback-rating.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FeedbackRatingStories} />
 
-<Title>FeedbackRating</Title>
+# FeedbackRating
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that allows the user to indicate a star rating from 1-5. The submit
 button is only enabled when a rating is set.
@@ -18,6 +17,6 @@ import { FeedbackRating } from "@lifesg/react-design-system/feedback-rating";
 
 <Canvas of={FeedbackRatingStories.Default} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

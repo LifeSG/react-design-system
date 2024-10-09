@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormMultiSelectStories from "./form-multi-select.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormMultiSelectStories} />
 
-<Title>Form.MultiSelect</Title>
+# Form.MultiSelect
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A field that provides a set of options for a user to select.
 
@@ -17,22 +16,22 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormMultiSelectStories.Default} />
 
-<Heading3>With search capabilities</Heading3>
+## With search capabilities
 
 <Canvas of={FormMultiSelectStories.WithSearch} />
 
-<Heading3>Rendering in grid layouts</Heading3>
+## Rendering in grid layouts
 
 You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--docs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormMultiSelectStories.RenderingInGridLayout} />
 
-<Heading3>Small variant</Heading3>
+## Small variant
 
 <Canvas of={FormMultiSelectStories.SmallVariant} />
 
-<Heading3>Using the field as a standalone</Heading3>
+## Using the field as a standalone
 
 In the case that you require the multi select field as a standalone, you can do this.
 
@@ -42,6 +41,6 @@ import { InputMultiSelect } from "@lifesg/react-design-system/input-multi-select
 
 <Canvas of={FormMultiSelectStories.StandaloneUsage} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

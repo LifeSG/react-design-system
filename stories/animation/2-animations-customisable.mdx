@@ -1,11 +1,10 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as AnimationsCustomisableStories from "./2-animations-customisable.stories";
 import { CustomisedPropsTable } from "./props-table";
 
 <Meta of={AnimationsCustomisableStories} />
 
-<Title>Customisable Animations</Title>
+# Customisable Animations
 
 > Not all animations
 > are able to do that at the moment and only these animations support the
@@ -13,7 +12,7 @@ import { CustomisedPropsTable } from "./props-table";
 
 <br />
 
-<Heading3>LoadingDotsSpinner</Heading3>
+## LoadingDotsSpinner
 
 ```tsx
 import { LoadingDotsSpinner } from "@lifesg/react-design-system/animations";
@@ -24,6 +23,6 @@ the theme.
 
 <Canvas of={AnimationsCustomisableStories.CustomLoadingDotsSpinner} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <CustomisedPropsTable />

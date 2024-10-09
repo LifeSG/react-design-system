@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as TimelineStories from "./timeline.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={TimelineStories} />
 
-<Title>Timeline</Title>
+# Timeline
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that displays upcoming steps of a process in a timeline presentation.
 
@@ -19,12 +18,12 @@ There are a variety of contents available to be specified for each `Timeline` it
 
 <Canvas of={TimelineStories.Default} />
 
-<Heading3>Variations</Heading3>
+## Variations
 
 The `Timeline` component comes in 4 variants and each item can be styled individually.
 
 <Canvas of={TimelineStories.Variants} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

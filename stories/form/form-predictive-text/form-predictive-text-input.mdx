@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormPredictiveTextInputStories from "./form-predictive-text-input.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormPredictiveTextInputStories} />
 
-<Title>Form.PredictiveTextInput</Title>
+# Form.PredictiveTextInput
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A predictive text input field that provides a set of options for a user to select.
 
@@ -17,18 +16,18 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormPredictiveTextInputStories.Default} />
 
-<Heading3>With secondary label</Heading3>
+## With secondary label
 
 <Canvas of={FormPredictiveTextInputStories.WithSecondaryLabel} />
 
-<Heading3>Rendering in grid layouts</Heading3>
+## Rendering in grid layouts
 
 You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--docs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormPredictiveTextInputStories.RenderingInGridLayout} />
 
-<Heading3>Using the field as a standalone</Heading3>
+## Using the field as a standalone
 
 In the case that you require the predictive text input field as a standalone, you can do this.
 
@@ -38,6 +37,6 @@ import { PredictiveTextInput } from "@lifesg/react-design-system/predictive-text
 
 <Canvas of={FormPredictiveTextInputStories.StandaloneUsage} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

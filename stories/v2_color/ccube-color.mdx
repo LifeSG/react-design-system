@@ -1,14 +1,14 @@
 import { Meta, Unstyled } from "@storybook/blocks";
 import { CCubeColorSet } from "src/spec/color-spec/ccube-color-set";
 import { V2_Text } from "src/v2_text";
-import { PreviewBox, Secondary, Title } from "../storybook-common";
+import { PreviewBox } from "../storybook-common";
 import { ColorPalette } from "./doc-color-palette";
 
 <Meta title="General/Color/CCube Color" />
 
-<Title>CCube Colors</Title>
+# CCube Colors
 
-<Secondary>Overview</Secondary>
+## Overview
 
 This will be the palette used when the `colorScheme` is `"ccube"`.
 
@@ -19,7 +19,7 @@ const theme: ThemeSpec = {
 };
 ```
 
-<Secondary>Colors</Secondary>
+## Colors
 
 <Unstyled>
     <ColorPalette set={CCubeColorSet.Brand} category="Brand" />
@@ -40,7 +40,7 @@ const theme: ThemeSpec = {
 <V2_Text.H3>Validation</V2_Text.H3>
 
 <PreviewBox>
-    `Color.Validation.<color>`
+  `Color.Validation.<color>`
 </PreviewBox>
 
 <Unstyled>

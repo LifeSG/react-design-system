@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as DataTableStories from "./data-table.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={DataTableStories} />
 
-<Title>Data Table</Title>
+# Data Table
 
-<Secondary>Overview</Secondary>
+## Overview
 
 Organises a collection of data into readable rows.
 
@@ -17,13 +16,13 @@ import { DataTable } from "@lifesg/react-design-system/data-table";
 
 <Canvas of={DataTableStories.Default} />
 
-<Heading3>Fixed column widths</Heading3>
+## Fixed column widths
 
 This example illustrates how column widths can be fixed by setting the `width` style on headers.
 
 <Canvas of={DataTableStories.FixedColumnWidths} />
 
-<Heading3>Sort indicators</Heading3>
+## Sort indicators
 
 A common use case is for rows to be sorted in some order.
 
@@ -31,32 +30,32 @@ A common use case is for rows to be sorted in some order.
 
 <Canvas of={DataTableStories.SortIndicators} />
 
-<Heading3>Multi-selection of rows</Heading3>
+## Multi-selection of rows
 
 > **Note:** The updating of the selection state is handled by the consumer
 
 <Canvas of={DataTableStories.MultiSelectionOfRows} />
 
-<Heading3>Disabled checkboxes</Heading3>
+## Disabled checkboxes
 
 <Canvas of={DataTableStories.DisabledCheckboxes} />
 
-<Heading3>Alternating rows</Heading3>
+## Alternating rows
 
 <Canvas of={DataTableStories.AlternatingRows} />
 
-<Heading3>Action bar</Heading3>
+## Action bar
 
 <Canvas of={DataTableStories.ActionBar} />
 
-<Heading3>No rows</Heading3>
+## No rows
 
 <Canvas of={DataTableStories.NoRows} />
 
-<Heading3>Loading state</Heading3>
+## Loading state
 
 <Canvas of={DataTableStories.LoadingState} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

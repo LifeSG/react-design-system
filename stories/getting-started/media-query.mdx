@@ -1,11 +1,10 @@
 import { Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 
 <Meta title="Getting started/Media Query" />
 
-<Title>Media Query</Title>
+# Media Query
 
-<Secondary>Overview</Secondary>
+## Overview
 
 To target different media widths, you can make use of this component.
 
@@ -27,11 +26,11 @@ Here are the list of media width breakpoints that the design system is using
 
 <br />
 
-<Secondary>Usage</Secondary>
+## Usage
 
 You can either target styles using the `max-width` or `min-width` breakpoints. Depending on your approach towards a desktop-first or mobile-first implementation.
 
-<Heading3>Max Width</Heading3>
+## Max Width
 
 ```tsx
 import styled from "styled-components";
@@ -49,7 +48,7 @@ const Components = styled.div`
 }
 ```
 
-<Heading3>Min Width</Heading3>
+## Min Width
 
 ```tsx
 import styled from "styled-components";
@@ -67,7 +66,7 @@ const Components = styled.div`
 }
 ```
 
-<Heading3>Using media width values</Heading3>
+## Using media width values
 
 ```tsx
 import { V2_MediaWidths } from "@lifesg/react-design-system/v2_media";

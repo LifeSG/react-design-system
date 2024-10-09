@@ -1,12 +1,11 @@
 import { Canvas, Meta } from "@storybook/blocks";
 import { Alert } from "src/alert";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
 import * as PopoverStories from "./popover.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={PopoverStories} />
 
-<Title>Popover</Title>
+# Popover
 
 <Alert type="warning">
     This component is deprecated and will be removed in a future version. It is
@@ -14,7 +13,7 @@ import { PropsTable } from "./props-table";
     offers improved positioning and easier usage.
 </Alert>
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component which appears when hovering or clicking on a target element and displays information about a certain element in the page.
 
@@ -26,7 +25,7 @@ import { withPopover } from "@lifesg/react-design-system/popover";
 
 <Canvas of={PopoverStories.Default} />
 
-<Heading4>Appearance information</Heading4>
+### Appearance information
 
 -   The `Popover` component automatically positions itself based on the amount of space available. It will always attempt to display itself on top of the trigger component by default
 -   The `Popover` appears as a modal in mobile viewports
@@ -35,12 +34,12 @@ import { withPopover } from "@lifesg/react-design-system/popover";
 
 {/* USAGE */}
 
-<Heading3>Usage</Heading3>
+## Usage
 
 We recommend using the `withPopover` higher order component (HOC) to construct the component. Here
 is how you can do it.
 
-<Heading4>Step 1: Create the trigger component</Heading4>
+### Step 1: Create the trigger component
 
 ```tsx
 import { V2_Text } from "@lifesg/react-design-system/v2_text";
@@ -52,7 +51,7 @@ const Trigger = () => (
 );
 ```
 
-<Heading4>Step 2: Use the HOC function to create a HOC</Heading4>
+### Step 2: Use the HOC function to create a HOC
 
 ```tsx
 const PopoverHOC = withPopover(Trigger, {
@@ -61,7 +60,7 @@ const PopoverHOC = withPopover(Trigger, {
 });
 ```
 
-<Heading4>Step 3: Compose the component with the HOC</Heading4>
+### Step 3: Compose the component with the HOC
 
 ```tsx
 export const PopoverHOCExample = () => {
@@ -111,7 +110,7 @@ export const CorrectExample = () => {
 
 {/* USING AS A COMPONENT */}
 
-<Heading3>Using as a component</Heading3>
+## Using as a component
 
 You also have the freedom to construct the `Popover` as a separate component from its trigger.
 
@@ -121,7 +120,7 @@ import { Popover } from "@lifesg/react-design-system/popover";
 
 <Canvas of={PopoverStories.UsingAsAComponent} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 ```tsx
 withPopover(component: JSX.Element, options: PopoverHOCOptionsProps): (props: PopoverHOCProps) => JSX.Element

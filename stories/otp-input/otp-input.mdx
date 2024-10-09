@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
 import * as OtpInputStories from "./otp-input.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={OtpInputStories} />
 
-<Title>OtpInput</Title>
+# OtpInput
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component to handle the entry of the one-time password (OTP) for multi-factored
 authentication methods.
@@ -18,15 +17,15 @@ import { OtpInput } from "@lifesg/react-design-system/otp-input";
 
 <Canvas of={OtpInputStories.Default} />
 
-<Heading3>With an error message</Heading3>
+## With an error message
 
 <Canvas of={OtpInputStories.WithErrorMessage} />
 
-<Heading3>With a custom action button</Heading3>
+## With a custom action button
 
 You can also customise the action button's props to suit your needs.
 
-<Heading4>Usage of in-built countdown</Heading4>
+### Usage of in-built countdown
 
 In this instance, you will need to handle the label when a countdown is ongoing.
 There are callback functions like `onCooldownStart` and `onCooldownEnd` to assist
@@ -36,7 +35,7 @@ you with it.
 
 <Canvas of={OtpInputStories.WithCustomActionButton} />
 
-<Heading4>Usage of custom countdown mechanism</Heading4>
+### Usage of custom countdown mechanism
 
 In this instance, you will need to handle the countdown calculation
 and rendering entirely on your own. In this example, we will just
@@ -48,6 +47,6 @@ use a simple `setTimeout` to handle the change in label.
 
 <br />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

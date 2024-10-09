@@ -1,15 +1,14 @@
 import { Meta, Unstyled } from "@storybook/blocks";
 import { V2_Text } from "src/v2_text";
 import { OneServiceTextStyleSet } from "src/spec/text-spec/oneservice-text-style-set";
-import { Secondary, Title } from "../storybook-common";
 import { FontDisplay, FontSizeDisplay } from "./collection-doc-elements";
 import { OneServiceTheme } from "../../src";
 
 <Meta title="General/Text/OneService Style" />
 
-<Title>OneService Style</Title>
+# OneService Style
 
-<Secondary>Overview</Secondary>
+## Overview
 
 This will be the collection used when the `textStyleScheme` is `oneservice`.
 
@@ -20,7 +19,7 @@ const theme: ThemeSpec = {
 };
 ```
 
-<Secondary>Font Family</Secondary>
+## Font Family
 
 <V2_Text.D1>Open Sans</V2_Text.D1>
 
@@ -28,7 +27,8 @@ const theme: ThemeSpec = {
     <FontDisplay />
 </Unstyled>
 
-<Secondary>Text Styles</Secondary>
+## Text Styles
+
 <Unstyled>
     <FontSizeDisplay
         textStyles={OneServiceTextStyleSet}

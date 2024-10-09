@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormTextareaStories from "./form-textarea.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormTextareaStories} />
 
-<Title>Form.Textarea</Title>
+# Form.Textarea
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A field that allows a user to enter a multi-line response. This is useful if there is a sizeable amount
 of free-form text.
@@ -18,7 +17,7 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormTextareaStories.Default} />
 
-<Heading3>Textarea with custom counter label</Heading3>
+## Textarea with custom counter label
 
 <Canvas of={FormTextareaStories.WithCustomCounter} />
 
@@ -32,14 +31,14 @@ const renderCustomCounter = (maxLength: number, currentValueLength: number) => {
 };
 ```
 
-<Heading3>Rendering in grid layouts</Heading3>
+## Rendering in grid layouts
 
 You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--docs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormTextareaStories.RenderingInGridLayout} />
 
-<Heading3>Using the field as a standalone</Heading3>
+## Using the field as a standalone
 
 In the case that you require the textarea field as a standalone, you can do this.
 
@@ -49,6 +48,6 @@ import { Textarea } from "@lifesg/react-design-system/input-textarea";
 
 <Canvas of={FormTextareaStories.StandaloneUsage} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

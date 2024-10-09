@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as FileUploadStories from "./file-upload.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FileUploadStories} />
 
-<Title>FileUpload</Title>
+# FileUpload
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that allows for uploading files.
 
@@ -17,13 +16,13 @@ import { FileUpload } from "@lifesg/react-design-system/file-upload";
 
 <Canvas of={FileUploadStories.Default} />
 
-<Heading3>Error display</Heading3>
+## Error display
 
 Each file item comes with an error display to indicate that the upload has failed.
 
 <Canvas of={FileUploadStories.WithErrorDisplay} />
 
-<Heading3>Loading indicator</Heading3>
+## Loading indicator
 
 The component also has the ability to render a loading indicator for file
 uploads. However this will require the user to manage the progress themselves.
@@ -33,7 +32,7 @@ uploads. However this will require the user to manage the progress themselves.
 
 <Canvas of={FileUploadStories.WithLoadingIndicator} />
 
-<Heading3>Editable file items</Heading3>
+## Editable file items
 
 The component also enables you to add a description to the file item. Note that
 this does not alter the file in any way and is up to the discretion of the user
@@ -43,7 +42,7 @@ of the component to decide what to do with it.
 
 <Canvas of={FileUploadStories.EditableFileItems} />
 
-<Heading3>Sortable file items</Heading3>
+## Sortable file items
 
 The component also enables you to perform a drag sort on the items to give you
 the flexibility to reorder items after uploading them.
@@ -52,16 +51,16 @@ the flexibility to reorder items after uploading them.
 
 <Canvas of={FileUploadStories.SortableFileItems} />
 
-<Heading3>Readonly state</Heading3>
+## Readonly state
 
 <Canvas of={FileUploadStories.ReadonlyState} />
 
-<Heading3>Default text styling</Heading3>
+## Default text styling
 
 The title and description support styling for commonly used markup such as `<strong>` or `<a>`.
 
 <Canvas of={FileUploadStories.TextStyling} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />
