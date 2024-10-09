@@ -45,7 +45,7 @@ export const Default: StoryObj<Component> = {
     },
 };
 
-export const TimeTableWithNavigation: StoryObj<Component> = {
+export const DateNavigation: StoryObj<Component> = {
     render: () => {
         const timeTableData = getTimeTableData();
 
@@ -96,7 +96,7 @@ export const TimeTableWithNavigation: StoryObj<Component> = {
     },
 };
 
-export const TimeTableWithLazyLoad: StoryObj<Component> = {
+export const LazyLoading: StoryObj<Component> = {
     render: () => {
         const [results, setResults] = useState([]);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -165,7 +165,7 @@ export const TimeTableWithLazyLoad: StoryObj<Component> = {
     },
 };
 
-export const TimeTableWithStyledPopovers: StoryObj<Component> = {
+export const CustomPopovers: StoryObj<Component> = {
     render: () => {
         const StyledCustomPopoverCard = styled(Card)`
             display: flex;
@@ -286,7 +286,7 @@ export const TimeTableWithStyledPopovers: StoryObj<Component> = {
     },
 };
 
-export const TimeTableWithEmptyContent: StoryObj<Component> = {
+export const EmptyContent: StoryObj<Component> = {
     render: () => {
         return (
             <StyledTimeTable

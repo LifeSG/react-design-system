@@ -38,7 +38,6 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "emptyContent",
-                mandatory: true,
                 description: (
                     <>
                         The props to determine what this component should render
@@ -189,7 +188,6 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "id",
-                mandatory: true,
                 description: (
                     <>
                         The identifier for this row. This can be useful if you
@@ -277,7 +275,6 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "id",
-                mandatory: true,
                 description: (
                     <>
                         The identifier for this cell. This can be useful if you

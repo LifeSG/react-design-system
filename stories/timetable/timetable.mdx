@@ -15,45 +15,51 @@ A component that displays a timetable to view a schedule for a specific day
 import { TimeTable } from "@lifesg/react-design-system/timetable";
 ```
 
-> This component auto generates blocked cells based on the difference in start/end time between each row and the overall timetable, and disabled cells when there are missing gaps between each row cell's start/end time.
+> This component auto generates blocked cells based on the difference in
+> start/end time between each row and the overall timetable, and disabled cells
+> when there are missing gaps between each row cell's start/end time.
 
 <Canvas of={TimeTableStories.Default} />
 
-<Secondary>TimeTable with navigation arrows</Secondary>
-Date navigational arrows can be interacted with when `onNextDayClick` and `onPreviousDayClick`
-props are passed in.
+<Secondary>Date navigation</Secondary> Date navigational arrows can be interacted
+with when `onNextDayClick` and `onPreviousDayClick` props are passed in.
 
 You may use `minDate` and `maxDate` to limit the range of date navigation
 
-_(In this example,
-the user can only view the timetable 2 days before today and 2 days after today)_
+_(In this example, the user can only view the timetable 2 days before today and
+2 days after today)_
 
-<Canvas of={TimeTableStories.TimeTableWithNavigation} />
+<Canvas of={TimeTableStories.DateNavigation} />
 
-<Secondary>Lazy Load</Secondary>
+<Secondary>Lazy loading</Secondary>
 
-Optional `onRefresh` and `totalRecords` props can also be passed in to show the total count and for refreshing results.
+Optional `onRefresh` and `totalRecords` props can also be passed in to show the
+total count and for refreshing results.
 
-This is especially useful when lazy loading is enabled through the `onPage` callback.
+This is especially useful when lazy loading is enabled through the `onPage`
+callback.
 
-<Canvas of={TimeTableStories.TimeTableWithLazyLoad} />
+<Canvas of={TimeTableStories.LazyLoading} />
 
-<Secondary>With popover interactions</Secondary>
+<Secondary>Custom popovers</Secondary>
 
-Custom popovers can be added onto row header names and row cells.
-There is also the flexibility to have custom popovers on auto generated blocked cells through the `outOfRangeCellPopover` prop.
+Custom popovers can be added onto row header names and row cells. There is also
+the flexibility to have custom popovers on auto generated blocked cells through
+the `outOfRangeCellPopover` prop.
 
 However, auto generated disabled cells will not have any popover interaction.
 
-Do note that if the custom popover trigger is set to click, it could conflict with the onClick callback for each cell.
+Do note that if the custom popover trigger is set to click, it could conflict
+with the onClick callback for each cell.
 
-<Canvas of={TimeTableStories.TimeTableWithStyledPopovers} />
+<Canvas of={TimeTableStories.CustomPopovers} />
 
 <Secondary>No results found</Secondary>
 
-`emptyContent` can be passed in to control what to show when there are no results to display.
+`emptyContent` can be passed in to control what to show when there are no
+results to display.
 
-<Canvas of={TimeTableStories.TimeTableWithEmptyContent} />
+<Canvas of={TimeTableStories.EmptyContent} />
 
 <Secondary>Component API</Secondary>
 
