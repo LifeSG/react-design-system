@@ -27,6 +27,8 @@ export const PopoverTrigger = ({
     position = "top",
     zIndex,
     rootNode,
+    customOffset,
+    delay,
     onPopoverAppear,
     onPopoverDismiss,
     ...otherProps
@@ -40,12 +42,13 @@ export const PopoverTrigger = ({
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
     });
+
     const { refs, floatingStyles, context } = useFloating({
         open: visible,
         placement: position,
         whileElementsMounted: autoUpdate,
         middleware: [
-            offset(16),
+            offset(customOffset ?? 16),
             flip(),
             shift({
                 limiter: limitShift(),
@@ -71,7 +74,10 @@ export const PopoverTrigger = ({
     const hover = useHover(context, {
         enabled: trigger === "hover",
         // short window to enter the floating element without it closing
-        delay: { close: 500 },
+        delay: {
+            open: delay?.open ?? 0,
+            close: delay?.close ?? 500,
+        },
     });
 
     const { getReferenceProps, getFloatingProps } = useInteractions([
@@ -136,6 +142,7 @@ export const PopoverTrigger = ({
                             }}
                             style={{
                                 ...floatingStyles,
+                                outline: "none",
                                 zIndex: zIndex ?? parentZIndex,
                             }}
                             {...getFloatingProps()}
