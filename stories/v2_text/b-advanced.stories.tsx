@@ -3,7 +3,7 @@ import { V2_Text } from "src/v2_text";
 import { ButtonContainer } from "./doc-elements";
 
 const meta: Meta = {
-    title: "General/Text/Advanced Usage",
+    title: "V2/Text/Advanced Usage",
 };
 
 export default meta;

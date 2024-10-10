@@ -3,6 +3,7 @@ import { V2_Container } from "./container";
 import { V2_Content } from "./content";
 import { V2_Section } from "./section";
 
+/** @deprecated */
 export const V2_Layout = {
     Section: V2_Section,
     Container: V2_Container,

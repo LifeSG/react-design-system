@@ -1,9 +1,16 @@
 import { Meta } from "@storybook/blocks";
+import { DocAlert } from "stories/storybook-common";
 import { PropsTable } from "./themes-props-table";
 
-<Meta title="Getting started/Themes" />
+<Meta title="V2/Themes" />
 
 # Themes
+
+<DocAlert
+    storybookLink={"../?path=/docs/foundations-themes-introduction--docs"}
+>
+    New theme specifications were introduced in v3.0.0.
+</DocAlert>
 
 ## Overview
 
@@ -31,7 +38,7 @@ import { OneServiceTheme } from "@lifesg/react-design-system/theme";
 
 ## Basics
 
-A theme object is composed as such:
+A V2 theme object is composed as such:
 
 ```tsx
 {
@@ -124,7 +131,7 @@ const SomeComponent = styled.div`
 
 ## Using the preset themes
 
-There are currently 3 preset themes. `BaseTheme`, `BookingSGTheme` and `RBSTheme`. To use them, simply import them and pass it via the 2 methods mentioned [above](#basics).
+There are currently 6 preset themes. To use them, simply import them and pass it via the 2 methods mentioned [above](#basics).
 
 ```tsx
 // app.tsx

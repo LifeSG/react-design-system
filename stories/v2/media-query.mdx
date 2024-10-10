@@ -1,8 +1,15 @@
 import { Meta } from "@storybook/blocks";
+import { DocAlert } from "stories/storybook-common";
 
-<Meta title="Getting started/Media Query" />
+<Meta title="V2/Media Query" />
 
 # Media Query
+
+<DocAlert>
+    This module was deprecated and replaced by
+    [Breakpoint](/docs/foundations-breakpoint-introduction--docs) tokens in
+    v3.0.0.
+</DocAlert>
 
 ## Overview
 
@@ -12,7 +19,7 @@ To target different media widths, you can make use of this component.
 import { V2_MediaQuery } from "@lifesg/react-design-system/v2_media";
 ```
 
-Here are the list of media width breakpoints that the design system is using
+Here are the list of media width breakpoints that this module supports.
 
 | Name        |   Size Ranges   | Breakpoint value |
 | ----------- | :-------------: | :--------------: |
@@ -37,7 +44,7 @@ import styled from "styled-components";
 import { V2_MediaQuery } from "@lifesg/react-design-system/v2_media";
 
 const Components = styled.div`
-	${MediaQuery.MaxWidth.mobileL} {
+	${V2_MediaQuery.MaxWidth.mobileL} {
 		// Your style
 	}
 `;
@@ -55,7 +62,7 @@ import styled from "styled-components";
 import { V2_MediaQuery } from "@lifesg/react-design-system/v2_media";
 
 const Components = styled.div`
-	${MediaQuery.MinWidth.mobileL} {
+	${V2_MediaQuery.MinWidth.mobileL} {
 		// Your style
 	}
 `;
@@ -72,14 +79,14 @@ const Components = styled.div`
 import { V2_MediaWidths } from "@lifesg/react-design-system/v2_media";
 ```
 
-You can import `MediaWidths` and use the value as required. It will return the various breakpoint values.
+You can import `V2_MediaWidths` and use the value as required. It will return the various breakpoint values.
 
 ```tsx
 import { V2_MediaWidths } from "@lifesg/react-design-system/v2_media";
 
 export const MyComponent = () => {
     const { innerWidth } = window;
-    if (innerWidth > MediaWidths.mobileL) {
+    if (innerWidth > V2_MediaWidths.mobileL) {
         // render something
     } else {
         // render something else

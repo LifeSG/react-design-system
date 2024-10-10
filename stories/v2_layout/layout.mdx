@@ -1,4 +1,5 @@
 import { Canvas, Meta } from "@storybook/blocks";
+import { DocAlert } from "stories/storybook-common";
 import { V2_Layout } from "src/v2_layout";
 import { V2_Text } from "src/v2_text";
 import { Label, PaddingLabel } from "./doc-elements";
@@ -8,6 +9,11 @@ import { PropsTable } from "./props-table";
 <Meta of={LayoutStories} />
 
 # Layout
+
+<DocAlert>
+    This module was deprecated and replaced by [Layout](/docs/core-layout--docs)
+    components in v3.0.0.
+</DocAlert>
 
 ## Overview
 
@@ -57,7 +63,7 @@ as follow:
 {/* DIAGRAM */}
 
 <div style={{ padding: "3rem 0" }}>
-    <Layout.Section
+    <V2_Layout.Section
         style={{
             padding: "2.5rem 1.5rem",
             background: "#F9B5B2",
@@ -68,7 +74,7 @@ as follow:
         <Label>Section</Label>
         <PaddingLabel>1.5rem</PaddingLabel>
         <PaddingLabel direction="right">1.5rem</PaddingLabel>
-        <Layout.Container
+        <V2_Layout.Container
             style={{
                 background: "#FDDDD7",
                 display: "flex",
@@ -82,15 +88,15 @@ as follow:
                     height: "50px",
                 }}
             />
-        </Layout.Container>
-    </Layout.Section>
+        </V2_Layout.Container>
+    </V2_Layout.Section>
     <br />
-    <Text.XSmall>
+    <V2_Text.XSmall>
         <em>
             Note: <strong>Section</strong> does not come with vertical padding.
             This is for illustration purposes.
         </em>
-    </Text.XSmall>
+    </V2_Text.XSmall>
 </div>
 
 {/* STORY */}

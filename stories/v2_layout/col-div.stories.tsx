@@ -6,7 +6,7 @@ import { Wrapper } from "./doc-elements";
 type Component = typeof V2_Layout.ColDiv;
 
 const meta: Meta<Component> = {
-    title: "Getting Started/Layout/Column Divs",
+    title: "V2/Layout/Column Divs",
     component: V2_Layout.ColDiv,
     parameters: {
         layout: "fullscreen",

@@ -3,7 +3,7 @@ import { V2_Layout } from "src/v2_layout";
 import { V2_Text } from "src/v2_text";
 
 const meta: Meta = {
-    title: "Getting Started/Layout",
+    title: "V2/Layout",
     parameters: {
         layout: "fullscreen",
     },

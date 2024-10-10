@@ -1,11 +1,4 @@
-import React from "react";
-import {
-    ApiTable,
-    DefaultCol,
-    DescriptionCol,
-    NameCol,
-    Table,
-} from "../storybook-common/api-table";
+import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
 
@@ -131,15 +124,15 @@ const CONTAINER_DATA: ApiTableSectionProps[] = [
 
 const PROPS_TABLE_DATA: TabAttribute[] = [
     {
-        title: "Layout.Content",
+        title: "V2_Layout.Content",
         component: <ApiTable sections={CONTENT_DATA} />,
     },
     {
-        title: "Layout.Section",
+        title: "V2_Layout.Section",
         component: <ApiTable sections={SECTION_DATA} />,
     },
     {
-        title: "Layout.Container",
+        title: "V2_Layout.Container",
         component: <ApiTable sections={CONTAINER_DATA} />,
     },
 ];

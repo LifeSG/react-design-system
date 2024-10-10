@@ -102,11 +102,11 @@ const HYPERLINK_DATA: ApiTableSectionProps[] = [
 
 const PROPS_TABLE_DATA: TabAttribute[] = [
     {
-        title: "Text",
+        title: "V2_Text",
         component: <ApiTable sections={TEXT_DATA} />,
     },
     {
-        title: "Hyperlink",
+        title: "V2_Hyperlink",
         component: <ApiTable sections={HYPERLINK_DATA} />,
     },
 ];

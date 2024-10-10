@@ -89,7 +89,7 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         You may refer to the{" "}
-                        <a href="https://github.com/LifeSG/react-design-system/blob/master/src/color/types.ts">
+                        <a href="https://github.com/LifeSG/react-design-system/blob/master/src/v2_color/types.ts">
                             ColorSet
                         </a>{" "}
                         specifications.
@@ -107,7 +107,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The attributes to modify the text style. For the
                         different keys available, refer to the text sizes&nbsp;
-                        <a href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#static">
+                        <a href="https://github.com/LifeSG/react-design-system/blob/master/src/v2-text/types.ts">
                             specification
                         </a>
                         .
@@ -154,7 +154,7 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         You may refer to the{" "}
-                        <a href="https://github.com/LifeSG/react-design-system/blob/master/src/design-token/types.ts">
+                        <a href="https://github.com/LifeSG/react-design-system/blob/master/src/v2-design-token/types.ts">
                             DesignTokenSet
                         </a>{" "}
                         specifications.

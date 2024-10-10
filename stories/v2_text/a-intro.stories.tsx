@@ -3,7 +3,7 @@ import { V2_Text } from "src/v2_text";
 import { DisplayContainer, LinkDiv, TextDisplay } from "./doc-elements";
 
 const meta: Meta = {
-    title: "General/Text/Introduction",
+    title: "V2/Text/Introduction",
 };
 
 export default meta;
