@@ -1,14 +1,21 @@
-import { MotionValues } from "./motion/theme-helper";
+import {
+    V2_BaseTheme,
+    V2_BookingSGTheme,
+    V2_CCubeTheme,
+    V2_MyLegacyTheme,
+    V2_RBSTheme,
+} from "../v2_theme";
 import { BorderValues } from "./border/theme-helper";
 import { MediaQuery as MediaQueryValues } from "./breakpoint/media-query-helper";
 import { BreakpointValues } from "./breakpoint/theme-helper";
 import { PrimitiveColour } from "./colour-primitive/theme-helper";
 import { ColourSemantic } from "./colour-semantic/theme-helper";
 import { FontSpecValues } from "./font-spec/theme-helper";
+import { FontValues } from "./font/theme-helper";
+import { MotionValues } from "./motion/theme-helper";
 import { RadiusValues } from "./radius/theme-helper";
 import { SpacingValues } from "./spacing/theme-helper";
 import { ThemeSpec } from "./types";
-import { FontValues } from "./font/theme-helper";
 
 // =============================================================================
 // TOKENS
@@ -47,6 +54,7 @@ export const LifeSGTheme: ThemeSpec = {
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
+    _v2: V2_BaseTheme,
 };
 
 export const BookingSGTheme: ThemeSpec = {
@@ -57,6 +65,7 @@ export const BookingSGTheme: ThemeSpec = {
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
+    _v2: V2_BookingSGTheme,
 };
 
 export const CCubeTheme: ThemeSpec = {
@@ -67,6 +76,7 @@ export const CCubeTheme: ThemeSpec = {
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
+    _v2: V2_CCubeTheme,
 };
 
 export const MyLegacyTheme: ThemeSpec = {
@@ -77,6 +87,7 @@ export const MyLegacyTheme: ThemeSpec = {
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
+    _v2: V2_MyLegacyTheme,
 };
 
 export const RBSTheme: ThemeSpec = {
@@ -87,4 +98,5 @@ export const RBSTheme: ThemeSpec = {
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
+    _v2: V2_RBSTheme,
 };
