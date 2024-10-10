@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as TextListStories from "./text-list.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={TextListStories} />
 
-<Title>TextList</Title>
+# TextList
 
-<Secondary>Overview</Secondary>
+## Overview
 
 Renders a group of related contents within a list format.
 
@@ -15,7 +14,7 @@ Renders a group of related contents within a list format.
 import { TextList } from "@lifesg/react-design-system/text-list";
 ```
 
-<Heading3>Unordered List</Heading3>
+## Unordered List
 
 This list is used when order does not matter and it does not follow a numbering system for each list item.
 
@@ -23,7 +22,7 @@ You can also choose the bullet type from the selection. Types include `disc`, `c
 
 <Canvas of={TextListStories.Unordered} />
 
-<Heading3>Ordered List</Heading3>
+## Ordered List
 
 This list is used when order matters and it follows a numbering system for each list item.
 
@@ -32,17 +31,17 @@ include `lower-alpha`, `decimal`, `lower-roman`.
 
 <Canvas of={TextListStories.Ordered} />
 
-<Heading3>Nested Lists</Heading3>
+## Nested Lists
 
 <Canvas of={TextListStories.Nested} />
 
-<Heading3>Other features</Heading3>
+## Other features
 
 Here are other examples the list can do.
 
 <Canvas of={TextListStories.OtherFeatures} />
 
-<Heading3>Advanced Usage</Heading3>
+## Advanced Usage
 
 Under some circumstances, you might want to customise the counter to suit your use case.
 
@@ -74,6 +73,6 @@ export const CustomOrderedList = styled(TextList.Ol)`
 `;
 ```
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

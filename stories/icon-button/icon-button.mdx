@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as IconButtonStories from "./icon-button.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={IconButtonStories} />
 
-<Title>Icon Button</Title>
+# Icon Button
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A call to action component with an icon in it.
 
@@ -17,18 +16,18 @@ import { IconButton } from "@lifesg/react-design-system/icon-button";
 
 <Canvas of={IconButtonStories.Default} />
 
-<Heading3>Variations</Heading3>
+## Variations
 
 The `IconButton` component comes in 3 sizes, a large, small and default size.
 
 <Canvas of={IconButtonStories.Variations} />
 
-<Heading3>Using custom components</Heading3>
+## Using custom components
 
 You can also pass in custom components to the `IconButton`. In this example, we will pass in an image.
 
 <Canvas of={IconButtonStories.CustomComponents} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

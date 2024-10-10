@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as ToggleStories from "./toggle.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={ToggleStories} />
 
-<Title>Toggle</Title>
+# Toggle
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A button that allows a user to enter a response by clicking, and shown with a different state when activated.
 
@@ -17,7 +16,7 @@ import { Toggle } from "@lifesg/react-design-system/toggle";
 
 <Canvas of={ToggleStories.Default} />
 
-<Heading3>Behaviours</Heading3>
+## Behaviours
 
 The `Toggle` can be used as a checkbox or radio button. This can be determined by the `type` prop.
 
@@ -31,7 +30,7 @@ Click to see the interactions.
 
 <Canvas of={ToggleStories.Behaviours} />
 
-<Heading3>Variants</Heading3>
+## Variants
 
 Click on the links to see the variants in depth.
 
@@ -45,6 +44,6 @@ You can find [commonly used patterns here](/docs/data-input-toggle-common-patter
 
 <br />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

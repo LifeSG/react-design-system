@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as ButtonWithIconStories from "./button-with-icon.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={ButtonWithIconStories} />
 
-<Title>ButtonWithIcon</Title>
+# ButtonWithIcon
 
-<Secondary>Overview</Secondary>
+## Overview
 
 The primary call to action component with an icon.
 
@@ -24,7 +23,7 @@ You can also indicate to render on the right using the `iconPosition` prop.
 
 <Canvas of={ButtonWithIconStories.RightPositioned} />
 
-<Heading3>Danger</Heading3>
+## Danger
 
 In some cases, when there is a requirement to display an enhanced display for
 destructive or important actions, you can make use of the `danger` prop which will
@@ -32,7 +31,6 @@ apply a red scheme over the buttons.
 
 <Canvas of={ButtonWithIconStories.Danger} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />
-import {ButtonWithIcon} from "../../src/button-with-icon";

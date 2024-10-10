@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormHistogramSliderStories from "./form-histogram-slider.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormHistogramSliderStories} />
 
-<Title>Form.Histogram</Title>
+# Form.Histogram
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A field that allows a user to select a numeric range. It displays a histogram
 which reflects the number of results within each data bin.
@@ -18,24 +17,24 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormHistogramSliderStories.Default} />
 
-<Heading3>With labels</Heading3>
+## With labels
 
 <Canvas of={FormHistogramSliderStories.WithLabels} />
 
-<Heading3>Empty bins</Heading3>
+## Empty bins
 
 If there are no results across any of the bins, you may specify a custom display.
 
 <Canvas of={FormHistogramSliderStories.EmptyBins} />
 
-<Heading3>Rendering in grid layouts</Heading3>
+## Rendering in grid layouts
 
 You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--column-divs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormHistogramSliderStories.RenderingInGridLayout} />
 
-<Heading3>Using the field as a standalone</Heading3>
+## Using the field as a standalone
 
 In the case that you require the HistogramSlider field as a standalone, you can do this.
 
@@ -45,6 +44,6 @@ import { HistogramSlider } from "@lifesg/react-design-system/histogram-slider";
 
 <Canvas of={FormHistogramSliderStories.StandaloneUsage} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

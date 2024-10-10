@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as ColDivStories from "./col-div.stories";
 import { PropsTable } from "./col-div-props-table";
 
 <Meta of={ColDivStories} />
 
-<Title>Column Divs</Title>
+# Column Divs
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A div that conforms to the grid layout of `Layout.Container`.
 
@@ -15,7 +14,7 @@ A div that conforms to the grid layout of `Layout.Container`.
 import { V2_Layout } from "@lifesg/react-design-system/v2_layout";
 ```
 
-<Heading3>Anatomy</Heading3>
+## Anatomy
 
 The Column Divs allows specifying the column widths for each viewport pertaining
 to the specifications of the [grid system](/docs/getting-started-layout--docs#grid-layout).
@@ -51,7 +50,7 @@ responsive.
 
 <Canvas of={ColDivStories.ColumnDivs} />
 
-<Heading3>Specifying ranges</Heading3>
+## Specifying ranges
 
 Instead of a fixed number of columns, you can also specify the start and end
 columns for the div for each viewports.
@@ -60,6 +59,6 @@ columns for the div for each viewports.
 
 <Canvas of={ColDivStories.SpecifyingRanges} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

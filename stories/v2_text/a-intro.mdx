@@ -1,13 +1,12 @@
 import { Canvas, Meta, Story } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as TextStories from "./a-intro.stories";
 import { PropsTable } from "./props-table";
 
 <Meta title="General/Text/Introduction" />
 
-<Title>Text</Title>
+# Text
 
-<Secondary>Overview</Secondary>
+## Overview
 
 The component that is used for headings, body text, links and more.
 
@@ -17,20 +16,16 @@ import { V2_Text } from "@lifesg/react-design-system/v2_text";
 
 The `Text` component comes with 2 categories of components:
 
--   [Static text (Display, Heading, Body)](#static)
--   [Hyperlinks](#hyperlink)
+-   [Static text (Display, Heading, Body)](#static-text)
+-   [Hyperlinks](#hyperlinks)
 
 <br />
 
-<a id="static">
-    <Heading3>Static Text</Heading3>
-</a>
+## Static Text
 
 <Story of={TextStories.Styles} />
 
-<a id="hyperlink">
-    <Heading3>Hyperlinks</Heading3>
-</a>
+## Hyperlinks
 
 <Canvas of={TextStories.Hyperlinks} />
 
@@ -38,6 +33,6 @@ As we recommend providing an indicator for links leading to external sites, you 
 
 <Canvas of={TextStories.ExternalHyperlinks} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

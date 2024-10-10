@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as CardStories from "./card.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={CardStories} />
 
-<Title>Card</Title>
+# Card
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that has rounded corners and box shadow and can have any contents.
 Can be used stand-alone or as part of other components (e.g. Popover, Tooltip).
@@ -18,14 +17,14 @@ import { Card } from "@lifesg/react-design-system/card";
 
 <Canvas of={CardStories.Default} />
 
-<Heading3>Custom Content</Heading3>
+## Custom Content
 
 Other than a `string`, the `Card` also accepts a `JSX.Element` as its `children`.
 The child `JSX.Element` is unaltered and is simply wrapped by the `Card`.
 
 <Canvas of={CardStories.CustomContent} />
 
-<Heading3>Customising the style</Heading3>
+## Customising the style
 
 You can customize/override the style of the `Card` component by extending it:
 
@@ -41,7 +40,7 @@ export const StyledCard = styled(Card)`
 `;
 ```
 
-<Secondary>Component API</Secondary>
+## Component API
 
 This component also inherits the [HTMLDivAttributes](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement)
 

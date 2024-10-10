@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as ModalStories from "./modal.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={ModalStories} />
 
-<Title>Modal</Title>
+# Modal
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A window or pop up that displays over other page contents and provides information or actions
 that a user can perform.
@@ -25,17 +24,17 @@ There are 2 components that can be used:
 
 <Canvas of={ModalStories.Default} />
 
-<Heading3>Custom content</Heading3>
+## Custom content
 
 <Canvas of={ModalStories.CustomContent} />
 
-<Heading3>Stacked modals</Heading3>
+## Stacked modals
 
 In some cases, you would require a stacked modal layout. Here is how you can construct it.
 
 <Canvas of={ModalStories.StackedModals} />
 
-<Heading3>Modal.Box</Heading3>
+## Modal.Box
 
 This component holds the dialog box.
 
@@ -57,7 +56,7 @@ You're recommended to apply this spacing around your content to avoid overlap wi
 </Modal.Box>
 ```
 
-<Secondary>Component API</Secondary>
+## Component API
 
 Both components also inherit the [HTMLDivElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement).
 

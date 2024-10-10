@@ -1,16 +1,15 @@
 import { Canvas, Meta } from "@storybook/blocks";
 import { V2_Layout } from "src/v2_layout";
 import { V2_Text } from "src/v2_text";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
 import { Label, PaddingLabel } from "./doc-elements";
 import * as LayoutStories from "./layout.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={LayoutStories} />
 
-<Title>Layout</Title>
+# Layout
 
-<Secondary>Overview</Secondary>
+## Overview
 
 The layout components handle responsive displays for its child elements.
 
@@ -18,14 +17,14 @@ The layout components handle responsive displays for its child elements.
 import { V2_Layout } from "@lifesg/react-design-system/v2_layout";
 ```
 
-<Heading3>Anatomy</Heading3>
+## Anatomy
 
 A standard layout comprises of 2 components:
 
 -   `Section` the component that represents the `<section>` tag
 -   `Container` the component that represents the child `<div>` tag
 
-<Heading4>Section</Heading4>
+### Section
 
 This is the wrapper component that uses the `<section>` under the hood.
 It's style specifications are as such:
@@ -36,7 +35,7 @@ It's style specifications are as such:
 | horizontal padding | `1.5rem` |
 | vertical padding   | `0`      |
 
-<Heading4>Container</Heading4>
+### Container
 
 This is the child component that uses a `<div>` under the hood.
 This component **comes with a horizontal padding** on certain viewports and
@@ -96,19 +95,19 @@ as follow:
 
 {/* STORY */}
 
-<Secondary>Usage</Secondary>
+## Usage
 
-<Heading3>General usage</Heading3>
+## General usage
 
 To allow ease of use and not having to compose the two components, we have provided the `Content` that comes with the `Section` and `Container`. This is the **recommended usage** and should fit most use cases.
 
 <Canvas of={LayoutStories.GeneralUsage} />
 
-<Heading3>Customising the style</Heading3>
+## Customising the style
 
 There are two ways to customize the style of the `Layout` elements.
 
-<Heading4>Nesting styles</Heading4>
+### Nesting styles
 
 If you are using `Layout.Content`, you are able to modify the styles by extending the component.
 
@@ -135,7 +134,7 @@ export const ModifiedContent2 = styled(V2_Layout.Content)`
 `;
 ```
 
-<Heading4>Breaking up V2_Layout.Content</Heading4>
+### Breaking up V2_Layout.Content
 
 You can break up the `Section` and `Container` separately and style them separately for more freedom. This is useful
 if you intend to add complex styles or other elements inside `Section`.
@@ -162,25 +161,25 @@ export const MyComponent = () => (
 );
 ```
 
-<Heading3>Split usage</Heading3>
+## Split usage
 
 As mentioned above, you can separately compose the `Section` and `Container` components.
 
 <Canvas of={LayoutStories.SplitUsage} />
 
-<Secondary>Flex column layout</Secondary>
+## Flex column layout
 
 You can arrange content vertically with the `type` prop set to `flex-column`.
 
 <Canvas of={LayoutStories.FlexColumnLayout} />
 
-<Secondary>Grid layout</Secondary>
+## Grid layout
 
 You can make use of the `type` prop to specify if the layout will use the [CSS Grid](https://css-tricks.com/snippets/css/complete-guide-grid/).
 
 <Canvas of={LayoutStories.GridLayout} />
 
-<Heading3>About the Grid</Heading3>
+## About the Grid
 
 The design system uses a **12 column** grid layout, with a column gutter of `2rem` for desktop viewports. The other viewport sizes are as such:
 
@@ -189,6 +188,6 @@ The design system uses a **12 column** grid layout, with a column gutter of `2re
 
 <br />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

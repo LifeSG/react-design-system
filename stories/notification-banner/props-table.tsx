@@ -2,7 +2,6 @@ import React from "react";
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
-import { Heading4 } from "../storybook-common/text.style";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -181,7 +180,8 @@ const PROPS_TABLE_DATA: TabAttribute[] = [
                         "withNotificationBanner(data: NotificationContentAttributes[]);"
                     }
                 </code>
-                <Heading4>NotificationContentAttributes</Heading4>
+                <br />
+                <h4>NotificationContentAttributes</h4>
                 <HOCTable />
             </div>
         ),

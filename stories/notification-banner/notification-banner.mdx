@@ -1,21 +1,15 @@
 import { Canvas, Meta, Unstyled } from "@storybook/blocks";
 import { V2_Text } from "src/v2_text";
-import {
-    Heading3,
-    Heading4,
-    PreviewBox,
-    Secondary,
-    Title,
-} from "../storybook-common";
+import { PreviewBox } from "../storybook-common";
 import * as NotificationBannerStories from "./notification-banner.stories";
 import { HOCElement, StyledContent } from "./doc-elements";
 import { PropsTable } from "./props-table";
 
 <Meta of={NotificationBannerStories} />
 
-<Title>NotificationBanner</Title>
+# NotificationBanner
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that remains sticky at the top of the page and provides the user of important notification or notices.
 
@@ -25,20 +19,20 @@ import { NotificationBanner } from "@lifesg/react-design-system/notification-ban
 
 <Canvas of={NotificationBannerStories.Default} />
 
-<Secondary>Other usages</Secondary>
+## Other usages
 
-<Heading3>Non sticky banner</Heading3>
+## Non sticky banner
 
 The `NotificationBanner` is sticky by default. To make it non sticky, you can just specify `false` on the `sticky`
 property.
 
 <Canvas of={NotificationBannerStories.NonSticky} />
 
-<Heading3>Non dismissible banner</Heading3>
+## Non dismissible banner
 
 <Canvas of={NotificationBannerStories.NonDismissible} />
 
-<Heading3>Text styling options</Heading3>
+## Text styling options
 
 The banner also supports customisation of the text styles. Here is how you can achieve it.
 
@@ -46,19 +40,19 @@ The banner also supports customisation of the text styles. Here is how you can a
 
 <Canvas of={NotificationBannerStories.TextStylingOptions} />
 
-<Heading3>Custom content</Heading3>
+## Custom content
 
 The `NotificationBanner` also allows custom content to be displayed.
 
 <Canvas of={NotificationBannerStories.CustomContent} />
 
-<Heading3>Banner click</Heading3>
+## Banner click
 
 The `NotificationBanner` allows performing of an action when clicked.
 
 <Canvas of={NotificationBannerStories.ClickableBanner} />
 
-<Heading3>Handling long content</Heading3>
+## Handling long content
 
 You can restrict the height of content by setting `maxCollapsedHeight` to a
 desired value in px.
@@ -68,7 +62,7 @@ such as redirecting the user to another page.
 
 <Canvas of={NotificationBannerStories.HandlingLongContent} />
 
-<Secondary>Using as a Higher Order Component (HOC)</Secondary>
+## Using as a Higher Order Component (HOC)
 
 You can also specify the contents of the `NotificationBanner` via the provided
 HOC. This can be especially useful if the contents of the banner are coming
@@ -100,7 +94,7 @@ properties.
     </PreviewBox>
 </Unstyled>
 
-<Heading4>Step 1: Specify the HOC element</Heading4>
+### Step 1: Specify the HOC element
 
 For usage of different elements, you will have to specify in an array format.
 
@@ -129,7 +123,7 @@ const HOCElement = withNotificationBanner([
 ]);
 ```
 
-<Heading4>Step 2: Use the HOC element</Heading4>
+### Step 2: Use the HOC element
 
 ```tsx
 const MainRender = () => {
@@ -142,6 +136,6 @@ const MainRender = () => {
 };
 ```
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

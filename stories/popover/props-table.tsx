@@ -7,7 +7,6 @@ import {
     Table,
 } from "../storybook-common/api-table";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
-import { Heading4 } from "../storybook-common/text.style";
 
 export const HOCTable = () => (
     <Table>

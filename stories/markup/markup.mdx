@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Secondary, Title } from "../storybook-common";
 import * as MarkupStories from "./markup.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={MarkupStories} />
 
-<Title>Markup</Title>
+# Markup
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that sets styling for commonly used markup such as `<strong>` or `<a>`.
 
@@ -21,6 +20,6 @@ By default, text will inherit the parent's font style and color.
 
 <Canvas of={MarkupStories.Inheritance} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Secondary, Title } from "../storybook-common";
 import * as SmartAppBannerStories from "./smart-app-banner.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={SmartAppBannerStories} />
 
-<Title>Smart App Banner</Title>
+# Smart App Banner
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A sticky banner that displays a summary of information and allows for a redirection
 to a specific destination when clicked on.
@@ -18,7 +17,7 @@ import { SmartAppBanner } from "@lifesg/react-design-system/smart-app-banner";
 
 <Canvas of={SmartAppBannerStories.Default} />
 
-<Secondary>Anatomy</Secondary>
+## Anatomy
 
 1. **Title** - The title of the banner
 2. **Icon** - The icon displayed in the banner
@@ -28,6 +27,6 @@ import { SmartAppBanner } from "@lifesg/react-design-system/smart-app-banner";
 
 <br />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />
