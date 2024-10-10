@@ -40,79 +40,51 @@ export const StyledDiv = styled.div<StyledDivStyleProps>`
         const {
             $xxlStart,
             $xxlSpan,
-            $xxlMargin,
-            $xxlGutter,
 
             $xlStart,
             $xlSpan,
-            $xlMargin,
-            $xlGutter,
 
             $lgStart,
             $lgSpan,
-            $lgMargin,
-            $lgGutter,
 
             $mdStart,
             $mdSpan,
-            $mdMargin,
-            $mdGutter,
 
             $smStart,
             $smSpan,
-            $smMargin,
-            $smGutter,
 
             $xsStart,
             $xsSpan,
-            $xsMargin,
-            $xsGutter,
 
             $xxsStart,
             $xxsSpan,
-            $xxsMargin,
-            $xxsGutter,
         } = props;
 
         return css`
             grid-column: ${$xxlStart || "auto"} / span ${$xxlSpan || 1};
-            margin: ${$xxlMargin}px;
-            padding: ${$xxlGutter}px;
 
             ${MediaQuery.MaxWidth.xl} {
                 grid-column: ${$xlStart || "auto"} / span ${$xlSpan || 1};
-                margin: ${$xlMargin}px;
-                padding: ${$xlGutter}px;
             }
 
             ${MediaQuery.MaxWidth.lg} {
                 grid-column: ${$lgStart || "auto"} / span ${$lgSpan || 1};
-                margin: ${$lgMargin}px;
-                padding: ${$lgGutter}px;
             }
 
             ${MediaQuery.MaxWidth.md} {
                 grid-column: ${$mdStart || "auto"} / span ${$mdSpan || 1};
-                margin: ${$mdMargin}px;
-                padding: ${$mdGutter}px;
             }
 
             ${MediaQuery.MaxWidth.sm} {
                 grid-column: ${$smStart || "auto"} / span ${$smSpan || 1};
-                margin: ${$smMargin}px;
-                padding: ${$smGutter}px;
             }
 
             ${MediaQuery.MaxWidth.xs} {
                 grid-column: ${$xsStart || "auto"} / span ${$xsSpan || 1};
-                margin: ${$xsMargin}px;
-                padding: ${$xsGutter}px;
             }
 
             ${MediaQuery.MaxWidth.xxs} {
                 grid-column: ${$xxsStart || "auto"} / span ${$xxsSpan || 1};
-                margin: ${$xxsMargin}px;
-                padding: ${$xxsGutter}px;
             }
         `;
     }}
