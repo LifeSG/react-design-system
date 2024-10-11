@@ -19,7 +19,8 @@ describe("Footer", () => {
     it("should be able to render the component", () => {
         render(<Footer />);
 
-        const defaultDisclaimerLinks = FooterHelper.getDisclaimerLinks();
+        const defaultDisclaimerLinks =
+            FooterHelper.getDisclaimerLinks(undefined);
 
         for (const link in defaultDisclaimerLinks) {
             expect(
@@ -102,7 +103,8 @@ describe("Footer", () => {
 
             render(<Footer disclaimerLinks={disclaimerLinks} />);
 
-            const defaultDisclaimerLinks = FooterHelper.getDisclaimerLinks();
+            const defaultDisclaimerLinks =
+                FooterHelper.getDisclaimerLinks(undefined);
 
             for (const link in defaultDisclaimerLinks) {
                 const anchor = getAnchorElement(

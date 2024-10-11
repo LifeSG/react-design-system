@@ -5,6 +5,7 @@ import React, {
     useRef,
     useState,
 } from "react";
+import { useTheme } from "styled-components";
 import { ButtonProps } from "../button/types";
 import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
@@ -12,6 +13,7 @@ import { Overlay } from "../overlay/overlay";
 import { MediaWidths } from "../spec/media-spec";
 import { Brand } from "./brand";
 import { Drawer } from "./drawer";
+import { getDefaultResourceLogo } from "./navbar-logo-data";
 import { NavbarActionButtons } from "./navbar-action-buttons";
 import { NavbarItems } from "./navbar-items";
 import {
@@ -30,7 +32,6 @@ import {
     NavbarButtonProps,
     NavbarDrawerHandle,
     NavbarProps,
-    NavbarResourcesProps,
 } from "./types";
 
 const Component = <T,>(
@@ -41,7 +42,7 @@ const Component = <T,>(
         selectedId,
         compress = false,
         fixed = true,
-        resources = DEFAULT_RESOURCES,
+        resources,
         hideNavElements = false,
         hideNavBranding = false,
         drawerDismissalExclusions: blockDrawerDismissalMethods = [],
@@ -62,8 +63,11 @@ const Component = <T,>(
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const isStretch = layout === "stretch";
     const elementRef = useRef<HTMLDivElement>();
+    const theme = useTheme();
+    const defaultResource = getDefaultResourceLogo(theme?.resourceScheme);
 
-    const { primary = DEFAULT_RESOURCES.primary, secondary } = resources;
+    const primary = resources?.primary || defaultResource.primary;
+    const secondary = resources?.secondary;
 
     useImperativeHandle(
         ref,
@@ -310,13 +314,3 @@ const Component = <T,>(
 };
 
 export const Navbar = forwardRef(Component);
-
-// =============================================================================
-// CONSTANTS
-// =============================================================================
-const DEFAULT_RESOURCES: NavbarResourcesProps = {
-    primary: {
-        brandName: "LifeSG",
-        logoSrc: "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
-    },
-};
