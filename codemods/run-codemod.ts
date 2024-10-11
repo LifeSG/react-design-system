@@ -5,23 +5,35 @@ import { checkbox, confirm, input, select } from "@inquirer/prompts";
 
 const codemodsDir: string = path.join(process.cwd(), "codemods");
 
-const codemodDescriptions: { [key: string]: string } = {
-    "deprecate-v2-tokens": "This is to deprecate previous tokens to V2",
-    "migrate-colour":
-        "This is to migrate V2_Color to its respective Colour tokens are usages.",
-    "migrate-layout":
+enum Codemod {
+    DeprecateV2Tokens = "deprecate-v2-tokens",
+    MigrateColour = "migrate-colour",
+    MigrateLayout = "migrate-layout",
+    MigrateMediaQuery = "migrate-media-query",
+    MigrateText = "migrate-text",
+}
+
+enum Theme {
+    LifeSG = "lifesg",
+    BookingSG = "bookingsg",
+}
+
+const codemodDescriptions: { [key in Codemod]?: string } = {
+    [Codemod.DeprecateV2Tokens]: "This is to deprecate previous tokens to V2",
+    [Codemod.MigrateColour]:
+        "This is to migrate V2_Color to its respective Colour tokens and usages.",
+    [Codemod.MigrateLayout]:
         "This is to migrate V2_Layout to its new Layout component and respective column usages",
-    "migrate-mediaquery":
+    [Codemod.MigrateMediaQuery]:
         "This is to migrate V2 mediaquery helper function to V3 and its new specs.",
-    "migrate-text":
-        "This is to migrate V2_text to its new Typography Components and previous usages.",
+    [Codemod.MigrateText]:
+        "This is to migrate V2_text to its new Typography Component and update its previous usages.",
 };
 
 // Shortcuts
 const predefinedPaths: { [key: string]: string } = {
     Src: "src",
     Codebase: ".",
-    TestData: "test-data/test-data.tsx",
 };
 
 // Return codemods in codemod folder
@@ -31,28 +43,25 @@ function listCodemods(): { name: string; value: string }[] {
     });
 
     const options = codemods.map((mod) => ({
-        name: codemodDescriptions[mod]
-            ? `${mod} - ${codemodDescriptions[mod]}`
-            : `${mod}`,
+        name: mod,
         value: mod,
+        description: codemodDescriptions[mod as Codemod],
     }));
 
-    options.push({ name: "Exit", value: "exit" });
     return options;
 }
 
 function runCodemods(
     codemodsToRun: string[],
     outputPath: string,
-    mapping?: string
+    options?: { "migrate-colour"?: Theme }
 ): void {
     codemodsToRun.forEach((codemod) => {
         const codemodPath = path.join(codemodsDir, codemod, "index.ts");
-        let command = `jscodeshift --parser=tsx --silent -t ${codemodPath} ${outputPath}`;
+        let command = `jscodeshift --parser=tsx -t ${codemodPath} ${outputPath}`;
 
-        if (mapping && codemod === "migrate-colour") {
-            console.log("CHEKCING MAPPING", mapping);
-            command = `jscodeshift --parser=tsx --silent -t ${codemodPath} --mapping=${mapping} ${outputPath}`;
+        if (codemod === Codemod.MigrateColour && options?.["migrate-colour"]) {
+            command = `jscodeshift --parser=tsx -t ${codemodPath} --mapping=${options["migrate-colour"]} ${outputPath}`;
         }
 
         console.log(
@@ -75,11 +84,9 @@ function runCodemods(
 // Choose path for codemod use
 async function chooseOutputPath(): Promise<string | null> {
     const options = [
-        { name: "Src", value: predefinedPaths.Src },
-        { name: "Codebase", value: predefinedPaths.Codebase },
-        { name: "TestData", value: predefinedPaths.TestData },
-        { name: "Custom", value: "custom" },
-        { name: "Exit", value: "exit" },
+        { name: "src (./src)", value: predefinedPaths.Src },
+        { name: "current directory (./)", value: predefinedPaths.Codebase },
+        { name: "custom", value: "custom" },
     ];
 
     const selectedOption = await select({
@@ -87,13 +94,16 @@ async function chooseOutputPath(): Promise<string | null> {
         choices: options,
     });
 
-    if (selectedOption === "exit") {
-        console.log("Exiting...");
-        return null;
-    }
-
     if (selectedOption === "custom") {
-        const customPath = await input({ message: "Enter your custom path:" });
+        const customPath = await input({
+            message: "Enter your custom path:",
+        });
+
+        if (!customPath) {
+            console.log("No custom path provided. Canceling.");
+            return null;
+        }
+
         const resolvedPath = path.resolve(customPath);
 
         if (!fs.existsSync(resolvedPath)) {
@@ -109,10 +119,10 @@ async function chooseOutputPath(): Promise<string | null> {
     return selectedOption;
 }
 
-async function chooseTheme(): Promise<string | null> {
+async function chooseTheme(): Promise<Theme | null> {
     const themeOptions = [
-        { name: "LifeSG", value: "lifesg" },
-        { name: "BookingSG", value: "bookingsg" },
+        { name: "LifeSG", value: Theme.LifeSG },
+        { name: "BookingSG", value: Theme.BookingSG },
     ];
 
     const selectedTheme = await select({
@@ -131,61 +141,51 @@ async function main(): Promise<void> {
         return;
     }
 
-    const selectedCodemods = await checkbox({
-        message: "Select codemods to run (use space to select multiple):",
-        choices: codemods,
-    });
+    try {
+        const selectedCodemods = await checkbox({
+            required: true,
+            message: "Select codemods to run:",
+            choices: codemods,
+        });
 
-    if (selectedCodemods.includes("exit")) {
-        console.log("Exiting...");
-        return;
-    }
+        let selectedTheme: Theme | null = null;
+        if (selectedCodemods.includes(Codemod.MigrateColour)) {
+            selectedTheme = await chooseTheme();
+        }
 
-    const codemodConfirmed = await confirm({
-        message: `You selected "${selectedCodemods.join(
+        const outputPath = await chooseOutputPath();
+        if (!outputPath) {
+            console.log("No output path selected or provided.");
+            return;
+        }
+
+        const finalConfirmationMessage = `You are about to run the following codemods: ${selectedCodemods.join(
             ", "
-        )}". Do you want to proceed?`,
-        default: true,
-    });
+        )}\nOutput path: ${outputPath}${
+            selectedTheme
+                ? `\nSelected theme for "migrate-colour": ${selectedTheme}`
+                : ""
+        }.\nDo you want to proceed?`;
 
-    if (!codemodConfirmed) {
-        console.log("Codemod selection canceled. Exiting...");
-        return;
-    }
-
-    let selectedTheme: string | null = null;
-
-    if (selectedCodemods.includes("migrate-colour")) {
-        selectedTheme = await chooseTheme();
-
-        const themeConfirmed = await confirm({
-            message: `You selected the theme "${selectedTheme}". Do you want to proceed?`,
+        const finalConfirmation = await confirm({
+            message: finalConfirmationMessage,
             default: true,
         });
 
-        if (!themeConfirmed) {
-            console.log("Theme selection canceled. Exiting...");
+        if (!finalConfirmation) {
             return;
         }
+
+        runCodemods(
+            selectedCodemods,
+            outputPath,
+            selectedTheme ? { "migrate-colour": selectedTheme } : undefined
+        );
+    } catch (error) {
+        if (error.name === "ExitPromptError") {
+            console.log("Selection process interrupted.");
+        }
     }
-
-    const outputPath = await chooseOutputPath();
-    if (!outputPath) {
-        console.log("No output path selected or provided. Exiting...");
-        return;
-    }
-
-    const pathConfirmed = await confirm({
-        message: `You selected the output path "${outputPath}". Do you want to proceed?`,
-        default: true,
-    });
-
-    if (!pathConfirmed) {
-        console.log("Output path selection canceled. Exiting...");
-        return;
-    }
-
-    runCodemods(selectedCodemods, outputPath, selectedTheme ?? undefined);
 }
 
 main();
