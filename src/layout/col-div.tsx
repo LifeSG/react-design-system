@@ -86,21 +86,6 @@ const Component = (
             $xsSpan: xsStartSpan.span,
             $xxsStart: xxsStartSpan.start,
             $xxsSpan: xxsStartSpan.span,
-
-            $xxlMargin: BreakpointValues["xxl-margin"]({ theme }),
-            $xxlGutter: BreakpointValues["xxl-gutter"]({ theme }),
-            $xlMargin: BreakpointValues["xl-margin"]({ theme }),
-            $xlGutter: BreakpointValues["xl-gutter"]({ theme }),
-            $lgMargin: BreakpointValues["lg-margin"]({ theme }),
-            $lgGutter: BreakpointValues["lg-gutter"]({ theme }),
-            $mdMargin: BreakpointValues["md-margin"]({ theme }),
-            $mdGutter: BreakpointValues["md-gutter"]({ theme }),
-            $smMargin: BreakpointValues["sm-margin"]({ theme }),
-            $smGutter: BreakpointValues["sm-gutter"]({ theme }),
-            $xsMargin: BreakpointValues["xs-margin"]({ theme }),
-            $xsGutter: BreakpointValues["xs-gutter"]({ theme }),
-            $xxsMargin: BreakpointValues["xxs-margin"]({ theme }),
-            $xxsGutter: BreakpointValues["xxs-gutter"]({ theme }),
         };
     };
 

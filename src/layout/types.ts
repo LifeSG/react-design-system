@@ -47,19 +47,4 @@ export interface ColDivProps
     extends React.HTMLAttributes<HTMLDivElement>,
         ColProps {
     "data-testid"?: string;
-
-    xxlMargin?: string | number;
-    xxlGutter?: string | number;
-    xlMargin?: string | number;
-    xlGutter?: string | number;
-    lgMargin?: string | number;
-    lgGutter?: string | number;
-    mdMargin?: string | number;
-    mdGutter?: string | number;
-    smMargin?: string | number;
-    smGutter?: string | number;
-    xsMargin?: string | number;
-    xsGutter?: string | number;
-    xxsMargin?: string | number;
-    xxsGutter?: string | number;
 }

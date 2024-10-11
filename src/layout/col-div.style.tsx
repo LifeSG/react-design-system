@@ -16,21 +16,6 @@ export interface StyledDivStyleProps {
     $xlSpan?: number | undefined;
     $xxlStart?: number | undefined;
     $xxlSpan?: number | undefined;
-
-    $xxsMargin?: string | number;
-    $xxsGutter?: string | number;
-    $xsMargin?: string | number;
-    $xsGutter?: string | number;
-    $smMargin?: string | number;
-    $smGutter?: string | number;
-    $mdMargin?: string | number;
-    $mdGutter?: string | number;
-    $lgMargin?: string | number;
-    $lgGutter?: string | number;
-    $xlMargin?: string | number;
-    $xlGutter?: string | number;
-    $xxlMargin?: string | number;
-    $xxlGutter?: string | number;
 }
 
 export const StyledDiv = styled.div<StyledDivStyleProps>`
