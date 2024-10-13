@@ -1,7 +1,7 @@
 import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 import { RefObject } from "react";
-import { PopoverTrigger } from "../popover-v2/popover-trigger";
-import { AddonWrapper, TriggerArea } from "./form-label-addon.style";
+import { PopoverInline } from "../popover-v2";
+import { AddonWrapper } from "./form-label-addon.style";
 import { FormLabelAddonProps } from "./types";
 
 // =============================================================================
@@ -26,26 +26,18 @@ export const PopoverAddon = ({
     // =========================================================================
     // RENDER FUNCTION
     // =========================================================================
-    const renderIcon = () => {
-        if (icon) {
-            return icon;
-        } else {
-            return <ICircleFillIcon id={`${type}-icon`} />;
-        }
-    };
-
     return (
-        <PopoverTrigger
-            trigger="click"
-            id={id}
-            data-testid={testId}
-            popoverContent={content}
-            rootNode={rootNode}
-            zIndex={zIndex}
-        >
-            <AddonWrapper>
-                <TriggerArea>{renderIcon()}</TriggerArea>
-            </AddonWrapper>
-        </PopoverTrigger>
+        <AddonWrapper>
+            <PopoverInline
+                trigger="click"
+                id={id}
+                data-testid={testId}
+                popoverContent={content}
+                rootNode={rootNode}
+                zIndex={zIndex}
+                icon={icon ?? <ICircleFillIcon data-testid={`${type}-icon`} />}
+                ariaLabel="More info"
+            />
+        </AddonWrapper>
     );
 };

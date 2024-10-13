@@ -46,6 +46,7 @@ export type PopoverInlineStyle = "default" | "underline" | "underline-dashed";
 
 export interface PopoverInlineProps
     extends Omit<PopoverV2TriggerProps, "children"> {
+    ariaLabel?: string | undefined;
     content?: React.ReactNode | undefined;
     icon?: JSX.Element | undefined;
     underlineStyle?: PopoverInlineStyle | undefined;
