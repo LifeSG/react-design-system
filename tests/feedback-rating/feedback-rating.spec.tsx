@@ -251,7 +251,7 @@ const getSubmitButton = (label?: string): HTMLElement => {
 };
 
 const getBannerImg = (): HTMLElement => {
-    return screen.getByRole("img", { name: "banner image" });
+    return screen.getByTestId("feedback-banner-image");
 };
 
 // =============================================================================
