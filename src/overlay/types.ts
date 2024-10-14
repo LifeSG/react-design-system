@@ -4,7 +4,6 @@ export interface OverlayProps {
     rootId?:
         | string
         | undefined /* the id of the root element to attach the overlay to */;
-    backgroundOpacity?: number | undefined;
     backgroundBlur?: boolean | undefined;
     disableTransition?: boolean | undefined;
     enableOverlayClick?: boolean | undefined;
@@ -19,7 +18,6 @@ export interface OverlayProps {
  */
 export interface StyleProps {
     $show: boolean;
-    $backgroundOpacity?: number | undefined;
     $backgroundBlur?: boolean | undefined;
     $disableTransition?: boolean | undefined;
     $enableOverlayClick?: boolean | undefined;

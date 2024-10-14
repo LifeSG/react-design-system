@@ -9,7 +9,6 @@ export const Overlay = ({
     rootId,
     onOverlayClick,
     children,
-    backgroundOpacity,
     backgroundBlur = true,
     disableTransition = false,
     enableOverlayClick = false,
@@ -180,7 +179,7 @@ export const Overlay = ({
         <Wrapper
             data-testid={"overlay-wrapper"}
             $show={show}
-            $backgroundOpacity={backgroundOpacity || (isStacked ? 0.5 : 0.8)}
+            $stacked={isStacked}
             $backgroundBlur={backgroundBlur}
             $disableTransition={disableTransition}
             $enableOverlayClick={enableOverlayClick}

@@ -24,7 +24,7 @@ export type MainButtonStyle =
     | "secondary"
     | "light"
     | "link";
-export type MainButtonSize = "default" | "small";
+export type MainButtonSize = "default" | "small" | "large";
 export interface MainStyleProps extends ComponentLoadingSpinnerProps {
     $buttonStyle: MainButtonStyle;
     $buttonSizeStyle?: MainButtonSize | undefined;
