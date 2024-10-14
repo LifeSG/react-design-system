@@ -33,8 +33,9 @@ export const LogoSection = styled.div`
     grid-column: 1 / span 2;
 
     img {
-        height: 4rem;
-        width: auto;
+        max-height: 4rem;
+        max-width: 100%;
+        object-fit: contain;
     }
 
     ${MediaQuery.MaxWidth.tablet} {

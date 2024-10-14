@@ -54,6 +54,7 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["string"],
+                defaultValue: "<theme service logo>",
             },
             {
                 name: "lastUpdated",

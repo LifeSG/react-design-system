@@ -36,7 +36,6 @@ export const Brand = ({
     return (
         <Clickable
             role="link"
-            aria-label={resources.brandName + "-app-home-page"}
             onClick={handleClick}
             tabIndex={0}
             data-id={dataId}
@@ -45,7 +44,7 @@ export const Brand = ({
         >
             <ImageWithFallback
                 src={resources.logoSrc}
-                alt={resources.brandName + "-app-logo"}
+                alt={resources.brandName}
             />
         </Clickable>
     );
