@@ -14,9 +14,9 @@ export interface InternalDisclaimerLinks {
 export namespace FooterHelper {
     export const getCopyrightInfo = (
         lastUpdated: Date = new Date(),
-        theme?: ResourceScheme
+        resourceScheme?: ResourceScheme
     ): string => {
-        const copyrightText = getCopyrightText(theme);
+        const copyrightText = getCopyrightText(resourceScheme);
         const copyright = `${new Date().getFullYear()} ${copyrightText}`;
         const lastUpdatedDateString = dayjs(lastUpdated).format("D MMMM YYYY");
 
@@ -39,7 +39,7 @@ export namespace FooterHelper {
     export const getFooterLogo = (resourceScheme?: ResourceScheme) => {
         switch (resourceScheme) {
             case "bookingsg":
-                return "https://www.booking.gov.sg/logo.svg";
+                return "https://home.booking.gov.sg/images/bookingsg/footer.svg";
             case "mylegacy":
                 return "https://mylegacy.life.gov.sg/images/site-logo.png";
             case "ccube":
