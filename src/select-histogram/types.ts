@@ -4,7 +4,7 @@ import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export type SelectHistogramSliderProps = Pick<
     HistogramSliderProps,
-    "bins" | "interval" | "renderEmptyView"
+    "bins" | "interval" | "renderEmptyView" | "ariaLabels"
 >;
 
 export interface SelectHistogramProps {

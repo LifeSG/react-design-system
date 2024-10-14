@@ -145,6 +145,11 @@ const DATA: ApiTableSectionProps[] = [
                     "A custom display if there are no results across any of the bins",
                 propTypes: ["() => React.ReactNode"],
             },
+            {
+                name: "ariaLabels",
+                description: "The user-friendly description of each thumb",
+                propTypes: ["[string, string]"],
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,

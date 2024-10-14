@@ -16,6 +16,7 @@ export interface HistogramSliderProps {
     showRangeLabels?: boolean | undefined;
     rangeLabelPrefix?: string | undefined;
     rangeLabelSuffix?: string | undefined;
+    ariaLabels?: [string, string] | undefined;
     renderRangeLabel?: ((value: number) => React.ReactNode) | undefined;
     /** Called on every selection change. Returns the value in the format `[start, end]` */
     onChange?: ((value: [number, number]) => void) | undefined;
