@@ -58,7 +58,7 @@ const MyLegacyDisclaimerLinks: InternalDisclaimerLinks = {
     },
 };
 
-export const getDefaultDisclaimerLink = (resourceScheme?: ResourceScheme) => {
+export const getDefaultDisclaimerLinks = (resourceScheme?: ResourceScheme) => {
     switch (resourceScheme) {
         case "bookingsg":
             return BookingSgDisclaimerLinks;

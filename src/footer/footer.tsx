@@ -18,9 +18,6 @@ import {
 import { FooterLinkProps, FooterProps } from "./types";
 import { useTheme } from "styled-components";
 
-const LIFESG_LOGO_SRC =
-    "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg";
-
 export const Footer = <T,>({
     children,
     links,
@@ -101,7 +98,12 @@ export const Footer = <T,>({
                 <>
                     <LogoSection data-testid="logo-section">
                         <img
-                            src={logoSrc || LIFESG_LOGO_SRC}
+                            src={
+                                logoSrc ||
+                                FooterHelper.getFooterLogo(
+                                    theme?.resourceScheme
+                                )
+                            }
                             alt="LifeSG"
                             data-testid="logo"
                         />
