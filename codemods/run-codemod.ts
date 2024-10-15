@@ -18,6 +18,10 @@ enum Theme {
     BookingSG = "bookingsg",
 }
 
+const theme = {
+    helpMode: "always" as const,
+};
+
 const codemodDescriptions: { [key in Codemod]?: string } = {
     [Codemod.DeprecateV2Tokens]: "This is to deprecate previous tokens to V2",
     [Codemod.MigrateColour]:
@@ -77,6 +81,8 @@ function runCodemods(
             console.error(
                 `Error executing codemod ${codemod}: ${error.message}`
             );
+
+            throw error;
         }
     });
 }
@@ -133,31 +139,41 @@ async function chooseTheme(): Promise<Theme | null> {
     return selectedTheme;
 }
 
-// Choose and run the codemods
-async function main(): Promise<void> {
+// Get codemod selections
+async function getCodemodSelections(): Promise<{
+    selectedCodemods: string[];
+    selectedTheme: Theme | null;
+    outputPath: string;
+}> {
     const codemods = listCodemods();
     if (codemods.length === 0) {
-        console.log("No codemod scripts found.");
-        return;
+        throw new Error("No codemod scripts found.");
     }
 
+    const selectedCodemods = await checkbox({
+        required: true,
+        message: "Select codemods to run:",
+        choices: codemods,
+        theme,
+    });
+
+    let selectedTheme: Theme | null = null;
+    if (selectedCodemods.includes(Codemod.MigrateColour)) {
+        selectedTheme = await chooseTheme();
+    }
+
+    const outputPath = await chooseOutputPath();
+    if (!outputPath) {
+        throw new Error("No output path selected or provided.");
+    }
+
+    return { selectedCodemods, selectedTheme, outputPath };
+}
+
+async function main(): Promise<void> {
     try {
-        const selectedCodemods = await checkbox({
-            required: true,
-            message: "Select codemods to run:",
-            choices: codemods,
-        });
-
-        let selectedTheme: Theme | null = null;
-        if (selectedCodemods.includes(Codemod.MigrateColour)) {
-            selectedTheme = await chooseTheme();
-        }
-
-        const outputPath = await chooseOutputPath();
-        if (!outputPath) {
-            console.log("No output path selected or provided.");
-            return;
-        }
+        const { selectedCodemods, selectedTheme, outputPath } =
+            await getCodemodSelections();
 
         const finalConfirmationMessage = `You are about to run the following codemods: ${selectedCodemods.join(
             ", "
@@ -184,6 +200,9 @@ async function main(): Promise<void> {
     } catch (error) {
         if (error.name === "ExitPromptError") {
             console.log("Selection process interrupted.");
+        } else {
+            console.error("An unexpected error occurred:", error);
+            throw error;
         }
     }
 }
