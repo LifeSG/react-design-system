@@ -1,7 +1,22 @@
 import styled, { css } from "styled-components";
-import { StyleProps } from "./types";
 import { Colour } from "../theme";
 
+// =============================================================================
+// STYLE INTERFACE, transient props are denoted with $
+// See more https://styled-components.com/docs/api#transient-props
+// =============================================================================
+interface StyleProps {
+    $show: boolean;
+    $backgroundBlur?: boolean | undefined;
+    $disableTransition?: boolean | undefined;
+    $enableOverlayClick?: boolean | undefined;
+    zIndex?: number | undefined;
+    $stacked?: boolean | undefined;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
 const getBackdropFilter = (blur: boolean) => {
     let styleString = "";
 

@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { Main } from "../button/button.style";
-import { MainStyleProps } from "../button/types";
+import { Main, MainStyleProps } from "../button/button.style";
 import { ButtonIconPosition } from "./types";
 
 // =============================================================================

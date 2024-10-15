@@ -1,6 +1,6 @@
 import React from "react";
-import { ButtonProps, ButtonRef, MainStyleProps } from "./types";
-import { Main, Spinner } from "./button.style";
+import { Main, MainStyleProps, Spinner } from "./button.style";
+import { ButtonProps, ButtonRef } from "./types";
 
 /**
  * NOTE: Due to the way we intend to customise both components, with forwardRef behaviour

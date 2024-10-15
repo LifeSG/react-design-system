@@ -18,13 +18,18 @@ export interface ButtonProps extends ButtonBaseProps {
 
 export type ButtonRef = React.Ref<HTMLButtonElement>;
 
+/** @deprecated For internal use only */
 export type MainButtonStyle =
     | "default"
     | "disabled"
     | "secondary"
     | "light"
     | "link";
+
+/** @deprecated For internal use only */
 export type MainButtonSize = "default" | "small" | "large";
+
+/** @deprecated For internal use only */
 export interface MainStyleProps extends ComponentLoadingSpinnerProps {
     $buttonStyle: MainButtonStyle;
     $buttonSizeStyle?: MainButtonSize | undefined;

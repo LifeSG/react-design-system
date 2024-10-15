@@ -1,8 +1,21 @@
 import styled, { css } from "styled-components";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
-import { MainStyleProps } from "./types";
-import { Colour, Font } from "../theme";
-import { MediaQuery } from "../theme";
+import { Colour, Font, MediaQuery } from "../theme";
+
+export type MainButtonStyle =
+    | "default"
+    | "disabled"
+    | "secondary"
+    | "light"
+    | "link";
+
+export type MainButtonSize = "default" | "small" | "large";
+
+export interface MainStyleProps {
+    $buttonStyle: MainButtonStyle;
+    $buttonSizeStyle?: MainButtonSize | undefined;
+    $buttonIsDanger?: boolean;
+}
 
 export const Main = styled.button<MainStyleProps>`
     padding: 0.5rem 1rem;

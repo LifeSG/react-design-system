@@ -12,10 +12,7 @@ export interface OverlayProps {
     id?: string | undefined;
 }
 
-/**
- * Transient props are denoted with $
- * https://styled-components.com/docs/api#transient-props
- */
+/** @deprecated for internal use only */
 export interface StyleProps {
     $show: boolean;
     $backgroundBlur?: boolean | undefined;
