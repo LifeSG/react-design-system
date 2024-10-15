@@ -77,8 +77,9 @@ export const NBComponent = ({
             data-testid={formatId("dismiss-button", testId)}
             focusHighlight={false}
             type="button"
+            aria-label="Dismiss notification"
         >
-            <StyledIcon />
+            <StyledIcon aria-hidden />
         </StyledIconButton>
     );
 

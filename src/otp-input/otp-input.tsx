@@ -208,6 +208,7 @@ export const OtpInput = ({
                                 "otp-input",
                                 dataTestId
                             )}
+                            aria-label={`Enter OTP character ${index + 1}`}
                             key={index}
                             ref={(el) => (inputRefs.current[index] = el)}
                             type="text"

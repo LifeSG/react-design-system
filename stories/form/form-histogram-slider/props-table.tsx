@@ -79,6 +79,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(value: number) => React.ReactNode"],
             },
             {
+                name: "ariaLabels",
+                description: "The user-friendly description of each thumb",
+                propTypes: ["[string, string]"],
+            },
+            {
                 name: "onChange",
                 description: (
                     <>

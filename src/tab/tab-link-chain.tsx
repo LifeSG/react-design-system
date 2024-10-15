@@ -84,6 +84,7 @@ export const TabLinkChain = ({
                     return (
                         <ChainItem
                             key={index}
+                            role="none"
                             $active={isActive}
                             ref={isActive ? activeLinkRef : null}
                         >

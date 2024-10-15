@@ -37,7 +37,12 @@ export const SelectHistogram = ({
     value,
     ...otherProps
 }: SelectHistogramProps): JSX.Element => {
-    const { interval, bins = [], renderEmptyView } = histogramSlider;
+    const {
+        interval,
+        bins = [],
+        renderEmptyView,
+        ariaLabels,
+    } = histogramSlider;
     // =============================================================================
     // CONST, STATE
     // =============================================================================
@@ -193,6 +198,7 @@ export const SelectHistogram = ({
                 onChangeEnd={onSliderChangeEnd}
                 showRangeLabels={false}
                 renderEmptyView={renderEmptyView}
+                ariaLabels={ariaLabels}
             />
         </HistogramSliderDropdownContainer>
     );

@@ -18,6 +18,7 @@ export const HistogramSlider = ({
     showRangeLabels,
     rangeLabelPrefix,
     rangeLabelSuffix,
+    ariaLabels,
     onChange,
     onChangeEnd,
     renderEmptyView,
@@ -133,6 +134,7 @@ export const HistogramSlider = ({
                     value={selection}
                     disabled={disabled}
                     readOnly={readOnly}
+                    ariaLabels={ariaLabels}
                     onChange={handleChange}
                     onChangeEnd={handleChangeEnd}
                 />

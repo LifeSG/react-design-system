@@ -368,6 +368,7 @@ const Component = (
                 </HeaderInputDropdown>
                 <HeaderArrows>
                     <HeaderArrowButton
+                        aria-label="Previous month"
                         data-testid="left-arrow-btn"
                         disabled={isLeftArrowDisabled()}
                         focusHighlight={false}
@@ -377,6 +378,7 @@ const Component = (
                         <ArrowLeft />
                     </HeaderArrowButton>
                     <HeaderArrowButton
+                        aria-label="Next month"
                         data-testid="right-arrow-btn"
                         disabled={isRightArrowDisabled()}
                         focusHighlight={false}

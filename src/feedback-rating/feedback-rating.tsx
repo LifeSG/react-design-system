@@ -30,9 +30,9 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
         <MainContainer {...otherProps}>
             {bannerSrc && (
                 <Image
+                    data-testid="feedback-banner-image"
                     src={bannerSrc}
                     alt=""
-                    aria-label="banner image"
                     onError={(event) =>
                         (event.currentTarget.style.display = "none")
                     }
