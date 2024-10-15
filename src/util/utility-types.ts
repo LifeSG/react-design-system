@@ -1,5 +1,3 @@
-import { DefaultTheme } from "styled-components";
-
 // recursively maps object property types to the specified type
 export type PropertiesToType<Model, Type> = {
     [Key in keyof Model]: Model[Key] extends object
@@ -28,18 +26,3 @@ export type AddOne<
 > = Result["length"] extends N
     ? [...Result, Result["length"]]["length"]
     : AddOne<N, [...Result, Result["length"]]>;
-
-// uses the range and if there is no max defined it just becomes a number
-export type ColSpan<Max extends number | undefined> = Max extends number
-    ? Range<Max> | [Range<AddOne<Max>>, Range<AddOne<Max>>] | undefined
-    : number | [number, number] | undefined;
-
-// using generic breakpointspan to extract column span for a specific breakpoint
-export type BreakpointSpan<
-    Breakpoint extends keyof DefaultTheme["maxColumns"]
-> = DefaultTheme["maxColumns"] extends Record<
-    Breakpoint,
-    infer Max extends number
->
-    ? ColSpan<Max>
-    : number | [number, number] | undefined;

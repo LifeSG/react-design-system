@@ -29,7 +29,6 @@ const Component = (
     ) => {
         if (!cols) return { start: undefined, span: undefined };
 
-        // during development process to give wwarning
         if (process.env.NODE_ENV === "development") {
             if (typeof cols === "number" && cols > maxCols) {
                 console.warn(
@@ -63,12 +62,63 @@ const Component = (
         const xsColumnCount = BreakpointValues["xs-column"]({ theme });
         const xxsColumnCount = BreakpointValues["xxs-column"]({ theme });
 
-        const xxlStartSpan = getColSpan(xxlCols, xxlColumnCount, "xxl");
-        const xlStartSpan = getColSpan(xlCols, xlColumnCount, "xl");
-        const lgStartSpan = getColSpan(lgCols, lgColumnCount, "lg");
-        const mdStartSpan = getColSpan(mdCols, mdColumnCount, "md");
-        const smStartSpan = getColSpan(smCols, smColumnCount, "sm");
-        const xsStartSpan = getColSpan(xsCols, xsColumnCount, "xs");
+        const xxlStartSpan = getColSpan(
+            xxlCols ||
+                xlCols ||
+                lgCols ||
+                mdCols ||
+                smCols ||
+                xsCols ||
+                xxsCols,
+            xxlColumnCount ||
+                xlColumnCount ||
+                lgColumnCount ||
+                mdColumnCount ||
+                smColumnCount ||
+                xsColumnCount ||
+                xxsColumnCount,
+            "xxl"
+        );
+
+        const xlStartSpan = getColSpan(
+            xlCols || lgCols || mdCols || smCols || xsCols || xxsCols,
+            xlColumnCount ||
+                lgColumnCount ||
+                mdColumnCount ||
+                smColumnCount ||
+                xsColumnCount ||
+                xxsColumnCount,
+            "xl"
+        );
+
+        const lgStartSpan = getColSpan(
+            lgCols || mdCols || smCols || xsCols || xxsCols,
+            lgColumnCount ||
+                mdColumnCount ||
+                smColumnCount ||
+                xsColumnCount ||
+                xxsColumnCount,
+            "lg"
+        );
+
+        const mdStartSpan = getColSpan(
+            mdCols || smCols || xsCols || xxsCols,
+            mdColumnCount || smColumnCount || xsColumnCount || xxsColumnCount,
+            "md"
+        );
+
+        const smStartSpan = getColSpan(
+            smCols || xsCols || xxsCols,
+            smColumnCount || xsColumnCount || xxsColumnCount,
+            "sm"
+        );
+
+        const xsStartSpan = getColSpan(
+            xsCols || xxsCols,
+            xsColumnCount || xxsColumnCount,
+            "xs"
+        );
+
         const xxsStartSpan = getColSpan(xxsCols, xxsColumnCount, "xxs");
 
         return {
