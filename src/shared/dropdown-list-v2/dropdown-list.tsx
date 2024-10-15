@@ -348,10 +348,14 @@ export const DropdownList = <T, V>({
                         tabIndex={active ? 0 : -1}
                         $active={active}
                     >
-                        {renderListItemIcon(selected)}
-                        {renderListItem
-                            ? renderListItem(item, { selected })
-                            : renderDropdownLabel(item, selected)}
+                        {renderListItem ? (
+                            renderListItem(item, { selected })
+                        ) : (
+                            <>
+                                {renderListItemIcon(selected)}
+                                {renderDropdownLabel(item, selected)}
+                            </>
+                        )}
                     </ListItem>
                 );
             });
