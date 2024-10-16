@@ -205,4 +205,16 @@ export namespace StringHelper {
             ? { startIndex: index0, endIndex: index1 }
             : { startIndex: index1, endIndex: index0 };
     };
+
+    export const convertLinks = (text: string): string => {
+        const words = text.split(" ");
+        const convertedText = words
+            .map((text) => {
+                return text.startsWith("http://") || text.startsWith("https://")
+                    ? `<a href="${text}">${text}</a>`
+                    : text;
+            })
+            .join(" ");
+        return convertedText;
+    };
 }

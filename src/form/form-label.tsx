@@ -1,7 +1,9 @@
 import { TextProps } from "../text";
 import { PopoverAddon } from "./form-label-addon";
 import { ErrorMessage, Label, Subtitle } from "./form-label.style";
+import DOMPurify from "dompurify";
 import { FormLabelProps } from "./types";
+import { StringHelper } from "../util";
 
 export const FormLabel = ({
     children,
@@ -24,7 +26,17 @@ export const FormLabel = ({
 
     return (
         <Label {...otherProps}>
-            {children}
+            {typeof children === "string" ? (
+                <span
+                    dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(
+                            StringHelper.convertLinks(children)
+                        ),
+                    }}
+                />
+            ) : (
+                children
+            )}
             {addon && addon.type && renderAddon()}
             {typeof subtitle === "string" ? (
                 <Subtitle
