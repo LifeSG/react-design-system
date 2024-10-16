@@ -1,6 +1,7 @@
 import {
     FloatingFocusManager,
     FloatingPortal,
+    Middleware,
     OpenChangeReason,
     Placement,
     autoUpdate,
@@ -17,6 +18,7 @@ import {
 } from "@floating-ui/react";
 import { useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { MediaWidths } from "../../media";
 import { useFloatingChild } from "../../overlay/use-floating-context";
 import { DropdownContainer } from "./element-with-dropdown.styles";
 import { DropdownAlignmentType } from "./types";
@@ -77,6 +79,20 @@ export const ElementWithDropdown = ({
         targetRef: elementRef,
         handleHeight: false,
     });
+    const center: Middleware = {
+        name: "center",
+        fn: ({ x, rects }) => {
+            const noGapInBetween =
+                x === 0 || x + rects.floating.width === window.innerWidth;
+            const isMobileScreen = window.innerWidth < MediaWidths.mobileL;
+            return {
+                x:
+                    noGapInBetween && isMobileScreen
+                        ? (window.innerWidth - rects.floating.width) / 2
+                        : x,
+            };
+        },
+    };
     const { refs, floatingStyles, context } = useFloating({
         open: isOpen,
         onOpenChange: (open, _event, reason) => {
@@ -110,6 +126,7 @@ export const ElementWithDropdown = ({
                     });
                 },
             }),
+            center,
         ],
     });
     const parentZIndex = useFloatingChild();
