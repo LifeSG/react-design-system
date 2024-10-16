@@ -4,6 +4,8 @@ export interface OverlayProps {
     rootId?:
         | string
         | undefined /* the id of the root element to attach the overlay to */;
+    /** @deprecated no longer has effect */
+    backgroundOpacity?: number | undefined;
     backgroundBlur?: boolean | undefined;
     disableTransition?: boolean | undefined;
     enableOverlayClick?: boolean | undefined;

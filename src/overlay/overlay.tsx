@@ -9,6 +9,7 @@ export const Overlay = ({
     rootId,
     onOverlayClick,
     children,
+    backgroundOpacity: _backgroundOpacity,
     backgroundBlur = true,
     disableTransition = false,
     enableOverlayClick = false,
