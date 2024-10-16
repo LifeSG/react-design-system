@@ -1,10 +1,21 @@
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color/color";
-import { V2_MediaQuery } from "../v2_media/media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
-import { V2_TextStyleHelper } from "../v2_text";
-import { MainStyleProps } from "./types";
-import { V2_DesignToken } from "../v2_design-token";
+import { Colour, Font, MediaQuery } from "../theme";
+
+export type MainButtonStyle =
+    | "default"
+    | "disabled"
+    | "secondary"
+    | "light"
+    | "link";
+
+export type MainButtonSize = "default" | "small" | "large";
+
+export interface MainStyleProps {
+    $buttonStyle: MainButtonStyle;
+    $buttonSizeStyle?: MainButtonSize | undefined;
+    $buttonIsDanger?: boolean;
+}
 
 export const Main = styled.button<MainStyleProps>`
     padding: 0.5rem 1rem;
@@ -16,12 +27,6 @@ export const Main = styled.button<MainStyleProps>`
     align-items: center;
     justify-content: center;
 
-    @media (hover: hover) {
-        &:hover {
-            box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.2);
-        }
-    }
-
     // -----------------------------------------------------------------------------
     // BUTTON STYLE + TEXT COLOR
     // -----------------------------------------------------------------------------
@@ -29,28 +34,51 @@ export const Main = styled.button<MainStyleProps>`
         switch (props.$buttonStyle) {
             case "secondary":
                 return css`
-                    background-color: ${V2_Color.Neutral[8]};
+                    background-color: ${Colour.Primitive.white};
                     border: 1px solid
                         ${props.$buttonIsDanger
-                            ? V2_DesignToken.Button.Danger.Border
-                            : V2_Color.Primary};
+                            ? Colour["border-error-strong"]
+                            : Colour["border-primary"]};
 
                     color: ${props.$buttonIsDanger
-                        ? V2_DesignToken.Button.Danger.Primary
-                        : V2_Color.Primary};
+                        ? Colour["text-error"]
+                        : Colour["text-primary"]};
+
+                    &:hover,
+                    &:active {
+                        background-color: ${Colour["bg-hover-neutral"]};
+                    }
                 `;
             case "light":
                 return css`
-                    background-color: ${V2_Color.Neutral[8]};
-                    border: 1px solid ${V2_Color.Neutral[5]};
+                    background-color: ${Colour.bg};
+                    border: 1px solid ${Colour.border};
 
                     color: ${props.$buttonIsDanger
-                        ? V2_DesignToken.Button.Danger.Primary
-                        : V2_Color.Primary};
+                        ? Colour["text-error"]
+                        : Colour["text-primary"]};
+
+                    &:hover,
+                    &:active {
+                        background-color: ${Colour["bg-hover-neutral"]};
+                    }
+                `;
+
+            case "link":
+                return css`
+                    background-color: transparent;
+                    border: transparent;
+                    color: ${props.$buttonIsDanger
+                        ? Colour["text-error"]
+                        : Colour["text-primary"]};
+                    &:hover,
+                    &:active {
+                        background-color: ${Colour["bg-hover-neutral"]};
+                    }
                 `;
             case "disabled":
                 return css`
-                    background-color: ${V2_Color.Neutral[6]};
+                    background-color: ${Colour["bg-disabled"]};
                     border: 1px solid transparent;
                     cursor: not-allowed;
 
@@ -58,41 +86,27 @@ export const Main = styled.button<MainStyleProps>`
                         box-shadow: none;
                     }
 
-                    color: ${V2_Color.Neutral[3]};
-                `;
-            case "link":
-                return css`
-                    background-color: transparent;
-                    border: none;
-                    border-radius: unset;
-
-                    &:hover {
-                        box-shadow: none;
-                    }
-
-                    color: ${props.$buttonIsDanger
-                        ? V2_DesignToken.Button.Danger.Primary
-                        : V2_Color.Primary};
-                    :hover,
-                    :active,
-                    :focus {
-                        color: ${props.$buttonIsDanger
-                            ? V2_DesignToken.Button.Danger.Hover
-                            : V2_Color.Secondary};
-                    }
+                    color: ${Colour["text-disabled"]};
                 `;
             default:
                 return css`
                     background-color: ${props.$buttonIsDanger
-                        ? V2_DesignToken.Button.Danger.BackgroundColor
-                        : V2_Color.Primary};
+                        ? Colour["bg-error-strong"]
+                        : Colour["bg-primary"]};
                     border: 1px solid transparent;
 
-                    ${V2_MediaQuery.MaxWidth.mobileL} {
+                    ${MediaQuery.MaxWidth.md} {
                         width: 100%;
                     }
 
-                    color: ${V2_Color.Neutral[8]};
+                    color: ${Colour["text-inverse"]};
+
+                    &:hover,
+                    &:active {
+                        background-color: ${props.$buttonIsDanger
+                            ? Colour["bg-error-strong-hover"]
+                            : Colour["bg-primary-hover"]};
+                    }
                 `;
         }
     }}
@@ -105,18 +119,29 @@ export const Main = styled.button<MainStyleProps>`
             case "small":
                 return css`
                     height: 2.5rem;
-                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
+                    ${Font["body-md-semibold"]}
 
-                    ${V2_MediaQuery.MaxWidth.mobileS} {
+                    ${MediaQuery.MaxWidth.xxs} {
                         height: auto;
                     }
                 `;
+
+            case "large":
+                return css`
+                    height: 4rem;
+                    ${Font["header-md-semibold"]}
+
+                    ${MediaQuery.MaxWidth.xxs} {
+                        height: auto;
+                    }
+                `;
+
             default:
                 return css`
                     height: 3rem;
-                    ${V2_TextStyleHelper.getTextStyle("H4", "semibold")}
+                    ${Font["header-xs-semibold"]}
 
-                    ${V2_MediaQuery.MaxWidth.mobileS} {
+                    ${MediaQuery.MaxWidth.xxs} {
                         height: auto;
                     }
                 `;
@@ -128,18 +153,18 @@ export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
     margin-right: 0.5rem;
     ${(props) => {
         let color = props.$buttonIsDanger
-            ? V2_DesignToken.Button.Danger.Primary
-            : V2_Color.Primary(props);
+            ? Colour["text-error"]
+            : Colour["text-primary"](props);
         switch (props.$buttonStyle) {
             case "secondary":
             case "light":
             case "link":
                 break;
             case "disabled":
-                color = V2_Color.Neutral[3](props);
+                color = Colour["text-disabled"](props);
                 break;
             default:
-                color = V2_Color.Neutral[8](props);
+                color = Colour["text-inverse"](props);
                 break;
         }
 

@@ -1,6 +1,5 @@
-import styled, { css } from "styled-components";
-import { Main } from "../button/button.style";
-import { MainStyleProps } from "../button/types";
+import styled from "styled-components";
+import { Main, MainStyleProps } from "../button/button.style";
 import { ButtonIconPosition } from "./types";
 
 // =============================================================================
@@ -20,24 +19,7 @@ export const MainButtonWithIcon = styled(Main)<MainStylePropsWithIcon>`
 
     svg {
         flex-shrink: 0;
+        height: 1em;
+        width: 1em;
     }
-
-    ${(props) => {
-        switch (props.$buttonSizeStyle) {
-            case "small":
-                return css`
-                    svg {
-                        height: 1rem;
-                        width: 1rem;
-                    }
-                `;
-            default:
-                return css`
-                    svg {
-                        height: 1.125rem;
-                        width: 1.125rem;
-                    }
-                `;
-        }
-    }}
 `;

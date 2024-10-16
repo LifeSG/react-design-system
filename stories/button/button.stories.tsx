@@ -31,6 +31,13 @@ export const Default: StoryObj<Component> = {
                     <Button.Small styleType="link">Link</Button.Small>
                     <Button.Small disabled>Disabled</Button.Small>
                 </Container>
+                <Container>
+                    <Button.Large>Large</Button.Large>
+                    <Button.Large styleType="secondary">Secondary</Button.Large>
+                    <Button.Large styleType="light">Light</Button.Large>
+                    <Button.Large styleType="link">Link</Button.Large>
+                    <Button.Large disabled>Disabled</Button.Large>
+                </Container>
             </>
         );
     },
@@ -70,6 +77,21 @@ export const LoadingState: StoryObj<Component> = {
                         Loading
                     </Button.Small>
                 </Container>
+                <Container>
+                    <Button.Large loading>Large</Button.Large>
+                    <Button.Large styleType="secondary" loading>
+                        Loading
+                    </Button.Large>
+                    <Button.Large styleType="light" loading>
+                        Loading
+                    </Button.Large>
+                    <Button.Large styleType="link" loading>
+                        Loading
+                    </Button.Large>
+                    <Button.Large disabled loading>
+                        Loading
+                    </Button.Large>
+                </Container>
             </>
         );
     },
@@ -104,6 +126,18 @@ export const Danger: StoryObj<Component> = {
                     </Button.Small>
                 </Container>
                 <Container>
+                    <Button.Large danger>Large</Button.Large>
+                    <Button.Large styleType="secondary" danger>
+                        Secondary
+                    </Button.Large>
+                    <Button.Large styleType="light" danger>
+                        Light
+                    </Button.Large>
+                    <Button.Large styleType="link" danger>
+                        Link
+                    </Button.Large>
+                </Container>
+                <Container>
                     <Button.Default loading danger>
                         Loading
                     </Button.Default>
@@ -130,6 +164,20 @@ export const Danger: StoryObj<Component> = {
                     <Button.Small styleType="link" loading danger>
                         Loading
                     </Button.Small>
+                </Container>
+                <Container>
+                    <Button.Large loading danger>
+                        Large
+                    </Button.Large>
+                    <Button.Large styleType="secondary" loading danger>
+                        Loading
+                    </Button.Large>
+                    <Button.Large styleType="light" loading danger>
+                        Loading
+                    </Button.Large>
+                    <Button.Large styleType="link" loading danger>
+                        Loading
+                    </Button.Large>
                 </Container>
             </>
         );
