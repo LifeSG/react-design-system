@@ -107,8 +107,13 @@ const MAIN_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "value",
-                description: "The value of the uneditable item",
-                propTypes: [`string`],
+                description: (
+                    <>
+                        The value of the uneditable item. <strong>Note:</strong>{" "}
+                        masking is only available for string values
+                    </>
+                ),
+                propTypes: [`string`, "React.ReactNode"],
                 mandatory: true,
             },
             {
