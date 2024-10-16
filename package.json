@@ -50,6 +50,7 @@
         "@babel/preset-typescript": "^7.24.7",
         "@dnd-kit/core": "^6.0.8",
         "@dnd-kit/sortable": "^7.0.2",
+        "@inquirer/prompts": "^7.0.0",
         "@lifesg/react-icons": "^1.6.0",
         "@playwright/test": "^1.45.0",
         "@rollup/plugin-commonjs": "^25.0.7",
