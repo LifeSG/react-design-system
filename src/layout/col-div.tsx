@@ -70,54 +70,35 @@ const Component = (
                 smCols ||
                 xsCols ||
                 xxsCols,
-            xxlColumnCount ||
-                xlColumnCount ||
-                lgColumnCount ||
-                mdColumnCount ||
-                smColumnCount ||
-                xsColumnCount ||
-                xxsColumnCount,
+            xxlColumnCount,
             "xxl"
         );
 
         const xlStartSpan = getColSpan(
             xlCols || lgCols || mdCols || smCols || xsCols || xxsCols,
-            xlColumnCount ||
-                lgColumnCount ||
-                mdColumnCount ||
-                smColumnCount ||
-                xsColumnCount ||
-                xxsColumnCount,
+            xlColumnCount,
             "xl"
         );
 
         const lgStartSpan = getColSpan(
             lgCols || mdCols || smCols || xsCols || xxsCols,
-            lgColumnCount ||
-                mdColumnCount ||
-                smColumnCount ||
-                xsColumnCount ||
-                xxsColumnCount,
+            lgColumnCount,
             "lg"
         );
 
         const mdStartSpan = getColSpan(
             mdCols || smCols || xsCols || xxsCols,
-            mdColumnCount || smColumnCount || xsColumnCount || xxsColumnCount,
+            mdColumnCount,
             "md"
         );
 
         const smStartSpan = getColSpan(
             smCols || xsCols || xxsCols,
-            smColumnCount || xsColumnCount || xxsColumnCount,
+            smColumnCount,
             "sm"
         );
 
-        const xsStartSpan = getColSpan(
-            xsCols || xxsCols,
-            xsColumnCount || xxsColumnCount,
-            "xs"
-        );
+        const xsStartSpan = getColSpan(xsCols || xxsCols, xsColumnCount, "xs");
 
         const xxsStartSpan = getColSpan(xxsCols, xxsColumnCount, "xxs");
 
