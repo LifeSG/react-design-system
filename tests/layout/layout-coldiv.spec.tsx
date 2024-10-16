@@ -7,7 +7,7 @@ import { ThemeSpec } from "../../src/theme/types";
 const mockTheme: ThemeSpec = {
     colourScheme: "lifesg",
     fontScheme: "lifesg",
-    animationScheme: "lifesg",
+    motionScheme: "lifesg",
     borderScheme: "lifesg",
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
