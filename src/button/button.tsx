@@ -68,7 +68,38 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
     );
 };
 
+const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
+    const {
+        children,
+        disabled = false,
+        loading = false,
+        styleType = "default",
+        danger = false,
+        ...otherProps
+    } = props;
+
+    const mainStyle: MainStyleProps = {
+        $buttonStyle: disabled ? "disabled" : styleType,
+        $buttonSizeStyle: "large",
+        $buttonIsDanger: danger,
+    };
+
+    return (
+        <Main
+            ref={ref}
+            data-testid={otherProps["data-testid"] || "button"}
+            disabled={disabled}
+            {...mainStyle}
+            {...otherProps}
+        >
+            {loading && <Spinner {...mainStyle} size={16} />}
+            <span>{children}</span>
+        </Main>
+    );
+};
+
 export const Button = {
     Default: React.forwardRef(DefaultComponent),
     Small: React.forwardRef(SmallComponent),
+    Large: React.forwardRef(LargeComponent),
 };
