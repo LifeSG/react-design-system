@@ -206,4 +206,22 @@ describe("StringHelper", () => {
             );
         });
     });
+
+    describe("convertLinks", () => {
+        it("should wrap the text link with anchor link HTML tag", () => {
+            const text = `Click here: https://www.google.com/ and https://www.google.com/`;
+            const result = StringHelper.convertLinks(text);
+            expect(result).toEqual(
+                `Click here: <a href="https://www.google.com/">https://www.google.com/</a> and <a href="https://www.google.com/">https://www.google.com/</a>`
+            );
+        });
+
+        it("should not wrap the text link with anchor link HTML tag without http or https", () => {
+            const text = `Click here: www.google.com/ and www.google.com/`;
+            const result = StringHelper.convertLinks(text);
+            expect(result).toEqual(
+                `Click here: www.google.com/ and www.google.com/`
+            );
+        });
+    });
 });
