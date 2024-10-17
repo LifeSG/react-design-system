@@ -6,6 +6,7 @@ import styled, { css } from "styled-components";
 import { V2_Color } from "../../v2_color";
 import { V2_MediaQuery } from "../../v2_media";
 import { V2_TextStyleHelper } from "../../v2_text";
+import { ComponentLoadingSpinner } from "../component-loading-spinner/component-loading-spinner";
 import { DropdownVariantType } from "../dropdown-list/types";
 import { BasicButton } from "../input-wrapper/input-wrapper";
 
@@ -150,14 +151,12 @@ export const SelectAllButton = styled(DropdownCommonButton)`
     padding: 0.5rem 1rem;
 `;
 
-export const ResultStateContainer = styled.div`
+export const ResultStateContainer = styled.div<ListStyleProps>`
     width: 100%;
     display: flex;
     padding: 1rem 0.5rem;
     align-items: center;
-`;
 
-export const ResultStateText = styled.div<ListStyleProps>`
     ${(props) =>
         V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
@@ -175,4 +174,9 @@ export const LabelIcon = styled(ExclamationCircleFillIcon)<ListStyleProps>`
     }}
     margin-right: 0.625rem;
     color: ${V2_Color.Validation.Red.Icon};
+`;
+
+export const Spinner = styled(ComponentLoadingSpinner)`
+    margin-right: 0.625rem;
+    color: ${V2_Color.Primary};
 `;

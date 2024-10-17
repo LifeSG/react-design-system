@@ -5,6 +5,7 @@ import { Checkbox } from "../../checkbox";
 import { V2_Color } from "../../v2_color";
 import { V2_MediaQuery } from "../../v2_media";
 import { V2_TextStyleHelper } from "../../v2_text";
+import { ComponentLoadingSpinner } from "../component-loading-spinner/component-loading-spinner";
 import {
     DropdownVariantType,
     IconProps,
@@ -270,14 +271,12 @@ export const DropdownCommonButton = styled.button<LabelProps>`
     }}
 `;
 
-export const ResultStateContainer = styled.div`
+export const ResultStateContainer = styled.div<ResultStateProps>`
     width: 100%;
     display: flex;
     padding: 1rem 0.5rem;
     align-items: center;
-`;
 
-export const ResultStateText = styled.div<ResultStateProps>`
     ${(props) =>
         V2_TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
@@ -295,4 +294,9 @@ export const LabelIcon = styled(ExclamationCircleFillIcon)<IconProps>`
     }}
     margin-right: 0.625rem;
     color: ${V2_Color.Validation.Red.Icon};
+`;
+
+export const Spinner = styled(ComponentLoadingSpinner)`
+    margin-right: 0.625rem;
+    color: ${V2_Color.Primary};
 `;
