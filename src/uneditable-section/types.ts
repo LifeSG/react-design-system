@@ -9,7 +9,8 @@ export type UneditableSectionItemMaskLoadingState = "loading" | "fail";
 export interface UneditableSectionItemProps extends MaskAttributeProps {
     id?: string | undefined;
     label: string;
-    value: string;
+    /** Note: masking is only available for string values */
+    value: string | React.ReactNode;
     /** The width that the item can span across. Values: "half", "full" */
     displayWidth?: UneditableSectionItemDisplayWidth | undefined;
     /**

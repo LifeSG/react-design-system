@@ -4,6 +4,7 @@ import { Alert } from "src/alert";
 import { BoxContainer } from "src/box-container";
 import { Button } from "src/button";
 import { Text } from "src/text";
+import { TextList } from "src/text-list";
 import {
     UneditableSection,
     UneditableSectionItemProps,
@@ -346,7 +347,13 @@ export const ComposingFromScratch: StoryObj<Component> = {
                     <UneditableSection.ItemSection>
                         <UneditableSection.Item
                             label="Spoken languages"
-                            value="English, Mandarin, French"
+                            value={
+                                <TextList.Ul>
+                                    <li>English</li>
+                                    <li>Mandarin</li>
+                                    <li>French</li>
+                                </TextList.Ul>
+                            }
                         />
                     </UneditableSection.ItemSection>
                 </div>

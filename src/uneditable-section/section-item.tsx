@@ -88,6 +88,10 @@ export const UneditableSectionItem = ({
     // HELPER FUNCTIONS
     // =========================================================================
     const getValue = () => {
+        if (typeof value !== "string") {
+            return value;
+        }
+
         return displayMaskState === "masked"
             ? StringHelper.maskValue(value, {
                   maskChar,
@@ -136,6 +140,10 @@ export const UneditableSectionItem = ({
     };
 
     const renderContent = () => {
+        if (typeof value !== "string") {
+            return value;
+        }
+
         if (!displayMaskState) {
             return <Text.Body>{value}</Text.Body>;
         }
