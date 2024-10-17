@@ -2,7 +2,6 @@ import find from "lodash/find";
 import isEqual from "lodash/isEqual";
 import React, { useEffect, useRef, useState } from "react";
 import { useSpring } from "react-spring";
-import { Spinner } from "../../button/button.style";
 import { StringHelper } from "../../util/string-helper";
 import {
     Container,
@@ -15,9 +14,9 @@ import {
     ListItemSelector,
     PrimaryText,
     ResultStateContainer,
-    ResultStateText,
     SecondaryText,
     SelectAllContainer,
+    Spinner,
     TruncateFirstLine,
     TruncateSecondLine,
 } from "./dropdown-list.styles";
@@ -467,14 +466,13 @@ export const DropdownList = <T, V>({
                 <ResultStateContainer
                     key="noResults"
                     data-testid="list-no-results"
+                    $variant={variant}
                 >
                     <LabelIcon
                         data-testid="no-result-icon"
                         $variant={variant}
                     />
-                    <ResultStateText $variant={variant}>
-                        No results found.
-                    </ResultStateText>
+                    No results found.
                 </ResultStateContainer>
             );
         }
@@ -482,14 +480,14 @@ export const DropdownList = <T, V>({
 
     const renderLoading = () => {
         if (onRetry && itemsLoadState === "loading") {
-            const spinnerSize = variant === "small" ? 16 : 24;
-
             return (
-                <ResultStateContainer key="loading" data-testid="list-loading">
-                    <Spinner $buttonStyle="secondary" size={spinnerSize} />
-                    <ResultStateText $variant={variant}>
-                        Loading...
-                    </ResultStateText>
+                <ResultStateContainer
+                    key="loading"
+                    data-testid="list-loading"
+                    $variant={variant}
+                >
+                    <Spinner />
+                    Loading...
                 </ResultStateContainer>
             );
         }
@@ -498,15 +496,16 @@ export const DropdownList = <T, V>({
     const renderTryAgain = () => {
         if (onRetry && itemsLoadState === "fail") {
             return (
-                <ResultStateContainer key="noResults" data-testid="list-fail">
+                <ResultStateContainer
+                    key="noResults"
+                    data-testid="list-fail"
+                    $variant={variant}
+                >
                     <LabelIcon
                         data-testid="load-error-icon"
                         $variant={variant}
                     />
-                    <ResultStateText $variant={variant}>
-                        Failed to load.
-                    </ResultStateText>
-                    &nbsp;
+                    Failed to load.&nbsp;
                     <DropdownCommonButton
                         onClick={handleTryAgain}
                         type="button"

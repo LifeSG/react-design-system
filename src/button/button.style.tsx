@@ -149,32 +149,6 @@ export const Main = styled.button<MainStyleProps>`
     }}
 `;
 
-export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
+export const Spinner = styled(ComponentLoadingSpinner)`
     margin-right: 0.5rem;
-    ${(props) => {
-        let color = props.$buttonIsDanger
-            ? Colour["text-error"]
-            : Colour["text-primary"](props);
-        switch (props.$buttonStyle) {
-            case "secondary":
-            case "light":
-            case "link":
-                break;
-            case "disabled":
-                color = Colour["text-disabled"](props);
-                break;
-            default:
-                color = Colour["text-inverse"](props);
-                break;
-        }
-
-        return css`
-            #inner1,
-            #inner2,
-            #inner3,
-            #inner4 {
-                border-color: ${color} transparent transparent transparent;
-            }
-        `;
-    }}
 `;

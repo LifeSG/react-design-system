@@ -2,7 +2,6 @@ import { enableMapSet, produce } from "immer";
 import get from "lodash/get";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useSpring } from "react-spring";
-import { Spinner } from "../../button/button.style";
 import { useEventListener } from "../../util/use-event-listener";
 import { ListItem } from "./list-item";
 import { DropdownSearch } from "../dropdown-list/dropdown-search";
@@ -17,8 +16,8 @@ import {
     LabelIcon,
     List,
     ResultStateContainer,
-    ResultStateText,
     SelectAllContainer,
+    Spinner,
 } from "./nested-dropdown-list.styles";
 
 enableMapSet();
@@ -526,7 +525,7 @@ export const NestedDropdownList = <V1, V2, V3>({
                         data-testid="list-no-results"
                     >
                         <LabelIcon data-testid="no-result-icon" />
-                        <ResultStateText>No results found.</ResultStateText>
+                        No results found.
                     </ResultStateContainer>
                 );
             }
@@ -537,8 +536,8 @@ export const NestedDropdownList = <V1, V2, V3>({
         if (onRetry && itemsLoadState === "loading") {
             return (
                 <ResultStateContainer key="loading" data-testid="list-loading">
-                    <Spinner $buttonStyle="secondary" size={24} />
-                    <ResultStateText>Loading...</ResultStateText>
+                    <Spinner />
+                    Loading...
                 </ResultStateContainer>
             );
         }
@@ -549,7 +548,7 @@ export const NestedDropdownList = <V1, V2, V3>({
             return (
                 <ResultStateContainer key="noResults" data-testid="list-fail">
                     <LabelIcon data-testid="load-error-icon" />
-                    <ResultStateText>Failed to load.</ResultStateText>
+                    Failed to load.&nbsp;
                     <DropdownCommonButton
                         onClick={handleTryAgain}
                         type="button"

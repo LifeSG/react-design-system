@@ -10,47 +10,37 @@ import {
 /**
  * This component is mainly used within components and is not to be confused
  * with the main loading spinner in animations/loading-spinner
+ *
+ * By default it inherits the font size and color of the parent container.
+ *
+ * The color can be customised via the prop or through styled-components.
+ *
+ * Example:
+ * ```
+ * styled(ComponentLoadingSpinner)`
+ *   color: red;
+ * `
+ * ```
  */
 export interface ComponentLoadingSpinnerProps {
     className?: string | undefined;
     /** Measurement in px */
     size?: number | undefined;
-    color?: string | undefined;
+    /** rgb/hex value or Color token */
+    color?: string | ((props: any) => string) | undefined;
 }
 
 export const ComponentLoadingSpinner = ({
     color,
     className,
-    size = 18,
+    size,
 }: ComponentLoadingSpinnerProps): JSX.Element => {
-    const borderWidth = 2;
-
     return (
         <OuterRing className={className} $size={size} $color={color}>
-            <InnerRing1
-                id="inner1"
-                $size={size - borderWidth}
-                $borderWidth={borderWidth}
-                $color={color}
-            />
-            <InnerRing2
-                id="inner2"
-                $size={size - borderWidth}
-                $borderWidth={borderWidth}
-                $color={color}
-            />
-            <InnerRing3
-                id="inner3"
-                $size={size - borderWidth}
-                $borderWidth={borderWidth}
-                $color={color}
-            />
-            <InnerRing4
-                id="inner4"
-                $size={size - borderWidth}
-                $borderWidth={borderWidth}
-                $color={color}
-            />
+            <InnerRing1 id="inner1" />
+            <InnerRing2 id="inner2" />
+            <InnerRing3 id="inner3" />
+            <InnerRing4 id="inner4" />
         </OuterRing>
     );
 };

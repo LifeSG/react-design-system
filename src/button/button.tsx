@@ -32,7 +32,7 @@ const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
             {...mainStyle}
             {...otherProps}
         >
-            {loading && <Spinner {...mainStyle} />}
+            {loading && <Spinner />}
             <span>{children}</span>
         </Main>
     );
@@ -62,7 +62,7 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
             {...mainStyle}
             {...otherProps}
         >
-            {loading && <Spinner {...mainStyle} size={16} />}
+            {loading && <Spinner />}
             <span>{children}</span>
         </Main>
     );
@@ -92,7 +92,7 @@ const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
             {...mainStyle}
             {...otherProps}
         >
-            {loading && <Spinner {...mainStyle} size={16} />}
+            {loading && <Spinner />}
             <span>{children}</span>
         </Main>
     );

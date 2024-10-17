@@ -3,7 +3,8 @@ import { animated } from "react-spring";
 import styled from "styled-components";
 import { V2_Color } from "../../v2_color";
 import { V2_MediaQuery } from "../../v2_media";
-import { V2_Text, V2_TextStyleHelper } from "../../v2_text";
+import { V2_TextStyleHelper } from "../../v2_text";
+import { ComponentLoadingSpinner } from "../component-loading-spinner/component-loading-spinner";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -55,9 +56,8 @@ export const ResultStateContainer = styled.div`
     display: flex;
     padding: 1rem 0.5rem;
     align-items: center;
+    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
 `;
-
-export const ResultStateText = styled(V2_Text.Body)``;
 
 export const LabelIcon = styled(ExclamationCircleFillIcon)`
     margin-right: 0.625rem;
@@ -81,4 +81,9 @@ export const DropdownCommonButton = styled.button`
     cursor: pointer;
     overflow: hidden;
     outline: none;
+`;
+
+export const Spinner = styled(ComponentLoadingSpinner)`
+    margin-right: 0.625rem;
+    color: ${V2_Color.Primary};
 `;

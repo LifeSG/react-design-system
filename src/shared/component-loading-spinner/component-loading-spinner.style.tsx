@@ -1,4 +1,3 @@
-import { V2_Color } from "../../v2_color/color";
 import styled, { keyframes } from "styled-components";
 
 // =============================================================================
@@ -6,14 +5,8 @@ import styled, { keyframes } from "styled-components";
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 interface StyleProps {
-    $size: number;
-    $color?: string;
-}
-
-interface InnerStyleProps {
-    $borderWidth: number;
-    $size: number;
-    $color?: string;
+    $size?: number;
+    $color?: string | ((props: any) => string);
 }
 
 // =============================================================================
@@ -22,8 +15,9 @@ interface InnerStyleProps {
 export const OuterRing = styled.div<StyleProps>`
     display: inline-block;
     position: relative;
-    width: ${(props) => props.$size}px;
-    height: ${(props) => props.$size}px;
+    width: ${({ $size }) => ($size ? `${$size}px` : "1em")};
+    height: ${({ $size }) => ($size ? `${$size}px` : "1em")};
+    color: ${(props) => props.$color || "currentColor"};
 `;
 
 const rotate = keyframes`
@@ -35,18 +29,16 @@ const rotate = keyframes`
 	}
 `;
 
-export const InnerRing1 = styled.div<InnerStyleProps>`
+export const InnerRing1 = styled.div`
     box-sizing: border-box;
     display: block;
     position: absolute;
-    width: ${(props) => props.$size}px;
-    height: ${(props) => props.$size}px;
-    margin: ${(props) => props.$borderWidth}px;
-    border-width: ${(props) => props.$borderWidth}px;
+    width: 100%;
+    height: 100%;
+    border-width: 2px;
     border-style: solid;
     border-radius: 50%;
-    border-color: ${(props) => props.$color || V2_Color.Neutral[8](props)}
-        transparent transparent transparent;
+    border-color: currentColor transparent transparent transparent;
     animation: ${rotate} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 `;
 
