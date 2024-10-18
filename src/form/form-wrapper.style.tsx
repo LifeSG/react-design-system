@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { V2_Layout } from "../v2_layout";
+import { Layout } from "../layout";
 
 const commonStyles = css`
     display: flex;
@@ -14,6 +14,6 @@ export const Container = styled.div`
     ${commonStyles}
 `;
 
-export const ColDivContainer = styled(V2_Layout.ColDiv)`
+export const ColDivContainer = styled(Layout.ColDiv)`
     ${commonStyles}
 `;

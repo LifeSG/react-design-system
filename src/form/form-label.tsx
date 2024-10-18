@@ -1,4 +1,4 @@
-import { V2_TextProps } from "../v2_text";
+import { TypographyProps } from "../typography/types";
 import { PopoverAddon } from "./form-label-addon";
 import { ErrorMessage, Label, Subtitle } from "./form-label.style";
 import { FormLabelProps } from "./types";
@@ -41,6 +41,6 @@ export const FormLabel = ({
     );
 };
 
-export const FormErrorMessage = (props: V2_TextProps): JSX.Element => {
+export const FormErrorMessage = (props: TypographyProps): JSX.Element => {
     return <ErrorMessage weight="semibold" {...props} />;
 };
