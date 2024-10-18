@@ -1,14 +1,13 @@
 import styled, { css } from "styled-components";
-import {
-    HtmlContentStyleOptions,
-    applyHtmlContentStyle,
-} from "../shared/html-content/html-content";
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
+import { TypographySizeType } from "../theme/font/types";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
 interface ContainerStyleProps {
-    $textSize?: HtmlContentStyleOptions["textSize"] | undefined;
+    // $textSize?: HtmlContentStyleOptions["textSize"] | undefined;
+    $textSize?: TypographySizeType | undefined;
     $textColor?: string | ((props: unknown) => string) | undefined;
 }
 

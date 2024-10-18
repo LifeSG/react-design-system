@@ -1,10 +1,10 @@
 import { css } from "styled-components";
-import { V2_Color } from "../../v2_color";
 import { FontFamily } from "../../spec/text-spec/font-spec";
-import { V2_TextSizeType, V2_TextStyleHelper } from "../../v2_text";
+import { TypographySizeType } from "../../theme/font/types";
+import { Colour, Font } from "../../theme";
 
 export interface HtmlContentStyleOptions {
-    textSize?: V2_TextSizeType | undefined;
+    textSize?: TypographySizeType | undefined;
 }
 
 export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
@@ -12,11 +12,11 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
 
     return css`
         // Text styling
-        ${textSize && V2_TextStyleHelper.getTextStyle(textSize, "regular")}
+        ${textSize && Font[`${textSize}-regular`]}
 
         strong {
             font-family: ${FontFamily.OpenSans.Semibold};
-            ${textSize && V2_TextStyleHelper.getTextStyle(textSize, "semibold")}
+            ${textSize && Font[`${textSize}-semibold`]}
         }
 
         p {
@@ -26,12 +26,12 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
         // Link styling
         a {
             font-family: ${FontFamily.OpenSans.Semibold};
-            ${textSize && V2_TextStyleHelper.getTextStyle(textSize, "semibold")}
-            color: ${V2_Color.Primary};
+            ${textSize && Font[`${textSize}-semibold`]}
+            color: ${Colour.hyperlink};
             text-decoration: none;
 
             svg {
-                color: ${V2_Color.Primary};
+                color: ${Colour["icon-primary"]};
                 height: 1rem;
                 width: 1rem;
                 margin-left: 0.4rem;
@@ -42,10 +42,10 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
             :active,
             :visited,
             :focus {
-                color: ${V2_Color.Secondary};
+                color: ${Colour["hyperlink-hover"]};
 
                 svg {
-                    color: ${V2_Color.Secondary};
+                    color: ${Colour["icon-hover"]};
                 }
             }
         }
