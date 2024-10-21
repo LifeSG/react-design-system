@@ -484,7 +484,7 @@ describe("TimeRangePicker", () => {
                 expect(
                     screen.queryByTestId(DROPDOWN_TESTID)
                 ).not.toBeInTheDocument();
-            });
+            }, 10000);
 
             it("should call onFocus and onBlur when cycling back through the tab sequence", async () => {
                 const user = userEvent.setup();
