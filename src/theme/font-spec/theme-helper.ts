@@ -1,13 +1,13 @@
-import { StyledComponentProps, getCollection } from "../helpers";
+import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { FontScheme, ThemeCollectionSpec } from "../types";
+import { BookingSgFontSpecSet } from "./specs/bookingsg-font-spec-set";
 import { LifeSgFontSpecSet } from "./specs/lifesg-font-spec-set";
-import { getValue } from "../helpers";
 import { FontSpecCollectionMap, FontSpecSet } from "./types";
 
 const FontSpec: ThemeCollectionSpec<FontSpecCollectionMap, FontScheme> = {
     collections: {
         lifesg: LifeSgFontSpecSet,
-        bookingsg: LifeSgFontSpecSet,
+        bookingsg: BookingSgFontSpecSet,
         rbs: LifeSgFontSpecSet,
         mylegacy: LifeSgFontSpecSet,
         ccube: LifeSgFontSpecSet,
