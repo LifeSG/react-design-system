@@ -107,6 +107,7 @@ export const BoxContainer = ({
                     type="button"
                     aria-label={showExpanded ? "Collapse" : "Expand"}
                     data-testid={subComponentTestIds?.handle || "handle"}
+                    aria-label={showExpanded ? "Collapse" : "Expand"}
                 >
                     <HandleIconContainer $expanded={showExpanded}>
                         <HandleIcon aria-hidden />
