@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import { Alert } from "../alert";
 import { Button } from "../button";
-import { V2_Color } from "../v2_color";
-import { V2_MediaQuery } from "../v2_media";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { V2_Text, V2_TextStyleHelper } from "../v2_text";
+import { Colour, Font, MediaQuery } from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLING
@@ -15,23 +14,24 @@ export const TextContainer = styled.div`
     margin-bottom: 2rem;
 `;
 
-export const Title = styled(V2_Text.H4)`
+export const Title = styled(Typography.HeaderXS)`
     margin-bottom: 0.5rem;
 `;
+``;
 
 export const TitleContainer = styled.div`
-    color: ${V2_Color.Neutral[1]};
-    ${applyHtmlContentStyle({ textSize: "Body" })}
+    color: ${Colour.text};
+    ${applyHtmlContentStyle({ textSize: "body-baseline" })}
 `;
 
-export const Description = styled(V2_Text.BodySmall)`
+export const Description = styled(Typography.BodyMD)`
     margin-bottom: 0;
-    color: ${V2_Color.Neutral[3]};
+    color: ${Colour["text-subtler"]};
 `;
 
 export const DescriptionContainer = styled.div`
-    color: ${V2_Color.Neutral[3]};
-    ${applyHtmlContentStyle({ textSize: "BodySmall" })}
+    color: ${Colour.text};
+    ${applyHtmlContentStyle({ textSize: "body-md" })}
 `;
 
 export const WarningAlert = styled(Alert)`
@@ -44,7 +44,7 @@ export const UploadButtonContainer = styled.div`
     flex-direction: column;
     align-items: flex-end;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         align-items: flex-start;
     }
 `;
@@ -52,17 +52,17 @@ export const UploadButtonContainer = styled.div`
 export const UploadButton = styled(Button.Small)`
     width: 10rem;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         width: 100%;
     }
 `;
 export const UploadButtonLabel = styled.label`
-    ${V2_TextStyleHelper.getTextStyle("BodySmall", "semibold")}
-    color: ${V2_Color.Neutral[3]};
+    ${Font["body-md-semibold"]}
+    color: ${Colour["text-primary"]};
     margin-top: 0.5rem;
     width: 10rem;
     text-align: center;
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         display: none;
         visibility: hidden;
     }
