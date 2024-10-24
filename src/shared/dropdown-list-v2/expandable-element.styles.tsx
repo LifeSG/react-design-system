@@ -21,6 +21,7 @@ export const Selector = styled(BasicButton)<StyleProps>`
     align-items: center;
     gap: 0.5rem;
     width: 100%;
+    color: initial;
     padding: ${(props) =>
         props.$variant === "small" ? "0.4375rem 1rem" : "0.6875rem 1rem"};
 
