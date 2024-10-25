@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { V2_Color } from "../v2_color";
 import { RadioButtonProps } from "./types";
+import { Colour } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -22,15 +22,23 @@ export const Container = styled.div<StyleProps>`
     width: 1.5rem;
     position: relative;
     border-radius: 50%;
-    border: 2px solid ${V2_Color.Accent.Light[2]};
+    border: 2px solid ${Colour["icon-primary-subtlest"]};
 
     ${(props) => {
         if (props.$disabled) {
             return `
-				border: 2px solid ${V2_Color.Neutral[4](props)};
+				border: 2px solid ${Colour["border-disabled"](props)};
 			`;
         }
     }}
+
+    &:hover {
+        border: 2px solid
+            ${(props) =>
+                props.$disabled
+                    ? Colour["border-disabled"](props)
+                    : Colour["icon-hover"](props)};
+    }
 `;
 
 export const Input = styled.input<RadioButtonProps>`
@@ -52,7 +60,9 @@ export const Checkmark = styled.div<StyleProps>`
     opacity: ${(props) => (props.$selected ? 1 : 0)};
     transition: all 200ms ease-in-out;
     background: ${(props) =>
-        props.$disabled ? V2_Color.Neutral[4](props) : V2_Color.Primary(props)};
+        props.$disabled
+            ? Colour["border-disabled"](props)
+            : Colour["icon-selected"](props)};
     border-radius: 50%;
     border: 1px solid transparent;
 `;

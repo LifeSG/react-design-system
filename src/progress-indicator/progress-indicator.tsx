@@ -1,4 +1,5 @@
-import { V2_MediaWidths } from "../v2_media";
+import { useTheme } from "styled-components";
+import { Breakpoint } from "../theme";
 import {
     Content,
     Indicator,
@@ -22,8 +23,10 @@ export const ProgressIndicator = <T,>({
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
     const isMobile = useMediaQuery({
-        maxWidth: V2_MediaWidths.tablet,
+        maxWidth: mobileBreakpoint,
     });
 
     // =============================================================================

@@ -1,6 +1,6 @@
 import styled, { css, keyframes } from "styled-components";
-import { V2_Color } from "../v2_color/color";
 import { CheckboxProps, CheckboxSize } from "./types";
+import { Colour } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -57,10 +57,10 @@ export const Container = styled.div<StyleProps>`
         height: 100%;
         color: ${(props) =>
             props.$disabled
-                ? V2_Color.Neutral[4](props)
+                ? Colour["icon-disabled-subtle"](props)
                 : props.$unchecked
-                ? V2_Color.Accent.Light[2](props)
-                : V2_Color.Primary(props)};
+                ? Colour["icon-primary-subtlest"](props)
+                : Colour["icon-primary"](props)};
     }
 `;
 

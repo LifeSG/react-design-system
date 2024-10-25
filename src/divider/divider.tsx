@@ -1,4 +1,4 @@
-import { V2_ColDiv } from "../v2_layout/col-div";
+import { ColDiv } from "../layout/col-div";
 import { Line } from "./divider.style";
 import { DividerProps } from "./types";
 
@@ -26,11 +26,11 @@ export const Divider = ({
             );
         case "grid":
             return (
-                <V2_ColDiv
+                <ColDiv
                     className={className}
-                    mobileCols={mobileCols}
-                    tabletCols={tabletCols}
-                    desktopCols={desktopCols}
+                    smCols={mobileCols}
+                    lgCols={tabletCols}
+                    xlCols={desktopCols}
                     {...otherProps}
                 >
                     <Line
@@ -38,7 +38,7 @@ export const Divider = ({
                         $lineStyle={lineStyle}
                         $color={color}
                     />
-                </V2_ColDiv>
+                </ColDiv>
             );
     }
 };
