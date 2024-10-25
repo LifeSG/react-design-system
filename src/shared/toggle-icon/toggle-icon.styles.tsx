@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { V2_Color } from "../../v2_color";
+import { Colour } from "../../theme";
 
 interface StyleProps {
     $active?: boolean;
@@ -22,11 +22,11 @@ export const Wrapper = styled.div<StyleProps>`
         ${(props) => {
             if (props.$active && !props.disabled) {
                 return css`
-                    color: ${V2_Color.Primary};
+                    color: ${Colour["icon-primary"]};
                 `;
             } else {
                 return css`
-                    color: ${V2_Color.Neutral[4]};
+                    color: ${Colour["icon-disabled-subtle"]};
                 `;
             }
         }};

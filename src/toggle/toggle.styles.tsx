@@ -41,6 +41,7 @@ interface ChildrenStyleProps extends StyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
+
 export const Container = styled.div<ContainerStyleProps>`
     position: relative;
     display: inline-flex;
@@ -61,7 +62,7 @@ export const Container = styled.div<ContainerStyleProps>`
         }
     }}
 
-    // Background, Hover and Border style
+    // Background, Hover and Border style following strict structure
     ${(props) => {
         switch (props.$styleType) {
             case "no-border": {
@@ -69,37 +70,73 @@ export const Container = styled.div<ContainerStyleProps>`
                     return css`
                         border-color: ${Colour["border-error"]};
                     `;
-                } else if (!props.$disabled) {
+                }
+
+                if (props.$disabled) {
+                    if (props.$selected) {
+                        return css`
+                            border: none;
+                            background: ${Colour["bg-selected-disabled"]};
+                        `;
+                    } else {
+                        return css`
+                            border: none;
+                            background: ${Colour.bg};
+                        `;
+                    }
+                }
+
+                if (props.$selected) {
                     return css`
-                        border-color: transparent;
+                        background: ${Colour["bg-selected"]};
+                        border: none;
 
                         :hover {
-                            background: ${Colour.bg};
+                            background: ${Colour["bg-selected-hover"]};
+                            border: ${Colour["border-selected-hover"]};
                         }
                     `;
                 } else {
                     return css`
-                        border-color: transparent;
+                        border: none;
+
+                        :hover {
+                            background: ${Colour["bg-hover-subtle"]};
+                            border: ${Colour["border-hover"]};
+                        }
                     `;
                 }
             }
 
             default: {
-                if (props.$disabled && !props.$selected) {
-                    return css`
-                        border-color: ${Colour["border-disabled"]};
-                    `;
-                } else if (props.$disabled && props.$selected) {
-                    return css`
-                        border-color: ${Colour["border-selected-disabled"]};
-                    `;
-                } else if (props.$error) {
+                if (props.$error) {
                     return css`
                         border-color: ${Colour["border-error"]};
                     `;
-                } else if (props.$selected) {
+                }
+                if (props.$disabled) {
+                    if (props.$selected) {
+                        return css`
+                            border-color: ${Colour["border-selected-disabled"]};
+                            background: ${Colour["bg-selected-disabled"]};
+                        `;
+                    } else {
+                        return css`
+                            border-color: ${Colour["border-disabled"]};
+                            background: ${Colour["bg-disabled"]};
+                        `;
+                    }
+                }
+
+                if (props.$selected) {
                     return css`
                         border-color: ${Colour["border-selected"]};
+                        background: ${Colour["bg-selected"]};
+
+                        :hover {
+                            border-color: ${Colour["border-selected-hover"]};
+                            background: ${Colour["bg-selected-hover"]};
+                        }
                     `;
                 } else {
                     return css`
@@ -139,27 +176,17 @@ export const TextContainer = styled.div`
 `;
 
 export const Label = styled.label<LabelStyleProps>`
-    ${(props) => {
-        if (props.$selected && !props.$indicator) {
-            return css`
-                ${Font["header-xs-semibold"]}
-            `;
-        } else {
-            return css`
-                ${Font["header-xs-regular"]}
-            `;
-        }
-    }}
+    ${Font["header-xs-regular"]}
     overflow: hidden;
     display: -webkit-box;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
     overflow-wrap: break-word;
     -webkit-line-clamp: ${(props) => props.$maxLines?.desktop ?? "none"};
-    ${MediaQuery.MaxWidth.xl} {
+    ${MediaQuery.MaxWidth.lg} {
         -webkit-line-clamp: ${(props) => props.$maxLines?.tablet ?? "none"};
     }
-    ${MediaQuery.MaxWidth.md} {
+    ${MediaQuery.MaxWidth.sm} {
         -webkit-line-clamp: ${(props) => props.$maxLines?.mobile ?? "none"};
     }
     color: ${Colour.text};
@@ -178,7 +205,7 @@ export const Label = styled.label<LabelStyleProps>`
 `;
 
 export const SubLabel = styled.div<LabelStyleProps>`
-    ${Font["body-lg-regular"]}
+    ${Font["body-md-regular"]}
     margin-top: 0.5rem;
 
     z-index: 1; // forces sublabel to render above the input
@@ -186,7 +213,7 @@ export const SubLabel = styled.div<LabelStyleProps>`
 
     strong,
     b {
-        ${Font["body-lg-semibold"]}
+        ${Font["body-md-semibold"]}
         color: inherit;
     }
 
@@ -197,7 +224,7 @@ export const SubLabel = styled.div<LabelStyleProps>`
             `;
         } else if (props.$selected) {
             return css`
-                color: ${Colour["text-selected"]};
+                color: ${Colour["text-primary"]};
             `;
         } else {
             return css`
@@ -212,47 +239,81 @@ export const HeaderContainer = styled.div<ContainerStyleProps>`
     align-items: flex-start;
     justify-content: space-between;
 
-    // Background, Hover and Border style
+    // Background, Hover, and Border style following strict structure
     ${(props) => {
         switch (props.$styleType) {
             case "no-border": {
                 if (props.$error) {
                     return css`
-                        background: ${Colour.bg};
+                        border-color: ${Colour["border-error"]};
                     `;
-                } else if (!props.$disabled) {
-                    return css`
-                        :hover {
+                }
+                if (props.$disabled) {
+                    if (props.$selected) {
+                        return css`
+                            background: ${Colour["bg-selected-disabled"]};
+                        `;
+                    } else {
+                        return css`
                             background: ${Colour.bg};
-                            border: ${Colour.border};
+                        `;
+                    }
+                }
+                if (props.$selected) {
+                    return css`
+                        background: ${Colour["bg-selected"]};
+
+                        :hover {
+                            background: ${Colour["bg-selected-hover"]};
                         }
                     `;
                 } else {
                     return css`
-                        border: ${Colour["border-disabled"]};
+                        :hover {
+                            background: ${Colour["bg-hover-subtle"]};
+                        }
                     `;
                 }
             }
+
             default: {
-                if (props.$disabled && !props.$selected) {
+                if (props.$error) {
                     return css`
-                        background: ${Colour["bg-disabled"]};
+                        border-color: ${Colour["border-error"]};
                     `;
-                } else if (props.$disabled && props.$selected) {
+                }
+                if (props.$disabled) {
+                    if (props.$selected) {
+                        return css`
+                            border-color: ${Colour["border-selected-disabled"]};
+                            background: ${Colour["bg-selected-disabled"]};
+                        `;
+                    } else {
+                        return css`
+                            border-color: ${Colour["border-disabled"]};
+                            background: ${Colour["bg-disabled"]};
+                        `;
+                    }
+                }
+
+                if (props.$selected) {
                     return css`
-                        background: ${Colour["bg-selected-disabled"]};
-                    `;
-                } else if (props.$error) {
-                    return css`
-                        background: ${Colour.bg};
-                    `;
-                } else if (props.$selected) {
-                    return css`
+                        border-color: ${Colour["border-selected"]};
                         background: ${Colour["bg-selected"]};
+
+                        :hover {
+                            border-color: ${Colour["border-selected-hover"]};
+                            background: ${Colour["bg-selected-hover"]};
+                        }
                     `;
                 } else {
                     return css`
                         background: ${Colour.bg};
+                        border-color: ${Colour.border};
+
+                        :hover {
+                            border-color: ${Colour["border-hover-strong"]};
+                        }
                     `;
                 }
             }
@@ -271,7 +332,7 @@ export const IndicatorLabelContainer = styled.div<IndicatorLabelContainerStylePr
 
 export const RemoveButton = styled.button<StyleProps>`
     color: ${(props) =>
-        props.$disabled ? Colour["text-disabled"] : Colour.text};
+        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
     white-space: nowrap;
     ${Font["header-xs-semibold"]}
     height: fit-content;
@@ -284,13 +345,13 @@ export const RemoveButton = styled.button<StyleProps>`
 
 export const ExpandButton = styled.button<ExpandButtonStyleProps>`
     color: ${(props) =>
-        props.disabled ? Colour["text-disabled"] : Colour.text};
+        props.disabled ? Colour["text-disabled"] : Colour["text-primary"]};
     ${Font["header-xs-semibold"]}
     display: flex;
     align-items: center;
     justify-content: flex-end;
     border: none;
-    background: none;
+    background-color: ${Colour.bg};
     cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
     padding: 0 1rem 0.6875rem 1rem;
     padding-top: ${(props) =>
@@ -298,8 +359,8 @@ export const ExpandButton = styled.button<ExpandButtonStyleProps>`
     width: 100%;
 
     svg {
-        width: 1.125rem;
-        height: 1.125rem;
+        width: 1em;
+        height: 1em;
         margin-left: 0.5rem;
     }
 `;
@@ -307,7 +368,7 @@ export const ExpandButton = styled.button<ExpandButtonStyleProps>`
 export const ErrorContainer = styled.div<StyleProps>`
     width: 100%;
     color: ${(props) =>
-        props.$disabled ? Colour["text-disabled"] : Colour.text};
+        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
     border: none;
     background: none;
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
@@ -323,7 +384,8 @@ export const Children = styled.div<ChildrenStyleProps>`
     padding: 0 1rem;
     padding-top: 0.6875rem;
     padding-bottom: ${(props) => (props.$isFinalItem ? "0.6875rem" : "0.5rem")};
-    ${applyHtmlContentStyle({ textSize: "body-sm" })}
+    background-color: ${Colour.bg};
+    ${applyHtmlContentStyle({ textSize: "body-md" })}
 
     ${(props) => {
         if (props.$disabled) {
@@ -344,7 +406,7 @@ export const Children = styled.div<ChildrenStyleProps>`
 
 export const ErrorText = styled(Typography.BodyMD)<StyleProps>`
     color: ${(props) =>
-        props.$disabled ? Colour["text-disabled"] : Colour.text};
+        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
 `;
 
 export const ErrorList = styled(TextList.Ul)<StyleProps>`

@@ -6,7 +6,6 @@ import { TypographySizeType } from "../theme/font/types";
 // STYLE INTERFACES
 // =============================================================================
 interface ContainerStyleProps {
-    // $textSize?: HtmlContentStyleOptions["textSize"] | undefined;
     $textSize?: TypographySizeType | undefined;
     $textColor?: string | ((props: unknown) => string) | undefined;
 }
