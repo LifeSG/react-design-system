@@ -9,7 +9,6 @@ import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal"
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { InputSelect } from "../input-select";
-import { MediaWidths } from "../spec/media-spec";
 import {
     EllipsisContainer,
     Hover,
@@ -26,6 +25,8 @@ import {
     PaginationWrapper,
 } from "./pagination.styles";
 import { PageSizeItemProps, PaginationProps } from "./types";
+import { useTheme } from "styled-components";
+import { Breakpoint } from "../theme";
 
 const Component = (
     {
@@ -46,8 +47,12 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
+        maxWidth: mobileBreakpoint,
     });
     const options: PageSizeItemProps[] = pageSizeOptions;
     const [hoverRightButton, setHoverRightButton] = useState(false);

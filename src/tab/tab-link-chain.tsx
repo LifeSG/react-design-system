@@ -1,6 +1,5 @@
 import { useContext, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
-import { V2_MediaWidths } from "../v2_media";
 import { TabContext } from "./tab-context";
 import {
     BoldLabel,
@@ -11,6 +10,8 @@ import {
     Label,
 } from "./tab-link-chain.style";
 import { ResizeCallbackParams } from "../shared/fade-wrapper";
+import { Breakpoint } from "../theme";
+import { useTheme } from "styled-components";
 
 interface Props {
     controlledMode?: boolean | undefined;
@@ -28,8 +29,12 @@ export const TabLinkChain = ({
     // =========================================================================
     const { setCurrentActiveIndex, currentActiveIndex, tabLinks } =
         useContext(TabContext);
+
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["md-max"]({ theme });
+
     const isMobile = useMediaQuery({
-        maxWidth: V2_MediaWidths.mobileL,
+        maxWidth: mobileBreakpoint,
     });
 
     const activeLinkRef = useRef<HTMLLIElement>(null);
@@ -49,11 +54,13 @@ export const TabLinkChain = ({
             }
         };
 
+    const windowInnerWidthBreakpoint = Breakpoint["lg-max"]({ theme });
+
     const handleResize = ({ content, wrapper }: ResizeCallbackParams) => {
         if (
             content &&
             wrapper &&
-            window.innerWidth <= V2_MediaWidths.tablet &&
+            window.innerWidth <= windowInnerWidthBreakpoint &&
             activeLinkRef
         ) {
             content.scrollLeft =

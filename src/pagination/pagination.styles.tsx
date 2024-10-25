@@ -1,10 +1,9 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button/button";
-import { V2_Color } from "../v2_color";
 import { Input } from "../input";
-import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { V2_Text, V2_TextStyleHelper } from "../v2_text";
+import { Colour, Font, MediaQuery } from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -30,7 +29,7 @@ export const PaginationList = styled.div`
     align-self: flex-start;
     overflow: auto;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         align-self: center;
     }
 `;
@@ -47,7 +46,7 @@ export const NavigationItem = styled(ClickableIcon)`
     justify-content: center;
     align-items: center;
     border-radius: 0.25rem;
-    color: ${V2_Color.Primary};
+    color: ${Colour["icon-primary"]};
 
     svg {
         height: 1.25rem;
@@ -55,13 +54,8 @@ export const NavigationItem = styled(ClickableIcon)`
     }
 
     &:disabled {
-        color: ${V2_Color.Neutral[4]};
+        color: ${Colour["icon-disabled-subtle"]};
         cursor: not-allowed;
-    }
-    :active,
-    :focus {
-        outline: none;
-        box-shadow: inset 0px 0px 4px 1px ${V2_Color.Accent.Light[1]};
     }
 `;
 
@@ -71,7 +65,7 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     justify-content: center;
     align-items: center;
     border-radius: 0.25rem;
-    color: ${V2_Color.Primary};
+    color: ${Colour["icon-primary"]};
 
     svg {
         height: 1.25rem;
@@ -79,14 +73,14 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     }
 
     &:disabled {
-        color: ${V2_Color.Neutral[4]};
+        color: ${Colour["icon-disabled-subtle"]};
         cursor: not-allowed;
     }
-    :active,
-    :focus {
-        outline: none;
-        box-shadow: inset 0px 0px 4px 1px ${V2_Color.Accent.Light[1]};
+
+    &:not(:disabled):hover {
+        background: ${Colour["bg-hover"]};
     }
+
     ${(props) => {
         if (props.$position === "left") {
             return css`
@@ -101,7 +95,7 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
         }
     }}
 
-    ${V2_MediaQuery.MaxWidth.mobileS} {
+    ${MediaQuery.MaxWidth.xxs} {
         margin-right: 0rem;
         margin-left: 0rem;
     }
@@ -109,11 +103,10 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
 
 export const PageItem = styled(Button.Default)<StyleProps>`
     background: ${(props) =>
-        props.$selected ? V2_Color.Primary : V2_Color.Neutral[8]};
-    border: 1px solid
-        ${(props) => (props.$selected ? V2_Color.Primary : V2_Color.Neutral[5])};
+        props.$selected ? Colour["bg-primary"] : Colour.bg};
+    border: 1px solid ${(props) => (props.$selected ? "" : Colour.border)};
     color: ${(props) =>
-        props.$selected ? V2_Color.Neutral[8] : V2_Color.Neutral[1]};
+        props.$selected ? Colour["text-inverse"] : Colour.text};
 
     min-width: 2.5rem;
     height: 2.5rem;
@@ -125,65 +118,27 @@ export const PageItem = styled(Button.Default)<StyleProps>`
 
     span {
         color: ${(props) =>
-            props.$selected ? V2_Color.Neutral[8] : V2_Color.Neutral[1]};
+            props.$selected ? Colour["text-inverse"] : Colour.text};
         ${(props) => {
             if (props.$selected) {
                 return css`
-                    ${V2_TextStyleHelper.getTextStyle("Body", 700)};
+                    ${Font["body-baseline-bold"]};
                 `;
             } else {
                 return css`
-                    ${V2_TextStyleHelper.getTextStyle("Body", 400)};
+                    ${Font["body-baseline-regular"]};
                 `;
             }
         }}
     }
+
     :hover {
         box-shadow: none;
 
-        background: ${(props) =>
-            props.$selected ? V2_Color.Primary : V2_Color.Accent.Light[5]};
-        border: 1px solid
-            ${(props) =>
-                props.$selected ? V2_Color.Primary : V2_Color.Accent.Light[5]};
+        background: ${Colour["bg-hover"]};
         span {
-            color: ${(props) =>
-                props.$selected ? V2_Color.Neutral[8] : V2_Color.Primary};
-            ${(props) => {
-                if (props.$selected) {
-                    return css`
-                        ${V2_TextStyleHelper.getTextStyle("Body", 700)};
-                    `;
-                } else {
-                    return css`
-                        ${V2_TextStyleHelper.getTextStyle("Body", 600)};
-                    `;
-                }
-            }}
-        }
-    }
-
-    :active,
-    :focus {
-        background: ${(props) =>
-            props.$selected ? V2_Color.Primary : V2_Color.Neutral[8]};
-        outline: none;
-        box-shadow: inset 0px 0px 4px 1px ${V2_Color.Accent.Light[1]};
-        span {
-            color: ${(props) =>
-                props.$selected ? V2_Color.Neutral[8] : V2_Color.Primary};
-
-            ${(props) => {
-                if (props.$selected) {
-                    return css`
-                        ${V2_TextStyleHelper.getTextStyle("Body", 700)};
-                    `;
-                } else {
-                    return css`
-                        ${V2_TextStyleHelper.getTextStyle("Body", 400)};
-                    `;
-                }
-            }}
+            color: ${Colour["text-hover"]};
+            ${Font["body-baseline-semibold"]};
         }
     }
 `;
@@ -192,7 +147,7 @@ export const EllipsisItem = styled(ClickableIcon)`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: ${V2_Color.Neutral[3]};
+    color: ${Colour["icon-primary"]};
     padding: 0.4rem 0.5rem;
     border-radius: 0.25rem;
     white-space: nowrap;
@@ -204,14 +159,8 @@ export const EllipsisItem = styled(ClickableIcon)`
 
     :hover {
         svg {
-            color: ${V2_Color.Neutral[3]};
+            color: ${Colour["icon-hover"]};
         }
-    }
-
-    :active,
-    :focus {
-        outline: none;
-        box-shadow: inset 0px 0px 4px 1px ${V2_Color.Accent.Light[1]};
     }
 `;
 
@@ -231,46 +180,45 @@ export const PaginationMobileInput = styled.div`
     justify-content: center;
     margin: 0.625rem;
     align-items: center;
-    color: ${V2_Color.Neutral[1]};
+    color: ${Colour.text};
 
     display: flex;
     justify-content: center;
 `;
 
-export const Label = styled(V2_Text.Body)`
+export const Label = styled(Typography.BodyBL)`
     white-space: nowrap;
 `;
 
-export const LabelDivider = styled(V2_Text.Body)`
+export const LabelDivider = styled(Typography.BodyBL)`
     white-space: nowrap;
     margin: 0 1rem;
 `;
 
 export const InputView = styled(Input)`
-    ${V2_TextStyleHelper.getTextStyle("Body", 400)};
+    ${Font["body-baseline-regular"]};
     justify-content: center;
     width: 3.5rem;
     height: 2.5rem;
     border-radius: 0.25rem;
-    border: 1px solid ${V2_Color.Neutral[5]};
+    border: 1px solid ${Colour.border};
     padding: 0.5rem 0.5rem;
 
     input {
         text-align: center;
 
         ::placeholder {
-            ${V2_TextStyleHelper.getTextStyle("XSmall", 400)};
+            ${Font["body-xs-regular"]}
         }
     }
 `;
 
 export const Hover = styled.div`
-    ${V2_TextStyleHelper.getTextStyle("XSmall", 400)};
-
-    background-color: ${V2_Color.Primary};
+    ${Font["body-xs-regular"]}
+    background-color: ${Colour["bg-hover"]};
     border: none;
     border-radius: 0.25rem;
-    color: ${V2_Color.Neutral[8]};
+    color: ${Colour["text-hover"]};
     align-items: center;
     position: fixed;
     display: flex;
