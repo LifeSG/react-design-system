@@ -63,6 +63,7 @@ export type SemanticColourSet = {
     "border-primary-subtle": SemanticColourValue;
 
     "border-hover": SemanticColourValue;
+    "border-hover-strong": SemanticColourValue;
 
     "border-selected": SemanticColourValue;
     "border-selected-subtle": SemanticColourValue;

@@ -146,7 +146,9 @@ export const SemanticColourDisplay = ({
                         "border-primary-subtle",
                     ]}
                 />
-                <SemanticColourPalette tokens={["border-hover"]} />
+                <SemanticColourPalette
+                    tokens={["border-hover", "border-hover-strong"]}
+                />
                 <SemanticColourPalette
                     tokens={[
                         "border-selected",

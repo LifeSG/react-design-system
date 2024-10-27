@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components";
-import { V2_Color } from "../../v2_color";
+import { Colour } from "../../theme";
 
 interface StyleProps {
     $active?: boolean;
-    disabled?: boolean;
+    $disabled?: boolean;
 }
 
 // =============================================================================
@@ -18,17 +18,29 @@ export const Wrapper = styled.div<StyleProps>`
     svg {
         height: 100%;
         width: 100%;
+    }
 
-        ${(props) => {
-            if (props.$active && !props.disabled) {
+    ${(props) => {
+        if (props.$disabled) {
+            if (props.$active) {
                 return css`
-                    color: ${V2_Color.Primary};
+                    color: ${Colour["icon-selected-disabled"]};
                 `;
             } else {
                 return css`
-                    color: ${V2_Color.Neutral[4]};
+                    color: ${Colour["icon-disabled-subtle"]};
                 `;
             }
-        }};
-    }
+        }
+
+        if (props.$active) {
+            return css`
+                color: ${Colour["icon-selected"]};
+            `;
+        }
+
+        return css`
+            color: ${Colour["icon-subtle"]};
+        `;
+    }};
 `;

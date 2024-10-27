@@ -95,6 +95,7 @@ export const ColourSemantic = {
     "border-primary-subtle": getSemanticColour("border-primary-subtle"),
 
     "border-hover": getSemanticColour("border-hover"),
+    "border-hover-strong": getSemanticColour("border-hover-strong"),
 
     "border-selected": getSemanticColour("border-selected"),
     "border-selected-subtle": getSemanticColour("border-selected-subtle"),
