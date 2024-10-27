@@ -1,7 +1,6 @@
 import { css } from "styled-components";
-import { FontFamily } from "../../spec/text-spec/font-spec";
+import { Colour, Font, FontSpec } from "../../theme";
 import { TypographySizeType } from "../../theme/font/types";
-import { Colour, Font } from "../../theme";
 
 export interface HtmlContentStyleOptions {
     textSize?: TypographySizeType | undefined;
@@ -15,8 +14,8 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
         ${textSize && Font[`${textSize}-regular`]}
 
         strong {
-            font-family: ${FontFamily.OpenSans.Semibold};
-            ${textSize && Font[`${textSize}-semibold`]}
+            font-weight: ${FontSpec["weight-semibold"]};
+            ${textSize && Font[`${textSize}-semibold`]};
         }
 
         p {
@@ -25,17 +24,17 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
 
         // Link styling
         a {
-            font-family: ${FontFamily.OpenSans.Semibold};
+            font-weight: ${FontSpec["weight-semibold"]};
             ${textSize && Font[`${textSize}-semibold`]}
             color: ${Colour.hyperlink};
             text-decoration: none;
 
             svg {
                 color: ${Colour["icon-primary"]};
-                height: 1rem;
-                width: 1rem;
+                height: 1lh;
+                width: 1em;
                 margin-left: 0.4rem;
-                vertical-align: baseline;
+                vertical-align: middle;
             }
 
             :hover,

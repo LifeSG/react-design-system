@@ -1,36 +1,18 @@
 import styled from "styled-components";
-import { Colour, Font } from "../theme";
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
+import { Colour, FontSpec } from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
 // STYLING
 // =============================================================================
 export const Label = styled.label`
-    ${Font["header-xs-semibold"]}
     color: ${Colour["text-subtle"]};
     margin-bottom: 0.5rem;
     display: inline-block;
 
-    a,
-    span,
-    p {
-        ${Font["header-xs-semibold"]}
-    }
-
-    a {
-        color: ${Colour.hyperlink};
-        text-decoration: none;
-
-        :hover,
-        :active,
-        :focus {
-            color: ${Colour["hyperlink-hover"]};
-
-            svg {
-                color: ${Colour["hyperlink-hover"]};
-            }
-        }
-    }
+    ${applyHtmlContentStyle({ textSize: "body-md" })}
+    font-weight: ${FontSpec["weight-semibold"]};
 `;
 
 // check input
@@ -41,9 +23,6 @@ export const ErrorMessage = styled(Typography.BodySM)`
     outline: none;
 `;
 
-export const Subtitle = styled(Typography.BodyMD)`
-    && {
-        color: ${Colour.text};
-        ${Font["body-sm-regular"]}
-    }
+export const Subtitle = styled(Typography.BodySM)`
+    color: ${Colour["text-subtler"]};
 `;

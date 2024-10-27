@@ -61,7 +61,7 @@ export const LifeSGColourSet: SemanticColourSet = {
     "border-selected": getPrimitiveColour("primary-50"),
     "border-selected-subtle": getPrimitiveColour("primary-70"),
     "border-selected-subtlest": getPrimitiveColour("primary-90"),
-    "border-selected-hover": getPrimitiveColour("primary-90"),
+    "border-selected-hover": getPrimitiveColour("primary-40"),
 
     "border-focus": getPrimitiveColour("primary-60"),
     "border-focus-strong": getPrimitiveColour("primary-50"),

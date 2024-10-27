@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ToggleIcon, ToggleIconType } from "../shared/toggle-icon/toggle-icon";
+import { ToggleIconType } from "../shared/toggle-icon/toggle-icon";
 import { SimpleIdGenerator } from "../util";
 import {
     AlertContainer,
@@ -16,6 +16,7 @@ import {
     Input,
     Label,
     RemoveButton,
+    StyledToggleIcon,
     SubLabel,
     TextContainer,
 } from "./toggle.styles";
@@ -136,10 +137,12 @@ export const Toggle = ({
         }
 
         return (
-            <ToggleIcon
+            <StyledToggleIcon
                 type={toggleIconType}
                 active={selected}
                 disabled={disabled}
+                $selected={selected}
+                $disabled={disabled}
             />
         );
     };
@@ -156,15 +159,7 @@ export const Toggle = ({
             component = subLabel;
         }
 
-        return (
-            <SubLabel
-                data-id="toggle-sublabel"
-                $disabled={disabled}
-                $selected={selected}
-            >
-                {component}
-            </SubLabel>
-        );
+        return <SubLabel data-id="toggle-sublabel">{component}</SubLabel>;
     };
 
     const renderCompositeChildren = () => {
@@ -224,12 +219,9 @@ export const Toggle = ({
                         checked={selected}
                     />
                     {indicator && renderIndicator()}
-                    <TextContainer>
+                    <TextContainer $selected={selected} $disabled={disabled}>
                         <Label
                             htmlFor={`${generatedId}-input`}
-                            $selected={selected}
-                            $indicator={indicator}
-                            $disabled={disabled}
                             data-testid={`${generatedId}-toggle-label`}
                             $maxLines={childrenMaxLines}
                         >

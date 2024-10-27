@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { MediaQuery } from "../theme";
-import { Colour } from "../theme";
+import { Colour, MediaQuery } from "../theme";
 
 export const Box = styled.div`
     position: relative;

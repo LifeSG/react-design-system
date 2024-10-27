@@ -69,9 +69,9 @@ export const Wrapper = styled.div<StyleProps>`
     color: ${Colour.text};
     ${(props) => {
         if (props.$sizeType === "small") {
-            return applyHtmlContentStyle({ textSize: "body-md" });
+            return applyHtmlContentStyle({ textSize: "body-sm" });
         }
-        return applyHtmlContentStyle({ textSize: "body-sm" });
+        return applyHtmlContentStyle({ textSize: "body-md" });
     }}
 `;
 
@@ -138,13 +138,11 @@ export const ActionLinkText = styled(Typography.LinkSM)<StyleProps>`
     display: flex;
     align-items: center;
     align-self: flex-start;
-    color: ${Colour.hyperlink};
 
     svg {
         height: 1rem;
         width: 1rem;
         margin-left: 0.25rem;
-        color: ${Colour.hyperlink};
     }
 `;
 

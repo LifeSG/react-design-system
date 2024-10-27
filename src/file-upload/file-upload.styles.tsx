@@ -12,12 +12,10 @@ export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
     margin-bottom: 2rem;
+    gap: 0.5rem;
 `;
 
-export const Title = styled(Typography.HeaderXS)`
-    margin-bottom: 0.5rem;
-`;
-``;
+export const Title = styled(Typography.BodyBL)``;
 
 export const TitleContainer = styled.div`
     color: ${Colour.text};
@@ -25,7 +23,6 @@ export const TitleContainer = styled.div`
 `;
 
 export const Description = styled(Typography.BodyMD)`
-    margin-bottom: 0;
     color: ${Colour["text-subtler"]};
 `;
 
@@ -56,9 +53,10 @@ export const UploadButton = styled(Button.Small)`
         width: 100%;
     }
 `;
+
 export const UploadButtonLabel = styled.label`
     ${Font["body-md-semibold"]}
-    color: ${Colour["text-primary"]};
+    color: ${Colour["text-subtler"]};
     margin-top: 0.5rem;
     width: 10rem;
     text-align: center;

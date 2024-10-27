@@ -101,7 +101,7 @@ export const FileUpload = ({
         }
 
         if (typeof title === "string") {
-            return <Title weight="regular">{title}</Title>;
+            return <Title>{title}</Title>;
         }
 
         return <TitleContainer>{title}</TitleContainer>;
@@ -113,7 +113,7 @@ export const FileUpload = ({
         }
 
         if (typeof description === "string") {
-            return <Description weight="regular">{description}</Description>;
+            return <Description>{description}</Description>;
         }
 
         return <DescriptionContainer>{description}</DescriptionContainer>;
