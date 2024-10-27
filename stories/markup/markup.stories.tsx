@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Markup } from "src/markup";
-import { Colour } from "../../src/theme";
+import { Colour } from "src/theme";
 
 type Component = typeof Markup;
 
