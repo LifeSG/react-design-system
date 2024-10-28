@@ -6,14 +6,22 @@ import { LocalNavPropsBase, NavItemProps } from "../types";
 import { Nav, NavItem } from "./local-nav-menu.styles";
 
 const LocalNavItem = (props: NavItemProps) => {
-    const { handleClick, isSelected, title, renderTitle } = props;
+    const { handleClick, isSelected, title, renderTitle, id, className } =
+        props;
 
     return (
-        <NavItem isSelected={isSelected} onClick={handleClick}>
+        <NavItem
+            id={id}
+            className={className}
+            isSelected={isSelected}
+            onClick={handleClick}
+        >
             {renderTitle?.(props) ?? (
                 <Text.Body
                     style={{ margin: 0 }}
                     weight={isSelected ? "semibold" : "regular"}
+                    id={id + "-title"}
+                    className={className + "-title"}
                 >
                     {title}
                 </Text.Body>
@@ -42,11 +50,18 @@ export const LocalNavMenu = React.forwardRef<
             titleList,
             visibleSectionIndex,
             renderTitle,
+            id,
         }: LocalNavMenuProps,
         ref
     ) => {
+        const localNavMenuId = id || "local-nav-menu";
         return (
-            <Nav ref={ref}>
+            <Nav
+                ref={ref}
+                id={`${localNavMenuId}-container`}
+                className={`${localNavMenuId}-container`}
+                data-test-id={`${localNavMenuId}-container`}
+            >
                 {titleList.map((title, i) => {
                     const handleNavItemClick = onNavItemClickCb
                         ? onNavItemClickCb(i)
@@ -55,7 +70,18 @@ export const LocalNavMenu = React.forwardRef<
 
                     return (
                         <LocalNavItem
-                            key={`${camelCase(title)}__local-nav--${i}`}
+                            key={`${camelCase(
+                                title
+                            )}__${localNavMenuId}-item--${i}`}
+                            className={`${camelCase(
+                                title
+                            )}__${localNavMenuId}-item--${i}`}
+                            id={`${camelCase(
+                                title
+                            )}__${localNavMenuId}-item--${i}`}
+                            data-test-id={`${camelCase(
+                                title
+                            )}__${localNavMenuId}-item--${i}`}
                             handleClick={handleNavItemClick}
                             isSelected={isSelected}
                             title={title}
