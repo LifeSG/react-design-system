@@ -131,9 +131,9 @@ export const LocalNavDropdown = React.forwardRef<
             setIsDropdownExpanded(false);
         }, []);
 
-        const navId = id || "local-nav";
-        const navTestId = testId || "local-nav";
-        const navClassName = className || "local-nav";
+        const navId = id || "local-nav-dropdown";
+        const navTestId = testId || "local-nav-dropdown";
+        const navClassName = className || "local-nav-dropdown";
 
         return (
             <>
