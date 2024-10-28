@@ -31,7 +31,6 @@ const DropdownNavItem = (props: NavItemProps) => {
 export interface LocalNavDropdownProps extends LocalNavPropsBase {
     defaultLabelText: string;
     stickyOffset?: number;
-    mastheadHeight?: number; //to show the scroll bar if the dropdown list is too big.
 }
 
 export const LocalNavDropdown = React.forwardRef<
@@ -45,7 +44,6 @@ export const LocalNavDropdown = React.forwardRef<
             onNavItemClickCb,
             sections,
             visibleSectionIndex,
-            mastheadHeight = 0,
         }: LocalNavDropdownProps,
         ref
     ) => {
@@ -143,9 +141,7 @@ export const LocalNavDropdown = React.forwardRef<
                     {isDropdownExpanded && (
                         <NavItemList
                             viewportHeight={
-                                viewportHeight -
-                                mastheadHeight -
-                                dropdowntHeight
+                                viewportHeight - dropdowntHeight - stickyOffset
                             }
                         >
                             {sections.map((section, i) => (
