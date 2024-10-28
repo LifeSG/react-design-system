@@ -35,7 +35,7 @@ export const Default: StoryObj<Component> = {
         return (
             <>
                 <LocalNavDropdown
-                    defaultLabelText={"initial"}
+                    defaultLabelText={selectedLabel}
                     titleList={sections}
                     stickyOffset={40}
                     visibleSectionIndex={0}
