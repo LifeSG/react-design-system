@@ -1,17 +1,12 @@
-export interface ISectionItem {
-    sectionTitle: string;
-    sectionData: JSX.Element;
-}
-
 export interface NavItemProps {
     handleClick?: any;
     isSelected?: boolean;
-    section: ISectionItem;
+    title: string;
     renderTitle?: (props: NavItemProps) => React.ReactNode;
 }
 
 export interface LocalNavPropsBase {
     onNavItemClickCb?: (...args: any[]) => (e?: React.MouseEvent) => any;
-    sections: ISectionItem[];
+    titleList: string[];
     visibleSectionIndex: number;
 }

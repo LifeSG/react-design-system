@@ -6,7 +6,7 @@ import { LocalNavPropsBase, NavItemProps } from "../types";
 import { Nav, NavItem } from "./local-nav-menu.styles";
 
 const LocalNavItem = (props: NavItemProps) => {
-    const { handleClick, isSelected, section, renderTitle } = props;
+    const { handleClick, isSelected, title, renderTitle } = props;
 
     return (
         <NavItem isSelected={isSelected} onClick={handleClick}>
@@ -15,7 +15,7 @@ const LocalNavItem = (props: NavItemProps) => {
                     style={{ margin: 0 }}
                     weight={isSelected ? "semibold" : "regular"}
                 >
-                    {section.sectionTitle}
+                    {title}
                 </Text.Body>
             )}
         </NavItem>
@@ -39,7 +39,7 @@ export const LocalNavMenu = React.forwardRef<
     (
         {
             onNavItemClickCb,
-            sections,
+            titleList,
             visibleSectionIndex,
             renderTitle,
         }: LocalNavMenuProps,
@@ -47,7 +47,7 @@ export const LocalNavMenu = React.forwardRef<
     ) => {
         return (
             <Nav ref={ref}>
-                {sections.map((section, i) => {
+                {titleList.map((title, i) => {
                     const handleNavItemClick = onNavItemClickCb
                         ? onNavItemClickCb(i)
                         : undefined;
@@ -55,12 +55,10 @@ export const LocalNavMenu = React.forwardRef<
 
                     return (
                         <LocalNavItem
-                            key={`${camelCase(
-                                section.sectionTitle
-                            )}__local-nav--${i}`}
+                            key={`${camelCase(title)}__local-nav--${i}`}
                             handleClick={handleNavItemClick}
                             isSelected={isSelected}
-                            section={section}
+                            title={title}
                             renderTitle={renderTitle}
                         />
                     );

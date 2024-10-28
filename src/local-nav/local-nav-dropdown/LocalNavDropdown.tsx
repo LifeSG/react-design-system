@@ -13,7 +13,7 @@ import {
 } from "./local-nav-dropdown.styles";
 
 const DropdownNavItem = (props: NavItemProps) => {
-    const { handleClick, isSelected, section } = props;
+    const { handleClick, isSelected, title } = props;
     return (
         <NavItem
             isSelected={isSelected}
@@ -21,9 +21,7 @@ const DropdownNavItem = (props: NavItemProps) => {
                 handleClick();
             }}
         >
-            <LabelText isSelected={isSelected}>
-                {section.sectionTitle}
-            </LabelText>
+            <LabelText isSelected={isSelected}>{title}</LabelText>
         </NavItem>
     );
 };
@@ -42,7 +40,7 @@ export const LocalNavDropdown = React.forwardRef<
             defaultLabelText,
             stickyOffset = 0,
             onNavItemClickCb,
-            sections,
+            titleList,
             visibleSectionIndex,
         }: LocalNavDropdownProps,
         ref
@@ -101,10 +99,10 @@ export const LocalNavDropdown = React.forwardRef<
         useEffect(() => {
             const visibleSectionTitle =
                 visibleSectionIndex >= 0 && isStickied
-                    ? sections[visibleSectionIndex].sectionTitle
+                    ? titleList[visibleSectionIndex]
                     : defaultLabelText;
             setLabelText(visibleSectionTitle);
-        }, [visibleSectionIndex, isStickied, sections, defaultLabelText]);
+        }, [visibleSectionIndex, isStickied, titleList, defaultLabelText]);
 
         useEffect(() => {
             document.body.style.overflow =
@@ -144,16 +142,16 @@ export const LocalNavDropdown = React.forwardRef<
                                 viewportHeight - dropdowntHeight - stickyOffset
                             }
                         >
-                            {sections.map((section, i) => (
+                            {titleList.map((title, i) => (
                                 <DropdownNavItem
                                     key={`${camelCase(
-                                        section.sectionTitle
+                                        title
                                     )}__dropdownNavItem--${i}`}
                                     handleClick={() => handleNavItemClick(i)}
                                     isSelected={
                                         i === visibleSectionIndex && isStickied
                                     }
-                                    section={section}
+                                    title={title}
                                 />
                             ))}
                         </NavItemList>
