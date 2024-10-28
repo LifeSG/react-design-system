@@ -13,15 +13,23 @@ import {
 } from "./local-nav-dropdown.styles";
 
 const DropdownNavItem = (props: NavItemProps) => {
-    const { handleClick, isSelected, title } = props;
+    const { handleClick, isSelected, title, id, className } = props;
     return (
         <NavItem
+            id={id}
+            className={className}
             isSelected={isSelected}
             onClick={() => {
                 handleClick();
             }}
         >
-            <LabelText isSelected={isSelected}>{title}</LabelText>
+            <LabelText
+                id={`${id}-label`}
+                className={`${className}-label`}
+                isSelected={isSelected}
+            >
+                {title}
+            </LabelText>
         </NavItem>
     );
 };
@@ -42,6 +50,9 @@ export const LocalNavDropdown = React.forwardRef<
             onNavItemClickCb,
             titleList,
             visibleSectionIndex,
+            id,
+            "data-testid": testId,
+            className,
         }: LocalNavDropdownProps,
         ref
     ) => {
@@ -120,24 +131,42 @@ export const LocalNavDropdown = React.forwardRef<
             setIsDropdownExpanded(false);
         }, []);
 
+        const navId = id || "local-nav";
+        const navTestId = testId || "local-nav";
+        const navClassName = className || "local-nav";
+
         return (
             <>
-                <span ref={detectStickyRef} />
+                <span
+                    ref={detectStickyRef}
+                    id={id || "sticky-ref"}
+                    data-testid={testId || "sticky-ref"}
+                    className={className || "sticky-ref"}
+                />
                 <NavWrapper
                     isStickied={isStickied}
                     stickyOffset={stickyOffset}
                     ref={ref}
+                    id={`${navId}-wrapper`}
+                    data-testid={`${navTestId}-wrapper`}
+                    className={`${navClassName}-wrapper`}
                 >
                     <NavLabel
                         htmlFor="dropdownNavShouldExpand"
                         ref={dropdownRef}
                         onClick={handleToggleDropdown}
+                        id={`${navId}-label`}
+                        data-testid={`${navTestId}-label`}
+                        className={`${navClassName}-label`}
                     >
                         <LabelText weight="bold">{labelText}</LabelText>
                         <NavIcon />
                     </NavLabel>
                     {isDropdownExpanded && (
                         <NavItemList
+                            id={`${navId}-dropdown-list`}
+                            data-testid={`${navTestId}-dropdown-list`}
+                            className={`${navClassName}-dropdown-list`}
                             viewportHeight={
                                 viewportHeight - dropdowntHeight - stickyOffset
                             }
@@ -145,6 +174,15 @@ export const LocalNavDropdown = React.forwardRef<
                             {titleList.map((title, i) => (
                                 <DropdownNavItem
                                     key={`${camelCase(
+                                        title
+                                    )}__dropdownNavItem--${i}`}
+                                    data-test-id={`${camelCase(
+                                        title
+                                    )}__dropdownNavItem--${i}`}
+                                    id={`${camelCase(
+                                        title
+                                    )}__dropdownNavItem--${i}`}
+                                    className={`${camelCase(
                                         title
                                     )}__dropdownNavItem--${i}`}
                                     handleClick={() => handleNavItemClick(i)}
