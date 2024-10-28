@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { LocalNavDropdown } from "../../../src/local-nav/local-nav-dropdown/LocalNavDropdown";
+import { Text } from "src/text";
 
 type Component = typeof LocalNavDropdown;
 
@@ -33,16 +34,26 @@ export const Default: StoryObj<Component> = {
             }
         };
         return (
-            <>
+            <div style={{ height: "200vh" }}>
+                <Text.H1>My content</Text.H1>
+                <div>sample 1</div>
+                <div>sample 2</div>
+                <div>sample 3</div>
+                <div>sample 4</div>
+
                 <LocalNavDropdown
                     defaultLabelText={selectedLabel}
                     titleList={sections}
-                    stickyOffset={40}
+                    stickyOffset={0}
                     visibleSectionIndex={0}
                     onNavItemClickCb={(index) => () =>
                         handleNavItemClick(index)}
                 />
-            </>
+            </div>
         );
+    },
+    parameters: {
+        layout: "fullscreen",
+        docs: { story: { inline: false, iframeHeight: 500 } },
     },
 };
