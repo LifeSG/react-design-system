@@ -1,6 +1,12 @@
 import find from "lodash/find";
 import isEqual from "lodash/isEqual";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { Spinner } from "../../button/button.style";
 import {
     useCompare,
@@ -94,11 +100,14 @@ export const DropdownList = <T, V>({
         return listExtractor ? listExtractor(item) : item.toString();
     };
 
-    const checkListItemSelected = (item: T): boolean => {
-        return !!find(selectedItems, (arrItem) => {
-            return isEqual(arrItem, item);
-        });
-    };
+    const checkListItemSelected = useCallback(
+        (item: T): boolean => {
+            return !!find(selectedItems, (arrItem) => {
+                return isEqual(arrItem, item);
+            });
+        },
+        [selectedItems]
+    );
 
     const filterItemsByCustomSearch = useEvent(() => {
         return searchFunction(searchValue);
@@ -233,6 +242,10 @@ export const DropdownList = <T, V>({
 
         if (disableItemFocus) return;
 
+        const selectedIndex = listItems.findIndex((item) =>
+            checkListItemSelected(item)
+        );
+
         // Focus search input if there is one
         if (searchInputRef.current) {
             setFocusedIndex(-1);
@@ -240,12 +253,23 @@ export const DropdownList = <T, V>({
         } else if (listItemRefs.current[focusedIndex]) {
             // Else focus on the specified element
             setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
+        } else if (listItemRefs.current[selectedIndex]) {
+            // Else focus on the selected element
+            setFocusedIndex(selectedIndex);
+            setTimeout(() => listItemRefs.current[selectedIndex]?.focus(), 200);
         } else {
             // Else focus on the first list item
             setFocusedIndex(0);
             setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
-    }, [disableItemFocus, focusedIndex, mounted, setFocusedIndex]);
+    }, [
+        checkListItemSelected,
+        disableItemFocus,
+        focusedIndex,
+        listItems,
+        mounted,
+        setFocusedIndex,
+    ]);
 
     useEffect(() => {
         if (!mounted || !itemsLoadStateChanged) {
