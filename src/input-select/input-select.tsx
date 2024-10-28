@@ -259,6 +259,7 @@ export const InputSelect = <T, V>({
                 renderCustomCallToAction={renderCustomCallToAction}
                 variant={variant}
                 width={elementWidth}
+                topScrollItem={selected}
             />
         );
     };
