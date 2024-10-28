@@ -1,0 +1,22 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import * as LocalNavDropdownStories from "./local-nav-dropdown.stories";
+import { PropsTable } from "./props-table";
+import { Heading3, Secondary, Title } from "../../storybook-common";
+
+<Meta of={LocalNavDropdownStories} />
+
+<Title>NavDropdown</Title>
+
+<Secondary>Overview</Secondary>
+
+Dropdown Component for mobile scenarios where it should be sticky when it reaches the top of the screen.
+
+```tsx
+import { LocalNavDropdown } from "@lifesg/react-design-system/local-nav/LocalNavDropdown";
+```
+
+<Canvas of={LocalNavDropdownStories.Default} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
