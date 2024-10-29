@@ -6,7 +6,7 @@ import { Overlay } from "src/overlay";
 type Component = typeof Overlay;
 
 const meta: Meta<Component> = {
-    title: "Modules/Overlay",
+    title: "Overlays/Overlay",
     component: Overlay,
 };
 

@@ -5,7 +5,7 @@ import { Headings, Wrapper } from "./doc-elements";
 type Component = typeof Toggle;
 
 const meta: Meta<Component> = {
-    title: "Data Input/Toggle/No border",
+    title: "Selection and input/Toggle/No border",
     component: Toggle,
 };
 

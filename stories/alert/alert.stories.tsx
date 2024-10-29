@@ -5,7 +5,7 @@ import { Alert } from "src/alert";
 type Component = typeof Alert;
 
 const meta: Meta<Component> = {
-    title: "Modules/Alert",
+    title: "Feedback indicators/Alert",
     component: Alert,
 };
 

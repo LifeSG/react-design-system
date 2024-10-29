@@ -5,7 +5,7 @@ import { Headings, SimpleContainer, Wrapper } from "./doc-elements";
 type Component = typeof Toggle;
 
 const meta: Meta<Component> = {
-    title: "Data Input/Toggle",
+    title: "Selection and input/Toggle",
     component: Toggle,
 };
 

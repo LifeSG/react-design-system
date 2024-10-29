@@ -5,7 +5,7 @@ import { Colour } from "src/theme";
 type Component = typeof Markup;
 
 const meta: Meta<Component> = {
-    title: "General/Markup",
+    title: "Core/Markup",
     component: Markup,
 };
 

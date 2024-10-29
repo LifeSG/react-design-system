@@ -5,7 +5,7 @@ import { Container } from "./doc-elements";
 type Component = typeof Button.Default;
 
 const meta: Meta<Component> = {
-    title: "General/Button/Base",
+    title: "Selection and input/Button/Base",
     component: Button.Default,
 };
 

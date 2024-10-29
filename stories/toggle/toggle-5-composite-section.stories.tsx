@@ -7,7 +7,7 @@ import { Variants } from "./doc-elements";
 type Component = typeof Toggle;
 
 const meta: Meta<Component> = {
-    title: "Data Input/Toggle/With composite section",
+    title: "Selection and input/Toggle/With composite section",
     component: Toggle,
 };
 export default meta;

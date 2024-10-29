@@ -5,7 +5,7 @@ import { Variants } from "./doc-elements";
 type Component = typeof Toggle;
 
 const meta: Meta<Component> = {
-    title: "Data Input/Toggle/Removable",
+    title: "Selection and input/Toggle/Removable",
     component: Toggle,
 };
 

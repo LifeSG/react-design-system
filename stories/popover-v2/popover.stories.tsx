@@ -5,7 +5,7 @@ import { Button, Modal, PopoverTrigger, PopoverV2 } from "../../src";
 type Component = typeof PopoverV2;
 
 const meta: Meta<Component> = {
-    title: "Modules/PopoverV2",
+    title: "Overlays/PopoverV2",
     component: PopoverV2,
 };
 

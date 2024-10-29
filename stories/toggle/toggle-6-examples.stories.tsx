@@ -7,7 +7,7 @@ import { V2_Text } from "../../src/v2_text";
 type Component = typeof Toggle;
 
 const meta: Meta<Component> = {
-    title: "Data Input/Toggle/Common patterns",
+    title: "Selection and input/Toggle/Common patterns",
     component: Toggle,
 };
 export default meta;

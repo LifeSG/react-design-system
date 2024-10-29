@@ -6,7 +6,7 @@ import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 type Component = typeof ButtonWithIcon.Default;
 
 const meta: Meta<Component> = {
-    title: "General/Button/With Icon",
+    title: "Selection and input/Button/With Icon",
     component: ButtonWithIcon.Default,
 };
 

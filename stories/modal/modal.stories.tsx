@@ -6,7 +6,7 @@ import { Modal } from "src/modal";
 type Component = typeof Modal;
 
 const meta: Meta<Component> = {
-    title: "Modules/Modal",
+    title: "Overlays/Modal",
     component: Modal,
 };
 
