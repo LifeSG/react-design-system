@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { Button, Modal, PopoverTrigger, PopoverV2 } from "../../src";
+import { Button } from "src/button";
+import { Modal } from "src/modal";
+import { PopoverTrigger, PopoverV2 } from "src/popover-v2";
 
 type Component = typeof PopoverV2;
 
@@ -12,7 +14,7 @@ const meta: Meta<Component> = {
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <PopoverTrigger popoverContent="This is the popover content">
                 <Button.Default>Click me</Button.Default>
@@ -22,7 +24,7 @@ export const Default: StoryObj<Component> = {
 };
 
 export const HoverInteraction: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <PopoverTrigger
                 popoverContent="This is the popover content"
@@ -35,7 +37,7 @@ export const HoverInteraction: StoryObj<Component> = {
 };
 
 export const DefaultStyling: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <PopoverTrigger
                 popoverContent={
@@ -63,15 +65,9 @@ export const DefaultStyling: StoryObj<Component> = {
 };
 
 export const Appearance: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-around",
-                    padding: "3rem 0",
-                }}
-            >
+            <>
                 <PopoverTrigger popoverContent="Remains aligned to the left of the screen when screen width is reduced">
                     <Button.Default>Left</Button.Default>
                 </PopoverTrigger>
@@ -88,12 +84,25 @@ export const Appearance: StoryObj<Component> = {
                 <PopoverTrigger popoverContent="Remains aligned to the right of the screen when screen width is reduced">
                     <Button.Default>Right</Button.Default>
                 </PopoverTrigger>
-            </div>
+            </>
         );
     },
     parameters: {
         layout: "fullscreen",
     },
+    decorators: [
+        (Story) => (
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    padding: "3rem 0",
+                }}
+            >
+                <Story />
+            </div>
+        ),
+    ],
 };
 
 export const Customisation: StoryObj<Component> = {
