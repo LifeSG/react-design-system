@@ -37,6 +37,7 @@ const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
         </Main>
     );
 };
+DefaultComponent.displayName = "Button.Default";
 
 const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
     const {
@@ -67,6 +68,7 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
         </Main>
     );
 };
+SmallComponent.displayName = "Button.Small";
 
 const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
     const {
@@ -97,6 +99,7 @@ const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
         </Main>
     );
 };
+LargeComponent.displayName = "Button.Large";
 
 export const Button = {
     Default: React.forwardRef(DefaultComponent),
