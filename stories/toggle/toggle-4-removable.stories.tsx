@@ -1,20 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Toggle } from "../../src";
-import { Variants } from "./doc-elements";
+import { Toggle } from "src/toggle";
+import { VariantDecorator } from "./doc-elements";
 
 type Component = typeof Toggle;
 
 const meta: Meta<Component> = {
     title: "Selection and input/Toggle/Removable",
     component: Toggle,
+    decorators: [VariantDecorator],
 };
 
 export default meta;
 
 export const CheckboxType: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Variants>
+            <>
                 <Toggle removable indicator>
                     Text
                 </Toggle>
@@ -30,15 +31,15 @@ export const CheckboxType: StoryObj<Component> = {
                 <Toggle removable indicator error>
                     Text
                 </Toggle>
-            </Variants>
+            </>
         );
     },
 };
 
 export const RadioType: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Variants>
+            <>
                 <Toggle removable indicator type="radio">
                     Text
                 </Toggle>
@@ -54,7 +55,7 @@ export const RadioType: StoryObj<Component> = {
                 <Toggle removable indicator type="radio" error>
                     Text
                 </Toggle>
-            </Variants>
+            </>
         );
     },
 };
