@@ -1,3 +1,5 @@
+import { ReactRenderer } from "@storybook/react";
+import { DecoratorFunction } from "@storybook/types";
 import styled from "styled-components";
 import { V2_MediaQuery } from "../../src/v2_media";
 import { MediaWidths } from "../../src/spec/media-spec";
@@ -53,3 +55,18 @@ export const FlexStoryContainer = styled.div`
     padding: 2rem 1.25rem;
     gap: 2rem;
 `;
+
+const StackStoryContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+`;
+
+export const StackDecorator: () => DecoratorFunction<ReactRenderer> = () =>
+    function Stack(Story) {
+        return (
+            <StackStoryContainer>
+                <Story />
+            </StackStoryContainer>
+        );
+    };
