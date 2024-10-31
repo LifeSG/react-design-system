@@ -1,0 +1,43 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Heading3, Secondary, Title } from "../storybook-common";
+import * as LocalNavStories from "./local-nav.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={LocalNavStories} />
+
+<Title>LocalNav</Title>
+
+Components for navigation to different sections within a page.
+
+<Secondary>Overview</Secondary>
+
+```tsx
+import {
+    LocalNavMenu,
+    LocalNavDropdown,
+} from "@lifesg/react-design-system/local-nav";
+```
+
+<Heading3>Menu</Heading3>
+
+The `LocalNavMenu` displays navigation items in a vertical list.
+
+<Canvas of={LocalNavStories.Menu} />
+
+<Heading3>Dropdown</Heading3>
+
+The `LocalNavDropdown` displays navigation items in a dropdown. It becomes
+sticky when it reaches the top of the screen.
+
+<Canvas of={LocalNavStories.Dropdown} />
+
+<Heading3>Combined usage</Heading3>
+
+A common use case to to use the menu on desktop, and switch to the dropdown on
+smaller screens.
+
+<Canvas of={LocalNavStories.CombinedUsage} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />
