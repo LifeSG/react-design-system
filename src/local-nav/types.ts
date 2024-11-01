@@ -1,17 +1,23 @@
-export interface NavItemProps {
-    handleClick?: any;
-    isSelected?: boolean;
-    title: string;
+export interface LocalNavItemProps {
+    title: string | React.ReactNode;
     id?: string;
-    className?: string;
-    renderTitle?: (props: NavItemProps) => React.ReactNode;
 }
 
 export interface LocalNavPropsBase {
     className?: string | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
-    onNavItemClickCb?: (...args: any[]) => (e?: React.MouseEvent) => any;
+    onNavItemSelect: (
+        e: MouseEvent,
+        item: LocalNavItemProps,
+        index: number
+    ) => void;
     titleList: string[];
-    visibleSectionIndex: number;
+    selectedItemIndex: number;
+    renderItem?:
+        | ((
+              item: LocalNavItemProps,
+              renderProps: { selected: boolean }
+          ) => React.ReactNode)
+        | undefined;
 }
