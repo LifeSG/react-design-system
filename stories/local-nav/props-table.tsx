@@ -13,7 +13,7 @@ const MENU_DATA: ApiTableSectionProps[] = [
                 ),
             },
             {
-                name: "visibleSectionIndex",
+                name: "selectedItemIndex",
                 description: "which item should be selected from the dropdown",
                 propTypes: ["number"],
             },
@@ -74,7 +74,7 @@ const DROPDOWN_DATA: ApiTableSectionProps[] = [
                 defaultValue: `"checkbox"`,
             },
             {
-                name: "visibleSectionIndex",
+                name: "selectedItemIndex",
                 description:
                     "which item should be selected from the dropdown for the initial render",
                 propTypes: ["number"],

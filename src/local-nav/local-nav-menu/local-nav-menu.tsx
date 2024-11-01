@@ -1,37 +1,37 @@
 /* eslint-disable react/display-name */
-import { Text } from "../../text/text";
-import camelCase from "lodash/camelCase";
 import React, { ReactNode } from "react";
-import { LocalNavPropsBase, NavItemProps } from "../types";
+import { Text } from "../../text/text";
+import { LocalNavItemComponentProps } from "../internal-types";
+import { LocalNavItemProps, LocalNavPropsBase } from "../types";
 import { Nav, NavItem } from "./local-nav-menu.styles";
 
-const LocalNavItem = (props: NavItemProps) => {
-    const { handleClick, isSelected, title, renderTitle, id, className } =
-        props;
-
-    return (
-        <NavItem
-            id={id}
-            className={className}
-            isSelected={isSelected}
-            onClick={handleClick}
-        >
-            {renderTitle?.(props) ?? (
+const LocalNavItem = (props: LocalNavItemComponentProps) => {
+    const { handleClick, isSelected, item } = props;
+    const renderTitle = () => {
+        if (typeof item.title === "string") {
+            return (
                 <Text.Body
                     style={{ margin: 0 }}
                     weight={isSelected ? "semibold" : "regular"}
-                    id={id + "-title"}
-                    className={className + "-title"}
+                    id={item.id + "-title"}
                 >
-                    {title}
+                    {item.title}
                 </Text.Body>
-            )}
+            );
+        } else if (React.isValidElement(item.title)) {
+            return item.title;
+        }
+        return null;
+    };
+    return (
+        <NavItem id={item.id} isSelected={isSelected} onClick={handleClick}>
+            {renderTitle()}
         </NavItem>
     );
 };
 
 export interface LocalNavMenuProps extends LocalNavPropsBase {
-    renderTitle?: (props: NavItemProps) => ReactNode;
+    renderTitle?: (props: LocalNavItemProps) => ReactNode;
 }
 
 /**
@@ -46,46 +46,36 @@ export const LocalNavMenu = React.forwardRef<
 >(
     (
         {
-            onNavItemClickCb,
+            onNavItemSelect: onNavItemSelect,
             titleList,
-            visibleSectionIndex,
+            selectedItemIndex,
             renderTitle,
             id,
+            "data-testid": dataTestId,
+            className,
         }: LocalNavMenuProps,
         ref
     ) => {
-        const localNavMenuId = id || "local-nav-menu";
+        const localNavMenuId = dataTestId || "local-nav-menu";
         return (
             <Nav
                 ref={ref}
-                id={`${localNavMenuId}-container`}
-                className={`${localNavMenuId}-container`}
-                data-test-id={`${localNavMenuId}-container`}
+                id={id}
+                className={className}
+                data-testid={`${localNavMenuId}-container`}
             >
                 {titleList.map((title, i) => {
-                    const handleNavItemClick = onNavItemClickCb
-                        ? onNavItemClickCb(i)
-                        : undefined;
-                    const isSelected = i === visibleSectionIndex;
+                    const isSelected = i === selectedItemIndex;
 
                     return (
                         <LocalNavItem
-                            key={`${camelCase(
-                                title
-                            )}__${localNavMenuId}-item--${i}`}
-                            className={`${camelCase(
-                                title
-                            )}__${localNavMenuId}-item--${i}`}
-                            id={`${camelCase(
-                                title
-                            )}__${localNavMenuId}-item--${i}`}
-                            data-test-id={`${camelCase(
-                                title
-                            )}__${localNavMenuId}-item--${i}`}
-                            handleClick={handleNavItemClick}
+                            key={i}
+                            data-testid={`${localNavMenuId}-item--${i}`}
+                            handleClick={(e) =>
+                                onNavItemSelect?.(e, { title, id }, i)
+                            }
                             isSelected={isSelected}
-                            title={title}
-                            renderTitle={renderTitle}
+                            item={{ title, id }}
                         />
                     );
                 })}
