@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
-import camelCase from "lodash/camelCase";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { LocalNavPropsBase, NavItemProps } from "../types";
+import { LocalNavItemComponentProps } from "../internal-types";
+import { LocalNavItemProps, LocalNavPropsBase } from "../types";
 import {
     Backdrop,
     LabelText,
@@ -10,33 +10,37 @@ import {
     NavItemList,
     NavLabel,
     NavWrapper,
+    StyledTickIcon,
 } from "./local-nav-dropdown.styles";
 
-const DropdownNavItem = (props: NavItemProps) => {
-    const { handleClick, isSelected, title, id, className } = props;
+const DropdownNavItem = (props: LocalNavItemComponentProps) => {
+    const { handleClick, isSelected, item } = props;
+    const renderTitle = () => {
+        if (typeof item.title === "string") {
+            return (
+                <>
+                    {isSelected && <StyledTickIcon />}
+                    <LabelText id={`${item.id}-label`} isSelected={isSelected}>
+                        {item.title}
+                    </LabelText>
+                </>
+            );
+        } else if (React.isValidElement(item.title)) {
+            return item.title;
+        }
+        return null;
+    };
+
     return (
-        <NavItem
-            id={id}
-            className={className}
-            isSelected={isSelected}
-            onClick={() => {
-                handleClick();
-            }}
-        >
-            <LabelText
-                id={`${id}-label`}
-                className={`${className}-label`}
-                isSelected={isSelected}
-            >
-                {title}
-            </LabelText>
+        <NavItem id={item.id} isSelected={isSelected} onClick={handleClick}>
+            {renderTitle()}
         </NavItem>
     );
 };
 
 export interface LocalNavDropdownProps extends LocalNavPropsBase {
-    defaultLabelText: string;
-    stickyOffset?: number;
+    defaultLabel: string | React.ReactNode;
+    stickyOffset?: number | undefined;
 }
 
 export const LocalNavDropdown = React.forwardRef<
@@ -45,11 +49,11 @@ export const LocalNavDropdown = React.forwardRef<
 >(
     (
         {
-            defaultLabelText,
+            defaultLabel,
             stickyOffset = 0,
-            onNavItemClickCb,
+            onNavItemSelect,
             titleList,
-            visibleSectionIndex,
+            selectedItemIndex,
             id,
             "data-testid": testId,
             className,
@@ -59,7 +63,7 @@ export const LocalNavDropdown = React.forwardRef<
         const detectStickyRef = useRef<HTMLSpanElement>(null);
         const dropdownRef = useRef<HTMLLabelElement>(null);
         const [isStickied, setIsStickied] = useState<boolean>(false);
-        const [labelText, setLabelText] = useState(defaultLabelText);
+        const [labelText, setLabelText] = useState(defaultLabel);
         const [isDropdownExpanded, setIsDropdownExpanded] =
             useState<boolean>(false);
         const [viewportHeight, setViewportHeight] = useState(
@@ -109,20 +113,24 @@ export const LocalNavDropdown = React.forwardRef<
 
         useEffect(() => {
             const visibleSectionTitle =
-                visibleSectionIndex >= 0 && isStickied
-                    ? titleList[visibleSectionIndex]
-                    : defaultLabelText;
+                selectedItemIndex >= 0 && isStickied
+                    ? titleList[selectedItemIndex]
+                    : defaultLabel;
             setLabelText(visibleSectionTitle);
-        }, [visibleSectionIndex, isStickied, titleList, defaultLabelText]);
+        }, [selectedItemIndex, isStickied, titleList, defaultLabel]);
 
         useEffect(() => {
             document.body.style.overflow =
                 isDropdownExpanded && isStickied ? "hidden" : "auto";
         }, [isDropdownExpanded, isStickied]);
 
-        const handleNavItemClick = (index: number) => {
-            if (onNavItemClickCb) {
-                onNavItemClickCb(index)();
+        const handleNavItemClick = (
+            e: MouseEvent,
+            item: LocalNavItemProps,
+            index: number
+        ) => {
+            if (onNavItemSelect) {
+                onNavItemSelect(e, item, index);
             }
             setIsDropdownExpanded(false);
         };
@@ -173,23 +181,15 @@ export const LocalNavDropdown = React.forwardRef<
                         >
                             {titleList.map((title, i) => (
                                 <DropdownNavItem
-                                    key={`${camelCase(
-                                        title
-                                    )}__dropdownNavItem--${i}`}
-                                    data-test-id={`${camelCase(
-                                        title
-                                    )}__dropdownNavItem--${i}`}
-                                    id={`${camelCase(
-                                        title
-                                    )}__dropdownNavItem--${i}`}
-                                    className={`${camelCase(
-                                        title
-                                    )}__dropdownNavItem--${i}`}
-                                    handleClick={() => handleNavItemClick(i)}
-                                    isSelected={
-                                        i === visibleSectionIndex && isStickied
+                                    key={i}
+                                    data-test-id={`dropdownNavItem--${i}`}
+                                    handleClick={(e) =>
+                                        handleNavItemClick(e, { title, id }, i)
                                     }
-                                    title={title}
+                                    isSelected={
+                                        i === selectedItemIndex && isStickied
+                                    }
+                                    item={{ title, id }}
                                 />
                             ))}
                         </NavItemList>

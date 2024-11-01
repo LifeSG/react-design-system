@@ -1,7 +1,8 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { Text } from "../../text/text";
+import { TickIcon } from "@lifesg/react-icons/tick";
 import { MyLegacyTheme } from "../../theme";
 
 interface DropdownNavStyleProps {
@@ -34,9 +35,14 @@ export const LabelText = styled(Text.BodySmall)<NavItemStyleProps>`
     margin: 0;
     ${(props) =>
         props.isSelected &&
-        `color: ${Color.Primary({ theme: MyLegacyTheme })};`}
+        css`
+            color: ${Color.Primary};
+        `}
 `;
-
+export const StyledTickIcon = styled(TickIcon)`
+    color: ${Color.Primary};
+    margin-right: 8px;
+`;
 export const NavIcon = styled(ChevronDownIcon)`
     color: ${Color.Primary};
     transition: transform 250ms ease-in-out;
@@ -66,20 +72,10 @@ export const NavItem = styled.li<NavItemStyleProps>`
     color: red;
     ${(props) =>
         props.isSelected &&
-        `
-        font-weight: bold;
-        background-color: #e0f7fa;
-
-        &::before {
-            content: '✔'; /* Tick mark */
-            position: absolute;
-            left: 0.5rem; /* Adjust left positioning */
-            top: 50%;
-            transform: translateY(-50%);
-			color: ${Color.Primary({ theme: MyLegacyTheme })};
-            font-size: 1rem; /* Adjust the size of the tick */
-        }
-    `}
+        css`
+            font-weight: bold;
+            background-color: #e0f7fa;
+        `}
 `;
 
 export const NavItemList = styled.ul<NavItemListStyleProps>`
