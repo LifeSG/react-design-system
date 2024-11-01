@@ -41,7 +41,7 @@ export const LabelText = styled(Text.BodySmall)<NavItemStyleProps>`
 `;
 export const StyledTickIcon = styled(TickIcon)`
     color: ${Color.Primary};
-    margin-right: 8px;
+    margin: 0 8px;
 `;
 export const NavIcon = styled(ChevronDownIcon)`
     color: ${Color.Primary};
@@ -75,6 +75,7 @@ export const NavItem = styled.li<NavItemStyleProps>`
         css`
             font-weight: bold;
             background-color: #e0f7fa;
+            padding-left: 0 !important;
         `}
 `;
 
@@ -104,23 +105,24 @@ export const NavWrapper = styled.nav<DropdownNavStyleProps>`
     z-index: 10;
     grid-column-start: 1;
     grid-column-end: 13;
+    padding: 0 1rem;
 
     ${(props) =>
         props.isStickied &&
         `${NavLabel} {
-			margin: 0 -1.5rem;
-			padding: 0.75rem 1.5rem;
+			margin: 0 -1rem;
+			padding: 0.75rem 1rem;
 			border-radius: 0;
 		}
 
 		${NavItemList} {
-			margin-left: -1.5rem;
-			margin-right: -1.5rem;
+			margin-left: -1rem;
+			margin-right: -1rem;
 			border-radius-bottom-left: 0.25rem;
 			border-radius-bottom-right: 0.25rem;
 
 			${NavItem} {
-				padding: 0.75rem 1.5rem;
+				padding: 0.75rem 2rem;
 			}
 		}
 
