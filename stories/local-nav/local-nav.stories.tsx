@@ -1,7 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { LocalNavDropdown, LocalNavMenu } from "src/local-nav";
+import {
+    LocalNavDropdown,
+    LocalNavItemProps,
+    LocalNavMenu,
+} from "src/local-nav";
 import { MediaWidths } from "src/media";
 import { Content, Page } from "./doc-elements";
 
@@ -24,7 +28,11 @@ export const Menu: StoryObj<MenuComponent> = {
     render: () => {
         const [selectedLabel, setSelectedLabel] = useState("initial");
 
-        const handleNavItemClick = (index: number) => {
+        const handleNavItemClick = (
+            e: MouseEvent,
+            item: LocalNavItemProps,
+            index: number
+        ) => {
             const section = NAV_ITEMS[index];
             if (section) {
                 setSelectedLabel(section);
@@ -33,8 +41,10 @@ export const Menu: StoryObj<MenuComponent> = {
         return (
             <LocalNavMenu
                 titleList={NAV_ITEMS}
-                visibleSectionIndex={NAV_ITEMS.indexOf(selectedLabel)}
-                onNavItemClickCb={(index) => () => handleNavItemClick(index)}
+                selectedItemIndex={NAV_ITEMS.indexOf(selectedLabel)}
+                onNavItemSelect={(e, item, index) =>
+                    handleNavItemClick(e, item, index)
+                }
             />
         );
     },
@@ -43,7 +53,11 @@ export const Menu: StoryObj<MenuComponent> = {
 export const Dropdown: StoryObj<DropdownComponent> = {
     render: () => {
         const [selectedLabel, setSelectedLabel] = useState(0);
-        const handleNavItemClick = (index: number) => {
+        const handleNavItemClick = (
+            e: MouseEvent,
+            item: LocalNavItemProps,
+            index: number
+        ) => {
             const section = NAV_ITEMS[index];
             if (section) {
                 setSelectedLabel(index);
@@ -53,12 +67,13 @@ export const Dropdown: StoryObj<DropdownComponent> = {
             <div style={{ height: "200vh", padding: "1rem" }}>
                 <Content />
                 <LocalNavDropdown
-                    defaultLabelText={"initial"}
+                    defaultLabel={"initial"}
                     titleList={NAV_ITEMS}
                     stickyOffset={0}
-                    visibleSectionIndex={selectedLabel}
-                    onNavItemClickCb={(index) => () =>
-                        handleNavItemClick(index)}
+                    selectedItemIndex={selectedLabel}
+                    onNavItemSelect={(e, item, index) =>
+                        handleNavItemClick(e, item, index)
+                    }
                 />
                 <Content />
             </div>
@@ -79,7 +94,11 @@ export const CombinedUsage: StoryObj = {
 
         const selectedIndex = NAV_ITEMS.indexOf(selectedLabel);
 
-        const handleNavItemClick = (index: number) => {
+        const handleNavItemClick = (
+            e: MouseEvent,
+            item: LocalNavItemProps,
+            index: number
+        ) => {
             const section = NAV_ITEMS[index];
             if (section) {
                 setSelectedLabel(section);
@@ -91,20 +110,22 @@ export const CombinedUsage: StoryObj = {
                 {!isMobile && (
                     <LocalNavMenu
                         titleList={NAV_ITEMS}
-                        visibleSectionIndex={selectedIndex}
-                        onNavItemClickCb={(index) => () =>
-                            handleNavItemClick(index)}
+                        selectedItemIndex={selectedIndex}
+                        onNavItemSelect={(e, item, index) =>
+                            handleNavItemClick(e, item, index)
+                        }
                     />
                 )}
                 <main>
                     {isMobile && (
                         <LocalNavDropdown
-                            defaultLabelText={selectedLabel}
+                            defaultLabel={selectedLabel}
                             titleList={NAV_ITEMS}
                             stickyOffset={0}
-                            visibleSectionIndex={selectedIndex}
-                            onNavItemClickCb={(index) => () =>
-                                handleNavItemClick(index)}
+                            selectedItemIndex={selectedIndex}
+                            onNavItemSelect={(e, item, index) =>
+                                handleNavItemClick(e, item, index)
+                            }
                         />
                     )}
                     <Content />
