@@ -43,9 +43,10 @@ export const StyledTickIcon = styled(TickIcon)`
     color: ${Color.Primary};
     margin: 0 8px;
 `;
-export const NavIcon = styled(ChevronDownIcon)`
+export const NavIcon = styled(ChevronDownIcon)<{ isDropdownExpanded: boolean }>`
     color: ${Color.Primary};
     transition: transform 250ms ease-in-out;
+    transform: rotate(${(props) => (props.isDropdownExpanded ? 180 : 0)}deg);
 `;
 
 export const NavLabel = styled.label`

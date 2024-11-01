@@ -168,7 +168,7 @@ export const LocalNavDropdown = React.forwardRef<
                         className={`${navClassName}-label`}
                     >
                         <LabelText weight="bold">{labelText}</LabelText>
-                        <NavIcon />
+                        <NavIcon isDropdownExpanded={isDropdownExpanded} />
                     </NavLabel>
                     {isDropdownExpanded && (
                         <NavItemList
