@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { RadioButtonProps } from "./types";
-import { Colour } from "../theme";
+import { Colour, Motion } from "../theme";
 import { CircleDotIcon, CircleIcon } from "@lifesg/react-icons";
 
 // =============================================================================
@@ -56,5 +56,6 @@ export const Input = styled.input<RadioButtonProps>`
 
     &:hover + ${StyledCircleIcon} {
         color: ${(props) => !props.disabled && Colour["icon-hover"](props)};
+        transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
     }
 `;

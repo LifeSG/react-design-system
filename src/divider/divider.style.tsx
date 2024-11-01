@@ -1,6 +1,7 @@
-import styled, { css, useTheme } from "styled-components";
+import styled, { css } from "styled-components";
 import { DividerLineStyleType } from "./types";
 import { Colour } from "../theme";
+import { StyledComponentProps } from "../theme/helpers";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -14,15 +15,13 @@ interface StyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-const dashedLineStyle = () => (props: StyleProps) => {
+const dashedLineStyle = () => (props: StyleProps & StyledComponentProps) => {
     let color;
-
-    const theme = useTheme();
 
     if (props.$color && typeof props.$color === "function") {
         color = props.$color(props);
     } else {
-        color = props.$color || Colour.border({ theme });
+        color = props.$color || Colour.border(props);
     }
 
     const encodedColor = encodeURIComponent(color);
