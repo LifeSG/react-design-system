@@ -42,21 +42,21 @@ export const Menu: StoryObj<MenuComponent> = {
 
 export const Dropdown: StoryObj<DropdownComponent> = {
     render: () => {
-        const [selectedLabel, setSelectedLabel] = useState("initial");
+        const [selectedLabel, setSelectedLabel] = useState(0);
         const handleNavItemClick = (index: number) => {
             const section = NAV_ITEMS[index];
             if (section) {
-                setSelectedLabel(section);
+                setSelectedLabel(index);
             }
         };
         return (
             <div style={{ height: "200vh", padding: "1rem" }}>
                 <Content />
                 <LocalNavDropdown
-                    defaultLabelText={selectedLabel}
+                    defaultLabelText={"initial"}
                     titleList={NAV_ITEMS}
                     stickyOffset={0}
-                    visibleSectionIndex={0}
+                    visibleSectionIndex={selectedLabel}
                     onNavItemClickCb={(index) => () =>
                         handleNavItemClick(index)}
                 />

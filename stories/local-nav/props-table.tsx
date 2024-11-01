@@ -14,8 +14,7 @@ const MENU_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "visibleSectionIndex",
-                description:
-                    "which item should be selected from the dropdown for the initial render",
+                description: "which item should be selected from the dropdown",
                 propTypes: ["number"],
             },
             {
