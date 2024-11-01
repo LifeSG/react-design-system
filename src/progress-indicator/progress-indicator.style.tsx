@@ -66,7 +66,7 @@ export const IndicatorTitleDesktop = styled(Typography.BodyMD)<IndicatorProps>`
 
 export const IndicatorTitleMobile = styled(Typography.BodyMD)`
     overflow-wrap: anywhere;
-    color: ${Colour["text-primary"]};
+    color: ${Colour.text};
 `;
 
 export const Indicator = styled.div`

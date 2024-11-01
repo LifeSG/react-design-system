@@ -16,15 +16,13 @@ export const ProgressIndicator = <T,>({
     steps,
     currentIndex,
     displayExtractor,
-    fadeColor,
-    fadePosition = "both",
     ...otherProps
 }: ProgressIndicatorProps<T>) => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
     const theme = useTheme();
-    const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({
         maxWidth: mobileBreakpoint,
     });
