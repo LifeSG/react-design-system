@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { Button } from "../button/button";
 import { Input } from "../input";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Colour, Font, MediaQuery } from "../theme";
@@ -101,7 +100,7 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     }
 `;
 
-export const PageItem = styled(Button.Default)<StyleProps>`
+export const PageItem = styled.button<StyleProps>`
     background: ${(props) =>
         props.$selected ? Colour["bg-primary"] : Colour.bg};
     border: 1px solid ${(props) => (props.$selected ? "" : Colour.border)};
@@ -109,37 +108,27 @@ export const PageItem = styled(Button.Default)<StyleProps>`
         props.$selected ? Colour["text-inverse"] : Colour.text};
 
     min-width: 2.5rem;
-    height: 2.5rem;
     text-align: center;
     padding: 0.4rem 0.5rem;
     border-radius: 0.25rem;
     margin: 0.25rem;
     cursor: pointer;
 
-    span {
-        color: ${(props) =>
-            props.$selected ? Colour["text-inverse"] : Colour.text};
-        ${(props) => {
-            if (props.$selected) {
-                return css`
-                    ${Font["body-baseline-bold"]};
-                `;
-            } else {
-                return css`
-                    ${Font["body-baseline-regular"]};
-                `;
-            }
-        }}
-    }
+    ${(props) =>
+        props.$selected
+            ? css`
+                  ${Font["body-baseline-bold"]}
+              `
+            : css`
+                  ${Font["body-baseline-regular"]}
+              `}
 
     :hover {
         box-shadow: none;
-
+        border: none;
         background: ${Colour["bg-hover"]};
-        span {
-            color: ${Colour["text-hover"]};
-            ${Font["body-baseline-semibold"]};
-        }
+        color: ${Colour["text-hover"]};
+        ${Font["body-baseline-semibold"]};
     }
 `;
 

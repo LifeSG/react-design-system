@@ -37,6 +37,8 @@ export const TabLinkChain = ({
         maxWidth: mobileBreakpoint,
     });
 
+    const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
+
     const activeLinkRef = useRef<HTMLLIElement>(null);
 
     // =========================================================================
@@ -54,13 +56,11 @@ export const TabLinkChain = ({
             }
         };
 
-    const windowInnerWidthBreakpoint = Breakpoint["lg-max"]({ theme });
-
     const handleResize = ({ content, wrapper }: ResizeCallbackParams) => {
         if (
             content &&
             wrapper &&
-            window.innerWidth <= windowInnerWidthBreakpoint &&
+            window.innerWidth <= tabletBreakpoint &&
             activeLinkRef
         ) {
             content.scrollLeft =

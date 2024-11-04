@@ -1,8 +1,8 @@
-import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour } from "../theme";
-import { MediaQuery } from "../theme";
+import { Colour, Motion } from "../theme";
+import styled, { css } from "styled-components";
 import { Typography } from "../typography/typography";
+import { MediaQuery } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -19,14 +19,13 @@ const VISIBILITY_STYLE = (show: boolean | undefined) => {
     if (show) {
         return css`
             right: 0;
-            transition: all 300ms cubic-bezier(0.21, 0.79, 0.53, 1);
-            transition-delay: 200ms;
+            transition: all ${Motion["duration-800"]} ${Motion["ease-exit"]};
         `;
     }
 
     return css`
         right: -100%;
-        transition: all 300ms cubic-bezier(0.4, 0.34, 0.38, 1);
+        transition: all ${Motion["duration-800"]} ${Motion["ease-default"]};
     `;
 };
 
@@ -86,6 +85,10 @@ export const CloseButton = styled(ClickableIcon)`
     color: ${Colour.icon};
     padding: 0;
     order: -1; // show button on the left of the header
+    :active,
+    :focus {
+        color: ${Colour["icon-hover"]};
+    }
 
     svg {
         height: 2rem;

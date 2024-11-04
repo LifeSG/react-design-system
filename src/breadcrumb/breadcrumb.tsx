@@ -41,6 +41,7 @@ export const Breadcrumb = ({
     // =============================================================================
 
     const theme = useTheme();
+    const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
 
     const onResize = useEvent(() => {
         const content = contentRef.current;
@@ -51,15 +52,14 @@ export const Breadcrumb = ({
             wrapper &&
             links &&
             links.length > 1 &&
-            window.innerWidth <= Breakpoint["lg-max"]({ theme })
+            window.innerWidth <= tabletBreakpoint
         ) {
             content.scrollLeft = content.scrollWidth - wrapper.offsetWidth;
         }
     });
 
     const handleShowFadeToggle = useEvent(() => {
-        const nextShowFade =
-            window.innerWidth <= Breakpoint["lg-max"]({ theme });
+        const nextShowFade = window.innerWidth <= tabletBreakpoint;
         setShowFade(nextShowFade);
 
         const content = contentRef.current;

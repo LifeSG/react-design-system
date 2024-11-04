@@ -1,9 +1,8 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { MediaQuery } from "../theme";
 import { Typography } from "../typography/typography";
 import { Colour } from "../theme";
-
 // =============================================================================
 // STYLE TYPES, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -42,6 +41,7 @@ export const Content = styled.ul`
     flex-wrap: wrap;
     white-space: nowrap;
     margin-left: -0.25rem;
+    font-size: 1rem;
     overflow-x: scroll;
     overflow-y: hidden;
     scrollbar-width: none; /* Firefox */
@@ -86,11 +86,11 @@ export const Fade = styled.div<FadeProps>`
 			`;
         }
 
-        return `
-			${MediaQuery.MaxWidth.lg} {
-				${positionStyle}
-			}
-		`;
+        return css`
+            ${MediaQuery.MaxWidth.lg} {
+                ${positionStyle}
+            }
+        `;
     }};
 `;
 
@@ -106,7 +106,9 @@ export const Item = styled.li<ItemStyleProps>`
 `;
 
 export const Caret = styled(ChevronRightIcon)`
-    margin: 0.25rem 0.25rem 0.1rem 0.25rem;
+    margin: 0.25rem;
+    height: 1em;
+    width: 1em;
     color: ${Colour["icon-subtle"]};
 `;
 
@@ -114,6 +116,6 @@ export const CurrentLabel = styled(Typography.BodyMD)`
     margin: 0.25rem !important;
 `;
 
-export const PreviousLink = styled(Typography.LinkSM)`
+export const PreviousLink = styled(Typography.LinkMD)`
     margin: 0.25rem !important;
 `;
