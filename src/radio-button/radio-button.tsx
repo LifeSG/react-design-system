@@ -2,8 +2,8 @@ import React from "react";
 import {
     Container,
     Input,
-    StyledCheckmarkIcon,
-    StyledCircleIcon,
+    StyledCheckedIcon,
+    StyledUnCheckedIcon,
 } from "./radio-button.styles";
 import { RadioButtonProps } from "./types";
 
@@ -29,12 +29,12 @@ export const RadioButton = ({
 
     const renderIcon = () => {
         return checked ? (
-            <StyledCheckmarkIcon
+            <StyledCheckedIcon
                 data-testid="radio-checked"
                 $disabled={disabled}
             />
         ) : (
-            <StyledCircleIcon
+            <StyledUnCheckedIcon
                 data-testid="radio-unchecked"
                 $disabled={disabled}
             />

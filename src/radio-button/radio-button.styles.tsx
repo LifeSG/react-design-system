@@ -20,27 +20,31 @@ export const Container = styled.div<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 1.625rem;
-    width: 1.625rem;
+    height: 1.5rem;
+    width: 1.5rem;
     position: relative;
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 `;
 
-export const StyledCircleIcon = styled(CircleIcon)<StyleProps>`
+export const StyledUnCheckedIcon = styled(CircleIcon)<StyleProps>`
     height: 100%;
     width: 100%;
     color: ${(props) =>
         props.$disabled
             ? Colour["icon-disabled-subtle"](props)
             : Colour["icon-subtle"](props)};
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 `;
 
-export const StyledCheckmarkIcon = styled(CircleDotIcon)<StyleProps>`
+export const StyledCheckedIcon = styled(CircleDotIcon)<StyleProps>`
     height: 100%;
     width: 100%;
     color: ${(props) =>
         props.$disabled
             ? Colour["icon-selected-disabled"](props)
             : Colour["icon-selected"](props)};
+
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 `;
 
 export const Input = styled.input<RadioButtonProps>`
@@ -54,8 +58,7 @@ export const Input = styled.input<RadioButtonProps>`
     background: transparent;
     border: none;
 
-    &:hover + ${StyledCircleIcon} {
+    &:hover + ${StyledUnCheckedIcon} {
         color: ${(props) => !props.disabled && Colour["icon-hover"](props)};
-        transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
     }
 `;
