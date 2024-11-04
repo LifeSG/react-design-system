@@ -6,9 +6,11 @@ import { LocalNavItemProps, LocalNavPropsBase } from "../types";
 import { Nav, NavItem } from "./local-nav-menu.styles";
 
 const LocalNavItem = (props: LocalNavItemComponentProps) => {
-    const { handleClick, isSelected, item } = props;
+    const { handleClick, isSelected, item, renderItem } = props;
     const renderTitle = () => {
-        if (typeof item.title === "string") {
+        if (renderItem) {
+            return renderItem(item, { selected: isSelected });
+        } else if (typeof item.title === "string") {
             return (
                 <Text.Body
                     style={{ margin: 0 }}
@@ -30,10 +32,6 @@ const LocalNavItem = (props: LocalNavItemComponentProps) => {
     );
 };
 
-export interface LocalNavMenuProps extends LocalNavPropsBase {
-    renderTitle?: (props: LocalNavItemProps) => ReactNode;
-}
-
 /**
  * A sidebar navigation element. The currently visible section will be highlighted.
  *
@@ -42,18 +40,18 @@ export interface LocalNavMenuProps extends LocalNavPropsBase {
  */
 export const LocalNavMenu = React.forwardRef<
     HTMLUListElement,
-    LocalNavMenuProps
+    LocalNavPropsBase
 >(
     (
         {
             onNavItemSelect: onNavItemSelect,
             titleList,
             selectedItemIndex,
-            renderTitle,
             id,
             "data-testid": dataTestId,
             className,
-        }: LocalNavMenuProps,
+            renderItem,
+        }: LocalNavPropsBase,
         ref
     ) => {
         const localNavMenuId = dataTestId || "local-nav-menu";
@@ -76,6 +74,7 @@ export const LocalNavMenu = React.forwardRef<
                             }
                             isSelected={isSelected}
                             item={{ title, id }}
+                            renderItem={renderItem}
                         />
                     );
                 })}

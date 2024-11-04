@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { LocalNavItemComponentProps } from "../internal-types";
-import { LocalNavItemProps, LocalNavPropsBase } from "../types";
+import { LocalNavDropdownProps, LocalNavItemProps } from "../types";
 import {
     Backdrop,
     LabelText,
@@ -14,9 +14,12 @@ import {
 } from "./local-nav-dropdown.styles";
 
 const DropdownNavItem = (props: LocalNavItemComponentProps) => {
-    const { handleClick, isSelected, item } = props;
+    const { handleClick, isSelected, item, renderItem } = props;
+
     const renderTitle = () => {
-        if (typeof item.title === "string") {
+        if (renderItem) {
+            return renderItem(item, { selected: isSelected });
+        } else if (typeof item.title === "string") {
             return (
                 <>
                     {isSelected && <StyledTickIcon />}
@@ -38,11 +41,6 @@ const DropdownNavItem = (props: LocalNavItemComponentProps) => {
     );
 };
 
-export interface LocalNavDropdownProps extends LocalNavPropsBase {
-    defaultLabel: string | React.ReactNode;
-    stickyOffset?: number | undefined;
-}
-
 export const LocalNavDropdown = React.forwardRef<
     HTMLElement,
     LocalNavDropdownProps
@@ -57,6 +55,7 @@ export const LocalNavDropdown = React.forwardRef<
             id,
             "data-testid": testId,
             className,
+            renderItem,
         }: LocalNavDropdownProps,
         ref
     ) => {
@@ -190,6 +189,7 @@ export const LocalNavDropdown = React.forwardRef<
                                         i === selectedItemIndex && isStickied
                                     }
                                     item={{ title, id }}
+                                    renderItem={renderItem}
                                 />
                             ))}
                         </NavItemList>
