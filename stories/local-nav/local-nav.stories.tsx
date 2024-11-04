@@ -50,6 +50,96 @@ export const Menu: StoryObj<MenuComponent> = {
     },
 };
 
+export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
+    render: () => {
+        const [selectedLabel, setSelectedLabel] = useState("initial");
+
+        const handleNavItemClick = (
+            e: MouseEvent,
+            item: LocalNavItemProps,
+            index: number
+        ) => {
+            const section = NAV_ITEMS[index];
+            if (section) {
+                setSelectedLabel(section);
+            }
+        };
+        return (
+            <LocalNavMenu
+                titleList={NAV_ITEMS}
+                selectedItemIndex={NAV_ITEMS.indexOf(selectedLabel)}
+                onNavItemSelect={(e, item, index) =>
+                    handleNavItemClick(e, item, index)
+                }
+                renderItem={(item, { selected }) => (
+                    <div
+                        style={{
+                            padding: "8px 16px",
+                            fontWeight: selected ? "bold" : "normal",
+                            color: selected ? "red" : "green",
+                            display: "flex",
+                            alignItems: "center",
+                        }}
+                    >
+                        {selected && (
+                            <span style={{ marginRight: "8px" }}>✔</span>
+                        )}
+                        {item.title}
+                    </div>
+                )}
+            />
+        );
+    },
+};
+
+export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
+    render: () => {
+        const [selectedLabel, setSelectedLabel] = useState(0);
+        const handleNavItemClick = (
+            e: MouseEvent,
+            item: LocalNavItemProps,
+            index: number
+        ) => {
+            const section = NAV_ITEMS[index];
+            if (section) {
+                setSelectedLabel(index);
+            }
+        };
+        return (
+            <div style={{ height: "200vh", padding: "1rem" }}>
+                <Content />
+                <LocalNavDropdown
+                    defaultLabel="initial"
+                    titleList={NAV_ITEMS}
+                    stickyOffset={0}
+                    selectedItemIndex={selectedLabel}
+                    onNavItemSelect={handleNavItemClick}
+                    renderItem={(item, { selected }) => (
+                        <div
+                            style={{
+                                padding: "8px 16px",
+                                fontWeight: selected ? "bold" : "normal",
+                                color: selected ? "red" : "green",
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            {selected && (
+                                <span style={{ marginRight: "8px" }}>✔</span>
+                            )}
+                            {item.title}
+                        </div>
+                    )}
+                />
+                <Content />
+            </div>
+        );
+    },
+    parameters: {
+        layout: "fullscreen",
+        docs: { story: { inline: false, iframeHeight: 500 } },
+    },
+};
 export const Dropdown: StoryObj<DropdownComponent> = {
     render: () => {
         const [selectedLabel, setSelectedLabel] = useState(0);

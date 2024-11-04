@@ -3,7 +3,6 @@ import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { Text } from "../../text/text";
 import { TickIcon } from "@lifesg/react-icons/tick";
-import { MyLegacyTheme } from "../../theme";
 
 interface DropdownNavStyleProps {
     isStickied?: boolean;

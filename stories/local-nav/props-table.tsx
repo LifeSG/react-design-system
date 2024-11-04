@@ -5,14 +5,6 @@ const MENU_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
-                name: "type",
-                description: (
-                    <>
-                        The type of <code>Menu</code>
-                    </>
-                ),
-            },
-            {
                 name: "selectedItemIndex",
                 description: "which item should be selected from the dropdown",
                 propTypes: ["number"],
@@ -21,6 +13,7 @@ const MENU_DATA: ApiTableSectionProps[] = [
                 name: "className",
                 description: "The class selector of the element",
                 propTypes: ["string"],
+                mandatory: false,
             },
             {
                 name: "id",
@@ -37,7 +30,7 @@ const MENU_DATA: ApiTableSectionProps[] = [
                 name: "onNavItemClickCb",
                 description: (
                     <>
-                        Called when the item in the <code>dropdown</code> is
+                        Called when the item in the <code>Menu</code> is
                         selected or deselected
                     </>
                 ),
@@ -45,16 +38,43 @@ const MENU_DATA: ApiTableSectionProps[] = [
                     "...args: any[]) => (e?: React.MouseEvent) => any;",
                 ],
             },
-
+            {
+                name: "renderItem",
+                description: (
+                    <>
+                        To customise the item in the <code>Menu</code>
+                    </>
+                ),
+                propTypes: [
+                    "((item: LocalNavItemProps,renderProps: { selected: boolean }) => React.ReactNode",
+                ],
+            },
             {
                 name: "titleList",
                 description: (
                     <>
-                        The title inside the <code>dropdown</code>, displayed
-                        when the dropdown is open
+                        The title inside the <code>Menu</code>, displayed when
+                        the dropdown is open
                     </>
                 ),
                 propTypes: ["string"],
+            },
+        ],
+    },
+    {
+        name: "LocalNavItemProps",
+        attributes: [
+            {
+                name: "title",
+                description: "title of the item",
+                propTypes: ["string", "React.ReactNode"],
+                mandatory: true,
+            },
+            {
+                name: "id",
+                description: "id of the element",
+                propTypes: ["string"],
+                mandatory: false,
             },
         ],
     },
@@ -63,16 +83,6 @@ const MENU_DATA: ApiTableSectionProps[] = [
 const DROPDOWN_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
-            {
-                name: "type",
-                description: (
-                    <>
-                        The type of <code>Dropdown</code>
-                    </>
-                ),
-                propTypes: [`"checkbox"`, `"radio"`, `"yes"`, `"no"`],
-                defaultValue: `"checkbox"`,
-            },
             {
                 name: "selectedItemIndex",
                 description:
@@ -119,7 +129,17 @@ const DROPDOWN_DATA: ApiTableSectionProps[] = [
                     "...args: any[]) => (e?: React.MouseEvent) => any;",
                 ],
             },
-
+            {
+                name: "renderItem",
+                description: (
+                    <>
+                        To customise the item in the <code>dropdown</code>
+                    </>
+                ),
+                propTypes: [
+                    "((item: LocalNavItemProps,renderProps: { selected: boolean }) => React.ReactNode",
+                ],
+            },
             {
                 name: "titleList",
                 description: (
@@ -129,6 +149,23 @@ const DROPDOWN_DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["string"],
+            },
+        ],
+    },
+    {
+        name: "LocalNavItemProps",
+        attributes: [
+            {
+                name: "title",
+                description: "title of the item",
+                propTypes: ["string", "React.ReactNode"],
+                mandatory: true,
+            },
+            {
+                name: "id",
+                description: "id of the element",
+                propTypes: ["string"],
+                mandatory: false,
             },
         ],
     },
