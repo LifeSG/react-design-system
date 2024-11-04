@@ -21,3 +21,8 @@ export interface LocalNavPropsBase {
           ) => React.ReactNode)
         | undefined;
 }
+
+export interface LocalNavDropdownProps extends LocalNavPropsBase {
+    defaultLabel: string | React.ReactNode;
+    stickyOffset?: number | undefined;
+}
