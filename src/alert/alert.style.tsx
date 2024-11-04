@@ -83,7 +83,8 @@ export const AlertIconWrapper = styled.div<StyleProps>`
     ${(props) =>
         props.$sizeType === "small" &&
         css`
-            height: 1.625rem;
+            align-items: center;
+            height: 1lh;
         `}
 
     ${(props) => {
