@@ -4,10 +4,9 @@ import { StarFillIcon } from "@lifesg/react-icons/star-fill";
 import { StarHalfIcon } from "@lifesg/react-icons/star-half";
 import styled, { css, keyframes } from "styled-components";
 import { Button } from "../button";
-import { V2_Color } from "../v2_color";
-import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { V2_Text, V2_TextStyleHelper } from "../v2_text";
+import { Colour, Font, MediaQuery } from "../theme";
+import { Typography } from "../typography/typography";
 
 const slideDown = keyframes`
 	from {
@@ -36,7 +35,7 @@ export const SmartAppBannerContainer = styled.div<{
     width: calc(100% - 2.5rem);
     min-height: 5.5rem;
     z-index: 9001;
-    background: ${V2_Color.Neutral[8]};
+    background: ${Colour.bg};
     box-shadow: 0 0.125rem 0.5rem rgba(104, 104, 104, 0.25);
     border-radius: 0.5rem;
     ${(props) => {
@@ -58,7 +57,7 @@ export const DismissButton = styled(ClickableIcon)`
 `;
 
 export const Cross = styled(CrossIcon)`
-    color: ${V2_Color.Neutral[1]};
+    color: ${Colour.icon};
     height: 1.25rem;
     width: 1.25rem;
 `;
@@ -77,7 +76,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
     align-items: left;
     margin: 0.5rem;
-    ${V2_MediaQuery.MaxWidth.mobileM} {
+    ${MediaQuery.MaxWidth.xs} {
         margin: 0 0.5rem;
     }
 `;
@@ -97,18 +96,18 @@ export const StyledButton = styled(Button.Small)`
     height: auto;
     & > span {
         overflow-wrap: anywhere;
-        ${V2_TextStyleHelper.getTextStyle("XSmall", "semibold")};
+        ${Font["body-xs-semibold"]}
     }
 `;
 
-export const Title = styled(V2_Text.H6)`
+export const Title = styled(Typography.BodySM)`
     overflow-wrap: anywhere;
-    ${V2_MediaQuery.MaxWidth.mobileM} {
-        ${V2_TextStyleHelper.getTextStyle("XSmall", "semibold")}
+    ${MediaQuery.MaxWidth.xs} {
+        ${Font["body-xs-semibold"]}
     }
 `;
 
-export const Description = styled(V2_Text.XSmall)`
+export const Description = styled(Typography.BodyXS)`
     overflow-wrap: anywhere;
 `;
 

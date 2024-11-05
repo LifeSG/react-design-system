@@ -1,4 +1,4 @@
-import { V2_TextLinkProps, V2_TextProps } from "../v2_text/types";
+import { TypographyLinkProps, TypographyProps } from "../typography";
 
 export interface NotificationBannerProps
     extends React.HTMLAttributes<HTMLDivElement> {
@@ -21,11 +21,11 @@ export interface NotificationBannerWithForwardedRefProps
 
 export type ContentType = "text" | "link";
 
-export interface ContentLinkAttributes extends V2_TextLinkProps {}
-export interface ContentTextAttributes extends V2_TextProps {}
+export interface ContentLinkAttributes extends TypographyLinkProps {}
+export interface ContentTextAttributes extends TypographyProps {}
 
 export interface NotificationContentAttributes {
     type: ContentType;
     content: string;
-    otherAttributes?: V2_TextLinkProps | V2_TextProps | undefined;
+    otherAttributes?: TypographyLinkProps | TypographyProps | undefined;
 }
