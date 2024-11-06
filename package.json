@@ -36,8 +36,6 @@
     },
     "homepage": "https://github.com/LifeSG/react-design-system#readme",
     "dependencies": {
-        "@floating-ui/dom": "^1.5.4",
-        "@floating-ui/react": "^0.26.6",
         "fabric": "^5.3.0",
         "immer": "^10.0.2",
         "react-slider": "^2.0.6",
@@ -50,6 +48,8 @@
         "@babel/preset-typescript": "^7.24.7",
         "@dnd-kit/core": "^6.0.8",
         "@dnd-kit/sortable": "^7.0.2",
+        "@floating-ui/dom": "^1.6.10",
+        "@floating-ui/react": "^0.26.23",
         "@inquirer/prompts": "^7.0.0",
         "@lifesg/react-icons": "^1.6.0",
         "@playwright/test": "^1.45.0",
@@ -133,6 +133,8 @@
         "typescript": "^4.8.2"
     },
     "peerDependencies": {
+        "@floating-ui/dom": "^1.6.10",
+        "@floating-ui/react": "^0.26.23",
         "@lifesg/react-icons": "^1.5.0",
         "react": "^17.0.2 || ^18.0.0",
         "react-dom": "^17.0.2 || ^18.0.0",

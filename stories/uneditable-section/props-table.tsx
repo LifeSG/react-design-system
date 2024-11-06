@@ -73,6 +73,12 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                 defaultValue: "true",
             },
             {
+                name: "stretch",
+                description:
+                    "Specifies if contents should take up the full width of the section",
+                propTypes: ["boolean"],
+            },
+            {
                 name: "onMask",
                 description: "Called when the mask icon is clicked",
                 propTypes: ["(item: UneditableSectionItemProps) => void"],
@@ -101,8 +107,13 @@ const MAIN_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "value",
-                description: "The value of the uneditable item",
-                propTypes: [`string`],
+                description: (
+                    <>
+                        The value of the uneditable item. <strong>Note:</strong>{" "}
+                        masking is only available for string values
+                    </>
+                ),
+                propTypes: [`string`, "React.ReactNode"],
                 mandatory: true,
             },
             {
@@ -201,6 +212,16 @@ const SECTION_DATA: ApiTableSectionProps[] = [
                         </a>
                     </>
                 ),
+            },
+            {
+                name: "stretch",
+                description: (
+                    <>
+                        Specifies if contents should take up the full width of
+                        the <code>UneditableSection</code>
+                    </>
+                ),
+                propTypes: ["boolean"],
             },
         ],
     },

@@ -28,7 +28,7 @@ export const DateInput = ({
     readOnly,
     id,
     allowDisabledSelection,
-    zIndex = 50,
+    zIndex,
     ...otherProps
 }: DateInputProps) => {
     // =============================================================================
@@ -239,7 +239,7 @@ export const DateInput = ({
             renderDropdown={renderCalendar}
             onClose={handleClose}
             onDismiss={handleDismiss}
-            zIndex={zIndex}
+            customZIndex={zIndex}
             offset={16}
         />
     );

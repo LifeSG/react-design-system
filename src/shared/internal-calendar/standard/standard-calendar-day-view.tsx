@@ -38,6 +38,7 @@ export const StandardCalendarDayView = ({
     minDate,
     maxDate,
     allowDisabledSelection,
+    showActiveMonthDaysOnly,
 }: CalendarDayViewProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -101,6 +102,9 @@ export const StandardCalendarDayView = ({
                                 disabledDates={disabledDates}
                                 allowDisabledSelection={allowDisabledSelection}
                                 isNewSelection={isNewSelection}
+                                showActiveMonthDaysOnly={
+                                    showActiveMonthDaysOnly
+                                }
                                 onSelect={handleDayClick}
                                 onHover={handleHoverCell}
                             />

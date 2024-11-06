@@ -9,8 +9,7 @@ interface StyleProps {
     $show: boolean;
     $backgroundBlur?: boolean | undefined;
     $disableTransition?: boolean | undefined;
-    $enableOverlayClick?: boolean | undefined;
-    zIndex?: number | undefined;
+    $zIndex?: number | undefined;
     $stacked?: boolean | undefined;
 }
 
@@ -34,9 +33,7 @@ export const Root = styled.div<StyleProps>`
     height: 0;
     width: 0;
     visibility: hidden;
-    z-index: ${(props) => {
-        return props.zIndex || (props.$stacked ? 99999 : 99998);
-    }};
+    z-index: ${(props) => props.$zIndex};
 
     ${(props) => {
         if (props.$show) {

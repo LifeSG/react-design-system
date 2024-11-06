@@ -261,6 +261,7 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
                 `;
             }
         }}
+    }
 `;
 
 export const IconButton = styled(DSIconButton)`

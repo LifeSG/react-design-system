@@ -31,7 +31,7 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const Content = styled.nav`
+export const Content = styled.div`
     display: flex;
     flex-basis: 0;
     justify-content: space-between;

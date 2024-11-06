@@ -20,6 +20,7 @@ interface StyleProps {
 interface ContainerStyleProps extends StyleProps {
     $styleType?: ToggleStyleType;
     $error?: boolean;
+    $useContentWidth?: boolean;
 }
 
 interface IndicatorLabelContainerStyleProps {
@@ -58,6 +59,15 @@ export const Container = styled.div<ContainerStyleProps>`
         if (!props.$indicator) {
             return css`
                 justify-content: center;
+            `;
+        }
+    }}
+
+    // Container min width to fit content
+    ${(props) => {
+        if (props.$useContentWidth) {
+            return css`
+                min-width: unset;
             `;
         }
     }}
@@ -147,7 +157,7 @@ export const Container = styled.div<ContainerStyleProps>`
                 `;
             }
         }
-    }}}
+    }}
 `;
 
 export const Input = styled.input`

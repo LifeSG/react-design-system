@@ -1,12 +1,10 @@
-import React from "react";
-import styled, { ThemeProvider } from "styled-components";
+import styled from "styled-components";
 import { V2_MediaQuery } from "../../src/v2_media";
 import {
     V2_Text,
     V2_TextStyleHelper,
     V2_TextStyleSetType,
 } from "../../src/v2_text";
-import { V2_BaseTheme, V2_ThemeSpec } from "../../src";
 
 export const FontDisplay = () => {
     return (
@@ -35,13 +33,9 @@ const FontDisplayContainer = styled.div`
 // =============================================================================
 interface FontSizeDisplayProps {
     textStyles: V2_TextStyleSetType;
-    theme?: V2_ThemeSpec;
 }
 
-export const FontSizeDisplay = ({
-    textStyles,
-    theme,
-}: FontSizeDisplayProps) => {
+export const FontSizeDisplay = ({ textStyles }: FontSizeDisplayProps) => {
     const getComponent = (key: string) => {
         switch (key) {
             case "D1":
@@ -76,7 +70,7 @@ export const FontSizeDisplay = ({
     };
 
     const renderFontSizes = () => {
-        return Object.entries(textStyles).map(([key, value], index) => {
+        return Object.entries(textStyles).map(([key, value]) => {
             const TextComponent = getComponent(key);
 
             return (
@@ -120,9 +114,7 @@ export const FontSizeDisplay = ({
 
     return (
         <FontSizeDisplayWrapper>
-            <ThemeProvider theme={theme || (V2_BaseTheme as any)}>
-                <FontSizeList>{renderFontSizes()}</FontSizeList>
-            </ThemeProvider>
+            <FontSizeList>{renderFontSizes()}</FontSizeList>
         </FontSizeDisplayWrapper>
     );
 };

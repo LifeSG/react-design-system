@@ -82,6 +82,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(value: YearMonthDisplay) => void"],
             },
             {
+                name: "showActiveMonthDaysOnly",
+                description:
+                    "Specifies if the calendar should display only dates for the selected month",
+                propTypes: ["boolean"],
+                defaultValue: `false`,
+            },
+            {
                 name: "onHover",
                 description: (
                     <>

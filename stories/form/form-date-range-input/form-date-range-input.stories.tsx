@@ -38,7 +38,7 @@ export const Default: StoryObj<Component> = {
                     hideInputKeyboard
                 />
                 <Form.DateRangeInput
-                    label="This has no action buttons on desktop viewports"
+                    label="This has no action buttons"
                     withButton={false}
                 />
                 <Form.DateRangeInput
@@ -100,7 +100,7 @@ export const WeekInput: StoryObj<Component> = {
                     }}
                 />
                 <Form.DateRangeInput
-                    label="This has no action buttons on desktop viewports"
+                    label="This has no action buttons"
                     variant="week"
                     withButton={false}
                 />
@@ -136,7 +136,7 @@ export const FixedRangeInput: StoryObj<Component> = {
                     numberOfDays={14}
                 />
                 <Form.DateRangeInput
-                    label="This has no action buttons on desktop viewports"
+                    label="This has no action buttons"
                     variant="fixed-range"
                     withButton={false}
                 />

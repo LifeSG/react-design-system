@@ -76,15 +76,15 @@ export const Wrapper = styled.div<StyleProps>`
 `;
 
 export const AlertIconWrapper = styled.div<StyleProps>`
+    display: flex;
     margin-right: 0.5rem;
 
     // adds extra spacing to align the small icon with text
     ${(props) =>
         props.$sizeType === "small" &&
         css`
-            display: flex;
             align-items: center;
-            height: 1.625rem;
+            height: 1lh;
         `}
 
     ${(props) => {

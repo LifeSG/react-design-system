@@ -14,7 +14,9 @@ export interface OverlayProps {
     id?: string | undefined;
 }
 
-/** @deprecated for internal use only */
+/**
+ * @deprecated For library internal use only
+ */
 export interface StyleProps {
     $show: boolean;
     $backgroundBlur?: boolean | undefined;

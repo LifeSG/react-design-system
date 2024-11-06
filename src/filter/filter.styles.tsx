@@ -1,10 +1,10 @@
-import { FilterIcon } from "@lifesg/react-icons/filter";
 import styled from "styled-components";
 import { Button } from "../button/button";
 import { V2_Color } from "../v2_color/color";
 import { V2_MediaQuery } from "../v2_media/media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { V2_Text } from "../v2_text/text";
+import { ButtonWithIcon } from "../button-with-icon";
 
 // =============================================================================
 // CONTAINER STYLES
@@ -92,16 +92,8 @@ export const FilterClearButton = styled(Button.Small)`
 // COMPONENT STYLES
 // =============================================================================
 
-export const FilterButton = styled(Button.Default)`
+export const FilterButton = styled(ButtonWithIcon.Default)`
     width: 100%;
-    span {
-        display: flex;
-        align-items: center;
-    }
-`;
-
-export const StyledFilterIcon = styled(FilterIcon)`
-    margin-right: 0.625rem;
 `;
 
 export const FilterFooter = styled.div`

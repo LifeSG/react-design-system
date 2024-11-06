@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { StringHelper } from "./string-helper";
 
 // =============================================================================
@@ -27,6 +28,46 @@ interface TimeValuesPlain {
 // HELPER FUNCTIONS
 // =============================================================================
 export namespace TimeHelper {
+    /**
+     * Rounds time to the nearest hour, e.g 6:30 will be clamped to 6:00
+     * @param time the input time in HH:mm format
+     * @param toNextHour to clamp to next hour instead, e.g. 6:30 will be clamped to 7:00
+     * @returns
+     */
+    export const roundToNearestHour = (time: string, toNextHour?: boolean) => {
+        const formattedTime = dayjs(time, "HH:mm");
+        const roundedTime =
+            formattedTime.minute() === 0
+                ? formattedTime
+                : toNextHour
+                ? formattedTime.minute(0).add(1, "hour")
+                : formattedTime.minute(0);
+        return roundedTime.format("HH:mm");
+    };
+
+    export const generateHourlyIntervals = (
+        startTime: string,
+        endTime: string,
+        generatedFormat = "ha"
+    ) => {
+        const format = "HH:mm";
+        let start = dayjs(startTime, format);
+        let end = dayjs(endTime, format);
+
+        if (start.isSame(end)) {
+            end = end.add(1, "day");
+        }
+
+        const intervals: string[] = [];
+
+        while (start.isBefore(end)) {
+            intervals.push(start.format(generatedFormat));
+            start = start.add(1, "hour");
+        }
+
+        return intervals;
+    };
+
     export const getTimeValues = (
         format: TimeFormat,
         value?: string
@@ -193,6 +234,170 @@ export namespace TimeHelper {
             seconds,
         };
     };
+
+    // Converts h:mma/hh:mma to 24hr (eg. 13:00)
+    export const to24Hour = (time: string) => {
+        if (time?.includes("am") || time?.includes("pm")) {
+            const [t, p] = time.split(/(am|pm)/i);
+            const [hr, m] = t.split(":").map(Number);
+            let h = hr;
+            if (p === "pm" && h < 12) h += 12;
+            if (p === "am" && h === 12) h = 0;
+            return toTimeString(h, m);
+        }
+        return time; // No conversion if string alr has am/pm
+    };
+
+    // Generates an array of timings based on given startTime/interval/format
+    export const generateTimings = (
+        interval: number, // In minutes
+        format: TimeFormat = "12hr",
+        startTime?: string | undefined,
+        endTime?: string | undefined // Inclusive
+    ): string[] => {
+        const timings = [];
+        let currentMinutes = 0;
+        let endMinutes = 1440 - interval; // Do not include next day's 12am
+
+        // Convert startTime (h:mma) to minutes
+        if (startTime) {
+            currentMinutes = timeToMinutes(startTime);
+        }
+        if (endTime) {
+            endMinutes = timeToMinutes(endTime);
+        }
+
+        while (currentMinutes <= endMinutes) {
+            let hours = Math.floor(currentMinutes / 60);
+            const minutes = currentMinutes % 60;
+
+            if (format === "12hr") {
+                const period = hours >= 12 ? "pm" : "am";
+
+                hours = hours % 12;
+                hours = hours ? hours : 12; // Convert hour 0 to 12
+
+                const timeString = toTimeString(hours, minutes, period);
+                timings.push(timeString);
+            } else {
+                const timeString = toTimeString(hours, minutes);
+                timings.push(timeString);
+            }
+
+            currentMinutes += interval;
+        }
+
+        return timings;
+    };
+
+    // Return undefined = invalid field, "" = empty field, else returns h:mma
+    export const parseInput = (
+        input: string,
+        format: TimeFormat = "12hr" // Returned format
+    ): string | undefined => {
+        if (input === "" || input === undefined) return input;
+
+        const sanitizedInput = input.trim().toLowerCase();
+        const timeRegex = /^(?:(\d{1,2})([:.])?(\d{2})?)?(a|p|am|pm)?$/;
+        const match = timeRegex.exec(sanitizedInput);
+
+        if (!match) return;
+
+        let hours = parseInt(match[1] || "0", 10);
+        const minutes = parseInt(match[3] || "0", 10);
+        let period = match[4];
+
+        // Ensure hours/mins are valid
+        if (match[1] === undefined || hours > 24 || minutes > 59) return;
+
+        // Convert single-character periods to full am/pm
+        if (period === "a") {
+            period = "am";
+        } else if (period === "p") {
+            period = "pm";
+        }
+
+        if (format === "24hr") {
+            // Convert 12-hour input to 24-hour format if period is present
+            if (period === "pm" && hours < 12) {
+                hours += 12;
+            } else if ((period === "am" && hours === 12) || hours === 24) {
+                hours = 0; // Midnight case
+            }
+
+            // Return time in 24-hour format (HH:mm)
+            return toTimeString(hours, minutes);
+        }
+
+        // Handle 24-hour times or AM/PM conversion
+        if (period) {
+            if (hours === 0 || hours === 24) {
+                period = "am";
+                hours = 12;
+            } else if (hours > 12) {
+                period = "pm";
+                hours -= 12;
+            }
+        } else {
+            period =
+                // NOTE: 12 or 1-6 will default to pm for convenience
+                hours === 0 || hours === 24 || (hours > 6 && hours < 12)
+                    ? "am"
+                    : "pm";
+            hours = hours % 12 || 12;
+        }
+
+        // Format the time as h:mma
+        const formattedTime = toTimeString(hours, minutes, period);
+
+        return formattedTime;
+    };
+
+    export const findClosestFlooredTime = (
+        inputTime: string,
+        timeArray: string[] // Should already be sorted in ascending order
+    ): string => {
+        if (!inputTime) return inputTime;
+        const flooredInputMinutes = timeToMinutes(inputTime);
+
+        let closestTime = "";
+        let minDifference = Infinity;
+
+        for (const time of timeArray) {
+            const timeInMinutes = timeToMinutes(time);
+            const difference = timeInMinutes - flooredInputMinutes;
+
+            // If the difference is negative or zero, update the closest time
+            if (difference <= 0 && Math.abs(difference) < minDifference) {
+                minDifference = Math.abs(difference);
+                closestTime = time;
+            }
+            // If the difference becomes positive, we've passed the closest time
+            else if (difference > 0) {
+                break;
+            }
+        }
+
+        return closestTime;
+    };
+
+    // Accepts both 12hr and 24hr formats
+    export const timeToMinutes = (time: string) => {
+        const [startHourMin, ampm] = time.toLowerCase().split(/(am|pm)/);
+        const [startHoursRaw, startMinutes] = startHourMin
+            .split(":")
+            .map(Number);
+        let startHours = startHoursRaw;
+
+        if (ampm === "pm" && startHours !== 12) {
+            startHours += 12; // Convert PM hours to 24-hour format
+        }
+        if (ampm === "am" && startHours === 12) {
+            startHours = 0; // Convert 12am to 0 hours
+        }
+
+        return startHours * 60 + startMinutes;
+    };
 }
 
 // =============================================================================
@@ -256,4 +461,12 @@ const convertToPlain = (value: string, format: TimeFormat): TimeValuesPlain => {
             minute: timeArr[1],
         };
     }
+};
+
+const toTimeString = (hours: number, minutes: number, period?: string) => {
+    return period
+        ? `${hours}:${minutes.toString().padStart(2, "0")}${period}`
+        : `${hours.toString().padStart(2, "0")}:${minutes
+              .toString()
+              .padStart(2, "0")}`;
 };

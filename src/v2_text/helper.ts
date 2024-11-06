@@ -1,25 +1,28 @@
 import { css } from "styled-components";
 import { FontFamily } from "../spec/text-spec/font-spec";
+import { FontWeightSpec } from "../spec/text-spec/types";
 import { V2_TextLinkSizeType, V2_TextSizeType, V2_TextWeight } from "./types";
 import { V2_TextStyle } from "./text-style";
 
 // =============================================================================
 // FONT STYLE
 // =============================================================================
-const getFont = (weight: V2_TextWeight) => {
+const FONTS_WITH_WEIGHTS = [FontFamily.OpenSans, FontFamily.PlusJakartaSans];
+
+const getFont = (fontFamily: FontWeightSpec, weight: V2_TextWeight) => {
     switch (weight) {
         case 700:
         case "bold":
-            return FontFamily.OpenSans.Bold;
+            return fontFamily.Bold;
         case 600:
         case "semibold":
-            return FontFamily.OpenSans.Semibold;
+            return fontFamily.Semibold;
         case 300:
         case "light":
-            return FontFamily.OpenSans.Light;
+            return fontFamily.Light;
         case 400:
         case "regular":
-            return FontFamily.OpenSans.Regular;
+            return fontFamily.Regular;
         default:
             return "";
     }
@@ -37,10 +40,14 @@ const getFontFamily = (
             props
         ) as V2_TextWeight;
 
-        if (Object.values(FontFamily.OpenSans).includes(fontFamilyFromTheme)) {
+        const fontFamily = FONTS_WITH_WEIGHTS.find((set) =>
+            Object.values(set).includes(fontFamilyFromTheme)
+        );
+
+        if (fontFamily) {
             return css`
-                font-family: ${getFont(weight) ||
-                getFont(fontWeightFromTheme) ||
+                font-family: ${getFont(fontFamily, weight) ||
+                getFont(fontFamily, fontWeightFromTheme) ||
                 fontFamilyFromTheme};
                 font-weight: normal !important;
             `;

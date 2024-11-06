@@ -1,3 +1,4 @@
+import React from "react";
 import { AlertProps } from "../alert";
 import { MaskAttributeProps } from "../masked-input";
 
@@ -8,7 +9,8 @@ export type UneditableSectionItemMaskLoadingState = "loading" | "fail";
 export interface UneditableSectionItemProps extends MaskAttributeProps {
     id?: string | undefined;
     label: string;
-    value: string;
+    /** Note: masking is only available for string values */
+    value: string | React.ReactNode;
     /** The width that the item can span across. Values: "half", "full" */
     displayWidth?: UneditableSectionItemDisplayWidth | undefined;
     /**
@@ -32,6 +34,12 @@ export interface UneditableSectionItemProps extends MaskAttributeProps {
     alert?: AlertProps | undefined;
 }
 
+export interface UneditableSectionItemSectionProps
+    extends React.HTMLAttributes<HTMLUListElement> {
+    /** Specifies if contents should take up the full width of the section */
+    stretch?: boolean | undefined;
+}
+
 export interface UneditableSectionProps {
     items?: UneditableSectionItemProps[] | undefined;
     title?: string | undefined;
@@ -47,6 +55,8 @@ export interface UneditableSectionProps {
     id?: string | undefined;
     /** If specified false, the background will be transparent. Else it is grey by default */
     background?: boolean | undefined;
+    /** Specifies if contents should take up the full width of the section */
+    stretch?: boolean | undefined;
     /** The callback function when the mask icon is clicked */
     onMask?: ((item: UneditableSectionItemProps) => void) | undefined;
     /** The callback function when the unmask icon is clicked */

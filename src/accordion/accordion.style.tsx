@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
-import { V2_MediaQuery } from "../v2_media";
 import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
 import { V2_Text } from "../v2_text/text";
 import { TitleStyleProps, TitleWrapperStyleProps } from "./types";
 
@@ -15,13 +15,24 @@ export const Content = styled.div`
 
 export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
     display: flex;
-    flex-direction: ${(props) => (props.$hasTitle ? "row" : "column")};
-    align-items: ${(props) => (props.$hasTitle ? "center" : "flex-end")};
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
     padding-bottom: 1rem;
 
     ${V2_MediaQuery.MaxWidth.mobileL} {
         justify-content: flex-end;
     }
+
+    ${(props) => {
+        if (!props.$showTitleInMobile && !props.$hasExpandAll) {
+            return css`
+                ${V2_MediaQuery.MaxWidth.mobileL} {
+                    display: none;
+                }
+            `;
+        }
+    }}
 `;
 
 export const Title = styled(V2_Text.H2)<TitleStyleProps>`

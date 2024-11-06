@@ -1,6 +1,7 @@
 import {
     FloatingFocusManager,
     FloatingPortal,
+    Middleware,
     OpenChangeReason,
     Placement,
     autoUpdate,
@@ -17,6 +18,8 @@ import {
 } from "@floating-ui/react";
 import { useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { V2_MediaWidths } from "../../v2_media";
+import { useFloatingChild } from "../../overlay/use-floating-context";
 import { DropdownContainer } from "./element-with-dropdown.styles";
 import { DropdownAlignmentType } from "./types";
 
@@ -32,7 +35,7 @@ interface ElementWithDropdownProps {
     onDismiss?: () => void | undefined;
     renderElement: () => React.ReactNode;
     renderDropdown: (props: DropdownRenderProps) => React.ReactNode;
-    zIndex?: number | undefined;
+    customZIndex?: number | undefined;
     clickToToggle?: boolean | undefined;
     /* the distance between the reference element and the dropdown */
     offset?: number | undefined;
@@ -51,6 +54,8 @@ const getFloatingPlacement = (alignment: DropdownAlignmentType): Placement => {
     }
 };
 
+const DEFAULT_Z_INDEX = 50;
+
 export const ElementWithDropdown = ({
     enabled,
     isOpen,
@@ -59,7 +64,7 @@ export const ElementWithDropdown = ({
     onDismiss,
     renderElement,
     renderDropdown,
-    zIndex = 50,
+    customZIndex,
     clickToToggle = false,
     offset: dropdownOffset = 0,
     alignment = "left",
@@ -74,6 +79,20 @@ export const ElementWithDropdown = ({
         targetRef: elementRef,
         handleHeight: false,
     });
+    const center: Middleware = {
+        name: "center",
+        fn: ({ x, rects }) => {
+            const noGapInBetween =
+                x === 0 || x + rects.floating.width === window.innerWidth;
+            const isMobileScreen = window.innerWidth < V2_MediaWidths.mobileL;
+            return {
+                x:
+                    noGapInBetween && isMobileScreen
+                        ? (window.innerWidth - rects.floating.width) / 2
+                        : x,
+            };
+        },
+    };
     const { refs, floatingStyles, context } = useFloating({
         open: isOpen,
         onOpenChange: (open, _event, reason) => {
@@ -107,8 +126,10 @@ export const ElementWithDropdown = ({
                     });
                 },
             }),
+            center,
         ],
     });
+    const parentZIndex = useFloatingChild();
 
     const { isMounted, styles } = useTransitionStyles(context, {
         initial: { opacity: 0 },
@@ -150,7 +171,10 @@ export const ElementWithDropdown = ({
                             ref={refs.setFloating}
                             style={{
                                 ...floatingStyles,
-                                zIndex,
+                                zIndex:
+                                    customZIndex ??
+                                    parentZIndex ??
+                                    DEFAULT_Z_INDEX,
                             }}
                             {...getFloatingProps()}
                         >

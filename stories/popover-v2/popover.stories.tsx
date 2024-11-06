@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Button, PopoverTrigger, PopoverV2 } from "../../src";
+import { useState } from "react";
+import { Button, Modal, PopoverTrigger, PopoverV2 } from "../../src";
 
 type Component = typeof PopoverV2;
 
@@ -107,6 +108,41 @@ export const Customisation: StoryObj<Component> = {
             >
                 <Button.Default>Click me</Button.Default>
             </PopoverTrigger>
+        );
+    },
+};
+
+export const UsageInOverlay: StoryObj<Component> = {
+    render: () => {
+        const [show, setShow] = useState(false);
+        const [showNested, setShowNested] = useState(false);
+
+        return (
+            <>
+                <Button.Default
+                    onClick={() => {
+                        setShow(true);
+                        setTimeout(() => {
+                            setShowNested(true);
+                        }, 3000);
+                    }}
+                >
+                    Show modal
+                </Button.Default>
+                <Modal show={show} onOverlayClick={() => setShow(false)}>
+                    <PopoverTrigger popoverContent="I'm a tooltip!">
+                        <Button.Default>Toggle tooltip</Button.Default>
+                    </PopoverTrigger>
+                </Modal>
+                <Modal
+                    show={showNested}
+                    onOverlayClick={() => setShowNested(false)}
+                >
+                    <PopoverTrigger popoverContent="I'm a nested tooltip!">
+                        <Button.Default>Toggle nested tooltip</Button.Default>
+                    </PopoverTrigger>
+                </Modal>
+            </>
         );
     },
 };

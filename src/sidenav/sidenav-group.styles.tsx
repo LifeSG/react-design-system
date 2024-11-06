@@ -9,9 +9,10 @@ export const Container = styled.ul`
     flex-direction: column;
     align-items: center;
     width: 100%;
+    list-style: none;
 `;
 
-export const Divider = styled.div`
+export const Divider = styled.li`
     margin: 0.5rem 0;
     width: 6.5rem;
     height: 1px;

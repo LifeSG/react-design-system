@@ -1,19 +1,8 @@
-import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
-import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
+import styled from "styled-components";
 import {
     BasicInput,
     InputWrapper,
 } from "../shared/input-wrapper/input-wrapper";
-
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-
-interface IndicatorStyleProps {
-    $position: "start" | "end" | "none";
-    $error: boolean;
-}
 
 // =============================================================================
 // STYLING

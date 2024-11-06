@@ -1,0 +1,49 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Alert } from "src/alert";
+import * as DateNavigatorStories from "./date-navigator.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={DateNavigatorStories} />
+
+# DateNavigator
+
+<Alert type="warning">
+    This component is still a work in progress. The UI and props are subject to
+    change.
+</Alert>
+
+## Overview
+
+A component that displays the current date and day, with support for navigating
+the dates.
+
+```tsx
+import { DateNavigator } from "@lifesg/react-design-system/date-navigator";
+```
+
+<Canvas of={DateNavigatorStories.Default} />
+
+## With navigation
+
+Navigation buttons can be enabled by specifying the `onLeftArrowClick` and
+`onRightArrowClick` callbacks.
+
+<Canvas of={DateNavigatorStories.WithNavigation} />
+
+## Loading state
+
+You can specify the `loading` prop to disable date navigation while asynchronous
+tasks are running.
+
+<Canvas of={DateNavigatorStories.LoadingState} />
+
+## With date range
+
+The corresponding navigation button is disabled when the current date is \<=
+`minDate` or \>= `maxDate`.
+
+<Canvas of={DateNavigatorStories.WithMinAndMaxDate} />
+
+## Component API
+
+<PropsTable />

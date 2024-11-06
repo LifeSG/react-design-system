@@ -3,6 +3,7 @@ import { V2_Text } from "src/v2_text";
 import { OneServiceTextStyleSet } from "src/spec/text-spec/oneservice-text-style-set";
 import { FontDisplay, FontSizeDisplay } from "./collection-doc-elements";
 import { OneServiceTheme } from "../../src";
+import { ThemeProvider } from "styled-components";
 
 <Meta title="V2/Text/OneService Style" />
 
@@ -24,14 +25,18 @@ const theme: ThemeSpec = {
 <V2_Text.D1>Open Sans</V2_Text.D1>
 
 <Unstyled>
-    <FontDisplay />
+    <ThemeProvider theme={OneServiceTheme}>
+        <FontDisplay />
+    </ThemeProvider>
 </Unstyled>
 
 ## Text Styles
 
 <Unstyled>
-    <FontSizeDisplay
-        textStyles={OneServiceTextStyleSet}
-        theme={OneServiceTheme}
-    />
+    <ThemeProvider theme={OneServiceTheme}>
+        <FontSizeDisplay
+            textStyles={OneServiceTextStyleSet}
+            theme={OneServiceTheme}
+        />
+    </ThemeProvider>
 </Unstyled>

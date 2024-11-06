@@ -1,6 +1,12 @@
 import find from "lodash/find";
 import isEqual from "lodash/isEqual";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import {
     useCompare,
     useEvent,
@@ -43,6 +49,7 @@ export const DropdownList = <T, V>({
     variant = "default",
     listboxId,
     width,
+    topScrollItem,
     onSelectItem,
     onSelectAll,
     onDismiss,
@@ -92,11 +99,14 @@ export const DropdownList = <T, V>({
         return listExtractor ? listExtractor(item) : item.toString();
     };
 
-    const checkListItemSelected = (item: T): boolean => {
-        return !!find(selectedItems, (arrItem) => {
-            return isEqual(arrItem, item);
-        });
-    };
+    const checkListItemSelected = useCallback(
+        (item: T): boolean => {
+            return !!find(selectedItems, (arrItem) => {
+                return isEqual(arrItem, item);
+            });
+        },
+        [selectedItems]
+    );
 
     const filterItemsByCustomSearch = useEvent(() => {
         return searchFunction(searchValue);
@@ -150,6 +160,7 @@ export const DropdownList = <T, V>({
                 }
                 break;
             case "Space":
+            case "Enter":
                 if (
                     document.activeElement ===
                     listItemRefs.current[focusedIndex]
@@ -203,12 +214,36 @@ export const DropdownList = <T, V>({
     useEventListener("keydown", handleKeyboardPress);
 
     useEffect(() => {
+        if (topScrollItem === undefined) return;
+
+        // Delay to ensure render is complete
+        const timer = setTimeout(() => {
+            const index = listItems.indexOf(topScrollItem);
+            const focusedItem = listItemRefs.current[index];
+
+            // Align the item to top of scrollable container
+            if (nodeRef.current) {
+                const scrollOffset = focusedItem?.offsetTop ?? 0;
+                nodeRef.current.scrollTop = scrollOffset - 8;
+            }
+
+            setFocusedIndex(index);
+        }, 0);
+
+        return () => clearTimeout(timer);
+    }, [listItemRefs, listItems, setFocusedIndex, topScrollItem]);
+
+    useEffect(() => {
         if (mounted) {
             // only run on mount
             return;
         }
 
         if (disableItemFocus) return;
+
+        const selectedIndex = listItems.findIndex((item) =>
+            checkListItemSelected(item)
+        );
 
         // Focus search input if there is one
         if (searchInputRef.current) {
@@ -217,12 +252,23 @@ export const DropdownList = <T, V>({
         } else if (listItemRefs.current[focusedIndex]) {
             // Else focus on the specified element
             setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
+        } else if (listItemRefs.current[selectedIndex]) {
+            // Else focus on the selected element
+            setFocusedIndex(selectedIndex);
+            setTimeout(() => listItemRefs.current[selectedIndex]?.focus(), 200);
         } else {
             // Else focus on the first list item
             setFocusedIndex(0);
             setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
-    }, [disableItemFocus, focusedIndex, mounted, setFocusedIndex]);
+    }, [
+        checkListItemSelected,
+        disableItemFocus,
+        focusedIndex,
+        listItems,
+        mounted,
+        setFocusedIndex,
+    ]);
 
     useEffect(() => {
         if (!mounted || !itemsLoadStateChanged) {
@@ -325,10 +371,14 @@ export const DropdownList = <T, V>({
                         tabIndex={active ? 0 : -1}
                         $active={active}
                     >
-                        {renderListItemIcon(selected)}
-                        {renderListItem
-                            ? renderListItem(item, { selected })
-                            : renderDropdownLabel(item, selected)}
+                        {renderListItem ? (
+                            renderListItem(item, { selected })
+                        ) : (
+                            <>
+                                {renderListItemIcon(selected)}
+                                {renderDropdownLabel(item, selected)}
+                            </>
+                        )}
                     </ListItem>
                 );
             });

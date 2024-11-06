@@ -141,3 +141,34 @@ export const NoTitle: StoryObj<Component> = {
         );
     },
 };
+
+export const NoExpandCollapseAll: StoryObj<Component> = {
+    render: () => {
+        return (
+            <Accordion title="No expand/collapse all" enableExpandAll={false}>
+                <Accordion.Item title="This is the first item">
+                    <V2_Text.Body>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua. Ut enim ad minim veniam, quis nostrud
+                        exercitation ullamco laboris nisi ut aliquip ex ea
+                        commodo consequat.
+                    </V2_Text.Body>
+                </Accordion.Item>
+                <Accordion.Item title="This is the second item">
+                    <V2_Text.Body>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor&nbsp;
+                        <V2_Text.Hyperlink.Default
+                            href="https://www.google.com"
+                            target="_blank"
+                        >
+                            see more here
+                        </V2_Text.Hyperlink.Default>
+                        .
+                    </V2_Text.Body>
+                </Accordion.Item>
+            </Accordion>
+        );
+    },
+};

@@ -71,11 +71,7 @@ export const ProgressIndicator = <T,>({
             const highlighted = stepIndex <= currentIndex;
 
             return (
-                <Indicator
-                    key={stepIndex}
-                    aria-label={getAriaLabel(stepIndex, currentIndex)}
-                    id={getId(stepIndex, currentIndex)}
-                >
+                <Indicator key={stepIndex} id={getId(stepIndex, currentIndex)}>
                     <IndicatorBar highlighted={highlighted}></IndicatorBar>
                 </Indicator>
             );
@@ -85,17 +81,18 @@ export const ProgressIndicator = <T,>({
     const renderStepTitleDesktop = () => {
         return steps.map((step: T, stepIndex: number) => {
             const highlighted = stepIndex <= currentIndex;
-            const fontWeight = stepIndex === currentIndex ? "bold" : "regular";
+            const current = stepIndex === currentIndex;
+            const fontWeight = current ? "bold" : "regular";
 
             return (
                 <Indicator
                     key={stepIndex}
-                    aria-label={getAriaLabel(stepIndex, currentIndex)}
                     id={`${getId(stepIndex, currentIndex)}-title`}
                 >
                     <IndicatorTitleDesktop
                         highlighted={highlighted}
                         weight={fontWeight}
+                        aria-current={current}
                     >
                         {getDisplayValue(step)}
                     </IndicatorTitleDesktop>
@@ -108,7 +105,6 @@ export const ProgressIndicator = <T,>({
         return (
             <Indicator
                 key={currentIndex}
-                aria-label={getAriaLabel(currentIndex, currentIndex)}
                 id={getId(currentIndex, currentIndex)}
             >
                 <IndicatorTitleTablet

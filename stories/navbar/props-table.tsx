@@ -296,7 +296,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "primary",
                 description: "The primary branding",
                 propTypes: ["NavbarBrandingProps"],
-                defaultValue: "<LifeSG branding>",
+                defaultValue: "<theme service branding>",
             },
             {
                 name: "secondary",

@@ -1,4 +1,5 @@
 import { BaseTextStyleSet } from "../spec/text-spec/base-text-style-set";
+import { BasePlusSansJakartaStyleSet } from "../spec/text-spec/base-plus-jakarta-sans-text-style-set";
 import { OneServiceTextStyleSet } from "../spec/text-spec/oneservice-text-style-set";
 import { V2_TextStyleSetType } from "../v2_text/types";
 import { getCollection, getValue } from "./helper";
@@ -20,6 +21,7 @@ const TextStyleSpec: V2_ThemeCollectionSpec<
     collections: {
         base: BaseTextStyleSet,
         oneservice: OneServiceTextStyleSet,
+        plusJakartaSans: BasePlusSansJakartaStyleSet,
     },
     defaultValue: "base",
 };

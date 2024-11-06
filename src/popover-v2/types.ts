@@ -33,6 +33,22 @@ export interface PopoverV2TriggerProps {
      * the popover may not be visible. Specify the parent element here instead
      */
     rootNode?: RefObject<HTMLElement> | undefined;
+    customOffset?: number | undefined;
+    // in milliseconds
+    delay?:
+        | { open?: number | undefined; close?: number | undefined }
+        | undefined;
     onPopoverAppear?: (() => void) | undefined;
     onPopoverDismiss?: (() => void) | undefined;
+}
+
+export type PopoverInlineStyle = "default" | "underline" | "underline-dashed";
+
+export interface PopoverInlineProps
+    extends Omit<PopoverV2TriggerProps, "children"> {
+    ariaLabel?: string | undefined;
+    content?: React.ReactNode | undefined;
+    icon?: JSX.Element | undefined;
+    underlineStyle?: PopoverInlineStyle | undefined;
+    underlineHoverStyle?: PopoverInlineStyle | undefined;
 }

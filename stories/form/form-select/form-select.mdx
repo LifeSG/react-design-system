@@ -52,6 +52,14 @@ column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormSelectStories.SmallVariant} />
 
+## Z-index conflicts
+
+The dropdown uses z-index to display above elements. It is `Modal` and
+`Overlay`-aware by default; when rendered as a child of either component, it
+will automatically adjust its z-index to remain visible.
+
+If you still encounter z-index issues, try setting a custom `dropdownZIndex`.
+
 ## Using the field as a standalone
 
 In the case that you require the select field as a standalone, you can do this.

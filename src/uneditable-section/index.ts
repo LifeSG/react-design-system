@@ -1,9 +1,9 @@
-import { UneditableSectionBase } from "./uneditable-section";
-import { GridUl } from "./uneditable-section.styles";
+import { UneditableItemSection } from "./item-section";
 import { UneditableSectionItem } from "./section-item";
+import { UneditableSectionBase } from "./uneditable-section";
 
 export * from "./types";
 export const UneditableSection = Object.assign(UneditableSectionBase, {
-    ItemSection: GridUl,
+    ItemSection: UneditableItemSection,
     Item: UneditableSectionItem,
 });

@@ -65,6 +65,8 @@ export interface DropdownListProps<T, V>
     labelDisplayType?: LabelDisplayType | undefined;
     /** Specifies the variant type. Small type will have shorter height. Values: "default" | "small" */
     variant?: DropdownVariantType | undefined;
+    /** Specifies the item for which the dropdown’s scroll position will be automatically adjusted */
+    topScrollItem?: T | undefined;
 
     onSelectItem?: ((item: T, extractedValue: V) => void) | undefined;
     onSelectAll?: (() => void) | undefined;

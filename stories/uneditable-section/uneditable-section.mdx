@@ -1,6 +1,6 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import * as UneditableSectionStories from "./uneditable-section.stories";
 import { PropsTable } from "./props-table";
+import * as UneditableSectionStories from "./uneditable-section.stories";
 
 <Meta of={UneditableSectionStories} />
 
@@ -73,6 +73,13 @@ To do so, you can make use of the `UneditableSection.ItemSection` and `Uneditabl
 to render the details at any position you intend.
 
 <Canvas of={UneditableSectionStories.ComposingFromScratch} />
+
+## Stretch
+
+If rendering this inside of another container, the contents can take up the full
+width using the `stretch` prop.
+
+<Canvas of={UneditableSectionStories.Stretch} />
 
 ## Component API
 

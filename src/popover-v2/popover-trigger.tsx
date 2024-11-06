@@ -1,26 +1,34 @@
 import {
+    FloatingFocusManager,
     FloatingPortal,
     autoUpdate,
     flip,
     limitShift,
     offset,
     shift,
+    useClick,
+    useDismiss,
     useFloating,
+    useHover,
+    useInteractions,
 } from "@floating-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { V2_MediaWidths } from "../v2_media";
+import { useFloatingChild } from "../overlay/use-floating-context";
 import { PopoverV2 } from "./popover";
 import { TriggerContainer } from "./popover-trigger.styles";
-import { PopoverV2TriggerProps } from "./types";
+import { PopoverV2TriggerProps, PopoverV2TriggerType } from "./types";
 
 export const PopoverTrigger = ({
     children,
     popoverContent,
-    trigger = "click",
+    trigger: _trigger = "click",
     position = "top",
     zIndex,
     rootNode,
+    customOffset,
+    delay,
     onPopoverAppear,
     onPopoverDismiss,
     ...otherProps
@@ -34,73 +42,61 @@ export const PopoverTrigger = ({
     const isMobile = useMediaQuery({
         maxWidth: V2_MediaWidths.mobileL,
     });
-    const { refs, floatingStyles } = useFloating({
+
+    const { refs, floatingStyles, context } = useFloating({
         open: visible,
         placement: position,
         whileElementsMounted: autoUpdate,
         middleware: [
-            offset(16),
+            offset(customOffset ?? 16),
             flip(),
             shift({
                 limiter: limitShift(),
             }),
         ],
+        onOpenChange: (isOpen) => {
+            setVisible(isOpen);
+
+            // this callback is triggering twice on hover, the check here prevents extra calls
+            if (visible !== isOpen) {
+                handleVisibilityChange(isOpen);
+            }
+        },
+    });
+    const parentZIndex = useFloatingChild();
+
+    const trigger: PopoverV2TriggerType = isMobile ? "click" : _trigger;
+    const click = useClick(context, {
+        // allow trigger by Space/Enter, but disable mouse click in hover mode
+        ignoreMouse: trigger === "hover",
+    });
+    const dismiss = useDismiss(context);
+    const hover = useHover(context, {
+        enabled: trigger === "hover",
+        // short window to enter the floating element without it closing
+        delay: {
+            open: delay?.open ?? 0,
+            close: delay?.close ?? 500,
+        },
     });
 
-    // =========================================================================
-    // EFFECTS
-    // =========================================================================
-    useEffect(() => {
-        // NOTE: Do not add mouse down event if it's mobile
-        if (isMobile || !visible) {
-            return;
-        }
-        document.addEventListener("mousedown", handleMouseDownEvent);
-
-        return () => {
-            document.removeEventListener("mousedown", handleMouseDownEvent);
-        };
-    }, [visible]);
+    const { getReferenceProps, getFloatingProps } = useInteractions([
+        click,
+        dismiss,
+        hover,
+    ]);
 
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleMouseDownEvent = (event: MouseEvent) => {
-        if (
-            !nodeRef.current?.contains(event.target as Node) &&
-            !popoverRef.current?.contains(event.target as Node)
-        ) {
-            // outside click
-            setVisible(false);
-
-            if (onPopoverDismiss) onPopoverDismiss();
-        }
-    };
-
-    const handleClick = (event: React.MouseEvent) => {
-        event.preventDefault();
-        if (trigger === "click" || isMobile) {
-            setVisible(!visible);
-
-            if (!visible && onPopoverAppear) onPopoverAppear();
-            if (visible && onPopoverDismiss) onPopoverDismiss();
-        }
-    };
-
-    const handleOnMouseEnter = () => {
-        if (trigger === "hover" && !isMobile) {
-            setVisible(true);
-        }
-    };
-
-    const handleOnMouseLeave = () => {
-        if (trigger === "hover" && visible && !isMobile) {
-            setVisible(false);
-        }
-    };
-
     const handlePopoverMobileClose = () => {
         setVisible(false);
+        handleVisibilityChange(false);
+    };
+
+    const handleVisibilityChange = (nextVisible: boolean) => {
+        if (nextVisible && onPopoverAppear) onPopoverAppear();
+        if (!nextVisible && onPopoverDismiss) onPopoverDismiss();
     };
 
     // =========================================================================
@@ -120,31 +116,42 @@ export const PopoverTrigger = ({
 
     return (
         <>
-            {visible && (
-                <FloatingPortal root={rootNode}>
-                    <div
-                        ref={(node) => {
-                            popoverRef.current = node;
-                            refs.setFloating(node);
-                        }}
-                        style={{ ...floatingStyles, zIndex }}
-                    >
-                        {renderPopover()}
-                    </div>
-                </FloatingPortal>
-            )}
             <TriggerContainer
                 ref={(node) => {
                     nodeRef.current = node;
                     refs.setReference(node);
                 }}
-                onClick={handleClick}
-                onMouseEnter={handleOnMouseEnter}
-                onMouseLeave={handleOnMouseLeave}
+                {...getReferenceProps({
+                    onClick: (event) => {
+                        // prevent popover interaction from triggering click events on parents
+                        event.stopPropagation();
+                        event.preventDefault();
+                    },
+                })}
                 {...otherProps}
             >
                 {children}
             </TriggerContainer>
+            {visible && (
+                <FloatingPortal root={rootNode}>
+                    <FloatingFocusManager context={context}>
+                        <div
+                            ref={(node) => {
+                                popoverRef.current = node;
+                                refs.setFloating(node);
+                            }}
+                            style={{
+                                ...floatingStyles,
+                                outline: "none",
+                                zIndex: zIndex ?? parentZIndex,
+                            }}
+                            {...getFloatingProps()}
+                        >
+                            {renderPopover()}
+                        </div>
+                    </FloatingFocusManager>
+                </FloatingPortal>
+            )}
         </>
     );
 };

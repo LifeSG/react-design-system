@@ -29,7 +29,7 @@ export type V2_ColorCollectionsMap = {
 // =============================================================================
 // FONT STYLE THEMES
 // =============================================================================
-export type V2_TextStyleScheme = "base" | "oneservice";
+export type V2_TextStyleScheme = "base" | "oneservice" | "plusJakartaSans";
 export type V2_FontStyleCollectionsMap = {
     [key in V2_TextStyleScheme]: V2_TextStyleSetType;
 };
@@ -45,7 +45,12 @@ export type V2_DesignTokenCollectionsMap = {
 // =============================================================================
 // RESOURCE THEMES
 // =============================================================================
-export type V2_ResourceScheme = "base" | "bookingsg" | "rbs" | "ccube";
+export type V2_ResourceScheme =
+    | "base"
+    | "bookingsg"
+    | "rbs"
+    | "ccube"
+    | "mylegacy";
 
 // =============================================================================
 // GENERAL

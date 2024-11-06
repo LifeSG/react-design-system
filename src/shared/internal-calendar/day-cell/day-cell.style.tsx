@@ -221,6 +221,10 @@ export const Label = styled(V2_Text.H5)<LabelStyleProps>`
                 return css`
                     color: ${V2_Color.Neutral[4]};
                 `;
+            case "hidden":
+                return css`
+                    visibility: hidden;
+                `;
             case "available":
             default:
                 return css`

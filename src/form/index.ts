@@ -15,6 +15,7 @@ import { FormPredictiveTextInput } from "./form-predictive-text-input";
 import { FormRangeSelect } from "./form-range-select";
 import { FormRangeSlider } from "./form-range-slider";
 import { FormSelect } from "./form-select";
+import { FormSelectHistogram } from "./form-select-histogram";
 import { FormSlider } from "./form-slider";
 import { FormTextarea } from "./form-textarea";
 import { FormTimeRangePicker } from "./form-time-range-picker";
@@ -34,6 +35,7 @@ export const Form = {
     NestedSelect: FormNestedSelect,
     NestedMultiSelect: FormNestedMultiSelect,
     Select: FormSelect,
+    SelectHistogram: FormSelectHistogram,
     Slider: FormSlider,
     RangeSlider: FormRangeSlider,
     RangeSelect: FormRangeSelect,

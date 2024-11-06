@@ -16,7 +16,6 @@ export const TriggerArea = styled.button`
 `;
 
 export const AddonWrapper = styled.div`
+    padding-left: 0.25rem;
     display: inline;
-    position: relative;
-    width: fit-content;
 `;

@@ -2,6 +2,8 @@ import { Meta, Unstyled } from "@storybook/blocks";
 import { V2_Text } from "src/v2_text";
 import { BaseTextStyleSet } from "src/spec/text-spec/base-text-style-set";
 import { FontDisplay, FontSizeDisplay } from "./collection-doc-elements";
+import { BaseTheme } from "../../src";
+import { ThemeProvider } from "styled-components";
 
 <Meta title="V2/Text/Base Style" />
 
@@ -23,11 +25,15 @@ const theme: ThemeSpec = {
 <V2_Text.D1>Open Sans</V2_Text.D1>
 
 <Unstyled>
-    <FontDisplay />
+    <ThemeProvider theme={BaseTheme}>
+        <FontDisplay />
+    </ThemeProvider>
 </Unstyled>
 
 ## Text Styles
 
 <Unstyled>
-    <FontSizeDisplay textStyles={BaseTextStyleSet} />
+    <ThemeProvider theme={BaseTheme}>
+        <FontSizeDisplay textStyles={BaseTextStyleSet} />
+    </ThemeProvider>
 </Unstyled>

@@ -39,5 +39,6 @@ export interface TitleStyleProps {
 }
 
 export interface TitleWrapperStyleProps {
-    $hasTitle: boolean;
+    $showTitleInMobile: boolean;
+    $hasExpandAll: boolean;
 }

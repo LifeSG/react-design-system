@@ -1,0 +1,29 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import * as PopoverInlineStories from "./popover-inline.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={PopoverInlineStories} />
+
+# PopoverInline
+
+## Overview
+
+Provides additional information for content within a text block.
+
+<Canvas of={PopoverInlineStories.InlineTextAndIcon} />
+
+## Text style
+
+The text and icon inherit the font size of the surrounding text.
+
+<Canvas of={PopoverInlineStories.InlineText} />
+
+<Canvas of={PopoverInlineStories.InlineIcon} />
+
+## Underline style
+
+<Canvas of={PopoverInlineStories.UnderlineStyle} />
+
+## Component API
+
+<PropsTable />

@@ -16,9 +16,7 @@ import {
     TopSection,
 } from "./footer.style";
 import { FooterLinkProps, FooterProps } from "./types";
-
-const LIFESG_LOGO_SRC =
-    "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg";
+import { useTheme } from "styled-components";
 
 export const Footer = <T,>({
     children,
@@ -36,7 +34,7 @@ export const Footer = <T,>({
     // CONST, STATE, REFS
     // =============================================================================
     const isStretch = layout === "stretch";
-
+    const theme = useTheme();
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -63,7 +61,10 @@ export const Footer = <T,>({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderDisclaimerLinks = () => {
-        const links = FooterHelper.getDisclaimerLinks(disclaimerLinks);
+        const links = FooterHelper.getDisclaimerLinks(
+            (theme as any)?.resourceScheme,
+            disclaimerLinks
+        );
 
         return Object.keys(links).map((key) => {
             return <DisclaimerTextLink key={key} {...links[key]} />;
@@ -72,7 +73,7 @@ export const Footer = <T,>({
 
     const renderFooterLinks = (links: FooterLinkProps<T>[]) => {
         return links.map((link, index) => {
-            const { "data-options": options, ...otherProps } = link;
+            const { "data-options": _options, ...otherProps } = link;
 
             return (
                 <li key={index}>
@@ -97,7 +98,12 @@ export const Footer = <T,>({
                 <>
                     <LogoSection data-testid="logo-section">
                         <img
-                            src={logoSrc || LIFESG_LOGO_SRC}
+                            src={
+                                logoSrc ||
+                                FooterHelper.getFooterLogo(
+                                    (theme as any)?.resourceScheme
+                                )
+                            }
                             alt="LifeSG"
                             data-testid="logo"
                         />
@@ -145,7 +151,10 @@ export const Footer = <T,>({
                         {copyrightInfo || (
                             <>
                                 &copy;{" "}
-                                {FooterHelper.getCopyrightInfo(lastUpdated)}
+                                {FooterHelper.getCopyrightInfo(
+                                    lastUpdated,
+                                    (theme as any)?.resourceScheme
+                                )}
                             </>
                         )}
                     </V2_Text.XSmall>

@@ -16,6 +16,7 @@ export const UneditableSectionBase = ({
     bottomSection,
     children,
     background = true,
+    stretch,
     onMask,
     onUnmask,
     onTryAgain,
@@ -53,7 +54,7 @@ export const UneditableSectionBase = ({
                 );
             });
 
-            return <GridUl>{renderedItems}</GridUl>;
+            return <GridUl $stretch={stretch}>{renderedItems}</GridUl>;
         }
 
         return null;
@@ -66,16 +67,22 @@ export const UneditableSectionBase = ({
 
         return (
             <>
-                {title && <Title weight="semibold">{title}</Title>}
-                {description && <Description>{description}</Description>}
+                {title && (
+                    <Title weight="semibold" $stretch={stretch}>
+                        {title}
+                    </Title>
+                )}
+                {description && (
+                    <Description $stretch={stretch}>{description}</Description>
+                )}
                 {topSection && (
-                    <CustomSection data-id="top-section">
+                    <CustomSection data-id="top-section" $stretch={stretch}>
                         {topSection}
                     </CustomSection>
                 )}
                 {renderItems()}
                 {bottomSection && (
-                    <CustomSection data-id="bottom-section">
+                    <CustomSection data-id="bottom-section" $stretch={stretch}>
                         {bottomSection}
                     </CustomSection>
                 )}

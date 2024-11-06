@@ -1,14 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 import { Alert } from "src/alert";
+import { BoxContainer } from "src/box-container";
 import { Button } from "src/button";
 import { V2_Text } from "src/v2_text";
+import { TextList } from "src/text-list";
 import {
     UneditableSection,
-    UneditableSectionItemMaskState,
     UneditableSectionItemProps,
 } from "src/uneditable-section";
 import { SAMPLE_ITEMS } from "./doc-elements";
-import { useState } from "react";
 
 type Component = typeof UneditableSection;
 
@@ -346,11 +347,33 @@ export const ComposingFromScratch: StoryObj<Component> = {
                     <UneditableSection.ItemSection>
                         <UneditableSection.Item
                             label="Spoken languages"
-                            value="English, Mandarin, French"
+                            value={
+                                <TextList.Ul>
+                                    <li>English</li>
+                                    <li>Mandarin</li>
+                                    <li>French</li>
+                                </TextList.Ul>
+                            }
                         />
                     </UneditableSection.ItemSection>
                 </div>
             </UneditableSection>
+        );
+    },
+};
+
+export const Stretch: StoryObj<Component> = {
+    render: () => {
+        return (
+            <BoxContainer title="Review" collapsible={false}>
+                <UneditableSection
+                    title="Your personal information"
+                    description="Retrieved on 27 Jun 2023"
+                    items={SAMPLE_ITEMS}
+                    background={false}
+                    stretch
+                />
+            </BoxContainer>
         );
     },
 };
