@@ -3,7 +3,7 @@ import { Colour, MediaQuery } from "../theme";
 import { Typography } from "../typography/typography";
 
 // Units in rem
-export const INDICATOR_BAR_MARGIN_RIGHT_MOBILE = 0.5;
+export const INDICATOR_BAR_MARGIN_RIGHT_TABLET = 0.5;
 
 // =============================================================================
 // STYLE TYPES
@@ -64,7 +64,7 @@ export const IndicatorTitleDesktop = styled(Typography.BodyMD)<IndicatorProps>`
     }};
 `;
 
-export const IndicatorTitleMobile = styled(Typography.BodyMD)`
+export const IndicatorTitleTablet = styled(Typography.BodyMD)`
     overflow-wrap: anywhere;
     color: ${Colour.text};
 `;
@@ -75,6 +75,6 @@ export const Indicator = styled.div`
     flex: 1;
 
     &:not(:last-child) {
-        margin-right: ${INDICATOR_BAR_MARGIN_RIGHT_MOBILE + "rem"};
+        margin-right: ${INDICATOR_BAR_MARGIN_RIGHT_TABLET + "rem"};
     }
 `;

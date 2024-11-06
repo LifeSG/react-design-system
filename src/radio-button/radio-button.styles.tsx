@@ -20,10 +20,9 @@ export const Container = styled.div<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 2rem;
+    width: 2rem;
     position: relative;
-    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 `;
 
 export const StyledUnCheckedIcon = styled(CircleIcon)<StyleProps>`
@@ -58,7 +57,7 @@ export const Input = styled.input<RadioButtonProps>`
     background: transparent;
     border: none;
 
-    &:hover + ${StyledUnCheckedIcon} {
+    &:hover + ${StyledUnCheckedIcon}, &:hover + ${StyledCheckedIcon} {
         color: ${(props) => !props.disabled && Colour["icon-hover"](props)};
     }
 `;

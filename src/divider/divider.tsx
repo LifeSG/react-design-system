@@ -9,9 +9,13 @@ export const Divider = ({
     layoutType = "flex",
     color,
     className,
-    xxsCols = 4,
-    mdCols = 8,
-    xlCols = 12,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
     mobileCols,
     tabletCols,
     desktopCols,
@@ -55,8 +59,12 @@ export const Divider = ({
                     <ColDiv
                         className={className}
                         xxsCols={xxsCols}
+                        xsCols={xsCols}
+                        smCols={smCols}
                         mdCols={mdCols}
+                        lgCols={lgCols}
                         xlCols={xlCols}
+                        xxlCols={xxlCols}
                         {...otherProps}
                     >
                         <Line
