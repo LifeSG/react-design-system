@@ -1,5 +1,10 @@
 import React from "react";
-import { Checkmark, Container, Input } from "./radio-button.styles";
+import {
+    Container,
+    Input,
+    StyledCheckedIcon,
+    StyledUnCheckedIcon,
+} from "./radio-button.styles";
 import { RadioButtonProps } from "./types";
 
 export const RadioButton = ({
@@ -21,6 +26,21 @@ export const RadioButton = ({
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
+
+    const renderIcon = () => {
+        return checked ? (
+            <StyledCheckedIcon
+                data-testid="radio-checked"
+                $disabled={disabled}
+            />
+        ) : (
+            <StyledUnCheckedIcon
+                data-testid="radio-unchecked"
+                $disabled={disabled}
+            />
+        );
+    };
+
     return (
         <Container
             $selected={checked}
@@ -36,12 +56,7 @@ export const RadioButton = ({
                 disabled={disabled}
                 {...otherProps}
             />
-            <Checkmark
-                id="checkmark"
-                data-testid="checkmark"
-                $disabled={disabled}
-                $selected={checked}
-            />
+            {renderIcon()}
         </Container>
     );
 };

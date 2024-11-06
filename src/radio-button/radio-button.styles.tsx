@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { V2_Color } from "../v2_color";
 import { RadioButtonProps } from "./types";
+import { Colour, Motion } from "../theme";
+import { CircleDotIcon, CircleIcon } from "@lifesg/react-icons";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -14,23 +15,35 @@ interface StyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
+
 export const Container = styled.div<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 2rem;
+    width: 2rem;
     position: relative;
-    border-radius: 50%;
-    border: 2px solid ${V2_Color.Accent.Light[2]};
+`;
 
-    ${(props) => {
-        if (props.$disabled) {
-            return `
-				border: 2px solid ${V2_Color.Neutral[4](props)};
-			`;
-        }
-    }}
+export const StyledUnCheckedIcon = styled(CircleIcon)<StyleProps>`
+    height: 100%;
+    width: 100%;
+    color: ${(props) =>
+        props.$disabled
+            ? Colour["icon-disabled-subtle"](props)
+            : Colour["icon-subtle"](props)};
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+`;
+
+export const StyledCheckedIcon = styled(CircleDotIcon)<StyleProps>`
+    height: 100%;
+    width: 100%;
+    color: ${(props) =>
+        props.$disabled
+            ? Colour["icon-selected-disabled"](props)
+            : Colour["icon-selected"](props)};
+
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 `;
 
 export const Input = styled.input<RadioButtonProps>`
@@ -40,19 +53,11 @@ export const Input = styled.input<RadioButtonProps>`
     cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
     z-index: 1;
 
-    /* Hide appearance but keep it focusable using keyboard interactions */
     appearance: none;
     background: transparent;
     border: none;
-`;
 
-export const Checkmark = styled.div<StyleProps>`
-    height: 0.75rem;
-    width: 0.75rem;
-    opacity: ${(props) => (props.$selected ? 1 : 0)};
-    transition: all 200ms ease-in-out;
-    background: ${(props) =>
-        props.$disabled ? V2_Color.Neutral[4](props) : V2_Color.Primary(props)};
-    border-radius: 50%;
-    border: 1px solid transparent;
+    &:hover + ${StyledUnCheckedIcon}, &:hover + ${StyledCheckedIcon} {
+        color: ${(props) => !props.disabled && Colour["icon-hover"](props)};
+    }
 `;
