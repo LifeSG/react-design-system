@@ -91,6 +91,7 @@ export const LifeSGColourSet: SemanticColourSet = {
     "bg-selected-hover": getPrimitiveColour("primary-90"),
     "bg-selected-strong": getPrimitiveColour("primary-90"),
     "bg-selected-strongest": getPrimitiveColour("primary-90"),
+    "bg-selected-strongest-hover": getPrimitiveColour("primary-40"),
 
     "bg-disabled": getPrimitiveColour("neutral-95"),
     "bg-selected-disabled": getPrimitiveColour("neutral-95"),

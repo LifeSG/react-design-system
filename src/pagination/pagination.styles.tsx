@@ -1,9 +1,8 @@
 import styled, { css } from "styled-components";
 import { Input } from "../input";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, Font, MediaQuery } from "../theme";
+import { Border, Colour, Font, MediaQuery, Radius } from "../theme";
 import { Typography } from "../typography";
-
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -44,7 +43,7 @@ export const NavigationItem = styled(ClickableIcon)`
     padding: 0.625rem;
     justify-content: center;
     align-items: center;
-    border-radius: 0.25rem;
+    border-radius: ${Radius.sm};
     color: ${Colour["icon-primary"]};
 
     svg {
@@ -56,6 +55,10 @@ export const NavigationItem = styled(ClickableIcon)`
         color: ${Colour["icon-disabled-subtle"]};
         cursor: not-allowed;
     }
+
+    :hover {
+        background-color: ${Colour["bg-hover"]};
+    }
 `;
 
 export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
@@ -63,7 +66,7 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     padding: 0.625rem;
     justify-content: center;
     align-items: center;
-    border-radius: 0.25rem;
+    border-radius: ${Radius.sm};
     color: ${Colour["icon-primary"]};
 
     svg {
@@ -103,33 +106,42 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
 export const PageItem = styled.button<StyleProps>`
     background: ${(props) =>
         props.$selected ? Colour["bg-primary"] : Colour.bg};
-    border: 1px solid ${(props) => (props.$selected ? "" : Colour.border)};
+    border: ${Border["width-010"]} solid
+        ${(props) => (props.$selected ? Colour["bg-primary"] : Colour.border)};
     color: ${(props) =>
         props.$selected ? Colour["text-inverse"] : Colour.text};
 
     min-width: 2.5rem;
     text-align: center;
     padding: 0.4rem 0.5rem;
-    border-radius: 0.25rem;
+    border-radius: ${Radius.sm};
     margin: 0.25rem;
     cursor: pointer;
+    box-shadow: none;
 
     ${(props) =>
         props.$selected
             ? css`
-                  ${Font["body-baseline-bold"]}
+                  ${Font["body-baseline-bold"]};
+
+                  &:hover {
+                      border-color: ${Colour["bg-selected-strongest-hover"]};
+                      background-color: ${Colour[
+                          "bg-selected-strongest-hover"
+                      ]};
+                      color: ${Colour["text-inverse"]};
+                  }
               `
             : css`
-                  ${Font["body-baseline-regular"]}
-              `}
+                  ${Font["body-baseline-regular"]};
 
-    :hover {
-        box-shadow: none;
-        border: none;
-        background: ${Colour["bg-hover"]};
-        color: ${Colour["text-hover"]};
-        ${Font["body-baseline-semibold"]};
-    }
+                  &:hover {
+                      border-color: ${Colour["bg-hover"]};
+                      background-color: ${Colour["bg-hover"]};
+                      color: ${Colour["text-hover"]};
+                      ${Font["body-baseline-semibold"]};
+                  }
+              `}
 `;
 
 export const EllipsisItem = styled(ClickableIcon)`
@@ -138,7 +150,7 @@ export const EllipsisItem = styled(ClickableIcon)`
     justify-content: center;
     color: ${Colour["icon-primary"]};
     padding: 0.4rem 0.5rem;
-    border-radius: 0.25rem;
+    border-radius: ${Radius.sm};
     white-space: nowrap;
 
     svg {
@@ -158,7 +170,7 @@ export const EllipsisContainer = styled.div`
     cursor: pointer;
     min-width: 2.5rem;
     height: 2.5rem;
-    border-radius: 0.25rem;
+    border-radius: ${Radius.sm};
     justify-content: center;
     align-items: center;
     position: relative;
@@ -189,8 +201,8 @@ export const InputView = styled(Input)`
     justify-content: center;
     width: 3.5rem;
     height: 2.5rem;
-    border-radius: 0.25rem;
-    border: 1px solid ${Colour.border};
+    border-radius: ${Radius.sm};
+    border: ${Border["width-010"]} solid ${Colour.border};
     padding: 0.5rem 0.5rem;
 
     input {
@@ -206,7 +218,7 @@ export const Hover = styled.div`
     ${Font["body-xs-regular"]}
     background-color: ${Colour["bg-hover"]};
     border: none;
-    border-radius: 0.25rem;
+    border-radius: ${Radius.sm};
     color: ${Colour["text-hover"]};
     align-items: center;
     position: fixed;

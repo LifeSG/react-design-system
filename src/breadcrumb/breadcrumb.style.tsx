@@ -1,6 +1,6 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../theme";
+import { FontSpec, MediaQuery } from "../theme";
 import { Typography } from "../typography/typography";
 import { Colour } from "../theme";
 // =============================================================================
@@ -23,7 +23,6 @@ export const Wrapper = styled.div`
     position: relative;
     width: 100%;
     z-index: 1;
-
     margin: 2rem 0;
 
     ${MediaQuery.MaxWidth.xl} {
@@ -41,7 +40,7 @@ export const Content = styled.ul`
     flex-wrap: wrap;
     white-space: nowrap;
     margin-left: -0.25rem;
-    font-size: 1rem;
+    font-size: ${FontSpec["body-size-md"]};
     overflow-x: scroll;
     overflow-y: hidden;
     scrollbar-width: none; /* Firefox */
