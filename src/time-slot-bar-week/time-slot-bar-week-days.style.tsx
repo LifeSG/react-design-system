@@ -1,7 +1,4 @@
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
-import { V2_Text } from "../v2_text/text";
-import { V2_TextStyleHelper } from "../v2_text";
 import { Button } from "../button";
 import { ChevronUpIcon } from "@lifesg/react-icons";
 import { Transition } from "../transition";
@@ -10,6 +7,8 @@ import {
     TimeSlotStyleProps,
 } from "../time-slot-bar/time-slot-bar.styles";
 import { animated } from "react-spring";
+import { Colour, Font } from "../theme";
+import { Typography } from "../typography";
 
 interface TimeSlotCellProps extends TimeSlotStyleProps {
     $height: number;
@@ -38,11 +37,11 @@ export const HeaderCellWeek = styled.div`
     flex: 1;
 `;
 
-export const CellWeekText = styled(V2_Text.XSmall)<CellWeekTextStyleProps>`
+export const CellWeekText = styled(Typography.BodyXS)<CellWeekTextStyleProps>`
     ${(props) =>
         props.$disabled &&
         css`
-            color: ${V2_Color.Neutral[4]};
+            color: ${Colour["text-disabled-subtlest"]};
         `}
 `;
 
@@ -90,8 +89,8 @@ export const TimeColumnWrapper = styled.div`
 `;
 
 export const TimeColumnText = styled.div`
-    ${V2_TextStyleHelper.getFontFamily("Body", 700)}
-    color: ${V2_Color.Neutral[3]};
+    ${Font["body-baseline-bold"]}
+    color: ${Colour["text-subtler"]};
     font-size: 0.625rem !important;
     line-height: 0.75rem !important;
     text-align: center;
@@ -155,13 +154,13 @@ export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
                                 ? "transparent"
                                 : props.$bgColor}
                             50%,
-                        ${V2_Color.Neutral[5]} 0%
+                        ${Colour["bg-strongest"]} 0%
                     )
                     ${props.$styleType === "stripes" &&
                     `, repeating-linear-gradient(
                             135deg,
-                            ${props.$bgColor2 || V2_Color.Neutral[5]} 0px,
-                            ${props.$bgColor2 || V2_Color.Neutral[5]} 10px,
+                            ${props.$bgColor2 || Colour["bg-strongest"]} 0px,
+                            ${props.$bgColor2 || Colour["bg-strongest"]} 10px,
                             ${props.$bgColor} 10px,
                             ${props.$bgColor} 20px
                         )`};

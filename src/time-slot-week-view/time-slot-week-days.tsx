@@ -8,9 +8,9 @@ import {
     RowDayCell,
     StyleProps,
 } from "../shared/internal-calendar/standard";
-import { V2_Text } from "../v2_text/text";
 import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.styles";
 import { TimeSlot } from "../time-slot-bar/types";
+import { Typography } from "../typography";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
     ColumnWeekCell,
@@ -128,9 +128,9 @@ export const TimeSlotWeekDays = ({
     const renderWeek = () => {
         return currentCalendarWeek.map((day, index) => (
             <HeaderCellWeek key={`week-day-${index}`}>
-                <V2_Text.XSmall weight={"semibold"}>
+                <Typography.BodyXS weight={"semibold"}>
                     {dayjs(day).format("ddd")}
-                </V2_Text.XSmall>
+                </Typography.BodyXS>
             </HeaderCellWeek>
         ));
     };

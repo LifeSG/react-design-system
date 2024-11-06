@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { V2_MediaQuery } from "../v2_media/media";
+import { MediaQuery } from "../theme";
 
 export const Wrapper = styled.div`
     min-width: 18.5rem;
 
     [data-id="calendar-header"] {
-        ${V2_MediaQuery.MaxWidth.mobileL} {
+        ${MediaQuery.MaxWidth.sm} {
             padding: 0 1.25rem;
         }
     }
