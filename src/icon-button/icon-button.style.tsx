@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { SizeType, StyleType } from "./types";
-import { Colour } from "../theme";
+import { Border, Colour } from "../theme";
 interface StyleProps {
     $styleType: StyleType;
     $sizeType: SizeType;
@@ -60,7 +60,8 @@ export const Main = styled.button<StyleProps>`
             case "secondary":
                 return css`
                     background-color: ${Colour.bg};
-                    border: 1px solid ${Colour["border-primary"]};
+                    border: ${Border["width-010"]} solid
+                        ${Colour["border-primary"]};
                     color: ${Colour["text-primary"]};
 
                     :hover {
@@ -71,7 +72,7 @@ export const Main = styled.button<StyleProps>`
             case "light":
                 return css`
                     background-color: ${Colour.bg};
-                    border: 1px solid ${Colour.border};
+                    border: ${Border["width-010"]} solid ${Colour.border};
                     color: ${Colour["text-primary"]};
 
                     :hover {
@@ -91,17 +92,11 @@ export const Main = styled.button<StyleProps>`
                 `;
         }
     }}
-    &:hover {
-        box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.2);
-    }
+
     &:disabled {
         background-color: ${Colour["bg-disabled"]};
-        border: 1px solid ${Colour["border-disabled"]};
+        border: ${Border["width-010"]} solid ${Colour["border-disabled"]};
         color: ${Colour["text-disabled"]};
         cursor: not-allowed;
-
-        &:hover {
-            box-shadow: none;
-        }
     }
 `;

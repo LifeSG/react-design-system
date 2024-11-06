@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour, Font } from "../theme";
+import { Border, Colour, Font, Motion, Radius } from "../theme";
 import { MediaQuery } from "../theme";
 
 export const Main = styled.button<{
@@ -14,13 +14,14 @@ export const Main = styled.button<{
     align-items: center;
     padding: 1.5rem 1rem;
     background-color: ${Colour.bg};
-    border: 1px solid transparent;
-    border-radius: 0.5rem;
+    border: ${Border["width-010"]} solid transparent;
+    border-radius: ${Radius.md};
     cursor: pointer;
     max-width: 13rem;
-    transition: all 200ms ease;
+    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
     ${Font["body-baseline-semibold"]}
-    color: ${({ $selected }) => $selected && Colour["text-primary"]};
+    color: ${({ $selected }) =>
+        $selected ? Colour["text-primary"] : Colour["text"]};
     overflow-wrap: anywhere;
 
     img {
@@ -33,29 +34,32 @@ export const Main = styled.button<{
     ${MediaQuery.MaxWidth.sm} {
         padding: 0.5rem 0.25rem;
         gap: 0.25rem;
-        ${Font["body-lg-semibold"]}
+        ${Font["body-md-semibold"]}
     }
 
     ${(props) => {
         if (props.$error) {
             return css`
                 background: ${Colour.bg};
-                border: 1px solid ${Colour["border-error"]};
+                border: ${Border["width-010"]} solid ${Colour["border-error"]};
             `;
         } else if (props.$selected) {
             return css`
                 background: ${Colour["bg-selected"]};
-                border: 1px solid ${Colour["border-selected"]};
+                border: ${Border["width-010"]} solid
+                    ${Colour["border-selected"]};
 
                 &:hover {
                     background: ${Colour["bg-selected-hover"]};
-                    border: 1px solid ${Colour["border-selected-hover"]};
+                    border: ${Border["width-010"]} solid
+                        ${Colour["border-selected-hover"]};
                 }
             `;
         } else {
             return css`
                 &:hover {
-                    border: 1px solid ${Colour["border-hover-strong"]};
+                    border: ${Border["width-010"]} solid
+                        ${Colour["border-hover-strong"]};
                 }
             `;
         }
@@ -63,7 +67,7 @@ export const Main = styled.button<{
 
     :disabled {
         &:hover {
-            border: 1px solid transparent;
+            border: ${Border["width-010"]} solid transparent;
         }
         box-shadow: none;
         img {
