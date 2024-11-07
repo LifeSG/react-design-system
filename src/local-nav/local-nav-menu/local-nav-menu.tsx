@@ -1,8 +1,8 @@
 /* eslint-disable react/display-name */
-import React, { ReactNode } from "react";
+import React from "react";
 import { Text } from "../../text/text";
 import { LocalNavItemComponentProps } from "../internal-types";
-import { LocalNavItemProps, LocalNavPropsBase } from "../types";
+import { LocalNavMenuProps } from "../types";
 import { Nav, NavItem } from "./local-nav-menu.styles";
 
 const LocalNavItem = (props: LocalNavItemComponentProps) => {
@@ -40,18 +40,18 @@ const LocalNavItem = (props: LocalNavItemComponentProps) => {
  */
 export const LocalNavMenu = React.forwardRef<
     HTMLUListElement,
-    LocalNavPropsBase
+    LocalNavMenuProps
 >(
     (
         {
             onNavItemSelect: onNavItemSelect,
-            titleList,
+            items,
             selectedItemIndex,
             id,
             "data-testid": dataTestId,
             className,
             renderItem,
-        }: LocalNavPropsBase,
+        }: LocalNavMenuProps,
         ref
     ) => {
         const localNavMenuId = dataTestId || "local-nav-menu";
@@ -62,7 +62,7 @@ export const LocalNavMenu = React.forwardRef<
                 className={className}
                 data-testid={`${localNavMenuId}-container`}
             >
-                {titleList.map((title, i) => {
+                {items.map((item, i) => {
                     const isSelected = i === selectedItemIndex;
 
                     return (
@@ -70,10 +70,14 @@ export const LocalNavMenu = React.forwardRef<
                             key={i}
                             data-testid={`${localNavMenuId}-item--${i}`}
                             handleClick={(e) =>
-                                onNavItemSelect?.(e, { title, id }, i)
+                                onNavItemSelect?.(
+                                    e.nativeEvent as MouseEvent,
+                                    { title: item.title, id },
+                                    i
+                                )
                             }
                             isSelected={isSelected}
-                            item={{ title, id }}
+                            item={{ title: item.title, id }}
                             renderItem={renderItem}
                         />
                     );

@@ -19,9 +19,9 @@ const meta: Meta = {
 export default meta;
 
 const NAV_ITEMS = [
-    "Title 1",
-    "Title 2",
-    "Title lorem ipsum dolor sit amet consectetur adipiscing elit",
+    { title: "Title 1" },
+    { title: "Title 2" },
+    { title: "Title lorem ipsum dolor sit amet consectetur adipiscing elit" },
 ];
 
 export const Menu: StoryObj<MenuComponent> = {
@@ -33,15 +33,20 @@ export const Menu: StoryObj<MenuComponent> = {
             item: LocalNavItemProps,
             index: number
         ) => {
-            const section = NAV_ITEMS[index];
+            const section = NAV_ITEMS[index].title;
             if (section) {
                 setSelectedLabel(section);
             }
         };
+
+        const selectedIndex = NAV_ITEMS.findIndex(
+            (item) => item.title === selectedLabel
+        );
+
         return (
             <LocalNavMenu
-                titleList={NAV_ITEMS}
-                selectedItemIndex={NAV_ITEMS.indexOf(selectedLabel)}
+                items={NAV_ITEMS}
+                selectedItemIndex={selectedIndex}
                 onNavItemSelect={(e, item, index) =>
                     handleNavItemClick(e, item, index)
                 }
@@ -59,15 +64,18 @@ export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
             item: LocalNavItemProps,
             index: number
         ) => {
-            const section = NAV_ITEMS[index];
+            const section = NAV_ITEMS[index].title;
             if (section) {
                 setSelectedLabel(section);
             }
         };
+        const selectedIndex = NAV_ITEMS.findIndex(
+            (item) => item.title === selectedLabel
+        );
         return (
             <LocalNavMenu
-                titleList={NAV_ITEMS}
-                selectedItemIndex={NAV_ITEMS.indexOf(selectedLabel)}
+                items={NAV_ITEMS}
+                selectedItemIndex={selectedIndex}
                 onNavItemSelect={(e, item, index) =>
                     handleNavItemClick(e, item, index)
                 }
@@ -94,7 +102,7 @@ export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
 
 export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
     render: () => {
-        const [selectedLabel, setSelectedLabel] = useState(0);
+        const [selectedLabel, setSelectedLabel] = useState(-1);
         const handleNavItemClick = (
             e: MouseEvent,
             item: LocalNavItemProps,
@@ -110,7 +118,7 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
                 <Content />
                 <LocalNavDropdown
                     defaultLabel="initial"
-                    titleList={NAV_ITEMS}
+                    items={NAV_ITEMS}
                     stickyOffset={0}
                     selectedItemIndex={selectedLabel}
                     onNavItemSelect={handleNavItemClick}
@@ -142,7 +150,7 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
 };
 export const Dropdown: StoryObj<DropdownComponent> = {
     render: () => {
-        const [selectedLabel, setSelectedLabel] = useState(0);
+        const [selectedLabel, setSelectedLabel] = useState(-1);
         const handleNavItemClick = (
             e: MouseEvent,
             item: LocalNavItemProps,
@@ -158,7 +166,7 @@ export const Dropdown: StoryObj<DropdownComponent> = {
                 <Content />
                 <LocalNavDropdown
                     defaultLabel={"initial"}
-                    titleList={NAV_ITEMS}
+                    items={NAV_ITEMS}
                     stickyOffset={0}
                     selectedItemIndex={selectedLabel}
                     onNavItemSelect={(e, item, index) =>
@@ -181,15 +189,16 @@ export const CombinedUsage: StoryObj = {
         const isMobile = useMediaQuery({
             maxWidth: MediaWidths.mobileL,
         });
-
-        const selectedIndex = NAV_ITEMS.indexOf(selectedLabel);
+        const selectedIndex = NAV_ITEMS.findIndex(
+            (item) => item.title === selectedLabel
+        );
 
         const handleNavItemClick = (
             e: MouseEvent,
             item: LocalNavItemProps,
             index: number
         ) => {
-            const section = NAV_ITEMS[index];
+            const section = NAV_ITEMS[index].title;
             if (section) {
                 setSelectedLabel(section);
             }
@@ -199,7 +208,7 @@ export const CombinedUsage: StoryObj = {
             <Page>
                 {!isMobile && (
                     <LocalNavMenu
-                        titleList={NAV_ITEMS}
+                        items={NAV_ITEMS}
                         selectedItemIndex={selectedIndex}
                         onNavItemSelect={(e, item, index) =>
                             handleNavItemClick(e, item, index)
@@ -210,7 +219,7 @@ export const CombinedUsage: StoryObj = {
                     {isMobile && (
                         <LocalNavDropdown
                             defaultLabel={selectedLabel}
-                            titleList={NAV_ITEMS}
+                            items={NAV_ITEMS}
                             stickyOffset={0}
                             selectedItemIndex={selectedIndex}
                             onNavItemSelect={(e, item, index) =>

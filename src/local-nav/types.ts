@@ -1,9 +1,9 @@
 export interface LocalNavItemProps {
     title: string | React.ReactNode;
-    id?: string;
+    id?: string | undefined;
 }
 
-export interface LocalNavPropsBase {
+interface LocalNavPropsBase {
     className?: string | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
@@ -12,7 +12,7 @@ export interface LocalNavPropsBase {
         item: LocalNavItemProps,
         index: number
     ) => void;
-    titleList: string[];
+    items: LocalNavItemProps[];
     selectedItemIndex: number;
     renderItem?:
         | ((
@@ -22,6 +22,7 @@ export interface LocalNavPropsBase {
         | undefined;
 }
 
+export interface LocalNavMenuProps extends LocalNavPropsBase {}
 export interface LocalNavDropdownProps extends LocalNavPropsBase {
     defaultLabel: string | React.ReactNode;
     stickyOffset?: number | undefined;

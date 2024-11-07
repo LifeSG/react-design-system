@@ -1,7 +1,7 @@
 import { LocalNavItemProps } from "./types";
 
 export interface LocalNavItemComponentProps {
-    handleClick: any;
+    handleClick: React.MouseEventHandler<HTMLLIElement>;
     isSelected: boolean;
     item: LocalNavItemProps;
     renderItem?:

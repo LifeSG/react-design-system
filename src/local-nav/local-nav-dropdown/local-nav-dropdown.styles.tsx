@@ -48,7 +48,7 @@ export const NavIcon = styled(ChevronDownIcon)<{ isDropdownExpanded: boolean }>`
     transform: rotate(${(props) => (props.isDropdownExpanded ? 180 : 0)}deg);
 `;
 
-export const NavLabel = styled.label`
+export const NavLabel = styled.div`
     display: block;
     margin: 0;
     cursor: pointer;
