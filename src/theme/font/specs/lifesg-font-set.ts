@@ -1,5 +1,4 @@
 import { css } from "styled-components";
-
 import { getFontSpec } from "../../font-spec/theme-helper";
 import { FontSpecSet } from "../../font-spec/types";
 import { FontSet } from "../types";

@@ -1,5 +1,5 @@
 import { BorderSet } from "../types";
-import { dashedBorderStyle } from "../theme-helper";
+import { dashedBorderStyle } from "../border-utils";
 import { StyledComponentProps } from "../../helpers";
 import { ColourSemantic } from "../../colour-semantic/theme-helper";
 
