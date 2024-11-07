@@ -5,6 +5,9 @@
     "main": "dist/cjs/index.js",
     "module": "dist/index.js",
     "typings": "dist/index.d.ts",
+    "bin": {
+        "lifesg-react-design-system": "./codemods/run-codemod.js"
+    },
     "scripts": {
         "build": "npm run rollup && npm run post:build",
         "build-check": "npm run rollup rollup.check.config.js",
@@ -123,6 +126,7 @@
         "react-spring": "~9.7.3",
         "remark-gfm": "^4.0.0",
         "rollup": "^3.29.4",
+        "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-generate-package-json": "^3.2.0",
         "rollup-plugin-peer-deps-external": "^2.2.4",
         "rollup-plugin-postcss": "^4.0.2",

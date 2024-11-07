@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+
 export const getFolders = (entry) => {
     const dirs = fs.readdirSync(entry);
 
@@ -14,18 +15,6 @@ export const getFolders = (entry) => {
 
     const dirsToUse = dirs
         .filter((dirName) => path.extname(dirName) === "") // exclude non-folders
-        .filter((dirName) => dirsToIgnore.indexOf(dirName) === -1);
-
-    return dirsToUse;
-};
-
-export const getCodemodFolders = (entry) => {
-    const dirs = fs.readdirSync(entry);
-
-    const dirsToIgnore = [];
-
-    const dirsToUse = dirs
-        .filter((dirName) => path.extname(dirName) === "")
         .filter((dirName) => dirsToIgnore.indexOf(dirName) === -1);
 
     return dirsToUse;

@@ -2,13 +2,14 @@ import commonjs from "@rollup/plugin-commonjs";
 import image from "@rollup/plugin-image";
 import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
-import typescript from "rollup-plugin-typescript2";
+import terser from "@rollup/plugin-terser";
+import copy from "rollup-plugin-copy";
+import generatePackageJson from "rollup-plugin-generate-package-json";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
-import terser from "@rollup/plugin-terser";
-import generatePackageJson from "rollup-plugin-generate-package-json";
+import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
-import { getFolders, getCodemodFolders } from "./scripts/build-util";
+import { getFolders } from "./scripts/build-util";
 
 export const plugins = [
     peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
@@ -53,23 +54,6 @@ const subfolderPlugins = (folderName) => [
     }),
 ];
 
-// Build for codemod scripts
-const folderCodemodBuildConfigs = getCodemodFolders("./codemods").map(
-    (folder) => {
-        return {
-            input: `codemods/${folder}/index.ts`,
-            output: {
-                file: `dist/codemods/${folder}/index.js`,
-                sourcemap: true,
-                exports: "named",
-                format: "esm",
-            },
-            plugins: subfolderPlugins(folder),
-            external: ["react", "react-dom", "styled-components"],
-        };
-    }
-);
-
 const folderBuildConfigs = getFolders("./src").map((folder) => {
     return {
         input: `src/${folder}/index.ts`,
@@ -84,6 +68,25 @@ const folderBuildConfigs = getFolders("./src").map((folder) => {
         external: ["react", "react-dom", "styled-components"],
     };
 });
+
+const codemodBuildConfigs = [
+    {
+        input: `codemods/run-codemod.ts`,
+        output: {
+            banner: "#!/usr/bin/env node",
+            file: `dist/codemods/run-codemod.js`,
+            sourcemap: true,
+            exports: "named",
+            format: "cjs",
+        },
+        plugins: [
+            ...plugins,
+            copy({
+                targets: [{ src: "codemods/**/*", dest: "dist/codemods" }],
+            }),
+        ],
+    },
+];
 
 export default [
     {
@@ -109,6 +112,6 @@ export default [
         plugins,
         external: ["react", "react-dom", "styled-components"],
     },
-    ...folderCodemodBuildConfigs,
     ...folderBuildConfigs,
+    ...codemodBuildConfigs,
 ];

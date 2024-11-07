@@ -3,7 +3,10 @@ import { execSync } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 
-const codemodsDir: string = path.join(process.cwd(), "codemods");
+const codemodsDir: string = path.join(
+    process.cwd(),
+    "node_modules/@lifesg/react-design-system/codemods"
+);
 
 enum Codemod {
     DeprecateV2Tokens = "deprecate-v2-tokens",
