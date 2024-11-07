@@ -94,7 +94,7 @@ export const Main = styled.button<StyleProps>`
         }
     }}
 
-&:disabled {
+    &:disabled {
         background-color: ${Colour["bg-disabled"]};
         border: ${Border["width-010"]} ${Border["solid"]}
             ${Colour["border-disabled"]};
