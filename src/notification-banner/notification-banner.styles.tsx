@@ -1,10 +1,9 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
-import { V2_Layout } from "../v2_layout";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { V2_Text, V2_TextStyleHelper } from "../v2_text";
-import { Transition } from "../transition";
+import { Colour, Font, Motion } from "../theme";
+import { Layout } from "../layout";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -23,19 +22,19 @@ interface ContentStyleProps {
 // STYLING
 // =============================================================================
 const commonLinkStyle = css`
-    color: ${V2_Color.Validation.Orange.Icon};
+    color: ${Colour["hyperlink-inverse"]};
 
     svg {
-        color: ${V2_Color.Validation.Orange.Icon};
+        color: ${Colour["icon-primary-inverse"]};
     }
 
     :hover,
     :active,
     :visited,
     :focus {
-        color: ${V2_Color.Validation.Orange.Icon};
+        color: ${Colour["hyperlink-inverse"]};
         svg {
-            color: ${V2_Color.Validation.Orange.Icon};
+            color: ${Colour["icon-primary-inverse"]};
         }
     }
 `;
@@ -45,13 +44,13 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     left: 0;
     top: 0;
     width: 100%;
-    transition: ${Transition.Base};
-    background: ${V2_Color.Neutral[2]};
+    transition: all ${Motion["duration-800"]} ${Motion["ease-default"]};
+    background: ${Colour["bg-inverse-subtle"]};
     z-index: 25;
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
 `;
 
-export const Container = styled(V2_Layout.Content)`
+export const Container = styled(Layout.Content)`
     display: flex;
 `;
 
@@ -68,20 +67,20 @@ export const Content = styled.div<ContentStyleProps>`
     display: inline-block;
     width: 100%;
 
-    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${V2_Color.Neutral[8]};
+    ${Font["body-baseline-regular"]}
+    color: ${Colour["text-inverse"]};
 
     p {
         display: inline-block;
     }
 
     strong {
-        ${V2_TextStyleHelper.getFontFamily("Body", "semibold")}
-        color: ${V2_Color.Neutral[8]};
+        ${Font["body-baseline-semibold"]}
+        color: ${Colour["text-inverse"]};
     }
 
     a {
-        ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
+        ${Font["body-baseline-regular"]}
         ${commonLinkStyle}
     }
 
@@ -98,7 +97,7 @@ export const Content = styled.div<ContentStyleProps>`
     }}
 `;
 
-export const ContentLink = styled(V2_Text.Hyperlink.Default)`
+export const ContentLink = styled(Typography.LinkBL)`
     position: relative;
 
     ${commonLinkStyle}
@@ -113,7 +112,7 @@ export const StyledIconButton = styled(ClickableIcon)`
 export const StyledIcon = styled(CrossIcon)`
     height: 1.875rem;
     width: 1.875rem;
-    color: ${V2_Color.Neutral[8]};
+    color: ${Colour["icon-inverse"]};
 `;
 
 export const ActionButton = styled.button`
@@ -125,8 +124,8 @@ export const ActionButton = styled.button`
 
     border: none;
     background: transparent;
-    color: ${V2_Color.Validation.Orange.Icon};
-    ${V2_TextStyleHelper.getTextStyle("BodySmall", "semibold")};
+    color: ${Colour["hyperlink-inverse"]};
+    ${Font["body-md-semibold"]};
 
     cursor: pointer;
 `;
