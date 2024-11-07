@@ -141,11 +141,7 @@ export const LocalNavDropdown = React.forwardRef<
         const navTestId = testId || "local-nav-dropdown";
 
         return (
-            <div
-                id={`${navTestId}-container`}
-                data-testid={`${navTestId}-container`}
-                className={`${navTestId}-container`}
-            >
+            <>
                 <span
                     ref={detectStickyRef}
                     id={id || "sticky-ref"}
@@ -199,7 +195,7 @@ export const LocalNavDropdown = React.forwardRef<
                         <Backdrop onClick={handleDismissBackdrop} />
                     )}
                 </NavWrapper>
-            </div>
+            </>
         );
     }
 );
