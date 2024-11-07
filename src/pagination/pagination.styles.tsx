@@ -45,6 +45,7 @@ export const NavigationItem = styled(ClickableIcon)`
     align-items: center;
     border-radius: ${Radius.sm};
     color: ${Colour["icon-primary"]};
+    outline: none;
 
     svg {
         height: 1.25rem;
@@ -56,7 +57,8 @@ export const NavigationItem = styled(ClickableIcon)`
         cursor: not-allowed;
     }
 
-    :hover {
+    &:hover,
+    &:focus-visible {
         background-color: ${Colour["bg-hover"]};
     }
 `;
@@ -68,6 +70,7 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     align-items: center;
     border-radius: ${Radius.sm};
     color: ${Colour["icon-primary"]};
+    outline: none;
 
     svg {
         height: 1.25rem;
@@ -79,7 +82,8 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
         cursor: not-allowed;
     }
 
-    &:not(:disabled):hover {
+    &:not(:disabled):hover,
+    &:not(:disabled):focus-visible {
         background: ${Colour["bg-hover"]};
     }
 
@@ -118,13 +122,15 @@ export const PageItem = styled.button<StyleProps>`
     margin: 0.25rem;
     cursor: pointer;
     box-shadow: none;
+    outline: none;
 
     ${(props) =>
         props.$selected
             ? css`
                   ${Font["body-baseline-bold"]};
 
-                  &:hover {
+                  &:hover,
+                  &:focus-visible {
                       border-color: ${Colour["bg-selected-strongest-hover"]};
                       background-color: ${Colour[
                           "bg-selected-strongest-hover"
@@ -135,7 +141,8 @@ export const PageItem = styled.button<StyleProps>`
             : css`
                   ${Font["body-baseline-regular"]};
 
-                  &:hover {
+                  &:hover,
+                  &:focus-visible {
                       border-color: ${Colour["bg-hover"]};
                       background-color: ${Colour["bg-hover"]};
                       color: ${Colour["text-hover"]};
@@ -152,13 +159,15 @@ export const EllipsisItem = styled(ClickableIcon)`
     padding: 0.4rem 0.5rem;
     border-radius: ${Radius.sm};
     white-space: nowrap;
+    outline: none;
 
     svg {
         height: 1.25rem;
         width: 1.25rem;
     }
 
-    :hover {
+    :hover,
+    :focus-visible {
         svg {
             color: ${Colour["icon-hover"]};
         }

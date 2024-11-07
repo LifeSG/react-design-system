@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { FadeWrapper } from "../shared/fade-wrapper";
-import { Colour, MediaQuery } from "../theme";
+import { Border, Colour, MediaQuery } from "../theme";
 import { Typography } from "../typography/typography";
 
 // =============================================================================
@@ -26,12 +26,12 @@ export const Chain = styled.ul`
 export const ChainItem = styled.li<ChainStyleProps>`
     display: flex;
     flex-shrink: 0;
-    border-bottom: 4px solid ${Colour.border};
+    border-bottom: 4px ${Border.solid} ${Colour.border};
 
     ${(props) => {
         if (props.$active) {
             return css`
-                border-bottom: 4px solid ${Colour["border-primary"]};
+                border-bottom: 4px ${Border.solid} ${Colour["border-primary"]};
             `;
         }
     }}

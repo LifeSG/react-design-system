@@ -1,5 +1,5 @@
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, Motion } from "../theme";
+import { Border, Colour, Motion } from "../theme";
 import styled, { css } from "styled-components";
 import { Typography } from "../typography/typography";
 import { MediaQuery } from "../theme";
@@ -73,7 +73,7 @@ export const Header = styled.div`
     height: 5rem;
     padding: 2rem 1rem 1rem;
     background-color: ${Colour.bg};
-    border-bottom: 1px solid ${Colour.border};
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 
     ${MediaQuery.MaxWidth.lg} {
         gap: 0.5rem;
