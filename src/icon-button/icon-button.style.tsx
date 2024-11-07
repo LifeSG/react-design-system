@@ -60,7 +60,7 @@ export const Main = styled.button<StyleProps>`
             case "secondary":
                 return css`
                     background-color: ${Colour.bg};
-                    border: ${Border["width-010"]} solid
+                    border: ${Border["width-010"]} ${Border.solid}
                         ${Colour["border-primary"]};
                     color: ${Colour["text-primary"]};
 
@@ -72,7 +72,8 @@ export const Main = styled.button<StyleProps>`
             case "light":
                 return css`
                     background-color: ${Colour.bg};
-                    border: ${Border["width-010"]} solid ${Colour.border};
+                    border: ${Border["width-010"]} ${Border.solid}
+                        ${Colour.border};
                     color: ${Colour["text-primary"]};
 
                     :hover {
@@ -93,9 +94,10 @@ export const Main = styled.button<StyleProps>`
         }
     }}
 
-    &:disabled {
+&:disabled {
         background-color: ${Colour["bg-disabled"]};
-        border: ${Border["width-010"]} solid ${Colour["border-disabled"]};
+        border: ${Border["width-010"]} ${Border["solid"]}
+            ${Colour["border-disabled"]};
         color: ${Colour["text-disabled"]};
         cursor: not-allowed;
     }

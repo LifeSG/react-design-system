@@ -14,7 +14,7 @@ export const Main = styled.button<{
     align-items: center;
     padding: 1.5rem 1rem;
     background-color: ${Colour.bg};
-    border: ${Border["width-010"]} solid transparent;
+    border: ${Border["width-010"]} ${Border.solid} transparent;
     border-radius: ${Radius.md};
     cursor: pointer;
     max-width: 13rem;
@@ -41,24 +41,25 @@ export const Main = styled.button<{
         if (props.$error) {
             return css`
                 background: ${Colour.bg};
-                border: ${Border["width-010"]} solid ${Colour["border-error"]};
+                border: ${Border["width-010"]} ${Border.solid}
+                    ${Colour["border-error"]};
             `;
         } else if (props.$selected) {
             return css`
                 background: ${Colour["bg-selected"]};
-                border: ${Border["width-010"]} solid
+                border: ${Border["width-010"]} ${Border.solid}
                     ${Colour["border-selected"]};
 
                 &:hover {
                     background: ${Colour["bg-selected-hover"]};
-                    border: ${Border["width-010"]} solid
+                    border: ${Border["width-010"]} ${Border.solid}
                         ${Colour["border-selected-hover"]};
                 }
             `;
         } else {
             return css`
                 &:hover {
-                    border: ${Border["width-010"]} solid
+                    border: ${Border["width-010"]} ${Border.solid}
                         ${Colour["border-hover-strong"]};
                 }
             `;
@@ -67,7 +68,7 @@ export const Main = styled.button<{
 
     :disabled {
         &:hover {
-            border: ${Border["width-010"]} solid transparent;
+            border: ${Border["width-010"]} ${Border.solid} transparent;
         }
         box-shadow: none;
         img {
