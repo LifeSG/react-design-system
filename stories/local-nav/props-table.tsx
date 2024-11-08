@@ -141,14 +141,14 @@ const DROPDOWN_DATA: ApiTableSectionProps[] = [
                 ],
             },
             {
-                name: "titleList",
+                name: "items",
                 description: (
                     <>
                         The title inside the <code>dropdown</code>, displayed
                         when the dropdown is open
                     </>
                 ),
-                propTypes: ["string"],
+                propTypes: ["LocalNavItemProps[]"],
             },
         ],
     },
