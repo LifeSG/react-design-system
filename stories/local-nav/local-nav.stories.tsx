@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import {
     LocalNavDropdown,
@@ -7,7 +7,7 @@ import {
     LocalNavMenu,
 } from "src/local-nav";
 import { MediaWidths } from "src/media";
-import { Content, Page } from "./doc-elements";
+import { Content, Page, TopContent } from "./doc-elements";
 
 type MenuComponent = typeof LocalNavMenu;
 type DropdownComponent = typeof LocalNavDropdown;
@@ -21,7 +21,7 @@ export default meta;
 const NAV_ITEMS = [
     { title: "Title 1" },
     { title: "Title 2" },
-    { title: "Title lorem ipsum dolor sit amet consectetur adipiscing elit" },
+    { title: "Title 3" },
 ];
 
 export const Menu: StoryObj<MenuComponent> = {
@@ -103,6 +103,7 @@ export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
 export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
     render: () => {
         const [selectedLabel, setSelectedLabel] = useState(-1);
+        const contentRef = useRef<HTMLDivElement>(null);
         const handleNavItemClick = (
             e: MouseEvent,
             item: LocalNavItemProps,
@@ -111,11 +112,20 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
             const section = NAV_ITEMS[index];
             if (section) {
                 setSelectedLabel(index);
+                // Scroll to the selected section
+                const element = contentRef.current?.children[index];
+                if (element) {
+                    const top =
+                        element.getBoundingClientRect().top +
+                        window.scrollY -
+                        250;
+                    window.scrollTo({ top, behavior: "smooth" });
+                }
             }
         };
         return (
             <div style={{ height: "200vh", padding: "1rem" }}>
-                <Content />
+                <TopContent />
                 <LocalNavDropdown
                     defaultLabel="initial"
                     items={NAV_ITEMS}
@@ -139,7 +149,9 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
                         </div>
                     )}
                 />
-                <Content />
+                <div style={{ padding: "1rem" }} ref={contentRef}>
+                    <Content />
+                </div>
             </div>
         );
     },
@@ -149,8 +161,11 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
     },
 };
 export const Dropdown: StoryObj<DropdownComponent> = {
+    // TODO: scroll the content to the top when a dropdown item is selected.
     render: () => {
         const [selectedLabel, setSelectedLabel] = useState(-1);
+        const contentRef = useRef<HTMLDivElement>(null);
+
         const handleNavItemClick = (
             e: MouseEvent,
             item: LocalNavItemProps,
@@ -159,11 +174,20 @@ export const Dropdown: StoryObj<DropdownComponent> = {
             const section = NAV_ITEMS[index];
             if (section) {
                 setSelectedLabel(index);
+                // Scroll to the selected section
+                const element = contentRef.current?.children[index];
+                if (element) {
+                    const top =
+                        element.getBoundingClientRect().top +
+                        window.scrollY -
+                        200;
+                    window.scrollTo({ top, behavior: "smooth" });
+                }
             }
         };
         return (
             <div style={{ height: "200vh", padding: "1rem" }}>
-                <Content />
+                <TopContent />
                 <LocalNavDropdown
                     defaultLabel={"initial"}
                     items={NAV_ITEMS}
@@ -173,7 +197,9 @@ export const Dropdown: StoryObj<DropdownComponent> = {
                         handleNavItemClick(e, item, index)
                     }
                 />
-                <Content />
+                <div style={{ padding: "1rem" }} ref={contentRef}>
+                    <Content />
+                </div>
             </div>
         );
     },

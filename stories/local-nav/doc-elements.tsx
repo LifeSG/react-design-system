@@ -19,6 +19,14 @@ export const Page = styled.div`
 `;
 
 export const Content = () => (
+    <>
+        <Text.Body style={{ margin: "1rem 0" }}>this is title 1</Text.Body>
+        <Text.Body style={{ margin: "1rem 0" }}>this is title 2</Text.Body>
+        <Text.Body style={{ margin: "1rem 0" }}>this is title 3</Text.Body>
+    </>
+);
+
+export const TopContent = () => (
     <Text.Body style={{ margin: "1rem 0" }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a
         tortor vitae magna sagittis bibendum. Proin dui risus, rhoncus eget

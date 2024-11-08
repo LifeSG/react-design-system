@@ -80,7 +80,7 @@ const Component = (
 
     useEffect(() => {
         const visibleSectionTitle =
-            selectedItemIndex >= 0
+            selectedItemIndex >= 0 && isStickied
                 ? items[selectedItemIndex].title
                 : defaultLabel;
         setLabelText(visibleSectionTitle);
