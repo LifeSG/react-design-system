@@ -1,6 +1,5 @@
 import React from "react";
 import { useTheme } from "styled-components";
-import { V2_BaseTheme } from "../v2_theme";
 import { getErrorDisplayData } from "./error-display-data";
 import {
     ActionButton,
@@ -15,6 +14,7 @@ import {
     InactivityAdditionalAttributes,
     MaintenanceAdditionalAttributes,
 } from "./types";
+import { LifeSGTheme } from "../theme";
 
 export const ErrorDisplay = ({
     type,
@@ -33,7 +33,7 @@ export const ErrorDisplay = ({
     const theme = useTheme();
     const defaultAssets = getErrorDisplayData(
         type,
-        illustrationScheme || ((theme || V2_BaseTheme) as any).resourceScheme
+        illustrationScheme || ((theme || LifeSGTheme) as any).resourceScheme
     );
 
     const testId = otherProps["data-testid"] || "error-display";

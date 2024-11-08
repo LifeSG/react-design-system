@@ -1,9 +1,9 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import styled from "styled-components";
-import { V2_Color } from "../v2_color";
-import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { V2_Text } from "../v2_text";
+import { MediaQuery } from "../theme";
+import { Colour } from "../theme";
+import { Typography } from "../typography/typography";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -32,7 +32,7 @@ export const Wrapper = styled.ul<WrapperStyleProps>`
 
     ${(props) => props.$alignLeft && "margin-right: auto;"}
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: none;
     }
 `;
@@ -41,7 +41,7 @@ export const MobileWrapper = styled.ul`
     display: none;
     list-style: none;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -60,7 +60,7 @@ export const LinkItem = styled.li<ItemStyleProps>`
         margin-left: ${(props) => (props.$hiddenBranding ? "-0.5rem" : "0")};
     }
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         flex-direction: column;
         padding: 0.125rem 0;
         width: 100%;
@@ -68,28 +68,28 @@ export const LinkItem = styled.li<ItemStyleProps>`
     }
 `;
 
-export const Link = styled(V2_Text.Hyperlink.Small)<StyleProps>`
+export const Link = styled(Typography.LinkSM)<StyleProps>`
     display: flex;
     position: relative;
     align-items: center;
     text-align: center;
-    color: ${V2_Color.Neutral[1]};
+    color: ${Colour.text};
     height: 100%;
     padding: 0 0.5rem;
 
     :active,
-    :focus {
-        color: ${V2_Color.Neutral[1]};
+    :hover :focus {
+        color: ${Colour["text-selected-hover"]};
     }
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
-        color: ${V2_Color.Neutral[1]};
+    ${MediaQuery.MaxWidth.lg} {
+        color: ${Colour.text};
         width: 100%;
         padding: 0.5rem 1rem;
         text-align: left;
         align-items: flex-start;
         :hover {
-            color: ${V2_Color.Neutral[1]};
+            color: ${Colour["text-selected-hover"]};
         }
     }
 `;
@@ -111,16 +111,16 @@ export const LinkIndicator = styled.div`
     height: 0.25rem;
     left: 0.5rem;
     right: 0.5rem;
-    background-color: ${V2_Color.Primary};
+    background-color: ${Colour["border-selected"]};
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         left: 0;
         right: unset;
         top: 0;
         bottom: 0;
         height: 100%;
         width: 0.25rem;
-        background-color: ${V2_Color.Primary};
+        background-color: ${Colour["border-selected"]};
     }
 `;
 
@@ -139,8 +139,8 @@ export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
 export const ChevronIcon = styled(ChevronUpIcon)`
     height: 1.25rem;
     width: 1.25rem;
-    color: ${V2_Color.Neutral[3]};
+    color: ${Colour.icon};
     :hover {
-        color: ${V2_Color.Neutral[1]};
+        color: ${Colour["icon-selected-hover"]};
     }
 `;

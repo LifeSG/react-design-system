@@ -3,6 +3,7 @@ import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
 import { ThemeSpec } from "../../src/theme/types";
 import { Radius } from "../../src";
+import { MOCK_THEME } from "./mock-theme-data";
 
 const RadiusTestComponent = styled.div`
     border-radius: ${Radius.sm};
@@ -10,20 +11,10 @@ const RadiusTestComponent = styled.div`
 
 describe("Radius Theming Test", () => {
     it("should apply correct border-radius based on the theme", () => {
-        const mockTheme: ThemeSpec = {
-            colourScheme: "lifesg",
-            fontScheme: "lifesg",
-            motionScheme: "lifesg",
-            borderScheme: "lifesg",
-            spacingScheme: "lifesg",
-            radiusScheme: "lifesg",
-            breakpointScheme: "lifesg",
-        };
-
         const radiusValue = "4px";
 
         const { container } = render(
-            <ThemeProvider theme={mockTheme}>
+            <ThemeProvider theme={MOCK_THEME}>
                 <RadiusTestComponent />
             </ThemeProvider>
         );
@@ -36,13 +27,7 @@ describe("Radius Theming Test", () => {
 
     it("should apply correct border-radius when overriding radius token", () => {
         const overrideTheme: ThemeSpec = {
-            colourScheme: "lifesg",
-            fontScheme: "lifesg",
-            motionScheme: "lifesg",
-            borderScheme: "lifesg",
-            spacingScheme: "lifesg",
-            radiusScheme: "lifesg",
-            breakpointScheme: "lifesg",
+            ...MOCK_THEME,
             overrides: {
                 radius: {
                     sm: 6,
@@ -71,13 +56,7 @@ describe("Radius Theming Test", () => {
         `;
 
         const overrideTheme: ThemeSpec = {
-            colourScheme: "lifesg",
-            fontScheme: "lifesg",
-            motionScheme: "lifesg",
-            borderScheme: "lifesg",
-            spacingScheme: "lifesg",
-            radiusScheme: "lifesg",
-            breakpointScheme: "lifesg",
+            ...MOCK_THEME,
             overrides: {
                 radius: {
                     sm: 6,

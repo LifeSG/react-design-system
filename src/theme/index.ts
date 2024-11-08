@@ -47,6 +47,7 @@ export const LifeSGTheme: ThemeSpec = {
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
+    resourceScheme: "lifesg",
 };
 
 export const BookingSGTheme: ThemeSpec = {
@@ -57,6 +58,7 @@ export const BookingSGTheme: ThemeSpec = {
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
+    resourceScheme: "bookingsg",
 };
 
 export const CCubeTheme: ThemeSpec = {
@@ -67,6 +69,7 @@ export const CCubeTheme: ThemeSpec = {
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
+    resourceScheme: "ccube",
 };
 
 export const MyLegacyTheme: ThemeSpec = {
@@ -77,6 +80,7 @@ export const MyLegacyTheme: ThemeSpec = {
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
+    resourceScheme: "mylegacy",
 };
 
 export const RBSTheme: ThemeSpec = {
@@ -87,4 +91,5 @@ export const RBSTheme: ThemeSpec = {
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
+    resourceScheme: "rbs",
 };

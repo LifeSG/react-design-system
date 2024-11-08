@@ -44,6 +44,12 @@ export type BorderScheme = "lifesg";
 export type SpacingScheme = "lifesg";
 export type RadiusScheme = "lifesg";
 export type BreakpointScheme = "lifesg";
+export type ResourceScheme =
+    | "lifesg"
+    | "bookingsg"
+    | "rbs"
+    | "mylegacy"
+    | "ccube";
 
 export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;
@@ -54,6 +60,7 @@ export interface ThemeSpecOptions {
     spacing?: SpacingSetOptions | undefined;
     border?: BorderSetOptions | undefined;
     radius?: RadiusSetOptions | undefined;
+    resourceScheme?: ResourceScheme | undefined;
     breakpoint?: BreakpointSetOptions | undefined;
 }
 
@@ -65,6 +72,7 @@ export interface ThemeSpec {
     spacingScheme: SpacingScheme;
     radiusScheme: RadiusScheme;
     breakpointScheme: BreakpointScheme;
+    resourceScheme: ResourceScheme;
     overrides?: ThemeSpecOptions | undefined;
 
     maxColumns?: any;

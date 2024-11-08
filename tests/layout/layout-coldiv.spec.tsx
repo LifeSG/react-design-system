@@ -12,6 +12,7 @@ const mockTheme: ThemeSpec = {
     spacingScheme: "lifesg",
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
+    resourceScheme: "lifesg",
 };
 
 describe("ColDiv Component", () => {

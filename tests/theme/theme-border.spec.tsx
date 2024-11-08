@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { render } from "@testing-library/react";
 import { ThemeSpec } from "../../src/theme/types";
 import { Border } from "../../src";
+import { MOCK_THEME } from "./mock-theme-data";
 
 const StyledBorderComponent = styled.div`
     border: ${Border["width-010"]} ${Border.solid};
@@ -11,16 +12,6 @@ const StyledBorderComponent = styled.div`
 
 describe("Border Theming Test", () => {
     it("should apply correct border styles based on the theme", () => {
-        const mockTheme: ThemeSpec = {
-            colourScheme: "lifesg",
-            fontScheme: "lifesg",
-            motionScheme: "lifesg",
-            borderScheme: "lifesg",
-            spacingScheme: "lifesg",
-            radiusScheme: "lifesg",
-            breakpointScheme: "lifesg",
-        };
-
         // Constants for border-top (dashed-default)
         const thickness = "1px";
         const color = "%23DDE1E2";
@@ -30,7 +21,7 @@ describe("Border Theming Test", () => {
         const expectedSvg = `<svg width="8" height="${thickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${color}" stroke-width="${strokeWidth}" stroke-dasharray="4 4" /></svg>`;
 
         const { container } = render(
-            <ThemeProvider theme={mockTheme}>
+            <ThemeProvider theme={MOCK_THEME}>
                 <StyledBorderComponent />
             </ThemeProvider>
         );
@@ -62,23 +53,13 @@ describe("Border Theming Test", () => {
             ${Border["dashed-default"](2, "red")};
         `;
 
-        const mockTheme: ThemeSpec = {
-            colourScheme: "lifesg",
-            fontScheme: "lifesg",
-            motionScheme: "lifesg",
-            borderScheme: "lifesg",
-            spacingScheme: "lifesg",
-            radiusScheme: "lifesg",
-            breakpointScheme: "lifesg",
-        };
-
         const dashThickness = "2px";
         const dashColor = "red";
         const dashStrokeWidth = parseInt(dashThickness) + 1;
         const dashExpectedSvg = `<svg width="8" height="${dashThickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${dashColor}" stroke-width="${dashStrokeWidth}" stroke-dasharray="4 4" /></svg>`;
 
         const { container } = render(
-            <ThemeProvider theme={mockTheme}>
+            <ThemeProvider theme={MOCK_THEME}>
                 <StyledBorderComponentDash />
             </ThemeProvider>
         );
@@ -106,13 +87,7 @@ describe("Border Theming Test", () => {
 
     it("should apply correct border styles based on the override for the border", () => {
         const mockTheme: ThemeSpec = {
-            colourScheme: "lifesg",
-            fontScheme: "lifesg",
-            borderScheme: "lifesg",
-            motionScheme: "lifesg",
-            spacingScheme: "lifesg",
-            radiusScheme: "lifesg",
-            breakpointScheme: "lifesg",
+            ...MOCK_THEME,
             overrides: {
                 border: {
                     "width-010": 3,

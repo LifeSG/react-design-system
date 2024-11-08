@@ -1,8 +1,8 @@
 import styled from "styled-components";
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Button } from "../button";
-import { V2_Color } from "../v2_color";
-import { V2_MediaQuery } from "../v2_media";
-import { V2_Text, V2_TextStyleHelper } from "../v2_text";
+import { Colour, Font, MediaQuery } from "../theme";
+import { Typography } from "../typography";
 
 export const Container = styled.div`
     display: flex;
@@ -17,15 +17,15 @@ export const Img = styled.img`
     width: 25rem;
     height: auto;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         width: 20rem;
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileM} {
+    ${MediaQuery.MaxWidth.xs} {
         width: 18rem;
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileS} {
+    ${MediaQuery.MaxWidth.xxs} {
         width: 15rem;
     }
 `;
@@ -39,40 +39,24 @@ export const TextContainer = styled.div`
     white-space: pre-wrap;
 `;
 
-export const Title = styled(V2_Text.H2)`
+export const Title = styled(Typography.HeaderMD)`
     margin: 2rem 0 1rem;
     text-align: center;
 `;
 
 export const DescriptionContainer = styled.div`
-    ${V2_TextStyleHelper.getTextStyle(
-        "Body",
-        "regular"
-    )} // Follow styling of Text.Body
-    color: ${V2_Color.Neutral[1]}; // Follow styling of Text.Body
+    ${Font["body-baseline-regular"]} // Follow styling of Text.Body
+    color: ${Colour.text};
     text-align: center;
 
-    strong {
-        ${V2_TextStyleHelper.getFontFamily("Body", "semibold")}
-    }
-
-    a {
-        ${V2_TextStyleHelper.getTextStyle("Body", "semibold")}
-        color: ${V2_Color.Primary};
-
-        :hover,
-        :active,
-        :focus {
-            color: ${V2_Color.Secondary};
-        }
-    }
+    ${applyHtmlContentStyle({ textSize: "body-baseline" })}
 `;
 
 export const ActionButton = styled(Button.Default)`
     margin: 2rem auto 0;
     width: 21rem;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         width: 100%;
         margin: 2rem auto 0;
     }

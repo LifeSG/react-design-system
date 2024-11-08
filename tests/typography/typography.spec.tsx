@@ -14,6 +14,7 @@ describe("Typography Components", () => {
         spacingScheme: "lifesg",
         radiusScheme: "lifesg",
         breakpointScheme: "lifesg",
+        resourceScheme: "lifesg",
     };
 
     describe("Body Text", () => {

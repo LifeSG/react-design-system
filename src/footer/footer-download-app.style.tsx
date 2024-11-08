@@ -1,5 +1,5 @@
-import { V2_MediaQuery } from "../v2_media";
-import { V2_Text } from "../v2_text";
+import { MediaQuery } from "../theme";
+import { Typography } from "../typography";
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -7,13 +7,13 @@ export const Wrapper = styled.div`
     align-items: flex-start;
     flex-direction: column;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         justify-content: flex-start;
         padding: 0;
     }
 `;
 
-export const Label = styled(V2_Text.H5).attrs({ as: "p" })`
+export const Label = styled(Typography.BodyMD).attrs({ as: "p" })`
     margin-bottom: 1rem;
 `;
 
@@ -33,7 +33,7 @@ export const AppStoreLink = styled.a`
         object-fit: contain;
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         &:not(:last-child) {
             margin-right: 1rem;
         }

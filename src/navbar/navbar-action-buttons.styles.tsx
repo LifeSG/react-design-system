@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
-import { V2_MediaQuery } from "../v2_media";
-import { V2_Text } from "../v2_text";
+import { MediaQuery } from "../theme";
+import { Typography } from "../typography/typography";
 
 // =============================================================================
 // WRAPPER
@@ -12,7 +12,7 @@ export const Wrapper = styled.ul`
     margin-left: 4rem;
     flex-shrink: 0;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: none;
     }
 `;
@@ -20,7 +20,7 @@ export const Wrapper = styled.ul`
 export const MobileWrapper = styled.ul`
     display: none;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
         list-style: none;
         margin-left: 4rem;
@@ -32,7 +32,7 @@ export const DrawerWrapper = styled.ul`
     display: none;
     list-style: none;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
         flex-direction: column;
         margin-top: 2.5rem;
@@ -41,7 +41,7 @@ export const DrawerWrapper = styled.ul`
         max-width: 24rem;
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         width: 100%;
         max-width: unset;
         min-width: unset;
@@ -60,7 +60,7 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
         margin-right: 1rem;
     }
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         width: 100%;
         padding: 0 0 0 1rem;
         justify-content: center;
@@ -71,7 +71,7 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
         }
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         ${(props) => {
             if (props.$mobile) {
                 return css`
@@ -83,7 +83,7 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
 `;
 
 export const ActionButton = styled(Button.Small)`
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         width: 100%;
         padding: 0.685rem 1rem;
     }
@@ -95,14 +95,14 @@ export const ActionButton = styled(Button.Small)`
 export const DownloadAppWrapper = styled.div`
     display: none;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
         flex-direction: column;
         margin-top: 2.5rem;
     }
 `;
 
-export const DownloadAppTitle = styled(V2_Text.BodySmall)`
+export const DownloadAppTitle = styled(Typography.BodyMD)`
     margin-bottom: 0.5rem;
 `;
 
@@ -121,13 +121,13 @@ export const DownloadAppImageLink = styled.a`
         object-fit: contain;
     }
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         img {
             max-width: 11rem;
         }
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         img {
             max-width: 100%;
         }

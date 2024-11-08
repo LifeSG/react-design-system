@@ -1,30 +1,29 @@
 import styled from "styled-components";
-import { V2_Layout } from "../v2_layout";
-import { V2_MediaQuery } from "../v2_media";
-import { V2_Color } from "../v2_color";
-import { V2_Text, V2_TextStyleHelper } from "../v2_text";
+import { Colour, Font, MediaQuery } from "../theme";
+import { Typography } from "../typography";
+import { Layout } from "../layout";
 
 // =============================================================================
 // GENERIC
 // =============================================================================
 
 export const BaseFooter = styled.footer`
-    background: ${V2_Color.Neutral[7]};
+    background: ${Colour["bg-strong"]};
 `;
 
-export const StyledFooterLink = styled(V2_Text.Hyperlink.Small)`
-    color: ${V2_Color.Neutral[1]};
+export const StyledFooterLink = styled(Typography.LinkSM)`
+    color: ${Colour.text};
 `;
 
 // =============================================================================
 // TOP SECTION
 // =============================================================================
 
-export const TopSection = styled(V2_Layout.Content)`
+export const TopSection = styled(Layout.Content)`
     padding: 4rem 0;
-    border-bottom: 1px solid ${V2_Color.Neutral[5]};
+    border-bottom: 1px solid ${Colour.border};
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         padding: 2rem 0;
     }
 `;
@@ -38,12 +37,12 @@ export const LogoSection = styled.div`
         object-fit: contain;
     }
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         grid-column: 1 / span 8;
         margin-bottom: 2rem;
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         grid-column: 1 / span 4;
         margin-bottom: 2rem;
     }
@@ -71,7 +70,7 @@ export const LinkSection = styled.ul`
         }
     }
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         // first col
         grid-column: 1 / span 4;
 
@@ -81,7 +80,7 @@ export const LinkSection = styled.ul`
         }
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         // first col
         grid-column: 1 / span 2;
 
@@ -95,12 +94,12 @@ export const LinkSection = styled.ul`
 export const AddonSection = styled.div`
     grid-column: 9 / span 4;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         grid-column: 1 / span 8;
         margin-top: 2rem;
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         grid-column: 1 / span 4;
     }
 `;
@@ -112,17 +111,17 @@ export const AddonSection = styled.div`
 export const MobileOnlyBorder = styled.div`
     display: none;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: block;
         height: 1px;
-        background: ${V2_Color.Neutral[6]};
+        background: ${Colour["bg-strong"]};
     }
 `;
 
-export const BottomSection = styled(V2_Layout.Content)`
+export const BottomSection = styled(Layout.Content)`
     padding: 1.375rem 0;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         border-top: none;
         flex-direction: column;
         padding: 1rem 0;
@@ -137,7 +136,7 @@ export const BottomSectionContent = styled.div`
         margin-right: 1rem;
     }
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         grid-column: 1 / span 8;
         flex-direction: column;
         &:not(:last-child) {
@@ -145,7 +144,7 @@ export const BottomSectionContent = styled.div`
         }
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         grid-column: 1 / span 4;
     }
 `;
@@ -154,44 +153,44 @@ export const CopyrightSection = styled(BottomSectionContent)`
     grid-column: 7 / span 6;
     justify-content: flex-end;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin-top: 1rem;
         justify-content: flex-start;
         grid-column: 1 / span 8;
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         grid-column: 1 / span 4;
     }
 `;
 
-export const DisclaimerTextLink = styled(V2_Text.Hyperlink.Small)`
-    ${V2_TextStyleHelper.getTextStyle("XSmall", "regular")}
-    color: ${V2_Color.Neutral[1]};
+export const DisclaimerTextLink = styled(Typography.LinkSM)`
+    ${Font["body-xs-regular"]}
+    color: ${Colour.text};
     &:not(:last-child) {
         margin-right: 1.5rem;
     }
 
     svg {
-        color: ${V2_Color.Neutral[1]};
+        color: ${Colour.icon};
         vertical-align: sub;
     }
 
     &:hover {
-        color: ${V2_Color.Neutral[3]};
+        color: ${Colour["text-subtler"]};
         svg {
-            color: ${V2_Color.Neutral[3]};
+            color: ${Colour["icon-subtle"]};
         }
     }
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin-bottom: 1rem;
         &:not(:last-child) {
             margin-right: 0;
         }
     }
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin-bottom: 0.625rem;
     }
 `;
