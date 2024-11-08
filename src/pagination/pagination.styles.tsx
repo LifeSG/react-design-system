@@ -110,8 +110,10 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
 export const PageItem = styled.button<StyleProps>`
     background: ${(props) =>
         props.$selected ? Colour["bg-primary"] : Colour.bg};
-    border: ${Border["width-010"]} solid
-        ${(props) => (props.$selected ? Colour["bg-primary"] : Colour.border)};
+    border: ${(props) =>
+        `${Border["width-010"]} ${Border.solid} ${
+            props.$selected ? Colour["bg-primary"] : Colour.border
+        }`};
     color: ${(props) =>
         props.$selected ? Colour["text-inverse"] : Colour.text};
 
@@ -211,7 +213,7 @@ export const InputView = styled(Input)`
     width: 3.5rem;
     height: 2.5rem;
     border-radius: ${Radius.sm};
-    border: ${Border["width-010"]} solid ${Colour.border};
+    border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     padding: 0.5rem 0.5rem;
 
     input {
