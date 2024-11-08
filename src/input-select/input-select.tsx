@@ -206,7 +206,9 @@ export const InputSelect = <T, V>({
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer ref={labelContainerRef}>{renderLabel()}</LabelContainer>
+        <LabelContainer ref={labelContainerRef} disabled={disabled}>
+            {renderLabel()}
+        </LabelContainer>
     );
 
     const renderElement = () => {

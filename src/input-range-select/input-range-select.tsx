@@ -239,6 +239,7 @@ export const InputRangeSelect = <T, V>({
             <LabelContainer
                 onClick={handleSelectorClick(rangeType)}
                 ref={labelContainerRef[rangeType]}
+                disabled={disabled}
             >
                 {renderLabel(rangeType)}
             </LabelContainer>

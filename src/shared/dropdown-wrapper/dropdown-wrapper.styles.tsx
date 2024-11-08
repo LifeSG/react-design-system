@@ -189,10 +189,17 @@ export const Divider = styled.div`
     margin: 0 0.5rem;
 `;
 
-export const LabelContainer = styled.div`
+export const LabelContainer = styled.div<{ disabled?: boolean }>`
     display: flex;
     flex: 1;
     word-break: break-all;
+    ${(props) => {
+        if (props.disabled) {
+            return css`
+                color: ${Color.Neutral[3]};
+            `;
+        }
+    }}
 `;
 
 export const ValueLabel = styled.div<ValueLabelStyleProps>`
