@@ -11,6 +11,7 @@ export const RadioButton = ({
     className,
     checked,
     disabled,
+    displaySize = "default",
     onChange,
     ...otherProps
 }: RadioButtonProps) => {
@@ -46,6 +47,7 @@ export const RadioButton = ({
             $selected={checked}
             $disabled={disabled}
             className={className}
+            $displaySize={displaySize}
             data-testid="radio-button"
         >
             <Input
