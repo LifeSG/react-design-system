@@ -1,0 +1,24 @@
+import { StyledComponentProps } from "../helpers";
+import { SpacingSet } from "./types";
+export declare const getSpace: (key: keyof SpacingSet) => (props: StyledComponentProps) => string;
+export declare const SpacingValues: {
+    "spacing-0": (props: StyledComponentProps) => string;
+    "spacing-4": (props: StyledComponentProps) => string;
+    "spacing-8": (props: StyledComponentProps) => string;
+    "spacing-12": (props: StyledComponentProps) => string;
+    "spacing-16": (props: StyledComponentProps) => string;
+    "spacing-20": (props: StyledComponentProps) => string;
+    "spacing-24": (props: StyledComponentProps) => string;
+    "spacing-32": (props: StyledComponentProps) => string;
+    "spacing-40": (props: StyledComponentProps) => string;
+    "spacing-48": (props: StyledComponentProps) => string;
+    "spacing-64": (props: StyledComponentProps) => string;
+    "spacing-72": (props: StyledComponentProps) => string;
+    "layout-xs": (props: StyledComponentProps) => string;
+    "layout-sm": (props: StyledComponentProps) => string;
+    "layout-md": (props: StyledComponentProps) => string;
+    "layout-lg": (props: StyledComponentProps) => string;
+    "layout-xl": (props: StyledComponentProps) => string;
+    "layout-xxl": (props: StyledComponentProps) => string;
+    "layout-xxxl": (props: StyledComponentProps) => string;
+};
