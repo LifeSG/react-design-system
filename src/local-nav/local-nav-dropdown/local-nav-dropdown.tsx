@@ -134,7 +134,7 @@ const Component = (
                 return (
                     <>
                         {isSelected && <StyledTickIcon />}
-                        <LabelText id={`${id}-label`} isSelected={isSelected}>
+                        <LabelText id={`${id}-label`} $isSelected={isSelected}>
                             {title}
                         </LabelText>
                     </>
@@ -146,7 +146,7 @@ const Component = (
         };
 
         return (
-            <NavItem id={id} isSelected={isSelected} onClick={handleClick}>
+            <NavItem id={id} $isSelected={isSelected} onClick={handleClick}>
                 {renderTitle()}
             </NavItem>
         );
@@ -161,8 +161,8 @@ const Component = (
                 className={className || "sticky-ref"}
             />
             <NavWrapper
-                isStickied={isStickied}
-                stickyOffset={stickyOffset}
+                $isStickied={isStickied}
+                $stickyOffset={stickyOffset}
                 ref={ref}
                 id={`${navTestId}-wrapper`}
                 data-testid={`${navTestId}-wrapper`}
@@ -174,12 +174,12 @@ const Component = (
                     data-testid={`${navTestId}-label`}
                 >
                     <LabelText weight="bold">{labelText}</LabelText>
-                    <NavIcon isDropdownExpanded={isDropdownExpanded} />
+                    <NavIcon $isDropdownExpanded={isDropdownExpanded} />
                 </NavLabel>
                 {isDropdownExpanded && (
                     <NavItemList
                         data-testid={`${navTestId}-dropdown-list`}
-                        viewportHeight={
+                        $viewportHeight={
                             viewportHeight - dropdowntHeight - stickyOffset
                         }
                     >

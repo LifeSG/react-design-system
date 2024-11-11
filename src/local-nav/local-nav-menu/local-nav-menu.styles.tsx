@@ -1,9 +1,17 @@
 import styled from "styled-components";
 import { Color } from "../../color";
 
+// =============================================================================
+// STYLE INTERFACES, transient props are denoted with $
+// See more https://styled-components.com/docs/api#transient-props
+// =============================================================================
 interface NavItemStyleProps {
-    isSelected?: boolean;
+    $isSelected?: boolean;
 }
+
+// =============================================================================
+// STYLING
+// =============================================================================
 
 export const Nav = styled.ul`
     list-style-type: none;
@@ -16,7 +24,7 @@ export const NavItem = styled.li<NavItemStyleProps>`
     margin: 0;
     padding: 1rem;
     cursor: pointer;
-    ${(props) => props.isSelected && "font-weight: bold;"}
+    ${(props) => props.$isSelected && "font-weight: bold;"}
 
     &::before {
         content: "";
@@ -27,7 +35,7 @@ export const NavItem = styled.li<NavItemStyleProps>`
         top: 0;
         background-color: ${Color.Primary} !important;
         transition: all 250ms linear;
-        opacity: ${(props) => (props.isSelected ? "1" : "0.2")};
+        opacity: ${(props) => (props.$isSelected ? "1" : "0.2")};
     }
 
     &:hover {

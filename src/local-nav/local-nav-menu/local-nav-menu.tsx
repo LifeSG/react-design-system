@@ -60,7 +60,7 @@ const Component = (
         };
 
         return (
-            <NavItem id={id} isSelected={isSelected} onClick={handleClick}>
+            <NavItem id={id} $isSelected={isSelected} onClick={handleClick}>
                 {renderTitle()}
             </NavItem>
         );
