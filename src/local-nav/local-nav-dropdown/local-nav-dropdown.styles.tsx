@@ -1,8 +1,8 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
 import { Color } from "../../color";
 import { Text } from "../../text/text";
-import { TickIcon } from "@lifesg/react-icons/tick";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
