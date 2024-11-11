@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import { V2_TextStyleHelper } from "src/v2_text";
+import { Font } from "../../src";
 
 // =============================================================================
 // STYLING
 // =============================================================================
 export const Container = styled.div`
     display: flex;
+    align-items: center;
     flex-direction: column;
 `;
 
@@ -17,6 +18,6 @@ export const OptionContainer = styled.div`
 `;
 
 export const Label = styled.label`
-    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
+    ${Font["body-baseline-regular"]}
     margin-left: 1rem;
 `;

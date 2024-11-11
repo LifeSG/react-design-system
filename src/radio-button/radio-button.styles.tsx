@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { RadioButtonProps } from "./types";
+import styled, { css } from "styled-components";
+import { RadioButtonProps, RadioButtonSize } from "./types";
 import { Colour, Motion } from "../theme";
 import { CircleDotIcon, CircleIcon } from "@lifesg/react-icons";
 
@@ -10,6 +10,7 @@ import { CircleDotIcon, CircleIcon } from "@lifesg/react-icons";
 interface StyleProps {
     $selected?: boolean;
     $disabled?: boolean;
+    $displaySize?: RadioButtonSize | undefined;
 }
 
 // =============================================================================
@@ -20,8 +21,19 @@ export const Container = styled.div<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 2rem;
-    width: 2rem;
+    ${(props) => {
+        if (props.$displaySize === "small") {
+            return css`
+                height: 1.5rem;
+                width: 1.5rem;
+            `;
+        } else {
+            return css`
+                height: 2rem;
+                width: 2rem;
+            `;
+        }
+    }}
     position: relative;
 `;
 

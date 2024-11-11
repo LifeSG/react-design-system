@@ -46,6 +46,9 @@ const Component = (
 
         if (Array.isArray(cols)) {
             const [start, end] = cols;
+            if (end === -1) {
+                return { start, span: maxCols - start + 1 };
+            }
             const span = Math.min(end - start, maxCols);
             return { start, span };
         }
