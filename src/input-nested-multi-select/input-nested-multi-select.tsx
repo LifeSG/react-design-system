@@ -344,7 +344,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
 
     const renderSelectorContent = () => (
         <>
-            <LabelContainer ref={labelContainerRef} disabled={disabled}>
+            <LabelContainer ref={labelContainerRef} $disabled={disabled}>
                 {renderLabel()}
             </LabelContainer>
             {!readOnly && (

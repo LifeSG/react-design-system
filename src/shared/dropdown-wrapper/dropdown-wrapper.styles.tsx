@@ -25,6 +25,10 @@ export interface SelectorStyleProps {
     $variant?: DropdownVariantType | undefined;
 }
 
+export interface LabelContainerStyleProps {
+    $disabled?: boolean | undefined;
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -189,12 +193,12 @@ export const Divider = styled.div`
     margin: 0 0.5rem;
 `;
 
-export const LabelContainer = styled.div<{ disabled?: boolean }>`
+export const LabelContainer = styled.div<LabelContainerStyleProps>`
     display: flex;
     flex: 1;
     word-break: break-all;
     ${(props) => {
-        if (props.disabled) {
+        if (props.$disabled) {
             return css`
                 color: ${Color.Neutral[3]};
             `;
