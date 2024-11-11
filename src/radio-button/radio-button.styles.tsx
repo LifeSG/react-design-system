@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { RadioButtonProps, RadioboxSize } from "./types";
+import { RadioButtonProps, RadioButtonSize } from "./types";
 import { Colour, Motion } from "../theme";
 import { CircleDotIcon, CircleIcon } from "@lifesg/react-icons";
 
@@ -10,7 +10,7 @@ import { CircleDotIcon, CircleIcon } from "@lifesg/react-icons";
 interface StyleProps {
     $selected?: boolean;
     $disabled?: boolean;
-    $displaySize?: RadioboxSize | undefined;
+    $displaySize?: RadioButtonSize | undefined;
 }
 
 // =============================================================================

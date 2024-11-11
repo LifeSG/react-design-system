@@ -54,3 +54,37 @@ export const MultipleOptions: StoryObj<Component> = {
         );
     },
 };
+
+export const MultipleSizes: StoryObj<Component> = {
+    render: () => {
+        const [value, setValue] = useState("");
+        const handleSelection = (event) => {
+            setValue(event.target.value);
+        };
+        return (
+            <Container>
+                <OptionContainer key="A">
+                    <RadioButton
+                        value="A"
+                        id="options-a"
+                        name="options"
+                        checked={value === "A"}
+                        onChange={handleSelection}
+                    />
+                    <Label htmlFor="options-a">Option A</Label>
+                </OptionContainer>
+                <OptionContainer key="B">
+                    <RadioButton
+                        value="B"
+                        id="options-b"
+                        name="options"
+                        checked={value === "B"}
+                        displaySize="small"
+                        onChange={handleSelection}
+                    />
+                    <Label htmlFor="options-b">Option B</Label>
+                </OptionContainer>
+            </Container>
+        );
+    },
+};

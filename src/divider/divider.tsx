@@ -1,9 +1,7 @@
-import { useTheme } from "styled-components";
 import { ColDiv } from "../layout/col-div";
 import { V2_ColDiv } from "../v2_layout/col-div";
 import { Line } from "./divider.style";
 import { DividerProps } from "./types";
-import { Breakpoint } from "../theme";
 
 export const Divider = ({
     thickness = 1,
@@ -11,33 +9,22 @@ export const Divider = ({
     layoutType = "flex",
     color,
     className,
-    xxsCols,
-    xsCols,
-    smCols,
-    mdCols,
-    lgCols,
-    xlCols,
-    xxlCols,
+    xxsCols = [1, -1],
+    xsCols = [1, -1],
+    smCols = [1, -1],
+    mdCols = [1, -1],
+    lgCols = [1, -1],
+    xlCols = [1, -1],
+    xxlCols = [1, -1],
     mobileCols = 4,
     tabletCols = 8,
     desktopCols = 12,
     ...otherProps
 }: DividerProps) => {
-    const theme = useTheme();
     const isV2Layout =
         mobileCols !== undefined ||
         tabletCols !== undefined ||
         desktopCols !== undefined;
-
-    const colProps = {
-        xxsCols: xxsCols ?? Breakpoint["xxs-column"]({ theme }),
-        xsCols: xsCols ?? Breakpoint["xs-column"]({ theme }),
-        smCols: smCols ?? Breakpoint["sm-column"]({ theme }),
-        mdCols: mdCols ?? Breakpoint["md-column"]({ theme }),
-        lgCols: lgCols ?? Breakpoint["lg-column"]({ theme }),
-        xlCols: xlCols ?? Breakpoint["xl-column"]({ theme }),
-        xxlCols: xxlCols ?? Breakpoint["xxl-column"]({ theme }),
-    };
 
     switch (layoutType) {
         case "flex":
@@ -69,7 +56,17 @@ export const Divider = ({
                 );
             } else {
                 return (
-                    <ColDiv className={className} {...colProps} {...otherProps}>
+                    <ColDiv
+                        className={className}
+                        xxsCols={xxsCols}
+                        xsCols={xsCols}
+                        smCols={smCols}
+                        mdCols={mdCols}
+                        lgCols={lgCols}
+                        xlCols={xlCols}
+                        xxlCols={xxlCols}
+                        {...otherProps}
+                    >
                         <Line
                             $thickness={thickness}
                             $lineStyle={lineStyle}

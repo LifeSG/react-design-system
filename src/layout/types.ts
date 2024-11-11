@@ -19,7 +19,7 @@ export interface SectionProps extends CommonLayoutProps {}
 export interface ContentProps extends ContainerProps {}
 
 export type ColSpan<Max extends number | undefined> = Max extends number
-    ? Range<Max> | [Range<AddOne<Max>>, Range<AddOne<Max>>] | undefined
+    ? Range<Max> | [Range<AddOne<Max>>, Range<AddOne<Max>> | -1] | undefined
     : number | [number, number] | undefined;
 
 export type BreakpointSpan<
