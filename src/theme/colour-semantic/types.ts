@@ -98,6 +98,7 @@ export type SemanticColourSet = {
     "bg-selected-hover": SemanticColourValue;
     "bg-selected-strong": SemanticColourValue;
     "bg-selected-strongest": SemanticColourValue;
+    "bg-selected-strongest-hover": SemanticColourValue;
 
     "bg-disabled": SemanticColourValue;
     "bg-selected-disabled": SemanticColourValue;

@@ -194,6 +194,7 @@ export const SemanticColourDisplay = ({
                         "bg-selected-hover",
                         "bg-selected-strong",
                         "bg-selected-strongest",
+                        "bg-selected-strongest-hover",
                     ]}
                 />
                 <SemanticColourPalette

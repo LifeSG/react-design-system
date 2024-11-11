@@ -130,6 +130,9 @@ export const ColourSemantic = {
     "bg-selected-hover": getSemanticColour("bg-selected-hover"),
     "bg-selected-strong": getSemanticColour("bg-selected-strong"),
     "bg-selected-strongest": getSemanticColour("bg-selected-strongest"),
+    "bg-selected-strongest-hover": getSemanticColour(
+        "bg-selected-strongest-hover"
+    ),
 
     "bg-disabled": getSemanticColour("bg-disabled"),
     "bg-selected-disabled": getSemanticColour("bg-selected-disabled"),

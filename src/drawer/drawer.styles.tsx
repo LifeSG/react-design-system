@@ -1,8 +1,8 @@
-import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
-import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { V2_Text } from "../v2_text";
+import { Border, Colour, Motion } from "../theme";
+import styled, { css } from "styled-components";
+import { Typography } from "../typography/typography";
+import { MediaQuery } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -19,14 +19,13 @@ const VISIBILITY_STYLE = (show: boolean | undefined) => {
     if (show) {
         return css`
             right: 0;
-            transition: all 300ms cubic-bezier(0.21, 0.79, 0.53, 1);
-            transition-delay: 200ms;
+            transition: all ${Motion["duration-800"]} ${Motion["ease-exit"]};
         `;
     }
 
     return css`
         right: -100%;
-        transition: all 300ms cubic-bezier(0.4, 0.34, 0.38, 1);
+        transition: all ${Motion["duration-800"]} ${Motion["ease-default"]};
     `;
 };
 
@@ -41,7 +40,7 @@ export const Container = styled.div<StyleProps>`
     flex-direction: column;
     height: 100%;
 
-    background-color: ${V2_Color.Neutral[8]};
+    background-color: ${Colour.bg};
     box-shadow: 0px 2px 12px rgba(104, 104, 104, 0.25);
 
     visibility: ${(props) => (props.$show ? "visible" : "hidden")};
@@ -52,12 +51,12 @@ export const Container = styled.div<StyleProps>`
     border-bottom-left-radius: 8px;
     overflow: hidden;
 
-    ${V2_MediaQuery.MaxWidth.desktopL} {
+    ${MediaQuery.MaxWidth.xl} {
         width: 50%;
         min-width: 700px;
     }
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         width: 100%;
         min-width: unset;
         border-top-left-radius: 0;
@@ -73,23 +72,22 @@ export const Header = styled.div`
     gap: 1rem;
     height: 5rem;
     padding: 2rem 1rem 1rem;
-    background-color: ${V2_Color.Neutral[8]};
-    border-bottom: 1px solid ${V2_Color.Neutral[5]};
+    background-color: ${Colour.bg};
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         gap: 0.5rem;
         padding: 2rem 1.25rem 1rem;
     }
 `;
 
 export const CloseButton = styled(ClickableIcon)`
-    color: ${V2_Color.Neutral[3]};
+    color: ${Colour.icon};
     padding: 0;
     order: -1; // show button on the left of the header
-
     :active,
     :focus {
-        color: ${V2_Color.Primary};
+        color: ${Colour["icon-hover"]};
     }
 
     svg {
@@ -98,7 +96,7 @@ export const CloseButton = styled(ClickableIcon)`
     }
 `;
 
-export const Heading = styled(V2_Text.H2)`
+export const Heading = styled(Typography.HeaderMD)`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

@@ -1,8 +1,7 @@
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
 import { FadeWrapper } from "../shared/fade-wrapper";
-import { V2_Text } from "../v2_text";
-import { V2_MediaQuery } from "../v2_media";
+import { Border, Colour, MediaQuery } from "../theme";
+import { Typography } from "../typography/typography";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -27,17 +26,17 @@ export const Chain = styled.ul`
 export const ChainItem = styled.li<ChainStyleProps>`
     display: flex;
     flex-shrink: 0;
-    border-bottom: 4px solid ${V2_Color.Neutral[5]};
+    border-bottom: 4px ${Border.solid} ${Colour.border};
 
     ${(props) => {
         if (props.$active) {
             return css`
-                border-bottom: 4px solid ${V2_Color.Primary};
+                border-bottom: 4px ${Border.solid} ${Colour["border-primary"]};
             `;
         }
     }}
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         flex: 1;
         justify-content: center;
     }
@@ -51,12 +50,12 @@ export const ChainLink = styled.button`
     cursor: pointer;
 `;
 
-export const Label = styled(V2_Text.Body)<LabelStyleProps>`
+export const Label = styled(Typography.BodyBL)<LabelStyleProps>`
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, calc(-50% - 0.125rem)); // Based on testing
-    color: ${V2_Color.Neutral[3]};
+    color: ${Colour["text-subtler"]};
     opacity: 1;
 
     ${(props) => {
@@ -68,8 +67,8 @@ export const Label = styled(V2_Text.Body)<LabelStyleProps>`
     }}
 `;
 
-export const BoldLabel = styled(V2_Text.Body)<LabelStyleProps>`
-    color: ${V2_Color.Primary};
+export const BoldLabel = styled(Typography.BodyBL)<LabelStyleProps>`
+    color: ${Colour["text-primary"]};
     opacity: 0;
     ${(props) => {
         if (props.$active) {

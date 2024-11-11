@@ -1,9 +1,8 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
-import styled from "styled-components";
-import { V2_Color } from "../v2_color";
-import { V2_MediaQuery } from "../v2_media";
-import { V2_Text } from "../v2_text/text";
-
+import styled, { css } from "styled-components";
+import { FontSpec, MediaQuery } from "../theme";
+import { Typography } from "../typography/typography";
+import { Colour } from "../theme";
 // =============================================================================
 // STYLE TYPES, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -24,14 +23,13 @@ export const Wrapper = styled.div`
     position: relative;
     width: 100%;
     z-index: 1;
-
     margin: 2rem 0;
 
-    ${V2_MediaQuery.MaxWidth.desktopM} {
+    ${MediaQuery.MaxWidth.xl} {
         margin: 1.5rem 0;
     }
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin: 1rem 0;
     }
 `;
@@ -42,6 +40,7 @@ export const Content = styled.ul`
     flex-wrap: wrap;
     white-space: nowrap;
     margin-left: -0.25rem;
+    font-size: ${FontSpec["body-size-md"]};
     overflow-x: scroll;
     overflow-y: hidden;
     scrollbar-width: none; /* Firefox */
@@ -50,7 +49,7 @@ export const Content = styled.ul`
         display: none; /* Chrome/Safari/Webkit */
     }
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         flex-wrap: nowrap;
     }
 `;
@@ -86,11 +85,11 @@ export const Fade = styled.div<FadeProps>`
 			`;
         }
 
-        return `
-			${V2_MediaQuery.MaxWidth.tablet} {
-				${positionStyle}
-			}
-		`;
+        return css`
+            ${MediaQuery.MaxWidth.lg} {
+                ${positionStyle}
+            }
+        `;
     }};
 `;
 
@@ -106,14 +105,16 @@ export const Item = styled.li<ItemStyleProps>`
 `;
 
 export const Caret = styled(ChevronRightIcon)`
-    margin: 0.25rem 0.25rem 0.1rem 0.25rem;
-    color: ${V2_Color.Neutral[4]};
+    margin: 0.25rem;
+    height: 1em;
+    width: 1em;
+    color: ${Colour["icon-subtle"]};
 `;
 
-export const CurrentLabel = styled(V2_Text.BodySmall)`
+export const CurrentLabel = styled(Typography.BodyMD)`
     margin: 0.25rem !important;
 `;
 
-export const PreviousLink = styled(V2_Text.Hyperlink.Small)`
+export const PreviousLink = styled(Typography.LinkMD)`
     margin: 0.25rem !important;
 `;
