@@ -38,6 +38,7 @@ const Component = (
         useState<boolean>(false);
     const [viewportHeight, setViewportHeight] = useState(0);
     const [dropdowntHeight, setDropdownHeight] = useState(0);
+    const [dynamicMargin, setDynamicMargin] = useState(0);
     const navTestId = testId || "local-nav-dropdown";
 
     const visibleSectionTitle =
@@ -89,6 +90,29 @@ const Component = (
         document.body.style.overflow =
             isDropdownExpanded && isStickied ? "hidden" : "auto";
     }, [isDropdownExpanded, isStickied]);
+
+    useEffect(() => {
+        const adjustPadding = () => {
+            const dropdown = document.querySelector(
+                `[data-testid="${navTestId}"]`
+            );
+            if (dropdown) {
+                const dropdownRect = dropdown.getBoundingClientRect();
+                const spaceToRight = window.innerWidth - dropdownRect.right;
+                const spaceToLeft = dropdownRect.left;
+                // Calculate the padding needed to balance the dropdown in the viewport
+                const sidePadding = Math.max(spaceToRight, spaceToLeft);
+                setDynamicMargin(sidePadding);
+            }
+        };
+        adjustPadding();
+
+        window.addEventListener("resize", adjustPadding);
+
+        return () => {
+            window.removeEventListener("resize", adjustPadding);
+        };
+    }, []);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -144,11 +168,13 @@ const Component = (
         );
     };
 
+    console.log("sideMargin: ", dynamicMargin);
     return (
         <>
             <span ref={detectStickyRef} data-testid={"sticky-ref"} />
             <NavWrapper
                 $isStickied={isStickied}
+                $sideMargin={dynamicMargin}
                 $stickyOffset={stickyOffset}
                 ref={ref}
                 id={id}

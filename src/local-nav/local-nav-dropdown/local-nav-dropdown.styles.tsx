@@ -11,6 +11,7 @@ import { Text } from "../../text/text";
 interface DropdownNavStyleProps {
     $isStickied?: boolean;
     $stickyOffset: number;
+    $sideMargin?: number;
 }
 interface NavItemListStyleProps {
     $viewportHeight?: number;
@@ -107,14 +108,14 @@ export const NavWrapper = styled.nav<DropdownNavStyleProps>`
     ${(props) =>
         props.$isStickied &&
         `${NavLabel} {
-			margin: 0 -16px;
+            ${props.$sideMargin && `margin: 0 -${props.$sideMargin}px;`}
 			padding: 12px 16px;
 			border-radius: 0;
 		}
 
 		${NavItemList} {
-			margin-left: -16px;
-			margin-right: -16px;
+            ${props.$sideMargin && `margin-left: -${props.$sideMargin}px;`}
+            ${props.$sideMargin && `margin-right: -${props.$sideMargin}px;`}
 			border-radius-bottom-left: 4px;
 			border-radius-bottom-right: 4px;
 
