@@ -24,22 +24,20 @@ export const NavItem = styled.li<NavItemStyleProps>`
     margin: 0;
     padding: 1rem;
     cursor: pointer;
-    ${(props) => props.$isSelected && "font-weight: bold;"}
 
     &::before {
         content: "";
         position: absolute;
         left: 0;
-        width: 0.25rem;
+        width: 4px;
         height: 100%;
         top: 0;
-        background-color: ${Color.Primary} !important;
+        background-color: ${(props) =>
+            props.$isSelected ? Color.Primary : Color.Accent.Light[5]};
         transition: all 250ms linear;
-        opacity: ${(props) => (props.$isSelected ? "1" : "0.2")};
     }
 
     &:hover {
-        font-weight: bold;
         background-color: ${Color.Accent.Light[6]};
     }
 `;

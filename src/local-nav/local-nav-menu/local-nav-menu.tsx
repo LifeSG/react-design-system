@@ -13,7 +13,7 @@ import { Nav, NavItem } from "./local-nav-menu.styles";
  */
 const Component = (
     {
-        onNavItemSelect: onNavItemSelect,
+        onNavItemSelect,
         items,
         selectedItemIndex,
         id,
@@ -43,20 +43,16 @@ const Component = (
         const renderTitle = () => {
             if (renderItem) {
                 return renderItem(item, { selected: isSelected });
-            } else if (typeof title === "string") {
-                return (
-                    <Text.Body
-                        style={{ margin: 0 }}
-                        weight={isSelected ? "semibold" : "regular"}
-                        id={`${id}-title`}
-                    >
-                        {title}
-                    </Text.Body>
-                );
-            } else if (React.isValidElement(title)) {
-                return title;
             }
-            return null;
+            return (
+                <Text.Body
+                    style={{ margin: 0 }}
+                    weight={isSelected ? "semibold" : "regular"}
+                    id={`${id}-title`}
+                >
+                    {title}
+                </Text.Body>
+            );
         };
 
         return (
@@ -70,21 +66,15 @@ const Component = (
             ref={ref}
             id={id}
             className={className}
-            data-testid={`${localNavMenuId}-container`}
+            data-testid={localNavMenuId}
         >
             {items.map((item, i) => {
                 const isSelected = i === selectedItemIndex;
-
                 return renderLocalNavItem({
-                    handleClick: (e) =>
-                        onNavItemSelect?.(
-                            e.nativeEvent as MouseEvent,
-                            { title: item.title, id: item.id },
-                            i
-                        ),
+                    handleClick: (e) => onNavItemSelect(e, item, i),
                     isSelected,
-                    item: { title: item.title, id: item.id },
-                    renderItem, // Optional, based on whether renderItem is passed
+                    item,
+                    renderItem,
                 });
             })}
         </Nav>

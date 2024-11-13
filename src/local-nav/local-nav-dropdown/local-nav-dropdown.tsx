@@ -33,12 +33,18 @@ const Component = (
     const detectStickyRef = useRef<HTMLSpanElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const [isStickied, setIsStickied] = useState<boolean>(false);
-    const [labelText, setLabelText] = useState(defaultLabel);
+    // const [labelText, setLabelText] = useState(defaultLabel);
     const [isDropdownExpanded, setIsDropdownExpanded] =
         useState<boolean>(false);
-    const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
-    const [dropdowntHeight, setDropdownHeight] = useState(window.innerHeight);
+    const [viewportHeight, setViewportHeight] = useState(0);
+    const [dropdowntHeight, setDropdownHeight] = useState(0);
     const navTestId = testId || "local-nav-dropdown";
+
+    const visibleSectionTitle =
+        selectedItemIndex >= 0 && isStickied
+            ? items[selectedItemIndex].title
+            : defaultLabel;
+    const labelText = visibleSectionTitle;
 
     // =============================================================================
     // EFFECTS, EVENT LISTENERS
@@ -53,6 +59,7 @@ const Component = (
     }, []);
 
     useEffect(() => {
+        setViewportHeight(window.innerHeight);
         const handleResize = () => {
             setViewportHeight(window.innerHeight);
         };
@@ -79,33 +86,24 @@ const Component = (
     }, [stickyOffset]);
 
     useEffect(() => {
-        const visibleSectionTitle =
-            selectedItemIndex >= 0 && isStickied
-                ? items[selectedItemIndex].title
-                : defaultLabel;
-        setLabelText(visibleSectionTitle);
-    }, [selectedItemIndex, isStickied, items, defaultLabel]);
-
-    useEffect(() => {
         document.body.style.overflow =
             isDropdownExpanded && isStickied ? "hidden" : "auto";
     }, [isDropdownExpanded, isStickied]);
-
-    const handleToggleDropdown = useCallback(() => {
-        console.log("came int here");
-        setIsDropdownExpanded((prev) => !prev);
-    }, []);
-
-    const handleDismissBackdrop = useCallback(() => {
-        setIsDropdownExpanded(false);
-    }, []);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
 
+    const handleToggleDropdown = () => {
+        setIsDropdownExpanded((prev) => !prev);
+    };
+
+    const handleDismissBackdrop = () => {
+        setIsDropdownExpanded(false);
+    };
+
     const handleNavItemClick = (
-        e: MouseEvent,
+        e: React.MouseEvent,
         item: LocalNavItemProps,
         index: number
     ) => {
@@ -125,24 +123,18 @@ const Component = (
         item,
         renderItem,
     }: LocalNavItemComponentProps) => {
-        const { id = "local-nav-dropdown", title } = item;
+        const { id, title } = item;
 
         const renderTitle = () => {
             if (renderItem) {
                 return renderItem(item, { selected: isSelected });
-            } else if (typeof title === "string") {
-                return (
-                    <>
-                        {isSelected && <StyledTickIcon />}
-                        <LabelText id={`${id}-label`} $isSelected={isSelected}>
-                            {title}
-                        </LabelText>
-                    </>
-                );
-            } else if (React.isValidElement(title)) {
-                return title;
             }
-            return null;
+            return (
+                <>
+                    {isSelected && <StyledTickIcon />}
+                    <LabelText $isSelected={isSelected}>{title}</LabelText>
+                </>
+            );
         };
 
         return (
@@ -154,19 +146,14 @@ const Component = (
 
     return (
         <>
-            <span
-                ref={detectStickyRef}
-                id={id || "sticky-ref"}
-                data-testid={testId || "sticky-ref"}
-                className={className || "sticky-ref"}
-            />
+            <span ref={detectStickyRef} data-testid={"sticky-ref"} />
             <NavWrapper
                 $isStickied={isStickied}
                 $stickyOffset={stickyOffset}
                 ref={ref}
-                id={`${navTestId}-wrapper`}
-                data-testid={`${navTestId}-wrapper`}
-                className={`${navTestId}-wrapper`}
+                id={id}
+                data-testid={navTestId}
+                className={className}
             >
                 <NavLabel
                     ref={dropdownRef}
@@ -186,14 +173,10 @@ const Component = (
                         {items.map((item, i) =>
                             renderDropdownNavItem({
                                 handleClick: (e) =>
-                                    handleNavItemClick?.(
-                                        e.nativeEvent as MouseEvent,
-                                        { title: item.title, id: item.id },
-                                        i
-                                    ),
+                                    handleNavItemClick(e, item, i),
                                 isSelected:
                                     i === selectedItemIndex && isStickied,
-                                item: { title: item.title, id: item.id },
+                                item,
                                 renderItem,
                             })
                         )}

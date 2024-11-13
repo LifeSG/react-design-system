@@ -59,8 +59,6 @@ export const NavIcon = styled(ChevronDownIcon)<NavIconStyleProps>`
 `;
 
 export const NavLabel = styled.div`
-    display: block;
-    margin: 0;
     cursor: pointer;
     background: ${Color.Neutral[8]};
     padding: 12px 16px;
@@ -70,40 +68,31 @@ export const NavLabel = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: bold;
     transition: all 200ms linear;
 `;
 
 export const NavItem = styled.li<NavItemStyleProps>`
-    padding: 12px 16px;
-    background: #fff;
+    padding: ${(props) =>
+        props.$isSelected ? "12px 16px 12px 0" : "12px 16px"};
+    background: ${(props) =>
+        props.$isSelected ? Color.Accent.Light[5] : Color.Neutral[8]};
     position: relative; /* Ensures that the tick mark is positioned relative to the selected item */
     display: flex;
     align-items: center; /* Vertically align text and tick */
-    color: red;
-    ${(props) =>
-        props.$isSelected &&
-        css`
-            font-weight: bold;
-            background-color: #e0f7fa;
-            padding-left: 0 !important;
-        `}
 `;
 
 export const NavItemList = styled.ul<NavItemListStyleProps>`
-    transform: scaleY(1);
     transition: all 300ms;
     transform-origin: top;
     list-style-type: none;
     padding: 0px 8px 0px 8px;
     margin: 0;
-    background: #fff;
+    background: ${Color.Neutral[8]};
     cursor: pointer;
     box-shadow: 0px 0px 1px 1px ${Color.Neutral[5]};
     border-bottom-right-radius: 4px;
     border-bottom-left-radius: 4px;
     overflow-y: auto; /* Enables vertical scrolling */
-    max-height: 300px; /* Set a max height for the dropdown list */
     max-height: ${(props) =>
         props.$viewportHeight}px; /* Set a max height for the dropdown list */
 `;
@@ -129,9 +118,6 @@ export const NavWrapper = styled.nav<DropdownNavStyleProps>`
 			border-radius-bottom-left: 4px;
 			border-radius-bottom-right: 4px;
 
-			${NavItem} {
-				padding: 12px 32px;
-			}
 		}
 
 		`}

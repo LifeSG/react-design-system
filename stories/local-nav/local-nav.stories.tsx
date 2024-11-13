@@ -29,7 +29,7 @@ export const Menu: StoryObj<MenuComponent> = {
         const [selectedLabel, setSelectedLabel] = useState("initial");
 
         const handleNavItemClick = (
-            e: MouseEvent,
+            e: React.MouseEvent,
             item: LocalNavItemProps,
             index: number
         ) => {
@@ -60,7 +60,7 @@ export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
         const [selectedLabel, setSelectedLabel] = useState("initial");
 
         const handleNavItemClick = (
-            e: MouseEvent,
+            e: React.MouseEvent,
             item: LocalNavItemProps,
             index: number
         ) => {
@@ -106,7 +106,7 @@ export const Dropdown: StoryObj<DropdownComponent> = {
         const contentRef = useRef<HTMLDivElement>(null);
 
         const handleNavItemClick = (
-            e: MouseEvent,
+            e: React.MouseEvent,
             item: LocalNavItemProps,
             index: number
         ) => {
@@ -125,7 +125,7 @@ export const Dropdown: StoryObj<DropdownComponent> = {
             }
         };
         return (
-            <div style={{ height: "200vh", padding: "1rem" }}>
+            <div style={{ height: "200vh", padding: "2rem" }}>
                 <TopContent />
                 <LocalNavDropdown
                     defaultLabel={"initial"}
@@ -153,7 +153,7 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
         const [selectedLabel, setSelectedLabel] = useState(-1);
         const contentRef = useRef<HTMLDivElement>(null);
         const handleNavItemClick = (
-            e: MouseEvent,
+            e: React.MouseEvent,
             item: LocalNavItemProps,
             index: number
         ) => {
@@ -220,7 +220,7 @@ export const CombinedUsage: StoryObj = {
         );
 
         const handleNavItemClick = (
-            e: MouseEvent,
+            e: React.MouseEvent,
             item: LocalNavItemProps,
             index: number
         ) => {
