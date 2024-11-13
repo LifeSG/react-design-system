@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Button } from "../button";
-import { Colour, Font, MediaQuery } from "../theme";
+import { Colour, MediaQuery } from "../theme";
 import { Typography } from "../typography";
 
 export const Container = styled.div`
@@ -45,7 +45,6 @@ export const Title = styled(Typography.HeaderMD)`
 `;
 
 export const DescriptionContainer = styled.div`
-    ${Font["body-baseline-regular"]} // Follow styling of Text.Body
     color: ${Colour.text};
     text-align: center;
 

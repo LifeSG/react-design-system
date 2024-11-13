@@ -19,13 +19,12 @@ describe("ErrorDisplay", () => {
 
     it("should render the component", () => {
         render(
-            <ThemeProvider theme={LifeSGTheme as any}>
+            <ThemeProvider theme={LifeSGTheme}>
                 <ErrorDisplay type="404" />
             </ThemeProvider>
         );
 
         const title = getErrorDisplayData("404", "lifesg").title;
-        console.log("THIS is title test: ", title);
         expect(screen.getByRole("heading", { level: 4, name: title }));
     });
 
@@ -38,7 +37,7 @@ describe("ErrorDisplay", () => {
         };
 
         render(
-            <ThemeProvider theme={LifeSGTheme as any}>
+            <ThemeProvider theme={LifeSGTheme}>
                 <ErrorDisplay type="404" actionButton={actionButton} />
             </ThemeProvider>
         );
@@ -50,7 +49,7 @@ describe("ErrorDisplay", () => {
 
     it("should be able to render custom title if specified", () => {
         render(
-            <ThemeProvider theme={LifeSGTheme as any}>
+            <ThemeProvider theme={LifeSGTheme}>
                 <ErrorDisplay type="404" title={CUSTOM_TITLE} />
             </ThemeProvider>
         );
@@ -62,7 +61,7 @@ describe("ErrorDisplay", () => {
 
     it("should not render any text content if the imageOnly prop is specified", () => {
         render(
-            <ThemeProvider theme={LifeSGTheme as any}>
+            <ThemeProvider theme={LifeSGTheme}>
                 <ErrorDisplay
                     type="404"
                     title={CUSTOM_TITLE}
@@ -91,7 +90,7 @@ describe("ErrorDisplay", () => {
 
         it("should be able to render JSX.Element", () => {
             render(
-                <ThemeProvider theme={LifeSGTheme as any}>
+                <ThemeProvider theme={LifeSGTheme}>
                     <ErrorDisplay
                         type="404"
                         description={<div>{CUSTOM_DESCRIPTION}</div>}
@@ -131,7 +130,7 @@ describe("ErrorDisplay", () => {
             "should render %s error correctly",
             (type: ErrorDisplayType) => {
                 render(
-                    <ThemeProvider theme={LifeSGTheme as any}>
+                    <ThemeProvider theme={LifeSGTheme}>
                         <ErrorDisplay type={type} />
                     </ThemeProvider>
                 );
@@ -157,7 +156,7 @@ describe("ErrorDisplay", () => {
             "should render bookingsg %s error correctly",
             (type: ErrorDisplayType) => {
                 render(
-                    <ThemeProvider theme={BookingSGTheme as any}>
+                    <ThemeProvider theme={BookingSGTheme}>
                         <ErrorDisplay type={type} />
                     </ThemeProvider>
                 );
@@ -184,8 +183,8 @@ describe("ErrorDisplay", () => {
 
         test("should use the specified illustration based on the illustrationScheme prop", () => {
             render(
-                <ThemeProvider theme={BookingSGTheme as any}>
-                    <ErrorDisplay type={"400"} illustrationScheme="base" />
+                <ThemeProvider theme={BookingSGTheme}>
+                    <ErrorDisplay type={"400"} illustrationScheme="lifesg" />
                 </ThemeProvider>
             );
 
@@ -215,7 +214,7 @@ describe("ErrorDisplay", () => {
             const additionalProps = { dateString: "01/01/2023" };
 
             render(
-                <ThemeProvider theme={LifeSGTheme as any}>
+                <ThemeProvider theme={LifeSGTheme}>
                     <ErrorDisplay
                         type={type}
                         additionalProps={additionalProps}

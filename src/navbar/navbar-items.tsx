@@ -136,6 +136,7 @@ export const NavbarItems = <T,>({
                                 {selected && (
                                     <LinkIndicator
                                         data-testid={`${testId}-indicator`}
+                                        $selected={selected}
                                     />
                                 )}
                                 {mobile && item.subMenu && (
@@ -149,7 +150,7 @@ export const NavbarItems = <T,>({
                                                 expanded ? "Collapse" : "Expand"
                                             }
                                         >
-                                            <ChevronIcon />
+                                            <ChevronIcon $selected={selected} />
                                         </ExpandCollapseButton>
                                     </LinkIconContainer>
                                 )}

@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const Label = styled(Typography.BodyMD).attrs({ as: "p" })`
+export const Label = styled(Typography.BodyMD)`
     margin-bottom: 1rem;
 `;
 

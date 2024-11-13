@@ -17,6 +17,7 @@ import {
 } from "./footer.style";
 import { FooterLinkProps, FooterProps } from "./types";
 import { useTheme } from "styled-components";
+import { Divider } from "../divider";
 
 export const Footer = <T,>({
     children,
@@ -129,15 +130,21 @@ export const Footer = <T,>({
 
         if (component) {
             return (
-                <TopSection type="grid" stretch={isStretch}>
-                    {component}
-                </TopSection>
+                <>
+                    <TopSection type="grid" stretch={isStretch}>
+                        {component}
+                    </TopSection>
+                    <Divider
+                        style={{
+                            width: "100%",
+                        }}
+                    />
+                </>
             );
         }
 
         return null;
     };
-
     return (
         <BaseFooter {...otherProps}>
             {renderTopSection()}

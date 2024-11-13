@@ -68,7 +68,7 @@ export const LinkItem = styled.li<ItemStyleProps>`
     }
 `;
 
-export const Link = styled(Typography.LinkSM)<StyleProps>`
+export const Link = styled(Typography.LinkMD)<StyleProps>`
     display: flex;
     position: relative;
     align-items: center;
@@ -78,19 +78,19 @@ export const Link = styled(Typography.LinkSM)<StyleProps>`
     padding: 0 0.5rem;
 
     :active,
-    :hover :focus {
-        color: ${Colour["text-selected-hover"]};
+    :focus,
+    :hover {
+        color: ${(props) =>
+            props.$selected
+                ? Colour["text-selected-hover"]
+                : Colour["text-hover"]};
     }
 
     ${MediaQuery.MaxWidth.lg} {
-        color: ${Colour.text};
         width: 100%;
         padding: 0.5rem 1rem;
         text-align: left;
         align-items: flex-start;
-        :hover {
-            color: ${Colour["text-selected-hover"]};
-        }
     }
 `;
 
@@ -105,13 +105,17 @@ export const LinkLabel = styled.div`
     white-space: pre-wrap;
 `;
 
-export const LinkIndicator = styled.div`
+export const LinkIndicator = styled.div<StyleProps>`
     position: absolute;
     bottom: 0;
     height: 0.25rem;
     left: 0.5rem;
     right: 0.5rem;
     background-color: ${Colour["border-selected"]};
+
+    :hover {
+        ${(props) => props.$selected && Colour["border-selected-hover"]};
+    }
 
     ${MediaQuery.MaxWidth.lg} {
         left: 0;
@@ -120,7 +124,6 @@ export const LinkIndicator = styled.div`
         bottom: 0;
         height: 100%;
         width: 0.25rem;
-        background-color: ${Colour["border-selected"]};
     }
 `;
 
@@ -136,11 +139,14 @@ export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
     margin: auto 0.25rem auto 0;
 `;
 
-export const ChevronIcon = styled(ChevronUpIcon)`
+export const ChevronIcon = styled(ChevronUpIcon)<StyleProps>`
     height: 1.25rem;
     width: 1.25rem;
     color: ${Colour.icon};
     :hover {
-        color: ${Colour["icon-selected-hover"]};
+        ${(props) =>
+            props.$selected
+                ? Colour["icon-selected-hover"]
+                : Colour["icon-hover"]};
     }
 `;

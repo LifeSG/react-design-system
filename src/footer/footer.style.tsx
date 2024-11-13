@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, Font, MediaQuery } from "../theme";
+import { Colour, MediaQuery } from "../theme";
 import { Typography } from "../typography";
 import { Layout } from "../layout";
 
@@ -21,7 +21,6 @@ export const StyledFooterLink = styled(Typography.LinkSM)`
 
 export const TopSection = styled(Layout.Content)`
     padding: 4rem 0;
-    border-bottom: 1px solid ${Colour.border};
 
     ${MediaQuery.MaxWidth.lg} {
         padding: 2rem 0;
@@ -164,8 +163,7 @@ export const CopyrightSection = styled(BottomSectionContent)`
     }
 `;
 
-export const DisclaimerTextLink = styled(Typography.LinkSM)`
-    ${Font["body-xs-regular"]}
+export const DisclaimerTextLink = styled(Typography.LinkXS)`
     color: ${Colour.text};
     &:not(:last-child) {
         margin-right: 1.5rem;
@@ -173,7 +171,7 @@ export const DisclaimerTextLink = styled(Typography.LinkSM)`
 
     svg {
         color: ${Colour.icon};
-        vertical-align: sub;
+        vertical-align: top;
     }
 
     &:hover {
