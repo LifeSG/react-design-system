@@ -1,9 +1,8 @@
 /* eslint-disable react/display-name */
 import React from "react";
-import { Text } from "../../text/text";
 import { LocalNavItemComponentProps } from "../internal-types";
 import { LocalNavMenuProps } from "../types";
-import { Nav, NavItem } from "./local-nav-menu.styles";
+import { Nav, NavItem, TextLabel } from "./local-nav-menu.styles";
 
 /**
  * A sidebar navigation element. The currently visible section will be highlighted.
@@ -38,20 +37,16 @@ const Component = (
         item,
         renderItem,
     }: LocalNavItemComponentProps) => {
-        const { id = "local-nav-menu", title } = item;
+        const { id, title } = item;
 
         const renderTitle = () => {
             if (renderItem) {
                 return renderItem(item, { selected: isSelected });
             }
             return (
-                <Text.Body
-                    style={{ margin: 0 }}
-                    weight={isSelected ? "semibold" : "regular"}
-                    id={`${id}-title`}
-                >
+                <TextLabel weight={isSelected ? "semibold" : "regular"}>
                     {title}
-                </Text.Body>
+                </TextLabel>
             );
         };
 

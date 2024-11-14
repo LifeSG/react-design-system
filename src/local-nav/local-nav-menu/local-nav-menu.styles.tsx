@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Color } from "../../color";
+import { Text } from "../../text/text";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -17,6 +18,9 @@ export const Nav = styled.ul`
     list-style-type: none;
     padding: 0;
     margin-top: 0;
+`;
+export const TextLabel = styled(Text.Body)<NavItemStyleProps>`
+    margin: 0;
 `;
 
 export const NavItem = styled.li<NavItemStyleProps>`
