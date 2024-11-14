@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { LocalNavItemComponentProps } from "../internal-types";
 import { LocalNavDropdownProps, LocalNavItemProps } from "../types";
 import {
