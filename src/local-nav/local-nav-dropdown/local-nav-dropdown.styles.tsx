@@ -64,7 +64,6 @@ export const NavLabel = styled.div`
     background: ${Color.Neutral[8]};
     padding: 12px 16px;
     box-shadow: 0px 0px 1px 1px ${Color.Neutral[5]};
-    border-radius: 4px;
     overflow: hidden;
     display: flex;
     justify-content: space-between;
