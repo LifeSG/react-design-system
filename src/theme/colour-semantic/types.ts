@@ -93,6 +93,7 @@ export type SemanticColourSet = {
     "bg-hover-strong": SemanticColourValue;
     "bg-hover-subtle": SemanticColourValue;
     "bg-hover-neutral": SemanticColourValue;
+    "bg-hover-neutral-strong": SemanticColourValue;
 
     "bg-selected": SemanticColourValue;
     "bg-selected-hover": SemanticColourValue;
@@ -104,12 +105,19 @@ export type SemanticColourSet = {
     "bg-selected-disabled": SemanticColourValue;
 
     "bg-success": SemanticColourValue;
+    "bg-success-hover": SemanticColourValue;
     "bg-success-strong": SemanticColourValue;
+    "bg-success-strong-hover": SemanticColourValue;
     "bg-warning": SemanticColourValue;
+    "bg-warning-hover": SemanticColourValue;
     "bg-warning-strong": SemanticColourValue;
+    "bg-warning-strong-hover": SemanticColourValue;
     "bg-info": SemanticColourValue;
+    "bg-info-hover": SemanticColourValue;
     "bg-info-strong": SemanticColourValue;
+    "bg-info-strong-hover": SemanticColourValue;
     "bg-error": SemanticColourValue;
+    "bg-error-hover": SemanticColourValue;
     "bg-error-strong": SemanticColourValue;
     "bg-error-strong-hover": SemanticColourValue;
 
@@ -117,6 +125,7 @@ export type SemanticColourSet = {
     "bg-inverse-subtle": SemanticColourValue;
     "bg-inverse-subtler": SemanticColourValue;
     "bg-inverse-subtlest": SemanticColourValue;
+    "bg-inverse-hover": SemanticColourValue;
 
     "bg-primary": SemanticColourValue;
     "bg-primary-subtle": SemanticColourValue;

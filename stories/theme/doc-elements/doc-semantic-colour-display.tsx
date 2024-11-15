@@ -186,6 +186,7 @@ export const SemanticColourDisplay = ({
                         "bg-hover-strong",
                         "bg-hover-subtle",
                         "bg-hover-neutral",
+                        "bg-hover-neutral-strong",
                     ]}
                 />
                 <SemanticColourPalette
@@ -215,12 +216,19 @@ export const SemanticColourDisplay = ({
                 <SemanticColourPalette
                     tokens={[
                         "bg-success",
+                        "bg-success-hover",
                         "bg-success-strong",
+                        "bg-success-strong-hover",
                         "bg-warning",
+                        "bg-warning-hover",
                         "bg-warning-strong",
+                        "bg-warning-strong-hover",
                         "bg-info",
+                        "bg-info-hover",
                         "bg-info-strong",
+                        "bg-info-strong-hover",
                         "bg-error",
+                        "bg-error-hover",
                         "bg-error-strong",
                         "bg-error-strong-hover",
                     ]}
@@ -231,6 +239,7 @@ export const SemanticColourDisplay = ({
                         "bg-inverse-subtle",
                         "bg-inverse-subtler",
                         "bg-inverse-subtlest",
+                        "bg-inverse-hover",
                     ]}
                 />
             </Display>

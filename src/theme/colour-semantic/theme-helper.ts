@@ -125,6 +125,7 @@ export const ColourSemantic = {
     "bg-hover-strong": getSemanticColour("bg-hover-strong"),
     "bg-hover-subtle": getSemanticColour("bg-hover-subtle"),
     "bg-hover-neutral": getSemanticColour("bg-hover-neutral"),
+    "bg-hover-neutral-strong": getSemanticColour("bg-hover-neutral-strong"),
 
     "bg-selected": getSemanticColour("bg-selected"),
     "bg-selected-hover": getSemanticColour("bg-selected-hover"),
@@ -138,12 +139,19 @@ export const ColourSemantic = {
     "bg-selected-disabled": getSemanticColour("bg-selected-disabled"),
 
     "bg-success": getSemanticColour("bg-success"),
+    "bg-success-hover": getSemanticColour("bg-success-hover"),
     "bg-success-strong": getSemanticColour("bg-success-strong"),
+    "bg-success-strong-hover": getSemanticColour("bg-success-strong-hover"),
     "bg-warning": getSemanticColour("bg-warning"),
+    "bg-warning-hover": getSemanticColour("bg-warning-hover"),
     "bg-warning-strong": getSemanticColour("bg-warning-strong"),
+    "bg-warning-strong-hover": getSemanticColour("bg-warning-strong-hover"),
     "bg-info": getSemanticColour("bg-info"),
+    "bg-info-hover": getSemanticColour("bg-info-hover"),
     "bg-info-strong": getSemanticColour("bg-info-strong"),
+    "bg-info-strong-hover": getSemanticColour("bg-info-strong-hover"),
     "bg-error": getSemanticColour("bg-error"),
+    "bg-error-hover": getSemanticColour("bg-error-hover"),
     "bg-error-strong": getSemanticColour("bg-error-strong"),
     "bg-error-strong-hover": getSemanticColour("bg-error-strong-hover"),
 
@@ -151,6 +159,7 @@ export const ColourSemantic = {
     "bg-inverse-subtle": getSemanticColour("bg-inverse-subtle"),
     "bg-inverse-subtler": getSemanticColour("bg-inverse-subtler"),
     "bg-inverse-subtlest": getSemanticColour("bg-inverse-subtlest"),
+    "bg-inverse-hover": getSemanticColour("bg-inverse-hover"),
 
     "bg-primary": getSemanticColour("bg-primary"),
     "bg-primary-subtle": getSemanticColour("bg-primary-subtle"),
