@@ -1,111 +1,100 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { V2_Color } from "src/v2_color";
 import { Divider } from "src/divider";
-import { V2_Layout } from "src/v2_layout";
-import { DisplayText, Wrapper } from "./doc-elements";
+import { Colour } from "src/theme";
+import {
+    FullWidthStoryDecorator,
+    GridDecorator,
+    StoryDecorator,
+} from "stories/storybook-common";
+import { LayoutGrid } from "./doc-elements";
 
 type Component = typeof Divider;
 
 const meta: Meta<Component> = {
-    title: "General/Divider",
+    title: "Core/Divider",
     component: Divider,
-    parameters: {
-        layout: "fullscreen",
-    },
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Wrapper type="flex-column">
-                <DisplayText>Standard divider</DisplayText>
-                <Divider style={{ marginBottom: "1.5rem" }} />
-                <DisplayText>Dashed styled divider</DisplayText>
-                <Divider
-                    lineStyle="dashed"
-                    style={{ marginBottom: "1.5rem" }}
-                />
-            </Wrapper>
+            <>
+                <Divider />
+                <Divider lineStyle="dashed" />
+            </>
         );
     },
+    decorators: [
+        GridDecorator({ columns: 1, rowHeaders: ["Standard", "Dashed"] }),
+        StoryDecorator(),
+    ],
 };
 
 export const UsingInGridLayout: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <V2_Layout.Content type="grid" style={{ padding: "5rem" }}>
-                <DisplayText>Dividers in the grid layout</DisplayText>
-                <Divider layoutType="grid" style={{ marginBottom: "1.5rem" }} />
-                <Divider
-                    layoutType="grid"
-                    lineStyle="dashed"
-                    style={{ marginBottom: "1.5rem" }}
-                />
-                <DisplayText>With custom grid column props</DisplayText>
-                <Divider
-                    layoutType="grid"
-                    mobileCols={[1, 3]}
-                    tabletCols={[1, 4]}
-                    desktopCols={[1, 5]}
-                    style={{ marginBottom: "1.5rem" }}
-                />
-                <Divider
-                    layoutType="grid"
-                    lineStyle="dashed"
-                    mobileCols={[1, 3]}
-                    tabletCols={[1, 4]}
-                    desktopCols={[1, 5]}
-                />
-            </V2_Layout.Content>
+            <LayoutGrid type="grid">
+                <Divider layoutType="grid" />
+                <Divider layoutType="grid" lineStyle="dashed" />
+            </LayoutGrid>
         );
     },
+    decorators: [FullWidthStoryDecorator()],
+};
+
+export const SettingGridColumns: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <LayoutGrid type="grid">
+                <Divider
+                    layoutType="grid"
+                    xxsCols={[1, 5]}
+                    mdCols={[1, 6]}
+                    xlCols={[1, 8]}
+                />
+                <Divider
+                    layoutType="grid"
+                    lineStyle="dashed"
+                    xxsCols={[1, 5]}
+                    mdCols={[1, 6]}
+                    xlCols={[1, 8]}
+                />
+            </LayoutGrid>
+        );
+    },
+    decorators: [FullWidthStoryDecorator()],
 };
 
 export const Customisations: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <V2_Layout.Content type="grid" style={{ padding: "5rem" }}>
-                <DisplayText>Changing the color (pure string)</DisplayText>
+            <>
+                <Divider color="red" />
+                <Divider lineStyle="dashed" color="red" />
+                <Divider color={Colour.Primitive["secondary-50"]} />
                 <Divider
-                    layoutType="grid"
-                    color="red"
-                    style={{ marginBottom: "1.5rem" }}
-                />
-                <Divider
-                    layoutType="grid"
                     lineStyle="dashed"
-                    color="red"
-                    style={{ marginBottom: "1.5rem" }}
+                    color={Colour.Primitive["secondary-50"]}
                 />
-                <DisplayText>
-                    Changing the color (Using the Color component)
-                </DisplayText>
-                <Divider
-                    layoutType="grid"
-                    color={V2_Color.Primary}
-                    style={{ marginBottom: "1.5rem" }}
-                />
-                <Divider
-                    layoutType="grid"
-                    lineStyle="dashed"
-                    color={V2_Color.Primary}
-                    style={{ marginBottom: "1.5rem" }}
-                />
-                <DisplayText>Changing the thickness</DisplayText>
-                <Divider
-                    layoutType="grid"
-                    thickness={5}
-                    style={{ marginBottom: "1.5rem" }}
-                />
-                <Divider
-                    layoutType="grid"
-                    lineStyle="dashed"
-                    thickness={5}
-                    style={{ marginBottom: "1.5rem" }}
-                />
-            </V2_Layout.Content>
+                <Divider thickness={5} />
+                <Divider lineStyle="dashed" thickness={5} />
+            </>
         );
     },
+    decorators: [
+        GridDecorator({
+            columns: 1,
+            rowHeaders: [
+                "Colour string",
+                "",
+                "Colour token",
+                "",
+                "Thickness",
+                "",
+            ],
+        }),
+        StoryDecorator(),
+    ],
 };

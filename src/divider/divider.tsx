@@ -9,22 +9,42 @@ export const Divider = ({
     layoutType = "flex",
     color,
     className,
-    xxsCols = [1, -1],
-    xsCols = [1, -1],
-    smCols = [1, -1],
-    mdCols = [1, -1],
-    lgCols = [1, -1],
-    xlCols = [1, -1],
-    xxlCols = [1, -1],
-    mobileCols = 4,
-    tabletCols = 8,
-    desktopCols = 12,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
+    mobileCols,
+    tabletCols,
+    desktopCols,
     ...otherProps
 }: DividerProps) => {
     const isV2Layout =
         mobileCols !== undefined ||
         tabletCols !== undefined ||
         desktopCols !== undefined;
+
+    const getColumnProps = () => {
+        const xxsColsProp = xxsCols || [1, -1];
+        const xsColsProp = xsCols || xxsColsProp;
+        const smColsProp = smCols || xsColsProp;
+        const mdColsProp = mdCols || smColsProp;
+        const lgColsProp = lgCols || mdColsProp;
+        const xlColsProp = xlCols || lgColsProp;
+        const xxlColsProp = xxlCols || xlColsProp;
+
+        return {
+            xxlCols: xxlColsProp,
+            xlCols: xlColsProp,
+            lgCols: lgColsProp,
+            mdCols: mdColsProp,
+            smCols: smColsProp,
+            xsCols: xsColsProp,
+            xxsCols: xxsColsProp,
+        };
+    };
 
     switch (layoutType) {
         case "flex":
@@ -58,13 +78,7 @@ export const Divider = ({
                 return (
                     <ColDiv
                         className={className}
-                        xxsCols={xxsCols}
-                        xsCols={xsCols}
-                        smCols={smCols}
-                        mdCols={mdCols}
-                        lgCols={lgCols}
-                        xlCols={xlCols}
-                        xxlCols={xxlCols}
+                        {...getColumnProps()}
                         {...otherProps}
                     >
                         <Line
