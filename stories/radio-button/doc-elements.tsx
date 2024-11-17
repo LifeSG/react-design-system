@@ -1,23 +1,20 @@
+import { Font } from "src/theme";
 import styled from "styled-components";
-import { Font } from "../../src";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div`
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-`;
-
 export const OptionContainer = styled.div`
     display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
     :not(:last-of-type) {
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
     }
 `;
 
 export const Label = styled.label`
     ${Font["body-baseline-regular"]}
-    margin-left: 1rem;
+    cursor: pointer;
 `;
