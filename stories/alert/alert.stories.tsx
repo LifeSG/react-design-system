@@ -1,13 +1,14 @@
 import { CalendarEventIcon } from "@lifesg/react-icons/calendar-event";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Alert } from "src/alert";
-import { StackDecorator } from "stories/storybook-common";
+import { StackDecorator, StoryDecorator } from "stories/storybook-common";
 
 type Component = typeof Alert;
 
 const meta: Meta<Component> = {
     title: "Feedback indicators/Alert",
     component: Alert,
+    decorators: [StackDecorator(), StoryDecorator()],
 };
 
 export default meta;
@@ -34,7 +35,6 @@ export const Default: StoryObj<Component> = {
             </>
         );
     },
-    decorators: [StackDecorator()],
 };
 
 export const WithIcon: StoryObj<Component> = {
@@ -59,7 +59,6 @@ export const WithIcon: StoryObj<Component> = {
             </>
         );
     },
-    decorators: [StackDecorator()],
 };
 
 export const WithBoldText: StoryObj<Component> = {
@@ -216,7 +215,6 @@ export const SmallSize: StoryObj<Component> = {
             </>
         );
     },
-    decorators: [StackDecorator()],
 };
 
 export const WithCustomIcon: StoryObj<Component> = {
@@ -271,5 +269,4 @@ export const WithMaxCollapsedHeight: StoryObj<Component> = {
             </>
         );
     },
-    decorators: [StackDecorator()],
 };
