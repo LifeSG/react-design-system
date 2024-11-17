@@ -1,36 +1,49 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Checkbox } from "src/checkbox";
-import { Grid, SubOption } from "./doc-elements";
+import { GridDecorator } from "stories/storybook-common";
+import { Label, SubOptionContainer } from "./doc-elements";
 
 type Component = typeof Checkbox;
 
 const meta: Meta<Component> = {
-    title: "Data Input/Checkbox",
+    title: "Selection and input/Checkbox",
     component: Checkbox,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Grid>
-                <Checkbox displaySize="default" />
-                <Checkbox displaySize="default" checked />
-                <Checkbox displaySize="default" indeterminate />
-                <Checkbox displaySize="default" disabled />
-                <Checkbox displaySize="default" disabled checked />
-                <Checkbox displaySize="default" disabled indeterminate />
+            <>
+                <Checkbox />
+                <Checkbox checked />
+                <Checkbox indeterminate />
+                <Checkbox disabled />
+                <Checkbox disabled checked />
+                <Checkbox disabled indeterminate />
                 <Checkbox displaySize="small" />
                 <Checkbox displaySize="small" checked />
                 <Checkbox displaySize="small" indeterminate />
                 <Checkbox displaySize="small" disabled />
                 <Checkbox displaySize="small" disabled checked />
                 <Checkbox displaySize="small" disabled indeterminate />
-            </Grid>
+            </>
         );
     },
+    decorators: [
+        GridDecorator({
+            columns: 3,
+            columnHeaders: ["Unchecked", "Checked", "Indeterminate"],
+            rowHeaders: [
+                "Default",
+                "Default Disabled",
+                "Small",
+                "Small Disabled",
+            ],
+        }),
+    ],
 };
 
 export const IndeterminateState: StoryObj<Component> = {
@@ -52,20 +65,22 @@ export const IndeterminateState: StoryObj<Component> = {
                         }
                     }}
                 />
-                <SubOption>
+                <SubOptionContainer>
                     <Checkbox
+                        id="option-1"
                         checked={checked1}
                         onChange={() => setChecked1(!checked1)}
                     />
-                    Sub-option 1
-                </SubOption>
-                <SubOption>
+                    <Label htmlFor="option-1">Sub-option 1</Label>
+                </SubOptionContainer>
+                <SubOptionContainer>
                     <Checkbox
+                        id="option-2"
                         checked={checked2}
                         onChange={() => setChecked2(!checked2)}
                     />
-                    Sub-option 2
-                </SubOption>
+                    <Label htmlFor="option-2">Sub-option 2</Label>
+                </SubOptionContainer>
             </>
         );
     },
