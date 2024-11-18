@@ -46,8 +46,8 @@ export interface TimeSlotStyleProps {
     $width?: number;
     $left?: number;
     $styleType: SlotStyle;
-    $bgColor: string;
-    $bgColor2?: string;
+    $bgColor: string | ((props: unknown) => string);
+    $bgColor2?: string | ((props: unknown) => string);
     $clickable?: boolean;
 }
 
@@ -75,7 +75,8 @@ export const ArrowButton = styled(ClickableIcon)<ArrowStyleProps>`
     position: absolute;
     bottom: ${({ $variant }) => ($variant === "default" ? "0.25rem" : "0rem")};
     background-color: ${Colour.bg};
-    box-shadow: 0px 2px 8px rgba(104, 104, 104, 0.5);
+    box-shadow: 0px 2px 8px
+        rgb(from ${Colour.Primitive["neutral-50"]} r g b / 50%);
     border-radius: 50%;
     padding: 0.5rem;
     width: 2rem;
@@ -137,7 +138,8 @@ export const TimeMarker = styled.div<TimeMarkerStyleProps>`
     display: inline-block;
     width: ${({ $variant }) => `${getCellWidth($variant)}px`};
     position: relative;
-    border-left: ${Border["width-010"]} solid ${Colour["border-stronger"]};
+    border-left: ${Border["width-010"]} ${Border.solid}
+        ${Colour["border-stronger"]};
     ${(props) => {
         let markerHeight = 0;
 
@@ -196,8 +198,8 @@ export const TimeSlot = styled.div<TimeSlotStyleProps>`
                 135deg,
                 ${props.$bgColor2 || Colour["bg-strongest"]} 0px,
                 ${props.$bgColor2 || Colour["bg-strongest"]} 10px,
-                ${props.$bgColor} 10px,
-                ${props.$bgColor} 20px
+                ${props.$bgColor || Colour["bg-stronger"]} 10px,
+                ${props.$bgColor || Colour["bg-stronger"]} 20px
             );
         `}
 `;
@@ -207,7 +209,8 @@ export const TimeSlotBorder = styled.div<{ $variant: TimeSlotBarVariant }>`
     top: ${MAX_LINE_HEIGHT}rem;
     height: ${({ $variant }) => `${getCellHeight($variant)}px`};
     z-index: 1;
-    border-right: ${Border["width-010"]} solid ${Colour["border-stronger"]};
+    border-right: ${Border["width-010"]} ${Border.solid}
+        ${Colour["border-stronger"]};
 `;
 
 export const CellText = styled(Typography.BodyXS)<CellTextStyleProps>`

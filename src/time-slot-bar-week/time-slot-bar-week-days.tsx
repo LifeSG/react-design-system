@@ -2,6 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 import React, { useMemo, useState } from "react";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
+import { Colour } from "../theme";
 import { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
@@ -193,7 +194,7 @@ export const TimeSlotBarWeekDays = ({
             endTime: "",
             clickable: false,
             styleAttributes: {
-                backgroundColor: "#E0E4E5",
+                backgroundColor: Colour["bg-stronger"],
             },
             cellLength,
         };

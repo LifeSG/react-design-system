@@ -161,8 +161,8 @@ export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
                             135deg,
                             ${props.$bgColor2 || Colour["bg-strongest"]} 0px,
                             ${props.$bgColor2 || Colour["bg-strongest"]} 10px,
-                            ${props.$bgColor} 10px,
-                            ${props.$bgColor} 20px
+                            ${props.$bgColor || Colour["bg-stronger"]} 10px,
+                            ${props.$bgColor || Colour["bg-stronger"]} 20px
                         )`};
             `;
         }

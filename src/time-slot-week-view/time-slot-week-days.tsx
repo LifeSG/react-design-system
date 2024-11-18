@@ -1,5 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
+import { Colour } from "../theme";
 import { useMemo } from "react";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import {
@@ -44,8 +45,8 @@ const fallbackSlot = {
     clickable: false,
     styleAttributes: {
         styleType: "stripes",
-        backgroundColor: "#ECEFEF",
-        backgroundColor2: "#E0E4E5",
+        backgroundColor: Colour["bg-stronger"],
+        backgroundColor2: Colour["bg-strongest"],
     },
 };
 
