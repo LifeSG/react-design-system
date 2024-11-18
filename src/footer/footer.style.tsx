@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Colour, MediaQuery } from "../theme";
 import { Typography } from "../typography";
 import { Layout } from "../layout";
+import { Divider } from "../divider";
 
 // =============================================================================
 // GENERIC
@@ -18,6 +19,10 @@ export const StyledFooterLink = styled(Typography.LinkSM)`
 // =============================================================================
 // TOP SECTION
 // =============================================================================
+
+export const FullWidthDivider = styled(Divider)`
+    width: 100%;
+`;
 
 export const TopSection = styled(Layout.Content)`
     padding: 4rem 0;
@@ -106,16 +111,6 @@ export const AddonSection = styled.div`
 // =============================================================================
 // BOTTOM SECTION
 // =============================================================================
-
-export const MobileOnlyBorder = styled.div`
-    display: none;
-
-    ${MediaQuery.MaxWidth.lg} {
-        display: block;
-        height: 1px;
-        background: ${Colour["bg-strong"]};
-    }
-`;
 
 export const BottomSection = styled(Layout.Content)`
     padding: 1.375rem 0;

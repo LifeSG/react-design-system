@@ -9,15 +9,14 @@ import {
     BottomSectionContent,
     CopyrightSection,
     DisclaimerTextLink,
+    FullWidthDivider,
     LinkSection,
     LogoSection,
-    MobileOnlyBorder,
     StyledFooterLink,
     TopSection,
 } from "./footer.style";
 import { FooterLinkProps, FooterProps } from "./types";
 import { useTheme } from "styled-components";
-import { Divider } from "../divider";
 
 export const Footer = <T,>({
     children,
@@ -134,11 +133,7 @@ export const Footer = <T,>({
                     <TopSection type="grid" stretch={isStretch}>
                         {component}
                     </TopSection>
-                    <Divider
-                        style={{
-                            width: "100%",
-                        }}
-                    />
+                    <FullWidthDivider />
                 </>
             );
         }
@@ -148,7 +143,6 @@ export const Footer = <T,>({
     return (
         <BaseFooter {...otherProps}>
             {renderTopSection()}
-            <MobileOnlyBorder />
             <BottomSection type="grid" stretch={isStretch}>
                 <BottomSectionContent key="disclaimer">
                     {renderDisclaimerLinks()}
