@@ -59,7 +59,7 @@ export const Wrapper = styled.div<StyleProps>`
                     break;
                 default:
                     backgroundColor = Colour["bg-inverse"];
-                    Colour["bg-inverse-hover"];
+                    hoverBackgroundColor = Colour["bg-inverse-hover"];
                     break;
             }
         } else {
@@ -106,13 +106,15 @@ export const Wrapper = styled.div<StyleProps>`
             background: ${backgroundColor};
             border: ${Border["width-010"]} ${Border.solid} ${borderColor};
             color: ${color};
-            &:hover {
-                ${props.$interactive && hoverBackgroundColor
-                    ? `background: ${hoverBackgroundColor(props)};`
-                    : ""}
-                ${props.$interactive && hoverBorderColor
-                    ? `border-color: ${hoverBorderColor(props)};`
-                    : ""}
+            @media (hover: hover) {
+                &:hover {
+                    ${props.$interactive &&
+                    hoverBackgroundColor &&
+                    `background: ${hoverBackgroundColor(props)};`}
+                    ${props.$interactive &&
+                    hoverBorderColor &&
+                    `border-color: ${hoverBorderColor(props)};`}
+                }
             }
         `;
     }}

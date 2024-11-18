@@ -152,7 +152,8 @@ export const Container = styled.div<ContainerStyleProps>`
                     border-color: ${Colour.border};
 
                     :hover {
-                        border-color: ${Colour["border-hover-strong"]};
+                        border-color: ${Colour.border};
+                        background: ${Colour["bg-hover-subtle"]};
                     }
                 `;
             }
@@ -209,10 +210,6 @@ export const TextContainer = styled.div<StyleProps>`
 
         return css`
             color: ${Colour.text};
-
-            &:is(${Container}:hover *) {
-                color: ${Colour["text-hover"]};
-            }
         `;
     }}
 `;
@@ -370,10 +367,6 @@ export const StyledToggleIcon = styled(ToggleIcon)<StyleProps>`
         }
         return css`
             color: ${Colour["icon-subtle"]};
-
-            &:is(${Container}:hover *) {
-                color: ${Colour["icon-hover"]};
-            }
         `;
     }};
 `;
