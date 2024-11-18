@@ -13,27 +13,24 @@ import {
     StyledTickIcon,
 } from "./local-nav-dropdown.styles";
 
-const Component = (
-    {
-        defaultLabel,
-        stickyOffset = 0,
-        onNavItemSelect,
-        items,
-        selectedItemIndex,
-        id,
-        "data-testid": testId,
-        className,
-        renderItem,
-    }: LocalNavDropdownProps,
-    ref: React.Ref<HTMLElement>
-): JSX.Element => {
+const Component = ({
+    defaultLabel,
+    stickyOffset = 0,
+    onNavItemSelect,
+    items,
+    selectedItemIndex,
+    id,
+    "data-testid": testId,
+    className,
+    renderItem,
+}: LocalNavDropdownProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const detectStickyRef = useRef<HTMLSpanElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const [isStickied, setIsStickied] = useState<boolean>(false);
-    // const [labelText, setLabelText] = useState(defaultLabel);
+    const navWrapperRef = useRef<HTMLElement>(null);
     const [isDropdownExpanded, setIsDropdownExpanded] =
         useState<boolean>(false);
     const [viewportHeight, setViewportHeight] = useState(0);
@@ -41,11 +38,10 @@ const Component = (
     const [dynamicMargin, setDynamicMargin] = useState(0);
     const navTestId = testId || "local-nav-dropdown";
 
-    const visibleSectionTitle =
+    const labelText =
         selectedItemIndex >= 0 && isStickied
             ? items[selectedItemIndex].title
             : defaultLabel;
-    const labelText = visibleSectionTitle;
 
     // =============================================================================
     // EFFECTS, EVENT LISTENERS
@@ -93,9 +89,7 @@ const Component = (
 
     useEffect(() => {
         const adjustPadding = () => {
-            const dropdown = document.querySelector(
-                `[data-testid="${navTestId}"]`
-            );
+            const dropdown = navWrapperRef?.current;
             if (dropdown) {
                 const dropdownRect = dropdown.getBoundingClientRect();
                 const spaceToRight = window.innerWidth - dropdownRect.right;
@@ -168,7 +162,6 @@ const Component = (
         );
     };
 
-    console.log("sideMargin: ", dynamicMargin);
     return (
         <>
             <span ref={detectStickyRef} data-testid={"sticky-ref"} />
@@ -176,7 +169,7 @@ const Component = (
                 $isStickied={isStickied}
                 $sideMargin={dynamicMargin}
                 $stickyOffset={stickyOffset}
-                ref={ref}
+                ref={navWrapperRef}
                 id={id}
                 data-testid={navTestId}
                 className={className}
