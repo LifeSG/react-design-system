@@ -65,6 +65,7 @@ export const NavLabel = styled.div`
     padding: 12px 16px;
     box-shadow: 0px 0px 1px 1px ${Color.Neutral[5]};
     overflow: hidden;
+    border-radius: 4px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -73,7 +74,7 @@ export const NavLabel = styled.div`
 
 export const NavItem = styled.li<NavItemStyleProps>`
     padding: ${(props) =>
-        props.$isSelected ? "12px 16px 12px 0" : "12px 16px"};
+        props.$isSelected ? "12px 8px 12px 0" : "12px 8px 12px 32px"};
     background: ${(props) =>
         props.$isSelected ? Color.Accent.Light[5] : Color.Neutral[8]};
     position: relative; /* Ensures that the tick mark is positioned relative to the selected item */
