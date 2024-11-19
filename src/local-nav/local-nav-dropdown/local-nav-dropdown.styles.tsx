@@ -67,7 +67,8 @@ export const NavLabel = styled.div<NavLabelStyleProps>`
     padding: 12px 16px;
     box-shadow: 0px 0px 1px 1px ${Color.Neutral[5]};
     overflow: hidden;
-    border-radius: ${(props) => (props.$isDropdownExpanded ? "0" : "4px")};
+    border-radius: ${(props) =>
+        props.$isDropdownExpanded ? "4px 4px 0 0" : "4px"};
     display: flex;
     justify-content: space-between;
     align-items: center;
