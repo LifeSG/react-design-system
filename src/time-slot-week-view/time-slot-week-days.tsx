@@ -1,5 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
+import { Colour } from "../theme";
 import { useMemo } from "react";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import {
@@ -8,9 +9,9 @@ import {
     RowDayCell,
     StyleProps,
 } from "../shared/internal-calendar/standard";
-import { V2_Text } from "../v2_text/text";
 import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.styles";
 import { TimeSlot } from "../time-slot-bar/types";
+import { Typography } from "../typography";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
     ColumnWeekCell,
@@ -44,8 +45,8 @@ const fallbackSlot = {
     clickable: false,
     styleAttributes: {
         styleType: "stripes",
-        backgroundColor: "#ECEFEF",
-        backgroundColor2: "#E0E4E5",
+        backgroundColor: Colour["bg-stronger"],
+        backgroundColor2: Colour["bg-strongest"],
     },
 };
 
@@ -128,9 +129,9 @@ export const TimeSlotWeekDays = ({
     const renderWeek = () => {
         return currentCalendarWeek.map((day, index) => (
             <HeaderCellWeek key={`week-day-${index}`}>
-                <V2_Text.XSmall weight={"semibold"}>
+                <Typography.BodyXS weight={"semibold"}>
                     {dayjs(day).format("ddd")}
-                </V2_Text.XSmall>
+                </Typography.BodyXS>
             </HeaderCellWeek>
         ));
     };

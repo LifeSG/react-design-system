@@ -7,7 +7,6 @@ import {
     ArrowButton,
     ArrowIconLeft,
     ArrowIconRight,
-    Border,
     CellText,
     Container,
     TimeLabel,
@@ -15,6 +14,7 @@ import {
     TimeMarkerWrapper,
     TimeSlot,
     TimeSlotBarContainer,
+    TimeSlotBorder,
     TimeSlotWrapper,
     getCellWidth,
 } from "./time-slot-bar.styles";
@@ -194,7 +194,7 @@ export const TimeSlotBar = ({
 
         return (
             <>
-                <Border $variant={variant} />
+                <TimeSlotBorder $variant={variant} />
                 <TimeSlot
                     key={"default-timeslot"}
                     data-testid={getDataTestId("default-timeslot")}
@@ -245,7 +245,7 @@ export const TimeSlotBar = ({
 
             return (
                 <div key={id}>
-                    <Border
+                    <TimeSlotBorder
                         $variant={variant}
                         style={{
                             left: `${slotOffset}px`,
@@ -273,7 +273,7 @@ export const TimeSlotBar = ({
                         )}
                     </TimeSlot>
                     {endTime !== slotEndTime && (
-                        <Border
+                        <TimeSlotBorder
                             $variant={variant}
                             style={{
                                 left: `${slotOffset + slotWidth}px`,

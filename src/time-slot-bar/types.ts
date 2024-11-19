@@ -10,9 +10,9 @@ interface TimeSlotBarStyleAttributes {
     /** The label color */
     color?: string;
     /** The background color */
-    backgroundColor: string;
+    backgroundColor: string | ((props: unknown) => string);
     /** The secondary background color. Used in conjunction if styleType is "stripes" */
-    backgroundColor2?: string;
+    backgroundColor2?: string | ((props: unknown) => string);
 }
 
 export interface TimeSlotBarProps {
