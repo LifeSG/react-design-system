@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { LocalNavItemComponentProps } from "../internal-types";
 import { LocalNavDropdownProps, LocalNavItemProps } from "../types";
 import {
@@ -13,29 +13,33 @@ import {
     StyledTickIcon,
 } from "./local-nav-dropdown.styles";
 
-const Component = ({
-    defaultLabel,
-    stickyOffset = 0,
-    onNavItemSelect,
-    items,
-    selectedItemIndex,
-    id,
-    "data-testid": testId,
-    className,
-    renderItem,
-}: LocalNavDropdownProps): JSX.Element => {
+const Component = (
+    {
+        defaultLabel,
+        stickyOffset = 0,
+        onNavItemSelect,
+        items,
+        selectedItemIndex,
+        id,
+        "data-testid": testId,
+        className,
+        renderItem,
+    }: LocalNavDropdownProps,
+    ref: React.Ref<HTMLElement>
+): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const detectStickyRef = useRef<HTMLSpanElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const [isStickied, setIsStickied] = useState<boolean>(false);
-    const navWrapperRef = useRef<HTMLElement>(null);
     const [isDropdownExpanded, setIsDropdownExpanded] =
         useState<boolean>(false);
     const [viewportHeight, setViewportHeight] = useState(0);
     const [dropdowntHeight, setDropdownHeight] = useState(0);
     const [dynamicMargin, setDynamicMargin] = useState(0);
+    const navWrapperRef = useRef<HTMLElement>(null);
+    useImperativeHandle(ref, () => navWrapperRef.current);
     const navTestId = testId || "local-nav-dropdown";
 
     const labelText =
