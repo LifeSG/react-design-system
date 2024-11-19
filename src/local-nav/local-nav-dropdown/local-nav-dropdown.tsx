@@ -178,6 +178,7 @@ const Component = ({
                     ref={dropdownRef}
                     onClick={handleToggleDropdown}
                     data-testid={`${navTestId}-label`}
+                    $isDropdownExpanded={isDropdownExpanded}
                 >
                     <LabelText weight="bold">{labelText}</LabelText>
                     <NavIcon $isDropdownExpanded={isDropdownExpanded} />

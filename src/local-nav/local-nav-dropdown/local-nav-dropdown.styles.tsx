@@ -20,10 +20,12 @@ interface NavItemListStyleProps {
 interface NavItemStyleProps {
     $isSelected?: boolean;
 }
-interface NavIconStyleProps {
+interface DropdownExpandedProps {
     $isDropdownExpanded: boolean;
 }
 
+interface NavIconStyleProps extends DropdownExpandedProps {}
+interface NavLabelStyleProps extends DropdownExpandedProps {}
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -59,13 +61,13 @@ export const NavIcon = styled(ChevronDownIcon)<NavIconStyleProps>`
     transform: rotate(${(props) => (props.$isDropdownExpanded ? 180 : 0)}deg);
 `;
 
-export const NavLabel = styled.div`
+export const NavLabel = styled.div<NavLabelStyleProps>`
     cursor: pointer;
     background: ${Color.Neutral[8]};
     padding: 12px 16px;
     box-shadow: 0px 0px 1px 1px ${Color.Neutral[5]};
     overflow: hidden;
-    border-radius: 4px;
+    border-radius: ${(props) => (props.$isDropdownExpanded ? "0" : "4px")};
     display: flex;
     justify-content: space-between;
     align-items: center;
