@@ -32,15 +32,16 @@ const Component = (
     // =============================================================================
     const detectStickyRef = useRef<HTMLSpanElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const navWrapperRef = useRef<HTMLElement>(null);
     const [isStickied, setIsStickied] = useState<boolean>(false);
     const [isDropdownExpanded, setIsDropdownExpanded] =
         useState<boolean>(false);
     const [viewportHeight, setViewportHeight] = useState(0);
     const [dropdowntHeight, setDropdownHeight] = useState(0);
     const [dynamicMargin, setDynamicMargin] = useState(0);
-    const navWrapperRef = useRef<HTMLElement>(null);
-    useImperativeHandle(ref, () => navWrapperRef.current);
     const navTestId = testId || "local-nav-dropdown";
+
+    useImperativeHandle(ref, () => navWrapperRef.current);
 
     const labelText =
         selectedItemIndex >= 0 && isStickied
@@ -96,7 +97,8 @@ const Component = (
             const dropdown = navWrapperRef?.current;
             if (dropdown) {
                 const dropdownRect = dropdown.getBoundingClientRect();
-                const spaceToRight = window.innerWidth - dropdownRect.right;
+                const spaceToRight =
+                    document.body.clientWidth - dropdownRect.right;
                 const spaceToLeft = dropdownRect.left;
                 // Calculate the padding needed to balance the dropdown in the viewport
                 const sidePadding = Math.max(spaceToRight, spaceToLeft);
