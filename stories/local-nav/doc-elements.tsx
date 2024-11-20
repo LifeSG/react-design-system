@@ -18,11 +18,21 @@ export const Page = styled.div`
     }
 `;
 
+const renderSection = (index: number) => (
+    <div>
+        <Text.H2 style={{ margin: "1rem 0" }}>Title {index}</Text.H2>
+        <Text.Body style={{ margin: "1rem 0" }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a
+            tortor vitae magna sagittis bibendum.
+        </Text.Body>
+    </div>
+);
+
 export const Content = () => (
     <>
-        <Text.Body style={{ margin: "1rem 0" }}>this is title 1</Text.Body>
-        <Text.Body style={{ margin: "1rem 0" }}>this is title 2</Text.Body>
-        <Text.Body style={{ margin: "1rem 0" }}>this is title 3</Text.Body>
+        {renderSection(1)}
+        {renderSection(2)}
+        {renderSection(3)}
     </>
 );
 

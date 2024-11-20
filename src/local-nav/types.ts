@@ -3,7 +3,11 @@ export interface LocalNavItemProps {
     id?: string | undefined;
 }
 
-interface LocalNavPropsBase {
+export interface LocalNavItemRenderProps {
+    selected: boolean;
+}
+
+interface BaseLocalNavProps {
     className?: string | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
@@ -13,17 +17,17 @@ interface LocalNavPropsBase {
         index: number
     ) => void;
     items: LocalNavItemProps[];
-    selectedItemIndex: number;
+    selectedItemIndex?: number | undefined;
     renderItem?:
         | ((
               item: LocalNavItemProps,
-              renderProps: { selected: boolean }
+              renderProps: LocalNavItemRenderProps
           ) => React.ReactNode)
         | undefined;
 }
 
-export interface LocalNavMenuProps extends LocalNavPropsBase {}
-export interface LocalNavDropdownProps extends LocalNavPropsBase {
+export interface LocalNavMenuProps extends BaseLocalNavProps {}
+export interface LocalNavDropdownProps extends BaseLocalNavProps {
     defaultLabel: string | React.ReactNode;
     stickyOffset?: number | undefined;
 }

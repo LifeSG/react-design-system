@@ -1,174 +1,94 @@
 import { ApiTable, TabAttribute, Tabs } from "../storybook-common";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import {
+    ApiTableAttributeRowProps,
+    ApiTableSectionProps,
+} from "../storybook-common/api-table/types";
+
+const COMMON_ATTRIBUTES: ApiTableAttributeRowProps[] = [
+    {
+        name: "selectedItemIndex",
+        description: "The current selected nav item",
+        propTypes: ["number"],
+    },
+    {
+        name: "className",
+        description: "The class selector of the element",
+        propTypes: ["string"],
+    },
+    {
+        name: "id",
+        description: "The unique identifier of the element",
+        propTypes: ["string"],
+    },
+    {
+        name: "data-testid",
+        description: "The test identifier of the element",
+        propTypes: ["string"],
+    },
+    {
+        name: "items",
+        description: "The nav items",
+        propTypes: ["LocalNavItemProps[]"],
+    },
+    {
+        name: "onNavItemSelect",
+        description: "Called when the nav item is selected",
+        propTypes: [
+            "(e: React.MouseEvent, item: LocalNavItemProps, index: number) => void",
+        ],
+    },
+    {
+        name: "renderItem",
+        description: "Function to customise the rendering of the nav item",
+        propTypes: [
+            "((item: LocalNavItemProps,renderProps: { selected: boolean }) => React.ReactNode",
+        ],
+    },
+];
+
+const NAV_ITEM_DATA: ApiTableSectionProps = {
+    name: "LocalNavItemProps",
+    attributes: [
+        {
+            name: "title",
+            description: "Display title of the nav item",
+            propTypes: ["string", "React.ReactNode"],
+            mandatory: true,
+        },
+        {
+            name: "id",
+            description: "Unique identifier of the nav item",
+            propTypes: ["string"],
+        },
+    ],
+};
 
 const MENU_DATA: ApiTableSectionProps[] = [
     {
-        attributes: [
-            {
-                name: "selectedItemIndex",
-                description: "which item should be selected from the dropdown",
-                propTypes: ["number"],
-            },
-            {
-                name: "className",
-                description: "The class selector of the element",
-                propTypes: ["string"],
-                mandatory: false,
-            },
-            {
-                name: "id",
-                description: "The unique identifier of the element",
-                propTypes: ["string"],
-            },
-            {
-                name: "data-testid",
-                description: "The test identifier of the element",
-                propTypes: ["string"],
-            },
-
-            {
-                name: "onNavItemClickCb",
-                description: (
-                    <>
-                        Called when the item in the <code>Menu</code> is
-                        selected or deselected
-                    </>
-                ),
-                propTypes: [
-                    "...args: any[]) => (e?: React.MouseEvent) => any;",
-                ],
-            },
-            {
-                name: "renderItem",
-                description: (
-                    <>
-                        To customise the item in the <code>Menu</code>
-                    </>
-                ),
-                propTypes: [
-                    "((item: LocalNavItemProps,renderProps: { selected: boolean }) => React.ReactNode",
-                ],
-            },
-            {
-                name: "titleList",
-                description: (
-                    <>
-                        The title inside the <code>Menu</code>, displayed when
-                        the dropdown is open
-                    </>
-                ),
-                propTypes: ["string"],
-            },
-        ],
+        attributes: [...COMMON_ATTRIBUTES],
     },
-    {
-        name: "LocalNavItemProps",
-        attributes: [
-            {
-                name: "title",
-                description: "title of the item",
-                propTypes: ["string", "React.ReactNode"],
-                mandatory: true,
-            },
-            {
-                name: "id",
-                description: "id of the element",
-                propTypes: ["string"],
-                mandatory: false,
-            },
-        ],
-    },
+    NAV_ITEM_DATA,
 ];
 
 const DROPDOWN_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
+            ...COMMON_ATTRIBUTES,
             {
-                name: "selectedItemIndex",
-                description:
-                    "which item should be selected from the dropdown for the initial render",
-                propTypes: ["number"],
-            },
-            {
-                name: "defaultLabelText",
-                description:
-                    "Default label text that should be displayed for the initial render",
+                name: "defaultLabel",
+                description: "Default label when no nav items are selected",
                 propTypes: ["boolean"],
-            },
-
-            {
-                name: "stickyOffset",
-                description: "from where we want the dropdown to start",
-                propTypes: ["number"],
-            },
-            {
-                name: "className",
-                description: "The class selector of the element",
-                propTypes: ["string"],
-            },
-            {
-                name: "id",
-                description: "The unique identifier of the element",
-                propTypes: ["string"],
-            },
-            {
-                name: "data-testid",
-                description: "The test identifier of the element",
-                propTypes: ["string"],
-            },
-
-            {
-                name: "onNavItemClickCb",
-                description: (
-                    <>
-                        Called when the item in the <code>dropdown</code> is
-                        selected or deselected
-                    </>
-                ),
-                propTypes: [
-                    "...args: any[]) => (e?: React.MouseEvent) => any;",
-                ],
-            },
-            {
-                name: "renderItem",
-                description: (
-                    <>
-                        To customise the item in the <code>dropdown</code>
-                    </>
-                ),
-                propTypes: [
-                    "((item: LocalNavItemProps,renderProps: { selected: boolean }) => React.ReactNode",
-                ],
-            },
-            {
-                name: "items",
-                description: (
-                    <>
-                        The title inside the <code>dropdown</code>, displayed
-                        when the dropdown is open
-                    </>
-                ),
-                propTypes: ["LocalNavItemProps[]"],
-            },
-        ],
-    },
-    {
-        name: "LocalNavItemProps",
-        attributes: [
-            {
-                name: "title",
-                description: "title of the item",
-                propTypes: ["string", "React.ReactNode"],
+                defaultValue: "0",
                 mandatory: true,
             },
             {
-                name: "id",
-                description: "id of the element",
-                propTypes: ["string"],
-                mandatory: false,
+                name: "stickyOffset",
+                description: "The top offset when the dropdown is sticky",
+                propTypes: ["number"],
             },
         ],
     },
+    NAV_ITEM_DATA,
 ];
 
 const PROPS_TABLE_DATA: TabAttribute[] = [

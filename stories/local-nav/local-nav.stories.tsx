@@ -26,22 +26,15 @@ const NAV_ITEMS = [
 
 export const Menu: StoryObj<MenuComponent> = {
     render: () => {
-        const [selectedLabel, setSelectedLabel] = useState("initial");
+        const [selectedIndex, setSelectedIndex] = useState(-1);
 
         const handleNavItemClick = (
             e: React.MouseEvent,
             item: LocalNavItemProps,
             index: number
         ) => {
-            const section = NAV_ITEMS[index].title;
-            if (section) {
-                setSelectedLabel(section);
-            }
+            setSelectedIndex(index);
         };
-
-        const selectedIndex = NAV_ITEMS.findIndex(
-            (item) => item.title === selectedLabel
-        );
 
         return (
             <LocalNavMenu
@@ -57,21 +50,16 @@ export const Menu: StoryObj<MenuComponent> = {
 
 export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
     render: () => {
-        const [selectedLabel, setSelectedLabel] = useState("initial");
+        const [selectedIndex, setSelectedIndex] = useState(-1);
 
         const handleNavItemClick = (
             e: React.MouseEvent,
             item: LocalNavItemProps,
             index: number
         ) => {
-            const section = NAV_ITEMS[index].title;
-            if (section) {
-                setSelectedLabel(section);
-            }
+            setSelectedIndex(index);
         };
-        const selectedIndex = NAV_ITEMS.findIndex(
-            (item) => item.title === selectedLabel
-        );
+
         return (
             <LocalNavMenu
                 items={NAV_ITEMS}
@@ -102,7 +90,7 @@ export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
 
 export const Dropdown: StoryObj<DropdownComponent> = {
     render: () => {
-        const [selectedLabel, setSelectedLabel] = useState(-1);
+        const [selectedIndex, setSelectedIndex] = useState(-1);
         const contentRef = useRef<HTMLDivElement>(null);
 
         const handleNavItemClick = (
@@ -110,10 +98,11 @@ export const Dropdown: StoryObj<DropdownComponent> = {
             item: LocalNavItemProps,
             index: number
         ) => {
+            setSelectedIndex(index);
+
+            // Scroll to the selected section
             const section = NAV_ITEMS[index];
             if (section) {
-                setSelectedLabel(index);
-                // Scroll to the selected section
                 const element = contentRef.current?.children[index];
                 if (element) {
                     const top =
@@ -124,14 +113,15 @@ export const Dropdown: StoryObj<DropdownComponent> = {
                 }
             }
         };
+
         return (
             <div style={{ height: "200vh", padding: "2rem" }}>
                 <TopContent />
                 <LocalNavDropdown
-                    defaultLabel={"initial"}
+                    defaultLabel={"Initial"}
                     items={NAV_ITEMS}
                     stickyOffset={0}
-                    selectedItemIndex={selectedLabel}
+                    selectedItemIndex={selectedIndex}
                     onNavItemSelect={(e, item, index) =>
                         handleNavItemClick(e, item, index)
                     }
@@ -150,35 +140,24 @@ export const Dropdown: StoryObj<DropdownComponent> = {
 
 export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
     render: () => {
-        const [selectedLabel, setSelectedLabel] = useState(-1);
-        const contentRef = useRef<HTMLDivElement>(null);
+        const [selectedIndex, setSelectedIndex] = useState(-1);
+
         const handleNavItemClick = (
             e: React.MouseEvent,
             item: LocalNavItemProps,
             index: number
         ) => {
-            const section = NAV_ITEMS[index];
-            if (section) {
-                setSelectedLabel(index);
-                // Scroll to the selected section
-                const element = contentRef.current?.children[index];
-                if (element) {
-                    const top =
-                        element.getBoundingClientRect().top +
-                        window.scrollY -
-                        250;
-                    window.scrollTo({ top, behavior: "smooth" });
-                }
-            }
+            setSelectedIndex(index);
         };
+
         return (
-            <div style={{ height: "200vh", padding: "1rem" }}>
+            <div>
                 <TopContent />
                 <LocalNavDropdown
-                    defaultLabel="initial"
+                    defaultLabel="Initial"
                     items={NAV_ITEMS}
                     stickyOffset={0}
-                    selectedItemIndex={selectedLabel}
+                    selectedItemIndex={selectedIndex}
                     onNavItemSelect={handleNavItemClick}
                     renderItem={(item, { selected }) => (
                         <div
@@ -197,37 +176,24 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
                         </div>
                     )}
                 />
-                <div style={{ padding: "1rem" }} ref={contentRef}>
-                    <Content />
-                </div>
             </div>
         );
-    },
-    parameters: {
-        layout: "fullscreen",
-        docs: { story: { inline: false, iframeHeight: 500 } },
     },
 };
 
 export const CombinedUsage: StoryObj = {
     render: () => {
-        const [selectedLabel, setSelectedLabel] = useState("initial");
+        const [selectedIndex, setSelectedIndex] = useState(undefined);
         const isMobile = useMediaQuery({
             maxWidth: MediaWidths.mobileL,
         });
-        const selectedIndex = NAV_ITEMS.findIndex(
-            (item) => item.title === selectedLabel
-        );
 
         const handleNavItemClick = (
             e: React.MouseEvent,
             item: LocalNavItemProps,
             index: number
         ) => {
-            const section = NAV_ITEMS[index].title;
-            if (section) {
-                setSelectedLabel(section);
-            }
+            setSelectedIndex(index);
         };
 
         return (
@@ -244,7 +210,7 @@ export const CombinedUsage: StoryObj = {
                 <main>
                     {isMobile && (
                         <LocalNavDropdown
-                            defaultLabel={selectedLabel}
+                            defaultLabel="Initial"
                             items={NAV_ITEMS}
                             stickyOffset={0}
                             selectedItemIndex={selectedIndex}
@@ -253,7 +219,7 @@ export const CombinedUsage: StoryObj = {
                             }
                         />
                     )}
-                    <Content />
+                    <TopContent />
                     <Content />
                 </main>
             </Page>
