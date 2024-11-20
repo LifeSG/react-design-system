@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { V2_TextWeight } from "../v2_text";
 import { Menu } from "./menu";
 import {
     ChevronIcon,
@@ -13,6 +12,7 @@ import {
     Wrapper,
 } from "./navbar-items.styles";
 import { NavItemLinkProps, NavItemProps } from "./types";
+import { TypographyWeight } from "../typography";
 
 interface Props<T> {
     items: NavItemProps<T>[];
@@ -109,7 +109,7 @@ export const NavbarItems = <T,>({
                     const selected = checkSelected(item);
                     const { children, options, ...otherItemAttrs } = item;
 
-                    const textWeight: V2_TextWeight = selected
+                    const textWeight: TypographyWeight = selected
                         ? mobile
                             ? "bold"
                             : "semibold"
@@ -121,6 +121,7 @@ export const NavbarItems = <T,>({
                         selectedIndex >= 0 &&
                         selectedIndex === index &&
                         showSubMenu;
+
                     return (
                         <LinkItem key={index} $hiddenBranding={hideNavBranding}>
                             <Link
@@ -135,6 +136,7 @@ export const NavbarItems = <T,>({
                                 {selected && (
                                     <LinkIndicator
                                         data-testid={`${testId}-indicator`}
+                                        $selected={selected}
                                     />
                                 )}
                                 {mobile && item.subMenu && (
@@ -148,7 +150,7 @@ export const NavbarItems = <T,>({
                                                 expanded ? "Collapse" : "Expand"
                                             }
                                         >
-                                            <ChevronIcon />
+                                            <ChevronIcon $selected={selected} />
                                         </ExpandCollapseButton>
                                     </LinkIconContainer>
                                 )}

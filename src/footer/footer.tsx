@@ -1,7 +1,7 @@
 import React from "react";
-import { V2_Text } from "../v2_text";
 import { DownloadApp } from "./footer-download-app";
 import { FooterHelper } from "./footer-helper";
+import { Typography } from "../typography";
 import {
     AddonSection,
     BaseFooter,
@@ -9,9 +9,9 @@ import {
     BottomSectionContent,
     CopyrightSection,
     DisclaimerTextLink,
+    FullWidthDivider,
     LinkSection,
     LogoSection,
-    MobileOnlyBorder,
     StyledFooterLink,
     TopSection,
 } from "./footer.style";
@@ -129,25 +129,26 @@ export const Footer = <T,>({
 
         if (component) {
             return (
-                <TopSection type="grid" stretch={isStretch}>
-                    {component}
-                </TopSection>
+                <>
+                    <TopSection type="grid" stretch={isStretch}>
+                        {component}
+                    </TopSection>
+                    <FullWidthDivider />
+                </>
             );
         }
 
         return null;
     };
-
     return (
         <BaseFooter {...otherProps}>
             {renderTopSection()}
-            <MobileOnlyBorder />
             <BottomSection type="grid" stretch={isStretch}>
                 <BottomSectionContent key="disclaimer">
                     {renderDisclaimerLinks()}
                 </BottomSectionContent>
                 <CopyrightSection key="copyright">
-                    <V2_Text.XSmall data-testid={"copyright-text"}>
+                    <Typography.BodyXS data-testid={"copyright-text"}>
                         {copyrightInfo || (
                             <>
                                 &copy;{" "}
@@ -157,7 +158,7 @@ export const Footer = <T,>({
                                 )}
                             </>
                         )}
-                    </V2_Text.XSmall>
+                    </Typography.BodyXS>
                 </CopyrightSection>
             </BottomSection>
         </BaseFooter>

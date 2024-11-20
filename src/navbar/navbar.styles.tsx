@@ -1,9 +1,9 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled from "styled-components";
-import { V2_Color } from "../v2_color";
-import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Transition } from "../transition";
+import { MediaQuery } from "../theme";
+import { Colour } from "../theme";
 
 // =============================================================================
 // CONSTANTS
@@ -51,7 +51,7 @@ export const Nav = styled.nav<StyleProps>`
     position: relative;
     transition: ${Transition.Base};
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         height: ${NAVBAR_MOBILE_HEIGHT}rem;
     }
 `;
@@ -63,7 +63,7 @@ export const NavElementsContainer = styled.div<StyleProps>`
     flex: 1;
     justify-content: flex-end;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin-left: 0rem;
     }
 `;
@@ -71,7 +71,7 @@ export const NavElementsContainer = styled.div<StyleProps>`
 export const MobileMenuButton = styled(ClickableIcon)`
     display: none;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
         padding: 0 1.5rem;
         margin-right: -1.5rem;
@@ -81,7 +81,7 @@ export const MobileMenuButton = styled(ClickableIcon)`
 export const MobileMenuIcon = styled(MenuIcon)`
     height: 1.5rem;
     width: 1.5rem;
-    color: ${V2_Color.Neutral[1]};
+    color: ${Colour.icon};
 `;
 
 export const NavBrandContainer = styled.div<StyleProps>`
@@ -92,27 +92,27 @@ export const NavBrandContainer = styled.div<StyleProps>`
 
     height: ${(props) => (props.$compress ? 1.5 : 2)}rem;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         height: 1.5rem;
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileS} {
+    ${MediaQuery.MaxWidth.xxs} {
         height: 1.25rem;
     }
 `;
 
 export const NavSeparator = styled.div<StyleProps>`
     display: flex;
-    background-color: ${V2_Color.Neutral[5]};
+    background-color: ${Colour.border};
     height: 100%;
     width: 1px;
     margin: 0 ${(props) => (props.$compress ? 1 : 1.5)}rem;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin: 0 1rem;
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileS} {
+    ${MediaQuery.MaxWidth.sm} {
         width: 2px;
         margin: 0 0.75rem;
     }

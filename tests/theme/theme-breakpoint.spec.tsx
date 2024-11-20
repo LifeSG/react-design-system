@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
 import { Breakpoint } from "../../src";
-import { ThemeSpec } from "../../src/theme/types";
+import { MOCK_THEME } from "./mock-theme-data";
 
 const StyledComponentTest = styled.div`
     background-color: red;
@@ -17,18 +17,9 @@ const StyledComponentTest = styled.div`
 `;
 
 describe("Media Width Breakpoints Test", () => {
-    const mockTheme: ThemeSpec = {
-        colourScheme: "lifesg",
-        fontScheme: "lifesg",
-        motionScheme: "lifesg",
-        borderScheme: "lifesg",
-        spacingScheme: "lifesg",
-        radiusScheme: "lifesg",
-        breakpointScheme: "lifesg",
-    };
     it("should apply correct styles based on media width", () => {
         const { container } = render(
-            <ThemeProvider theme={mockTheme}>
+            <ThemeProvider theme={MOCK_THEME}>
                 <StyledComponentTest />
             </ThemeProvider>
         );

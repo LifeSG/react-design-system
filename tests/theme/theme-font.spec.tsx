@@ -1,9 +1,9 @@
 import styled, { ThemeProvider } from "styled-components";
 import { render } from "@testing-library/react";
-
 import { ThemeSpec } from "../../src/theme/types";
 import "jest-styled-components";
 import { Font, FontSpec } from "../../src";
+import { MOCK_THEME } from "./mock-theme-data";
 
 const StyledFontTest = styled.div`
     ${Font["header-xxl-bold"]};
@@ -15,23 +15,13 @@ const StyledFontSpecSet = styled.div`
 
 describe("StyledFontTests", () => {
     it("should apply correct font styles based on the theme", () => {
-        const mockTheme: ThemeSpec = {
-            colourScheme: "lifesg",
-            fontScheme: "lifesg",
-            motionScheme: "lifesg",
-            borderScheme: "lifesg",
-            spacingScheme: "lifesg",
-            radiusScheme: "lifesg",
-            breakpointScheme: "lifesg",
-        };
-
         const fontSize = "3rem";
         const fontWeight = "700";
         const lineHeight = "3.5rem";
         const letterSpacing = "-0.056rem";
 
         const { container } = render(
-            <ThemeProvider theme={mockTheme}>
+            <ThemeProvider theme={MOCK_THEME}>
                 <StyledFontTest />
             </ThemeProvider>
         );
@@ -47,13 +37,7 @@ describe("StyledFontTests", () => {
 
     it("should apply correct font styles when overriding font token", () => {
         const overrideTheme: ThemeSpec = {
-            colourScheme: "lifesg",
-            fontScheme: "lifesg",
-            motionScheme: "lifesg",
-            borderScheme: "lifesg",
-            spacingScheme: "lifesg",
-            radiusScheme: "lifesg",
-            breakpointScheme: "lifesg",
+            ...MOCK_THEME,
             overrides: {
                 font: {
                     "header-xxl-bold": {
@@ -87,20 +71,10 @@ describe("StyledFontTests", () => {
     });
 
     it("should apply correct font spec styles based on the theme", () => {
-        const overrideTheme: ThemeSpec = {
-            colourScheme: "lifesg",
-            fontScheme: "lifesg",
-            motionScheme: "lifesg",
-            borderScheme: "lifesg",
-            spacingScheme: "lifesg",
-            radiusScheme: "lifesg",
-            breakpointScheme: "lifesg",
-        };
-
         const fontSize = "1.125rem";
 
         const { container } = render(
-            <ThemeProvider theme={overrideTheme}>
+            <ThemeProvider theme={MOCK_THEME}>
                 <StyledFontSpecSet />
             </ThemeProvider>
         );

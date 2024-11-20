@@ -1,8 +1,8 @@
 import styled, { ThemeProvider } from "styled-components";
 import { MediaQuery } from "../../src/theme/breakpoint/media-query-helper";
-import { ThemeSpec } from "../../src/theme/types";
 import { render } from "@testing-library/react";
 import "jest-styled-components";
+import { MOCK_THEME } from "./mock-theme-data";
 
 const StyledComponentTest = styled.div`
     background-color: red;
@@ -16,22 +16,12 @@ const StyledComponentTest = styled.div`
     }
 `;
 describe("MediaQuery Helper Function Test", () => {
-    const mockTheme: ThemeSpec = {
-        colourScheme: "lifesg",
-        fontScheme: "lifesg",
-        motionScheme: "lifesg",
-        borderScheme: "lifesg",
-        spacingScheme: "lifesg",
-        radiusScheme: "lifesg",
-        breakpointScheme: "lifesg",
-    };
-
     const xsMin = "321px";
     const xsMax = "375px";
 
     it("should apply correct styles based on media query spec", () => {
         const { container } = render(
-            <ThemeProvider theme={mockTheme}>
+            <ThemeProvider theme={MOCK_THEME}>
                 <StyledComponentTest />
             </ThemeProvider>
         );

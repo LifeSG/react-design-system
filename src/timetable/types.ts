@@ -1,11 +1,11 @@
 import { PopoverV2TriggerType } from "../popover-v2";
-import { V2_ResourceScheme } from "../v2_theme";
+import { ResourceScheme } from "../theme/types";
 
 export type TimeTableCellType = "filled" | "blocked" | "default" | "disabled";
 
 interface EmptyContentProps {
     description: string;
-    illustrationScheme: V2_ResourceScheme;
+    illustrationScheme: ResourceScheme;
 }
 
 export interface TimeTableRowData {

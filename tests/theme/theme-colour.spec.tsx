@@ -3,6 +3,7 @@ import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
 import { Colour } from "../../src/theme";
 import { ThemeSpec } from "../../src/theme/types";
+import { MOCK_THEME } from "./mock-theme-data";
 
 const StyledComponentTest = styled.div`
     background-color: ${Colour.Primitive["primary-10"]};
@@ -11,21 +12,11 @@ const StyledComponentTest = styled.div`
 
 describe("Colour Themeing Test", () => {
     it("should apply correct styles based on the theme", () => {
-        const mockTheme: ThemeSpec = {
-            colourScheme: "bookingsg",
-            fontScheme: "lifesg",
-            motionScheme: "lifesg",
-            borderScheme: "lifesg",
-            spacingScheme: "lifesg",
-            radiusScheme: "lifesg",
-            breakpointScheme: "lifesg",
-        };
-
-        const bgColor = "#1A122C";
-        const textColor = "#7654BC";
+        const bgColor = "#001731";
+        const textColor = "#1768BE";
 
         const { container } = render(
-            <ThemeProvider theme={mockTheme}>
+            <ThemeProvider theme={MOCK_THEME}>
                 <StyledComponentTest />
             </ThemeProvider>
         );
@@ -39,13 +30,7 @@ describe("Colour Themeing Test", () => {
 
     it("should apply correct styles when overriding primitive colour token", () => {
         const overrideTheme: ThemeSpec = {
-            colourScheme: "lifesg",
-            fontScheme: "lifesg",
-            motionScheme: "lifesg",
-            borderScheme: "lifesg",
-            spacingScheme: "lifesg",
-            radiusScheme: "lifesg",
-            breakpointScheme: "lifesg",
+            ...MOCK_THEME,
             overrides: {
                 primitiveColour: {
                     "primary-10": "#fefefe",
@@ -71,13 +56,7 @@ describe("Colour Themeing Test", () => {
 
     it("should apply correct styles when overriding semantic colour token", () => {
         const overrideTheme: ThemeSpec = {
-            colourScheme: "lifesg",
-            fontScheme: "lifesg",
-            motionScheme: "lifesg",
-            borderScheme: "lifesg",
-            spacingScheme: "lifesg",
-            radiusScheme: "lifesg",
-            breakpointScheme: "lifesg",
+            ...MOCK_THEME,
             overrides: {
                 semanticColour: {
                     "border-primary": "#fefefe",
