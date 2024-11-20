@@ -39,7 +39,7 @@ export const AppStoreLink = styled.a`
         }
 
         img {
-            width: auto;
+            width: 100%;
             height: auto;
             object-fit: contain;
         }
