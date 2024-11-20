@@ -42,24 +42,24 @@ export const LogoSection = styled.div`
     }
 
     ${MediaQuery.MaxWidth.lg} {
-        grid-column: 1 / span 8;
+        grid-column: 1 / span 12;
         margin-bottom: 2rem;
     }
 
-    ${MediaQuery.MaxWidth.sm} {
-        grid-column: 1 / span 4;
+    ${MediaQuery.MaxWidth.md} {
+        grid-column: 1 / span 8;
         margin-bottom: 2rem;
     }
 `;
 
 export const LinkSection = styled.ul`
     // first col
-    grid-column: 3 / span 2;
+    grid-column: 3 / span 4;
     list-style-type: none;
 
     :nth-of-type(2) {
         // 2nd col
-        grid-column: 5 / span 2;
+        grid-column: 7 / span 4;
     }
 
     li {
@@ -76,6 +76,16 @@ export const LinkSection = styled.ul`
 
     ${MediaQuery.MaxWidth.lg} {
         // first col
+        grid-column: 1 / span 6;
+
+        :nth-of-type(2) {
+            // 2nd col
+            grid-column: 7 / span 6;
+        }
+    }
+
+    ${MediaQuery.MaxWidth.md} {
+        // first col
         grid-column: 1 / span 4;
 
         :nth-of-type(2) {
@@ -83,28 +93,18 @@ export const LinkSection = styled.ul`
             grid-column: 5 / span 4;
         }
     }
-
-    ${MediaQuery.MaxWidth.sm} {
-        // first col
-        grid-column: 1 / span 2;
-
-        :nth-of-type(2) {
-            // 2nd col
-            grid-column: 3 / span 2;
-        }
-    }
 `;
 
 export const AddonSection = styled.div`
-    grid-column: 9 / span 4;
+    grid-column: 13 / span 6;
 
     ${MediaQuery.MaxWidth.lg} {
-        grid-column: 1 / span 8;
+        grid-column: 1 / span 12;
         margin-top: 2rem;
     }
 
-    ${MediaQuery.MaxWidth.sm} {
-        grid-column: 1 / span 4;
+    ${MediaQuery.MaxWidth.md} {
+        grid-column: 1 / span 8;
     }
 `;
 
@@ -131,15 +131,15 @@ export const BottomSectionContent = styled.div`
     }
 
     ${MediaQuery.MaxWidth.lg} {
-        grid-column: 1 / span 8;
+        grid-column: 1 / span 12;
         flex-direction: column;
         &:not(:last-child) {
             margin-right: 0;
         }
     }
 
-    ${MediaQuery.MaxWidth.sm} {
-        grid-column: 1 / span 4;
+    ${MediaQuery.MaxWidth.md} {
+        grid-column: 1 / span 8;
     }
 `;
 
@@ -150,11 +150,11 @@ export const CopyrightSection = styled(BottomSectionContent)`
     ${MediaQuery.MaxWidth.lg} {
         margin-top: 1rem;
         justify-content: flex-start;
-        grid-column: 1 / span 8;
+        grid-column: 1 / span 12;
     }
 
-    ${MediaQuery.MaxWidth.sm} {
-        grid-column: 1 / span 4;
+    ${MediaQuery.MaxWidth.md} {
+        grid-column: 1 / span 8;
     }
 `;
 
