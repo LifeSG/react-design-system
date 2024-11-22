@@ -1,16 +1,16 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
-import { V2_Color } from "../v2_color";
-import { V2_MediaQuery } from "../v2_media";
-import { V2_Text } from "../v2_text/text";
 import { TitleStyleProps, TitleWrapperStyleProps } from "./types";
+import { Border, MediaQuery } from "../theme";
+import { Colour } from "../theme";
+import { Typography } from "../typography";
 
 // ============================================================================
 // STYLING
 // =============================================================================
 export const Content = styled.div`
     width: 100%;
-    border-bottom: 1px solid ${V2_Color.Neutral[6]};
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 `;
 
 export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
@@ -20,14 +20,14 @@ export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
     justify-content: flex-end;
     padding-bottom: 1rem;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         justify-content: flex-end;
     }
 
     ${(props) => {
         if (!props.$showTitleInMobile && !props.$hasExpandAll) {
             return css`
-                ${V2_MediaQuery.MaxWidth.mobileL} {
+                ${MediaQuery.MaxWidth.sm} {
                     display: none;
                 }
             `;
@@ -35,18 +35,18 @@ export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
     }}
 `;
 
-export const Title = styled(V2_Text.H2)<TitleStyleProps>`
+export const Title = styled(Typography.HeaderMD)<TitleStyleProps>`
     display: flex;
     align-self: flex-start;
     flex: 1;
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         text-align: left;
     }
 
     ${(props) => {
         if (!props.$showInMobile) {
             return css`
-                ${V2_MediaQuery.MaxWidth.mobileL} {
+                ${MediaQuery.MaxWidth.sm} {
                     display: none;
                     visibility: hidden;
                 }

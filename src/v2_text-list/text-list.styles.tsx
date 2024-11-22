@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
-import { V2_MediaQuery } from "../v2_media";
-import { V2_Color } from "../v2_color";
-import { V2_TextStyleHelper } from "../v2_text/helper";
 import { V2_OrderedListProps, V2_UnorderedListProps } from "./types";
+import { Colour, Font, MediaQuery } from "../theme";
 
 const baseListStyle = (bottomMargin: number) => `
 	margin-bottom: ${bottomMargin ? bottomMargin : 0}rem;
@@ -19,7 +17,7 @@ export const V2_StyledOrderedList = styled.ol<V2_OrderedListProps>`
     ${(props) => baseListStyle(props.bottomMargin)}
     margin-left: ${BASE_MARGIN}rem;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin-left: 2.5rem;
     }
 
@@ -27,9 +25,9 @@ export const V2_StyledOrderedList = styled.ol<V2_OrderedListProps>`
     counter-reset: list;
 
     li {
-        ${(props) => V2_TextStyleHelper.getTextStyle(props.size, "regular")}
+        ${(props) => Font[`${props.size}-regular`]}
         position: relative;
-        color: ${V2_Color.Neutral[1]};
+        color: ${Colour.text};
     }
 
     ${(props) => {
@@ -84,8 +82,8 @@ export const V2_StyledUnorderedList = styled.ul<V2_UnorderedListProps>`
     list-style-type: ${(props) => props.bulletType || "disc"};
 
     li {
-        ${(props) => V2_TextStyleHelper.getTextStyle(props.size, "regular")}
-        color: ${V2_Color.Neutral[1]};
+        ${(props) => Font[`${props.size}-regular`]}
+        color: ${Colour.text};
     }
 
     counter-reset: list;
