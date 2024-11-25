@@ -1,13 +1,11 @@
 import { Button } from "../button";
 import { animated } from "react-spring";
-import { V2_ValidationElementAttributes } from "src/v2_color";
-import { PropertiesToType } from "src/util/utility-types";
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color/color";
-import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { V2_Text } from "../v2_text";
 import { ToastType } from "./types";
+import { Colour } from "../theme";
+import { MediaQuery } from "../theme";
+import { Typography } from "../typography/typography";
 
 //=============================================================================
 // STYLE INTERFACE
@@ -17,21 +15,44 @@ interface StyleProps {
     $fixed?: boolean | undefined;
 }
 
-const getValidationColorAttributes = (
-    props: any
-): PropertiesToType<V2_ValidationElementAttributes, (props) => string> => {
-    switch (props.$type) {
-        case "success":
-            return V2_Color.Validation.Green;
-        case "warning":
-            return V2_Color.Validation.Orange;
-        case "error":
-            return V2_Color.Validation.Red;
-        case "info":
-            return V2_Color.Validation.Blue;
-        default:
-            return;
-    }
+const getValidationColorAttributes = (props: StyleProps) => {
+    const type = props.$type;
+
+    const typeMapping = {
+        success: {
+            Background: `bg-success`,
+            Border: `border-success`,
+            Text: `text-success`,
+            Icon: `icon-success`,
+        },
+        warning: {
+            Background: `bg-warning`,
+            Border: `border-warning`,
+            Text: `text-warning`,
+            Icon: `icon-warning`,
+        },
+        error: {
+            Background: `bg-error`,
+            Border: `border-error`,
+            Text: `text-error`,
+            Icon: `icon-error`,
+        },
+        info: {
+            Background: `bg-info`,
+            Border: `border-info`,
+            Text: `text-info`,
+            Icon: `icon-info`,
+        },
+    };
+
+    const selectedTypeMapping = typeMapping[type];
+
+    return {
+        Background: Colour[selectedTypeMapping.Background],
+        Border: Colour[selectedTypeMapping.Border],
+        Text: Colour[selectedTypeMapping.Text],
+        Icon: Colour[selectedTypeMapping.Icon],
+    };
 };
 
 // =============================================================================
@@ -50,7 +71,7 @@ export const Wrapper = styled(animated.div)<StyleProps>`
     align-items: center;
     gap: 2rem;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         left: 0;
     }
 
@@ -70,7 +91,7 @@ export const ContentWrapper = styled.div`
     flex: 1;
     justify-content: space-between;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         display: flex;
         align-items: flex-start;
         flex-direction: column;
@@ -102,7 +123,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
 `;
 
-export const Title = styled(V2_Text.H4)<StyleProps>`
+export const Title = styled(Typography.HeaderXS)<StyleProps>`
     display: flex;
 
     ${(props) => {
@@ -129,7 +150,7 @@ export const ActionButton = styled(Button.Small)`
     width: fit-content;
     flex-shrink: 0;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         align-self: flex-start;
         margin-left: 2rem;
     }
@@ -150,7 +171,7 @@ export const DismissButton = styled(ClickableIcon)<StyleProps>`
             :hover {
                 background: transparent;
             }
-            ${V2_MediaQuery.MaxWidth.mobileL} {
+            ${MediaQuery.MaxWidth.sm} {
                 align-self: center;
             }
         `;
