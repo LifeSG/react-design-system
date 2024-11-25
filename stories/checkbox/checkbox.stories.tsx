@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Checkbox } from "src/checkbox";
-import { Grid, SubOption } from "./doc-elements";
+import { Grid, Label, SubOption } from "./doc-elements";
 
 type Component = typeof Checkbox;
 
@@ -54,17 +54,19 @@ export const IndeterminateState: StoryObj<Component> = {
                 />
                 <SubOption>
                     <Checkbox
+                        id="sub-option-1"
                         checked={checked1}
                         onChange={() => setChecked1(!checked1)}
                     />
-                    Sub-option 1
+                    <Label htmlFor="sub-option-1">Sub-option 1</Label>
                 </SubOption>
                 <SubOption>
                     <Checkbox
+                        id="sub-option-2"
                         checked={checked2}
                         onChange={() => setChecked2(!checked2)}
                     />
-                    Sub-option 2
+                    <Label htmlFor="sub-option-2">Sub-option 2</Label>
                 </SubOption>
             </>
         );

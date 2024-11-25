@@ -55,12 +55,20 @@ export const Container = styled.div<StyleProps>`
         animation: 200ms ease-in-out ${fadeIn};
         width: 100%;
         height: 100%;
+
         color: ${(props) =>
             props.$disabled
                 ? Colour["icon-disabled-subtle"](props)
                 : props.$unchecked
                 ? Colour["icon-primary-subtlest"](props)
-                : Colour["icon-primary"](props)};
+                : Colour["icon-selected"](props)};
+    }
+
+    &:hover svg {
+        color: ${(props) =>
+            !props.$disabled &&
+            props.$unchecked &&
+            Colour["icon-hover"](props)};
     }
 `;
 
