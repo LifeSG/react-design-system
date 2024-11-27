@@ -8,8 +8,7 @@ import { PropsTable } from "./props-table";
 
 ## Overview
 
-A component that has rounded corners and box shadow and can have any contents.
-Can be used stand-alone or as part of other components (e.g. Popover, Tooltip).
+A content container that has rounded corners and appears elevated.
 
 ```tsx
 import { Card } from "@lifesg/react-design-system/card";
@@ -17,10 +16,9 @@ import { Card } from "@lifesg/react-design-system/card";
 
 <Canvas of={CardStories.Default} />
 
-## Custom Content
+## Custom content
 
-Other than a `string`, the `Card` also accepts a `JSX.Element` as its `children`.
-The child `JSX.Element` is unaltered and is simply wrapped by the `Card`.
+You can construct a custom layout and pass it into the component.
 
 <Canvas of={CardStories.CustomContent} />
 
@@ -33,8 +31,6 @@ import { Card } from "@lifesg/react-design-system/card";
 import styled from "styled-components";
 
 export const StyledCard = styled(Card)`
-    border-radius: 4px;
-    padding: 1rem 2rem;
     max-width: 30rem;
     /* Other CSS properties... */
 `;

@@ -43,6 +43,7 @@ const preview: Preview = {
                     ],
                     "Core",
                     ["Typography", "Layout", "Icon"],
+                    "Content",
                     "Selection and input",
                     ["Button", ["Base", "With Icon"]],
                     "Feedback indicators",
