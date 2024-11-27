@@ -1,85 +1,66 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { ImageButton } from "src/image-button";
-import { FlexStoryContainer } from "../storybook-common";
-import { Headings, Wrapper } from "./doc-elements";
+import { GridDecorator } from "stories/storybook-common";
 
 type Component = typeof ImageButton;
 
 const meta: Meta<Component> = {
-    title: "General/ImageButton",
+    title: "Selection and input/ImageButton",
     component: ImageButton,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    args: {
+        imgSrc: "https://cdn-icons-png.flaticon.com/512/4401/4401459.png",
+        children: "Office Equipment",
+    },
+    render: (args) => {
         return (
-            <Wrapper>
-                <Headings />
-                <ImageButton imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png">
-                    Office Equipment
-                </ImageButton>
-                <ImageButton
-                    selected
-                    imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png"
-                >
-                    Office Equipment
-                </ImageButton>
-                <ImageButton
-                    disabled
-                    imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png"
-                >
-                    Office Equipment
-                </ImageButton>
-                <ImageButton
-                    error
-                    imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png"
-                >
-                    Office Equipment
-                </ImageButton>
-                <ImageButton
-                    error
-                    selected
-                    imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png"
-                >
-                    Office Equipment
-                </ImageButton>
-            </Wrapper>
+            <>
+                <ImageButton {...args} />
+                <ImageButton {...args} selected />
+                <ImageButton {...args} disabled />
+                <ImageButton {...args} error />
+                <ImageButton {...args} error selected />
+            </>
         );
     },
+    decorators: [
+        GridDecorator({
+            columns: 1,
+            rowHeaders: [
+                "Default",
+                "Selected",
+                "Disabled",
+                "Error",
+                "Error Selected",
+            ],
+        }),
+    ],
 };
 
 export const Fallback: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <ImageButton
-                disabled={false}
-                imgSrc="https://cdn-icons-png.flaticon.com/512/10754/10754asdfads537.png"
-            >
-                Rooms
-            </ImageButton>
+            <ImageButton imgSrc="https://example.com/404">Rooms</ImageButton>
         );
     },
 };
 
 export const FlexBehaviour: StoryObj<Component> = {
-    render: () => {
+    render: (args) => {
         return (
-            <FlexStoryContainer>
-                <ImageButton imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png">
-                    Meeting Room
-                </ImageButton>
-                <ImageButton imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png">
-                    Common Area
-                </ImageButton>
-                <ImageButton imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png">
-                    Pantry
-                </ImageButton>
-                <ImageButton imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png">
-                    Supply Closet
-                </ImageButton>
-            </FlexStoryContainer>
+            <div style={{ display: "flex", gap: "1rem" }}>
+                <ImageButton {...args}>Meeting Room</ImageButton>
+                <ImageButton {...args}>Common Area</ImageButton>
+                <ImageButton {...args}>Pantry</ImageButton>
+                <ImageButton {...args}>Supply Closet</ImageButton>
+            </div>
         );
+    },
+    args: {
+        imgSrc: "https://cdn-icons-png.flaticon.com/512/4401/4401459.png",
     },
 };
