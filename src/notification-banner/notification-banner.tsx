@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { NamedExoticComponent, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import {
     AccessibleBannerButton,
@@ -153,6 +153,7 @@ const formatId = (componentName: string, id = "wrapper"): string => {
 // EXPORTABLE
 // =============================================================================
 const Base = React.forwardRef(NBWithRef);
+(Base as NamedExoticComponent).displayName = "NotificationBanner";
 export const NotificationBanner = Object.assign(Base, {
     Link: NBLink,
 });
