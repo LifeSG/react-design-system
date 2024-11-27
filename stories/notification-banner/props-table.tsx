@@ -1,7 +1,10 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+    TabAttribute,
+    Tabs,
+} from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -92,13 +95,9 @@ const LINK_DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         This component also inherits props from&nbsp;
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#component-api"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
+                        <StorybookLink path="/docs/core-typography--docs#component-api">
                             TextLinkProps
-                        </a>
+                        </StorybookLink>
                     </>
                 ),
             },
@@ -131,21 +130,13 @@ const HOC_DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: (
                     <>
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#component-api"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
+                        <StorybookLink path="/docs/core-typography--docs#component-api">
                             <code>TextLinkProps</code>
-                        </a>
+                        </StorybookLink>
                         &nbsp;
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#component-api"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
+                        <StorybookLink path="/docs/core-typography--docs#component-api">
                             <code>TextProps</code>
-                        </a>
+                        </StorybookLink>
                         &nbsp;
                     </>
                 ),
