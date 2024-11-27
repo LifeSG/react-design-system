@@ -1,98 +1,86 @@
 import { LockIcon } from "@lifesg/react-icons/lock";
 import type { Meta, StoryObj } from "@storybook/react";
 import { IconButton } from "src/icon-button";
-import { StoryContainer } from "../storybook-common";
-import { Grid, Row } from "./doc-elements";
+import { GridDecorator } from "stories/storybook-common";
 
 type Component = typeof IconButton;
 
 const meta: Meta<Component> = {
-    title: "General/IconButton",
+    title: "Selection and input/IconButton",
     component: IconButton,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <IconButton>
-                <LockIcon />
+                <LockIcon aria-label="Lock" />
             </IconButton>
         );
     },
 };
 
 export const Variations: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Grid>
-                    <Row>
-                        <span />
-                        <label>Primary</label>
-                        <label>Secondary</label>
-                        <label>Light</label>
-                        <label>Disabled</label>
-                    </Row>
-                    <Row>
-                        <label>Large</label>
-                        <IconButton sizeType="large" styleType="primary">
-                            <LockIcon />
-                        </IconButton>
-                        <IconButton sizeType="large" styleType="secondary">
-                            <LockIcon />
-                        </IconButton>
-                        <IconButton sizeType="large" styleType="light">
-                            <LockIcon />
-                        </IconButton>
-                        <IconButton sizeType="large" disabled>
-                            <LockIcon />
-                        </IconButton>
-                    </Row>
-                    <Row>
-                        <label>Default</label>
-                        <IconButton styleType="primary">
-                            <LockIcon />
-                        </IconButton>
-                        <IconButton styleType="secondary">
-                            <LockIcon />
-                        </IconButton>
-                        <IconButton styleType="light">
-                            <LockIcon />
-                        </IconButton>
-                        <IconButton disabled>
-                            <LockIcon />
-                        </IconButton>
-                    </Row>
-                    <Row>
-                        <label>Small</label>
-                        <IconButton sizeType="small" styleType="primary">
-                            <LockIcon />
-                        </IconButton>
-                        <IconButton sizeType="small" styleType="secondary">
-                            <LockIcon />
-                        </IconButton>
-                        <IconButton sizeType="small" styleType="light">
-                            <LockIcon />
-                        </IconButton>
-                        <IconButton sizeType="small" disabled>
-                            <LockIcon />
-                        </IconButton>
-                    </Row>
-                </Grid>
-            </StoryContainer>
+            <>
+                <IconButton sizeType="large" styleType="primary">
+                    <LockIcon />
+                </IconButton>
+                <IconButton sizeType="large" styleType="secondary">
+                    <LockIcon />
+                </IconButton>
+                <IconButton sizeType="large" styleType="light">
+                    <LockIcon />
+                </IconButton>
+                <IconButton sizeType="large" disabled>
+                    <LockIcon />
+                </IconButton>
+                <IconButton styleType="primary">
+                    <LockIcon />
+                </IconButton>
+                <IconButton styleType="secondary">
+                    <LockIcon />
+                </IconButton>
+                <IconButton styleType="light">
+                    <LockIcon />
+                </IconButton>
+                <IconButton disabled>
+                    <LockIcon />
+                </IconButton>
+                <IconButton sizeType="small" styleType="primary">
+                    <LockIcon />
+                </IconButton>
+                <IconButton sizeType="small" styleType="secondary">
+                    <LockIcon />
+                </IconButton>
+                <IconButton sizeType="small" styleType="light">
+                    <LockIcon />
+                </IconButton>
+                <IconButton sizeType="small" disabled>
+                    <LockIcon />
+                </IconButton>
+            </>
         );
     },
+    decorators: [
+        GridDecorator({
+            columns: 4,
+            columnHeaders: ["Primary", "Secondary", "Light", "Disabled"],
+            rowHeaders: ["Large", "Default", "Small"],
+        }),
+    ],
 };
 
 export const CustomComponents: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <IconButton>
                 <img
                     src="https://cdn-icons-png.flaticon.com/128/2171/2171991.png"
-                    alt="icon-image"
+                    alt="Pet a cat"
                 />
             </IconButton>
         );
