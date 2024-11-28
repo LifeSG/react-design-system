@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Colour } from "../../src";
 
 // =============================================================================
 // STYLING
@@ -15,10 +14,6 @@ export const SubOption = styled.div`
     margin-left: 2rem;
     align-items: center;
     gap: 0.5rem;
-
-    &:hover > div > svg {
-        color: ${(props) => Colour["icon-hover"](props)};
-    }
 `;
 
 export const Label = styled.label`

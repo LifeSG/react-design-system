@@ -1,6 +1,12 @@
 import styled, { css, keyframes } from "styled-components";
 import { CheckboxProps, CheckboxSize } from "./types";
-import { Colour } from "../theme";
+import { Colour, Motion } from "../theme";
+import {
+    MinusSquareFillIcon,
+    SquareFillIcon,
+    SquareIcon,
+    SquareTickFillIcon,
+} from "@lifesg/react-icons";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -30,46 +36,43 @@ export const Container = styled.div<StyleProps>`
     align-items: center;
     position: relative;
 
-    ${(props) => {
-        let height: string;
-        let width: string;
+    ${(props) => css`
+        height: ${props.$displaySize === "small" ? "1.5rem" : "2rem"};
+        width: ${props.$displaySize === "small" ? "1.5rem" : "2rem"};
+    `}
+`;
 
-        switch (props.$displaySize) {
-            case "small":
-                height = "1.5rem";
-                width = "1.5rem";
-                break;
-            default:
-                height = "2rem";
-                width = "2rem";
-                break;
-        }
+const BaseIconStyles = css`
+    animation: 200ms ease-in-out ${fadeIn};
+    width: 100%;
+    height: 100%;
+    transition: color ${Motion["duration-150"]} ${Motion["ease-default"]};
+`;
 
-        return css`
-            height: ${height};
-            width: ${width};
-        `;
-    }}
+export const StyledUncheckedIcon = styled(SquareIcon)<StyleProps>`
+    ${BaseIconStyles}
+    color: ${Colour["icon-primary-subtlest"]};
+`;
 
-    svg {
-        animation: 200ms ease-in-out ${fadeIn};
-        width: 100%;
-        height: 100%;
+export const StyledUncheckedDisabledIcon = styled(SquareFillIcon)<StyleProps>`
+    ${BaseIconStyles}
+    color: ${Colour["icon-disabled-subtle"]};
+`;
 
-        color: ${(props) =>
-            props.$disabled
-                ? Colour["icon-disabled-subtle"](props)
-                : props.$unchecked
-                ? Colour["icon-primary-subtlest"](props)
-                : Colour["icon-selected"](props)};
-    }
+export const StyledCheckedIcon = styled(SquareTickFillIcon)<StyleProps>`
+    ${BaseIconStyles}
+    color: ${(props) =>
+        props.$disabled
+            ? Colour["icon-disabled-subtle"](props)
+            : Colour["icon-selected"](props)};
+`;
 
-    &:hover svg {
-        color: ${(props) =>
-            !props.$disabled &&
-            props.$unchecked &&
-            Colour["icon-hover"](props)};
-    }
+export const StyledInteremediateIcon = styled(MinusSquareFillIcon)<StyleProps>`
+    ${BaseIconStyles}
+    color: ${(props) =>
+        props.$disabled
+            ? Colour["icon-disabled-subtle"](props)
+            : Colour["icon-selected"](props)};
 `;
 
 export const Input = styled.input<CheckboxProps>`
@@ -78,4 +81,13 @@ export const Input = styled.input<CheckboxProps>`
     width: 100%;
     height: 100%;
     cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+
+    &:hover
+        + ${StyledUncheckedIcon},
+        &:hover
+        + ${StyledCheckedIcon},
+        &:hover
+        + ${StyledInteremediateIcon} {
+        color: ${(props) => !props.disabled && Colour["icon-hover"](props)};
+    }
 `;
