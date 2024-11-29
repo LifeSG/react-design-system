@@ -147,6 +147,10 @@ export const componentMap = [
         oldName: "ColDivProps",
         newName: "V2_ColDivProps",
     },
+    {
+        oldName: "TextList",
+        newName: "V2_TextList",
+    },
     // Added theme name mappings
     {
         oldName: "BaseTheme",
@@ -243,6 +247,10 @@ export const pathMap = [
     {
         oldPath: "layout",
         newPath: "v2_layout",
+    },
+    {
+        oldPath: "text-list",
+        newPath: "v2_text-list",
     },
     {
         oldPath: "theme",
