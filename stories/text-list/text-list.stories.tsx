@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { V2_Text } from "src/v2_text";
-import { TextList } from "src/text-list";
+import { V2_TextList } from "src/v2_text-list";
 import { Container, CustomOrderedList, SubContainer } from "./doc-elements";
 
 const meta: Meta = {
@@ -13,29 +13,29 @@ export const Unordered: StoryObj = {
     render: () => {
         return (
             <Container>
-                <TextList.Ul>
+                <V2_TextList.Ul>
                     <li>First</li>
                     <li>Second</li>
                     <li>Third</li>
-                </TextList.Ul>
+                </V2_TextList.Ul>
                 <br />
-                <TextList.Ul bulletType="circle">
+                <V2_TextList.Ul bulletType="circle">
                     <li>First</li>
                     <li>Second</li>
                     <li>Third</li>
-                </TextList.Ul>
+                </V2_TextList.Ul>
                 <br />
-                <TextList.Ul bulletType="square">
+                <V2_TextList.Ul bulletType="square">
                     <li>First</li>
                     <li>Second</li>
                     <li>Third</li>
-                </TextList.Ul>
+                </V2_TextList.Ul>
                 <br />
-                <TextList.Ul bulletType="none">
+                <V2_TextList.Ul bulletType="none">
                     <li>First</li>
                     <li>Second</li>
                     <li>Third</li>
-                </TextList.Ul>
+                </V2_TextList.Ul>
             </Container>
         );
     },
@@ -45,26 +45,26 @@ export const Ordered: StoryObj = {
     render: () => {
         return (
             <Container>
-                <TextList.Ol>
+                <V2_TextList.Ol>
                     <li>First</li>
                     <li>Second</li>
                     <li>Third</li>
-                </TextList.Ol>
-                <TextList.Ol counterType="lower-alpha">
+                </V2_TextList.Ol>
+                <V2_TextList.Ol counterType="lower-alpha">
                     <li>First</li>
                     <li>Second</li>
                     <li>Third</li>
-                </TextList.Ol>
-                <TextList.Ol counterType="lower-roman">
+                </V2_TextList.Ol>
+                <V2_TextList.Ol counterType="lower-roman">
                     <li>First</li>
                     <li>Second</li>
                     <li>Third</li>
-                </TextList.Ol>
-                <TextList.Ol counterType="lower-alpha" counterSeparator="=">
+                </V2_TextList.Ol>
+                <V2_TextList.Ol counterType="lower-alpha" counterSeparator="=">
                     <li>First</li>
                     <li>Second</li>
                     <li>Third</li>
-                </TextList.Ol>
+                </V2_TextList.Ol>
             </Container>
         );
     },
@@ -73,26 +73,26 @@ export const Ordered: StoryObj = {
 export const Nested: StoryObj = {
     render: () => {
         return (
-            <TextList.Ol>
+            <V2_TextList.Ol>
                 <li>First</li>
                 <li>Second</li>
                 <li>
                     Third
-                    <TextList.Ol>
+                    <V2_TextList.Ol>
                         <li>Nested First</li>
                         <li>
                             Nested Second
-                            <TextList.Ol counterType="lower-alpha">
+                            <V2_TextList.Ol counterType="lower-alpha">
                                 <li>Nested Second Nested First</li>
                                 <li>Nested Second Nested Second</li>
                                 <li>Nested Second Nested Third</li>
-                            </TextList.Ol>
+                            </V2_TextList.Ol>
                         </li>
                         <li>Nested Third</li>
-                    </TextList.Ol>
+                    </V2_TextList.Ol>
                 </li>
                 <li>Fourth</li>
-            </TextList.Ol>
+            </V2_TextList.Ol>
         );
     },
 };
@@ -104,20 +104,20 @@ export const OtherFeatures: StoryObj = {
                 <SubContainer>
                     <V2_Text.H5>Reverse count</V2_Text.H5>
                     <br />
-                    <TextList.Ol reversed start={3}>
+                    <V2_TextList.Ol reversed start={3}>
                         <li>Item A</li>
                         <li>Item B</li>
                         <li>Item C</li>
-                    </TextList.Ol>
+                    </V2_TextList.Ol>
                 </SubContainer>
                 <SubContainer>
                     <V2_Text.H5>Custom start count</V2_Text.H5>
                     <br />
-                    <TextList.Ol start={7}>
+                    <V2_TextList.Ol start={7}>
                         <li>First</li>
                         <li>Second</li>
                         <li>Third</li>
-                    </TextList.Ol>
+                    </V2_TextList.Ol>
                 </SubContainer>
             </Container>
         );
@@ -127,7 +127,7 @@ export const OtherFeatures: StoryObj = {
 export const AdvancedUsage: StoryObj = {
     render: () => {
         return (
-            <TextList.Ol counterSeparator=".">
+            <V2_TextList.Ol counterSeparator=".">
                 <li>Item A</li>
                 <li>
                     Item B
@@ -144,7 +144,7 @@ export const AdvancedUsage: StoryObj = {
                     </CustomOrderedList>
                 </li>
                 <li>Item D</li>
-            </TextList.Ol>
+            </V2_TextList.Ol>
         );
     },
 };

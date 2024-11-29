@@ -6,11 +6,13 @@ interface BaseListProps {
     size?: V2_TextSizeType | undefined;
 }
 
-export type CounterType = "lower-alpha" | "decimal" | "lower-roman";
+/** @deprecated */
+export type V2_CounterType = "lower-alpha" | "decimal" | "lower-roman";
 
-export interface OrderedListProps extends BaseListProps {
+/** @deprecated */
+export interface V2_OrderedListProps extends BaseListProps {
     /**  Values: "lower-alpha" | "decimal" | "lower-roman" */
-    counterType?: CounterType | undefined;
+    counterType?: V2_CounterType | undefined;
     counterSeparator?: string | undefined;
     /** Specifies if the list counter decrements */
     reversed?: boolean | undefined;
@@ -18,9 +20,11 @@ export interface OrderedListProps extends BaseListProps {
     start?: number | undefined;
 }
 
-export type BulletType = "disc" | "circle" | "square" | "none";
+/** @deprecated */
+export type V2_BulletType = "disc" | "circle" | "square" | "none";
 
-export interface UnorderedListProps extends BaseListProps {
+/** @deprecated */
+export interface V2_UnorderedListProps extends BaseListProps {
     /** Values: "disc" | "circle" | "square" | "none" */
-    bulletType?: BulletType | undefined;
+    bulletType?: V2_BulletType | undefined;
 }

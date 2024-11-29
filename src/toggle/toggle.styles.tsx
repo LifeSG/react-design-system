@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { Alert } from "../alert";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { ToggleIcon } from "../shared/toggle-icon/toggle-icon";
-import { TextList } from "../text-list";
+import { V2_TextList } from "../v2_text-list";
 import { Colour, Font, MediaQuery } from "../theme";
 import { Typography } from "../typography";
 import { ToggleStyleType } from "./types";
@@ -337,7 +337,7 @@ export const ErrorText = styled(Typography.BodyMD)<StyleProps>`
         props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
 `;
 
-export const ErrorList = styled(TextList.Ul)<StyleProps>`
+export const ErrorList = styled(V2_TextList.Ul)<StyleProps>`
     color: ${(props) =>
         props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
 `;
