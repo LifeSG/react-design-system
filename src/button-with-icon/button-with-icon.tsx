@@ -45,6 +45,7 @@ const DefaultComponent = (
         </MainButtonWithIcon>
     );
 };
+DefaultComponent.displayName = "ButtonWithIcon.Default";
 
 const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
     const {
@@ -77,6 +78,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
         </MainButtonWithIcon>
     );
 };
+SmallComponent.displayName = "ButtonWithIcon.Small";
 
 export const ButtonWithIcon = {
     Default: React.forwardRef(DefaultComponent),

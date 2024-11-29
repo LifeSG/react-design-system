@@ -1,7 +1,11 @@
-import React from "react";
-import { ApiTable, code } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+    TabAttribute,
+    Tabs,
+    code,
+} from "stories/storybook-common";
 
 const MAIN_DATA: ApiTableSectionProps[] = [
     {
@@ -182,13 +186,9 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: (
-                    <a
-                        href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-alert--docs#component-api"
-                        rel="noreferrer"
-                        target="_blank"
-                    >
+                    <StorybookLink path="/docs/feedback-indicators-alert--docs#component-api">
                         AlertProps
-                    </a>
+                    </StorybookLink>
                 ),
             },
         ],

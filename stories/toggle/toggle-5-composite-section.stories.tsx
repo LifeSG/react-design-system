@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Toggle } from "../../src";
-import { Form } from "../../src/form";
+import { Form } from "src/form";
+import { Toggle } from "src/toggle";
 import { StoryContainer } from "../storybook-common";
-import { Variants } from "./doc-elements";
+import { VariantDecorator } from "./doc-elements";
 
 type Component = typeof Toggle;
 
 const meta: Meta<Component> = {
-    title: "Data Input/Toggle/With composite section",
+    title: "Selection and input/Toggle/With composite section",
     component: Toggle,
 };
 export default meta;
@@ -23,199 +23,154 @@ const ChildComponent = () => (
     </>
 );
 
+// NOTE: SB doesn't like the nested JSX, workaround is to pass down through args
 export const CheckboxType: StoryObj<Component> = {
-    render: () => {
+    args: {
+        compositeSection: {
+            children: <ChildComponent />,
+            collapsible: false,
+        },
+    },
+    render: (args) => {
         return (
-            <Variants>
-                <Toggle
-                    indicator
-                    compositeSection={{
-                        children: <ChildComponent />,
-                        collapsible: false,
-                    }}
-                >
+            <>
+                <Toggle indicator {...args}>
                     Text
                 </Toggle>
-                <Toggle
-                    indicator
-                    compositeSection={{
-                        children: <ChildComponent />,
-                        collapsible: false,
-                    }}
-                    checked
-                >
+                <Toggle indicator checked {...args}>
                     Text
                 </Toggle>
-                <Toggle
-                    indicator
-                    disabled
-                    compositeSection={{
-                        children: <ChildComponent />,
-                        collapsible: false,
-                    }}
-                >
+                <Toggle indicator disabled {...args}>
                     Text
                 </Toggle>
-                <Toggle
-                    indicator
-                    disabled
-                    checked
-                    compositeSection={{
-                        children: <ChildComponent />,
-                        collapsible: false,
-                    }}
-                >
+                <Toggle indicator disabled checked {...args}>
                     Text
                 </Toggle>
-                <Toggle
-                    indicator
-                    error
-                    compositeSection={{
-                        children: <ChildComponent />,
-                        collapsible: false,
-                    }}
-                >
+                <Toggle indicator error {...args}>
                     Text
                 </Toggle>
-            </Variants>
+            </>
         );
     },
+    decorators: [VariantDecorator],
 };
 
+// NOTE: SB doesn't like the nested JSX, workaround is to pass down through args
 export const RadioType: StoryObj<Component> = {
-    render: () => {
+    args: {
+        compositeSection: {
+            children: <ChildComponent />,
+            collapsible: false,
+        },
+    },
+    render: (args) => {
         return (
-            <Variants>
-                <Toggle
-                    indicator
-                    type="radio"
-                    compositeSection={{
-                        children: <ChildComponent />,
-                        collapsible: false,
-                    }}
-                >
+            <>
+                <Toggle indicator type="radio" {...args}>
                     Text
                 </Toggle>
-                <Toggle
-                    indicator
-                    type="radio"
-                    checked
-                    compositeSection={{
-                        children: <ChildComponent />,
-                        collapsible: false,
-                    }}
-                >
+                <Toggle indicator type="radio" checked {...args}>
                     Text
                 </Toggle>
-                <Toggle
-                    indicator
-                    type="radio"
-                    disabled
-                    compositeSection={{
-                        children: <ChildComponent />,
-                        collapsible: false,
-                    }}
-                >
+                <Toggle indicator type="radio" disabled {...args}>
                     Text
                 </Toggle>
-                <Toggle
-                    indicator
-                    type="radio"
-                    disabled
-                    checked
-                    compositeSection={{
-                        children: <ChildComponent />,
-                        collapsible: false,
-                    }}
-                >
+                <Toggle indicator type="radio" disabled checked {...args}>
                     Text
                 </Toggle>
-                <Toggle
-                    indicator
-                    type="radio"
-                    compositeSection={{
-                        children: <ChildComponent />,
-                        collapsible: false,
-                    }}
-                    error
-                >
+                <Toggle indicator type="radio" error {...args}>
                     Text
                 </Toggle>
-            </Variants>
+            </>
         );
     },
+    decorators: [VariantDecorator],
 };
 
+// NOTE: SB doesn't like the nested JSX, workaround is to declare outside of the CSF
 export const Collapsible: StoryObj<Component> = {
-    render: () => {
-        return (
-            <StoryContainer>
-                <Toggle
-                    indicator
-                    checked
-                    compositeSection={{
-                        children: <ChildComponent />,
-                        collapsible: true,
-                    }}
-                >
-                    Sample text
-                </Toggle>
-            </StoryContainer>
-        );
+    render: (_args) => {
+        return _Collapsible;
     },
+    decorators: [
+        (Story) => (
+            <StoryContainer>
+                <Story />
+            </StoryContainer>
+        ),
+    ],
 };
 
+const _Collapsible = (
+    <Toggle
+        indicator
+        checked
+        compositeSection={{
+            children: <ChildComponent />,
+            collapsible: true,
+        }}
+    >
+        Sample text
+    </Toggle>
+);
+
+// NOTE: SB doesn't like the nested JSX, workaround is to declare outside of the CSF
 export const CollapsedWithError: StoryObj<Component> = {
-    render: () => {
-        return (
-            <StoryContainer>
-                <Toggle
-                    indicator
-                    checked
-                    error
-                    compositeSection={{
-                        children: (
-                            <Form.Input
-                                label="Label"
-                                errorMessage="Invalid field"
-                            />
-                        ),
-                        collapsible: true,
-                        initialExpanded: false,
-                        errors: ["Something went wrong"],
-                    }}
-                >
-                    Sample text
-                </Toggle>
-            </StoryContainer>
-        );
+    render: (_args) => {
+        return _CollapsedWithError;
     },
+    decorators: [
+        (Story) => (
+            <StoryContainer>
+                <Story />
+            </StoryContainer>
+        ),
+    ],
 };
 
+const _CollapsedWithError = (
+    <Toggle
+        indicator
+        checked
+        error
+        compositeSection={{
+            children: <Form.Input label="Label" errorMessage="Invalid field" />,
+            collapsible: true,
+            initialExpanded: false,
+            errors: ["Something went wrong"],
+        }}
+    >
+        Sample text
+    </Toggle>
+);
+
+// NOTE: SB doesn't like the nested JSX, workaround is to declare outside of the CSF
 export const CollapsedWithErrorAndDisabled: StoryObj<Component> = {
-    render: () => {
-        return (
-            <StoryContainer>
-                <Toggle
-                    indicator
-                    checked
-                    disabled
-                    error
-                    compositeSection={{
-                        children: (
-                            <Form.Input
-                                label="Label"
-                                errorMessage="Invalid field"
-                            />
-                        ),
-                        collapsible: true,
-                        initialExpanded: false,
-                        errors: ["Something went wrong"],
-                    }}
-                >
-                    Sample text
-                </Toggle>
-            </StoryContainer>
-        );
+    render: (_args) => {
+        return _CollapsedWithErrorAndDisabled;
     },
+    decorators: [
+        (Story) => (
+            <StoryContainer>
+                <Story />
+            </StoryContainer>
+        ),
+    ],
 };
+
+const _CollapsedWithErrorAndDisabled = (
+    <Toggle
+        indicator
+        checked
+        disabled
+        error
+        compositeSection={{
+            children: <Form.Input label="Label" errorMessage="Invalid field" />,
+            collapsible: true,
+            initialExpanded: false,
+            errors: ["Something went wrong"],
+        }}
+    >
+        Sample text
+    </Toggle>
+);

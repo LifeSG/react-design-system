@@ -1,6 +1,8 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+} from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -9,9 +11,9 @@ const DATA: ApiTableSectionProps[] = [
                 name: "actionButtonProps",
                 description: "The call to action custom button props",
                 propTypes: (
-                    <a href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-button--docs#component-api">
+                    <StorybookLink path="/docs/selection-and-input-button-base--docs#component-api">
                         ButtonProps
-                    </a>
+                    </StorybookLink>
                 ),
             },
             {

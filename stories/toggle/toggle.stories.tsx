@@ -1,56 +1,53 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Toggle } from "src/toggle";
-import { Headings, SimpleContainer, Wrapper } from "./doc-elements";
+import { SimpleStoryWrapper, VariantDecorator } from "./doc-elements";
 
 type Component = typeof Toggle;
 
 const meta: Meta<Component> = {
-    title: "Data Input/Toggle",
+    title: "Selection and input/Toggle",
     component: Toggle,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Wrapper>
-                <Headings />
-                <div>
-                    <Toggle>Hello</Toggle>
-                    <Toggle checked>Hello</Toggle>
-                    <Toggle disabled>Hello</Toggle>
-                    <Toggle disabled checked>
-                        Hello
-                    </Toggle>
-                    <Toggle error>Hello</Toggle>
-                </div>
-            </Wrapper>
+            <>
+                <Toggle>Hello</Toggle>
+                <Toggle checked>Hello</Toggle>
+                <Toggle disabled>Hello</Toggle>
+                <Toggle disabled checked>
+                    Hello
+                </Toggle>
+                <Toggle error>Hello</Toggle>
+            </>
         );
     },
+    decorators: [VariantDecorator],
 };
 
 export const Behaviours: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <SimpleContainer>
-                <li>
-                    <Toggle>Checkbox</Toggle>
-                </li>
-                <li>
-                    <Toggle type="radio">Radio</Toggle>
-                </li>
-                <li>
-                    <Toggle type="yes" indicator>
-                        Yes
-                    </Toggle>
-                </li>
-                <li>
-                    <Toggle type="no" indicator>
-                        No
-                    </Toggle>
-                </li>
-            </SimpleContainer>
+            <>
+                <Toggle>Checkbox</Toggle>
+                <Toggle type="radio">Radio</Toggle>
+                <Toggle type="yes" indicator>
+                    Yes
+                </Toggle>
+                <Toggle type="no" indicator>
+                    No
+                </Toggle>
+            </>
         );
     },
+    decorators: [
+        (Story) => (
+            <SimpleStoryWrapper>
+                <Story />
+            </SimpleStoryWrapper>
+        ),
+    ],
 };
