@@ -16,7 +16,7 @@ export const LifeSGColourSet: SemanticColourSet = {
     "text-disabled": getPrimitiveColour("neutral-50"),
     "text-disabled-subtle": getPrimitiveColour("neutral-60"),
     "text-disabled-subtlest": getPrimitiveColour("neutral-80"),
-    "text-selected-disabled": getPrimitiveColour("neutral-50"),
+    "text-selected-disabled": getPrimitiveColour("neutral-20"),
 
     "text-success": getPrimitiveColour("success-40"),
     "text-warning": getPrimitiveColour("warning-40"),

@@ -15,3 +15,7 @@ export const SubOption = styled.div`
     align-items: center;
     gap: 0.5rem;
 `;
+
+export const Label = styled.label`
+    cursor: pointer;
+`;
