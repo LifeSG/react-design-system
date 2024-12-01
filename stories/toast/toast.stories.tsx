@@ -1,24 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Button } from "src/button";
-import { V2_Text } from "src/v2_text";
 import { Toast } from "src/toast";
+import { Typography } from "../../src/typography";
+import { StackDecorator } from "../storybook-common";
 
 type Component = typeof Toast;
 
 const meta: Meta<Component> = {
-    title: "Modules/Toast",
+    title: "Feedback indicators/Toast",
     component: Toast,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
-        const customActionButton = {
-            label: "Click me",
-            onClick: () => console.log("This function is called"),
-        };
+    render: (_args) => {
         return (
             <>
                 <Toast
@@ -26,19 +23,16 @@ export const Default: StoryObj<Component> = {
                     label="This is a success toast message"
                     fixed={false}
                 />
-                <br />
                 <Toast
                     type="warning"
                     label="This is a warning toast message"
                     fixed={false}
                 />
-                <br />
                 <Toast
                     type="error"
                     label="This is an error toast message"
                     fixed={false}
                 />
-                <br />
                 <Toast
                     type="info"
                     label="This is an info toast message"
@@ -47,79 +41,65 @@ export const Default: StoryObj<Component> = {
             </>
         );
     },
+    decorators: [StackDecorator()],
 };
 
 export const WithSubLabel: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
                 <Toast
                     type="success"
-                    label="Your bookings has been updated and received by the service provider."
+                    label="Your bookings have been updated."
                     fixed={false}
                 />
-                <br />
                 <Toast
                     type="success"
-                    title="Template successfully updated"
-                    label="Your bookings has been updated and received by the service provider."
+                    title="Booking completed"
+                    label="Your bookings have been updated."
                     fixed={false}
                 />
-                <br />
-                <br />
                 <Toast
                     type="warning"
-                    label="The template contains characters that cannot be updated. Please
-                remove the characters and try again."
+                    label="The template contains characters that cannot be updated. Please remove the characters and try again."
                     fixed={false}
                 />
-                <br />
                 <Toast
                     type="warning"
                     title="Unknown characters"
-                    label="The template contains characters that cannot be updated. Please
-                remove the characters and try again."
+                    label="The template contains characters that cannot be updated. Please remove the characters and try again."
                     fixed={false}
                 />
-                <br />
-                <br />
                 <Toast
                     type="error"
-                    label="An internal system error had occured. Please log out and try
-                again."
+                    label="An internal system error has occurred. Please log out and try again."
                     fixed={false}
                 />
-                <br />
                 <Toast
                     type="error"
                     title="System error"
-                    label="An internal system error had occured. Please log out and try
-                again."
+                    label="An internal system error has occurred. Please log out and try again."
                     fixed={false}
                 />
-                <br />
-                <br />
                 <Toast
                     type="info"
-                    label="The calendar will be automatically updated when you have done
-                editing the event information."
+                    label="The calendar will be automatically updated when you are done editing the event information."
                     fixed={false}
                 />
-                <br />
                 <Toast
                     type="info"
                     title="Updated automatically"
-                    label="The calendar will be automatically updated when you have done
-                editing the event information."
+                    label="The calendar will be automatically updated when you are done editing the event information."
                     fixed={false}
                 />
             </>
         );
     },
+    decorators: [StackDecorator()],
 };
 
 export const AutoDismissal: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
                 <Toast
@@ -128,7 +108,6 @@ export const AutoDismissal: StoryObj<Component> = {
                     autoDismiss
                     fixed={false}
                 />
-                <br />
                 <Toast
                     type="info"
                     label="This toast has a custom auto dismiss time of 8 seconds."
@@ -139,10 +118,11 @@ export const AutoDismissal: StoryObj<Component> = {
             </>
         );
     },
+    decorators: [StackDecorator()],
 };
 
 export const FixedPositioning: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [isVisible, setIsVisible] = useState(false);
         const openToast = () => setIsVisible(true);
         const closeToast = () => setIsVisible(false);
@@ -176,20 +156,20 @@ export const FixedPositioning: StoryObj<Component> = {
 };
 
 export const WithCustomDisplay: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Toast
                 type="warning"
                 title={
-                    <V2_Text.H4 weight="regular" style={{ color: "grey" }}>
+                    <Typography.HeaderXS weight="regular">
                         This is a <strong>JSX Element</strong>
-                    </V2_Text.H4>
+                    </Typography.HeaderXS>
                 }
                 label={
-                    <V2_Text.BodySmall>
+                    <Typography.BodyMD>
                         This is a JSX element that contains a{" "}
-                        <V2_Text.Hyperlink.Small>link</V2_Text.Hyperlink.Small>
-                    </V2_Text.BodySmall>
+                        <Typography.LinkMD>link</Typography.LinkMD>
+                    </Typography.BodyMD>
                 }
                 fixed={false}
             />
@@ -207,36 +187,32 @@ export const WithActionButton: StoryObj<Component> = {
             <>
                 <Toast
                     type="success"
-                    title="Template successfully updated"
-                    label="Your bookings has been updated and received by the service provider."
+                    label="Your bookings have been updated."
                     actionButton={customActionButton}
                     fixed={false}
                 />
-                <br />
                 <Toast
                     type="warning"
-                    label="Your bookings has been updated and received by the service provider."
+                    title="Unknown characters"
+                    label="The template contains characters that cannot be updated. Please remove the characters and try again."
                     actionButton={customActionButton}
                     fixed={false}
                 />
-                <br />
                 <Toast
                     type="error"
-                    label="An internal system error had occured. Please log out and try
-                again."
+                    label="An internal system error has occurred. Please log out and try again."
                     actionButton={customActionButton}
                     fixed={false}
                 />
-                <br />
                 <Toast
                     type="info"
                     title="Updated automatically"
-                    label="The calendar will be automatically updated when you have done
-                editing the event information."
+                    label="The calendar will be automatically updated when you are done editing the event information."
                     actionButton={customActionButton}
                     fixed={false}
                 />
             </>
         );
     },
+    decorators: [StackDecorator()],
 };
