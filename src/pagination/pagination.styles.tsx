@@ -110,10 +110,11 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
 export const PageItem = styled.button<StyleProps>`
     background: ${(props) =>
         props.$selected ? Colour["bg-primary"] : Colour.bg};
-    border: ${(props) =>
-        `${Border["width-010"]} ${Border.solid} ${
-            props.$selected ? Colour["bg-primary"] : Colour.border
-        }`};
+    border: ${Border["width-010"]} ${Border.solid}
+        ${(props) =>
+            css`
+                ${props.$selected ? Colour["bg-primary"] : Colour.border}
+            `};
     color: ${(props) =>
         props.$selected ? Colour["text-inverse"] : Colour.text};
 

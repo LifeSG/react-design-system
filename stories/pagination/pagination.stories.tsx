@@ -1,92 +1,83 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Pagination } from "src/pagination";
-import { FullWidthStoryContainer } from "../storybook-common";
 import { CurrentPage } from "./doc-elements";
 
 type Component = typeof Pagination;
 
 const meta: Meta<Component> = {
-    title: "Modules/Pagination",
+    title: "Navigation/Pagination",
     component: Pagination,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [selectedPage, setSelected] = useState(1);
         return (
-            <FullWidthStoryContainer>
-                <Pagination
-                    onPageChange={(selected) => setSelected(selected)}
-                    activePage={selectedPage}
-                    totalItems={50}
-                />
-            </FullWidthStoryContainer>
+            <Pagination
+                onPageChange={(selected) => setSelected(selected)}
+                activePage={selectedPage}
+                totalItems={50}
+            />
         );
     },
 };
 
 export const WithManyPages: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [selectedPage, setSelected] = useState(5);
         return (
             <>
                 <CurrentPage page={selectedPage} />
-                <FullWidthStoryContainer>
-                    <Pagination
-                        onPageChange={(selected) => setSelected(selected)}
-                        activePage={selectedPage}
-                        totalItems={500}
-                    />
-                </FullWidthStoryContainer>
+                <Pagination
+                    onPageChange={(selected) => setSelected(selected)}
+                    activePage={selectedPage}
+                    totalItems={500}
+                />
             </>
         );
     },
 };
 
 export const WithFirstAndLastNav: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [selectedPage, setSelected] = useState(5);
         return (
             <>
                 <CurrentPage page={selectedPage} />
-                <FullWidthStoryContainer>
-                    <Pagination
-                        onPageChange={(selected) => setSelected(selected)}
-                        activePage={selectedPage}
-                        totalItems={600}
-                        showFirstAndLastNav
-                    />
-                </FullWidthStoryContainer>
+                <Pagination
+                    onPageChange={(selected) => setSelected(selected)}
+                    activePage={selectedPage}
+                    totalItems={600}
+                    showFirstAndLastNav
+                />
             </>
         );
     },
 };
 
 export const WithPageSizeChanger: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [selectedPage, setSelected] = useState(5);
         return (
             <>
                 <CurrentPage page={selectedPage} />
-                <FullWidthStoryContainer>
-                    <Pagination
-                        onPageChange={(selected) => setSelected(selected)}
-                        onPageSizeChange={(page, pageSize) => setSelected(page)}
-                        activePage={selectedPage}
-                        totalItems={400}
-                        showPageSizeChanger
-                    />
-                </FullWidthStoryContainer>
+                <Pagination
+                    onPageChange={(selected) => setSelected(selected)}
+                    onPageSizeChange={(page) => setSelected(page)}
+                    activePage={selectedPage}
+                    totalItems={400}
+                    showPageSizeChanger
+                />
             </>
         );
     },
 };
 
 export const WithCustomPageSizeOptions: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [selectedPage, setSelected] = useState(5);
         const pageOptions = [
             { value: 5, label: "5 / page" },
@@ -98,17 +89,15 @@ export const WithCustomPageSizeOptions: StoryObj<Component> = {
         return (
             <>
                 <CurrentPage page={selectedPage} />
-                <FullWidthStoryContainer>
-                    <Pagination
-                        onPageChange={(selected) => setSelected(selected)}
-                        onPageSizeChange={(page, pageSize) => setSelected(page)}
-                        activePage={selectedPage}
-                        totalItems={600}
-                        pageSizeOptions={pageOptions}
-                        showFirstAndLastNav
-                        showPageSizeChanger
-                    />
-                </FullWidthStoryContainer>
+                <Pagination
+                    onPageChange={(selected) => setSelected(selected)}
+                    onPageSizeChange={(page) => setSelected(page)}
+                    activePage={selectedPage}
+                    totalItems={600}
+                    pageSizeOptions={pageOptions}
+                    showFirstAndLastNav
+                    showPageSizeChanger
+                />
             </>
         );
     },
