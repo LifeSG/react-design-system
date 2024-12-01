@@ -44,6 +44,7 @@ const preview: Preview = {
                     "Core",
                     ["Typography", "Layout", "Icon"],
                     "Content",
+                    "Navigation",
                     "Selection and input",
                     ["Button", ["Base", "With Icon"]],
                     "Feedback indicators",
