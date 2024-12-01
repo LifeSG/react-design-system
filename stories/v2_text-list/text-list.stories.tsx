@@ -4,7 +4,7 @@ import { V2_TextList } from "src/v2_text-list";
 import { Container, CustomOrderedList, SubContainer } from "./doc-elements";
 
 const meta: Meta = {
-    title: "General/TextList",
+    title: "V2/TextList",
 };
 
 export default meta;

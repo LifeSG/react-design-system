@@ -11,7 +11,7 @@ import { PropsTable } from "./props-table";
 Renders a group of related contents within a list format.
 
 ```tsx
-import { TextList } from "@lifesg/react-design-system/text-list";
+import { V2_TextList } from "@lifesg/react-design-system/v2-text-list";
 ```
 
 ## Unordered List
@@ -50,7 +50,7 @@ Under some circumstances, you might want to customise the counter to suit your u
 You can do so by overriding the default styling.
 
 ```tsx
-export const CustomOrderedList = styled(TextList.Ol)`
+export const CustomOrderedList = styled(V2_TextList.Ol)`
     margin-left: 2rem;
 
     li {
@@ -62,7 +62,7 @@ export const CustomOrderedList = styled(TextList.Ol)`
         left: -3rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${V2_MediaQuery.MaxWidth.mobileL} {
         li {
             margin-left: 1rem;
         }
