@@ -1,6 +1,6 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import * as TimeSlotBarStories from "./time-slot-bar.stories";
 import { PropsTable } from "./props-table";
+import * as TimeSlotBarStories from "./time-slot-bar.stories";
 
 <Meta of={TimeSlotBarStories} />
 
@@ -20,13 +20,11 @@ import { TimeSlotBar } from "@lifesg/react-design-system/time-slot-bar";
 
 In cases where there is a requirement to display a large number of time slots in a smaller viewport, you can make use of the minified variant of the component. To do so, set `variant="minified"`.
 
-<Canvas of={TimeSlotBarStories.MinifiedVairant} />
-
-## Variations
+<Canvas of={TimeSlotBarStories.MinifiedVariant} />
 
 ## Different indicators
 
-Here is an example of how you can specify with different indicators and colors.
+Here is an example of how you can specify different indicators and colors.
 
 <Canvas of={TimeSlotBarStories.DifferentIndicators} />
 

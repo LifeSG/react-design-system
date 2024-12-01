@@ -2,108 +2,80 @@ import type { Meta, StoryObj } from "@storybook/react";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { TimeSlotWeekView } from "src/time-slot-week-view";
-import { FullWidthStoryContainer } from "../storybook-common";
-import { Wrapper } from "./doc-elements";
+import { FullWidthStoryDecorator } from "stories/storybook-common";
 import { getSlots, getSlotsMin } from "./slots";
 
 type Component = typeof TimeSlotWeekView;
 
 const meta: Meta<Component> = {
-    title: "Modules/TimeSlotWeekView",
+    title: "Selection and input/TimeSlotWeekView",
     component: TimeSlotWeekView,
-    parameters: {
-        layout: "fullscreen",
-    },
+    decorators: [FullWidthStoryDecorator()],
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
-        return (
-            <Wrapper>
-                <TimeSlotWeekView slots={getSlots()} />
-            </Wrapper>
-        );
+    render: (_args) => {
+        return <TimeSlotWeekView slots={getSlots()} />;
     },
 };
 
 export const WithDisabledDates: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [disabledDates] = useState([
             dayjs().subtract(2, "day").format("YYYY-MM-DD"),
             dayjs().add(2, "day").format("YYYY-MM-DD"),
         ]);
         return (
-            <Wrapper>
-                <TimeSlotWeekView
-                    slots={getSlots()}
-                    disabledDates={disabledDates}
-                />
-            </Wrapper>
+            <TimeSlotWeekView
+                slots={getSlots()}
+                disabledDates={disabledDates}
+            />
         );
     },
 };
 
 export const MinAndMaxDates: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const minDate = dayjs().subtract(7, "day").format("YYYY-MM-DD");
         const maxDate = dayjs().add(20, "day").format("YYYY-MM-DD");
         return (
-            <Wrapper>
-                <TimeSlotWeekView
-                    slots={getSlots()}
-                    minDate={minDate}
-                    maxDate={maxDate}
-                />
-            </Wrapper>
+            <TimeSlotWeekView
+                slots={getSlots()}
+                minDate={minDate}
+                maxDate={maxDate}
+            />
         );
     },
 };
 
 export const HideNavHeader: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <FullWidthStoryContainer>
-                <Wrapper>
-                    <TimeSlotWeekView
-                        slots={getSlotsMin()}
-                        showNavigationHeader={false}
-                    />
-                </Wrapper>
-            </FullWidthStoryContainer>
+            <TimeSlotWeekView
+                slots={getSlotsMin()}
+                showNavigationHeader={false}
+            />
         );
     },
 };
 
 export const DisableDaySelection: StoryObj<Component> = {
-    render: () => {
-        return (
-            <FullWidthStoryContainer>
-                <Wrapper>
-                    <TimeSlotWeekView
-                        slots={getSlots()}
-                        enableSelection={false}
-                    />
-                </Wrapper>
-            </FullWidthStoryContainer>
-        );
+    render: (_args) => {
+        return <TimeSlotWeekView slots={getSlots()} enableSelection={false} />;
     },
 };
 
 export const SlotSelection: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <FullWidthStoryContainer>
-                <Wrapper>
-                    <TimeSlotWeekView
-                        slots={getSlots()}
-                        onSlotClick={(date, slot) => {
-                            alert(date + JSON.stringify(slot));
-                        }}
-                    />
-                </Wrapper>
-            </FullWidthStoryContainer>
+            <TimeSlotWeekView
+                slots={getSlots()}
+                onSlotClick={(date, slot) => {
+                    alert(date + JSON.stringify(slot));
+                }}
+            />
         );
     },
 };

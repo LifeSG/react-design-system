@@ -2,159 +2,115 @@ import type { Meta, StoryObj } from "@storybook/react";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { TimeSlotBarWeek } from "src/time-slot-bar-week";
-import { FullWidthStoryContainer } from "../storybook-common";
-import { Wrapper } from "./doc-elements";
+import { FullWidthStoryDecorator } from "stories/storybook-common";
 import { getSlots, getSlotsMin } from "./slots";
 
 type Component = typeof TimeSlotBarWeek;
 
 const meta: Meta<Component> = {
-    title: "Modules/TimeSlotBarWeek",
+    title: "Selection and input/TimeSlotBarWeek",
     component: TimeSlotBarWeek,
-    parameters: {
-        layout: "fullscreen",
-    },
+    decorators: [FullWidthStoryDecorator()],
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
-        return (
-            <Wrapper>
-                <TimeSlotBarWeek slots={getSlots()} />
-            </Wrapper>
-        );
+    render: (_args) => {
+        return <TimeSlotBarWeek slots={getSlots()} />;
     },
 };
 
 export const Interval: StoryObj<Component> = {
-    render: () => {
-        return (
-            <Wrapper>
-                <TimeSlotBarWeek slots={getSlots()} interval={15} />
-            </Wrapper>
-        );
+    render: (_args) => {
+        return <TimeSlotBarWeek slots={getSlots()} interval={15} />;
     },
 };
 
 export const Variations: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Wrapper>
-                <TimeSlotBarWeek
-                    slots={getSlots()}
-                    interval={15}
-                    variant={"fixed"}
-                />
-            </Wrapper>
+            <TimeSlotBarWeek
+                slots={getSlots()}
+                interval={15}
+                variant={"fixed"}
+            />
         );
     },
 };
 
 export const MaxVisibleCellHeight: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Wrapper>
-                <TimeSlotBarWeek
-                    slots={getSlots()}
-                    maxVisibleCellHeight={136}
-                />
-            </Wrapper>
+            <TimeSlotBarWeek slots={getSlots()} maxVisibleCellHeight={136} />
         );
     },
 };
 
 export const StartAndEndTime: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Wrapper>
-                <TimeSlotBarWeek
-                    slots={getSlots()}
-                    startTime="11:00"
-                    endTime="16:00"
-                />
-            </Wrapper>
+            <TimeSlotBarWeek
+                slots={getSlots()}
+                startTime="11:00"
+                endTime="16:00"
+            />
         );
     },
 };
 
 export const MinAndMaxDates: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const minDate = dayjs().subtract(7, "day").format("YYYY-MM-DD");
         const maxDate = dayjs().add(20, "day").format("YYYY-MM-DD");
         return (
-            <Wrapper>
-                <TimeSlotBarWeek
-                    slots={getSlots()}
-                    minDate={minDate}
-                    maxDate={maxDate}
-                />
-            </Wrapper>
+            <TimeSlotBarWeek
+                slots={getSlots()}
+                minDate={minDate}
+                maxDate={maxDate}
+            />
         );
     },
 };
 
 export const WithDisabledDates: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [disabledDates] = useState([
             dayjs().subtract(2, "day").format("YYYY-MM-DD"),
             dayjs().add(2, "day").format("YYYY-MM-DD"),
         ]);
         return (
-            <Wrapper>
-                <TimeSlotBarWeek
-                    slots={getSlots()}
-                    disabledDates={disabledDates}
-                />
-            </Wrapper>
+            <TimeSlotBarWeek slots={getSlots()} disabledDates={disabledDates} />
         );
     },
 };
 
 export const HideNavHeader: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <FullWidthStoryContainer>
-                <Wrapper>
-                    <TimeSlotBarWeek
-                        slots={getSlotsMin()}
-                        showNavigationHeader={false}
-                    />
-                </Wrapper>
-            </FullWidthStoryContainer>
+            <TimeSlotBarWeek
+                slots={getSlotsMin()}
+                showNavigationHeader={false}
+            />
         );
     },
 };
 
 export const DisableDaySelection: StoryObj<Component> = {
-    render: () => {
-        return (
-            <FullWidthStoryContainer>
-                <Wrapper>
-                    <TimeSlotBarWeek
-                        slots={getSlots()}
-                        enableSelection={false}
-                    />
-                </Wrapper>
-            </FullWidthStoryContainer>
-        );
+    render: (_args) => {
+        return <TimeSlotBarWeek slots={getSlots()} enableSelection={false} />;
     },
 };
 
 export const SlotSelection: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <FullWidthStoryContainer>
-                <Wrapper>
-                    <TimeSlotBarWeek
-                        slots={getSlots()}
-                        onSlotClick={(date, slot) => {
-                            alert(date + JSON.stringify(slot));
-                        }}
-                    />
-                </Wrapper>
-            </FullWidthStoryContainer>
+            <TimeSlotBarWeek
+                slots={getSlots()}
+                onSlotClick={(date, slot) => {
+                    alert(date + JSON.stringify(slot));
+                }}
+            />
         );
     },
 };

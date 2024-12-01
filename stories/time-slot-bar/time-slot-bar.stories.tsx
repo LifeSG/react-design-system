@@ -5,14 +5,14 @@ import { TimeSlotBar } from "src/time-slot-bar";
 type Component = typeof TimeSlotBar;
 
 const meta: Meta<Component> = {
-    title: "Modules/TimeSlotBar",
+    title: "Selection and input/TimeSlotBar",
     component: TimeSlotBar,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <TimeSlotBar
                 startTime="08:00"
@@ -64,8 +64,8 @@ export const Default: StoryObj<Component> = {
     },
 };
 
-export const MinifiedVairant: StoryObj<Component> = {
-    render: () => {
+export const MinifiedVariant: StoryObj<Component> = {
+    render: (_args) => {
         return (
             <TimeSlotBar
                 variant="minified"
