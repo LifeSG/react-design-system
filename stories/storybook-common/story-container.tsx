@@ -150,6 +150,26 @@ const DocsViewModeContainer = styled.div<StoryStyleProps>`
 `;
 
 // -----------------------------------------------------------------------------
+// Row story
+// -----------------------------------------------------------------------------
+
+/** For displaying component variants in a column */
+export const RowDecorator: () => DecoratorFunction<ReactRenderer> = () =>
+    function Row(Story) {
+        return (
+            <RowStoryContainer>
+                <Story />
+            </RowStoryContainer>
+        );
+    };
+
+const RowStoryContainer = styled.div`
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+`;
+
+// -----------------------------------------------------------------------------
 // Stack story
 // -----------------------------------------------------------------------------
 
