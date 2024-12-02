@@ -14,6 +14,7 @@ enum Codemod {
     MigrateLayout = "migrate-layout",
     MigrateMediaQuery = "migrate-media-query",
     MigrateText = "migrate-text",
+    MigrateTextList = "migrate-text-list",
 }
 
 enum Theme {
@@ -32,6 +33,8 @@ const CodemodDescriptions: { [key in Codemod]: string } = {
     [Codemod.MigrateMediaQuery]:
         "Replace V2 media queries with new Breakpoint tokens",
     [Codemod.MigrateText]: "Replace V2_Text with new Typography components",
+    [Codemod.MigrateTextList]:
+        "Replace V2_TextList with new Textlist components",
 };
 
 const TargetDirectoryPaths = {

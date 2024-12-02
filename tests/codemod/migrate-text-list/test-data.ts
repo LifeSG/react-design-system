@@ -8,6 +8,7 @@ import { V2_TextList } from "@lifesg/react-design-system/v2_text-list";
     <li>Second</li>
     <li>Third</li>
 </V2_TextList.Ul>;
+<V2_TextList size="Body" />;
 
 
 `;
@@ -22,6 +23,7 @@ import { TextList } from "@lifesg/react-design-system/text-list";
     <li>Second</li>
     <li>Third</li>
 </TextList.Ul>;
+<TextList size="body-baseline" />;
 
 
 `;

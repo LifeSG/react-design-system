@@ -1,10 +1,9 @@
-import { TypographySizeType } from "../theme/font/types";
+import { V2_TextSizeType } from "../v2_text/types";
 
 interface BaseListProps {
     children: JSX.Element | JSX.Element[];
     bottomMargin?: number | undefined;
-    // size?: V2_TextSizeType | undefined;
-    size?: TypographySizeType | undefined;
+    size?: V2_TextSizeType | undefined;
 }
 
 /** @deprecated */

@@ -1,4 +1,5 @@
 import { API, FileInfo, JSCodeshift } from "jscodeshift";
+import { sizePropMapping } from "./data";
 
 // ======= Constants ======= //
 
@@ -72,6 +73,29 @@ export default function transformer(file: FileInfo, api: API) {
                 path.node.object.name = JSX_IDENTIFIERS.TEXT_LIST;
             }
         });
+
+        source
+            .find(j.JSXOpeningElement, {
+                name: { name: JSX_IDENTIFIERS.TEXT_LIST },
+            })
+            .forEach((path) => {
+                const attributes = path.node.attributes;
+
+                attributes?.forEach((attribute) => {
+                    if (
+                        j.JSXAttribute.check(attribute) &&
+                        attribute.name.name === "size" &&
+                        j.StringLiteral.check(attribute.value)
+                    ) {
+                        const sizeValue = attribute.value.value;
+                        if (sizePropMapping[sizeValue]) {
+                            attribute.value = j.literal(
+                                sizePropMapping[sizeValue]
+                            );
+                        }
+                    }
+                });
+            });
     }
 
     return source.toSource();
