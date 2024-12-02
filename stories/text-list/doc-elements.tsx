@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { V2_MediaQuery } from "../../src/v2_media";
-import { TextList } from "../../src/text-list";
+import { V2_TextList } from "../../src/v2_text-list";
 
 // =============================================================================
 // STYLING
@@ -22,7 +22,7 @@ export const SubContainer = styled.div`
     margin-right: 1.5rem;
 `;
 
-export const CustomOrderedList = styled(TextList.Ol)`
+export const CustomOrderedList = styled(V2_TextList.Ol)`
     margin-left: 2rem;
 
     li {

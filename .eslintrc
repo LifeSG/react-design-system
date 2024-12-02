@@ -100,5 +100,13 @@
                 "varsIgnorePattern": "^_"
             }
         ]
-    }
+    },
+    "overrides": [
+        {
+            "files": ["src/v2_*/**/*.{ts,tsx}"],
+            "rules": {
+                "@typescript-eslint/naming-convention": "off"
+            }
+        }
+    ]
 }
