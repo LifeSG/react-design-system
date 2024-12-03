@@ -19,6 +19,8 @@ import { V2_Layout } from "@lifesg/react-design-system/v2_layout";
     </V2_Layout.Container>
 
 </div>
+
+const Container = styled(V2_Layout.Container)\`\`;
 `;
 
 export const expectedOutputCode = `
@@ -42,4 +44,6 @@ import { Layout } from "@lifesg/react-design-system/layout";
     </Layout.Container>
 
 </div>
+
+const Container = styled(Layout.Container)\`\`;
 `;

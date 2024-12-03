@@ -11,7 +11,7 @@ const IMPORT_SPECIFIERS = {
     LAYOUT: "Layout",
 };
 
-export default function transformer(file: FileInfo, api: API, options: any) {
+export default function transformer(file: FileInfo, api: API) {
     const j: JSCodeshift = api.jscodeshift;
     const source = j(file.source);
 
@@ -57,6 +57,12 @@ export default function transformer(file: FileInfo, api: API, options: any) {
                 object.name = IMPORT_SPECIFIERS.LAYOUT;
             }
         });
+
+        source
+            .find(j.Identifier, { name: IMPORT_SPECIFIERS.V2_LAYOUT })
+            .forEach((path) => {
+                path.node.name = IMPORT_SPECIFIERS.LAYOUT;
+            });
 
         // Update Layout props to its V3 Mapped version
         source.find(j.JSXOpeningElement).forEach((path) => {

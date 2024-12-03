@@ -27,6 +27,8 @@ const ExampleComponent = () => (
 );
 
 export default ExampleComponent;
+
+const Text = styled(V2_Text.Body)\`\`;
 `;
 
 export const expectedOutputCode = `
@@ -57,4 +59,6 @@ const ExampleComponent = () => (
 );
 
 export default ExampleComponent;
+
+const Text = styled(Typography.BodyBL)\`\`;
 `;
