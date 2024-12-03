@@ -8,6 +8,7 @@ import { DesignToken } from "@lifesg/react-design-system/design-token";
 import { ColDiv } from "@lifesg/react-design-system/layout";
 import {ContainerType} from "@lifesg/react-design-system/layout"
 import {BaseColorSet} from "@lifesg/react-design-system/layout"
+import {TextList} from "@lifesg/react-design-system/text-list"
 
 const Container = styled.div\`
    color: \${DesignToken.Table.Cell.Primary};
@@ -28,6 +29,11 @@ const Component = () => (
             <div>Item 2</div>
             <div>Item 3</div>
         </Layout.Content>
+        <TextList.Ul bulletType="circle">
+            <li>First</li>
+            <li>Second</li>
+            <li>Third</li>
+        </TextList.Ul>
     </>
 );
 
@@ -45,6 +51,7 @@ import { V2_DesignToken } from "@lifesg/react-design-system/v2_design-token";
 import { V2_ColDiv } from "@lifesg/react-design-system/v2_layout";
 import {V2_ContainerType} from "@lifesg/react-design-system/v2_layout"
 import {BaseColorSet} from "@lifesg/react-design-system/layout"
+import {V2_TextList} from "@lifesg/react-design-system/v2_text-list"
 
 const Container = styled.div\`
    color: \${V2_DesignToken.Table.Cell.Primary};
@@ -65,6 +72,11 @@ const Component = () => (
             <div>Item 2</div>
             <div>Item 3</div>
         </V2_Layout.Content>
+        <V2_TextList.Ul bulletType="circle">
+            <li>First</li>
+            <li>Second</li>
+            <li>Third</li>
+        </V2_TextList.Ul>
     </>
 );
 
