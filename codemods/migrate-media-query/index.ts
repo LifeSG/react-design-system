@@ -33,8 +33,8 @@ export default function transformer(file: FileInfo, api: API) {
     const j: JSCodeshift = api.jscodeshift;
     const source = j(file.source);
 
-    let isMediaQueryImportUpdated = false;
-    let isV2MediaWidthsUsed = false;
+    let isV2MediaQueryImported = false;
+    let isV2MediaWidthsImported = false;
 
     source.find(j.ImportDeclaration).forEach((path) => {
         const importPath = path.node.source.value;
@@ -44,16 +44,22 @@ export default function transformer(file: FileInfo, api: API) {
             importPath === IMPORT_PATHS.DESIGN_SYSTEM
         ) {
             const specifiers = path.node.specifiers;
-            let hasMediaQuerySpecifier = false;
 
             if (specifiers && specifiers.length > 0) {
+                let hasV2MediaWidths = false;
+                let hasV2MediaQuery = false;
+
                 specifiers.forEach((specifier) => {
                     if (j.ImportSpecifier.check(specifier)) {
-                        // Change import path for V2_Media to updated V3 Media
+                        // Detect usage of V2_MediaQuery
+                        // Replace V2_MediaQuery with V3 MediaQuery
                         if (
                             specifier.imported.name ===
                             IMPORT_SPECIFIERS.V2_MEDIA_QUERY
                         ) {
+                            hasV2MediaQuery = true;
+                            isV2MediaQueryImported = true;
+
                             specifier.imported.name =
                                 IMPORT_SPECIFIERS.MEDIA_QUERY;
                             if (
@@ -64,7 +70,6 @@ export default function transformer(file: FileInfo, api: API) {
                                 specifier.local.name =
                                     IMPORT_SPECIFIERS.MEDIA_QUERY;
                             }
-                            hasMediaQuerySpecifier = true;
                         }
 
                         // Detect usage of V2_MediaWidths
@@ -72,17 +77,14 @@ export default function transformer(file: FileInfo, api: API) {
                             specifier.imported.name ===
                             IMPORT_SPECIFIERS.V2_MEDIA_WIDTHS
                         ) {
-                            isV2MediaWidthsUsed = true;
+                            hasV2MediaWidths = true;
+                            isV2MediaWidthsImported = true;
                         }
                     }
                 });
 
-                // If MediaQuery was imported, set flag to update usages
-                if (hasMediaQuerySpecifier) {
-                    isMediaQueryImportUpdated = true;
-                }
-                // Create seperate import for deprecated MediaWidths
-                if (hasMediaQuerySpecifier && isV2MediaWidthsUsed) {
+                // Create separate import for V2_MediaWidths
+                if (hasV2MediaQuery && hasV2MediaWidths) {
                     path.node.specifiers = specifiers.filter((specifier) => {
                         if (j.ImportSpecifier.check(specifier)) {
                             return (
@@ -104,16 +106,18 @@ export default function transformer(file: FileInfo, api: API) {
                     j(path).insertAfter(newImportDeclaration);
                 }
 
-                // Update import path
-                if (importPath === IMPORT_PATHS.V2_MEDIA) {
-                    path.node.source.value = IMPORT_PATHS.THEME;
+                // Update import path for V2_MediaQuery
+                if (hasV2MediaQuery) {
+                    if (importPath === IMPORT_PATHS.V2_MEDIA) {
+                        path.node.source.value = IMPORT_PATHS.THEME;
+                    }
                 }
             }
         }
     });
 
     // Link to migration docs for V2_MediaWidths deprecation
-    if (isV2MediaWidthsUsed) {
+    if (isV2MediaWidthsImported) {
         const hasV2MediaWidths =
             source.find(j.Identifier, {
                 name: IMPORT_SPECIFIERS.V2_MEDIA_WIDTHS,
@@ -125,7 +129,7 @@ export default function transformer(file: FileInfo, api: API) {
     }
 
     // Update MediaQuery usages
-    if (isMediaQueryImportUpdated) {
+    if (isV2MediaQueryImported) {
         // Rename all instances of V2_MediaQuery to MediaQuery
         source
             .find(j.Identifier, { name: IMPORT_SPECIFIERS.V2_MEDIA_QUERY })
@@ -133,7 +137,7 @@ export default function transformer(file: FileInfo, api: API) {
                 path.node.name = IMPORT_SPECIFIERS.MEDIA_QUERY;
             });
 
-        // Map V2 Breakpoints of MediaQuery to V3
+        // Map V2 to V3 breakpoints
         source.find(j.MemberExpression).forEach((path) => {
             const object = path.node.object;
             const property = path.node.property;
