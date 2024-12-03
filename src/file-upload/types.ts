@@ -50,7 +50,7 @@ export interface FileUploadProps extends FileInputProps {
     /** Specifies if sorting is enabled for the file items */
     sortable?: boolean | undefined;
     /** The general error message for the component */
-    errorMessage?: string | undefined;
+    errorMessage?: string | JSX.Element | undefined;
     /** Indicates if the component is in the readonly state */
     readOnly?: boolean | undefined;
     /** Called when an upload happens via drag drop or click */
