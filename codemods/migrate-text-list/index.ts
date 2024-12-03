@@ -74,12 +74,29 @@ export default function transformer(file: FileInfo, api: API) {
             }
         });
 
-        source
-            .find(j.JSXOpeningElement, {
-                name: { name: JSX_IDENTIFIERS.TEXT_LIST },
-            })
-            .forEach((path) => {
-                const attributes = path.node.attributes;
+        source.find(j.JSXMemberExpression).forEach((path) => {
+            if (
+                j.JSXIdentifier.check(path.node.object) &&
+                path.node.object.name === JSX_IDENTIFIERS.V2_TEXT_LIST
+            ) {
+                path.node.object.name = JSX_IDENTIFIERS.TEXT_LIST;
+            }
+        });
+
+        source.find(j.JSXOpeningElement).forEach((path) => {
+            const openingElement = path.node;
+            let isTextListElement = false;
+
+            if (
+                j.JSXMemberExpression.check(openingElement.name) &&
+                j.JSXIdentifier.check(openingElement.name.object) &&
+                openingElement.name.object.name === JSX_IDENTIFIERS.TEXT_LIST
+            ) {
+                isTextListElement = true;
+            }
+
+            if (isTextListElement) {
+                const attributes = openingElement.attributes;
 
                 attributes?.forEach((attribute) => {
                     if (
@@ -95,7 +112,8 @@ export default function transformer(file: FileInfo, api: API) {
                         }
                     }
                 });
-            });
+            }
+        });
     }
 
     return source.toSource();
