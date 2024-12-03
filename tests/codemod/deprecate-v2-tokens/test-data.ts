@@ -12,7 +12,10 @@ import {TextList} from "@lifesg/react-design-system/text-list"
 
 const Container = styled.div\`
    color: \${DesignToken.Table.Cell.Primary};
+   color: \${Color.Validation.Red.Text};
 \`
+
+const Header = styled(Text.H1)\`\`;
 
 interface Props {
     foo : ContainerType;
@@ -55,7 +58,10 @@ import {V2_TextList} from "@lifesg/react-design-system/v2_text-list"
 
 const Container = styled.div\`
    color: \${V2_DesignToken.Table.Cell.Primary};
+   color: \${V2_Color.Validation.Red.Text};
 \`
+
+const Header = styled(V2_Text.H1)\`\`;
 
 interface Props {
     foo : V2_ContainerType;

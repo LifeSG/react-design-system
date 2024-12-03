@@ -1,7 +1,7 @@
 import { API, FileInfo, JSCodeshift } from "jscodeshift";
 import { componentMap, pathMap } from "./data";
 
-export default function transformer(file: FileInfo, api: API, options: any) {
+export default function transformer(file: FileInfo, api: API) {
     const j: JSCodeshift = api.jscodeshift;
     const source = j(file.source);
 
@@ -75,7 +75,10 @@ export default function transformer(file: FileInfo, api: API, options: any) {
                     });
 
                 source.find(j.Identifier, { name: oldName }).forEach((path) => {
-                    path.node.name = newName;
+                    // only update if it's a parent property
+                    if (!j.MemberExpression.check(path.parent.value.object)) {
+                        path.node.name = newName;
+                    }
                 });
             }
         });
