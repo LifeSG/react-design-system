@@ -151,6 +151,22 @@ export const componentMap = [
         oldName: "TextList",
         newName: "V2_TextList",
     },
+    {
+        oldName: "OrderedListProps",
+        newName: "V2_OrderedListProps",
+    },
+    {
+        oldName: "UnorderedListProps",
+        newName: "V2_UnorderedListProps",
+    },
+    {
+        oldName: "CounterType",
+        newName: "V2_CounterType",
+    },
+    {
+        oldName: "BulletType",
+        newName: "V2_BulletType",
+    },
     // Added theme name mappings
     {
         oldName: "BaseTheme",
