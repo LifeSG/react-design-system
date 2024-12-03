@@ -3,6 +3,7 @@ import { propMapping } from "./data";
 
 const IMPORT_PATHS = {
     V2_LAYOUT: "@lifesg/react-design-system/v2_layout",
+    DESIGN_SYSTEM: "@lifesg/react-design-system",
     LAYOUT: "@lifesg/react-design-system/layout",
 };
 
@@ -20,10 +21,11 @@ export default function transformer(file: FileInfo, api: API) {
     source.find(j.ImportDeclaration).forEach((path) => {
         const importPath = path.node.source.value;
 
-        if (importPath === IMPORT_PATHS.V2_LAYOUT) {
-            isLifesgImport = true;
-
-            // Update import path
+        if (
+            importPath === IMPORT_PATHS.V2_LAYOUT ||
+            importPath === IMPORT_PATHS.DESIGN_SYSTEM
+        ) {
+            // Update V2 modules to V3 modules
             if (path.node.specifiers && path.node.specifiers.length > 0) {
                 path.node.specifiers.forEach((specifier) => {
                     if (
@@ -38,7 +40,12 @@ export default function transformer(file: FileInfo, api: API) {
                             specifier.local.name = IMPORT_SPECIFIERS.LAYOUT;
                         }
 
-                        path.node.source.value = IMPORT_PATHS.LAYOUT;
+                        // Replace import subpath only
+                        if (importPath === IMPORT_PATHS.V2_LAYOUT) {
+                            path.node.source.value = IMPORT_PATHS.LAYOUT;
+                        }
+
+                        isLifesgImport = true;
                     }
                 });
             }

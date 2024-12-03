@@ -34,7 +34,7 @@ export default function transformer(file: FileInfo, api: API) {
             importPath === IMPORT_PATHS.V2_TEXT ||
             importPath === IMPORT_PATHS.DESIGN_SYSTEM
         ) {
-            // Update V2 imports to V3 updated imports
+            // Update V2 modules to V3 modules
             path.node.specifiers?.forEach((specifier) => {
                 if (
                     j.ImportSpecifier.check(specifier) &&
@@ -49,7 +49,11 @@ export default function transformer(file: FileInfo, api: API) {
                         specifier.local.name = IMPORT_SPECIFIERS.TYPOGRAPHY;
                     }
 
-                    path.node.source.value = IMPORT_PATHS.TYPOGRAPHY;
+                    // Replace import subpath only
+                    if (importPath === IMPORT_PATHS.V2_TEXT) {
+                        path.node.source.value = IMPORT_PATHS.TYPOGRAPHY;
+                    }
+
                     isLifesgImport = true;
                 }
             });

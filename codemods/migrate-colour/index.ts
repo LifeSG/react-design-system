@@ -9,6 +9,7 @@ import {
 
 const IMPORT_PATHS = {
     V2_COLOR: "@lifesg/react-design-system/v2_color",
+    DESIGN_SYSTEM: "@lifesg/react-design-system",
     THEME: "@lifesg/react-design-system/theme",
 };
 
@@ -33,7 +34,7 @@ export default function transformer(file: FileInfo, api: API, options: any) {
     const j: JSCodeshift = api.jscodeshift;
     const source = j(file.source);
 
-    let isv2ColorImport = false;
+    let isV2ColorImport = false;
 
     // Determine which Colour mapping to use
     const colorMapping =
@@ -55,10 +56,11 @@ export default function transformer(file: FileInfo, api: API, options: any) {
     source.find(j.ImportDeclaration).forEach((path) => {
         const importPath = path.node.source.value;
 
-        if (importPath === IMPORT_PATHS.V2_COLOR) {
-            isv2ColorImport = true;
-
-            // Update imports
+        if (
+            importPath === IMPORT_PATHS.V2_COLOR ||
+            importPath === IMPORT_PATHS.DESIGN_SYSTEM
+        ) {
+            // Update V2 modules to V3 modules
             if (path.node.specifiers && path.node.specifiers.length > 0) {
                 path.node.specifiers.forEach((specifier) => {
                     if (j.ImportSpecifier.check(specifier)) {
@@ -78,12 +80,17 @@ export default function transformer(file: FileInfo, api: API, options: any) {
                     }
                 });
 
-                path.node.source.value = IMPORT_PATHS.THEME;
+                // Replace import subpath only
+                if (importPath === IMPORT_PATHS.V2_COLOR) {
+                    path.node.source.value = IMPORT_PATHS.THEME;
+                }
+
+                isV2ColorImport = true;
             }
         }
     });
 
-    if (isv2ColorImport) {
+    if (isV2ColorImport) {
         // Update all instances of 'V2_Color' to 'Colour'
         source
             .find(j.Identifier, { name: IMPORT_SPECIFIERS.V2_COLOR })

@@ -34,6 +34,7 @@ export default function transformer(file: FileInfo, api: API) {
             importPath === IMPORT_PATHS.V2_TEXT_LIST ||
             importPath === IMPORT_PATHS.DESIGN_SYSTEM
         ) {
+            // Update V2 modules to V3 modules
             path.node.specifiers?.forEach((specifier) => {
                 if (
                     j.ImportSpecifier.check(specifier) &&
@@ -48,6 +49,7 @@ export default function transformer(file: FileInfo, api: API) {
                         specifier.local.name = IMPORT_SPECIFIERS.TEXT_LIST;
                     }
 
+                    // Replace import subpath only
                     if (importPath === IMPORT_PATHS.V2_TEXT_LIST) {
                         path.node.source.value = IMPORT_PATHS.TEXT_LIST;
                     }
