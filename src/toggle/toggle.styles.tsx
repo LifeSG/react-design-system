@@ -78,7 +78,7 @@ export const Container = styled.div<ContainerStyleProps>`
             case "no-border": {
                 if (props.$error) {
                     return css`
-                        border-color: ${Colour["border-error-strong"]};
+                        border-color: ${Colour["border-error"]};
                     `;
                 }
 
@@ -118,7 +118,11 @@ export const Container = styled.div<ContainerStyleProps>`
             default: {
                 if (props.$error) {
                     return css`
-                        border-color: ${Colour["border-error-strong"]};
+                        border-color: ${Colour["border-error"]};
+
+                        &:has(${HeaderContainer}:hover) {
+                            background: ${Colour["bg-hover-subtle"]};
+                        }
                     `;
                 }
 
@@ -141,8 +145,7 @@ export const Container = styled.div<ContainerStyleProps>`
                         border-color: ${Colour["border-selected"]};
                         background: ${Colour["bg-selected"]};
 
-                        :hover {
-                            border-color: ${Colour["border-selected-hover"]};
+                        &:has(${HeaderContainer}:hover) {
                             background: ${Colour["bg-selected-hover"]};
                         }
                     `;
@@ -151,8 +154,7 @@ export const Container = styled.div<ContainerStyleProps>`
                 return css`
                     border-color: ${Colour.border};
 
-                    :hover {
-                        border-color: ${Colour.border};
+                    &:has(${HeaderContainer}:hover) {
                         background: ${Colour["bg-hover-subtle"]};
                     }
                 `;
