@@ -40,7 +40,9 @@ export const getSemanticColour = (key: keyof SemanticColourSet) => {
     };
 };
 
-export const ColourSemantic = {
+export const ColourSemantic: {
+    [key in keyof SemanticColourSet]: (props: StyledComponentProps) => string;
+} = {
     // text
     text: getSemanticColour("text"),
     "text-subtle": getSemanticColour("text-subtle"),

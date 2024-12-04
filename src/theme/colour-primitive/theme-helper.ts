@@ -1,3 +1,4 @@
+import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import {
     ColourScheme,
     PrimitiveColourSet,
@@ -8,7 +9,6 @@ import { CCubeColourSet } from "./specs/ccube-colour-set";
 import { LifeSgColourSet } from "./specs/lifesg-colour-set";
 import { MyLegacyColourSet } from "./specs/mylegacy-colour-set";
 import { RBSColourSet } from "./specs/rbs-colour-set";
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { ColourCollectionsMap } from "./types";
 
 export const ColourSpec: ThemeCollectionSpec<
@@ -41,7 +41,20 @@ export const getPrimitiveColour = (key: keyof PrimitiveColourSet) => {
     };
 };
 
-export const PrimitiveColour = {
+export const PrimitiveColour: {
+    [key in keyof PrimitiveColourSet]: (props: StyledComponentProps) => string;
+} = {
+    "brand-10": getPrimitiveColour("brand-10"),
+    "brand-20": getPrimitiveColour("brand-20"),
+    "brand-30": getPrimitiveColour("brand-30"),
+    "brand-40": getPrimitiveColour("brand-40"),
+    "brand-50": getPrimitiveColour("brand-50"),
+    "brand-60": getPrimitiveColour("brand-60"),
+    "brand-70": getPrimitiveColour("brand-70"),
+    "brand-80": getPrimitiveColour("brand-80"),
+    "brand-90": getPrimitiveColour("brand-90"),
+    "brand-95": getPrimitiveColour("brand-95"),
+    "brand-100": getPrimitiveColour("brand-100"),
     "primary-10": getPrimitiveColour("primary-10"),
     "primary-20": getPrimitiveColour("primary-20"),
     "primary-30": getPrimitiveColour("primary-30"),

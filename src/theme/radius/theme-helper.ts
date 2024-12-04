@@ -26,7 +26,9 @@ export const getRadius = (key: keyof RadiusSet) => {
     };
 };
 
-export const RadiusValues = {
+export const RadiusValues: {
+    [key in keyof RadiusSet]: (props: StyledComponentProps) => string;
+} = {
     none: getRadius("none"),
     xs: getRadius("xs"),
     sm: getRadius("sm"),

@@ -26,7 +26,9 @@ export const getMotion = (key: keyof MotionSet) => {
     };
 };
 
-export const MotionValues = {
+export const MotionValues: {
+    [key in keyof MotionSet]: (props: StyledComponentProps) => string;
+} = {
     "duration-150": getMotion("duration-150"),
     "duration-250": getMotion("duration-250"),
     "duration-350": getMotion("duration-350"),

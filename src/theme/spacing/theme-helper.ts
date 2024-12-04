@@ -26,7 +26,9 @@ export const getSpace = (key: keyof SpacingSet) => {
     };
 };
 
-export const SpacingValues = {
+export const SpacingValues: {
+    [key in keyof SpacingSet]: (props: StyledComponentProps) => string;
+} = {
     "spacing-0": getSpace("spacing-0"),
     "spacing-4": getSpace("spacing-4"),
     "spacing-8": getSpace("spacing-8"),
