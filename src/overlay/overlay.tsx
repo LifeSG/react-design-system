@@ -39,7 +39,7 @@ const OverlayComponent = ({
     const overlayRootId = id
         ? `lifesg-ds-overlay-root-${id}`
         : "lifesg-ds-overlay-root";
-    const zIndex = customZIndex ?? isStacked ? 99999 : 99998;
+    const zIndex = customZIndex ?? (isStacked ? 99999 : 99998);
 
     useFloatingParent(zIndex);
 
