@@ -31,10 +31,10 @@ const TextStyleSpec: V2_ThemeCollectionSpec<
 // =============================================================================
 export const getThemeTextStyles = (attributePath: string) => {
     return (props: any): string | number => {
-        const theme = props.theme as V2_ThemeSpec;
+        const theme = (props.theme?._v2 || props.theme) as V2_ThemeSpec;
         const textStyleSet: V2_TextStyleSetType = getCollection(
             TextStyleSpec,
-            theme[V2_ThemeContextKeys.textStyleScheme]
+            theme?.[V2_ThemeContextKeys.textStyleScheme]
         );
 
         return theme.options && theme.options.textStyle

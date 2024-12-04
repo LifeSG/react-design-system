@@ -1,12 +1,13 @@
+import { V2_ThemeSpec } from "../v2_theme/types";
+import { BorderSetOptions } from "./border/types";
+import { BreakpointSetOptions } from "./breakpoint/types";
 import { PrimitiveColourSetOptions } from "./colour-primitive/types";
 import { SemanticColourSetOptions } from "./colour-semantic/types";
-import { FontSetOptions } from "./font/types";
 import { FontSpecSetOptions } from "./font-spec/types";
+import { FontSetOptions } from "./font/types";
 import { MotionSetOptions } from "./motion/types";
-import { BorderSetOptions } from "./border/types";
-import { SpacingSetOptions } from "./spacing/types";
 import { RadiusSetOptions } from "./radius/types";
-import { BreakpointSetOptions } from "./breakpoint/types";
+import { SpacingSetOptions } from "./spacing/types";
 
 export type {
     PrimitiveColourSet,
@@ -76,6 +77,8 @@ export interface ThemeSpec {
     overrides?: ThemeSpecOptions | undefined;
 
     maxColumns?: any;
+    /** @deprecated For backwards compatibility with V2 theme */
+    _v2?: V2_ThemeSpec;
 }
 
 export interface ThemeCollectionSpec<T, V> {

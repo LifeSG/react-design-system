@@ -30,10 +30,10 @@ const DesignTokenSpec: V2_ThemeCollectionSpec<
 // =============================================================================
 export const getThemeDesignToken = (attributePath: string) => {
     return (props: any): CssValue => {
-        const theme = props.theme as V2_ThemeSpec;
+        const theme = (props.theme?._v2 || props.theme) as V2_ThemeSpec;
         const DesignTokenSet: V2_DesignTokenSet = getCollection(
             DesignTokenSpec,
-            theme[V2_ThemeContextKeys.designTokenScheme]
+            theme?.[V2_ThemeContextKeys.designTokenScheme]
         );
 
         return theme.options?.designToken

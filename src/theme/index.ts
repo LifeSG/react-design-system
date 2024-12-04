@@ -48,6 +48,12 @@ export const LifeSGTheme: ThemeSpec = {
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
     resourceScheme: "lifesg",
+    _v2: {
+        colorScheme: "base",
+        textStyleScheme: "base",
+        designTokenScheme: "base",
+        resourceScheme: "base",
+    },
 };
 
 export const BookingSGTheme: ThemeSpec = {
@@ -59,6 +65,12 @@ export const BookingSGTheme: ThemeSpec = {
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
     resourceScheme: "bookingsg",
+    _v2: {
+        colorScheme: "bookingsg",
+        textStyleScheme: "base",
+        designTokenScheme: "base",
+        resourceScheme: "bookingsg",
+    },
 };
 
 export const CCubeTheme: ThemeSpec = {
@@ -70,6 +82,12 @@ export const CCubeTheme: ThemeSpec = {
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
     resourceScheme: "ccube",
+    _v2: {
+        colorScheme: "ccube",
+        textStyleScheme: "base",
+        designTokenScheme: "base",
+        resourceScheme: "ccube",
+    },
 };
 
 export const MyLegacyTheme: ThemeSpec = {
@@ -81,6 +99,12 @@ export const MyLegacyTheme: ThemeSpec = {
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
     resourceScheme: "mylegacy",
+    _v2: {
+        colorScheme: "mylegacy",
+        textStyleScheme: "base",
+        designTokenScheme: "base",
+        resourceScheme: "mylegacy",
+    },
 };
 
 export const RBSTheme: ThemeSpec = {
@@ -92,4 +116,10 @@ export const RBSTheme: ThemeSpec = {
     radiusScheme: "lifesg",
     breakpointScheme: "lifesg",
     resourceScheme: "rbs",
+    _v2: {
+        colorScheme: "rbs",
+        textStyleScheme: "base",
+        designTokenScheme: "rbs",
+        resourceScheme: "rbs",
+    },
 };
