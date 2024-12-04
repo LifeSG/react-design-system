@@ -61,6 +61,21 @@ const Component = (
     }, []);
 
     useEffect(() => {
+        addStylesheetForDocumentBody();
+        return () => {
+            applyBodyStyleClass("remove");
+        };
+    }, []);
+
+    useEffect(() => {
+        if (isDropdownExpanded && isStickied) {
+            applyBodyStyleClass("add");
+        } else {
+            applyBodyStyleClass("remove");
+        }
+    }, [isDropdownExpanded, isStickied]);
+
+    useEffect(() => {
         setViewportHeight(window.innerHeight);
         const handleResize = () => {
             setViewportHeight(window.innerHeight);
@@ -88,11 +103,6 @@ const Component = (
     }, [stickyOffset]);
 
     useEffect(() => {
-        document.body.style.overflow =
-            isDropdownExpanded && isStickied ? "hidden" : "auto";
-    }, [isDropdownExpanded, isStickied]);
-
-    useEffect(() => {
         const adjustPadding = () => {
             const dropdown = navWrapperRef?.current;
             if (dropdown) {
@@ -113,6 +123,51 @@ const Component = (
             window.removeEventListener("resize", adjustPadding);
         };
     }, []);
+
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
+
+    const addStylesheetForDocumentBody = () => {
+        /**
+         * This stylesheet is to manipulate the <body>. We only add once
+         */
+        if (!document.getElementById(STYLESHEET_ID)) {
+            const overlayStyleSheet = document.createElement("style");
+            overlayStyleSheet.id = STYLESHEET_ID;
+
+            const documentWidth = document.documentElement.clientWidth;
+            const windowWidth = window.innerWidth;
+            const scrollBarWidth = windowWidth - documentWidth;
+
+            overlayStyleSheet.innerHTML = `
+				.${DROPDOWN_OPEN_CLASSNAME} {
+					overflow: hidden;
+					padding-right: ${scrollBarWidth}px !important;
+					-ms-overflow-style: none;
+					scrollbar-width: none;
+				}
+
+				.${DROPDOWN_OPEN_CLASSNAME}::-webkit-scrollbar {
+					display: none;
+				}
+			`;
+
+            document.body.appendChild(overlayStyleSheet);
+        }
+    };
+
+    const applyBodyStyleClass = (action: "add" | "remove") => {
+        const isOverlayStyleClassApplied = document.body.classList.contains(
+            DROPDOWN_OPEN_CLASSNAME
+        );
+
+        if (action === "add" && !isOverlayStyleClassApplied) {
+            document.body.classList.add(DROPDOWN_OPEN_CLASSNAME);
+        } else if (action === "remove" && isOverlayStyleClassApplied) {
+            document.body.classList.remove(DROPDOWN_OPEN_CLASSNAME);
+        }
+    };
 
     // =============================================================================
     // EVENT HANDLERS
@@ -186,7 +241,7 @@ const Component = (
                     data-testid={`${navTestId}-label`}
                     $isDropdownExpanded={isDropdownExpanded}
                 >
-                    <LabelText weight="bold">{labelText}</LabelText>
+                    <LabelText weight="semibold">{labelText}</LabelText>
                     <NavIcon $isDropdownExpanded={isDropdownExpanded} />
                 </NavLabel>
                 {isDropdownExpanded && (
@@ -217,3 +272,9 @@ const Component = (
 };
 
 export const LocalNavDropdown = React.forwardRef(Component);
+
+// =============================================================================
+// CONSTANTS
+// =============================================================================
+const STYLESHEET_ID = "lifesg-ds-local-nav-dropdown-stylesheet";
+const DROPDOWN_OPEN_CLASSNAME = "lifesg-ds-local-nav-dropdown-open";
