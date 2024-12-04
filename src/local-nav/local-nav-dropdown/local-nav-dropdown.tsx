@@ -186,7 +186,7 @@ const Component = (
                     data-testid={`${navTestId}-label`}
                     $isDropdownExpanded={isDropdownExpanded}
                 >
-                    <LabelText weight="bold">{labelText}</LabelText>
+                    <LabelText weight="semibold">{labelText}</LabelText>
                     <NavIcon $isDropdownExpanded={isDropdownExpanded} />
                 </NavLabel>
                 {isDropdownExpanded && (
