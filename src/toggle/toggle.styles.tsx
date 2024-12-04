@@ -102,9 +102,7 @@ export const Container = styled.div<ContainerStyleProps>`
 
                         &:has(${HeaderContainer}:hover) {
                             background: ${Colour["bg-selected-hover"]};
-                        }
 
-                        &:hover {
                             & ${TextContainer} {
                                 color: ${Colour["text-selected-hover"]};
                             }
@@ -157,9 +155,7 @@ export const Container = styled.div<ContainerStyleProps>`
 
                         &:has(${HeaderContainer}:hover) {
                             background: ${Colour["bg-selected-hover"]};
-                        }
 
-                        &:hover {
                             & ${TextContainer} {
                                 color: ${Colour["text-selected-hover"]};
                             }
