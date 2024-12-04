@@ -37,10 +37,10 @@ const ColorSpec: V2_ThemeCollectionSpec<
 // =============================================================================
 export const getThemeColors = (attributePath: string) => {
     return (props: any): string => {
-        const theme = props.theme as V2_ThemeSpec;
+        const theme = (props.theme?._v2 || props.theme) as V2_ThemeSpec;
         const colorSet: V2_ColorSet = getCollection(
             ColorSpec,
-            theme[V2_ThemeContextKeys.colorScheme]
+            theme?.[V2_ThemeContextKeys.colorScheme]
         );
 
         return theme.options && theme.options.color
