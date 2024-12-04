@@ -17,7 +17,7 @@ import { FilterItem } from "./filter-item";
 import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
 import { FilterItemPage } from "./filter-item-page";
 import { FilterProps, Mode } from "./types";
-import { MediaWidths } from "../spec/media-spec";
+import { MediaWidths } from "../v2_spec/media-spec";
 import { Overlay } from "../overlay/overlay";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";

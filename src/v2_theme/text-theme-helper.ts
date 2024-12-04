@@ -1,6 +1,6 @@
-import { BaseTextStyleSet } from "../spec/text-spec/base-text-style-set";
-import { BasePlusSansJakartaStyleSet } from "../spec/text-spec/base-plus-jakarta-sans-text-style-set";
-import { OneServiceTextStyleSet } from "../spec/text-spec/oneservice-text-style-set";
+import { BaseTextStyleSet } from "../v2_spec/text-spec/base-text-style-set";
+import { BasePlusSansJakartaStyleSet } from "../v2_spec/text-spec/base-plus-jakarta-sans-text-style-set";
+import { OneServiceTextStyleSet } from "../v2_spec/text-spec/oneservice-text-style-set";
 import { V2_TextStyleSetType } from "../v2_text/types";
 import { getCollection, getValue } from "./helper";
 import {

@@ -1,4 +1,4 @@
-import { MediaWidths } from "../spec/media-spec";
+import { MediaWidths } from "../v2_spec/media-spec";
 
 export namespace ErrorDisplayHelper {
     export interface ImagePathAttributes {

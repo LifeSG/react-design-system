@@ -2,7 +2,7 @@ import { Card } from "src/card";
 import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color";
 import { V2_MediaQuery } from "../v2_media";
-import { Transition } from "../transition";
+import { V2_Transition } from "../v2_transition";
 import { TooltipPosition } from "./types";
 
 // =============================================================================
@@ -21,14 +21,14 @@ const getVisibilityStyle = (visible: boolean) => {
         return css`
             visibility: "visible";
             opacity: 1;
-            transition: ${Transition.Base};
+            transition: ${V2_Transition.Base};
             z-index: 2;
         `;
     } else {
         return css`
             visibility: "hidden";
             opacity: 0;
-            transition: ${Transition.Base};
+            transition: ${V2_Transition.Base};
             z-index: -1;
         `;
     }

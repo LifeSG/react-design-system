@@ -13,7 +13,7 @@ import {
 } from "./countdown-timer.style";
 import { TimeHelper } from "../util/time-helper";
 import { ClockIcon } from "@lifesg/react-icons";
-import { MediaWidths } from "../spec/media-spec";
+import { MediaWidths } from "../v2_spec/media-spec";
 
 export const CountdownTimer = ({
     className,

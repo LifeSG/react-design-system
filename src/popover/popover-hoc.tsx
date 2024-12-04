@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { MediaWidths } from "../spec/media-spec";
+import { MediaWidths } from "../v2_spec/media-spec";
 import { Popover } from "./popover";
 import { HOCTrigger, HOCWrapper } from "./popover.styles";
 import { PopoverHOCOptionsProps, PopoverHOCProps } from "./types";

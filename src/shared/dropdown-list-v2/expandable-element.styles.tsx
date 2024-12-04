@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { V2_Color } from "../../v2_color";
 import { V2_TextStyle, V2_TextStyleHelper } from "../../v2_text";
-import { Transition } from "../../transition";
+import { V2_Transition } from "../../v2_transition";
 import { BasicButton } from "../input-wrapper/input-wrapper";
 import { DropdownVariantType } from "./types";
 
@@ -39,7 +39,7 @@ export const IconContainer = styled.div<StyleProps>`
     display: flex;
     align-items: center;
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
-    transition: ${Transition.Base};
+    transition: ${V2_Transition.Base};
 
     svg {
         color: ${V2_Color.Neutral[3]};
