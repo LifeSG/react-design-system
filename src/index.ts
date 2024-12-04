@@ -73,7 +73,7 @@ export * from "./timetable";
 export * from "./toast";
 export * from "./toggle";
 export * from "./tooltip";
-export * from "./transition";
+export * from "./v2_transition";
 export * from "./typography";
 export * from "./uneditable-section";
 export * from "./unit-number";

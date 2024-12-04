@@ -1,7 +1,7 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Transition } from "../transition";
+import { V2_Transition } from "../v2_transition";
 import { MediaQuery } from "../theme";
 import { Colour } from "../theme";
 
@@ -49,7 +49,7 @@ export const Nav = styled.nav<StyleProps>`
     justify-content: space-between;
     align-items: center;
     position: relative;
-    transition: ${Transition.Base};
+    transition: ${V2_Transition.Base};
 
     ${MediaQuery.MaxWidth.lg} {
         height: ${NAVBAR_MOBILE_HEIGHT}rem;

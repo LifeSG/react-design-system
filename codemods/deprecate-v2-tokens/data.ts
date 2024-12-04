@@ -167,6 +167,10 @@ export const componentMap = [
         oldName: "BulletType",
         newName: "V2_BulletType",
     },
+    {
+        oldName: "Transition",
+        newName: "V2_Transition",
+    },
     // Added theme name mappings
     {
         oldName: "BaseTheme",
@@ -271,5 +275,9 @@ export const pathMap = [
     {
         oldPath: "theme",
         newPath: "v2_theme",
+    },
+    {
+        oldPath: "transition",
+        newPath: "v2_transition",
     },
 ];

@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { ChevronUpIcon } from "@lifesg/react-icons";
-import { Transition } from "../transition";
+import { V2_Transition } from "../v2_transition";
 import {
     TimeSlot,
     TimeSlotStyleProps,
@@ -65,7 +65,7 @@ export const Expandable = styled(animated.div)`
 export const ColumnWeekCell = styled.div`
     display: flex;
     gap: 0.25rem;
-    transition: ${Transition.Base};
+    transition: ${V2_Transition.Base};
     overflow: hidden;
 `;
 
@@ -75,7 +75,7 @@ export const TimeColumn = styled.div<TimeColumnStyleProps>`
     grid-row: 3 / auto;
     gap: 0.25rem;
     width: 1.375rem;
-    transition: ${Transition.Base};
+    transition: ${V2_Transition.Base};
     overflow: hidden;
 
     ${(props) => props.$height && `height: ${props.$height}px;`}

@@ -5,7 +5,7 @@ import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color";
 import { V2_MediaQuery } from "../v2_media";
 import { V2_Text } from "../v2_text/text";
-import { Transition } from "../transition";
+import { V2_Transition } from "../v2_transition";
 import { BoxContainerDisplayState } from "./types";
 
 // =============================================================================
@@ -150,7 +150,7 @@ export const HandleLabel = styled(V2_Text.H4)`
 
 export const HandleIconContainer = styled.div<StyleProps>`
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
-    transition: ${Transition.Base};
+    transition: ${V2_Transition.Base};
 `;
 
 export const HandleIcon = styled(ChevronDownIcon)`

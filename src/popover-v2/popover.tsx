@@ -1,6 +1,6 @@
 import { useMediaQuery } from "react-responsive";
 import { Modal } from "../modal/modal";
-import { MediaWidths } from "../spec/media-spec";
+import { MediaWidths } from "../v2_spec/media-spec";
 import {
     ContentWrapper,
     MobileModalBox,

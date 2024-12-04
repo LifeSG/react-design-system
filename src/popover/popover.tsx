@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Card } from "src/card";
 import { Modal } from "../modal/modal";
-import { MediaWidths } from "../spec/media-spec";
+import { MediaWidths } from "../v2_spec/media-spec";
 import { V2_Text } from "../v2_text/text";
 import {
     BubbleWrap,

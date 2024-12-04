@@ -4,7 +4,7 @@ import { V2_Color } from "../v2_color";
 import { Selector as DropdownSelector } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { V2_Text } from "../v2_text/text";
 import { V2_TextStyle } from "../v2_text/text-style";
-import { Transition } from "../transition";
+import { V2_Transition } from "../v2_transition";
 import { InputGroupAddonPosition } from "./types";
 
 // =============================================================================
@@ -77,7 +77,7 @@ export const SelectorReadOnly = styled.div`
 
 export const IconContainer = styled.div<StyleProps>`
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
-    transition: ${Transition.Base};
+    transition: ${V2_Transition.Base};
     margin: 0 0.75rem;
 `;
 

@@ -1,6 +1,6 @@
 import { ReactRenderer } from "@storybook/react";
 import { DecoratorFunction } from "@storybook/types";
-import { MediaWidths } from "src/spec/media-spec";
+import { MediaWidths } from "src/v2_spec/media-spec";
 import { Typography } from "src/typography";
 import { V2_MediaQuery } from "src/v2_media";
 import styled from "styled-components";

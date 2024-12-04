@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { BoxContainer } from "../../src";
-import { BaseColorSet } from "../../src/spec/color-spec/base-color-set";
+import { BaseColorSet } from "../../src/v2_spec/color-spec/base-color-set";
 
 // =============================================================================
 // UNIT TESTS

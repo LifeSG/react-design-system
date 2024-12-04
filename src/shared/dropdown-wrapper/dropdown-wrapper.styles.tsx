@@ -3,7 +3,7 @@ import styled, { css, keyframes } from "styled-components";
 import { V2_Color } from "../../v2_color";
 import { V2_DesignToken } from "../../v2_design-token";
 import { V2_TextStyle, V2_TextStyleHelper } from "../../v2_text";
-import { Transition } from "../../transition";
+import { V2_Transition } from "../../v2_transition";
 import { DropdownVariantType, TruncateType } from "../dropdown-list/types";
 
 // =============================================================================
@@ -165,7 +165,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
 
 export const IconContainer = styled.div<DropdownWrapperStyleProps>`
     transform: rotate(${(props) => (props.expanded ? 180 : 0)}deg);
-    transition: ${Transition.Base};
+    transition: ${V2_Transition.Base};
     margin-left: 1rem;
 `;
 
