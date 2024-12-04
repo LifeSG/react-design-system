@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 import { Form } from "src/form";
 import { Textarea } from "src/input-textarea";
 import { Layout } from "src/layout";
@@ -18,6 +19,12 @@ export default meta;
 
 export const Default: StoryObj<Component> = {
     render: () => {
+        const [newValue, setnewValue] = useState("");
+
+        const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+            const { value } = event.target;
+            setnewValue(value.replace(/[<>\\\n]/g, "_"));
+        };
         return (
             <StoryContainer>
                 <Container>
@@ -48,6 +55,14 @@ export const Default: StoryObj<Component> = {
                     <Form.Textarea
                         label="This is does not have a counter"
                         placeholder="Enter here..."
+                    />
+                    <Form.Textarea
+                        rows={2}
+                        label="This is a textarea with a handle change. "
+                        placeholder="Enter here. Replace \, <, >  and new line with _ ..."
+                        maxLength={100}
+                        onChange={handleInput}
+                        value={newValue}
                     />
                 </Container>
             </StoryContainer>
