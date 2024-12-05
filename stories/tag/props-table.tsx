@@ -53,6 +53,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["JSX.Element"],
             },
             {
+                name: "iconPosition",
+                description:
+                    "The position of the icon relative to the label text",
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"left"`,
+            },
+            {
                 name: "interactive",
                 description: <>Specifies if the tag is interactive</>,
                 propTypes: ["boolean"],
