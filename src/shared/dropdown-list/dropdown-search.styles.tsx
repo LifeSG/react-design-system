@@ -1,10 +1,9 @@
-import { CrossIcon } from "@lifesg/react-icons/cross";
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import styled, { css } from "styled-components";
-import { V2_Color } from "../../v2_color";
 import { ClickableIcon } from "../clickable-icon";
 import { BasicInput, InputStyleProps } from "../input-wrapper/input-wrapper";
 import { DropdownVariantType, IconProps } from "./types";
+import { Colour } from "../../theme";
 
 const getIconSize = (variant?: DropdownVariantType) => {
     return variant === "small" ? 1 : 1.375;
@@ -17,7 +16,7 @@ const getCssHeightAndWidth = (variant?: DropdownVariantType) => {
 };
 
 export const Container = styled.li`
-    background: ${V2_Color.Neutral[7]};
+    background: ${Colour["bg-strong"]};
     display: flex;
     border-radius: 4px;
     align-items: center;
@@ -35,7 +34,7 @@ export const SearchIcon = styled(MagnifierIcon)<IconProps>`
         return getCssHeightAndWidth(props.$variant);
     }}
     margin: 0 0.5rem;
-    color: ${V2_Color.Neutral[3]};
+    color: ${Colour.icon};
 `;
 
 export const CancelButton = styled(ClickableIcon)<IconProps>`
@@ -44,7 +43,7 @@ export const CancelButton = styled(ClickableIcon)<IconProps>`
     }}
     padding: 0;
     margin: 0 0.5rem;
-    color: ${V2_Color.Neutral[3]};
+    color: ${Colour["icon-subtle"]};
     cursor: pointer;
     ${(props) => {
         if (props.$variant === "small")

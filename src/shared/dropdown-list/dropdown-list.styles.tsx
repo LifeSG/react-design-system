@@ -3,8 +3,6 @@ import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Checkbox } from "../../checkbox";
 import { V2_Color } from "../../v2_color";
-import { V2_MediaQuery } from "../../v2_media";
-import { V2_TextStyleHelper } from "../../v2_text";
 import { ComponentLoadingSpinner } from "../component-loading-spinner/component-loading-spinner";
 import {
     DropdownVariantType,
@@ -12,6 +10,7 @@ import {
     LabelDisplayType,
     TruncateType,
 } from "./types";
+import { Colour, Font, MediaQuery } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -73,13 +72,13 @@ export const List = styled.ul<ListContainerProps>`
     }
 
     ::-webkit-scrollbar-thumb {
-        background: ${V2_Color.Neutral[4]};
-        border-right: 5px solid ${V2_Color.Neutral[8]};
+        background: ${Colour["bg-inverse-subtlest"]};
+        border-right: 5px solid ${Colour.border};
         border-top-right-radius: 4px;
         border-bottom-right-radius: 4px;
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         max-height: 15rem;
     }
 `;
@@ -88,7 +87,7 @@ export const ListItem = styled.li<ListItemProps>`
     :hover,
     :focus,
     :active {
-        background: ${V2_Color.Accent.Light[5]};
+        background: ${Colour["bg-strong"]};
     }
     ${(props) => {
         if (props.$checked) {
@@ -160,10 +159,14 @@ const lineClampCss = css<LabelProps>`
 
 export const PrimaryText = styled.div<LabelProps>`
     ${(props) =>
-        V2_TextStyleHelper.getTextStyle(
-            props.$variant === "small" ? "BodySmall" : "Body",
-            "regular"
-        )}
+        props.$variant === "small"
+            ? css`
+                  ${Font["body-md-regular"]}
+              `
+            : css`
+                  ${Font["body-baseline-regular"]}
+              `}
+
     color: ${V2_Color.Neutral[1]};
     width: 100%;
 
@@ -180,12 +183,12 @@ export const SecondaryText = styled.div<LabelProps>`
         switch (props.$labelDisplayType) {
             case "next-line":
                 return css`
-                    ${V2_TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+                    ${Font["body-md-semibold"]}
                 `;
             case "inline":
             default:
                 return css`
-                    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
+                    ${Font["body-baseline-regular"]}
                 `;
         }
     }}
@@ -254,10 +257,10 @@ export const SelectAllContainer = styled.div`
 
 export const DropdownCommonButton = styled.button<LabelProps>`
     ${(props) =>
-        V2_TextStyleHelper.getTextStyle(
-            props.$variant === "small" ? "BodySmall" : "Body",
-            "semibold"
-        )}
+        props.$variant === "small"
+            ? Font["body-md-semibold"]
+            : Font["body-baseline-semibold"]};
+
     background-color: transparent;
     background-repeat: no-repeat;
     border: none;
@@ -278,10 +281,9 @@ export const ResultStateContainer = styled.div<ResultStateProps>`
     align-items: center;
 
     ${(props) =>
-        V2_TextStyleHelper.getTextStyle(
-            props.$variant === "small" ? "BodySmall" : "Body",
-            "regular"
-        )}
+        props.$variant === "small"
+            ? Font["body-md-regular"]
+            : Font["body-baseline-regular"]};
 `;
 
 export const LabelIcon = styled(ExclamationCircleFillIcon)<IconProps>`
