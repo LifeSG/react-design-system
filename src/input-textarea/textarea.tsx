@@ -29,7 +29,14 @@ export const TextareaBase = React.forwardRef(TextareaBaseComponent);
 // =============================================================================
 
 const TextareaComponent = (
-    { value, disabled, rows = 5, onChange, ...otherProps }: TextareaProps,
+    {
+        value,
+        disabled,
+        rows = 5,
+        onChange,
+        transformValue,
+        ...otherProps
+    }: TextareaProps,
     ref: TextareaRef
 ) => {
     // -------------------------------------------------------------------------
@@ -51,11 +58,14 @@ const TextareaComponent = (
     // -------------------------------------------------------------------------
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newValue = event.target.value;
-        if (!(otherProps.maxLength && newValue.length > otherProps.maxLength)) {
-            setStateValue(newValue);
-            event.target.value = newValue;
-            if (onChange) onChange(event);
-        }
+
+        const transformedValue = transformValue
+            ? transformValue(newValue ?? "")
+            : newValue;
+
+        setStateValue(transformedValue);
+        event.target.value = transformedValue;
+        if (onChange) onChange(event);
     };
 
     // -------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TextareaBase } from "../input-textarea/textarea";
 import { TextareaCounter } from "../input-textarea/textarea-counter";
 import { TextareaRef } from "../input-textarea/types";
@@ -29,8 +29,20 @@ const FormTextareaComponent = (
         mobileCols,
         tabletCols,
         desktopCols,
+        transformValue,
         ...otherProps
     } = props;
+
+    const [stateValue, setStateValue] = useState<
+        string | number | readonly string[]
+    >(value);
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        setStateValue(value);
+    }, [value]);
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -44,6 +56,14 @@ const FormTextareaComponent = (
     // EVENT HANDLER
     // =============================================================================
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const newValue = event.target.value;
+
+        const transformedValue = transformValue
+            ? transformValue(newValue ?? "")
+            : newValue;
+
+        setStateValue(transformedValue);
+        event.target.value = transformedValue;
         if (onChange) onChange(event);
     };
 
@@ -67,7 +87,7 @@ const FormTextareaComponent = (
                 {otherProps.maxLength && (
                     <TextareaCounter
                         disabled={otherProps.disabled}
-                        value={value}
+                        value={stateValue}
                         maxLength={otherProps.maxLength}
                         renderCustomCounter={otherProps.renderCustomCounter}
                     />
@@ -89,7 +109,7 @@ const FormTextareaComponent = (
             <TextareaBase
                 id={`${id}-base`}
                 data-testid={testId || id}
-                value={value}
+                value={stateValue}
                 error={!!errorMessage}
                 onChange={handleChange}
                 ref={ref}

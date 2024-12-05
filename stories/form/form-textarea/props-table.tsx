@@ -45,6 +45,11 @@ const DATA: ApiTableSectionProps[] = [
                     "(maxLength: number,currentValueLength: number) => JSX.Element",
                 ],
             },
+            {
+                name: "transformValue",
+                description: "Function to Transform field value */",
+                propTypes: ["(value: string) => JSX.Element"],
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,
