@@ -47,8 +47,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "transformValue",
-                description: "Function to Transform field value */",
-                propTypes: ["(value: string) => JSX.Element"],
+                description: "Function to transform value",
+                propTypes: ["(value: string) => string"],
             },
         ],
     },

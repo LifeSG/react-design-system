@@ -49,13 +49,22 @@ export const Default: StoryObj<Component> = {
                         label="This is does not have a counter"
                         placeholder="Enter here..."
                     />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
+export const TransformValue: StoryObj<Component> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Container>
                     <Form.Textarea
-                        rows={2}
-                        label="This is a textarea with a handle change. "
-                        placeholder="Enter here. Replace \, <, >  and new line with empty string ..."
+                        label="This removes special characters"
                         maxLength={100}
                         transformValue={(value) =>
-                            value.replace(/[<>\\\n]/g, "")
+                            value.replace(/[^A-Za-z0-9 ]/g, "")
                         }
                     />
                 </Container>
