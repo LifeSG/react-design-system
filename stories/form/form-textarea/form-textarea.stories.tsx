@@ -55,6 +55,24 @@ export const Default: StoryObj<Component> = {
     },
 };
 
+export const TransformValue: StoryObj<Component> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.Textarea
+                        label="This removes special characters"
+                        maxLength={100}
+                        transformValue={(value) =>
+                            value.replace(/[^A-Za-z0-9 ]/g, "")
+                        }
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
 export const WithCustomCounter: StoryObj<Component> = {
     render: () => {
         return (
