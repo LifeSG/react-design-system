@@ -78,7 +78,11 @@ export const Container = styled.div<ContainerStyleProps>`
             case "no-border": {
                 if (props.$error) {
                     return css`
-                        border-color: ${Colour["border-error-strong"]};
+                        border-color: ${Colour["border-error"]};
+
+                        &:has(${HeaderContainer}:hover) {
+                            background: ${Colour["bg-hover-subtle"]};
+                        }
                     `;
                 }
 
@@ -100,8 +104,16 @@ export const Container = styled.div<ContainerStyleProps>`
                         border: none;
                         background: ${Colour["bg-selected"]};
 
-                        :hover {
+                        &:has(${HeaderContainer}:hover) {
                             background: ${Colour["bg-selected-hover"]};
+
+                            & ${TextContainer} {
+                                color: ${Colour["text-selected-hover"]};
+                            }
+
+                            & ${StyledToggleIcon} {
+                                color: ${Colour["icon-selected-hover"]};
+                            }
                         }
                     `;
                 }
@@ -109,7 +121,7 @@ export const Container = styled.div<ContainerStyleProps>`
                 return css`
                     border: none;
 
-                    :hover {
+                    &:has(${HeaderContainer}:hover) {
                         background: ${Colour["bg-hover-subtle"]};
                     }
                 `;
@@ -118,7 +130,11 @@ export const Container = styled.div<ContainerStyleProps>`
             default: {
                 if (props.$error) {
                     return css`
-                        border-color: ${Colour["border-error-strong"]};
+                        border-color: ${Colour["border-error"]};
+
+                        &:has(${HeaderContainer}:hover) {
+                            background: ${Colour["bg-hover-subtle"]};
+                        }
                     `;
                 }
 
@@ -141,9 +157,16 @@ export const Container = styled.div<ContainerStyleProps>`
                         border-color: ${Colour["border-selected"]};
                         background: ${Colour["bg-selected"]};
 
-                        :hover {
-                            border-color: ${Colour["border-selected-hover"]};
+                        &:has(${HeaderContainer}:hover) {
                             background: ${Colour["bg-selected-hover"]};
+
+                            & ${TextContainer} {
+                                color: ${Colour["text-selected-hover"]};
+                            }
+
+                            & ${StyledToggleIcon} {
+                                color: ${Colour["icon-selected-hover"]};
+                            }
                         }
                     `;
                 }
@@ -151,8 +174,7 @@ export const Container = styled.div<ContainerStyleProps>`
                 return css`
                     border-color: ${Colour.border};
 
-                    :hover {
-                        border-color: ${Colour.border};
+                    &:has(${HeaderContainer}:hover) {
                         background: ${Colour["bg-hover-subtle"]};
                     }
                 `;
@@ -199,12 +221,6 @@ export const TextContainer = styled.div<StyleProps>`
         if (props.$selected) {
             return css`
                 color: ${Colour["text-selected"]};
-
-                // this syntax is a workaround for this issue:
-                // https://github.com/styled-components/styled-components/issues/3265#issuecomment-1199263511
-                &:is(${Container}:hover *) {
-                    color: ${Colour["text-selected-hover"]};
-                }
             `;
         }
 
@@ -359,10 +375,6 @@ export const StyledToggleIcon = styled(ToggleIcon)<StyleProps>`
         if (props.$selected) {
             return css`
                 color: ${Colour["icon-selected"]};
-
-                &:is(${Container}:hover *) {
-                    color: ${Colour["icon-selected-hover"]};
-                }
             `;
         }
         return css`
