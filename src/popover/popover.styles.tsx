@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { V2_MediaQuery } from "../v2_media";
 import { ModalBox } from "../modal/modal-box";
 import { V2_Transition } from "../v2_transition";
+import { MediaQuery } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -102,7 +102,7 @@ export const BubbleWrap = styled.div<PopoverStyleProps>`
     ${(props) => getVisibilityStyle(props.$visible)}
     ${(props) => getBubblePosition(props.$offset)}
 
-	${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.md} {
         display: none;
     }
 `;

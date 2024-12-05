@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
+import styled from "styled-components";
+import { Border, Colour } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -17,8 +17,8 @@ export const ListWrapper = styled.ul<ListWrapperStyleProps>`
 `;
 
 export const EditableItemsContainer = styled.li`
-    border-top: 1px solid ${V2_Color.Neutral[5]};
-    border-bottom: 1px solid ${V2_Color.Neutral[5]};
+    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 
     :not(:last-child) {
         margin-bottom: 2rem;

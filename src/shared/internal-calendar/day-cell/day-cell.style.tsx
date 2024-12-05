@@ -1,14 +1,14 @@
 import styled, { css } from "styled-components";
-import { V2_Color } from "../../../v2_color";
-import { V2_Text, V2_TextStyleHelper } from "../../../v2_text";
 import { CellType, LabelType } from "./types";
+import { Colour, Font, Radius } from "../../../theme";
+import { Typography } from "../../../typography";
+import { StyledComponentProps } from "../../../theme/helpers";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
-interface StyleProps {
+interface StyleProps extends StyledComponentProps {
     $type?: CellType;
-    $shadow?: boolean;
 }
 
 interface LabelStyleProps {
@@ -21,40 +21,40 @@ interface LabelStyleProps {
 // HELPERS
 // =============================================================================
 const getCellStyle = (props: StyleProps) => {
-    let color = V2_Color.Neutral[8];
+    let color = Colour.bg;
     let border = "1px solid transparent";
+    let dot = false;
 
     switch (props.$type) {
         case "current":
-            color = V2_Color.Accent.Light[5];
+            color = Colour.bg;
+            dot = true;
             break;
         case "hover-dash":
-            color = V2_Color.Accent.Light[6];
-            border = `1px dashed ${V2_Color.Accent.Light[4](props)}`;
+            color = Colour["bg-hover-subtle"];
+            border = `1px dashed ${Colour["border-hover"](props)}`;
             break;
         case "hover-current":
-            color = V2_Color.Neutral[8];
-            border = `1px solid ${V2_Color.Primary(props)}`;
+            color = Colour["bg-hover-strong"];
             break;
         case "selected":
-            color = V2_Color.Accent.Light[5];
-            border = `1px solid ${V2_Color.Accent.Light[4](props)}`;
+            color = Colour["bg-selected"];
+            border = `1px solid ${Colour["border-selected-subtle"](props)}`;
             break;
         case "selected-outline":
-            color = V2_Color.Accent.Light[5];
-            border = `1px solid ${V2_Color.Primary(props)}`;
+            color = Colour["bg-selected"];
+            border = `1px solid ${Colour["border-selected"](props)}`;
             break;
         case "overlap":
-            color = V2_Color.Accent.Light[4];
-            border = `1px solid ${V2_Color.Accent.Light[4](props)}`;
+            color = Colour["bg-selected"];
+            border = `1px solid ${Colour["border-selected-subtle"](props)}`;
             break;
         case "overlap-outline":
-            color = V2_Color.Accent.Light[4];
-            border = `1px solid ${V2_Color.Primary(props)}`;
+            color = Colour["bg-selected-hover"];
             break;
     }
 
-    return { color, border };
+    return { color, border, dot };
 };
 
 // =============================================================================
@@ -96,25 +96,6 @@ export const RightHalf = styled(Half)`
     right: 0;
 `;
 
-const HalfShadow = styled.div<StyleProps>`
-    z-index: -1;
-    box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Accent};
-    position: absolute;
-    height: 100%;
-    width: 50%;
-    display: none;
-
-    ${(props) => props.$shadow && "display: block;"}
-`;
-
-export const LeftHalfShadow = styled(HalfShadow)`
-    left: 0;
-`;
-
-export const RightHalfShadow = styled(HalfShadow)`
-    right: 0;
-`;
-
 export const Circle = styled.div<StyleProps>`
     position: absolute;
     z-index: 1;
@@ -126,49 +107,53 @@ export const Circle = styled.div<StyleProps>`
     width: 2.5rem;
 
     border: 1px solid transparent;
-    border-radius: 50%;
+    border-radius: ${Radius.md};
 
     ${(props) => {
         if (props.$type) {
-            const { color, border } = getCellStyle(props);
+            const { color, border, dot } = getCellStyle(props);
             return css`
                 background-color: ${color};
                 background-clip: content-box;
                 border: ${border};
+
+                ${dot &&
+                css`
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        width: 4px;
+                        height: 4px;
+                        background-color: ${Colour["icon-primary"]};
+                        border-radius: 50%;
+                        bottom: 3px;
+                    }
+                `}
             `;
         }
     }}
+`;
 
-    ${(props) =>
-        props.$shadow &&
-        css`
-            &:before {
-                content: "";
-                border-radius: 50%;
-                position: absolute;
-                height: 100%;
-                width: 100%;
-            }
-        `}
+export const Dot = styled.div`
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: ${Colour["icon-primary"]};
+    border-radius: 50%;
+    bottom: 3px;
 `;
 
 export const LeftCircle = styled(Circle)`
     right: calc(50% - 1.25rem);
     clip-path: inset(-3px 1.25rem -3px -3px);
-    &:before {
-        box-shadow: -1px 0 4px 1px ${V2_Color.Shadow.Accent};
-    }
 `;
 
 export const RightCircle = styled(Circle)`
     left: calc(50% - 1.25rem);
     clip-path: inset(-3px -3px -3px 1.25rem);
-    &:before {
-        box-shadow: 1px 0 4px 1px ${V2_Color.Shadow.Accent};
-    }
 `;
 
-export const Label = styled(V2_Text.H5)<LabelStyleProps>`
+export const Label = styled(Typography.BodyMD)<LabelStyleProps>`
     position: absolute;
     top: 0;
     bottom: 0;
@@ -195,31 +180,37 @@ export const Label = styled(V2_Text.H5)<LabelStyleProps>`
         const { $disabled, $type } = props;
 
         if ($disabled) {
-            if ($type === "selected") {
-                return css`
-                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")};
-                    color: ${V2_Color.Accent.Light[2]};
-                `;
-            }
-
             return css`
-                color: ${V2_Color.Neutral[4]};
+                color: ${Colour["text-disabled-subtlest"]};
             `;
         }
 
         switch ($type) {
             case "selected":
                 return css`
-                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")};
-                    color: ${V2_Color.Primary};
+                    ${Font["body-md-semibold"]}
+                    color: ${Colour["text-selected"]};
                 `;
             case "current":
                 return css`
-                    color: ${V2_Color.Neutral[3]};
+                    ${Font["body-md-semibold"]}
+                    color: ${Colour["text-primary"]};
+
+                    /* position: relative;
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        width: 4px;
+                        height: 4px;
+                        background-color: ${Colour["icon-primary"]};
+                        border-radius: 50%;
+                        bottom: 0;
+                    } */
                 `;
             case "unavailable":
                 return css`
-                    color: ${V2_Color.Neutral[4]};
+                    color: ${Colour["text-disabled-subtlest"]};
                 `;
             case "hidden":
                 return css`
@@ -228,7 +219,7 @@ export const Label = styled(V2_Text.H5)<LabelStyleProps>`
             case "available":
             default:
                 return css`
-                    color: ${V2_Color.Neutral[1]};
+                    color: ${Colour.text};
                 `;
         }
     }}

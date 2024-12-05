@@ -3,10 +3,8 @@ import {
     Label,
     LeftCircle,
     LeftHalf,
-    LeftHalfShadow,
     RightCircle,
     RightHalf,
-    RightHalfShadow,
 } from "./day-cell.style";
 import { DayCellProps } from "./types";
 
@@ -15,8 +13,6 @@ export const DayCell = ({
     bgRight,
     circleLeft,
     circleRight,
-    shadow,
-    circleShadow,
     labelType,
     disabled,
     interactive,
@@ -45,18 +41,10 @@ export const DayCell = ({
     // =========================================================================
     return (
         <Cell>
-            <LeftHalfShadow $shadow={bgLeft && shadow} />
-            <LeftHalf $type={bgLeft} $shadow={bgLeft && shadow}></LeftHalf>
-            <LeftCircle
-                $type={circleLeft}
-                $shadow={circleLeft && circleShadow}
-            />
-            <RightHalfShadow $shadow={bgRight && shadow} />
-            <RightHalf $type={bgRight} $shadow={bgRight && shadow}></RightHalf>
-            <RightCircle
-                $type={circleRight}
-                $shadow={circleRight && circleShadow}
-            />
+            <LeftHalf $type={bgLeft}></LeftHalf>
+            <LeftCircle $type={circleLeft} />
+            <RightHalf $type={bgRight}></RightHalf>
+            <RightCircle $type={circleRight} />
             <Label
                 weight="regular"
                 $type={labelType}

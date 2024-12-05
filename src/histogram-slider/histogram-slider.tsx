@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { V2_Text } from "../v2_text";
 import {
     Bar,
     Histogram,
@@ -8,6 +7,7 @@ import {
     Slider,
 } from "./histogram-slider.styles";
 import { HistogramSliderProps } from "./types";
+import { Typography } from "../typography/typography";
 
 export const HistogramSlider = ({
     bins = [],
@@ -94,11 +94,11 @@ export const HistogramSlider = ({
             return renderRangeLabel(value);
         }
         return (
-            <V2_Text.Body>
+            <Typography.BodyBL>
                 {rangeLabelPrefix}
                 {value}
                 {rangeLabelSuffix}
-            </V2_Text.Body>
+            </Typography.BodyBL>
         );
     };
 

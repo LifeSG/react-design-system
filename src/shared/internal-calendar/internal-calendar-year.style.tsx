@@ -1,9 +1,9 @@
 import styled, { css } from "styled-components";
+import { Border, Colour, Font } from "../../theme";
 import { V2_Color } from "../../v2_color";
-import { V2_TextStyleHelper } from "../../v2_text/helper";
-import { V2_Text } from "../../v2_text/text";
 import { YearVariant } from "./internal-calendar-year";
 import { CalendarType } from "./types";
+import { Typography } from "../../typography";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -58,8 +58,8 @@ export const YearCell = styled.div<StyleProps>`
             return css`
                 cursor: pointer;
                 &:hover {
-                    box-shadow: 0px 0px 4px 1px ${V2_Color.Shadow.Accent};
-                    border: 1px solid ${V2_Color.Accent.Light[1]};
+                    background: ${Colour["bg-hover"]};
+                    color: ${Colour["text-hover"]};
                 }
             `;
         }
@@ -73,14 +73,20 @@ export const YearCell = styled.div<StyleProps>`
 
     ${(props) => {
         switch (props.$variant) {
-            case "current-year":
-                return css`
-                    background: ${V2_Color.Accent.Light[6](props)};
-                `;
             case "selected-year":
                 return css`
-                    background: ${V2_Color.Accent.Light[5](props)};
-                    border: 1px solid ${V2_Color.Primary(props)};
+                    background: ${Colour["bg-selected"](props)};
+                    border: ${Border["width-010"]} ${Border.solid}
+                        ${Colour["border-selected"](props)};
+
+                    :hover {
+                        background-color: ${Colour["bg-selected-hover"](props)};
+                        border: ${Border["width-010"]} ${Border.solid}
+                            ${Colour["border-selected-hover"](props)};
+                        & > ${CellLabel} {
+                            color: ${Colour["text-selected-hover"]};
+                        }
+                    }
                 `;
             case "other-decade":
             case "default":
@@ -89,23 +95,24 @@ export const YearCell = styled.div<StyleProps>`
     }};
 `;
 
-export const CellLabel = styled(V2_Text.H5)<StyleProps>`
+export const CellLabel = styled(Typography.BodyMD)<StyleProps>`
     ${(props) => {
         if (props.$disabledDisplay) {
             return css`
-                color: ${V2_Color.Neutral[4]};
+                color: ${Colour["text-disabled-subtlest"]};
             `;
         }
 
         switch (props.$variant) {
             case "current-year":
                 return css`
-                    color: ${V2_Color.Neutral[3](props)};
+                    ${Font["body-md-semibold"]}
+                    color: ${Colour["text-primary"](props)};
                 `;
             case "selected-year":
                 return css`
-                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
-                    color: ${V2_Color.Primary(props)};
+                    ${Font["body-md-semibold"]}
+                    color: ${Colour["text-selected"](props)};
                 `;
             case "other-decade":
                 return css`

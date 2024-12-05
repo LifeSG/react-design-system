@@ -1,9 +1,8 @@
 import styled, { css } from "styled-components";
-import { V2_Color } from "../../v2_color";
-import { V2_TextStyleHelper } from "../../v2_text/helper";
-import { V2_Text } from "../../v2_text/text";
 import { MonthVariant } from "./internal-calendar-month";
 import { CalendarType } from "./types";
+import { Border, Colour, Font, Radius } from "../../theme";
+import { Typography } from "../../typography";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -50,7 +49,7 @@ export const MonthCell = styled.div<StyleProps>`
     align-items: center;
     justify-content: center;
     cursor: default;
-    border-radius: 5rem;
+    border-radius: ${Radius.md};
     margin: 0 0.5rem;
 
     ${(props) => {
@@ -58,8 +57,7 @@ export const MonthCell = styled.div<StyleProps>`
             return css`
                 cursor: pointer;
                 &:hover {
-                    box-shadow: 0px 0px 4px 1px ${V2_Color.Shadow.Accent};
-                    border: 1px solid ${V2_Color.Accent.Light[1]};
+                    background: ${Colour["bg-hover"]};
                 }
             `;
         }
@@ -72,14 +70,19 @@ export const MonthCell = styled.div<StyleProps>`
 
     ${(props) => {
         switch (props.$variant) {
-            case "current-month":
-                return css`
-                    background-color: ${V2_Color.Accent.Light[6](props)};
-                `;
             case "selected-month":
                 return css`
-                    background-color: ${V2_Color.Accent.Light[5](props)};
-                    border: 1px solid ${V2_Color.Primary(props)};
+                    background-color: ${Colour["bg-selected"](props)};
+                    border: 1px solid ${Colour["border-selected"](props)};
+
+                    :hover {
+                        background-color: ${Colour["bg-selected-hover"](props)};
+                        border: ${Border["width-010"]} ${Border.solid}
+                            ${Colour["border-selected-hover"](props)};
+                        & > ${CellLabel} {
+                            color: ${Colour["text-selected-hover"]};
+                        }
+                    }
                 `;
             case "default":
                 break;
@@ -87,23 +90,24 @@ export const MonthCell = styled.div<StyleProps>`
     }}
 `;
 
-export const CellLabel = styled(V2_Text.H5)<StyleProps>`
+export const CellLabel = styled(Typography.BodyMD)<StyleProps>`
     ${(props) => {
         if (props.$disabledDisplay) {
             return css`
-                color: ${V2_Color.Neutral[4]};
+                color: ${Colour["text-disabled-subtlest"]};
             `;
         }
 
         switch (props.$variant) {
             case "current-month":
                 return css`
-                    color: ${V2_Color.Neutral[3](props)};
+                    ${Font["body-md-semibold"]}
+                    color: ${Colour["text-primary"](props)};
                 `;
             case "selected-month":
                 return css`
-                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
-                    color: ${V2_Color.Primary(props)};
+                    ${Font["body-md-semibold"]}
+                    color: ${Colour["text-selected"](props)};
                 `;
             case "default":
                 break;

@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
 import { V2_Color } from "../../../v2_color";
-import { V2_Text, V2_TextStyleHelper } from "../../../v2_text";
 import { DayVariant } from "./standard-calendar-day-view";
+import { Typography } from "../../../typography";
+import { Colour, Font } from "../../../theme";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -88,26 +89,26 @@ export const BaseInteractiveCircle = styled.div<BaseInteractiveCircleProps>`
     position: absolute;
 `;
 
-export const DayLabel = styled(V2_Text.H5)<DayLabelStyleProps>`
+export const DayLabel = styled(Typography.BodyMD)<DayLabelStyleProps>`
     ${(props) => {
         const { $disabledDisplay, $selected, $variant } = props;
 
         if ($disabledDisplay && $selected) {
             return css`
-                ${V2_TextStyleHelper.getTextStyle("H5", "semibold")};
-                color: ${V2_Color.Accent.Light[2]};
+                ${Font["body-md-semibold"]}
+                color: ${Colour["text-error"]};
             `;
         }
 
         if ($disabledDisplay) {
             return css`
-                color: ${V2_Color.Neutral[4]};
+                color: ${Colour["text-error"]};
             `;
         }
 
         if ($selected) {
             return css`
-                ${V2_TextStyleHelper.getTextStyle("H5", "semibold")};
+                ${Font["body-md-semibold"]}
                 color: ${V2_Color.Primary};
             `;
         }

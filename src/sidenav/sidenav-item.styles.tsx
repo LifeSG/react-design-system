@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
-import { V2_Text, V2_TextStyleHelper } from "../v2_text";
-import { V2_Color } from "../v2_color";
-import { Button } from "../button";
+import { Colour, Font, Radius } from "../theme";
+import { Typography } from "../typography";
 
 //=============================================================================
 // STYLE INTERFACE
@@ -17,67 +16,74 @@ export const Container = styled.li`
     width: 100%;
 `;
 
-export const DefaultButton = styled(Button.Default)<StyleProps>`
+export const IconContainer = styled.span`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+
+    padding: 0.5rem;
+    border-radius: ${Radius.md};
+
+    svg {
+        height: 1.25rem;
+        width: 1.25rem;
+        color: ${Colour["icon-primary"]};
+    }
+`;
+
+export const TitleText = styled(Typography.BodyXS)`
+    ${Font["body-xs-regular"]}
+    font-size: 0.75rem !important;
+    overflow: hidden;
+    display: -webkit-box;
+    margin-top: 0.5rem;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+`;
+
+export const DefaultButton = styled.button<StyleProps>`
+    background: none;
+    border: none;
     width: 100%;
     height: unset;
 
-    span {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 
-        svg {
-            height: 1.25rem;
-            width: 1.25rem;
-            margin-top: 0.25rem;
+    &:hover,
+    &:focus {
+        ${IconContainer} {
+            background-color: ${Colour["bg-hover"]};
+
+            svg {
+                color: ${Colour["icon-primary"]};
+            }
         }
 
-        span {
-            ${V2_TextStyleHelper.getFontFamily("XSmall", "regular")}
-            font-size: 0.75rem !important;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-    }
-
-    :hover,
-    :focus {
-        span {
-            div {
-                background-color: ${V2_Color.Accent.Light[5]};
-                color: ${V2_Color.Primary} !important;
-            }
-
-            span {
-                ${V2_TextStyleHelper.getFontFamily("XSmall", "semibold")}
-                color: ${V2_Color.Primary} !important;
-            }
+        ${TitleText} {
+            ${Font["body-xs-semibold"]}
+            color: ${Colour["text-hover"]};
         }
     }
 
     ${(props) =>
         props.$highlight &&
         css`
-            span {
-                div {
-                    background-color: ${V2_Color.Accent.Light[5]};
-                }
+            ${IconContainer} {
+                background-color: ${Colour["bg-hover"]};
 
-                span {
-                    ${V2_TextStyleHelper.getFontFamily("XSmall", "semibold")}
-                    color: ${V2_Color.Primary};
+                svg {
+                    color: ${Colour["icon-primary"]};
                 }
+            }
+
+            ${TitleText} {
+                ${Font["body-xs-semibold"]}
+                color: ${Colour["text-hover"]};
             }
         `}
 `;
-
-export const IconContainer = styled.div`
-    height: 1.75rem;
-    width: 3.25rem;
-    border-radius: 0.5rem;
-    margin-bottom: 0.25rem;
-`;
-
-export const TitleText = styled(V2_Text.XSmall)``;

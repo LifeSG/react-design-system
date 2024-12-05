@@ -3,8 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Card } from "src/card";
 import { Modal } from "../modal/modal";
-import { MediaWidths } from "../v2_spec/media-spec";
-import { V2_Text } from "../v2_text/text";
 import {
     BubbleWrap,
     ContentWrapper,
@@ -12,6 +10,9 @@ import {
     OffsetPosition,
 } from "./popover.styles";
 import { PopoverProps } from "./types";
+import { Typography } from "../typography/typography";
+import { MediaQuery } from "../theme";
+import { useTheme } from "styled-components";
 
 /**
  * @deprecated Use `PopoverV2` for improved positioning behaviour. This component will be removed in DS v3.
@@ -25,11 +26,13 @@ export const Popover = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const theme = useTheme();
+
     const testId = otherProps["data-testid"] || "popover";
     const [offset, _setOffset] = useState<OffsetPosition>("none");
     const bubbleRef = useRef<HTMLDivElement>(null);
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
+        maxWidth: MediaQuery.MaxWidth.sm({ theme }),
     });
 
     /**
@@ -136,7 +139,7 @@ export const Popover = ({
     // =============================================================================
     const renderContent = () =>
         typeof children === "string" ? (
-            <V2_Text.BodySmall>{children}</V2_Text.BodySmall>
+            <Typography.BodyMD>{children}</Typography.BodyMD>
         ) : (
             children
         );

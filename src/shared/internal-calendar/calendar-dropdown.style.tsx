@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { V2_MediaQuery } from "../../v2_media";
+import { MediaQuery } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -16,7 +16,7 @@ export const CalendarWrapper = styled.div<StyleProps>`
     max-width: 41rem;
     min-width: 21rem;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         min-width: 17.5rem;
     }
 `;

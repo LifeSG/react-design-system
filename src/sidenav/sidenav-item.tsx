@@ -20,7 +20,6 @@ export const SidenavItem = ({
     // =============================================================================
     const id = otherProps.id || title.toLowerCase().replaceAll(" ", "-");
     const {
-        currentItem,
         previouslySelectedItemId,
         selectedItem,
         setCurrentItem,
@@ -70,15 +69,11 @@ export const SidenavItem = ({
     return (
         <Container>
             <DefaultButton
-                styleType="link"
                 type="button"
                 onClick={handleOnClick}
                 onMouseEnter={handleMouseEnter}
                 {...otherProps}
-                $highlight={
-                    (selectedItem && selectedItem.itemId === id) ||
-                    (currentItem && currentItem.itemId === id)
-                }
+                $highlight={selectedItem && selectedItem.itemId === id}
             >
                 <IconContainer>{icon}</IconContainer>
                 <TitleText>{title}</TitleText>
