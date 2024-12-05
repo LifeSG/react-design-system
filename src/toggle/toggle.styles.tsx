@@ -79,6 +79,10 @@ export const Container = styled.div<ContainerStyleProps>`
                 if (props.$error) {
                     return css`
                         border-color: ${Colour["border-error"]};
+
+                        &:has(${HeaderContainer}:hover) {
+                            background: ${Colour["bg-hover-subtle"]};
+                        }
                     `;
                 }
 
