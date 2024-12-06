@@ -52,22 +52,21 @@ export const WithIcon: StoryObj<Component> = {
         return (
             <Wrapper>
                 <Tag
-                    type="solid"
-                    colorType="blue"
+                    type="outline"
                     icon={<PlusCircleFillIcon />}
-                    data-testid="first-example"
-                    interactive={true}
+                    interactive
                     onClick={() => window.alert("Interactive tag clicked!")}
                 >
-                    Some Label
+                    Icon on left
                 </Tag>
                 <Tag
-                    type="outline"
-                    colorType="blue"
-                    icon={<PlaceholderIcon />}
-                    data-testid="second-example"
+                    type="solid"
+                    icon={<PlusCircleFillIcon />}
+                    iconPosition="right"
+                    interactive
+                    onClick={() => window.alert("Interactive tag clicked!")}
                 >
-                    Some Label
+                    Icon on right
                 </Tag>
             </Wrapper>
         );

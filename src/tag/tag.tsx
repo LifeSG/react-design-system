@@ -7,6 +7,7 @@ export const Tag = ({
     children,
     interactive = false,
     icon,
+    iconPosition = "left",
     ...otherProps
 }: TagProps): JSX.Element => {
     return (
@@ -17,8 +18,9 @@ export const Tag = ({
             $interactive={interactive}
             {...otherProps}
         >
-            {icon}
+            {iconPosition === "left" && icon}
             <Label>{children}</Label>
+            {iconPosition === "right" && icon}
         </Wrapper>
     );
 };
