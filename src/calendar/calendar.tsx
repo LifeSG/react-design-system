@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
 import { InternalCalendar } from "../shared/internal-calendar";
+import { Border, Colour, Radius } from "../theme";
 import { CalendarProps } from "./types";
 
 export const Calendar = ({
@@ -58,8 +58,8 @@ const Wrapper = styled.div<StyleProps>`
     ${(props) => {
         if (props.$hasBorder) {
             return css`
-                border: 1px solid ${V2_Color.Neutral[5](props)};
-                border-radius: 12px;
+                border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+                border-radius: ${Radius.lg};
                 overflow: hidden;
             `;
         }

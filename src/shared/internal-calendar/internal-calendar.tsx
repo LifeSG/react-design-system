@@ -1,7 +1,7 @@
 import { Dayjs } from "dayjs";
 import React, { useImperativeHandle, useRef } from "react";
 import { CalendarManager } from "./calendar-manager";
-import { FixedRangeCalendarDayView } from "./fixed-range/fixed-range-calendar-day-view";
+import { FixedRangeCalendarDayView } from "./fixed-range";
 import { Container } from "./internal-calendar.style";
 import { StandardCalendarDayView } from "./standard";
 import {
