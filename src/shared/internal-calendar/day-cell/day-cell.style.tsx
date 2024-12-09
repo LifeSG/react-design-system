@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
-import { V2_Color } from "../../../v2_color";
-import { V2_Text, V2_TextStyleHelper } from "../../../v2_text";
+import { Border, Colour, Font, FontSpec, Motion, Radius } from "../../../theme";
 import { CellType, LabelType } from "./types";
 
 // =============================================================================
@@ -16,50 +15,55 @@ interface LabelStyleProps {
     $interactive: boolean | null;
 }
 
+interface IndicatorStyleProps {
+    $disabled: boolean;
+}
+
 // =============================================================================
 // HELPERS
 // =============================================================================
 const getCellStyle = (props: StyleProps) => {
-    let color = V2_Color.Neutral[8];
-    let border = "1px solid transparent";
+    let color = Colour.bg;
+    let borderColor: typeof color | string = "transparent";
 
     switch (props.$type) {
-        case "current":
-            color = V2_Color.Accent.Light[5];
+        case "hover-subtle":
+            color = Colour["bg-hover"];
+            borderColor = Colour["bg-hover"];
             break;
-        case "hover-dash":
-            color = V2_Color.Accent.Light[6];
-            border = `1px dashed ${V2_Color.Accent.Light[4](props)}`;
+        case "hover":
+            color = Colour["bg-hover-strong"];
+            borderColor = Colour["bg-hover-strong"];
             break;
-        case "hover-current":
-            color = V2_Color.Neutral[8];
-            border = `1px solid ${V2_Color.Primary(props)}`;
-            break;
-        case "selected":
-            color = V2_Color.Accent.Light[5];
-            border = `1px solid ${V2_Color.Accent.Light[4](props)}`;
+        case "hover-outline":
+            color = Colour["bg-hover-subtle"];
+            borderColor = Colour["border-hover"];
             break;
         case "selected-outline":
-            color = V2_Color.Accent.Light[5];
-            border = `1px solid ${V2_Color.Primary(props)}`;
+            color = Colour["bg-selected"];
+            borderColor = Colour["border-selected"];
             break;
-        case "overlap":
-            color = V2_Color.Accent.Light[4];
-            border = `1px solid ${V2_Color.Accent.Light[4](props)}`;
+        case "selected-outline-subtle":
+            color = Colour["bg-selected"];
+            borderColor = Colour["border-selected-subtle"];
             break;
-        case "overlap-outline":
-            color = V2_Color.Accent.Light[4];
-            border = `1px solid ${V2_Color.Primary(props)}`;
+        case "selected-hover":
+            color = Colour["bg-selected-hover"];
+            // no border to give it an overlay effect
+            break;
+        case "selected-hover-outline":
+            color = Colour["bg-selected-hover"];
+            borderColor = Colour["border-selected-hover"];
             break;
     }
 
-    return { color, border };
+    return { color, borderColor };
 };
 
 // =============================================================================
 // COMPONENTS
 // =============================================================================
-export const Cell = styled.div`
+export const Cell = styled.div<StyleProps>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -72,17 +76,21 @@ const Half = styled.div<StyleProps>`
     position: absolute;
     height: 2.5rem;
     width: 50%;
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+    border: ${Border["width-010"]} ${Border["solid"]} transparent;
+    border-left: none;
+    border-right: none;
 
     ${(props) => {
         if (!props.$type) {
             return;
         }
-        const { color, border } = getCellStyle(props);
+        const { color, borderColor } = getCellStyle(props);
         return css`
             background-color: ${color};
-            background-clip: content-box;
-            border-top: ${border};
-            border-bottom: ${border};
+            background-clip: border-box;
+            border-top-color: ${borderColor};
+            border-bottom-color: ${borderColor};
         `;
     }}
 `;
@@ -104,17 +112,18 @@ export const Circle = styled.div<StyleProps>`
     justify-content: center;
     height: 2.5rem;
     width: 2.5rem;
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
-    border: 1px solid transparent;
-    border-radius: 50%;
+    border: ${Border["width-010"]} ${Border["solid"]} transparent;
+    border-radius: ${Radius.md};
 
     ${(props) => {
         if (props.$type) {
-            const { color, border } = getCellStyle(props);
+            const { color, borderColor } = getCellStyle(props);
             return css`
                 background-color: ${color};
                 background-clip: content-box;
-                border: ${border};
+                border-color: ${borderColor};
             `;
         }
     }}
@@ -130,7 +139,7 @@ export const RightCircle = styled(Circle)`
     clip-path: inset(-3px -3px -3px 1.25rem);
 `;
 
-export const Label = styled(V2_Text.H5)<LabelStyleProps>`
+export const Label = styled.div<LabelStyleProps>`
     position: absolute;
     top: 0;
     bottom: 0;
@@ -141,7 +150,8 @@ export const Label = styled(V2_Text.H5)<LabelStyleProps>`
     justify-content: center;
     height: 2.5rem;
     width: 2.5rem;
-    border-radius: 50%;
+    ${Font["body-md-regular"]}
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
     cursor: ${(props) => {
         if (props.$interactive) {
@@ -157,31 +167,35 @@ export const Label = styled(V2_Text.H5)<LabelStyleProps>`
         const { $disabled, $type } = props;
 
         if ($disabled) {
-            if ($type === "selected") {
-                return css`
-                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")};
-                    color: ${V2_Color.Accent.Light[2]};
-                `;
-            }
-
             return css`
-                color: ${V2_Color.Neutral[4]};
+                color: ${Colour["text-disabled-subtlest"]};
             `;
         }
 
         switch ($type) {
             case "selected":
                 return css`
-                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")};
-                    color: ${V2_Color.Primary};
+                    font-weight: ${FontSpec["weight-semibold"]};
+                    color: ${Colour["text-selected"]};
+                `;
+            case "selected-hover":
+                return css`
+                    font-weight: ${FontSpec["weight-semibold"]};
+                    color: ${Colour["text-selected-hover"]};
                 `;
             case "current":
                 return css`
-                    color: ${V2_Color.Neutral[3]};
+                    font-weight: ${FontSpec["weight-semibold"]};
+                    color: ${Colour["text-primary"]};
+                `;
+            case "hover":
+                return css`
+                    font-weight: ${FontSpec["weight-semibold"]};
+                    color: ${Colour["text-hover"]};
                 `;
             case "unavailable":
                 return css`
-                    color: ${V2_Color.Neutral[4]};
+                    color: ${Colour["text-disabled-subtlest"]};
                 `;
             case "hidden":
                 return css`
@@ -190,8 +204,17 @@ export const Label = styled(V2_Text.H5)<LabelStyleProps>`
             case "available":
             default:
                 return css`
-                    color: ${V2_Color.Neutral[1]};
+                    color: ${Colour.text};
                 `;
         }
     }}
+`;
+
+export const Indicator = styled.div<IndicatorStyleProps>`
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: currentColor;
+    border-radius: 50%;
+    bottom: 4px;
 `;

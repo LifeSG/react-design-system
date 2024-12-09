@@ -104,7 +104,7 @@ export const FixedRangeDayCell = ({
         if (isHover) {
             applyRange(
                 props,
-                "hover-dash",
+                "hover",
                 formattedDate === hoverStart,
                 formattedDate === hoverEnd
             );
@@ -112,31 +112,16 @@ export const FixedRangeDayCell = ({
         if (isSelected) {
             applyRange(
                 props,
-                "selected",
+                "selected-outline",
                 formattedDate === rangeStart,
                 formattedDate === rangeEnd
             );
         }
         if (isSelected && isHover) {
-            applyRange(props, "overlap", isStart, isEnd);
-        }
+            applyRange(props, "selected-hover-outline", isStart, isEnd);
 
-        if (formattedDate === rangeStart) {
-            if (isHover) {
-                props.circleLeft = "overlap-outline";
-                props.circleRight = "overlap-outline";
-            } else {
-                props.circleRight = "selected-outline";
-                props.circleLeft = "selected-outline";
-            }
-        }
-
-        if (formattedDate === hoverStart) {
-            props.circleLeft = "hover-current";
-            props.circleRight = "hover-current";
-            if (hoverStart >= rangeStart && hoverStart < rangeEnd) {
-                props.circleLeft = "overlap-outline";
-                props.circleRight = "overlap-outline";
+            if (formattedDate === hoverStart && formattedDate !== rangeStart) {
+                props.circleLeft = "selected-hover";
             }
         }
 
@@ -152,8 +137,6 @@ export const FixedRangeDayCell = ({
             props.labelType = "unavailable";
         } else if (dayjs().isSame(date, "day") && !disabled) {
             props.labelType = "current";
-            props.circleLeft = "current";
-            props.circleRight = "current";
         }
 
         return props;
@@ -168,6 +151,7 @@ export const FixedRangeDayCell = ({
         calendarDate,
         disabled,
         interactive,
+        currentDateIndicator: true,
         onSelect: handleSelect,
         onHover: handleHover,
     };

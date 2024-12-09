@@ -1,19 +1,21 @@
 import { Dayjs } from "dayjs";
 
 export type CellType =
-    | "current"
-    | "selected"
+    | "hover-subtle"
+    | "hover"
+    | "hover-outline"
     | "selected-outline"
-    | "overlap"
-    | "overlap-outline"
-    | "hover-dash"
-    | "hover-current";
+    | "selected-outline-subtle"
+    | "selected-hover"
+    | "selected-hover-outline";
 
 export type LabelType =
     | "available"
     | "unavailable"
     | "current"
+    | "hover"
     | "selected"
+    | "selected-hover"
     | "hidden";
 
 export interface CellStyleProps {
@@ -24,6 +26,7 @@ export interface CellStyleProps {
     labelType?: LabelType | undefined;
     disabled?: boolean | undefined;
     interactive?: boolean | null | undefined;
+    currentDateIndicator?: boolean | undefined;
 }
 
 export interface DayCellProps extends CellStyleProps {

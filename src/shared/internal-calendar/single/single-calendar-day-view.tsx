@@ -1,30 +1,39 @@
 import dayjs, { Dayjs } from "dayjs";
+import isBetween from "dayjs/plugin/isBetween";
 import { useMemo, useState } from "react";
 import { Typography } from "../../../typography";
 import { CalendarHelper } from "../../../util/calendar-helper";
-import { HeaderCell, RowDayCell, Wrapper } from "../standard";
 import { CommonCalendarProps } from "../types";
-import { FixedRangeDayCell } from "./fixed-range-cell";
+import {
+    HeaderCell,
+    RowDayCell,
+    Wrapper,
+} from "./single-calendar-day-view.style";
+import { SingleCell } from "./single-cell";
 
-interface FixedRangeCalendarDayViewProps extends CommonCalendarProps {
-    selectedStartDate: string;
+dayjs.extend(isBetween);
+
+// TODO: to remove after all references have been cleaned up
+export type DayVariant = "default" | "other-month" | "today";
+
+interface CalendarDayViewProps extends CommonCalendarProps {
+    selectedDate: string;
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
-    numberOfDays: number;
 }
 
-export const FixedRangeCalendarDayView = ({
+export const SingleCalendarDayView = ({
     calendarDate,
     disabledDates,
-    selectedStartDate,
+    selectedDate,
     onSelect,
     onHover,
     minDate,
     maxDate,
     allowDisabledSelection,
-    numberOfDays,
-}: FixedRangeCalendarDayViewProps) => {
+    showActiveMonthDaysOnly,
+}: CalendarDayViewProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -41,14 +50,11 @@ export const FixedRangeCalendarDayView = ({
         if (isDisabled && !allowDisabledSelection) return;
 
         onSelect(value);
-
-        if (!!value && !dayjs(value).isSame(value, "month")) {
-            setHoverValue("");
-        }
     };
 
     const handleHoverCell = (value: string, isDisabled: boolean) => {
         if (isDisabled && !allowDisabledSelection) return;
+
         setHoverValue(value);
         onHover(value);
     };
@@ -77,19 +83,21 @@ export const FixedRangeCalendarDayView = ({
                 <RowDayCell key={weekIndex} onMouseLeave={handleMouseLeaveCell}>
                     {week.map((day, dayIndex) => {
                         return (
-                            <FixedRangeDayCell
+                            <SingleCell
                                 key={`day-${dayIndex}`}
                                 date={day}
                                 calendarDate={calendarDate}
-                                selectedDate={selectedStartDate}
+                                selectedDate={selectedDate}
                                 hoverDate={hoverValue}
                                 minDate={minDate}
                                 maxDate={maxDate}
                                 disabledDates={disabledDates}
                                 allowDisabledSelection={allowDisabledSelection}
+                                showActiveMonthDaysOnly={
+                                    showActiveMonthDaysOnly
+                                }
                                 onSelect={handleDayClick}
                                 onHover={handleHoverCell}
-                                numberOfDays={numberOfDays}
                             />
                         );
                     })}
