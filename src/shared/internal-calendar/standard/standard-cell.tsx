@@ -132,7 +132,6 @@ export const StandardCell = ({
         const isHover = date.isSame(hoverDate, "day");
 
         if (isHover) {
-            props.circleShadow = true;
             props.circleLeft = "hover-current";
             props.circleRight = "hover-current";
         }
@@ -166,7 +165,6 @@ export const StandardCell = ({
                 props.labelType = "selected";
 
                 if (isStart || isEnd) {
-                    props.circleShadow = true;
                     props.circleLeft = "overlap-outline";
                     props.circleRight = "overlap-outline";
                 }

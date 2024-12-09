@@ -75,8 +75,6 @@ export const WeekDayCell = ({
         let type: CellType = undefined;
         if (isSelected && isHover) {
             type = "hover-current";
-            props.shadow = true;
-            props.circleShadow = isStart || isEnd;
         } else if (isSelected) {
             type = "selected-outline";
         } else if (isHover) {

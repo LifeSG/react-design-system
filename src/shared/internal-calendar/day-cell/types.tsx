@@ -21,8 +21,6 @@ export interface CellStyleProps {
     bgRight?: CellType | undefined;
     circleLeft?: CellType | undefined;
     circleRight?: CellType | undefined;
-    shadow?: boolean | undefined;
-    circleShadow?: boolean | undefined;
     labelType?: LabelType | undefined;
     disabled?: boolean | undefined;
     interactive?: boolean | null | undefined;

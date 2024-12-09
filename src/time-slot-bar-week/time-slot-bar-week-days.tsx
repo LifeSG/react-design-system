@@ -171,7 +171,6 @@ export const TimeSlotBarWeekDays = ({
         if (isHoverEnabled && hoverDay && day.isSame(hoverDay, "day")) {
             dayCellStyleProps.circleLeft = "hover-current";
             dayCellStyleProps.circleRight = "hover-current";
-            dayCellStyleProps.circleShadow = true;
         }
 
         // Apply selected styles

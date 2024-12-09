@@ -134,7 +134,6 @@ export const FixedRangeDayCell = ({
         if (formattedDate === hoverStart) {
             props.circleLeft = "hover-current";
             props.circleRight = "hover-current";
-            props.circleShadow = true;
             if (hoverStart >= rangeStart && hoverStart < rangeEnd) {
                 props.circleLeft = "overlap-outline";
                 props.circleRight = "overlap-outline";

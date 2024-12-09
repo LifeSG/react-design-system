@@ -8,7 +8,6 @@ import { CellType, LabelType } from "./types";
 // =============================================================================
 interface StyleProps {
     $type?: CellType;
-    $shadow?: boolean;
 }
 
 interface LabelStyleProps {
@@ -96,25 +95,6 @@ export const RightHalf = styled(Half)`
     right: 0;
 `;
 
-const HalfShadow = styled.div<StyleProps>`
-    z-index: -1;
-    box-shadow: 0 0 4px 1px ${V2_Color.Shadow.Accent};
-    position: absolute;
-    height: 100%;
-    width: 50%;
-    display: none;
-
-    ${(props) => props.$shadow && "display: block;"}
-`;
-
-export const LeftHalfShadow = styled(HalfShadow)`
-    left: 0;
-`;
-
-export const RightHalfShadow = styled(HalfShadow)`
-    right: 0;
-`;
-
 export const Circle = styled.div<StyleProps>`
     position: absolute;
     z-index: 1;
@@ -138,34 +118,16 @@ export const Circle = styled.div<StyleProps>`
             `;
         }
     }}
-
-    ${(props) =>
-        props.$shadow &&
-        css`
-            &:before {
-                content: "";
-                border-radius: 50%;
-                position: absolute;
-                height: 100%;
-                width: 100%;
-            }
-        `}
 `;
 
 export const LeftCircle = styled(Circle)`
     right: calc(50% - 1.25rem);
     clip-path: inset(-3px 1.25rem -3px -3px);
-    &:before {
-        box-shadow: -1px 0 4px 1px ${V2_Color.Shadow.Accent};
-    }
 `;
 
 export const RightCircle = styled(Circle)`
     left: calc(50% - 1.25rem);
     clip-path: inset(-3px -3px -3px 1.25rem);
-    &:before {
-        box-shadow: 1px 0 4px 1px ${V2_Color.Shadow.Accent};
-    }
 `;
 
 export const Label = styled(V2_Text.H5)<LabelStyleProps>`
