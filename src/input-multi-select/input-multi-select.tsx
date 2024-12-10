@@ -195,7 +195,7 @@ export const InputMultiSelect = <T, V>({
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer>{renderLabel()}</LabelContainer>
+        <LabelContainer $disabled={disabled}>{renderLabel()}</LabelContainer>
     );
 
     const renderElement = () => {

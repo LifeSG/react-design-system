@@ -154,7 +154,7 @@ export const SelectHistogram = ({
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer ref={labelContainerRef}>
+        <LabelContainer ref={labelContainerRef} $disabled={disabled}>
             {getDisplayValue()}
         </LabelContainer>
     );

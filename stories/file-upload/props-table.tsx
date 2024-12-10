@@ -95,7 +95,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "errorMessage",
                 description: "The general error message for the component",
-                propTypes: ["string"],
+                propTypes: ["string", "JSX.Element"],
             },
             {
                 name: "readOnly",

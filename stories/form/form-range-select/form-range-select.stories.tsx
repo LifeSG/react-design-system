@@ -21,6 +21,19 @@ const meta: Meta<Component> = {
 
 export default meta;
 
+const RANGE_OPTIONS = {
+    from: [
+        { value: "A", label: "Option A" },
+        { value: "B", label: "Option B" },
+        { value: "C", label: "Option C" },
+        { value: "D", label: "Option D" },
+    ],
+    to: [
+        { value: "K", label: "Option K" },
+        { value: "L", label: "Option L" },
+    ],
+};
+
 export const Default: StoryObj<Component> = {
     render: () => {
         return (
@@ -56,17 +69,24 @@ export const Default: StoryObj<Component> = {
                         />
                         <Form.RangeSelect
                             label="This is the disabled state"
-                            options={{
-                                from: [
-                                    { value: "A", label: "Option A" },
-                                    { value: "B", label: "Option B" },
-                                    { value: "C", label: "Option C" },
-                                    { value: "D", label: "Option D" },
-                                ],
-                                to: [
-                                    { value: "K", label: "Option K" },
-                                    { value: "L", label: "Option L" },
-                                ],
+                            options={RANGE_OPTIONS}
+                            valueExtractor={(item) => item.value}
+                            listExtractor={(item) => item.label}
+                            displayValueExtractor={(item) => item.label}
+                            disabled
+                        />
+                        <Form.RangeSelect
+                            label="This is the disabled state with selected value"
+                            options={RANGE_OPTIONS}
+                            selectedOptions={{
+                                from: {
+                                    value: "A",
+                                    label: "Option A",
+                                },
+                                to: {
+                                    value: "L",
+                                    label: "Option L",
+                                },
                             }}
                             valueExtractor={(item) => item.value}
                             listExtractor={(item) => item.label}
@@ -75,18 +95,7 @@ export const Default: StoryObj<Component> = {
                         />
                         <Form.RangeSelect
                             label="This is the readonly state"
-                            options={{
-                                from: [
-                                    { value: "A", label: "Option A" },
-                                    { value: "B", label: "Option B" },
-                                    { value: "C", label: "Option C" },
-                                    { value: "D", label: "Option D" },
-                                ],
-                                to: [
-                                    { value: "K", label: "Option K" },
-                                    { value: "L", label: "Option L" },
-                                ],
-                            }}
+                            options={RANGE_OPTIONS}
                             valueExtractor={(item) => item.value}
                             listExtractor={(item) => item.label}
                             displayValueExtractor={(item) => item.label}
@@ -98,18 +107,7 @@ export const Default: StoryObj<Component> = {
                         />
                         <Form.RangeSelect
                             label="This is the error state"
-                            options={{
-                                from: [
-                                    { value: "A", label: "Option A" },
-                                    { value: "B", label: "Option B" },
-                                    { value: "C", label: "Option C" },
-                                    { value: "D", label: "Option D" },
-                                ],
-                                to: [
-                                    { value: "K", label: "Option K" },
-                                    { value: "L", label: "Option L" },
-                                ],
-                            }}
+                            options={RANGE_OPTIONS}
                             valueExtractor={(item) => item.value}
                             listExtractor={(item) => item.label}
                             displayValueExtractor={(item) => item.label}
@@ -199,18 +197,7 @@ export const WithSearch: StoryObj<Component> = {
                 <Container>
                     <Form.RangeSelect
                         label="This has searchable options"
-                        options={{
-                            from: [
-                                { value: "A", label: "Option A" },
-                                { value: "B", label: "Option B" },
-                                { value: "C", label: "Option C" },
-                                { value: "D", label: "Option D" },
-                            ],
-                            to: [
-                                { value: "K", label: "Option K" },
-                                { value: "L", label: "Option L" },
-                            ],
-                        }}
+                        options={RANGE_OPTIONS}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
@@ -228,18 +215,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
             <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
                 <Form.RangeSelect
                     label="A shorter form input"
-                    options={{
-                        from: [
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ],
-                        to: [
-                            { value: "K", label: "Option K" },
-                            { value: "L", label: "Option L" },
-                        ],
-                    }}
+                    options={RANGE_OPTIONS}
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
                     displayValueExtractor={(item) => item.label}
@@ -247,18 +223,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                 />
                 <Form.RangeSelect
                     label="A longer form input"
-                    options={{
-                        from: [
-                            { value: "A", label: "Option A" },
-                            { value: "B", label: "Option B" },
-                            { value: "C", label: "Option C" },
-                            { value: "D", label: "Option D" },
-                        ],
-                        to: [
-                            { value: "K", label: "Option K" },
-                            { value: "L", label: "Option L" },
-                        ],
-                    }}
+                    options={RANGE_OPTIONS}
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
                     displayValueExtractor={(item) => item.label}
@@ -279,18 +244,7 @@ export const StandaloneUsage: StoryObj<StandaloneComponent> = {
             <StoryContainer>
                 <Container>
                     <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "Option A" },
-                                { value: "B", label: "Option B" },
-                                { value: "C", label: "Option C" },
-                                { value: "D", label: "Option D" },
-                            ],
-                            to: [
-                                { value: "K", label: "Option K" },
-                                { value: "L", label: "Option L" },
-                            ],
-                        }}
+                        options={RANGE_OPTIONS}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
@@ -298,18 +252,7 @@ export const StandaloneUsage: StoryObj<StandaloneComponent> = {
                     />
                     <br />
                     <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "Option A" },
-                                { value: "B", label: "Option B" },
-                                { value: "C", label: "Option C" },
-                                { value: "D", label: "Option D" },
-                            ],
-                            to: [
-                                { value: "K", label: "Option K" },
-                                { value: "L", label: "Option L" },
-                            ],
-                        }}
+                        options={RANGE_OPTIONS}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}

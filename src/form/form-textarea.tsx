@@ -29,6 +29,7 @@ const FormTextareaComponent = (
         mobileCols,
         tabletCols,
         desktopCols,
+        transformValue,
         ...otherProps
     } = props;
 
@@ -56,11 +57,14 @@ const FormTextareaComponent = (
     // =============================================================================
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newValue = event.target.value;
-        if (!(otherProps.maxLength && newValue.length > otherProps.maxLength)) {
-            setStateValue(newValue);
-            event.target.value = newValue;
-            if (onChange) onChange(event);
-        }
+
+        const transformedValue = transformValue
+            ? transformValue(newValue ?? "")
+            : newValue;
+
+        setStateValue(transformedValue);
+        event.target.value = transformedValue;
+        if (onChange) onChange(event);
     };
 
     // =============================================================================

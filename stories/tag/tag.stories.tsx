@@ -1,4 +1,3 @@
-import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Tag } from "src/tag";
@@ -52,22 +51,21 @@ export const WithIcon: StoryObj<Component> = {
         return (
             <>
                 <Tag
-                    type="solid"
-                    colorType="blue"
+                    type="outline"
                     icon={<PlusCircleFillIcon />}
-                    data-testid="first-example"
-                    interactive={true}
+                    interactive
                     onClick={() => window.alert("Interactive tag clicked!")}
                 >
-                    Some Label
+                    Icon on left
                 </Tag>
                 <Tag
-                    type="outline"
-                    colorType="blue"
-                    icon={<PlaceholderIcon />}
-                    data-testid="second-example"
+                    type="solid"
+                    icon={<PlusCircleFillIcon />}
+                    iconPosition="right"
+                    interactive
+                    onClick={() => window.alert("Interactive tag clicked!")}
                 >
-                    Some Label
+                    Icon on right
                 </Tag>
             </>
         );

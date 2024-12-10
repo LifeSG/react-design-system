@@ -116,7 +116,7 @@ export const InputRangeSelect = <T, V>({
         }
     };
 
-    const handleListDismiss = (rangeType: RangeType) => {
+    const handleListDismiss = () => {
         setFocusedInput("none");
         triggerOptionDisplayCallback(false);
 
@@ -239,6 +239,7 @@ export const InputRangeSelect = <T, V>({
             <LabelContainer
                 onClick={handleSelectorClick(rangeType)}
                 ref={labelContainerRef[rangeType]}
+                $disabled={disabled}
             >
                 {renderLabel(rangeType)}
             </LabelContainer>
@@ -261,7 +262,7 @@ export const InputRangeSelect = <T, V>({
                     onSelectItem={(i, v) =>
                         handleListItemClick(i, v, focusedInput)
                     }
-                    onDismiss={() => handleListDismiss(focusedInput)}
+                    onDismiss={() => handleListDismiss()}
                     valueExtractor={valueExtractor}
                     listExtractor={listExtractor}
                     listStyleWidth={listStyleWidth}
