@@ -1,27 +1,34 @@
 import styled, { css } from "styled-components";
-import { DayLabel } from "../shared/internal-calendar/standard";
 import { Colour, Font } from "../theme";
 
-export const DayLabelWeek = styled(DayLabel)`
-    ${(props) => {
-        const { $variant } = props;
-        switch ($variant) {
-            case "default":
-                return css`
-                    ${Font["body-md-semibold"]}
-                    color: ${Colour["text-subtler"]};
-                `;
-        }
-    }}
-`;
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+interface LabelStyleProps {
+    $disabled: boolean;
+}
 
+// =============================================================================
+// STYLING
+// =============================================================================
 export const HeaderCellWeek = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
     user-select: none;
     margin-bottom: 0.188rem;
+`;
+
+export const DayLabel = styled.div<LabelStyleProps>`
+    ${Font["body-xs-semibold"]}
+    color:${Colour["text"]};
+
+    ${(props) =>
+        props.$disabled &&
+        css`
+            color: ${Colour["text-disabled-subtlest"]};
+        `};
 `;
 
 export const Wrapper = styled.div`
@@ -35,6 +42,7 @@ export const ColumnWeekCell = styled.div`
     display: flex;
     min-height: 7.625rem;
 `;
+
 export const TimeSlotText = styled.div`
     ${Font["body-xs-semibold"]}
     margin: 1rem 0rem;
