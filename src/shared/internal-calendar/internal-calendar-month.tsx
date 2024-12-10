@@ -9,7 +9,7 @@ export type MonthVariant = "default" | "current-month" | "selected-month";
 interface Props
     extends Pick<
         InternalCalendarProps,
-        "type" | "minDate" | "maxDate" | "allowDisabledSelection"
+        "minDate" | "maxDate" | "allowDisabledSelection"
     > {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
@@ -26,7 +26,6 @@ export const InternalCalendarMonth = ({
     selectedStartDate,
     selectedEndDate,
     viewCalendarDate,
-    type,
     isNewSelection,
     minDate,
     maxDate,
@@ -104,7 +103,7 @@ export const InternalCalendarMonth = ({
     if (!months.length) return null;
 
     return (
-        <Wrapper $type={type}>
+        <Wrapper>
             {months.map((date) => {
                 const { disabledDisplay, interactive, variant, month } =
                     generateMonthStatus(date);

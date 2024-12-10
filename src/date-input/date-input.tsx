@@ -213,7 +213,6 @@ export const DateInput = ({
     const renderCalendar = ({ elementWidth }: DropdownRenderProps) => {
         return (
             <CalendarDropdown
-                type="input"
                 variant="single"
                 initialCalendarDate={selectedDate}
                 withButton={withButton}

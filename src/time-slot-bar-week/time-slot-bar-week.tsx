@@ -122,7 +122,6 @@ export const TimeSlotBarWeek = ({
         <Wrapper {...otherProps}>
             <CalendarManager
                 ref={calendarManagerRef}
-                type="standalone"
                 dynamicHeight
                 initialCalendarDate={getInitialCalendarDate()}
                 selectedStartDate={selectedDate}

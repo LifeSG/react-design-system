@@ -32,7 +32,6 @@ const Component = (
     {
         children,
         initialCalendarDate,
-        type,
         minDate,
         maxDate,
         currentFocus,
@@ -326,7 +325,6 @@ const Component = (
             case "month-options":
                 return (
                     <InternalCalendarMonth
-                        type={type}
                         calendarDate={calendarDate}
                         currentFocus={currentFocus}
                         minDate={minDate}
@@ -342,7 +340,6 @@ const Component = (
             case "year-options":
                 return (
                     <InternalCalendarYear
-                        type={type}
                         calendarDate={calendarDate}
                         currentFocus={currentFocus}
                         minDate={minDate}

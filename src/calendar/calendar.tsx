@@ -29,7 +29,6 @@ export const Calendar = ({
     return (
         <Wrapper className={className} $hasBorder={styleType === "bordered"}>
             <InternalCalendar
-                type="standalone"
                 value={selectedDate}
                 initialCalendarDate={selectedDate}
                 onSelect={(value) => {
@@ -53,6 +52,10 @@ interface StyleProps {
 // STYLING
 // =============================================================================
 const Wrapper = styled.div<StyleProps>`
+    --vertical-inset: 1.5rem;
+    --horizontal-inset: 2rem;
+    --header-bottom-spacing: 0.5rem;
+
     width: 41rem;
 
     ${(props) => {

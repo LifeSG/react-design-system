@@ -629,7 +629,6 @@ export const DateRangeInput = ({
         return (
             <CalendarDropdown
                 ref={calendarRef}
-                type="input"
                 variant={variant}
                 initialCalendarDate={initialCalendarDate}
                 withButton={withButton}

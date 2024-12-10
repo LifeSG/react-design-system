@@ -27,7 +27,6 @@ export const Component = (
         minDate,
         maxDate,
         allowDisabledSelection,
-        type = "standalone",
         selectWithinRange = true,
         initialCalendarDate,
         numberOfDays,
@@ -195,9 +194,8 @@ export const Component = (
     };
 
     return (
-        <Container $type={type}>
+        <Container>
             <CalendarManager
-                type={type}
                 ref={calendarManagerRef}
                 withButton={withButton}
                 doneButtonDisabled={isDoneButtonDisabled()}

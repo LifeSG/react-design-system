@@ -13,7 +13,7 @@ export type YearVariant =
 interface Props
     extends Pick<
         InternalCalendarProps,
-        "type" | "minDate" | "maxDate" | "allowDisabledSelection"
+        "minDate" | "maxDate" | "allowDisabledSelection"
     > {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
@@ -30,7 +30,6 @@ export const InternalCalendarYear = ({
     selectedStartDate,
     selectedEndDate,
     viewCalendarDate,
-    type,
     isNewSelection,
     minDate,
     maxDate,
@@ -113,7 +112,7 @@ export const InternalCalendarYear = ({
     if (!years.length) return null;
 
     return (
-        <Wrapper $type={type}>
+        <Wrapper>
             {years.map((date) => {
                 const { disabledDisplay, interactive, variant, year } =
                     generateYearStatus(date);

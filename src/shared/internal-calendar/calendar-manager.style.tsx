@@ -52,6 +52,9 @@ export const Container = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
+
+    padding-top: var(--vertical-inset);
+    padding-bottom: var(--vertical-inset);
 `;
 
 export const ToggleZone = styled.div`
@@ -63,6 +66,9 @@ export const ToggleZone = styled.div`
 export const DefaultView = styled.div`
     isolation: isolate;
     width: 100%;
+
+    padding-left: var(--horizontal-inset);
+    padding-right: var(--horizontal-inset);
 `;
 
 export const OptionsOverlay = styled.div<OverlayStyleProps>`
@@ -72,6 +78,9 @@ export const OptionsOverlay = styled.div<OverlayStyleProps>`
     height: 100%;
     width: 100%;
     background: ${Colour.bg};
+
+    padding-left: var(--horizontal-inset);
+    padding-right: var(--horizontal-inset);
 
     ${(props) => {
         if (!props.$visible) {
@@ -88,7 +97,10 @@ export const OptionsOverlay = styled.div<OverlayStyleProps>`
 export const Header = styled.div`
     display: flex;
     justify-content: space-between;
-    margin: 0 0 0.5rem 0;
+
+    padding-left: var(--header-horizontal-inset, var(--horizontal-inset));
+    padding-right: var(--header-horizontal-inset, var(--horizontal-inset));
+    padding-bottom: var(--header-bottom-spacing);
 `;
 
 export const HeaderInputDropdown = styled.div`
@@ -145,6 +157,9 @@ export const ActionButtonSection = styled.div`
     display: flex;
     gap: 0.5rem;
     margin-top: 1.5rem;
+
+    padding-left: var(--horizontal-inset);
+    padding-right: var(--horizontal-inset);
 `;
 
 export const ActionButton = styled(Button.Small)`

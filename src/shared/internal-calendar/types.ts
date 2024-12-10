@@ -21,8 +21,6 @@ export interface CommonCalendarProps {
 // Types used in InternalCalendarProps
 // =============================================================================
 export interface InternalCalendarProps extends CommonCalendarProps {
-    /** The display type of the component. Values `standalone` | `input` */
-    type: CalendarType;
     /** Selected start date in `YYYY-MM-DD` format */
     value?: string | undefined;
     /** Selected end date in `YYYY-MM-DD` format */
@@ -54,7 +52,6 @@ export interface CalendarDropdownProps extends InternalCalendarProps {
 }
 
 export type CalendarAction = "reset" | "confirmed";
-export type CalendarType = "standalone" | "input";
 export type Variant = "single" | "range" | "week" | "fixed-range";
 export type FocusType = "start" | "end" | "none";
 export type View = "default" | "month-options" | "year-options";
@@ -75,7 +72,6 @@ export interface InternalCalendarRef {
 export interface CalendarManagerProps extends CommonCalendarProps {
     children: React.ReactNode | ((props: DefaultViewProps) => React.ReactNode);
     initialCalendarDate?: string | undefined;
-    type: CalendarType;
     currentFocus?: FocusType | undefined;
     selectedStartDate?: string | undefined;
     selectedEndDate?: string | undefined;

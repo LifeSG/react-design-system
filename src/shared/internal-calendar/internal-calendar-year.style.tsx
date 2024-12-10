@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 import { Border, Colour, Font, FontSpec, Motion, Radius } from "../../theme";
 import { YearVariant } from "./internal-calendar-year";
-import { CalendarType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -13,42 +12,23 @@ interface StyleProps {
     $variant: YearVariant;
 }
 
-interface WrapperStyleProps {
-    $type: CalendarType;
-}
-
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled.div<WrapperStyleProps>`
+export const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     display: grid;
     align-content: center;
     align-items: center;
     grid-template-columns: repeat(3, 1fr);
-
-    ${(props) => {
-        switch (props.$type) {
-            case "standalone":
-                return css`
-                    grid-template-rows: repeat(4, 4rem);
-                    gap: 0.5rem 2.5rem;
-                `;
-            case "input":
-                return css`
-                    grid-template-rows: repeat(4, 4.375rem);
-                    gap: 0.5rem 1rem;
-                `;
-        }
-    }}
 `;
 
 export const YearCell = styled.div<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 0.5rem;
+    margin: 1rem 0.5rem;
     transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
     padding: 0.5rem;
 

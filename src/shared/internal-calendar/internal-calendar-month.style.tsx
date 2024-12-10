@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 import { Border, Colour, Font, FontSpec, Motion, Radius } from "../../theme";
 import { MonthVariant } from "./internal-calendar-month";
-import { CalendarType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -13,14 +12,10 @@ interface StyleProps {
     $interactive?: boolean;
 }
 
-interface WrapperStyleProps {
-    $type: CalendarType;
-}
-
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled.div<WrapperStyleProps>`
+export const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     display: grid;
@@ -29,18 +24,7 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     align-content: center;
     justify-content: center;
 
-    ${(props) => {
-        switch (props.$type) {
-            case "standalone":
-                return css`
-                    gap: 0.5rem 2.5rem;
-                `;
-            case "input":
-                return css`
-                    gap: 0.5rem 1rem;
-                `;
-        }
-    }}
+    gap: 0.5rem 0;
 `;
 
 export const MonthCell = styled.div<StyleProps>`
