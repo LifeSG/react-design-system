@@ -1,7 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import { useMemo, useState } from "react";
-import { Typography } from "../../../typography";
 import { CalendarHelper } from "../../../util/calendar-helper";
 import { CommonCalendarProps, FocusType } from "../types";
 import {
@@ -76,9 +75,7 @@ export const StandardCalendarDayView = ({
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
             <HeaderCell key={`week-day-${index}`}>
-                <Typography.BodySM weight="semibold">
-                    {dayjs(day).format("ddd")}
-                </Typography.BodySM>
+                {dayjs(day).format("ddd")}
             </HeaderCell>
         ));
     };

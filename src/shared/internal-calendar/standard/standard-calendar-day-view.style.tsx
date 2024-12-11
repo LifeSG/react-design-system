@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Colour, Font } from "../../../theme";
 
 export const Wrapper = styled.div`
     width: 100%;
@@ -14,6 +15,9 @@ export const HeaderCell = styled.div`
     height: 2.5rem;
     pointer-events: none;
     user-select: none;
+
+    ${Font["body-sm-semibold"]};
+    color: ${Colour["text"]};
 `;
 
 export const RowDayCell = styled.div`

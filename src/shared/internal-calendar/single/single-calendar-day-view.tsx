@@ -1,14 +1,9 @@
 import dayjs, { Dayjs } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import { useMemo, useState } from "react";
-import { Typography } from "../../../typography";
 import { CalendarHelper } from "../../../util/calendar-helper";
+import { HeaderCell, RowDayCell, Wrapper } from "../standard";
 import { CommonCalendarProps } from "../types";
-import {
-    HeaderCell,
-    RowDayCell,
-    Wrapper,
-} from "./single-calendar-day-view.style";
 import { SingleCell } from "./single-cell";
 
 dayjs.extend(isBetween);
@@ -70,9 +65,7 @@ export const SingleCalendarDayView = ({
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
             <HeaderCell key={`week-day-${index}`}>
-                <Typography.BodySM weight="semibold">
-                    {dayjs(day).format("ddd")}
-                </Typography.BodySM>
+                {dayjs(day).format("ddd")}
             </HeaderCell>
         ));
     };
