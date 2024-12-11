@@ -1,8 +1,9 @@
 import { Dayjs } from "dayjs";
 import React, { useImperativeHandle, useRef } from "react";
 import { CalendarManager } from "./calendar-manager";
-import { FixedRangeCalendarDayView } from "./fixed-range/fixed-range-calendar-day-view";
+import { FixedRangeCalendarDayView } from "./fixed-range";
 import { Container } from "./internal-calendar.style";
+import { SingleCalendarDayView } from "./single";
 import { StandardCalendarDayView } from "./standard";
 import {
     CalendarManagerRef,
@@ -159,6 +160,19 @@ export const Component = (
                     />
                 );
             case "single":
+                return (
+                    <SingleCalendarDayView
+                        calendarDate={calendarDate}
+                        disabledDates={disabledDates}
+                        selectedDate={selectedStartDate}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        allowDisabledSelection={allowDisabledSelection}
+                        showActiveMonthDaysOnly={showActiveMonthDaysOnly}
+                        onSelect={handleDateSelect}
+                        onHover={handleDateHover}
+                    />
+                );
             case "range":
             default: // standalone type
                 return (

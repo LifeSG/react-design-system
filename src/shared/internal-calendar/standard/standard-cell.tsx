@@ -71,8 +71,6 @@ export const StandardCell = ({
                 : "unavailable";
         } else if (dayjs().isSame(date, "day") && !disabled) {
             props.labelType = "current";
-            props.circleLeft = "current";
-            props.circleRight = "current";
         } else if (isNewSelection) {
             const beforeStart =
                 currentFocus === "end" && startDate && date.isBefore(startDate);
@@ -112,10 +110,10 @@ export const StandardCell = ({
             props.labelType = "selected";
 
             if (!isStart) {
-                props.bgLeft = "selected";
+                props.bgLeft = "selected-outline-subtle";
             }
             if (!isEnd) {
-                props.bgRight = "selected";
+                props.bgRight = "selected-outline-subtle";
             }
         }
 
@@ -131,27 +129,35 @@ export const StandardCell = ({
 
         const isHover = date.isSame(hoverDate, "day");
 
-        if (isHover) {
-            props.circleShadow = true;
-            props.circleLeft = "hover-current";
-            props.circleRight = "hover-current";
-        }
-
         const { hoverStart, hoverEnd, overlapStart, overlapEnd } =
             getHoverRange();
+
+        if (isHover) {
+            const isStart = date.isSame(startDate, "day");
+            const isEnd = date.isSame(endDate, "day");
+            if (isStart || isEnd) {
+                props.labelType = "selected-hover";
+                props.circleLeft = "selected-hover-outline";
+                props.circleRight = "selected-hover-outline";
+            } else {
+                props.labelType = "hover";
+                props.circleLeft = "hover";
+                props.circleRight = "hover";
+            }
+        }
 
         if (hoverStart && hoverEnd) {
             if (date.isBetween(hoverStart, hoverEnd, "day", "[]")) {
                 const isStart = date.isSame(hoverStart, "day");
                 const isEnd = date.isSame(hoverEnd, "day");
 
-                props.labelType = "selected";
-
                 if (!isStart) {
-                    props.bgLeft = "hover-dash";
+                    props.labelType = "hover";
+                    props.bgLeft = "hover-outline";
                 }
                 if (!isEnd) {
-                    props.bgRight = "hover-dash";
+                    props.labelType = "hover";
+                    props.bgRight = "hover-outline";
                 }
             }
 
@@ -160,22 +166,10 @@ export const StandardCell = ({
 
         if (overlapStart && overlapEnd) {
             if (date.isBetween(overlapStart, overlapEnd, "day", "[]")) {
-                const isStart = date.isSame(overlapStart, "day");
-                const isEnd = date.isSame(overlapEnd, "day");
-
-                props.labelType = "selected";
-
-                if (isStart || isEnd) {
-                    props.circleShadow = true;
-                    props.circleLeft = "overlap-outline";
-                    props.circleRight = "overlap-outline";
-                }
-
-                if (!isStart) {
-                    props.bgLeft = "overlap";
-                }
-                if (!isEnd) {
-                    props.bgRight = "overlap";
+                if (isHover) {
+                    props.labelType = "selected-hover";
+                    props.circleLeft = "selected-hover";
+                    props.circleRight = "selected-hover";
                 }
             }
 
@@ -236,6 +230,7 @@ export const StandardCell = ({
         calendarDate,
         disabled,
         interactive,
+        currentDateIndicator: true,
         onSelect: handleSelect,
         onHover: handleHover,
     };

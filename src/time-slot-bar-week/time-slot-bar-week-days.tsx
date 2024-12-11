@@ -168,17 +168,22 @@ export const TimeSlotBarWeekDays = ({
             ? null
             : isHoverEnabled;
 
-        if (isHoverEnabled && hoverDay && day.isSame(hoverDay, "day")) {
-            dayCellStyleProps.circleLeft = "hover-current";
-            dayCellStyleProps.circleRight = "hover-current";
-            dayCellStyleProps.circleShadow = true;
-        }
+        const isHover =
+            isHoverEnabled && hoverDay && day.isSame(hoverDay, "day");
+        const isSelected = [selectedDate].includes(dateStartWithYear);
 
-        // Apply selected styles
-        if ([selectedDate].includes(dateStartWithYear)) {
+        if (isSelected && isHover) {
+            dayCellStyleProps.labelType = "selected-hover";
+            dayCellStyleProps.circleLeft = "selected-hover-outline";
+            dayCellStyleProps.circleRight = "selected-hover-outline";
+        } else if (isSelected) {
             dayCellStyleProps.labelType = "selected";
             dayCellStyleProps.circleLeft = "selected-outline";
             dayCellStyleProps.circleRight = "selected-outline";
+        } else if (isHover) {
+            dayCellStyleProps.labelType = "hover";
+            dayCellStyleProps.circleLeft = "hover-subtle";
+            dayCellStyleProps.circleRight = "hover-subtle";
         }
 
         return dayCellStyleProps;

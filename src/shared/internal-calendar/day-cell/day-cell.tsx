@@ -1,12 +1,12 @@
+import dayjs from "dayjs";
 import {
     Cell,
+    Indicator,
     Label,
     LeftCircle,
     LeftHalf,
-    LeftHalfShadow,
     RightCircle,
     RightHalf,
-    RightHalfShadow,
 } from "./day-cell.style";
 import { DayCellProps } from "./types";
 
@@ -15,16 +15,20 @@ export const DayCell = ({
     bgRight,
     circleLeft,
     circleRight,
-    shadow,
-    circleShadow,
     labelType,
     disabled,
     interactive,
+    currentDateIndicator,
     date,
     onSelect,
     onHover,
     onHoverEnd,
 }: DayCellProps) => {
+    // =========================================================================
+    // CONST
+    // =========================================================================
+    const today = dayjs().isSame(date, "day");
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
@@ -45,20 +49,11 @@ export const DayCell = ({
     // =========================================================================
     return (
         <Cell>
-            <LeftHalfShadow $shadow={bgLeft && shadow} />
-            <LeftHalf $type={bgLeft} $shadow={bgLeft && shadow}></LeftHalf>
-            <LeftCircle
-                $type={circleLeft}
-                $shadow={circleLeft && circleShadow}
-            />
-            <RightHalfShadow $shadow={bgRight && shadow} />
-            <RightHalf $type={bgRight} $shadow={bgRight && shadow}></RightHalf>
-            <RightCircle
-                $type={circleRight}
-                $shadow={circleRight && circleShadow}
-            />
+            <LeftHalf $type={bgLeft}></LeftHalf>
+            <LeftCircle $type={circleLeft} />
+            <RightHalf $type={bgRight}></RightHalf>
+            <RightCircle $type={circleRight} />
             <Label
-                weight="regular"
                 $type={labelType}
                 $disabled={disabled}
                 $interactive={interactive}
@@ -67,6 +62,9 @@ export const DayCell = ({
                 onMouseLeave={handleMouseout}
             >
                 {date.date()}
+                {currentDateIndicator && today && (
+                    <Indicator $disabled={disabled} />
+                )}
             </Label>
         </Cell>
     );

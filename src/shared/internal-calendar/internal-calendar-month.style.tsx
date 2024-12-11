@@ -1,7 +1,5 @@
 import styled, { css } from "styled-components";
-import { V2_Color } from "../../v2_color";
-import { V2_TextStyleHelper } from "../../v2_text/helper";
-import { V2_Text } from "../../v2_text/text";
+import { Border, Colour, Font, FontSpec, Motion, Radius } from "../../theme";
 import { MonthVariant } from "./internal-calendar-month";
 import { CalendarType } from "./types";
 
@@ -49,18 +47,23 @@ export const MonthCell = styled.div<StyleProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: default;
-    border-radius: 5rem;
+    border-radius: ${Radius.md};
     margin: 0 0.5rem;
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
+    // default styles
+    ${Font["body-md-regular"]}
+    border-radius: ${Radius.md};
+    border: ${Border["width-010"]} ${Border.solid} transparent;
+    background-clip: border-box;
+    color: ${Colour["text"]};
+    cursor: default;
+
+    // cursor style
     ${(props) => {
         if (props.$interactive) {
             return css`
                 cursor: pointer;
-                &:hover {
-                    box-shadow: 0px 0px 4px 1px ${V2_Color.Shadow.Accent};
-                    border: 1px solid ${V2_Color.Accent.Light[1]};
-                }
             `;
         }
         if (props.$disabledDisplay) {
@@ -70,43 +73,63 @@ export const MonthCell = styled.div<StyleProps>`
         }
     }}
 
-    ${(props) => {
-        switch (props.$variant) {
-            case "current-month":
-                return css`
-                    background-color: ${V2_Color.Accent.Light[6](props)};
-                `;
-            case "selected-month":
-                return css`
-                    background-color: ${V2_Color.Accent.Light[5](props)};
-                    border: 1px solid ${V2_Color.Primary(props)};
-                `;
-            case "default":
-                break;
-        }
-    }}
-`;
-
-export const CellLabel = styled(V2_Text.H5)<StyleProps>`
-    ${(props) => {
-        if (props.$disabledDisplay) {
+    // background, border and text styles
+    ${({ $variant, $interactive, $disabledDisplay }) => {
+        if ($variant === "selected-month") {
             return css`
-                color: ${V2_Color.Neutral[4]};
+                background: ${Colour["bg-selected"]};
+                border-color: ${Colour["border-selected"]};
+                color: ${Colour["text-selected"]};
+                font-weight: ${FontSpec["weight-semibold"]};
+
+                ${$interactive &&
+                css`
+                    &:hover {
+                        background: ${Colour["bg-selected-hover"]};
+                        border-color: ${Colour["border-selected-hover"]};
+                        color: ${Colour["text-selected-hover"]};
+                    }
+                `}
             `;
         }
 
-        switch (props.$variant) {
-            case "current-month":
-                return css`
-                    color: ${V2_Color.Neutral[3](props)};
-                `;
-            case "selected-month":
-                return css`
-                    ${V2_TextStyleHelper.getTextStyle("H5", "semibold")}
-                    color: ${V2_Color.Primary(props)};
-                `;
-            case "default":
-                break;
+        if ($variant === "current-month") {
+            return css`
+                color: ${Colour["text-primary"]};
+                font-weight: ${FontSpec["weight-semibold"]};
+            `;
         }
+
+        if ($disabledDisplay) {
+            return css`
+                color: ${Colour["text-disabled-subtlest"]};
+            `;
+        }
+    }}
+
+    // hover styles
+    ${({ $variant, $interactive }) => {
+        if (!$interactive) {
+            return;
+        }
+
+        if ($variant === "selected-month") {
+            return css`
+                &:hover {
+                    background: ${Colour["bg-selected-hover"]};
+                    border-color: ${Colour["border-selected-hover"]};
+                    color: ${Colour["text-selected-hover"]};
+                    font-weight: ${FontSpec["weight-semibold"]};
+                }
+            `;
+        }
+
+        return css`
+            &:hover {
+                background: ${Colour["bg-hover"]};
+                color: ${Colour["text-hover"]};
+                font-weight: ${FontSpec["weight-semibold"]};
+            }
+        `;
     }}
 `;

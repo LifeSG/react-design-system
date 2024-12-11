@@ -1,12 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
-import { CalendarHelper, DateHelper } from "../../../util";
-import {
-    CellStyleProps,
-    CellType,
-    DayCell,
-    DayCellProps,
-    LabelType,
-} from "../day-cell";
+import { CalendarHelper } from "../../../util";
+import { CellStyleProps, DayCell, DayCellProps } from "../day-cell";
 
 interface Props {
     date: Dayjs;
@@ -17,11 +11,12 @@ interface Props {
     maxDate?: string | undefined;
     disabledDates?: string[] | undefined;
     allowDisabledSelection?: boolean | undefined;
+    showActiveMonthDaysOnly?: boolean | undefined;
     onSelect: (value: Dayjs, disabled: boolean) => void;
     onHover: (value: string, disabled: boolean) => void;
 }
 
-export const WeekDayCell = ({
+export const SingleCell = ({
     date,
     calendarDate,
     selectedDate,
@@ -30,6 +25,7 @@ export const WeekDayCell = ({
     maxDate,
     disabledDates,
     allowDisabledSelection,
+    showActiveMonthDaysOnly,
     onSelect,
     onHover,
 }: Props) => {
@@ -43,23 +39,6 @@ export const WeekDayCell = ({
         maxDate
     );
     const interactive = !disabled || allowDisabledSelection;
-    const { start: weekStart, end: weekEnd } = CalendarHelper.getWeekStartEnd(
-        DateHelper.toDayjs(selectedDate)
-    );
-    const { start: hoverStart, end: hoverEnd } = CalendarHelper.getWeekStartEnd(
-        DateHelper.toDayjs(hoverDate)
-    );
-
-    const isSelected =
-        selectedDate && date.isBetween(weekStart, weekEnd, "day", "[]");
-    const isHover =
-        hoverDate && date.isBetween(hoverStart, hoverEnd, "day", "[]");
-    const isStart =
-        (isSelected && date.isSame(weekStart)) ||
-        (isHover && date.isSame(hoverStart));
-    const isEnd =
-        (isSelected && date.isSame(weekEnd)) ||
-        (isHover && date.isSame(hoverEnd));
 
     // =========================================================================
     // EVENT HANDLERS
@@ -75,48 +54,32 @@ export const WeekDayCell = ({
     // =========================================================================
     // HELPERS
     // =========================================================================
-    const getRangeStyle = (): CellStyleProps => {
-        const props: CellStyleProps = {};
-
-        let type: CellType = undefined;
-        let labelType: LabelType = undefined;
-        if (isSelected && isHover) {
-            type = "selected-hover-outline";
-            labelType = "selected-hover";
-        } else if (isSelected) {
-            type = "selected-outline";
-            labelType = "selected";
-        } else if (isHover) {
-            type = "hover";
-            labelType = "hover";
-        }
-
-        if (type) {
-            props.labelType = labelType;
-
-            if (isStart) {
-                props.circleLeft = type;
-            } else {
-                props.bgLeft = type;
-            }
-
-            if (isEnd) {
-                props.circleRight = type;
-            } else {
-                props.bgRight = type;
-            }
-        }
-
-        return props;
-    };
-
     const getCellStyle = () => {
         const props: CellStyleProps = {};
 
         if (calendarDate.month() !== date.month()) {
-            props.labelType = "unavailable";
+            props.labelType = showActiveMonthDaysOnly
+                ? "hidden"
+                : "unavailable";
         } else if (dayjs().isSame(date, "day") && !disabled) {
             props.labelType = "current";
+        }
+
+        const isSelected = date.isSame(selectedDate, "day");
+        const isHover = date.isSame(hoverDate, "day");
+
+        if (isSelected && isHover) {
+            props.labelType = "selected-hover";
+            props.circleLeft = "selected-hover-outline";
+            props.circleRight = "selected-hover-outline";
+        } else if (isSelected) {
+            props.labelType = "selected";
+            props.circleLeft = "selected-outline";
+            props.circleRight = "selected-outline";
+        } else if (isHover) {
+            props.labelType = "hover";
+            props.circleLeft = "hover-subtle";
+            props.circleRight = "hover-subtle";
         }
 
         return props;
@@ -136,7 +99,5 @@ export const WeekDayCell = ({
         onHover: handleHover,
     };
 
-    return (
-        <DayCell {...commonProps} {...getCellStyle()} {...getRangeStyle()} />
-    );
+    return <DayCell {...commonProps} {...getCellStyle()} />;
 };

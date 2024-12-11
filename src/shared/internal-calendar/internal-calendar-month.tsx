@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo } from "react";
 import { CalendarHelper } from "../../util/calendar-helper";
-import { CellLabel, MonthCell, Wrapper } from "./internal-calendar-month.style";
+import { MonthCell, Wrapper } from "./internal-calendar-month.style";
 import { FocusType, InternalCalendarProps } from "./types";
 
 export type MonthVariant = "default" | "current-month" | "selected-month";
@@ -117,13 +117,7 @@ export const InternalCalendarMonth = ({
                         $interactive={interactive}
                         onClick={() => handleMonthClick(date, !interactive)}
                     >
-                        <CellLabel
-                            weight="regular"
-                            $variant={variant}
-                            $disabledDisplay={disabledDisplay}
-                        >
-                            {month}
-                        </CellLabel>
+                        {month}
                     </MonthCell>
                 );
             })}

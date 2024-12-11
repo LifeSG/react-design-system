@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo } from "react";
 import { CalendarHelper } from "../../util/calendar-helper";
-import { CellLabel, Wrapper, YearCell } from "./internal-calendar-year.style";
+import { Wrapper, YearCell } from "./internal-calendar-year.style";
 import { FocusType, InternalCalendarProps } from "./types";
 
 export type YearVariant =
@@ -126,14 +126,7 @@ export const InternalCalendarYear = ({
                         $interactive={interactive}
                         onClick={() => handleYearClick(date, !interactive)}
                     >
-                        <CellLabel
-                            weight="regular"
-                            $variant={variant}
-                            $disabledDisplay={disabledDisplay}
-                            $interactive={interactive}
-                        >
-                            {year}
-                        </CellLabel>
+                        {year}
                     </YearCell>
                 );
             })}
