@@ -18,6 +18,7 @@ import { TimelineItemProps, TimelineProps, Variant } from "./types";
 export const Timeline = ({
     items,
     className,
+    id,
     title,
     startCol,
     colSpan,
@@ -119,11 +120,12 @@ export const Timeline = ({
     return (
         <TimelineWrapper
             className={className}
+            id={id}
             data-testid={testId}
             $startCol={startCol}
             $colSpan={colSpan}
         >
-            <TimelineTitle id="timeline-title" weight="bold">
+            <TimelineTitle data-testid="timeline-title" weight="bold">
                 {title}
             </TimelineTitle>
             {renderItems()}
