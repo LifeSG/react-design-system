@@ -101,7 +101,7 @@ export const LinkList = <T,>({
                 title,
                 description,
                 secondaryDescription,
-                onClick, // deconstruct since we are handling it
+                onClick: _onClick, // deconstruct since we are handling it
                 ...otherProps
             } = item;
             return (
@@ -127,7 +127,7 @@ export const LinkList = <T,>({
             const {
                 title,
                 description,
-                onClick, // deconstruct since we are handling it
+                onClick: _onClick, // deconstruct since we are handling it
                 secondaryDescription,
                 ...otherProps
             } = item;

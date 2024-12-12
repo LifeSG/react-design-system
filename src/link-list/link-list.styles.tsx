@@ -3,8 +3,8 @@ import { MinusIcon } from "@lifesg/react-icons/minus";
 import { PlusIcon } from "@lifesg/react-icons/plus";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
-import { V2_Text } from "../v2_text";
+import { Border, Colour } from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -20,20 +20,25 @@ interface ToggleStyleProps {
 const iconStyle = css`
     height: 1.125rem;
     width: 1.125rem;
-    color: ${V2_Color.Primary};
+    color: ${Colour["icon-primary"]};
 `;
 
 export const Container = styled.div`
-    border-top: 1px solid ${V2_Color.Neutral[5]};
-    border-bottom: 1px solid ${V2_Color.Neutral[5]};
+    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 `;
 
-export const ItemTitleDefault = styled(V2_Text.H3)`
-    color: ${V2_Color.Primary};
+export const ItemTitleDefault = styled(Typography.HeaderSM).attrs({
+    as: "div",
+})`
+    color: ${Colour["text-primary"]};
     margin-bottom: 0.5rem;
 `;
-export const ItemTitleSmall = styled(V2_Text.Body)`
-    color: ${V2_Color.Primary};
+
+export const ItemTitleSmall = styled(Typography.HeaderXS).attrs({
+    as: "div",
+})`
+    color: ${Colour["text-primary"]};
 `;
 
 export const ItemIcon = styled(ChevronRightIcon)`
@@ -48,14 +53,14 @@ export const Item = styled.a`
     min-height: 4rem;
 
     :not(:last-of-type) {
-        border-bottom: 1px solid ${V2_Color.Neutral[5]};
+        border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     }
 
     :hover {
         ${ItemTitleDefault},
         ${ItemTitleSmall},
         ${ItemIcon} {
-            color: ${V2_Color.PrimaryDark};
+            color: ${Colour["text-hover"]};
         }
     }
 `;
@@ -67,7 +72,7 @@ export const ItemContent = styled.div`
     margin-right: 1rem;
 `;
 
-export const Description = styled(V2_Text.BodySmall)`
+export const Description = styled(Typography.BodyMD)`
     margin-top: 0.25rem;
 `;
 
@@ -76,12 +81,14 @@ export const Expandable = styled(animated.div)`
 `;
 
 export const ExpandableChild = styled.div`
-    border-top: 1px solid ${V2_Color.Neutral[5]};
+    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 `;
 
-export const ToggleButtonLabel = styled(V2_Text.H5)`
-    color: ${V2_Color.Primary};
-    margin-right: 0.5rem;
+export const ToggleButtonLabel = styled(Typography.BodyMD).attrs({
+    as: "span",
+})`
+    color: ${Colour["text-primary"]};
+    margin-right: 1rem;
 `;
 
 export const ViewMoreIcon = styled(PlusIcon)`
@@ -100,14 +107,13 @@ export const ToggleButton = styled.button<ToggleStyleProps>`
     border: none;
     background: none;
     cursor: pointer;
-    transition: border-width 300ms linear;
-    border-top: 1px solid ${V2_Color.Neutral[5]};
+    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 
     :hover {
         ${ToggleButtonLabel},
         ${ViewMoreIcon},
         ${ViewLessIcon} {
-            color: ${V2_Color.PrimaryDark};
+            color: ${Colour["text-hover"]};
         }
     }
 `;
