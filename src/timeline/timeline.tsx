@@ -1,5 +1,6 @@
 import { ExclamationCircleFillIcon, TickIcon } from "@lifesg/react-icons";
-import { V2_Text } from "../v2_text";
+import { PillProps } from "../pill";
+import { Typography } from "../typography";
 import {
     CircleIndicator,
     LineIndicator,
@@ -13,7 +14,6 @@ import {
     TimelineWrapper,
 } from "./timeline.style";
 import { TimelineItemProps, TimelineProps, Variant } from "./types";
-import { PillProps } from "../pill";
 
 export const Timeline = ({
     items,
@@ -30,9 +30,9 @@ export const Timeline = ({
     const renderContent = (content: string | JSX.Element): JSX.Element => {
         if (typeof content === "string") {
             return (
-                <V2_Text.Body className="timeline-item-content-text">
+                <Typography.BodyMD className="timeline-item-content-text">
                     {content}
-                </V2_Text.Body>
+                </Typography.BodyMD>
             );
         }
 
@@ -123,7 +123,9 @@ export const Timeline = ({
             $startCol={startCol}
             $colSpan={colSpan}
         >
-            <TimelineTitle id="timeline-title">{title}</TimelineTitle>
+            <TimelineTitle id="timeline-title" weight="bold">
+                {title}
+            </TimelineTitle>
             {renderItems()}
         </TimelineWrapper>
     );
