@@ -1,7 +1,7 @@
 import { StarIcon } from "@lifesg/react-icons/star";
 import { StarFillIcon } from "@lifesg/react-icons/star-fill";
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color/color";
+import { Border, Colour, MediaQuery } from "../theme";
 
 export const Input = styled.input`
     position: absolute;
@@ -13,9 +13,10 @@ export const Input = styled.input`
 const starStyle = css`
     width: 2.75rem;
     height: 2.75rem;
-    color: ${V2_Color.Primary};
+    color: ${Colour["icon-primary"]};
     ${Input}:focus-visible + & {
-        outline: 0.125rem solid ${V2_Color.Primary};
+        outline: ${Border["width-020"]} ${Border["solid"]}
+            ${Colour["icon-primary"]};
         outline-offset: -0.0625rem;
         border-radius: 0.25rem;
     }
@@ -32,7 +33,9 @@ export const StarFilled = styled(StarFillIcon)`
 export const Label = styled.label`
     margin: 0 0.5rem;
     line-height: 0;
-    @media screen and (max-width: 38rem) {
+    display: flex;
+    align-items: center;
+    ${MediaQuery.MaxWidth.md} {
         margin: 0 0.5rem;
     }
 `;
