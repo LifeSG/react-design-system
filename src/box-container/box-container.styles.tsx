@@ -2,10 +2,15 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
-import { V2_MediaQuery } from "../v2_media";
-import { V2_Text } from "../v2_text/text";
-import { V2_Transition } from "../v2_transition";
+import {
+    Border,
+    Colour,
+    Font,
+    FontSpec,
+    MediaQuery,
+    Motion,
+    Radius,
+} from "../theme";
 import { BoxContainerDisplayState } from "./types";
 
 // =============================================================================
@@ -29,8 +34,8 @@ interface HeaderStyleProps {
 // STYLING
 // =============================================================================
 export const Container = styled.div`
-    border: 1px solid ${V2_Color.Neutral[5]};
-    border-radius: 4px;
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
     margin-bottom: 2rem;
 `;
 
@@ -43,7 +48,7 @@ export const NonExpandable = styled.div`
 `;
 
 export const ChildContainer = styled.div`
-    border-top: 1px solid ${V2_Color.Neutral[5]};
+    border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 `;
 
 export const Header = styled.div<HeaderStyleProps>`
@@ -52,7 +57,7 @@ export const Header = styled.div<HeaderStyleProps>`
     align-items: center;
     justify-content: space-between;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         padding: 1rem 1.25rem;
         display: block;
     }
@@ -66,7 +71,9 @@ export const Header = styled.div<HeaderStyleProps>`
     }}
 `;
 
-export const LabelText = styled(V2_Text.H3)`
+export const LabelText = styled.div`
+    ${Font["header-sm-semibold"]}
+    color: ${Colour["text"]};
     word-wrap: break-word;
     overflow-wrap: anywhere;
     display: flex;
@@ -79,13 +86,11 @@ export const LabelWrapper = styled.div`
 `;
 
 export const LabelIcon = styled.span<LabelIconStyleProps>`
-    font-size: 1.5rem;
-    vertical-align: middle;
     display: flex;
     align-items: center;
     margin-right: 2.5rem;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         margin-right: 0rem;
     }
 
@@ -93,11 +98,11 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
         switch (props.$displayState) {
             case "error":
                 return css`
-                    color: ${V2_Color.Validation.Red.Icon(props)};
+                    color: ${Colour["icon-error"]};
                 `;
             case "warning":
                 return css`
-                    color: ${V2_Color.Validation.Orange.Icon(props)};
+                    color: ${Colour["icon-warning"]};
                 `;
             default:
                 break;
@@ -106,21 +111,21 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
 `;
 
 export const AlertIcon = styled(ExclamationCircleFillIcon)`
-    height: 1.375rem;
-    width: 1.375rem;
+    height: ${FontSpec["header-size-sm"]};
+    width: ${FontSpec["header-size-sm"]};
 `;
 
 export const CallToActionContainer = styled.div<StyleProps>`
     display: flex;
     margin-left: auto;
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         flex-direction: column;
     }
     ${(props) => {
         if (props.$collapsible) {
             return css`
                 margin-right: 2.5rem;
-                ${V2_MediaQuery.MaxWidth.mobileL} {
+                ${MediaQuery.MaxWidth.sm} {
                     margin-right: 0rem;
                     margin-top: 1rem;
                 }
@@ -138,23 +143,19 @@ export const Handle = styled.button`
     display: flex;
     align-items: center;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         margin: -1rem -1rem -1rem 0;
         margin-left: auto;
     }
 `;
 
-export const HandleLabel = styled(V2_Text.H4)`
-    color: ${V2_Color.Primary};
-`;
-
 export const HandleIconContainer = styled.div<StyleProps>`
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
-    transition: ${V2_Transition.Base};
+    transition: ${Motion["duration-250"]} ${Motion["ease-default"]};
 `;
 
 export const HandleIcon = styled(ChevronDownIcon)`
-    color: ${V2_Color.Neutral[3]};
-    height: 1.375rem;
-    width: 1.375rem;
+    color: ${Colour["icon"]};
+    height: ${FontSpec["header-size-sm"]};
+    width: ${FontSpec["header-size-sm"]};
 `;

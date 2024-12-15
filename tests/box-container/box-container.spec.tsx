@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { BoxContainer } from "../../src";
-import { BaseColorSet } from "../../src/v2_spec/color-spec/base-color-set";
+import { BoxContainer, Colour, LifeSGTheme } from "../../src";
 
 // =============================================================================
 // UNIT TESTS
@@ -58,8 +57,8 @@ describe("BoxContainer", () => {
         it.each`
             state        | color
             ${"default"} | ${"no"}
-            ${"error"}   | ${BaseColorSet.Validation.Red.Icon}
-            ${"warning"} | ${BaseColorSet.Validation.Orange.Icon}
+            ${"error"}   | ${Colour["icon-error"]({ theme: LifeSGTheme })}
+            ${"warning"} | ${Colour["icon-warning"]({ theme: LifeSGTheme })}
         `(
             "should render $state state with $color color icon",
             ({ state, color }) => {
