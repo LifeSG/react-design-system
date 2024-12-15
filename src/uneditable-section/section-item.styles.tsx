@@ -1,11 +1,9 @@
 import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
-import { V2_MediaQuery } from "../v2_media";
-import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
-import { V2_TextStyleHelper } from "../v2_text";
-import { UneditableSectionItemDisplayWidth } from "./types";
 import { Alert } from "../alert";
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
+import { Colour, Font, FontSpec, MediaQuery } from "../theme";
+import { UneditableSectionItemDisplayWidth } from "./types";
 
 // =============================================================================
 // STYLING INTERFACES
@@ -34,12 +32,8 @@ export const Container = styled.li<ContainerStyleProps>`
         }
     }}
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
-        grid-column: auto / span 8;
-    }
-
-    ${V2_MediaQuery.MaxWidth.mobileL} {
-        grid-column: auto / span 4;
+    ${MediaQuery.MaxWidth.lg} {
+        grid-column: 1 / -1;
     }
 
     overflow-wrap: break-word;
@@ -50,18 +44,18 @@ export const IconContainer = styled.div`
     height: 100%;
     align-items: center;
     justify-content: center;
-    color: ${V2_Color.Primary};
+    color: ${Colour["icon-primary"]};
     margin-left: 0.5rem;
 
     svg {
-        width: 1.125rem;
-        height: 1.125rem;
+        width: ${FontSpec["body-size-baseline"]};
+        height: ${FontSpec["body-size-baseline"]};
     }
 `;
 
 export const Clickable = styled.button`
-    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${V2_Color.Neutral[1]};
+    ${Font["body-baseline-regular"]}
+    color: ${Colour["text"]};
     border: none;
     background: transparent;
     padding: 0;
@@ -81,36 +75,31 @@ export const Clickable = styled.button`
 // LOADING DISPLAY
 // -----------------------------------------------------------------------------
 export const LoadingLabel = styled.span`
-    color: ${V2_Color.Neutral[3]};
+    color: ${Colour["text-disabled"]};
 `;
 
 export const Spinner = styled(ComponentLoadingSpinner)`
     margin-right: 0.5rem;
-    #inner1,
-    #inner2,
-    #inner3,
-    #inner4 {
-        border-color: ${V2_Color.Neutral[3]} transparent transparent transparent;
-    }
+    color: ${Colour["text-disabled"]};
 `;
 
 // -----------------------------------------------------------------------------
 // ERROR DISPLAY
 // -----------------------------------------------------------------------------
 export const ErrorIcon = styled(ExclamationTriangleIcon)`
-    color: ${V2_Color.Validation.Orange.Icon};
+    color: ${Colour["icon-warning"]};
     margin-right: 0.5rem;
-    height: 1.125rem;
-    width: 1.125rem;
+    height: ${FontSpec["body-size-baseline"]};
+    width: ${FontSpec["body-size-baseline"]};
 `;
 
 export const ErrorLabel = styled.span`
-    color: ${V2_Color.Validation.Orange.Text};
+    color: ${Colour["text-warning"]};
 `;
 
 export const TryAgainLabel = styled.span`
-    ${V2_TextStyleHelper.getTextStyle("Body", "semibold")}
-    color: ${V2_Color.Primary};
+    ${Font["body-baseline-semibold"]}
+    color: ${Colour["hyperlink"]};
     text-decoration: underline;
     margin-left: 0.5rem;
 `;
