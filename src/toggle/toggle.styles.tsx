@@ -77,13 +77,19 @@ export const Container = styled.div<ContainerStyleProps>`
         switch (props.$styleType) {
             case "no-border": {
                 if (props.$error) {
-                    return css`
-                        border-color: ${Colour["border-error"]};
+                    if (props.$disabled) {
+                        return css`
+                            border-color: ${Colour["border-error"]};
+                        `;
+                    } else {
+                        return css`
+                            border-color: ${Colour["border-error"]};
 
-                        &:has(${HeaderContainer}:hover) {
-                            background: ${Colour["bg-hover-subtle"]};
-                        }
-                    `;
+                            &:has(${HeaderContainer}:hover) {
+                                background: ${Colour["bg-hover-subtle"]};
+                            }
+                        `;
+                    }
                 }
 
                 if (props.$disabled) {
@@ -129,13 +135,19 @@ export const Container = styled.div<ContainerStyleProps>`
 
             default: {
                 if (props.$error) {
-                    return css`
-                        border-color: ${Colour["border-error"]};
+                    if (props.$disabled) {
+                        return css`
+                            border-color: ${Colour["border-error"]};
+                        `;
+                    } else {
+                        return css`
+                            border-color: ${Colour["border-error"]};
 
-                        &:has(${HeaderContainer}:hover) {
-                            background: ${Colour["bg-hover-subtle"]};
-                        }
-                    `;
+                            &:has(${HeaderContainer}:hover) {
+                                background: ${Colour["bg-hover-subtle"]};
+                            }
+                        `;
+                    }
                 }
 
                 if (props.$disabled) {
@@ -314,7 +326,7 @@ export const ErrorContainer = styled.div<StyleProps>`
     color: ${(props) =>
         props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
     border: none;
-    background: none;
+    background: ${Colour.bg};
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
     padding: 0.6875rem 1rem 0.5rem 1rem;
 `;
