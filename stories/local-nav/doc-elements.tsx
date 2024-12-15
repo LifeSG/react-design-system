@@ -1,5 +1,5 @@
-import { V2_MediaQuery } from "src/v2_media";
-import { V2_Text } from "src/v2_text";
+import { MediaQuery } from "src/theme";
+import { Typography } from "src/typography";
 import styled from "styled-components";
 
 export const Page = styled.div`
@@ -9,7 +9,7 @@ export const Page = styled.div`
     gap: 1rem;
     grid-template-columns: 1fr 2fr;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         grid-template-columns: 1fr;
     }
 
@@ -17,14 +17,17 @@ export const Page = styled.div`
         padding: 1rem;
     }
 `;
+Page.displayName = "Page";
 
 const renderSection = (index: number) => (
     <div>
-        <V2_Text.H2 style={{ margin: "1rem 0" }}>Title {index}</V2_Text.H2>
-        <V2_Text.Body style={{ margin: "1rem 0" }}>
+        <Typography.HeaderMD style={{ margin: "1rem 0" }}>
+            Title {index}
+        </Typography.HeaderMD>
+        <Typography.BodyBL style={{ margin: "1rem 0" }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a
             tortor vitae magna sagittis bibendum.
-        </V2_Text.Body>
+        </Typography.BodyBL>
     </div>
 );
 
@@ -37,12 +40,12 @@ export const Content = () => (
 );
 
 export const TopContent = () => (
-    <V2_Text.Body style={{ margin: "1rem 0" }}>
+    <Typography.BodyBL style={{ margin: "1rem 0" }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a
         tortor vitae magna sagittis bibendum. Proin dui risus, rhoncus eget
         ligula non, tincidunt volutpat erat. Suspendisse vitae mauris pharetra,
         ullamcorper massa id, luctus elit. Aliquam at vestibulum nisi. In hac
         habitasse platea dictumst. Vestibulum sit amet mollis justo, in iaculis
         sem. Vivamus eu blandit sem.
-    </V2_Text.Body>
+    </Typography.BodyBL>
 );

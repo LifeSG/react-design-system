@@ -14,14 +14,14 @@ import { SAMPLE_ITEMS } from "./doc-elements";
 type Component = typeof UneditableSection;
 
 const meta: Meta<Component> = {
-    title: "Modules/UneditableSection",
+    title: "Content/UneditableSection",
     component: UneditableSection,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <UneditableSection
                 title="Your personal information"
@@ -33,7 +33,7 @@ export const Default: StoryObj<Component> = {
 };
 
 export const NoBackground: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <UneditableSection
                 title="Your personal information"
@@ -46,7 +46,7 @@ export const NoBackground: StoryObj<Component> = {
 };
 
 export const WithMaskedItems: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const ITEMS: UneditableSectionItemProps[] = [
             {
                 label: "Plain value",
@@ -102,7 +102,7 @@ export const WithMaskedItems: StoryObj<Component> = {
 };
 
 export const ControlledMaskUnmask: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [item, setItem] = useState<UneditableSectionItemProps>({
             id: "item1",
             label: "This has controlled masking/unmasking of values",
@@ -140,7 +140,7 @@ export const ControlledMaskUnmask: StoryObj<Component> = {
 };
 
 export const MaskUnmaskWithLoading: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [item, setItem] = useState<UneditableSectionItemProps>({
             id: "item1",
             label: "This has a loading display when unmasking",
@@ -189,7 +189,7 @@ export const MaskUnmaskWithLoading: StoryObj<Component> = {
 };
 
 export const MaskUnmaskWithError: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [item, setItem] = useState<UneditableSectionItemProps>({
             id: "item1",
             label: "This has an error display when unmasking",
@@ -238,7 +238,7 @@ export const MaskUnmaskWithError: StoryObj<Component> = {
 };
 
 export const MaskUnmaskWithAlert: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const ITEMS: UneditableSectionItemProps[] = [
             {
                 id: "item1",
@@ -263,7 +263,7 @@ export const MaskUnmaskWithAlert: StoryObj<Component> = {
 };
 
 export const WithCustomContent: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <UneditableSection
                 title="Your personal information"
@@ -290,7 +290,7 @@ export const WithCustomContent: StoryObj<Component> = {
 };
 
 export const ComposingFromScratch: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <UneditableSection>
                 <div
@@ -363,7 +363,7 @@ export const ComposingFromScratch: StoryObj<Component> = {
 };
 
 export const Stretch: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <BoxContainer title="Review" collapsible={false}>
                 <UneditableSection

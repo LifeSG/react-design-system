@@ -1,8 +1,10 @@
-import { ApiTable, TabAttribute, Tabs } from "../storybook-common";
 import {
+    ApiTable,
     ApiTableAttributeRowProps,
     ApiTableSectionProps,
-} from "../storybook-common/api-table/types";
+    TabAttribute,
+    Tabs,
+} from "stories/storybook-common";
 
 const COMMON_ATTRIBUTES: ApiTableAttributeRowProps[] = [
     {

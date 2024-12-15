@@ -1,6 +1,8 @@
-import React from "react";
-import { ApiTable, code } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+} from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -78,13 +80,9 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: (
-                    <a
-                        href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-pill--docs#component-api"
-                        rel="noreferrer"
-                        target="_blank"
-                    >
-                        PillProps[]
-                    </a>
+                    <StorybookLink path="/docs/feedback-indicators-pill--docs#component-api">
+                        <code>PillProps[]</code>
+                    </StorybookLink>
                 ),
             },
             {
