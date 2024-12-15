@@ -71,7 +71,12 @@ export const Drawer = ({
                 {...otherProps}
             >
                 <Header>
-                    <Heading id={id} ref={initialFocusRef} tabIndex={-1}>
+                    <Heading
+                        id={id}
+                        ref={initialFocusRef}
+                        tabIndex={-1}
+                        weight="bold"
+                    >
                         {heading}
                     </Heading>
                     <CloseButton // second element for tab focus order

@@ -123,6 +123,7 @@ function Component(
             case "small":
                 return (
                     <TitleH4
+                        weight="bold"
                         data-testid={`${testId}-title`}
                         $isCollapsed={expand}
                     >
@@ -132,6 +133,7 @@ function Component(
             default:
                 return (
                     <Title
+                        weight="bold"
                         data-testid={`${testId}-title`}
                         $isCollapsed={expand}
                     >

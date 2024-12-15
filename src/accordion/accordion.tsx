@@ -51,6 +51,7 @@ const AccordionBase = ({
             >
                 {title && (
                     <Title
+                        weight="bold"
                         $showInMobile={showTitleInMobile}
                         data-testid="accordion-title"
                     >
