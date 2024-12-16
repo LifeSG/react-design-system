@@ -1,13 +1,31 @@
-import { LocalNavItemProps } from "./types";
+import {
+    LocalNavDropdownItemRenderProps,
+    LocalNavItemProps,
+    LocalNavMenuItemRenderProps,
+} from "./types";
 
-export interface LocalNavItemComponentProps {
+interface LocalNavItemBaseComponentProps {
     handleClick: React.MouseEventHandler<HTMLLIElement>;
     isSelected: boolean;
     item: LocalNavItemProps;
+}
+
+export interface LocalNavMenuItemComponentProps
+    extends LocalNavItemBaseComponentProps {
     renderItem?:
         | ((
               item: LocalNavItemProps,
-              renderProps: { selected: boolean }
+              renderProps: LocalNavMenuItemRenderProps
+          ) => React.ReactNode)
+        | undefined;
+}
+
+export interface LocalNavDropdownItemComponentProps
+    extends LocalNavItemBaseComponentProps {
+    renderItem?:
+        | ((
+              item: LocalNavItemProps,
+              renderProps: LocalNavDropdownItemRenderProps
           ) => React.ReactNode)
         | undefined;
 }
