@@ -1,9 +1,8 @@
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
-import { V2_MediaQuery } from "../v2_media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ImagePlaceholder } from "../shared/image-placeholder";
-import { V2_Text } from "../v2_text";
+import { Border, Colour, MediaQuery, Radius } from "../theme";
+import { Typography } from "../typography";
 import { StatefulImage } from "./stateful-image";
 
 // =============================================================================
@@ -23,10 +22,15 @@ interface ThumbnailItemStyleProps {
 const IconButton = styled(ClickableIcon)`
     padding: 0;
     border-radius: 100%;
-    background: ${V2_Color.Neutral[8]};
-    color: ${V2_Color.Primary};
+    background: ${Colour["bg"]};
+    color: ${Colour["icon-primary"]};
     height: 2.5rem;
     width: 2.5rem;
+
+    svg {
+        height: 1.5rem;
+        width: 1.5rem;
+    }
 `;
 
 export const CloseButton = styled(IconButton)`
@@ -35,14 +39,9 @@ export const CloseButton = styled(IconButton)`
     right: 3rem;
     z-index: 5;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         top: 1.25rem;
         right: 1.25rem;
-    }
-
-    svg {
-        height: 1.5rem;
-        width: 1.5rem;
     }
 `;
 
@@ -52,14 +51,9 @@ export const MagnifierButton = styled(IconButton)`
     right: 6.5rem;
     z-index: 5;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         top: 1.25rem;
         right: 4.75rem;
-    }
-
-    svg {
-        height: 1.5rem;
-        width: 1.5rem;
     }
 `;
 
@@ -73,7 +67,7 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
         props.$position === "left" &&
         css`
             left: 3rem;
-            ${V2_MediaQuery.MaxWidth.mobileL} {
+            ${MediaQuery.MaxWidth.sm} {
                 left: 1.25rem;
             }
         `}
@@ -82,15 +76,10 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
         props.$position === "right" &&
         css`
             right: 3rem;
-            ${V2_MediaQuery.MaxWidth.mobileL} {
+            ${MediaQuery.MaxWidth.sm} {
                 right: 1.25rem;
             }
         `}
-
-    svg {
-        height: 1.25rem;
-        width: 1.25rem;
-    }
 `;
 
 export const ImageGalleryContainer = styled.div`
@@ -168,13 +157,13 @@ export const BoxChip = styled.div`
     z-index: 3;
 `;
 
-export const Chip = styled(V2_Text.XSmall)`
+export const Chip = styled(Typography.BodyXS)`
     display: inline-flex;
     padding: 0.25rem 1rem;
     justify-content: center;
     align-items: center;
-    border-radius: 20px;
-    background-color: ${V2_Color.Neutral[8]};
+    border-radius: ${Radius.full};
+    background-color: ${Colour["bg"]};
     text-align: center;
 `;
 
@@ -186,10 +175,10 @@ export const ThumbnailContainer = styled.div`
     flex-shrink: 0;
     display: flex;
     overflow: auto;
-    background-color: ${V2_Color.Neutral[1]};
+    background-color: ${Colour["bg-inverse"]};
     padding: 1.5rem 1rem;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         padding: 1rem 1.25rem;
     }
 `;
@@ -204,37 +193,58 @@ export const ThumbnailWrapper = styled.div`
     margin-right: auto;
 `;
 
-export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
-    cursor: pointer;
-    background-color: ${V2_Color.Neutral[1]};
-    border-radius: 10px;
-
-    flex-shrink: 0;
-    overflow: hidden;
-    border: 1px solid transparent;
+export const ThumbnailItemContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     height: 6.25rem;
     width: 6.25rem;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         height: 4rem;
         width: 4rem;
+    }
+`;
+
+export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
+    cursor: pointer;
+    background-color: ${Colour["bg-inverse"]};
+    border-radius: ${Radius["md"]};
+    border: ${Border["solid"]} transparent;
+    box-sizing: content-box;
+
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5.75rem;
+    width: 5.75rem;
+
+    ${MediaQuery.MaxWidth.sm} {
+        height: 3.75rem;
+        width: 3.75rem;
     }
 
     ${(props) =>
         props.$active
             ? css`
-                  border: 4px solid ${V2_Color.Primary};
+                  border-width: ${Border["width-040"]};
+                  border-color: ${Colour["border-selected"]};
 
-                  ${V2_MediaQuery.MaxWidth.mobileL} {
-                      border: 2px solid ${V2_Color.Primary};
+                  ${MediaQuery.MaxWidth.sm} {
+                      border-width: ${Border["width-020"]};
+                  }
+
+                  :hover {
+                      border-color: ${Colour["border-selected-hover"]};
                   }
               `
             : css`
+                  border-width: ${Border["width-010"]};
+
                   :hover {
-                      border: 1px solid ${V2_Color.Neutral[5]};
+                      border-color: ${Colour["border-hover"]};
                   }
               `};
 `;

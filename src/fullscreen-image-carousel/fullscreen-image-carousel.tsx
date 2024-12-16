@@ -36,6 +36,7 @@ import {
     ThumbnailContainer,
     ThumbnailImage,
     ThumbnailItem,
+    ThumbnailItemContainer,
     ThumbnailWrapper,
 } from "./fullscreen-image-carousel.style";
 import {
@@ -244,21 +245,22 @@ export const Component = (
                     {items.map((item, index) => {
                         const src = item.thumbnailSrc ?? item.src;
                         return (
-                            <ThumbnailItem
-                                data-testid="thumbnail-item"
-                                key={index}
-                                $active={index === currentSlide}
-                                onClick={() => goToSlide(index)}
-                                ref={(el) =>
-                                    (thumbnailRefs.current[index] = el)
-                                }
-                            >
-                                <ThumbnailImage
-                                    src={src}
-                                    alt={`Thumbnail ${index + 1}`}
-                                    fit="cover"
-                                />
-                            </ThumbnailItem>
+                            <ThumbnailItemContainer key={index}>
+                                <ThumbnailItem
+                                    data-testid="thumbnail-item"
+                                    $active={index === currentSlide}
+                                    onClick={() => goToSlide(index)}
+                                    ref={(el) =>
+                                        (thumbnailRefs.current[index] = el)
+                                    }
+                                >
+                                    <ThumbnailImage
+                                        src={src}
+                                        alt={`Thumbnail ${index + 1}`}
+                                        fit="cover"
+                                    />
+                                </ThumbnailItem>
+                            </ThumbnailItemContainer>
                         );
                     })}
                 </ThumbnailWrapper>
