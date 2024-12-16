@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { V2_Color } from "../../v2_color";
-import { V2_Text } from "../../v2_text/text";
+import { Colour } from "../../theme";
+import { Typography } from "../../typography";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -19,7 +19,8 @@ export const Nav = styled.ul`
     padding: 0;
     margin-top: 0;
 `;
-export const TextLabel = styled(V2_Text.Body)<NavItemStyleProps>`
+
+export const TextLabel = styled(Typography.BodyBL)<NavItemStyleProps>`
     margin: 0;
 `;
 
@@ -37,11 +38,13 @@ export const NavItem = styled.li<NavItemStyleProps>`
         height: 100%;
         top: 0;
         background-color: ${(props) =>
-            props.$isSelected ? V2_Color.Primary : V2_Color.Accent.Light[5]};
+            props.$isSelected
+                ? Colour["bg-primary"]
+                : Colour["bg-primary-subtler"]};
         transition: all 250ms linear;
     }
 
     &:hover {
-        background-color: ${V2_Color.Accent.Light[6]};
+        background-color: ${Colour["bg-hover-subtle"]};
     }
 `;

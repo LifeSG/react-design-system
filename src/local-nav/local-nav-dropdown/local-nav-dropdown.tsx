@@ -4,14 +4,15 @@ import { LocalNavItemComponentProps } from "../internal-types";
 import { LocalNavDropdownProps, LocalNavItemProps } from "../types";
 import {
     Backdrop,
-    LabelText,
-    NavIcon,
     NavItem,
+    NavItemLabel,
     NavItemList,
-    NavLabel,
+    NavSelect,
+    NavSelectIcon,
     NavWrapper,
     StyledTickIcon,
 } from "./local-nav-dropdown.styles";
+import { Typography } from "../../typography";
 
 const Component = (
     {
@@ -211,7 +212,9 @@ const Component = (
             return (
                 <>
                     {isSelected && <StyledTickIcon />}
-                    <LabelText $isSelected={isSelected}>{title}</LabelText>
+                    <NavItemLabel $isSelected={isSelected}>
+                        {title}
+                    </NavItemLabel>
                 </>
             );
         };
@@ -235,15 +238,17 @@ const Component = (
                 data-testid={navTestId}
                 className={className}
             >
-                <NavLabel
+                <NavSelect
                     ref={dropdownRef}
                     onClick={handleToggleDropdown}
                     data-testid={`${navTestId}-label`}
                     $isDropdownExpanded={isDropdownExpanded}
                 >
-                    <LabelText weight="semibold">{labelText}</LabelText>
-                    <NavIcon $isDropdownExpanded={isDropdownExpanded} />
-                </NavLabel>
+                    <Typography.BodyBL weight="semibold">
+                        {labelText}
+                    </Typography.BodyBL>
+                    <NavSelectIcon $isDropdownExpanded={isDropdownExpanded} />
+                </NavSelect>
                 {isDropdownExpanded && (
                     <NavItemList
                         data-testid={`${navTestId}-dropdown-list`}
