@@ -36,7 +36,7 @@ export const SidenavDrawerSubitem = ({
     // =========================================================================
     return (
         <Container {...otherProps}>
-            <LinkButton styleType="link" type="button" onClick={handleOnClick}>
+            <LinkButton type="button" onClick={handleOnClick}>
                 {title}
             </LinkButton>
         </Container>

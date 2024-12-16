@@ -1,9 +1,9 @@
-import styled, { css } from "styled-components";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import { Button } from "../button";
-import { V2_Color } from "../v2_color";
-import { V2_TextStyleHelper } from "../v2_text";
 import { animated } from "react-spring";
+import styled, { css } from "styled-components";
+import { BasicButton } from "../shared/input-wrapper";
+import { lineClampCss } from "../shared/styles";
+import { Colour, Font, Motion, Radius } from "../theme";
 
 //=============================================================================
 // STYLE INTERFACE
@@ -22,41 +22,34 @@ interface IconStyleProp {
 //=============================================================================
 export const Container = styled(animated.li)``;
 
-export const LinkButton = styled(Button.Default)<LinkButtonStyleProp>`
-    justify-content: flex-start;
+export const LinkButton = styled(BasicButton)<LinkButtonStyleProp>`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
     width: 100%;
-    height: unset;
     padding: 0.75rem 1rem;
-    border-radius: 8px;
+    border-radius: ${Radius["md"]};
 
-    span {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        ${V2_TextStyleHelper.getFontFamily("H5", "semibold")}
-        font-size: 1rem !important;
-        color: ${V2_Color.Neutral[1]} !important;
-    }
-
-    :hover,
-    :focus {
-        background-color: ${V2_Color.Accent.Light[4]};
-
-        span {
-            ${(props) =>
-                props.$noChildren &&
-                css`
-                    color: ${V2_Color.Primary} !important;
-                `}
-        }
-    }
+    ${Font["body-md-semibold"]}
+    color: ${Colour.text};
 
     ${(props) =>
-        props.$highlight &&
-        css`
-            background-color: ${V2_Color.Accent.Light[4]};
-        `}
+        props.$noChildren
+            ? css`
+                  :hover,
+                  :focus {
+                      background: ${Colour["bg-hover"]};
+                      color: ${Colour["text-hover"]};
+                  }
+              `
+            : css`
+                  :hover,
+                  :focus {
+                      background: ${Colour["bg-hover-strong"]};
+                  }
+              `}
 `;
 
 export const DrawerSubitemContainer = styled(animated.div)`
@@ -64,26 +57,16 @@ export const DrawerSubitemContainer = styled(animated.div)`
     overflow: hidden;
 `;
 
-export const IconElement = styled.div`
-    align-self: center;
-    padding-left: 0.5rem;
-`;
-
 export const ChevronIcon = styled(ChevronUpIcon)<IconStyleProp>`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: ${V2_Color.Neutral[3]};
+    flex-shrink: 0;
+    color: ${Colour.icon};
     transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
-    transition: transform 300ms ease-in-out;
+    transition: transform ${Motion["duration-150"]} ${Motion["ease-default"]};
 `;
 
-export const TextElement = styled.div`
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    text-align: initial;
+export const TextElement = styled.span`
+    ${lineClampCss(2)}
+    text-align: left;
 `;
 
 export const DrawerContent = styled(animated.ul)``;

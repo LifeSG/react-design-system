@@ -70,7 +70,6 @@ export const SidenavItem = ({
     return (
         <Container>
             <DefaultButton
-                styleType="link"
                 type="button"
                 onClick={handleOnClick}
                 onMouseEnter={handleMouseEnter}

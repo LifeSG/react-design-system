@@ -6,7 +6,6 @@ import {
     Container,
     DrawerContent,
     DrawerSubitemContainer,
-    IconElement,
     LinkButton,
     TextElement,
 } from "./sidenav-drawer-item.styles";
@@ -76,18 +75,13 @@ export const SidenavDrawerItem = ({
             style={containerAnimationProps}
         >
             <LinkButton
-                styleType="link"
                 type="button"
                 onClick={handleOnClick}
                 $highlight={highlight && expanded}
                 $noChildren={!children}
             >
                 <TextElement>{title}</TextElement>
-                {children && (
-                    <IconElement>
-                        <ChevronIcon aria-hidden $expanded={expanded} />
-                    </IconElement>
-                )}
+                {children && <ChevronIcon aria-hidden $expanded={expanded} />}
             </LinkButton>
             <DrawerSubitemContainer style={contentAnimationProps}>
                 <DrawerContent ref={childRef}>{children}</DrawerContent>
