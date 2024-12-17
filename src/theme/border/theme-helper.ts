@@ -1,8 +1,8 @@
 import { css } from "styled-components";
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { BorderScheme, ThemeCollectionSpec } from "../types";
-import { BorderCollectionMap, BorderSet } from "./types";
 import { LifeSgBorderSet } from "./specs/lifesg-border-set";
+import { BorderCollectionMap, BorderSet } from "./types";
 
 const BorderSpec: ThemeCollectionSpec<BorderCollectionMap, BorderScheme> = {
     collections: {
@@ -57,6 +57,7 @@ export const getBorder = (key: keyof BorderSet) => {
 export const BorderValues = {
     "width-010": getBorder("width-010"),
     "width-020": getBorder("width-020"),
+    "width-040": getBorder("width-040"),
     solid: getBorder("solid"),
     "dashed-default": getBorder("dashed-default"),
 };

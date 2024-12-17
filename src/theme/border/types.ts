@@ -5,6 +5,7 @@ import { StyledComponentProps } from "../helpers";
 export interface BorderSet {
     "width-010": number;
     "width-020": number;
+    "width-040": number;
     solid: string;
     "dashed-default": (
         thickness?: number | ((props: StyledComponentProps) => number),
