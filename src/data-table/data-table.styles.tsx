@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
-import { ErrorDisplay } from "../error-display";
-import { V2_DesignToken } from "../v2_design-token";
-import { V2_Text } from "../v2_text";
+import { BasicButton } from "../shared/input-wrapper";
+import { lineClampCss } from "../shared/styles";
+import { Border, Colour, Font, Motion, Radius } from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -44,8 +44,8 @@ interface ActionBarProps {
 // =============================================================================
 // STYLES CONSTANTS
 // =============================================================================
-const borderColor = V2_Color.Neutral[5];
-const fontColor = V2_Color.Neutral[1];
+const borderColor = Colour["border"];
+const fontColor = Colour["text"];
 
 // =============================================================================
 // STYLES
@@ -54,8 +54,8 @@ export const TableWrapper = styled.div`
     overflow: auto;
     display: flex;
     flex-direction: column;
-    border: 1px solid ${borderColor};
-    border-radius: 0.5rem;
+    border: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
+    border-radius: ${Radius["md"]};
 
     // Hide scrollbar
     ::-webkit-scrollbar {
@@ -103,7 +103,7 @@ export const TableBody = styled.tbody<TableBodyProps>`
         td {
             border-bottom: ${(props) =>
                 props.$showLastRowBottomBorder
-                    ? `1px solid ${borderColor}`
+                    ? `${Border["width-010"]} ${Border["solid"]} ${borderColor}`
                     : "none"};
         }
     }
@@ -129,31 +129,44 @@ export const ActionBarWrapper = styled.div<ActionBarWrapperProps>`
     }};
 `;
 
+export const TextButton = styled(BasicButton)`
+    ${Font["body-md-semibold"]}
+    cursor: pointer;
+    color: ${Colour["text-primary"]};
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+    padding: 0.75rem;
+    margin: -0.75rem 0;
+
+    :hover {
+        color: ${Colour["text-hover"]};
+    }
+`;
+
 export const ActionBar = styled.div<ActionBarProps>`
     overflow: hidden;
     display: flex;
     ${(props) =>
         props.$float &&
-        `
+        css`
             transform: translateX(-0.5%) translateY(-2rem);
-            border-radius: 4px;
+            border-radius: ${Radius["sm"]};
             box-shadow: 0 0 4px 0 rgba(40, 40, 40, 0.25);
             width: 101%;
-            border: 1px solid ${borderColor};
+            border: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
         `}
     align-items: center;
     height: 3.5rem;
     padding: 1rem;
-    border-top: 1px solid ${borderColor};
-    border-radius: 0 0 4px 4px;
-    background-color: ${V2_DesignToken.Table.Cell.Selected};
+    border-top: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
+    border-radius: 0 0 ${Radius["sm"]} ${Radius["sm"]};
+    background-color: ${Colour["bg-selected"]};
     transition: all 300ms ease;
 `;
 
 export const HeaderRow = styled.tr`
-    background-color: ${V2_DesignToken.Table.Header};
+    background-color: ${Colour["bg-stronger"]};
     height: 6rem;
-    border-bottom: 1px solid ${borderColor};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
 `;
 
 export const HeaderCell = styled.th<HeaderCellProps>`
@@ -163,7 +176,7 @@ export const HeaderCell = styled.th<HeaderCellProps>`
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
     vertical-align: middle;
     color: ${fontColor};
-    border-bottom: 1px solid ${borderColor};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
     ${(props) => {
         if (props.$isCheckbox) {
             return css`
@@ -179,7 +192,7 @@ export const HeaderCellWrapper = styled.div`
     align-items: center;
 
     svg {
-        color: ${V2_Color.Neutral[1]};
+        color: ${fontColor};
         margin-left: 0.5rem;
     }
 `;
@@ -188,24 +201,24 @@ export const BodyRow = styled.tr<BodyRowProps>`
     background-color: ${(props) => {
         if (props.$isSelected) {
             return css`
-                ${V2_DesignToken.Table.Cell.Selected};
+                ${Colour["bg-selected"]};
             `;
         } else if (props.$alternating) {
             return css`
-                ${V2_DesignToken.Table.Cell.Primary};
+                ${Colour["bg-strong"]};
             `;
         } else {
             return css`
-                ${V2_DesignToken.Table.Cell.Secondary};
+                ${Colour["bg"]};
             `;
         }
     }};
-    border-top: 1px solid ${borderColor};
+    border-top: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
     &:hover {
         ${(props) => {
-            if (!props.$isSelected && props.$isSelectable) {
+            if (props.$isSelectable) {
                 return css`
-                    background-color: ${V2_DesignToken.Table.Cell.Hover};
+                    background-color: ${Colour["bg-hover-strong"]};
                 `;
             }
         }};
@@ -217,16 +230,12 @@ export const BodyCell = styled.td<BodyCellProps>`
         props.$isCheckbox ? "1.25rem 0.5rem 1.25rem 1.5rem" : "1.25rem 1rem"};
     vertical-align: middle;
     color: ${fontColor};
-    border-bottom: 1px solid ${borderColor};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
 `;
 
-export const BodyCellContent = styled(V2_Text.Body)`
-    overflow: hidden;
+export const BodyCellContent = styled(Typography.BodyBL)`
+    ${lineClampCss(2)}
     text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
 `;
 
 export const CheckBoxWrapper = styled.div`
@@ -242,15 +251,9 @@ export const LoaderWrapper = styled.div`
     padding: 4rem 0;
 `;
 
-export const ErrorDisplayElement = styled(ErrorDisplay)`
-    h3,
-    button {
-        margin-top: 2rem;
-    }
-
-    p {
-        margin-top: 1rem;
-    }
+export const ErrorDisplayTitle = styled(Typography.HeaderSM)`
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 `;
 
 export const EmptyViewCell = styled.td`

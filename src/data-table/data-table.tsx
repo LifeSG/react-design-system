@@ -1,6 +1,12 @@
+import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import { useResizeDetector } from "react-resize-detector";
 import { LoadingDotsSpinner } from "../animations";
+import { Checkbox } from "../checkbox";
+import { ErrorDisplay } from "../error-display";
+import { Typography } from "../typography";
+import { useEventListener } from "../util/use-event-listener";
 import {
     ActionBar,
     ActionBarWrapper,
@@ -9,7 +15,7 @@ import {
     BodyRow,
     CheckBoxWrapper,
     EmptyViewCell,
-    ErrorDisplayElement,
+    ErrorDisplayTitle,
     HeaderCell,
     HeaderCellWrapper,
     HeaderRow,
@@ -18,14 +24,9 @@ import {
     TableBody,
     TableContainer,
     TableWrapper,
+    TextButton,
 } from "./data-table.styles";
 import { DataTableProps, HeaderProps, RowProps } from "./types";
-import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
-import { V2_Text } from "../v2_text";
-import { Checkbox } from "../checkbox";
-import { Button } from "../button";
-import { useEventListener } from "../util/use-event-listener";
-import { useResizeDetector } from "react-resize-detector";
 
 export const DataTable = ({
     id,
@@ -236,7 +237,9 @@ export const DataTable = ({
             >
                 <HeaderCellWrapper>
                     {typeof label === "string" ? (
-                        <V2_Text.H4 weight="bold">{label}</V2_Text.H4>
+                        <Typography.BodyBL weight="bold">
+                            {label}
+                        </Typography.BodyBL>
                     ) : (
                         label
                     )}
@@ -276,7 +279,6 @@ export const DataTable = ({
                 <CheckBoxWrapper>
                     {enableSelectAll && (
                         <Checkbox
-                            displaySize="small"
                             checked={isAllCheckboxSelected()}
                             indeterminate={isIndeterminateCheckbox()}
                             onClick={() => {
@@ -354,7 +356,6 @@ export const DataTable = ({
             >
                 <CheckBoxWrapper>
                     <Checkbox
-                        displaySize="small"
                         checked={isRowSelected(rowId)}
                         onClick={() => {
                             if (onSelect) {
@@ -370,18 +371,22 @@ export const DataTable = ({
 
     const renderBasicEmptyView = () => {
         return (
-            <ErrorDisplayElement
+            <ErrorDisplay
                 type={"no-item-found"}
                 {...emptyView}
                 title={
                     emptyView?.title ? (
                         typeof emptyView.title === "string" ? (
-                            <V2_Text.H3>{emptyView.title}</V2_Text.H3>
+                            <ErrorDisplayTitle weight="bold">
+                                {emptyView.title}
+                            </ErrorDisplayTitle>
                         ) : (
                             emptyView.title
                         )
                     ) : (
-                        <V2_Text.H3>{"No <items> found"}</V2_Text.H3>
+                        <ErrorDisplayTitle weight="bold">
+                            {"No <items> found"}
+                        </ErrorDisplayTitle>
                     )
                 }
                 description={
@@ -419,15 +424,14 @@ export const DataTable = ({
                     }
                     $scrollable={scrollable}
                 >
-                    <V2_Text.H5 weight="semibold">{`${selectedIds.length} item${
+                    <Typography.BodyMD weight="semibold">{`${
+                        selectedIds.length
+                    } item${
                         selectedIds.length > 1 ? "s" : ""
-                    } selected`}</V2_Text.H5>
-                    <Button.Small
-                        styleType="link"
-                        onClick={onClearSelectionClick}
-                    >
+                    } selected`}</Typography.BodyMD>
+                    <TextButton type="button" onClick={onClearSelectionClick}>
                         Clear selection
-                    </Button.Small>
+                    </TextButton>
                     {actionBarContent}
                 </ActionBar>
             </ActionBarWrapper>
