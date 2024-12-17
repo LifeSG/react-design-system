@@ -1,87 +1,88 @@
 import { ICircleFillIcon } from "@lifesg/react-icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { PopoverInline } from "src/popover-v2";
-import { V2_Text } from "src/v2_text";
+import { Typography } from "src/typography";
+import { StackDecorator } from "stories/storybook-common";
 
 type Component = typeof PopoverInline;
 
 const meta: Meta<Component> = {
-    title: "Modules/PopoverV2/PopoverInline",
+    title: "Overlays/PopoverInline",
     component: PopoverInline,
 };
 
 export default meta;
 
 export const InlineText: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
-                <V2_Text.H3>
+                <Typography.HeaderSM weight="semibold">
                     The{" "}
                     <PopoverInline
                         content="fox"
                         popoverContent="It is quick and brown"
                     />{" "}
                     jumps over the dog
-                </V2_Text.H3>
-                <br />
-                <V2_Text.Body>
+                </Typography.HeaderSM>
+                <Typography.BodyBL>
                     The{" "}
                     <PopoverInline
                         content="fox"
                         popoverContent="It is quick and brown"
                     />{" "}
                     jumps over the dog
-                </V2_Text.Body>
+                </Typography.BodyBL>
             </>
         );
     },
+    decorators: [StackDecorator()],
 };
 
 export const InlineIcon: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
-                <V2_Text.H3>
+                <Typography.HeaderSM weight="semibold">
                     Get a free slice of pizza today{" "}
                     <PopoverInline
                         popoverContent="Terms and conditions apply"
                         icon={<ICircleFillIcon />}
                     />
-                </V2_Text.H3>
-                <br />
-                <V2_Text.Body>
+                </Typography.HeaderSM>
+                <Typography.BodyBL>
                     Get a free slice of pizza today{" "}
                     <PopoverInline
                         popoverContent="Terms and conditions apply"
                         icon={<ICircleFillIcon />}
                     />
-                </V2_Text.Body>
+                </Typography.BodyBL>
             </>
         );
     },
+    decorators: [StackDecorator()],
 };
 
 export const InlineTextAndIcon: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <V2_Text.Body>
+            <Typography.BodyBL>
                 Only available on{" "}
                 <PopoverInline
                     content="Fridays"
                     popoverContent="Operating hours: 9am to 5pm"
                     icon={<ICircleFillIcon />}
                 ></PopoverInline>
-            </V2_Text.Body>
+            </Typography.BodyBL>
         );
     },
 };
 
 export const UnderlineStyle: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
-                <V2_Text.Body>
+                <Typography.BodyBL>
                     This is the{" "}
                     <PopoverInline
                         content="underlined style"
@@ -90,9 +91,8 @@ export const UnderlineStyle: StoryObj<Component> = {
                         underlineStyle="underline"
                         underlineHoverStyle="underline"
                     />
-                </V2_Text.Body>
-                <br />
-                <V2_Text.Body>
+                </Typography.BodyBL>
+                <Typography.BodyBL>
                     This is the{" "}
                     <PopoverInline
                         content="dashed style"
@@ -101,8 +101,9 @@ export const UnderlineStyle: StoryObj<Component> = {
                         underlineStyle="underline-dashed"
                         underlineHoverStyle="underline-dashed"
                     />
-                </V2_Text.Body>
+                </Typography.BodyBL>
             </>
         );
     },
+    decorators: [StackDecorator()],
 };
