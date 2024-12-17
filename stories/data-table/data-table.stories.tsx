@@ -8,7 +8,7 @@ import { DATA_HEADERS, DATA_ROWS, generateRows } from "./row-data";
 type Component = typeof DataTable;
 
 const meta: Meta<Component> = {
-    title: "Modules/DataTable",
+    title: "Content/DataTable",
     component: DataTable,
 };
 
@@ -180,15 +180,13 @@ export const MultiSelectionOfRows: StoryObj<Component> = {
 };
 
 export const DisabledCheckboxes: StoryObj<Component> = {
-    render: () => {
-        const [selected, setSelected] = useState(["1", "3"]);
-        const [disabled, setDisabled] = useState(["1", "2"]);
+    render: (_args) => {
         return (
             <DataTable
                 headers={DATA_HEADERS}
                 rows={DATA_ROWS}
-                selectedIds={selected}
-                disabledIds={disabled}
+                selectedIds={["1", "3"]}
+                disabledIds={["1", "2"]}
                 enableMultiSelect
             />
         );
@@ -196,7 +194,7 @@ export const DisabledCheckboxes: StoryObj<Component> = {
 };
 
 export const AlternatingRows: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <DataTable
                 headers={DATA_HEADERS}
@@ -213,7 +211,6 @@ export const ActionBar: StoryObj<Component> = {
     render: () => {
         const [selected, setSelected] = useState(["1"]);
         const [rowCount, setRowCount] = useState(5);
-        const [height, setHeight] = useState("default");
         const handleOnClickSelect = (rowId, isSelected) => {
             if (isSelected) {
                 setSelected((selected) => [...selected, rowId]);
@@ -231,7 +228,6 @@ export const ActionBar: StoryObj<Component> = {
                 onRowCountChange={setRowCount}
             >
                 <DataTable
-                    key={height}
                     headers={DATA_HEADERS}
                     rows={generateRows(rowCount)}
                     alternatingRows
@@ -249,13 +245,13 @@ export const ActionBar: StoryObj<Component> = {
 };
 
 export const NoRows: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return <DataTable headers={DATA_HEADERS} />;
     },
 };
 
 export const LoadingState: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return <DataTable headers={DATA_HEADERS} loadState="loading" />;
     },
 };
