@@ -14,8 +14,9 @@ import {
 } from "@floating-ui/react";
 import { useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { V2_MediaWidths } from "../v2_media";
+import { useTheme } from "styled-components";
 import { useFloatingChild } from "../overlay/use-floating-context";
+import { Breakpoint } from "../theme";
 import { PopoverV2 } from "./popover";
 import { TriggerContainer } from "./popover-trigger.styles";
 import { PopoverV2TriggerProps, PopoverV2TriggerType } from "./types";
@@ -39,9 +40,9 @@ export const PopoverTrigger = ({
     const [visible, setVisible] = useState<boolean>(false);
     const nodeRef = useRef<HTMLDivElement>();
     const popoverRef = useRef<HTMLDivElement>();
-    const isMobile = useMediaQuery({
-        maxWidth: V2_MediaWidths.mobileL,
-    });
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
 
     const { refs, floatingStyles, context } = useFloating({
         open: visible,
