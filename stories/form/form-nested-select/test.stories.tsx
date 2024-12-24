@@ -23,7 +23,7 @@ export const Single = {
             <div style={{ width: "23rem" }}>
                 <NestedDropdownList
                     selectedKeyPaths={selectedKeyPath ? [selectedKeyPath] : []}
-                    onSelectItem={setSelectedKeyPath}
+                    onSelectItem={(item) => setSelectedKeyPath(item.keyPath)}
                     listItems={options}
                 />
             </div>
@@ -40,7 +40,7 @@ export const SingleExpanded = {
             <div style={{ width: "23rem" }}>
                 <NestedDropdownList
                     selectedKeyPaths={selectedKeyPath ? [selectedKeyPath] : []}
-                    onSelectItem={setSelectedKeyPath}
+                    onSelectItem={(item) => setSelectedKeyPath(item.keyPath)}
                     listItems={options}
                     mode="expand"
                 />
@@ -58,7 +58,7 @@ export const SingleCollapsed = {
             <div style={{ width: "23rem" }}>
                 <NestedDropdownList
                     selectedKeyPaths={selectedKeyPath ? [selectedKeyPath] : []}
-                    onSelectItem={setSelectedKeyPath}
+                    onSelectItem={(item) => setSelectedKeyPath(item.keyPath)}
                     listItems={options}
                     mode="collapse"
                 />
@@ -76,7 +76,7 @@ export const SingleWithSearch = {
             <div style={{ width: "23rem" }}>
                 <NestedDropdownList
                     selectedKeyPaths={selectedKeyPath ? [selectedKeyPath] : []}
-                    onSelectItem={setSelectedKeyPath}
+                    onSelectItem={(item) => setSelectedKeyPath(item.keyPath)}
                     enableSearch
                     listItems={optionsForSearch}
                 />
@@ -94,7 +94,7 @@ export const SingleWithSelectableCategory = {
             <div style={{ width: "23rem" }}>
                 <NestedDropdownList
                     selectedKeyPaths={selectedKeyPath ? [selectedKeyPath] : []}
-                    onSelectItem={setSelectedKeyPath}
+                    onSelectItem={(item) => setSelectedKeyPath(item.keyPath)}
                     selectableCategory
                     listItems={options}
                 />
@@ -125,7 +125,7 @@ export const Multi = {
             <div style={{ width: "23rem" }}>
                 <NestedDropdownList
                     selectedKeyPaths={selectedKeyPaths}
-                    onSelectItem={handleSelectItem}
+                    onSelectItem={(item) => handleSelectItem(item.keyPath)}
                     multiSelect
                     listItems={options}
                 />
@@ -156,7 +156,7 @@ export const MultiWithSearch = {
             <div style={{ width: "23rem" }}>
                 <NestedDropdownList
                     selectedKeyPaths={selectedKeyPaths}
-                    onSelectItem={handleSelectItem}
+                    onSelectItem={(item) => handleSelectItem(item.keyPath)}
                     multiSelect
                     enableSearch
                     listItems={optionsForSearch}

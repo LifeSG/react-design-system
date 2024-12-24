@@ -140,7 +140,7 @@ export interface NestedDropdownListProps<T>
     /** If specified, the category label is selectable */
     selectableCategory?: boolean | undefined;
 
-    onSelectItem?: ((keyPath: string[]) => void) | undefined;
+    onSelectItem?: ((item: NestedDropdownListLocalItem<T>) => void) | undefined;
     onSelectAll?: (() => void) | undefined;
     onRetry?: (() => void) | undefined;
 }
