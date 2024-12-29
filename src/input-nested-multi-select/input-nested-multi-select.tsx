@@ -1,27 +1,30 @@
-import React, { useEffect, useRef, useState } from "react";
+import { OpenChangeReason } from "@floating-ui/react";
 import isEmpty from "lodash/isEmpty";
-import { NestedDropdownList } from "../shared/nested-dropdown-list/nested-dropdown-list";
-import { DropdownWrapper } from "../shared/dropdown-wrapper";
+import isEqual from "lodash/isEqual";
+import React, { useEffect, useRef, useState } from "react";
 import {
-    CombinedFormattedOptionProps,
-    SelectedItem,
-} from "../shared/nested-dropdown-list/types";
+    ExpandableElement,
+    NestedDropdownList,
+    NestedDropdownListItemProps,
+    NestedDropdownListLocalItem,
+} from "../shared/dropdown-list-v2";
 import {
-    Divider,
-    IconContainer,
+    DropdownRenderProps,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
+import {
     LabelContainer,
     PlaceholderLabel,
-    Selector,
-    StyledChevronIcon,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
-import { StringHelper } from "../util";
+import { InputBox } from "../shared/input-wrapper/input-wrapper";
+import { SimpleIdGenerator, StringHelper } from "../util";
+import { SelectedItem, getSelectedItems, getSelectedSubItems } from "./helpers";
 import { InputNestedMultiSelectProps } from "./types";
-import { CombinedOptionProps } from "../input-nested-select";
 
 export const InputNestedMultiSelect = <V1, V2, V3>({
     placeholder = "Select",
-    options,
+    options: _options,
     disabled,
     error,
     className,
@@ -33,156 +36,128 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     enableSearch,
     searchPlaceholder,
     hideNoResultsDisplay,
-    listStyleWidth,
     readOnly,
     onSearch,
     onSelectOptions,
     onShowOptions,
     onHideOptions,
     onRetry,
+    onBlur,
     optionsLoadState = "success",
     optionTruncationType = "end",
-    ...otherProps
+    variant,
+    alignment,
+    dropdownZIndex,
 }: InputNestedMultiSelectProps<V1, V2, V3>): JSX.Element => {
-    // =============================================================================
+    // =========================================================================
     // CONST, STATE
-    // =============================================================================
+    // =========================================================================
+    const options = _options as NestedDropdownListItemProps<V1 | V2 | V3>[];
     const [selectedKeyPaths, setSelectedKeyPaths] = useState<string[][]>(
         _selectedKeyPaths || []
     );
     const [selectedItems, setSelectedItems] = useState<
-        SelectedItem<V1, V2, V3>[]
+        SelectedItem<V1 | V2 | V3>[]
     >([]);
 
     const [showOptions, setShowOptions] = useState<boolean>(false);
+    const [focused, setFocused] = useState<boolean>(false);
+    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
+    const nodeRef = useRef<HTMLDivElement>();
     const selectorRef = useRef<HTMLButtonElement>();
     const labelContainerRef = useRef<HTMLDivElement>();
 
-    // =============================================================================
+    // =========================================================================
     // EFFECTS
-    // =============================================================================
+    // =========================================================================
     useEffect(() => {
         const newKeyPath = _selectedKeyPaths || [];
-        const selectedItems = getSelectedItemFromKey(options, newKeyPath);
+        const selectedItems = getSelectedItems(options, newKeyPath);
 
         setSelectedKeyPaths(newKeyPath);
         setSelectedItems(selectedItems);
     }, [_selectedKeyPaths, options]);
 
-    // =============================================================================
+    // =========================================================================
     // EVENT HANDLERS
-    // =============================================================================
-    const handleSelectorClick = (event: React.MouseEvent) => {
-        event.preventDefault();
-
-        if (disabled || readOnly) {
-            return;
+    // =========================================================================
+    const handleSelectAll = (
+        keyPaths: string[][],
+        items: NestedDropdownListLocalItem<V1 | V2 | V3>[]
+    ) => {
+        if (keyPaths.length) {
+            const selectedItems = items.map((item) => ({
+                keyPath: item.keyPath,
+                label: item.item.label,
+                value: item.item.value,
+            }));
+            setSelectedKeyPaths(keyPaths);
+            setSelectedItems(selectedItems);
+            performOnSelectOptions(keyPaths, selectedItems);
+        } else {
+            const keyPaths = [];
+            const selectedItems = [];
+            setSelectedKeyPaths(keyPaths);
+            setSelectedItems(selectedItems);
+            performOnSelectOptions(keyPaths, selectedItems);
         }
-
-        setShowOptions(!showOptions);
-        triggerOptionDisplayCallback(!showOptions);
     };
 
-    const handleSelectItem = (
-        item: CombinedFormattedOptionProps<V1, V2, V3>
+    const handleListItemClick = (
+        listItem: NestedDropdownListLocalItem<V1 | V2 | V3>
     ) => {
-        const selectedItem = getItemAtKeyPath(item.keyPath);
-        let newKeyPaths: string[][] = [];
-
-        if (selectedItem.subItems) {
-            const selectableOptionKeyPaths = getSubItemKeyPaths(
-                selectedItem,
-                item.keyPath
-            );
-
-            const selectedCount = selectedKeyPaths.filter((keyPath) =>
-                isSubItem(keyPath, item.keyPath)
-            ).length;
-
-            if (selectedCount < selectableOptionKeyPaths.length) {
-                newKeyPaths = [
-                    ...new Map(
-                        [...selectedKeyPaths, ...selectableOptionKeyPaths].map(
-                            (k) => [k.join("-"), k]
-                        )
-                    ).values(),
-                ];
-            } else {
-                newKeyPaths = selectedKeyPaths.filter(
-                    (keyPath) => !isSubItem(keyPath, item.keyPath)
-                );
-            }
-        } else {
-            const selected = selectedKeyPaths.some((keyPath) =>
-                isSubItem(keyPath, item.keyPath)
-            );
-
-            if (selected) {
-                const filteredItems = selectedItems.filter(
-                    ({ keyPath }) =>
-                        JSON.stringify(keyPath) !== JSON.stringify(item.keyPath)
-                );
-                newKeyPaths = filteredItems.map((i) => i.keyPath);
-            } else {
-                newKeyPaths = [...selectedKeyPaths, item.keyPath];
-            }
-        }
-
-        const newSelectedItems = getSelectedItemFromKey(options, newKeyPaths);
-
-        setSelectedKeyPaths(newKeyPaths);
+        const newSelectedItems: SelectedItem<V1 | V2 | V3>[] =
+            getNewSelection(listItem);
+        const newKeyPaths = newSelectedItems.map((item) => item.keyPath);
         setSelectedItems(newSelectedItems);
-
-        if (selectorRef.current) selectorRef.current.focus();
-
+        setSelectedKeyPaths(newKeyPaths);
         performOnSelectOptions(newKeyPaths, newSelectedItems);
     };
 
-    const handleSelectAll = (
-        keyPaths: string[][],
-        items: SelectedItem<V1, V2, V3>[]
-    ) => {
-        if (keyPaths && keyPaths.length > 0) {
-            setSelectedKeyPaths(keyPaths);
-            setSelectedItems(items);
-            performOnSelectOptions(keyPaths, items);
-        } else {
-            setSelectedKeyPaths([]);
-            setSelectedItems([]);
-            performOnSelectOptions();
+    const handleNodeFocus = () => {
+        if (!focused && !showOptions) {
+            setFocused(true);
         }
     };
 
-    const handleListDismiss = (setSelectorFocus?: boolean | undefined) => {
-        if (showOptions) {
-            setShowOptions(false);
-            triggerOptionDisplayCallback(false);
-        }
-
-        if (setSelectorFocus && selectorRef.current) {
-            selectorRef.current.focus();
+    const handleNodeBlur = (e: React.FocusEvent) => {
+        if (
+            focused &&
+            !showOptions &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
+        ) {
+            setFocused(false);
+            onBlur?.();
         }
     };
 
-    const handleWrapperBlur = () => {
+    const handleOpen = () => {
+        setShowOptions(true);
+        triggerOptionDisplayCallback(true);
+        setFocused(true);
+    };
+
+    const handleClose = (reason: OpenChangeReason) => {
+        setShowOptions(false);
+        triggerOptionDisplayCallback(false);
+
+        // click to toggle should not blur the input
+        if (reason !== "click") {
+            setFocused(false);
+            onBlur?.();
+        }
+    };
+
+    const handleDismiss = () => {
+        selectorRef.current.focus();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };
 
-    // =============================================================================
+    // =========================================================================
     // HELPER FUNCTION
-    // =============================================================================
-    const performOnSelectOptions = (
-        keyPaths: string[][] = [],
-        items: SelectedItem<V1, V2, V3>[] = []
-    ) => {
-        if (onSelectOptions) {
-            const returnValue = items.map((item) => item.value);
-            onSelectOptions(keyPaths, returnValue);
-        }
-    };
-
+    // =========================================================================
     const getDisplayValue = (): string => {
         const { label, value } = selectedItems[0];
 
@@ -193,111 +168,6 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         } else {
             return label;
         }
-    };
-
-    const getItemAtKeyPath = (_keyPath: string[]) => {
-        const find = (
-            items: CombinedOptionProps<V1, V2, V3>[],
-            keyPath: string[]
-        ): CombinedOptionProps<V1, V2, V3> => {
-            const [currentKey, ...nextKeyPath] = keyPath;
-
-            if (isEmpty(items) || !currentKey) return undefined;
-
-            const item = items.find((item) => item.key === currentKey);
-
-            if (!item || !nextKeyPath.length) return item;
-
-            return find(item.subItems, nextKeyPath);
-        };
-
-        const item = find(options, _keyPath);
-
-        return item;
-    };
-
-    const isSubItem = (listItemKeyPath: string[], categoryKeyPath: string[]) =>
-        JSON.stringify(categoryKeyPath) ===
-        JSON.stringify(listItemKeyPath.slice(0, categoryKeyPath.length));
-
-    const getSubItemKeyPaths = (
-        _item: CombinedOptionProps<V1, V2, V3>,
-        selectedKeyPath: string[]
-    ) => {
-        const targetKeyPaths: string[][] = [];
-        const parentKey = selectedKeyPath.slice(0, -1);
-
-        const find = (
-            item: CombinedOptionProps<V1, V2, V3>,
-            parentKey: string[]
-        ) => {
-            const releventKey = [...parentKey, item.key];
-
-            if (!item.subItems) {
-                targetKeyPaths.push(releventKey);
-                return;
-            }
-
-            item.subItems.forEach((subItem) => find(subItem, releventKey));
-        };
-
-        find(_item, parentKey);
-
-        return targetKeyPaths;
-    };
-
-    const getSelectedItemFromKey = (
-        options: CombinedOptionProps<V1, V2, V3>[],
-        keyPaths: string[][]
-    ) => {
-        let count = 0;
-
-        const findSelectedItem = (
-            items: CombinedOptionProps<V1, V2, V3>[],
-            keyPath: string[]
-        ): SelectedItem<V1, V2, V3> | undefined => {
-            const [currentKey, ...nextKeyPath] = keyPath;
-
-            if (isEmpty(items) || !currentKey) {
-                return undefined;
-            }
-
-            const item = items.find((item) => item.key === currentKey);
-
-            if (!item) {
-                return undefined;
-            }
-
-            const { label, value, subItems } = item;
-
-            if (!nextKeyPath.length) {
-                const result = {
-                    label,
-                    value,
-                    keyPath: keyPaths[count],
-                };
-                count = count + 1;
-                return result;
-            }
-
-            return findSelectedItem(subItems, nextKeyPath);
-        };
-
-        const selectedItems = [];
-
-        for (let i = 0; i < keyPaths.length; i++) {
-            const item = findSelectedItem(options, keyPaths[i]);
-
-            if (item) {
-                selectedItems.push({
-                    value: item.value,
-                    label: item.label,
-                    keyPath: item.keyPath,
-                });
-            }
-        }
-
-        return selectedItems;
     };
 
     const truncateValue = (value: string) => {
@@ -323,9 +193,56 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         }
     };
 
-    // =============================================================================
+    const performOnSelectOptions = (
+        keyPaths: string[][],
+        items: SelectedItem<V1 | V2 | V3>[]
+    ) => {
+        if (onSelectOptions) {
+            const returnValue = items.map((item) => item.value);
+            onSelectOptions(keyPaths, returnValue);
+        }
+    };
+
+    const getNewSelection = (
+        item: NestedDropdownListLocalItem<V1 | V2 | V3>
+    ): SelectedItem<V1 | V2 | V3>[] => {
+        if (item.checked === true) {
+            // remove item or subitems
+            return selectedItems.filter((selectedItem) => {
+                const ancestorKeyPath = selectedItem.keyPath.slice(
+                    0,
+                    item.keyPath.length
+                );
+                return !isEqual(item.keyPath, ancestorKeyPath);
+            });
+        } else {
+            // select item or all subitems
+            const nextSelection = [...selectedItems];
+            const newItemsToAdd = item.hasSubItems
+                ? getSelectedSubItems(options, item.keyPath)
+                : [
+                      {
+                          value: item.item.value,
+                          label: item.item.label,
+                          keyPath: item.keyPath,
+                      },
+                  ];
+            newItemsToAdd.forEach((addedItem) => {
+                if (
+                    !selectedItems.find((selectedItem) =>
+                        isEqual(selectedItem.keyPath, addedItem.keyPath)
+                    )
+                ) {
+                    nextSelection.push(addedItem);
+                }
+            });
+            return nextSelection;
+        }
+    };
+
+    // =========================================================================
     // RENDER FUNCTION
-    // =============================================================================
+    // =========================================================================
     const renderLabel = () => {
         if (isEmpty(selectedItems)) {
             return (
@@ -343,68 +260,78 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     };
 
     const renderSelectorContent = () => (
-        <>
-            <LabelContainer ref={labelContainerRef} $disabled={disabled}>
-                {renderLabel()}
-            </LabelContainer>
-            {!readOnly && (
-                <IconContainer expanded={showOptions}>
-                    <StyledChevronIcon />
-                </IconContainer>
-            )}
-        </>
+        <LabelContainer ref={labelContainerRef} $disabled={disabled}>
+            {renderLabel()}
+        </LabelContainer>
     );
 
-    const renderOptionList = () => {
-        if ((options && options.length > 0) || onRetry) {
-            return (
-                <NestedDropdownList
-                    data-testid="nested-dropdown-list"
-                    multiSelect={true}
-                    listItems={options}
-                    listStyleWidth={listStyleWidth}
-                    visible={showOptions}
-                    mode={mode}
-                    selectedKeyPaths={selectedKeyPaths}
-                    itemsLoadState={optionsLoadState}
-                    itemTruncationType={optionTruncationType}
-                    enableSearch={enableSearch}
-                    searchPlaceholder={searchPlaceholder}
-                    hideNoResultsDisplay={hideNoResultsDisplay}
-                    onDismiss={handleListDismiss}
-                    onSelectAll={handleSelectAll}
-                    onSelectItem={handleSelectItem}
-                    onSearch={onSearch}
-                    onRetry={onRetry}
-                />
-            );
-        }
+    const renderElement = () => {
+        return (
+            <InputBox
+                className={className}
+                data-testid={testId}
+                id={id}
+                ref={nodeRef}
+                tabIndex={-1}
+                onFocus={handleNodeFocus}
+                onBlur={handleNodeBlur}
+                $focused={focused}
+                $disabled={disabled}
+                $readOnly={readOnly}
+                $error={error}
+            >
+                <ExpandableElement
+                    ref={selectorRef}
+                    disabled={disabled}
+                    expanded={showOptions}
+                    listboxId={internalId}
+                    popupRole="tree"
+                    readOnly={readOnly}
+                    variant={variant}
+                >
+                    {renderSelectorContent()}
+                </ExpandableElement>
+            </InputBox>
+        );
+    };
 
-        return null;
+    const renderDropdown = ({ elementWidth }: DropdownRenderProps) => {
+        return (
+            <NestedDropdownList
+                listboxId={internalId}
+                listItems={options}
+                multiSelect
+                selectedKeyPaths={selectedKeyPaths}
+                itemsLoadState={optionsLoadState}
+                itemTruncationType={optionTruncationType}
+                enableSearch={enableSearch}
+                searchPlaceholder={searchPlaceholder}
+                hideNoResultsDisplay={hideNoResultsDisplay}
+                onSelectItem={handleListItemClick}
+                onSelectAll={handleSelectAll}
+                onRetry={onRetry}
+                onSearch={onSearch}
+                variant={variant}
+                mode={mode}
+                width={elementWidth}
+            />
+        );
     };
 
     return (
-        <DropdownWrapper
-            className={className}
-            show={showOptions}
-            error={error && !showOptions}
-            disabled={disabled}
-            readOnly={readOnly}
-            testId={testId}
-            onBlur={handleWrapperBlur}
-        >
-            <Selector
-                ref={selectorRef}
-                type="button"
-                data-testid={id || "selector"}
-                disabled={disabled}
-                onClick={handleSelectorClick}
-                {...otherProps}
-            >
-                {renderSelectorContent()}
-            </Selector>
-            {showOptions && <Divider />}
-            {renderOptionList()}
-        </DropdownWrapper>
+        <ElementWithDropdown
+            enabled={!readOnly && !disabled}
+            isOpen={showOptions}
+            renderElement={renderElement}
+            renderDropdown={renderDropdown}
+            onOpen={handleOpen}
+            onClose={handleClose}
+            onDismiss={handleDismiss}
+            clickToToggle
+            offset={8}
+            alignment={alignment}
+            fitAvailableHeight
+            customZIndex={dropdownZIndex}
+        />
     );
 };

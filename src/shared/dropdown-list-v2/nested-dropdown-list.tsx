@@ -203,6 +203,24 @@ export const NestedDropdownList = <T,>({
         setFocusedIndex(index);
     };
 
+    const handleOnSelectAll = () => {
+        const activeList = searchActive
+            ? filteredListItems
+            : unfilteredListItems;
+
+        const keyPaths: string[][] = [];
+        const items: NestedDropdownListLocalItem<T>[] = [];
+        activeList.forEach((item) => {
+            if (item.hasSubItems) {
+                return;
+            }
+            keyPaths.push(item.keyPath);
+            items.push(item);
+        });
+
+        onSelectAll?.(keyPaths, items);
+    };
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -363,7 +381,7 @@ export const NestedDropdownList = <T,>({
             return (
                 <SelectAllContainer>
                     <SelectAllButton
-                        onClick={onSelectAll}
+                        onClick={handleOnSelectAll}
                         type="button"
                         $variant={variant}
                     >
