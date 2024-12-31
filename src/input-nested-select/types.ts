@@ -4,33 +4,36 @@ import {
 } from "../input-select";
 import {
     DropdownSearchProps,
-    DropdownStyleProps,
-    Mode,
-} from "../shared/nested-dropdown-list/types";
+    DropdownVariantType,
+    ExpandMode,
+} from "../shared/dropdown-list-v2/types";
+import { DropdownAlignmentType } from "../shared/dropdown-wrapper/types";
 
+// =============================================================================
+// SHARED PROPS
+// =============================================================================
 export interface InputNestedSelectOptionsProps<V1, V2, V3>
     extends Omit<InputSelectOptionsProps<V1>, "options"> {
     options: L1OptionProps<V1, V2, V3>[];
 }
 
-// =============================================================================
-// INPUT SELECT PROPS
-// =============================================================================
-export interface InputNestedSelectSharedProps<V1, V2, V3> {
+export interface InputNestedSelectSharedProps<V1, V2, V3>
+    extends Omit<InputSelectSharedProps<V1>, "options"> {
     readOnly?: boolean | undefined;
     /** Specifies if items are expanded or collapsed when the dropdown is opened */
-    mode?: Mode | undefined;
+    mode?: ExpandMode | undefined;
     /** Function to convert selected value into a string */
     valueToStringFunction?: ((value: V1 | V2 | V3) => string) | undefined;
 }
 
+// =============================================================================
+// INPUT SELECT PROPS
+// =============================================================================
 export interface InputNestedSelectProps<V1, V2, V3>
     extends React.HTMLAttributes<HTMLElement>,
         InputNestedSelectOptionsProps<V1, V2, V3>,
         InputNestedSelectSharedProps<V1, V2, V3>,
-        Omit<InputSelectSharedProps<V1>, "options">,
-        DropdownSearchProps,
-        DropdownStyleProps {
+        DropdownSearchProps<L1OptionProps<V1, V2, V3>> {
     /** Specifies key path of the selected option */
     selectedKeyPath?: string[] | undefined;
     /** If specified, the category label is selectable */
@@ -39,6 +42,12 @@ export interface InputNestedSelectProps<V1, V2, V3>
     onSelectOption?:
         | ((keyPath: string[], value: V1 | V2 | V3) => void)
         | undefined;
+    variant?: DropdownVariantType | undefined;
+    alignment?: DropdownAlignmentType | undefined;
+    dropdownZIndex?: number | undefined;
+    /** @deprecated this has no effect as the dropdown will automatically resize */
+    listStyleWidth?: string | undefined;
+    onBlur?: (() => void) | undefined;
 }
 
 /** To be exposed for Form component inheritance */
@@ -48,7 +57,7 @@ export type InputNestedSelectPartialProps<V1, V2, V3> = Omit<
 >;
 
 // =============================================================================
-// Recursive Types
+// OPTION PROPS
 // =============================================================================
 interface BaseOptionProps {
     label: string;

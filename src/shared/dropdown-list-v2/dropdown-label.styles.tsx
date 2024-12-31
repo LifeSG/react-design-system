@@ -65,6 +65,14 @@ export const SecondaryText = styled.div<LabelStyleProps>`
     }}
 `;
 
+export const MatchedText = styled.span<LabelStyleProps>`
+    ${(props) =>
+        TextStyleHelper.getTextStyle(
+            props.$variant === "small" ? "BodySmall" : "Body",
+            "semibold"
+        )}
+`;
+
 export const Label = styled.div<LabelStyleProps>`
     text-align: left;
     width: 100%;
