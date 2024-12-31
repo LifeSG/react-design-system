@@ -88,12 +88,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     useEffect(() => {
         setSelectedKeyPaths(_selectedKeyPath ? [_selectedKeyPath] : []);
         const selectedItem = findItemByKeyPath(options, _selectedKeyPath || []);
-        if (selectedItem) {
-            const { label, value } = selectedItem;
-            setSelectedItem({ label, value });
-        } else {
-            setSelectedItem(undefined);
-        }
+        setSelectedItem(selectedItem ?? undefined);
     }, [_selectedKeyPath, options]);
 
     // =========================================================================
