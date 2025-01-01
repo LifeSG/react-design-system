@@ -207,7 +207,9 @@ export const InputNestedSelect = <V1, V2, V3>({
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer ref={labelContainerRef}>{renderLabel()}</LabelContainer>
+        <LabelContainer ref={labelContainerRef} $disabled={disabled}>
+            {renderLabel()}
+        </LabelContainer>
     );
 
     const renderElement = () => {
