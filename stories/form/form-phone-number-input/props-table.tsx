@@ -111,7 +111,19 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "autoComplete",
-                description: "The autoComplete attribute of the input field",
+                description: (
+                    <>
+                        The{" "}
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            autoComplete
+                        </a>{" "}
+                        attribute of the input field
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
