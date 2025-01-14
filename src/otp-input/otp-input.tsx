@@ -217,6 +217,7 @@ export const OtpInput = ({
                             error={!!errorMessage}
                             onChange={handleChange(index)}
                             onKeyDown={handleKeyDown(index)}
+                            autoComplete="off"
                             {...otherProps}
                         />
                     );
