@@ -54,4 +54,5 @@ export interface PhoneNumberInputProps extends React.AriaAttributes {
     placeholder?: string | undefined;
     readOnly?: boolean | undefined;
     id?: string | undefined;
+    autoComplete?: string | undefined;
 }

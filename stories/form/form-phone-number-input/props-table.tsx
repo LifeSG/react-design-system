@@ -110,6 +110,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["PhoneNumberInputValue"],
             },
             {
+                name: "autoComplete",
+                description: "The autoComplete attribute of the input field",
+                propTypes: ["string"],
+            },
+            {
                 name: "onChange",
                 description:
                     "Called when a change is made on the input field or a selection on the country code options dropdown",
