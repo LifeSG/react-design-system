@@ -24,6 +24,7 @@ export const UnitNumberInput = ({
     onBlurRaw,
     readOnly,
     placeholder = "00-8888",
+    autoComplete,
     ...otherProps
 }: UnitNumberInputProps) => {
     // =============================================================================
@@ -280,6 +281,7 @@ export const UnitNumberInput = ({
                         ? ""
                         : getPlaceholder(placeholder)[0]
                 }
+                autoComplete={autoComplete}
             />
             <UnitNumberDivider $inactive={floorValue.length === 0}>
                 -
@@ -304,6 +306,7 @@ export const UnitNumberInput = ({
                         ? ""
                         : getPlaceholder(placeholder)[1]
                 }
+                autoComplete={autoComplete}
             />
         </>
     );
