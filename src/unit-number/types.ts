@@ -16,6 +16,7 @@ export interface UnitNumberInputProps extends React.AriaAttributes {
     name?: string | undefined;
     error?: boolean | undefined;
     disabled?: boolean | undefined;
+    autoComplete?: string | undefined;
     onChange?: ((value: string) => void) | undefined;
     /**
      * Function that returns the raw values in the UnitNumberInput on change in an array format
