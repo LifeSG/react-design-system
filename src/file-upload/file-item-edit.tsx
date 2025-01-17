@@ -11,9 +11,9 @@ import {
     Item,
     NameSection,
 } from "./file-item-edit.styles";
+import { FileListItemThumbnail } from "./file-list-item/file-list-item-thumbnail";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
-import { FileListItemThumbnail } from "./file-list-item/file-list-item-thumbnail";
 
 interface Props {
     fileItem: FileItemProps;

@@ -6,7 +6,7 @@ import { SimpleIdGenerator } from "src/util/simple-id-generator";
 type Component = typeof FileUpload;
 
 const meta: Meta<Component> = {
-    title: "Modules/FileUpload",
+    title: "Selection and input/FileUpload",
     component: FileUpload,
 };
 
@@ -282,8 +282,8 @@ export const SortableFileItems: StoryObj<Component> = {
 };
 
 export const ReadonlyState: StoryObj<Component> = {
-    render: () => {
-        const [fileItems, setFileItems] = useState([
+    render: (_args) => {
+        const [fileItems] = useState([
             {
                 id: "1",
                 name: "img-1.jpg",
@@ -312,7 +312,7 @@ export const ReadonlyState: StoryObj<Component> = {
 };
 
 export const TextStyling: StoryObj<Component> = {
-    render: (args) => {
+    render: (_args) => {
         const [fileItems, setFileItems] = useState([]);
         const handleChange = (files) => {
             const newFileItems = files.map((file) => {
@@ -365,7 +365,6 @@ export const TextStyling: StoryObj<Component> = {
                         </ol>
                     </>
                 }
-                {...args}
             />
         );
     },

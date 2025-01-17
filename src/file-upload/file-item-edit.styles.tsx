@@ -1,8 +1,7 @@
 import styled, { css } from "styled-components";
-import { V2_MediaQuery } from "../v2_media/media";
 import { Button } from "../button/button";
-import { V2_Text } from "../v2_text/text";
-import { V2_Color } from "../v2_color/color";
+import { Border, Colour, MediaQuery, Spacing } from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -17,18 +16,18 @@ interface ActionButtonSectionStyleProps {
 export const Item = styled.li`
     display: flex;
     flex-direction: column;
-    padding: 2rem 0;
+    padding: ${Spacing["spacing-32"]} 0;
     background: transparent;
 
     :not(:last-child) {
-        border-bottom: 1px solid ${V2_Color.Neutral[5]};
+        border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     }
 `;
 
 export const ContentSection = styled.div`
     display: flex;
     align-items: flex-start;
-    margin-bottom: 1rem;
+    margin-bottom: ${Spacing["spacing-16"]};
     width: 100%;
 `;
 
@@ -44,37 +43,39 @@ export const NameSection = styled.div`
     justify-content: space-between;
     margin-bottom: 1rem;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         flex-direction: column;
         justify-content: flex-start;
     }
 `;
 
-export const FileNameText = styled(V2_Text.BodySmall)`
+export const FileNameText = styled(Typography.BodyMD)`
     display: flex;
     flex: 1;
-    margin-right: 1rem;
+    margin-right: ${Spacing["spacing-16"]};
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         margin-right: 0;
-        margin-bottom: 0.5rem;
+        margin-bottom: ${Spacing["spacing-8"]};
     }
 `;
 
-export const FileSizeText = styled(V2_Text.BodySmall)``;
+export const FileSizeText = styled(Typography.BodyMD)``;
 
 export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
     display: flex;
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         flex-direction: column;
     }
 
     ${(props) => {
         if (props.$thumbnail) {
             return css`
-                margin-left: 8rem; // 6rem width + 2rem gap
+                margin-left: calc(
+                    6rem + ${Spacing["spacing-32"]}
+                ); // 6rem width + 2rem gap
 
-                ${V2_MediaQuery.MaxWidth.mobileL} {
+                ${MediaQuery.MaxWidth.sm} {
                     margin-left: 0;
                 }
             `;
@@ -85,13 +86,13 @@ export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
 export const ActionButton = styled(Button.Small)`
     width: 7.5rem;
     :not(:last-of-type) {
-        margin-right: 1rem;
+        margin-right: ${Spacing["spacing-16"]};
     }
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         width: 100%;
         :not(:last-of-type) {
-            margin-bottom: 1rem;
+            margin-bottom: ${Spacing["spacing-16"]};
         }
     }
 `;
