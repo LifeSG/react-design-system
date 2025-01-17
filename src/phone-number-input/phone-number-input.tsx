@@ -19,6 +19,7 @@ export const PhoneNumberInput = ({
     onHideOptions,
     onShowOptions,
     placeholder,
+    autoComplete,
     ...otherProps
 }: PhoneNumberInputProps) => {
     // =============================================================================
@@ -161,6 +162,7 @@ export const PhoneNumberInput = ({
             placeholder={placeholder}
             addon={getAddonProps()}
             inputMode="numeric"
+            autoComplete={autoComplete}
             {...otherProps}
         />
     );

@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
-import { LocalNavItemComponentProps } from "../internal-types";
+import { LocalNavDropdownItemComponentProps } from "../internal-types";
 import { LocalNavDropdownProps, LocalNavItemProps } from "../types";
 import {
     Backdrop,
@@ -202,26 +202,28 @@ const Component = (
         isSelected,
         item,
         renderItem,
-    }: LocalNavItemComponentProps) => {
+    }: LocalNavDropdownItemComponentProps) => {
         const { id, title } = item;
 
-        const renderTitle = () => {
-            if (renderItem) {
-                return renderItem(item, { selected: isSelected });
-            }
+        if (renderItem) {
             return (
-                <>
-                    {isSelected && <StyledTickIcon />}
-                    <NavItemLabel $isSelected={isSelected}>
-                        {title}
-                    </NavItemLabel>
-                </>
+                <li id={id} onClick={handleClick}>
+                    {renderItem(item, {
+                        selected: isSelected,
+                        stickied: isStickied,
+                    })}
+                </li>
             );
-        };
+        }
 
         return (
-            <NavItem id={id} $isSelected={isSelected} onClick={handleClick}>
-                {renderTitle()}
+            <NavItem
+                id={id}
+                $isSelected={isSelected && isStickied}
+                onClick={handleClick}
+            >
+                {isSelected && <StyledTickIcon />}
+                <NavItemLabel $isSelected={isSelected}>{title}</NavItemLabel>
             </NavItem>
         );
     };
@@ -260,8 +262,7 @@ const Component = (
                             renderDropdownNavItem({
                                 handleClick: (e) =>
                                     handleNavItemClick(e, item, i),
-                                isSelected:
-                                    i === selectedItemIndex && isStickied,
+                                isSelected: i === selectedItemIndex,
                                 item,
                                 renderItem,
                             })

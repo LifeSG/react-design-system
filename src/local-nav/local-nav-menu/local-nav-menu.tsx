@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React from "react";
-import { LocalNavItemComponentProps } from "../internal-types";
+import { LocalNavMenuItemComponentProps } from "../internal-types";
 import { LocalNavMenuProps } from "../types";
 import { Nav, NavItem, TextLabel } from "./local-nav-menu.styles";
 
@@ -36,7 +36,7 @@ const Component = (
         isSelected,
         item,
         renderItem,
-    }: LocalNavItemComponentProps) => {
+    }: LocalNavMenuItemComponentProps) => {
         const { id, title } = item;
 
         const renderTitle = () => {

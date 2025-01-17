@@ -110,6 +110,23 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["PhoneNumberInputValue"],
             },
             {
+                name: "autoComplete",
+                description: (
+                    <>
+                        The{" "}
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            autoComplete
+                        </a>{" "}
+                        attribute of the input field
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
                 name: "onChange",
                 description:
                     "Called when a change is made on the input field or a selection on the country code options dropdown",

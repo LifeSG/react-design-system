@@ -43,7 +43,7 @@ const COMMON_ATTRIBUTES: ApiTableAttributeRowProps[] = [
         name: "renderItem",
         description: "Function to customise the rendering of the nav item",
         propTypes: [
-            "((item: LocalNavItemProps,renderProps: { selected: boolean }) => React.ReactNode",
+            "((item: LocalNavItemProps,renderProps: { selected: boolean, stickied: boolean }) => React.ReactNode",
         ],
     },
 ];
