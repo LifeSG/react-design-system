@@ -38,7 +38,7 @@ export const FileDownload = ({
         }
 
         if (typeof title === "string") {
-            return <Title weight="regular">{title}</Title>;
+            return <Title>{title}</Title>;
         }
 
         return <TitleContainer>{title}</TitleContainer>;
@@ -50,7 +50,7 @@ export const FileDownload = ({
         }
 
         if (typeof description === "string") {
-            return <Description weight="regular">{description}</Description>;
+            return <Description>{description}</Description>;
         }
 
         return <DescriptionContainer>{description}</DescriptionContainer>;

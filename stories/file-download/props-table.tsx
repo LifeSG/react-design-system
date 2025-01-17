@@ -1,10 +1,8 @@
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
-            // Component specific
             {
                 name: "className",
                 description: "The class selector of the component",
