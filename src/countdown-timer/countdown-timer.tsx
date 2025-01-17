@@ -1,19 +1,19 @@
 import throttle from "lodash/throttle";
 import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import { useInView } from "react-intersection-observer";
-import { useTimer } from "./use-timer";
-import { CountdownTimerProps } from "./types";
+import { useMediaQuery } from "react-responsive";
+import { TimeHelper } from "../util/time-helper";
+import { MediaWidths } from "../v2_spec/media-spec";
 import {
     Countdown,
     FixedCountdown,
     TimeLeft,
     Timer,
+    TimerIcon,
     Wrapper,
 } from "./countdown-timer.style";
-import { TimeHelper } from "../util/time-helper";
-import { ClockIcon } from "@lifesg/react-icons";
-import { MediaWidths } from "../v2_spec/media-spec";
+import { CountdownTimerProps } from "./types";
+import { useTimer } from "./use-timer";
 
 export const CountdownTimer = ({
     className,
@@ -49,6 +49,7 @@ export const CountdownTimer = ({
         initialInView: true,
     });
     const isVisible = !fixed || inView;
+    const warn = remainingSeconds <= notifyTimer;
 
     const isMobile = useMediaQuery({
         maxWidth: MediaWidths.mobileL,
@@ -147,7 +148,7 @@ export const CountdownTimer = ({
 
         return (
             <>
-                <ClockIcon />
+                <TimerIcon $warn={warn} />
                 <TimeLeft>Time left:</TimeLeft>
                 <Timer>
                     {minutes} {m} {String(seconds).padStart(2, "0")} {s}
@@ -164,7 +165,7 @@ export const CountdownTimer = ({
                 ref={wrapperRef}
                 inert={isVisible ? undefined : ""}
                 $visible={isVisible}
-                $warn={remainingSeconds <= notifyTimer}
+                $warn={warn}
             >
                 {renderTimer()}
             </Countdown>
@@ -185,7 +186,7 @@ export const CountdownTimer = ({
             <FixedCountdown
                 data-testid={testId}
                 data-id="fixed-countdown-wrapper"
-                $warn={remainingSeconds <= notifyTimer}
+                $warn={warn}
                 $top={offsetY}
                 $left={left}
                 $right={right}
