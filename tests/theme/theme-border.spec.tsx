@@ -1,8 +1,8 @@
-import "jest-styled-components";
-import styled, { ThemeProvider } from "styled-components";
 import { render } from "@testing-library/react";
-import { ThemeSpec } from "../../src/theme/types";
-import { Border } from "../../src";
+import "jest-styled-components";
+import { Border } from "src/theme";
+import { ThemeSpec } from "src/theme/types";
+import styled, { ThemeProvider } from "styled-components";
 import { MOCK_THEME } from "./mock-theme-data";
 
 const StyledBorderComponent = styled.div`
@@ -12,13 +12,9 @@ const StyledBorderComponent = styled.div`
 
 describe("Border Theming Test", () => {
     it("should apply correct border styles based on the theme", () => {
-        // Constants for border-top (dashed-default)
-        const thickness = "1px";
-        const color = "%23DDE1E2";
-        const strokeWidth = 2;
-        // Stroke width is thickeness + 1
-
-        const expectedSvg = `<svg width="8" height="${thickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${color}" stroke-width="${strokeWidth}" stroke-dasharray="4 4" /></svg>`;
+        const expectedSvg = encodeURIComponent(
+            `<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' fill='none' rx='0' ry='0' stroke='#DDE1E2' stroke-width='1px' stroke-dasharray='4, 8' stroke-dashoffset='0' stroke-linecap='square'/></svg>`
+        );
 
         const { container } = render(
             <ThemeProvider theme={MOCK_THEME}>
@@ -31,32 +27,28 @@ describe("Border Theming Test", () => {
         ).border;
 
         expect(receivedBorderStyle).toBe("1px solid");
-
-        expect(container.firstChild).toHaveStyleRule(
-            "background-color",
-            "transparent"
-        );
-        expect(container.firstChild).toHaveStyleRule("height", thickness);
-        expect(container.firstChild).toHaveStyleRule(
-            "background-repeat",
-            "repeat-x"
-        );
         expect(container.firstChild).toHaveStyleRule(
             "background-image",
-            `url('data:image/svg+xml,${expectedSvg}')`
+            `url("data:image/svg+xml,${expectedSvg}")`
         );
     });
 
-    it("should apply correct border styles when overriding border color in dashed-default", () => {
+    it("should apply correct border styles when setting options for dashed-default", () => {
+        const colour = "red";
+        const strokeWidth = 2;
+        const radius = 4;
+
         const StyledBorderComponentDash = styled.div`
-            border: ${Border["width-010"]} ${Border.solid};
-            ${Border["dashed-default"](2, "red")};
+            ${Border["dashed-default"]({
+                thickness: strokeWidth,
+                colour,
+                radius,
+            })};
         `;
 
-        const dashThickness = "2px";
-        const dashColor = "red";
-        const dashStrokeWidth = parseInt(dashThickness) + 1;
-        const dashExpectedSvg = `<svg width="8" height="${dashThickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${dashColor}" stroke-width="${dashStrokeWidth}" stroke-dasharray="4 4" /></svg>`;
+        const expectedSvg = encodeURIComponent(
+            `<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' fill='none' rx='${radius}' ry='${radius}' stroke='${colour}' stroke-width='${strokeWidth}' stroke-dasharray='4, 8' stroke-dashoffset='0' stroke-linecap='square'/></svg>`
+        );
 
         const { container } = render(
             <ThemeProvider theme={MOCK_THEME}>
@@ -64,24 +56,9 @@ describe("Border Theming Test", () => {
             </ThemeProvider>
         );
 
-        const receivedBorderStyle = getComputedStyle(
-            container.firstElementChild
-        ).border;
-
-        expect(receivedBorderStyle).toBe("1px solid");
-
-        expect(container.firstChild).toHaveStyleRule(
-            "background-color",
-            "transparent"
-        );
-        expect(container.firstChild).toHaveStyleRule("height", dashThickness);
-        expect(container.firstChild).toHaveStyleRule(
-            "background-repeat",
-            "repeat-x"
-        );
         expect(container.firstChild).toHaveStyleRule(
             "background-image",
-            `url('data:image/svg+xml,${dashExpectedSvg}')`
+            `url("data:image/svg+xml,${expectedSvg}")`
         );
     });
 
@@ -95,12 +72,9 @@ describe("Border Theming Test", () => {
             },
         };
 
-        // Constants for border-top (dashed-default)
-        const thickness = "1px";
-        const color = "%23DDE1E2";
-        const strokeWidth = 2;
-
-        const expectedSvg = `<svg width="8" height="${thickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${color}" stroke-width="${strokeWidth}" stroke-dasharray="4 4" /></svg>`;
+        const expectedSvg = encodeURIComponent(
+            `<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' fill='none' rx='0' ry='0' stroke='#DDE1E2' stroke-width='3px' stroke-dasharray='4, 8' stroke-dashoffset='0' stroke-linecap='square'/></svg>`
+        );
 
         const { container } = render(
             <ThemeProvider theme={mockTheme}>
@@ -113,19 +87,9 @@ describe("Border Theming Test", () => {
         ).border;
 
         expect(receivedBorderStyle).toBe("3px solid");
-
-        expect(container.firstChild).toHaveStyleRule(
-            "background-color",
-            "transparent"
-        );
-        expect(container.firstChild).toHaveStyleRule("height", thickness);
-        expect(container.firstChild).toHaveStyleRule(
-            "background-repeat",
-            "repeat-x"
-        );
         expect(container.firstChild).toHaveStyleRule(
             "background-image",
-            `url('data:image/svg+xml,${expectedSvg}')`
+            `url("data:image/svg+xml,${expectedSvg}")`
         );
     });
 });

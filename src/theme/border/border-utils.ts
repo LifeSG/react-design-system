@@ -1,27 +1,31 @@
 import { css } from "styled-components";
+import { ColourSemantic } from "../colour-semantic/theme-helper";
 import { StyledComponentProps } from "../helpers";
+import { BorderValues } from "./theme-helper";
 
 export const dashedBorderStyle =
-    (
-        thickness: number | ((props: StyledComponentProps) => number),
-        colour: string | ((props: StyledComponentProps) => string)
-    ) =>
+    (options?: {
+        thickness?: number | ((props: StyledComponentProps) => string);
+        radius?: number | ((props: StyledComponentProps) => string);
+        colour?: string | ((props: StyledComponentProps) => string);
+    }) =>
     (props: StyledComponentProps) => {
-        // Resolve thickness
+        const { thickness, radius, colour } = options || {};
+        // Resolve design tokens to their underlying value
         const resolvedThickness =
-            typeof thickness === "function" ? thickness(props) : thickness;
-
-        // Resolve color
+            (typeof thickness === "function" ? thickness(props) : thickness) ??
+            BorderValues["width-010"](props);
+        const resolvedRadius =
+            (typeof radius === "function" ? radius(props) : radius) ?? 0;
         const resolvedColor =
-            typeof colour === "function" ? colour(props) : colour;
+            (typeof colour === "function" ? colour(props) : colour) ??
+            ColourSemantic.border(props);
 
-        const encodedColor = encodeURIComponent(resolvedColor);
-        const strokeWidth = resolvedThickness + 1;
+        const svg = `<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' fill='none' rx='${resolvedRadius}' ry='${resolvedRadius}' stroke='${resolvedColor}' stroke-width='${resolvedThickness}' stroke-dasharray='4, 8' stroke-dashoffset='0' stroke-linecap='square'/></svg>`;
+        const encodedSvg = encodeURIComponent(svg);
 
         return css`
-            background-color: transparent;
-            height: ${resolvedThickness}px;
-            background-repeat: repeat-x;
-            background-image: url('data:image/svg+xml,<svg width="8" height="${resolvedThickness}px" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${encodedColor}" stroke-width="${strokeWidth}" stroke-dasharray="4 4" /></svg>');
+            background-image: url("data:image/svg+xml,${encodedSvg}");
+            border-radius: ${resolvedRadius};
         `;
     };

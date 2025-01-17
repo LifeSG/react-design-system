@@ -1,5 +1,5 @@
-import { getBorder } from "src/theme/border/theme-helper";
-import { BorderSet, ThemeSpec } from "src/theme/types";
+import { getBorder, getBorderWidth } from "src/theme/border/theme-helper";
+import { ThemeSpec } from "src/theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
 import { Border } from "../../../src/theme";
 
@@ -26,13 +26,15 @@ export const BorderDisplay = ({ theme }: BorderDisplayProps) => {
     );
 };
 
-interface BorderCollectionProps {
-    token: keyof BorderSet;
+interface BorderWidthCollectionProps {
+    token: Parameters<typeof getBorderWidth>[0];
 }
 
-const BorderWidthCollection = ({ token }: BorderCollectionProps) => {
+const BorderWidthCollection = ({ token }: BorderWidthCollectionProps) => {
     const theme = useTheme();
-    const value = getBorder(token)()({ theme });
+    const value = getBorderWidth(token)({
+        theme,
+    });
 
     return (
         <Row key={token}>
@@ -47,9 +49,13 @@ const BorderWidthCollection = ({ token }: BorderCollectionProps) => {
     );
 };
 
-const BorderStyleCollection = ({ token }: BorderCollectionProps) => {
+interface BorderStyleCollectionProps {
+    token: Parameters<typeof getBorder>[0];
+}
+
+const BorderStyleCollection = ({ token }: BorderStyleCollectionProps) => {
     const theme = useTheme();
-    const value = getBorder(token)()({ theme });
+    const value = getBorder(token)({ theme });
 
     return (
         <Row key={token}>
@@ -71,7 +77,7 @@ const DashedBorderStyleCollection = () => {
                 <code>dashed-default</code>
             </div>
             <div>
-                <code>{"(thickness, color) => style"}</code>
+                <code>{"({thickness, colour, radius}) => style"}</code>
             </div>
             <div>
                 <DashedBorderExample />
@@ -140,7 +146,7 @@ const BorderStyleExample = styled.div<BorderStyleProps>`
 const DashedBorderExample = styled.div`
     height: 24px;
     width: 48px;
-    ${Border["dashed-default"](1, "tomato")}
+    ${Border["dashed-default"]({ colour: "tomato" })}
 `;
 
 const Divider = styled.div`
