@@ -227,3 +227,5 @@ export const FilterItemCheckbox = <T,>({
         </StyledFilterItem>
     );
 };
+
+FilterItemCheckbox.displayName = "Filter.Checkbox";

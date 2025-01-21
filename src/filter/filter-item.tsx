@@ -170,3 +170,5 @@ export const FilterItem = ({
         </FilterItemWrapper>
     );
 };
+
+FilterItem.displayName = "Filter.Item";

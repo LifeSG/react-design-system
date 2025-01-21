@@ -1,11 +1,11 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import isEmpty from "lodash/isEmpty";
-import React, { useState } from "react";
+import { useState } from "react";
+import { Filter, Mode } from "src/filter";
+import { Form } from "src/form";
+import { Colour } from "src/theme";
+import { Typography } from "src/typography";
 import styled from "styled-components";
-import { V2_Color } from "../../src/v2_color";
-import { Filter, Mode } from "../../src/filter";
-import { Form } from "../../src/form";
-import { V2_Text } from "../../src/v2_text";
 
 interface Props<T> {
     mode: Mode;
@@ -14,7 +14,7 @@ interface Props<T> {
 }
 
 const SearchIcon = styled(MagnifierIcon)`
-    color: ${V2_Color.Neutral[3]};
+    color: ${Colour["icon"]};
 `;
 
 export const StyledFilterItem = styled(Filter.Item)<{ $mode: Mode }>`
@@ -22,7 +22,7 @@ export const StyledFilterItem = styled(Filter.Item)<{ $mode: Mode }>`
         props.$mode === "default" ? "0 1.25rem 1.5rem" : "1.5rem 1.25rem"};
 `;
 
-export const SearchFilter = ({ mode, value, onChange }: Props<string>) => {
+export const SearchFilter = ({ value, onChange }: Props<string>) => {
     return (
         <Form.InputGroup
             placeholder="Search with keyword"
@@ -46,7 +46,7 @@ export const DateFilter = ({ value, onChange }: Props<string>) => {
 
 export const TextFilter = () => {
     return (
-        <V2_Text.BodySmall>
+        <Typography.BodyMD>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
             venenatis neque felis, ac tempor erat iaculis et. Nam elementum at
             lectus et dapibus. Orci varius natoque penatibus et magnis dis
@@ -56,7 +56,7 @@ export const TextFilter = () => {
             interdum. Fusce auctor pharetra lorem eu rhoncus. Integer
             consectetur in odio sed vestibulum. Nunc imperdiet ligula non eros
             faucibus, non aliquam dui aliquet.
-        </V2_Text.BodySmall>
+        </Typography.BodyMD>
     );
 };
 

@@ -65,7 +65,7 @@ export const FlexStoryContainer = styled.div`
 // =============================================================================
 
 interface StoryStyleProps {
-    $fullscreen?: boolean;
+    $maxWidth?: boolean;
 }
 
 interface FullscreenStoryStyleProps {
@@ -113,18 +113,20 @@ const FullWidthContainer = styled.div<FullscreenStoryStyleProps>`
 // -----------------------------------------------------------------------------
 
 /** For general components */
-export const StoryDecorator: () => DecoratorFunction<ReactRenderer> = () =>
+export const StoryDecorator: (options?: {
+    maxWidth?: boolean;
+}) => DecoratorFunction<ReactRenderer> = (options) =>
     function StoryWrapper(Story, { viewMode }) {
         if (viewMode === "docs") {
             return (
-                <DocsViewModeContainer>
+                <DocsViewModeContainer $maxWidth={options?.maxWidth}>
                     <Story />
                 </DocsViewModeContainer>
             );
         }
 
         return (
-            <StoryViewModeContainer>
+            <StoryViewModeContainer $maxWidth={options?.maxWidth}>
                 <Story />
             </StoryViewModeContainer>
         );
@@ -133,15 +135,15 @@ export const StoryDecorator: () => DecoratorFunction<ReactRenderer> = () =>
 const StoryViewModeContainer = styled.div<StoryStyleProps>`
     min-width: min(500px, calc(100vw - 32px));
     width: fit-content;
+    ${(props) => props.$maxWidth && "max-width: 500px;"}
     margin: auto;
-    ${(props) => !props.$fullscreen && "padding: 16px;"}
 `;
 
 const DocsViewModeContainer = styled.div<StoryStyleProps>`
     min-width: 500px;
     width: fit-content;
+    ${(props) => props.$maxWidth && "max-width: 500px;"}
     margin: auto;
-    ${(props) => !props.$fullscreen && "padding: 16px;"}
 
     @media screen and (max-width: 600px) {
         min-width: unset;

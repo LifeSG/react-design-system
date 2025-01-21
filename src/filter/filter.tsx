@@ -180,6 +180,8 @@ const FilterBase = ({
     );
 };
 
+FilterBase.displayName = "Filter";
+
 export const Filter = Object.assign(FilterBase, {
     Item: FilterItem,
     Page: FilterItemPage,
