@@ -4,12 +4,11 @@ import { FilterContext } from "../filter-context";
 import { FilterItemCheckboxProps } from "../types";
 import {
     Group,
-    Input,
     Item,
     SelectAllButton,
+    StyledCheckbox,
     StyledFilterItem,
     StyledToggle,
-    StyledToggleIcon,
 } from "./filter-item-checkbox.styles";
 
 export const FilterItemCheckbox = <T,>({
@@ -155,12 +154,11 @@ export const FilterItemCheckbox = <T,>({
                 $selected={checked}
                 ref={index === 4 ? lastVisibleElement : undefined}
             >
-                <Input
-                    type="checkbox"
+                <StyledCheckbox
+                    displaySize="small"
                     checked={checked}
                     onChange={handleItemClick(option)}
                 />
-                <StyledToggleIcon type="checkbox" active={checked} />
                 {optionLabel}
             </Item>
         );

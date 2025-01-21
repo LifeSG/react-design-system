@@ -1,9 +1,7 @@
 import styled, { css } from "styled-components";
-import { Button } from "../../button/button";
-import { V2_Color } from "../../v2_color/color";
-import { V2_MediaQuery } from "../../v2_media/media";
-import { ToggleIcon } from "../../shared/toggle-icon/toggle-icon";
-import { V2_TextStyleHelper } from "../../v2_text/helper";
+import { Button } from "../../button";
+import { Checkbox } from "../../checkbox";
+import { Colour, Font, MediaQuery, Spacing } from "../../theme";
 import { Toggle } from "../../toggle";
 import { FilterItem } from "../filter-item";
 
@@ -12,19 +10,16 @@ export const StyledFilterItem = styled(FilterItem)`
 
     [data-id="content-container"] {
         position: relative; // to get the item position relative to this parent
-        padding: 0.5rem 0.5rem 0;
+        padding: ${Spacing["spacing-8"]} ${Spacing["spacing-8"]} 0;
 
-        ${V2_MediaQuery.MaxWidth.tablet} {
-            padding: 1rem 1.25rem 0.5rem;
+        ${MediaQuery.MaxWidth.lg} {
+            padding: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]}
+                ${Spacing["spacing-8"]};
         }
     }
 
     [data-id="minimise-button"] {
-        margin: 0.5rem 1.25rem 0;
-
-        ${V2_MediaQuery.MaxWidth.tablet} {
-            margin: 0.5rem 1.25rem 0;
-        }
+        margin: ${Spacing["spacing-8"]} ${Spacing["spacing-20"]} 0;
     }
 `;
 
@@ -32,10 +27,10 @@ export const Group = styled.div`
     display: flex;
     flex-direction: column;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         flex-direction: row;
         flex-wrap: wrap;
-        gap: 1rem;
+        gap: ${Spacing["spacing-16"]};
     }
 `;
 
@@ -47,31 +42,25 @@ export const Item = styled.label<{ $visible: boolean; $selected: boolean }>`
     position: relative;
     width: 100%;
     min-height: 1.5rem;
-    padding: 0.5rem;
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-12"]};
 
     cursor: pointer;
-    ${V2_TextStyleHelper.getTextStyle("BodySmall", "regular")}
+    ${Font["body-md-regular"]}
+    color: ${Colour["text"]};
     ${(props) =>
         props.$selected &&
         css`
-            color: ${V2_Color.Primary};
+            color: ${Colour["text-selected"]};
         `}
-`;
 
-export const Input = styled.input`
-    appearance: none;
-`;
-
-export const StyledToggleIcon = styled(ToggleIcon)`
-    height: 1.5rem;
-    width: 1.5rem;
-    flex-shrink: 0;
-
-    ${Input}:focus-visible + & {
-        outline: 2px solid ${V2_Color.Primary};
-        outline-offset: -2px;
-        border-radius: 4px;
+    ${MediaQuery.MaxWidth.lg} {
+        padding: ${Spacing["spacing-8"]};
     }
+`;
+
+export const StyledCheckbox = styled(Checkbox)`
+    flex-shrink: 0;
+    margin-right: ${Spacing["spacing-8"]};
 `;
 
 export const StyledToggle = styled(Toggle)<{ $visible: boolean }>`
@@ -81,9 +70,10 @@ export const StyledToggle = styled(Toggle)<{ $visible: boolean }>`
 export const SelectAllButton = styled(Button.Small)`
     height: fit-content;
     padding: 0;
-    margin: 1rem 0 0.5rem 0.75rem;
+    margin: ${Spacing["spacing-16"]} 0 ${Spacing["spacing-8"]}
+        ${Spacing["spacing-12"]};
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
-        margin: 0 0 1rem 0;
+    ${MediaQuery.MaxWidth.lg} {
+        margin: 0 0 ${Spacing["spacing-16"]} 0;
     }
 `;

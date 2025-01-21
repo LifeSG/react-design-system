@@ -1,4 +1,13 @@
 import { CrossIcon, FilterIcon } from "@lifesg/react-icons";
+import { useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import { useTheme } from "styled-components";
+import { Overlay } from "../overlay/overlay";
+import { Breakpoint } from "../theme";
+import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
+import { FilterContext } from "./filter-context";
+import { FilterItem } from "./filter-item";
+import { FilterItemPage } from "./filter-item-page";
 import {
     DesktopContainer,
     FilterBody,
@@ -12,15 +21,7 @@ import {
     MobileContainer,
     MobileOverlayContainer,
 } from "./filter.styles";
-import { FilterContext } from "./filter-context";
-import { FilterItem } from "./filter-item";
-import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
-import { FilterItemPage } from "./filter-item-page";
 import { FilterProps, Mode } from "./types";
-import { MediaWidths } from "../v2_spec/media-spec";
-import { Overlay } from "../overlay/overlay";
-import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 
 const FilterBase = ({
     toggleFilterButtonLabel = "Filters",
@@ -39,9 +40,9 @@ const FilterBase = ({
     const [visible, setVisible] = useState(false);
     const mobileNodeRef = useRef<HTMLDivElement>(null);
     const desktopNodeRef = useRef<HTMLDivElement>(null);
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.tablet,
-    });
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
 
     // =============================================================================
     // EFFECTS

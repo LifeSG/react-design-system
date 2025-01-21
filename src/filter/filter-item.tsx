@@ -116,7 +116,7 @@ export const FilterItem = ({
             {(title || collapsible) && (
                 <FilterItemHeader>
                     {title && (
-                        <FilterItemTitle weight="semibold">
+                        <FilterItemTitle>
                             {title} {addon && renderAddon()}
                         </FilterItemTitle>
                     )}
