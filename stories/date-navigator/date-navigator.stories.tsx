@@ -1,26 +1,26 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import dayjs from "dayjs";
 import { useState } from "react";
-import { DateNavigator } from "../../src/date-navigator/date-navigator";
+import { DateNavigator } from "src/date-navigator";
 
 type Component = typeof DateNavigator;
 
 const meta: Meta<Component> = {
-    title: "Modules/DateNavigator",
+    title: "Selection and input/DateNavigator",
     component: DateNavigator,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const today = dayjs().toString();
         return <DateNavigator selectedDate={today} />;
     },
 };
 
 export const WithNavigation: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const today = dayjs().toString();
         const [selectedDate, setSelectedDate] = useState<string>(today);
 
@@ -43,7 +43,7 @@ export const WithNavigation: StoryObj<Component> = {
 };
 
 export const LoadingState: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const today = dayjs().toString();
         const [selectedDate, setSelectedDate] = useState<string>(today);
         const [loading, setLoading] = useState<boolean>(false);
@@ -75,7 +75,7 @@ export const LoadingState: StoryObj<Component> = {
 };
 
 export const WithMinAndMaxDate: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const today = dayjs().toString();
         const minDate = dayjs(today).subtract(6, "day").toString();
         const maxDate = dayjs(today).add(6, "day").toString();
