@@ -3,20 +3,50 @@ import { InboxIcon } from "@lifesg/react-icons/inbox";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useRef, useState } from "react";
 import { IconButton } from "src/icon-button";
-import { NavItemLinkProps, Navbar, NavbarDrawerHandle } from "src/navbar";
+import {
+    NavItemLinkProps,
+    NavItemProps,
+    Navbar,
+    NavbarButtonProps,
+    NavbarDrawerHandle,
+} from "src/navbar";
+import { FullWidthStoryDecorator } from "stories/storybook-common";
 import { DesktopCustomComponent, MobileCustomComponent } from "./doc-elements";
 
 type Component = typeof Navbar;
 
 const meta: Meta<Component> = {
-    title: "Modules/Navbar",
+    title: "Navigation/Navbar",
     component: Navbar,
+    decorators: [FullWidthStoryDecorator({})],
+    parameters: { layout: "fullscreen" },
 };
 
 export default meta;
 
+const navItems: NavItemProps<undefined>[] = [
+    {
+        id: "home",
+        children: "Home",
+        href: "https://www.life.gov.sg",
+        target: "_blank",
+    },
+    {
+        id: "guides",
+        children: "Guides",
+        href: "https://www.life.gov.sg",
+    },
+    {
+        id: "lifesg-app",
+        children: "LifeSG app",
+        href: "https://www.life.gov.sg",
+    },
+];
+
+const actionButtons: NavbarButtonProps[] = [{ type: "download" }];
+
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [selected, setSelected] = useState("home");
         return (
             <Navbar
@@ -85,7 +115,7 @@ export const Default: StoryObj<Component> = {
 };
 
 export const SingleActionButton: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Navbar
                 items={{
@@ -111,29 +141,10 @@ export const SingleActionButton: StoryObj<Component> = {
 };
 
 export const MultipleActionButtons: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Navbar
-                items={{
-                    desktop: [
-                        {
-                            id: "home",
-                            children: "Home",
-                            href: "https://www.life.gov.sg",
-                            target: "_blank",
-                        },
-                        {
-                            id: "guides",
-                            children: "Guides",
-                            href: "https://www.life.gov.sg",
-                        },
-                        {
-                            id: "lifesg-app",
-                            children: "LifeSG app",
-                            href: "https://www.life.gov.sg",
-                        },
-                    ],
-                }}
+                items={{ desktop: navItems }}
                 actionButtons={{
                     desktop: [
                         {
@@ -182,29 +193,11 @@ export const MultipleActionButtons: StoryObj<Component> = {
 };
 
 export const CustomActionButtons: StoryObj<Component> = {
-    render: () => {
+    parameters: { docs: { source: { type: "code" } } }, // prevent Storybook from freezing
+    render: (_args) => {
         return (
             <Navbar
-                items={{
-                    desktop: [
-                        {
-                            id: "home",
-                            children: "Home",
-                            href: "https://www.life.gov.sg",
-                            target: "_blank",
-                        },
-                        {
-                            id: "guides",
-                            children: "Guides",
-                            href: "https://www.life.gov.sg",
-                        },
-                        {
-                            id: "lifesg-app",
-                            children: "LifeSG app",
-                            href: "https://www.life.gov.sg",
-                        },
-                    ],
-                }}
+                items={{ desktop: navItems }}
                 actionButtons={{
                     desktop: [
                         {
@@ -232,29 +225,11 @@ export const CustomActionButtons: StoryObj<Component> = {
 };
 
 export const UncollapsibleActionButtons: StoryObj<Component> = {
-    render: () => {
+    parameters: { docs: { source: { type: "code" } } }, // prevent Storybook from freezing
+    render: (_args) => {
         return (
             <Navbar
-                items={{
-                    desktop: [
-                        {
-                            id: "home",
-                            children: "Home",
-                            href: "https://www.life.gov.sg",
-                            target: "_blank",
-                        },
-                        {
-                            id: "guides",
-                            children: "Guides",
-                            href: "https://www.life.gov.sg",
-                        },
-                        {
-                            id: "lifesg-app",
-                            children: "LifeSG app",
-                            href: "https://www.life.gov.sg",
-                        },
-                    ],
-                }}
+                items={{ desktop: navItems }}
                 actionButtons={{
                     desktop: [
                         {
@@ -281,9 +256,9 @@ export const UncollapsibleActionButtons: StoryObj<Component> = {
 };
 
 export const CustomItems: StoryObj<Component> = {
-    render: () => {
+    parameters: { docs: { source: { type: "code" } } },
+    render: (_args) => {
         const navbarRef = useRef<NavbarDrawerHandle>();
-        const [selected, setSelected] = useState("home");
         return (
             <Navbar
                 ref={navbarRef}
@@ -292,42 +267,10 @@ export const CustomItems: StoryObj<Component> = {
                         {
                             id: "home",
                             children: "Home",
-                            onClick: () => {
-                                setSelected("home");
-                            },
-                        },
-                        {
-                            id: "guides",
-                            children: "Guides",
-                            onClick: () => {
-                                setSelected("guides");
-                            },
-                            subMenu: [
-                                {
-                                    id: "guides2",
-                                    children: "Sub Guides 2",
-                                    onClick: () => {
-                                        setSelected("guides2");
-                                    },
-                                },
-                                {
-                                    id: "guides3",
-                                    children: "Sub Guides 3",
-                                    onClick: () => {
-                                        setSelected("guides3");
-                                    },
-                                },
-                            ],
                         },
                         {
                             itemType: "component",
-                            children: (
-                                <DesktopCustomComponent
-                                    onClick={() => {
-                                        console.log("custom component clicked");
-                                    }}
-                                />
-                            ),
+                            children: <DesktopCustomComponent />,
                         },
                     ],
                     mobile: [
@@ -342,84 +285,24 @@ export const CustomItems: StoryObj<Component> = {
                             ),
                         },
                         {
-                            itemType: "link",
                             id: "home",
                             children: "Home",
-                            onClick: () => {
-                                setSelected("home");
-                            },
-                        },
-                        {
-                            id: "guides",
-                            children: "Guides",
-                            onClick: () => {
-                                setSelected("guides");
-                            },
-                            subMenu: [
-                                {
-                                    id: "guides2",
-                                    children: "Sub Guides 2",
-                                    onClick: () => {
-                                        setSelected("guides2");
-                                    },
-                                },
-                                {
-                                    id: "guides3",
-                                    children: "Sub Guides 3",
-                                    onClick: () => {
-                                        setSelected("guides3");
-                                    },
-                                },
-                            ],
                         },
                     ],
                 }}
-                actionButtons={{
-                    desktop: [
-                        {
-                            type: "download",
-                        },
-                    ],
-                }}
-                selectedId={selected}
+                actionButtons={{ desktop: actionButtons }}
                 fixed={false}
-                layout={"stretch"}
             />
         );
     },
 };
 
 export const PreventDrawerDismissal: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Navbar
-                items={{
-                    desktop: [
-                        {
-                            id: "home",
-                            children: "Home",
-                            href: "https://www.life.gov.sg",
-                            target: "_blank",
-                        },
-                        {
-                            id: "guides",
-                            children: "Guides",
-                            href: "https://www.life.gov.sg",
-                        },
-                        {
-                            id: "lifesg-app",
-                            children: "LifeSG app",
-                            href: "https://www.life.gov.sg",
-                        },
-                    ],
-                }}
-                actionButtons={{
-                    desktop: [
-                        {
-                            type: "download",
-                        },
-                    ],
-                }}
+                items={{ desktop: navItems }}
+                actionButtons={{ desktop: actionButtons }}
                 selectedId="home"
                 fixed={false}
                 drawerDismissalExclusions={["brand-click"]}
@@ -429,7 +312,7 @@ export const PreventDrawerDismissal: StoryObj<Component> = {
 };
 
 export const SubMenu: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [selected, setSelected] = useState("lifesg1");
         return (
             <Navbar
@@ -444,19 +327,19 @@ export const SubMenu: StoryObj<Component> = {
                             children: "Guides",
                             subMenu: [
                                 {
-                                    id: "guides1",
+                                    id: "guides-item-1",
                                     children:
-                                        "Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1 Sub Guides 1",
+                                        "Lorem ipsum dolor sit amet consectetur adipiscing elit",
                                     href: "https://www.life.gov.sg",
                                 },
                                 {
-                                    id: "guides2",
-                                    children: "Sub Guides 2",
+                                    id: "guides-item-2",
+                                    children: "Lorem ipsum dolor sit amet",
                                     href: "https://www.life.gov.sg",
                                 },
                                 {
-                                    id: "guides3",
-                                    children: "Sub Guides 3",
+                                    id: "guides-item-2",
+                                    children: "Lorem ipsum",
                                     href: "https://www.life.gov.sg",
                                 },
                             ],
@@ -466,50 +349,15 @@ export const SubMenu: StoryObj<Component> = {
                             children: "LifeSG app",
                             subMenu: [
                                 {
-                                    id: "lifesg1",
-                                    children: "Sub LifeSG 1",
-                                    href: "https://www.life.gov.sg",
-                                },
-                                {
-                                    id: "lifesg2",
-                                    children: "Sub LifeSG 2",
-                                    href: "https://www.life.gov.sg",
-                                },
-                                {
-                                    id: "lifesg3",
-                                    children: "Sub LifeSG 3",
-                                    href: "https://www.life.gov.sg",
-                                },
-                                {
-                                    id: "lifesg4",
-                                    children: "Sub LifeSG 4",
+                                    id: "app-item-1",
+                                    children: "About the app",
                                     href: "https://www.life.gov.sg",
                                 },
                             ],
                         },
                     ],
                 }}
-                actionButtons={{
-                    desktop: [
-                        {
-                            type: "button",
-                            args: {
-                                styleType: "link",
-                                children: "FAQ",
-                            },
-                        },
-                        {
-                            type: "button",
-                            args: {
-                                styleType: "secondary",
-                                children: "Logout",
-                            },
-                        },
-                        {
-                            type: "download",
-                        },
-                    ],
-                }}
+                actionButtons={{ desktop: actionButtons }}
                 selectedId={selected}
                 fixed={false}
                 onItemClick={(item: NavItemLinkProps<undefined>) => {
@@ -521,32 +369,12 @@ export const SubMenu: StoryObj<Component> = {
 };
 
 export const SecondaryBranding: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Navbar
-                items={{
-                    desktop: [
-                        {
-                            id: "home",
-                            children: "Home",
-                        },
-                        {
-                            id: "guides",
-                            children: "Guides",
-                        },
-                        {
-                            id: "lifesg-app",
-                            children: "LifeSG app",
-                        },
-                    ],
-                }}
-                actionButtons={{
-                    desktop: [
-                        {
-                            type: "download",
-                        },
-                    ],
-                }}
+                items={{ desktop: navItems }}
+                actionButtons={{ desktop: actionButtons }}
+                selectedId="home"
                 fixed={false}
                 resources={{
                     secondary: {
@@ -564,46 +392,11 @@ export const SecondaryBranding: StoryObj<Component> = {
 };
 
 export const HiddenMasthead: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Navbar
-                items={{
-                    desktop: [
-                        {
-                            id: "home",
-                            children: "Home",
-                        },
-                        {
-                            id: "guides",
-                            children: "Guides",
-                        },
-                        {
-                            id: "lifesg-app",
-                            children: "LifeSG app",
-                        },
-                    ],
-                }}
-                actionButtons={{
-                    desktop: [
-                        {
-                            type: "button",
-                            args: {
-                                styleType: "link",
-                                children: "FAQ",
-                            },
-                        },
-                        {
-                            type: "button",
-                            args: {
-                                styleType: "secondary",
-                                children: "Logout",
-                            },
-                        },
-                        {
-                            type: "download",
-                        },
-                    ],
-                }}
+                items={{ desktop: navItems }}
+                selectedId="home"
                 fixed={false}
                 masthead={false}
             />
@@ -612,25 +405,10 @@ export const HiddenMasthead: StoryObj<Component> = {
 };
 
 export const StretchedLayout: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Navbar
-                items={{
-                    desktop: [
-                        {
-                            id: "home",
-                            children: "Home",
-                        },
-                        {
-                            id: "guides",
-                            children: "Guides",
-                        },
-                        {
-                            id: "lifesg-app",
-                            children: "LifeSG app",
-                        },
-                    ],
-                }}
+                items={{ desktop: navItems }}
                 actionButtons={{
                     desktop: [
                         {
@@ -652,6 +430,7 @@ export const StretchedLayout: StoryObj<Component> = {
                         },
                     ],
                 }}
+                selectedId="home"
                 fixed={false}
                 layout={"stretch"}
             />
@@ -660,36 +439,10 @@ export const StretchedLayout: StoryObj<Component> = {
 };
 
 export const HiddenBranding: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Navbar
-                items={{
-                    desktop: [
-                        {
-                            id: "home",
-                            children: "Home",
-                        },
-                        {
-                            id: "guides",
-                            children: "Guides",
-                        },
-                        {
-                            id: "lifesg-app",
-                            children: "LifeSG app",
-                        },
-                    ],
-                }}
-                actionButtons={{
-                    desktop: [
-                        {
-                            type: "button",
-                            args: {
-                                styleType: "secondary",
-                                children: "Logout",
-                            },
-                        },
-                    ],
-                }}
+                items={{ desktop: navItems }}
                 selectedId="home"
                 fixed={false}
                 hideNavBranding

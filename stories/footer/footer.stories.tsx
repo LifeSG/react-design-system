@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Footer } from "src/footer";
-import { V2_Layout } from "src/v2_layout";
+import { Layout } from "src/layout";
 
 type Component = typeof Footer;
 
 const meta: Meta<Component> = {
-    title: "Modules/Footer",
+    title: "Navigation/Footer",
     component: Footer,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Footer
                 lastUpdated={new Date()}
@@ -58,16 +58,16 @@ export const Default: StoryObj<Component> = {
 };
 
 export const MinimalVersion: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return <Footer lastUpdated={new Date()} />;
     },
 };
 
 export const WithCustomContent: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Footer lastUpdated={new Date()}>
-                <V2_Layout.Content>
+                <Layout.Content>
                     <div
                         style={{
                             padding: "2rem 0",
@@ -80,14 +80,14 @@ export const WithCustomContent: StoryObj<Component> = {
                     >
                         My custom content
                     </div>
-                </V2_Layout.Content>
+                </Layout.Content>
             </Footer>
         );
     },
 };
 
 export const OtherCustomisations: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Footer
                 lastUpdated={new Date()}
@@ -141,7 +141,7 @@ export const OtherCustomisations: StoryObj<Component> = {
 };
 
 export const StretchedLayout: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Footer
                 layout={"stretch"}
