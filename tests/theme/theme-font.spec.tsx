@@ -2,7 +2,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { render } from "@testing-library/react";
 import { ThemeSpec } from "../../src/theme/types";
 import "jest-styled-components";
-import { Font, FontSpec } from "../../src";
+import { Font } from "../../src";
 import { MOCK_THEME } from "./mock-theme-data";
 
 const StyledFontTest = styled.div`
@@ -10,7 +10,7 @@ const StyledFontTest = styled.div`
 `;
 
 const StyledFontSpecSet = styled.div`
-    font-size: ${FontSpec["header-size-xs"]};
+    font-size: ${Font.Spec["header-size-xs"]};
 `;
 
 describe("StyledFontTests", () => {

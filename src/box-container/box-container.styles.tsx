@@ -2,15 +2,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
-import {
-    Border,
-    Colour,
-    Font,
-    FontSpec,
-    MediaQuery,
-    Motion,
-    Radius,
-} from "../theme";
+import { Border, Colour, Font, MediaQuery, Motion, Radius } from "../theme";
 import { BoxContainerDisplayState } from "./types";
 
 // =============================================================================
@@ -111,8 +103,8 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
 `;
 
 export const AlertIcon = styled(ExclamationCircleFillIcon)`
-    height: ${FontSpec["header-size-sm"]};
-    width: ${FontSpec["header-size-sm"]};
+    height: ${Font.Spec["header-size-sm"]};
+    width: ${Font.Spec["header-size-sm"]};
 `;
 
 export const CallToActionContainer = styled.div<StyleProps>`
@@ -156,6 +148,6 @@ export const HandleIconContainer = styled.div<StyleProps>`
 
 export const HandleIcon = styled(ChevronDownIcon)`
     color: ${Colour["icon"]};
-    height: ${FontSpec["header-size-sm"]};
-    width: ${FontSpec["header-size-sm"]};
+    height: ${Font.Spec["header-size-sm"]};
+    width: ${Font.Spec["header-size-sm"]};
 `;

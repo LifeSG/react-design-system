@@ -5,7 +5,7 @@ import { StarHalfIcon } from "@lifesg/react-icons/star-half";
 import styled, { css, keyframes } from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, Font, FontSpec, MediaQuery, Radius } from "../theme";
+import { Colour, Font, MediaQuery, Radius } from "../theme";
 import { Typography } from "../typography/typography";
 
 const slideDown = keyframes`
@@ -101,7 +101,7 @@ export const StyledButton = styled(Button.Small)`
 `;
 
 export const Title = styled(Typography.BodySM)`
-    font-weight: ${FontSpec["weight-bold"]};
+    font-weight: ${Font.Spec["weight-bold"]};
     overflow-wrap: anywhere;
     ${MediaQuery.MaxWidth.xs} {
         ${Font["body-xs-bold"]}

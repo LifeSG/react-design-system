@@ -3,7 +3,7 @@ import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, Font, FontSpec, MediaQuery, Motion, Spacing } from "../theme";
+import { Colour, Font, MediaQuery, Motion, Spacing } from "../theme";
 
 // =============================================================================
 // STYLES INTERFACE
@@ -71,8 +71,8 @@ export const FilterItemExpandButton = styled(ClickableIcon)`
 `;
 
 export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
-    height: ${FontSpec["body-size-baseline"]};
-    width: ${FontSpec["body-size-baseline"]};
+    height: ${Font.Spec["body-size-baseline"]};
+    width: ${Font.Spec["body-size-baseline"]};
 
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
     transition: transform ${Motion["duration-350"]} ${Motion["ease-standard"]};

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, FontSpec, Motion, Radius } from "../../../theme";
+import { Border, Colour, Font, Motion, Radius } from "../../../theme";
 import { CellType, LabelType } from "./types";
 
 // =============================================================================
@@ -175,22 +175,22 @@ export const Label = styled.div<LabelStyleProps>`
         switch ($type) {
             case "selected":
                 return css`
-                    font-weight: ${FontSpec["weight-semibold"]};
+                    font-weight: ${Font.Spec["weight-semibold"]};
                     color: ${Colour["text-selected"]};
                 `;
             case "selected-hover":
                 return css`
-                    font-weight: ${FontSpec["weight-semibold"]};
+                    font-weight: ${Font.Spec["weight-semibold"]};
                     color: ${Colour["text-selected-hover"]};
                 `;
             case "current":
                 return css`
-                    font-weight: ${FontSpec["weight-semibold"]};
+                    font-weight: ${Font.Spec["weight-semibold"]};
                     color: ${Colour["text-primary"]};
                 `;
             case "hover":
                 return css`
-                    font-weight: ${FontSpec["weight-semibold"]};
+                    font-weight: ${Font.Spec["weight-semibold"]};
                     color: ${Colour["text-hover"]};
                 `;
             case "unavailable":

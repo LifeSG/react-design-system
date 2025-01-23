@@ -1,14 +1,6 @@
 import { ClockIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
-import {
-    Border,
-    Colour,
-    Font,
-    FontSpec,
-    MediaQuery,
-    Radius,
-    Spacing,
-} from "../theme";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // STYLE TYPES
@@ -87,7 +79,7 @@ export const FixedCountdown = styled(BaseCountdown)`
 `;
 
 export const TimeLeft = styled.div`
-    font-weight: ${FontSpec["weight-bold"]};
+    font-weight: ${Font.Spec["weight-bold"]};
     margin-left: ${Spacing["spacing-8"]};
     margin-right: ${Spacing["spacing-24"]};
 
@@ -97,7 +89,7 @@ export const TimeLeft = styled.div`
 `;
 
 export const Timer = styled.div`
-    font-weight: ${FontSpec["weight-semibold"]};
+    font-weight: ${Font.Spec["weight-semibold"]};
     margin-left: auto;
 `;
 

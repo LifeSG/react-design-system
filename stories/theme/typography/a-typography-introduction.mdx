@@ -6,7 +6,7 @@ import { DocInfo, DocNote } from "stories/storybook-common";
 # Typography
 
 ```tsx
-import { Font, FontSpec } from "@lifesg/react-design-system/theme";
+import { Font } from "@lifesg/react-design-system/theme";
 ```
 
 The **font spec** tokens define these font styling properties:
@@ -36,7 +36,7 @@ A **font** token is a combination of these font spec tokens.
 </DocInfo>
 
 The `Font` namespace provides tokens to apply text styling within style
-declarations. You will rarely need to use the `FontSpec` tokens directly.
+declarations. You will rarely need to use the font spec tokens directly, but they are available via `Font.Spec`.
 
 ```tsx
 import { Font } from "@lifesg/react-design-system/theme";
@@ -49,7 +49,7 @@ const Container = styled.div`
 
 // A common use case is to match an image, such as an icon, to the text size
 const Icon = styled.svg`
-    height: ${FontSpec["header-size-xxl"]};
+    height: ${Font.Spec["header-size-xxl"]};
 `;
 ```
 

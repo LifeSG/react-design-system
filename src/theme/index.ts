@@ -19,9 +19,10 @@ export const Colour = {
     Primitive: PrimitiveColour,
 };
 
-export const FontSpec = FontSpecValues;
-
-export const Font = FontValues;
+export const Font = {
+    ...FontValues,
+    Spec: FontSpecValues,
+};
 
 export const Motion = MotionValues;
 

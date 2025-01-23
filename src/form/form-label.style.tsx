@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Colour, FontSpec } from "../theme";
+import { Colour, Font } from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -12,7 +12,7 @@ export const Label = styled.label`
     display: inline-block;
 
     ${applyHtmlContentStyle({ textSize: "body-md" })}
-    font-weight: ${FontSpec["weight-semibold"]};
+    font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
 // check input

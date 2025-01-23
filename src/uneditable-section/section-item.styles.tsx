@@ -2,7 +2,7 @@ import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangl
 import styled, { css } from "styled-components";
 import { Alert } from "../alert";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
-import { Colour, Font, FontSpec, MediaQuery } from "../theme";
+import { Colour, Font, MediaQuery } from "../theme";
 import { UneditableSectionItemDisplayWidth } from "./types";
 
 // =============================================================================
@@ -48,8 +48,8 @@ export const IconContainer = styled.div`
     margin-left: 0.5rem;
 
     svg {
-        width: ${FontSpec["body-size-baseline"]};
-        height: ${FontSpec["body-size-baseline"]};
+        width: ${Font.Spec["body-size-baseline"]};
+        height: ${Font.Spec["body-size-baseline"]};
     }
 `;
 
@@ -89,8 +89,8 @@ export const Spinner = styled(ComponentLoadingSpinner)`
 export const ErrorIcon = styled(ExclamationTriangleIcon)`
     color: ${Colour["icon-warning"]};
     margin-right: 0.5rem;
-    height: ${FontSpec["body-size-baseline"]};
-    width: ${FontSpec["body-size-baseline"]};
+    height: ${Font.Spec["body-size-baseline"]};
+    width: ${Font.Spec["body-size-baseline"]};
 `;
 
 export const ErrorLabel = styled.span`

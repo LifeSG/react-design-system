@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, FontSpec, Motion, Radius } from "../../theme";
+import { Border, Colour, Font, Motion, Radius } from "../../theme";
 import { MonthVariant } from "./internal-calendar-month";
 
 // =============================================================================
@@ -64,7 +64,7 @@ export const MonthCell = styled.div<StyleProps>`
                 background: ${Colour["bg-selected"]};
                 border-color: ${Colour["border-selected"]};
                 color: ${Colour["text-selected"]};
-                font-weight: ${FontSpec["weight-semibold"]};
+                font-weight: ${Font.Spec["weight-semibold"]};
 
                 ${$interactive &&
                 css`
@@ -80,7 +80,7 @@ export const MonthCell = styled.div<StyleProps>`
         if ($variant === "current-month") {
             return css`
                 color: ${Colour["text-primary"]};
-                font-weight: ${FontSpec["weight-semibold"]};
+                font-weight: ${Font.Spec["weight-semibold"]};
             `;
         }
 
@@ -103,7 +103,7 @@ export const MonthCell = styled.div<StyleProps>`
                     background: ${Colour["bg-selected-hover"]};
                     border-color: ${Colour["border-selected-hover"]};
                     color: ${Colour["text-selected-hover"]};
-                    font-weight: ${FontSpec["weight-semibold"]};
+                    font-weight: ${Font.Spec["weight-semibold"]};
                 }
             `;
         }
@@ -112,7 +112,7 @@ export const MonthCell = styled.div<StyleProps>`
             &:hover {
                 background: ${Colour["bg-hover"]};
                 color: ${Colour["text-hover"]};
-                font-weight: ${FontSpec["weight-semibold"]};
+                font-weight: ${Font.Spec["weight-semibold"]};
             }
         `;
     }}

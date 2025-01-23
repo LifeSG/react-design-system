@@ -1,5 +1,5 @@
 import { css } from "styled-components";
-import { Colour, Font, FontSpec } from "../../theme";
+import { Colour, Font } from "../../theme";
 import { TypographySizeType } from "../../theme/font/types";
 
 export interface HtmlContentStyleOptions {
@@ -14,7 +14,7 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
         ${textSize && Font[`${textSize}-regular`]}
 
         strong {
-            font-weight: ${FontSpec["weight-semibold"]};
+            font-weight: ${Font.Spec["weight-semibold"]};
             ${textSize && Font[`${textSize}-semibold`]};
         }
 
@@ -24,7 +24,7 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
 
         // Link styling
         a {
-            font-weight: ${FontSpec["weight-semibold"]};
+            font-weight: ${Font.Spec["weight-semibold"]};
             ${textSize && Font[`${textSize}-semibold`]}
             color: ${Colour.hyperlink};
             text-decoration: none;
