@@ -34,6 +34,7 @@ type DesktopColRange = DesktopCol | 13;
 
 /** @deprecated */
 export interface V2_ColProps {
+    /** @deprecated */
     /**
      * Specifies the number of columns to be span across in mobile viewports.
      * If an array is specified, the format is as such [startCol, endCol].
@@ -44,6 +45,7 @@ export interface V2_ColProps {
      * column.
      */
     mobileCols?: MobileCol | [MobileColRange, MobileColRange] | undefined;
+    /** @deprecated */
     /**
      * Specifies the number of columns to be span across in tablet viewports.
      * If an array is specified, the format is as such [startCol, endCol].
@@ -54,6 +56,7 @@ export interface V2_ColProps {
      * column.
      */
     tabletCols?: TabletCol | [TabletColRange, TabletColRange] | undefined;
+    /** @deprecated */
     /**
      * Specifies the number of columns to be span across in desktop viewports.
      * If an array is specified, the format is as such [startCol, endCol].

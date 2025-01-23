@@ -12,7 +12,7 @@ import { InputSelectPartialProps } from "../input-select/types";
 import { InputSliderProps } from "../input-slider";
 import { TextareaPartialProps } from "../input-textarea/types";
 import { InputPartialProps } from "../input/types";
-import { V2_ColProps } from "../v2_layout/types";
+import { ColProps } from "../layout/types";
 import { MaskedInputPartialProps } from "../masked-input/types";
 import { PhoneNumberInputProps } from "../phone-number-input/types";
 import { PredictiveTextInputProps } from "../predictive-text-input/types";
@@ -20,6 +20,7 @@ import { SelectHistogramProps } from "../select-histogram";
 import { TimeRangePickerProps } from "../time-range-picker/types";
 import { TimepickerProps } from "../timepicker/types";
 import { UnitNumberInputProps } from "../unit-number/types";
+import { V2_ColProps } from "../v2_layout/types";
 
 export type FormLabelAddonType = "tooltip" | "popover";
 
@@ -48,7 +49,7 @@ export interface FormLabelProps
 
 export type FormElementLayoutType = "flex" | "grid";
 
-export interface BaseFormElementProps extends V2_ColProps {
+export interface BaseFormElementProps extends V2_ColProps, ColProps {
     label?: FormLabelProps | string | undefined;
     errorMessage?: string | undefined;
     "data-error-testid"?: string | undefined;
