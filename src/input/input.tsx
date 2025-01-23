@@ -1,11 +1,11 @@
 import React, { useImperativeHandle, useRef } from "react";
-import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { StringHelper, useNextInputState } from "../util";
 import {
-    BasicWrapper,
-    ClearContainer,
+    ClearButton,
     ClearIcon,
+    DefaultWrapper,
     InputElement,
+    NoBorderWrapper,
 } from "./input.style";
 import { InputProps, InputRef } from "./types";
 
@@ -101,6 +101,7 @@ const Component = (
      * be set to empty string)
      */
     const updatedValue = value ? convertInputString(value) : value;
+    const showClear = shouldShowClear();
 
     const renderInputElement = () => {
         return (
@@ -113,12 +114,18 @@ const Component = (
                     onChange={handleChange}
                     type={type}
                     readOnly={readOnly}
+                    $showClear={showClear}
+                    $styleType={styleType}
                     {...otherProps}
                 />
-                {shouldShowClear() && (
-                    <ClearContainer onClick={handleClear} type="button">
+                {showClear && (
+                    <ClearButton
+                        onClick={handleClear}
+                        type="button"
+                        $styleType={styleType}
+                    >
                         <ClearIcon aria-hidden />
-                    </ClearContainer>
+                    </ClearButton>
                 )}
             </>
         );
@@ -127,18 +134,18 @@ const Component = (
     return (
         <>
             {styleType === "no-border" ? (
-                <BasicWrapper className={className}>
+                <NoBorderWrapper className={className}>
                     {renderInputElement()}
-                </BasicWrapper>
+                </NoBorderWrapper>
             ) : (
-                <InputWrapper
+                <DefaultWrapper
                     $disabled={disabled}
                     $error={error}
                     $readOnly={readOnly}
                     className={className}
                 >
                     {renderInputElement()}
-                </InputWrapper>
+                </DefaultWrapper>
             )}
         </>
     );

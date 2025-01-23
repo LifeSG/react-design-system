@@ -1,6 +1,4 @@
-import React from "react";
-import { ApiTable } from "../../storybook-common/api-table";
-import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
@@ -11,7 +9,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "",
                 description: (
                     <>
-                        This component also inherits props from&nbsp;
+                        This component also inherits props from
                         <a
                             href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement"
                             rel="noreferrer"
@@ -26,8 +24,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "spacing",
                 description: (
                     <>
-                        Sets the number of characters before a space is
-                        added&nbps; (works only with type <code>tel</code> input
+                        Sets the number of characters before a space is added
+                        (works only with type <code>tel</code> input)
                     </>
                 ),
 
@@ -37,8 +35,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "error",
                 description: (
                     <>
-                        Indicates if an error display is to be set&nbsp; (Not
-                        needed if you indicated <code>errorMessage</code>)
+                        Indicates if an error display is to be set (Not needed
+                        if you indicated <code>errorMessage</code>)
                     </>
                 ),
                 propTypes: ["boolean"],

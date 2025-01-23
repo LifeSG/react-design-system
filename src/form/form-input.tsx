@@ -15,6 +15,13 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
         mobileCols,
         tabletCols,
         desktopCols,
+        xxsCols,
+        xsCols,
+        smCols,
+        mdCols,
+        lgCols,
+        xlCols,
+        xxlCols,
         ...otherProps
     } = props;
 
@@ -29,6 +36,13 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <Input
                 id={`${id}-base`}

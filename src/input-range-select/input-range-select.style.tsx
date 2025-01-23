@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ClearContainer } from "../input/input.style";
+import { ClearButton } from "../input/input.style";
 import { Selector } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 
 // =============================================================================
@@ -12,7 +12,7 @@ export const InputSelectorWrapper = styled.div`
     justify-content: space-between;
 `;
 
-export const ClearIconContainer = styled(ClearContainer)`
+export const ClearIconContainer = styled(ClearButton)`
     position: absolute;
     right: 0;
     padding-left: 0.5rem;
