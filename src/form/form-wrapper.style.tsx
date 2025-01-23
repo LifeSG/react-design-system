@@ -1,12 +1,13 @@
 import styled, { css } from "styled-components";
 import { Layout } from "../layout";
+import { Spacing } from "../theme";
 
 const commonStyles = css`
     display: flex;
     flex-direction: column;
 
     &:not(:last-child) {
-        margin-bottom: 2rem;
+        margin-bottom: ${Spacing["spacing-32"]};
     }
 `;
 
