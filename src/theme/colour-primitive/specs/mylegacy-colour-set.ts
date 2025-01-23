@@ -92,4 +92,5 @@ export const MyLegacyColourSet: PrimitiveColourSet = {
     "info-100": "#F4FAFD",
     white: "#FFFFFF",
     black: "#000000",
+    "primary-inverse": "#FEAB10",
 };

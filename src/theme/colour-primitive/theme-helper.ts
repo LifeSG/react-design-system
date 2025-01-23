@@ -134,4 +134,5 @@ export const PrimitiveColour: {
     "info-100": getPrimitiveColour("info-100"),
     white: getPrimitiveColour("white"),
     black: getPrimitiveColour("black"),
+    "primary-inverse": getPrimitiveColour("primary-inverse"),
 };

@@ -97,4 +97,5 @@ export type PrimitiveColourSet = {
     "info-100": string;
     white: string;
     black: string;
+    "primary-inverse": string;
 };

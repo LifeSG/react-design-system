@@ -80,6 +80,7 @@ export type SemanticColourSet = {
     "border-warning": SemanticColourValue;
     "border-error": SemanticColourValue;
     "border-error-focus": SemanticColourValue;
+    "border-error-focus-strong": SemanticColourValue;
     "border-error-strong": SemanticColourValue;
     "border-info": SemanticColourValue;
 
@@ -98,11 +99,13 @@ export type SemanticColourSet = {
     "bg-selected": SemanticColourValue;
     "bg-selected-hover": SemanticColourValue;
     "bg-selected-strong": SemanticColourValue;
+    "bg-selected-stronger": SemanticColourValue;
     "bg-selected-strongest": SemanticColourValue;
     "bg-selected-strongest-hover": SemanticColourValue;
 
     "bg-disabled": SemanticColourValue;
     "bg-selected-disabled": SemanticColourValue;
+    "bg-selected-stronger-disabled": SemanticColourValue;
 
     "bg-success": SemanticColourValue;
     "bg-success-hover": SemanticColourValue;
@@ -131,10 +134,11 @@ export type SemanticColourSet = {
     "bg-primary-subtle": SemanticColourValue;
     "bg-primary-subtler": SemanticColourValue;
     "bg-primary-subtlest": SemanticColourValue;
+    "bg-available": SemanticColourValue;
+
     "bg-primary-hover": SemanticColourValue;
     "bg-primary-subtlest-hover": SemanticColourValue;
     "bg-primary-subtlest-selected": SemanticColourValue;
-    "bg-available": SemanticColourValue;
 
     // overlay
     "overlay-strong": SemanticColourValue;
@@ -142,6 +146,8 @@ export type SemanticColourSet = {
 
     // hyperlink
     hyperlink: SemanticColourValue;
+    "hyperlink-hover": SemanticColourValue;
+    "hyperlink-visited": SemanticColourValue;
     "hyperlink-inverse": SemanticColourValue;
 
     // focus ring

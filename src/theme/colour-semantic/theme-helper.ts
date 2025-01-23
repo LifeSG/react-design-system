@@ -114,6 +114,7 @@ export const ColourSemantic: {
     "border-warning": getSemanticColour("border-warning"),
     "border-error": getSemanticColour("border-error"),
     "border-error-focus": getSemanticColour("border-error-focus"),
+    "border-error-focus-strong": getSemanticColour("border-error-focus-strong"),
     "border-error-strong": getSemanticColour("border-error-strong"),
     "border-info": getSemanticColour("border-info"),
 
@@ -132,6 +133,7 @@ export const ColourSemantic: {
     "bg-selected": getSemanticColour("bg-selected"),
     "bg-selected-hover": getSemanticColour("bg-selected-hover"),
     "bg-selected-strong": getSemanticColour("bg-selected-strong"),
+    "bg-selected-stronger": getSemanticColour("bg-selected-stronger"),
     "bg-selected-strongest": getSemanticColour("bg-selected-strongest"),
     "bg-selected-strongest-hover": getSemanticColour(
         "bg-selected-strongest-hover"
@@ -139,6 +141,9 @@ export const ColourSemantic: {
 
     "bg-disabled": getSemanticColour("bg-disabled"),
     "bg-selected-disabled": getSemanticColour("bg-selected-disabled"),
+    "bg-selected-stronger-disabled": getSemanticColour(
+        "bg-selected-stronger-disabled"
+    ),
 
     "bg-success": getSemanticColour("bg-success"),
     "bg-success-hover": getSemanticColour("bg-success-hover"),
@@ -167,12 +172,13 @@ export const ColourSemantic: {
     "bg-primary-subtle": getSemanticColour("bg-primary-subtle"),
     "bg-primary-subtler": getSemanticColour("bg-primary-subtler"),
     "bg-primary-subtlest": getSemanticColour("bg-primary-subtlest"),
+    "bg-available": getSemanticColour("bg-available"),
+
     "bg-primary-hover": getSemanticColour("bg-primary-hover"),
     "bg-primary-subtlest-hover": getSemanticColour("bg-primary-subtlest-hover"),
     "bg-primary-subtlest-selected": getSemanticColour(
         "bg-primary-subtlest-selected"
     ),
-    "bg-available": getSemanticColour("bg-available"),
 
     // overlay
     "overlay-strong": getSemanticColour("overlay-strong"),
@@ -180,6 +186,8 @@ export const ColourSemantic: {
 
     // hyperlink
     hyperlink: getSemanticColour("hyperlink"),
+    "hyperlink-hover": getSemanticColour("hyperlink-hover"),
+    "hyperlink-visited": getSemanticColour("hyperlink-visited"),
     "hyperlink-inverse": getSemanticColour("hyperlink-inverse"),
 
     // focus ring
