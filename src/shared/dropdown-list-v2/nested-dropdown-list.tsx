@@ -277,6 +277,26 @@ export const NestedDropdownList = <T,>({
         return filterMatchedItems(nestedList);
     });
 
+    const updateSelectedItemsInList = useEvent(() => {
+        setUnfilteredListItems((unfilteredListItems) =>
+            updateSelectedState(
+                unfilteredListItems,
+                selectedKeyPaths,
+                multiSelect
+            )
+        );
+
+        if (searchActive) {
+            setFilteredListItems((filteredListItems) =>
+                updateSelectedState(
+                    filteredListItems,
+                    selectedKeyPaths,
+                    multiSelect
+                )
+            );
+        }
+    });
+
     const toggleCategory = (index: number, nextExpanded: boolean) => {
         const activeList = searchActive
             ? filteredListItems
@@ -310,15 +330,8 @@ export const NestedDropdownList = <T,>({
     }, [flatten, flattenDefaultMode, listItems, mode]);
 
     useEffect(() => {
-        // update paths
-        setUnfilteredListItems((unfilteredListItems) =>
-            updateSelectedState(
-                unfilteredListItems,
-                selectedKeyPaths,
-                multiSelect
-            )
-        );
-    }, [multiSelect, selectedKeyPaths]);
+        updateSelectedItemsInList();
+    }, [multiSelect, selectedKeyPaths, updateSelectedItemsInList]);
 
     useEffect(() => {
         if (searchActive && searchValue.trim().length >= 3) {
