@@ -86,22 +86,14 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         keyPaths: string[][],
         items: NestedDropdownListLocalItem<V1 | V2 | V3>[]
     ) => {
-        if (keyPaths.length) {
-            const selectedItems = items.map((item) => ({
-                keyPath: item.keyPath,
-                label: item.item.label,
-                value: item.item.value,
-            }));
-            setSelectedKeyPaths(keyPaths);
-            setSelectedItems(selectedItems);
-            performOnSelectOptions(keyPaths, selectedItems);
-        } else {
-            const keyPaths = [];
-            const selectedItems = [];
-            setSelectedKeyPaths(keyPaths);
-            setSelectedItems(selectedItems);
-            performOnSelectOptions(keyPaths, selectedItems);
-        }
+        const selectedItems = items.map((item) => ({
+            keyPath: item.keyPath,
+            label: item.item.label,
+            value: item.item.value,
+        }));
+        setSelectedKeyPaths(keyPaths);
+        setSelectedItems(selectedItems);
+        performOnSelectOptions(keyPaths, selectedItems);
     };
 
     const handleListItemClick = (

@@ -204,21 +204,21 @@ export const NestedDropdownList = <T,>({
     };
 
     const handleOnSelectAll = () => {
-        const activeList = searchActive
-            ? filteredListItems
-            : unfilteredListItems;
+        if (selectedKeyPaths.length === 0) {
+            const keyPaths: string[][] = [];
+            const items: NestedDropdownListLocalItem<T>[] = [];
+            unfilteredListItems.forEach((item) => {
+                if (item.hasSubItems) {
+                    return;
+                }
+                keyPaths.push(item.keyPath);
+                items.push(item);
+            });
 
-        const keyPaths: string[][] = [];
-        const items: NestedDropdownListLocalItem<T>[] = [];
-        activeList.forEach((item) => {
-            if (item.hasSubItems) {
-                return;
-            }
-            keyPaths.push(item.keyPath);
-            items.push(item);
-        });
-
-        onSelectAll?.(keyPaths, items);
+            onSelectAll?.(keyPaths, items);
+        } else {
+            onSelectAll?.([], []);
+        }
     };
 
     // =========================================================================
@@ -374,8 +374,8 @@ export const NestedDropdownList = <T,>({
     const renderSelectAll = () => {
         if (
             multiSelect &&
-            filteredListItems.length > 0 &&
-            !searchValue &&
+            !searchActive &&
+            unfilteredListItems.length > 0 &&
             itemsLoadState === "success"
         ) {
             return (

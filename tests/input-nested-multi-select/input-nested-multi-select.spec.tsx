@@ -233,6 +233,63 @@ describe("InputNestedMultiSelect", () => {
         expect(screen.getByText("Select")).toBeVisible();
     });
 
+    it("should select all list items correctly", async () => {
+        const user = userEvent.setup();
+        const mockOnSelectOptions = jest.fn();
+
+        render(
+            <InputNestedMultiSelect
+                data-testid={FIELD_TESTID}
+                options={OPTIONS}
+                onSelectOptions={mockOnSelectOptions}
+            />
+        );
+
+        await user.click(screen.queryByTestId(FIELD_TESTID));
+
+        await waitFor(() => {
+            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+        });
+
+        await user.click(screen.queryByText("Select all"));
+
+        expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeInTheDocument();
+        expect(mockOnSelectOptions).toHaveBeenCalledWith(
+            [
+                ["1", "10", "100"],
+                ["1", "10", "200"],
+            ],
+            ["1.1.1", "1.1.2"]
+        );
+        expect(screen.getByText("2 selected")).toBeVisible();
+    });
+
+    it("should clear all list items correctly", async () => {
+        const user = userEvent.setup();
+        const mockOnSelectOptions = jest.fn();
+
+        render(
+            <InputNestedMultiSelect
+                data-testid={FIELD_TESTID}
+                options={OPTIONS}
+                onSelectOptions={mockOnSelectOptions}
+                selectedKeyPaths={[["1", "10", "100"]]}
+            />
+        );
+
+        await user.click(screen.queryByTestId(FIELD_TESTID));
+
+        await waitFor(() => {
+            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+        });
+
+        await user.click(screen.queryByText("Clear all"));
+
+        expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeInTheDocument();
+        expect(mockOnSelectOptions).toHaveBeenCalledWith([], []);
+        expect(screen.getByText("Select")).toBeVisible();
+    });
+
     describe("focus/blur behaviour", () => {
         it("should call onBlur via outside click", async () => {
             const user = userEvent.setup();
@@ -257,7 +314,9 @@ describe("InputNestedMultiSelect", () => {
 
             expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
-            await user.click(document.body);
+            await act(async () => {
+                await user.click(document.body);
+            });
 
             expect(mockOnBlur).toHaveBeenCalledTimes(1);
         });
@@ -285,7 +344,9 @@ describe("InputNestedMultiSelect", () => {
 
             expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
-            await user.click(document.body);
+            await act(async () => {
+                await user.click(document.body);
+            });
 
             await waitForElementToBeRemoved(() =>
                 screen.queryByTestId(DROPDOWN_TESTID)
@@ -337,7 +398,7 @@ describe("InputNestedMultiSelect", () => {
             expect(mockOnBlur).toHaveBeenCalledTimes(1);
         });
 
-        it("should call onFocus and onBlur when cycling through the tab sequence", async () => {
+        it("should call onBlur when cycling through the tab sequence", async () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
@@ -369,7 +430,7 @@ describe("InputNestedMultiSelect", () => {
             expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
             await act(async () => {
-                await user.keyboard("{Tab}");
+                await user.keyboard("{Tab}{Tab}");
             });
 
             await waitForElementToBeRemoved(() =>
