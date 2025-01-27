@@ -13,6 +13,13 @@ export const FormSelect = <T, V>({
     mobileCols,
     tabletCols,
     desktopCols,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
     variant,
     ...otherProps
 }: FormInputSelectProps<T, V>): JSX.Element => {
@@ -27,6 +34,13 @@ export const FormSelect = <T, V>({
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <InputSelect
                 id={`${id}-base`}

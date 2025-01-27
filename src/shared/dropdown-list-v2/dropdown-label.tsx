@@ -1,8 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useTheme } from "styled-components";
-import { V2_TextStyle } from "../../v2_text";
-import { V2_BaseTheme } from "../../v2_theme";
+import { Font } from "../../theme";
 import { StringHelper } from "../../util/string-helper";
 import { DropdownVariantType, LabelDisplayType } from "../dropdown-list/types";
 import {
@@ -32,9 +31,12 @@ export const DropdownLabel = ({
     truncationType = "middle",
     variant,
 }: DropdownLabelProps): JSX.Element => {
-    const theme = useTheme() || V2_BaseTheme;
-    const fontSize = V2_TextStyle.Body.fontSize({ theme });
-    const fontFamily = V2_TextStyle.Body.fontFamily({ theme });
+    const theme = useTheme();
+    const fontSize =
+        variant === "small"
+            ? Font.Spec["body-size-md"]({ theme })
+            : Font.Spec["body-size-baseline"]({ theme });
+    const fontFamily = Font.Spec["font-family"]({ theme });
     const { ref, width } = useResizeDetector();
 
     // =========================================================================
@@ -51,7 +53,7 @@ export const DropdownLabel = ({
             // but might not be performant for large lists
             const textWidth = StringHelper.getTextWidth(
                 displayText,
-                `${fontSize}rem '${fontFamily}'`
+                `${fontSize} '${fontFamily}'`
             );
 
             // there's less space than expected due to word breaks, so an
@@ -95,13 +97,12 @@ export const DropdownLabel = ({
     };
 
     return (
-        <Label ref={ref} $labelDisplayType={itemDisplayType}>
+        <Label ref={ref} $labelDisplayType={itemDisplayType} $variant={variant}>
             <PrimaryText
                 aria-label={label}
                 $maxLines={maxLines}
                 $selected={selected}
                 $truncateType={truncationType}
-                $variant={variant}
             >
                 {truncationType === "middle" && shouldTruncateTitle
                     ? renderTruncatedText(label)

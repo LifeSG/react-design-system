@@ -370,6 +370,7 @@ export const DropdownList = <T, V>({
                         role="option"
                         tabIndex={active ? 0 : -1}
                         $active={active}
+                        $selected={selected}
                     >
                         {renderListItem ? (
                             renderListItem(item, { selected })
@@ -433,14 +434,8 @@ export const DropdownList = <T, V>({
             itemsLoadState === "success"
         ) {
             return (
-                <ResultStateContainer
-                    data-testid="list-no-results"
-                    $variant={variant}
-                >
-                    <LabelIcon
-                        data-testid="no-result-icon"
-                        $variant={variant}
-                    />
+                <ResultStateContainer data-testid="list-no-results">
+                    <LabelIcon data-testid="no-result-icon" />
                     No results found.
                 </ResultStateContainer>
             );
@@ -450,10 +445,7 @@ export const DropdownList = <T, V>({
     const renderLoading = () => {
         if (onRetry && itemsLoadState === "loading") {
             return (
-                <ResultStateContainer
-                    data-testid="list-loading"
-                    $variant={variant}
-                >
+                <ResultStateContainer data-testid="list-loading">
                     <Spinner />
                     Loading...
                 </ResultStateContainer>
@@ -464,14 +456,8 @@ export const DropdownList = <T, V>({
     const renderTryAgain = () => {
         if (onRetry && itemsLoadState === "fail") {
             return (
-                <ResultStateContainer
-                    data-testid="list-fail"
-                    $variant={variant}
-                >
-                    <LabelIcon
-                        data-testid="load-error-icon"
-                        $variant={variant}
-                    />
+                <ResultStateContainer data-testid="list-fail">
+                    <LabelIcon data-testid="load-error-icon" />
                     Failed to load.&nbsp;
                     <TryAgainButton
                         onClick={handleTryAgain}
@@ -517,6 +503,7 @@ export const DropdownList = <T, V>({
             data-testid="dropdown-container"
             ref={nodeRef}
             $width={width}
+            $variant={variant}
         >
             {renderList()}
             {renderBottomCta()}

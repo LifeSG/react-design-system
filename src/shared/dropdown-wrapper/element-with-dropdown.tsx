@@ -18,8 +18,9 @@ import {
 } from "@floating-ui/react";
 import { useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { V2_MediaWidths } from "../../v2_media";
+import { useTheme } from "styled-components";
 import { useFloatingChild } from "../../overlay/use-floating-context";
+import { Breakpoint } from "../../theme";
 import { DropdownContainer } from "./element-with-dropdown.styles";
 import { DropdownAlignmentType } from "./types";
 
@@ -73,6 +74,8 @@ export const ElementWithDropdown = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const elementRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const { width: referenceWidth } = useResizeDetector({
@@ -84,7 +87,7 @@ export const ElementWithDropdown = ({
         fn: ({ x, rects }) => {
             const noGapInBetween =
                 x === 0 || x + rects.floating.width === window.innerWidth;
-            const isMobileScreen = window.innerWidth < V2_MediaWidths.mobileL;
+            const isMobileScreen = window.innerWidth < mobileBreakpoint;
             return {
                 x:
                     noGapInBetween && isMobileScreen
