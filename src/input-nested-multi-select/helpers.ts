@@ -3,8 +3,7 @@ import { NestedDropdownListItemProps } from "../shared/dropdown-list-v2";
 
 const findSelectedItem = <V1, V2, V3>(
     options: NestedDropdownListItemProps<V1 | V2 | V3>[],
-    keyPath: string[],
-    originalKeyPath: string[]
+    keyPath: string[]
 ): NestedDropdownListItemProps<V1 | V2 | V3> | undefined => {
     const [currentKey, ...nextKeyPath] = keyPath;
 
@@ -22,7 +21,7 @@ const findSelectedItem = <V1, V2, V3>(
         return item;
     }
 
-    return findSelectedItem(item.subItems, nextKeyPath, originalKeyPath);
+    return findSelectedItem(item.subItems, nextKeyPath);
 };
 
 export const getSelectedItems = <V1, V2, V3>(
@@ -33,7 +32,7 @@ export const getSelectedItems = <V1, V2, V3>(
 
     for (let i = 0; i < keyPaths.length; i++) {
         const keyPath = keyPaths[i];
-        const item = findSelectedItem(options, keyPath, keyPath);
+        const item = findSelectedItem(options, keyPath);
 
         if (item) {
             selectedItems.push({
@@ -80,7 +79,7 @@ export const getSelectedSubItems = <V1, V2, V3>(
     options: NestedDropdownListItemProps<V1 | V2 | V3>[],
     keyPath: string[]
 ): SelectedItem<V1 | V2 | V3>[] => {
-    const item = findSelectedItem(options, keyPath, keyPath);
+    const item = findSelectedItem(options, keyPath);
 
     if (item && item.subItems) {
         return findSubItems(item.subItems, keyPath);
