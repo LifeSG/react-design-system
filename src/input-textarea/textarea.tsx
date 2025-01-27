@@ -15,7 +15,7 @@ const TextareaBaseComponent = (
             ref={ref}
             disabled={disabled}
             value={value}
-            error={error}
+            $error={error}
             rows={rows}
             {...otherProps}
         />
@@ -32,6 +32,7 @@ const TextareaComponent = (
     {
         value,
         disabled,
+        error,
         rows = 5,
         onChange,
         transformValue,
@@ -79,11 +80,11 @@ const TextareaComponent = (
                 value={stateValue}
                 rows={rows || 5}
                 onChange={handleChange}
+                $error={error}
                 {...otherProps}
             />
             {otherProps.maxLength && (
                 <TextareaCounter
-                    disabled={disabled}
                     value={stateValue}
                     maxLength={otherProps.maxLength}
                     renderCustomCounter={otherProps.renderCustomCounter}

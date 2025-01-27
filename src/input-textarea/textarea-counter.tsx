@@ -4,7 +4,6 @@ import { CounterLabel } from "./textara-counter.style";
 interface Props {
     value: string | number | readonly string[];
     maxLength: number;
-    disabled?: boolean | undefined;
     renderCustomCounter?: (
         maxLength: number,
         currentValueLength: number
@@ -14,7 +13,6 @@ interface Props {
 export const TextareaCounter = ({
     value,
     maxLength,
-    disabled,
     renderCustomCounter,
 }: Props): JSX.Element => {
     // =============================================================================
@@ -55,11 +53,7 @@ export const TextareaCounter = ({
             {React.isValidElement(counterLabel) ? (
                 counterLabel
             ) : (
-                <CounterLabel
-                    data-testid="counter-label"
-                    weight="semibold"
-                    disabled={disabled}
-                >
+                <CounterLabel data-testid="counter-label">
                     {counterLabel}
                 </CounterLabel>
             )}

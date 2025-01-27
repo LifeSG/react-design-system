@@ -1,14 +1,11 @@
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
-import { V2_DesignToken } from "../v2_design-token";
-import { V2_TextStyleHelper } from "../v2_text";
-import { V2_Transition } from "../v2_transition";
+import { Border, Colour, Font, Radius, Spacing } from "../theme";
 
 // =============================================================================
-// STYLE INTERFACe
+// STYLE INTERFACE
 // =============================================================================
 interface StyleProps {
-    error?: boolean;
+    $error?: boolean;
 }
 
 // =============================================================================
@@ -21,62 +18,59 @@ export const Wrapper = styled.div`
 `;
 
 export const Element = styled.textarea<StyleProps>`
-    border: 1px solid ${V2_Color.Neutral[5]};
-    border-radius: 4px;
-    display: block;
-    padding: 0.75rem 1rem;
-    width: 100%;
-    transition: ${V2_Transition.Base};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    background: ${Colour["bg"]};
+    outline: none;
+    overflow: hidden;
 
-    ${V2_TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${V2_Color.Neutral[1]};
-    background: ${V2_Color.Neutral[8]};
+    display: block;
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
+    width: 100%;
+
+    ${Font["body-baseline-regular"]}
+    color: ${Colour["text"]};
 
     :focus,
     :active {
-        outline: none;
-        border: 1px solid ${V2_Color.Accent.Light[1]};
-        box-shadow: ${V2_DesignToken.InputBoxShadow};
+        outline-offset: -1px;
+        outline: ${Border["width-020"]} ${Border["solid"]}
+            ${Colour["border-focus"]};
     }
 
     ::placeholder,
     ::-webkit-input-placeholder {
-        color: ${V2_Color.Neutral[3]};
+        color: ${Colour["text-subtler"]};
     }
 
     ${(props) => {
         if (props.readOnly) {
             return css`
-                border: none;
-                padding: 0.75rem 0;
+                border-color: transparent;
                 background: transparent !important;
 
                 :focus,
                 :active {
-                    border: none;
-                    box-shadow: none;
+                    outline-color: ${Colour["border-focus"]};
                 }
             `;
         } else if (props.disabled) {
             return css`
-                background: ${V2_Color.Neutral[6](props)};
+                background: ${Colour["bg-disabled"]};
                 cursor: not-allowed;
 
                 :focus,
                 :active {
-                    outline: none;
-                    border: 1px solid ${V2_Color.Neutral[5](props)};
-                    box-shadow: none;
+                    outline-color: ${Colour["border-disabled"]};
                 }
             `;
-        } else if (props.error) {
+        } else if (props.$error) {
             return css`
-                border: 1px solid ${V2_Color.Validation.Red.Border(props)};
+                border-color: ${Colour["border-error"]};
 
                 :focus,
                 :active {
-                    border: 1px solid ${V2_Color.Validation.Red.Border(props)};
-                    box-shadow: ${V2_DesignToken.InputErrorBoxShadow};
+                    outline-color: ${Colour["border-error-focus"]};
                 }
             `;
         }

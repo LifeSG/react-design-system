@@ -1,11 +1,10 @@
-import { V2_Text } from "../../../src/v2_text/text";
 import styled from "styled-components";
-import React from "react";
 
-const CustomCounterLabel = styled(V2_Text.H6)`
+const CustomCounterLabel = styled.p`
     text-align: right;
-    color: #a4a4a4 !important;
+    color: #a4a4a4;
     font-size: 14px;
+    font-weight: 600;
 `;
 
 export const renderCustomCounter = (
@@ -13,7 +12,7 @@ export const renderCustomCounter = (
     currentValueLength: number
 ): JSX.Element => {
     return (
-        <CustomCounterLabel data-testid={"counter-label"} weight="semibold">
+        <CustomCounterLabel data-testid={"counter-label"}>
             {currentValueLength}/{maxLength}
         </CustomCounterLabel>
     );
