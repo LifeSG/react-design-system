@@ -77,7 +77,6 @@ const FormTextareaComponent = (
                 {errorMessage && (
                     <ErrorMessageContainer>
                         <ErrorMessageLabel
-                            weight="semibold"
                             data-testid={getErrorTestMessageId()}
                         >
                             {errorMessage}

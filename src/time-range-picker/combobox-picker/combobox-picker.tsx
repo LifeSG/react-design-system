@@ -391,7 +391,6 @@ export const ComboboxPicker = ({
         validationError && (
             <ErrorMessage
                 id={id ? `${id}-error-message` : "error-message"}
-                weight={"semibold"}
                 tabIndex={0}
                 data-testid={id ? `${id}-error-message` : "error-message"}
             >

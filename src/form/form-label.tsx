@@ -1,4 +1,3 @@
-import { TypographyProps } from "../typography/types";
 import { PopoverAddon } from "./form-label-addon";
 import { ErrorMessage, Label, Subtitle } from "./form-label.style";
 import { FormLabelProps } from "./types";
@@ -28,7 +27,6 @@ export const FormLabel = ({
             {addon && addon.type && renderAddon()}
             {typeof subtitle === "string" ? (
                 <Subtitle
-                    as="span"
                     data-testid={testId ? `${testId}-subtitle` : "subtitle"}
                     {...otherProps}
                 >
@@ -41,6 +39,8 @@ export const FormLabel = ({
     );
 };
 
-export const FormErrorMessage = (props: TypographyProps): JSX.Element => {
-    return <ErrorMessage weight="semibold" {...props} />;
+export const FormErrorMessage = (
+    props: React.HTMLAttributes<HTMLElement>
+): JSX.Element => {
+    return <ErrorMessage {...props} />;
 };

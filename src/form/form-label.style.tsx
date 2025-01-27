@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Colour, Font, Spacing } from "../theme";
-import { Typography } from "../typography";
 
 // =============================================================================
 // STYLING
@@ -15,14 +14,16 @@ export const Label = styled.label`
     font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
-// check input
-export const ErrorMessage = styled(Typography.BodySM)`
+export const ErrorMessage = styled.p`
+    ${Font["body-sm-semibold"]}
     color: ${Colour["text-error"]};
     margin-top: ${Spacing["spacing-8"]};
     margin-bottom: 0;
     outline: none;
 `;
 
-export const Subtitle = styled(Typography.BodySM)`
+export const Subtitle = styled.span`
+    ${Font["body-sm-regular"]}
     color: ${Colour["text-subtler"]};
+    display: block;
 `;

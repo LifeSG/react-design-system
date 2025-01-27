@@ -154,7 +154,6 @@ export const FormWrapper = ({
             {errorMessage && (
                 <ErrorMessage
                     id={getErrorTestMessageId()}
-                    weight="semibold"
                     tabIndex={0}
                     data-testid={getErrorTestMessageId()}
                 >
