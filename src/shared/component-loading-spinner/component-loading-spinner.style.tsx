@@ -33,8 +33,9 @@ export const InnerRing1 = styled.div`
     box-sizing: border-box;
     display: block;
     position: absolute;
-    width: 100%;
-    height: 100%;
+    top: 1px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
     border-width: 2px;
     border-style: solid;
     border-radius: 50%;
