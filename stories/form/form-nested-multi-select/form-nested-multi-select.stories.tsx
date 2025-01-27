@@ -5,7 +5,9 @@ import { InputNestedMultiSelect } from "src/input-nested-multi-select";
 import { Layout } from "src/layout";
 import { StoryContainer } from "../../storybook-common";
 import {
+    longLabelOptions,
     options,
+    searchOptions,
     twoTierOptions,
 } from "../form-nested-select/nested-data-list";
 import { Container } from "../shared-doc-elements";
@@ -22,23 +24,12 @@ export default meta;
 
 export const Default: StoryObj<Component> = {
     render: () => {
-        const [selectedKeyPaths, setSelectedKeyPaths] = useState([
-            ["999", "820", "10002"],
-        ]);
         return (
             <StoryContainer>
                 <Container>
                     <Form.NestedMultiSelect
                         label="This is the nested select field"
                         options={options}
-                    />
-                    <Form.NestedMultiSelect
-                        label="This is prefilled with a selected option"
-                        options={options}
-                        selectedKeyPaths={selectedKeyPaths}
-                        onSelectOptions={(keyPaths, values) => {
-                            setSelectedKeyPaths(keyPaths);
-                        }}
                     />
                     <Form.NestedMultiSelect
                         label="This contains a 2 tier option"
@@ -67,9 +58,18 @@ export const Default: StoryObj<Component> = {
 
 export const SpecifyingMode: StoryObj<Component> = {
     render: () => {
+        const [selectedKeyPaths, setSelectedKeyPaths] = useState([["2", "22"]]);
         return (
             <StoryContainer>
                 <Container>
+                    <Form.NestedMultiSelect
+                        label="The selected option is expanded by default"
+                        options={options}
+                        selectedKeyPaths={selectedKeyPaths}
+                        onSelectOptions={(keyPaths) => {
+                            setSelectedKeyPaths(keyPaths);
+                        }}
+                    />
                     <Form.NestedMultiSelect
                         label="With all (sub)categories expanded "
                         options={options}
@@ -93,8 +93,28 @@ export const WithSearch: StoryObj<Component> = {
                 <Container>
                     <Form.NestedMultiSelect
                         label="This has searchable options"
-                        options={options}
+                        options={searchOptions}
                         enableSearch
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
+export const LabelTruncation: StoryObj<Component> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.NestedMultiSelect
+                        label="This has truncation at the end"
+                        options={longLabelOptions}
+                    />
+                    <Form.NestedMultiSelect
+                        label="This has truncation in the middle"
+                        optionTruncationType="middle"
+                        options={longLabelOptions}
                     />
                 </Container>
             </StoryContainer>

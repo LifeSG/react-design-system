@@ -203,6 +203,24 @@ export const NestedDropdownList = <T,>({
         setFocusedIndex(index);
     };
 
+    const handleOnSelectAll = () => {
+        if (selectedKeyPaths.length === 0) {
+            const keyPaths: string[][] = [];
+            const items: NestedDropdownListLocalItem<T>[] = [];
+            unfilteredListItems.forEach((item) => {
+                if (item.hasSubItems) {
+                    return;
+                }
+                keyPaths.push(item.keyPath);
+                items.push(item);
+            });
+
+            onSelectAll?.(keyPaths, items);
+        } else {
+            onSelectAll?.([], []);
+        }
+    };
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -259,6 +277,26 @@ export const NestedDropdownList = <T,>({
         return filterMatchedItems(nestedList);
     });
 
+    const updateSelectedItemsInList = useEvent(() => {
+        setUnfilteredListItems((unfilteredListItems) =>
+            updateSelectedState(
+                unfilteredListItems,
+                selectedKeyPaths,
+                multiSelect
+            )
+        );
+
+        if (searchActive) {
+            setFilteredListItems((filteredListItems) =>
+                updateSelectedState(
+                    filteredListItems,
+                    selectedKeyPaths,
+                    multiSelect
+                )
+            );
+        }
+    });
+
     const toggleCategory = (index: number, nextExpanded: boolean) => {
         const activeList = searchActive
             ? filteredListItems
@@ -292,15 +330,8 @@ export const NestedDropdownList = <T,>({
     }, [flatten, flattenDefaultMode, listItems, mode]);
 
     useEffect(() => {
-        // update paths
-        setUnfilteredListItems((unfilteredListItems) =>
-            updateSelectedState(
-                unfilteredListItems,
-                selectedKeyPaths,
-                multiSelect
-            )
-        );
-    }, [multiSelect, selectedKeyPaths]);
+        updateSelectedItemsInList();
+    }, [multiSelect, selectedKeyPaths, updateSelectedItemsInList]);
 
     useEffect(() => {
         if (searchActive && searchValue.trim().length >= 3) {
@@ -356,14 +387,14 @@ export const NestedDropdownList = <T,>({
     const renderSelectAll = () => {
         if (
             multiSelect &&
-            filteredListItems.length > 0 &&
-            !searchValue &&
+            !searchActive &&
+            unfilteredListItems.length > 0 &&
             itemsLoadState === "success"
         ) {
             return (
                 <SelectAllContainer>
                     <SelectAllButton
-                        onClick={onSelectAll}
+                        onClick={handleOnSelectAll}
                         type="button"
                         $variant={variant}
                     >

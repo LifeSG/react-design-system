@@ -584,6 +584,65 @@ describe("NestedDropdownList", () => {
                 screen.getByRole("treeitem", { name: "Child 2.2.2 item" })
             ).not.toBeChecked();
         });
+
+        it("should display selected items as checked during search", async () => {
+            const user = userEvent.setup();
+            const options = buildOptions([
+                ["A", [["AA", [["Apple"], ["Banana"]]]]],
+                ["B", [["BB", [["Banana milk"], ["Skimmed milk"]]]]],
+                ["C", [["CCC", [["Cheese"]]]]],
+            ]);
+            const { rerender } = render(
+                <NestedDropdownList
+                    listItems={options}
+                    multiSelect
+                    selectedKeyPaths={[["A", "AA", "Apple"]]}
+                    enableSearch
+                />
+            );
+
+            await waitFor(() => {
+                expect(
+                    screen.getByLabelText("Enter text to search")
+                ).toHaveFocus();
+            });
+
+            await act(async () => {
+                await user.keyboard("Banana");
+            });
+
+            rerender(
+                <NestedDropdownList
+                    listItems={options}
+                    multiSelect
+                    selectedKeyPaths={[
+                        ["A", "AA", "Apple"],
+                        ["A", "AA", "Banana"],
+                    ]}
+                    enableSearch
+                />
+            );
+
+            expect(
+                screen.getByRole("treeitem", { name: "Parent A item" })
+            ).toBeChecked();
+            expect(
+                screen.getByRole("treeitem", { name: "Parent AA item" })
+            ).toBeChecked();
+            expect(
+                screen.getByRole("treeitem", { name: "Child Banana item" })
+            ).toBeChecked();
+
+            expect(
+                screen.getByRole("treeitem", { name: "Parent B item" })
+            ).not.toBeChecked();
+            expect(
+                screen.getByRole("treeitem", { name: "Parent BB item" })
+            ).not.toBeChecked();
+            expect(
+                screen.getByRole("treeitem", { name: "Child Banana milk item" })
+            ).not.toBeChecked();
+        });
     });
 });
 

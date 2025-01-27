@@ -22,6 +22,9 @@ export interface InputNestedSelectSharedProps<V1, V2, V3>
     readOnly?: boolean | undefined;
     /** Specifies if items are expanded or collapsed when the dropdown is opened */
     mode?: ExpandMode | undefined;
+    variant?: DropdownVariantType | undefined;
+    alignment?: DropdownAlignmentType | undefined;
+    dropdownZIndex?: number | undefined;
     /** Function to convert selected value into a string */
     valueToStringFunction?: ((value: V1 | V2 | V3) => string) | undefined;
 }
@@ -42,9 +45,6 @@ export interface InputNestedSelectProps<V1, V2, V3>
     onSelectOption?:
         | ((keyPath: string[], value: V1 | V2 | V3) => void)
         | undefined;
-    variant?: DropdownVariantType | undefined;
-    alignment?: DropdownAlignmentType | undefined;
-    dropdownZIndex?: number | undefined;
     /** @deprecated this has no effect as the dropdown will automatically resize */
     listStyleWidth?: string | undefined;
     onBlur?: (() => void) | undefined;
