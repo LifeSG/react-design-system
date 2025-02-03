@@ -20,10 +20,10 @@ export const getFontSpec = (key: keyof FontSpecSet) => {
         const theme = props.theme;
         const fontSpecSet: FontSpecSet = getCollection(
             FontSpec,
-            theme.fontScheme
+            theme?.fontScheme
         );
 
-        if (theme.overrides && theme.overrides.fontSpec) {
+        if (theme?.overrides?.fontSpec) {
             return getValue(fontSpecSet, key, theme.overrides.fontSpec);
         } else {
             return fontSpecSet[key];

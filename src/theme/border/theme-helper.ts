@@ -18,10 +18,10 @@ export const getBorderWidth = (
         const theme = props.theme;
         const borderSet: BorderSet = getCollection(
             BorderSpec,
-            theme.borderScheme
+            theme?.borderScheme
         );
 
-        if (theme.overrides && theme.overrides.border) {
+        if (theme?.overrides?.border) {
             return `${getValue(borderSet, key, theme.overrides.border)}px`;
         } else {
             return `${borderSet[key]}px`;
@@ -34,14 +34,13 @@ export const getBorder = (key: "solid") => {
         const theme = props.theme;
         const borderSet: BorderSet = getCollection(
             BorderSpec,
-            theme.borderScheme
+            theme?.borderScheme
         );
 
         // check for an override
-        const borderValue =
-            theme.overrides && theme.overrides.border
-                ? getValue(borderSet, key, theme.overrides.border)
-                : borderSet[key];
+        const borderValue = theme?.overrides?.border
+            ? getValue(borderSet, key, theme.overrides.border)
+            : borderSet[key];
 
         // If function, resolve with props
         if (typeof borderValue === "function") {
@@ -66,13 +65,12 @@ export const getBorderStyle = (key: "dashed-default") => {
             const theme = resolvedStyledProps.theme;
             const borderSet: BorderSet = getCollection(
                 BorderSpec,
-                theme.borderScheme
+                theme?.borderScheme
             );
 
-            const borderValue =
-                theme.overrides && theme.overrides.border
-                    ? getValue(borderSet, key, theme.overrides.border)
-                    : borderSet[key];
+            const borderValue = theme?.overrides?.border
+                ? getValue(borderSet, key, theme.overrides.border)
+                : borderSet[key];
 
             return borderValue(...resolvedOptions)(resolvedStyledProps);
         };

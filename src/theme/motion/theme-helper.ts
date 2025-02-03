@@ -15,10 +15,10 @@ export const getMotion = (key: keyof MotionSet) => {
         const theme = props.theme;
         const motionSet: MotionSet = getCollection(
             MotionSpec,
-            theme.motionScheme
+            theme?.motionScheme
         );
 
-        if (theme.overrides && theme.overrides.motion) {
+        if (theme?.overrides?.motion) {
             return getValue(motionSet, key, theme.overrides.motion);
         } else {
             return motionSet[key];

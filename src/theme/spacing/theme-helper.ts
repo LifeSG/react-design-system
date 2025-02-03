@@ -15,10 +15,10 @@ export const getSpace = (key: keyof SpacingSet) => {
         const theme = props.theme;
         const spacingSet: SpacingSet = getCollection(
             SpacingSpec,
-            theme.spacingScheme
+            theme?.spacingScheme
         );
 
-        if (theme.overrides && theme.overrides.spacing) {
+        if (theme?.overrides?.spacing) {
             return `${getValue(spacingSet, key, theme.overrides.spacing)}px`;
         } else {
             return `${spacingSet[key]}px`;

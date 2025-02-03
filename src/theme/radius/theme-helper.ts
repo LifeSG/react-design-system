@@ -15,10 +15,10 @@ export const getRadius = (key: keyof RadiusSet) => {
         const theme = props.theme;
         const radiusSet: RadiusSet = getCollection(
             RadiusSpec,
-            theme.radiusScheme
+            theme?.radiusScheme
         );
 
-        if (theme.overrides && theme.overrides.radius) {
+        if (theme?.overrides?.radius) {
             return `${getValue(radiusSet, key, theme.overrides.radius)}px`;
         } else {
             return `${radiusSet[key]}px`;

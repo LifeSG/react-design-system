@@ -18,13 +18,12 @@ const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
 export const getFont = (key: keyof FontSet) => {
     return (props: StyledComponentProps): CSSProp | string => {
         const theme = props.theme;
-        const fontSet: FontSet = getCollection(FontSpec, theme.fontScheme);
+        const fontSet: FontSet = getCollection(FontSpec, theme?.fontScheme);
 
         // Check for an override
-        const fontValue =
-            theme.overrides && theme.overrides.font
-                ? getValue(fontSet, key, theme.overrides.font)
-                : fontSet[key];
+        const fontValue = theme?.overrides?.font
+            ? getValue(fontSet, key, theme.overrides.font)
+            : fontSet[key];
 
         // If function, resolve with props
         return typeof fontValue === "function"
