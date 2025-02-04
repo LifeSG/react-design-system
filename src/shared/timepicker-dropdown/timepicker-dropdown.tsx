@@ -16,6 +16,7 @@ import {
     InputSection,
     SwitchButton,
     TimeInput,
+    TimeInputBox,
     TimePeriodSection,
     TimePeriodToggle,
 } from "./timepicker-dropdown.styles";
@@ -284,23 +285,25 @@ export const TimepickerDropdown = ({
             >
                 <ChevronUpIcon />
             </SwitchButton>
-            <TimeInput
-                aria-label="hour"
-                type="number"
-                name={EInputName.HOUR}
-                id="hour"
-                maxLength={2}
-                pattern="[0-9]{2}"
-                ref={hourInputRef}
-                value={hourValue}
-                onFocus={handleFocus}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                min={1}
-                max={12}
-                placeholder="HH"
-                data-testid={getTestId("hour-input")}
-            />
+            <TimeInputBox>
+                <TimeInput
+                    aria-label="hour"
+                    type="number"
+                    name={EInputName.HOUR}
+                    id="hour"
+                    maxLength={2}
+                    pattern="[0-9]{2}"
+                    ref={hourInputRef}
+                    value={hourValue}
+                    onFocus={handleFocus}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    min={1}
+                    max={12}
+                    placeholder="HH"
+                    data-testid={getTestId("hour-input")}
+                />
+            </TimeInputBox>
             <SwitchButton
                 aria-label="decrease hour"
                 name={EInputButtonName.HOUR_DOWN}
@@ -324,23 +327,25 @@ export const TimepickerDropdown = ({
             >
                 <ChevronUpIcon />
             </SwitchButton>
-            <TimeInput
-                aria-label="minute"
-                type="number"
-                name={EInputName.MINUTE}
-                id="minute"
-                maxLength={2}
-                pattern="[0-9]{2}"
-                ref={minuteInputRef}
-                value={minuteValue}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                onFocus={handleFocus}
-                min={0}
-                max={59}
-                placeholder="MM"
-                data-testid={getTestId("minute-input")}
-            />
+            <TimeInputBox>
+                <TimeInput
+                    aria-label="minute"
+                    type="number"
+                    name={EInputName.MINUTE}
+                    id="minute"
+                    maxLength={2}
+                    pattern="[0-9]{2}"
+                    ref={minuteInputRef}
+                    value={minuteValue}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    onFocus={handleFocus}
+                    min={0}
+                    max={59}
+                    placeholder="MM"
+                    data-testid={getTestId("minute-input")}
+                />
+            </TimeInputBox>
             <SwitchButton
                 aria-label="decrease minute"
                 name={EInputButtonName.MINUTE_DOWN}
@@ -380,8 +385,9 @@ export const TimepickerDropdown = ({
 
     // React spring animation configuration
     const styles = useSpring({
+        opacity: show ? 1 : 0, // prevent top border from staying too long
         height: show
-            ? resizeDetector.height + 32 // include vertical padding
+            ? resizeDetector.height + 32 + 2 // include vertical padding and border
             : 0,
     });
 
