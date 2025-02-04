@@ -142,6 +142,18 @@ export const CustomAddon: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+const listAddonOptions = {
+    placeholder: "Select",
+    options: [
+        { value: "SG", display: "Singapore" },
+        { value: "US", display: "United States" },
+        { value: "UK", display: "United Kingdom" },
+        { value: "JP", display: "Japan" },
+    ],
+    valueExtractor: (option) => option.value,
+    listExtractor: (option) => option.display,
+};
+
 export const ListAddon: StoryObj<Component> = {
     render: () => {
         return (
@@ -151,17 +163,7 @@ export const ListAddon: StoryObj<Component> = {
                     placeholder="Enter something"
                     addon={{
                         type: "list",
-                        attributes: {
-                            placeholder: "Select",
-                            options: [
-                                { value: "SG", display: "Singapore" },
-                                { value: "US", display: "United States" },
-                                { value: "UK", display: "United Kingdom" },
-                                { value: "JP", display: "Japan" },
-                            ],
-                            valueExtractor: (option) => option.value,
-                            listExtractor: (option) => option.display,
-                        },
+                        attributes: listAddonOptions,
                     }}
                 />
                 <Form.InputGroup
@@ -169,17 +171,7 @@ export const ListAddon: StoryObj<Component> = {
                     placeholder="Enter something"
                     addon={{
                         type: "list",
-                        attributes: {
-                            placeholder: "Select",
-                            options: [
-                                { value: "SG", display: "Singapore" },
-                                { value: "US", display: "United States" },
-                                { value: "UK", display: "United Kingdom" },
-                                { value: "JP", display: "Japan" },
-                            ],
-                            valueExtractor: (option) => option.value,
-                            listExtractor: (option) => option.display,
-                        },
+                        attributes: listAddonOptions,
                     }}
                     readOnly
                 />
@@ -189,15 +181,7 @@ export const ListAddon: StoryObj<Component> = {
                     addon={{
                         type: "list",
                         attributes: {
-                            placeholder: "Select",
-                            options: [
-                                { value: "SG", display: "Singapore" },
-                                { value: "US", display: "United States" },
-                                { value: "UK", display: "United Kingdom" },
-                                { value: "JP", display: "Japan" },
-                            ],
-                            valueExtractor: (option) => option.value,
-                            listExtractor: (option) => option.display,
+                            ...listAddonOptions,
                             selectedOption: {
                                 value: "SG",
                                 display: "Singapore",
@@ -213,15 +197,7 @@ export const ListAddon: StoryObj<Component> = {
                     addon={{
                         type: "list",
                         attributes: {
-                            placeholder: "Select",
-                            options: [
-                                { value: "SG", display: "Singapore" },
-                                { value: "US", display: "United States" },
-                                { value: "UK", display: "United Kingdom" },
-                                { value: "JP", display: "Japan" },
-                            ],
-                            valueExtractor: (option) => option.value,
-                            listExtractor: (option) => option.display,
+                            ...listAddonOptions,
                             selectedOption: {
                                 value: "SG",
                                 display: "Singapore",
@@ -236,15 +212,7 @@ export const ListAddon: StoryObj<Component> = {
                     addon={{
                         type: "list",
                         attributes: {
-                            placeholder: "Select",
-                            options: [
-                                { value: "SG", display: "Singapore" },
-                                { value: "US", display: "United States" },
-                                { value: "UK", display: "United Kingdom" },
-                                { value: "JP", display: "Japan" },
-                            ],
-                            valueExtractor: (option) => option.value,
-                            listExtractor: (option) => option.display,
+                            ...listAddonOptions,
                             selectedOption: {
                                 value: "SG",
                                 display: "Singapore",
@@ -258,17 +226,7 @@ export const ListAddon: StoryObj<Component> = {
                     placeholder="Enter something"
                     addon={{
                         type: "list",
-                        attributes: {
-                            placeholder: "Select",
-                            options: [
-                                { value: "SG", display: "Singapore" },
-                                { value: "US", display: "United States" },
-                                { value: "UK", display: "United Kingdom" },
-                                { value: "JP", display: "Japan" },
-                            ],
-                            valueExtractor: (option) => option.value,
-                            listExtractor: (option) => option.display,
-                        },
+                        attributes: listAddonOptions,
                         position: "right",
                     }}
                 />
