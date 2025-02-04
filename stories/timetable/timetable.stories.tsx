@@ -103,13 +103,22 @@ export const LazyLoading: StoryObj<Component> = {
         const [loading, setLoading] = useState(true);
         const [page, setPage] = useState(1);
 
-        useEffect(() => {
+        const onPage = () => {
+            setPage(page + 1);
             setTimeout(() => {
-                const results = lazyLoad(page);
+                const results = lazyLoad(page + 1);
                 setResults((prev) => [...prev, ...results]);
                 setLoading(false);
             }, 2000);
-        }, [page]);
+        };
+
+        useEffect(() => {
+            setTimeout(() => {
+                const results = lazyLoad(1);
+                setResults(results);
+                setLoading(false);
+            }, 2000);
+        }, []);
 
         const onPreviousDayClick = (currentDate: string) => {
             setPage(1);
@@ -156,7 +165,7 @@ export const LazyLoading: StoryObj<Component> = {
                 rowData={results}
                 loading={loading}
                 onRefresh={onRefresh}
-                onPage={() => setPage(page + 1)}
+                onPage={onPage}
                 totalRecords={50}
                 onNextDayClick={onNextDayClick}
                 onPreviousDayClick={onPreviousDayClick}
