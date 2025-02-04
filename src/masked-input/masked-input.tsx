@@ -166,9 +166,7 @@ const Component = (
                                 <ErrorIcon />
                                 <ErrorLabel>Error</ErrorLabel>
                             </ErrorTextContainer>
-                            <TryAgainLabel weight="semibold">
-                                Try again?
-                            </TryAgainLabel>
+                            <TryAgainLabel>Try again?</TryAgainLabel>
                         </ClickableErrorWrapper>
                     );
                 case "loading":

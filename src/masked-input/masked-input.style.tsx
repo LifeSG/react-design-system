@@ -1,9 +1,14 @@
-import styled from "styled-components";
-import { V2_Color } from "../v2_color";
-import { InputGroup } from "../input-group";
-import { V2_Text, V2_TextStyleHelper } from "../v2_text";
-import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
+import styled from "styled-components";
+import { InputGroup } from "../input-group";
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
+import { Colour, Font, Spacing } from "../theme";
+import { Typography } from "../typography";
+import { BasicButton } from "../shared/input-wrapper";
+
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
 
 interface InputGroupWrapperProps {
     readOnly: boolean;
@@ -16,8 +21,12 @@ interface IconProps {
     $activeColor: string;
 }
 
+// =============================================================================
+// STYLING
+// =============================================================================
+
 export const InputGroupWrapper = styled(InputGroup)<InputGroupWrapperProps>`
-    padding: 0 0 0 ${({ readOnly }) => (readOnly ? "0" : "1rem")};
+    padding: 0 0 0 ${({ readOnly }) => (readOnly ? "0" : Spacing["spacing-16"])};
     input {
         cursor: ${({ readOnly, $isDisabled }) =>
             readOnly && !$isDisabled ? "pointer" : "initial"};
@@ -26,20 +35,19 @@ export const InputGroupWrapper = styled(InputGroup)<InputGroupWrapperProps>`
 
 export const IconContainer = styled.div<IconProps>`
     display: flex;
-    height: calc(3rem - 2px);
-    width: 3.25rem;
     align-items: center;
     justify-content: center;
     cursor: ${({ $isDisabled }) => (!$isDisabled ? "pointer" : "initial")};
     color: ${({
         $isDisabled,
-        $inactiveColor = V2_Color.Neutral[3],
-        $activeColor = V2_Color.Primary,
+        $inactiveColor = Colour.icon,
+        $activeColor = Colour["icon-primary"],
     }) => ($isDisabled ? $inactiveColor : $activeColor)};
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
 
     svg {
-        width: 1.125rem;
-        height: 1.125rem;
+        height: 1em;
+        width: 1em;
     }
 `;
 
@@ -52,47 +60,43 @@ export const LoadingWrapper = styled.div`
     height: 3rem;
 `;
 
-export const LoadingLabel = styled(V2_Text.Body)`
-    color: ${V2_Color.Neutral[3]};
+export const LoadingLabel = styled(Typography.BodyBL)`
+    color: ${Colour["text-subtler"]};
 `;
 
 export const Spinner = styled(ComponentLoadingSpinner)`
-    margin-right: 0.5rem;
-    #inner1,
-    #inner2,
-    #inner3,
-    #inner4 {
-        border-color: ${V2_Color.Neutral[3]} transparent transparent transparent;
-    }
+    margin-right: ${Spacing["spacing-8"]};
+    color: ${Colour["icon"]};
 `;
 
 // -----------------------------------------------------------------------------
 // ERROR DISPLAY
 // -----------------------------------------------------------------------------
 
-export const TryAgainLabel = styled(V2_Text.Body)`
-    color: ${V2_Color.Primary};
+export const TryAgainLabel = styled.span`
+    color: ${Colour["text-primary"]};
     text-decoration: underline;
+    font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
-export const ErrorTextContainer = styled.div`
+export const ErrorTextContainer = styled.span`
     display: flex;
     align-items: center;
-    margin-right: 0.5rem;
+    margin-right: ${Spacing["spacing-8"]};
 `;
 
 export const ErrorIcon = styled(ExclamationTriangleIcon)`
-    color: ${V2_Color.Validation.Orange.Icon};
-    margin-right: 0.5rem;
-    height: 1.125rem;
-    width: 1.125rem;
+    color: ${Colour["icon-warning"]};
+    margin-right: ${Spacing["spacing-8"]};
+    height: 1em;
+    width: 1em;
 `;
 
-export const ErrorLabel = styled(V2_Text.Body)`
-    color: ${V2_Color.Validation.Orange.Text};
+export const ErrorLabel = styled.span`
+    color: ${Colour["text-warning"]};
 `;
 
-export const ClickableErrorWrapper = styled.button`
+export const ClickableErrorWrapper = styled(BasicButton)`
     width: 100%;
     height: 3rem;
     display: flex;
@@ -102,11 +106,11 @@ export const ClickableErrorWrapper = styled.button`
     background: transparent;
     cursor: pointer;
 
-    :hover,
-    :active,
-    :focus {
+    ${Font["body-baseline-regular"]}
+
+    :hover, :active, :focus {
         ${TryAgainLabel} {
-            color: ${V2_Color.Secondary};
+            color: ${Colour["text-hover"]};
         }
     }
 `;
