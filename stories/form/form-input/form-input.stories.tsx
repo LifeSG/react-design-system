@@ -59,6 +59,7 @@ export const ClearButton: StoryObj<Component> = {
                 onChange={(event) => setInput(event.target.value)}
                 onClear={() => setInput("")}
                 allowClear
+                styleType="no-border"
             />
         );
     },

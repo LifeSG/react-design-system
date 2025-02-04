@@ -17,6 +17,13 @@ const Component = <T, V>(
         mobileCols,
         tabletCols,
         desktopCols,
+        xxsCols,
+        xsCols,
+        smCols,
+        mdCols,
+        lgCols,
+        xlCols,
+        xxlCols,
         ...otherProps
     } = props;
 
@@ -31,6 +38,13 @@ const Component = <T, V>(
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <InputGroup
                 ref={ref}

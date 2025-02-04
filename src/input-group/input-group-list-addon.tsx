@@ -220,6 +220,7 @@ export const Component = <T, V>(
                 onChange={handleInputChange}
                 data-testid={otherProps["data-testid"] || "input"}
                 onBlur={handleBlur}
+                styleType="no-border"
             />
         </DisplayContainer>
     );

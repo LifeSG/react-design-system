@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color";
-import { AddOnContainer } from "../input-group/input-group.style";
+import { LabelAddonContainer } from "../input-group/input-group.style";
 import { Input } from "../input/input";
 import { V2_Text } from "../v2_text/text";
 
@@ -15,7 +15,7 @@ interface LabelStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const HashContainer = styled(AddOnContainer)`
+export const HashContainer = styled(LabelAddonContainer)`
     margin-right: 0.25rem;
 `;
 

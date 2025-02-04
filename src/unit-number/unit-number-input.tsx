@@ -336,7 +336,7 @@ export const UnitNumberInput = ({
         >
             <HashContainer
                 data-testid="addon"
-                disabled={disabled}
+                $disabled={disabled}
                 $readOnly={readOnly}
             >
                 #
