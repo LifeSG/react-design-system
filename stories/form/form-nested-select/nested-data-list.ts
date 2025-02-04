@@ -1,177 +1,71 @@
 export const options = [
     {
-        label: "Category 1",
-        value: { id: 999, name: "category 1" },
-        key: "999",
+        label: "1",
+        value: { id: 1, name: "1" },
+        key: "1",
         subItems: [
             {
-                label: "Sub Category A",
-                value: {
-                    id: 820,
-                    name: "Sub category a",
-                },
-                key: "820",
+                label: "1.1",
+                value: { id: 11, name: "1.1" },
+                key: "11",
+            },
+            {
+                label: "1.2",
+                value: { id: 12, name: "1.2" },
+                key: "12",
                 subItems: [
                     {
-                        label: "Option 1",
-                        value: {
-                            id: 10001,
-                            name: "Option-1",
-                        },
-                        key: "10001",
+                        label: "1.2.1",
+                        value: { id: 121, name: "1.2.1" },
+                        key: "121",
                     },
                     {
-                        label: "Option 2",
-                        value: {
-                            id: 10002,
-                            name: "Option-2",
-                        },
-                        key: "10002",
+                        label: "1.2.2",
+                        value: { id: 122, name: "1.2.2" },
+                        key: "122",
                     },
                     {
-                        label: "Option 3",
-                        value: {
-                            id: 10003,
-                            name: "Option-3",
-                        },
-                        key: "10003",
+                        label: "1.2.3",
+                        value: { id: 123, name: "1.2.3" },
+                        key: "123",
                     },
                 ],
             },
             {
-                label: "Sub Category B",
-                value: { id: 821, name: "Sub category b" },
-                key: "821",
+                label: "1.3",
+                value: { id: 13, name: "1.3" },
+                key: "13",
                 subItems: [
                     {
-                        label: "Option ",
-                        value: {
-                            id: 103,
-                            name: "Sub option 2",
-                        },
-                        key: "103",
-                    },
-                ],
-            },
-            {
-                label: "Sub Category C",
-                value: {
-                    id: 822,
-                    name: "Sub category c",
-                },
-                key: "822",
-                subItems: [
-                    {
-                        label: "Honey",
-                        value: {
-                            id: 104,
-                            name: "honey",
-                        },
-                        key: "104",
-                    },
-                    {
-                        label: "Nuts",
-                        value: {
-                            id: 105,
-                            name: "nuts",
-                        },
-                        key: "105",
-                    },
-                    {
-                        label: "Butter",
-                        value: {
-                            id: 106,
-                            name: "butter",
-                        },
-                        key: "106",
-                    },
-                ],
-            },
-            {
-                label: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin dolor ut est rutrum vulputate. Maecenas lacinia viverra metus",
-                value: {
-                    id: 510,
-                    name: "Long sub category a",
-                },
-                key: "510",
-                subItems: [
-                    {
-                        label: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc tempor varius elit nec iaculis. Sed sed mauris iaculis, pretium dui vel, lacinia est.",
-                        value: {
-                            id: 23,
-                            name: "Long item a",
-                        },
-                        key: "23",
+                        label: "1.3.1",
+                        value: { id: 131, name: "1.3.1" },
+                        key: "131",
                     },
                 ],
             },
         ],
     },
     {
-        label: "Hive",
-        value: { id: 487, name: "hive" },
-        key: "32",
+        label: "2",
+        value: { id: 2, name: "2" },
+        key: "2",
         subItems: [
             {
-                label: "Level 8",
-                value: { id: 100, name: "Level 8" },
-                key: "100",
+                label: "2.1",
+                value: { id: 21, name: "2.1" },
+                key: "21",
             },
             {
-                label: "Level 9 ",
-                value: { id: 101, name: "Level 9" },
-                key: "101",
-                subItems: [
-                    {
-                        label: "Tutu kueh",
-                        value: {
-                            id: 900,
-                            name: "tutu kueh",
-                        },
-                        key: "900",
-                    },
-                    {
-                        label: "Lychee",
-                        value: {
-                            id: 901,
-                            name: "lychee",
-                        },
-                        key: "901",
-                    },
-                    {
-                        label: "Mao Shan Wang",
-                        value: {
-                            id: 902,
-                            name: "mao shan wang",
-                        },
-                        key: "902",
-                    },
-                ],
-            },
-            {
-                label: "Base",
-                value: { id: 102, name: "Earth" },
-                key: "102",
-                subItems: [
-                    {
-                        label: "Uranus",
-                        value: {
-                            id: 903,
-                            name: "Uranus",
-                        },
-                        key: "903",
-                    },
-                    {
-                        label: "Neptune",
-                        value: {
-                            id: 904,
-                            name: "Neptune",
-                        },
-                        key: "904",
-                    },
-                ],
+                label: "2.2",
+                value: { id: 22, name: "2.2" },
+                key: "22",
             },
         ],
+    },
+    {
+        label: "3",
+        value: { id: 3, name: "3" },
+        key: "3",
     },
 ];
 
@@ -239,6 +133,151 @@ export const twoTierOptions = [
                 label: "Huat Kueh",
                 value: { id: "2203", name: "Huat Kueh" },
                 key: "2203",
+            },
+        ],
+    },
+];
+
+const LONG_TEXT =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sollicitudin dolor ut est rutrum vulputate.";
+
+export const longLabelOptions = [
+    {
+        label: LONG_TEXT,
+        value: 1,
+        key: "1",
+    },
+    {
+        label: LONG_TEXT,
+        value: 2,
+        key: "2",
+        subItems: [
+            {
+                label: LONG_TEXT,
+                value: 1,
+                key: "1",
+                subItems: [],
+            },
+            {
+                label: LONG_TEXT,
+                value: 2,
+                key: "2",
+                subItems: [
+                    {
+                        label: LONG_TEXT,
+                        value: 1,
+                        key: "1",
+                    },
+                ],
+            },
+        ],
+    },
+];
+
+export const searchOptions = [
+    {
+        label: "Fruits",
+        value: "1",
+        key: "1",
+        subItems: [
+            {
+                label: "Avocado",
+                value: "1.1",
+                key: "10",
+            },
+            {
+                label: "Berries",
+                value: "1.2",
+                key: "20",
+                subItems: [
+                    {
+                        label: "Banana",
+                        value: "1.2.1",
+                        key: "100",
+                    },
+                    {
+                        label: "Blueberry",
+                        value: "1.2.2",
+                        key: "200",
+                    },
+                ],
+            },
+            {
+                label: "Not berries",
+                value: "1.3",
+                key: "30",
+                subItems: [
+                    {
+                        label: "Strawberry",
+                        value: "1.3.1",
+                        key: "100",
+                    },
+                    {
+                        label: "Raspberry",
+                        value: "1.3.2",
+                        key: "200",
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        label: "Dairy",
+        value: "2",
+        key: "2",
+        subItems: [
+            {
+                label: "Milk",
+                value: "2.1",
+                key: "10",
+                subItems: [
+                    {
+                        label: "Banana milk",
+                        value: "2.1.1",
+                        key: "100",
+                    },
+
+                    {
+                        label: "Skimmed milk",
+                        value: "2.1.2",
+                        key: "200",
+                    },
+                ],
+            },
+            {
+                label: "Cheese",
+                value: "2.2",
+                key: "20",
+                subItems: [
+                    {
+                        label: "Cheddar",
+                        value: "2.2.1",
+                        key: "100",
+                    },
+
+                    {
+                        label: "Mozzarella",
+                        value: "2.2.2",
+                        key: "200",
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        label: "Toiletries",
+        value: "3",
+        key: "3",
+        subItems: [
+            {
+                label: "Toilet paper",
+                value: "3.1",
+                key: "10",
+            },
+            {
+                label: "Shampoo",
+                value: "3.2",
+                key: "20",
             },
         ],
     },

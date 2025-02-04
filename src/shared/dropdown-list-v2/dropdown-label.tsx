@@ -7,6 +7,7 @@ import { StringHelper } from "../../util/string-helper";
 import { DropdownVariantType, LabelDisplayType } from "../dropdown-list/types";
 import {
     Label,
+    MatchedText,
     PrimaryText,
     SecondaryText,
     TruncateFirstLine,
@@ -14,18 +15,22 @@ import {
 } from "./dropdown-label.styles";
 
 interface DropdownLabelProps {
+    bold?: boolean | undefined;
     displayType?: LabelDisplayType | undefined;
     label: string;
     maxLines?: number | undefined;
+    searchTerm?: string | undefined;
     selected?: boolean | undefined;
-    sublabel: string;
+    sublabel?: string | undefined;
     truncationType?: "middle" | "end" | undefined;
     variant?: DropdownVariantType | undefined;
 }
 
 export const DropdownLabel = ({
+    bold,
     displayType = "inline",
     label,
+    searchTerm,
     maxLines = 2,
     selected,
     sublabel,
@@ -81,14 +86,38 @@ export const DropdownLabel = ({
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
+    const renderMatchInBold = (displayText: string) => {
+        if (!searchTerm) {
+            return displayText;
+        }
+
+        const match = searchTerm.toLowerCase().trim();
+        const startIndex = displayText.toLowerCase().indexOf(match);
+        const endIndex = startIndex + searchTerm.length;
+
+        if (startIndex === -1) {
+            return displayText;
+        }
+
+        return (
+            <>
+                {label.slice(0, startIndex)}
+                <MatchedText $variant={variant}>
+                    {label.slice(startIndex, endIndex)}
+                </MatchedText>
+                {label.slice(endIndex)}
+            </>
+        );
+    };
+
     const renderTruncatedText = (displayText: string): JSX.Element => {
         return (
             <>
                 <TruncateFirstLine $maxLines={maxLines} aria-hidden>
-                    {displayText}
+                    {renderMatchInBold(displayText)}
                 </TruncateFirstLine>
                 <TruncateSecondLine $maxLines={maxLines} aria-hidden>
-                    {displayText}
+                    {renderMatchInBold(displayText)}
                 </TruncateSecondLine>
             </>
         );
@@ -98,6 +127,7 @@ export const DropdownLabel = ({
         <Label ref={ref} $labelDisplayType={itemDisplayType}>
             <PrimaryText
                 aria-label={label}
+                $bold={bold}
                 $maxLines={maxLines}
                 $selected={selected}
                 $truncateType={truncationType}
@@ -105,7 +135,7 @@ export const DropdownLabel = ({
             >
                 {truncationType === "middle" && shouldTruncateTitle
                     ? renderTruncatedText(label)
-                    : label}
+                    : renderMatchInBold(label)}
             </PrimaryText>
             {sublabel && (
                 <SecondaryText

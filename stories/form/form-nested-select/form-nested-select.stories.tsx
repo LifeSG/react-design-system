@@ -5,7 +5,12 @@ import { InputNestedSelect } from "src/input-nested-select";
 import { Layout } from "src/layout";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
-import { options, twoTierOptions } from "./nested-data-list";
+import {
+    longLabelOptions,
+    options,
+    searchOptions,
+    twoTierOptions,
+} from "./nested-data-list";
 
 type Component = typeof Form.NestedSelect;
 type StandaloneComponent = typeof InputNestedSelect;
@@ -19,30 +24,12 @@ export default meta;
 
 export const Default: StoryObj<Component> = {
     render: () => {
-        const [selectedKeyPath, setSelectedKeyPath] = useState([
-            "999",
-            "820",
-            "10001",
-        ]);
         return (
             <StoryContainer>
                 <Container>
                     <Form.NestedSelect
                         label="This is the nested select field"
                         options={options}
-                    />
-                    <Form.NestedSelect
-                        label="This is prefilled with a selected option"
-                        options={options}
-                        selectedKeyPath={selectedKeyPath}
-                        onSelectOption={(keyPath, value) => {
-                            setSelectedKeyPath(keyPath);
-                        }}
-                    />
-                    <Form.NestedSelect
-                        label="This allows selection of categories"
-                        options={options}
-                        selectableCategory={true}
                     />
                     <Form.NestedSelect
                         label="This contains a 2 tier option"
@@ -54,7 +41,7 @@ export const Default: StoryObj<Component> = {
                         disabled
                     />
                     <Form.NestedSelect
-                        label="This is the readOnly state"
+                        label="This is the readonly state"
                         options={options}
                         readOnly
                     />
@@ -71,9 +58,18 @@ export const Default: StoryObj<Component> = {
 
 export const SpecifyingMode: StoryObj<Component> = {
     render: () => {
+        const [selectedKeyPath, setSelectedKeyPath] = useState(["2", "22"]);
         return (
             <StoryContainer>
                 <Container>
+                    <Form.NestedSelect
+                        label="The selected option is expanded by default"
+                        options={options}
+                        selectedKeyPath={selectedKeyPath}
+                        onSelectOption={(keyPath) => {
+                            setSelectedKeyPath(keyPath);
+                        }}
+                    />
                     <Form.NestedSelect
                         label="With all (sub)categories expanded "
                         options={options}
@@ -90,6 +86,22 @@ export const SpecifyingMode: StoryObj<Component> = {
     },
 };
 
+export const SelectableCategory: StoryObj<Component> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.NestedSelect
+                        label="This allows selection of categories"
+                        options={options}
+                        selectableCategory={true}
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
 export const WithSearch: StoryObj<Component> = {
     render: () => {
         return (
@@ -97,8 +109,28 @@ export const WithSearch: StoryObj<Component> = {
                 <Container>
                     <Form.NestedSelect
                         label="This has searchable options"
-                        options={options}
+                        options={searchOptions}
                         enableSearch
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
+export const LabelTruncation: StoryObj<Component> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.NestedSelect
+                        label="This has truncation at the end"
+                        options={longLabelOptions}
+                    />
+                    <Form.NestedSelect
+                        label="This has truncation in the middle"
+                        optionTruncationType="middle"
+                        options={longLabelOptions}
                     />
                 </Container>
             </StoryContainer>
