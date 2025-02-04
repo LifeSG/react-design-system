@@ -11,7 +11,7 @@ import { SimpleIdGenerator } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
 import { SelectorInput, Wrapper } from "../common.styles";
 import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
-import { TimeFieldContainer } from "./combobox-picker.styles.tsx";
+import { TimeFieldContainer } from "./combobox-picker.styles";
 
 type TimeRangeInputType = "start" | "end";
 interface TimeChangeOptions {
