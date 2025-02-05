@@ -1,4 +1,5 @@
 import { Canvas, Meta } from "@storybook/blocks";
+import { DocAlert } from "stories/storybook-common";
 import * as FormPhoneNumberInputStories from "./form-phone-number-input.stories";
 import { PropsTable } from "./props-table";
 
@@ -14,7 +15,9 @@ The field that allows a user to enter a phone number value.
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-**Important note**: This component currently does not do phone number value validation
+<DocAlert>
+    This component currently does not do phone number value validation
+</DocAlert>
 
 <Canvas of={FormPhoneNumberInputStories.Default} />
 
