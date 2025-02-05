@@ -7,7 +7,7 @@ import {
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { LabelContainer } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
-import { V2_Text } from "../v2_text";
+import { Typography } from "../typography";
 import { SimpleIdGenerator } from "../util";
 import {
     HistogramSliderDropdownContainer,
@@ -128,11 +128,11 @@ export const SelectHistogram = ({
         }
 
         return (
-            <V2_Text.Body>
+            <Typography.BodyBL>
                 {rangeLabelPrefix}
                 {value}
                 {rangeLabelSuffix}
-            </V2_Text.Body>
+            </Typography.BodyBL>
         );
     };
 

@@ -1,5 +1,4 @@
-import { ApiTable, code } from "../../storybook-common/api-table";
-import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps, code } from "stories/storybook-common";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [

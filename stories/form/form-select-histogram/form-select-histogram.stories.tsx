@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Form } from "src/form";
 import { Layout } from "src/layout";
-import { V2_Text } from "src/v2_text";
-import { SelectHistogram } from "../../../src/select-histogram";
-import { StoryContainer } from "../../storybook-common";
-import { Container } from "../shared-doc-elements";
+import { SelectHistogram } from "src/select-histogram";
+import { Typography } from "src/typography";
+import {
+    FullWidthStoryDecorator,
+    StoryDecorator,
+} from "stories/storybook-common";
 
 type Component = typeof Form.SelectHistogram;
 
@@ -25,128 +27,123 @@ const BINS_DATA = [
 ];
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.SelectHistogram
-                        label="This is the select field"
-                        histogramSlider={{
-                            bins: BINS_DATA,
-                            interval: 100,
-                        }}
-                    />
-                    <Form.SelectHistogram
-                        label="This is the disabled state"
-                        disabled
-                        histogramSlider={{
-                            bins: BINS_DATA,
-                            interval: 100,
-                        }}
-                    />
-                    <Form.SelectHistogram
-                        label="This is the readonly state"
-                        readOnly
-                        histogramSlider={{
-                            bins: BINS_DATA,
-                            interval: 100,
-                        }}
-                    />
-                    <Form.SelectHistogram
-                        label="This is the error state"
-                        histogramSlider={{
-                            bins: BINS_DATA,
-                            interval: 100,
-                        }}
-                        errorMessage="Out of range"
-                    />
-                </Container>
-            </StoryContainer>
+            <>
+                <Form.SelectHistogram
+                    label="This is the select field"
+                    histogramSlider={{
+                        bins: BINS_DATA,
+                        interval: 100,
+                    }}
+                />
+                <Form.SelectHistogram
+                    label="This is the disabled state"
+                    disabled
+                    histogramSlider={{
+                        bins: BINS_DATA,
+                        interval: 100,
+                    }}
+                />
+                <Form.SelectHistogram
+                    label="This is the readonly state"
+                    readOnly
+                    histogramSlider={{
+                        bins: BINS_DATA,
+                        interval: 100,
+                    }}
+                />
+                <Form.SelectHistogram
+                    label="This is the error state"
+                    histogramSlider={{
+                        bins: BINS_DATA,
+                        interval: 100,
+                    }}
+                    errorMessage="Out of range"
+                />
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const EmptyBins: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.SelectHistogram
-                        label="This has no data"
-                        histogramSlider={{
-                            bins: [],
-                            interval: 100,
-                            renderEmptyView: () => (
-                                <div
-                                    style={{
-                                        padding: "1rem",
-                                        background: "#fafafa",
-                                        textAlign: "center",
-                                    }}
-                                >
-                                    No results found.
-                                </div>
-                            ),
-                        }}
-                    />
-                </Container>
-            </StoryContainer>
+            <Form.SelectHistogram
+                label="This has no data"
+                histogramSlider={{
+                    bins: [],
+                    interval: 100,
+                    renderEmptyView: () => (
+                        <div
+                            style={{
+                                padding: "1rem",
+                                background: "#fafafa",
+                                textAlign: "center",
+                            }}
+                        >
+                            No results found.
+                        </div>
+                    ),
+                }}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const WithLabels: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.SelectHistogram
-                        label="With unit as prefix"
-                        histogramSlider={{
-                            bins: BINS_DATA,
-                            interval: 100,
-                        }}
-                        rangeLabelPrefix="$"
-                        value={[100, 400]}
-                    />
-                    <Form.SelectHistogram
-                        label="With unit as suffix"
-                        histogramSlider={{
-                            bins: BINS_DATA,
-                            interval: 100,
-                        }}
-                        value={[100, 400]}
-                        rangeLabelSuffix="km"
-                    />
-                    <Form.SelectHistogram
-                        label="With custom rendering"
-                        histogramSlider={{
-                            bins: BINS_DATA,
-                            interval: 100,
-                        }}
-                        value={[100, 400]}
-                        renderRangeLabel={(val) =>
-                            val === 1 ? (
-                                <V2_Text.XSmall weight="semibold">
-                                    1 photo
-                                </V2_Text.XSmall>
-                            ) : (
-                                <V2_Text.XSmall weight="semibold">
-                                    {val} photos
-                                </V2_Text.XSmall>
-                            )
-                        }
-                    />
-                </Container>
-            </StoryContainer>
+            <>
+                <Form.SelectHistogram
+                    label="With unit as prefix"
+                    histogramSlider={{
+                        bins: BINS_DATA,
+                        interval: 100,
+                    }}
+                    rangeLabelPrefix="$"
+                    value={[100, 400]}
+                />
+                <Form.SelectHistogram
+                    label="With unit as suffix"
+                    histogramSlider={{
+                        bins: BINS_DATA,
+                        interval: 100,
+                    }}
+                    value={[100, 400]}
+                    rangeLabelSuffix="km"
+                />
+                <Form.SelectHistogram
+                    label="With custom rendering"
+                    histogramSlider={{
+                        bins: BINS_DATA,
+                        interval: 100,
+                    }}
+                    value={[100, 400]}
+                    renderRangeLabel={(val) =>
+                        val === 1 ? (
+                            <Typography.BodySM weight="semibold">
+                                1 photo
+                            </Typography.BodySM>
+                        ) : (
+                            <Typography.BodySM weight="semibold">
+                                {val} photos
+                            </Typography.BodySM>
+                        )
+                    }
+                />
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const RenderingInGridLayout: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <Layout.Content type="grid">
                 <Form.SelectHistogram
                     label="A shorter form input"
                     histogramSlider={{
@@ -155,7 +152,8 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     }}
                     value={[100, 400]}
                     rangeLabelPrefix="$"
-                    mobileCols={[1, 5]}
+                    xxsCols={[1, 9]}
+                    lgCols={[1, 5]}
                 />
                 <Form.SelectHistogram
                     label="A longer form input"
@@ -166,33 +164,27 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     }}
                     value={[100, 400]}
                     rangeLabelPrefix="$"
-                    mobileCols={[1, 5]}
-                    tabletCols={[1, 9]}
+                    xxsCols={[1, 9]}
                 />
             </Layout.Content>
         );
     },
-    parameters: {
-        layout: "fullscreen",
-    },
+    decorators: [FullWidthStoryDecorator()],
 };
 
 export const StandaloneUsage: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <SelectHistogram
-                        histogramSlider={{
-                            bins: BINS_DATA,
+            <SelectHistogram
+                histogramSlider={{
+                    bins: BINS_DATA,
 
-                            interval: 100,
-                        }}
-                        value={[100, 200]}
-                        rangeLabelPrefix="$"
-                    />
-                </Container>
-            </StoryContainer>
+                    interval: 100,
+                }}
+                value={[100, 200]}
+                rangeLabelPrefix="$"
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
