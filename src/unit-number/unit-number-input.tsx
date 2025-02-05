@@ -282,6 +282,7 @@ export const UnitNumberInput = ({
                         : getPlaceholder(placeholder)[0]
                 }
                 autoComplete={autoComplete}
+                styleType="no-border"
             />
             <UnitNumberDivider $inactive={floorValue.length === 0}>
                 -
@@ -307,6 +308,7 @@ export const UnitNumberInput = ({
                         : getPlaceholder(placeholder)[1]
                 }
                 autoComplete={autoComplete}
+                styleType="no-border"
             />
         </>
     );
