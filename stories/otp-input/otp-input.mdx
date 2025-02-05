@@ -1,4 +1,5 @@
 import { Canvas, Meta } from "@storybook/blocks";
+import { DocNote } from "stories/storybook-common";
 import * as OtpInputStories from "./otp-input.stories";
 import { PropsTable } from "./props-table";
 
@@ -31,7 +32,7 @@ In this instance, you will need to handle the label when a countdown is ongoing.
 There are callback functions like `onCooldownStart` and `onCooldownEnd` to assist
 you with it.
 
-> You can use `setInterval` to handle the countdown display
+<DocNote>You can use `setInterval` to handle the countdown display</DocNote>
 
 <Canvas of={OtpInputStories.WithCustomActionButton} />
 
@@ -41,7 +42,7 @@ In this instance, you will need to handle the countdown calculation
 and rendering entirely on your own. In this example, we will just
 use a simple `setTimeout` to handle the change in label.
 
-> You can use `setInterval` to handle the countdown display
+<DocNote>You can use `setInterval` to handle the countdown display</DocNote>
 
 <Canvas of={OtpInputStories.WithCustomActionButtonSelfHandle} />
 
