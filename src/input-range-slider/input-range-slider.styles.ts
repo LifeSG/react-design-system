@@ -1,7 +1,7 @@
 import ReactSlider from "react-slider";
 import styled, { css } from "styled-components";
-import { V2_Color } from "../v2_color";
-import { V2_Text } from "../v2_text";
+import { Border, Colour, Radius, Spacing } from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -23,17 +23,17 @@ export const Wrapper = styled.div`
 `;
 
 export const LabelContainer = styled.div`
-    margin-top: 1rem;
+    margin-top: ${Spacing["spacing-8"]};
     display: flex;
     justify-content: space-between;
-    gap: 1rem;
+    gap: ${Spacing["spacing-8"]};
 `;
 
 export const IndicatorLabelContainer = styled.div`
-    margin-bottom: 1rem;
+    margin-bottom: ${Spacing["spacing-8"]};
 `;
 
-export const LabelText = styled(V2_Text.Body)`
+export const LabelText = styled(Typography.BodyBL)`
     overflow-wrap: anywhere;
 `;
 
@@ -75,9 +75,13 @@ export const Knob = styled.div<ThumbStyleProps>`
         left: 50%;
         transform: translate(-50%, -50%);
 
-        background-color: ${V2_Color.Neutral[8]};
+        background-color: ${Colour["bg"]};
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
-        border: 1px solid ${V2_Color.Neutral[4]};
+        border: ${Border["width-010"]} ${Border["solid"]}
+            ${(props) =>
+                props.$disabled
+                    ? Colour["border-selected-disabled"]
+                    : Colour["border-strong"]};
         border-radius: 50%;
     }
 `;
@@ -88,8 +92,10 @@ export const SliderThumb = styled.div`
     position: relative;
     outline: none;
 
-    :focus-visible ${Knob}:after {
-        border: 1px solid ${V2_Color.Primary};
+    :focus ${Knob}:after {
+        outline-offset: -1px;
+        outline: ${Border["width-040"]} ${Border["solid"]}
+            ${Colour["border-selected"]};
     }
 `;
 
@@ -97,13 +103,13 @@ export const SliderTrack = styled.div<TrackStyleProps>`
     height: 0.25rem;
     top: 50%;
     transform: translateY(-50%);
-    border-radius: 1rem;
+    border-radius: ${Radius["full"]};
 
     background: ${(props) => {
         if (props.$color && typeof props.$color === "function") {
             return props.$color(props);
         } else {
-            return props.$color || V2_Color.Neutral[4](props);
+            return props.$color || Colour["border-strong"](props);
         }
     }};
 `;

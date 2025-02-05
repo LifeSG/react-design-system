@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { V2_Color } from "../v2_color";
+import { Colour } from "../theme";
 import {
     IndicatorLabelContainer,
     Knob,
@@ -102,9 +102,13 @@ export const InputRangeSlider = ({
 
     function getDefaultColors() {
         const inactiveColor =
-            disabled || readOnly ? V2_Color.Neutral[5] : V2_Color.Neutral[4];
+            disabled || readOnly
+                ? Colour["border-disabled"]
+                : Colour["border-strong"];
         const activeColor =
-            disabled || readOnly ? V2_Color.Neutral[4] : V2_Color.Primary;
+            disabled || readOnly
+                ? Colour["border-selected-disabled"]
+                : Colour["border-selected"];
 
         if (numOfThumbs === 1) {
             return [activeColor, inactiveColor];

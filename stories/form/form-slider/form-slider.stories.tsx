@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Form } from "src/form";
 import { InputSlider } from "src/input-slider";
-import { V2_Layout } from "src/v2_layout";
-import { V2_Text } from "src/v2_text";
-import { StoryContainer } from "../../storybook-common";
-import { Container } from "../shared-doc-elements";
+import { Layout } from "src/layout";
+import { Typography } from "src/typography";
+import {
+    FullWidthStoryDecorator,
+    StoryDecorator,
+} from "stories/storybook-common";
 
 type Component = typeof Form.Slider;
 
@@ -16,122 +18,110 @@ const meta: Meta<Component> = {
 export default meta;
 
 export const Slider: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.Slider label="This is the slider" />
-                    <Form.Slider
-                        label="This is the disabled state"
-                        value={25}
-                        disabled
-                    />
-                    <Form.Slider
-                        label="This is the read-only state"
-                        value={75}
-                        readOnly
-                    />
-                    <Form.Slider
-                        label="This is the error state"
-                        errorMessage="Out of range"
-                        value={50}
-                    />
-                </Container>
-            </StoryContainer>
+            <>
+                <Form.Slider label="This is the slider" />
+                <Form.Slider
+                    label="This is the disabled state"
+                    value={25}
+                    disabled
+                />
+                <Form.Slider
+                    label="This is the read-only state"
+                    value={75}
+                    readOnly
+                />
+                <Form.Slider
+                    label="This is the error state"
+                    errorMessage="Out of range"
+                    value={50}
+                />
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const ColorCustomisation: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.Slider
-                        label="This has custom colors"
-                        colors={[
-                            "linear-gradient(to right, red 0%, blue 50%)",
-                            "linear-gradient(to right, blue 0%, red 50%)",
-                        ]}
-                    />
-                </Container>
-            </StoryContainer>
+            <Form.Slider
+                label="This has custom colors"
+                colors={[
+                    "linear-gradient(to right, red 0%, blue 50%)",
+                    "linear-gradient(to right, blue 0%, red 50%)",
+                ]}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const WithLabels: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.Slider
-                        label="With unit as prefix"
-                        showSliderLabels
-                        sliderLabelPrefix="$"
-                    />
-                    <Form.Slider
-                        label="With unit as suffix"
-                        showSliderLabels
-                        sliderLabelSuffix="km"
-                    />
-                    <Form.Slider
-                        label="With custom rendering"
-                        min={1}
-                        max={10}
-                        showSliderLabels
-                        renderSliderLabel={(val) =>
-                            val === 1 ? (
-                                <V2_Text.XSmall weight="semibold">
-                                    1 photo
-                                </V2_Text.XSmall>
-                            ) : (
-                                <V2_Text.XSmall weight="semibold">
-                                    {val} photos
-                                </V2_Text.XSmall>
-                            )
-                        }
-                    />
-                    <Form.Slider
-                        label="With indicator"
-                        min={1}
-                        max={10}
-                        showIndicatorLabel
-                        indicatorLabelPrefix="Showing "
-                        indicatorLabelSuffix=" item(s)"
-                    />
-                </Container>
-            </StoryContainer>
+            <>
+                <Form.Slider
+                    label="With unit as prefix"
+                    showSliderLabels
+                    sliderLabelPrefix="$"
+                />
+                <Form.Slider
+                    label="With unit as suffix"
+                    showSliderLabels
+                    sliderLabelSuffix="km"
+                />
+                <Form.Slider
+                    label="With custom rendering"
+                    min={1}
+                    max={10}
+                    showSliderLabels
+                    renderSliderLabel={(val) =>
+                        val === 1 ? (
+                            <Typography.BodySM weight="semibold">
+                                1 photo
+                            </Typography.BodySM>
+                        ) : (
+                            <Typography.BodySM weight="semibold">
+                                {val} photos
+                            </Typography.BodySM>
+                        )
+                    }
+                />
+                <Form.Slider
+                    label="With indicator"
+                    min={1}
+                    max={10}
+                    showIndicatorLabel
+                    indicatorLabelPrefix="Showing "
+                    indicatorLabelSuffix=" item(s)"
+                />
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const RenderingInGridLayout: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
-                <Form.Slider label="A shorter form input" mobileCols={[1, 5]} />
+            <Layout.Content type="grid">
                 <Form.Slider
-                    label="A longer form input"
-                    mobileCols={[1, 5]}
-                    tabletCols={[1, 9]}
+                    label="A shorter form input"
+                    xxsCols={[1, 9]}
+                    lgCols={[1, 5]}
                 />
-            </V2_Layout.Content>
+                <Form.Slider label="A longer form input" xxsCols={[1, 9]} />
+            </Layout.Content>
         );
     },
-    parameters: {
-        layout: "fullscreen",
-    },
+    decorators: [FullWidthStoryDecorator()],
 };
 
 export const StandaloneUsage: StoryObj<Component> = {
-    render: () => {
-        return (
-            <StoryContainer>
-                <Container>
-                    <InputSlider step={5} />
-                </Container>
-            </StoryContainer>
-        );
+    render: (_args) => {
+        return <InputSlider step={5} />;
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
