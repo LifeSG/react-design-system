@@ -39,26 +39,22 @@ const TextareaBaseComponent = (
                 newValue = prefix;
             }
 
-            // Extract user input (ensuring it's never undefined)
-            const userInput = newValue.slice(prefix.length) || ""; // Ensure empty string, not undefined
+            // Extract user input
+            const userInput = newValue.slice(prefix.length);
 
-            setStateValue(userInput);
-            event.target.value = prefix + userInput; // Update displayed value
+            const transformedValue = transformValue
+                ? transformValue(userInput ?? "")
+                : userInput;
 
-            // Ensure cursor stays in correct position
-            requestAnimationFrame(() => {
-                const cursorPosition = Math.max(
-                    prefix.length,
-                    event.target.selectionStart || 0
-                );
-                event.target.setSelectionRange(cursorPosition, cursorPosition);
-            });
+            setStateValue(transformedValue);
+
+            event.target.value = prefix + transformedValue; // Update displayed value
 
             // Pass only user input (without prefix) to parent `onChange`
             if (onChange) {
                 const syntheticEvent = {
                     ...event,
-                    target: { ...event.target, value: userInput },
+                    target: { ...event.target, value: transformedValue },
                 };
                 onChange(
                     syntheticEvent as React.ChangeEvent<HTMLTextAreaElement>
@@ -80,17 +76,29 @@ const TextareaBaseComponent = (
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        // Prevent backspace when cursor is at the start (right after prefix)
-        if (prefix && event.key === "Backspace") {
-            const { selectionStart, selectionEnd } = event.currentTarget;
+        if (!prefix) return;
 
-            // If the cursor is at the start of the user input (right after prefix), prevent backspace
-            if (
-                selectionStart === selectionEnd &&
-                selectionStart <= prefix.length
-            ) {
-                event.preventDefault();
-            }
+        const { selectionStart, selectionEnd } = event.currentTarget;
+
+        // Prevent backspace in prefix
+        if (event.key === "Backspace" && selectionStart <= prefix.length) {
+            event.preventDefault();
+        }
+
+        // Prevent left arrow from moving into prefix
+        if (event.key === "ArrowLeft" && selectionStart <= prefix.length) {
+            event.preventDefault();
+        }
+
+        // Prevent "Home" key from moving cursor to beginning
+        if (event.key === "Home") {
+            event.preventDefault();
+            requestAnimationFrame(() => {
+                event.currentTarget.setSelectionRange(
+                    prefix.length,
+                    prefix.length
+                );
+            });
         }
     };
 
@@ -100,7 +108,7 @@ const TextareaBaseComponent = (
             disabled={disabled}
             value={prefix ? displayValue() : stateValue}
             onChange={handleChange}
-            onKeyDown={handleKeyDown} // Add this to prevent prefix deletion
+            onKeyDown={handleKeyDown}
             error={error}
             rows={rows}
             {...otherProps}
@@ -116,7 +124,7 @@ export const TextareaBase = React.forwardRef(TextareaBaseComponent);
 
 const TextareaComponent = (
     {
-        value = "", // Ensure value is never undefined
+        value,
         disabled,
         rows = 5,
         onChange,
@@ -163,6 +171,7 @@ const TextareaComponent = (
                 onChange={handleChange}
                 prefix={prefix}
                 transformValue={transformValue}
+                maxLength={maxLength}
                 {...otherProps}
             />
             {maxLength && (
