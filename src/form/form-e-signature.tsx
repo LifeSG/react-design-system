@@ -13,6 +13,13 @@ export const FormESignature = (props: FormESignatureProps) => {
         mobileCols,
         tabletCols,
         desktopCols,
+        xxsCols,
+        xsCols,
+        smCols,
+        mdCols,
+        lgCols,
+        xlCols,
+        xxlCols,
         ...otherProps
     } = props;
 
@@ -26,6 +33,13 @@ export const FormESignature = (props: FormESignatureProps) => {
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <ESignature
                 id={`${id}-base`}

@@ -1,10 +1,12 @@
 import { EraserIcon, PencilIcon } from "@lifesg/react-icons";
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useTheme } from "styled-components";
+import { Button } from "../button";
 import { ButtonWithIcon } from "../button-with-icon";
-import { V2_MediaWidths } from "../v2_media";
 import { ProgressBar } from "../shared/progress-bar";
-import { V2_Text } from "../v2_text";
+import { Breakpoint } from "../theme";
+import { Typography } from "../typography";
 import { ESignatureCanvasRef } from "./e-signature-canvas";
 import {
     AddSignatureButton,
@@ -46,8 +48,12 @@ export const ESignature = (props: EsignatureProps) => {
     const [showModal, setShowModal] = useState(false);
     const eSignatureCanvasRef = useRef<ESignatureCanvasRef>(null);
     const [dataURL, setDataURL] = useState<string>(value);
-    const isMobile = useMediaQuery({
-        maxWidth: V2_MediaWidths.mobileL,
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const isMobileLandscape = useMediaQuery({
+        maxHeight: mobileBreakpoint,
+        orientation: "landscape",
     });
 
     // =============================================================================
@@ -108,7 +114,7 @@ export const ESignature = (props: EsignatureProps) => {
         return (
             <ProgressBox>
                 {loadingLabel && (
-                    <V2_Text.BodySmall>{loadingLabel}</V2_Text.BodySmall>
+                    <Typography.BodyMD>{loadingLabel}</Typography.BodyMD>
                 )}
                 <ProgressBar
                     progress={loadingProgress}
@@ -139,15 +145,28 @@ export const ESignature = (props: EsignatureProps) => {
                         </ESignatureContainer>
                         <ModalButtons>
                             <ModalActionButton
-                                as={ButtonWithIcon.Default}
+                                as={
+                                    isMobileLandscape
+                                        ? ButtonWithIcon.Small
+                                        : ButtonWithIcon.Default
+                                }
                                 type="button"
-                                styleType={isMobile ? "light" : "link"}
+                                styleType={
+                                    isMobile && !isMobileLandscape
+                                        ? "light"
+                                        : "link"
+                                }
                                 icon={<EraserIcon />}
                                 onClick={handleClearDrawing}
                             >
                                 Clear
                             </ModalActionButton>
                             <ModalActionButton
+                                as={
+                                    isMobileLandscape
+                                        ? Button.Small
+                                        : Button.Default
+                                }
                                 type="button"
                                 onClick={handleClickSave}
                             >
@@ -162,11 +181,7 @@ export const ESignature = (props: EsignatureProps) => {
 
     const renderDescription = () => {
         if (!description) return null;
-        return (
-            <Instructions weight="regular" as="p">
-                {description}
-            </Instructions>
-        );
+        return <Instructions>{description}</Instructions>;
     };
 
     return (
