@@ -46,6 +46,9 @@ interface LoaderProps {
     $isEmptyContent: boolean;
 }
 
+export const Container = styled.div`
+`;
+
 export const EmptyTableContainer = styled.div`
     display: grid;
     overflow: scroll;
@@ -186,7 +189,7 @@ export const RowHeader = styled.div<RowHeaderProps>`
     }};
 `;
 
-export const ClickableRowHeaderTitle = styled(Text.H5)<{
+export const ClickableRowHeaderTitle = styled(Text.H5) <{
     $isClickable: boolean;
 }>`
     display: inline-block;
@@ -200,7 +203,7 @@ export const ClickableRowHeaderTitle = styled(Text.H5)<{
     }
 `;
 
-export const RowHeaderSubtitle = styled(Text.XSmall)<{ $show: boolean }>`
+export const RowHeaderSubtitle = styled(Text.XSmall) <{ $show: boolean }>`
     display: inline-flex;
     gap: 6px;
     align-items: center;
@@ -214,7 +217,7 @@ export const RowHeaderSubtitle = styled(Text.XSmall)<{ $show: boolean }>`
     }}
 `;
 
-export const Loader = styled(LoadingDotsSpinner)<LoaderProps>`
+export const Loader = styled(LoadingDotsSpinner) <LoaderProps>`
     display: flex;
     align-items: center;
     justify-content: center;

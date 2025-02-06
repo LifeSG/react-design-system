@@ -1,9 +1,9 @@
 import { RefreshIcon } from "@lifesg/react-icons";
 import { MutableRefObject } from "react";
-import { DateNavigator } from "../../date-navigator/date-navigator";
 import {
     NavigationHeaderSubtitleWrapper,
     NavigationHeaderWrapper,
+    StyledDateNavigator,
     StyledRefreshButton,
     StyledResultText,
 } from "./timetable-navigator.style";
@@ -15,9 +15,10 @@ interface TimeTableNavigatorProps {
     minDate?: string | undefined;
     maxDate?: string | undefined;
     totalRecords?: number | undefined;
-    onLeftArrowClick?: (currentDate: string) => void | undefined;
-    onRightArrowClick?: (currentDate: string) => void | undefined;
+    onPreviousDayClick: (currentDate: string) => void | undefined;
+    onNextDayClick: (currentDate: string) => void | undefined;
     onRefresh?: (() => void) | undefined;
+    onCalendarDateSelect?: ((currentDate: string) => void) | undefined;
 }
 
 export const TimeTableNavigator = ({
@@ -25,9 +26,10 @@ export const TimeTableNavigator = ({
     loading,
     tableContainerRef,
     totalRecords,
-    onLeftArrowClick,
-    onRightArrowClick,
+    onPreviousDayClick,
+    onNextDayClick,
     onRefresh,
+    onCalendarDateSelect,
     ...otherProps
 }: TimeTableNavigatorProps) => {
     // =============================================================================
@@ -48,13 +50,14 @@ export const TimeTableNavigator = ({
 
     const handleRightArrowClick = (date: string) => {
         scrollToTop();
-        onRightArrowClick(date);
+        onNextDayClick(date);
     };
 
     const handleLeftArrowClick = (date: string) => {
         scrollToTop();
-        onLeftArrowClick(date);
+        onPreviousDayClick(date);
     };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -87,16 +90,13 @@ export const TimeTableNavigator = ({
     return (
         <NavigationHeaderWrapper>
             {
-                <DateNavigator
+                <StyledDateNavigator
                     selectedDate={selectedDate}
                     loading={loading}
                     {...otherProps}
-                    onRightArrowClick={
-                        onRightArrowClick ? handleRightArrowClick : undefined
-                    }
-                    onLeftArrowClick={
-                        onLeftArrowClick ? handleLeftArrowClick : undefined
-                    }
+                    onRightArrowClick={handleRightArrowClick}
+                    onLeftArrowClick={handleLeftArrowClick}
+                    onCalendarDateSelect={onCalendarDateSelect}
                 />
             }
             {renderRecordsSection()}

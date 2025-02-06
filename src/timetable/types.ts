@@ -1,12 +1,6 @@
 import { PopoverV2TriggerType } from "../popover-v2";
-import { ResourceScheme } from "../theme";
 
 export type TimeTableCellType = "filled" | "blocked" | "default" | "disabled";
-
-interface EmptyContentProps {
-    description: string;
-    illustrationScheme: ResourceScheme;
-}
 
 export interface TimeTableRowData {
     id?: string | undefined;
@@ -20,16 +14,16 @@ export interface TimeTableRowData {
     // HH:mm format, defaults to maxTime
     rowMaxTime?: string | undefined;
     onRowNameClick?:
-        | ((rowData: TimeTableRowData, e: React.MouseEvent) => void)
-        | undefined;
+    | ((rowData: TimeTableRowData, e: React.MouseEvent) => void)
+    | undefined;
 }
 
 export interface TimeTablePopoverProps {
     trigger: PopoverV2TriggerType;
     content: string | JSX.Element | (() => React.ReactNode);
     delay?:
-        | { open?: number | undefined; close?: number | undefined }
-        | undefined;
+    | { open?: number | undefined; close?: number | undefined }
+    | undefined;
     offset?: number | undefined;
 }
 
@@ -38,7 +32,7 @@ export interface TimeTableProps {
     className?: string | undefined;
     "data-testid"?: string | undefined;
     date: string;
-    emptyContent?: EmptyContentProps | undefined;
+    emptyContentMessage?: string;
     rowData: TimeTableRowData[];
     loading?: boolean | undefined;
     // HH:mm format
@@ -50,8 +44,10 @@ export interface TimeTableProps {
     totalRecords?: number | undefined;
     onRefresh?: (() => void) | undefined;
     onPage?: (() => void) | undefined;
-    onPreviousDayClick?: ((currentDate: string) => void) | undefined;
-    onNextDayClick?: ((currentDate: string) => void) | undefined;
+    onPreviousDayClick: ((currentDate: string) => void) | undefined;
+    onNextDayClick: ((currentDate: string) => void) | undefined;
+    onCalendarDateSelect?: ((currentDate: string) => void) | undefined;
+
 }
 
 export interface TimeTableRowCellData {
@@ -65,6 +61,6 @@ export interface TimeTableRowCellData {
     subtitle?: string | undefined;
     customPopover?: TimeTablePopoverProps | undefined;
     onClick?:
-        | ((data: TimeTableRowCellData, e: React.MouseEvent) => void)
-        | undefined;
+    | ((data: TimeTableRowCellData, e: React.MouseEvent) => void)
+    | undefined;
 }
