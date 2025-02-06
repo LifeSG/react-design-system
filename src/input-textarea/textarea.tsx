@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextareaCounter } from "./textarea-counter";
-import { Element, PrefixSpan, PrefixWrapper, Wrapper } from "./textarea.style";
+import { Element, Wrapper } from "./textarea.style";
 import { TextareaProps, TextareaRef } from "./types";
 
 // =============================================================================
@@ -20,71 +20,91 @@ const TextareaBaseComponent = (
     ref: TextareaRef
 ) => {
     const [stateValue, setStateValue] = useState(value);
-    const [prefixWidth, setPrefixWidth] = useState(0);
-    const prefixRef = useRef<HTMLSpanElement>(null);
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    // Update prefix width on mount and when prefix changes
     useEffect(() => {
-        if (prefix && prefixRef.current) {
-            const { width } = prefixRef.current.getBoundingClientRect();
-            setPrefixWidth(width);
-        }
-    }, [prefix]);
+        setStateValue(value);
+    }, [value]);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const newValue = event.target.value;
+        let newValue = event.target.value;
 
-        const transformedValue = transformValue
-            ? transformValue(newValue ?? "")
-            : newValue;
+        if (prefix) {
+            // Ensure the prefix is always at the beginning
+            if (!newValue.startsWith(prefix)) {
+                newValue = prefix + newValue.trimStart();
+            }
 
-        setStateValue(transformedValue);
-        event.target.value = transformedValue;
-        if (onChange) onChange(event);
+            // Prevent user from deleting the prefix
+            if (newValue.length < prefix.length) {
+                newValue = prefix;
+            }
+
+            // Extract user input (ensuring it's never undefined)
+            const userInput = newValue.slice(prefix.length) || ""; // Ensure empty string, not undefined
+
+            setStateValue(userInput);
+            event.target.value = prefix + userInput; // Update displayed value
+
+            // Ensure cursor stays in correct position
+            requestAnimationFrame(() => {
+                const cursorPosition = Math.max(
+                    prefix.length,
+                    event.target.selectionStart || 0
+                );
+                event.target.setSelectionRange(cursorPosition, cursorPosition);
+            });
+
+            // Pass only user input (without prefix) to parent `onChange`
+            if (onChange) {
+                const syntheticEvent = {
+                    ...event,
+                    target: { ...event.target, value: userInput },
+                };
+                onChange(
+                    syntheticEvent as React.ChangeEvent<HTMLTextAreaElement>
+                );
+            }
+        } else {
+            const transformedValue = transformValue
+                ? transformValue(newValue ?? "")
+                : newValue;
+
+            setStateValue(transformedValue);
+            event.target.value = transformedValue;
+            if (onChange) onChange(event);
+        }
     };
 
-    useEffect(() => {
-        // Apply textIndent dynamically after prefix width is set
-        if (prefix && textareaRef.current) {
-            textareaRef.current.style.textIndent = `${prefixWidth}px`;
+    const displayValue = () => {
+        return prefix + (stateValue ?? ""); // Ensures no "undefined"
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        // Prevent backspace when cursor is at the start (right after prefix)
+        if (prefix && event.key === "Backspace") {
+            const { selectionStart, selectionEnd } = event.currentTarget;
+
+            // If the cursor is at the start of the user input (right after prefix), prevent backspace
+            if (
+                selectionStart === selectionEnd &&
+                selectionStart <= prefix.length
+            ) {
+                event.preventDefault();
+            }
         }
-    }, [prefixWidth]);
+    };
 
     return (
-        <>
-            {prefix ? (
-                <PrefixWrapper>
-                    {prefix && (
-                        <PrefixSpan ref={prefixRef}>{prefix}</PrefixSpan>
-                    )}
-
-                    {/* Textarea (Uses textIndent) */}
-                    <Element
-                        ref={ref}
-                        disabled={disabled}
-                        value={stateValue}
-                        onChange={handleChange}
-                        error={error}
-                        rows={rows}
-                        style={{
-                            textIndent: `${prefixWidth}px`,
-                        }}
-                        {...otherProps}
-                    ></Element>
-                </PrefixWrapper>
-            ) : (
-                <Element
-                    ref={ref}
-                    disabled={disabled}
-                    value={stateValue}
-                    onChange={handleChange}
-                    error={error}
-                    rows={rows}
-                    {...otherProps}
-                ></Element>
-            )}
-        </>
+        <Element
+            ref={ref}
+            disabled={disabled}
+            value={prefix ? displayValue() : stateValue}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown} // Add this to prevent prefix deletion
+            error={error}
+            rows={rows}
+            {...otherProps}
+        />
     );
 };
 
@@ -96,7 +116,7 @@ export const TextareaBase = React.forwardRef(TextareaBaseComponent);
 
 const TextareaComponent = (
     {
-        value,
+        value = "", // Ensure value is never undefined
         disabled,
         rows = 5,
         onChange,
@@ -143,7 +163,6 @@ const TextareaComponent = (
                 onChange={handleChange}
                 prefix={prefix}
                 transformValue={transformValue}
-                maxLength={maxLength}
                 {...otherProps}
             />
             {maxLength && (

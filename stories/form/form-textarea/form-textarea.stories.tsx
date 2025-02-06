@@ -81,12 +81,12 @@ export const Prefix: StoryObj<Component> = {
                     <Form.Textarea
                         label="This form textarea has a prefix"
                         maxLength={100}
-                        prefix={"ABC" + "\u00A0"}
+                        prefix="ABC "
                     />
                 </Container>
                 <Container>
                     <Form.Label>This textarea has a prefix</Form.Label>
-                    <Textarea maxLength={100} prefix={"ABC" + "\u00A0"} />
+                    <Textarea maxLength={100} prefix="ABC " />
                 </Container>
             </StoryContainer>
         );

@@ -20,24 +20,6 @@ export const Wrapper = styled.div`
     flex-direction: column;
 `;
 
-export const PrefixWrapper = styled.span`
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-`;
-
-export const PrefixSpan = styled.span`
-    position: absolute;
-    left: 16px;
-    top: 13px;
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[1]};
-    background: ${Color.Neutral[8]};
-    whitespace: nowrap;
-    pointer-events: none;
-`;
-
 export const Element = styled.textarea<StyleProps>`
     border: 1px solid ${Color.Neutral[5]};
     border-radius: 4px;
