@@ -113,6 +113,14 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["number"],
             },
             {
+                name: "showTodayAsToday",
+                description: "Shows system's today's date as 'Today'",
+            },
+            {
+                name: "showDateAsShortForm",
+                description: "Shows the date text in short form",
+            },
+            {
                 name: "onRefresh",
                 description: (
                     <>

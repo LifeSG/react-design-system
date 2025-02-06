@@ -18,12 +18,15 @@ describe("TimeTable", () => {
         onNameClick: function (rowData: TimeTableRowData): void {
             alert(`Clicked on ${JSON.stringify(rowData)}`);
         },
-        emptyContent: {
-            illustrationScheme: "bookingsg",
-            description:
-                "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page.",
-        },
+        emptyContentMessage: "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page.",
         isLoading: false,
+        onPreviousDayClick: (currentDate: string): void => {
+            alert(`Clicked on previous day button for ${currentDate}`);
+        },
+        onNextDayClick: (currentDate: string): void => {
+            alert(`Clicked on next day button for ${currentDate}`);
+
+        },
     } as TimeTableProps;
 
     beforeEach(() => {
@@ -49,15 +52,16 @@ describe("TimeTable", () => {
                 maxDate={timeTableMockData.maxDate}
                 rowData={[]}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
+                emptyContentMessage={timeTableMockData.emptyContentMessage}
+                onPreviousDayClick={timeTableMockData.onPreviousDayClick}
+                onNextDayClick={timeTableMockData.onNextDayClick}
             />
         );
-        expect(screen.getByText("11 September 2024")).toBeVisible();
+        expect(screen.getByText("11 September 2024, Wednesday")).toBeVisible();
     });
 
-    it("should have date navigator component visible if onRightArrowClick and onLeftArrowClick props are passed in", () => {
-        const onRightArrowClick = jest.fn();
-        const onLeftArrowClick = jest.fn();
+    it("should have calendar dropdown component when onCalendarDateSelect props are passed in and the date navigator date text is clicked", () => {
+        const onCalendarDateSelect = jest.fn();
 
         render(
             <TimeTable
@@ -66,16 +70,17 @@ describe("TimeTable", () => {
                 maxDate={timeTableMockData.maxDate}
                 rowData={[]}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
-                onNextDayClick={onRightArrowClick}
-                onPreviousDayClick={onLeftArrowClick}
+                emptyContentMessage={timeTableMockData.emptyContentMessage}
+                onNextDayClick={timeTableMockData.onNextDayClick}
+                onPreviousDayClick={timeTableMockData.onPreviousDayClick}
+                onCalendarDateSelect={onCalendarDateSelect}
             />
         );
-        const leftBtn = screen.getByTestId("date-navigator-left-arrow-btn");
-        const rightBtn = screen.getByTestId("date-navigator-right-arrow-btn");
-        expect(screen.getByText("11 September 2024")).toBeVisible();
-        expect(leftBtn).toBeVisible();
-        expect(rightBtn).toBeVisible();
+        const dateNavigatorDateText = screen.getByTestId("date-navigator-date-text");
+        fireEvent.click(dateNavigatorDateText);
+        const calendarDropdown = screen.getByTestId("calendar-dropdown");
+        expect(screen.getByText("11 September 2024, Wednesday")).toBeVisible();
+        expect(calendarDropdown).toBeInTheDocument();
     });
 
     it("should not have have popover appear if there's no popover content", () => {
@@ -101,7 +106,9 @@ describe("TimeTable", () => {
                     },
                 ]}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
+                onNextDayClick={timeTableMockData.onNextDayClick}
+                onPreviousDayClick={timeTableMockData.onPreviousDayClick}
+                emptyContentMessage={timeTableMockData.emptyContentMessage}
             />
         );
         const rowHeaderParent = screen.getByTestId("row-header-column-id");
@@ -166,7 +173,9 @@ describe("TimeTable", () => {
                     },
                 ]}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
+                onNextDayClick={timeTableMockData.onNextDayClick}
+                onPreviousDayClick={timeTableMockData.onPreviousDayClick}
+                emptyContentMessage={timeTableMockData.emptyContentMessage}
             />
         );
         const rowHeaderParent = screen.getByTestId("row-header-column-id");
@@ -216,7 +225,9 @@ describe("TimeTable", () => {
                     },
                 ]}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
+                onNextDayClick={timeTableMockData.onNextDayClick}
+                onPreviousDayClick={timeTableMockData.onPreviousDayClick}
+                emptyContentMessage={timeTableMockData.emptyContentMessage}
             />
         );
         const rowHeaderName = screen.getByTestId("1-row-header-title");
@@ -231,7 +242,9 @@ describe("TimeTable", () => {
                 date={timeTableMockData.date}
                 rowData={[]}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
+                onNextDayClick={timeTableMockData.onNextDayClick}
+                onPreviousDayClick={timeTableMockData.onPreviousDayClick}
+                emptyContentMessage={timeTableMockData.emptyContentMessage}
             />
         );
         const emptyContent = screen.getByTestId("error-display");
@@ -248,7 +261,9 @@ describe("TimeTable", () => {
                 rowData={lazyLoad(1)}
                 totalRecords={20}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
+                onNextDayClick={timeTableMockData.onNextDayClick}
+                onPreviousDayClick={timeTableMockData.onPreviousDayClick}
+                emptyContentMessage={timeTableMockData.emptyContentMessage}
                 onPage={() => lazyLoad(2)}
             />
         );
