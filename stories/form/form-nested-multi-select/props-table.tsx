@@ -91,9 +91,15 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
-                name: "listStyleWidth",
-                description:
-                    "Style option: The width of the option display. (E.g. '100%' or '12rem')",
+                name: "listStyleWidth (deprecated)",
+                description: (
+                    <>
+                        Style option: The width of the option display.
+                        <br />
+                        <b>Note:</b> This attribute has no effect and will be
+                        removed in a future version
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
@@ -107,6 +113,26 @@ const DATA: ApiTableSectionProps[] = [
                 name: "searchPlaceholder",
                 description: "The placeholder for the search field",
                 propTypes: ["string"],
+            },
+            {
+                name: "variant",
+                description: "The display variant of the component",
+                propTypes: [`"small"`, `"default"`],
+                defaultValue: `"default"`,
+            },
+            {
+                name: "alignment",
+                description:
+                    "Specifies if the dropdown is aligned to the left or right of the main field",
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"left"`,
+            },
+            {
+                name: "dropdownZIndex",
+                description:
+                    "The custom z-index of the dropdown. Try specifying this if you encounter z-index conflicts.",
+                propTypes: ["number"],
+                defaultValue: "50",
             },
             {
                 name: "onSelectOptions",
@@ -134,6 +160,11 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "onSearch",
                 description: "Called when a search is being executed",
+                propTypes: ["() => void"],
+            },
+            {
+                name: "onBlur",
+                description: "Called when a defocus on the field is made",
                 propTypes: ["() => void"],
             },
         ],

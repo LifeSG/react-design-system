@@ -218,6 +218,7 @@ export const InputMultiSelect = <T, V>({
                     disabled={disabled}
                     expanded={showOptions}
                     listboxId={internalId}
+                    popupRole="listbox"
                     readOnly={readOnly}
                     variant={variant}
                 >

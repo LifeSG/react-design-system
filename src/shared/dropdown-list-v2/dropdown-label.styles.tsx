@@ -20,6 +20,11 @@ interface LabelTextStyleProps {
     $maxLines?: number;
     $selected?: boolean;
     $truncateType?: TruncateType;
+    $bold?: boolean;
+}
+
+interface MatchedTextStyleProps {
+    $variant: DropdownVariantType;
 }
 
 // =============================================================================
@@ -27,6 +32,10 @@ interface LabelTextStyleProps {
 // =============================================================================
 
 export const PrimaryText = styled.div<LabelTextStyleProps>`
+    font-weight: ${(props) =>
+        props.$bold
+            ? Font.Spec["weight-semibold"]
+            : Font.Spec["weight-regular"]};
     color: ${(props) =>
         props.$selected ? Colour["text-selected"] : Colour["text"]};
     width: 100%;
@@ -57,6 +66,10 @@ export const SecondaryText = styled.div<LabelTextStyleProps>`
                 `;
         }
     }}
+`;
+
+export const MatchedText = styled.span<MatchedTextStyleProps>`
+    font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
 export const Label = styled.div<LabelStyleProps>`
