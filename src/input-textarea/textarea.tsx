@@ -7,11 +7,76 @@ import { TextareaProps, TextareaRef } from "./types";
 // BASE COMPONENT
 // =============================================================================
 const TextareaBaseComponent = (
-    { value, disabled, error, rows = 5, prefix, ...otherProps }: TextareaProps,
+    {
+        value,
+        disabled,
+        error,
+        rows = 5,
+        prefix,
+        transformValue,
+        onChange,
+        ...otherProps
+    }: TextareaProps,
     ref: TextareaRef
 ) => {
+    const [stateValue, setStateValue] = useState(value);
+
+    useEffect(() => {
+        setStateValue(value);
+    }, [value]);
+
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        let newValue = event.target.value;
+
+        if (prefix) {
+            // Ensure the prefix is always at the beginning
+            if (!newValue.startsWith(prefix)) {
+                newValue = prefix + newValue.trimStart();
+            }
+
+            // Prevent user from deleting the prefix
+            if (newValue.length < prefix.length) {
+                newValue = prefix;
+            }
+
+            // Extract user input (ensuring it's never undefined)
+            const userInput = newValue.slice(prefix.length) || ""; // Ensure empty string, not undefined
+
+            setStateValue(userInput);
+            event.target.value = prefix + userInput; // Update displayed value
+
+            // Ensure cursor stays in correct position
+            requestAnimationFrame(() => {
+                const cursorPosition = Math.max(
+                    prefix.length,
+                    event.target.selectionStart || 0
+                );
+                event.target.setSelectionRange(cursorPosition, cursorPosition);
+            });
+
+            // Pass only user input (without prefix) to parent `onChange`
+            if (onChange) {
+                const syntheticEvent = {
+                    ...event,
+                    target: { ...event.target, value: userInput },
+                };
+                onChange(
+                    syntheticEvent as React.ChangeEvent<HTMLTextAreaElement>
+                );
+            }
+        } else {
+            const transformedValue = transformValue
+                ? transformValue(newValue ?? "")
+                : newValue;
+
+            setStateValue(transformedValue);
+            event.target.value = transformedValue;
+            if (onChange) onChange(event);
+        }
+    };
+
     const displayValue = () => {
-        return prefix + (value ?? ""); // Ensures no "undefined"
+        return prefix + (stateValue ?? ""); // Ensures no "undefined"
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -33,7 +98,8 @@ const TextareaBaseComponent = (
         <Element
             ref={ref}
             disabled={disabled}
-            value={prefix ? displayValue() : value}
+            value={prefix ? displayValue() : stateValue}
+            onChange={handleChange}
             onKeyDown={handleKeyDown} // Add this to prevent prefix deletion
             error={error}
             rows={rows}
@@ -50,12 +116,14 @@ export const TextareaBase = React.forwardRef(TextareaBaseComponent);
 
 const TextareaComponent = (
     {
-        value,
+        value = "", // Ensure value is never undefined
         disabled,
         rows = 5,
         onChange,
         transformValue,
         prefix,
+        maxLength,
+        renderCustomCounter,
         ...otherProps
     }: TextareaProps,
     ref: TextareaRef
@@ -78,19 +146,8 @@ const TextareaComponent = (
     // EVENT HANDLER
     // -------------------------------------------------------------------------
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        let newValue = event.target.value;
-
-        if (prefix && newValue.startsWith(prefix)) {
-            newValue = newValue.replace(prefix, "");
-        }
-
-        const transformedValue = transformValue
-            ? transformValue(newValue ?? "")
-            : newValue;
-
-        setStateValue(transformedValue);
-        event.target.value = transformedValue;
-        if (onChange) onChange(event);
+        const newValue = event.target.value;
+        setStateValue(newValue);
     };
 
     // -------------------------------------------------------------------------
@@ -98,20 +155,22 @@ const TextareaComponent = (
     // -------------------------------------------------------------------------
     return (
         <Wrapper>
-            <Element
+            <TextareaBase
                 ref={ref}
                 disabled={disabled}
                 value={stateValue}
                 rows={rows || 5}
                 onChange={handleChange}
+                prefix={prefix}
+                transformValue={transformValue}
                 {...otherProps}
             />
-            {otherProps.maxLength && (
+            {maxLength && (
                 <TextareaCounter
                     disabled={disabled}
                     value={stateValue}
-                    maxLength={otherProps.maxLength}
-                    renderCustomCounter={otherProps.renderCustomCounter}
+                    maxLength={maxLength}
+                    renderCustomCounter={renderCustomCounter}
                 />
             )}
         </Wrapper>
