@@ -108,6 +108,7 @@ const FormTextareaComponent = (
                 onChange={handleChange}
                 ref={ref}
                 prefix={prefix}
+                transformValue={transformValue}
                 {...otherProps}
             />
             {renderBottomLabels()}
