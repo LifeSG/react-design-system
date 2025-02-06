@@ -13,13 +13,7 @@ const meta: Meta<Component> = {
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
-        const today = dayjs().toString();
-        return <DateNavigator selectedDate={today} />;
-    },
-};
 
-export const WithNavigation: StoryObj<Component> = {
     render: () => {
         const today = dayjs().toString();
         const [selectedDate, setSelectedDate] = useState<string>(today);
@@ -37,6 +31,60 @@ export const WithNavigation: StoryObj<Component> = {
                 selectedDate={selectedDate}
                 onLeftArrowClick={onLeftArrowClick}
                 onRightArrowClick={onRightArrowClick}
+            />
+        );
+    },
+};
+
+export const ShortFormDate: StoryObj<Component> = {
+
+    render: () => {
+        const today = dayjs().toString();
+        const [selectedDate, setSelectedDate] = useState<string>(today);
+
+        const onLeftArrowClick = (currentDate: string) => {
+            setSelectedDate(dayjs(currentDate).subtract(1, "day").toString());
+        };
+
+        const onRightArrowClick = (currentDate: string) => {
+            setSelectedDate(dayjs(currentDate).add(1, "day").toString());
+        };
+
+        return (
+            <DateNavigator
+                selectedDate={selectedDate}
+                onLeftArrowClick={onLeftArrowClick}
+                onRightArrowClick={onRightArrowClick}
+                showDateAsShortForm
+                showTodayAsToday
+            />
+        );
+    },
+};
+
+export const WithCalendarNavigation: StoryObj<Component> = {
+    render: () => {
+        const today = dayjs().toString();
+        const [selectedDate, setSelectedDate] = useState<string>(today);
+
+        const onLeftArrowClick = (currentDate: string) => {
+            setSelectedDate(dayjs(currentDate).subtract(1, "day").toString());
+        };
+
+        const onRightArrowClick = (currentDate: string) => {
+            setSelectedDate(dayjs(currentDate).add(1, "day").toString());
+        };
+
+        const onCalendarDateSelect = (currentDate: string) => {
+            setSelectedDate(currentDate);
+        };
+
+        return (
+            <DateNavigator
+                selectedDate={selectedDate}
+                onLeftArrowClick={onLeftArrowClick}
+                onRightArrowClick={onRightArrowClick}
+                onCalendarDateSelect={onCalendarDateSelect}
             />
         );
     },
@@ -63,12 +111,19 @@ export const LoadingState: StoryObj<Component> = {
             setTimeout(() => setLoading(false), 1000);
         };
 
+
+        const onCalendarDateSelect = (currentDate: string) => {
+            setSelectedDate(currentDate);
+            loadData();
+        };
+
         return (
             <DateNavigator
                 selectedDate={selectedDate}
                 loading={loading}
                 onLeftArrowClick={onLeftArrowClick}
                 onRightArrowClick={onRightArrowClick}
+                onCalendarDateSelect={onCalendarDateSelect}
             />
         );
     },
@@ -89,6 +144,10 @@ export const WithMinAndMaxDate: StoryObj<Component> = {
             setSelectedDate(dayjs(currentDate).add(1, "day").toString());
         };
 
+        const onCalendarDateSelect = (currentDate: string) => {
+            setSelectedDate(currentDate);
+        };
+
         return (
             <DateNavigator
                 selectedDate={selectedDate}
@@ -96,6 +155,7 @@ export const WithMinAndMaxDate: StoryObj<Component> = {
                 onRightArrowClick={onRightArrowClick}
                 minDate={minDate}
                 maxDate={maxDate}
+                onCalendarDateSelect={onCalendarDateSelect}
             />
         );
     },

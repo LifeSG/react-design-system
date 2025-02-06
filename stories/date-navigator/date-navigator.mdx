@@ -8,11 +8,6 @@ import { PropsTable } from "./props-table";
 
 <Title>DateNavigator</Title>
 
-<Alert type="warning">
-    This component is still a work in progress. The UI and props are subject to
-    change.
-</Alert>
-
 <Secondary>Overview</Secondary>
 
 A component that displays the current date and day, with support for navigating
@@ -24,12 +19,16 @@ import { DateNavigator } from "@lifesg/react-design-system/date-navigator";
 
 <Canvas of={DateNavigatorStories.Default} />
 
-<Heading3>With navigation</Heading3>
+<Heading3>With short form date display</Heading3>
+You can specify `showDateAsShortForm` for short form date display, and `showTodayAsToday`
+to show system today's date as "Today"
+<Canvas of={DateNavigatorStories.ShortFormDate} />
 
-Navigation buttons can be enabled by specifying the `onLeftArrowClick` and
-`onRightArrowClick` callbacks.
+<Heading3>With calendar navigation</Heading3>
 
-<Canvas of={DateNavigatorStories.WithNavigation} />
+A calendar dropdown can be enabled by specifying the `onCalendarDateSelect` callback.
+
+<Canvas of={DateNavigatorStories.WithCalendarNavigation} />
 
 <Heading3>Loading state</Heading3>
 
@@ -40,8 +39,7 @@ tasks are running.
 
 <Heading3>With date range</Heading3>
 
-The corresponding navigation button is disabled when the current date is \<=
-`minDate` or \>= `maxDate`.
+You can constraint the `minDate` and `maxDate` for both the arrow buttons and the calendar dropdown selections.
 
 <Canvas of={DateNavigatorStories.WithMinAndMaxDate} />
 

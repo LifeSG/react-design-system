@@ -55,15 +55,30 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The loading state to disable navigation buttons",
             },
             {
+                name: "showDateAsShortForm",
+                description: "Shows the date in short form",
+            },
+            {
+                name: "showTodayAsToday",
+                description: "Shows today's system date as 'Today'",
+            },
+            {
                 name: "onLeftArrowClick",
+                mandatory: true,
                 description: "Called on left arrow navigation button click",
                 propTypes: ["(currentDate: string) => void"],
             },
             {
                 name: "onRightArrowClick",
+                mandatory: true,
                 description: "Called on right arrow navigation button click",
                 propTypes: ["(currentDate: string) => void"],
             },
+            {
+                name: "onCalendarDateSelect",
+                description: "Called on a calendar date selection",
+                propTypes: ["(currentDate: string) => void"]
+            }
         ],
     },
 ];
