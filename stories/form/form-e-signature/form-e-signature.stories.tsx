@@ -37,6 +37,17 @@ export const Default: StoryObj<Component> = {
                     description="Description"
                 />
                 <Form.ESignature
+                    label="This is disabled"
+                    id="disabled"
+                    disabled
+                />
+                <Form.ESignature
+                    label="This is disabled (prefilled)"
+                    id="prefill-disabled"
+                    value={signatureDataURL}
+                    disabled
+                />
+                <Form.ESignature
                     label="This comes with an error message"
                     id="error"
                     errorMessage="Error message"

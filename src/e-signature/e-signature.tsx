@@ -43,6 +43,7 @@ export const ESignature = (props: EsignatureProps) => {
         loadingLabel = "Uploading...",
         onChange,
         value,
+        disabled,
         ...otherProps
     } = props;
     const [showModal, setShowModal] = useState(false);
@@ -89,6 +90,7 @@ export const ESignature = (props: EsignatureProps) => {
                     aria-label="Add signature"
                     id={id}
                     onClick={() => setShowModal(true)}
+                    disabled={disabled}
                 >
                     Add signature
                 </AddSignatureButton>
@@ -103,6 +105,7 @@ export const ESignature = (props: EsignatureProps) => {
                     onClick={() => setShowModal(true)}
                     id={id}
                     aria-label="Edit signature"
+                    disabled={disabled}
                 >
                     <PencilIcon />
                 </EditSignatureButton>
@@ -186,7 +189,7 @@ export const ESignature = (props: EsignatureProps) => {
 
     return (
         <div {...otherProps}>
-            <SignatureArea>
+            <SignatureArea $disabled={disabled}>
                 {isNaN(loadingProgress)
                     ? renderSignatureArea()
                     : renderLoadingIndicator()}

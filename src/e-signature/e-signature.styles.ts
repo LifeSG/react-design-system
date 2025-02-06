@@ -14,6 +14,13 @@ import {
 import { Typography } from "../typography";
 
 // =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+interface SignatureAreaProps {
+    $disabled: boolean;
+}
+
+// =============================================================================
 // CUSTOM MEDIA QUERIES
 // =============================================================================
 // for mobileL and below in both orientations
@@ -41,29 +48,45 @@ const mobileLandscapeMediaQuery = css`
 // MAIN FIELD
 // -----------------------------------------------------------------------------
 
-export const SignatureArea = styled.div`
+export const SignatureArea = styled.div<SignatureAreaProps>`
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    ${Border["dashed-default"]({
-        radius: Radius["sm"],
-        thickness: Border["width-040"],
-        colour: Colour["border"],
-    })}
-    background-color: ${Colour["bg"]};
+    ${(props) =>
+        css`
+            ${Border["dashed-default"]({
+                radius: Radius["sm"],
+                thickness: Border["width-040"],
+                colour: props.$disabled
+                    ? Colour["border-disabled"]
+                    : Colour["border"],
+            })}
+
+            background-color: ${props.$disabled
+                ? Colour["bg-disabled"]
+                : Colour["bg"]};
+        `}
     height: 14.125rem;
 `;
 
 export const AddSignatureButton = styled(Button.Default)`
     width: fit-content;
     margin: 0 ${Spacing["spacing-20"]};
+
+    :disabled {
+        border-color: ${Colour["border-strong"]};
+    }
 `;
 
 export const EditSignatureButton = styled(IconButton)`
     position: absolute;
     top: ${Spacing["spacing-16"]};
     right: ${Spacing["spacing-16"]};
+
+    :disabled {
+        border-color: ${Colour["border-strong"]};
+    }
 `;
 
 export const SignaturePreviewImage = styled.img`

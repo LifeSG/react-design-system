@@ -29,6 +29,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "disabled",
+                description: "Specifies if the component should be disabled",
+                propTypes: ["boolean"],
+            },
+            {
                 name: "loadingProgress",
                 description:
                     "Number between 0 and 1 to mark the progress in a progress indicator",
