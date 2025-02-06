@@ -2,15 +2,17 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Form } from "src/form";
 import { InputNestedMultiSelect } from "src/input-nested-multi-select";
-import { V2_Layout } from "src/v2_layout";
-import { StoryContainer } from "../../storybook-common";
+import { Layout } from "src/layout";
+import {
+    FullWidthStoryDecorator,
+    StoryDecorator,
+} from "stories/storybook-common";
 import {
     longLabelOptions,
     options,
     searchOptions,
     twoTierOptions,
 } from "../form-nested-select/nested-data-list";
-import { Container } from "../shared-doc-elements";
 
 type Component = typeof Form.NestedMultiSelect;
 type StandaloneComponent = typeof InputNestedMultiSelect;
@@ -23,139 +25,139 @@ const meta: Meta<Component> = {
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.NestedMultiSelect
-                        label="This is the nested select field"
-                        options={options}
-                    />
-                    <Form.NestedMultiSelect
-                        label="This contains a 2 tier option"
-                        options={twoTierOptions}
-                    />
-                    <Form.NestedMultiSelect
-                        label="This is the disabled state"
-                        options={options}
-                        disabled
-                    />
-                    <Form.NestedMultiSelect
-                        label="This is the readOnly state"
-                        options={options}
-                        readOnly
-                    />
-                    <Form.NestedMultiSelect
-                        label="This is the error state"
-                        options={options}
-                        errorMessage="Selection is required"
-                    />
-                </Container>
-            </StoryContainer>
+            <>
+                <Form.NestedMultiSelect
+                    label="This is the nested select field"
+                    options={options}
+                />
+                <Form.NestedMultiSelect
+                    label="This contains a 2 tier option"
+                    options={twoTierOptions}
+                />
+                <Form.NestedMultiSelect
+                    label="This is the disabled state"
+                    options={options}
+                    disabled
+                />
+                <Form.NestedMultiSelect
+                    label="This is the readOnly state"
+                    options={options}
+                    readOnly
+                />
+                <Form.NestedMultiSelect
+                    label="This is the error state"
+                    options={options}
+                    errorMessage="Selection is required"
+                />
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const SpecifyingMode: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [selectedKeyPaths, setSelectedKeyPaths] = useState([["2", "22"]]);
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.NestedMultiSelect
-                        label="The selected option is expanded by default"
-                        options={options}
-                        selectedKeyPaths={selectedKeyPaths}
-                        onSelectOptions={(keyPaths) => {
-                            setSelectedKeyPaths(keyPaths);
-                        }}
-                    />
-                    <Form.NestedMultiSelect
-                        label="With all (sub)categories expanded "
-                        options={options}
-                        mode="expand"
-                    />
-                    <Form.NestedMultiSelect
-                        label="With all (sub)categories collapsed "
-                        options={options}
-                        mode="collapse"
-                    />
-                </Container>
-            </StoryContainer>
+            <>
+                <Form.NestedMultiSelect
+                    label="The selected option is expanded by default"
+                    options={options}
+                    selectedKeyPaths={selectedKeyPaths}
+                    onSelectOptions={(keyPaths) => {
+                        setSelectedKeyPaths(keyPaths);
+                    }}
+                />
+                <Form.NestedMultiSelect
+                    label="With all (sub)categories expanded "
+                    options={options}
+                    mode="expand"
+                />
+                <Form.NestedMultiSelect
+                    label="With all (sub)categories collapsed "
+                    options={options}
+                    mode="collapse"
+                />
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const WithSearch: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.NestedMultiSelect
-                        label="This has searchable options"
-                        options={searchOptions}
-                        enableSearch
-                    />
-                </Container>
-            </StoryContainer>
+            <Form.NestedMultiSelect
+                label="This has searchable options"
+                options={searchOptions}
+                enableSearch
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const LabelTruncation: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.NestedMultiSelect
-                        label="This has truncation at the end"
-                        options={longLabelOptions}
-                    />
-                    <Form.NestedMultiSelect
-                        label="This has truncation in the middle"
-                        optionTruncationType="middle"
-                        options={longLabelOptions}
-                    />
-                </Container>
-            </StoryContainer>
+            <>
+                <Form.NestedMultiSelect
+                    label="This has truncation at the end"
+                    options={longLabelOptions}
+                />
+                <Form.NestedMultiSelect
+                    label="This has truncation in the middle"
+                    optionTruncationType="middle"
+                    options={longLabelOptions}
+                />
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const RenderingInGridLayout: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <Layout.Content type="grid">
                 <Form.NestedMultiSelect
                     label="A shorter form input"
                     options={options}
-                    mobileCols={[1, 5]}
+                    xxsCols={[1, 9]}
+                    lgCols={[1, 5]}
                 />
                 <Form.NestedMultiSelect
                     label="A longer form input"
                     options={options}
-                    mobileCols={[1, 5]}
-                    tabletCols={[1, 9]}
+                    xxsCols={[1, 9]}
                 />
-            </V2_Layout.Content>
+            </Layout.Content>
         );
     },
-    parameters: {
-        layout: "fullscreen",
+    decorators: [FullWidthStoryDecorator()],
+};
+
+export const SmallVariant: StoryObj<StandaloneComponent> = {
+    render: (_args) => {
+        return (
+            <Form.NestedMultiSelect
+                variant="small"
+                label="This is the small variant"
+                options={options}
+                enableSearch
+            />
+        );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const StandaloneUsage: StoryObj<StandaloneComponent> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <InputNestedMultiSelect
-                        options={options}
-                        placeholder="Select"
-                    />
-                </Container>
-            </StoryContainer>
+            <InputNestedMultiSelect options={options} placeholder="Select" />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };

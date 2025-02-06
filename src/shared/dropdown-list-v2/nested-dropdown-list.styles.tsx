@@ -1,7 +1,6 @@
 import { MinusSquareFillIcon } from "@lifesg/react-icons/minus-square-fill";
-import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
-import { V2_Color } from "../../v2_color";
+import { Colour, Motion, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -40,39 +39,36 @@ export const ListItem = styled.div<ListItemStyleProps>`
     flex: 1;
     display: flex;
     align-items: flex-start;
-    gap: 0.5rem;
-    padding: 0.75rem 0.5rem;
+    gap: ${Spacing["spacing-8"]};
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
     cursor: ${(props) => (props.$toggleable ? "default" : "pointer")};
     overflow: hidden; // required for label to truncate properly
 
-    outline-color: ${V2_Color.Accent.Light[3]};
+    outline: none;
 
     ${(props) =>
         props.$active &&
         css`
-            background: ${V2_Color.Accent.Light[5]};
+            background: ${Colour["bg-hover"]};
         `}
 `;
 
 export const Indent = styled.div<IndentStyleProps>`
     height: 1px;
-    width: ${(props) => {
-        const expandButtonWidth = 1.625;
-        const spaceWidth = 0.5;
-        return (expandButtonWidth + spaceWidth) * props.$level;
-    }}rem;
+    width: calc((1lh + ${Spacing["spacing-8"]}) * ${(props) => props.$level});
 `;
 
 export const ExpandButton = styled.div<ExpandButtonStyleProps>`
-    width: 1.625rem;
-    height: 1.625rem;
-    color: ${V2_Color.Primary};
+    width: 1lh;
+    height: 1lh;
+    color: ${Colour["icon-primary"]};
     cursor: pointer;
 
     svg {
-        width: 1.625rem;
-        height: 1.625rem;
-        transition: transform 250ms ease-in-out;
+        width: 1lh;
+        height: 1lh;
+        transition: transform ${Motion["duration-350"]}
+            ${Motion["ease-standard"]};
 
         ${(props) => {
             if (props.$expanded) {
@@ -85,30 +81,24 @@ export const ExpandButton = styled.div<ExpandButtonStyleProps>`
 `;
 
 export const UnexpandableIndicator = styled.div`
-    width: 1.625rem;
-    height: 1.625rem;
-    margin-right: 0.5rem;
+    width: 1lh;
+    height: 1lh;
+    margin-right: ${Spacing["spacing-8"]};
 `;
 
 export const SelectionIndicator = styled.div<IndicatorStyleProps>`
     flex-shrink: 0;
-    height: 1.625rem;
-    width: ${(props) => (props.$hasNestedSiblings ? "1.625rem" : "1rem")};
+    height: 1lh;
+    width: ${(props) =>
+        props.$hasNestedSiblings ? "1lh" : Spacing["spacing-16"]};
 
     display: flex;
     justify-content: center;
 `;
 
-export const SelectedIndicator = styled(TickIcon)`
-    flex-shrink: 0;
-    height: 1.625rem;
-    width: 1rem;
-    color: ${V2_Color.Primary};
-`;
-
 export const CheckboxMixedIndicator = styled(MinusSquareFillIcon)`
     flex-shrink: 0;
-    height: 1.625rem;
-    width: 1.625rem;
-    color: ${V2_Color.Primary};
+    height: 1lh;
+    width: 1lh;
+    color: ${Colour["icon-selected"]};
 `;

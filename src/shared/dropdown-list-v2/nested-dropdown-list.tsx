@@ -12,6 +12,7 @@ import {
     ResultStateContainer,
     SelectAllButton,
     SelectAllContainer,
+    SelectedIndicator,
     TryAgainButton,
 } from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
@@ -31,7 +32,6 @@ import {
     Indent,
     ListItem,
     ListItemContainer,
-    SelectedIndicator,
     SelectionIndicator,
     UnexpandableIndicator,
 } from "./nested-dropdown-list.styles";
