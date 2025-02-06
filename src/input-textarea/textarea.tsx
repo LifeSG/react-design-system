@@ -7,14 +7,34 @@ import { TextareaProps, TextareaRef } from "./types";
 // BASE COMPONENT
 // =============================================================================
 const TextareaBaseComponent = (
-    { value, disabled, error, rows = 5, ...otherProps }: TextareaProps,
+    { value, disabled, error, rows = 5, prefix, ...otherProps }: TextareaProps,
     ref: TextareaRef
 ) => {
+    const displayValue = () => {
+        return prefix + (value ?? ""); // Ensures no "undefined"
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        // Prevent backspace when cursor is at the start (right after prefix)
+        if (prefix && event.key === "Backspace") {
+            const { selectionStart, selectionEnd } = event.currentTarget;
+
+            // If the cursor is at the start of the user input (right after prefix), prevent backspace
+            if (
+                selectionStart === selectionEnd &&
+                selectionStart <= prefix.length
+            ) {
+                event.preventDefault();
+            }
+        }
+    };
+
     return (
         <Element
             ref={ref}
             disabled={disabled}
-            value={value}
+            value={prefix ? displayValue() : value}
+            onKeyDown={handleKeyDown} // Add this to prevent prefix deletion
             error={error}
             rows={rows}
             {...otherProps}
@@ -35,6 +55,7 @@ const TextareaComponent = (
         rows = 5,
         onChange,
         transformValue,
+        prefix,
         ...otherProps
     }: TextareaProps,
     ref: TextareaRef
@@ -57,7 +78,11 @@ const TextareaComponent = (
     // EVENT HANDLER
     // -------------------------------------------------------------------------
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const newValue = event.target.value;
+        let newValue = event.target.value;
+
+        if (prefix && newValue.startsWith(prefix)) {
+            newValue = newValue.replace(prefix, "");
+        }
 
         const transformedValue = transformValue
             ? transformValue(newValue ?? "")

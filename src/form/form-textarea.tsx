@@ -30,6 +30,7 @@ const FormTextareaComponent = (
         tabletCols,
         desktopCols,
         transformValue,
+        prefix = "",
         ...otherProps
     } = props;
 
@@ -56,15 +57,53 @@ const FormTextareaComponent = (
     // EVENT HANDLER
     // =============================================================================
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const newValue = event.target.value;
+        let newValue = event.target.value;
 
-        const transformedValue = transformValue
-            ? transformValue(newValue ?? "")
-            : newValue;
+        if (prefix) {
+            // Ensure the prefix is always at the beginning
+            if (!newValue.startsWith(prefix)) {
+                newValue = prefix + newValue.trimStart();
+            }
 
-        setStateValue(transformedValue);
-        event.target.value = transformedValue;
-        if (onChange) onChange(event);
+            // Prevent user from deleting the prefix
+            if (newValue.length < prefix.length) {
+                newValue = prefix;
+            }
+
+            // Extract user input (ensuring it's never undefined)
+            const userInput = newValue.slice(prefix.length) || ""; // Ensure empty string, not undefined
+
+            setStateValue(userInput);
+            event.target.value = prefix + userInput; // Update displayed value
+
+            // Ensure cursor stays in correct position
+            requestAnimationFrame(() => {
+                const cursorPosition = Math.max(
+                    prefix.length,
+                    event.target.selectionStart || 0
+                );
+                event.target.setSelectionRange(cursorPosition, cursorPosition);
+            });
+
+            // Pass only user input (without prefix) to parent `onChange`
+            if (onChange) {
+                const syntheticEvent = {
+                    ...event,
+                    target: { ...event.target, value: userInput },
+                };
+                onChange(
+                    syntheticEvent as React.ChangeEvent<HTMLTextAreaElement>
+                );
+            }
+        } else {
+            const transformedValue = transformValue
+                ? transformValue(newValue ?? "")
+                : newValue;
+
+            setStateValue(transformedValue);
+            event.target.value = transformedValue;
+            if (onChange) onChange(event);
+        }
     };
 
     // =============================================================================
@@ -113,6 +152,7 @@ const FormTextareaComponent = (
                 error={!!errorMessage}
                 onChange={handleChange}
                 ref={ref}
+                prefix={prefix}
                 {...otherProps}
             />
             {renderBottomLabels()}

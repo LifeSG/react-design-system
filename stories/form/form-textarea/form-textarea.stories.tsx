@@ -73,6 +73,22 @@ export const TransformValue: StoryObj<Component> = {
     },
 };
 
+export const Prefix: StoryObj<Component> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.Textarea
+                        label="This textarea has a prefix"
+                        maxLength={100}
+                        prefix="ABC "
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
 export const WithCustomCounter: StoryObj<Component> = {
     render: () => {
         return (
