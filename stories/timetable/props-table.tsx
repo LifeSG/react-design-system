@@ -37,16 +37,16 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "emptyContent",
+                name: "emptyContentMessage",
                 description: (
                     <>
-                        The props to determine what this component should render
+                        The props to determine what message this component should render
                         if there is no content. Note that it is determined as
                         empty when <code>totalRecords=0</code>or
                         <code>rowData=[]</code>.
                     </>
                 ),
-                propTypes: ["EmptyContentProps"],
+                propTypes: ["string"],
             },
             {
                 name: "rowData",
@@ -136,11 +136,9 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The callback function to trigger when the left arrow has
                         been clicked on the date navigator component.
-                        <br />
-                        <b>Note</b>: Arrow button will not be rendered if this
-                        prop is not passed in.
                     </>
                 ),
+                mandatory: true,
                 propTypes: ["(currentDate: string) => void"],
             },
             {
@@ -149,37 +147,21 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The callback function to trigger when the right arrow
                         has been clicked on the date navigator component.
-                        <br />
-                        <b>Note</b>: Arrow button will not be rendered if this
-                        prop is not passed in.
                     </>
                 ),
+                mandatory: true,
                 propTypes: ["(currentDate: string) => void"],
             },
-        ],
-    },
-    {
-        name: "EmptyContentProps",
-        attributes: [
             {
-                name: "description",
+                name: "onCalendarDateSelect",
+                description: (
+                    <>
+                        The callback function to trigger when a calendar date has been
+                        picked in the dropdown calendar.
+                    </>
+                ),
                 mandatory: true,
-                description:
-                    "The description text to show when there is no content to display",
-                propTypes: ["string"],
-            },
-            {
-                name: "illustrationScheme",
-                mandatory: true,
-                description:
-                    "The scheme to use, which decides what image to display for empty content",
-                propTypes: [
-                    `"base"`,
-                    `"bookingsg"`,
-                    `"ccube"`,
-                    `"rbs"`,
-                    `"mylegacy"`,
-                ],
+                propTypes: ["(currentDate: string) => void"],
             },
         ],
     },
