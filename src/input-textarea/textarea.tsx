@@ -86,7 +86,7 @@ const TextareaBaseComponent = (
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (!prefix) return;
 
-        const { selectionStart, selectionEnd } = event.currentTarget;
+        const { selectionStart } = event.currentTarget;
 
         // Prevent backspace in prefix
         if (event.key === "Backspace" && selectionStart <= prefix.length) {
