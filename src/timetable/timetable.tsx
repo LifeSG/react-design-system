@@ -9,7 +9,7 @@ import {
     ROW_HEADER_WIDTH,
     ROW_INTERVAL,
 } from "./const";
-import { TimeTableHeader } from "./timetable-navigator/timetable-navigator";
+import { TimeTableHeader } from "./timetable-header/timetable-header";
 import { RowBar } from "./timetable-row/row-bar";
 import {
     ClickableRowHeaderTitle,

@@ -6,7 +6,7 @@ import {
     StyledDateNavigator,
     StyledRefreshButton,
     StyledResultText,
-} from "./timetable-navigator.style";
+} from "./timetable-header.style";
 
 interface TimeTableHeaderProps {
     selectedDate: string;
