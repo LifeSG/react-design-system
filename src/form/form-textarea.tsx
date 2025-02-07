@@ -59,6 +59,7 @@ const FormTextareaComponent = (
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newValue = event.target.value;
         setStateValue(newValue);
+        if (onChange) onChange(event);
     };
 
     // =============================================================================
