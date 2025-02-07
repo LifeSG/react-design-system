@@ -300,7 +300,7 @@ export const CustomPopovers: StoryObj<Component> = {
 
         const onPage = () => {
             setTimeout(() => {
-                setResults((prev) => [...prev, ...rowData.slice(6)]);
+                setResults((prev) => [...prev, ...rowData.slice(5)]);
                 setLoading(false);
             }, 2000);
         };
