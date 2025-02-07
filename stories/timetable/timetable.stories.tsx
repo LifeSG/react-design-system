@@ -187,7 +187,6 @@ export const CustomPopovers: StoryObj<Component> = {
         const [results, setResults] = useState([]);
         const [date, setDate] = useState(today);
         const [loading, setLoading] = useState(true);
-        const [page, setPage] = useState(1);
         const totalRecords = 10;
 
 
@@ -298,62 +297,58 @@ export const CustomPopovers: StoryObj<Component> = {
             };
         });
 
+
         const onPage = () => {
-            setPage(page + 1);
             setTimeout(() => {
-                setResults((prev) => [...prev, ...rowData]);
+                setResults((prev) => [...prev, ...rowData.slice(6)]);
                 setLoading(false);
             }, 2000);
         };
 
         useEffect(() => {
-            setTimeout(() => {
-                setResults(rowData);
+            if (rowData) {
+                setResults(rowData.slice(0, 5));
                 setLoading(false);
-            }, 2000);
-        }, [rowData]);
+            }
+        }, []);
 
         const onPreviousDayClick = (currentDate: string) => {
-            setPage(1);
             const newDate = dayjs(currentDate)
                 .add(-1, "day")
                 .format("YYYY-MM-DD");
             setDate(newDate);
             setLoading(true);
             setTimeout(() => {
-                setResults(rowData);
+                setResults(rowData.slice(0, 5));
                 setLoading(false);
             }, 1000);
         };
 
         const onNextDayClick = (currentDate: string) => {
-            setPage(1);
             const newDate = dayjs(currentDate)
                 .add(1, "day")
                 .format("YYYY-MM-DD");
             setDate(newDate);
             setLoading(true);
             setTimeout(() => {
-                setResults(rowData);
+                setResults(rowData.slice(0, 5));
                 setLoading(false);
             }, 1000);
         };
 
         const onRefresh = () => {
             setLoading(true);
-            setPage(1);
             setTimeout(() => {
-                setResults(rowData);
+                setResults(rowData.slice(0, 5));
                 setLoading(false);
             }, 5000);
         };
 
         const onCalendarDateSelect = (currentDate: string) => {
-            setPage(1);
             setDate(currentDate);
             setLoading(true);
             setTimeout(() => {
-                setResults(rowData);
+                setResults(rowData.slice(0, 5));
                 setLoading(false);
             }, 1000);
         };
