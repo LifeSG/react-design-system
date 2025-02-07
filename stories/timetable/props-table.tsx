@@ -199,8 +199,12 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "rowCells",
                 mandatory: true,
-                description:
-                    "The array of row cells to be rendered in this row of data.",
+                description: (
+                    <>
+                        The array of row cells to be rendered in this row of data.
+                        This component will sort the cells array by start time.
+                    </>
+                ),
                 propTypes: ["TimeTableRowCellData[]"],
             },
             {

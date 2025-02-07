@@ -58,6 +58,7 @@ export const RowBar = ({
                 customPopover: outOfRangeCellPopover,
             });
         }
+
         const sortedRowCells = rowCells.sort((a, b) => {
             const timeA = dayjs(a.startTime, "HH:mm");
             const timeB = dayjs(b.startTime, "HH:mm");
