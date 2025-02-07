@@ -28,61 +28,38 @@ const TextareaBaseComponent = (
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         let newValue = event.target.value;
-        let { selectionStart, selectionEnd } = event.target;
-
         if (prefix) {
             // Ensure prefix is always present
             if (!newValue.startsWith(prefix)) {
                 newValue = prefix + newValue.trimStart();
             }
 
-            // Prevent deletion of the prefix
+            // Prevent deleting the prefix
             if (newValue.length < prefix.length) {
                 newValue = prefix;
             }
 
-            // Extract user input (excluding prefix)
-            let userInput = newValue.slice(prefix.length);
+            const cursorPosition = event.target.selectionStart || 0;
 
-            // User selects inside the prefix → Move cursor to end of user input
-            if (
-                (selectionStart < prefix.length ||
-                    selectionEnd <= prefix.length) &&
-                userInput
-            ) {
-                requestAnimationFrame(() => {
-                    event.target.setSelectionRange(
-                        event.target.value.length,
-                        event.target.value.length
-                    );
-                });
+            // Ensure backspace does not delete the prefix
+            if (cursorPosition < prefix.length) {
+                event.preventDefault();
                 return;
             }
 
-            // Apply transformation if provided
+            // Extract user input
+            const userInput = newValue.slice(prefix.length);
+
+            // Transform the input if needed
             const transformedValue = transformValue
                 ? transformValue(userInput)
                 : userInput;
 
-            // Update state
+            // Update state and input field
             setStateValue(transformedValue);
-
-            // Ensure prefix is added correctly without duplication
             event.target.value = prefix + transformedValue;
 
-            // Adjust cursor position correctly
-            requestAnimationFrame(() => {
-                let newCursorPosition = Math.max(
-                    selectionStart - (transformedValue.length === 0 ? 1 : 0),
-                    prefix.length
-                );
-                event.target.setSelectionRange(
-                    newCursorPosition,
-                    newCursorPosition
-                );
-            });
-
-            // Fire the onChange event with correct user input (excluding prefix)
+            // Pass only the user input (without prefix) to `onChange`
             if (onChange) {
                 const syntheticEvent = {
                     ...event,
@@ -93,17 +70,17 @@ const TextareaBaseComponent = (
                 );
             }
         } else {
-            // Handle normal input when no prefix is used
             const transformedValue = transformValue
                 ? transformValue(newValue ?? "")
                 : newValue;
+
             setStateValue(transformedValue);
             event.target.value = transformedValue;
             if (onChange) onChange(event);
         }
     };
 
-    const displayValue = () => {
+    const getDisplayValue = () => {
         return prefix ? prefix + (stateValue ?? "") : stateValue;
     };
 
@@ -115,13 +92,11 @@ const TextareaBaseComponent = (
         // Prevent backspace in prefix
         if (event.key === "Backspace" && selectionStart <= prefix.length) {
             event.preventDefault();
-            return;
         }
 
         // Prevent left arrow from moving into prefix
         if (event.key === "ArrowLeft" && selectionStart <= prefix.length) {
             event.preventDefault();
-            return;
         }
 
         // Prevent "Home" key from moving cursor to beginning
@@ -140,7 +115,7 @@ const TextareaBaseComponent = (
         <Element
             ref={ref}
             disabled={disabled}
-            value={displayValue()}
+            value={getDisplayValue()}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             error={error}
