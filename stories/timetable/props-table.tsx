@@ -69,6 +69,7 @@ const DATA: ApiTableSectionProps[] = [
                         format.
                     </>
                 ),
+                defaultValue: "00:00",
                 propTypes: ["string"],
             },
             {
@@ -78,6 +79,7 @@ const DATA: ApiTableSectionProps[] = [
                         The end time of this time table in {TIME_FORMAT} format.
                     </>
                 ),
+                defaultValue: "23:00",
                 propTypes: ["string"],
             },
             {
