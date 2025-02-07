@@ -15,6 +15,7 @@ const TextareaBaseComponent = (
         prefix,
         transformValue,
         onChange,
+        maxLength,
         ...otherProps
     }: TextareaProps,
     ref: TextareaRef
@@ -144,6 +145,7 @@ const TextareaBaseComponent = (
             onKeyDown={handleKeyDown}
             error={error}
             rows={rows}
+            maxLength={prefix ? prefix.length + maxLength : maxLength}
             {...otherProps}
         />
     );
