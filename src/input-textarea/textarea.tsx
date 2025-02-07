@@ -27,30 +27,38 @@ const TextareaBaseComponent = (
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         let newValue = event.target.value;
-
         if (prefix) {
-            // Ensure the prefix is always at the beginning
+            // Ensure prefix is always present
             if (!newValue.startsWith(prefix)) {
                 newValue = prefix + newValue.trimStart();
             }
 
-            // Prevent user from deleting the prefix
+            // Prevent deleting the prefix
             if (newValue.length < prefix.length) {
                 newValue = prefix;
+            }
+
+            const cursorPosition = event.target.selectionStart || 0;
+
+            // Ensure backspace does not delete the prefix
+            if (cursorPosition < prefix.length) {
+                event.preventDefault();
+                return;
             }
 
             // Extract user input
             const userInput = newValue.slice(prefix.length);
 
+            // Transform the input if needed
             const transformedValue = transformValue
-                ? transformValue(userInput ?? "")
+                ? transformValue(userInput)
                 : userInput;
 
+            // Update state and input field
             setStateValue(transformedValue);
+            event.target.value = prefix + transformedValue;
 
-            event.target.value = prefix + transformedValue; // Update displayed value
-
-            // Pass only user input (without prefix) to parent `onChange`
+            // Pass only the user input (without prefix) to `onChange`
             if (onChange) {
                 const syntheticEvent = {
                     ...event,
