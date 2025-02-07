@@ -14,6 +14,7 @@ import {
 import { applyHtmlContentStyle } from "../../src/shared/html-content/html-content";
 import { TimeTable } from "../../src/timetable/timetable";
 import { StyledHoverContent, getTimeTableData, lazyLoad } from "./mock-data";
+import { timetableDefaultData } from "./timetable-default-data";
 
 type Component = typeof TimeTable;
 
@@ -42,7 +43,7 @@ export const Default: StoryObj<Component> = {
     render: () => {
         const timeTableData = getTimeTableData();
 
-        const [results, setResults] = useState(getTimeTableData().rowData);
+        const [results, setResults] = useState(timetableDefaultData);
         const [date, setDate] = useState(timeTableData.date);
         const [loading, setLoading] = useState(timeTableData.loading);
 
@@ -53,7 +54,7 @@ export const Default: StoryObj<Component> = {
             setDate(newDate);
             setLoading(true);
             setTimeout(() => {
-                setResults(getTimeTableData(newDate).rowData);
+                setResults(timetableDefaultData);
                 setLoading(false);
             }, 1000);
         };
@@ -65,21 +66,16 @@ export const Default: StoryObj<Component> = {
             setDate(newDate);
             setLoading(true);
             setTimeout(() => {
-                setResults(getTimeTableData(newDate).rowData);
+                setResults(timetableDefaultData);
                 setLoading(false);
             }, 1000);
         };
 
         return (
             <StyledTimeTable
-                {...timeTableData}
                 date={date}
-                minDate={dayjs(timeTableData.date)
-                    .subtract(2, "days")
-                    .format("YYYY-MM-DD")}
-                maxDate={dayjs(timeTableData.date)
-                    .add(2, "days")
-                    .format("YYYY-MM-DD")}
+                minTime={"06:00"}
+                maxTime={"23:00"}
                 rowData={results}
                 loading={loading}
                 onNextDayClick={onNextDayClick}
