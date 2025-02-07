@@ -8,7 +8,7 @@ import {
     StyledResultText,
 } from "./timetable-navigator.style";
 
-interface TimeTableNavigatorProps {
+interface TimeTableHeaderProps {
     selectedDate: string;
     loading: boolean;
     tableContainerRef: MutableRefObject<HTMLDivElement>;
@@ -21,7 +21,7 @@ interface TimeTableNavigatorProps {
     onCalendarDateSelect?: ((currentDate: string) => void) | undefined;
 }
 
-export const TimeTableNavigator = ({
+export const TimeTableHeader = ({
     selectedDate,
     loading,
     tableContainerRef,
@@ -31,7 +31,7 @@ export const TimeTableNavigator = ({
     onRefresh,
     onCalendarDateSelect,
     ...otherProps
-}: TimeTableNavigatorProps) => {
+}: TimeTableHeaderProps) => {
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================

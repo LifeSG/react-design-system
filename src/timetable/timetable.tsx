@@ -9,7 +9,7 @@ import {
     ROW_HEADER_WIDTH,
     ROW_INTERVAL,
 } from "./const";
-import { TimeTableNavigator } from "./timetable-navigator/timetable-navigator";
+import { TimeTableHeader } from "./timetable-navigator/timetable-navigator";
 import { RowBar } from "./timetable-row/row-bar";
 import {
     ClickableRowHeaderTitle,
@@ -84,8 +84,9 @@ export const TimeTable = ({
 
             const { scrollTop, clientHeight, scrollHeight } =
                 tableContainerRef.current;
+            const scrollBottomTolerance = 1;
             const isEndReached =
-                Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+                Math.ceil(scrollTop + clientHeight) >= scrollHeight - scrollBottomTolerance;
             const shouldLoadMore =
                 isEndReached && !allRecordsLoaded && onPage && !loading;
 
@@ -327,7 +328,7 @@ export const TimeTable = ({
     if (isEmptyContent) {
         return (
             <Container>
-                <TimeTableNavigator
+                <TimeTableHeader
                     selectedDate={date}
                     loading={loading || loadMore}
                     tableContainerRef={tableContainerRef}
@@ -357,7 +358,7 @@ export const TimeTable = ({
 
     return (
         <Container>
-            <TimeTableNavigator
+            <TimeTableHeader
                 selectedDate={date}
                 loading={loading || loadMore}
                 tableContainerRef={tableContainerRef}
