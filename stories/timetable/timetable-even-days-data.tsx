@@ -20,18 +20,7 @@ export const evenDaysData = [
             alert(`Clicked on row header for ${rowData.name}`);
         },
         rowCells: [
-            {
-                startTime: "08:00:00",
-                endTime: "08:15:00",
-                title: "title",
-                subtitle: "subtitle",
-                status: "filled" as TimeTableCellType,
-                onClick: (data: TimeTableRowCellData) => {
-                    alert(
-                        `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
-                    );
-                },
-            },
+
             {
                 startTime: "08:15:00",
                 endTime: "08:30:00",
@@ -53,6 +42,18 @@ export const evenDaysData = [
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`
+                    );
+                },
+            },
+            {
+                startTime: "08:00:00",
+                endTime: "08:15:00",
+                title: "title",
+                subtitle: "subtitle",
+                status: "filled" as TimeTableCellType,
+                onClick: (data: TimeTableRowCellData) => {
+                    alert(
+                        `This is an unsorted cell start: ${data.startTime}, end: ${data.endTime}`
                     );
                 },
             },
