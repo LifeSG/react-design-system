@@ -72,7 +72,7 @@ const TextareaBaseComponent = (
             // Adjust cursor position correctly
             requestAnimationFrame(() => {
                 let newCursorPosition = Math.max(
-                    selectionStart - (userInput.length === 0 ? 1 : 0),
+                    selectionStart - (transformedValue.length === 0 ? 1 : 0),
                     prefix.length
                 );
                 event.target.setSelectionRange(
@@ -103,7 +103,7 @@ const TextareaBaseComponent = (
     };
 
     const displayValue = () => {
-        return prefix + (stateValue ?? ""); // Ensures no "undefined"
+        return prefix ? prefix + (stateValue ?? "") : stateValue;
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -139,7 +139,7 @@ const TextareaBaseComponent = (
         <Element
             ref={ref}
             disabled={disabled}
-            value={prefix ? displayValue() : stateValue}
+            value={displayValue()}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             error={error}
