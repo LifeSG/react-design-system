@@ -1,20 +1,20 @@
 import dayjs from "dayjs";
-import { V2_TextLinkProps } from "../v2_text";
-import { V2_ResourceScheme } from "../v2_theme";
+import { ResourceScheme } from "../theme/types";
+import { TypographyLinkProps } from "../typography";
 import { getDefaultDisclaimerLinks } from "./footer-disclaimer-links-data";
 import { DisclaimerLinks } from "./types";
 
 /* Internally used.  Not to be exported */
 export interface InternalDisclaimerLinks {
-    privacy?: V2_TextLinkProps | undefined;
-    termsOfUse?: V2_TextLinkProps | undefined;
-    reportVulnerability?: V2_TextLinkProps | undefined;
+    privacy?: TypographyLinkProps | undefined;
+    termsOfUse?: TypographyLinkProps | undefined;
+    reportVulnerability?: TypographyLinkProps | undefined;
 }
 
 export namespace FooterHelper {
     export const getCopyrightInfo = (
         lastUpdated: Date = new Date(),
-        resourceScheme?: V2_ResourceScheme
+        resourceScheme?: ResourceScheme
     ): string => {
         const copyrightText = getCopyrightText(resourceScheme);
         const copyright = `${new Date().getFullYear()} ${copyrightText}`;
@@ -23,7 +23,7 @@ export namespace FooterHelper {
         return `${copyright} Last Updated ${lastUpdatedDateString}`;
     };
 
-    const getCopyrightText = (resourceScheme: V2_ResourceScheme) => {
+    const getCopyrightText = (resourceScheme: ResourceScheme) => {
         switch (resourceScheme) {
             case "bookingsg":
                 return "BookingSG, Government of Singapore.";
@@ -36,7 +36,7 @@ export namespace FooterHelper {
         }
     };
 
-    export const getFooterLogo = (resourceScheme?: V2_ResourceScheme) => {
+    export const getFooterLogo = (resourceScheme?: ResourceScheme) => {
         switch (resourceScheme) {
             case "bookingsg":
                 return "https://home.booking.gov.sg/images/bookingsg/footer.svg";
@@ -50,7 +50,7 @@ export namespace FooterHelper {
     };
 
     export const getDisclaimerLinks = (
-        resourceScheme: V2_ResourceScheme | undefined,
+        resourceScheme: ResourceScheme | undefined,
         customDisclaimerLinks?: DisclaimerLinks
     ): InternalDisclaimerLinks => {
         const defaultDisclaimerLinks =

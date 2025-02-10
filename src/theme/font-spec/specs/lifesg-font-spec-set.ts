@@ -35,8 +35,8 @@ export const LifeSgFontSpecSet: FontSpecSet = {
 
     "body-lh-baseline": "1.625rem",
     "body-lh-md": "1.5rem",
-    "body-lh-sm": "1.6rem",
-    "body-lh-xs": "1.2rem",
+    "body-lh-sm": "1.625rem",
+    "body-lh-xs": "1.25rem",
 
     "body-ls-baseline": "0rem",
     "body-ls-md": "0.014rem",

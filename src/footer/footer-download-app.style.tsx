@@ -1,6 +1,6 @@
-import { MediaQuery } from "../theme";
-import { Typography } from "../typography";
 import styled from "styled-components";
+import { MediaQuery, Spacing } from "../theme";
+import { Typography } from "../typography";
 
 export const Wrapper = styled.div`
     display: flex;
@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Label = styled(Typography.BodyMD)`
-    margin-bottom: 1rem;
+    margin-bottom: ${Spacing["spacing-16"]};
 `;
 
 export const Items = styled.div`
@@ -24,7 +24,7 @@ export const Items = styled.div`
 
 export const AppStoreLink = styled.a`
     &:not(:last-child) {
-        margin-right: 2rem;
+        margin-right: ${Spacing["spacing-32"]};
     }
 
     img {
@@ -35,7 +35,7 @@ export const AppStoreLink = styled.a`
 
     ${MediaQuery.MaxWidth.sm} {
         &:not(:last-child) {
-            margin-right: 1rem;
+            margin-right: ${Spacing["spacing-16"]};
         }
 
         img {

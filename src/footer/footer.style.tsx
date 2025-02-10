@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, MediaQuery } from "../theme";
+import { Colour, MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography";
 import { Layout } from "../layout";
 import { Divider } from "../divider";
@@ -25,10 +25,10 @@ export const FullWidthDivider = styled(Divider)`
 `;
 
 export const TopSection = styled(Layout.Content)`
-    padding: 4rem 0;
+    padding: ${Spacing["spacing-64"]} 0;
 
     ${MediaQuery.MaxWidth.lg} {
-        padding: 2rem 0;
+        padding: ${Spacing["spacing-32"]} 0;
     }
 `;
 
@@ -43,12 +43,12 @@ export const LogoSection = styled.div`
 
     ${MediaQuery.MaxWidth.lg} {
         grid-column: 1 / span 12;
-        margin-bottom: 2rem;
+        margin-bottom: ${Spacing["spacing-32"]};
     }
 
     ${MediaQuery.MaxWidth.md} {
         grid-column: 1 / span 8;
-        margin-bottom: 2rem;
+        margin-bottom: ${Spacing["spacing-32"]};
     }
 `;
 
@@ -64,13 +64,11 @@ export const LinkSection = styled.ul`
 
     li {
         :not(:last-child) {
-            margin-bottom: 0.5rem;
+            margin-bottom: ${Spacing["spacing-8"]};
         }
 
         a {
             display: inline-block;
-            vertical-align: top;
-            line-height: 1rem;
         }
     }
 
@@ -100,7 +98,7 @@ export const AddonSection = styled.div`
 
     ${MediaQuery.MaxWidth.lg} {
         grid-column: 1 / span 12;
-        margin-top: 2rem;
+        margin-top: ${Spacing["spacing-32"]};
     }
 
     ${MediaQuery.MaxWidth.md} {
@@ -113,12 +111,12 @@ export const AddonSection = styled.div`
 // =============================================================================
 
 export const BottomSection = styled(Layout.Content)`
-    padding: 1.375rem 0;
+    padding: ${Spacing["spacing-20"]} 0;
 
     ${MediaQuery.MaxWidth.lg} {
         border-top: none;
         flex-direction: column;
-        padding: 1rem 0;
+        padding: ${Spacing["spacing-16"]} 0;
     }
 `;
 
@@ -127,7 +125,7 @@ export const BottomSectionContent = styled.div`
     display: flex;
 
     &:not(:last-child) {
-        margin-right: 1rem;
+        margin-right: ${Spacing["spacing-16"]};
     }
 
     ${MediaQuery.MaxWidth.lg} {
@@ -148,7 +146,7 @@ export const CopyrightSection = styled(BottomSectionContent)`
     justify-content: flex-end;
 
     ${MediaQuery.MaxWidth.lg} {
-        margin-top: 1rem;
+        margin-top: ${Spacing["spacing-16"]};
         justify-content: flex-start;
         grid-column: 1 / span 12;
     }
@@ -161,12 +159,11 @@ export const CopyrightSection = styled(BottomSectionContent)`
 export const DisclaimerTextLink = styled(Typography.LinkXS)`
     color: ${Colour.text};
     &:not(:last-child) {
-        margin-right: 1.5rem;
+        margin-right: ${Spacing["spacing-16"]};
     }
 
     svg {
         color: ${Colour.icon};
-        vertical-align: top;
     }
 
     &:hover {
@@ -177,13 +174,13 @@ export const DisclaimerTextLink = styled(Typography.LinkXS)`
     }
 
     ${MediaQuery.MaxWidth.lg} {
-        margin-bottom: 1rem;
+        margin-bottom: ${Spacing["spacing-12"]};
         &:not(:last-child) {
             margin-right: 0;
         }
     }
 
     ${MediaQuery.MaxWidth.lg} {
-        margin-bottom: 0.625rem;
+        margin-bottom: ${Spacing["spacing-8"]};
     }
 `;

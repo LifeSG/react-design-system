@@ -1,4 +1,4 @@
-import { V2_ResourceScheme } from "../v2_theme";
+import { ResourceScheme } from "../theme/types";
 import { InternalDisclaimerLinks } from "./footer-helper";
 
 const BaseDisclaimerLinks: InternalDisclaimerLinks = {
@@ -58,9 +58,7 @@ const MyLegacyDisclaimerLinks: InternalDisclaimerLinks = {
     },
 };
 
-export const getDefaultDisclaimerLinks = (
-    resourceScheme?: V2_ResourceScheme
-) => {
+export const getDefaultDisclaimerLinks = (resourceScheme?: ResourceScheme) => {
     switch (resourceScheme) {
         case "bookingsg":
             return BookingSgDisclaimerLinks;
