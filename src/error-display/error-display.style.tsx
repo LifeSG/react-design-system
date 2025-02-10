@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Button } from "../button";
-import { Colour, MediaQuery } from "../theme";
+import { Colour, MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography";
 
 export const Container = styled.div`
@@ -14,19 +14,19 @@ export const Container = styled.div`
 
 export const Img = styled.img`
     position: relative;
-    width: 25rem;
+    width: 400px;
     height: auto;
 
     ${MediaQuery.MaxWidth.sm} {
-        width: 20rem;
+        width: 320px;
     }
 
     ${MediaQuery.MaxWidth.xs} {
-        width: 18rem;
+        width: 288px;
     }
 
     ${MediaQuery.MaxWidth.xxs} {
-        width: 15rem;
+        width: 240px;
     }
 `;
 
@@ -35,12 +35,12 @@ export const TextContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    max-width: 41rem;
+    max-width: 656px;
     white-space: pre-wrap;
 `;
 
 export const Title = styled(Typography.HeaderMD)`
-    margin: 2rem 0 1rem;
+    margin: ${Spacing["spacing-32"]} 0 ${Spacing["spacing-16"]};
     text-align: center;
 `;
 
@@ -52,11 +52,10 @@ export const DescriptionContainer = styled.div`
 `;
 
 export const ActionButton = styled(Button.Default)`
-    margin: 2rem auto 0;
+    margin: ${Spacing["spacing-32"]} auto 0;
     width: 21rem;
 
     ${MediaQuery.MaxWidth.sm} {
         width: 100%;
-        margin: 2rem auto 0;
     }
 `;

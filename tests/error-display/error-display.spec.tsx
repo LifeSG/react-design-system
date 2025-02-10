@@ -24,7 +24,7 @@ describe("ErrorDisplay", () => {
             </ThemeProvider>
         );
 
-        const title = getErrorDisplayData("404", "lifesg").title;
+        const title = getErrorDisplayData("404", "lifesg", LifeSGTheme).title;
         expect(screen.getByRole("heading", { level: 4, name: title }));
     });
 
@@ -135,7 +135,7 @@ describe("ErrorDisplay", () => {
                     </ThemeProvider>
                 );
 
-                const error = getErrorDisplayData(type, "lifesg");
+                const error = getErrorDisplayData(type, "lifesg", LifeSGTheme);
 
                 expect(
                     screen.getByRole("heading", { level: 4, name: error.title })
@@ -161,7 +161,11 @@ describe("ErrorDisplay", () => {
                     </ThemeProvider>
                 );
 
-                const error = getErrorDisplayData(type, "bookingsg");
+                const error = getErrorDisplayData(
+                    type,
+                    "bookingsg",
+                    BookingSGTheme
+                );
 
                 expect(
                     screen.getByRole("heading", {
@@ -188,7 +192,7 @@ describe("ErrorDisplay", () => {
                 </ThemeProvider>
             );
 
-            const error = getErrorDisplayData("400", "lifesg");
+            const error = getErrorDisplayData("400", "lifesg", LifeSGTheme);
 
             expect(
                 screen.getByRole("heading", {
@@ -222,7 +226,7 @@ describe("ErrorDisplay", () => {
                 </ThemeProvider>
             );
 
-            const error = getErrorDisplayData(type, "lifesg");
+            const error = getErrorDisplayData(type, "lifesg", LifeSGTheme);
             const errorDescription = transformJSXElementToString(
                 error.renderDescription(additionalProps) as JSX.Element
             );

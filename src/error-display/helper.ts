@@ -1,4 +1,5 @@
-import { MediaWidths } from "../v2_spec/media-spec";
+import { Breakpoint } from "../theme";
+import { ThemeSpec } from "../theme/types";
 
 export namespace ErrorDisplayHelper {
     export interface ImagePathAttributes {
@@ -23,13 +24,17 @@ export namespace ErrorDisplayHelper {
      * @param {ImagePathAttributes} pathAttributes
      */
     export const imgAttributeHelper = (
-        pathAttributes: ImagePathAttributes
+        pathAttributes: ImagePathAttributes,
+        theme: ThemeSpec
     ): React.ImgHTMLAttributes<HTMLImageElement> => {
         const { base, md, lg, width, height } = pathAttributes;
+        const mobile = Breakpoint["sm-max"]({ theme });
+        const tablet = Breakpoint["lg-max"]({ theme });
+
         return {
             srcSet: `${base} 400w, ${md} 800w, ${lg} 1200w`,
             src: lg,
-            sizes: `(max-width: ${MediaWidths.mobileL}px) 400px, (max-width: ${MediaWidths.tablet}px) 800px, 1200px`,
+            sizes: `(max-width: ${mobile}px) 400px, (max-width: ${tablet}px) 800px, 1200px`,
             width,
             height,
         };

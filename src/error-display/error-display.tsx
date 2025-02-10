@@ -33,7 +33,8 @@ export const ErrorDisplay = ({
     const theme = useTheme();
     const defaultAssets = getErrorDisplayData(
         type,
-        illustrationScheme || (theme || LifeSGTheme).resourceScheme
+        illustrationScheme || (theme || LifeSGTheme).resourceScheme,
+        theme
     );
 
     const testId = otherProps["data-testid"] || "error-display";
