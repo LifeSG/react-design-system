@@ -1,7 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 import { BaseAnimationProps } from "../types";
 import { LottieSpinner } from "./lottie-animation";
+import { Spacing } from "../../theme";
 
 export const LoadingSpinner = (props: BaseAnimationProps) => {
     return (
@@ -17,5 +17,6 @@ export const LoadingSpinner = (props: BaseAnimationProps) => {
 
 const Container = styled.div`
     margin: 0 auto;
-    padding: 1rem 2rem 4rem;
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-32"]}
+        ${Spacing["spacing-64"]};
 `;

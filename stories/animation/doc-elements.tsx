@@ -1,13 +1,12 @@
+import { MediaQuery } from "src/theme";
 import styled from "styled-components";
-import { V2_MediaQuery } from "../../src/v2_media";
-import { StoryContainer } from "../storybook-common";
 
 export const AnimationDisplay = styled.div`
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-gap: 1.25rem;
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         grid-template-columns: repeat(1, minmax(0, 1fr));
     }
 `;
@@ -36,14 +35,4 @@ export const Content = styled.div`
         padding: 0.5rem;
         margin-bottom: 1rem;
     }
-`;
-
-export const StoryWrapper = styled(StoryContainer)`
-    display: flex;
-    justify-content: center;
-`;
-
-export const StoryAnimationItem = styled.div`
-    display: flex;
-    flex-direction: column;
 `;

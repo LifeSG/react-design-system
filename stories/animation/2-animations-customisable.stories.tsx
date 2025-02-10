@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { LoadingDotsSpinner } from "src/animations";
-import { V2_Color } from "src/v2_color";
-import { V2_BaseTheme } from "src/v2_theme";
+import { Colour, LifeSGTheme } from "src/theme";
 import { AnimationDisplay, AnimationItem } from "./doc-elements";
 
 const meta: Meta = {
-    title: "General/Animations/Customisable Animations",
+    title: "Feedback indicators/Animations/Customisable Animations",
 };
 
 export default meta;
@@ -23,9 +22,9 @@ export const CustomLoadingDotsSpinner: StoryObj<typeof LoadingDotsSpinner> = {
                 </AnimationItem>
                 <AnimationItem>
                     <LoadingDotsSpinner
-                        id="custom-1"
-                        color={V2_Color.Accent.Light[2]({
-                            theme: V2_BaseTheme,
+                        id="custom-2"
+                        color={Colour["icon-primary-subtlest"]({
+                            theme: LifeSGTheme,
                         })}
                     />
                 </AnimationItem>

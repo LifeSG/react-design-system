@@ -1,4 +1,5 @@
 import { Canvas, Meta } from "@storybook/blocks";
+import { DocNote } from "stories/storybook-common";
 import * as AnimationsCustomisableStories from "./2-animations-customisable.stories";
 import { CustomisedPropsTable } from "./props-table";
 
@@ -6,11 +7,9 @@ import { CustomisedPropsTable } from "./props-table";
 
 # Customisable Animations
 
-> Not all animations
-> are able to do that at the moment and only these animations support the
-> customisations.
-
-<br />
+<DocNote>
+    Customisation is only supported by the animations on this page.
+</DocNote>
 
 ## LoadingDotsSpinner
 
@@ -18,8 +17,8 @@ import { CustomisedPropsTable } from "./props-table";
 import { LoadingDotsSpinner } from "@lifesg/react-design-system/animations";
 ```
 
-For this component, if no color is specified, it will use the `Primary` color of
-the theme.
+For this component, if no color is specified, it will use the
+`Colour["icon-primary"]` token.
 
 <Canvas of={AnimationsCustomisableStories.CustomLoadingDotsSpinner} />
 
