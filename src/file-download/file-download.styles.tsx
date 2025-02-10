@@ -36,7 +36,7 @@ export const Container = styled.div<StyleProps>`
 export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 2rem;
+    margin-bottom: ${Spacing["spacing-32"]};
 `;
 
 export const Title = styled.p`

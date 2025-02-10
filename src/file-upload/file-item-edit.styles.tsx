@@ -41,7 +41,7 @@ export const NameSection = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    margin-bottom: ${Spacing["spacing-16"]};
 
     ${MediaQuery.MaxWidth.sm} {
         flex-direction: column;
@@ -72,8 +72,8 @@ export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
         if (props.$thumbnail) {
             return css`
                 margin-left: calc(
-                    6rem + ${Spacing["spacing-32"]}
-                ); // 6rem width + 2rem gap
+                    96px + ${Spacing["spacing-32"]}
+                ); // thumbnail width + right margin
 
                 ${MediaQuery.MaxWidth.sm} {
                     margin-left: 0;

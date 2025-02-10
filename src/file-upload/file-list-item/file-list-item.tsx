@@ -298,6 +298,7 @@ const Component = ({
                 <DragHandleIcon
                     data-testid={`${id}-drag-handle`}
                     $disabled={shouldDisable()}
+                    $active={focusType === "self"}
                 />
             )}
             <Box

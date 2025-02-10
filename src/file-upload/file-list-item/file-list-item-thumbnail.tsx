@@ -49,16 +49,16 @@ export const Container = styled.div`
 `;
 
 export const Thumbnail = styled(ImageWithFallback)`
-    width: 6rem;
-    height: 6rem;
+    width: 96px;
+    height: 96px;
     aspect-ratio: 1;
     border-radius: ${Radius["sm"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     object-fit: cover;
 
     ${MediaQuery.MaxWidth.sm} {
-        width: 4rem;
-        height: 4rem;
+        width: 64px;
+        height: 64px;
     }
 `;
 

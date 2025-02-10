@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Alert } from "../alert";
 import { Button } from "../button";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Colour, Font, MediaQuery } from "../theme";
+import { Colour, Font, MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -11,8 +11,8 @@ import { Typography } from "../typography";
 export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 2rem;
-    gap: 0.5rem;
+    margin-bottom: ${Spacing["spacing-32"]};
+    gap: ${Spacing["spacing-8"]};
 `;
 
 export const Title = styled(Typography.BodyBL)``;
@@ -32,7 +32,7 @@ export const DescriptionContainer = styled.div`
 `;
 
 export const WarningAlert = styled(Alert)`
-    margin-bottom: 2rem;
+    margin-bottom: ${Spacing["spacing-32"]};
 `;
 
 export const UploadButtonContainer = styled.div`
@@ -57,7 +57,7 @@ export const UploadButton = styled(Button.Small)`
 export const UploadButtonLabel = styled.label`
     ${Font["body-md-semibold"]}
     color: ${Colour["text-subtler"]};
-    margin-top: 0.5rem;
+    margin-top: ${Spacing["spacing-8"]};
     width: 10rem;
     text-align: center;
     ${MediaQuery.MaxWidth.sm} {
@@ -67,5 +67,5 @@ export const UploadButtonLabel = styled.label`
 `;
 
 export const ErrorAlert = styled(Alert)`
-    margin-bottom: 2rem;
+    margin-bottom: ${Spacing["spacing-32"]};
 `;

@@ -24,7 +24,7 @@ export const Item = styled.li`
     border: none;
 
     :not(:last-child) {
-        margin-bottom: 1rem;
+        margin-bottom: ${Spacing["spacing-16"]};
     }
 `;
 
@@ -196,13 +196,13 @@ export const Thumbnail = styled(ImageWithFallback)`
     border-radius: ${Radius["sm"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 
-    width: 6rem;
-    height: 6rem;
+    width: 96px;
+    height: 96px;
     aspect-ratio: 1;
     object-fit: cover;
 
     ${MediaQuery.MaxWidth.lg} {
-        width: 4rem;
-        height: 4rem;
+        width: 64px;
+        height: 64px;
     }
 `;
