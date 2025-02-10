@@ -1,6 +1,8 @@
 import { useMediaQuery } from "react-responsive";
+import { useTheme } from "styled-components";
 import { Modal } from "../modal/modal";
-import { MediaWidths } from "../v2_spec/media-spec";
+import { Breakpoint } from "../theme";
+import { Typography } from "../typography";
 import {
     ContentWrapper,
     MobileModalBox,
@@ -8,7 +10,6 @@ import {
     PopoverContainer,
 } from "./popover.styles";
 import { PopoverV2Props } from "./types";
-import { Typography } from "../typography";
 
 export const PopoverV2 = ({
     children,
@@ -20,9 +21,9 @@ export const PopoverV2 = ({
     // CONST, STATE, REF
     // =============================================================================
     const testId = otherProps["data-testid"] || "popover";
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
 
     // =============================================================================
     // EVENT HANDLERS

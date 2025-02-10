@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { InternalCalendar } from "../shared/internal-calendar";
-import { Border, Colour, Radius } from "../theme";
+import { Border, Colour, Radius, Spacing } from "../theme";
 import { CalendarProps } from "./types";
 
 export const Calendar = ({
@@ -52,9 +52,9 @@ interface StyleProps {
 // STYLING
 // =============================================================================
 const Wrapper = styled.div<StyleProps>`
-    --vertical-inset: 1.5rem;
-    --horizontal-inset: 2rem;
-    --header-bottom-spacing: 0.5rem;
+    --vertical-inset: ${Spacing["spacing-24"]};
+    --horizontal-inset: ${Spacing["spacing-32"]};
+    --header-bottom-spacing: ${Spacing["spacing-8"]};
 
     width: 41rem;
 

@@ -2,7 +2,15 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, MediaQuery, Motion, Radius } from "../theme";
+import {
+    Border,
+    Colour,
+    Font,
+    MediaQuery,
+    Motion,
+    Radius,
+    Spacing,
+} from "../theme";
 import { BoxContainerDisplayState } from "./types";
 
 // =============================================================================
@@ -28,7 +36,7 @@ interface HeaderStyleProps {
 export const Container = styled.div`
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
-    margin-bottom: 2rem;
+    margin-bottom: ${Spacing["spacing-32"]};
 `;
 
 export const Expandable = styled(animated.div)`
@@ -44,13 +52,13 @@ export const ChildContainer = styled.div`
 `;
 
 export const Header = styled.div<HeaderStyleProps>`
-    padding: 1rem 2rem;
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-32"]};
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     ${MediaQuery.MaxWidth.sm} {
-        padding: 1rem 1.25rem;
+        padding: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
         display: block;
     }
 
@@ -70,7 +78,7 @@ export const LabelText = styled.div`
     overflow-wrap: anywhere;
     display: flex;
     align-items: center;
-    margin-right: 1rem;
+    margin-right: ${Spacing["spacing-16"]};
 `;
 
 export const LabelWrapper = styled.div`
@@ -80,10 +88,10 @@ export const LabelWrapper = styled.div`
 export const LabelIcon = styled.span<LabelIconStyleProps>`
     display: flex;
     align-items: center;
-    margin-right: 2.5rem;
+    margin-right: ${Spacing["spacing-40"]};
 
     ${MediaQuery.MaxWidth.sm} {
-        margin-right: 0rem;
+        margin-right: 0;
     }
 
     ${(props) => {
@@ -116,10 +124,10 @@ export const CallToActionContainer = styled.div<StyleProps>`
     ${(props) => {
         if (props.$collapsible) {
             return css`
-                margin-right: 2.5rem;
+                margin-right: ${Spacing["spacing-40"]};
                 ${MediaQuery.MaxWidth.sm} {
-                    margin-right: 0rem;
-                    margin-top: 1rem;
+                    margin-right: 0;
+                    margin-top: ${Spacing["spacing-16"]};
                 }
             `;
         }
@@ -130,13 +138,15 @@ export const Handle = styled.button`
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 1rem;
-    margin: -1rem;
+    padding: ${Spacing["spacing-16"]};
+    margin: -${Spacing["spacing-16"]};
     display: flex;
     align-items: center;
 
     ${MediaQuery.MaxWidth.sm} {
-        margin: -1rem -1rem -1rem 0;
+        margin: -${Spacing["spacing-16"]} -${Spacing["spacing-16"]} -${Spacing[
+                "spacing-16"
+            ]} 0;
         margin-left: auto;
     }
 `;

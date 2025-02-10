@@ -1,6 +1,14 @@
 import styled, { css } from "styled-components";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
-import { Colour, Font, MediaQuery } from "../theme";
+import {
+    Border,
+    Colour,
+    Font,
+    MediaQuery,
+    Motion,
+    Radius,
+    Spacing,
+} from "../theme";
 
 export type MainButtonStyle =
     | "default"
@@ -18,10 +26,11 @@ export interface MainStyleProps {
 }
 
 export const Main = styled.button<MainStyleProps>`
-    padding: 0.5rem 1rem;
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
     min-width: 4rem;
-    border-radius: 4px;
-    transition: all 200ms ease;
+    border: ${Border["width-010"]} ${Border["solid"]} transparent;
+    border-radius: ${Radius["sm"]};
+    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -35,10 +44,9 @@ export const Main = styled.button<MainStyleProps>`
             case "secondary":
                 return css`
                     background-color: ${Colour.Primitive.white};
-                    border: 1px solid
-                        ${props.$buttonIsDanger
-                            ? Colour["border-error-strong"]
-                            : Colour["border-primary"]};
+                    border-color: ${props.$buttonIsDanger
+                        ? Colour["border-error-strong"]
+                        : Colour["border-primary"]};
 
                     color: ${props.$buttonIsDanger
                         ? Colour["text-error"]
@@ -52,7 +60,7 @@ export const Main = styled.button<MainStyleProps>`
             case "light":
                 return css`
                     background-color: ${Colour.bg};
-                    border: 1px solid ${Colour.border};
+                    border-color: ${Colour.border};
 
                     color: ${props.$buttonIsDanger
                         ? Colour["text-error"]
@@ -67,7 +75,7 @@ export const Main = styled.button<MainStyleProps>`
             case "link":
                 return css`
                     background-color: transparent;
-                    border: transparent;
+
                     color: ${props.$buttonIsDanger
                         ? Colour["text-error"]
                         : Colour["text-primary"]};
@@ -79,7 +87,7 @@ export const Main = styled.button<MainStyleProps>`
             case "disabled":
                 return css`
                     background-color: ${Colour["bg-disabled"]};
-                    border: 1px solid transparent;
+
                     cursor: not-allowed;
 
                     &:hover {
@@ -93,7 +101,6 @@ export const Main = styled.button<MainStyleProps>`
                     background-color: ${props.$buttonIsDanger
                         ? Colour["bg-error-strong"]
                         : Colour["bg-primary"]};
-                    border: 1px solid transparent;
 
                     ${MediaQuery.MaxWidth.md} {
                         width: 100%;

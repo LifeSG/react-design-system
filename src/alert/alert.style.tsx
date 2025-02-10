@@ -2,7 +2,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { AlertSizeType, AlertType } from "./types";
-import { Colour, Font } from "../theme";
+import { Border, Colour, Font, Motion, Spacing } from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -27,7 +27,7 @@ export interface ShowMoreIconStyleProps {
 // =============================================================================
 
 export const Wrapper = styled.div<StyleProps>`
-    padding: 0.5rem 1rem 0.5rem 0.875rem;
+    padding: ${Spacing["8"]} ${Spacing["spacing-16"]};
     display: flex;
 
     ${(props) => {
@@ -62,7 +62,8 @@ export const Wrapper = styled.div<StyleProps>`
 
         return css`
             background: ${backgroundColor};
-            border-left: 2px solid ${borderColor};
+            border-left: ${Border["width-020"]} ${Border["solid"]}
+                ${borderColor};
         `;
     }}
 
@@ -77,15 +78,9 @@ export const Wrapper = styled.div<StyleProps>`
 
 export const AlertIconWrapper = styled.div<StyleProps>`
     display: flex;
-    margin-right: 0.5rem;
-
-    // adds extra spacing to align the small icon with text
-    ${(props) =>
-        props.$sizeType === "small" &&
-        css`
-            align-items: center;
-            height: 1lh;
-        `}
+    align-items: center;
+    height: 1lh;
+    margin-right: ${Spacing["spacing-8"]};
 
     ${(props) => {
         let iconColor: string;
@@ -126,12 +121,12 @@ export const ActionLinkText = styled(Typography.LinkSM)<StyleProps>`
         if (props.$sizeType === "small")
             return css`
                 ${Font["body-sm-semibold"]}
-                margin-top: 0.25rem;
+                margin-top: ${Spacing["spacing-4"]};
             `;
         else {
             return css`
                 ${Font["body-md-semibold"]}
-                margin-top: 0.5rem;
+                margin-top: ${Spacing["spacing-8"]};
             `;
         }
     }}
@@ -142,7 +137,7 @@ export const ActionLinkText = styled(Typography.LinkSM)<StyleProps>`
     svg {
         height: 1rem;
         width: 1rem;
-        margin-left: 0.25rem;
+        margin-left: ${Spacing["spacing-4"]};
     }
 `;
 
@@ -159,9 +154,9 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
     flex: 1;
     ${(props) => {
         if (props.$showMore && props.$hasActionLink)
-            return `
-            margin-bottom: 0.5rem;
-        `;
+            return css`
+                margin-bottom: ${Spacing["spacing-8"]};
+            `;
     }}
     ${(props) => {
         const gradient =
@@ -192,8 +187,8 @@ export const ShowMoreButton = styled.button<StyleProps>`
     display: flex;
     align-items: center;
     align-self: flex-start;
-    gap: 0.25rem;
-    margin-top: 0.5rem;
+    gap: ${Spacing["spacing-4"]};
+    margin-top: ${Spacing["spacing-8"]};
 
     cursor: pointer;
     user-select: none;
@@ -204,6 +199,6 @@ export const ShowMoreButton = styled.button<StyleProps>`
 `;
 
 export const ChevronIcon = styled(ChevronDownIcon)<ShowMoreIconStyleProps>`
-    transform: rotate(${(props) => (props.$expanded ? -180 : 0)}deg);
-    transition: transform 300ms ease-in-out;
+    transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
+    transition: transform ${Motion["duration-350"]} ${Motion["ease-standard"]};
 `;

@@ -1,8 +1,7 @@
-import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, Motion } from "../theme";
 import styled, { css } from "styled-components";
-import { Typography } from "../typography/typography";
-import { MediaQuery } from "../theme";
+import { ClickableIcon } from "../shared/clickable-icon";
+import { Border, Colour, MediaQuery, Motion, Radius, Spacing } from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -41,14 +40,15 @@ export const Container = styled.div<StyleProps>`
     height: 100%;
 
     background-color: ${Colour.bg};
-    box-shadow: 0px 2px 12px rgba(104, 104, 104, 0.25);
+    box-shadow: 0px 2px 12px
+        rgb(from ${Colour.Primitive["neutral-50"]} r g b / 25%);
 
     visibility: ${(props) => (props.$show ? "visible" : "hidden")};
     ${(props) => VISIBILITY_STYLE(props.$show)}
 
     width: 40%;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-top-left-radius: ${Radius["md"]};
+    border-bottom-left-radius: ${Radius["md"]};
     overflow: hidden;
 
     ${MediaQuery.MaxWidth.xl} {
@@ -69,15 +69,16 @@ export const Header = styled.div`
 
     display: flex;
     align-items: center;
-    gap: 1rem;
-    height: 5rem;
-    padding: 2rem 1rem 1rem;
+    gap: ${Spacing["spacing-16"]};
+    padding: ${Spacing["spacing-32"]} ${Spacing["spacing-16"]}
+        ${Spacing["spacing-16"]};
     background-color: ${Colour.bg};
     border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 
     ${MediaQuery.MaxWidth.lg} {
-        gap: 0.5rem;
-        padding: 2rem 1.25rem 1rem;
+        gap: ${Spacing["spacing-8"]};
+        padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]}
+            ${Spacing["spacing-16"]};
     }
 `;
 

@@ -1,12 +1,12 @@
-import styled, { css, keyframes } from "styled-components";
-import { CheckboxProps, CheckboxSize } from "./types";
-import { Colour, Motion } from "../theme";
 import {
     MinusSquareFillIcon,
     SquareFillIcon,
     SquareIcon,
     SquareTickFillIcon,
 } from "@lifesg/react-icons";
+import styled, { css, keyframes } from "styled-components";
+import { Colour, Motion } from "../theme";
+import { CheckboxProps, CheckboxSize } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -43,7 +43,7 @@ export const Container = styled.div<StyleProps>`
 `;
 
 const BaseIconStyles = css`
-    animation: 200ms ease-in-out ${fadeIn};
+    animation: ${Motion["duration-150"]} ${Motion["ease-default"]} ${fadeIn};
     width: 100%;
     height: 100%;
     transition: color ${Motion["duration-150"]} ${Motion["ease-default"]};

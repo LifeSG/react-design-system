@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Border, Colour, MediaQuery, Radius } from "../../theme";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -12,9 +12,9 @@ interface StyleProps {
 // STYLING
 // =============================================================================
 export const CalendarWrapper = styled.div<StyleProps>`
-    --vertical-inset: 1.5rem;
-    --horizontal-inset: 1.25rem;
-    --header-bottom-spacing: 0.25rem;
+    --vertical-inset: ${Spacing["spacing-24"]};
+    --horizontal-inset: ${Spacing["spacing-20"]};
+    --header-bottom-spacing: ${Spacing["spacing-4"]};
 
     border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     border-radius: ${Radius["sm"]};

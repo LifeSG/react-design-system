@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { FadeWrapper } from "../shared/fade-wrapper";
-import { Border, Colour, MediaQuery } from "../theme";
+import { Border, Colour, MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography/typography";
 
 // =============================================================================
@@ -26,12 +26,12 @@ export const Chain = styled.ul`
 export const ChainItem = styled.li<ChainStyleProps>`
     display: flex;
     flex-shrink: 0;
-    border-bottom: 4px ${Border.solid} ${Colour.border};
+    border-bottom: ${Border["width-040"]} ${Border.solid} ${Colour.border};
 
     ${(props) => {
         if (props.$active) {
             return css`
-                border-bottom: 4px ${Border.solid} ${Colour["border-primary"]};
+                border-color: ${Colour["border-primary"]};
             `;
         }
     }}
@@ -44,7 +44,8 @@ export const ChainItem = styled.li<ChainStyleProps>`
 
 export const ChainLink = styled.button`
     position: relative;
-    padding: 1rem 1rem 1.25rem;
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-16"]}
+        ${Spacing["spacing-20"]};
     border: none;
     background: none;
     cursor: pointer;
@@ -82,6 +83,6 @@ export const BoldLabel = styled(Typography.BodyBL)<LabelStyleProps>`
 export const CustomFadeWrapper = styled(FadeWrapper)`
     [data-id="left-fade-indicator-button"],
     [data-id="right-fade-indicator-button"] {
-        margin-bottom: 4px;
+        margin-bottom: ${Spacing["spacing-4"]};
     }
 `;

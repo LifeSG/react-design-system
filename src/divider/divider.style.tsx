@@ -16,9 +16,9 @@ interface StyleProps {
 // STYLING
 // =============================================================================
 const dashedLineStyle = () => (props: StyleProps & StyledComponentProps) => {
-    let color;
+    let color: string;
 
-    if (props.$color && typeof props.$color === "function") {
+    if (typeof props.$color === "function") {
         color = props.$color(props);
     } else {
         color = props.$color || Colour.border(props);

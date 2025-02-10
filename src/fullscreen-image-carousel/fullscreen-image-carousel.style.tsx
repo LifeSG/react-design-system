@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ImagePlaceholder } from "../shared/image-placeholder";
-import { Border, Colour, MediaQuery, Radius } from "../theme";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
 import { Typography } from "../typography";
 import { StatefulImage } from "./stateful-image";
 
@@ -35,25 +35,29 @@ const IconButton = styled(ClickableIcon)`
 
 export const CloseButton = styled(IconButton)`
     position: absolute;
-    top: 3rem;
-    right: 3rem;
+    top: ${Spacing["spacing-48"]};
+    right: ${Spacing["spacing-48"]};
     z-index: 5;
 
     ${MediaQuery.MaxWidth.sm} {
-        top: 1.25rem;
-        right: 1.25rem;
+        top: ${Spacing["spacing-20"]};
+        right: ${Spacing["spacing-20"]};
     }
 `;
 
 export const MagnifierButton = styled(IconButton)`
     position: absolute;
-    top: 3rem;
-    right: 6.5rem;
+    top: ${Spacing["spacing-48"]};
+    right: calc(
+        2.5rem + ${Spacing["spacing-48"]} + ${Spacing["spacing-16"]}
+    ); // close button + space from screen + gap between buttons
     z-index: 5;
 
     ${MediaQuery.MaxWidth.sm} {
-        top: 1.25rem;
-        right: 4.75rem;
+        top: ${Spacing["spacing-20"]};
+        right: calc(
+            2.5rem + ${Spacing["spacing-20"]} + ${Spacing["spacing-16"]}
+        );
     }
 `;
 
@@ -66,18 +70,18 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
     ${(props) =>
         props.$position === "left" &&
         css`
-            left: 3rem;
+            left: ${Spacing["spacing-48"]};
             ${MediaQuery.MaxWidth.sm} {
-                left: 1.25rem;
+                left: ${Spacing["spacing-20"]};
             }
         `}
 
     ${(props) =>
         props.$position === "right" &&
         css`
-            right: 3rem;
+            right: ${Spacing["spacing-48"]};
             ${MediaQuery.MaxWidth.sm} {
-                right: 1.25rem;
+                right: ${Spacing["spacing-20"]};
             }
         `}
 `;
@@ -147,7 +151,7 @@ export const SlidePlaceholderImage = styled(ImagePlaceholder)`
 export const BoxChip = styled.div`
     display: flex;
     justify-content: center;
-    padding: 1rem;
+    padding: ${Spacing["spacing-16"]};
     position: absolute;
     bottom: 0;
     left: 0;
@@ -159,7 +163,7 @@ export const BoxChip = styled.div`
 
 export const Chip = styled(Typography.BodyXS)`
     display: inline-flex;
-    padding: 0.25rem 1rem;
+    padding: ${Spacing["spacing-4"]} ${Spacing["spacing-16"]};
     justify-content: center;
     align-items: center;
     border-radius: ${Radius.full};
@@ -176,10 +180,10 @@ export const ThumbnailContainer = styled.div`
     display: flex;
     overflow: auto;
     background-color: ${Colour["bg-inverse"]};
-    padding: 1.5rem 1rem;
+    padding: ${Spacing["spacing-24"]} ${Spacing["spacing-16"]};
 
     ${MediaQuery.MaxWidth.sm} {
-        padding: 1rem 1.25rem;
+        padding: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
     }
 `;
 
@@ -187,7 +191,7 @@ export const ThumbnailWrapper = styled.div`
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: ${Spacing["spacing-16"]};
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -197,12 +201,12 @@ export const ThumbnailItemContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 6.25rem;
-    width: 6.25rem;
+    height: 100px;
+    width: 100px;
 
     ${MediaQuery.MaxWidth.sm} {
-        height: 4rem;
-        width: 4rem;
+        height: 64px;
+        width: 64px;
     }
 `;
 
@@ -218,12 +222,12 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 5.75rem;
-    width: 5.75rem;
+    height: 92px;
+    width: 92px;
 
     ${MediaQuery.MaxWidth.sm} {
-        height: 3.75rem;
-        width: 3.75rem;
+        height: 60px;
+        width: 60px;
     }
 
     ${(props) =>

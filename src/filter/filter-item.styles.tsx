@@ -42,7 +42,7 @@ export const Divider = styled.div<DividerStyleProps>`
 
     ${MediaQuery.MaxWidth.lg} {
         display: ${(props) => (props.$showMobileDivider ? "block" : "none")};
-        margin: 0 1rem;
+        margin: 0 ${Spacing["spacing-16"]};
     }
 `;
 

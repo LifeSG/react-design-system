@@ -1,16 +1,17 @@
 import styled from "styled-components";
-import { V2_Color } from "../../v2_color";
+import { Colour } from "../../theme";
 
 export const Placeholder = styled.div`
-    background-color: ${V2_Color.Neutral[6]};
+    background-color: ${Colour["bg-stronger"]};
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1rem;
 
     svg {
-        min-width: 3rem;
+        min-width: 48px;
         width: 18%;
         height: auto;
+        color: ${Colour["icon-subtle"]};
     }
 `;

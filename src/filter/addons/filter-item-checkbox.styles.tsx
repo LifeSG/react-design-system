@@ -6,7 +6,7 @@ import { Toggle } from "../../toggle";
 import { FilterItem } from "../filter-item";
 
 export const StyledFilterItem = styled(FilterItem)`
-    padding: 0 0 1rem;
+    padding: 0 0 ${Spacing["spacing-16"]};
 
     [data-id="content-container"] {
         position: relative; // to get the item position relative to this parent
