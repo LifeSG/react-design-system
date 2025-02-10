@@ -153,6 +153,9 @@ export const ModalBox = styled(Modal.Box)`
         height: 100%;
         border-radius: 0;
         padding: 0;
+
+        --close-button-top-inset: ${Spacing["spacing-8"]};
+        --close-button-right-inset: ${Spacing["spacing-20"]};
     }
 `;
 
@@ -163,7 +166,7 @@ export const ModalTitle = styled.h2`
     text-align: center;
 
     ${mobileMediaQuery} {
-        ${Font["body-sm-semibold"]}
+        ${Font["body-md-semibold"]}
         margin: ${Spacing["spacing-12"]} 0;
     }
 `;
