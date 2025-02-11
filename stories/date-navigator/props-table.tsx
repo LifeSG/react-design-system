@@ -59,7 +59,7 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Shows the date in short form",
             },
             {
-                name: "showTodayAsToday",
+                name: "showCurrentDateAsToday",
                 description: "Shows today's system date as 'Today'",
             },
             {

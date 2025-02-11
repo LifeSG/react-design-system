@@ -115,7 +115,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["number"],
             },
             {
-                name: "showTodayAsToday",
+                name: "showCurrentDateAsToday",
                 description: "Shows system's today's date as 'Today'",
                 propTypes: ["boolean"],
             },

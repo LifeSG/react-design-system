@@ -42,7 +42,7 @@ export interface TimeTableProps {
     minDate?: string | undefined;
     maxDate?: string | undefined;
     totalRecords?: number | undefined;
-    showTodayAsToday?: boolean | undefined;
+    showCurrentDateAsToday?: boolean | undefined;
     showDateAsShortForm?: boolean | undefined;
     onRefresh?: (() => void) | undefined;
     onPage?: (() => void) | undefined;

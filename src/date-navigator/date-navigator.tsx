@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
-import { useRef, useState } from "react";
-import { useResizeDetector } from "react-resize-detector";
-import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import { useState } from "react";
+import { DropdownRenderProps, ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { CalendarDropdown } from "../shared/internal-calendar";
 import {
     ArrowLeft,
@@ -11,7 +10,7 @@ import { CalendarHelper, DateHelper } from "../util";
 import {
     Container,
     HeaderArrowButton,
-    StyledDateText
+    StyledDateTextButton
 } from "./date-navigator.style";
 import { DateNavigatorProps } from "./types";
 
@@ -21,7 +20,7 @@ export const DateNavigator = ({
     maxDate,
     loading,
     showDateAsShortForm,
-    showTodayAsToday,
+    showCurrentDateAsToday,
     onLeftArrowClick,
     onRightArrowClick,
     onCalendarDateSelect,
@@ -36,15 +35,10 @@ export const DateNavigator = ({
         .toString();
     const isToday = DateHelper.isSame(selectedDate, dayjs());
     const dayText =
-        isToday && showTodayAsToday
+        isToday && showCurrentDateAsToday
             ? "Today"
             :
-            DateHelper.toDayjs(selectedDate).format(showDateAsShortForm ? "ddd" : "dddd");
-    const containerRef = useRef<HTMLDivElement>(null);
-    const { width: referenceWidth } = useResizeDetector({
-        targetRef: containerRef,
-        handleHeight: false,
-    });
+            date.format(showDateAsShortForm ? "ddd" : "dddd");
     const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
 
     // =============================================================================
@@ -88,7 +82,7 @@ export const DateNavigator = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderCalendar = () => {
+    const renderCalendar = ({ elementWidth }: DropdownRenderProps) => {
         return (
             <CalendarDropdown
                 type="input"
@@ -98,14 +92,14 @@ export const DateNavigator = ({
                 minDate={minDate}
                 maxDate={maxDate}
                 onSelect={handleSelect}
-                width={referenceWidth}
+                width={elementWidth}
             />
         );
     };
 
     const renderDateNavElement = () => {
         return (
-            <Container ref={containerRef} {...otherProps}>
+            <Container {...otherProps}>
                 {(
                     <HeaderArrowButton
                         data-testid="date-navigator-left-arrow-btn"
@@ -118,14 +112,15 @@ export const DateNavigator = ({
                         <ArrowLeft />
                     </HeaderArrowButton>
                 )}
-                <StyledDateText
+                <StyledDateTextButton
                     onClick={() => !!onCalendarDateSelect && !loading && setIsCalendarOpen(!isCalendarOpen)}
                     $enableDateClick={!!onCalendarDateSelect && !loading}
                     data-testid="date-navigator-date-text"
-                    weight={"semibold"}
+                    styleType="link"
+                    disabled={!onCalendarDateSelect || loading}
                 >
                     {`${dateText}, ${dayText}`}
-                </StyledDateText>
+                </StyledDateTextButton>
                 {(
                     <HeaderArrowButton
                         data-testid="date-navigator-right-arrow-btn"

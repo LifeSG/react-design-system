@@ -89,16 +89,14 @@ export const TimeTableHeader = ({
 
     return (
         <NavigationHeaderWrapper>
-            {
-                <StyledDateNavigator
-                    selectedDate={selectedDate}
-                    loading={loading}
-                    {...otherProps}
-                    onRightArrowClick={handleRightArrowClick}
-                    onLeftArrowClick={handleLeftArrowClick}
-                    onCalendarDateSelect={onCalendarDateSelect}
-                />
-            }
+            <StyledDateNavigator
+                selectedDate={selectedDate}
+                loading={loading}
+                {...otherProps}
+                onRightArrowClick={handleRightArrowClick}
+                onLeftArrowClick={handleLeftArrowClick}
+                onCalendarDateSelect={onCalendarDateSelect}
+            />
             {renderRecordsSection()}
         </NavigationHeaderWrapper>
     );

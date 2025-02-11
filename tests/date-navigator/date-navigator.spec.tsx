@@ -26,8 +26,8 @@ describe("DateNavigator", () => {
         expect(screen.getByText("5 September 2024, Thursday")).toBeVisible();
     });
 
-    it("should render current date in short form if showDateAsShortForm is true, and as today if showTodayAsToday is true", () => {
-        render(<DateNavigator selectedDate={today} onRightArrowClick={onRightArrowClick} onLeftArrowClick={onLeftArrowClick} showDateAsShortForm showTodayAsToday />);
+    it("should render current date in short form if showDateAsShortForm is true, and as today if showCurrentDateAsToday is true", () => {
+        render(<DateNavigator selectedDate={today} onRightArrowClick={onRightArrowClick} onLeftArrowClick={onLeftArrowClick} showDateAsShortForm showCurrentDateAsToday />);
         expect(screen.getByText("5 Sep 2024, Today")).toBeVisible();
     });
 

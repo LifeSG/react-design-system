@@ -43,4 +43,5 @@ export const StyledResultText = styled(Text.H6)`
 
 export const StyledDateNavigator = styled(DateNavigator)`
     width: 400px;
+    height: 56px;
 `;
