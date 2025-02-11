@@ -6,8 +6,8 @@ import { Colour, MediaQuery, Spacing } from "../theme";
 // STYLE INTERFACES
 // =============================================================================
 interface CloseButtonProps {
-    $insetTop?: string;
-    $insetRight?: string;
+    $insetTop?: string | undefined;
+    $insetRight?: string | undefined;
 }
 
 // =============================================================================
