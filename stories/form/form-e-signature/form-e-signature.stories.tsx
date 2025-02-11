@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Form } from "src/form";
 import { ESignature } from "src/e-signature";
-import { V2_Layout } from "src/v2_layout";
-import { StoryContainer } from "../../storybook-common";
-import { Container } from "../shared-doc-elements";
+import { Form } from "src/form";
+import { Layout } from "src/layout";
+import {
+    FullWidthStoryDecorator,
+    StoryDecorator,
+} from "stories/storybook-common";
 import { signatureDataURL } from "./doc-elements";
 
 type Component = typeof Form.ESignature;
@@ -17,74 +19,76 @@ const meta: Meta<Component> = {
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.ESignature
-                        label="This is the default state"
-                        id="default"
-                    />
-                    <Form.ESignature
-                        label="This is prefilled"
-                        id="prefill"
-                        value={signatureDataURL}
-                    />
-                    <Form.ESignature
-                        label="This comes with a description"
-                        id="description"
-                        description="Description"
-                    />
-                    <Form.ESignature
-                        label="This comes with an error message"
-                        id="error"
-                        errorMessage="Error message"
-                    />
-                </Container>
-            </StoryContainer>
+            <>
+                <Form.ESignature
+                    label="This is the default state"
+                    id="default"
+                />
+                <Form.ESignature
+                    label="This is prefilled"
+                    id="prefill"
+                    value={signatureDataURL}
+                />
+                <Form.ESignature
+                    label="This comes with a description"
+                    id="description"
+                    description="Description"
+                />
+                <Form.ESignature
+                    label="This is disabled"
+                    id="disabled"
+                    disabled
+                />
+                <Form.ESignature
+                    label="This is disabled (prefilled)"
+                    id="prefill-disabled"
+                    value={signatureDataURL}
+                    disabled
+                />
+                <Form.ESignature
+                    label="This comes with an error message"
+                    id="error"
+                    errorMessage="Error message"
+                />
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const WithLoadingIndicator: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.ESignature
-                        label="This comes with a loading indicator"
-                        loadingProgress={0.5}
-                    />
-                </Container>
-            </StoryContainer>
+            <Form.ESignature
+                label="This comes with a loading indicator"
+                loadingProgress={0.5}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const RenderingInGridLayout: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <V2_Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <Layout.Content type="grid">
                 <Form.ESignature
                     label="A shorter form input"
-                    mobileCols={[1, 5]}
+                    xxsCols={[1, 9]}
+                    lgCols={[1, 5]}
                 />
-                <Form.ESignature
-                    label="A longer form input"
-                    mobileCols={[1, 5]}
-                    tabletCols={[1, 9]}
-                />
-            </V2_Layout.Content>
+                <Form.ESignature label="A longer form input" xxsCols={[1, 9]} />
+            </Layout.Content>
         );
     },
+    decorators: [FullWidthStoryDecorator()],
 };
 
 export const StandaloneUsage: StoryObj<StandaloneComponent> = {
-    render: () => {
-        return (
-            <StoryContainer>
-                <ESignature />
-            </StoryContainer>
-        );
+    render: (_args) => {
+        return <ESignature />;
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };

@@ -1,7 +1,18 @@
 import styled from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, MediaQuery } from "../theme";
+import { Colour, MediaQuery, Spacing } from "../theme";
 
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+interface CloseButtonProps {
+    $insetTop?: string | undefined;
+    $insetRight?: string | undefined;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
 export const Box = styled.div`
     position: relative;
     display: flex;
@@ -19,10 +30,10 @@ export const Box = styled.div`
     }
 `;
 
-export const CloseButton = styled(ClickableIcon)`
+export const CloseButton = styled(ClickableIcon)<CloseButtonProps>`
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: var(--close-button-top-inset, ${Spacing["spacing-16"]});
+    right: var(--close-button-right-inset, ${Spacing["spacing-16"]});
     padding: 0;
     color: ${Colour.icon};
 
@@ -32,6 +43,6 @@ export const CloseButton = styled(ClickableIcon)`
     }
 
     ${MediaQuery.MaxWidth.sm} {
-        right: 1.25rem;
+        right: var(--close-button-right-inset, ${Spacing["spacing-20"]});
     }
 `;
