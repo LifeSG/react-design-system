@@ -20,7 +20,6 @@ export const evenDaysData = [
             alert(`Clicked on row header for ${rowData.name}`);
         },
         rowCells: [
-
             {
                 startTime: "08:15:00",
                 endTime: "08:30:00",

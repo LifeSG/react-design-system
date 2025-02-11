@@ -59,7 +59,7 @@ export const RowBar = ({
             });
         }
 
-        const sortedRowCells = rowCells.sort((a, b) => {
+        const sortedRowCells = [...rowCells].sort((a, b) => {
             const timeA = dayjs(a.startTime, "HH:mm");
             const timeB = dayjs(b.startTime, "HH:mm");
             if (timeA.isBefore(timeB)) return -1;

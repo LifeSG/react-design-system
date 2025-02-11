@@ -40,9 +40,9 @@ const DATA: ApiTableSectionProps[] = [
                 name: "emptyContentMessage",
                 description: (
                     <>
-                        The props to determine what message this component should render
-                        if there is no content. Note that it is determined as
-                        empty when <code>totalRecords=0</code>or
+                        The props to determine what message this component
+                        should render if there is no content. Note that it is
+                        determined as empty when <code>totalRecords=0</code>or
                         <code>rowData=[]</code>.
                     </>
                 ),
@@ -168,8 +168,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onCalendarDateSelect",
                 description: (
                     <>
-                        The callback function to trigger when a calendar date has been
-                        picked in the dropdown calendar.
+                        The callback function to trigger when a calendar date
+                        has been picked in the dropdown calendar.
                     </>
                 ),
                 mandatory: true,
@@ -203,8 +203,9 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: (
                     <>
-                        The array of row cells to be rendered in this row of data.
-                        This component will sort the cells array by start time.
+                        The array of row cells to be rendered in this row of
+                        data. This component will sort the cells array by start
+                        time.
                     </>
                 ),
                 propTypes: ["TimeTableRowCellData[]"],

@@ -14,7 +14,6 @@ const meta: Meta<Component> = {
 export default meta;
 
 export const Default: StoryObj<Component> = {
-
     render: () => {
         const today = dayjs().toString();
         const [selectedDate, setSelectedDate] = useState<string>(today);
@@ -35,13 +34,11 @@ export const Default: StoryObj<Component> = {
                     onRightArrowClick={onRightArrowClick}
                 />
             </StoryContainer>
-
         );
     },
 };
 
 export const ShortFormDate: StoryObj<Component> = {
-
     render: () => {
         const today = dayjs().toString();
         const [selectedDate, setSelectedDate] = useState<string>(today);
@@ -94,7 +91,6 @@ export const WithCalendarNavigation: StoryObj<Component> = {
                     onCalendarDateSelect={onCalendarDateSelect}
                 />
             </StoryContainer>
-
         );
     },
 };
@@ -119,7 +115,6 @@ export const LoadingState: StoryObj<Component> = {
             setLoading(true);
             setTimeout(() => setLoading(false), 1000);
         };
-
 
         const onCalendarDateSelect = (currentDate: string) => {
             setSelectedDate(currentDate);

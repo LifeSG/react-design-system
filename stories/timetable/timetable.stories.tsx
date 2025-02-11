@@ -26,17 +26,19 @@ const meta: Meta<Component> = {
 export default meta;
 
 const StyledTimeTable = styled(TimeTable)`
-    width: 900px;
-    height: 400px;
+    [data-id="timetable-container-id"] {
+        width: 900px;
+        height: 400px;
+    }
 `;
 
 const StyledCustomPopoverCard = styled(Card)`
-display: flex;
-flex-direction: column;
-row-gap: 2rem;
-width: 400px;
-padding: 3rem;
-${applyHtmlContentStyle({ textSize: "BodySmall" })}
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    width: 400px;
+    padding: 3rem;
+    ${applyHtmlContentStyle({ textSize: "BodySmall" })}
 `;
 
 export const Default: StoryObj<Component> = {
@@ -176,15 +178,12 @@ export const LazyLoading: StoryObj<Component> = {
 };
 
 export const CustomPopovers: StoryObj<Component> = {
-
     render: () => {
-
         const today = dayjs().format("YYYY-MM-DD");
         const [results, setResults] = useState([]);
         const [date, setDate] = useState(today);
         const [loading, setLoading] = useState(true);
         const totalRecords = 10;
-
 
         const buildCustomPopover = (
             row: TimeTableRowData,
@@ -293,7 +292,6 @@ export const CustomPopovers: StoryObj<Component> = {
             };
         });
 
-
         const onPage = () => {
             setTimeout(() => {
                 setResults((prev) => [...prev, ...rowData.slice(5)]);
@@ -349,17 +347,20 @@ export const CustomPopovers: StoryObj<Component> = {
             }, 1000);
         };
 
-        return <StyledTimeTable
-            {...getTimeTableData()}
-            date={date}
-            totalRecords={totalRecords}
-            loading={loading}
-            onPage={onPage}
-            onRefresh={onRefresh}
-            onNextDayClick={onNextDayClick}
-            onPreviousDayClick={onPreviousDayClick}
-            onCalendarDateSelect={onCalendarDateSelect}
-            rowData={results} />;
+        return (
+            <StyledTimeTable
+                {...getTimeTableData()}
+                date={date}
+                totalRecords={totalRecords}
+                loading={loading}
+                onPage={onPage}
+                onRefresh={onRefresh}
+                onNextDayClick={onNextDayClick}
+                onPreviousDayClick={onPreviousDayClick}
+                onCalendarDateSelect={onCalendarDateSelect}
+                rowData={results}
+            />
+        );
     },
 };
 
@@ -414,7 +415,9 @@ export const EmptyContent: StoryObj<Component> = {
                 totalRecords={0}
                 rowData={[]}
                 loading={loading}
-                emptyContentMessage={"There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page."}
+                emptyContentMessage={
+                    "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page."
+                }
             />
         );
     },

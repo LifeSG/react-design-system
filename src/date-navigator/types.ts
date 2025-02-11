@@ -11,7 +11,7 @@ export interface DateNavigatorProps {
     loading?: boolean | undefined;
     showDateAsShortForm?: boolean | undefined;
     showCurrentDateAsToday?: boolean | undefined;
-    onLeftArrowClick: ((currentDate: string) => void);
-    onRightArrowClick: ((currentDate: string) => void);
+    onLeftArrowClick: (currentDate: string) => void;
+    onRightArrowClick: (currentDate: string) => void;
     onCalendarDateSelect?: ((currentDate: string) => void) | undefined;
 }

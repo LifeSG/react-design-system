@@ -15,6 +15,8 @@ interface TimeTableHeaderProps {
     minDate?: string | undefined;
     maxDate?: string | undefined;
     totalRecords?: number | undefined;
+    showDateAsShortForm?: boolean | undefined;
+    showCurrentDateAsToday?: boolean | undefined;
     onPreviousDayClick: (currentDate: string) => void | undefined;
     onNextDayClick: (currentDate: string) => void | undefined;
     onRefresh?: (() => void) | undefined;

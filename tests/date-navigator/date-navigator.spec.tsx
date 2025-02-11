@@ -22,18 +22,38 @@ describe("DateNavigator", () => {
     });
 
     it("should render current date", () => {
-        render(<DateNavigator selectedDate={today} onRightArrowClick={onRightArrowClick} onLeftArrowClick={onLeftArrowClick} />);
+        render(
+            <DateNavigator
+                selectedDate={today}
+                onRightArrowClick={onRightArrowClick}
+                onLeftArrowClick={onLeftArrowClick}
+            />
+        );
         expect(screen.getByText("5 September 2024, Thursday")).toBeVisible();
     });
 
     it("should render current date in short form if showDateAsShortForm is true, and as today if showCurrentDateAsToday is true", () => {
-        render(<DateNavigator selectedDate={today} onRightArrowClick={onRightArrowClick} onLeftArrowClick={onLeftArrowClick} showDateAsShortForm showCurrentDateAsToday />);
+        render(
+            <DateNavigator
+                selectedDate={today}
+                onRightArrowClick={onRightArrowClick}
+                onLeftArrowClick={onLeftArrowClick}
+                showDateAsShortForm
+                showCurrentDateAsToday
+            />
+        );
         expect(screen.getByText("5 Sep 2024, Today")).toBeVisible();
     });
 
     it("should render other date in full", () => {
         const tomorrow = "2024-09-06";
-        render(<DateNavigator selectedDate={tomorrow} onRightArrowClick={onRightArrowClick} onLeftArrowClick={onLeftArrowClick} />);
+        render(
+            <DateNavigator
+                selectedDate={tomorrow}
+                onRightArrowClick={onRightArrowClick}
+                onLeftArrowClick={onLeftArrowClick}
+            />
+        );
         expect(screen.getByText("6 September 2024, Friday")).toBeVisible();
     });
 
@@ -48,7 +68,9 @@ describe("DateNavigator", () => {
                 onCalendarDateSelect={onCalendarDateSelect}
             />
         );
-        const dateNavigatorDateText = screen.getByTestId("date-navigator-date-text");
+        const dateNavigatorDateText = screen.getByTestId(
+            "date-navigator-date-text"
+        );
         fireEvent.click(dateNavigatorDateText);
         const calendarDropdown = screen.getByTestId("calendar-dropdown");
         expect(calendarDropdown).toBeInTheDocument();

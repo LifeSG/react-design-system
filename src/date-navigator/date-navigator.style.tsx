@@ -17,11 +17,11 @@ export const HeaderArrowButton = styled(ClickableIcon)`
     background-color: ${Color.Neutral[8]};
     :hover {
         background-color: ${Color.Neutral[7]};
-    };
+    }
     :disabled {
         cursor: not-allowed;
         background-color: ${Color.Neutral[6]};
-    };
+    }
 `;
 
 export const Container = styled.div`
@@ -33,8 +33,9 @@ export const Container = styled.div`
     border-radius: 0.25rem;
 `;
 
-export const StyledDateTextButton = styled(Button.Default) <StyledDateTextProps>`
-    color: ${(props) => (props.$enableDateClick ? Color.Primary : Color.Neutral[1])};
+export const StyledDateTextButton = styled(Button.Default)<StyledDateTextProps>`
+    color: ${(props) =>
+        props.$enableDateClick ? Color.Primary : Color.Neutral[1]};
     white-space: nowrap;
     display: inline-block;
     text-wrap: auto;

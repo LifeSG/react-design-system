@@ -27,7 +27,9 @@ const fetchRowData = (date: Dayjs) => {
     return oddDaysData;
 };
 
-export const getTimeTableData = (currentDate?: string): Partial<TimeTableProps> => {
+export const getTimeTableData = (
+    currentDate?: string
+): Partial<TimeTableProps> => {
     const date = dayjs(currentDate);
 
     return {

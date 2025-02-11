@@ -19,7 +19,6 @@ import {
     Container,
     ContentContainer,
     EmptyTableContainer,
-    EmptyTableRowHeader,
     Loader,
     LoadingBar,
     LoadingCell,
@@ -44,6 +43,8 @@ export const TimeTable = ({
     minDate,
     maxDate,
     totalRecords,
+    showCurrentDateAsToday,
+    showDateAsShortForm,
     onPage,
     onRefresh,
     onNextDayClick,
@@ -54,7 +55,7 @@ export const TimeTable = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const testId = otherProps["data-testid"] || "timetable-container-id";
+    const testId = otherProps["data-testid"] || "container-testid";
     const timetableMinTime = TimeHelper.roundToNearestHour(minTime);
     const timetableMaxTime = TimeHelper.roundToNearestHour(maxTime, true);
     const hourlyIntervals = TimeHelper.generateHourlyIntervals(
@@ -86,7 +87,8 @@ export const TimeTable = ({
                 tableContainerRef.current;
             const scrollBottomTolerance = 1;
             const isEndReached =
-                Math.ceil(scrollTop + clientHeight) >= scrollHeight - scrollBottomTolerance;
+                Math.ceil(scrollTop + clientHeight) >=
+                scrollHeight - scrollBottomTolerance;
             const shouldLoadMore =
                 isEndReached && !allRecordsLoaded && onPage && !loading;
 
@@ -327,7 +329,7 @@ export const TimeTable = ({
 
     if (isEmptyContent) {
         return (
-            <Container>
+            <Container {...otherProps}>
                 <TimeTableHeader
                     selectedDate={date}
                     loading={loading || loadMore}
@@ -335,14 +337,14 @@ export const TimeTable = ({
                     minDate={minDate}
                     maxDate={maxDate}
                     totalRecords={totalRecords}
+                    showCurrentDateAsToday={showCurrentDateAsToday}
+                    showDateAsShortForm={showDateAsShortForm}
                     onPreviousDayClick={onPreviousDayClick}
                     onNextDayClick={onNextDayClick}
                     onRefresh={onRefresh}
                     onCalendarDateSelect={onCalendarDateSelect}
                 />
-                <EmptyTableContainer className="empty-container" {...otherProps}>
-                    <EmptyTableRowHeader>
-                    </EmptyTableRowHeader>
+                <EmptyTableContainer className="empty-container">
                     {!loading ? (
                         <NoResultsFound
                             type="no-item-found"
@@ -357,31 +359,33 @@ export const TimeTable = ({
     }
 
     return (
-        <Container>
+        <Container data-testid={testId} {...otherProps}>
             <TimeTableHeader
+                data-id="timetable-header-id"
                 selectedDate={date}
                 loading={loading || loadMore}
                 tableContainerRef={tableContainerRef}
                 minDate={minDate}
                 maxDate={maxDate}
                 totalRecords={totalRecords}
+                showCurrentDateAsToday={showCurrentDateAsToday}
+                showDateAsShortForm={showDateAsShortForm}
                 onPreviousDayClick={onPreviousDayClick}
                 onNextDayClick={onNextDayClick}
                 onRefresh={onRefresh}
                 onCalendarDateSelect={onCalendarDateSelect}
             />
             <TimeTableContainer
+                data-id="timetable-container-id"
+                data-testid="timetable-container-testid"
                 ref={tableContainerRef}
-                data-testid={testId}
-                {...otherProps}
                 $loading={loading}
                 $allRecordsLoaded={allRecordsLoaded || !onPage}
             >
                 <RowColumnHeader
                     $isScrolledY={isScrolledY}
                     $isScrolledX={isScrolledX}
-                >
-                </RowColumnHeader>
+                ></RowColumnHeader>
                 <RowHeaderColumn
                     $numOfRows={rowData.length}
                     $isScrolled={isScrolledX}

@@ -1,6 +1,9 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import { DropdownRenderProps, ElementWithDropdown } from "../shared/dropdown-wrapper";
+import {
+    DropdownRenderProps,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
 import { CalendarDropdown } from "../shared/internal-calendar";
 import {
     ArrowLeft,
@@ -10,7 +13,7 @@ import { CalendarHelper, DateHelper } from "../util";
 import {
     Container,
     HeaderArrowButton,
-    StyledDateTextButton
+    StyledDateTextButton,
 } from "./date-navigator.style";
 import { DateNavigatorProps } from "./types";
 
@@ -37,8 +40,7 @@ export const DateNavigator = ({
     const dayText =
         isToday && showCurrentDateAsToday
             ? "Today"
-            :
-            date.format(showDateAsShortForm ? "ddd" : "dddd");
+            : date.format(showDateAsShortForm ? "ddd" : "dddd");
     const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
 
     // =============================================================================
@@ -100,7 +102,7 @@ export const DateNavigator = ({
     const renderDateNavElement = () => {
         return (
             <Container {...otherProps}>
-                {(
+                {
                     <HeaderArrowButton
                         data-testid="date-navigator-left-arrow-btn"
                         disabled={loading || isLeftArrowDisabled()}
@@ -111,9 +113,13 @@ export const DateNavigator = ({
                     >
                         <ArrowLeft />
                     </HeaderArrowButton>
-                )}
+                }
                 <StyledDateTextButton
-                    onClick={() => !!onCalendarDateSelect && !loading && setIsCalendarOpen(!isCalendarOpen)}
+                    onClick={() =>
+                        !!onCalendarDateSelect &&
+                        !loading &&
+                        setIsCalendarOpen(!isCalendarOpen)
+                    }
                     $enableDateClick={!!onCalendarDateSelect && !loading}
                     data-testid="date-navigator-date-text"
                     styleType="link"
@@ -121,7 +127,7 @@ export const DateNavigator = ({
                 >
                     {`${dateText}, ${dayText}`}
                 </StyledDateTextButton>
-                {(
+                {
                     <HeaderArrowButton
                         data-testid="date-navigator-right-arrow-btn"
                         disabled={loading || isRightArrowDisabled()}
@@ -132,7 +138,7 @@ export const DateNavigator = ({
                     >
                         <ArrowRight />
                     </HeaderArrowButton>
-                )}
+                }
             </Container>
         );
     };

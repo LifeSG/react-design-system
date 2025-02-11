@@ -11,16 +11,16 @@ const spin = keyframes`
     }
 `;
 
-export const StyledRefreshButton = styled(IconButton) <{ $loading: boolean }>`
+export const StyledRefreshButton = styled(IconButton)<{ $loading: boolean }>`
     color: ${Color.Neutral[3]};
     svg {
         ${(props) => {
-        if (props.$loading) {
-            return css`
+            if (props.$loading) {
+                return css`
                     animation: ${spin} 4s linear infinite;
                 `;
-        }
-    }}
+            }
+        }}
     }
 `;
 
@@ -43,5 +43,4 @@ export const StyledResultText = styled(Text.H6)`
 
 export const StyledDateNavigator = styled(DateNavigator)`
     width: 400px;
-    height: 56px;
 `;

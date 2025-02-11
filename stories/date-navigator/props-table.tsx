@@ -77,8 +77,8 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "onCalendarDateSelect",
                 description: "Called on a calendar date selection",
-                propTypes: ["(currentDate: string) => void"]
-            }
+                propTypes: ["(currentDate: string) => void"],
+            },
         ],
     },
 ];

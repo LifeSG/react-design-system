@@ -18,14 +18,14 @@ describe("TimeTable", () => {
         onNameClick: function (rowData: TimeTableRowData): void {
             alert(`Clicked on ${JSON.stringify(rowData)}`);
         },
-        emptyContentMessage: "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page.",
+        emptyContentMessage:
+            "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page.",
         isLoading: false,
         onPreviousDayClick: (currentDate: string): void => {
             alert(`Clicked on previous day button for ${currentDate}`);
         },
         onNextDayClick: (currentDate: string): void => {
             alert(`Clicked on next day button for ${currentDate}`);
-
         },
     } as TimeTableProps;
 
@@ -76,7 +76,9 @@ describe("TimeTable", () => {
                 onCalendarDateSelect={onCalendarDateSelect}
             />
         );
-        const dateNavigatorDateText = screen.getByTestId("date-navigator-date-text");
+        const dateNavigatorDateText = screen.getByTestId(
+            "date-navigator-date-text"
+        );
         fireEvent.click(dateNavigatorDateText);
         const calendarDropdown = screen.getByTestId("calendar-dropdown");
         expect(screen.getByText("11 September 2024, Wednesday")).toBeVisible();
@@ -267,7 +269,7 @@ describe("TimeTable", () => {
                 onPage={() => lazyLoad(2)}
             />
         );
-        const container = screen.getByTestId("timetable-container-id");
+        const container = screen.getByTestId("timetable-container-testid");
         expect(screen.queryByTestId("lazy-loader")).toBeNull();
 
         // Scroll to the bottom of the container
