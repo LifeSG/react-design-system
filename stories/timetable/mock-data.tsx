@@ -27,7 +27,9 @@ const fetchRowData = (date: Dayjs) => {
     return oddDaysData;
 };
 
-export const getTimeTableData = (currentDate?: string): TimeTableProps => {
+export const getTimeTableData = (
+    currentDate?: string
+): Partial<TimeTableProps> => {
     const date = dayjs(currentDate);
 
     return {
@@ -35,11 +37,6 @@ export const getTimeTableData = (currentDate?: string): TimeTableProps => {
         minTime: "06:00:00",
         maxTime: "23:00:00",
         rowData: fetchRowData(date),
-        emptyContent: {
-            illustrationScheme: "bookingsg",
-            description:
-                "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page.",
-        },
     };
 };
 

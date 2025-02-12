@@ -1,12 +1,6 @@
 import { PopoverV2TriggerType } from "../popover-v2";
-import { ResourceScheme } from "../theme";
 
 export type TimeTableCellType = "filled" | "blocked" | "default" | "disabled";
-
-interface EmptyContentProps {
-    description: string;
-    illustrationScheme: ResourceScheme;
-}
 
 export interface TimeTableRowData {
     id?: string | undefined;
@@ -38,7 +32,7 @@ export interface TimeTableProps {
     className?: string | undefined;
     "data-testid"?: string | undefined;
     date: string;
-    emptyContent?: EmptyContentProps | undefined;
+    emptyContentMessage?: string;
     rowData: TimeTableRowData[];
     loading?: boolean | undefined;
     // HH:mm format
@@ -48,10 +42,13 @@ export interface TimeTableProps {
     minDate?: string | undefined;
     maxDate?: string | undefined;
     totalRecords?: number | undefined;
+    showCurrentDateAsToday?: boolean | undefined;
+    showDateAsShortForm?: boolean | undefined;
     onRefresh?: (() => void) | undefined;
     onPage?: (() => void) | undefined;
-    onPreviousDayClick?: ((currentDate: string) => void) | undefined;
-    onNextDayClick?: ((currentDate: string) => void) | undefined;
+    onPreviousDayClick: ((currentDate: string) => void) | undefined;
+    onNextDayClick: ((currentDate: string) => void) | undefined;
+    onCalendarDateSelect?: ((currentDate: string) => void) | undefined;
 }
 
 export interface TimeTableRowCellData {

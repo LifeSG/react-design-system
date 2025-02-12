@@ -8,11 +8,6 @@ import { PropsTable } from "./props-table";
 
 <Title>TimeTable</Title>
 
-<Alert type="warning">
-    This component is still a work in progress. The UI and props are subject to
-    change.
-</Alert>
-
 <Secondary>Overview</Secondary>
 
 A component that displays a timetable to view a schedule for a specific day
@@ -26,16 +21,6 @@ import { TimeTable } from "@lifesg/react-design-system/timetable";
 > when there are missing gaps between each row cell's start/end time.
 
 <Canvas of={TimeTableStories.Default} />
-
-<Secondary>Date navigation</Secondary> Date navigational arrows can be interacted
-with when `onNextDayClick` and `onPreviousDayClick` props are passed in.
-
-You may use `minDate` and `maxDate` to limit the range of date navigation
-
-_(In this example, the user can only view the timetable 2 days before today and
-2 days after today)_
-
-<Canvas of={TimeTableStories.DateNavigation} />
 
 <Secondary>Lazy loading</Secondary>
 
@@ -62,7 +47,7 @@ with the onClick callback for each cell.
 
 <Secondary>No results found</Secondary>
 
-`emptyContent` can be passed in to control what to show when there are no
+`emptyContentMessage` can be passed in to control what description to show when there are no
 results to display.
 
 <Canvas of={TimeTableStories.EmptyContent} />

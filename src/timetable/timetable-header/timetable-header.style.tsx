@@ -2,7 +2,7 @@ import styled, { css, keyframes } from "styled-components";
 import { Color } from "../../color";
 import { IconButton } from "../../icon-button";
 import { Text } from "../../text";
-import { ROW_HEADER_WIDTH } from "../const";
+import { DateNavigator } from "../../date-navigator";
 
 const spin = keyframes`
     100% {
@@ -25,8 +25,9 @@ export const StyledRefreshButton = styled(IconButton)<{ $loading: boolean }>`
 `;
 
 export const NavigationHeaderWrapper = styled.div`
-    width: ${ROW_HEADER_WIDTH}px;
+    display: flex;
     padding-bottom: 1rem;
+    justify-content: space-between;
 `;
 
 export const NavigationHeaderSubtitleWrapper = styled.div`
@@ -38,4 +39,8 @@ export const NavigationHeaderSubtitleWrapper = styled.div`
 
 export const StyledResultText = styled(Text.H6)`
     color: ${Color.Neutral[3]};
+`;
+
+export const StyledDateNavigator = styled(DateNavigator)`
+    width: 400px;
 `;

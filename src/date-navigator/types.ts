@@ -9,6 +9,9 @@ export interface DateNavigatorProps {
     /** YYYY-MM-DD format */
     maxDate?: string | undefined;
     loading?: boolean | undefined;
-    onLeftArrowClick?: ((currentDate: string) => void) | undefined;
-    onRightArrowClick?: ((currentDate: string) => void) | undefined;
+    showDateAsShortForm?: boolean | undefined;
+    showCurrentDateAsToday?: boolean | undefined;
+    onLeftArrowClick: (currentDate: string) => void;
+    onRightArrowClick: (currentDate: string) => void;
+    onCalendarDateSelect?: ((currentDate: string) => void) | undefined;
 }

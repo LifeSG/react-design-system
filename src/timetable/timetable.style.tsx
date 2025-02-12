@@ -46,22 +46,13 @@ interface LoaderProps {
     $isEmptyContent: boolean;
 }
 
+export const Container = styled.div``;
+
 export const EmptyTableContainer = styled.div`
     display: grid;
     overflow: scroll;
     position: relative;
     grid-template-columns: ${ROW_HEADER_WIDTH}px auto;
-`;
-
-export const EmptyTableRowHeader = styled.div`
-    display: flex;
-    position: sticky;
-    top: 0;
-    background-color: white;
-    z-index: 1;
-    height: fit-content;
-    grid-column: 1 / -1;
-    border-bottom: 1px solid ${Color.Neutral[5]};
 `;
 
 export const TimeTableContainer = styled.div<TimeTableContainerProps>`
