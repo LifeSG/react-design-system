@@ -329,7 +329,7 @@ export const TimeTable = ({
 
     if (isEmptyContent) {
         return (
-            <Container {...otherProps} data-testId={testId}>
+            <Container {...otherProps} data-testid={testId}>
                 <TimeTableHeader
                     selectedDate={date}
                     loading={loading || loadMore}
@@ -359,7 +359,7 @@ export const TimeTable = ({
     }
 
     return (
-        <Container {...otherProps} data-testId={testId}>
+        <Container {...otherProps} data-testid={testId}>
             <TimeTableHeader
                 data-id="timetable-date-navigator"
                 selectedDate={date}
