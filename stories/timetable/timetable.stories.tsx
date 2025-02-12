@@ -26,7 +26,7 @@ const meta: Meta<Component> = {
 export default meta;
 
 const StyledTimeTable = styled(TimeTable)`
-    [data-id="timetable-container-id"] {
+    [data-id="timetable-container"] {
         width: 900px;
         height: 400px;
     }

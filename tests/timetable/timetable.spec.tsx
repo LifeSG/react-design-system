@@ -269,7 +269,7 @@ describe("TimeTable", () => {
                 onPage={() => lazyLoad(2)}
             />
         );
-        const container = screen.getByTestId("timetable-container-testid");
+        const container = screen.getByTestId("timetable-container");
         expect(screen.queryByTestId("lazy-loader")).toBeNull();
 
         // Scroll to the bottom of the container

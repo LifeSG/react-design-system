@@ -55,7 +55,7 @@ export const TimeTable = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const testId = otherProps["data-testid"] || "container-testid";
+    const testId = otherProps["data-testid"] || "timetable";
     const timetableMinTime = TimeHelper.roundToNearestHour(minTime);
     const timetableMaxTime = TimeHelper.roundToNearestHour(maxTime, true);
     const hourlyIntervals = TimeHelper.generateHourlyIntervals(
@@ -329,7 +329,7 @@ export const TimeTable = ({
 
     if (isEmptyContent) {
         return (
-            <Container {...otherProps}>
+            <Container {...otherProps} data-testId={testId}>
                 <TimeTableHeader
                     selectedDate={date}
                     loading={loading || loadMore}
@@ -359,9 +359,9 @@ export const TimeTable = ({
     }
 
     return (
-        <Container data-testid={testId} {...otherProps}>
+        <Container {...otherProps} data-testId={testId}>
             <TimeTableHeader
-                data-id="timetable-header-id"
+                data-id="timetable-date-navigator"
                 selectedDate={date}
                 loading={loading || loadMore}
                 tableContainerRef={tableContainerRef}
@@ -376,8 +376,8 @@ export const TimeTable = ({
                 onCalendarDateSelect={onCalendarDateSelect}
             />
             <TimeTableContainer
-                data-id="timetable-container-id"
-                data-testid="timetable-container-testid"
+                data-id="timetable-container"
+                data-testid="timetable-container"
                 ref={tableContainerRef}
                 $loading={loading}
                 $allRecordsLoaded={allRecordsLoaded || !onPage}
