@@ -10,7 +10,7 @@ export const Main = styled.button<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: ${Spacing["spacing-32"]};
+    padding: ${Spacing["spacing-24"]};
     background-color: transparent;
     border: none;
     cursor: pointer;
