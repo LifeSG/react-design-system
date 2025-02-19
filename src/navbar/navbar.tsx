@@ -7,15 +7,15 @@ import React, {
 } from "react";
 import { useTheme } from "styled-components";
 import { ButtonProps } from "../button/types";
-import { V2_Layout } from "../v2_layout";
+import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
-import { MediaWidths } from "../v2_spec/media-spec";
+import { Breakpoint } from "../theme";
 import { Brand } from "./brand";
 import { Drawer } from "./drawer";
-import { getDefaultResourceLogo } from "./navbar-logo-data";
 import { NavbarActionButtons } from "./navbar-action-buttons";
 import { NavbarItems } from "./navbar-items";
+import { getDefaultResourceLogo } from "./navbar-logo-data";
 import {
     MobileMenuButton,
     MobileMenuIcon,
@@ -67,6 +67,7 @@ const Component = <T,>(
     const defaultResource = getDefaultResourceLogo(
         (theme as any)?.resourceScheme
     );
+    const tabletWidth = Breakpoint["lg-max"]({ theme });
 
     const primary = resources?.primary || defaultResource.primary;
     const secondary = resources?.secondary;
@@ -130,7 +131,7 @@ const Component = <T,>(
     // EVENT HANDLER
     // =============================================================================
     const handleResize = () => {
-        if (window.innerWidth <= MediaWidths.tablet && showDrawer) {
+        if (window.innerWidth <= tabletWidth && showDrawer) {
             dismissDrawer();
         }
     };
@@ -274,7 +275,7 @@ const Component = <T,>(
 
     const renderNavbar = () => {
         return (
-            <V2_Layout.Content stretch={isStretch}>
+            <Layout.Content stretch={isStretch}>
                 <Nav $compress={compress}>
                     {!hideNavBranding && renderBrand()}
                     {!hideNavElements && (
@@ -297,7 +298,7 @@ const Component = <T,>(
                 </Nav>
 
                 {!hideNavElements && renderDrawer()}
-            </V2_Layout.Content>
+            </Layout.Content>
         );
     };
 

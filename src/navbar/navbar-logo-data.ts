@@ -1,4 +1,4 @@
-import { V2_ResourceScheme } from "../v2_theme";
+import { ResourceScheme } from "../theme/types";
 import { NavbarResourcesProps } from "./types";
 
 const DEFAULT_RESOURCES_LOGO: NavbarResourcesProps = {
@@ -29,7 +29,7 @@ const MYLEGACY_RESOURCES_LOGO: NavbarResourcesProps = {
     },
 };
 
-export const getDefaultResourceLogo = (resourceScheme?: V2_ResourceScheme) => {
+export const getDefaultResourceLogo = (resourceScheme?: ResourceScheme) => {
     switch (resourceScheme) {
         case "bookingsg":
             return BOOKINGSG_RESOURCES_LOGO;

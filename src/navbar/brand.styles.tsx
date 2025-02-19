@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { V2_Transition } from "../v2_transition";
+import { Motion } from "../theme";
 import { BrandType } from "./types";
 
 // =============================================================================
@@ -21,7 +21,7 @@ export const Clickable = styled.a<StyleProps>`
     img {
         width: auto;
         height: 100%;
-        transition: ${V2_Transition.Base};
+        transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
         object-fit: contain;
     }
 `;

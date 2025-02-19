@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
-import { MediaQuery } from "../theme";
+import { MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography/typography";
 
 // =============================================================================
@@ -9,7 +9,7 @@ import { Typography } from "../typography/typography";
 export const Wrapper = styled.ul`
     display: flex;
     list-style: none;
-    margin-left: 4rem;
+    margin-left: ${Spacing["spacing-64"]};
     flex-shrink: 0;
 
     ${MediaQuery.MaxWidth.lg} {
@@ -23,7 +23,7 @@ export const MobileWrapper = styled.ul`
     ${MediaQuery.MaxWidth.lg} {
         display: flex;
         list-style: none;
-        margin-left: 4rem;
+        margin-left: ${Spacing["spacing-64"]};
         flex-shrink: 0;
     }
 `;
@@ -35,7 +35,7 @@ export const DrawerWrapper = styled.ul`
     ${MediaQuery.MaxWidth.lg} {
         display: flex;
         flex-direction: column;
-        margin-top: 2.5rem;
+        margin-top: ${Spacing["spacing-40"]};
         width: max-content;
         min-width: 22rem;
         max-width: 24rem;
@@ -57,17 +57,18 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
     align-items: center;
 
     :not(:last-of-type) {
-        margin-right: 1rem;
+        margin-right: ${Spacing["spacing-16"]};
     }
 
     ${MediaQuery.MaxWidth.lg} {
         width: 100%;
-        padding: 0 0 0 1rem;
+        padding: 0 0 0 ${Spacing["spacing-16"]};
         justify-content: center;
 
         :not(:last-of-type) {
             margin-right: 0;
-            margin-bottom: ${(props) => (props.$mobile ? "1rem" : "0")};
+            margin-bottom: ${(props) =>
+                props.$mobile ? Spacing["spacing-16"] : "0"};
         }
     }
 
@@ -75,7 +76,7 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
         ${(props) => {
             if (props.$mobile) {
                 return css`
-                    padding: 0 1rem;
+                    padding: 0 ${Spacing["spacing-16"]};
                 `;
             }
         }}
@@ -85,7 +86,6 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
 export const ActionButton = styled(Button.Small)`
     ${MediaQuery.MaxWidth.lg} {
         width: 100%;
-        padding: 0.685rem 1rem;
     }
 `;
 
@@ -98,12 +98,12 @@ export const DownloadAppWrapper = styled.div`
     ${MediaQuery.MaxWidth.lg} {
         display: flex;
         flex-direction: column;
-        margin-top: 2.5rem;
+        margin-top: ${Spacing["spacing-40"]};
     }
 `;
 
 export const DownloadAppTitle = styled(Typography.BodyMD)`
-    margin-bottom: 0.5rem;
+    margin-bottom: ${Spacing["spacing-8"]};
 `;
 
 export const DownloadAppImageLinkWrapper = styled.div`
@@ -112,7 +112,7 @@ export const DownloadAppImageLinkWrapper = styled.div`
 
 export const DownloadAppImageLink = styled.a`
     :not(:last-child) {
-        margin-right: 1rem;
+        margin-right: ${Spacing["spacing-16"]};
     }
 
     img {

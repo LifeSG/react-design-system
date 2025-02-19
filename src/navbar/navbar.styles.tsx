@@ -1,9 +1,7 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { V2_Transition } from "../v2_transition";
-import { MediaQuery } from "../theme";
-import { Colour } from "../theme";
+import { Colour, MediaQuery, Motion } from "../theme";
 
 // =============================================================================
 // CONSTANTS
@@ -49,7 +47,7 @@ export const Nav = styled.nav<StyleProps>`
     justify-content: space-between;
     align-items: center;
     position: relative;
-    transition: ${V2_Transition.Base};
+    transition: ${Motion["duration-350"]} ${Motion["ease-standard"]};
 
     ${MediaQuery.MaxWidth.lg} {
         height: ${NAVBAR_MOBILE_HEIGHT}rem;
@@ -105,7 +103,7 @@ export const NavSeparator = styled.div<StyleProps>`
     display: flex;
     background-color: ${Colour.border};
     height: 100%;
-    width: 1px;
+    width: 2px;
     margin: 0 ${(props) => (props.$compress ? 1 : 1.5)}rem;
 
     ${MediaQuery.MaxWidth.lg} {
@@ -113,7 +111,6 @@ export const NavSeparator = styled.div<StyleProps>`
     }
 
     ${MediaQuery.MaxWidth.sm} {
-        width: 2px;
         margin: 0 0.75rem;
     }
 `;

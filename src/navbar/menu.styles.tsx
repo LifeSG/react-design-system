@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { V2_Color } from "../v2_color";
-import { V2_MediaQuery } from "../v2_media";
-import { V2_Text, V2_TextStyleHelper } from "../v2_text";
-import { V2_DesignToken } from "../v2_design-token";
+import { lineClampCss } from "../shared/styles";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
+import { Typography } from "../typography";
+
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -13,28 +13,31 @@ import { V2_DesignToken } from "../v2_design-token";
 // =============================================================================
 
 export const Wrapper = styled.ul`
-    width: 100%;
-    overflow: auto;
     display: flex;
     flex-direction: column;
-    margin-top: 0;
-    left: 0;
-    top: 102%;
-    min-width: 15.625rem;
     position: absolute;
-    max-height: 20rem;
+    left: 0;
+    top: 100%;
 
-    background: ${V2_Color.Neutral[8]};
-    border-radius: 0 0 0.5rem 0.5rem;
-    box-shadow: ${V2_DesignToken.ElevationBoxShadow};
+    min-width: 15.625rem;
+    width: 100%;
+    max-height: 20rem;
+    overflow: auto;
+
+    padding: ${Spacing["spacing-8"]} 0;
+
+    background: ${Colour["bg"]};
+    border-radius: ${Radius["md"]};
+    box-shadow: 0px 2px 8px 0px
+        rgb(from ${Colour.Primitive["neutral-50"]} r g b / 25%);
 `;
 
 export const MobileWrapper = styled.ul`
     display: none;
     list-style: none;
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
-        border-left: 0.25rem solid ${V2_Color.Primary};
+    ${MediaQuery.MaxWidth.lg} {
+        border-left: ${Border["width-040"]} solid ${Colour["border-selected"]};
         display: flex;
         flex-direction: column;
     }
@@ -44,37 +47,32 @@ export const MobileWrapper = styled.ul`
 // LINK ITEMS
 // =============================================================================
 
-export const Link = styled(V2_Text.Hyperlink.Small)`
-    ${V2_TextStyleHelper.getTextStyle("H6", "regular")};
+export const Link = styled(Typography.LinkBL)`
     width: 100%;
-    display: flex;
     position: relative;
-    align-items: flex-start;
     text-align: left;
-    color: ${V2_Color.Neutral[1]};
+    color: ${Colour["text"]};
 
-    padding: 1px 1rem;
+    margin: 0 ${Spacing["spacing-8"]};
 
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    // use border, as padding still shows an extra line after the ellipsis
+    border: ${Border["solid"]} transparent;
+    border-width: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
+
+    border-radius: ${Radius["md"]};
+
+    ${lineClampCss(2)}
     white-space: pre-wrap;
 
+    :hover,
     :active,
     :focus {
-        color: ${V2_Color.Primary};
-    }
-    :hover {
-        color: ${V2_Color.Accent.Light[1]};
+        background-color: ${Colour["bg-hover"]};
+        color: ${Colour["text"]};
     }
 
-    ${V2_MediaQuery.MaxWidth.tablet} {
-        ${V2_TextStyleHelper.getTextStyle("H5", "bold")}
-        width: 100%;
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-        line-height: 1.125rem;
+    ${MediaQuery.MaxWidth.lg} {
+        ${Font["body-md-regular"]}
     }
 `;
 
@@ -86,25 +84,4 @@ export const MenuItem = styled.li`
     position: relative;
     display: flex;
     align-items: flex-start;
-    padding: 0.5rem 0;
-
-    :first-child {
-        padding-top: 1rem;
-    }
-
-    :last-child {
-        padding-bottom: 1rem;
-    }
-
-    ${V2_MediaQuery.MaxWidth.tablet} {
-        padding: 0.625rem 0;
-
-        :first-child {
-            padding-top: 0.25rem;
-        }
-
-        :last-child {
-            padding-bottom: 0.625rem;
-        }
-    }
 `;
