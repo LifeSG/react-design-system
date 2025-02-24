@@ -21,7 +21,7 @@ interface ESignatureCanvasProps {
 
 export interface ESignatureCanvasRef {
     clear: VoidFunction;
-    export: () => string;
+    export: () => string | null;
 }
 
 const Component = (
@@ -50,8 +50,9 @@ const Component = (
     // HELPER FUNCTIONS
     // =============================================================================
     const exportAsImage = () => {
+        if (!fabricCanvas.current) return null;
         if (!fabricCanvas.current.getObjects().length) return null;
-        const dataURL = fabricCanvas.current?.toDataURL({
+        const dataURL = fabricCanvas.current.toDataURL({
             format: "png",
             quality: 1,
             enableRetinaScaling: true,
@@ -72,8 +73,10 @@ const Component = (
 
             // change x and y position of the viewport to centralise the drawing
             const viewport = fabricCanvas.current.viewportTransform;
-            viewport[4] = (canvasWidth - 640) / 2;
-            viewport[5] = (canvasHeight - 320) * 0.75;
+            if (viewport) {
+                viewport[4] = (canvasWidth - 640) / 2;
+                viewport[5] = (canvasHeight - 320) * 0.75;
+            }
         }
     }, []);
 
@@ -113,14 +116,19 @@ const Component = (
         if (baseImageDataURL) {
             fabric.Image.fromURL(baseImageDataURL, (img) => {
                 if (fabricCanvas.current) {
-                    fabricCanvas.current?.clear();
+                    fabricCanvas.current.clear();
                     img.selectable = false;
                     img.hoverCursor = "default";
-                    img.scale(fabricCanvas.current.width / img.width);
+
+                    if (fabricCanvas.current.width && img.width) {
+                        img.scale(fabricCanvas.current.width / img.width);
+                    }
 
                     const viewport = fabricCanvas.current.viewportTransform;
-                    img.left = -viewport[4];
-                    img.top = -viewport[5];
+                    if (viewport) {
+                        img.left = -viewport[4];
+                        img.top = -viewport[5];
+                    }
 
                     fabricCanvas.current.add(img);
                 }

@@ -25,7 +25,9 @@ export const Checkbox = ({
     const checkRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        checkRef.current.indeterminate = indeterminate;
+        if (checkRef.current) {
+            checkRef.current.indeterminate = indeterminate ?? false;
+        }
     }, [indeterminate]);
 
     // =============================================================================

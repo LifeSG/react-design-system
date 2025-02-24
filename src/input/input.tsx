@@ -30,7 +30,7 @@ const Component = (
     // CONST, STATE, REF
     // =============================================================================
     const elementRef = useRef<HTMLInputElement>(null);
-    useImperativeHandle(ref, () => elementRef.current, []);
+    useImperativeHandle(ref, () => elementRef.current!, []);
 
     const getNextInputState = useNextInputState({
         ref: elementRef,

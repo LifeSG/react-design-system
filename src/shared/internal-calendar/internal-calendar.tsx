@@ -46,10 +46,10 @@ export const Component = (
     useImperativeHandle(ref, () => {
         return {
             reset() {
-                calendarManagerRef.current.resetView();
+                calendarManagerRef.current?.resetView();
             },
             setCalendarDate(value?: string) {
-                calendarManagerRef.current.setCalendarDate(value);
+                calendarManagerRef.current?.setCalendarDate(value);
             },
         };
     });
@@ -60,7 +60,7 @@ export const Component = (
     const handleDateSelect = (value: Dayjs) => {
         const stringValue = value.format("YYYY-MM-DD");
 
-        calendarManagerRef.current.setCalendarDate(stringValue);
+        calendarManagerRef.current?.setCalendarDate(stringValue);
         performOnSelectHandler(stringValue);
     };
 

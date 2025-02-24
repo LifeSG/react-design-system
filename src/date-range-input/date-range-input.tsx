@@ -222,9 +222,9 @@ export const DateRangeInput = ({
                 onChange?.(selectedStart, selectedEnd);
             } else {
                 actions.dismiss();
-                nodeRef.current.focus();
-                startInputRef.current.resetPlaceholder();
-                endInputRef.current.resetPlaceholder();
+                nodeRef.current?.focus();
+                startInputRef.current?.resetPlaceholder();
+                endInputRef.current?.resetPlaceholder();
             }
         }
     };
@@ -234,8 +234,8 @@ export const DateRangeInput = ({
 
         setIsStartDisabled(false);
         setIsEndDisabled(false);
-        startInputRef.current.resetPlaceholder();
-        endInputRef.current.resetPlaceholder();
+        startInputRef.current?.resetPlaceholder();
+        endInputRef.current?.resetPlaceholder();
 
         onBlur?.();
     };
@@ -243,9 +243,9 @@ export const DateRangeInput = ({
     const handleDismiss = () => {
         actions.dismiss();
 
-        nodeRef.current.focus();
-        startInputRef.current.resetPlaceholder();
-        endInputRef.current.resetPlaceholder();
+        nodeRef.current?.focus();
+        startInputRef.current?.resetPlaceholder();
+        endInputRef.current?.resetPlaceholder();
     };
 
     const handleStartDateChange = (val: string) => {
@@ -256,7 +256,7 @@ export const DateRangeInput = ({
         }
 
         actions.changeStart(val);
-        calendarRef.current.setCalendarDate(val);
+        calendarRef.current?.setCalendarDate(val);
         isUnselectable.current = false;
 
         if (!val) {
@@ -313,13 +313,13 @@ export const DateRangeInput = ({
         // if date range is invalid, set selected value as start and reselect end
         if (isInvalidRange) {
             actions.changeStart(val);
-            calendarRef.current.setCalendarDate(val);
+            calendarRef.current?.setCalendarDate(val);
             actions.reselectEnd();
             return;
         }
 
         actions.changeEnd(val);
-        calendarRef.current.setCalendarDate(val);
+        calendarRef.current?.setCalendarDate(val);
 
         if (!val) {
             // if both start and end were cleared, confirm the selection
@@ -370,7 +370,7 @@ export const DateRangeInput = ({
         }
 
         actions.changeStart(val);
-        calendarRef.current.setCalendarDate(val);
+        calendarRef.current?.setCalendarDate(val);
         isUnselectable.current = false;
 
         if (!val) {
@@ -409,14 +409,15 @@ export const DateRangeInput = ({
         if (
             focused &&
             !calendarOpen &&
-            !nodeRef.current.contains(e.relatedTarget as Node)
+            nodeRef.current &&
+            nodeRef.current.contains(e.relatedTarget as Node)
         ) {
             actions.blur();
 
             setIsStartDisabled(false);
             setIsEndDisabled(false);
-            startInputRef.current.resetPlaceholder();
-            endInputRef.current.resetPlaceholder();
+            startInputRef.current?.resetPlaceholder();
+            endInputRef.current?.resetPlaceholder();
 
             onBlur?.();
         }
@@ -460,14 +461,14 @@ export const DateRangeInput = ({
     const handleStartInputBlur = (validFormat: boolean) => {
         if (!validFormat || isUnselectable.current) {
             actions.resetStart();
-            startInputRef.current.resetInput();
+            startInputRef.current?.resetInput();
         }
     };
 
     const handleEndInputBlur = (validFormat: boolean) => {
         if (!validFormat || isUnselectable.current) {
             actions.resetEnd();
-            endInputRef.current.resetInput();
+            endInputRef.current?.resetInput();
         }
     };
 
@@ -490,7 +491,7 @@ export const DateRangeInput = ({
     };
 
     const handleCalendarDismiss = (action: CalendarAction) => {
-        nodeRef.current.focus();
+        nodeRef.current?.focus();
 
         switch (action) {
             case "reset":

@@ -74,7 +74,7 @@ export const InputSelect = <T, V>({
     // EVENT HANDLERS
     // =============================================================================
     const handleListItemClick = (item: T, extractedValue: V) => {
-        selectorRef.current.focus();
+        selectorRef.current?.focus();
         setSelected(item);
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
@@ -99,6 +99,7 @@ export const InputSelect = <T, V>({
         if (
             focused &&
             !showOptions &&
+            nodeRef.current &&
             !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
             setFocused(false);
@@ -124,7 +125,7 @@ export const InputSelect = <T, V>({
     };
 
     const handleDismiss = () => {
-        selectorRef.current.focus();
+        selectorRef.current?.focus();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };

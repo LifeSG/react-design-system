@@ -100,7 +100,9 @@ export const CountdownTimer = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleWindowResize = () => {
-        const clientRect = wrapperRef.current?.getBoundingClientRect();
+        if (!wrapperRef.current) return;
+
+        const clientRect = wrapperRef.current.getBoundingClientRect();
 
         setClientRectX(clientRect.x);
         setClientRectRight(clientRect.right);

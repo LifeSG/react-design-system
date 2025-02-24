@@ -112,6 +112,7 @@ export const Component = (
     };
 
     const handleTouchEnd = () => {
+        if (!containerRef.current) return;
         if (Math.abs(diff) > containerRef.current.offsetWidth / 3) {
             if (diff > 0) {
                 goToNextSlide();
@@ -157,7 +158,7 @@ export const Component = (
     const getZoomRatio = () => {
         const imageDimension = imagesDimension[items[currentSlide].src];
 
-        if (containerRef?.current && !!imageDimension) {
+        if (containerRef.current && !!imageDimension) {
             const { clientHeight, clientWidth } = containerRef.current;
             const { width, height } = imageDimension;
             const isSmallImg = width < clientWidth && height < clientHeight;

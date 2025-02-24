@@ -255,7 +255,7 @@ export const DropdownList = <T, V>({
                     ) {
                         const upcomingIndex =
                             focusedListIndexStateRef.current + 1;
-                        listItemRefs.current[upcomingIndex].focus();
+                        listItemRefs.current[upcomingIndex]?.focus();
 
                         setFocusedIndex(upcomingIndex);
                     }
@@ -265,7 +265,7 @@ export const DropdownList = <T, V>({
                     if (focusedListIndexStateRef.current > 0) {
                         const upcomingIndex =
                             focusedListIndexStateRef.current - 1;
-                        listItemRefs.current[upcomingIndex].focus();
+                        listItemRefs.current[upcomingIndex]?.focus();
 
                         setFocusedIndex(focusedListIndexStateRef.current - 1);
                     }
@@ -298,7 +298,7 @@ export const DropdownList = <T, V>({
 
     const handleOnClear = () => {
         setSearchValue("");
-        searchInputRef.current.focus();
+        searchInputRef.current?.focus();
 
         if (onSearch) onSearch();
     };

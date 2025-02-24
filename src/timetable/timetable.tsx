@@ -78,7 +78,7 @@ export const TimeTable = ({
                 setIsScrolledY(tableContainerRef.current.scrollTop > 0);
             }
 
-            if (loadMore) return;
+            if (loadMore || !tableContainerRef.current) return;
 
             const { scrollTop, clientHeight, scrollHeight } =
                 tableContainerRef.current;

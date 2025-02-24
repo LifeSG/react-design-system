@@ -102,7 +102,7 @@ export const InputRangeSelect = <T, V>({
             : setSelectedToValue(item);
         triggerOptionDisplayCallback(false);
         if (selectorRef) {
-            selectorRef.current.focus();
+            selectorRef.current?.focus();
         }
         if (onSelectOption) {
             onSelectOption({ [rangeType]: item }, extractedValue);
@@ -121,7 +121,7 @@ export const InputRangeSelect = <T, V>({
         triggerOptionDisplayCallback(false);
 
         if (selectorRef) {
-            selectorRef.current.focus();
+            selectorRef.current?.focus();
         }
 
         if (!selectedFromValue || !selectedToValue) {

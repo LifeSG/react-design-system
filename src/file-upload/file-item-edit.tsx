@@ -64,7 +64,9 @@ export const FileItemEdit = ({
     // EVENT HANDLERS
     // =========================================================================
     const handleSave = () => {
-        onSave(textareaRef.current.value.trim());
+        if (textareaRef.current) {
+            onSave(textareaRef.current.value.trim());
+        }
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {

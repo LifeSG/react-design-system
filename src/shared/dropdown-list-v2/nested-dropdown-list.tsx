@@ -115,7 +115,7 @@ export const NestedDropdownList = <T,>({
                 );
                 if (upcomingIndex >= 0) {
                     setFocusedIndex(upcomingIndex);
-                    listItemRefs.current[upcomingIndex].focus();
+                    listItemRefs.current[upcomingIndex]?.focus();
                 }
                 break;
             }
@@ -128,7 +128,7 @@ export const NestedDropdownList = <T,>({
                 );
                 if (upcomingIndex >= 0) {
                     setFocusedIndex(upcomingIndex);
-                    listItemRefs.current[upcomingIndex].focus();
+                    listItemRefs.current[upcomingIndex]?.focus();
                 } else if (focusedIndex === 0 && searchInputRef.current) {
                     searchInputRef.current.focus();
                     setFocusedIndex(-1);
@@ -180,7 +180,7 @@ export const NestedDropdownList = <T,>({
     const handleOnClear = () => {
         setSearchValue("");
         setSearchActive(false);
-        searchInputRef.current.focus();
+        searchInputRef.current?.focus();
 
         onSearch?.();
     };
