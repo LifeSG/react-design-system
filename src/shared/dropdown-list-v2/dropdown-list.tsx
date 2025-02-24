@@ -77,10 +77,10 @@ export const DropdownList = <T, V>({
     const itemsLoadStateChanged = useCompare(itemsLoadState);
     const mounted = useIsMounted();
 
-    const nodeRef = useRef<HTMLDivElement>();
-    const listRef = useRef<HTMLDivElement>();
-    const listItemRefs = useRef<HTMLElement[]>([]);
-    const searchInputRef = useRef<HTMLInputElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
+    const listItemRefs = useRef<(HTMLElement | null)[]>([]);
+    const searchInputRef = useRef<HTMLInputElement>(null);
 
     // =========================================================================
     // HELPER FUNCTIONS

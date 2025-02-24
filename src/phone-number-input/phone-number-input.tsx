@@ -34,7 +34,7 @@ export const PhoneNumberInput = ({
     >(undefined);
     const [inputValue, setInputValue] = useState<string>("");
 
-    const nodeRef = useRef<HTMLInputElement>();
+    const nodeRef = useRef<HTMLInputElement>(null);
 
     const getNextInputState = useNextInputState({
         ref: nodeRef,

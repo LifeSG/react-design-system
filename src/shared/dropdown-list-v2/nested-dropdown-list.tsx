@@ -69,10 +69,10 @@ export const NestedDropdownList = <T,>({
     const [searchValue, setSearchValue] = useState<string>("");
     const searchTerm = searchValue.toLowerCase().trim();
     const [searchActive, setSearchActive] = useState<boolean>(false);
-    const nodeRef = useRef<HTMLDivElement>();
-    const listRef = useRef<HTMLDivElement>();
-    const listItemRefs = useRef<HTMLElement[]>([]);
-    const searchInputRef = useRef<HTMLInputElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
+    const listItemRefs = useRef<(HTMLElement | null)[]>([]);
+    const searchInputRef = useRef<HTMLInputElement>(null);
     const mounted = useIsMounted();
 
     // maintaining a separate list for search and non-search as we need to

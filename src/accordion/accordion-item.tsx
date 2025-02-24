@@ -35,7 +35,7 @@ function Component(
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const elementRef = useRef<HTMLDivElement>();
+    const elementRef = useRef<HTMLDivElement>(null);
     const expandAll = useContext(AccordionContext);
     const [expand, setExpand] = useState<boolean>(
         collapsible ? expanded ?? expandAll : true

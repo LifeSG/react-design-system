@@ -55,10 +55,10 @@ export const InputRangeSelect = <T, V>({
     const [selectedFromValue, setSelectedFromValue] = useState<T | undefined>();
     const [selectedToValue, setSelectedToValue] = useState<T | undefined>();
 
-    const selectorRef = useRef<HTMLButtonElement>();
+    const selectorRef = useRef<HTMLButtonElement>(null);
     const labelContainerRef = {
-        from: useRef<HTMLDivElement>(),
-        to: useRef<HTMLDivElement>(),
+        from: useRef<HTMLDivElement>(null),
+        to: useRef<HTMLDivElement>(null),
     };
     const [focusedInput, setFocusedInput] = useState<RangeType | "none">(
         "none"

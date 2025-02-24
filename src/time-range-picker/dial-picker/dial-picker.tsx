@@ -28,7 +28,7 @@ export const DialPicker = ({
     const [startTimeVal, setStartTimeVal] = useState<string>("");
     const [endTimeVal, setEndTimeVal] = useState<string>("");
 
-    const nodeRef = useRef<HTMLDivElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // EFFECTS

@@ -68,11 +68,11 @@ export const DropdownList = <T, V>({
         height: contentHeight,
     });
 
-    const nodeRef = useRef<HTMLDivElement>();
-    const listRef = useRef<HTMLUListElement>();
-    const listItemRefs = useRef<HTMLButtonElement[]>([]);
-    const searchInputRef = useRef<HTMLInputElement>();
-    const customCallToActionRef = useRef<HTMLDivElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const listRef = useRef<HTMLUListElement>(null);
+    const listItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
+    const searchInputRef = useRef<HTMLInputElement>(null);
+    const customCallToActionRef = useRef<HTMLDivElement>(null);
 
     /**
      * Have to use refs to allow the state values to be accessible

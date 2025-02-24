@@ -64,9 +64,9 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     const [focused, setFocused] = useState<boolean>(false);
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
-    const nodeRef = useRef<HTMLDivElement>();
-    const selectorRef = useRef<HTMLButtonElement>();
-    const labelContainerRef = useRef<HTMLDivElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const selectorRef = useRef<HTMLButtonElement>(null);
+    const labelContainerRef = useRef<HTMLDivElement>(null);
 
     // =========================================================================
     // EFFECTS

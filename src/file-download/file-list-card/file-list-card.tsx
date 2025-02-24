@@ -45,7 +45,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const [displayText, setDisplayText] = useState<string>();
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // =========================================================================
     // EFFECTS

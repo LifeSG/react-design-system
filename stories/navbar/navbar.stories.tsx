@@ -258,7 +258,7 @@ export const UncollapsibleActionButtons: StoryObj<Component> = {
 export const CustomItems: StoryObj<Component> = {
     parameters: { docs: { source: { type: "code" } } },
     render: (_args) => {
-        const navbarRef = useRef<NavbarDrawerHandle>();
+        const navbarRef = useRef<NavbarDrawerHandle>(null);
         return (
             <Navbar
                 ref={navbarRef}

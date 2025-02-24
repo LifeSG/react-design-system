@@ -50,9 +50,9 @@ export const ComboboxPicker = ({
     const [initialStartTimeVal, setInitialStartTimeVal] = useState<string>("");
     const [initialEndTimeVal, setInitialEndTimeVal] = useState<string>("");
 
-    const nodeRef = useRef<HTMLDivElement>();
-    const startInputRef = useRef<HTMLInputElement>();
-    const endInputRef = useRef<HTMLInputElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const startInputRef = useRef<HTMLInputElement>(null);
+    const endInputRef = useRef<HTMLInputElement>(null);
 
     const startOptions = useMemo(
         () =>

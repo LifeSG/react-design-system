@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { MutableRefObject, useMemo } from "react";
+import { RefObject, useMemo } from "react";
 import { RowBarColors } from "../const";
 import { TimeTableRowCellData, TimeTableRowData } from "../types";
 import { RowCellContainer } from "./row-bar.style";
@@ -9,7 +9,7 @@ interface RowBarProps extends TimeTableRowData {
     timetableMinTime: string;
     timetableMaxTime: string;
     intervalWidth: number;
-    containerRef: MutableRefObject<HTMLDivElement>;
+    containerRef: RefObject<HTMLDivElement>;
     rowBarColor: RowBarColors;
 }
 

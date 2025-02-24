@@ -28,8 +28,8 @@ export const FilterItemCheckbox = <T,>({
     const [minimisedHeight, setMinimisedHeight] = useState<number>();
     const [lastVisibleElementIndex, setLastVisibleElementIndex] =
         useState<number>(options.length);
-    const parentRef = useRef<HTMLDivElement>();
-    const lastVisibleElement = useRef<HTMLLabelElement>();
+    const parentRef = useRef<HTMLDivElement>(null);
+    const lastVisibleElement = useRef<HTMLLabelElement>(null);
 
     // =============================================================================
     // EVENT HANDLERS

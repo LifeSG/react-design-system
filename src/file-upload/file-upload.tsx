@@ -44,7 +44,7 @@ export const FileUpload = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const dropzoneRef = useRef<DropzoneElement>();
+    const dropzoneRef = useRef<DropzoneElement>(null);
     const [activeId, setActiveId] = useState<string>();
 
     // =========================================================================

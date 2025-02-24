@@ -33,7 +33,7 @@ export const TimeSlotBarWeek = ({
     // CONST, STATE, REF
     // =============================================================================
     const [selectedDate, setSelectedDate] = useState<string>(value); // YYYY-MM-DD
-    const calendarManagerRef = useRef<CalendarManagerRef>();
+    const calendarManagerRef = useRef<CalendarManagerRef>(null);
     const previousCalendarDate = useRef<Dayjs>(undefined);
 
     // =============================================================================

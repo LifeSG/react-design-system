@@ -17,7 +17,7 @@ export const withPopover =
         const triggerBehaviour = options.trigger || "click";
         const innerProps = otherProps as T;
         const [visible, setVisible] = useState<boolean>(false);
-        const nodeRef = useRef<HTMLDivElement>();
+        const nodeRef = useRef<HTMLDivElement>(null);
         const isMobile = useMediaQuery({
             maxWidth: MediaWidths.mobileL,
         });

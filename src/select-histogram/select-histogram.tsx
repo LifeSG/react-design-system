@@ -55,9 +55,9 @@ export const SelectHistogram = ({
     const values = bins.map((item) => item.minValue);
     const minValue = Math.min(...values);
 
-    const nodeRef = useRef<HTMLDivElement>();
-    const selectorRef = useRef<HTMLButtonElement>();
-    const labelContainerRef = useRef<HTMLDivElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const selectorRef = useRef<HTMLButtonElement>(null);
+    const labelContainerRef = useRef<HTMLDivElement>(null);
 
     const testId = otherProps["data-testid"] || "select-histogram";
     // =========================================================================

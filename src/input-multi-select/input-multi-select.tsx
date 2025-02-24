@@ -56,8 +56,8 @@ export const InputMultiSelect = <T, V>({
     const [focused, setFocused] = useState<boolean>(false);
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
-    const nodeRef = useRef<HTMLDivElement>();
-    const selectorRef = useRef<HTMLButtonElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const selectorRef = useRef<HTMLButtonElement>(null);
 
     // =============================================================================
     // EFFECTS

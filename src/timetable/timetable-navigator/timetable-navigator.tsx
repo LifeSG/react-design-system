@@ -1,5 +1,5 @@
 import { RefreshIcon } from "@lifesg/react-icons";
-import { MutableRefObject } from "react";
+import { RefObject } from "react";
 import { DateNavigator } from "../../date-navigator/date-navigator";
 import {
     NavigationHeaderSubtitleWrapper,
@@ -11,7 +11,7 @@ import {
 interface TimeTableNavigatorProps {
     selectedDate: string;
     loading: boolean;
-    tableContainerRef: MutableRefObject<HTMLDivElement>;
+    tableContainerRef: RefObject<HTMLDivElement>;
     minDate?: string | undefined;
     maxDate?: string | undefined;
     totalRecords?: number | undefined;

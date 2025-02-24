@@ -61,7 +61,7 @@ export const Toggle = ({
     const [uniqueId] = useState(SimpleIdGenerator.generate());
     const generatedId = id ? `${id}` : `tg-${uniqueId}`;
 
-    const inputRef = useRef<HTMLInputElement>();
+    const inputRef = useRef<HTMLInputElement>(null);
 
     // =============================================================================
     // EFFECTS

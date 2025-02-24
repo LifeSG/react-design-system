@@ -72,8 +72,8 @@ export const Component = (
     const [startX, setStartX] = useState(null);
     const [endX, setEndX] = useState(null);
     const containerRef = useRef<HTMLDivElement>(null);
-    const thumbnailRefs = useRef<HTMLDivElement[]>([]);
-    const zoomRefs = useRef<ReactZoomPanPinchContentRef[]>([]);
+    const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const zoomRefs = useRef<(ReactZoomPanPinchContentRef | null)[]>([]);
     const diff = startX && endX ? startX - endX : 0;
 
     useImperativeHandle<FullscreenImageCarouselRef, FullscreenImageCarouselRef>(

@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import React, { MutableRefObject } from "react";
+import React, { RefObject } from "react";
 import { PopoverTrigger, PopoverV2TriggerProps } from "../../popover-v2";
 import { DateHelper } from "../../util";
 import { ROW_CELL_GAP, ROW_INTERVAL } from "../const";
@@ -14,7 +14,7 @@ import {
 } from "./row-cell.style";
 
 interface RowCellProps extends TimeTableRowCellData {
-    containerRef: MutableRefObject<HTMLDivElement>;
+    containerRef: RefObject<HTMLDivElement>;
     intervalWidth: number;
     rowBarColor: string;
 }

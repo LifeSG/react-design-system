@@ -24,7 +24,7 @@ export const Timepicker = ({
     // =============================================================================
     const [showSelector, setShowSelector] = useState<boolean>(false);
 
-    const nodeRef = useRef<HTMLDivElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // EFFECTS

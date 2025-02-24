@@ -39,7 +39,7 @@ const Component = (
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const inputRef = useRef<HTMLInputElement>();
+    const inputRef = useRef<HTMLInputElement>(null);
     const { getRootProps, isDragActive } = useDropzone({
         onDrop: onChange,
         noClick: true,

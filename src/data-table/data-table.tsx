@@ -55,7 +55,7 @@ export const DataTable = ({
     // CONST, STATE, REF
     // =============================================================================
     const tableRef = useRef<HTMLTableElement>(null);
-    const tableEndRef = useRef<HTMLDivElement>(null);
+    const tableEndRef = useRef<HTMLDivElement | null>(null);
     const headerRef = useRef<HTMLTableSectionElement>(null);
     const actionBarRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);

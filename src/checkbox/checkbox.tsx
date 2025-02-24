@@ -22,7 +22,7 @@ export const Checkbox = ({
     // =============================================================================
     // REFS, EFFECTS
     // =============================================================================
-    const checkRef = useRef<HTMLInputElement>();
+    const checkRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         checkRef.current.indeterminate = indeterminate;

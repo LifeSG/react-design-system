@@ -76,7 +76,7 @@ export const ElementWithDropdown = ({
     // =============================================================================
     const theme = useTheme();
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
-    const elementRef = useRef<HTMLDivElement>(null);
+    const elementRef = useRef<HTMLDivElement | null>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const { width: referenceWidth } = useResizeDetector({
         targetRef: elementRef,

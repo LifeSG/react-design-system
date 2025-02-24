@@ -37,7 +37,7 @@ export const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const calendarManagerRef = useRef<CalendarManagerRef>();
+    const calendarManagerRef = useRef<CalendarManagerRef>(null);
     const previousCalendarDate = useRef<Dayjs>(undefined);
 
     // =============================================================================

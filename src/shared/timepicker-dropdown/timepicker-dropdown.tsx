@@ -64,8 +64,8 @@ export const TimepickerDropdown = ({
     const [minuteValue, setMinuteValue] = useState<string>(timeValues.minute);
     const [timePeriod, setTimePeriod] = useState<EPeriod>(timeValues.period);
 
-    const hourInputRef = useRef<HTMLInputElement>();
-    const minuteInputRef = useRef<HTMLInputElement>();
+    const hourInputRef = useRef<HTMLInputElement>(null);
+    const minuteInputRef = useRef<HTMLInputElement>(null);
     const resizeDetector = useResizeDetector();
 
     // =============================================================================

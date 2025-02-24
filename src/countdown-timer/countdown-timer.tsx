@@ -36,7 +36,7 @@ export const CountdownTimer = ({
     // CONST, STATE, REF
     // =============================================================================
 
-    const wrapperRef = useRef<HTMLDivElement>();
+    const wrapperRef = useRef<HTMLDivElement>(null);
     const isNotified = useRef<boolean>(false);
     const [offsetY, setOffsetY] = useState<number>(0);
     const [clientRectRight, setClientRectRight] = useState<number>(0);

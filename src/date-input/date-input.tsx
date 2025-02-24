@@ -45,7 +45,7 @@ export const DateInput = ({
     const [focused, setFocused] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
-    const inputRef = useRef<StandaloneDateInputRef>();
+    const inputRef = useRef<StandaloneDateInputRef>(null);
 
     // =============================================================================
     // EFFECTS

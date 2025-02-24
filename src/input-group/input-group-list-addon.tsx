@@ -51,7 +51,7 @@ export const Component = <T, V>(
     const [selected, setSelected] = useState<T>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
 
-    const selectorRef = useRef<HTMLButtonElement>();
+    const selectorRef = useRef<HTMLButtonElement>(null);
 
     // =============================================================================
     // EFFECTS

@@ -61,7 +61,7 @@ const Component = ({
     // Sortable mechanism
     const { attributes, listeners, setNodeRef, transform, transition } =
         useSortable({ id });
-    const detailSectionRef = useRef<HTMLDivElement>();
+    const detailSectionRef = useRef<HTMLDivElement>(null);
     const style = {
         transform: CSS.Translate.toString(transform),
         transition,

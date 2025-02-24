@@ -182,10 +182,10 @@ export const DateRangeInput = ({
 
     // tracks if current value in focused input is allowed for selection
     const isUnselectable = useRef<boolean>(false);
-    const nodeRef = useRef<HTMLDivElement>();
-    const calendarRef = useRef<InternalCalendarRef>();
-    const startInputRef = useRef<StandaloneDateInputRef>();
-    const endInputRef = useRef<StandaloneDateInputRef>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const calendarRef = useRef<InternalCalendarRef>(null);
+    const startInputRef = useRef<StandaloneDateInputRef>(null);
+    const endInputRef = useRef<StandaloneDateInputRef>(null);
     const shouldWrap = useContainerQuery({
         maxWidth: MOBILE_WRAP_WIDTH,
         targetRef: nodeRef,

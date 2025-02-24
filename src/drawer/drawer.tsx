@@ -24,7 +24,7 @@ export const Drawer = ({
     // =============================================================================
     const [showOverlay, setShowOverlay] = useState(show);
     const [id] = useState(() => SimpleIdGenerator.generate());
-    const initialFocusRef = useRef<HTMLHeadingElement>();
+    const initialFocusRef = useRef<HTMLHeadingElement>(null);
 
     // =============================================================================
     // EFFECTS

@@ -46,8 +46,8 @@ export const FileItemEdit = ({
     const [formattedName, setFormattedName] = useState<string>();
     const [currentDescription, setCurrentDescription] = useState<string>("");
 
-    const textareaRef = useRef<HTMLTextAreaElement>();
-    const nameSectionRef = useRef<HTMLDivElement>();
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const nameSectionRef = useRef<HTMLDivElement>(null);
 
     // =========================================================================
     // EFFECTS
