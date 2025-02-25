@@ -52,7 +52,7 @@ describe("TimeRangePicker", () => {
                 />
             );
 
-            await user.click(screen.queryByLabelText("Clear"));
+            await user.click(screen.getByLabelText("Clear"));
 
             expect(screen.queryByLabelText(START_LABEL)).toHaveValue("");
             expect(screen.queryByLabelText(END_LABEL)).toHaveValue("");
@@ -241,14 +241,14 @@ describe("TimeRangePicker", () => {
                     expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
                 });
                 await act(async () => {
-                    await user.click(screen.queryByText("9:00am"));
+                    await user.click(screen.getByText("9:00am"));
                 });
                 await waitFor(() => expect(startInput).toHaveValue("9:00am"));
                 expect(mockOnChange).toHaveBeenCalledTimes(1);
 
                 // Click end dropdown option
                 await act(async () => {
-                    await user.click(screen.queryByText("10:00am"));
+                    await user.click(screen.getByText("10:00am"));
                 });
                 await waitFor(() =>
                     expect(screen.getByLabelText(END_LABEL)).toHaveValue(
@@ -330,7 +330,7 @@ describe("TimeRangePicker", () => {
                 expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
                 await act(async () => {
-                    await user.click(screen.queryByText("1:00am"));
+                    await user.click(screen.getByText("1:00am"));
                 });
                 expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
@@ -353,7 +353,7 @@ describe("TimeRangePicker", () => {
                 expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
                 await act(async () => {
-                    await user.click(screen.queryByText("1:00am"));
+                    await user.click(screen.getByText("1:00am"));
                 });
                 expect(mockOnBlur).toHaveBeenCalledTimes(0);
 

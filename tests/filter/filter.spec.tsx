@@ -26,7 +26,7 @@ describe("Filter", () => {
             </Filter>
         );
 
-        const desktop = within(screen.queryByTestId(DESKTOP_TESTID));
+        const desktop = within(screen.getByTestId(DESKTOP_TESTID));
         expect(desktop.getByTestId("item1")).toBeInTheDocument();
         expect(desktop.getByTestId("item2")).toBeInTheDocument();
     });
@@ -45,7 +45,7 @@ describe("Filter", () => {
             fireEvent.click(screen.getByTestId(MOBILE_SHOW_BUTTON_TESTID));
         });
 
-        const mobile = within(screen.queryByTestId(MOBILE_TESTID));
+        const mobile = within(screen.getByTestId(MOBILE_TESTID));
         expect(mobile.getByTestId("item1")).toBeVisible();
         expect(mobile.getByTestId("item2")).toBeVisible();
     });

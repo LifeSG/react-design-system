@@ -36,11 +36,11 @@ describe("UnitNumberInput", () => {
             render(<UnitNumberInput />);
 
             const floorInput: HTMLInputElement =
-                screen.queryByTestId("floor-input");
+                screen.getByTestId("floor-input");
             const floorInputSpy = jest.spyOn(floorInput, "setSelectionRange");
 
             const unitInput: HTMLInputElement =
-                screen.queryByTestId("unit-input");
+                screen.getByTestId("unit-input");
             const unitInputSpy = jest.spyOn(unitInput, "setSelectionRange");
 
             fireEvent.change(floorInput, {
@@ -69,11 +69,11 @@ describe("UnitNumberInput", () => {
             render(<UnitNumberInput />);
 
             const floorInput: HTMLInputElement =
-                screen.queryByTestId("floor-input");
+                screen.getByTestId("floor-input");
             const floorInputSpy = jest.spyOn(floorInput, "setSelectionRange");
 
             const unitInput: HTMLInputElement =
-                screen.queryByTestId("unit-input");
+                screen.getByTestId("unit-input");
             const unitInputSpy = jest.spyOn(unitInput, "setSelectionRange");
 
             fireEvent.change(floorInput, {

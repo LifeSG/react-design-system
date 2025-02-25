@@ -72,7 +72,7 @@ describe("InputNestedMultiSelect", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -93,13 +93,13 @@ describe("InputNestedMultiSelect", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(
@@ -120,13 +120,13 @@ describe("InputNestedMultiSelect", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByText("Child 1.1.1 item"));
+        await user.click(screen.getByText("Child 1.1.1 item"));
 
         expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeInTheDocument();
         expect(mockOnSelectOptions).toHaveBeenCalledWith(
@@ -134,13 +134,13 @@ describe("InputNestedMultiSelect", () => {
             ["1.1.1"]
         );
         expect(
-            within(screen.queryByTestId(SELECTOR_TESTID)).queryByText(
+            within(screen.getByTestId(SELECTOR_TESTID)).queryByText(
                 "Child 1.1.1 item"
             )
         ).toBeInTheDocument();
 
         await user.click(
-            within(screen.queryByTestId(DROPDOWN_TESTID)).queryByText(
+            within(screen.getByTestId(DROPDOWN_TESTID)).getByText(
                 "Child 1.1.1 item"
             )
         );
@@ -162,13 +162,13 @@ describe("InputNestedMultiSelect", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByText("Parent 1.1 item"));
+        await user.click(screen.getByText("Parent 1.1 item"));
 
         expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeInTheDocument();
         expect(mockOnSelectOptions).toHaveBeenCalledWith(
@@ -179,12 +179,12 @@ describe("InputNestedMultiSelect", () => {
             ["1.1.1", "1.1.2"]
         );
         expect(
-            within(screen.queryByTestId(SELECTOR_TESTID)).queryByText(
+            within(screen.getByTestId(SELECTOR_TESTID)).queryByText(
                 "2 selected"
             )
         ).toBeInTheDocument();
 
-        await user.click(screen.queryByText("Parent 1.1 item"));
+        await user.click(screen.getByText("Parent 1.1 item"));
 
         expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeInTheDocument();
         expect(mockOnSelectOptions).toHaveBeenCalledWith([], []);
@@ -204,13 +204,13 @@ describe("InputNestedMultiSelect", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByText("Parent 1.1 item"));
+        await user.click(screen.getByText("Parent 1.1 item"));
 
         expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeInTheDocument();
         expect(mockOnSelectOptions).toHaveBeenCalledWith(
@@ -221,12 +221,12 @@ describe("InputNestedMultiSelect", () => {
             ["1.1.1", "1.1.2"]
         );
         expect(
-            within(screen.queryByTestId(SELECTOR_TESTID)).queryByText(
+            within(screen.getByTestId(SELECTOR_TESTID)).queryByText(
                 "2 selected"
             )
         ).toBeInTheDocument();
 
-        await user.click(screen.queryByText("Parent 1.1 item"));
+        await user.click(screen.getByText("Parent 1.1 item"));
 
         expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeInTheDocument();
         expect(mockOnSelectOptions).toHaveBeenCalledWith([], []);
@@ -245,13 +245,13 @@ describe("InputNestedMultiSelect", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByText("Select all"));
+        await user.click(screen.getByText("Select all"));
 
         expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeInTheDocument();
         expect(mockOnSelectOptions).toHaveBeenCalledWith(
@@ -277,13 +277,13 @@ describe("InputNestedMultiSelect", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByText("Clear all"));
+        await user.click(screen.getByText("Clear all"));
 
         expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeInTheDocument();
         expect(mockOnSelectOptions).toHaveBeenCalledWith([], []);
@@ -303,7 +303,7 @@ describe("InputNestedMultiSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
             await waitFor(() =>
@@ -333,7 +333,7 @@ describe("InputNestedMultiSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
             await waitFor(() =>
@@ -368,7 +368,7 @@ describe("InputNestedMultiSelect", () => {
             );
 
             await act(async () => {
-                await user.click(screen.queryByTestId(FIELD_TESTID));
+                await user.click(screen.getByTestId(FIELD_TESTID));
             });
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
@@ -466,7 +466,7 @@ describe("InputNestedMultiSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => {
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();

@@ -54,7 +54,7 @@ describe("HistogramSlider", () => {
             />
         );
 
-        const thumb = screen.queryByTestId("slider-track-0").parentElement;
+        const thumb = screen.getByTestId("slider-track-0").parentElement;
         fireEvent.mouseDown(thumb);
 
         expect(mockChange).toHaveBeenCalledWith([1, 2]);
