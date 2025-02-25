@@ -131,7 +131,7 @@ describe("Filter", () => {
                 const mockOnChange = jest.fn();
                 render(
                     <FilterContext.Provider
-                        value={{ mode: "mobile", rootNode: null }}
+                        value={{ mode: "mobile", rootNode: { current: null } }}
                     >
                         <Filter.Item
                             expanded={false}

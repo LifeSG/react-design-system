@@ -19,13 +19,13 @@ describe("Footer", () => {
     it("should be able to render the component", () => {
         render(<Footer />);
 
-        const defaultDisclaimerLinks =
-            FooterHelper.getDisclaimerLinks(undefined);
+        const defaultDisclaimerLinks = FooterHelper.getDisclaimerLinks(
+            undefined,
+            undefined
+        );
 
-        for (const link in defaultDisclaimerLinks) {
-            expect(
-                screen.getByText(defaultDisclaimerLinks[link].children)
-            ).toBeInTheDocument();
+        for (const item of Object.values(defaultDisclaimerLinks)) {
+            expect(screen.getByText(item.children)).toBeInTheDocument();
         }
     });
 
@@ -103,15 +103,15 @@ describe("Footer", () => {
 
             render(<Footer disclaimerLinks={disclaimerLinks} />);
 
-            const defaultDisclaimerLinks =
-                FooterHelper.getDisclaimerLinks(undefined);
+            const defaultDisclaimerLinks = FooterHelper.getDisclaimerLinks(
+                undefined,
+                undefined
+            );
 
-            for (const link in defaultDisclaimerLinks) {
-                const anchor = getAnchorElement(
-                    defaultDisclaimerLinks[link].children
-                );
+            for (const item of Object.values(defaultDisclaimerLinks)) {
+                const anchor = getAnchorElement(item.children);
 
-                expect(anchor.href).toBe(disclaimerLinks[link].href);
+                expect(anchor.href).toBe(item.href);
             }
         });
 

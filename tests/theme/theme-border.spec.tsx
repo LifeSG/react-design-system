@@ -23,7 +23,7 @@ describe("Border Theming Test", () => {
         );
 
         const receivedBorderStyle = getComputedStyle(
-            container.firstElementChild
+            container.firstElementChild!
         ).border;
 
         expect(receivedBorderStyle).toBe("1px solid");
@@ -83,7 +83,7 @@ describe("Border Theming Test", () => {
         );
 
         const receivedBorderStyle = getComputedStyle(
-            container.firstElementChild
+            container.firstElementChild!
         ).border;
 
         expect(receivedBorderStyle).toBe("3px solid");

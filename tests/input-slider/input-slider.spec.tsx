@@ -38,7 +38,7 @@ describe("InputSlider", () => {
         const mockChange = jest.fn();
         render(<InputSlider onChange={mockChange} />);
 
-        const slider = screen.getByTestId("slider-track-0").parentElement;
+        const slider = screen.getByTestId("slider-track-0").parentElement!;
         fireEvent.mouseDown(slider);
 
         expect(mockChange).toHaveBeenCalledWith(0);

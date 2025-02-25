@@ -114,9 +114,12 @@ const DEFAULT_TEXT = "default text";
 // =============================================================================
 const getActionLink = (isQuery = false, children?: string) => {
     if (isQuery) {
-        return screen.queryByRole("link", children && { name: children });
+        return screen.queryByRole(
+            "link",
+            children ? { name: children } : undefined
+        );
     }
-    return screen.getByRole("link", children && { name: children });
+    return screen.getByRole("link", children ? { name: children } : undefined);
 };
 
 const getCustomIcon = () => {

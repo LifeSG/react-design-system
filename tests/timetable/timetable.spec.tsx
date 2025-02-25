@@ -105,10 +105,10 @@ describe("TimeTable", () => {
             />
         );
         const rowHeaderParent = screen.getByTestId("row-header-column-id");
-        const firstRowHeader = rowHeaderParent.firstElementChild;
+        const firstRowHeader = rowHeaderParent.firstElementChild!;
 
         const contentContainer = screen.getByTestId("content-container-id");
-        const firstRowBar = contentContainer.firstElementChild;
+        const firstRowBar = contentContainer.firstElementChild!;
         const blockedCell = firstRowBar.children[0];
         const filledCell = firstRowBar.children[1];
 
@@ -170,9 +170,9 @@ describe("TimeTable", () => {
             />
         );
         const rowHeaderParent = screen.getByTestId("row-header-column-id");
-        const firstRowHeader = rowHeaderParent.firstElementChild;
+        const firstRowHeader = rowHeaderParent.firstElementChild!;
         const contentContainer = screen.getByTestId("content-container-id");
-        const firstRowBar = contentContainer.firstElementChild;
+        const firstRowBar = contentContainer.firstElementChild!;
         const blockedCell = firstRowBar.children[0];
         const filledCell = firstRowBar.children[1];
 
