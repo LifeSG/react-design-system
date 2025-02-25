@@ -30,6 +30,7 @@ import {
     DrawerDismissalMethod,
     NavItemLinkProps,
     NavbarButtonProps,
+    NavbarDrawerApi,
     NavbarDrawerHandle,
     NavbarProps,
 } from "./types";
@@ -75,11 +76,14 @@ const Component = <T,>(
     useImperativeHandle(
         ref,
         () =>
-            Object.assign(elementRef.current, {
-                dismissDrawer: () => {
-                    dismissDrawer();
-                },
-            }),
+            Object.assign<HTMLDivElement, NavbarDrawerApi>(
+                elementRef.current!,
+                {
+                    dismissDrawer: () => {
+                        dismissDrawer();
+                    },
+                }
+            ),
         [showDrawer]
     );
 

@@ -19,7 +19,11 @@ import {
     TitleContainer,
     TitleH4,
 } from "./accordion-item.style";
-import { AccordionItemHandle, AccordionItemProps } from "./types";
+import {
+    AccordionItemApi,
+    AccordionItemHandle,
+    AccordionItemProps,
+} from "./types";
 
 function Component(
     {
@@ -50,17 +54,20 @@ function Component(
     useImperativeHandle(
         ref,
         () =>
-            Object.assign(elementRef.current, {
-                expand(): void {
-                    setExpand(true);
-                },
-                collapse(): void {
-                    setExpand(false);
-                },
-                isExpanded() {
-                    return expand;
-                },
-            }),
+            Object.assign<HTMLDivElement, AccordionItemApi>(
+                elementRef.current!,
+                {
+                    expand(): void {
+                        setExpand(true);
+                    },
+                    collapse(): void {
+                        setExpand(false);
+                    },
+                    isExpanded() {
+                        return expand;
+                    },
+                }
+            ),
         [expand]
     );
 
@@ -76,7 +83,7 @@ function Component(
 
     useEffect(() => {
         if (hasFirstLoad) {
-            setExpand(expanded);
+            setExpand(!!expanded);
         }
     }, [expanded]);
 

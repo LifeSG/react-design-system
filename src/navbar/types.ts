@@ -88,9 +88,11 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
 
 export type BrandType = "primary" | "secondary";
 
-export type NavbarDrawerHandle = HTMLDivElement & {
+export type NavbarDrawerApi = {
     dismissDrawer: () => void;
 };
+
+export type NavbarDrawerHandle = HTMLDivElement & NavbarDrawerApi;
 
 export interface NavbarProps<T = void> extends NavbarSharedProps {
     items: NavItemsProps<T>;
