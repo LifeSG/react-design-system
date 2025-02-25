@@ -52,7 +52,10 @@ export const PopoverV2 = ({
                 </PopoverContainer>
             )}
             {isMobile && (
-                <Modal show={visible} onOverlayClick={handleMobileClose}>
+                <Modal
+                    show={visible ?? false}
+                    onOverlayClick={handleMobileClose}
+                >
                     <MobileModalBox onClose={handleMobileClose}>
                         <ContentWrapper>{renderContent()}</ContentWrapper>
                     </MobileModalBox>

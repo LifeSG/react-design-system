@@ -16,8 +16,8 @@ dayjs.extend(isBetween);
 export type DayVariant = "default" | "other-month" | "today";
 
 interface CalendarDayViewProps extends CommonCalendarProps {
-    selectedStartDate: string;
-    selectedEndDate: string;
+    selectedStartDate: string | undefined;
+    selectedEndDate: string | undefined;
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     isNewSelection: boolean;

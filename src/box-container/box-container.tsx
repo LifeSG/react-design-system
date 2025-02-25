@@ -43,6 +43,7 @@ export const BoxContainer = ({
     const theme = useTheme();
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const interactiveHeader = clickableHeader && collapsible;
 
     // =============================================================================
     // EVENT HANDLERS
@@ -121,8 +122,8 @@ export const BoxContainer = ({
         <Container {...otherProps}>
             <Header
                 data-testid="header"
-                onClick={clickableHeader && collapsible && onHandleClick}
-                $interactive={clickableHeader && collapsible}
+                onClick={interactiveHeader ? onHandleClick : undefined}
+                $interactive={interactiveHeader}
             >
                 <LabelWrapper>
                     <LabelText

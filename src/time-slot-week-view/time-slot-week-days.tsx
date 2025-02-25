@@ -24,7 +24,7 @@ interface TimeSlotWeekDaysProps
         InternalCalendarProps,
         "disabledDates" | "minDate" | "maxDate"
     > {
-    selectedDate: string;
+    selectedDate: string | undefined;
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     slots?: { [date: string]: TimeSlot[] } | undefined;
@@ -34,12 +34,13 @@ interface TimeSlotWeekDaysProps
 
 const dateFormat = "YYYY-MM-DD";
 
-const fallbackSlot = {
+const fallbackSlot: TimeSlot = {
     id: "1",
     startTime: "",
     endTime: "",
     clickable: false,
     styleAttributes: {
+        color: "",
         styleType: "stripes",
         backgroundColor: Colour["bg-stronger"],
         backgroundColor2: Colour["bg-strongest"],
@@ -75,7 +76,7 @@ export const TimeSlotWeekDays = ({
     };
 
     const handleSlotClick = (date: string, slot: TimeSlot) => {
-        onSlotClick(date, slot);
+        onSlotClick?.(date, slot);
     };
 
     const handleDayHover = (value: Dayjs) => {
@@ -97,7 +98,7 @@ export const TimeSlotWeekDays = ({
         );
 
         const isDisabledDate =
-            disabledDates && disabledDates.includes(day.format(dateFormat));
+            !!disabledDates && disabledDates.includes(day.format(dateFormat));
 
         return !isWithinRange || isDisabledDate;
     };

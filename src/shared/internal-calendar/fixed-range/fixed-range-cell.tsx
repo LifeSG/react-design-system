@@ -5,13 +5,13 @@ import { CellStyleProps, CellType, DayCell, DayCellProps } from "../day-cell";
 interface Props {
     date: Dayjs;
     calendarDate: Dayjs;
-    selectedDate: string;
-    hoverDate: string;
+    selectedDate: string | undefined;
+    hoverDate: string | undefined;
     minDate?: string | undefined;
     maxDate?: string | undefined;
     disabledDates?: string[] | undefined;
     allowDisabledSelection?: boolean | undefined;
-    numberOfDays?: number;
+    numberOfDays?: number | undefined;
     onSelect: (value: Dayjs, disabled: boolean) => void;
     onHover: (value: string, disabled: boolean) => void;
 }
@@ -25,7 +25,7 @@ export const FixedRangeDayCell = ({
     maxDate,
     disabledDates,
     allowDisabledSelection,
-    numberOfDays,
+    numberOfDays = 1,
     onSelect,
     onHover,
 }: Props) => {
@@ -53,9 +53,9 @@ export const FixedRangeDayCell = ({
         : { start: undefined, end: undefined };
 
     const isSelected =
-        selectedDate && date.isBetween(rangeStart, rangeEnd, "day", "[]");
+        !!selectedDate && date.isBetween(rangeStart, rangeEnd, "day", "[]");
     const isHover =
-        hoverDate && date.isBetween(hoverStart, hoverEnd, "day", "[]");
+        !!hoverDate && date.isBetween(hoverStart, hoverEnd, "day", "[]");
     const isStart =
         (isSelected && date.isSame(rangeStart, "day")) ||
         (isHover && date.isSame(hoverStart, "day"));

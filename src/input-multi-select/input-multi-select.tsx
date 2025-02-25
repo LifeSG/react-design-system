@@ -131,7 +131,7 @@ export const InputMultiSelect = <T, V>({
         setFocused(true);
     };
 
-    const handleClose = (reason: OpenChangeReason) => {
+    const handleClose = (reason: OpenChangeReason | undefined) => {
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 

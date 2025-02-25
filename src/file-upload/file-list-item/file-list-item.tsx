@@ -134,7 +134,7 @@ const Component = ({
 
     const shouldDisable = () => disabled || !!activeId;
 
-    const shouldEnableSort = () => sortable && !readOnly;
+    const shouldEnableSort = () => !!sortable && !readOnly;
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -171,7 +171,7 @@ const Component = ({
         </>
     );
 
-    const renderWithThumbnail = () => (
+    const renderWithThumbnail = (thumbnailImageDataUrl: string) => (
         <>
             <FileListItemThumbnail
                 thumbnailImageDataUrl={thumbnailImageDataUrl}
@@ -205,7 +205,7 @@ const Component = ({
         if (errorMessage) {
             content = renderErrorState();
         } else if (thumbnailImageDataUrl) {
-            content = renderWithThumbnail();
+            content = renderWithThumbnail(thumbnailImageDataUrl);
         } else {
             content = renderDefault();
         }

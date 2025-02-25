@@ -39,8 +39,9 @@ export const PredictiveTextInput = <T, V>({
     const [isOptionSelected, setIsOptionSelected] = useState<boolean>(
         !!selectedOption
     );
-    const [prevOptionSelected, setPrevOptionSelected] =
-        useState<T>(selectedOption);
+    const [prevOptionSelected, setPrevOptionSelected] = useState<T | undefined>(
+        selectedOption
+    );
     const fetchOptionsRef = useRef(fetchOptions);
 
     // =============================================================================
@@ -166,10 +167,15 @@ export const PredictiveTextInput = <T, V>({
     // =============================================================================
 
     const showDropdown = () => {
-        return input && input.length >= minimumCharacters && !isOptionSelected;
+        return (
+            !!input && input.length >= minimumCharacters && !isOptionSelected
+        );
+    };
     };
 
-    const getValue = (item: T): V => {
+    const getValue = (item: T | undefined): V | undefined => {
+        if (!item) return undefined;
+
         return valueExtractor ? valueExtractor(item) : (item as unknown as V);
     };
 

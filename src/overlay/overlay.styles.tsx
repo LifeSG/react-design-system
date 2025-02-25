@@ -16,7 +16,7 @@ interface StyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-const getBackdropFilter = (blur: boolean) => {
+const getBackdropFilter = (blur: boolean | undefined) => {
     let styleString = "";
 
     if (blur) {

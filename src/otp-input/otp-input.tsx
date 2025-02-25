@@ -39,9 +39,7 @@ export const OtpInput = ({
         new Array(numOfInput).fill("")
     );
     const [countDown, setCountDown] = useState<number>(cooldownDuration);
-    const [lastCtaTimestamp, setLastCtaTimestamp] = useState<Date | undefined>(
-        new Date()
-    );
+    const [lastCtaTimestamp, setLastCtaTimestamp] = useState<Date>(new Date());
 
     // =============================================================================
     // EFFECTS
@@ -114,6 +112,8 @@ export const OtpInput = ({
         };
 
     const handlePaste = (event: ClipboardEvent): void => {
+        if (!event.clipboardData) return;
+
         const pastedValue = event.clipboardData.getData("text");
         const pastedValueArr = pastedValue.split("");
         if (pastedValue && validateUserInput(pastedValue, numOfInput)) {

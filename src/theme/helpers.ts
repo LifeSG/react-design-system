@@ -9,7 +9,7 @@ export const getValue = <C, T, K extends keyof C | keyof T>(
     collection: C,
     key: K,
     customCollection?: T
-): T[K & keyof T] | C[K & keyof C] | undefined => {
+): NonNullable<T[K & keyof T] | C[K & keyof C]> => {
     return get(customCollection, key) || get(collection, key);
 };
 

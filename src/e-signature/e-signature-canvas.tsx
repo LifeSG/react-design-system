@@ -15,7 +15,7 @@ import {
 } from "./e-signature.styles";
 
 interface ESignatureCanvasProps {
-    baseImageDataURL?: string | undefined;
+    baseImageDataURL?: string | null | undefined;
     forwardedRef?: Ref<ESignatureCanvasRef> | undefined;
 }
 

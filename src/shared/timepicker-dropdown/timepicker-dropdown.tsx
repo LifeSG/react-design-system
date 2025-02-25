@@ -40,7 +40,7 @@ enum ETimePeriodToggleName {
 
 interface TimepickerDropdownProps {
     id?: string;
-    value: string;
+    value: string | undefined;
     show: boolean;
     format: TimeFormat;
     onChange: (value: string) => void;
@@ -387,7 +387,7 @@ export const TimepickerDropdown = ({
     const styles = useSpring({
         opacity: show ? 1 : 0, // prevent top border from staying too long
         height: show
-            ? resizeDetector.height + 32 + 2 // include vertical padding and border
+            ? (resizeDetector.height ?? 0) + 32 + 2 // include vertical padding and border
             : 0,
     });
 

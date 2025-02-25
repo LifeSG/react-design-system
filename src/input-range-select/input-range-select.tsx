@@ -95,7 +95,7 @@ export const InputRangeSelect = <T, V>({
     const handleListItemClick = (
         item: T,
         extractedValue: V,
-        rangeType?: RangeType
+        rangeType: RangeType
     ) => {
         rangeType === "from"
             ? setSelectedFromValue(item)
@@ -286,7 +286,6 @@ export const InputRangeSelect = <T, V>({
     return (
         <DropdownWrapper
             show={focusedInput !== "none"}
-            data-testid={otherProps["data-testid"]}
             error={error && !(focusedInput !== "none")}
             disabled={disabled}
             readOnly={readOnly}

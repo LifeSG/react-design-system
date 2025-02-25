@@ -54,7 +54,7 @@ export const InputSelect = <T, V>({
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const [selected, setSelected] = useState<T>(selectedOption);
+    const [selected, setSelected] = useState<T | undefined>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
@@ -113,7 +113,7 @@ export const InputSelect = <T, V>({
         setFocused(true);
     };
 
-    const handleClose = (reason: OpenChangeReason) => {
+    const handleClose = (reason: OpenChangeReason | undefined) => {
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 

@@ -104,7 +104,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         </>
     );
 
-    const renderWithThumbnail = () => (
+    const renderWithThumbnail = (thumbnailImageDataUrl: string) => (
         <>
             <ThumbnailContainer data-testid={`${id}-thumbnail`}>
                 <Thumbnail
@@ -140,7 +140,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         let content: JSX.Element;
 
         if (thumbnailImageDataUrl) {
-            content = renderWithThumbnail();
+            content = renderWithThumbnail(thumbnailImageDataUrl);
         } else {
             content = renderDefault();
         }

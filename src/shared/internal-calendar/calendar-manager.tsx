@@ -203,7 +203,7 @@ const Component = (
         }
     };
 
-    const handleDoneButton = (isDisabled: boolean) => {
+    const handleDoneButton = (isDisabled: boolean | undefined) => {
         if (isDisabled) return;
 
         setCalendarDate(viewCalendarDate);
@@ -332,7 +332,7 @@ const Component = (
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         viewCalendarDate={viewCalendarDate}
-                        isNewSelection={selectWithinRange}
+                        isNewSelection={!!selectWithinRange}
                         onMonthSelect={handleMonthYearSelect}
                         allowDisabledSelection={allowDisabledSelection}
                     />
@@ -347,7 +347,7 @@ const Component = (
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         viewCalendarDate={viewCalendarDate}
-                        isNewSelection={selectWithinRange}
+                        isNewSelection={!!selectWithinRange}
                         onYearSelect={handleMonthYearSelect}
                         allowDisabledSelection={allowDisabledSelection}
                     />

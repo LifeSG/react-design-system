@@ -41,7 +41,7 @@ export const ComboboxPicker = ({
     // =============================================================================
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
     const [activeTimeSelector, setActiveTimeSelector] =
-        useState<TimeRangeInputType>(null);
+        useState<TimeRangeInputType | null>(null);
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const [validationError, setValidationError] = useState<string>("");
 
@@ -66,7 +66,9 @@ export const ComboboxPicker = ({
             initialStartTimeVal,
             startOptions
         );
-        return startOptions.slice(startOptions.indexOf(flooredStartVal));
+        return flooredStartVal
+            ? startOptions.slice(startOptions.indexOf(flooredStartVal))
+            : [];
     }, [startOptions, initialStartTimeVal]);
 
     // =========================================================================
@@ -249,7 +251,7 @@ export const ComboboxPicker = ({
     };
 
     // NOTE: Dropdown dismissal (esc) does not trigger onClose
-    const handleClose = (reason: OpenChangeReason) => {
+    const handleClose = (reason: OpenChangeReason | undefined) => {
         if (reason === "outside-press") {
             // No handleTimeChange to avoid duplicate call from handleBlur
             setActiveTimeSelector(null);

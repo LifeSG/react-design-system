@@ -32,7 +32,7 @@ interface ElementWithDropdownProps {
     enabled: boolean;
     isOpen: boolean;
     onOpen?: () => void | undefined;
-    onClose?: (reason: OpenChangeReason) => void | undefined;
+    onClose?: (reason: OpenChangeReason | undefined) => void | undefined;
     onDismiss?: () => void | undefined;
     renderElement: () => React.ReactNode;
     renderDropdown: (props: DropdownRenderProps) => React.ReactNode;
@@ -78,7 +78,7 @@ export const ElementWithDropdown = ({
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const elementRef = useRef<HTMLDivElement | null>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const { width: referenceWidth } = useResizeDetector({
+    const { width: referenceWidth = 0 } = useResizeDetector({
         targetRef: elementRef,
         handleHeight: false,
     });

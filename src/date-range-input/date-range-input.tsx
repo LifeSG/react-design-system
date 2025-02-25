@@ -74,7 +74,7 @@ export const DateRangeInput = ({
     // CONST, STATE, REF
     // =============================================================================
     const [initialCalendarDate, setInitialCalendarDate] = useState<string>();
-    const [hoverValue, setHoverValue] = useState<string>(undefined);
+    const [hoverValue, setHoverValue] = useState<string | undefined>(undefined);
     const [isStartDisabled, setIsStartDisabled] = useState<boolean>(false);
     const [isEndDisabled, setIsEndDisabled] = useState<boolean>(false);
     const isWeekSelection = variant === "week";
@@ -524,7 +524,7 @@ export const DateRangeInput = ({
     };
 
     const getHoverValue = (getValue: Exclude<FocusType, "none">) => {
-        let values = {
+        let values: { start: string | undefined; end: string | undefined } = {
             start: undefined,
             end: undefined,
         };

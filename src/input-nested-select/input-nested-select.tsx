@@ -135,7 +135,7 @@ export const InputNestedSelect = <V1, V2, V3>({
         setFocused(true);
     };
 
-    const handleClose = (reason: OpenChangeReason) => {
+    const handleClose = (reason: OpenChangeReason | undefined) => {
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 

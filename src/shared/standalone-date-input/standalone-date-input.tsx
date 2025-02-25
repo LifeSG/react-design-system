@@ -297,7 +297,7 @@ export const Component = (
     // =============================================================================
     // HELPERS
     // =============================================================================
-    function parseToInputValues(stringVal: string) {
+    function parseToInputValues(stringVal: string | undefined) {
         if (!stringVal) {
             return [undefined, undefined, undefined];
         } else {

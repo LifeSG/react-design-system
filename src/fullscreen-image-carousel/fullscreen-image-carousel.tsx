@@ -69,8 +69,8 @@ export const Component = (
         Record<string, ImageDimension>
     >({});
     const [zoom, setZoom] = useState(1);
-    const [startX, setStartX] = useState(null);
-    const [endX, setEndX] = useState(null);
+    const [startX, setStartX] = useState<number | undefined>();
+    const [endX, setEndX] = useState<number | undefined>();
     const containerRef = useRef<HTMLDivElement>(null);
     const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
     const zoomRefs = useRef<(ReactZoomPanPinchContentRef | null)[]>([]);
@@ -120,8 +120,8 @@ export const Component = (
                 goToPrevSlide();
             }
         }
-        setStartX(null);
-        setEndX(null);
+        setStartX(undefined);
+        setEndX(undefined);
     };
 
     const handleZoom = (e: ReactZoomPanPinchRef) => {
@@ -142,14 +142,22 @@ export const Component = (
         if (zoom === 1) {
             const zoomRatio = getZoomRatio();
             zoomRefs.current?.[currentSlide]?.centerView(zoomRatio);
-            setZoom(zoomRatio);
+            setZoom(zoomRatio ?? 1);
         } else {
             setZoom(1);
             zoomRefs.current?.[currentSlide]?.resetTransform();
         }
     };
 
-    const setDimension = ({ src, height, width }) => {
+    const setDimension = ({
+        src,
+        height,
+        width,
+    }: {
+        src: string;
+        height: number;
+        width: number;
+    }) => {
         setImageDimension((oldState) => {
             return { ...oldState, [src]: { height, width } };
         });

@@ -14,7 +14,7 @@ export interface DropzoneElement extends HTMLInputElement {
 }
 
 interface Props extends FileInputProps {
-    children: JSX.Element[];
+    children: React.ReactNode;
     id: string;
     border: boolean;
     onChange: (files: File[]) => void;

@@ -27,9 +27,9 @@ export const TimeSlotWeekView = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [selectedDate, setSelectedDate] = useState<string>(value); // YYYY-MM-DD
+    const [selectedDate, setSelectedDate] = useState<string | undefined>(value); // YYYY-MM-DD
     const calendarManagerRef = useRef<CalendarManagerRef>(null);
-    const previousCalendarDate = useRef<Dayjs>(undefined);
+    const previousCalendarDate = useRef<Dayjs | undefined>(undefined);
 
     // =============================================================================
     // EFFECTS
@@ -103,13 +103,13 @@ export const TimeSlotWeekView = ({
                 getLeftArrowDate={(day) => day.subtract(1, "week")}
                 getRightArrowDate={(day) => day.add(1, "week")}
                 isLeftArrowDisabled={(calendarDate) =>
-                    minDate &&
+                    !!minDate &&
                     dayjs(calendarDate)
                         .subtract(1, "week")
                         .isBefore(minDate, "week")
                 }
                 isRightArrowDisabled={(calendarDate) =>
-                    maxDate &&
+                    !!maxDate &&
                     dayjs(calendarDate).add(1, "week").isAfter(maxDate, "week")
                 }
                 onCalendarDateChange={handleOnCalendarDateChange}

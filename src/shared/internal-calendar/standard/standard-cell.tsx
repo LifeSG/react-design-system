@@ -7,8 +7,8 @@ import { FocusType } from "../types";
 interface Props {
     date: Dayjs;
     calendarDate: Dayjs;
-    startDate: string;
-    endDate: string;
+    startDate: string | undefined;
+    endDate: string | undefined;
     hoverDate: string;
     minDate?: string | undefined;
     maxDate?: string | undefined;
@@ -122,7 +122,7 @@ export const StandardCell = ({
 
     const getHoverStyle = (): CellStyleProps => {
         if (!hoverDate) {
-            return;
+            return {};
         }
 
         const props: CellStyleProps = {};
@@ -184,8 +184,8 @@ export const StandardCell = ({
         const isBeforeEnd = hoverDay.isBefore(endDate, "day");
         const isAfterStart = hoverDay.isAfter(startDate, "day");
 
-        let hoverStart: string, hoverEnd: string;
-        let overlapStart: string, overlapEnd: string;
+        let hoverStart: string | undefined, hoverEnd: string | undefined;
+        let overlapStart: string | undefined, overlapEnd: string | undefined;
 
         // [s h e] => overlap
         // [h s e] => hover

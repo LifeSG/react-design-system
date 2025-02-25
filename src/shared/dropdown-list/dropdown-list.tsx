@@ -372,7 +372,7 @@ export const DropdownList = <T, V>({
     };
 
     const renderItems = () => {
-        if (!onRetry || (onRetry && itemsLoadState === "success")) {
+        if (!onRetry || itemsLoadState === "success") {
             return displayListItems.map((item, index) => {
                 return (
                     <ListItem
@@ -434,6 +434,7 @@ export const DropdownList = <T, V>({
 
     const renderSelectAll = () => {
         if (
+            selectedItems &&
             multiSelect &&
             displayListItems.length > 0 &&
             !searchValue &&
@@ -545,9 +546,10 @@ export const DropdownList = <T, V>({
             return;
         }
 
+        // FIXME: add onDismiss handling
         return (
             <div ref={customCallToActionRef} data-testid="custom-cta">
-                {renderCustomCallToAction(onDismiss, displayListItems)}
+                {renderCustomCallToAction(onDismiss as any, displayListItems)}
             </div>
         );
     };

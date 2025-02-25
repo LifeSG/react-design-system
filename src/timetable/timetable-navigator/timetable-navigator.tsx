@@ -48,12 +48,12 @@ export const TimeTableNavigator = ({
 
     const handleRightArrowClick = (date: string) => {
         scrollToTop();
-        onRightArrowClick(date);
+        onRightArrowClick?.(date);
     };
 
     const handleLeftArrowClick = (date: string) => {
         scrollToTop();
-        onLeftArrowClick(date);
+        onLeftArrowClick?.(date);
     };
     // =============================================================================
     // RENDER FUNCTIONS

@@ -35,7 +35,7 @@ interface TimeSlotWeekDaysProps
         InternalCalendarProps,
         "disabledDates" | "minDate" | "maxDate"
     > {
-    selectedDate: string;
+    selectedDate: string | undefined;
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     slots: { [date: string]: TimeSlot[] };
@@ -89,7 +89,7 @@ export const TimeSlotBarWeekDays = ({
     );
 
     // React spring animation configuration
-    const { height: actualHeight, ref: cellsRef } = useResizeDetector();
+    const { height: actualHeight = 0, ref: cellsRef } = useResizeDetector();
     const height = maxVisibleCellHeight
         ? actualHeight < maxVisibleCellHeight || expandAll
             ? actualHeight
@@ -101,7 +101,7 @@ export const TimeSlotBarWeekDays = ({
         [date: string]: TimeSlotCell[];
     } => {
         if (daySlots) {
-            const transformedDaySlots = {};
+            const transformedDaySlots: Record<string, TimeSlotCell[]> = {};
             Object.entries(daySlots).forEach(([key, slots]) => {
                 const cellsArray = initializeAndFillSlots(slots);
                 transformedDaySlots[key] = populateEmptyCells(cellsArray);

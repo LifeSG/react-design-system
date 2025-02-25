@@ -12,7 +12,7 @@ dayjs.extend(isBetween);
 export type DayVariant = "default" | "other-month" | "today";
 
 interface CalendarDayViewProps extends CommonCalendarProps {
-    selectedDate: string;
+    selectedDate: string | undefined;
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;

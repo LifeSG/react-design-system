@@ -49,7 +49,7 @@ export const DropdownLabel = ({
     // =========================================================================
     const hasExceededContainer = useCallback(
         (displayText: string) => {
-            if (displayType !== "inline") {
+            if (displayType !== "inline" || !width) {
                 return false;
             }
 

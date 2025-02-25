@@ -40,7 +40,9 @@ export const DateInput = ({
     const [selectedDate, setSelectedDate] = useState<string>(
         DateInputHelper.sanitizeInput(value)
     );
-    const [hoveredDate, setHoveredDate] = useState<string>(undefined);
+    const [hoveredDate, setHoveredDate] = useState<string | undefined>(
+        undefined
+    );
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
 
@@ -166,7 +168,7 @@ export const DateInput = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const performOnChangeHandler = (changeValue?: string) => {
+    const performOnChangeHandler = (changeValue: string) => {
         if (onChange) {
             onChange(changeValue);
         }

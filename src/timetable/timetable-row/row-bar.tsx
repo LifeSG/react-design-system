@@ -26,11 +26,6 @@ export const RowBar = ({
     outOfRangeCellPopover,
     ...otherProps
 }: RowBarProps) => {
-    // =============================================================================
-    // CONST, STATE, REF
-    // =============================================================================
-    const testId = otherProps["data-testid"] || "timetable-row";
-
     // ===========================================================================
     // HELPER FUNCTIONS
     // ===========================================================================
@@ -117,7 +112,7 @@ export const RowBar = ({
     ]);
 
     return (
-        <RowCellContainer data-testid={testId} {...otherProps}>
+        <RowCellContainer data-testid="timetable-row" {...otherProps}>
             {rowCellArray.map((cell, index) => {
                 return (
                     <RowCell

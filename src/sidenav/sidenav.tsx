@@ -69,7 +69,7 @@ const SidenavBase = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleOutsideClicks = (e: PointerEvent) => {
+    const handleOutsideClicks = (e: MouseEvent) => {
         if (
             wrapperRef.current &&
             !wrapperRef.current.contains(e.target as Node)
@@ -97,10 +97,7 @@ const SidenavBase = ({
     useEventListener("click", handleOutsideClicks, "window", true);
 
     useEffect(() => {
-        setShowDrawer(
-            (selectedItem && !!selectedItem.content) ||
-                (currentItem && !!currentItem.content)
-        );
+        setShowDrawer(!!selectedItem?.content || !!currentItem?.content);
     }, [currentItem, selectedItem]);
 
     // =========================================================================

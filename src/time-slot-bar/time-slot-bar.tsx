@@ -178,6 +178,8 @@ export const TimeSlotBar = ({
 
     // Render default time slot (aka background)
     const renderDefaultTimeSlots = () => {
+        if (!styleAttributes) return;
+
         const {
             backgroundColor,
             backgroundColor2,
@@ -349,7 +351,7 @@ export const TimeSlotBar = ({
                     data-testid={getDataTestId("time-slot-wrapper")}
                     data-id="slot-wrapper"
                 >
-                    {styleAttributes && renderDefaultTimeSlots()}
+                    {renderDefaultTimeSlots()}
                     {renderTimeSlots()}
                 </TimeSlotWrapper>
             </TimeSlotBarContainer>

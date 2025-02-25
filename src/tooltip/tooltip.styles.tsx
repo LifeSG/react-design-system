@@ -16,7 +16,7 @@ interface TooltipStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-const getVisibilityStyle = (visible: boolean) => {
+const getVisibilityStyle = (visible: boolean | undefined) => {
     if (visible) {
         return css`
             visibility: "visible";
@@ -34,7 +34,7 @@ const getVisibilityStyle = (visible: boolean) => {
     }
 };
 
-const getBubblePositionStyle = (position: TooltipPosition) => {
+const getBubblePositionStyle = (position: TooltipPosition | undefined) => {
     switch (position) {
         case "left":
             return css`

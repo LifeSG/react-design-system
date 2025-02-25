@@ -45,7 +45,9 @@ const Component = (
     useImperativeHandle(ref, () => navWrapperRef.current!);
 
     const labelText =
-        selectedItemIndex >= 0 && isStickied
+        typeof selectedItemIndex === "number" &&
+        selectedItemIndex >= 0 &&
+        isStickied
             ? items[selectedItemIndex].title
             : defaultLabel;
 

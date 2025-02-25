@@ -11,7 +11,7 @@ interface WrapperStyleProps {
 }
 
 interface ContentStyleProps {
-    $stretch: boolean;
+    $stretch: boolean | undefined;
 }
 
 // =============================================================================

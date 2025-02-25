@@ -69,7 +69,7 @@ export const useStateActions = <State, Reducers extends ReducerObj<State>>({
         Object.keys(reducers).map((actionType) => {
             return [
                 actionType,
-                (payload) => {
+                (payload: unknown) => {
                     if (debug) {
                         logAction(name, actionType, payload);
                     }
@@ -84,7 +84,11 @@ export const useStateActions = <State, Reducers extends ReducerObj<State>>({
     return [state, actions] as [State, Actions<State, Reducers>];
 };
 
-const logAction = (name, type, payload) => {
+const logAction = (
+    name: string | undefined,
+    type: string,
+    payload: unknown
+) => {
     const args = [];
     if (name) args.push(`[${name}]`);
     args.push(type, payload);

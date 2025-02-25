@@ -26,7 +26,7 @@ export const Wrapper = styled.div<StyleProps>`
 
     ${(props) => {
         let backgroundColor: (props: any) => string;
-        let borderColor: (props: any) => string;
+        let borderColor: ((props: any) => string) | undefined;
         let color: (props: any) => string;
 
         if (props.$type === "solid") {

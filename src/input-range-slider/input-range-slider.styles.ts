@@ -7,12 +7,12 @@ import { Typography } from "../typography";
 // STYLE INTERFACES
 // =============================================================================
 interface TrackStyleProps {
-    $color: string | ((props: unknown) => string);
+    $color: string | ((props: unknown) => string) | undefined;
 }
 
 interface ThumbStyleProps {
-    $disabled: boolean;
-    $readOnly: boolean;
+    $disabled: boolean | undefined;
+    $readOnly: boolean | undefined;
 }
 
 // =============================================================================

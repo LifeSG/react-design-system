@@ -65,9 +65,7 @@ const Component = <T,>(
     const isStretch = layout === "stretch";
     const elementRef = useRef<HTMLDivElement>(null);
     const theme = useTheme();
-    const defaultResource = getDefaultResourceLogo(
-        (theme as any)?.resourceScheme
-    );
+    const defaultResource = getDefaultResourceLogo(theme?.resourceScheme);
     const tabletWidth = Breakpoint["lg-max"]({ theme });
 
     const primary = resources?.primary || defaultResource.primary;

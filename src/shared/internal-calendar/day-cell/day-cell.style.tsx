@@ -6,17 +6,17 @@ import { CellType, LabelType } from "./types";
 // STYLE INTERFACES
 // =============================================================================
 interface StyleProps {
-    $type?: CellType;
+    $type: CellType | undefined;
 }
 
 interface LabelStyleProps {
-    $type: LabelType;
-    $disabled: boolean;
-    $interactive: boolean | null;
+    $type: LabelType | undefined;
+    $disabled: boolean | undefined;
+    $interactive: boolean | null | undefined;
 }
 
 interface IndicatorStyleProps {
-    $disabled: boolean;
+    $disabled: boolean | undefined;
 }
 
 // =============================================================================
@@ -63,7 +63,7 @@ const getCellStyle = (props: StyleProps) => {
 // =============================================================================
 // COMPONENTS
 // =============================================================================
-export const Cell = styled.div<StyleProps>`
+export const Cell = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;

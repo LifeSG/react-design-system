@@ -52,7 +52,7 @@ export const Toggle = ({
         initialExpanded,
     } = compositeSection || {};
     const [selected, setSelected] = useState<boolean | undefined>(checked);
-    const [expanded, setExpanded] = useState<boolean>(initialExpanded);
+    const [expanded, setExpanded] = useState<boolean>(!!initialExpanded);
     const hasCompositeSectionError = useMemo(() => {
         const hasErrorList = Array.isArray(errors) && errors?.length > 0;
         const hasErrorElement = !Array.isArray(errors) && !!errors;

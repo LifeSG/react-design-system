@@ -43,7 +43,7 @@ import {
 
 export const NestedDropdownList = <T,>({
     listItems,
-    multiSelect,
+    multiSelect = false,
     selectedKeyPaths,
     itemsLoadState = "success",
     itemTruncationType = "end",
@@ -317,7 +317,7 @@ export const NestedDropdownList = <T,>({
     useEventListener("keydown", handleKeyboardPress);
 
     useEffect(() => {
-        let list: NestedDropdownListLocalItem<T>[];
+        let list: NestedDropdownListLocalItem<T>[] = [];
         if (mode === "default") {
             list = flattenDefaultMode(listItems);
         } else if (mode === "expand") {

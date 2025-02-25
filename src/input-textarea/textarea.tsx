@@ -44,7 +44,7 @@ const TextareaComponent = (
     // CONST, STATE, REF
     // -------------------------------------------------------------------------
     const [stateValue, setStateValue] = useState<
-        string | number | readonly string[]
+        string | number | readonly string[] | undefined
     >(value);
 
     // -------------------------------------------------------------------------

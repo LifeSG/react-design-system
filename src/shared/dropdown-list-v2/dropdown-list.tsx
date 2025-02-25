@@ -218,6 +218,8 @@ export const DropdownList = <T, V>({
 
         // Delay to ensure render is complete
         const timer = setTimeout(() => {
+            if (!listItems) return;
+
             const index = listItems.indexOf(topScrollItem);
             const focusedItem = listItemRefs.current[index];
 
@@ -239,7 +241,7 @@ export const DropdownList = <T, V>({
             return;
         }
 
-        if (disableItemFocus) return;
+        if (disableItemFocus || !listItems) return;
 
         const selectedIndex = listItems.findIndex((item) =>
             checkListItemSelected(item)
@@ -352,7 +354,7 @@ export const DropdownList = <T, V>({
     };
 
     const renderItems = () => {
-        if (!onRetry || (onRetry && itemsLoadState === "success")) {
+        if (!onRetry || itemsLoadState === "success") {
             return displayListItems.map((item, index) => {
                 const selected = checkListItemSelected(item);
                 const active = index === focusedIndex;
@@ -405,6 +407,7 @@ export const DropdownList = <T, V>({
 
     const renderSelectAll = () => {
         if (
+            selectedItems &&
             multiSelect &&
             displayListItems.length > 0 &&
             !searchValue &&
@@ -491,9 +494,10 @@ export const DropdownList = <T, V>({
             return;
         }
 
+        // FIXME: implement onDismiss handling
         return (
             <div data-testid="custom-cta">
-                {renderCustomCallToAction(onDismiss, displayListItems)}
+                {renderCustomCallToAction(onDismiss as any, displayListItems)}
             </div>
         );
     };

@@ -49,12 +49,12 @@ export const Alert = ({
     // =============================================================================
 
     const setCollapsedState = () => {
-        setShowHiddenContent(!maxCollapsedHeight); 
+        setShowHiddenContent(!maxCollapsedHeight);
         setRenderShowMore(isContentOutsideCollapsibleZone());
     };
 
     const isContentOutsideCollapsibleZone = () => {
-        if(maxCollapsedHeight) {
+        if (contentHeight && maxCollapsedHeight) {
             return contentHeight > maxCollapsedHeight;
         }
         return false;
@@ -84,6 +84,8 @@ export const Alert = ({
     };
 
     const renderLink = () => {
+        if (!actionLink) return null;
+
         return (
             <ActionLinkText
                 data-testid="action-link"
@@ -126,7 +128,7 @@ export const Alert = ({
             $hasActionLink={!!actionLink}
         >
             <div ref={contentRef}>{children}</div>
-            {actionLink && renderLink()}
+            {renderLink()}
         </TextWrapperContainer>
     );
 

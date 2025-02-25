@@ -48,7 +48,7 @@ export const ESignature = (props: EsignatureProps) => {
     } = props;
     const [showModal, setShowModal] = useState(false);
     const eSignatureCanvasRef = useRef<ESignatureCanvasRef>(null);
-    const [dataURL, setDataURL] = useState<string>(value);
+    const [dataURL, setDataURL] = useState<string | null | undefined>(value);
     const theme = useTheme();
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
@@ -122,7 +122,7 @@ export const ESignature = (props: EsignatureProps) => {
                     <Typography.BodyMD>{loadingLabel}</Typography.BodyMD>
                 )}
                 <ProgressBar
-                    progress={loadingProgress}
+                    progress={loadingProgress ?? 0}
                     data-testid={`${id || "e-signature"}-progress-bar`}
                 />
             </ProgressBox>
@@ -192,9 +192,9 @@ export const ESignature = (props: EsignatureProps) => {
     return (
         <div {...otherProps}>
             <SignatureArea $disabled={disabled}>
-                {isNaN(loadingProgress)
-                    ? renderSignatureArea()
-                    : renderLoadingIndicator()}
+                {typeof loadingProgress === "number"
+                    ? renderLoadingIndicator()
+                    : renderSignatureArea()}
             </SignatureArea>
             {renderModal()}
             {renderDescription()}

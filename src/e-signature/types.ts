@@ -8,5 +8,5 @@ export interface EsignatureProps {
     loadingProgress?: number | undefined;
     /** image dataURL */
     value?: string | undefined;
-    onChange?: ((value: string) => void) | undefined;
+    onChange?: ((value: string | null) => void) | undefined;
 }
