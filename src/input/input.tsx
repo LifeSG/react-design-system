@@ -9,6 +9,13 @@ import {
 } from "./input.style";
 import { InputProps, InputRef } from "./types";
 
+const shouldAllowSpacing = (
+    type: string | undefined,
+    spacing: number | undefined
+): spacing is number => {
+    return type === "tel" && !!spacing;
+};
+
 const Component = (
     {
         value,
@@ -29,12 +36,17 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const allowSpacing = shouldAllowSpacing(type, spacing);
     const elementRef = useRef<HTMLInputElement>(null);
     useImperativeHandle(ref, () => elementRef.current!, []);
 
     const getNextInputState = useNextInputState({
         ref: elementRef,
-        formatter: (value) => StringHelper.transformWithSpaces(value, spacing),
+        formatter: (value) => {
+            return allowSpacing
+                ? StringHelper.transformWithSpaces(value, spacing)
+                : value;
+        },
     });
 
     // =============================================================================
@@ -42,7 +54,7 @@ const Component = (
     // =============================================================================
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (onChange) {
-            if (shouldAllowSpacing()) {
+            if (allowSpacing) {
                 handleSpacingAndCaretPosition(event);
             } else {
                 onChange(event);
@@ -61,13 +73,9 @@ const Component = (
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const shouldAllowSpacing = () => {
-        return type === "tel" && spacing;
-    };
-
     const convertInputString = (value: string | number | readonly string[]) => {
         if (!value) return "";
-        if (shouldAllowSpacing()) {
+        if (allowSpacing) {
             return StringHelper.transformWithSpaces(value, spacing);
         }
         return value;
