@@ -326,7 +326,7 @@ describe("TimeRangePicker", () => {
                 );
 
                 user.click(screen.getByLabelText(START_LABEL));
-                await waitFor(() => screen.queryByTestId(DROPDOWN_TESTID));
+                await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
                 expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
                 await act(async () => {
@@ -349,7 +349,7 @@ describe("TimeRangePicker", () => {
                 );
 
                 user.click(screen.getByLabelText(START_LABEL));
-                await waitFor(() => screen.queryByTestId(DROPDOWN_TESTID));
+                await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
                 expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
                 await act(async () => {
@@ -358,7 +358,7 @@ describe("TimeRangePicker", () => {
                 expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
                 // Dismiss dropdown
-                await act(async () => await user.keyboard("{Esc}"));
+                await act(async () => await user.keyboard("{Escape}"));
                 expect(
                     screen.queryByTestId(DROPDOWN_TESTID)
                 ).not.toBeInTheDocument();
