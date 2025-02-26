@@ -60,7 +60,9 @@ export const DropdownList = <T, V>({
     // =============================================================================
     const [focusedListIndex, _setFocusedIndex] = useState<number>(0);
     const [searchValue, setSearchValue] = useState<string>("");
-    const [displayListItems, _setDisplayListItems] = useState<T[]>(listItems);
+    const [displayListItems, _setDisplayListItems] = useState<T[]>(
+        listItems ?? []
+    );
     const [contentHeight, setContentHeight] = useState<number>(0);
 
     // React spring animation configuration
@@ -144,7 +146,7 @@ export const DropdownList = <T, V>({
     }, [displayListItems, itemsLoadState]);
 
     useEffect(() => {
-        setDisplayListItems(listItems);
+        setDisplayListItems(listItems ?? []);
 
         // Reset
         setSearchValue("");
@@ -164,8 +166,14 @@ export const DropdownList = <T, V>({
         return `item_${index}__${formattedValue}`;
     };
 
-    const getOptionLabel = (item: T): string | ListItemDisplayProps => {
-        return listExtractor ? listExtractor(item) : item.toString();
+    const getOptionLabel = (item: T): ListItemDisplayProps => {
+        const value = listExtractor ? listExtractor(item) : item?.toString();
+
+        if (typeof value === "object") {
+            return { title: value.title, secondaryLabel: value.secondaryLabel };
+        }
+
+        return { title: value ?? "" };
     };
 
     const hasExceededContainer = (displayText: string) => {
@@ -194,21 +202,13 @@ export const DropdownList = <T, V>({
     const filterAndUpdateList = (searchValue: string) => {
         if (searchValue === "") {
             // reset
-            setDisplayListItems(listItems);
+            setDisplayListItems(listItems ?? []);
         } else if (searchFunction) {
             const updated = searchFunction(searchValue);
             setDisplayListItems(updated);
         } else {
-            const updated = listItems.filter((item) => {
-                const label = getOptionLabel(item);
-                const title =
-                    typeof label === "object"
-                        ? label.title.toLowerCase()
-                        : label.toLowerCase();
-                const secondaryLabel =
-                    typeof label === "string"
-                        ? undefined
-                        : label.secondaryLabel?.toLowerCase();
+            const updated = listItems?.filter((item) => {
+                const { title, secondaryLabel } = getOptionLabel(item);
                 const updatedSearchValue = searchValue.trim().toLowerCase();
                 return (
                     title.includes(updatedSearchValue) ||
@@ -216,7 +216,7 @@ export const DropdownList = <T, V>({
                         secondaryLabel.includes(updatedSearchValue))
                 );
             });
-            setDisplayListItems(updated);
+            setDisplayListItems(updated ?? []);
         }
     };
 
@@ -328,10 +328,7 @@ export const DropdownList = <T, V>({
     };
 
     const renderDropdownLabels = (item: T) => {
-        const label = getOptionLabel(item);
-        const title = typeof label === "string" ? label : label.title;
-        const secondaryLabel =
-            typeof label == "string" ? undefined : label.secondaryLabel;
+        const { title, secondaryLabel } = getOptionLabel(item);
 
         const shouldTruncateTitle = hasExceededContainer(title);
         const shouldTruncateLabel =

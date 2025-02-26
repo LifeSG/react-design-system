@@ -34,7 +34,7 @@ export const DropdownLabel = ({
     selected,
     sublabel,
     truncationType = "middle",
-    variant,
+    variant = "default",
 }: DropdownLabelProps): JSX.Element => {
     const theme = useTheme();
     const fontSize =

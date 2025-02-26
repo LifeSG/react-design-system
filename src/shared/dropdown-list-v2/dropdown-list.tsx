@@ -73,7 +73,7 @@ export const DropdownList = <T, V>({
         DropdownListStateContext
     );
     const [searchValue, setSearchValue] = useState<string>("");
-    const [displayListItems, setDisplayListItems] = useState(listItems);
+    const [displayListItems, setDisplayListItems] = useState(listItems ?? []);
     const itemsLoadStateChanged = useCompare(itemsLoadState);
     const mounted = useIsMounted();
 
@@ -95,8 +95,14 @@ export const DropdownList = <T, V>({
         return `item_${index}__${formattedValue}`;
     };
 
-    const getOptionLabel = (item: T): string | ListItemDisplayProps => {
-        return listExtractor ? listExtractor(item) : item.toString();
+    const getOptionLabel = (item: T): ListItemDisplayProps => {
+        const value = listExtractor ? listExtractor(item) : item?.toString();
+
+        if (typeof value === "object") {
+            return { title: value.title, secondaryLabel: value.secondaryLabel };
+        }
+
+        return { title: value ?? "" };
     };
 
     const checkListItemSelected = useCallback(
@@ -109,20 +115,12 @@ export const DropdownList = <T, V>({
     );
 
     const filterItemsByCustomSearch = useEvent(() => {
-        return searchFunction(searchValue);
+        return searchFunction?.(searchValue);
     });
 
     const filterItemsByLabel = useEvent(() => {
-        return listItems.filter((item) => {
-            const label = getOptionLabel(item);
-            const title =
-                typeof label === "object"
-                    ? label.title.toLowerCase()
-                    : label.toLowerCase();
-            const secondaryLabel =
-                typeof label === "string"
-                    ? undefined
-                    : label.secondaryLabel?.toLowerCase();
+        return listItems?.filter((item) => {
+            const { title, secondaryLabel } = getOptionLabel(item);
             const updatedSearchValue = searchValue.trim().toLowerCase();
             return (
                 title.includes(updatedSearchValue) ||
@@ -306,7 +304,7 @@ export const DropdownList = <T, V>({
             }
         };
 
-        setDisplayListItems(filterItems());
+        setDisplayListItems(filterItems() ?? []);
     }, [
         filterItemsByCustomSearch,
         filterItemsByLabel,
@@ -335,10 +333,7 @@ export const DropdownList = <T, V>({
     };
 
     const renderDropdownLabel = (item: T, selected: boolean) => {
-        const label = getOptionLabel(item);
-        const title = typeof label === "string" ? label : label.title;
-        const secondaryLabel =
-            typeof label == "string" ? undefined : label.secondaryLabel;
+        const { title, secondaryLabel } = getOptionLabel(item);
 
         return (
             <DropdownLabel
