@@ -68,12 +68,15 @@ export const ClearButton: StoryObj<Component> = {
 
 export const TextSpacing: StoryObj<Component> = {
     render: (_args) => {
+        const [input, setInput] = useState("");
         return (
             <Form.Input
                 label="This has text spacing properties (works with tel type only)"
                 placeholder="Enter here..."
+                value={input}
                 spacing={4}
                 type="tel"
+                onChange={(event) => setInput(event.target.value)}
             />
         );
     },
