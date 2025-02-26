@@ -60,7 +60,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     onRetry,
     optionsLoadState = "success",
     optionTruncationType = "end",
-    variant,
+    variant = "default",
     alignment,
     dropdownZIndex,
 }: InputNestedSelectProps<V1, V2, V3>): JSX.Element => {
@@ -156,10 +156,11 @@ export const InputNestedSelect = <V1, V2, V3>({
     // HELPER FUNCTION
     // =========================================================================
     const getDisplayValue = (): string => {
+        if (!selectedItem) return "";
         const { label, value } = selectedItem;
 
         if (valueToStringFunction) {
-            return valueToStringFunction(value) || value.toString();
+            return valueToStringFunction(value);
         } else {
             return label;
         }

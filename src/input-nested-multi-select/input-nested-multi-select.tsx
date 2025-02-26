@@ -45,7 +45,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     onBlur,
     optionsLoadState = "success",
     optionTruncationType = "end",
-    variant,
+    variant = "default",
     alignment,
     dropdownZIndex,
 }: InputNestedMultiSelectProps<V1, V2, V3>): JSX.Element => {
@@ -152,12 +152,13 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     // HELPER FUNCTION
     // =========================================================================
     const getDisplayValue = (): string => {
-        const { label, value } = selectedItems[0];
-
         if (selectedItems.length > 1) {
             return `${selectedItems.length} selected`;
-        } else if (valueToStringFunction) {
-            return valueToStringFunction(value) || value.toString();
+        }
+
+        const { label, value } = selectedItems[0];
+        if (valueToStringFunction) {
+            return valueToStringFunction(value);
         } else {
             return label;
         }
