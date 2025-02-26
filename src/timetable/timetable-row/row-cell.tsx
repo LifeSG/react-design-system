@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import React, { RefObject } from "react";
-import { PopoverTrigger, PopoverV2TriggerProps } from "../../popover-v2";
 import { DateHelper } from "../../util";
 import { ROW_CELL_GAP, ROW_INTERVAL } from "../const";
 import { TimeTableRowCellData } from "../types";
@@ -12,6 +11,7 @@ import {
     Gap,
     Wrapper,
 } from "./row-cell.style";
+import { WithOptionalPopover } from "./with-optional-popover";
 
 interface RowCellProps extends TimeTableRowCellData {
     containerRef: RefObject<HTMLDivElement>;
@@ -66,40 +66,10 @@ const Component = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-
-    const ConditionalCellWrapper = ({
-        wrapper,
-        children,
-    }: {
-        wrapper: (child: JSX.Element) => JSX.Element;
-        children: JSX.Element;
-    }) => {
-        if (!customPopover) {
-            return children;
-        }
-
-        return wrapper(children);
-    };
-
-    const buildPopoverTrigger = (child: JSX.Element) => {
-        const popoverTriggerProps: PopoverV2TriggerProps = {
-            position: "bottom-start",
-            rootNode: containerRef,
-            customOffset: customPopover.offset,
-            children: child,
-            trigger: customPopover.trigger,
-            delay: customPopover.delay,
-            popoverContent: customPopover.content,
-        };
-
-        return (
-            <PopoverTrigger {...popoverTriggerProps}>{child}</PopoverTrigger>
-        );
-    };
-
     return (
-        <ConditionalCellWrapper
-            wrapper={(child: JSX.Element) => buildPopoverTrigger(child)}
+        <WithOptionalPopover
+            containerRef={containerRef}
+            customPopover={customPopover}
         >
             <BlockContainer
                 key={`block-container-key`}
@@ -126,7 +96,7 @@ const Component = ({
                     {<Gap />}
                 </Wrapper>
             </BlockContainer>
-        </ConditionalCellWrapper>
+        </WithOptionalPopover>
     );
 };
 
