@@ -43,7 +43,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "color",
                 description: <>The color for the {code("Divider")} line</>,
-                propTypes: ["string", "(props: unknown) => string"],
+                propTypes: ["string", "(props: ThemeStyleProps) => string"],
             },
             // Copied from `layout/col-div-props-table.tsx`
             {
