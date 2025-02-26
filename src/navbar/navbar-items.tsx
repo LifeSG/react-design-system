@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { TypographyWeight } from "../typography";
 import { Menu } from "./menu";
 import {
     ChevronIcon,
@@ -11,8 +12,7 @@ import {
     MobileWrapper,
     Wrapper,
 } from "./navbar-items.styles";
-import { NavItemLinkProps, NavItemProps } from "./types";
-import { TypographyWeight } from "../typography";
+import { NavItemCommonProps, NavItemLinkProps, NavItemProps } from "./types";
 
 interface Props<T> {
     items: NavItemProps<T>[];
@@ -22,7 +22,7 @@ interface Props<T> {
     hideNavBranding?: boolean | undefined;
     onItemClick: (
         event: React.MouseEvent<HTMLAnchorElement>,
-        item: NavItemProps<T>
+        item: NavItemProps<T> | NavItemCommonProps<T>
     ) => void;
 }
 
@@ -65,7 +65,7 @@ export const NavbarItems = <T,>({
     const checkSelected = (item: NavItemLinkProps<T>): boolean => {
         if (item.id === selectedId) {
             return true;
-        } else if (item?.subMenu && item.subMenu.length >= 1) {
+        } else if (item.subMenu && item.subMenu.length >= 1) {
             const foundSubItem = item.subMenu.find(
                 (dataS) => dataS.id === selectedId
             );
@@ -88,7 +88,7 @@ export const NavbarItems = <T,>({
 
     const handleSubLinkClick = (
         event: React.MouseEvent<HTMLAnchorElement>,
-        item: NavItemLinkProps<T>
+        item: NavItemCommonProps<T>
     ) => {
         event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
         onItemClick(event, item);
@@ -155,7 +155,7 @@ export const NavbarItems = <T,>({
                                     </LinkIconContainer>
                                 )}
                             </Link>
-                            {expanded && (
+                            {expanded && item.subMenu && (
                                 <Menu
                                     items={item.subMenu}
                                     mobile={mobile}

@@ -279,7 +279,7 @@ export const CustomItems: StoryObj<Component> = {
                             children: (
                                 <MobileCustomComponent
                                     onClick={() => {
-                                        navbarRef.current.dismissDrawer();
+                                        navbarRef.current?.dismissDrawer();
                                     }}
                                 />
                             ),
@@ -360,8 +360,8 @@ export const SubMenu: StoryObj<Component> = {
                 actionButtons={{ desktop: actionButtons }}
                 selectedId={selected}
                 fixed={false}
-                onItemClick={(item: NavItemLinkProps<undefined>) => {
-                    setSelected(item.id);
+                onItemClick={(item) => {
+                    setSelected((item as NavItemLinkProps<undefined>).id);
                 }}
             />
         );

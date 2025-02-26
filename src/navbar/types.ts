@@ -32,15 +32,32 @@ export interface NavItemsProps<T> {
 // ACTION BUTTON TYPES
 // =============================================================================
 
+export interface NavbarActionButtonDownloadProps {
+    type: "download";
+    args?: ButtonProps | undefined;
+    uncollapsible?: boolean | undefined;
+}
+
+export interface NavbarActionButtonCtaProps {
+    type: "button";
+    args: ButtonProps;
+    uncollapsible?: boolean | undefined;
+}
+
 export interface NavbarButtonComponentProps {
     render: JSX.Element;
 }
 
-export interface NavbarButtonProps {
-    type: "download" | "button" | "component";
-    args?: ButtonProps | NavbarButtonComponentProps | undefined;
+export interface NavbarActionButtonComponentProps {
+    type: "component";
+    args?: NavbarButtonComponentProps | undefined;
     uncollapsible?: boolean | undefined;
 }
+
+export type NavbarButtonProps =
+    | NavbarActionButtonDownloadProps
+    | NavbarActionButtonCtaProps
+    | NavbarActionButtonComponentProps;
 
 export interface NavbarActionButtonsProps {
     desktop: NavbarButtonProps[];
@@ -108,7 +125,9 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
     drawerDismissalExclusions?: DrawerDismissalMethod[] | undefined;
     hideNavElements?: boolean | undefined;
     onBrandClick?: ((type: BrandType) => void) | undefined; // override
-    onItemClick?: ((item: NavItemProps<T>) => void) | undefined;
+    onItemClick?:
+        | ((item: NavItemProps<T> | NavItemCommonProps<T>) => void)
+        | undefined;
     onActionButtonClick?:
         | ((actionButton: NavbarButtonProps) => void)
         | undefined;
