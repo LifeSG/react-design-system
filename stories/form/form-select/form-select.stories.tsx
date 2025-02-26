@@ -221,7 +221,7 @@ export const LoadState: StoryObj<Component> = {
             useState<ComponentProps<typeof Form.Select>["optionsLoadState"]>(
                 "loading"
             );
-        const [results, setResults] = useState([]);
+        const [results, setResults] = useState<string[]>([]);
 
         useEffect(() => {
             const timer = setTimeout(() => {

@@ -184,7 +184,7 @@ export const FontDisplay = ({ theme }: FontDisplayProps) => {
 // STYLE INTERFACE
 // =============================================================================
 interface TextPreviewProps {
-    $token: string;
+    $token: keyof FontSet;
 }
 
 // =============================================================================

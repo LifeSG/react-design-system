@@ -74,10 +74,10 @@ export const StackedModals: StoryObj<Component> = {
     render: () => {
         const [showFirst, setShowFirst] = useState(false);
         const [showStacked, setShowStacked] = useState(false);
-        const handleFirst = (show) => () => {
+        const handleFirst = (show: boolean) => () => {
             setShowFirst(show);
         };
-        const handleStacked = (show) => () => {
+        const handleStacked = (show: boolean) => () => {
             setShowStacked(show);
         };
         return (

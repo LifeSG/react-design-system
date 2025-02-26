@@ -98,7 +98,7 @@ export const DateNavigation: StoryObj<Component> = {
 
 export const LazyLoading: StoryObj<Component> = {
     render: () => {
-        const [results, setResults] = useState([]);
+        const [results, setResults] = useState<TimeTableRowData[]>([]);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, setLoading] = useState(true);
         const [page, setPage] = useState(1);

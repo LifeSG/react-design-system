@@ -55,7 +55,7 @@ export const ControlledMode: StoryObj<Component> = {
     render: () => {
         const [currentIndex, setCurrentIndex] = useState(0);
 
-        const handleTabClick = (_, order) => {
+        const handleTabClick = (_: string, order: number) => {
             setCurrentIndex(order);
         };
 

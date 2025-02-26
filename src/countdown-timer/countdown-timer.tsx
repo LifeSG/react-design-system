@@ -203,8 +203,6 @@ export const CountdownTimer = ({
         );
     };
 
-    if (typeof window === undefined) return;
-
     if (!isPlaying && remainingSeconds !== 0) return <></>;
 
     return (
