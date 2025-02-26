@@ -26,3 +26,6 @@ export type AddOne<
 > = Result["length"] extends N
     ? [...Result, Result["length"]]["length"]
     : AddOne<N, [...Result, Result["length"]]>;
+
+// Extract the string keys of an object
+export type KeyOf<T extends object> = Extract<keyof T, string>;
