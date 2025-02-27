@@ -2,6 +2,7 @@ import { checkbox, confirm, input, select } from "@inquirer/prompts";
 import { execSync } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
+import { Theme } from "./common";
 
 const codemodsDir: string = path.join(
     process.cwd(),
@@ -15,11 +16,6 @@ enum Codemod {
     MigrateMediaQuery = "migrate-media-query",
     MigrateText = "migrate-text",
     MigrateTextList = "migrate-text-list",
-}
-
-enum Theme {
-    LifeSG = "lifesg",
-    BookingSG = "bookingsg",
 }
 
 const theme = {
@@ -84,9 +80,11 @@ function runCodemods(selection: UserSelection): void {
                 `Codemod ${codemod} executed successfully on ${targetPath}`
             );
         } catch (error) {
-            console.error(
-                `Error executing codemod ${codemod}: ${error.message}`
-            );
+            if (error instanceof Error) {
+                console.error(
+                    `Error executing codemod ${codemod}: ${error.message}`
+                );
+            }
 
             throw error;
         }
@@ -204,8 +202,8 @@ async function main(): Promise<void> {
         }
 
         runCodemods(selection);
-    } catch (error) {
-        if (error.name === "ExitPromptError") {
+    } catch (error: unknown) {
+        if (error instanceof Error && error.name === "ExitPromptError") {
             // user exited, do nothing
         } else {
             throw error;

@@ -28,6 +28,7 @@ export const plugins = [
                 "**/custom-types/jpg.d.ts",
                 "**/custom-types/mdx.d.ts",
                 "**/custom-types/svg.d.ts",
+                "codemods",
             ],
         },
     }),

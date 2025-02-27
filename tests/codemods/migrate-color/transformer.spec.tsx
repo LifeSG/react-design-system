@@ -3,28 +3,28 @@ import * as fs from "fs";
 import * as path from "path";
 import { expectedOutputCode, inputCode } from "./test-data";
 
-describe("Codemod Transformer for V2_Text to Typography", () => {
+describe("Codemod Transformer for V2_Color to Colour", () => {
     const inputPath = path.join(__dirname, "input.tsx");
     const outputPath = path.join(__dirname, "output.tsx");
 
     beforeAll(() => {
-        // create sample input file for testing
+        // Create sample input file for testing
         jest.resetAllMocks();
         fs.writeFileSync(inputPath, inputCode);
     });
 
     afterAll(() => {
-        // delete the files created for testing (comment this out to view files)
+        // Delete the files created for testing (comment this out to view files)
         fs.unlinkSync(inputPath);
         fs.unlinkSync(outputPath);
     });
 
-    it("should transform V2_Text components to Typography components", () => {
+    it("should transform V2_Color tokens to Colour tokens and map theme correctly", () => {
         fs.copyFileSync(inputPath, outputPath);
 
         // Execute the jscodeshift command for the codemod
         execSync(
-            `jscodeshift --parser=tsx -t ./codemods/migrate-text ${outputPath}`
+            `jscodeshift --parser=tsx --verbose=2 -t ./codemods/migrate-colour/index.ts --mapping=lifesg ${outputPath}`
         );
 
         // Check the transformed code
