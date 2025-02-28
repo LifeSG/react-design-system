@@ -10,10 +10,21 @@ const LottieLoadingDots = lazy(async () => ({
 export const LoadingDots = (props: BaseAnimationProps) => {
     return (
         <Container {...props}>
-            <Suspense fallback={null}>
+            <Suspense fallback={<Placeholder />}>
                 <LottieLoadingDots />
             </Suspense>
         </Container>
+    );
+};
+
+const Placeholder = () => {
+    return (
+        <div
+            style={{
+                height: "16px",
+                width: "64px",
+            }}
+        />
     );
 };
 

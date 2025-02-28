@@ -10,10 +10,21 @@ const LottieSpinner = lazy(async () => ({
 export const LoadingSpinner = (props: BaseAnimationProps) => {
     return (
         <Container {...props}>
-            <Suspense fallback={null}>
+            <Suspense fallback={<Placeholder />}>
                 <LottieSpinner />
             </Suspense>
         </Container>
+    );
+};
+
+const Placeholder = () => {
+    return (
+        <div
+            style={{
+                height: "200px",
+                width: "200px",
+            }}
+        />
     );
 };
 

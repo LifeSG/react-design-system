@@ -18,10 +18,21 @@ export const LoadingDotsSpinner = ({
         color || Color.Primary({ theme: theme || BaseTheme });
     return (
         <Container {...otherProps}>
-            <Suspense fallback={null}>
+            <Suspense fallback={<Placeholder />}>
                 <LottieLoadingDotsSpinner color={animationColor} />
             </Suspense>
         </Container>
+    );
+};
+
+const Placeholder = () => {
+    return (
+        <div
+            style={{
+                height: "200px",
+                width: "200px",
+            }}
+        />
     );
 };
 
