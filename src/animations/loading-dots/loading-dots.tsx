@@ -1,12 +1,18 @@
-import React from "react";
+import { Suspense, lazy } from "react";
 import styled from "styled-components";
 import { BaseAnimationProps } from "../types";
-import { LottieLoadingDots } from "./lottie-animation";
+
+// lazy load to fix next.js SSR errors
+const LottieLoadingDots = lazy(async () => ({
+    default: (await import("./lottie-animation")).LottieLoadingDots,
+}));
 
 export const LoadingDots = (props: BaseAnimationProps) => {
     return (
         <Container {...props}>
-            <LottieLoadingDots />
+            <Suspense fallback={null}>
+                <LottieLoadingDots />
+            </Suspense>
         </Container>
     );
 };
