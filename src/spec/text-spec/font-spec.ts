@@ -14,4 +14,5 @@ export const FontFamily = {
         Light: "Plus Jakarta Sans Light",
     },
     MerriWeather: "Merriweather",
+    Lato: "Lato",
 } satisfies TFontFamily;
