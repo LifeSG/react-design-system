@@ -13,7 +13,8 @@ export type ColorScheme =
     | "rbs"
     | "mylegacy"
     | "ccube"
-    | "oneservice";
+    | "oneservice"
+    | "pa";
 export type ColorCollectionsMap = {
     [key in ColorScheme]: ColorSet;
 };
@@ -21,7 +22,7 @@ export type ColorCollectionsMap = {
 // =============================================================================
 // FONT STYLE THEMES
 // =============================================================================
-export type TextStyleScheme = "base" | "oneservice" | "plusJakartaSans";
+export type TextStyleScheme = "base" | "oneservice" | "pa" | "plusJakartaSans";
 export type FontStyleCollectionsMap = {
     [key in TextStyleScheme]: TextStyleSetType;
 };

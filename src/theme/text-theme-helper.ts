@@ -10,6 +10,7 @@ import {
     ThemeContextKeys,
     ThemeSpec,
 } from "./types";
+import { PATextStyleSet } from "../spec/text-spec/pa-text-style-set";
 
 // =============================================================================
 // THEME SPECIFICATION
@@ -22,6 +23,7 @@ const TextStyleSpec: ThemeCollectionSpec<
         base: BaseTextStyleSet,
         oneservice: OneServiceTextStyleSet,
         plusJakartaSans: BasePlusSansJakartaStyleSet,
+        pa: PATextStyleSet,
     },
     defaultValue: "base",
 };
