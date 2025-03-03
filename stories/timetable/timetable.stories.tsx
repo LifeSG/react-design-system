@@ -26,30 +26,26 @@ const meta: Meta<Component> = {
 export default meta;
 
 const StyledTimeTable = styled(TimeTable)`
-    width: 900px;
-    height: 400px;
+    [data-id="timetable-container"] {
+        width: 900px;
+        height: 400px;
+    }
+`;
+
+const StyledCustomPopoverCard = styled(Card)`
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    width: 400px;
+    padding: 3rem;
+    ${applyHtmlContentStyle({ textSize: "body-md" })}
 `;
 
 export const Default: StoryObj<Component> = {
     render: () => {
-        const date = dayjs().format("YYYY-MM-DD");
-
-        return (
-            <StyledTimeTable
-                date={date}
-                minTime={"06:00"}
-                maxTime={"23:00"}
-                rowData={timetableDefaultData}
-            />
-        );
-    },
-};
-
-export const DateNavigation: StoryObj<Component> = {
-    render: () => {
         const timeTableData = getTimeTableData();
 
-        const [results, setResults] = useState(getTimeTableData().rowData);
+        const [results, setResults] = useState(timetableDefaultData);
         const [date, setDate] = useState(timeTableData.date);
         const [loading, setLoading] = useState(timeTableData.loading);
 
@@ -60,7 +56,7 @@ export const DateNavigation: StoryObj<Component> = {
             setDate(newDate);
             setLoading(true);
             setTimeout(() => {
-                setResults(getTimeTableData(newDate).rowData);
+                setResults(timetableDefaultData);
                 setLoading(false);
             }, 1000);
         };
@@ -72,21 +68,16 @@ export const DateNavigation: StoryObj<Component> = {
             setDate(newDate);
             setLoading(true);
             setTimeout(() => {
-                setResults(getTimeTableData(newDate).rowData);
+                setResults(timetableDefaultData);
                 setLoading(false);
             }, 1000);
         };
 
         return (
             <StyledTimeTable
-                {...timeTableData}
                 date={date}
-                minDate={dayjs(timeTableData.date)
-                    .subtract(2, "days")
-                    .format("YYYY-MM-DD")}
-                maxDate={dayjs(timeTableData.date)
-                    .add(2, "days")
-                    .format("YYYY-MM-DD")}
+                minTime={"06:00"}
+                maxTime={"23:00"}
                 rowData={results}
                 loading={loading}
                 onNextDayClick={onNextDayClick}
@@ -98,18 +89,28 @@ export const DateNavigation: StoryObj<Component> = {
 
 export const LazyLoading: StoryObj<Component> = {
     render: () => {
+        const today = dayjs().format("YYYY-MM-DD");
         const [results, setResults] = useState([]);
-        const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
+        const [date, setDate] = useState(today);
         const [loading, setLoading] = useState(true);
         const [page, setPage] = useState(1);
 
-        useEffect(() => {
+        const onPage = () => {
+            setPage(page + 1);
             setTimeout(() => {
-                const results = lazyLoad(page);
+                const results = lazyLoad(page + 1);
                 setResults((prev) => [...prev, ...results]);
                 setLoading(false);
             }, 2000);
-        }, [page]);
+        };
+
+        useEffect(() => {
+            setTimeout(() => {
+                const results = lazyLoad(1);
+                setResults(results);
+                setLoading(false);
+            }, 2000);
+        }, []);
 
         const onPreviousDayClick = (currentDate: string) => {
             setPage(1);
@@ -146,20 +147,31 @@ export const LazyLoading: StoryObj<Component> = {
             }, 5000);
         };
 
+        const onCalendarDateSelect = (currentDate: string) => {
+            setPage(1);
+            setDate(currentDate);
+            setLoading(true);
+            setTimeout(() => {
+                setResults(lazyLoad(1));
+                setLoading(false);
+            }, 1000);
+        };
+
         return (
             <StyledTimeTable
                 date={date}
                 minTime="06:00"
                 maxTime="20:00"
-                minDate={dayjs(date).subtract(2, "days").format("YYYY-MM-DD")}
-                maxDate={dayjs(date).add(2, "days").format("YYYY-MM-DD")}
+                minDate={dayjs(today).subtract(2, "days").format("YYYY-MM-DD")}
+                maxDate={dayjs(today).add(2, "days").format("YYYY-MM-DD")}
                 rowData={results}
                 loading={loading}
                 onRefresh={onRefresh}
-                onPage={() => setPage(page + 1)}
+                onPage={onPage}
                 totalRecords={50}
                 onNextDayClick={onNextDayClick}
                 onPreviousDayClick={onPreviousDayClick}
+                onCalendarDateSelect={onCalendarDateSelect}
             />
         );
     },
@@ -167,14 +179,12 @@ export const LazyLoading: StoryObj<Component> = {
 
 export const CustomPopovers: StoryObj<Component> = {
     render: () => {
-        const StyledCustomPopoverCard = styled(Card)`
-            display: flex;
-            flex-direction: column;
-            row-gap: 2rem;
-            width: 400px;
-            padding: 3rem;
-            ${applyHtmlContentStyle({ textSize: "body-md" })}
-        `;
+        const today = dayjs().format("YYYY-MM-DD");
+        const [results, setResults] = useState([]);
+        const [date, setDate] = useState(today);
+        const [loading, setLoading] = useState(true);
+        const totalRecords = 10;
+
         const buildCustomPopover = (
             row: TimeTableRowData,
             cell: TimeTableRowCellData
@@ -288,17 +298,132 @@ export const CustomPopovers: StoryObj<Component> = {
             };
         });
 
-        return <StyledTimeTable {...getTimeTableData()} rowData={rowData} />;
+        const onPage = () => {
+            setTimeout(() => {
+                setResults((prev) => [...prev, ...rowData.slice(5)]);
+                setLoading(false);
+            }, 2000);
+        };
+
+        useEffect(() => {
+            if (rowData) {
+                setResults(rowData.slice(0, 5));
+                setLoading(false);
+            }
+        }, []);
+
+        const onPreviousDayClick = (currentDate: string) => {
+            const newDate = dayjs(currentDate)
+                .add(-1, "day")
+                .format("YYYY-MM-DD");
+            setDate(newDate);
+            setLoading(true);
+            setTimeout(() => {
+                setResults(rowData.slice(0, 5));
+                setLoading(false);
+            }, 1000);
+        };
+
+        const onNextDayClick = (currentDate: string) => {
+            const newDate = dayjs(currentDate)
+                .add(1, "day")
+                .format("YYYY-MM-DD");
+            setDate(newDate);
+            setLoading(true);
+            setTimeout(() => {
+                setResults(rowData.slice(0, 5));
+                setLoading(false);
+            }, 1000);
+        };
+
+        const onRefresh = () => {
+            setLoading(true);
+            setTimeout(() => {
+                setResults(rowData.slice(0, 5));
+                setLoading(false);
+            }, 5000);
+        };
+
+        const onCalendarDateSelect = (currentDate: string) => {
+            setDate(currentDate);
+            setLoading(true);
+            setTimeout(() => {
+                setResults(rowData.slice(0, 5));
+                setLoading(false);
+            }, 1000);
+        };
+
+        return (
+            <StyledTimeTable
+                {...getTimeTableData()}
+                date={date}
+                totalRecords={totalRecords}
+                loading={loading}
+                onPage={onPage}
+                onRefresh={onRefresh}
+                onNextDayClick={onNextDayClick}
+                onPreviousDayClick={onPreviousDayClick}
+                onCalendarDateSelect={onCalendarDateSelect}
+                rowData={results}
+            />
+        );
     },
 };
 
 export const EmptyContent: StoryObj<Component> = {
     render: () => {
+        const today = dayjs().toString();
+        const [date, setDate] = useState(today);
+        const [loading, setLoading] = useState(true);
+
+        useEffect(() => {
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
+        }, []);
+
+        const onPreviousDayClick = (currentDate: string) => {
+            const newDate = dayjs(currentDate)
+                .add(-1, "day")
+                .format("YYYY-MM-DD");
+            setDate(newDate);
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+            }, 1000);
+        };
+
+        const onNextDayClick = (currentDate: string) => {
+            const newDate = dayjs(currentDate)
+                .add(1, "day")
+                .format("YYYY-MM-DD");
+            setDate(newDate);
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+            }, 1000);
+        };
+
+        const onCalendarDateSelect = (currentDate: string) => {
+            setDate(currentDate);
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+            }, 1000);
+        };
+
         return (
             <StyledTimeTable
-                {...getTimeTableData()}
+                date={date}
+                onNextDayClick={onNextDayClick}
+                onPreviousDayClick={onPreviousDayClick}
+                onCalendarDateSelect={onCalendarDateSelect}
                 totalRecords={0}
                 rowData={[]}
+                loading={loading}
+                emptyContentMessage={
+                    "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page."
+                }
             />
         );
     },

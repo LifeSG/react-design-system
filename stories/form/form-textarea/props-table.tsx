@@ -48,6 +48,11 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Function to transform value",
                 propTypes: ["(value: string) => string"],
             },
+            {
+                name: "prefix",
+                description: "The prefix to be displayed",
+                propTypes: ["string"],
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,

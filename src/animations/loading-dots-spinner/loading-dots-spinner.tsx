@@ -1,7 +1,12 @@
+import { Suspense, lazy } from "react";
 import styled, { useTheme } from "styled-components";
 import { Colour } from "../../theme";
 import { CustomisableAnimationProps } from "../types";
-import { LottieLoadingDotsSpinner } from "./lottie-animation";
+
+// lazy load to fix next.js SSR errors
+const LottieLoadingDotsSpinner = lazy(async () => ({
+    default: (await import("./lottie-animation")).LottieLoadingDotsSpinner,
+}));
 
 export const LoadingDotsSpinner = ({
     color,
@@ -11,8 +16,21 @@ export const LoadingDotsSpinner = ({
     const animationColor = color || Colour["icon-primary"]({ theme });
     return (
         <Container {...otherProps}>
-            <LottieLoadingDotsSpinner color={animationColor} />
+            <Suspense fallback={<Placeholder />}>
+                <LottieLoadingDotsSpinner color={animationColor} />
+            </Suspense>
         </Container>
+    );
+};
+
+const Placeholder = () => {
+    return (
+        <div
+            style={{
+                height: "200px",
+                width: "200px",
+            }}
+        />
     );
 };
 

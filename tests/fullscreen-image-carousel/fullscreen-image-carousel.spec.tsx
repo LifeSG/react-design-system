@@ -6,7 +6,7 @@ import { FullscreenImageCarousel } from "../../src/fullscreen-image-carousel";
 // =============================================================================
 describe("Fullscreen Image Carousel", () => {
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
 
         // have to mock as it's not implemented in jsdom
         window.HTMLElement.prototype.scrollIntoView = jest.fn();

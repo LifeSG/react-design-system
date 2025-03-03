@@ -9,16 +9,16 @@ import {
     ROW_HEADER_WIDTH,
     ROW_INTERVAL,
 } from "./const";
-import { TimeTableNavigator } from "./timetable-navigator/timetable-navigator";
+import { TimeTableHeader } from "./timetable-header/timetable-header";
 import { RowBar } from "./timetable-row/row-bar";
 import {
     ClickableRowHeaderTitle,
     ColumnHeader,
     ColumnHeaderRow,
     ColumnHeaderTitle,
+    Container,
     ContentContainer,
     EmptyTableContainer,
-    EmptyTableRowHeader,
     Loader,
     LoadingBar,
     LoadingCell,
@@ -35,7 +35,7 @@ import { TimeTableProps, TimeTableRowData } from "./types";
 
 export const TimeTable = ({
     date,
-    emptyContent,
+    emptyContentMessage,
     rowData,
     loading,
     minTime = "00:00",
@@ -43,16 +43,19 @@ export const TimeTable = ({
     minDate,
     maxDate,
     totalRecords,
+    showCurrentDateAsToday,
+    showDateAsShortForm,
     onPage,
     onRefresh,
     onNextDayClick,
     onPreviousDayClick,
+    onCalendarDateSelect,
     ...otherProps
 }: TimeTableProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const testId = otherProps["data-testid"] || "timetable-container-id";
+    const testId = otherProps["data-testid"] || "timetable";
     const timetableMinTime = TimeHelper.roundToNearestHour(minTime);
     const timetableMaxTime = TimeHelper.roundToNearestHour(maxTime, true);
     const hourlyIntervals = TimeHelper.generateHourlyIntervals(
@@ -82,8 +85,10 @@ export const TimeTable = ({
 
             const { scrollTop, clientHeight, scrollHeight } =
                 tableContainerRef.current;
+            const scrollBottomTolerance = 1;
             const isEndReached =
-                Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+                Math.ceil(scrollTop + clientHeight) >=
+                scrollHeight - scrollBottomTolerance;
             const shouldLoadMore =
                 isEndReached && !allRecordsLoaded && onPage && !loading;
 
@@ -324,71 +329,78 @@ export const TimeTable = ({
 
     if (isEmptyContent) {
         return (
-            <EmptyTableContainer className="empty-container" {...otherProps}>
-                <EmptyTableRowHeader>
-                    <TimeTableNavigator
-                        selectedDate={date}
-                        loading={loading || loadMore}
-                        tableContainerRef={tableContainerRef}
-                        minDate={minDate}
-                        maxDate={maxDate}
-                        totalRecords={totalRecords}
-                        onLeftArrowClick={onPreviousDayClick}
-                        onRightArrowClick={onNextDayClick}
-                        onRefresh={onRefresh}
-                    />
-                </EmptyTableRowHeader>
-                {!loading ? (
-                    <NoResultsFound
-                        type="no-item-found"
-                        illustrationScheme={emptyContent?.illustrationScheme}
-                        description={emptyContent?.description}
-                    />
-                ) : (
-                    <Loader $isEmptyContent={isEmptyContent}></Loader>
-                )}
-            </EmptyTableContainer>
-        );
-    }
-
-    return (
-        <TimeTableContainer
-            ref={tableContainerRef}
-            data-testid={testId}
-            {...otherProps}
-            $loading={loading}
-            $allRecordsLoaded={allRecordsLoaded || !onPage}
-        >
-            <RowColumnHeader
-                $isScrolledY={isScrolledY}
-                $isScrolledX={isScrolledX}
-            >
-                <TimeTableNavigator
+            <Container {...otherProps} data-testid={testId}>
+                <TimeTableHeader
                     selectedDate={date}
                     loading={loading || loadMore}
                     tableContainerRef={tableContainerRef}
                     minDate={minDate}
                     maxDate={maxDate}
                     totalRecords={totalRecords}
-                    onLeftArrowClick={onPreviousDayClick}
-                    onRightArrowClick={onNextDayClick}
+                    showCurrentDateAsToday={showCurrentDateAsToday}
+                    showDateAsShortForm={showDateAsShortForm}
+                    onPreviousDayClick={onPreviousDayClick}
+                    onNextDayClick={onNextDayClick}
                     onRefresh={onRefresh}
+                    onCalendarDateSelect={onCalendarDateSelect}
                 />
-            </RowColumnHeader>
-            <RowHeaderColumn
-                $numOfRows={rowData.length}
-                $isScrolled={isScrolledX}
-                data-testid={"row-header-column-id"}
+                <EmptyTableContainer className="empty-container">
+                    {!loading ? (
+                        <NoResultsFound
+                            type="no-item-found"
+                            description={emptyContentMessage}
+                        />
+                    ) : (
+                        <Loader $isEmptyContent={isEmptyContent}></Loader>
+                    )}
+                </EmptyTableContainer>
+            </Container>
+        );
+    }
+
+    return (
+        <Container {...otherProps} data-testid={testId}>
+            <TimeTableHeader
+                data-id="timetable-date-navigator"
+                selectedDate={date}
+                loading={loading || loadMore}
+                tableContainerRef={tableContainerRef}
+                minDate={minDate}
+                maxDate={maxDate}
+                totalRecords={totalRecords}
+                showCurrentDateAsToday={showCurrentDateAsToday}
+                showDateAsShortForm={showDateAsShortForm}
+                onPreviousDayClick={onPreviousDayClick}
+                onNextDayClick={onNextDayClick}
+                onRefresh={onRefresh}
+                onCalendarDateSelect={onCalendarDateSelect}
+            />
+            <TimeTableContainer
+                data-id="timetable-container"
+                data-testid="timetable-container"
+                ref={tableContainerRef}
+                $loading={loading}
+                $allRecordsLoaded={allRecordsLoaded || !onPage}
             >
-                {renderRowHeaderColumn()}
-            </RowHeaderColumn>
-            <ColumnHeaderRow
-                $numOfColumns={hourlyIntervals.length}
-                $isScrolled={isScrolledY}
-            >
-                {renderColumnHeaders()}
-            </ColumnHeaderRow>
-            {renderRowBarData()}
-        </TimeTableContainer>
+                <RowColumnHeader
+                    $isScrolledY={isScrolledY}
+                    $isScrolledX={isScrolledX}
+                ></RowColumnHeader>
+                <RowHeaderColumn
+                    $numOfRows={rowData.length}
+                    $isScrolled={isScrolledX}
+                    data-testid={"row-header-column-id"}
+                >
+                    {renderRowHeaderColumn()}
+                </RowHeaderColumn>
+                <ColumnHeaderRow
+                    $numOfColumns={hourlyIntervals.length}
+                    $isScrolled={isScrolledY}
+                >
+                    {renderColumnHeaders()}
+                </ColumnHeaderRow>
+                {renderRowBarData()}
+            </TimeTableContainer>
+        </Container>
     );
 };

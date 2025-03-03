@@ -1,4 +1,10 @@
 import dayjs from "dayjs";
+import { useState } from "react";
+import {
+    DropdownRenderProps,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
+import { CalendarDropdown } from "../shared/internal-calendar";
 import {
     ArrowLeft,
     ArrowRight,
@@ -7,9 +13,7 @@ import { CalendarHelper, DateHelper } from "../util";
 import {
     Container,
     HeaderArrowButton,
-    StyledDateText,
-    StyledDayText,
-    Wrapper,
+    StyledDateTextButton,
 } from "./date-navigator.style";
 import { DateNavigatorProps } from "./types";
 
@@ -18,8 +22,11 @@ export const DateNavigator = ({
     minDate,
     maxDate,
     loading,
+    showDateAsShortForm,
+    showCurrentDateAsToday,
     onLeftArrowClick,
     onRightArrowClick,
+    onCalendarDateSelect,
     ...otherProps
 }: DateNavigatorProps) => {
     // =============================================================================
@@ -27,12 +34,14 @@ export const DateNavigator = ({
     // =============================================================================
     const date = DateHelper.toDayjs(selectedDate);
     const dateText = DateHelper.toDayjs(selectedDate)
-        .format("D MMMM YYYY")
+        .format(showDateAsShortForm ? "D MMM YYYY" : "D MMMM YYYY")
         .toString();
     const isToday = DateHelper.isSame(selectedDate, dayjs());
-    const dayText = isToday
-        ? "Today"
-        : DateHelper.toDayjs(selectedDate).format("dddd");
+    const dayText =
+        isToday && showCurrentDateAsToday
+            ? "Today"
+            : date.format(showDateAsShortForm ? "ddd" : "dddd");
+    const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -57,49 +66,91 @@ export const DateNavigator = ({
         );
     };
 
+    const handleSelect = (value: string) => {
+        onCalendarDateSelect && onCalendarDateSelect(value);
+        setIsCalendarOpen(!isCalendarOpen);
+    };
+
+    const navigatePrevious = () => {
+        setIsCalendarOpen(false);
+        onLeftArrowClick(selectedDate);
+    };
+
+    const navigateNext = () => {
+        setIsCalendarOpen(false);
+        onRightArrowClick(selectedDate);
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    return (
-        <Container {...otherProps}>
-            {onLeftArrowClick && (
-                <HeaderArrowButton
-                    data-testid="date-navigator-left-arrow-btn"
-                    disabled={loading || isLeftArrowDisabled()}
-                    focusHighlight={false}
-                    focusOutline="browser"
-                    aria-label="Previous day"
-                    onClick={() => onLeftArrowClick(selectedDate)}
-                >
-                    <ArrowLeft />
-                </HeaderArrowButton>
-            )}
-            <Wrapper>
-                <StyledDateText
+    const renderCalendar = ({ elementWidth }: DropdownRenderProps) => {
+        return (
+            <CalendarDropdown
+                variant="single"
+                initialCalendarDate={selectedDate}
+                value={selectedDate}
+                minDate={minDate}
+                maxDate={maxDate}
+                onSelect={handleSelect}
+                width={elementWidth}
+            />
+        );
+    };
+
+    const renderDateNavElement = () => {
+        return (
+            <Container {...otherProps}>
+                {
+                    <HeaderArrowButton
+                        data-testid="date-navigator-left-arrow-btn"
+                        disabled={loading || isLeftArrowDisabled()}
+                        aria-label="Previous day"
+                        onClick={navigatePrevious}
+                        styleType="light"
+                        sizeType="small"
+                    >
+                        <ArrowLeft />
+                    </HeaderArrowButton>
+                }
+                <StyledDateTextButton
+                    onClick={() =>
+                        !!onCalendarDateSelect &&
+                        !loading &&
+                        setIsCalendarOpen(!isCalendarOpen)
+                    }
+                    $enableDateClick={!!onCalendarDateSelect && !loading}
                     data-testid="date-navigator-date-text"
-                    weight={"semibold"}
+                    styleType="link"
+                    disabled={!onCalendarDateSelect || loading}
                 >
-                    {dateText}
-                </StyledDateText>
-                <StyledDayText
-                    data-testid="date-navigator-day-text"
-                    weight={"bold"}
-                >
-                    {dayText}
-                </StyledDayText>
-            </Wrapper>
-            {onRightArrowClick && (
-                <HeaderArrowButton
-                    data-testid="date-navigator-right-arrow-btn"
-                    disabled={loading || isRightArrowDisabled()}
-                    focusHighlight={false}
-                    focusOutline="browser"
-                    aria-label="Next day"
-                    onClick={() => onRightArrowClick(selectedDate)}
-                >
-                    <ArrowRight />
-                </HeaderArrowButton>
-            )}
-        </Container>
+                    {`${dateText}, ${dayText}`}
+                </StyledDateTextButton>
+                {
+                    <HeaderArrowButton
+                        data-testid="date-navigator-right-arrow-btn"
+                        disabled={loading || isRightArrowDisabled()}
+                        aria-label="Next day"
+                        onClick={navigateNext}
+                        styleType="light"
+                        sizeType="small"
+                    >
+                        <ArrowRight />
+                    </HeaderArrowButton>
+                }
+            </Container>
+        );
+    };
+
+    return (
+        <ElementWithDropdown
+            enabled={!loading}
+            isOpen={isCalendarOpen}
+            renderElement={renderDateNavElement}
+            renderDropdown={renderCalendar}
+            onDismiss={() => setIsCalendarOpen(false)}
+            onClose={() => setIsCalendarOpen(false)}
+            offset={8}
+        />
     );
 };

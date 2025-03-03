@@ -5,6 +5,7 @@ export interface TextareaProps
     error?: boolean | undefined;
     "data-testid"?: string | undefined;
     transformValue?: ((value: string) => string) | undefined;
+    prefix?: string | undefined;
     renderCustomCounter?:
         | ((maxLength: number, currentValueLength: number) => JSX.Element)
         | undefined;

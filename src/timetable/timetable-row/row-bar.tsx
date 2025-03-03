@@ -59,7 +59,15 @@ export const RowBar = ({
             });
         }
 
-        rowCells.forEach((cell, index) => {
+        const sortedRowCells = [...rowCells].sort((a, b) => {
+            const timeA = dayjs(a.startTime, "HH:mm");
+            const timeB = dayjs(b.startTime, "HH:mm");
+            if (timeA.isBefore(timeB)) return -1;
+            if (timeA.isAfter(timeB)) return 1;
+            return 0;
+        });
+
+        sortedRowCells.forEach((cell, index) => {
             const { endTime } = cell;
             rowCellArray.push(cell);
 
