@@ -57,7 +57,8 @@ export type ResourceScheme =
     | "bookingsg"
     | "rbs"
     | "mylegacy"
-    | "ccube";
+    | "ccube"
+    | "pa";
 
 export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;
