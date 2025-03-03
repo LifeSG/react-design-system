@@ -31,7 +31,6 @@ interface ListItemStyleProps {
 // -----------------------------------------------------------------------------
 // MAIN STYLES
 // -----------------------------------------------------------------------------
-
 export const Container = styled.div<ContainerStyleProps>`
     overflow: hidden;
     border: 1px solid ${Color.Neutral[5]};
@@ -131,7 +130,7 @@ export const SelectAllContainer = styled.div`
     justify-content: flex-end;
 `;
 
-export const DropdownCommonButton = styled(BasicButton)<ListStyleProps>`
+export const DropdownCommonButton = styled(BasicButton) <ListStyleProps>`
     ${(props) =>
         TextStyleHelper.getTextStyle(
             props.$variant === "small" ? "BodySmall" : "Body",
@@ -165,7 +164,7 @@ export const ResultStateText = styled.div<ListStyleProps>`
         )}
 `;
 
-export const LabelIcon = styled(ExclamationCircleFillIcon)<ListStyleProps>`
+export const LabelIcon = styled(ExclamationCircleFillIcon) <ListStyleProps>`
     ${(props) => {
         const size = props.$variant === "small" ? 1 : 1.125;
         return css`
