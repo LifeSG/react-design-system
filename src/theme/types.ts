@@ -37,7 +37,8 @@ export type ColourScheme =
     | "bookingsg"
     | "rbs"
     | "mylegacy"
-    | "ccube";
+    | "ccube"
+    | "pa";
 
 export type FontScheme = "lifesg" | "bookingsg" | "rbs" | "mylegacy" | "ccube";
 export type MotionScheme = "lifesg";
