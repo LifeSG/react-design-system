@@ -40,7 +40,13 @@ export type ColourScheme =
     | "ccube"
     | "pa";
 
-export type FontScheme = "lifesg" | "bookingsg" | "rbs" | "mylegacy" | "ccube";
+export type FontScheme =
+    | "lifesg"
+    | "bookingsg"
+    | "rbs"
+    | "mylegacy"
+    | "ccube"
+    | "pa";
 export type MotionScheme = "lifesg";
 export type BorderScheme = "lifesg";
 export type SpacingScheme = "lifesg";
