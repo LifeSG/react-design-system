@@ -1,5 +1,6 @@
 import { Unstyled } from "@storybook/blocks";
 import orderBy from "lodash/orderBy";
+import { Fragment } from "react";
 import {
     DefaultCol,
     DescriptionCol,
@@ -46,14 +47,14 @@ export const ApiTable = (props: ApiTableProps): JSX.Element => {
     const renderContents = () => {
         return props.sections.map((section, index) => {
             return (
-                <>
+                <Fragment key={index}>
                     {section.name && (
                         <Section key={`section-${index + 1}`}>
                             {section.name}
                         </Section>
                     )}
                     {renderSection(section.attributes, index)}
-                </>
+                </Fragment>
             );
         });
     };
