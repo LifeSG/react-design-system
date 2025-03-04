@@ -16,6 +16,7 @@ export const BorderDisplay = ({ theme }: BorderDisplayProps) => {
                     <div>Value</div>
                     <div></div>
                 </HeaderRow>
+                <BorderWidthCollection token="width-005" />
                 <BorderWidthCollection token="width-010" />
                 <BorderWidthCollection token="width-020" />
                 <Divider />

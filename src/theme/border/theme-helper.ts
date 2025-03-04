@@ -12,7 +12,7 @@ const BorderSpec: ThemeCollectionSpec<BorderCollectionMap, BorderScheme> = {
 };
 
 export const getBorderWidth = (
-    key: "width-010" | "width-020" | "width-040"
+    key: "width-005" | "width-010" | "width-020" | "width-040"
 ) => {
     return (props: StyledComponentProps) => {
         const theme = props.theme;
@@ -77,6 +77,7 @@ export const getBorderStyle = (key: "dashed-default") => {
 };
 
 export const BorderValues = {
+    "width-005": getBorderWidth("width-005"),
     "width-010": getBorderWidth("width-010"),
     "width-020": getBorderWidth("width-020"),
     "width-040": getBorderWidth("width-040"),
