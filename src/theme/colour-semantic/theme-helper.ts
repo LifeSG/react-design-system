@@ -13,6 +13,7 @@ const ColourSpec: ThemeCollectionSpec<
         rbs: LifeSGColourSet,
         mylegacy: LifeSGColourSet,
         ccube: LifeSGColourSet,
+        pa: LifeSGColourSet,
     },
     defaultValue: "lifesg",
 };

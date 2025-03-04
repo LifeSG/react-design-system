@@ -8,6 +8,7 @@ import {
     CCubeTheme,
     MyLegacyTheme,
     RBSTheme,
+    PATheme,
 } from "../src/theme";
 
 const preview: Preview = {
@@ -21,6 +22,7 @@ const preview: Preview = {
                 RBS: RBSTheme,
                 // TODO: update when OS theme is added
                 // OneService: V2_OneServiceTheme,
+                PA: PATheme,
             },
             Provider: ThemeProvider,
         }),
