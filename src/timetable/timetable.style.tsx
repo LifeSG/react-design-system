@@ -1,9 +1,9 @@
 import styled, { css, keyframes } from "styled-components";
 import { LoadingDotsSpinner } from "../animations";
-import { V2_Color } from "../v2_color";
 import { ErrorDisplay } from "../error-display";
 import { PopoverTrigger } from "../popover-v2";
-import { V2_Text } from "../v2_text";
+import { Border, Colour, Spacing } from "../theme";
+import { Typography } from "../typography";
 import {
     MIN_HOURLY_INTERVAL_WIDTH,
     ROW_HEADER_WIDTH,
@@ -32,6 +32,14 @@ interface RowColumnHeaderProps {
 
 interface RowHeaderProps {
     $isScrolled: boolean;
+}
+
+interface ClickableRowHeaderTitleProps {
+    $isClickable: boolean;
+}
+
+interface RowHeaderSubtitleProps {
+    $show: boolean;
 }
 
 interface LoadingCellWrapperProps {
@@ -77,17 +85,18 @@ export const RowColumnHeader = styled.div<RowColumnHeaderProps>`
     position: sticky;
     top: 0;
     left: 0;
-    background-color: white;
+    background-color: ${Colour["bg"]};
     width: ${ROW_HEADER_WIDTH}px;
     z-index: 2;
-    border-bottom: 1px solid ${V2_Color.Neutral[5]};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     ${(props) => {
         if (props.$isScrolledX || props.$isScrolledY) {
             return css`
-                box-shadow: 0.125rem 0.125rem 0.5rem ${V2_Color.Neutral[5]};
+                box-shadow: 2px 2px 8px
+                    rgb(from ${Colour.Primitive["neutral-20"]} r g b / 25%);
                 clip-path: inset(
-                    0 ${props.$isScrolledX ? "-0.75rem" : "0"}
-                        ${props.$isScrolledY ? "-0.75rem" : "0"} 0
+                    0 ${props.$isScrolledX ? "-0.12px" : "0"}
+                        ${props.$isScrolledY ? "-0.12px" : "0"} 0
                 );
                 transition: box-shadow 0.5s ease-in-out,
                     clip-path 0.5s ease-in-out;
@@ -109,7 +118,7 @@ export const RowHeaderColumn = styled.div<RowHeaderColumnProps>`
     grid-column: 1 / 2;
     left: 0;
     z-index: 1;
-    background-color: white;
+    background-color: ${Colour["bg"]};
     grid-template-rows: repeat(${(props) => props.$numOfRows}, ${ROW_HEIGHT}px);
 `;
 
@@ -120,15 +129,16 @@ export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
     grid-row: 1 / 2;
     top: 0;
     z-index: 1;
-    background-color: white;
+    background-color: ${Colour["bg"]};
     grid-template-columns: repeat(${(props) => props.$numOfColumns}, 1fr);
     width: 100%;
-    border-bottom: 1px solid ${V2_Color.Neutral[5]};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     transition: all 0.5s ease-in-out;
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: 0rem 0.125rem 0.5rem ${V2_Color.Neutral[5]};
+                box-shadow: 2px 2px 8px
+                    rgb(from ${Colour.Primitive["neutral-20"]} r g b / 25%);
             `;
         }
     }};
@@ -137,11 +147,11 @@ export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
 export const ColumnHeader = styled.div`
     min-width: ${MIN_HOURLY_INTERVAL_WIDTH}px;
     align-content: end;
-    margin-bottom: 0.25rem;
+    margin-bottom: ${Spacing["spacing-4"]};
 `;
 
-export const ColumnHeaderTitle = styled(V2_Text.H6)`
-    color: ${V2_Color.Neutral[3]};
+export const ColumnHeaderTitle = styled(Typography.BodySM)`
+    color: ${Colour["text-subtler"]};
 `;
 
 export const ContentContainer = styled.div<ContentContainerPopoverProps>`
@@ -156,46 +166,50 @@ export const RowHeader = styled.div<RowHeaderProps>`
     justify-content: center;
     position: sticky;
     left: 0;
-    background-color: white;
+    background-color: ${Colour["bg"]};
     width: ${ROW_HEADER_WIDTH}px;
     height: ${ROW_HEIGHT}px;
     text-align: right;
-    padding: 0 1rem 0 2rem;
-    border-bottom: 1px solid ${V2_Color.Neutral[5]};
-    border-left: 1px solid ${V2_Color.Accent.Light[1]};
+    padding: 0 ${Spacing["spacing-16"]} 0 ${Spacing["spacing-32"]};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-left: ${Border["width-010"]} ${Border["solid"]}
+        ${Colour["border-primary"]};
     transition: all 0.5s ease-in-out;
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: 0.125rem 0.125rem 0.5rem ${V2_Color.Neutral[5]};
+                box-shadow: 2px 2px 8px
+                    rgb(from ${Colour.Primitive["neutral-20"]} r g b / 25%);
             `;
         } else {
             return css`
-                box-shadow: inset -0.5px 0px ${V2_Color.Accent.Light[1]};
+                box-shadow: inset -0.5px 0px ${Colour["border-primary"]};
             `;
         }
     }};
 `;
 
-export const ClickableRowHeaderTitle = styled(V2_Text.H5)<{
-    $isClickable: boolean;
-}>`
+export const ClickableRowHeaderTitle = styled(
+    Typography.BodyMD
+)<ClickableRowHeaderTitleProps>`
     display: inline-block;
     text-overflow: ellipsis;
     overflow: hidden;
     width: 100%;
     white-space: nowrap;
-    color: ${V2_Color.Primary};
+    color: ${Colour["text-primary"]};
     :hover {
         cursor: ${(props) => (props.$isClickable ? "pointer" : "default")};
     }
 `;
 
-export const RowHeaderSubtitle = styled(V2_Text.XSmall)<{ $show: boolean }>`
+export const RowHeaderSubtitle = styled(
+    Typography.BodyXS
+)<RowHeaderSubtitleProps>`
     display: inline-flex;
-    gap: 6px;
+    gap: ${Spacing["spacing-4"]};
     align-items: center;
-    color: ${V2_Color.Neutral[3]};
+    color: ${Colour["text-subtler"]};
     ${(props) => {
         if (!props.$show) {
             return css`
@@ -218,19 +232,20 @@ export const Loader = styled(LoadingDotsSpinner)<LoaderProps>`
 export const NoResultsFound = styled(ErrorDisplay)`
     grid-column: 1 / -1;
     grid-row: 2;
-    padding: 5rem 0 5rem 0;
+    padding: ${Spacing["spacing-72"]} 0;
 `;
 
 export const LoadingWrapper = styled.div`
     display: flex;
-    border-bottom: 1px solid ${V2_Color.Neutral[5]};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 `;
 
 export const LoadingCell = styled.div<LoadingCellWrapperProps>`
-    border-right: 0.5px solid ${V2_Color.Accent.Light[1]};
+    border-right: ${Border["width-005"]} ${Border["solid"]}
+        ${Colour["border-primary"]};
     width: ${(props) => `${props.$width}px`};
     height: 100%;
-    padding: 20px 12px 20px 12px;
+    padding: ${Spacing["spacing-20"]} ${Spacing["spacing-12"]};
 `;
 
 const gradientAnimation = keyframes`
@@ -247,9 +262,9 @@ export const LoadingBar = styled.div`
     width: 100%;
     background: linear-gradient(
         to right,
-        ${V2_Color.Neutral[6]} 8%,
-        ${V2_Color.Neutral[7]} 18%,
-        ${V2_Color.Neutral[6]} 33%
+        ${Colour.Primitive["neutral-95"]} 8%,
+        ${Colour.Primitive["neutral-100"]} 18%,
+        ${Colour.Primitive["neutral-95"]} 33%
     );
     background-size: 800px 104px;
     animation: ${gradientAnimation} 1.5s forwards infinite;

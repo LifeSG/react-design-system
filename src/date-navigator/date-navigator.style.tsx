@@ -22,7 +22,7 @@ export const Container = styled.div`
 
 export const StyledDateTextButton = styled(Button.Default)<StyledDateTextProps>`
     color: ${(props) =>
-        props.$enableDateClick ? Colour["text-hover"] : Colour["text"]};
+        props.$enableDateClick ? Colour["text-primary"] : Colour["text"]};
     white-space: nowrap;
     display: inline-block;
     text-wrap: auto;
