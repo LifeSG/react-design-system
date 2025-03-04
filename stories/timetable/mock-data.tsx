@@ -1,11 +1,8 @@
-import { Person2Icon, PinIcon } from "@lifesg/react-icons";
-import dayjs, { Dayjs } from "dayjs";
+import { Person2Icon } from "@lifesg/react-icons";
+import { TimeTableCellType, TimeTableRowData } from "src/timetable";
 import styled from "styled-components";
-import { V2_Text } from "../../src/v2_text";
-import { TimeTableCellType, TimeTableProps } from "../../src/timetable/types";
-import { evenDaysData } from "./timetable-even-days-data";
+import { timetableDefaultData } from "./timetable-default-data";
 import lazyLoadData from "./timetable-lazy-load-data.json";
-import { oddDaysData } from "./timetable-odd-days-data";
 
 export const StyledHoverContent = styled.div`
     display: flex;
@@ -19,28 +16,12 @@ const cellTypeMap: Record<string, TimeTableCellType> = {
     DEFAULT: "default",
 };
 
-const fetchRowData = (date: Dayjs) => {
-    const isEven = date.day() % 2 === 0;
-    if (isEven) {
-        return evenDaysData;
-    }
-    return oddDaysData;
+export const fetchTimeTableData = async (): Promise<TimeTableRowData[]> => {
+    await new Promise((r) => setTimeout(r, 1000));
+    return timetableDefaultData;
 };
 
-export const getTimeTableData = (
-    currentDate?: string
-): Partial<TimeTableProps> => {
-    const date = dayjs(currentDate);
-
-    return {
-        date: date.format("YYYY-MM-DD"),
-        minTime: "06:00:00",
-        maxTime: "23:00:00",
-        rowData: fetchRowData(date),
-    };
-};
-
-export const lazyLoad = (page: number) => {
+export const buildTimeTableData = (page: number): TimeTableRowData[] => {
     const limit = 10;
     const pageStart = (page - 1) * limit;
     const pageEnd = page * limit;
@@ -59,19 +40,6 @@ export const lazyLoad = (page: number) => {
                     {resource.capacity}
                 </>
             ),
-            rowHeaderHoverContent: (
-                <>
-                    <V2_Text.Body weight={"regular"}>
-                        {resource.title}
-                    </V2_Text.Body>
-                    <StyledHoverContent>
-                        <PinIcon />
-                        <V2_Text.H6 weight={"semibold"}>
-                            {resource.subtitle}
-                        </V2_Text.H6>
-                    </StyledHoverContent>
-                </>
-            ),
             rowCells: resource.timelines[0].slots.map((slot) => {
                 return {
                     id: slot.id,
@@ -84,4 +52,11 @@ export const lazyLoad = (page: number) => {
             }),
         };
     });
+};
+
+export const lazyLoadTimeTableData = async (
+    page: number
+): Promise<TimeTableRowData[]> => {
+    await new Promise((r) => setTimeout(r, 1000));
+    return buildTimeTableData(page);
 };
