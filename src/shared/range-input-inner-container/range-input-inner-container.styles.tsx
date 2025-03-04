@@ -11,7 +11,7 @@ interface GeneralStyleProps {
 
 interface IndicatorStyleProps extends GeneralStyleProps {
     $position: "start" | "end" | "none";
-    $error: boolean;
+    $error: boolean | undefined;
 }
 
 // =============================================================================

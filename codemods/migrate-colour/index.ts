@@ -1,4 +1,5 @@
 import { API, FileInfo, JSCodeshift } from "jscodeshift";
+import { Theme } from "../common";
 import {
     bookingSgMapping,
     ccubeMapping,
@@ -30,7 +31,15 @@ const COLOR_MAPPINGS = {
     rbs: rbsMapping,
 };
 
-export default function transformer(file: FileInfo, api: API, options: any) {
+interface Options {
+    mapping: Theme;
+}
+
+export default function transformer(
+    file: FileInfo,
+    api: API,
+    options: Options
+) {
     const j: JSCodeshift = api.jscodeshift;
     const source = j(file.source);
 
@@ -38,7 +47,7 @@ export default function transformer(file: FileInfo, api: API, options: any) {
 
     // Determine which Colour mapping to use
     const colorMapping =
-        COLOR_MAPPINGS[options.mapping] || COLOR_MAPPINGS.lifesg;
+        COLOR_MAPPINGS[options.mapping] || COLOR_MAPPINGS[Theme.LifeSG];
 
     //Update Colour usage post mapping
     const replaceWithColorPrimitive = (path: any, new_color_value: string) => {
@@ -138,7 +147,8 @@ export default function transformer(file: FileInfo, api: API, options: any) {
                     property_name += `[${index}]`;
                 }
 
-                const newColorValue = colorMapping[property_name];
+                const newColorValue =
+                    colorMapping[property_name as keyof typeof colorMapping];
                 if (newColorValue) {
                     replaceWithColorPrimitive(path, newColorValue);
                 }

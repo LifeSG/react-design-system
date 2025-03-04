@@ -70,7 +70,7 @@ export namespace TimeHelper {
 
     export const getTimeValues = (
         format: TimeFormat,
-        value?: string
+        value: string | undefined
     ): TimeValues => {
         // Default value
         const timeValues: TimeValues = {
@@ -104,14 +104,16 @@ export namespace TimeHelper {
                             : StringHelper.padValue((hour - 12).toString());
                 }
             } else {
-                const plain = convertToPlain(value, format);
+                const {
+                    hour,
+                    minute,
+                    period = "",
+                } = convertToPlain(value, format);
 
-                timeValues.hour = StringHelper.padValue(plain.hour);
-                timeValues.minute = StringHelper.padValue(plain.minute);
+                timeValues.hour = StringHelper.padValue(hour);
+                timeValues.minute = StringHelper.padValue(minute);
                 timeValues.period =
-                    plain.period.toLowerCase() === "am"
-                        ? EPeriod.AM
-                        : EPeriod.PM;
+                    period.toLowerCase() === "am" ? EPeriod.AM : EPeriod.PM;
             }
 
             return timeValues;
@@ -202,19 +204,19 @@ export namespace TimeHelper {
     };
 
     export const formatDisplayValue = (
-        value: string,
+        value: string | undefined,
         format: TimeFormat
     ): string => {
         try {
-            const plain = convertToPlain(value, format);
+            const { hour, minute, period = "" } = convertToPlain(value, format);
 
-            const paddedHour = StringHelper.padValue(plain.hour);
-            const paddedMinute = StringHelper.padValue(plain.minute);
+            const paddedHour = StringHelper.padValue(hour);
+            const paddedMinute = StringHelper.padValue(minute);
 
             let formatted = `${paddedHour}:${paddedMinute}`;
 
             if (format === "12hr") {
-                formatted += plain.period.toLowerCase();
+                formatted += period.toLowerCase();
 
                 return formatted;
             }
@@ -354,9 +356,9 @@ export namespace TimeHelper {
     };
 
     export const findClosestFlooredTime = (
-        inputTime: string,
+        inputTime: string | undefined,
         timeArray: string[] // Should already be sorted in ascending order
-    ): string => {
+    ): string | undefined => {
         if (!inputTime) return inputTime;
         const flooredInputMinutes = timeToMinutes(inputTime);
 
@@ -422,8 +424,11 @@ const isValidTimePeriod = (timePeriodString: string): boolean => {
     );
 };
 
-const convertToPlain = (value: string, format: TimeFormat): TimeValuesPlain => {
-    const timeArr = value.split(":");
+const convertToPlain = (
+    value: string | undefined,
+    format: TimeFormat
+): TimeValuesPlain => {
+    const timeArr = value ? value.split(":") : [];
     const error = new Error("Invalid format");
 
     if (format === "12hr") {

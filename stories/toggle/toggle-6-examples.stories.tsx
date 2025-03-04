@@ -32,21 +32,29 @@ export const AdditionalInputs: StoryObj<Component> = {
                     checked={selected}
                     error={error}
                     compositeSection={
-                        selected && {
-                            children: (
-                                <Form.Input
-                                    label="Label"
-                                    errorMessage={error && "Invalid field"}
-                                    value={value}
-                                    onChange={(e) => {
-                                        setValue(e.target.value);
-                                        setError(e.target.value === "x");
-                                    }}
-                                />
-                            ),
-                            collapsible: true,
-                            errors: error && ["Something went wrong"],
-                        }
+                        selected
+                            ? {
+                                  children: (
+                                      <Form.Input
+                                          label="Label"
+                                          errorMessage={
+                                              error
+                                                  ? "Invalid field"
+                                                  : undefined
+                                          }
+                                          value={value}
+                                          onChange={(e) => {
+                                              setValue(e.target.value);
+                                              setError(e.target.value === "x");
+                                          }}
+                                      />
+                                  ),
+                                  collapsible: true,
+                                  errors: error
+                                      ? ["Something went wrong"]
+                                      : undefined,
+                              }
+                            : undefined
                     }
                     onChange={() => {
                         const nextState = !selected;

@@ -11,7 +11,7 @@ import { Typography } from "../typography";
 interface TableProps {
     $end: boolean;
     $scrollable: boolean;
-    $stickyHeader: boolean;
+    $stickyHeader: boolean | undefined;
 }
 interface TableBodyProps {
     $showLastRowBottomBorder: boolean;

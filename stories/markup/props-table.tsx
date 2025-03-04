@@ -34,7 +34,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "baseTextColor",
                 description:
                     "The default font color. Supports theming. If not specified, inherited from the parent",
-                propTypes: ["string", "(props: unknown) => string"],
+                propTypes: ["string", "(props: ThemeStyleProps) => string"],
             },
             {
                 name: "inline",

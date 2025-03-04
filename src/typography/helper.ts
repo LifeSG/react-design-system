@@ -1,6 +1,6 @@
 import { css } from "styled-components";
 import { Colour, Font } from "../theme";
-import { TypographySizeType } from "../theme/font/types";
+import { FontSet, TypographySizeType } from "../theme/font/types";
 import { TypographyProps, TypographyWeight } from "./types";
 
 export const getTextStyle = (
@@ -8,7 +8,7 @@ export const getTextStyle = (
     weight: TypographyWeight,
     paragraph = false
 ) => {
-    const token = `${type}-${weight.toLowerCase()}`;
+    const token: keyof FontSet = `${type}-${weight}`;
 
     return css`
         ${Font[token]}

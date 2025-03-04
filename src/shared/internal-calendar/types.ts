@@ -100,5 +100,5 @@ export interface DefaultViewProps {
 export interface CalendarManagerRef {
     defaultView: () => void;
     resetView: () => void;
-    setCalendarDate: (date: string) => void;
+    setCalendarDate: (date: string | undefined) => void;
 }

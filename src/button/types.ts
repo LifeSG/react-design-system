@@ -5,6 +5,7 @@ export type ButtonStyleType = "default" | "secondary" | "light" | "link";
 
 export interface ButtonBaseProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    "data-testid"?: string | undefined;
     /** The style type of the button. Values: "default" | "secondary" | "light" | "link" */
     styleType?: ButtonStyleType | undefined;
     /** If specified, the component will have a red color scheme being applied */

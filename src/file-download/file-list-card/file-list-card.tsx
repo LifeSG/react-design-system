@@ -45,7 +45,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const [displayText, setDisplayText] = useState<string>();
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // =========================================================================
     // EFFECTS
@@ -104,7 +104,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         </>
     );
 
-    const renderWithThumbnail = () => (
+    const renderWithThumbnail = (thumbnailImageDataUrl: string) => (
         <>
             <ThumbnailContainer data-testid={`${id}-thumbnail`}>
                 <Thumbnail
@@ -140,7 +140,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         let content: JSX.Element;
 
         if (thumbnailImageDataUrl) {
-            content = renderWithThumbnail();
+            content = renderWithThumbnail(thumbnailImageDataUrl);
         } else {
             content = renderDefault();
         }

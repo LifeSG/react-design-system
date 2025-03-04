@@ -153,8 +153,10 @@ export default function transformer(file: FileInfo, api: API) {
                         MEMBER_EXPRESSION_PROPERTIES.MIN_WIDTH) &&
                 j.Identifier.check(property)
             ) {
-                const queryType = object.property.name;
-                const mediaKey = property.name;
+                const queryType = object.property
+                    .name as keyof typeof mediaQueryMap;
+                const mediaKey =
+                    property.name as keyof (typeof mediaQueryMap)[typeof queryType];
 
                 if (
                     mediaQueryMap[queryType] &&

@@ -1,6 +1,10 @@
 import { ColourSpec } from "src/theme/colour-primitive/theme-helper";
 import { getSemanticColour } from "src/theme/colour-semantic/theme-helper";
-import { SemanticColourSet, ThemeSpec } from "src/theme/types";
+import {
+    PrimitiveColourSet,
+    SemanticColourSet,
+    ThemeSpec,
+} from "src/theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
 
 interface SemanticColourPalette {
@@ -11,15 +15,16 @@ const SemanticColourPalette = ({ tokens }: SemanticColourPalette) => {
     const theme = useTheme();
 
     // apply proxy to spy on the primitive token being accessed
-    let colourToken: string;
+    let colourToken: string | undefined;
+    const scheme = theme.colourScheme;
+    const original = ColourSpec.collections[scheme];
+
     const proxy = {
-        get(target, prop) {
+        get(target: typeof original, prop: keyof PrimitiveColourSet) {
             colourToken = prop;
             return target[prop];
         },
     };
-    const scheme = theme.colourScheme;
-    const original = ColourSpec.collections[scheme];
     ColourSpec.collections[scheme] = new Proxy(original, proxy);
 
     const component = (

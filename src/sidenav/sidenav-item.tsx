@@ -75,8 +75,8 @@ export const SidenavItem = ({
                 onMouseEnter={handleMouseEnter}
                 {...otherProps}
                 $highlight={
-                    (selectedItem && selectedItem.itemId === id) ||
-                    (currentItem && currentItem.itemId === id)
+                    (!!selectedItem && selectedItem.itemId === id) ||
+                    (!!currentItem && currentItem.itemId === id)
                 }
             >
                 <IconContainer>{icon}</IconContainer>

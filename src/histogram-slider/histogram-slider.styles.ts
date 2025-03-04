@@ -4,7 +4,7 @@ import { Colour, Radius, Spacing } from "../theme";
 
 interface BarStyleProps {
     $selected: boolean;
-    $disabled: boolean;
+    $disabled: boolean | undefined;
 }
 
 export const Label = styled.div`

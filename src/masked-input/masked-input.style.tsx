@@ -11,14 +11,14 @@ import { BasicButton } from "../shared/input-wrapper";
 // =============================================================================
 
 interface InputGroupWrapperProps {
-    readOnly: boolean;
-    $isDisabled: boolean;
+    readOnly: boolean | undefined;
+    $isDisabled: boolean | undefined;
 }
 
 interface IconProps {
     $isDisabled?: boolean;
-    $inactiveColor: string;
-    $activeColor: string;
+    $inactiveColor: string | undefined;
+    $activeColor: string | undefined;
 }
 
 // =============================================================================

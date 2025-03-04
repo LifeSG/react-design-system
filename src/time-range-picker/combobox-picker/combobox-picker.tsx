@@ -41,7 +41,7 @@ export const ComboboxPicker = ({
     // =============================================================================
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
     const [activeTimeSelector, setActiveTimeSelector] =
-        useState<TimeRangeInputType>(null);
+        useState<TimeRangeInputType | null>(null);
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const [validationError, setValidationError] = useState<string>("");
 
@@ -50,9 +50,9 @@ export const ComboboxPicker = ({
     const [initialStartTimeVal, setInitialStartTimeVal] = useState<string>("");
     const [initialEndTimeVal, setInitialEndTimeVal] = useState<string>("");
 
-    const nodeRef = useRef<HTMLDivElement>();
-    const startInputRef = useRef<HTMLInputElement>();
-    const endInputRef = useRef<HTMLInputElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const startInputRef = useRef<HTMLInputElement>(null);
+    const endInputRef = useRef<HTMLInputElement>(null);
 
     const startOptions = useMemo(
         () =>
@@ -66,7 +66,9 @@ export const ComboboxPicker = ({
             initialStartTimeVal,
             startOptions
         );
-        return startOptions.slice(startOptions.indexOf(flooredStartVal));
+        return flooredStartVal
+            ? startOptions.slice(startOptions.indexOf(flooredStartVal))
+            : [];
     }, [startOptions, initialStartTimeVal]);
 
     // =========================================================================
@@ -145,7 +147,7 @@ export const ComboboxPicker = ({
 
         setActiveTimeSelector(selector);
         setDropdownOpen(true);
-        (selector === "start" ? startInputRef : endInputRef).current.select();
+        (selector === "start" ? startInputRef : endInputRef).current?.select();
     };
 
     function handleKeyDownEvent(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -156,7 +158,7 @@ export const ComboboxPicker = ({
                 } else if (activeTimeSelector === "end") {
                     // Let handleBlur call handleTimeChange instead
                     if (dropdownOpen) handleEndTime(endTimeVal);
-                    endInputRef.current.blur();
+                    endInputRef.current?.blur();
                 }
                 break;
             case "Tab":
@@ -199,7 +201,7 @@ export const ComboboxPicker = ({
         // Go to end input only if start is a valid time
         if (goToNextInput && parseInput(startInput) !== undefined) {
             setActiveTimeSelector("end");
-            endInputRef.current.select();
+            endInputRef.current?.select();
         }
 
         if (triggerOnBlur) {
@@ -233,7 +235,7 @@ export const ComboboxPicker = ({
         (activeTimeSelector === "start"
             ? startInputRef
             : endInputRef
-        ).current.focus();
+        ).current?.focus();
         setDropdownOpen(false);
     };
 
@@ -249,7 +251,7 @@ export const ComboboxPicker = ({
     };
 
     // NOTE: Dropdown dismissal (esc) does not trigger onClose
-    const handleClose = (reason: OpenChangeReason) => {
+    const handleClose = (reason: OpenChangeReason | undefined) => {
         if (reason === "outside-press") {
             // No handleTimeChange to avoid duplicate call from handleBlur
             setActiveTimeSelector(null);

@@ -34,7 +34,7 @@ export const DropdownLabel = ({
     selected,
     sublabel,
     truncationType = "middle",
-    variant,
+    variant = "default",
 }: DropdownLabelProps): JSX.Element => {
     const theme = useTheme();
     const fontSize =
@@ -49,7 +49,7 @@ export const DropdownLabel = ({
     // =========================================================================
     const hasExceededContainer = useCallback(
         (displayText: string) => {
-            if (displayType !== "inline") {
+            if (displayType !== "inline" || !width) {
                 return false;
             }
 

@@ -1,7 +1,8 @@
 import React from "react";
-import { DownloadApp } from "./footer-download-app";
-import { FooterHelper } from "./footer-helper";
+import { useTheme } from "styled-components";
 import { Typography } from "../typography";
+import { DownloadApp } from "./footer-download-app";
+import { FooterHelper, InternalDisclaimerLinks } from "./footer-helper";
 import {
     AddonSection,
     BaseFooter,
@@ -16,7 +17,6 @@ import {
     TopSection,
 } from "./footer.style";
 import { FooterLinkProps, FooterProps } from "./types";
-import { useTheme } from "styled-components";
 
 export const Footer = <T,>({
     children,
@@ -62,13 +62,15 @@ export const Footer = <T,>({
     // =============================================================================
     const renderDisclaimerLinks = () => {
         const links = FooterHelper.getDisclaimerLinks(
-            (theme as any)?.resourceScheme,
+            theme?.resourceScheme,
             disclaimerLinks
         );
 
-        return Object.keys(links).map((key) => {
-            return <DisclaimerTextLink key={key} {...links[key]} />;
-        });
+        return (Object.keys(links) as (keyof InternalDisclaimerLinks)[]).map(
+            (key) => {
+                return <DisclaimerTextLink key={key} {...links[key]} />;
+            }
+        );
     };
 
     const renderFooterLinks = (links: FooterLinkProps<T>[]) => {
@@ -87,7 +89,7 @@ export const Footer = <T,>({
     };
 
     const renderTopSection = () => {
-        let component: JSX.Element | JSX.Element[] = null;
+        let component: React.ReactNode = null;
 
         if (children) {
             return children;
@@ -101,7 +103,7 @@ export const Footer = <T,>({
                             src={
                                 logoSrc ||
                                 FooterHelper.getFooterLogo(
-                                    (theme as any)?.resourceScheme
+                                    theme?.resourceScheme
                                 )
                             }
                             alt="LifeSG"
@@ -154,7 +156,7 @@ export const Footer = <T,>({
                                 &copy;{" "}
                                 {FooterHelper.getCopyrightInfo(
                                     lastUpdated,
-                                    (theme as any)?.resourceScheme
+                                    theme?.resourceScheme
                                 )}
                             </>
                         )}

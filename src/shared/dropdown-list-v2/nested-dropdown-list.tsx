@@ -43,7 +43,7 @@ import {
 
 export const NestedDropdownList = <T,>({
     listItems,
-    multiSelect,
+    multiSelect = false,
     selectedKeyPaths,
     itemsLoadState = "success",
     itemTruncationType = "end",
@@ -69,10 +69,10 @@ export const NestedDropdownList = <T,>({
     const [searchValue, setSearchValue] = useState<string>("");
     const searchTerm = searchValue.toLowerCase().trim();
     const [searchActive, setSearchActive] = useState<boolean>(false);
-    const nodeRef = useRef<HTMLDivElement>();
-    const listRef = useRef<HTMLDivElement>();
-    const listItemRefs = useRef<HTMLElement[]>([]);
-    const searchInputRef = useRef<HTMLInputElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
+    const listItemRefs = useRef<(HTMLElement | null)[]>([]);
+    const searchInputRef = useRef<HTMLInputElement>(null);
     const mounted = useIsMounted();
 
     // maintaining a separate list for search and non-search as we need to
@@ -115,7 +115,7 @@ export const NestedDropdownList = <T,>({
                 );
                 if (upcomingIndex >= 0) {
                     setFocusedIndex(upcomingIndex);
-                    listItemRefs.current[upcomingIndex].focus();
+                    listItemRefs.current[upcomingIndex]?.focus();
                 }
                 break;
             }
@@ -128,7 +128,7 @@ export const NestedDropdownList = <T,>({
                 );
                 if (upcomingIndex >= 0) {
                     setFocusedIndex(upcomingIndex);
-                    listItemRefs.current[upcomingIndex].focus();
+                    listItemRefs.current[upcomingIndex]?.focus();
                 } else if (focusedIndex === 0 && searchInputRef.current) {
                     searchInputRef.current.focus();
                     setFocusedIndex(-1);
@@ -180,7 +180,7 @@ export const NestedDropdownList = <T,>({
     const handleOnClear = () => {
         setSearchValue("");
         setSearchActive(false);
-        searchInputRef.current.focus();
+        searchInputRef.current?.focus();
 
         onSearch?.();
     };
@@ -317,7 +317,7 @@ export const NestedDropdownList = <T,>({
     useEventListener("keydown", handleKeyboardPress);
 
     useEffect(() => {
-        let list: NestedDropdownListLocalItem<T>[];
+        let list: NestedDropdownListLocalItem<T>[] = [];
         if (mode === "default") {
             list = flattenDefaultMode(listItems);
         } else if (mode === "expand") {

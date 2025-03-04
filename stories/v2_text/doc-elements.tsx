@@ -11,7 +11,7 @@ interface TextDisplayLabelProps {
 }
 
 const TextDisplayLabel = ({ variant }: TextDisplayLabelProps) => {
-    let type;
+    let type: "display" | "header" | "general";
 
     switch (variant) {
         case "D1":

@@ -2,7 +2,7 @@ import isEmpty from "lodash/isEmpty";
 import { NestedDropdownListItemProps } from "../shared/dropdown-list-v2";
 
 const findSelectedItem = <V1, V2, V3>(
-    options: NestedDropdownListItemProps<V1 | V2 | V3>[],
+    options: NestedDropdownListItemProps<V1 | V2 | V3>[] | undefined,
     keyPath: string[]
 ): NestedDropdownListItemProps<V1 | V2 | V3> | undefined => {
     const [currentKey, ...nextKeyPath] = keyPath;
@@ -11,7 +11,7 @@ const findSelectedItem = <V1, V2, V3>(
         return undefined;
     }
 
-    const item = options.find((item) => item.key === currentKey);
+    const item = options!.find((item) => item.key === currentKey);
 
     if (!item) {
         return undefined;

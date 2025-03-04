@@ -5,11 +5,11 @@ import { DropdownVariantType } from "./types";
 
 interface ExpandableElementProps {
     children: React.ReactNode;
-    disabled: boolean;
-    expanded: boolean;
+    disabled: boolean | undefined;
+    expanded: boolean | undefined;
     listboxId: string;
     popupRole: AriaAttributes["aria-haspopup"];
-    readOnly: boolean;
+    readOnly: boolean | undefined;
     variant: DropdownVariantType;
 }
 

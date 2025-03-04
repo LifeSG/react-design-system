@@ -4,7 +4,10 @@ import { HOCWrapper } from "./tooltip.styles";
 import { TooltipHOCOptionsProps, TooltipHOCProps } from "./types";
 
 export const withTooltip =
-    <T,>(Component: React.ComponentType<T>, options: TooltipHOCOptionsProps) =>
+    <T extends object>(
+        Component: React.ComponentType<T>,
+        options: TooltipHOCOptionsProps
+    ) =>
     // eslint-disable-next-line react/display-name
     (props: T & TooltipHOCProps): JSX.Element => {
         const { tooltipVisible, position, ...otherProps } = props;

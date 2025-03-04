@@ -98,7 +98,7 @@ export const ConfiguringFilterItem: StoryObj<Component> = {
 export const HandlingExpandedState: StoryObj<Component> = {
     render: (_args) => {
         const [expanded, setExpanded] = useState("item-1");
-        const handleExpandChange = (item) => setExpanded(item);
+        const handleExpandChange = (item: string) => setExpanded(item);
         return (
             <Filter>
                 <Filter.Item

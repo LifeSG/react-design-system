@@ -89,7 +89,10 @@ export default function transformer(file: FileInfo, api: API) {
                             j.JSXIdentifier.check(attribute.name)
                         ) {
                             const oldPropName = attribute.name.name;
-                            const newPropName = propMapping[oldPropName];
+                            const newPropName =
+                                propMapping[
+                                    oldPropName as keyof typeof propMapping
+                                ];
 
                             if (newPropName) {
                                 attribute.name.name = newPropName;

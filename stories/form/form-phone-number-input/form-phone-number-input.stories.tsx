@@ -2,7 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Form } from "src/form";
 import { Layout } from "src/layout";
-import { PhoneNumberInput } from "src/phone-number-input";
+import {
+    PhoneNumberInput,
+    PhoneNumberInputValue,
+} from "src/phone-number-input";
 import {
     FullWidthStoryDecorator,
     StoryDecorator,
@@ -71,7 +74,7 @@ export const FixedCountry: StoryObj<Component> = {
 
 export const AllowClear: StoryObj<Component> = {
     render: (_args) => {
-        const [value, setValue] = useState({
+        const [value, setValue] = useState<PhoneNumberInputValue>({
             countryCode: "65",
             number: "88888888",
         });

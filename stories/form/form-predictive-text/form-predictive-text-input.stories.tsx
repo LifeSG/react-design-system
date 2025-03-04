@@ -8,6 +8,8 @@ import {
     StoryDecorator,
 } from "stories/storybook-common";
 import {
+    Option,
+    OptionWithSecondaryLabel,
     mockFetchOptions,
     mockFetchOptionsWithSecondaryLabel,
 } from "./mock-fetch-options";
@@ -24,8 +26,12 @@ export default meta;
 
 export const Default: StoryObj<Component> = {
     render: () => {
-        const [selectedOption, setSelectedOption] = useState(undefined);
-        const [selectedOption2, setSelectedOption2] = useState(undefined);
+        const [selectedOption, setSelectedOption] = useState<
+            Option | undefined
+        >(undefined);
+        const [selectedOption2, setSelectedOption2] = useState<
+            Option | undefined
+        >(undefined);
         return (
             <>
                 <Form.PredictiveTextInput
@@ -79,7 +85,9 @@ export const Default: StoryObj<Component> = {
 
 export const WithSecondaryLabel: StoryObj<Component> = {
     render: () => {
-        const [selectedOption, setSelectedOption] = useState(undefined);
+        const [selectedOption, setSelectedOption] = useState<
+            OptionWithSecondaryLabel | undefined
+        >(undefined);
         return (
             <>
                 <Form.PredictiveTextInput

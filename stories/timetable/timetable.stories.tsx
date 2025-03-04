@@ -191,7 +191,7 @@ export const CustomPopovers: StoryObj<Component> = {
         const buildCustomPopover = (
             row: TimeTableRowData,
             cell: TimeTableRowCellData
-        ): TimeTablePopoverProps => {
+        ): TimeTablePopoverProps | undefined => {
             switch (cell.status) {
                 case "filled": {
                     return {

@@ -54,14 +54,14 @@ export const InputSelect = <T, V>({
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const [selected, setSelected] = useState<T>(selectedOption);
+    const [selected, setSelected] = useState<T | undefined>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
-    const nodeRef = useRef<HTMLDivElement>();
-    const selectorRef = useRef<HTMLButtonElement>();
-    const labelContainerRef = useRef<HTMLDivElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const selectorRef = useRef<HTMLButtonElement>(null);
+    const labelContainerRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // EFFECTS
@@ -74,7 +74,7 @@ export const InputSelect = <T, V>({
     // EVENT HANDLERS
     // =============================================================================
     const handleListItemClick = (item: T, extractedValue: V) => {
-        selectorRef.current.focus();
+        selectorRef.current?.focus();
         setSelected(item);
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
@@ -99,6 +99,7 @@ export const InputSelect = <T, V>({
         if (
             focused &&
             !showOptions &&
+            nodeRef.current &&
             !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
             setFocused(false);
@@ -112,7 +113,7 @@ export const InputSelect = <T, V>({
         setFocused(true);
     };
 
-    const handleClose = (reason: OpenChangeReason) => {
+    const handleClose = (reason: OpenChangeReason | undefined) => {
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
@@ -124,7 +125,7 @@ export const InputSelect = <T, V>({
     };
 
     const handleDismiss = () => {
-        selectorRef.current.focus();
+        selectorRef.current?.focus();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };
@@ -132,27 +133,24 @@ export const InputSelect = <T, V>({
     // =============================================================================
     // HELPER FUNCTION
     // =============================================================================
-    const getDisplayValue = (): string | V => {
+    const getDisplayValue = (): string => {
+        if (!selected) return "";
+
         if (displayValueExtractor) {
             return displayValueExtractor(selected);
         }
 
         if (valueExtractor) {
-            return valueExtractor(selected);
+            const value = valueExtractor(selected);
+            return valueToStringFunction
+                ? valueToStringFunction(value)
+                : value?.toString() ?? "";
         }
 
         return selected.toString();
     };
 
-    const convertValueToString = (value: V | string): string => {
-        if (typeof value === "string") {
-            return value;
-        } else {
-            return valueToStringFunction(value) || value.toString();
-        }
-    };
-
-    const truncateValue = (value: string | V) => {
+    const truncateValue = (value: string) => {
         if (optionTruncationType === "middle") {
             let widthOfElement = 0;
             if (labelContainerRef && labelContainerRef.current) {
@@ -160,12 +158,7 @@ export const InputSelect = <T, V>({
                     labelContainerRef.current.getBoundingClientRect().width;
             }
 
-            return StringHelper.truncateOneLine(
-                convertValueToString(value),
-                widthOfElement,
-                120,
-                8
-            );
+            return StringHelper.truncateOneLine(value, widthOfElement, 120, 8);
         }
         return value;
     };

@@ -27,7 +27,7 @@ export interface ShowMoreIconStyleProps {
 // =============================================================================
 
 export const Wrapper = styled.div<StyleProps>`
-    padding: ${Spacing["8"]} ${Spacing["spacing-16"]};
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
     display: flex;
 
     ${(props) => {

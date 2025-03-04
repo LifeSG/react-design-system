@@ -36,21 +36,22 @@ export const CountdownTimer = ({
     // CONST, STATE, REF
     // =============================================================================
 
-    const wrapperRef = useRef<HTMLDivElement>();
+    const wrapperRef = useRef<HTMLDivElement>(null);
     const isNotified = useRef<boolean>(false);
     const [offsetY, setOffsetY] = useState<number>(0);
     const [clientRectRight, setClientRectRight] = useState<number>(0);
     const [clientRectX, setClientRectX] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState(false);
 
-    const [remainingSeconds] = useTimer(timer, isPlaying, timestamp);
+    const [remainingSeconds] = useTimer(timer, timestamp, isPlaying);
     const { ref: stickyRef, inView } = useInView({
         threshold: 1,
         rootMargin: `${offsetY * -1}px 0px 0px 0px`,
         initialInView: true,
     });
     const isVisible = !fixed || inView;
-    const warn = remainingSeconds <= notifyTimer;
+    const warn =
+        typeof notifyTimer === "number" && remainingSeconds <= notifyTimer;
 
     const theme = useTheme();
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
@@ -67,7 +68,10 @@ export const CountdownTimer = ({
     useEffect(() => {
         if (remainingSeconds === 0) {
             performOnFinishHandler();
-        } else if (remainingSeconds <= notifyTimer) {
+        } else if (
+            typeof notifyTimer === "number" &&
+            remainingSeconds <= notifyTimer
+        ) {
             performOnTickHandler();
             performOnNotifyHandler();
         }
@@ -100,7 +104,9 @@ export const CountdownTimer = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleWindowResize = () => {
-        const clientRect = wrapperRef.current?.getBoundingClientRect();
+        if (!wrapperRef.current) return;
+
+        const clientRect = wrapperRef.current.getBoundingClientRect();
 
         setClientRectX(clientRect.x);
         setClientRectRight(clientRect.right);
@@ -196,8 +202,6 @@ export const CountdownTimer = ({
             </FixedCountdown>
         );
     };
-
-    if (typeof window === undefined) return;
 
     if (!isPlaying && remainingSeconds !== 0) return <></>;
 

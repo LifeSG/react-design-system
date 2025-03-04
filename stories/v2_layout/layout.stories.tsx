@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
 import { V2_Layout } from "src/v2_layout";
 import { V2_Text } from "src/v2_text";
 
@@ -65,7 +66,7 @@ export const SplitUsage: StoryObj = {
 
 export const FlexColumnLayout: StoryObj = {
     render: () => {
-        const renderContent = (content) => {
+        const renderContent = (content: React.ReactNode) => {
             return (
                 <div
                     style={{
@@ -88,7 +89,7 @@ export const FlexColumnLayout: StoryObj = {
 
 export const GridLayout: StoryObj = {
     render: () => {
-        const renderColumn = (index) => (
+        const renderColumn = (index: number) => (
             <div
                 style={{
                     border: "2px dotted #F26664",

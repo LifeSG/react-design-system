@@ -103,9 +103,9 @@ export const StyledContainer = styled.div<StyleProps>`
                     }
 
                     ${MediaQuery.MaxWidth.xxs} {
-                        column-gap: ${Breakpoint["xss-gutter"]}px;
+                        column-gap: ${Breakpoint["xxs-gutter"]}px;
                         grid-template-columns: repeat(
-                            ${Breakpoint["xss-column"]},
+                            ${Breakpoint["xxs-column"]},
                             minmax(0, 1fr)
                         );
                     }

@@ -69,11 +69,11 @@ export const Component = (
         Record<string, ImageDimension>
     >({});
     const [zoom, setZoom] = useState(1);
-    const [startX, setStartX] = useState(null);
-    const [endX, setEndX] = useState(null);
+    const [startX, setStartX] = useState<number | undefined>();
+    const [endX, setEndX] = useState<number | undefined>();
     const containerRef = useRef<HTMLDivElement>(null);
-    const thumbnailRefs = useRef<HTMLDivElement[]>([]);
-    const zoomRefs = useRef<ReactZoomPanPinchContentRef[]>([]);
+    const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const zoomRefs = useRef<(ReactZoomPanPinchContentRef | null)[]>([]);
     const diff = startX && endX ? startX - endX : 0;
 
     useImperativeHandle<FullscreenImageCarouselRef, FullscreenImageCarouselRef>(
@@ -112,6 +112,7 @@ export const Component = (
     };
 
     const handleTouchEnd = () => {
+        if (!containerRef.current) return;
         if (Math.abs(diff) > containerRef.current.offsetWidth / 3) {
             if (diff > 0) {
                 goToNextSlide();
@@ -119,8 +120,8 @@ export const Component = (
                 goToPrevSlide();
             }
         }
-        setStartX(null);
-        setEndX(null);
+        setStartX(undefined);
+        setEndX(undefined);
     };
 
     const handleZoom = (e: ReactZoomPanPinchRef) => {
@@ -141,14 +142,22 @@ export const Component = (
         if (zoom === 1) {
             const zoomRatio = getZoomRatio();
             zoomRefs.current?.[currentSlide]?.centerView(zoomRatio);
-            setZoom(zoomRatio);
+            setZoom(zoomRatio ?? 1);
         } else {
             setZoom(1);
             zoomRefs.current?.[currentSlide]?.resetTransform();
         }
     };
 
-    const setDimension = ({ src, height, width }) => {
+    const setDimension = ({
+        src,
+        height,
+        width,
+    }: {
+        src: string;
+        height: number;
+        width: number;
+    }) => {
         setImageDimension((oldState) => {
             return { ...oldState, [src]: { height, width } };
         });
@@ -157,7 +166,7 @@ export const Component = (
     const getZoomRatio = () => {
         const imageDimension = imagesDimension[items[currentSlide].src];
 
-        if (containerRef?.current && !!imageDimension) {
+        if (containerRef.current && !!imageDimension) {
             const { clientHeight, clientWidth } = containerRef.current;
             const { width, height } = imageDimension;
             const isSmallImg = width < clientWidth && height < clientHeight;

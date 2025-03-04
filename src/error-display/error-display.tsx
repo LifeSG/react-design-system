@@ -26,7 +26,7 @@ export const ErrorDisplay = ({
     imageOnly,
     illustrationScheme,
     ...otherProps
-}: ErrorDisplayProps): JSX.Element => {
+}: ErrorDisplayProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -48,14 +48,14 @@ export const ErrorDisplay = ({
                 const typecastProps =
                     additionalProps as MaintenanceAdditionalAttributes;
                 return additionalProps && typecastProps.dateString
-                    ? defaultAssets.renderDescription(typecastProps)
+                    ? defaultAssets?.renderDescription?.(typecastProps)
                     : description || undefined;
             }
             case "inactivity": {
                 const typecastProps =
                     additionalProps as InactivityAdditionalAttributes;
                 return additionalProps && typecastProps.secondsLeft
-                    ? defaultAssets.renderDescription(typecastProps)
+                    ? defaultAssets?.renderDescription?.(typecastProps)
                     : description || undefined;
             }
             default:

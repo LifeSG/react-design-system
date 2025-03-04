@@ -14,7 +14,7 @@ export interface DropzoneElement extends HTMLInputElement {
 }
 
 interface Props extends FileInputProps {
-    children: JSX.Element[];
+    children: React.ReactNode;
     id: string;
     border: boolean;
     onChange: (files: File[]) => void;
@@ -39,7 +39,7 @@ const Component = (
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const inputRef = useRef<HTMLInputElement>();
+    const inputRef = useRef<HTMLInputElement>(null);
     const { getRootProps, isDragActive } = useDropzone({
         onDrop: onChange,
         noClick: true,
@@ -47,10 +47,12 @@ const Component = (
     });
 
     useImperativeHandle(ref, () => ({
-        ...inputRef.current,
+        ...inputRef.current!,
         openFileDialog: () => {
-            inputRef.current.value = null; // Reset the input to enable same file upload
-            inputRef.current?.click();
+            if (inputRef.current) {
+                inputRef.current.value = ""; // Reset the input to enable same file upload
+                inputRef.current.click();
+            }
         },
     }));
 

@@ -35,7 +35,7 @@ describe("PhoneNumberInput", () => {
         it("should format number and preserve caret position", async () => {
             render(<PhoneNumberInput value={{ countryCode: "994" }} />);
 
-            const input: HTMLInputElement = screen.queryByTestId("input");
+            const input: HTMLInputElement = screen.getByTestId("input");
             const inputSpy = jest.spyOn(input, "setSelectionRange");
 
             fireEvent.change(input, {
@@ -53,7 +53,7 @@ describe("PhoneNumberInput", () => {
         it("should remove non-numeric characters and preserve caret position", async () => {
             render(<PhoneNumberInput value={{ countryCode: "994" }} />);
 
-            const input: HTMLInputElement = screen.queryByTestId("input");
+            const input: HTMLInputElement = screen.getByTestId("input");
             const inputSpy = jest.spyOn(input, "setSelectionRange");
 
             fireEvent.change(input, {

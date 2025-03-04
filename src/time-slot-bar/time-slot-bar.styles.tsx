@@ -2,9 +2,10 @@ import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Direction, SlotStyle, TimeSlotBarVariant } from "./types";
 import { Border, Colour } from "../theme";
+import { ThemeStyleProps } from "../theme/types";
 import { Typography } from "../typography";
+import { Direction, SlotStyle, TimeSlotBarVariant } from "./types";
 
 const MAX_LINE_HEIGHT = 1.25; // NOTE in rem
 
@@ -46,8 +47,8 @@ export interface TimeSlotStyleProps {
     $width?: number;
     $left?: number;
     $styleType: SlotStyle;
-    $bgColor: string | ((props: unknown) => string);
-    $bgColor2?: string | ((props: unknown) => string);
+    $bgColor: string | ((props: ThemeStyleProps) => string);
+    $bgColor2?: string | ((props: ThemeStyleProps) => string);
     $clickable?: boolean;
 }
 

@@ -34,7 +34,7 @@ type FileEditedDescriptions = Record<string, string>;
 type RenderItem = FileItemProps | FileItemProps[];
 
 interface Props {
-    fileItems: FileItemProps[];
+    fileItems: FileItemProps[] | undefined;
     editableFileItems: boolean;
     fileDescriptionMaxLength?: number | undefined;
     sortable?: boolean | undefined;
@@ -65,7 +65,7 @@ export const FileList = ({
     // =========================================================================
     const [renderModes, setRenderModes] = useState<FileItemRenderModes>({});
     const { setActiveId } = useContext(FileUploadContext);
-    const { width: wrapperWidth, ref: wrapperRef } = useResizeDetector();
+    const { width: wrapperWidth = 0, ref: wrapperRef } = useResizeDetector();
 
     // Keep track of edited description without re-rendering
     const descriptionsValueRef = useRef<FileEditedDescriptions>({});
@@ -140,7 +140,7 @@ export const FileList = ({
     };
 
     const handleDragEnd = (event: DragEndEvent) => {
-        if (onSort) {
+        if (onSort && fileItems) {
             const { active, over } = event;
 
             if (over && active.id !== over.id) {
@@ -190,7 +190,7 @@ export const FileList = ({
     };
 
     const getItemsRenderMode = (
-        fileItems: FileItemProps[]
+        fileItems: FileItemProps[] | undefined
     ): FileItemRenderModes => {
         if (!fileItems || fileItems.length === 0) return {};
 
@@ -225,7 +225,7 @@ export const FileList = ({
      * with edit modes as a group
      */
     const getArrangedItems = (
-        fileItems: FileItemProps[],
+        fileItems: FileItemProps[] | undefined,
         renderModes: FileItemRenderModes
     ) => {
         if (!fileItems || fileItems.length === 0) return [];

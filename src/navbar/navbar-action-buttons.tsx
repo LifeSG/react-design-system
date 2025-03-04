@@ -12,11 +12,7 @@ import {
     MobileWrapper,
     Wrapper,
 } from "./navbar-action-buttons.styles";
-import {
-    NavbarActionButtonsProps,
-    NavbarButtonComponentProps,
-    NavbarButtonProps,
-} from "./types";
+import { NavbarActionButtonsProps, NavbarButtonProps } from "./types";
 
 const APP_STORE_ICON =
     "https://assets.life.gov.sg/react-design-system/img/download/apple-app-store.png";
@@ -137,13 +133,11 @@ export const NavbarActionButtons = ({
             : actionButtonList;
 
         return buttonsToRender.map((actionButton, index) => {
-            let component: JSX.Element;
+            let component: React.ReactNode;
             switch (actionButton.type) {
                 case "download":
                     component = isMobile ? (
-                        renderDownloadAppMobileView(
-                            actionButton.args as ButtonProps
-                        )
+                        renderDownloadAppMobileView(actionButton.args)
                     ) : (
                         <ActionButton
                             {...actionButton.args}
@@ -173,8 +167,7 @@ export const NavbarActionButtons = ({
                     break;
                 }
                 case "component": {
-                    const args =
-                        actionButton.args as NavbarButtonComponentProps;
+                    const args = actionButton.args;
                     component = (args && args.render) || null;
                     break;
                 }

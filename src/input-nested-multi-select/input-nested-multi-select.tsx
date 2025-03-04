@@ -45,7 +45,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     onBlur,
     optionsLoadState = "success",
     optionTruncationType = "end",
-    variant,
+    variant = "default",
     alignment,
     dropdownZIndex,
 }: InputNestedMultiSelectProps<V1, V2, V3>): JSX.Element => {
@@ -64,9 +64,9 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     const [focused, setFocused] = useState<boolean>(false);
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
-    const nodeRef = useRef<HTMLDivElement>();
-    const selectorRef = useRef<HTMLButtonElement>();
-    const labelContainerRef = useRef<HTMLDivElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const selectorRef = useRef<HTMLButtonElement>(null);
+    const labelContainerRef = useRef<HTMLDivElement>(null);
 
     // =========================================================================
     // EFFECTS
@@ -117,6 +117,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         if (
             focused &&
             !showOptions &&
+            nodeRef.current &&
             !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
             setFocused(false);
@@ -130,7 +131,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         setFocused(true);
     };
 
-    const handleClose = (reason: OpenChangeReason) => {
+    const handleClose = (reason: OpenChangeReason | undefined) => {
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
@@ -142,7 +143,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     };
 
     const handleDismiss = () => {
-        selectorRef.current.focus();
+        selectorRef.current?.focus();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };
@@ -151,12 +152,13 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     // HELPER FUNCTION
     // =========================================================================
     const getDisplayValue = (): string => {
-        const { label, value } = selectedItems[0];
-
         if (selectedItems.length > 1) {
             return `${selectedItems.length} selected`;
-        } else if (valueToStringFunction) {
-            return valueToStringFunction(value) || value.toString();
+        }
+
+        const { label, value } = selectedItems[0];
+        if (valueToStringFunction) {
+            return valueToStringFunction(value);
         } else {
             return label;
         }

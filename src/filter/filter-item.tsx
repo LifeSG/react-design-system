@@ -47,7 +47,8 @@ export const FilterItem = ({
         height: expanded ? itemResizeDetector.height : 0,
     });
     const contentHeight = contentMinimised
-        ? minimisedHeight ?? Math.min(contentResizeDetector.height * 0.5, 216)
+        ? minimisedHeight ??
+          Math.min((contentResizeDetector.height ?? 0) * 0.5, 216)
         : contentResizeDetector.height;
 
     // =============================================================================
@@ -94,7 +95,7 @@ export const FilterItem = ({
     // =============================================================================
 
     const renderAddon = () => {
-        switch (addon.type) {
+        switch (addon?.type) {
             case "popover":
                 return (
                     <PopoverAddon

@@ -24,7 +24,7 @@ describe("ErrorDisplay", () => {
             </ThemeProvider>
         );
 
-        const title = getErrorDisplayData("404", "lifesg", LifeSGTheme).title;
+        const title = getErrorDisplayData("404", "lifesg", LifeSGTheme)!.title;
         expect(screen.getByRole("heading", { level: 4, name: title }));
     });
 
@@ -80,7 +80,7 @@ describe("ErrorDisplay", () => {
     describe("description", () => {
         it("should be able to render custom description", () => {
             render(
-                <ThemeProvider theme={LifeSGTheme as any}>
+                <ThemeProvider theme={LifeSGTheme}>
                     <ErrorDisplay type="404" description={CUSTOM_DESCRIPTION} />
                 </ThemeProvider>
             );
@@ -124,7 +124,7 @@ describe("ErrorDisplay", () => {
             ["transfer-unsuccessful"],
             ["unsupported-browser"],
             ["partially-supported-browser"],
-        ];
+        ] as const;
 
         test.each(testData)(
             "should render %s error correctly",
@@ -135,7 +135,7 @@ describe("ErrorDisplay", () => {
                     </ThemeProvider>
                 );
 
-                const error = getErrorDisplayData(type, "lifesg", LifeSGTheme);
+                const error = getErrorDisplayData(type, "lifesg", LifeSGTheme)!;
 
                 expect(
                     screen.getByRole("heading", { level: 4, name: error.title })
@@ -143,7 +143,7 @@ describe("ErrorDisplay", () => {
 
                 expect(screen.getByRole("img")).toHaveAttribute(
                     "src",
-                    error.img.src
+                    error.img!.src
                 );
 
                 expect(
@@ -165,7 +165,7 @@ describe("ErrorDisplay", () => {
                     type,
                     "bookingsg",
                     BookingSGTheme
-                );
+                )!;
 
                 expect(
                     screen.getByRole("heading", {
@@ -176,7 +176,7 @@ describe("ErrorDisplay", () => {
 
                 expect(screen.getByRole("img")).toHaveAttribute(
                     "src",
-                    error.img.src
+                    error.img!.src
                 );
 
                 expect(
@@ -192,7 +192,7 @@ describe("ErrorDisplay", () => {
                 </ThemeProvider>
             );
 
-            const error = getErrorDisplayData("400", "lifesg", LifeSGTheme);
+            const error = getErrorDisplayData("400", "lifesg", LifeSGTheme)!;
 
             expect(
                 screen.getByRole("heading", {
@@ -203,7 +203,7 @@ describe("ErrorDisplay", () => {
 
             expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
-                error.img.src
+                error.img!.src
             );
 
             expect(
@@ -226,9 +226,9 @@ describe("ErrorDisplay", () => {
                 </ThemeProvider>
             );
 
-            const error = getErrorDisplayData(type, "lifesg", LifeSGTheme);
+            const error = getErrorDisplayData(type, "lifesg", LifeSGTheme)!;
             const errorDescription = transformJSXElementToString(
-                error.renderDescription(additionalProps) as JSX.Element
+                error.renderDescription!(additionalProps) as JSX.Element
             );
 
             expect(
@@ -251,7 +251,7 @@ const ERROR_DESCRIPTION_TEST_ID = "error-display--description";
 const transformJSXElementToString = (element: JSX.Element): string => {
     let text = "";
 
-    element.props.children.forEach((child) => {
+    element.props.children.forEach((child: any) => {
         if (typeof child === "object") {
             text += child.props.children;
         } else {

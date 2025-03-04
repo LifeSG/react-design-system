@@ -1,11 +1,11 @@
-import { Button } from "../button";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
+import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { ToastType } from "./types";
-import { Colour } from "../theme";
-import { MediaQuery } from "../theme";
+import { Colour, MediaQuery } from "../theme";
+import { SemanticColourSet } from "../theme/types";
 import { Typography } from "../typography/typography";
+import { ToastType } from "./types";
 
 //=============================================================================
 // STYLE INTERFACE
@@ -18,30 +18,33 @@ interface StyleProps {
 const getValidationColorAttributes = (props: StyleProps) => {
     const type = props.$type;
 
-    const typeMapping = {
+    const typeMapping: Record<
+        ToastType,
+        Record<string, keyof SemanticColourSet>
+    > = {
         success: {
-            Background: `bg-success`,
-            Border: `border-success`,
-            Text: `text-success`,
-            Icon: `icon-success`,
+            Background: "bg-success",
+            Border: "border-success",
+            Text: "text-success",
+            Icon: "icon-success",
         },
         warning: {
-            Background: `bg-warning`,
-            Border: `border-warning`,
-            Text: `text-warning`,
-            Icon: `icon-warning`,
+            Background: "bg-warning",
+            Border: "border-warning",
+            Text: "text-warning",
+            Icon: "icon-warning",
         },
         error: {
-            Background: `bg-error`,
-            Border: `border-error`,
-            Text: `text-error`,
-            Icon: `icon-error`,
+            Background: "bg-error",
+            Border: "border-error",
+            Text: "text-error",
+            Icon: "icon-error",
         },
         info: {
-            Background: `bg-info`,
-            Border: `border-info`,
-            Text: `text-info`,
-            Icon: `icon-info`,
+            Background: "bg-info",
+            Border: "border-info",
+            Text: "text-info",
+            Icon: "icon-info",
         },
     };
 

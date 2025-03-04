@@ -24,7 +24,7 @@ export const Drawer = ({
     // =============================================================================
     const [showOverlay, setShowOverlay] = useState(show);
     const [id] = useState(() => SimpleIdGenerator.generate());
-    const initialFocusRef = useRef<HTMLHeadingElement>();
+    const initialFocusRef = useRef<HTMLHeadingElement>(null);
 
     // =============================================================================
     // EFFECTS
@@ -44,7 +44,7 @@ export const Drawer = ({
     const handleDialogVisibility = (e: React.TransitionEvent) => {
         if (e.propertyName === "visibility" && show) {
             // focus the first element so that the screenreader enters the dialog
-            initialFocusRef.current.focus();
+            initialFocusRef.current?.focus();
         }
     };
 

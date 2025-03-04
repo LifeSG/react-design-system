@@ -56,7 +56,7 @@ export const SidenavDrawerItem = ({
             setExpanded(!expanded);
             return;
         }
-        setSelectedItem({ itemId: currentItem.itemId, content: undefined });
+        setSelectedItem({ itemId: currentItem?.itemId, content: undefined });
         setCurrentItem(undefined);
         setPreviouslySelectedItemId(undefined);
         if (onClick) {

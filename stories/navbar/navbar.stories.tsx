@@ -258,7 +258,7 @@ export const UncollapsibleActionButtons: StoryObj<Component> = {
 export const CustomItems: StoryObj<Component> = {
     parameters: { docs: { source: { type: "code" } } },
     render: (_args) => {
-        const navbarRef = useRef<NavbarDrawerHandle>();
+        const navbarRef = useRef<NavbarDrawerHandle>(null);
         return (
             <Navbar
                 ref={navbarRef}
@@ -279,7 +279,7 @@ export const CustomItems: StoryObj<Component> = {
                             children: (
                                 <MobileCustomComponent
                                     onClick={() => {
-                                        navbarRef.current.dismissDrawer();
+                                        navbarRef.current?.dismissDrawer();
                                     }}
                                 />
                             ),
@@ -360,8 +360,8 @@ export const SubMenu: StoryObj<Component> = {
                 actionButtons={{ desktop: actionButtons }}
                 selectedId={selected}
                 fixed={false}
-                onItemClick={(item: NavItemLinkProps<undefined>) => {
-                    setSelected(item.id);
+                onItemClick={(item) => {
+                    setSelected((item as NavItemLinkProps<undefined>).id);
                 }}
             />
         );

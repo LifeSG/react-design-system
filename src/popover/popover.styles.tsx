@@ -23,7 +23,7 @@ interface PopoverStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-const getVisibilityStyle = (visible: boolean) => {
+const getVisibilityStyle = (visible: boolean | undefined) => {
     if (visible) {
         return css`
             visibility: visible;

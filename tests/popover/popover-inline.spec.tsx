@@ -25,7 +25,7 @@ describe("PopoverInline", () => {
         );
 
         const text = screen.getByText(TEXT_CONTENT);
-        const icon = document.querySelector("svg");
+        const icon = document.querySelector("svg")!;
 
         expect(text).toBeInTheDocument();
         expect(icon).toBeInTheDocument();

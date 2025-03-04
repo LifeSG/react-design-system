@@ -2,7 +2,7 @@ import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Form } from "src/form";
-import { InputGroup } from "src/input-group";
+import { InputGroup, ListAddon as ListAddonProps } from "src/input-group";
 import { Layout } from "src/layout";
 import {
     FullWidthStoryDecorator,
@@ -142,7 +142,12 @@ export const CustomAddon: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
-const listAddonOptions = {
+interface Option {
+    value: string;
+    display: string;
+}
+
+const listAddonOptions: ListAddonProps<Option, string> = {
     placeholder: "Select",
     options: [
         { value: "SG", display: "Singapore" },
@@ -150,8 +155,8 @@ const listAddonOptions = {
         { value: "UK", display: "United Kingdom" },
         { value: "JP", display: "Japan" },
     ],
-    valueExtractor: (option) => option.value,
-    listExtractor: (option) => option.display,
+    valueExtractor: (option: Option) => option.value,
+    listExtractor: (option: Option) => option.display,
 };
 
 export const ListAddon: StoryObj<Component> = {

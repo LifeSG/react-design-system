@@ -1,7 +1,7 @@
 import { DropdownVariantType } from "../dropdown-list/types";
 
 export interface DropdownSelectorProps {
-    children: JSX.Element[];
+    children: React.ReactNode;
     show: boolean;
     onBlur: () => void;
     error?: boolean | undefined;

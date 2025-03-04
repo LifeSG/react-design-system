@@ -13,7 +13,7 @@ interface Props
     > {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
-    selectedStartDate: string;
+    selectedStartDate: string | undefined;
     selectedEndDate?: string | undefined;
     viewCalendarDate: Dayjs;
     isNewSelection: boolean;
@@ -76,7 +76,7 @@ export const InternalCalendarMonth = ({
             day.isBefore(selectedStartDate, "month") &&
             isNewSelection;
 
-        return isStartAfterEnd || isEndBeforeStart;
+        return !!(isStartAfterEnd || isEndBeforeStart);
     };
 
     const generateMonthStatus = (date: Dayjs) => {

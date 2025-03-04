@@ -26,7 +26,7 @@ export const SidenavDrawerSubitem = ({
         if (onClick) {
             onClick(id);
         }
-        setSelectedItem({ itemId: currentItem.itemId, content: undefined });
+        setSelectedItem({ itemId: currentItem?.itemId, content: undefined });
         setCurrentItem(undefined);
         setPreviouslySelectedItemId(undefined);
     };

@@ -17,7 +17,7 @@ interface Props
     > {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
-    selectedStartDate: string;
+    selectedStartDate: string | undefined;
     selectedEndDate?: string | undefined;
     viewCalendarDate: Dayjs;
     isNewSelection: boolean;
@@ -80,7 +80,7 @@ export const InternalCalendarYear = ({
             day.isBefore(selectedStartDate, "year") &&
             isNewSelection;
 
-        return isStartAfterEnd || isEndBeforeStart;
+        return !!(isStartAfterEnd || isEndBeforeStart);
     };
 
     const generateYearStatus = (date: Dayjs) => {
@@ -122,7 +122,7 @@ export const InternalCalendarYear = ({
                         key={year}
                         $variant={variant}
                         $disabledDisplay={disabledDisplay}
-                        $interactive={interactive}
+                        $interactive={!!interactive}
                         onClick={() => handleYearClick(date, !interactive)}
                     >
                         {year}

@@ -40,8 +40,11 @@ export const ProgressIndicator = <T,>({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const getDisplayValue = (item: T) => {
-        return displayExtractor ? displayExtractor(item) : item.toString();
+    const getDisplayValue = (item: T): string => {
+        if (displayExtractor) {
+            return displayExtractor(item);
+        }
+        return item?.toString() ?? "";
     };
 
     const getAriaLabel = (stepIndex: number, currentIndex: number) => {

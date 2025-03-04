@@ -31,7 +31,7 @@ export interface InputRangeSelectProps<T, V>
     placeholders?: InputRangeProp<string> | undefined;
     selectedOptions?: InputRangeProp<T> | undefined;
     onSelectOption?:
-        | ((option: InputRangeProp<T>, extractedValue: V) => void)
+        | ((option: InputRangeProp<T>, extractedValue: V | undefined) => void)
         | undefined;
     // /** Function to derive display value for selected option */
     displayValueExtractor?: ((option: T) => string) | undefined;

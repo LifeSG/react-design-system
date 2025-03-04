@@ -5,7 +5,7 @@ import { Colour, Font } from "../theme";
 // STYLE INTERFACES
 // =============================================================================
 interface LabelStyleProps {
-    $disabled: boolean;
+    $disabled: boolean | undefined;
 }
 
 // =============================================================================

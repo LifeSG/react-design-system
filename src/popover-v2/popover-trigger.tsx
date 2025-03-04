@@ -38,8 +38,8 @@ export const PopoverTrigger = ({
     // CONST, STATE, REF
     // =========================================================================
     const [visible, setVisible] = useState<boolean>(false);
-    const nodeRef = useRef<HTMLDivElement>();
-    const popoverRef = useRef<HTMLDivElement>();
+    const nodeRef = useRef<HTMLDivElement | null>(null);
+    const popoverRef = useRef<HTMLDivElement | null>(null);
     const theme = useTheme();
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });

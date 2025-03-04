@@ -128,7 +128,7 @@ export const SortIndicators: StoryObj<Component> = {
                     : b.colA.localeCompare(a.colA);
             });
         }, [sortState]);
-        const handleHeaderClick = (fieldKey) => {
+        const handleHeaderClick = (fieldKey: string) => {
             if (fieldKey === "colA") {
                 setSortState({
                     colA: sortState.colA === "asc" ? "desc" : "asc",
@@ -150,8 +150,8 @@ export const SortIndicators: StoryObj<Component> = {
 
 export const MultiSelectionOfRows: StoryObj<Component> = {
     render: () => {
-        const [selected, setSelected] = useState([]);
-        const handleOnClickSelect = (rowId, isSelected) => {
+        const [selected, setSelected] = useState<string[]>([]);
+        const handleOnClickSelect = (rowId: string, isSelected: boolean) => {
             if (isSelected) {
                 setSelected((selected) => [...selected, rowId]);
             } else {
@@ -162,7 +162,7 @@ export const MultiSelectionOfRows: StoryObj<Component> = {
                 );
             }
         };
-        const handleOnClickSelectAll = (selected) => {
+        const handleOnClickSelectAll = (selected: boolean) => {
             setSelected(selected ? [] : DATA_ROWS.map(({ id }) => id));
         };
         return (
@@ -211,7 +211,7 @@ export const ActionBar: StoryObj<Component> = {
     render: () => {
         const [selected, setSelected] = useState(["1"]);
         const [rowCount, setRowCount] = useState(5);
-        const handleOnClickSelect = (rowId, isSelected) => {
+        const handleOnClickSelect = (rowId: string, isSelected: boolean) => {
             if (isSelected) {
                 setSelected((selected) => [...selected, rowId]);
             } else {

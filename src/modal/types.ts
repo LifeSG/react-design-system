@@ -4,7 +4,7 @@ export type ModalAnimationDirection = "top" | "bottom" | "left" | "right";
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     show: boolean;
-    children: JSX.Element | JSX.Element[];
+    children: React.ReactNode;
     /** Animation direction of appearance and dismissal. Values: "top" | "bottom" | "left" | "right" */
     animationFrom?: ModalAnimationDirection | undefined;
     enableOverlayClick?: boolean | undefined;
@@ -17,7 +17,7 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export interface ModalBoxProps extends React.HTMLAttributes<HTMLDivElement> {
-    children: JSX.Element | JSX.Element[];
+    children: React.ReactNode;
     showCloseButton?: boolean | undefined;
     onClose?: (() => void) | undefined;
 }

@@ -1,14 +1,33 @@
 import { useEffect, useState } from "react";
 
-export const useTimer = (
-    seconds: number,
-    isPlaying: boolean,
-    endTime?: number | undefined // Takes precedence over seconds
+const getTimestamp = (
+    seconds: number | undefined,
+    endTime: number | undefined
 ) => {
+    if (endTime) {
+        return endTime;
+    } else {
+        return Date.now() + (seconds ?? 0) * 1000;
+    }
+};
+
+const getSeconds = (ms: number) => {
+    return Math.max(Math.round(ms / 1000), 0);
+};
+
+export const useTimer = (
+    seconds: number | undefined,
+    endTime: number | undefined, // Takes precedence over seconds
+    isPlaying: boolean
+): [number] => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [remainingSeconds, setRemainingSeconds] = useState<number>(seconds);
+    const [remainingSeconds, setRemainingSeconds] = useState<number>(() => {
+        const timestamp = getTimestamp(seconds, endTime);
+        const msToEnd = timestamp - Date.now();
+        return getSeconds(msToEnd);
+    });
 
     // =============================================================================
     // EFFECTS
@@ -16,7 +35,7 @@ export const useTimer = (
     useEffect(() => {
         if (!isPlaying) return;
 
-        const targetTime = endTime ?? Date.now() + seconds * 1000;
+        const targetTime = getTimestamp(seconds, endTime);
         const timeoutId = runCountdown(targetTime);
 
         return () => clearTimeout(timeoutId);
@@ -29,9 +48,10 @@ export const useTimer = (
         const updateCountdown = () => {
             const msToEnd = timestamp - Date.now();
             const driftTime = msToEnd % 1000;
-            const countdown = Math.max(Math.round(msToEnd / 1000), 0);
+            const countdown = getSeconds(msToEnd);
 
             setRemainingSeconds(countdown);
+
             if (countdown === 0) return;
 
             const timeoutId = setTimeout(

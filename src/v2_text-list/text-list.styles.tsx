@@ -1,10 +1,25 @@
 import styled, { css } from "styled-components";
-import { V2_MediaQuery } from "../v2_media";
 import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
 import { V2_TextStyleHelper } from "../v2_text/helper";
+import { V2_TextSizeType } from "../v2_text/types";
 import { V2_OrderedListProps, V2_UnorderedListProps } from "./types";
 
-const baseListStyle = (bottomMargin: number) => `
+// =============================================================================
+// STYLE INTERFACE
+// =============================================================================
+interface OrderedListStyleProps extends V2_OrderedListProps {
+    size: V2_TextSizeType;
+}
+
+interface UnorderedListStyleProps extends V2_UnorderedListProps {
+    size: V2_TextSizeType;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
+const baseListStyle = (bottomMargin: number | undefined) => `
 	margin-bottom: ${bottomMargin ? bottomMargin : 0}rem;
 `;
 
@@ -15,7 +30,7 @@ const BASE_MARGIN = 3;
 // ============================================================================
 
 /** @deprecated */
-export const V2_StyledOrderedList = styled.ol<V2_OrderedListProps>`
+export const V2_StyledOrderedList = styled.ol<OrderedListStyleProps>`
     ${(props) => baseListStyle(props.bottomMargin)}
     margin-left: ${BASE_MARGIN}rem;
 
@@ -78,7 +93,7 @@ export const V2_StyledOrderedList = styled.ol<V2_OrderedListProps>`
 // =============================================================================
 
 /** @deprecated */
-export const V2_StyledUnorderedList = styled.ul<V2_UnorderedListProps>`
+export const V2_StyledUnorderedList = styled.ul<UnorderedListStyleProps>`
     ${(props) => baseListStyle(props.bottomMargin)}
     margin-left: 2.5rem;
     list-style-type: ${(props) => props.bulletType || "disc"};

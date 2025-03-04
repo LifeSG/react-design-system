@@ -13,7 +13,7 @@ export const FormLabel = ({
     // RENDER FUNCTIONS
     // -------------------------------------------------------------------------
     const renderAddon = () => {
-        switch (addon.type) {
+        switch (addon?.type) {
             case "popover":
                 return <PopoverAddon addon={addon} />;
             default:

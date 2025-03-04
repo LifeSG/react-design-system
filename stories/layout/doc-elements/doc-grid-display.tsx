@@ -17,20 +17,22 @@ const Background = styled.div`
 
 export const GridDisplay = () => {
     const [gridColumnCount, setGridColumnCount] = useState(0);
-    const ref = useRef();
+    const ref = useRef<HTMLDivElement>(null);
 
     useResizeDetector({
         targetRef: ref,
         handleWidth: true,
         handleHeight: false,
         onResize() {
-            const gridComputedStyle = window.getComputedStyle(ref.current);
+            if (ref.current) {
+                const gridComputedStyle = window.getComputedStyle(ref.current);
 
-            const count = gridComputedStyle
-                .getPropertyValue("grid-template-columns")
-                .split(" ").length;
+                const count = gridComputedStyle
+                    .getPropertyValue("grid-template-columns")
+                    .split(" ").length;
 
-            setGridColumnCount(count);
+                setGridColumnCount(count);
+            }
         },
     });
 

@@ -14,11 +14,11 @@ interface StyleProps {
 }
 
 interface WrapperStyleProps {
-    $alignLeft: boolean;
+    $alignLeft: boolean | undefined;
 }
 
 interface ItemStyleProps {
-    $hiddenBranding: boolean;
+    $hiddenBranding: boolean | undefined;
 }
 
 // =============================================================================

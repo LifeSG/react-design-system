@@ -28,7 +28,7 @@ export const DialPicker = ({
     const [startTimeVal, setStartTimeVal] = useState<string>("");
     const [endTimeVal, setEndTimeVal] = useState<string>("");
 
-    const nodeRef = useRef<HTMLDivElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // EFFECTS
@@ -129,7 +129,7 @@ export const DialPicker = ({
     };
 
     const runOutsideFocusHandler = (event: MouseEvent | KeyboardEvent) => {
-        if (nodeRef && !nodeRef.current.contains(event.target as any)) {
+        if (nodeRef.current && !nodeRef.current.contains(event.target as any)) {
             if (showEndTimeSelector || showStartTimeSelector) {
                 runOnBlurHandler();
             }

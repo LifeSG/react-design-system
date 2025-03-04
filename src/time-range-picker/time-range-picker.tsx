@@ -5,10 +5,10 @@ import { TimeRangePickerProps } from "./types";
 export const TimeRangePicker = ({
     variant = "dial",
     ...otherProps
-}: TimeRangePickerProps): JSX.Element => {
-    if (variant === "dial") {
-        return <DialPicker {...otherProps} />;
-    } else if (variant === "combobox") {
+}: TimeRangePickerProps) => {
+    if (variant === "combobox") {
         return <ComboboxPicker {...otherProps} />;
+    } else {
+        return <DialPicker {...otherProps} />;
     }
 };

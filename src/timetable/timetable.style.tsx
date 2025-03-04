@@ -21,7 +21,7 @@ interface RowHeaderColumnProps {
 }
 
 interface TimeTableContainerProps {
-    $loading: boolean;
+    $loading: boolean | undefined;
     $allRecordsLoaded: boolean;
 }
 

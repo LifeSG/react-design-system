@@ -67,7 +67,7 @@ describe("SelectHistogram", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(SELECTOR_TESTID));
+        await user.click(screen.getByTestId(SELECTOR_TESTID));
 
         expect(screen.getByTestId(SELECTOR_TESTID)).toBeVisible();
         expectRangeLabel(1, 2);
@@ -99,12 +99,12 @@ describe("SelectHistogram", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(SELECTOR_TESTID));
+        await user.click(screen.getByTestId(SELECTOR_TESTID));
 
-        const thumb = screen.queryByTestId("slider-track-0");
+        const thumb = screen.getByTestId("slider-track-0");
 
         await waitFor(() => {
-            fireEvent.mouseDown(thumb.parentElement);
+            fireEvent.mouseDown(thumb.parentElement!);
             expect(mockChange).toHaveBeenCalledWith([1, 2]);
         });
     });
@@ -124,13 +124,13 @@ describe("SelectHistogram", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(SELECTOR_TESTID));
+        await user.click(screen.getByTestId(SELECTOR_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(FIELD_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByTestId(SELECTOR_TESTID));
+        await user.click(screen.getByTestId(SELECTOR_TESTID));
 
         await waitFor(() => {
             expect(

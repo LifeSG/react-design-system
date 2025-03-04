@@ -25,7 +25,7 @@ export const Component = <T, V>(
         onBlur,
         ...otherProps
     }: InputGroupProps<T, V>,
-    ref
+    ref: React.Ref<HTMLInputElement>
 ) => {
     const {
         placeholder,
@@ -41,17 +41,17 @@ export const Component = <T, V>(
         onHideOptions,
         onShowOptions,
         "data-selector-testid": selectorTestId,
-    } = addon.attributes as ListAddon<T, V>;
+    } = addon!.attributes as ListAddon<T, V>;
 
-    const { position } = addon;
+    const { position } = addon!;
 
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [selected, setSelected] = useState<T>(selectedOption);
+    const [selected, setSelected] = useState<T | undefined>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
 
-    const selectorRef = useRef<HTMLButtonElement>();
+    const selectorRef = useRef<HTMLButtonElement>(null);
 
     // =============================================================================
     // EFFECTS
@@ -64,6 +64,8 @@ export const Component = <T, V>(
     // HELPER FUNCTIONS
     // =============================================================================
     const getDisplayValue = () => {
+        if (!selected) return;
+
         if (displayValueExtractor) {
             return displayValueExtractor(selected);
         }
@@ -111,7 +113,7 @@ export const Component = <T, V>(
         triggerOptionDisplayCallback(false);
 
         if (selectorRef) {
-            selectorRef.current.focus();
+            selectorRef.current?.focus();
         }
 
         if (onSelectOption) {
@@ -132,7 +134,7 @@ export const Component = <T, V>(
         triggerOptionDisplayCallback(false);
 
         if (selectorRef) {
-            selectorRef.current.focus();
+            selectorRef.current?.focus();
         }
     };
 
@@ -159,7 +161,7 @@ export const Component = <T, V>(
             );
         }
 
-        return null;
+        return <></>;
     };
 
     const renderSelectorContent = () => (

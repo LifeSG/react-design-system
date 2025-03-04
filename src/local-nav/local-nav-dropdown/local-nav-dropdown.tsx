@@ -42,10 +42,12 @@ const Component = (
     const [dynamicMargin, setDynamicMargin] = useState(0);
     const navTestId = testId || "local-nav-dropdown";
 
-    useImperativeHandle(ref, () => navWrapperRef.current);
+    useImperativeHandle(ref, () => navWrapperRef.current!);
 
     const labelText =
-        selectedItemIndex >= 0 && isStickied
+        typeof selectedItemIndex === "number" &&
+        selectedItemIndex >= 0 &&
+        isStickied
             ? items[selectedItemIndex].title
             : defaultLabel;
 

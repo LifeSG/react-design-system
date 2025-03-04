@@ -11,7 +11,7 @@ import {
 interface Props {
     date: Dayjs;
     calendarDate: Dayjs;
-    selectedDate: string;
+    selectedDate: string | undefined;
     hoverDate: string;
     minDate?: string | undefined;
     maxDate?: string | undefined;
@@ -78,8 +78,8 @@ export const WeekDayCell = ({
     const getRangeStyle = (): CellStyleProps => {
         const props: CellStyleProps = {};
 
-        let type: CellType = undefined;
-        let labelType: LabelType = undefined;
+        let type: CellType | undefined = undefined;
+        let labelType: LabelType | undefined = undefined;
         if (isSelected && isHover) {
             type = "selected-hover-outline";
             labelType = "selected-hover";

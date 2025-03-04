@@ -24,7 +24,7 @@ export const Timepicker = ({
     // =============================================================================
     const [showSelector, setShowSelector] = useState<boolean>(false);
 
-    const nodeRef = useRef<HTMLDivElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // EFFECTS
@@ -76,7 +76,7 @@ export const Timepicker = ({
     };
 
     const runOutsideFocusHandler = (event: MouseEvent | KeyboardEvent) => {
-        if (nodeRef && !nodeRef.current.contains(event.target as any)) {
+        if (nodeRef.current && !nodeRef.current.contains(event.target as any)) {
             showSelector && runOnBlurHandler();
         }
     };

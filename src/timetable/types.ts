@@ -46,8 +46,8 @@ export interface TimeTableProps {
     showDateAsShortForm?: boolean | undefined;
     onRefresh?: (() => void) | undefined;
     onPage?: (() => void) | undefined;
-    onPreviousDayClick: ((currentDate: string) => void) | undefined;
-    onNextDayClick: ((currentDate: string) => void) | undefined;
+    onPreviousDayClick: (currentDate: string) => void;
+    onNextDayClick: (currentDate: string) => void;
     onCalendarDateSelect?: ((currentDate: string) => void) | undefined;
 }
 

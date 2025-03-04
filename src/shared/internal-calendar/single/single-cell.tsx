@@ -5,8 +5,8 @@ import { CellStyleProps, DayCell, DayCellProps } from "../day-cell";
 interface Props {
     date: Dayjs;
     calendarDate: Dayjs;
-    selectedDate: string;
-    hoverDate: string;
+    selectedDate: string | undefined;
+    hoverDate: string | undefined;
     minDate?: string | undefined;
     maxDate?: string | undefined;
     disabledDates?: string[] | undefined;

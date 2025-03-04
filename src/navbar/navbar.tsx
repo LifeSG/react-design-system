@@ -6,7 +6,6 @@ import React, {
     useState,
 } from "react";
 import { useTheme } from "styled-components";
-import { ButtonProps } from "../button/types";
 import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
@@ -14,6 +13,7 @@ import { Breakpoint } from "../theme";
 import { Brand } from "./brand";
 import { Drawer } from "./drawer";
 import { NavbarActionButtons } from "./navbar-action-buttons";
+import { NavbarHelper } from "./navbar-helper";
 import { NavbarItems } from "./navbar-items";
 import { getDefaultResourceLogo } from "./navbar-logo-data";
 import {
@@ -28,8 +28,11 @@ import {
 import {
     BrandType,
     DrawerDismissalMethod,
-    NavItemLinkProps,
+    NavItemCommonProps,
+    NavItemProps,
+    NavbarActionButtonsProps,
     NavbarButtonProps,
+    NavbarDrawerApi,
     NavbarDrawerHandle,
     NavbarProps,
 } from "./types";
@@ -62,11 +65,9 @@ const Component = <T,>(
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const isStretch = layout === "stretch";
-    const elementRef = useRef<HTMLDivElement>();
+    const elementRef = useRef<HTMLDivElement>(null);
     const theme = useTheme();
-    const defaultResource = getDefaultResourceLogo(
-        (theme as any)?.resourceScheme
-    );
+    const defaultResource = getDefaultResourceLogo(theme?.resourceScheme);
     const tabletWidth = Breakpoint["lg-max"]({ theme });
 
     const primary = resources?.primary || defaultResource.primary;
@@ -75,11 +76,14 @@ const Component = <T,>(
     useImperativeHandle(
         ref,
         () =>
-            Object.assign(elementRef.current, {
-                dismissDrawer: () => {
-                    dismissDrawer();
-                },
-            }),
+            Object.assign<HTMLDivElement, NavbarDrawerApi>(
+                elementRef.current!,
+                {
+                    dismissDrawer: () => {
+                        dismissDrawer();
+                    },
+                }
+            ),
         [showDrawer]
     );
 
@@ -112,7 +116,9 @@ const Component = <T,>(
         );
     };
 
-    const hasCollapsibleActionButtons = () => {
+    const hasCollapsibleActionButtons = (
+        actionButtons: NavbarActionButtonsProps
+    ) => {
         const drawerActionButtons =
             actionButtons.mobile || actionButtons.desktop;
         if (drawerActionButtons) {
@@ -152,16 +158,20 @@ const Component = <T,>(
 
     const handleNavItemClick = <K extends T>(
         event: React.MouseEvent<HTMLAnchorElement>,
-        item: NavItemLinkProps<K>
+        item: NavItemProps<K> | NavItemCommonProps<K>
     ) => {
-        if (item.onClick) {
+        if (NavbarHelper.isNavItemCommon(item) && item.onClick) {
             item.onClick(event);
         } else if (onItemClick) {
             event.preventDefault();
             onItemClick(item);
         }
 
-        if (!item?.subMenu && shouldDismissDrawer("item-click")) {
+        if (
+            NavbarHelper.isNavItemLink(item) &&
+            !item.subMenu &&
+            shouldDismissDrawer("item-click")
+        ) {
             dismissDrawer();
         }
     };
@@ -170,8 +180,12 @@ const Component = <T,>(
         event: React.MouseEvent<HTMLButtonElement> | React.MouseEvent<Element>,
         actionButton: NavbarButtonProps
     ) => {
-        if (actionButton.args && (actionButton.args as ButtonProps).onClick) {
-            (actionButton.args as ButtonProps).onClick(
+        if (
+            (actionButton.type === "button" ||
+                actionButton.type === "download") &&
+            actionButton.args?.onClick
+        ) {
+            actionButton.args.onClick(
                 event as React.MouseEvent<HTMLButtonElement>
             );
         } else if (onActionButtonClick) {
@@ -230,13 +244,15 @@ const Component = <T,>(
 
     const renderBrand = () => (
         <NavBrandContainer $compress={compress} data-id="brand-container">
-            <Brand
-                resources={primary}
-                onClick={handleBrandClick}
-                data-id="brand-primary"
-                data-testid="main__brand"
-                type="primary"
-            />
+            {primary && (
+                <Brand
+                    resources={primary}
+                    onClick={handleBrandClick}
+                    data-id="brand-primary"
+                    data-testid="main__brand"
+                    type="primary"
+                />
+            )}
             {secondary && (
                 <>
                     <NavSeparator $compress={compress} />
@@ -256,7 +272,7 @@ const Component = <T,>(
         const drawerItems = items.mobile || items.desktop;
         if (
             (drawerItems && drawerItems.length > 0) ||
-            (actionButtons && hasCollapsibleActionButtons())
+            (actionButtons && hasCollapsibleActionButtons(actionButtons))
         ) {
             return (
                 <MobileMenuButton

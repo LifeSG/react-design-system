@@ -5,7 +5,7 @@ interface StorybookLinkProps {
 
 export const StorybookLink = (props: StorybookLinkProps) => {
     const { path, children } = props;
-    const url = new URL(window.top.location.href);
+    const url = new URL(window.top?.location.href || window.location.href);
     url.hash = "";
     url.search = "";
     const storybookHref = url.toString() + "?path=" + path;

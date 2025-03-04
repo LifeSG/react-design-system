@@ -7,6 +7,7 @@ export namespace DateInputHelper {
     ): boolean => {
         const { disabledDates, minDate, maxDate } = props;
         if (
+            val &&
             disabledDates &&
             disabledDates.length &&
             disabledDates.includes(val)
@@ -29,7 +30,7 @@ export namespace DateInputHelper {
         return false;
     };
 
-    export const sanitizeInput = (date: string): string => {
+    export const sanitizeInput = (date: string | undefined): string => {
         if (date) {
             const day = dayjs(date);
             if (day.isValid()) {

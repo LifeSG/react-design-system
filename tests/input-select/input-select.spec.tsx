@@ -36,7 +36,7 @@ describe("InputSelect", () => {
 
         render(<InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />);
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -52,13 +52,13 @@ describe("InputSelect", () => {
 
         render(<InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />);
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(
@@ -79,13 +79,13 @@ describe("InputSelect", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByText("Option 1"));
+        await user.click(screen.getByText("Option 1"));
 
         await waitFor(() => {
             expect(
@@ -109,7 +109,7 @@ describe("InputSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
             await waitFor(() =>
@@ -120,7 +120,7 @@ describe("InputSelect", () => {
 
             expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
-            await user.click(screen.queryByText("Option 1"));
+            await user.click(screen.getByText("Option 1"));
 
             await waitForElementToBeRemoved(() =>
                 screen.queryByTestId(DROPDOWN_TESTID)
@@ -145,7 +145,7 @@ describe("InputSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
             await waitFor(() =>
@@ -178,7 +178,7 @@ describe("InputSelect", () => {
             );
 
             await act(async () => {
-                await user.click(screen.queryByTestId(FIELD_TESTID));
+                await user.click(screen.getByTestId(FIELD_TESTID));
             });
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
@@ -276,7 +276,7 @@ describe("InputSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => {
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -310,7 +310,7 @@ describe("InputSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => {
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -346,7 +346,7 @@ describe("InputSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => {
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -379,7 +379,7 @@ describe("InputSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => {
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();

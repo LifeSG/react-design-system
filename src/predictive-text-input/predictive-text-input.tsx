@@ -22,16 +22,17 @@ export const PredictiveTextInput = <T, V>({
     error,
     valueExtractor,
     listExtractor,
-    displayValueExtractor = (item) => item.toString(),
+    displayValueExtractor,
     onSelectOption,
 }: PredictiveTextInputProps<T, V>) => {
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const inputValue = selectedOption && displayValueExtractor(selectedOption);
-    const [input, setInput] = useState<string>(inputValue || "");
-    const [searchedInput, setSearchedInput] = useState<string>(
-        inputValue || ""
+    const [input, setInput] = useState<string>(() =>
+        selectedOption ? getDisplayValue(selectedOption) : ""
+    );
+    const [searchedInput, setSearchedInput] = useState<string>(() =>
+        selectedOption ? getDisplayValue(selectedOption) : ""
     );
     const [options, setOptions] = useState<T[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -39,8 +40,9 @@ export const PredictiveTextInput = <T, V>({
     const [isOptionSelected, setIsOptionSelected] = useState<boolean>(
         !!selectedOption
     );
-    const [prevOptionSelected, setPrevOptionSelected] =
-        useState<T>(selectedOption);
+    const [prevOptionSelected, setPrevOptionSelected] = useState<T | undefined>(
+        selectedOption
+    );
     const fetchOptionsRef = useRef(fetchOptions);
 
     // =============================================================================
@@ -101,7 +103,7 @@ export const PredictiveTextInput = <T, V>({
             setPrevOptionSelected(undefined);
         }
 
-        if (selectedOption && input !== displayValueExtractor(selectedOption)) {
+        if (selectedOption && input !== getDisplayValue(selectedOption)) {
             setIsOptionSelected(false);
         }
     }, [input, selectedOption]);
@@ -111,7 +113,7 @@ export const PredictiveTextInput = <T, V>({
      * hide dropdown and sync prevOption selected
      */
     useEffect(() => {
-        setInput(selectedOption ? displayValueExtractor(selectedOption) : "");
+        setInput(selectedOption ? getDisplayValue(selectedOption) : "");
         handleDropdownDismiss(selectedOption);
         setPrevOptionSelected(selectedOption);
     }, [selectedOption]);
@@ -131,7 +133,7 @@ export const PredictiveTextInput = <T, V>({
     };
 
     const handleDropdownDismiss = (item?: T) => {
-        setSearchedInput(item ? displayValueExtractor(item) : "");
+        setSearchedInput(item ? getDisplayValue(item) : "");
         setIsOptionSelected(!!item);
         setOptions([]);
         setIsLoading(true);
@@ -150,7 +152,7 @@ export const PredictiveTextInput = <T, V>({
             handleOnClear();
         } else {
             handleDropdownDismiss(prevOptionSelected);
-            setInput(displayValueExtractor(prevOptionSelected));
+            setInput(getDisplayValue(prevOptionSelected));
             if (onSelectOption) {
                 onSelectOption(
                     prevOptionSelected,
@@ -166,10 +168,22 @@ export const PredictiveTextInput = <T, V>({
     // =============================================================================
 
     const showDropdown = () => {
-        return input && input.length >= minimumCharacters && !isOptionSelected;
+        return (
+            !!input && input.length >= minimumCharacters && !isOptionSelected
+        );
     };
 
-    const getValue = (item: T): V => {
+    const getDisplayValue = (item: T | undefined): string => {
+        if (!item) return "";
+
+        return displayValueExtractor
+            ? displayValueExtractor(item)
+            : item.toString();
+    };
+
+    const getValue = (item: T | undefined): V | undefined => {
+        if (!item) return undefined;
+
         return valueExtractor ? valueExtractor(item) : (item as unknown as V);
     };
 

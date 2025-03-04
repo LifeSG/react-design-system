@@ -11,6 +11,7 @@ export interface MaskAttributeProps {
 }
 
 export interface MaskedInputProps extends InputProps, MaskAttributeProps {
+    value?: string | undefined;
     iconMask?: JSX.Element;
     iconUnmask?: JSX.Element;
     iconActiveColor?: string | undefined;

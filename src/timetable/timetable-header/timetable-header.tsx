@@ -1,5 +1,5 @@
 import { RefreshIcon } from "@lifesg/react-icons";
-import { MutableRefObject } from "react";
+import { RefObject } from "react";
 import {
     NavigationHeaderSubtitleWrapper,
     NavigationHeaderWrapper,
@@ -11,7 +11,7 @@ import {
 interface TimeTableHeaderProps {
     selectedDate: string;
     loading: boolean;
-    tableContainerRef: MutableRefObject<HTMLDivElement>;
+    tableContainerRef: RefObject<HTMLDivElement>;
     minDate?: string | undefined;
     maxDate?: string | undefined;
     totalRecords?: number | undefined;
