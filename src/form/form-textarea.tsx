@@ -37,6 +37,7 @@ const FormTextareaComponent = (
         xlCols,
         xxlCols,
         transformValue,
+        prefix = "",
         ...otherProps
     } = props;
 
@@ -64,13 +65,7 @@ const FormTextareaComponent = (
     // =============================================================================
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newValue = event.target.value;
-
-        const transformedValue = transformValue
-            ? transformValue(newValue ?? "")
-            : newValue;
-
-        setStateValue(transformedValue);
-        event.target.value = transformedValue;
+        setStateValue(newValue);
         if (onChange) onChange(event);
     };
 
@@ -125,6 +120,8 @@ const FormTextareaComponent = (
                 error={!!errorMessage}
                 onChange={handleChange}
                 ref={ref}
+                prefix={prefix}
+                transformValue={transformValue}
                 {...otherProps}
             />
             {renderBottomLabels()}

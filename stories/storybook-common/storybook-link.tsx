@@ -5,7 +5,10 @@ interface StorybookLinkProps {
 
 export const StorybookLink = (props: StorybookLinkProps) => {
     const { path, children } = props;
-    const storybookHref = "./?path=" + path;
+    const url = new URL(window.top.location.href);
+    url.hash = "";
+    url.search = "";
+    const storybookHref = url.toString() + "?path=" + path;
 
     // because Storybook loads in an iframe, navigating to the href via
     // `window.location.href` does not work, instead, you'll have to do

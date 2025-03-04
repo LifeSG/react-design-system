@@ -4,7 +4,7 @@ import { StoryContainer } from "../storybook-common";
 import { DemoContainer } from "./doc-elements";
 
 const meta: Meta = {
-    title: "Modules/Masonry",
+    title: "Deprecated/Masonry",
 };
 
 export default meta;

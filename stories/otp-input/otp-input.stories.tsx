@@ -6,7 +6,7 @@ import { StoryDecorator } from "stories/storybook-common";
 type Component = typeof OtpInput;
 
 const meta: Meta<Component> = {
-    title: "Modules/OtpInput",
+    title: "Selection and input/OtpInput",
     component: OtpInput,
 };
 

@@ -1,13 +1,15 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
-import { TimeTable } from "../../src/timetable/timetable";
-import { TimeTableProps, TimeTableRowData } from "../../src/timetable/types";
-import { lazyLoad } from "../../stories/timetable/mock-data";
+import {
+    TimeTable,
+    TimeTableProps,
+    TimeTableRowData,
+} from "../../src/timetable";
 
 describe("TimeTable", () => {
     const date = dayjs("2024-09-11");
 
-    const timeTableMockData = {
+    const timeTableMockProps: TimeTableProps = {
         date: date.format("YYYY-MM-DD"),
         minTime: "06:20:00",
         maxTime: "22:00:00",
@@ -15,19 +17,13 @@ describe("TimeTable", () => {
         minDate: date.add(-11, "month").format("YYYY-MM-DD"),
         totalRecords: 10,
         rowData: [],
-        onNameClick: function (rowData: TimeTableRowData): void {
-            alert(`Clicked on ${JSON.stringify(rowData)}`);
-        },
-        emptyContent: {
-            illustrationScheme: "bookingsg",
-            description:
-                "There’s no data to show. You may need to adjust your search or filters. If you believe this is a mistake, try refreshing the page.",
-        },
-        isLoading: false,
-    } as TimeTableProps;
+        emptyContentMessage: "empty content message",
+        onPreviousDayClick: jest.fn(),
+        onNextDayClick: jest.fn(),
+    };
 
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
         jest.useFakeTimers().setSystemTime(new Date("2024-09-11"));
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
@@ -44,66 +40,83 @@ describe("TimeTable", () => {
     it("should render default timetable without errors", () => {
         render(
             <TimeTable
-                date={timeTableMockData.date}
-                minDate={timeTableMockData.minTime}
-                maxDate={timeTableMockData.maxDate}
-                rowData={[]}
+                date={timeTableMockProps.date}
+                minDate={timeTableMockProps.minTime}
+                maxDate={timeTableMockProps.maxDate}
+                rowData={buildMockRowData(1)}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
+                emptyContentMessage={timeTableMockProps.emptyContentMessage}
+                onPreviousDayClick={timeTableMockProps.onPreviousDayClick}
+                onNextDayClick={timeTableMockProps.onNextDayClick}
             />
         );
-        expect(screen.getByText("11 September 2024")).toBeVisible();
+
+        expect(screen.getByText("11 September 2024, Wednesday")).toBeVisible();
+        expect(screen.getByText("Row name")).toBeVisible();
+        expect(screen.getByText("Cell title")).toBeVisible();
+        expect(screen.getByText("Cell subtitle")).toBeVisible();
+        expect(
+            screen.queryByText(timeTableMockProps.emptyContentMessage)
+        ).not.toBeInTheDocument();
     });
 
-    it("should have date navigator component visible if onRightArrowClick and onLeftArrowClick props are passed in", () => {
-        const onRightArrowClick = jest.fn();
-        const onLeftArrowClick = jest.fn();
+    it("should render empty timetable without errors", () => {
+        render(
+            <TimeTable
+                date={timeTableMockProps.date}
+                minDate={timeTableMockProps.minTime}
+                maxDate={timeTableMockProps.maxDate}
+                rowData={[]}
+                loading={false}
+                emptyContentMessage={timeTableMockProps.emptyContentMessage}
+                onPreviousDayClick={timeTableMockProps.onPreviousDayClick}
+                onNextDayClick={timeTableMockProps.onNextDayClick}
+            />
+        );
+
+        expect(screen.getByText("11 September 2024, Wednesday")).toBeVisible();
+        expect(
+            screen.getByText(timeTableMockProps.emptyContentMessage)
+        ).toBeVisible();
+    });
+
+    it("should display calendar dropdown when onCalendarDateSelect prop is specified and the date navigator date text is clicked", () => {
+        const onCalendarDateSelect = jest.fn();
 
         render(
             <TimeTable
-                date={timeTableMockData.date}
-                minDate={timeTableMockData.minTime}
-                maxDate={timeTableMockData.maxDate}
+                date={timeTableMockProps.date}
+                minDate={timeTableMockProps.minTime}
+                maxDate={timeTableMockProps.maxDate}
                 rowData={[]}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
-                onNextDayClick={onRightArrowClick}
-                onPreviousDayClick={onLeftArrowClick}
+                emptyContentMessage={timeTableMockProps.emptyContentMessage}
+                onNextDayClick={timeTableMockProps.onNextDayClick}
+                onPreviousDayClick={timeTableMockProps.onPreviousDayClick}
+                onCalendarDateSelect={onCalendarDateSelect}
             />
         );
-        const leftBtn = screen.getByTestId("date-navigator-left-arrow-btn");
-        const rightBtn = screen.getByTestId("date-navigator-right-arrow-btn");
-        expect(screen.getByText("11 September 2024")).toBeVisible();
-        expect(leftBtn).toBeVisible();
-        expect(rightBtn).toBeVisible();
+
+        fireEvent.click(screen.getByTestId("date-navigator-date-text"));
+
+        expect(screen.getByText("11 September 2024, Wednesday")).toBeVisible();
+        expect(screen.getByTestId("calendar-dropdown")).toBeInTheDocument();
     });
 
     it("should not have have popover appear if there's no popover content", () => {
         render(
             <TimeTable
-                date={timeTableMockData.date}
+                date={timeTableMockProps.date}
                 minTime="07:00:00"
                 maxTime="09:00:00"
-                rowData={[
-                    {
-                        id: "1",
-                        name: "Test",
-                        rowMinTime: "08:00:00",
-                        rowMaxTime: "09:00:00",
-                        rowCells: [
-                            {
-                                id: "1",
-                                startTime: "08:00:00",
-                                endTime: "09:00:00",
-                                status: "filled",
-                            },
-                        ],
-                    },
-                ]}
+                rowData={buildMockRowData(1)}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
+                onNextDayClick={timeTableMockProps.onNextDayClick}
+                onPreviousDayClick={timeTableMockProps.onPreviousDayClick}
+                emptyContentMessage={timeTableMockProps.emptyContentMessage}
             />
         );
+
         const rowHeaderParent = screen.getByTestId("row-header-column-id");
         const firstRowHeader = rowHeaderParent.firstElementChild!;
 
@@ -131,44 +144,17 @@ describe("TimeTable", () => {
     it("should have popover appear if there's popover content", () => {
         render(
             <TimeTable
-                date={timeTableMockData.date}
+                date={timeTableMockProps.date}
                 minTime="07:00:00"
                 maxTime="09:00:00"
-                rowData={[
-                    {
-                        id: "1",
-                        name: "Test",
-                        rowMinTime: "08:00:00",
-                        rowMaxTime: "09:00:00",
-                        rowCells: [
-                            {
-                                id: "1",
-                                startTime: "08:00:00",
-                                endTime: "09:00:00",
-                                status: "filled",
-                                customPopover: {
-                                    trigger: "hover",
-                                    content: "beeeboobeebooo",
-                                    delay: { open: 0, close: 0 },
-                                },
-                            },
-                        ],
-                        rowHeaderPopover: {
-                            trigger: "hover",
-                            content: "hello world123",
-                            delay: { open: 0, close: 0 },
-                        },
-                        outOfRangeCellPopover: {
-                            trigger: "hover",
-                            content: "skibididiidi ohio",
-                            delay: { open: 0, close: 0 },
-                        },
-                    },
-                ]}
+                rowData={buildMockRowData(1)}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
+                onNextDayClick={timeTableMockProps.onNextDayClick}
+                onPreviousDayClick={timeTableMockProps.onPreviousDayClick}
+                emptyContentMessage={timeTableMockProps.emptyContentMessage}
             />
         );
+
         const rowHeaderParent = screen.getByTestId("row-header-column-id");
         const firstRowHeader = rowHeaderParent.firstElementChild!;
         const contentContainer = screen.getByTestId("content-container-id");
@@ -177,27 +163,27 @@ describe("TimeTable", () => {
         const filledCell = firstRowBar.children[1];
 
         fireEvent.mouseEnter(firstRowHeader);
-        expect(screen.queryByText("hello world123")).toBeVisible();
+        expect(screen.queryByText("row header popover")).toBeVisible();
         expect(screen.queryByTestId("popover")).toBeInTheDocument();
         fireEvent.mouseLeave(firstRowHeader);
 
         fireEvent.mouseEnter(blockedCell);
-        expect(screen.queryByText("skibididiidi ohio")).toBeVisible();
+        expect(screen.queryByText("out of range cell popover")).toBeVisible();
         expect(screen.queryByTestId("popover")).toBeInTheDocument();
         fireEvent.mouseLeave(blockedCell);
 
         fireEvent.mouseEnter(filledCell);
-        expect(screen.queryByText("beeeboobeebooo")).toBeVisible();
+        expect(screen.queryByText("row cell popover")).toBeVisible();
         expect(screen.queryByTestId("popover")).toBeInTheDocument();
         fireEvent.mouseLeave(filledCell);
     });
 
-    it("should trigger onNameClick if row header name are clicked", () => {
+    it("should trigger onRowNameClick if row header name are clicked", () => {
         const onRowNameClick = jest.fn();
 
         render(
             <TimeTable
-                date={timeTableMockData.date}
+                date={timeTableMockProps.date}
                 rowData={[
                     {
                         id: "1",
@@ -216,7 +202,9 @@ describe("TimeTable", () => {
                     },
                 ]}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
+                onNextDayClick={timeTableMockProps.onNextDayClick}
+                onPreviousDayClick={timeTableMockProps.onPreviousDayClick}
+                emptyContentMessage={timeTableMockProps.emptyContentMessage}
             />
         );
         const rowHeaderName = screen.getByTestId("1-row-header-title");
@@ -228,10 +216,12 @@ describe("TimeTable", () => {
     it("should have show empty content display if no rowData is passed into TimeTable", () => {
         render(
             <TimeTable
-                date={timeTableMockData.date}
+                date={timeTableMockProps.date}
                 rowData={[]}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
+                onNextDayClick={timeTableMockProps.onNextDayClick}
+                onPreviousDayClick={timeTableMockProps.onPreviousDayClick}
+                emptyContentMessage={timeTableMockProps.emptyContentMessage}
             />
         );
         const emptyContent = screen.getByTestId("error-display");
@@ -242,17 +232,19 @@ describe("TimeTable", () => {
     it("should have lazy load and a lazy loader should appear when user scrolls to the bottom of the TimeTable", async () => {
         render(
             <TimeTable
-                date={timeTableMockData.date}
-                minDate={timeTableMockData.minTime}
-                maxDate={timeTableMockData.maxDate}
-                rowData={lazyLoad(1)}
+                date={timeTableMockProps.date}
+                minDate={timeTableMockProps.minTime}
+                maxDate={timeTableMockProps.maxDate}
+                rowData={buildMockRowData(1)}
                 totalRecords={20}
                 loading={false}
-                emptyContent={timeTableMockData.emptyContent}
-                onPage={() => lazyLoad(2)}
+                onNextDayClick={timeTableMockProps.onNextDayClick}
+                onPreviousDayClick={timeTableMockProps.onPreviousDayClick}
+                emptyContentMessage={timeTableMockProps.emptyContentMessage}
+                onPage={() => buildMockRowData(1)}
             />
         );
-        const container = screen.getByTestId("timetable-container-id");
+        const container = screen.getByTestId("timetable-container");
         expect(screen.queryByTestId("lazy-loader")).toBeNull();
 
         // Scroll to the bottom of the container
@@ -264,3 +256,43 @@ describe("TimeTable", () => {
         expect(await screen.findByTestId("lazy-loader")).toBeInTheDocument();
     });
 });
+
+// =============================================================================
+// MOCKS
+// =============================================================================
+
+const buildMockRowData = (size: number): TimeTableRowData[] => {
+    return Array(size)
+        .fill(0)
+        .map((_, i) => ({
+            id: i.toString(),
+            name: "Row name",
+            rowMinTime: "08:00:00",
+            rowMaxTime: "09:00:00",
+            rowCells: [
+                {
+                    id: i.toString(),
+                    title: "Cell title",
+                    subtitle: "Cell subtitle",
+                    startTime: "08:00:00",
+                    endTime: "09:00:00",
+                    status: "filled",
+                    customPopover: {
+                        trigger: "hover",
+                        content: "row cell popover",
+                        delay: { open: 0, close: 0 },
+                    },
+                },
+            ],
+            rowHeaderPopover: {
+                trigger: "hover",
+                content: "row header popover",
+                delay: { open: 0, close: 0 },
+            },
+            outOfRangeCellPopover: {
+                trigger: "hover",
+                content: "out of range cell popover",
+                delay: { open: 0, close: 0 },
+            },
+        }));
+};

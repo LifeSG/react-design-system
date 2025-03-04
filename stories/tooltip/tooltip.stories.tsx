@@ -12,7 +12,7 @@ import {
 type Component = typeof Tooltip;
 
 const meta: Meta<Component> = {
-    title: "Modules/Tooltip",
+    title: "Deprecated/Tooltip",
     component: Tooltip,
 };
 

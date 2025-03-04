@@ -37,9 +37,16 @@ export type ColourScheme =
     | "bookingsg"
     | "rbs"
     | "mylegacy"
-    | "ccube";
+    | "ccube"
+    | "pa";
 
-export type FontScheme = "lifesg" | "bookingsg" | "rbs" | "mylegacy" | "ccube";
+export type FontScheme =
+    | "lifesg"
+    | "bookingsg"
+    | "rbs"
+    | "mylegacy"
+    | "ccube"
+    | "pa";
 export type MotionScheme = "lifesg";
 export type BorderScheme = "lifesg";
 export type SpacingScheme = "lifesg";
@@ -50,7 +57,8 @@ export type ResourceScheme =
     | "bookingsg"
     | "rbs"
     | "mylegacy"
-    | "ccube";
+    | "ccube"
+    | "pa";
 
 export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;

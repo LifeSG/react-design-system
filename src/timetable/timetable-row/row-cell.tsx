@@ -93,7 +93,7 @@ const Component = ({
                             </BlockDescription>
                         )}
                     </Block>
-                    {<Gap />}
+                    <Gap />
                 </Wrapper>
             </BlockContainer>
         </WithOptionalPopover>

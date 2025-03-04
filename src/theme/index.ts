@@ -124,3 +124,14 @@ export const RBSTheme: ThemeSpec = {
         resourceScheme: "rbs",
     },
 };
+
+export const PATheme: ThemeSpec = {
+    colourScheme: "pa",
+    fontScheme: "pa",
+    motionScheme: "lifesg",
+    borderScheme: "lifesg",
+    spacingScheme: "lifesg",
+    radiusScheme: "lifesg",
+    breakpointScheme: "lifesg",
+    resourceScheme: "pa",
+};

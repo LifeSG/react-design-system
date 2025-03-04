@@ -96,7 +96,7 @@ const LINK_DATA: ApiTableSectionProps[] = [
                     <>
                         This component also inherits props from&nbsp;
                         <StorybookLink path="/docs/core-typography--docs#component-api">
-                            TextLinkProps
+                            TypographyLinkProps
                         </StorybookLink>
                     </>
                 ),
@@ -131,11 +131,11 @@ const HOC_DATA: ApiTableSectionProps[] = [
                 propTypes: (
                     <>
                         <StorybookLink path="/docs/core-typography--docs#component-api">
-                            <code>TextLinkProps</code>
+                            <code>TypographyLinkProps</code>
                         </StorybookLink>
                         &nbsp;
                         <StorybookLink path="/docs/core-typography--docs#component-api">
-                            <code>TextProps</code>
+                            <code>TypographyProps</code>
                         </StorybookLink>
                         &nbsp;
                     </>

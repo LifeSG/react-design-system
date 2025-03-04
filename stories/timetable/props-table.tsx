@@ -1,5 +1,4 @@
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 
 const TIME_FORMAT = (
     <>
@@ -37,16 +36,16 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "emptyContent",
+                name: "emptyContentMessage",
                 description: (
                     <>
-                        The props to determine what this component should render
-                        if there is no content. Note that it is determined as
-                        empty when <code>totalRecords=0</code>or
+                        The props to determine what message this component
+                        should render if there is no content. Note that it is
+                        determined as empty when <code>totalRecords=0</code>or
                         <code>rowData=[]</code>.
                     </>
                 ),
-                propTypes: ["EmptyContentProps"],
+                propTypes: ["string"],
             },
             {
                 name: "rowData",
@@ -69,6 +68,7 @@ const DATA: ApiTableSectionProps[] = [
                         format.
                     </>
                 ),
+                defaultValue: "00:00",
                 propTypes: ["string"],
             },
             {
@@ -78,6 +78,7 @@ const DATA: ApiTableSectionProps[] = [
                         The end time of this time table in {TIME_FORMAT} format.
                     </>
                 ),
+                defaultValue: "23:00",
                 propTypes: ["string"],
             },
             {
@@ -113,6 +114,16 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["number"],
             },
             {
+                name: "showCurrentDateAsToday",
+                description: "Shows system's today's date as 'Today'",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "showDateAsShortForm",
+                description: "Shows the date text in short form",
+                propTypes: ["boolean"],
+            },
+            {
                 name: "onRefresh",
                 description: (
                     <>
@@ -136,11 +147,9 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The callback function to trigger when the left arrow has
                         been clicked on the date navigator component.
-                        <br />
-                        <b>Note</b>: Arrow button will not be rendered if this
-                        prop is not passed in.
                     </>
                 ),
+                mandatory: true,
                 propTypes: ["(currentDate: string) => void"],
             },
             {
@@ -149,37 +158,21 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The callback function to trigger when the right arrow
                         has been clicked on the date navigator component.
-                        <br />
-                        <b>Note</b>: Arrow button will not be rendered if this
-                        prop is not passed in.
                     </>
                 ),
+                mandatory: true,
                 propTypes: ["(currentDate: string) => void"],
             },
-        ],
-    },
-    {
-        name: "EmptyContentProps",
-        attributes: [
             {
-                name: "description",
+                name: "onCalendarDateSelect",
+                description: (
+                    <>
+                        The callback function to trigger when a calendar date
+                        has been picked in the dropdown calendar.
+                    </>
+                ),
                 mandatory: true,
-                description:
-                    "The description text to show when there is no content to display",
-                propTypes: ["string"],
-            },
-            {
-                name: "illustrationScheme",
-                mandatory: true,
-                description:
-                    "The scheme to use, which decides what image to display for empty content",
-                propTypes: [
-                    `"base"`,
-                    `"bookingsg"`,
-                    `"ccube"`,
-                    `"rbs"`,
-                    `"mylegacy"`,
-                ],
+                propTypes: ["(currentDate: string) => void"],
             },
         ],
     },
@@ -207,8 +200,13 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "rowCells",
                 mandatory: true,
-                description:
-                    "The array of row cells to be rendered in this row of data.",
+                description: (
+                    <>
+                        The array of row cells to be rendered in this row of
+                        data. This component will sort the cells array by start
+                        time.
+                    </>
+                ),
                 propTypes: ["TimeTableRowCellData[]"],
             },
             {

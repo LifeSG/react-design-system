@@ -1,4 +1,8 @@
-import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+} from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -102,13 +106,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         This component also inherits props from&nbsp;
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            TextLinkProps
-                        </a>
+                        <StorybookLink path="/docs/core-typography--docs#component-api">
+                            TypographyLinkProps
+                        </StorybookLink>
                     </>
                 ),
             },
@@ -141,13 +141,9 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: (
                     <>
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            <code>TextLinkProps</code>
-                        </a>
+                        <StorybookLink path="/docs/core-typography--docs#component-api">
+                            <code>TypographyLinkProps</code>
+                        </StorybookLink>
                     </>
                 ),
                 defaultValue: "Predefined values",
@@ -166,13 +162,9 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: (
                     <>
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            <code>TextLinkProps</code>
-                        </a>
+                        <StorybookLink path="/docs/core-typography--docs#component-api">
+                            <code>TypographyLinkProps</code>
+                        </StorybookLink>
                     </>
                 ),
                 defaultValue: "Predefined values",
@@ -191,13 +183,9 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: (
                     <>
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            <code>TextLinkProps</code>
-                        </a>
+                        <StorybookLink path="/docs/core-typography--docs#component-api">
+                            <code>TypographyLinkProps</code>
+                        </StorybookLink>
                     </>
                 ),
                 defaultValue: "Predefined values",

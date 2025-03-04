@@ -11,6 +11,7 @@ const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
         rbs: LifeSgFontSet,
         mylegacy: LifeSgFontSet,
         ccube: LifeSgFontSet,
+        pa: LifeSgFontSet,
     },
     defaultValue: "lifesg",
 };

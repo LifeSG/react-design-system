@@ -3,6 +3,7 @@ import { BorderScheme } from "../types";
 import { StyledComponentProps } from "../helpers";
 
 export interface BorderSet {
+    "width-005": number;
     "width-010": number;
     "width-020": number;
     "width-040": number;

@@ -1,0 +1,24 @@
+import { Meta } from "@storybook/blocks";
+import { PATheme } from "src/theme";
+import { FontDisplay } from "../doc-elements";
+
+<Meta title="Foundations/Font/PA" />
+
+# PA font
+
+This is the font set used when the `fontScheme` is `"pa"`.
+
+```tsx
+const theme: ThemeSpec = {
+    fontScheme: "pa",
+    // ...other specifications
+};
+```
+
+This stylesheet should be loaded in your app.
+
+```
+https://assets.life.gov.sg/react-design-system/v3/css/lato.css
+```
+
+<FontDisplay theme={PATheme} />

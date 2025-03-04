@@ -1,35 +1,39 @@
 import { RefreshIcon } from "@lifesg/react-icons";
 import { RefObject } from "react";
-import { DateNavigator } from "../../date-navigator/date-navigator";
 import {
     NavigationHeaderSubtitleWrapper,
     NavigationHeaderWrapper,
+    StyledDateNavigator,
     StyledRefreshButton,
     StyledResultText,
-} from "./timetable-navigator.style";
+} from "./timetable-header.style";
 
-interface TimeTableNavigatorProps {
+interface TimeTableHeaderProps {
     selectedDate: string;
     loading: boolean;
     tableContainerRef: RefObject<HTMLDivElement>;
     minDate?: string | undefined;
     maxDate?: string | undefined;
     totalRecords?: number | undefined;
-    onLeftArrowClick?: (currentDate: string) => void | undefined;
-    onRightArrowClick?: (currentDate: string) => void | undefined;
+    showDateAsShortForm?: boolean | undefined;
+    showCurrentDateAsToday?: boolean | undefined;
+    onPreviousDayClick: (currentDate: string) => void | undefined;
+    onNextDayClick: (currentDate: string) => void | undefined;
     onRefresh?: (() => void) | undefined;
+    onCalendarDateSelect?: ((currentDate: string) => void) | undefined;
 }
 
-export const TimeTableNavigator = ({
+export const TimeTableHeader = ({
     selectedDate,
     loading,
     tableContainerRef,
     totalRecords,
-    onLeftArrowClick,
-    onRightArrowClick,
+    onPreviousDayClick,
+    onNextDayClick,
     onRefresh,
+    onCalendarDateSelect,
     ...otherProps
-}: TimeTableNavigatorProps) => {
+}: TimeTableHeaderProps) => {
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -48,13 +52,14 @@ export const TimeTableNavigator = ({
 
     const handleRightArrowClick = (date: string) => {
         scrollToTop();
-        onRightArrowClick?.(date);
+        onNextDayClick(date);
     };
 
     const handleLeftArrowClick = (date: string) => {
         scrollToTop();
-        onLeftArrowClick?.(date);
+        onPreviousDayClick(date);
     };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -86,19 +91,14 @@ export const TimeTableNavigator = ({
 
     return (
         <NavigationHeaderWrapper>
-            {
-                <DateNavigator
-                    selectedDate={selectedDate}
-                    loading={loading}
-                    {...otherProps}
-                    onRightArrowClick={
-                        onRightArrowClick ? handleRightArrowClick : undefined
-                    }
-                    onLeftArrowClick={
-                        onLeftArrowClick ? handleLeftArrowClick : undefined
-                    }
-                />
-            }
+            <StyledDateNavigator
+                selectedDate={selectedDate}
+                loading={loading}
+                {...otherProps}
+                onRightArrowClick={handleRightArrowClick}
+                onLeftArrowClick={handleLeftArrowClick}
+                onCalendarDateSelect={onCalendarDateSelect}
+            />
             {renderRecordsSection()}
         </NavigationHeaderWrapper>
     );

@@ -56,6 +56,19 @@ export const Default: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+export const Prefix: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Form.Textarea
+                label="This has a prefix"
+                prefix="It is a truth universally acknowledged, "
+                maxLength={100}
+            />
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
 export const WithCustomCounter: StoryObj<Component> = {
     render: (_args) => {
         return (
