@@ -38,7 +38,7 @@ const preview: Preview = {
                         "Introduction",
                         "Themes",
                         "Colours",
-                        "Typography",
+                        "Font",
                         "Breakpoint",
                         "Spacing",
                         "Motion",
