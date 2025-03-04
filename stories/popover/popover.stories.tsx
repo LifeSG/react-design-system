@@ -7,7 +7,7 @@ import { Container, Item, PopoverHOCExample } from "./doc-elements";
 type Component = typeof Popover;
 
 const meta: Meta<Component> = {
-    title: "Modules/Popover",
+    title: "Deprecated/Popover",
     component: Popover,
 };
 

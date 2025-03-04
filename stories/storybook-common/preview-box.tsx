@@ -6,6 +6,7 @@ interface Props {
     className?: string;
 }
 
+/** @deprecated */
 export const PreviewBox = ({ children, className }: Props) => {
     return (
         <Container className={className}>
