@@ -120,7 +120,9 @@ const TextareaBaseComponent = (
             onKeyDown={handleKeyDown}
             $error={error}
             rows={rows}
-            maxLength={prefix ? prefix.length + maxLength : maxLength}
+            maxLength={
+                prefix && maxLength ? prefix.length + maxLength : maxLength
+            }
             {...otherProps}
         />
     );

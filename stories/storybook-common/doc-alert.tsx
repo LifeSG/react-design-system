@@ -8,8 +8,8 @@ interface Props {
     storybookPath?: string;
 }
 
-const getStorybookPath = (path) => {
-    const url = new URL(window.top.location.href);
+const getStorybookPath = (path: string) => {
+    const url = new URL(window.top?.location.href || window.location.href);
     url.hash = "";
     url.search = "";
     const storybookHref = url.toString() + "?path=" + path;
