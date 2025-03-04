@@ -5,10 +5,18 @@ import styled from "styled-components";
 
 interface Props {
     children: React.ReactNode;
-    storybookLink?: string;
+    storybookPath?: string;
 }
 
-export const DocAlert = ({ children, storybookLink }: Props) => {
+const getStorybookPath = (path) => {
+    const url = new URL(window.top.location.href);
+    url.hash = "";
+    url.search = "";
+    const storybookHref = url.toString() + "?path=" + path;
+    return storybookHref;
+};
+
+export const DocAlert = ({ children, storybookPath }: Props) => {
     return (
         <Unstyled>
             <StyledAlert
@@ -16,9 +24,9 @@ export const DocAlert = ({ children, storybookLink }: Props) => {
                 showIcon
                 sizeType="small"
                 actionLink={
-                    storybookLink
+                    storybookPath
                         ? {
-                              href: storybookLink,
+                              href: getStorybookPath(storybookPath),
                               children: "View documentation",
                           }
                         : undefined
@@ -30,7 +38,7 @@ export const DocAlert = ({ children, storybookLink }: Props) => {
     );
 };
 
-export const DocInfo = ({ children, storybookLink }: Props) => {
+export const DocInfo = ({ children, storybookPath }: Props) => {
     return (
         <Unstyled>
             <StyledAlert
@@ -38,9 +46,9 @@ export const DocInfo = ({ children, storybookLink }: Props) => {
                 showIcon
                 sizeType="small"
                 actionLink={
-                    storybookLink
+                    storybookPath
                         ? {
-                              href: storybookLink,
+                              href: getStorybookPath(storybookPath),
                               children: "View documentation",
                           }
                         : undefined
@@ -52,7 +60,7 @@ export const DocInfo = ({ children, storybookLink }: Props) => {
     );
 };
 
-export const DocNote = ({ children, storybookLink }: Props) => {
+export const DocNote = ({ children, storybookPath }: Props) => {
     return (
         <Unstyled>
             <StyledAlert
@@ -61,9 +69,9 @@ export const DocNote = ({ children, storybookLink }: Props) => {
                 sizeType="small"
                 customIcon={<LightbulbFillIcon />}
                 actionLink={
-                    storybookLink
+                    storybookPath
                         ? {
-                              href: storybookLink,
+                              href: getStorybookPath(storybookPath),
                               children: "View documentation",
                           }
                         : undefined

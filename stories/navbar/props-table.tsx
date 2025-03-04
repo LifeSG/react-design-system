@@ -184,13 +184,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         This also inherits props from&nbsp;
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#component-api"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            TextLinkProps
-                        </a>
+                        <StorybookLink path="/docs/core-typography--docs#component-api">
+                            TypographyLinkProps
+                        </StorybookLink>
                     </>
                 ),
             },

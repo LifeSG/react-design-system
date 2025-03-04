@@ -1,4 +1,8 @@
-import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+} from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -39,13 +43,9 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "Font size of the list. Inherited from the parent if not specified",
                 propTypes: (
-                    <a
-                        href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-base-style--docs"
-                        rel="noreferrer"
-                        target="_blank"
-                    >
-                        TextSizeType
-                    </a>
+                    <StorybookLink path="/docs/core-typography--docs">
+                        TypographySizeType
+                    </StorybookLink>
                 ),
             },
         ],
