@@ -202,6 +202,12 @@ export const Label = styled(Text.H5)<LabelStyleProps>`
                 `;
             }
 
+            if ($type === "hidden") {
+                return css`
+                    visibility: hidden;
+                `;
+            }
+
             return css`
                 color: ${Color.Neutral[4]};
             `;
