@@ -7,7 +7,7 @@ import { MOCK_THEME } from "./mock-theme-data";
 
 const StyledBorderComponent = styled.div`
     border: ${Border["width-010"]} ${Border.solid};
-    ${Border["dashed-default"]};
+    ${Border.Util["dashed-default"]};
 `;
 
 describe("Border Theming Test", () => {
@@ -39,7 +39,7 @@ describe("Border Theming Test", () => {
         const radius = 4;
 
         const StyledBorderComponentDash = styled.div`
-            ${Border["dashed-default"]({
+            ${Border.Util["dashed-default"]({
                 thickness: strokeWidth,
                 colour,
                 radius,

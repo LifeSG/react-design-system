@@ -147,7 +147,7 @@ const BorderStyleExample = styled.div<BorderStyleProps>`
 const DashedBorderExample = styled.div`
     height: 24px;
     width: 48px;
-    ${Border["dashed-default"]({ colour: "tomato" })}
+    ${Border.Util["dashed-default"]({ colour: "tomato" })}
 `;
 
 const Divider = styled.div`

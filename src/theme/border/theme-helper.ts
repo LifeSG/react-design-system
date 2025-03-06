@@ -1,4 +1,3 @@
-import { CSSProp } from "styled-components";
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { BorderScheme, ThemeCollectionSpec } from "../types";
 import { LifeSgBorderSet } from "./specs/lifesg-border-set";
@@ -51,36 +50,10 @@ export const getBorder = (key: "solid") => {
     };
 };
 
-const isStyledProps = (args: any): args is [StyledComponentProps] =>
-    args.length === 1 && "theme" in args[0];
-
-export const getBorderStyle = (key: "dashed-default") => {
-    return (
-            ...args: Parameters<BorderSet[typeof key]> | [StyledComponentProps]
-        ) =>
-        (props: StyledComponentProps): CSSProp => {
-            const resolvedOptions = isStyledProps(args) ? [] : args;
-            const resolvedStyledProps = isStyledProps(args) ? args[0] : props;
-
-            const theme = resolvedStyledProps.theme;
-            const borderSet: BorderSet = getCollection(
-                BorderSpec,
-                theme?.borderScheme
-            );
-
-            const borderValue = theme?.overrides?.border
-                ? getValue(borderSet, key, theme.overrides.border)
-                : borderSet[key];
-
-            return borderValue(...resolvedOptions)(resolvedStyledProps);
-        };
-};
-
 export const BorderValues = {
     "width-005": getBorderWidth("width-005"),
     "width-010": getBorderWidth("width-010"),
     "width-020": getBorderWidth("width-020"),
     "width-040": getBorderWidth("width-040"),
     solid: getBorder("solid"),
-    "dashed-default": getBorderStyle("dashed-default"),
 };

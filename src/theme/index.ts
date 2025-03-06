@@ -1,14 +1,15 @@
-import { MotionValues } from "./motion/theme-helper";
+import { BorderUtilValues } from "./border-util/theme-helper";
 import { BorderValues } from "./border/theme-helper";
 import { MediaQuery as MediaQueryValues } from "./breakpoint/media-query-helper";
 import { BreakpointValues } from "./breakpoint/theme-helper";
 import { PrimitiveColour } from "./colour-primitive/theme-helper";
 import { ColourSemantic } from "./colour-semantic/theme-helper";
 import { FontSpecValues } from "./font-spec/theme-helper";
+import { FontValues } from "./font/theme-helper";
+import { MotionValues } from "./motion/theme-helper";
 import { RadiusValues } from "./radius/theme-helper";
 import { SpacingValues } from "./spacing/theme-helper";
 import { ThemeSpec } from "./types";
-import { FontValues } from "./font/theme-helper";
 
 // =============================================================================
 // TOKENS
@@ -26,7 +27,10 @@ export const Font = {
 
 export const Motion = MotionValues;
 
-export const Border = BorderValues;
+export const Border = {
+    ...BorderValues,
+    Util: BorderUtilValues,
+};
 
 export const Spacing = SpacingValues;
 

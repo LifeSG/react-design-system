@@ -1,4 +1,3 @@
-import { dashedBorderStyle } from "../border-utils";
 import { BorderSet } from "../types";
 
 export const LifeSgBorderSet: BorderSet = {
@@ -8,6 +7,4 @@ export const LifeSgBorderSet: BorderSet = {
     "width-040": 4,
 
     solid: "solid",
-
-    "dashed-default": dashedBorderStyle,
 };

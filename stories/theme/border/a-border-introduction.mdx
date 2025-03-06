@@ -9,7 +9,8 @@ import { DocInfo, DocNote } from "stories/storybook-common";
 import { Border } from "@lifesg/react-design-system/theme";
 ```
 
-The **border** tokens define the style and width of element borders.
+The **border** tokens define the style and width of element borders. Utilities
+are provided to declare certain border styles.
 
 ## Collections
 
@@ -28,7 +29,7 @@ const SolidBorder = styled.div`
 `;
 
 const DashedBorder = styled.div`
-    ${Border["dashed-default"]};
+    ${Border.Util["dashed-default"]};
 `;
 ```
 

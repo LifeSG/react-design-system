@@ -1,7 +1,7 @@
 import { css } from "styled-components";
+import { BorderValues } from "../border/theme-helper";
 import { ColourSemantic } from "../colour-semantic/theme-helper";
 import { StyledComponentProps } from "../helpers";
-import { BorderValues } from "./theme-helper";
 
 export const dashedBorderStyle =
     (options?: {

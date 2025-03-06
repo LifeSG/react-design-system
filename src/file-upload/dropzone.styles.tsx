@@ -22,7 +22,7 @@ export const Container = styled.div<StyleProps>`
     ${(props) => {
         if (props.$border) {
             return css`
-                ${Border["dashed-default"]({
+                ${Border.Util["dashed-default"]({
                     radius: Radius["sm"],
                     thickness: Border["width-040"],
                     colour: Colour["border"],
@@ -49,7 +49,7 @@ export const DragOverlay = styled.div`
     height: 100%;
 
     background: ${Colour["bg-primary-subtler"]};
-    ${Border["dashed-default"]({
+    ${Border.Util["dashed-default"]({
         radius: Radius["sm"],
         thickness: Border["width-040"],
         colour: Colour["border-primary"],

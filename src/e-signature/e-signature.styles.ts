@@ -55,7 +55,7 @@ export const SignatureArea = styled.div<SignatureAreaProps>`
     justify-content: center;
     ${(props) =>
         css`
-            ${Border["dashed-default"]({
+            ${Border.Util["dashed-default"]({
                 radius: Radius["sm"],
                 thickness: Border["width-040"],
                 colour: props.$disabled
