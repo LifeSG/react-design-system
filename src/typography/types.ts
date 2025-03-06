@@ -7,6 +7,8 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
     inline?: boolean | undefined;
     /** Specifies if text has a bottom margin */
     paragraph?: boolean | undefined;
+    /** Specify the number of lines visible, the additional lines will be truncated */
+    maxLines?: number | undefined;
 }
 
 export interface TypographyLinkProps

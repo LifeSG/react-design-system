@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Typography } from "src/typography";
+import { GridDecorator } from "stories/storybook-common";
 
 const meta: Meta = {
     title: "Core/Typography",
@@ -61,6 +62,30 @@ export const Paragraphs: StoryObj = {
             </Typography.BodyBL>
         </>
     ),
+};
+
+export const MaxLines: StoryObj = {
+    render: (_args) => (
+        <>
+            <Typography.BodyBL maxLines={1}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                euismod quam eget ex tincidunt dapibus. Donec vitae leo
+                vehicula, fermentum urna vitae, gravida ex.
+            </Typography.BodyBL>
+            <Typography.BodyBL maxLines={2}>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Perferendis laudantium iste quibusdam hic sed ad, earum quos ab,
+                corporis nam maxime fugiat reiciendis repellendus aspernatur
+                consequatur libero at. Sint, autem.
+            </Typography.BodyBL>
+        </>
+    ),
+    decorators: [
+        GridDecorator({
+            columns: 1,
+            rowHeaders: ["Max 1 line", "Max 2 lines"],
+        }),
+    ],
 };
 
 export const ExternalLink: StoryObj = {
