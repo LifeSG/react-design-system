@@ -31,7 +31,7 @@ const OPTIONS_DATA = [
     { value: "D", label: "Option D" },
 ];
 
-const LARGE_OPTIONS_DATA = [...Array(500)].map((_, i) => ({ value: i + 1, label: `Option ${i + 1}` }));
+const LARGE_OPTIONS_DATA = [...Array(50000)].map((_, i) => ({ value: i + 1, label: `Option ${i + 1}` }));
 
 export const Select: StoryObj<Component> = {
     render: () => {
@@ -166,7 +166,7 @@ export const Virtualisation: StoryObj<StandaloneComponent> = {
             <StoryContainer>
                 <Container>
                     <Form.Select
-                        label="This is the select field"
+                        label="The options are rendered using virtualisation"
                         options={LARGE_OPTIONS_DATA}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
