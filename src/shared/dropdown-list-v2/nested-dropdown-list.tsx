@@ -22,6 +22,8 @@ import {
     expandSelectedSubtrees,
     findIndexFromEnd,
     findIndexFromStart,
+    findItemFromEnd,
+    findItemFromStart,
     flattenList,
     toggleSubtree,
     updateSelectedState,
@@ -41,9 +43,11 @@ import {
     NestedDropdownListLocalItem,
     NestedDropdownListProps,
 } from "./types";
+import { Virtuoso } from "react-virtuoso";
 
 export const NestedDropdownList = <T,>({
     listItems,
+    // listOptions,
     multiSelect,
     selectedKeyPaths,
     itemsLoadState = "success",
@@ -84,6 +88,11 @@ export const NestedDropdownList = <T,>({
     const [filteredListItems, setFilteredListItems] = useState<
         NestedDropdownListLocalItem<T>[]
     >([]);
+    const [visibleItems, setVisibleItems] = useState<
+        NestedDropdownListLocalItem<T>[]
+    >([]);
+
+    const activeList = searchActive ? filteredListItems : unfilteredListItems;
 
     const maxLevel = useMemo(() => {
         let currentMaxLevel = 0;
@@ -97,41 +106,44 @@ export const NestedDropdownList = <T,>({
 
     // TODO: persist in context?
     const [focusedIndex, setFocusedIndex] = useState(0);
+    const [virtuosoIndex, setVirtuosoIndex] = useState(0);
 
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const handleKeyboardPress = (event: KeyboardEvent) => {
-        const activeList = searchActive
-            ? filteredListItems
-            : unfilteredListItems;
-
+        // When navigating using keyboard, need to use virtuoso index, when expanding/collapsing, need actual index
+        // Actual index comes from activeList, virtuoso index is for UI only...
         switch (event.code) {
             case "ArrowDown": {
                 event.preventDefault();
-                const upcomingIndex = findIndexFromStart(
+                const upcomingItem = findItemFromStart(
                     activeList,
                     (item) => item.visible,
                     focusedIndex + 1
                 );
-                if (upcomingIndex >= 0) {
-                    setFocusedIndex(upcomingIndex);
-                    listItemRefs.current[upcomingIndex].focus();
+                console.log("upcoming", upcomingItem?.index);
+                if (upcomingItem) {
+                    setVirtuosoIndex((vi => vi + 1));
+                    setFocusedIndex(upcomingItem.index);
+                    listItemRefs.current[upcomingItem.index].focus();
                 }
                 break;
             }
             case "ArrowUp": {
                 event.preventDefault();
-                const upcomingIndex = findIndexFromEnd(
+                const upcomingItem = findItemFromEnd(
                     activeList,
                     (item) => item.visible,
                     focusedIndex - 1
                 );
-                if (upcomingIndex >= 0) {
-                    setFocusedIndex(upcomingIndex);
-                    listItemRefs.current[upcomingIndex].focus();
-                } else if (focusedIndex === 0 && searchInputRef.current) {
+                if (upcomingItem) {
+                    setVirtuosoIndex((vi) => vi - 1);
+                    setFocusedIndex(upcomingItem.index);
+                    listItemRefs.current[upcomingItem.index].focus();
+                } else if (virtuosoIndex === 0 && searchInputRef.current) {
                     searchInputRef.current.focus();
+                    setVirtuosoIndex(-1);
                     setFocusedIndex(-1);
                 }
                 break;
@@ -190,17 +202,15 @@ export const NestedDropdownList = <T,>({
         onRetry?.();
     };
 
-    const handleListItemClick = (index: number) => {
-        setFocusedIndex(index);
-
-        const activeList = searchActive
-            ? filteredListItems
-            : unfilteredListItems;
+    const handleListItemClick = (index: number, virtuosoIndex: number) => {
+        setVirtuosoIndex(virtuosoIndex);
         onSelectItem?.(activeList[index]);
     };
 
-    const handleListItemHover = (index: number) => {
-        setFocusedIndex(index);
+    const handleListItemHover = (virtuosoIndex: number, listItem: NestedDropdownListLocalItem<T>
+    ) => {
+        setFocusedIndex(listItem.index);
+        setVirtuosoIndex(virtuosoIndex);
     };
 
     const handleOnSelectAll = () => {
@@ -278,6 +288,7 @@ export const NestedDropdownList = <T,>({
     });
 
     const updateSelectedItemsInList = useEvent(() => {
+        const start = Date.now();
         setUnfilteredListItems((unfilteredListItems) =>
             updateSelectedState(
                 unfilteredListItems,
@@ -295,13 +306,10 @@ export const NestedDropdownList = <T,>({
                 )
             );
         }
+        console.log("ended", Date.now() - start);
     });
 
     const toggleCategory = (index: number, nextExpanded: boolean) => {
-        const activeList = searchActive
-            ? filteredListItems
-            : unfilteredListItems;
-
         const list = toggleSubtree(activeList, index, nextExpanded);
         setFocusedIndex(index);
 
@@ -317,6 +325,7 @@ export const NestedDropdownList = <T,>({
     // =========================================================================
     useEventListener("keydown", handleKeyboardPress);
 
+    // FIXME - This is being called on every dropdown open click, will take time to load for big lists
     useEffect(() => {
         let list: NestedDropdownListLocalItem<T>[];
         if (mode === "default") {
@@ -327,7 +336,13 @@ export const NestedDropdownList = <T,>({
             list = flatten(listItems, false);
         }
         setUnfilteredListItems(list);
+
     }, [flatten, flattenDefaultMode, listItems, mode]);
+
+    useEffect(() => {
+        // Filter out non-visible items before passing to Virtuoso
+        setVisibleItems(activeList.filter(item => item.visible));
+    }, [filteredListItems, unfilteredListItems, searchActive, activeList]);
 
     useEffect(() => {
         updateSelectedItemsInList();
@@ -353,6 +368,7 @@ export const NestedDropdownList = <T,>({
         // Focus search input if there is one
         if (searchInputRef.current) {
             setFocusedIndex(-1);
+            setVirtuosoIndex(-1);
             setTimeout(() => searchInputRef.current?.focus(), 200); // wait for animation
         } else if (listItemRefs.current[focusedIndex]) {
             // Else focus on the specified element
@@ -360,9 +376,10 @@ export const NestedDropdownList = <T,>({
         } else {
             // Else focus on the first list item
             setFocusedIndex(0);
+            setVirtuosoIndex(0);
             setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
-    }, [focusedIndex, mounted, setFocusedIndex]);
+    }, [focusedIndex, virtuosoIndex, mounted, setFocusedIndex, setVirtuosoIndex]);
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -491,85 +508,84 @@ export const NestedDropdownList = <T,>({
         );
     };
 
-    const renderItems = () => {
-        const activeList = searchActive
-            ? filteredListItems
-            : unfilteredListItems;
-        return activeList.map((listItem, i) => {
-            const {
-                item,
-                level,
-                visible,
-                expanded,
-                keyPath,
-                checked,
-                hasSubItems,
-                indexInParent,
-                parentSetSize,
-            } = listItem;
-            const active = focusedIndex === i;
-            const toggleable = hasSubItems && !selectableCategory;
 
-            return (
-                <ListItemContainer
-                    key={`[${keyPath.join("---")}]`}
-                    $visible={visible}
+    const renderItems = (listItem: NestedDropdownListLocalItem<T>, vi: number) => {
+        const {
+            level,
+            visible,
+            expanded,
+            keyPath,
+            checked,
+            hasSubItems,
+            indexInParent,
+            parentSetSize,
+        } = listItem;
+        const i = listItem.index;
+        const active = virtuosoIndex === vi;
+        const toggleable = hasSubItems && !selectableCategory;
+
+        return (
+            <ListItemContainer
+                key={`[${keyPath.join("---")}]`}
+                $visible={visible}
+            >
+                {maxLevel > 0 && <Indent $level={level} />}
+                {maxLevel > 0 && !hasSubItems && multiSelect && (
+                    <UnexpandableIndicator />
+                )}
+                <ListItem
+                    aria-checked={checked} // not working with safari voiceover
+                    aria-selected={!!checked} // required for safari voiceover
+                    aria-expanded={hasSubItems ? expanded : undefined}
+                    aria-level={level + 1}
+                    aria-posinset={indexInParent + 1}
+                    aria-setsize={parentSetSize}
+                    data-testid="list-item"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        if (toggleable) {
+                            toggleCategory(i, !expanded);
+                        } else {
+                            handleListItemClick(i, vi);
+                        }
+                    }}
+                    onMouseEnter={() => handleListItemHover(vi, listItem)}
+                    ref={(node) => (listItemRefs.current[listItem.index] = node)}
+                    role="treeitem"
+                    tabIndex={active ? 0 : -1}
+                    $active={active}
+                    $toggleable={toggleable}
                 >
-                    {maxLevel > 0 && <Indent $level={level} />}
-                    {maxLevel > 0 && !hasSubItems && multiSelect && (
-                        <UnexpandableIndicator />
-                    )}
-                    <ListItem
-                        aria-checked={checked} // not working with safari voiceover
-                        aria-selected={!!checked} // required for safari voiceover
-                        aria-expanded={hasSubItems ? expanded : undefined}
-                        aria-level={level + 1}
-                        aria-posinset={indexInParent + 1}
-                        aria-setsize={parentSetSize}
-                        data-testid="list-item"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            if (toggleable) {
+                    {hasSubItems && (
+                        // not an actual button, only required for visual display
+                        <ExpandButton
+                            data-testid="toggle-category-button"
+                            onClick={(e) => {
+                                e.stopPropagation();
                                 toggleCategory(i, !expanded);
-                            } else {
-                                handleListItemClick(i);
-                            }
-                        }}
-                        onMouseEnter={() => handleListItemHover(i)}
-                        ref={(node) => (listItemRefs.current[i] = node)}
-                        role="treeitem"
-                        tabIndex={active ? 0 : -1}
-                        $active={active}
-                        $toggleable={toggleable}
-                    >
-                        {hasSubItems && (
-                            // not an actual button, only required for visual display
-                            <ExpandButton
-                                data-testid="toggle-category-button"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    toggleCategory(i, !expanded);
-                                }}
-                                $expanded={expanded}
-                            >
-                                <CaretRightIcon />
-                            </ExpandButton>
-                        )}
-                        {renderSelectionIcon(listItem)}
-                        <DropdownLabel
-                            bold={hasSubItems}
-                            searchTerm={searchActive ? searchTerm : undefined}
-                            label={item.label}
-                            selected={!!checked}
-                            truncationType={itemTruncationType}
-                            maxLines={itemMaxLines}
-                        />
-                    </ListItem>
-                </ListItemContainer>
-            );
-        });
+                            }}
+                            $expanded={expanded}
+                        >
+                            <CaretRightIcon />
+                        </ExpandButton>
+                    )}
+                    {renderSelectionIcon(listItem)}
+                    <DropdownLabel
+                        bold={hasSubItems}
+                        searchTerm={searchActive ? searchTerm : undefined}
+                        label={listItem.item.label}
+                        selected={!!checked}
+                        truncationType={itemTruncationType}
+                        maxLines={itemMaxLines}
+                    />
+                </ListItem>
+            </ListItemContainer>
+        );
+        // });
     };
 
+    // Consider refactoring itemContent to a separate function for more readability
+    // move the div out of virtuoso
     const renderList = () => {
         return (
             <List data-testid="nested-dropdown-list">
@@ -584,8 +600,14 @@ export const NestedDropdownList = <T,>({
                     ref={listRef}
                     role="tree"
                 >
-                    {renderItems()}
+                    <Virtuoso
+                        style={{ height: '100%' }}
+                        customScrollParent={nodeRef.current}
+                        data={visibleItems}
+                        itemContent={(index, item) => renderItems(item, index)}
+                    />
                 </div>
+
             </List>
         );
     };

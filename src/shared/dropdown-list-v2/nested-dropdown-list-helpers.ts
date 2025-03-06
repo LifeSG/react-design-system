@@ -17,6 +17,7 @@ export const flattenList = <T>(
     searchTerm: string,
     initialExpanded: boolean
 ): NestedDropdownListLocalItem<T>[] => {
+    const start = Date.now();
     const items: NestedDropdownListLocalItem<T>[] = [];
 
     const flatten = (
@@ -88,6 +89,7 @@ export const flattenList = <T>(
 
     flatten(nestedList, undefined);
 
+    console.log("end flatten", Date.now() - start);
     return items;
 };
 
@@ -201,7 +203,8 @@ export const updateSelectedState = <T>(
     selectedKeyPaths: string[][],
     multiSelect: boolean
 ) => {
-    return produce(list, (draft) => {
+    const start = Date.now();
+    const res = produce(list, (draft) => {
         for (let i = draft.length - 1; i >= 0; i--) {
             const item = draft[i];
             item.checked = !!selectedKeyPaths.find((keyPath) =>
@@ -230,6 +233,8 @@ export const updateSelectedState = <T>(
             }
         }
     });
+    console.log("update select state took", Date.now() - start);
+    return res;
 };
 
 export const findIndexFromStart = <T>(
@@ -246,6 +251,20 @@ export const findIndexFromStart = <T>(
     return -1;
 };
 
+export const findItemFromStart = <T>(
+    arr: T[],
+    predicate: (e: T) => boolean,
+    start: number
+): T => {
+    for (let i = start; i < arr.length; i++) {
+        if (predicate(arr[i])) {
+            return arr[i];
+        }
+    }
+
+    return undefined;
+};
+
 export const findIndexFromEnd = <T>(
     arr: T[],
     predicate: (e: T) => boolean,
@@ -258,6 +277,20 @@ export const findIndexFromEnd = <T>(
     }
 
     return -1;
+};
+
+export const findItemFromEnd = <T>(
+    arr: T[],
+    predicate: (e: T) => boolean,
+    end: number
+): T => {
+    for (let i = end; i >= 0; i--) {
+        if (predicate(arr[i])) {
+            return arr[i];
+        }
+    }
+
+    return undefined;
 };
 
 export const findItemByKeyPath = <T>(
