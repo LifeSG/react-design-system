@@ -17,7 +17,6 @@ export const flattenList = <T>(
     searchTerm: string,
     initialExpanded: boolean
 ): NestedDropdownListLocalItem<T>[] => {
-    const start = Date.now();
     const items: NestedDropdownListLocalItem<T>[] = [];
 
     const flatten = (
@@ -88,8 +87,6 @@ export const flattenList = <T>(
     };
 
     flatten(nestedList, undefined);
-
-    console.log("end flatten", Date.now() - start);
     return items;
 };
 
@@ -203,14 +200,12 @@ export const updateSelectedState = <T>(
     selectedKeyPaths: string[][],
     multiSelect: boolean
 ) => {
-    const start = Date.now();
     const res = produce(list, (draft) => {
         for (let i = draft.length - 1; i >= 0; i--) {
             const item = draft[i];
             item.checked = !!selectedKeyPaths.find((keyPath) =>
                 isEqual(keyPath, item.keyPath)
             );
-
             if (item.hasSubItems) {
                 if (multiSelect && item.checked !== true) {
                     const children = item.subItemIndexes.map(
@@ -233,7 +228,6 @@ export const updateSelectedState = <T>(
             }
         }
     });
-    console.log("update select state took", Date.now() - start);
     return res;
 };
 

@@ -465,6 +465,24 @@ export const DropdownList = <T, V>({
         }
     };
 
+    const renderVirtualisedList = () => {
+        return (
+            <Virtuoso
+                ref={virtuosoRef}
+                style={{ height: '100%' }}
+                data={displayListItems}
+                customScrollParent={nodeRef.current}
+                itemContent={(index, item) => {
+                    return (
+                        <Listbox role="listbox" id={listboxId}>
+                            {renderItems(item, index)}
+                        </Listbox>
+                    );
+                }}
+            />
+        );
+    };
+
     const renderList = () => {
         return (
             <List ref={listRef} data-testid="dropdown-list">
@@ -473,19 +491,7 @@ export const DropdownList = <T, V>({
                 {renderNoResults()}
                 {renderLoading()}
                 {renderTryAgain()}
-                <Virtuoso
-                    ref={virtuosoRef}
-                    style={{ height: '100%' }}
-                    data={displayListItems}
-                    customScrollParent={nodeRef.current}
-                    itemContent={(index, item) => {
-                        return (
-                            <Listbox role="listbox" id={listboxId}>
-                                {renderItems(item, index)}
-                            </Listbox>
-                        );
-                    }}
-                />
+                {renderVirtualisedList()}
             </List>
         );
     };
