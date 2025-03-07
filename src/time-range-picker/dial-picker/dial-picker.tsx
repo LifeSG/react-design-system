@@ -38,7 +38,7 @@ export const DialPicker = ({
             setStartTimeVal(value.start);
             setEndTimeVal(value.end);
         }
-    }, []);
+    }, [value]);
 
     useEventListener("mousedown", handleMouseDownEvent, "document");
     useEventListener("keyup", handleKeyUpEvent, "document");
