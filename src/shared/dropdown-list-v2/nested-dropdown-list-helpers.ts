@@ -87,7 +87,6 @@ export const flattenList = <T>(
     };
 
     flatten(nestedList, undefined);
-
     return items;
 };
 
@@ -201,13 +200,12 @@ export const updateSelectedState = <T>(
     selectedKeyPaths: string[][],
     multiSelect: boolean
 ) => {
-    return produce(list, (draft) => {
+    const res = produce(list, (draft) => {
         for (let i = draft.length - 1; i >= 0; i--) {
             const item = draft[i];
             item.checked = !!selectedKeyPaths.find((keyPath) =>
                 isEqual(keyPath, item.keyPath)
             );
-
             if (item.hasSubItems) {
                 if (multiSelect && item.checked !== true) {
                     const children = item.subItemIndexes.map(
@@ -230,6 +228,7 @@ export const updateSelectedState = <T>(
             }
         }
     });
+    return res;
 };
 
 export const findIndexFromStart = <T>(
@@ -246,6 +245,20 @@ export const findIndexFromStart = <T>(
     return -1;
 };
 
+export const findItemFromStart = <T>(
+    arr: T[],
+    predicate: (e: T) => boolean,
+    start: number
+): T => {
+    for (let i = start; i < arr.length; i++) {
+        if (predicate(arr[i])) {
+            return arr[i];
+        }
+    }
+
+    return undefined;
+};
+
 export const findIndexFromEnd = <T>(
     arr: T[],
     predicate: (e: T) => boolean,
@@ -258,6 +271,20 @@ export const findIndexFromEnd = <T>(
     }
 
     return -1;
+};
+
+export const findItemFromEnd = <T>(
+    arr: T[],
+    predicate: (e: T) => boolean,
+    end: number
+): T => {
+    for (let i = end; i >= 0; i--) {
+        if (predicate(arr[i])) {
+            return arr[i];
+        }
+    }
+
+    return undefined;
 };
 
 export const findItemByKeyPath = <T>(

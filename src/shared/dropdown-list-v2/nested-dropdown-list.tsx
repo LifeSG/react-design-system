@@ -1,5 +1,6 @@
 import { CaretRightIcon } from "@lifesg/react-icons/caret-right";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Virtuoso } from "react-virtuoso";
 import { Spinner } from "../../button/button.style";
 import { useEvent, useEventListener, useIsMounted } from "../../util";
 import { DropdownLabel } from "./dropdown-label";
@@ -20,8 +21,8 @@ import {
     expandFirstSubtree,
     expandMatchedSubtrees,
     expandSelectedSubtrees,
-    findIndexFromEnd,
-    findIndexFromStart,
+    findItemFromEnd,
+    findItemFromStart,
     flattenList,
     toggleSubtree,
     updateSelectedState,
@@ -85,6 +86,8 @@ export const NestedDropdownList = <T,>({
         NestedDropdownListLocalItem<T>[]
     >([]);
 
+    const activeList = searchActive ? filteredListItems : unfilteredListItems;
+
     const maxLevel = useMemo(() => {
         let currentMaxLevel = 0;
         for (const item of unfilteredListItems) {
@@ -98,40 +101,53 @@ export const NestedDropdownList = <T,>({
     // TODO: persist in context?
     const [focusedIndex, setFocusedIndex] = useState(0);
 
+    /**
+     * NOTE: Keeping track of the visible items to pass to Virtuoso for virtualisation to work.
+     * This is required due to the nature of show/hide sub-items, to omit them from the DOM entirely.
+     */
+    const [visibleItems, setVisibleItems] = useState<
+        NestedDropdownListLocalItem<T>[]
+    >([]);
+
+    // NOTE: Maintaining a separate index for UI to keep track on which item (in terms of Virtuoso's indexing) is currently focused on keyboard press events.
+    const [virtuosoIndex, setVirtuosoIndex] = useState(0);
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const handleKeyboardPress = (event: KeyboardEvent) => {
-        const activeList = searchActive
-            ? filteredListItems
-            : unfilteredListItems;
-
+        /**
+         *  NOTE: When navigating up/down the list using keyboard, need to use virtuoso index, when expanding/collapsing, need actual index as we need to toggle the visible state of the sub-items
+         */
         switch (event.code) {
             case "ArrowDown": {
                 event.preventDefault();
-                const upcomingIndex = findIndexFromStart(
+                const upcomingItem = findItemFromStart(
                     activeList,
                     (item) => item.visible,
                     focusedIndex + 1
                 );
-                if (upcomingIndex >= 0) {
-                    setFocusedIndex(upcomingIndex);
-                    listItemRefs.current[upcomingIndex].focus();
+                if (upcomingItem) {
+                    setVirtuosoIndex((vIndex) => vIndex + 1);
+                    setFocusedIndex(upcomingItem.index);
+                    listItemRefs.current[upcomingItem.index].focus();
                 }
                 break;
             }
             case "ArrowUp": {
                 event.preventDefault();
-                const upcomingIndex = findIndexFromEnd(
+                const upcomingItem = findItemFromEnd(
                     activeList,
                     (item) => item.visible,
                     focusedIndex - 1
                 );
-                if (upcomingIndex >= 0) {
-                    setFocusedIndex(upcomingIndex);
-                    listItemRefs.current[upcomingIndex].focus();
-                } else if (focusedIndex === 0 && searchInputRef.current) {
+                if (upcomingItem) {
+                    setVirtuosoIndex((vIndex) => vIndex - 1);
+                    setFocusedIndex(upcomingItem.index);
+                    listItemRefs.current[upcomingItem.index].focus();
+                } else if (virtuosoIndex === 0 && searchInputRef.current) {
                     searchInputRef.current.focus();
+                    setVirtuosoIndex(-1);
                     setFocusedIndex(-1);
                 }
                 break;
@@ -190,17 +206,17 @@ export const NestedDropdownList = <T,>({
         onRetry?.();
     };
 
-    const handleListItemClick = (index: number) => {
-        setFocusedIndex(index);
-
-        const activeList = searchActive
-            ? filteredListItems
-            : unfilteredListItems;
-        onSelectItem?.(activeList[index]);
+    const handleListItemClick = (itemIndex: number, vIndex: number) => {
+        setVirtuosoIndex(vIndex);
+        onSelectItem?.(activeList[itemIndex]);
     };
 
-    const handleListItemHover = (index: number) => {
-        setFocusedIndex(index);
+    const handleListItemHover = (
+        virtuosoIndex: number,
+        listItem: NestedDropdownListLocalItem<T>
+    ) => {
+        setFocusedIndex(listItem.index);
+        setVirtuosoIndex(virtuosoIndex);
     };
 
     const handleOnSelectAll = () => {
@@ -298,10 +314,6 @@ export const NestedDropdownList = <T,>({
     });
 
     const toggleCategory = (index: number, nextExpanded: boolean) => {
-        const activeList = searchActive
-            ? filteredListItems
-            : unfilteredListItems;
-
         const list = toggleSubtree(activeList, index, nextExpanded);
         setFocusedIndex(index);
 
@@ -317,6 +329,7 @@ export const NestedDropdownList = <T,>({
     // =========================================================================
     useEventListener("keydown", handleKeyboardPress);
 
+    // FIXME - This is being called on every dropdown open click, will take time to load for big lists
     useEffect(() => {
         let list: NestedDropdownListLocalItem<T>[];
         if (mode === "default") {
@@ -328,6 +341,11 @@ export const NestedDropdownList = <T,>({
         }
         setUnfilteredListItems(list);
     }, [flatten, flattenDefaultMode, listItems, mode]);
+
+    useEffect(() => {
+        // Filter out non-visible items before passing to Virtuoso
+        setVisibleItems(activeList.filter((item) => item.visible));
+    }, [filteredListItems, unfilteredListItems, searchActive, activeList]);
 
     useEffect(() => {
         updateSelectedItemsInList();
@@ -353,6 +371,7 @@ export const NestedDropdownList = <T,>({
         // Focus search input if there is one
         if (searchInputRef.current) {
             setFocusedIndex(-1);
+            setVirtuosoIndex(-1);
             setTimeout(() => searchInputRef.current?.focus(), 200); // wait for animation
         } else if (listItemRefs.current[focusedIndex]) {
             // Else focus on the specified element
@@ -360,9 +379,16 @@ export const NestedDropdownList = <T,>({
         } else {
             // Else focus on the first list item
             setFocusedIndex(0);
+            setVirtuosoIndex(0);
             setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
-    }, [focusedIndex, mounted, setFocusedIndex]);
+    }, [
+        focusedIndex,
+        virtuosoIndex,
+        mounted,
+        setFocusedIndex,
+        setVirtuosoIndex,
+    ]);
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -491,83 +517,101 @@ export const NestedDropdownList = <T,>({
         );
     };
 
-    const renderItems = () => {
-        const activeList = searchActive
-            ? filteredListItems
-            : unfilteredListItems;
-        return activeList.map((listItem, i) => {
-            const {
-                item,
-                level,
-                visible,
-                expanded,
-                keyPath,
-                checked,
-                hasSubItems,
-                indexInParent,
-                parentSetSize,
-            } = listItem;
-            const active = focusedIndex === i;
-            const toggleable = hasSubItems && !selectableCategory;
+    const renderItems = (
+        listItem: NestedDropdownListLocalItem<T>,
+        vIndex: number
+    ) => {
+        const {
+            level,
+            visible,
+            expanded,
+            keyPath,
+            checked,
+            hasSubItems,
+            indexInParent,
+            parentSetSize,
+        } = listItem;
+        const itemIndex = listItem.index;
+        const active = virtuosoIndex === vIndex;
+        const toggleable = hasSubItems && !selectableCategory;
 
-            return (
-                <ListItemContainer
-                    key={`[${keyPath.join("---")}]`}
-                    $visible={visible}
+        return (
+            <ListItemContainer
+                key={`[${keyPath.join("---")}]`}
+                $visible={visible}
+            >
+                {maxLevel > 0 && <Indent $level={level} />}
+                {maxLevel > 0 && !hasSubItems && multiSelect && (
+                    <UnexpandableIndicator />
+                )}
+                <ListItem
+                    aria-checked={checked} // not working with safari voiceover
+                    aria-selected={!!checked} // required for safari voiceover
+                    aria-expanded={hasSubItems ? expanded : undefined}
+                    aria-level={level + 1}
+                    aria-posinset={indexInParent + 1}
+                    aria-setsize={parentSetSize}
+                    data-testid="list-item"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        if (toggleable) {
+                            toggleCategory(itemIndex, !expanded);
+                        } else {
+                            handleListItemClick(itemIndex, vIndex);
+                        }
+                    }}
+                    onMouseEnter={() => handleListItemHover(vIndex, listItem)}
+                    ref={(node) =>
+                        (listItemRefs.current[listItem.index] = node)
+                    }
+                    role="treeitem"
+                    tabIndex={active ? 0 : -1}
+                    $active={active}
+                    $toggleable={toggleable}
                 >
-                    {maxLevel > 0 && <Indent $level={level} />}
-                    {maxLevel > 0 && !hasSubItems && multiSelect && (
-                        <UnexpandableIndicator />
+                    {hasSubItems && (
+                        // not an actual button, only required for visual display
+                        <ExpandButton
+                            data-testid="toggle-category-button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                toggleCategory(itemIndex, !expanded);
+                            }}
+                            $expanded={expanded}
+                        >
+                            <CaretRightIcon />
+                        </ExpandButton>
                     )}
-                    <ListItem
-                        aria-checked={checked} // not working with safari voiceover
-                        aria-selected={!!checked} // required for safari voiceover
-                        aria-expanded={hasSubItems ? expanded : undefined}
-                        aria-level={level + 1}
-                        aria-posinset={indexInParent + 1}
-                        aria-setsize={parentSetSize}
-                        data-testid="list-item"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            if (toggleable) {
-                                toggleCategory(i, !expanded);
-                            } else {
-                                handleListItemClick(i);
-                            }
-                        }}
-                        onMouseEnter={() => handleListItemHover(i)}
-                        ref={(node) => (listItemRefs.current[i] = node)}
-                        role="treeitem"
-                        tabIndex={active ? 0 : -1}
-                        $active={active}
-                        $toggleable={toggleable}
-                    >
-                        {hasSubItems && (
-                            // not an actual button, only required for visual display
-                            <ExpandButton
-                                data-testid="toggle-category-button"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    toggleCategory(i, !expanded);
-                                }}
-                                $expanded={expanded}
-                            >
-                                <CaretRightIcon />
-                            </ExpandButton>
-                        )}
-                        {renderSelectionIcon(listItem)}
-                        <DropdownLabel
-                            bold={hasSubItems}
-                            searchTerm={searchActive ? searchTerm : undefined}
-                            label={item.label}
-                            selected={!!checked}
-                            truncationType={itemTruncationType}
-                            maxLines={itemMaxLines}
-                        />
-                    </ListItem>
-                </ListItemContainer>
-            );
-        });
+                    {renderSelectionIcon(listItem)}
+                    <DropdownLabel
+                        bold={hasSubItems}
+                        searchTerm={searchActive ? searchTerm : undefined}
+                        label={listItem.item.label}
+                        selected={!!checked}
+                        truncationType={itemTruncationType}
+                        maxLines={itemMaxLines}
+                    />
+                </ListItem>
+            </ListItemContainer>
+        );
+    };
+
+    const renderVirtualisedList = () => {
+        return (
+            <div
+                aria-multiselectable={multiSelect}
+                id={listboxId}
+                ref={listRef}
+                role="tree"
+            >
+                <Virtuoso
+                    style={{ height: "100%" }}
+                    customScrollParent={nodeRef.current}
+                    data={visibleItems}
+                    itemContent={(vIndex, item) => renderItems(item, vIndex)}
+                />
+            </div>
+        );
     };
 
     const renderList = () => {
@@ -578,14 +622,7 @@ export const NestedDropdownList = <T,>({
                 {renderNoResults()}
                 {renderLoading()}
                 {renderTryAgain()}
-                <div
-                    aria-multiselectable={multiSelect}
-                    id={listboxId}
-                    ref={listRef}
-                    role="tree"
-                >
-                    {renderItems()}
-                </div>
+                {renderVirtualisedList()}
             </List>
         );
     };

@@ -31,7 +31,6 @@ interface ListItemStyleProps {
 // -----------------------------------------------------------------------------
 // MAIN STYLES
 // -----------------------------------------------------------------------------
-
 export const Container = styled.div<ContainerStyleProps>`
     overflow: hidden;
     border: 1px solid ${Color.Neutral[5]};
