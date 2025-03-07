@@ -25,7 +25,7 @@ import {
     findItemFromStart,
     flattenList,
     toggleSubtree,
-    updateSelectedState
+    updateSelectedState,
 } from "./nested-dropdown-list-helpers";
 import {
     CheckboxMixedIndicator,
@@ -104,7 +104,7 @@ export const NestedDropdownList = <T,>({
     /**
      * NOTE: Keeping track of the visible items to pass to Virtuoso for virtualisation to work.
      * This is required due to the nature of show/hide sub-items, to omit them from the DOM entirely.
-    */
+     */
     const [visibleItems, setVisibleItems] = useState<
         NestedDropdownListLocalItem<T>[]
     >([]);
@@ -118,7 +118,7 @@ export const NestedDropdownList = <T,>({
     const handleKeyboardPress = (event: KeyboardEvent) => {
         /**
          *  NOTE: When navigating up/down the list using keyboard, need to use virtuoso index, when expanding/collapsing, need actual index as we need to toggle the visible state of the sub-items
-        */
+         */
         switch (event.code) {
             case "ArrowDown": {
                 event.preventDefault();
@@ -128,7 +128,7 @@ export const NestedDropdownList = <T,>({
                     focusedIndex + 1
                 );
                 if (upcomingItem) {
-                    setVirtuosoIndex((vIndex => vIndex + 1));
+                    setVirtuosoIndex((vIndex) => vIndex + 1);
                     setFocusedIndex(upcomingItem.index);
                     listItemRefs.current[upcomingItem.index].focus();
                 }
@@ -211,7 +211,9 @@ export const NestedDropdownList = <T,>({
         onSelectItem?.(activeList[itemIndex]);
     };
 
-    const handleListItemHover = (virtuosoIndex: number, listItem: NestedDropdownListLocalItem<T>
+    const handleListItemHover = (
+        virtuosoIndex: number,
+        listItem: NestedDropdownListLocalItem<T>
     ) => {
         setFocusedIndex(listItem.index);
         setVirtuosoIndex(virtuosoIndex);
@@ -338,12 +340,11 @@ export const NestedDropdownList = <T,>({
             list = flatten(listItems, false);
         }
         setUnfilteredListItems(list);
-
     }, [flatten, flattenDefaultMode, listItems, mode]);
 
     useEffect(() => {
         // Filter out non-visible items before passing to Virtuoso
-        setVisibleItems(activeList.filter(item => item.visible));
+        setVisibleItems(activeList.filter((item) => item.visible));
     }, [filteredListItems, unfilteredListItems, searchActive, activeList]);
 
     useEffect(() => {
@@ -381,7 +382,13 @@ export const NestedDropdownList = <T,>({
             setVirtuosoIndex(0);
             setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
-    }, [focusedIndex, virtuosoIndex, mounted, setFocusedIndex, setVirtuosoIndex]);
+    }, [
+        focusedIndex,
+        virtuosoIndex,
+        mounted,
+        setFocusedIndex,
+        setVirtuosoIndex,
+    ]);
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -510,8 +517,10 @@ export const NestedDropdownList = <T,>({
         );
     };
 
-
-    const renderItems = (listItem: NestedDropdownListLocalItem<T>, vIndex: number) => {
+    const renderItems = (
+        listItem: NestedDropdownListLocalItem<T>,
+        vIndex: number
+    ) => {
         const {
             level,
             visible,
@@ -552,7 +561,9 @@ export const NestedDropdownList = <T,>({
                         }
                     }}
                     onMouseEnter={() => handleListItemHover(vIndex, listItem)}
-                    ref={(node) => (listItemRefs.current[listItem.index] = node)}
+                    ref={(node) =>
+                        (listItemRefs.current[listItem.index] = node)
+                    }
                     role="treeitem"
                     tabIndex={active ? 0 : -1}
                     $active={active}
@@ -594,7 +605,7 @@ export const NestedDropdownList = <T,>({
                 role="tree"
             >
                 <Virtuoso
-                    style={{ height: '100%' }}
+                    style={{ height: "100%" }}
                     customScrollParent={nodeRef.current}
                     data={visibleItems}
                     itemContent={(vIndex, item) => renderItems(item, vIndex)}
