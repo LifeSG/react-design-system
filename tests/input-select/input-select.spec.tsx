@@ -3,10 +3,11 @@ import {
     render,
     screen,
     waitFor,
-    waitForElementToBeRemoved,
+    waitForElementToBeRemoved
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { InputSelect } from "../../src";
+import { MockVirtuosoContextWrapper } from "../test-mocks/virtuoso/virtuoso-test-mocks";
 
 const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";
@@ -14,6 +15,10 @@ const DROPDOWN_TESTID = "dropdown-list";
 const OPTIONS = ["Option 1", "Option 2", "Option 3"];
 
 describe("InputSelect", () => {
+    const renderDropdown = (dropdown: JSX.Element) => {
+        return render(dropdown, { wrapper: MockVirtuosoContextWrapper });
+    };
+
     beforeEach(() => {
         jest.clearAllMocks();
 
@@ -25,7 +30,9 @@ describe("InputSelect", () => {
     });
 
     it("should render the component", async () => {
-        render(<InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />);
+        renderDropdown(
+            <InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />,
+        );
 
         expect(screen.getByText("Select")).toBeVisible();
         expect(screen.queryByTestId(DROPDOWN_TESTID)).not.toBeInTheDocument();
@@ -34,7 +41,9 @@ describe("InputSelect", () => {
     it("should open dropdown list when selector is clicked", async () => {
         const user = userEvent.setup();
 
-        render(<InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />);
+        renderDropdown(
+            <InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />,
+        );
 
         await user.click(screen.queryByTestId(FIELD_TESTID));
 
@@ -50,7 +59,7 @@ describe("InputSelect", () => {
     it("should toggle dropdown list when selector is clicked", async () => {
         const user = userEvent.setup();
 
-        render(<InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />);
+        renderDropdown(<InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />);
 
         await user.click(screen.queryByTestId(FIELD_TESTID));
 
@@ -71,12 +80,12 @@ describe("InputSelect", () => {
         const user = userEvent.setup();
         const mockOnSelectOption = jest.fn();
 
-        render(
+        renderDropdown(
             <InputSelect
                 data-testid={FIELD_TESTID}
                 options={OPTIONS}
                 onSelectOption={mockOnSelectOption}
-            />
+            />,
         );
 
         await user.click(screen.queryByTestId(FIELD_TESTID));
@@ -101,12 +110,12 @@ describe("InputSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderDropdown(
                 <InputSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
                     onBlur={mockOnBlur}
-                />
+                />,
             );
 
             await user.click(screen.queryByTestId(FIELD_TESTID));
@@ -137,12 +146,12 @@ describe("InputSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderDropdown(
                 <InputSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
                     onBlur={mockOnBlur}
-                />
+                />,
             );
 
             await user.click(screen.queryByTestId(FIELD_TESTID));
@@ -169,12 +178,12 @@ describe("InputSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderDropdown(
                 <InputSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
                     onBlur={mockOnBlur}
-                />
+                />,
             );
 
             await act(async () => {
@@ -212,7 +221,7 @@ describe("InputSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderDropdown(
                 <>
                     <button data-testid="before" />
                     <InputSelect
@@ -222,7 +231,7 @@ describe("InputSelect", () => {
                         enableSearch
                     />
                     <button data-testid="after" />
-                </>
+                </>,
             );
 
             await user.keyboard("{Tab}");
@@ -268,12 +277,12 @@ describe("InputSelect", () => {
         it("should support default search for string options", async () => {
             const user = userEvent.setup();
 
-            render(
+            renderDropdown(
                 <InputSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
                     enableSearch
-                />
+                />,
             );
 
             await user.click(screen.queryByTestId(FIELD_TESTID));
@@ -298,7 +307,7 @@ describe("InputSelect", () => {
         it("should support default search for title", async () => {
             const user = userEvent.setup();
 
-            render(
+            renderDropdown(
                 <InputSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -334,7 +343,7 @@ describe("InputSelect", () => {
         it("should support default search for label", async () => {
             const user = userEvent.setup();
 
-            render(
+            renderDropdown(
                 <InputSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -370,14 +379,13 @@ describe("InputSelect", () => {
         it("should support custom search", async () => {
             const user = userEvent.setup();
 
-            render(
+            renderDropdown(
                 <InputSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
                     enableSearch
                     searchFunction={() => ["custom 1"]}
-                />
-            );
+                />);
 
             await user.click(screen.queryByTestId(FIELD_TESTID));
 
