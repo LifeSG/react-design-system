@@ -1,5 +1,6 @@
 import { CaretRightIcon } from "@lifesg/react-icons/caret-right";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Virtuoso } from "react-virtuoso";
 import { Spinner } from "../../button/button.style";
 import { useEvent, useEventListener, useIsMounted } from "../../util";
 import { DropdownLabel } from "./dropdown-label";
@@ -20,13 +21,11 @@ import {
     expandFirstSubtree,
     expandMatchedSubtrees,
     expandSelectedSubtrees,
-    findIndexFromEnd,
-    findIndexFromStart,
     findItemFromEnd,
     findItemFromStart,
     flattenList,
     toggleSubtree,
-    updateSelectedState,
+    updateSelectedState
 } from "./nested-dropdown-list-helpers";
 import {
     CheckboxMixedIndicator,
@@ -43,11 +42,9 @@ import {
     NestedDropdownListLocalItem,
     NestedDropdownListProps,
 } from "./types";
-import { Virtuoso } from "react-virtuoso";
 
 export const NestedDropdownList = <T,>({
     listItems,
-    // listOptions,
     multiSelect,
     selectedKeyPaths,
     itemsLoadState = "success",
@@ -88,9 +85,6 @@ export const NestedDropdownList = <T,>({
     const [filteredListItems, setFilteredListItems] = useState<
         NestedDropdownListLocalItem<T>[]
     >([]);
-    const [visibleItems, setVisibleItems] = useState<
-        NestedDropdownListLocalItem<T>[]
-    >([]);
 
     const activeList = searchActive ? filteredListItems : unfilteredListItems;
 
@@ -106,14 +100,25 @@ export const NestedDropdownList = <T,>({
 
     // TODO: persist in context?
     const [focusedIndex, setFocusedIndex] = useState(0);
+
+    /**
+     * NOTE: Keeping track of the visible items to pass to Virtuoso for virtualisation to work.
+     * This is required due to the nature of show/hide sub-items, to omit them from the DOM entirely.
+    */
+    const [visibleItems, setVisibleItems] = useState<
+        NestedDropdownListLocalItem<T>[]
+    >([]);
+
+    // NOTE: Maintaining a separate index for UI to keep track on which item (in terms of Virtuoso's indexing) is currently focused on keyboard press events.
     const [virtuosoIndex, setVirtuosoIndex] = useState(0);
 
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const handleKeyboardPress = (event: KeyboardEvent) => {
-        // When navigating using keyboard, need to use virtuoso index, when expanding/collapsing, need actual index
-        // Actual index comes from activeList, virtuoso index is for UI only...
+        /**
+         *  NOTE: When navigating up/down the list using keyboard, need to use virtuoso index, when expanding/collapsing, need actual index as we need to toggle the visible state of the sub-items
+        */
         switch (event.code) {
             case "ArrowDown": {
                 event.preventDefault();
@@ -122,9 +127,8 @@ export const NestedDropdownList = <T,>({
                     (item) => item.visible,
                     focusedIndex + 1
                 );
-                console.log("upcoming", upcomingItem?.index);
                 if (upcomingItem) {
-                    setVirtuosoIndex((vi => vi + 1));
+                    setVirtuosoIndex((vIndex => vIndex + 1));
                     setFocusedIndex(upcomingItem.index);
                     listItemRefs.current[upcomingItem.index].focus();
                 }
@@ -138,7 +142,7 @@ export const NestedDropdownList = <T,>({
                     focusedIndex - 1
                 );
                 if (upcomingItem) {
-                    setVirtuosoIndex((vi) => vi - 1);
+                    setVirtuosoIndex((vIndex) => vIndex - 1);
                     setFocusedIndex(upcomingItem.index);
                     listItemRefs.current[upcomingItem.index].focus();
                 } else if (virtuosoIndex === 0 && searchInputRef.current) {
@@ -202,9 +206,9 @@ export const NestedDropdownList = <T,>({
         onRetry?.();
     };
 
-    const handleListItemClick = (index: number, virtuosoIndex: number) => {
-        setVirtuosoIndex(virtuosoIndex);
-        onSelectItem?.(activeList[index]);
+    const handleListItemClick = (itemIndex: number, vIndex: number) => {
+        setVirtuosoIndex(vIndex);
+        onSelectItem?.(activeList[itemIndex]);
     };
 
     const handleListItemHover = (virtuosoIndex: number, listItem: NestedDropdownListLocalItem<T>
@@ -288,7 +292,6 @@ export const NestedDropdownList = <T,>({
     });
 
     const updateSelectedItemsInList = useEvent(() => {
-        const start = Date.now();
         setUnfilteredListItems((unfilteredListItems) =>
             updateSelectedState(
                 unfilteredListItems,
@@ -306,7 +309,6 @@ export const NestedDropdownList = <T,>({
                 )
             );
         }
-        console.log("ended", Date.now() - start);
     });
 
     const toggleCategory = (index: number, nextExpanded: boolean) => {
@@ -509,7 +511,7 @@ export const NestedDropdownList = <T,>({
     };
 
 
-    const renderItems = (listItem: NestedDropdownListLocalItem<T>, vi: number) => {
+    const renderItems = (listItem: NestedDropdownListLocalItem<T>, vIndex: number) => {
         const {
             level,
             visible,
@@ -520,8 +522,8 @@ export const NestedDropdownList = <T,>({
             indexInParent,
             parentSetSize,
         } = listItem;
-        const i = listItem.index;
-        const active = virtuosoIndex === vi;
+        const itemIndex = listItem.index;
+        const active = virtuosoIndex === vIndex;
         const toggleable = hasSubItems && !selectableCategory;
 
         return (
@@ -544,12 +546,12 @@ export const NestedDropdownList = <T,>({
                     onClick={(e) => {
                         e.stopPropagation();
                         if (toggleable) {
-                            toggleCategory(i, !expanded);
+                            toggleCategory(itemIndex, !expanded);
                         } else {
-                            handleListItemClick(i, vi);
+                            handleListItemClick(itemIndex, vIndex);
                         }
                     }}
-                    onMouseEnter={() => handleListItemHover(vi, listItem)}
+                    onMouseEnter={() => handleListItemHover(vIndex, listItem)}
                     ref={(node) => (listItemRefs.current[listItem.index] = node)}
                     role="treeitem"
                     tabIndex={active ? 0 : -1}
@@ -562,7 +564,7 @@ export const NestedDropdownList = <T,>({
                             data-testid="toggle-category-button"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                toggleCategory(i, !expanded);
+                                toggleCategory(itemIndex, !expanded);
                             }}
                             $expanded={expanded}
                         >
@@ -581,11 +583,26 @@ export const NestedDropdownList = <T,>({
                 </ListItem>
             </ListItemContainer>
         );
-        // });
     };
 
-    // Consider refactoring itemContent to a separate function for more readability
-    // move the div out of virtuoso
+    const renderVirtualisedList = () => {
+        return (
+            <div
+                aria-multiselectable={multiSelect}
+                id={listboxId}
+                ref={listRef}
+                role="tree"
+            >
+                <Virtuoso
+                    style={{ height: '100%' }}
+                    customScrollParent={nodeRef.current}
+                    data={visibleItems}
+                    itemContent={(vIndex, item) => renderItems(item, vIndex)}
+                />
+            </div>
+        );
+    };
+
     const renderList = () => {
         return (
             <List data-testid="nested-dropdown-list">
@@ -594,20 +611,7 @@ export const NestedDropdownList = <T,>({
                 {renderNoResults()}
                 {renderLoading()}
                 {renderTryAgain()}
-                <div
-                    aria-multiselectable={multiSelect}
-                    id={listboxId}
-                    ref={listRef}
-                    role="tree"
-                >
-                    <Virtuoso
-                        style={{ height: '100%' }}
-                        customScrollParent={nodeRef.current}
-                        data={visibleItems}
-                        itemContent={(index, item) => renderItems(item, index)}
-                    />
-                </div>
-
+                {renderVirtualisedList()}
             </List>
         );
     };
