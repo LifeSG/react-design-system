@@ -145,7 +145,6 @@ export const DropdownList = <T, V>({
                 if (focusedIndex < displayListItems.length - 1) {
                     const upcomingIndex = focusedIndex + 1;
                     listItemRefs.current[upcomingIndex]?.focus();
-
                     setFocusedIndex(upcomingIndex);
                 }
                 break;
@@ -155,7 +154,6 @@ export const DropdownList = <T, V>({
                 if (focusedIndex > 0) {
                     const upcomingIndex = focusedIndex - 1;
                     listItemRefs.current[upcomingIndex]?.focus();
-
                     setFocusedIndex(upcomingIndex);
                 } else if (focusedIndex === 0 && searchInputRef.current) {
                     searchInputRef.current.focus();
@@ -217,13 +215,19 @@ export const DropdownList = <T, V>({
     useEventListener("keydown", handleKeyboardPress);
 
     useEffect(() => {
-        if (topScrollItem === undefined) return;
-
-        const index = listItems.indexOf(topScrollItem);
-        if (virtuosoRef.current && index !== -1) {
-            virtuosoRef.current.scrollToIndex({ index });
+        if (!topScrollItem && virtuosoRef.current) {
+            virtuosoRef.current.scrollTo({ top: 0 });
         }
-        setFocusedIndex(index);
+        // Delay to ensure render is complete
+        const timer = setTimeout(() => {
+            const index = listItems.indexOf(topScrollItem);
+            if (virtuosoRef.current && index !== -1) {
+                virtuosoRef.current.scrollToIndex({ index });
+                setFocusedIndex(index);
+            }
+        }, 0);
+
+        return () => clearTimeout(timer);
     }, [listItemRefs, listItems, setFocusedIndex, topScrollItem]);
 
     useEffect(() => {
@@ -237,10 +241,21 @@ export const DropdownList = <T, V>({
         const index = listItems.findIndex((item) =>
             checkListItemSelected(item)
         );
-
-        if (index === -1) return;
-
-        virtuosoRef.current.scrollToIndex({ index });
+        if (searchInputRef.current) {
+            setFocusedIndex(-1);
+            setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
+        } else if (focusedIndex > 0) {
+            setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
+            virtuosoRef.current.scrollToIndex({ index: focusedIndex, align: "center" });
+        } else if (index !== -1) {
+            setFocusedIndex(index);
+            setTimeout(() => listItemRefs.current[index]?.focus(), 200);
+            virtuosoRef.current.scrollToIndex({ index, align: "center" });
+        } else {
+            setFocusedIndex(0);
+            setTimeout(() => listItemRefs.current[0]?.focus(), 200);
+            virtuosoRef.current.scrollToIndex({ index: 0 });
+        }
     }, [
         checkListItemSelected,
         disableItemFocus,
@@ -331,7 +346,6 @@ export const DropdownList = <T, V>({
         );
     };
 
-    // Clean up for item
     const renderItems = (item: T, index: number) => {
         if (!onRetry || (onRetry && itemsLoadState === "success")) {
             const selected = checkListItemSelected(item);
@@ -344,7 +358,10 @@ export const DropdownList = <T, V>({
                     key={getItemKey(item, index)}
                     onClick={() => handleListItemClick(item, index)}
                     onMouseEnter={() => handleListItemHover(index)}
-                    ref={(element) => (listItemRefs.current[index] = element)}
+                    ref={(element) => {
+                        if (!element) return;
+                        listItemRefs.current[index] = element;
+                    }}
                     role="option"
                     tabIndex={active ? 0 : -1}
                     $active={active}
