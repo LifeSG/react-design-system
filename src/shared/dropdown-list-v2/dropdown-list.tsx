@@ -332,9 +332,8 @@ export const DropdownList = <T, V>({
     };
 
     // Clean up for item
-    const renderItems = (item: T, index: number,) => {
+    const renderItems = (item: T, index: number) => {
         if (!onRetry || (onRetry && itemsLoadState === "success")) {
-
             const selected = checkListItemSelected(item);
             const active = index === focusedIndex;
             return (
@@ -350,18 +349,16 @@ export const DropdownList = <T, V>({
                     tabIndex={active ? 0 : -1}
                     $active={active}
                 >
-                    {
-                        renderListItem ? (
-                            renderListItem(item, { selected })
-                        ) : (
-                            <>
-                                {renderListItemIcon(selected)}
-                                {renderDropdownLabel(item, selected)}
-                            </>
-                        )}
-                </ListItem >
+                    {renderListItem ? (
+                        renderListItem(item, { selected })
+                    ) : (
+                        <>
+                            {renderListItemIcon(selected)}
+                            {renderDropdownLabel(item, selected)}
+                        </>
+                    )}
+                </ListItem>
             );
-
         }
     };
 
@@ -469,7 +466,7 @@ export const DropdownList = <T, V>({
         return (
             <Virtuoso
                 ref={virtuosoRef}
-                style={{ height: '100%' }}
+                style={{ height: "100%" }}
                 data={displayListItems}
                 customScrollParent={nodeRef.current}
                 itemContent={(index, item) => {

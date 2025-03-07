@@ -49,12 +49,12 @@ export const Alert = ({
     // =============================================================================
 
     const setCollapsedState = () => {
-        setShowHiddenContent(!maxCollapsedHeight); 
+        setShowHiddenContent(!maxCollapsedHeight);
         setRenderShowMore(isContentOutsideCollapsibleZone());
     };
 
     const isContentOutsideCollapsibleZone = () => {
-        if(maxCollapsedHeight) {
+        if (maxCollapsedHeight) {
             return contentHeight > maxCollapsedHeight;
         }
         return false;
