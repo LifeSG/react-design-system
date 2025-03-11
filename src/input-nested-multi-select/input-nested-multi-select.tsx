@@ -53,8 +53,8 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     // CONST, STATE
     // =========================================================================
     const options = _options as NestedDropdownListItemProps<V1 | V2 | V3>[];
-    const [selectedKeyPaths, setSelectedKeyPaths] = useState<string[][]>(
-        _selectedKeyPaths || []
+    const [selectedKeyPaths, setSelectedKeyPaths] = useState<Set<string>>(
+        new Set<string>(_selectedKeyPaths?.map(path => path.join(","))) || new Set<string>()
     );
     const [selectedItems, setSelectedItems] = useState<
         SelectedItem<V1 | V2 | V3>[]
@@ -75,7 +75,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         const newKeyPath = _selectedKeyPaths || [];
         const selectedItems = getSelectedItems(options, newKeyPath);
 
-        setSelectedKeyPaths(newKeyPath);
+        setSelectedKeyPaths(new Set<string>(newKeyPath.map(path => path.join(","))));
         setSelectedItems(selectedItems);
     }, [_selectedKeyPaths, options]);
 
@@ -91,7 +91,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             label: item.item.label,
             value: item.item.value,
         }));
-        setSelectedKeyPaths(keyPaths);
+        setSelectedKeyPaths(new Set<string>(keyPaths.map((keyPath) => keyPath.join(","))));
         setSelectedItems(selectedItems);
         performOnSelectOptions(keyPaths, selectedItems);
     };
@@ -103,7 +103,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             getNewSelection(listItem);
         const newKeyPaths = newSelectedItems.map((item) => item.keyPath);
         setSelectedItems(newSelectedItems);
-        setSelectedKeyPaths(newKeyPaths);
+        setSelectedKeyPaths(new Set<string>(newKeyPaths.map(keyPath => keyPath.join(","))));
         performOnSelectOptions(newKeyPaths, newSelectedItems);
     };
 
@@ -213,12 +213,12 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             const newItemsToAdd = item.hasSubItems
                 ? getSelectedSubItems(options, item.keyPath)
                 : [
-                      {
-                          value: item.item.value,
-                          label: item.item.label,
-                          keyPath: item.keyPath,
-                      },
-                  ];
+                    {
+                        value: item.item.value,
+                        label: item.item.label,
+                        keyPath: item.keyPath,
+                    },
+                ];
             newItemsToAdd.forEach((addedItem) => {
                 if (
                     !selectedItems.find((selectedItem) =>

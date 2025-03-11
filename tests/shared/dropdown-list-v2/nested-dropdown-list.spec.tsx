@@ -24,7 +24,7 @@ describe("NestedDropdownList", () => {
         it("should expand the first subtree (1 tier)", () => {
             const options = buildOptions([["1"], ["2"]]);
             renderDropdown(
-                <NestedDropdownList listItems={options} selectedKeyPaths={[]} />
+                <NestedDropdownList listItems={options} selectedKeyPaths={new Set<string>()} />
             );
 
             expect(screen.queryByText("Child 1 item")).toBeVisible();
@@ -37,7 +37,7 @@ describe("NestedDropdownList", () => {
                 ["2", [["2.1"], ["2.2"]]],
             ]);
             renderDropdown(
-                <NestedDropdownList listItems={options} selectedKeyPaths={[]} />
+                <NestedDropdownList listItems={options} selectedKeyPaths={new Set<string>()} />
             );
 
             expect(screen.queryByText("Parent 1 item")).toBeVisible();
@@ -68,7 +68,7 @@ describe("NestedDropdownList", () => {
                 ["2", [["2.1"], ["2.2", [["2.2.1"]]]]],
             ]);
             renderDropdown(
-                <NestedDropdownList listItems={options} selectedKeyPaths={[]} />
+                <NestedDropdownList listItems={options} selectedKeyPaths={new Set<string>()} />
             );
 
             expect(screen.queryByText("Parent 1 item")).toBeVisible();
@@ -103,7 +103,7 @@ describe("NestedDropdownList", () => {
             renderDropdown(
                 <NestedDropdownList
                     listItems={options}
-                    selectedKeyPaths={[]}
+                    selectedKeyPaths={new Set<string>()}
                     mode="expand"
                 />
             );
@@ -120,7 +120,7 @@ describe("NestedDropdownList", () => {
             renderDropdown(
                 <NestedDropdownList
                     listItems={options}
-                    selectedKeyPaths={[]}
+                    selectedKeyPaths={new Set<string>()}
                     mode="expand"
                 />
             );
@@ -155,7 +155,7 @@ describe("NestedDropdownList", () => {
             renderDropdown(
                 <NestedDropdownList
                     listItems={options}
-                    selectedKeyPaths={[]}
+                    selectedKeyPaths={new Set<string>()}
                     mode="expand"
                 />
             );
@@ -192,7 +192,7 @@ describe("NestedDropdownList", () => {
             renderDropdown(
                 <NestedDropdownList
                     listItems={options}
-                    selectedKeyPaths={[]}
+                    selectedKeyPaths={new Set<string>()}
                     mode="collapse"
                 />
             );
@@ -209,7 +209,7 @@ describe("NestedDropdownList", () => {
             renderDropdown(
                 <NestedDropdownList
                     listItems={options}
-                    selectedKeyPaths={[]}
+                    selectedKeyPaths={new Set<string>()}
                     mode="collapse"
                 />
             );
@@ -244,7 +244,7 @@ describe("NestedDropdownList", () => {
             renderDropdown(
                 <NestedDropdownList
                     listItems={options}
-                    selectedKeyPaths={[]}
+                    selectedKeyPaths={new Set<string>()}
                     mode="collapse"
                 />
             );
@@ -285,7 +285,7 @@ describe("NestedDropdownList", () => {
         renderDropdown(
             <NestedDropdownList
                 listItems={options}
-                selectedKeyPaths={[]}
+                selectedKeyPaths={new Set<string>()}
                 mode="collapse"
                 onSelectItem={mockOnSelectItem}
             />
@@ -330,7 +330,7 @@ describe("NestedDropdownList", () => {
         renderDropdown(
             <NestedDropdownList
                 listItems={options}
-                selectedKeyPaths={[]}
+                selectedKeyPaths={new Set<string>()}
                 mode="collapse"
                 onSelectItem={mockOnSelectItem}
             />
@@ -385,7 +385,7 @@ describe("NestedDropdownList", () => {
         renderDropdown(
             <NestedDropdownList
                 listItems={options}
-                selectedKeyPaths={[]}
+                selectedKeyPaths={new Set<string>()}
                 mode="expand"
                 onSelectItem={mockOnSelectItem}
             />
@@ -430,7 +430,7 @@ describe("NestedDropdownList", () => {
         renderDropdown(
             <NestedDropdownList
                 listItems={options}
-                selectedKeyPaths={[]}
+                selectedKeyPaths={new Set<string>()}
                 mode="expand"
                 onSelectItem={mockOnSelectItem}
             />
@@ -486,7 +486,7 @@ describe("NestedDropdownList", () => {
             renderDropdown(
                 <NestedDropdownList
                     listItems={options}
-                    selectedKeyPaths={[]}
+                    selectedKeyPaths={new Set<string>()}
                     selectableCategory
                     onSelectItem={mockOnSelectItem}
                 />
@@ -519,7 +519,7 @@ describe("NestedDropdownList", () => {
             renderDropdown(
                 <NestedDropdownList
                     listItems={options}
-                    selectedKeyPaths={[]}
+                    selectedKeyPaths={new Set<string>()}
                     selectableCategory
                     onSelectItem={mockOnSelectItem}
                 />
@@ -546,16 +546,18 @@ describe("NestedDropdownList", () => {
                 ["2", [["2.1"], ["2.2", [["2.2.1"], ["2.2.2"]]]]],
                 ["3", [["3.1"], ["3.2", [["3.2.1"], ["3.2.2"]]]]],
             ]);
+            const selectedKeyPaths = [
+                ["1", "1.1"],
+                ["1", "1.2", "1.2.1"],
+                ["1", "1.2", "1.2.2"],
+                ["2", "2.2", "2.2.1"],
+            ];
+
             renderDropdown(
                 <NestedDropdownList
                     listItems={options}
                     multiSelect
-                    selectedKeyPaths={[
-                        ["1", "1.1"],
-                        ["1", "1.2", "1.2.1"],
-                        ["1", "1.2", "1.2.2"],
-                        ["2", "2.2", "2.2.1"],
-                    ]}
+                    selectedKeyPaths={new Set<string>(selectedKeyPaths.map(path => path.join(',')))}
                 />
             );
 
@@ -598,11 +600,13 @@ describe("NestedDropdownList", () => {
                 ["B", [["BB", [["Banana milk"], ["Skimmed milk"]]]]],
                 ["C", [["CCC", [["Cheese"]]]]],
             ]);
+            const selectedKeyPaths = [["A", "AA", "Apple"]];
+
             const { rerender } = renderDropdown(
                 <NestedDropdownList
                     listItems={options}
                     multiSelect
-                    selectedKeyPaths={[["A", "AA", "Apple"]]}
+                    selectedKeyPaths={new Set<string>(selectedKeyPaths.map(path => path.join(",")))}
                     enableSearch
                 />
             );
@@ -617,14 +621,16 @@ describe("NestedDropdownList", () => {
                 await user.keyboard("Banana");
             });
 
+            const newSelectedKeyPaths = [
+                ["A", "AA", "Apple"],
+                ["A", "AA", "Banana"],
+            ];
+
             rerender(
                 <NestedDropdownList
                     listItems={options}
                     multiSelect
-                    selectedKeyPaths={[
-                        ["A", "AA", "Apple"],
-                        ["A", "AA", "Banana"],
-                    ]}
+                    selectedKeyPaths={new Set<string>(newSelectedKeyPaths.map(path => path.join(",")))}
                     enableSearch
                 />,
 

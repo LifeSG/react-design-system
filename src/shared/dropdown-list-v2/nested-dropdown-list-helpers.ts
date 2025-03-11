@@ -12,7 +12,7 @@ import {
  */
 export const flattenList = <T>(
     nestedList: NestedDropdownListItemProps<T>[],
-    selectedKeyPaths: string[][],
+    selectedKeyPaths: Set<string>,
     multiSelect: boolean,
     searchTerm: string,
     initialExpanded: boolean
@@ -24,27 +24,25 @@ export const flattenList = <T>(
         parentItem: NestedDropdownListLocalItem<T>
     ) => {
         const current: NestedDropdownListLocalItem<T>[] = [];
-        const hasNestedSiblings = !!list.find(
-            (option) => option.subItems?.length
-        );
+        const hasNestedSiblings = list.some(option => option.subItems?.length);
 
-        for (let i = 0; i < list.length; i++) {
-            const option = list[i];
+        list.forEach((option, i) => {
             const level = parentItem ? parentItem.level + 1 : 0;
+            const keyPath = parentItem ? [...parentItem.keyPath, option.key] : [option.key];
+            const keyPathString = keyPath.join(',');
+
             const item: (typeof items)[number] = {
                 item: option,
                 index: items.length,
                 indexInParent: i,
                 parentSetSize: list.length,
-                keyPath: parentItem
-                    ? [...parentItem.keyPath, option.key]
-                    : [option.key],
+                keyPath,
                 parentIndex: parentItem ? parentItem.index : -1,
                 parentKeyPath: parentItem ? parentItem.keyPath : [],
                 level,
-                visible: level === 0 || initialExpanded || parentItem.expanded,
+                visible: level === 0 || initialExpanded || parentItem?.expanded,
                 expanded: initialExpanded,
-                checked: false,
+                checked: selectedKeyPaths.has(keyPathString),
                 hasSubItems: !!option.subItems?.length,
                 subItemIndexes: [],
                 hasNestedSiblings,
@@ -53,9 +51,6 @@ export const flattenList = <T>(
                     : false,
                 hasMatchedSubItems: false,
             };
-            item.checked = !!selectedKeyPaths.find((keyPath) =>
-                isEqual(keyPath, item.keyPath)
-            );
             current.push(item);
             items.push(item);
 
@@ -82,7 +77,7 @@ export const flattenList = <T>(
                 );
                 item.subItemIndexes = children.map((child) => child.index);
             }
-        }
+        });
         return current;
     };
 
@@ -197,15 +192,14 @@ export const toggleSubtree = <T>(
 
 export const updateSelectedState = <T>(
     list: NestedDropdownListLocalItem<T>[],
-    selectedKeyPaths: string[][],
+    selectedKeyPaths: Set<string>,
     multiSelect: boolean
 ) => {
     const res = produce(list, (draft) => {
         for (let i = draft.length - 1; i >= 0; i--) {
             const item = draft[i];
-            item.checked = !!selectedKeyPaths.find((keyPath) =>
-                isEqual(keyPath, item.keyPath)
-            );
+            const itemKeyPathString = item.keyPath.join(',');
+            item.checked = selectedKeyPaths.has(itemKeyPathString);
             if (item.hasSubItems) {
                 if (multiSelect && item.checked !== true) {
                     const children = item.subItemIndexes.map(

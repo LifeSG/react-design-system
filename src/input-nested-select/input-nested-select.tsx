@@ -6,7 +6,7 @@ import {
     NestedDropdownList,
     NestedDropdownListItemProps,
     NestedDropdownListLocalItem,
-    findItemByKeyPath,
+    findItemByKeyPath
 } from "../shared/dropdown-list-v2";
 import {
     DropdownRenderProps,
@@ -68,8 +68,8 @@ export const InputNestedSelect = <V1, V2, V3>({
     // CONST, STATE
     // =========================================================================
     const options = _options as NestedDropdownListItemProps<V1 | V2 | V3>[];
-    const [selectedKeyPaths, setSelectedKeyPaths] = useState<string[][]>(
-        _selectedKeyPath ? [_selectedKeyPath] : []
+    const [selectedKeyPaths, setSelectedKeyPaths] = useState<Set<string>>(
+        _selectedKeyPath ? new Set<string>([_selectedKeyPath.join(",")]) : new Set<string>()
     );
     const [selectedItem, setSelectedItem] =
         useState<SelectedItemType<V1, V2, V3>>();
@@ -86,7 +86,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     // EFFECTS
     // =========================================================================
     useEffect(() => {
-        setSelectedKeyPaths(_selectedKeyPath ? [_selectedKeyPath] : []);
+        setSelectedKeyPaths(_selectedKeyPath ? new Set<string>([_selectedKeyPath.join(",")]) : new Set<string>());
         const selectedItem = findItemByKeyPath(options, _selectedKeyPath || []);
         setSelectedItem(selectedItem ?? undefined);
     }, [_selectedKeyPath, options]);
@@ -101,8 +101,7 @@ export const InputNestedSelect = <V1, V2, V3>({
             keyPath,
             item: { label, value },
         } = listItem;
-
-        setSelectedKeyPaths([keyPath]);
+        setSelectedKeyPaths(new Set<string>([keyPath.join(",")]));
         setSelectedItem({ label, value });
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
@@ -129,6 +128,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     };
 
     const handleOpen = () => {
+        // console.log(">>>hmm", listOptions);
         setShowOptions(true);
         triggerOptionDisplayCallback(true);
         setFocused(true);

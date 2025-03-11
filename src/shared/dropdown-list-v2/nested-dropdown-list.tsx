@@ -220,7 +220,7 @@ export const NestedDropdownList = <T,>({
     };
 
     const handleOnSelectAll = () => {
-        if (selectedKeyPaths.length === 0) {
+        if (selectedKeyPaths.size === 0) {
             const keyPaths: string[][] = [];
             const items: NestedDropdownListLocalItem<T>[] = [];
             unfilteredListItems.forEach((item) => {
@@ -257,7 +257,7 @@ export const NestedDropdownList = <T,>({
 
     const flattenDefaultMode = useEvent(
         (nestedList: NestedDropdownListItemProps<T>[]) => {
-            if (selectedKeyPaths.length) {
+            if (selectedKeyPaths.size) {
                 return expandSelectedSubtrees(flatten(nestedList, false));
             } else {
                 return expandFirstSubtree(flatten(nestedList, false));
@@ -329,7 +329,6 @@ export const NestedDropdownList = <T,>({
     // =========================================================================
     useEventListener("keydown", handleKeyboardPress);
 
-    // FIXME - This is being called on every dropdown open click, will take time to load for big lists
     useEffect(() => {
         let list: NestedDropdownListLocalItem<T>[];
         if (mode === "default") {
@@ -345,7 +344,7 @@ export const NestedDropdownList = <T,>({
     useEffect(() => {
         // Filter out non-visible items before passing to Virtuoso
         setVisibleItems(activeList.filter((item) => item.visible));
-    }, [filteredListItems, unfilteredListItems, searchActive, activeList]);
+    }, [searchActive, activeList]);
 
     useEffect(() => {
         updateSelectedItemsInList();
@@ -424,7 +423,7 @@ export const NestedDropdownList = <T,>({
                         type="button"
                         $variant={variant}
                     >
-                        {selectedKeyPaths.length === 0
+                        {selectedKeyPaths.size === 0
                             ? "Select all"
                             : "Clear all"}
                     </SelectAllButton>
@@ -520,6 +519,7 @@ export const NestedDropdownList = <T,>({
     const renderItems = (
         listItem: NestedDropdownListLocalItem<T>,
         vIndex: number
+
     ) => {
         const {
             level,
