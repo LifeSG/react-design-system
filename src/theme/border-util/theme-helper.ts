@@ -1,5 +1,5 @@
 import { CSSProp } from "styled-components";
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
+import { StyledComponentProps, getCollection } from "../helpers";
 import { BorderScheme, ThemeCollectionSpec } from "../types";
 import { LifeSgBorderUtilSet } from "./specs/lifesg-border-util-set";
 import { BorderUtilCollectionMap, BorderUtilSet } from "./types";
@@ -17,7 +17,7 @@ const BorderUtilSpec: ThemeCollectionSpec<
 const isStyledProps = (args: any): args is [StyledComponentProps] =>
     args.length === 1 && "theme" in args[0];
 
-export const getBorderStyle = (key: "dashed-default") => {
+export const getBorderStyle = (key: keyof BorderUtilSet) => {
     return (
             ...args:
                 | Parameters<BorderUtilSet[typeof key]>
@@ -33,14 +33,12 @@ export const getBorderStyle = (key: "dashed-default") => {
                 theme?.borderScheme
             );
 
-            const borderValue = theme?.overrides?.border
-                ? getValue(borderUtilSet, key, theme.overrides.border)
-                : borderUtilSet[key];
-
+            const borderValue = borderUtilSet[key];
             return borderValue(...resolvedOptions)(resolvedStyledProps);
         };
 };
 
 export const BorderUtilValues = {
+    solid: getBorderStyle("solid"),
     "dashed-default": getBorderStyle("dashed-default"),
 };

@@ -24,12 +24,31 @@ Apply the tokens when defining borders.
 import { Border } from "@lifesg/react-design-system/theme";
 import styled, { css } from "styled-components";
 
+const Container = styled.div`
+    border-width: ${Border["width-010"]};
+    border-style: ${Border.solid};
+`;
+
 const SolidBorder = styled.div`
-    border: ${Border["width-010"]} ${Border.solid};
+    ${Border.Util["solid"]};
+
+    /* optionally configure the border properties */
+    ${Border.Util["solid"]({
+        thickness: 1,
+        colour: "red",
+        radius: 5,
+    })};
 `;
 
 const DashedBorder = styled.div`
     ${Border.Util["dashed-default"]};
+
+    /* optionally configure the border properties */
+    ${Border.Util["dashed-default"]({
+        thickness: 1,
+        colour: "red",
+        radius: 5,
+    })};
 `;
 ```
 

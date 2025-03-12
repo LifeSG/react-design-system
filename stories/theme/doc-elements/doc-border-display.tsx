@@ -21,7 +21,15 @@ export const BorderDisplay = ({ theme }: BorderDisplayProps) => {
                 <BorderWidthCollection token="width-020" />
                 <Divider />
                 <BorderStyleCollection token="solid" />
-                <DashedBorderStyleCollection />
+            </Display>
+            <Display>
+                <HeaderRow>
+                    <div>Utility</div>
+                    <div>Parameters</div>
+                    <div></div>
+                </HeaderRow>
+                <SolidBorderUtilCollection />
+                <DashedBorderUtilCollection />
             </Display>
         </ThemeProvider>
     );
@@ -71,14 +79,30 @@ const BorderStyleCollection = ({ token }: BorderStyleCollectionProps) => {
     );
 };
 
-const DashedBorderStyleCollection = () => {
+const SolidBorderUtilCollection = () => {
+    return (
+        <Row>
+            <div>
+                <code>solid</code>
+            </div>
+            <div>
+                <code>{"{ thickness, colour, radius }"}</code>
+            </div>
+            <div>
+                <SolidBorderExample />
+            </div>
+        </Row>
+    );
+};
+
+const DashedBorderUtilCollection = () => {
     return (
         <Row>
             <div>
                 <code>dashed-default</code>
             </div>
             <div>
-                <code>{"({thickness, colour, radius}) => style"}</code>
+                <code>{"{ thickness, colour, radius }"}</code>
             </div>
             <div>
                 <DashedBorderExample />
@@ -142,6 +166,12 @@ const BorderStyleExample = styled.div<BorderStyleProps>`
     height: 24px;
     width: 48px;
     border: 1px ${(props) => props.$style} tomato;
+`;
+
+const SolidBorderExample = styled.div`
+    height: 24px;
+    width: 48px;
+    ${Border.Util["solid"]({ colour: "tomato" })}
 `;
 
 const DashedBorderExample = styled.div`

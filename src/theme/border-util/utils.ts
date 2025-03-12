@@ -3,6 +3,31 @@ import { BorderValues } from "../border/theme-helper";
 import { ColourSemantic } from "../colour-semantic/theme-helper";
 import { StyledComponentProps } from "../helpers";
 
+export const solidBorderStyle =
+    (options?: {
+        thickness?: number | ((props: StyledComponentProps) => string);
+        radius?: number | ((props: StyledComponentProps) => string);
+        colour?: string | ((props: StyledComponentProps) => string);
+    }) =>
+    (props: StyledComponentProps) => {
+        const { thickness, radius, colour } = options || {};
+        // Resolve design tokens to their underlying value
+        const resolvedThickness =
+            (typeof thickness === "function" ? thickness(props) : thickness) ??
+            BorderValues["width-010"](props);
+        const resolvedRadius =
+            (typeof radius === "function" ? radius(props) : radius) ?? 0;
+        const resolvedColor =
+            (typeof colour === "function" ? colour(props) : colour) ??
+            ColourSemantic.border(props);
+        const style = BorderValues["solid"];
+
+        return css`
+            border: ${resolvedThickness} ${style} ${resolvedColor};
+            border-radius: ${resolvedRadius};
+        `;
+    };
+
 export const dashedBorderStyle =
     (options?: {
         thickness?: number | ((props: StyledComponentProps) => string);
