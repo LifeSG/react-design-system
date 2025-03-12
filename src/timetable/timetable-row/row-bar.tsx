@@ -24,7 +24,6 @@ export const RowBar = ({
     intervalWidth,
     containerRef,
     outOfRangeCellPopover,
-    ...otherProps
 }: RowBarProps) => {
     // ===========================================================================
     // HELPER FUNCTIONS
@@ -120,7 +119,7 @@ export const RowBar = ({
     ]);
 
     return (
-        <RowCellContainer data-testid="timetable-row" {...otherProps}>
+        <RowCellContainer data-testid="timetable-row">
             {rowCellArray.map((cell, index) => {
                 return (
                     <RowCell
