@@ -47,7 +47,7 @@ export interface FormLabelProps
     "data-testid"?: string | undefined;
 }
 
-export type FormElementLayoutType = "flex" | "grid";
+export type FormElementLayoutType = "flex" | "grid" | "v2-grid";
 
 export interface BaseFormElementProps extends V2_ColProps, ColProps {
     label?: FormLabelProps | string | undefined;

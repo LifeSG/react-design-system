@@ -50,7 +50,7 @@ export const FormWrapper = ({
         return !!errorMessage;
     };
 
-    function getLayoutType(): FormElementLayoutType | "v2-grid" {
+    function getLayoutType(): FormElementLayoutType {
         if (!layoutType && (mobileCols || tabletCols || desktopCols)) {
             return "v2-grid";
         } else if (
@@ -71,9 +71,7 @@ export const FormWrapper = ({
         }
     }
 
-    const getContainerLayoutProps = (
-        layoutType: FormElementLayoutType | "v2-grid"
-    ) => {
+    const getContainerLayoutProps = (layoutType: FormElementLayoutType) => {
         switch (layoutType) {
             case "v2-grid":
                 return {
@@ -97,7 +95,7 @@ export const FormWrapper = ({
     };
 
     const getContainerComponent = (
-        layoutType: FormElementLayoutType | "v2-grid"
+        layoutType: FormElementLayoutType
     ): ComponentType => {
         switch (layoutType) {
             case "v2-grid":
