@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form } from "src/form";
 import { InputNestedMultiSelect } from "src/input-nested-multi-select";
 import { Layout } from "src/layout";
