@@ -42,6 +42,8 @@ const preview: Preview = {
                         "Breakpoint",
                         "Spacing",
                         "Motion",
+                        "Radius",
+                        "Border",
                     ],
                     "Core",
                     ["Typography", "Layout", "Icon"],
