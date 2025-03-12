@@ -164,16 +164,16 @@ export const FontDisplay = ({ theme }: FontDisplayProps) => {
                     letterSpacingToken="body-ls-xs"
                 />
                 <FontCollection
-                    tokens={["formlabel-baseline-semibold"]}
-                    fontSizeToken="formlabel-size-baseline"
-                    lineHeightToken="formlabel-lh-baseline"
-                    letterSpacingToken="formlabel-ls-baseline"
+                    tokens={["form-label"]}
+                    fontSizeToken="form-label-size"
+                    lineHeightToken="form-label-lh"
+                    letterSpacingToken="form-label-ls"
                 />
                 <FontCollection
-                    tokens={["formlabel-lg-semibold"]}
-                    fontSizeToken="formlabel-size-lg"
-                    lineHeightToken="formlabel-lh-lg"
-                    letterSpacingToken="formlabel-ls-lg"
+                    tokens={["form-description"]}
+                    fontSizeToken="form-description-size"
+                    lineHeightToken="form-description-lh"
+                    letterSpacingToken="form-description-ls"
                 />
             </Display>
         </ThemeProvider>

@@ -70,6 +70,6 @@ export type FontSet = {
     "body-xs-semibold": CSSProp | string;
     "body-xs-bold": CSSProp | string;
 
-    "formlabel-baseline-semibold": CSSProp | string;
-    "formlabel-lg-semibold": CSSProp | string;
+    "form-label": CSSProp | string;
+    "form-description": CSSProp | string;
 };

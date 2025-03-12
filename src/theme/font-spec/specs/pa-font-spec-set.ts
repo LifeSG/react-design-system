@@ -43,12 +43,12 @@ export const PAFontSpecSet: FontSpecSet = {
     "body-ls-sm": "0.012rem",
     "body-ls-xs": "0.012rem",
 
-    "formlabel-size-baseline": "1rem",
-    "formlabel-size-lg": "1.125rem",
+    "form-label-size": "1rem",
+    "form-description-size": "0.875rem",
 
-    "formlabel-lh-baseline": "1.5rem",
-    "formlabel-lh-lg": "1.625rem",
+    "form-label-lh": "1.5rem",
+    "form-description-lh": "1.6rem",
 
-    "formlabel-ls-baseline": "0.014rem",
-    "formlabel-ls-lg": "0rem",
+    "form-label-ls": "0.014rem",
+    "form-description-ls": "0.012rem",
 };

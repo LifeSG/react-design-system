@@ -86,6 +86,6 @@ export const FontValues: {
     "body-xs-semibold": getFont("body-xs-semibold"),
     "body-xs-bold": getFont("body-xs-bold"),
 
-    "formlabel-baseline-semibold": getFont("formlabel-baseline-semibold"),
-    "formlabel-lg-semibold": getFont("formlabel-lg-semibold"),
+    "form-label": getFont("form-label"),
+    "form-description": getFont("form-description"),
 };

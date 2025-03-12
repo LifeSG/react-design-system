@@ -257,16 +257,16 @@ export const LifeSgFontSet: FontSet = {
         "body-lh-xs",
         "body-ls-xs"
     ),
-    "formlabel-baseline-semibold": generateFontCSS(
-        "formlabel-size-baseline",
+    "form-label": generateFontCSS(
+        "form-label-size",
         "weight-semibold",
-        "formlabel-lh-baseline",
-        "formlabel-ls-baseline"
+        "form-label-lh",
+        "form-label-ls"
     ),
-    "formlabel-lg-semibold": generateFontCSS(
-        "formlabel-size-lg",
-        "weight-semibold",
-        "formlabel-lh-lg",
-        "formlabel-ls-lg"
+    "form-description": generateFontCSS(
+        "form-description-size",
+        "weight-regular",
+        "form-description-lh",
+        "form-description-ls"
     ),
 };

@@ -10,7 +10,8 @@ export const Label = styled.label`
     margin-bottom: ${Spacing["spacing-8"]};
     display: inline-block;
 
-    ${applyHtmlContentStyle({ textSize: "body-md" })}
+    ${Font["form-label"]}
+    ${applyHtmlContentStyle()}
     font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
@@ -23,7 +24,7 @@ export const ErrorMessage = styled.p`
 `;
 
 export const Subtitle = styled.span`
-    ${Font["body-sm-regular"]}
+    ${Font["form-description"]}
     color: ${Colour["text-subtler"]};
     display: block;
 `;

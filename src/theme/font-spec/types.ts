@@ -59,14 +59,14 @@ export type FontSpecSet = {
     "body-ls-xs": string;
 
     // Form label sizes
-    "formlabel-size-baseline": string;
-    "formlabel-size-lg": string;
+    "form-label-size": string;
+    "form-description-size": string;
 
     // Form label line heights
-    "formlabel-lh-baseline": string;
-    "formlabel-lh-lg": string;
+    "form-label-lh": string;
+    "form-description-lh": string;
 
     // Form label letter spacing
-    "formlabel-ls-baseline": string;
-    "formlabel-ls-lg": string;
+    "form-label-ls": string;
+    "form-description-ls": string;
 };
