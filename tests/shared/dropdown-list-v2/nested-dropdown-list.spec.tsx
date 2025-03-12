@@ -2,7 +2,7 @@ import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { NestedDropdownList } from "../../../src/shared/dropdown-list-v2/nested-dropdown-list";
 import { NestedDropdownListItemProps } from "../../../src/shared/dropdown-list-v2/types";
-import { MockVirtuosoContextWrapper } from "../../test-mocks/virtuoso/virtuoso-test-mocks";
+import { MockVirtuosoContextWrapper } from "../../__test-utils__/virtuoso/virtuoso-test-mocks";
 
 describe("NestedDropdownList", () => {
 
@@ -44,8 +44,8 @@ describe("NestedDropdownList", () => {
             expect(screen.queryByText("Child 1.1 item")).toBeVisible();
             expect(screen.queryByText("Child 1.2 item")).toBeVisible();
             expect(screen.queryByText("Parent 2 item")).toBeVisible();
-            expect(screen.queryByText("Child 2.1 item")).toBeNull();
-            expect(screen.queryByText("Child 2.2 item")).toBeNull();
+            expect(screen.queryByText("Child 2.1 item")).not.toBeInTheDocument();
+            expect(screen.queryByText("Child 2.2 item")).not.toBeInTheDocument();
 
             expect(
                 screen.getByRole("treeitem", { name: "Parent 1 item" })
@@ -76,11 +76,11 @@ describe("NestedDropdownList", () => {
             expect(screen.queryByText("Parent 1.2 item")).toBeVisible();
             expect(screen.queryByText("Child 1.2.1 item")).toBeVisible();
             expect(screen.queryByText("Parent 1.3 item")).toBeVisible();
-            expect(screen.queryByText("Child 1.3.1 item")).toBeNull();
+            expect(screen.queryByText("Child 1.3.1 item")).not.toBeInTheDocument();
             expect(screen.queryByText("Parent 2 item")).toBeVisible();
-            expect(screen.queryByText("Child 2.1 item")).toBeNull();;
-            expect(screen.queryByText("Parent 2.2 item")).toBeNull();
-            expect(screen.queryByText("Child 2.2.1 item")).toBeNull();;
+            expect(screen.queryByText("Child 2.1 item")).not.toBeInTheDocument();;
+            expect(screen.queryByText("Parent 2.2 item")).not.toBeInTheDocument();
+            expect(screen.queryByText("Child 2.2.1 item")).not.toBeInTheDocument();;
 
             expect(
                 screen.getByRole("treeitem", { name: "Parent 1 item" })
@@ -215,11 +215,11 @@ describe("NestedDropdownList", () => {
             );
 
             expect(screen.queryByText("Parent 1 item")).toBeVisible();
-            expect(screen.queryByText("Child 1.1 item")).toBeNull();
-            expect(screen.queryByText("Child 1.2 item")).toBeNull();
+            expect(screen.queryByText("Child 1.1 item")).not.toBeInTheDocument();
+            expect(screen.queryByText("Child 1.2 item")).not.toBeInTheDocument();
             expect(screen.queryByText("Parent 2 item")).toBeVisible();
-            expect(screen.queryByText("Child 2.1 item")).toBeNull();
-            expect(screen.queryByText("Child 2.2 item")).toBeNull();
+            expect(screen.queryByText("Child 2.1 item")).not.toBeInTheDocument();
+            expect(screen.queryByText("Child 2.2 item")).not.toBeInTheDocument();
 
             expect(
                 screen.getByRole("treeitem", { name: "Parent 1 item" })
@@ -250,15 +250,15 @@ describe("NestedDropdownList", () => {
             );
 
             expect(screen.queryByText("Parent 1 item")).toBeVisible();
-            expect(screen.queryByText("Child 1.1 item")).toBeNull();
-            expect(screen.queryByText("Parent 1.2 item")).toBeNull();
-            expect(screen.queryByText("Child 1.2.1 item")).toBeNull();
-            expect(screen.queryByText("Parent 1.3 item")).toBeNull();
-            expect(screen.queryByText("Child 1.3.1 item")).toBeNull();
+            expect(screen.queryByText("Child 1.1 item")).not.toBeInTheDocument();
+            expect(screen.queryByText("Parent 1.2 item")).not.toBeInTheDocument();
+            expect(screen.queryByText("Child 1.2.1 item")).not.toBeInTheDocument();
+            expect(screen.queryByText("Parent 1.3 item")).not.toBeInTheDocument();
+            expect(screen.queryByText("Child 1.3.1 item")).not.toBeInTheDocument();
             expect(screen.queryByText("Parent 2 item")).toBeVisible();
-            expect(screen.queryByText("Child 2.1 item")).toBeNull();
-            expect(screen.queryByText("Parent 2.2 item")).toBeNull();
-            expect(screen.queryByText("Child 2.2.1 item")).toBeNull();
+            expect(screen.queryByText("Child 2.1 item")).not.toBeInTheDocument();
+            expect(screen.queryByText("Parent 2.2 item")).not.toBeInTheDocument();
+            expect(screen.queryByText("Child 2.2.1 item")).not.toBeInTheDocument();
 
             expect(
                 screen.getByRole("treeitem", { name: "Parent 1 item" })
@@ -295,11 +295,11 @@ describe("NestedDropdownList", () => {
 
         expect(screen.queryByText("Parent 1 item")).toBeVisible();
         expect(screen.queryByText("Parent 1.1 item")).toBeVisible();
-        expect(screen.queryByText("Child 1.1.1 item")).toBeNull();
+        expect(screen.queryByText("Child 1.1.1 item")).not.toBeInTheDocument();
         expect(screen.queryByText("Parent 1.2 item")).toBeVisible();
-        expect(screen.queryByText("Child 1.2.1 item")).toBeNull();
+        expect(screen.queryByText("Child 1.2.1 item")).not.toBeInTheDocument();
         expect(screen.queryByText("Parent 1.3 item")).toBeVisible();
-        expect(screen.queryByText("Child 1.3.1 item")).toBeNull();
+        expect(screen.queryByText("Child 1.3.1 item")).not.toBeInTheDocument();
 
         await user.click(screen.queryByText("Parent 1.1 item"));
 
@@ -307,9 +307,9 @@ describe("NestedDropdownList", () => {
         expect(screen.queryByText("Parent 1.1 item")).toBeVisible();
         expect(screen.queryByText("Child 1.1.1 item")).toBeVisible();
         expect(screen.queryByText("Parent 1.2 item")).toBeVisible();
-        expect(screen.queryByText("Child 1.2.1 item")).toBeNull();
+        expect(screen.queryByText("Child 1.2.1 item")).not.toBeInTheDocument();
         expect(screen.queryByText("Parent 1.3 item")).toBeVisible();
-        expect(screen.queryByText("Child 1.3.1 item")).toBeNull();
+        expect(screen.queryByText("Child 1.3.1 item")).not.toBeInTheDocument();
 
         expect(mockOnSelectItem).not.toHaveBeenCalled();
     });
@@ -348,11 +348,11 @@ describe("NestedDropdownList", () => {
 
         expect(screen.queryByText("Parent 1 item")).toBeVisible();
         expect(screen.queryByText("Parent 1.1 item")).toBeVisible();
-        expect(screen.queryByText("Child 1.1.1 item")).toBeNull();
+        expect(screen.queryByText("Child 1.1.1 item")).not.toBeInTheDocument();
         expect(screen.queryByText("Parent 1.2 item")).toBeVisible();
-        expect(screen.queryByText("Child 1.2.1 item")).toBeNull();
+        expect(screen.queryByText("Child 1.2.1 item")).not.toBeInTheDocument();
         expect(screen.queryByText("Parent 1.3 item")).toBeVisible();
-        expect(screen.queryByText("Child 1.3.1 item")).toBeNull();
+        expect(screen.queryByText("Child 1.3.1 item")).not.toBeInTheDocument();
 
         await act(async () => {
             await user.keyboard("{ArrowDown}{ArrowRight}");
@@ -362,9 +362,9 @@ describe("NestedDropdownList", () => {
         expect(screen.queryByText("Parent 1.1 item")).toBeVisible();
         expect(screen.queryByText("Child 1.1.1 item")).toBeVisible();
         expect(screen.queryByText("Parent 1.2 item")).toBeVisible();
-        expect(screen.queryByText("Child 1.2.1 item")).toBeNull();
+        expect(screen.queryByText("Child 1.2.1 item")).not.toBeInTheDocument();
         expect(screen.queryByText("Parent 1.3 item")).toBeVisible();
-        expect(screen.queryByText("Child 1.3.1 item")).toBeNull();
+        expect(screen.queryByText("Child 1.3.1 item")).not.toBeInTheDocument();
 
         expect(mockOnSelectItem).not.toHaveBeenCalled();
     });
@@ -395,7 +395,7 @@ describe("NestedDropdownList", () => {
 
         expect(screen.queryByText("Parent 1 item")).toBeVisible();
         expect(screen.queryByText("Parent 1.1 item")).toBeVisible();
-        expect(screen.queryByText("Child 1.1.1 item")).toBeNull();
+        expect(screen.queryByText("Child 1.1.1 item")).not.toBeInTheDocument();
         expect(screen.queryByText("Parent 1.2 item")).toBeVisible();
         expect(screen.queryByText("Child 1.2.1 item")).toBeVisible();
         expect(screen.queryByText("Parent 1.3 item")).toBeVisible();
@@ -404,12 +404,12 @@ describe("NestedDropdownList", () => {
         await user.click(screen.queryByText("Parent 1 item"));
 
         expect(screen.queryByText("Parent 1 item")).toBeVisible();
-        expect(screen.queryByText("Parent 1.1 item")).toBeNull();
-        expect(screen.queryByText("Child 1.1.1 item")).toBeNull();
-        expect(screen.queryByText("Parent 1.2 item")).toBeNull();
-        expect(screen.queryByText("Child 1.2.1 item")).toBeNull();
-        expect(screen.queryByText("Parent 1.3 item")).toBeNull();
-        expect(screen.queryByText("Child 1.3.1 item")).toBeNull();
+        expect(screen.queryByText("Parent 1.1 item")).not.toBeInTheDocument();
+        expect(screen.queryByText("Child 1.1.1 item")).not.toBeInTheDocument();
+        expect(screen.queryByText("Parent 1.2 item")).not.toBeInTheDocument();
+        expect(screen.queryByText("Child 1.2.1 item")).not.toBeInTheDocument();
+        expect(screen.queryByText("Parent 1.3 item")).not.toBeInTheDocument();
+        expect(screen.queryByText("Child 1.3.1 item")).not.toBeInTheDocument();
 
         expect(mockOnSelectItem).not.toHaveBeenCalled();
     });
@@ -448,7 +448,7 @@ describe("NestedDropdownList", () => {
 
         expect(screen.queryByText("Parent 1 item")).toBeVisible();
         expect(screen.queryByText("Parent 1.1 item")).toBeVisible();
-        expect(screen.queryByText("Child 1.1.1 item")).toBeNull();
+        expect(screen.queryByText("Child 1.1.1 item")).not.toBeInTheDocument();
         expect(screen.queryByText("Parent 1.2 item")).toBeVisible();
         expect(screen.queryByText("Child 1.2.1 item")).toBeVisible();
         expect(screen.queryByText("Parent 1.3 item")).toBeVisible();
@@ -459,12 +459,12 @@ describe("NestedDropdownList", () => {
         });
 
         expect(screen.queryByText("Parent 1 item")).toBeVisible();
-        expect(screen.queryByText("Parent 1.1 item")).toBeNull();
-        expect(screen.queryByText("Child 1.1.1 item")).toBeNull();
-        expect(screen.queryByText("Parent 1.2 item")).toBeNull();
-        expect(screen.queryByText("Child 1.2.1 item")).toBeNull();
-        expect(screen.queryByText("Parent 1.3 item")).toBeNull();
-        expect(screen.queryByText("Child 1.3.1 item")).toBeNull();
+        expect(screen.queryByText("Parent 1.1 item")).not.toBeInTheDocument();
+        expect(screen.queryByText("Child 1.1.1 item")).not.toBeInTheDocument();
+        expect(screen.queryByText("Parent 1.2 item")).not.toBeInTheDocument();
+        expect(screen.queryByText("Child 1.2.1 item")).not.toBeInTheDocument();
+        expect(screen.queryByText("Parent 1.3 item")).not.toBeInTheDocument();
+        expect(screen.queryByText("Child 1.3.1 item")).not.toBeInTheDocument();
 
         expect(mockOnSelectItem).not.toHaveBeenCalled();
     });
@@ -532,7 +532,7 @@ describe("NestedDropdownList", () => {
             );
 
             expect(mockOnSelectItem).not.toHaveBeenCalled();
-            expect(screen.queryByText("Child 1.1.1 item")).toBeNull();
+            expect(screen.queryByText("Child 1.1.1 item")).not.toBeInTheDocument();
             expect(
                 screen.getByRole("treeitem", { name: "Parent 1.1 item" })
             ).toHaveAttribute("aria-expanded", "false");

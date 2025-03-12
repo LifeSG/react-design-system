@@ -24,12 +24,16 @@ export const flattenList = <T>(
         parentItem: NestedDropdownListLocalItem<T>
     ) => {
         const current: NestedDropdownListLocalItem<T>[] = [];
-        const hasNestedSiblings = list.some(option => option.subItems?.length);
+        const hasNestedSiblings = list.some(
+            (option) => option.subItems?.length
+        );
 
         list.forEach((option, i) => {
             const level = parentItem ? parentItem.level + 1 : 0;
-            const keyPath = parentItem ? [...parentItem.keyPath, option.key] : [option.key];
-            const keyPathString = keyPath.join(',');
+            const keyPath = parentItem
+                ? [...parentItem.keyPath, option.key]
+                : [option.key];
+            const keyPathString = buildKeyPath(keyPath);
 
             const item: (typeof items)[number] = {
                 item: option,
@@ -198,7 +202,7 @@ export const updateSelectedState = <T>(
     const res = produce(list, (draft) => {
         for (let i = draft.length - 1; i >= 0; i--) {
             const item = draft[i];
-            const itemKeyPathString = item.keyPath.join(',');
+            const itemKeyPathString = buildKeyPath(item.keyPath);
             item.checked = selectedKeyPaths.has(itemKeyPathString);
             if (item.hasSubItems) {
                 if (multiSelect && item.checked !== true) {
@@ -225,20 +229,6 @@ export const updateSelectedState = <T>(
     return res;
 };
 
-export const findIndexFromStart = <T>(
-    arr: T[],
-    predicate: (e: T) => boolean,
-    start: number
-): number => {
-    for (let i = start; i < arr.length; i++) {
-        if (predicate(arr[i])) {
-            return i;
-        }
-    }
-
-    return -1;
-};
-
 export const findItemFromStart = <T>(
     arr: T[],
     predicate: (e: T) => boolean,
@@ -251,20 +241,6 @@ export const findItemFromStart = <T>(
     }
 
     return undefined;
-};
-
-export const findIndexFromEnd = <T>(
-    arr: T[],
-    predicate: (e: T) => boolean,
-    end: number
-): number => {
-    for (let i = end; i >= 0; i--) {
-        if (predicate(arr[i])) {
-            return i;
-        }
-    }
-
-    return -1;
 };
 
 export const findItemFromEnd = <T>(
@@ -297,4 +273,14 @@ export const findItemByKeyPath = <T>(
     }
 
     return findItemByKeyPath(item.subItems, nextKeyPath);
+};
+
+export const buildKeyPath = (keyPath: string[]): string => {
+    return keyPath.join(",");
+};
+
+export const buildKeyPathToSet = (
+    keyPathArr: string[][]
+): Set<string> | undefined => {
+    return new Set<string>(keyPathArr.map((keyPath) => keyPath.join(",")));
 };

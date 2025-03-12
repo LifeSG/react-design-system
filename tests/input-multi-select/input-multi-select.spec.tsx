@@ -7,7 +7,7 @@ import {
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { InputMultiSelect } from "../../src/input-multi-select";
-import { MockVirtuosoContextWrapper } from "../test-mocks/virtuoso/virtuoso-test-mocks";
+import { MockVirtuosoContextWrapper } from "../__test-utils__/virtuoso/virtuoso-test-mocks";
 
 const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";

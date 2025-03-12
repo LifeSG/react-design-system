@@ -22,8 +22,8 @@ export interface DropdownDisplayProps<T, V> {
     listExtractor?: ((item: T) => string | ListItemDisplayProps) | undefined;
     /** Function to render custom component */
     renderListItem?:
-    | ((item: T, args: ListItemRenderArgs) => JSX.Element)
-    | undefined;
+        | ((item: T, args: ListItemRenderArgs) => JSX.Element)
+        | undefined;
     /**
      * Function to render a custom call-to-action component at the bottom of the dropdown list.
      * @param hideOptions - A function that can be called to hide the dropdown list.
@@ -31,8 +31,8 @@ export interface DropdownDisplayProps<T, V> {
      * @returns A JSX.Element representing the custom call-to-action component.
      */
     renderCustomCallToAction?:
-    | ((hideOptions: () => void, options: T[]) => JSX.Element)
-    | undefined;
+        | ((hideOptions: () => void, options: T[]) => JSX.Element)
+        | undefined;
 }
 
 export interface DropdownSearchProps<T> {
@@ -68,8 +68,8 @@ export interface DropdownConfigProps {
 
 export interface DropdownListProps<T, V>
     extends DropdownDisplayProps<T, V>,
-    DropdownSearchProps<T>,
-    DropdownConfigProps {
+        DropdownSearchProps<T>,
+        DropdownConfigProps {
     listItems?: T[] | undefined;
     selectedItems?: T[] | undefined;
     disableItemFocus?: boolean | undefined;
@@ -131,7 +131,7 @@ export type ExpandMode = "default" | "expand" | "collapse";
 
 export interface NestedDropdownListProps<T>
     extends DropdownSearchProps<NestedDropdownListItemProps<T>>,
-    DropdownConfigProps {
+        DropdownConfigProps {
     listItems: NestedDropdownListItemProps<T>[];
     selectedKeyPaths: Set<string>;
     listboxId?: string | undefined;
@@ -142,10 +142,10 @@ export interface NestedDropdownListProps<T>
 
     onSelectItem?: ((item: NestedDropdownListLocalItem<T>) => void) | undefined;
     onSelectAll?:
-    | ((
-        keyPaths: string[][],
-        items: NestedDropdownListLocalItem<T>[]
-    ) => void)
-    | undefined;
+        | ((
+              keyPaths: string[][],
+              items: NestedDropdownListLocalItem<T>[]
+          ) => void)
+        | undefined;
     onRetry?: (() => void) | undefined;
 }

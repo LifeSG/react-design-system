@@ -241,20 +241,25 @@ export const DropdownList = <T, V>({
         const index = listItems.findIndex((item) =>
             checkListItemSelected(item)
         );
+
+        // Focus search input if there is one
         if (searchInputRef.current) {
             setFocusedIndex(-1);
             setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
         } else if (focusedIndex > 0) {
-            setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
+            // Else focus on the specified element
             virtuosoRef.current.scrollToIndex({ index: focusedIndex, align: "center" });
+            setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
         } else if (index !== -1) {
+            // Else focus on the selected element
+            virtuosoRef.current.scrollToIndex({ index, align: "center" });
             setFocusedIndex(index);
             setTimeout(() => listItemRefs.current[index]?.focus(), 200);
-            virtuosoRef.current.scrollToIndex({ index, align: "center" });
         } else {
+            // Else focus on the first list item
+            virtuosoRef.current.scrollToIndex({ index: 0 });
             setFocusedIndex(0);
             setTimeout(() => listItemRefs.current[0]?.focus(), 200);
-            virtuosoRef.current.scrollToIndex({ index: 0 });
         }
     }, [
         checkListItemSelected,
@@ -346,7 +351,7 @@ export const DropdownList = <T, V>({
         );
     };
 
-    const renderItems = (item: T, index: number) => {
+    const renderItem = (item: T, index: number) => {
         if (!onRetry || (onRetry && itemsLoadState === "success")) {
             const selected = checkListItemSelected(item);
             const active = index === focusedIndex;
@@ -481,19 +486,16 @@ export const DropdownList = <T, V>({
 
     const renderVirtualisedList = () => {
         return (
-            <Virtuoso
-                ref={virtuosoRef}
-                style={{ height: "100%" }}
-                data={displayListItems}
-                customScrollParent={nodeRef.current}
-                itemContent={(index, item) => {
-                    return (
-                        <Listbox role="listbox" id={listboxId}>
-                            {renderItems(item, index)}
-                        </Listbox>
-                    );
-                }}
-            />
+            <Listbox role="listbox" id={listboxId}>
+                <Virtuoso
+                    ref={virtuosoRef}
+                    style={{ height: "100%" }}
+                    data={displayListItems}
+                    customScrollParent={nodeRef.current}
+                    itemContent={(index, item) => renderItem(item, index)}
+                />
+            </Listbox>
+
         );
     };
 

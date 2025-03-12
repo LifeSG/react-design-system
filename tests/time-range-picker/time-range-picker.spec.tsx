@@ -2,7 +2,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FormTimeRangePicker } from "../../src/form/form-time-range-picker";
 import { TimeRangePicker } from "../../src/time-range-picker/time-range-picker";
-import { MockVirtuosoContextWrapper } from "../test-mocks/virtuoso/virtuoso-test-mocks";
+import { MockVirtuosoContextWrapper } from "../__test-utils__/virtuoso/virtuoso-test-mocks";
 
 // =============================================================================
 // UNIT TESTS

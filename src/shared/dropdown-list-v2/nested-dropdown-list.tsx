@@ -154,12 +154,12 @@ export const NestedDropdownList = <T,>({
             }
             case "ArrowRight": {
                 event.preventDefault();
-                toggleCategory(focusedIndex, true);
+                toggleCategory(focusedIndex, true, virtuosoIndex);
                 break;
             }
             case "ArrowLeft": {
                 event.preventDefault();
-                toggleCategory(focusedIndex, false);
+                toggleCategory(focusedIndex, false, virtuosoIndex);
                 break;
             }
             case "Space": {
@@ -208,6 +208,7 @@ export const NestedDropdownList = <T,>({
 
     const handleListItemClick = (itemIndex: number, vIndex: number) => {
         setVirtuosoIndex(vIndex);
+        setFocusedIndex(itemIndex);
         onSelectItem?.(activeList[itemIndex]);
     };
 
@@ -313,10 +314,10 @@ export const NestedDropdownList = <T,>({
         }
     });
 
-    const toggleCategory = (index: number, nextExpanded: boolean) => {
+    const toggleCategory = (index: number, nextExpanded: boolean, virtuosoIndex: number) => {
         const list = toggleSubtree(activeList, index, nextExpanded);
         setFocusedIndex(index);
-
+        setVirtuosoIndex(virtuosoIndex);
         if (searchActive) {
             setFilteredListItems(list);
         } else {
@@ -385,8 +386,6 @@ export const NestedDropdownList = <T,>({
         focusedIndex,
         virtuosoIndex,
         mounted,
-        setFocusedIndex,
-        setVirtuosoIndex,
     ]);
 
     // =========================================================================
@@ -516,7 +515,7 @@ export const NestedDropdownList = <T,>({
         );
     };
 
-    const renderItems = (
+    const renderItem = (
         listItem: NestedDropdownListLocalItem<T>,
         vIndex: number
 
@@ -555,7 +554,7 @@ export const NestedDropdownList = <T,>({
                     onClick={(e) => {
                         e.stopPropagation();
                         if (toggleable) {
-                            toggleCategory(itemIndex, !expanded);
+                            toggleCategory(itemIndex, !expanded, vIndex);
                         } else {
                             handleListItemClick(itemIndex, vIndex);
                         }
@@ -575,7 +574,7 @@ export const NestedDropdownList = <T,>({
                             data-testid="toggle-category-button"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                toggleCategory(itemIndex, !expanded);
+                                toggleCategory(itemIndex, !expanded, vIndex);
                             }}
                             $expanded={expanded}
                         >
@@ -608,7 +607,7 @@ export const NestedDropdownList = <T,>({
                     style={{ height: "100%" }}
                     customScrollParent={nodeRef.current}
                     data={visibleItems}
-                    itemContent={(vIndex, item) => renderItems(item, vIndex)}
+                    itemContent={(vIndex, item) => renderItem(item, vIndex)}
                 />
             </div>
         );
