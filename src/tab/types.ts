@@ -11,6 +11,7 @@ export interface TabProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
     onTabClick?: ((title: string, index: number) => void) | undefined;
+    fullWidthIndicatorLine?: boolean | undefined;
 }
 
 export interface TabItemProps {
