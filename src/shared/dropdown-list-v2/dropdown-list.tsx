@@ -249,7 +249,10 @@ export const DropdownList = <T, V>({
             setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
         } else if (focusedIndex > 0) {
             // Else focus on the specified element
-            virtuosoRef.current.scrollToIndex({ index: focusedIndex, align: "center" });
+            virtuosoRef.current.scrollToIndex({
+                index: focusedIndex,
+                align: "center",
+            });
             setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
         } else if (index !== -1) {
             // Else focus on the selected element
@@ -495,7 +498,6 @@ export const DropdownList = <T, V>({
                     itemContent={(index, item) => renderItem(item, index)}
                 />
             </Listbox>
-
         );
     };
 

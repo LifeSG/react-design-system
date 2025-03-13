@@ -7,7 +7,7 @@ import {
     NestedDropdownList,
     NestedDropdownListItemProps,
     NestedDropdownListLocalItem,
-    buildKeyPathToSet
+    buildKeyPathToSet,
 } from "../shared/dropdown-list-v2";
 import {
     DropdownRenderProps,
@@ -54,7 +54,11 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     // CONST, STATE
     // =========================================================================
     const options = _options as NestedDropdownListItemProps<V1 | V2 | V3>[];
-    const [selectedKeyPaths, setSelectedKeyPaths] = useState<Set<string>>(_selectedKeyPaths ? buildKeyPathToSet(_selectedKeyPaths) : new Set<string>());
+    const [selectedKeyPaths, setSelectedKeyPaths] = useState<Set<string>>(
+        _selectedKeyPaths
+            ? buildKeyPathToSet(_selectedKeyPaths)
+            : new Set<string>()
+    );
     const [selectedItems, setSelectedItems] = useState<
         SelectedItem<V1 | V2 | V3>[]
     >([]);
@@ -212,12 +216,12 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             const newItemsToAdd = item.hasSubItems
                 ? getSelectedSubItems(options, item.keyPath)
                 : [
-                    {
-                        value: item.item.value,
-                        label: item.item.label,
-                        keyPath: item.keyPath,
-                    },
-                ];
+                      {
+                          value: item.item.value,
+                          label: item.item.label,
+                          keyPath: item.keyPath,
+                      },
+                  ];
             newItemsToAdd.forEach((addedItem) => {
                 if (
                     !selectedItems.find((selectedItem) =>

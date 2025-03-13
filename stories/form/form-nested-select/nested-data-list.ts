@@ -1,4 +1,4 @@
-const createSubItems = (length, depth, prefix = '') =>
+const createSubItems = (length, depth, prefix = "") =>
     Array.from({ length }, (_, index) => {
         const currentIndex = index + 1;
         const label = prefix ? `${prefix}.${currentIndex}` : `${currentIndex}`;
@@ -6,7 +6,12 @@ const createSubItems = (length, depth, prefix = '') =>
         const key = label;
 
         return depth > 1
-            ? { label, value, key, subItems: createSubItems(length, depth - 1, label) }
+            ? {
+                  label,
+                  value,
+                  key,
+                  subItems: createSubItems(length, depth - 1, label),
+              }
             : { label, value, key };
     });
 

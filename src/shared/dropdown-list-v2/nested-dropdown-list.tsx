@@ -314,7 +314,11 @@ export const NestedDropdownList = <T,>({
         }
     });
 
-    const toggleCategory = (index: number, nextExpanded: boolean, virtuosoIndex: number) => {
+    const toggleCategory = (
+        index: number,
+        nextExpanded: boolean,
+        virtuosoIndex: number
+    ) => {
         const list = toggleSubtree(activeList, index, nextExpanded);
         setFocusedIndex(index);
         setVirtuosoIndex(virtuosoIndex);
@@ -382,11 +386,7 @@ export const NestedDropdownList = <T,>({
             setVirtuosoIndex(0);
             setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
-    }, [
-        focusedIndex,
-        virtuosoIndex,
-        mounted,
-    ]);
+    }, [focusedIndex, virtuosoIndex, mounted]);
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -518,7 +518,6 @@ export const NestedDropdownList = <T,>({
     const renderItem = (
         listItem: NestedDropdownListLocalItem<T>,
         vIndex: number
-
     ) => {
         const {
             level,

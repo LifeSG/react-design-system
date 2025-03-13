@@ -8,7 +8,6 @@ import { StarIcon } from "@lifesg/react-icons/star";
 // =============================================================================
 describe("Alert", () => {
     beforeEach(() => {
-        
         jest.resetAllMocks();
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
@@ -94,7 +93,6 @@ describe("Alert", () => {
 
             expect(getCustomIcon()).toBeInTheDocument();
         });
-
     });
 
     it("should render custom display if required", () => {

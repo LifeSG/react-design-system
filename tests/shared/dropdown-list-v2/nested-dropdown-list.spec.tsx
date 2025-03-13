@@ -5,7 +5,6 @@ import { NestedDropdownListItemProps } from "../../../src/shared/dropdown-list-v
 import { MockVirtuosoContextWrapper } from "../../__test-utils__/virtuoso/virtuoso-test-mocks";
 
 describe("NestedDropdownList", () => {
-
     const renderDropdown = (dropdown: JSX.Element) => {
         return render(dropdown, { wrapper: MockVirtuosoContextWrapper });
     };
@@ -24,7 +23,10 @@ describe("NestedDropdownList", () => {
         it("should expand the first subtree (1 tier)", () => {
             const options = buildOptions([["1"], ["2"]]);
             renderDropdown(
-                <NestedDropdownList listItems={options} selectedKeyPaths={new Set<string>()} />
+                <NestedDropdownList
+                    listItems={options}
+                    selectedKeyPaths={new Set<string>()}
+                />
             );
 
             expect(screen.queryByText("Child 1 item")).toBeVisible();
@@ -37,15 +39,22 @@ describe("NestedDropdownList", () => {
                 ["2", [["2.1"], ["2.2"]]],
             ]);
             renderDropdown(
-                <NestedDropdownList listItems={options} selectedKeyPaths={new Set<string>()} />
+                <NestedDropdownList
+                    listItems={options}
+                    selectedKeyPaths={new Set<string>()}
+                />
             );
 
             expect(screen.queryByText("Parent 1 item")).toBeVisible();
             expect(screen.queryByText("Child 1.1 item")).toBeVisible();
             expect(screen.queryByText("Child 1.2 item")).toBeVisible();
             expect(screen.queryByText("Parent 2 item")).toBeVisible();
-            expect(screen.queryByText("Child 2.1 item")).not.toBeInTheDocument();
-            expect(screen.queryByText("Child 2.2 item")).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 2.1 item")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 2.2 item")
+            ).not.toBeInTheDocument();
 
             expect(
                 screen.getByRole("treeitem", { name: "Parent 1 item" })
@@ -68,7 +77,10 @@ describe("NestedDropdownList", () => {
                 ["2", [["2.1"], ["2.2", [["2.2.1"]]]]],
             ]);
             renderDropdown(
-                <NestedDropdownList listItems={options} selectedKeyPaths={new Set<string>()} />
+                <NestedDropdownList
+                    listItems={options}
+                    selectedKeyPaths={new Set<string>()}
+                />
             );
 
             expect(screen.queryByText("Parent 1 item")).toBeVisible();
@@ -76,11 +88,19 @@ describe("NestedDropdownList", () => {
             expect(screen.queryByText("Parent 1.2 item")).toBeVisible();
             expect(screen.queryByText("Child 1.2.1 item")).toBeVisible();
             expect(screen.queryByText("Parent 1.3 item")).toBeVisible();
-            expect(screen.queryByText("Child 1.3.1 item")).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 1.3.1 item")
+            ).not.toBeInTheDocument();
             expect(screen.queryByText("Parent 2 item")).toBeVisible();
-            expect(screen.queryByText("Child 2.1 item")).not.toBeInTheDocument();;
-            expect(screen.queryByText("Parent 2.2 item")).not.toBeInTheDocument();
-            expect(screen.queryByText("Child 2.2.1 item")).not.toBeInTheDocument();;
+            expect(
+                screen.queryByText("Child 2.1 item")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Parent 2.2 item")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 2.2.1 item")
+            ).not.toBeInTheDocument();
 
             expect(
                 screen.getByRole("treeitem", { name: "Parent 1 item" })
@@ -215,11 +235,19 @@ describe("NestedDropdownList", () => {
             );
 
             expect(screen.queryByText("Parent 1 item")).toBeVisible();
-            expect(screen.queryByText("Child 1.1 item")).not.toBeInTheDocument();
-            expect(screen.queryByText("Child 1.2 item")).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 1.1 item")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 1.2 item")
+            ).not.toBeInTheDocument();
             expect(screen.queryByText("Parent 2 item")).toBeVisible();
-            expect(screen.queryByText("Child 2.1 item")).not.toBeInTheDocument();
-            expect(screen.queryByText("Child 2.2 item")).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 2.1 item")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 2.2 item")
+            ).not.toBeInTheDocument();
 
             expect(
                 screen.getByRole("treeitem", { name: "Parent 1 item" })
@@ -250,15 +278,31 @@ describe("NestedDropdownList", () => {
             );
 
             expect(screen.queryByText("Parent 1 item")).toBeVisible();
-            expect(screen.queryByText("Child 1.1 item")).not.toBeInTheDocument();
-            expect(screen.queryByText("Parent 1.2 item")).not.toBeInTheDocument();
-            expect(screen.queryByText("Child 1.2.1 item")).not.toBeInTheDocument();
-            expect(screen.queryByText("Parent 1.3 item")).not.toBeInTheDocument();
-            expect(screen.queryByText("Child 1.3.1 item")).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 1.1 item")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Parent 1.2 item")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 1.2.1 item")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Parent 1.3 item")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 1.3.1 item")
+            ).not.toBeInTheDocument();
             expect(screen.queryByText("Parent 2 item")).toBeVisible();
-            expect(screen.queryByText("Child 2.1 item")).not.toBeInTheDocument();
-            expect(screen.queryByText("Parent 2.2 item")).not.toBeInTheDocument();
-            expect(screen.queryByText("Child 2.2.1 item")).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 2.1 item")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Parent 2.2 item")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 2.2.1 item")
+            ).not.toBeInTheDocument();
 
             expect(
                 screen.getByRole("treeitem", { name: "Parent 1 item" })
@@ -532,7 +576,9 @@ describe("NestedDropdownList", () => {
             );
 
             expect(mockOnSelectItem).not.toHaveBeenCalled();
-            expect(screen.queryByText("Child 1.1.1 item")).not.toBeInTheDocument();
+            expect(
+                screen.queryByText("Child 1.1.1 item")
+            ).not.toBeInTheDocument();
             expect(
                 screen.getByRole("treeitem", { name: "Parent 1.1 item" })
             ).toHaveAttribute("aria-expanded", "false");
@@ -557,7 +603,11 @@ describe("NestedDropdownList", () => {
                 <NestedDropdownList
                     listItems={options}
                     multiSelect
-                    selectedKeyPaths={new Set<string>(selectedKeyPaths.map(path => path.join(',')))}
+                    selectedKeyPaths={
+                        new Set<string>(
+                            selectedKeyPaths.map((path) => path.join(","))
+                        )
+                    }
                 />
             );
 
@@ -606,7 +656,11 @@ describe("NestedDropdownList", () => {
                 <NestedDropdownList
                     listItems={options}
                     multiSelect
-                    selectedKeyPaths={new Set<string>(selectedKeyPaths.map(path => path.join(",")))}
+                    selectedKeyPaths={
+                        new Set<string>(
+                            selectedKeyPaths.map((path) => path.join(","))
+                        )
+                    }
                     enableSearch
                 />
             );
@@ -630,10 +684,13 @@ describe("NestedDropdownList", () => {
                 <NestedDropdownList
                     listItems={options}
                     multiSelect
-                    selectedKeyPaths={new Set<string>(newSelectedKeyPaths.map(path => path.join(",")))}
+                    selectedKeyPaths={
+                        new Set<string>(
+                            newSelectedKeyPaths.map((path) => path.join(","))
+                        )
+                    }
                     enableSearch
-                />,
-
+                />
             );
 
             expect(

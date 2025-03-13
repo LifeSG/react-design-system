@@ -3,7 +3,7 @@ import {
     render,
     screen,
     waitFor,
-    waitForElementToBeRemoved
+    waitForElementToBeRemoved,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { InputSelect } from "../../src";
@@ -31,7 +31,7 @@ describe("InputSelect", () => {
 
     it("should render the component", async () => {
         renderDropdown(
-            <InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />,
+            <InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
         expect(screen.getByText("Select")).toBeVisible();
@@ -42,7 +42,7 @@ describe("InputSelect", () => {
         const user = userEvent.setup();
 
         renderDropdown(
-            <InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />,
+            <InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
         await user.click(screen.queryByTestId(FIELD_TESTID));
@@ -59,7 +59,9 @@ describe("InputSelect", () => {
     it("should toggle dropdown list when selector is clicked", async () => {
         const user = userEvent.setup();
 
-        renderDropdown(<InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />);
+        renderDropdown(
+            <InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />
+        );
 
         await user.click(screen.queryByTestId(FIELD_TESTID));
 
@@ -85,7 +87,7 @@ describe("InputSelect", () => {
                 data-testid={FIELD_TESTID}
                 options={OPTIONS}
                 onSelectOption={mockOnSelectOption}
-            />,
+            />
         );
 
         await user.click(screen.queryByTestId(FIELD_TESTID));
@@ -115,7 +117,7 @@ describe("InputSelect", () => {
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
                     onBlur={mockOnBlur}
-                />,
+                />
             );
 
             await user.click(screen.queryByTestId(FIELD_TESTID));
@@ -151,7 +153,7 @@ describe("InputSelect", () => {
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
                     onBlur={mockOnBlur}
-                />,
+                />
             );
 
             await user.click(screen.queryByTestId(FIELD_TESTID));
@@ -183,7 +185,7 @@ describe("InputSelect", () => {
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
                     onBlur={mockOnBlur}
-                />,
+                />
             );
 
             await act(async () => {
@@ -231,7 +233,7 @@ describe("InputSelect", () => {
                         enableSearch
                     />
                     <button data-testid="after" />
-                </>,
+                </>
             );
 
             await user.keyboard("{Tab}");
@@ -282,7 +284,7 @@ describe("InputSelect", () => {
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
                     enableSearch
-                />,
+                />
             );
 
             await user.click(screen.queryByTestId(FIELD_TESTID));
@@ -385,7 +387,8 @@ describe("InputSelect", () => {
                     options={OPTIONS}
                     enableSearch
                     searchFunction={() => ["custom 1"]}
-                />);
+                />
+            );
 
             await user.click(screen.queryByTestId(FIELD_TESTID));
 

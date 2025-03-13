@@ -31,7 +31,10 @@ const OPTIONS_DATA = [
     { value: "D", label: "Option D" },
 ];
 
-const LARGE_OPTIONS_DATA = [...Array(50000)].map((_, i) => ({ value: i + 1, label: `Option ${i + 1}` }));
+const LARGE_OPTIONS_DATA = [...Array(50000)].map((_, i) => ({
+    value: i + 1,
+    label: `Option ${i + 1}`,
+}));
 
 export const Select: StoryObj<Component> = {
     render: () => {
