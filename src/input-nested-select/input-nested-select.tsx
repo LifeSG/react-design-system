@@ -6,6 +6,7 @@ import {
     NestedDropdownList,
     NestedDropdownListItemProps,
     NestedDropdownListLocalItem,
+    buildKeyPathToSet,
     findItemByKeyPath,
 } from "../shared/dropdown-list-v2";
 import {
@@ -68,8 +69,10 @@ export const InputNestedSelect = <V1, V2, V3>({
     // CONST, STATE
     // =========================================================================
     const options = _options as NestedDropdownListItemProps<V1 | V2 | V3>[];
-    const [selectedKeyPaths, setSelectedKeyPaths] = useState<string[][]>(
-        _selectedKeyPath ? [_selectedKeyPath] : []
+    const [selectedKeyPaths, setSelectedKeyPaths] = useState<Set<string>>(
+        _selectedKeyPath
+            ? buildKeyPathToSet([_selectedKeyPath])
+            : new Set<string>()
     );
     const [selectedItem, setSelectedItem] =
         useState<SelectedItemType<V1, V2, V3>>();
@@ -86,7 +89,11 @@ export const InputNestedSelect = <V1, V2, V3>({
     // EFFECTS
     // =========================================================================
     useEffect(() => {
-        setSelectedKeyPaths(_selectedKeyPath ? [_selectedKeyPath] : []);
+        setSelectedKeyPaths(
+            _selectedKeyPath
+                ? buildKeyPathToSet([_selectedKeyPath])
+                : new Set<string>()
+        );
         const selectedItem = findItemByKeyPath(options, _selectedKeyPath || []);
         setSelectedItem(selectedItem ?? undefined);
     }, [_selectedKeyPath, options]);
@@ -101,8 +108,7 @@ export const InputNestedSelect = <V1, V2, V3>({
             keyPath,
             item: { label, value },
         } = listItem;
-
-        setSelectedKeyPaths([keyPath]);
+        setSelectedKeyPaths(buildKeyPathToSet([keyPath]));
         setSelectedItem({ label, value });
         setShowOptions(false);
         triggerOptionDisplayCallback(false);

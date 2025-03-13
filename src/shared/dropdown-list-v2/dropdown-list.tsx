@@ -7,6 +7,7 @@ import React, {
     useRef,
     useState,
 } from "react";
+import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
 import { Spinner } from "../../button/button.style";
 import {
     useCompare,
@@ -82,6 +83,7 @@ export const DropdownList = <T, V>({
     const listRef = useRef<HTMLDivElement>();
     const listItemRefs = useRef<HTMLElement[]>([]);
     const searchInputRef = useRef<HTMLInputElement>();
+    const virtuosoRef = useRef<VirtuosoHandle>(null);
 
     // =========================================================================
     // HELPER FUNCTIONS
@@ -143,7 +145,6 @@ export const DropdownList = <T, V>({
                 if (focusedIndex < displayListItems.length - 1) {
                     const upcomingIndex = focusedIndex + 1;
                     listItemRefs.current[upcomingIndex]?.focus();
-
                     setFocusedIndex(upcomingIndex);
                 }
                 break;
@@ -153,7 +154,6 @@ export const DropdownList = <T, V>({
                 if (focusedIndex > 0) {
                     const upcomingIndex = focusedIndex - 1;
                     listItemRefs.current[upcomingIndex]?.focus();
-
                     setFocusedIndex(upcomingIndex);
                 } else if (focusedIndex === 0 && searchInputRef.current) {
                     searchInputRef.current.focus();
@@ -215,20 +215,17 @@ export const DropdownList = <T, V>({
     useEventListener("keydown", handleKeyboardPress);
 
     useEffect(() => {
-        if (topScrollItem === undefined) return;
-
+        if (!topScrollItem && virtuosoRef.current) {
+            virtuosoRef.current.scrollTo({ top: 0 });
+            return;
+        }
         // Delay to ensure render is complete
         const timer = setTimeout(() => {
             const index = listItems.indexOf(topScrollItem);
-            const focusedItem = listItemRefs.current[index];
-
-            // Align the item to top of scrollable container
-            if (nodeRef.current) {
-                const scrollOffset = focusedItem?.offsetTop ?? 0;
-                nodeRef.current.scrollTop = scrollOffset - 8;
+            if (virtuosoRef.current && index !== -1) {
+                virtuosoRef.current.scrollToIndex({ index });
+                setFocusedIndex(index);
             }
-
-            setFocusedIndex(index);
         }, 0);
 
         return () => clearTimeout(timer);
@@ -242,23 +239,29 @@ export const DropdownList = <T, V>({
 
         if (disableItemFocus) return;
 
-        const selectedIndex = listItems.findIndex((item) =>
+        const index = listItems.findIndex((item) =>
             checkListItemSelected(item)
         );
 
         // Focus search input if there is one
         if (searchInputRef.current) {
             setFocusedIndex(-1);
-            setTimeout(() => searchInputRef.current?.focus(), 200); // wait for animation
-        } else if (listItemRefs.current[focusedIndex]) {
+            setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
+        } else if (focusedIndex > 0) {
             // Else focus on the specified element
+            virtuosoRef.current.scrollToIndex({
+                index: focusedIndex,
+                align: "center",
+            });
             setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
-        } else if (listItemRefs.current[selectedIndex]) {
+        } else if (index !== -1) {
             // Else focus on the selected element
-            setFocusedIndex(selectedIndex);
-            setTimeout(() => listItemRefs.current[selectedIndex]?.focus(), 200);
+            virtuosoRef.current.scrollToIndex({ index, align: "center" });
+            setFocusedIndex(index);
+            setTimeout(() => listItemRefs.current[index]?.focus(), 200);
         } else {
             // Else focus on the first list item
+            virtuosoRef.current.scrollToIndex({ index: 0 });
             setFocusedIndex(0);
             setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
@@ -352,37 +355,35 @@ export const DropdownList = <T, V>({
         );
     };
 
-    const renderItems = () => {
+    const renderItem = (item: T, index: number) => {
         if (!onRetry || (onRetry && itemsLoadState === "success")) {
-            return displayListItems.map((item, index) => {
-                const selected = checkListItemSelected(item);
-                const active = index === focusedIndex;
-                return (
-                    <ListItem
-                        aria-selected={selected}
-                        aria-multiselectable={multiSelect}
-                        data-testid="list-item"
-                        key={getItemKey(item, index)}
-                        onClick={() => handleListItemClick(item, index)}
-                        onMouseEnter={() => handleListItemHover(index)}
-                        ref={(element) =>
-                            (listItemRefs.current[index] = element)
-                        }
-                        role="option"
-                        tabIndex={active ? 0 : -1}
-                        $active={active}
-                    >
-                        {renderListItem ? (
-                            renderListItem(item, { selected })
-                        ) : (
-                            <>
-                                {renderListItemIcon(selected)}
-                                {renderDropdownLabel(item, selected)}
-                            </>
-                        )}
-                    </ListItem>
-                );
-            });
+            const selected = checkListItemSelected(item);
+            const active = index === focusedIndex;
+            return (
+                <ListItem
+                    aria-selected={selected}
+                    aria-multiselectable={multiSelect}
+                    data-testid="list-item"
+                    key={getItemKey(item, index)}
+                    onClick={() => handleListItemClick(item, index)}
+                    onMouseEnter={() => handleListItemHover(index)}
+                    ref={(element) => {
+                        listItemRefs.current[index] = element;
+                    }}
+                    role="option"
+                    tabIndex={active ? 0 : -1}
+                    $active={active}
+                >
+                    {renderListItem ? (
+                        renderListItem(item, { selected })
+                    ) : (
+                        <>
+                            {renderListItemIcon(selected)}
+                            {renderDropdownLabel(item, selected)}
+                        </>
+                    )}
+                </ListItem>
+            );
         }
     };
 
@@ -486,6 +487,20 @@ export const DropdownList = <T, V>({
         }
     };
 
+    const renderVirtualisedList = () => {
+        return (
+            <Listbox role="listbox" id={listboxId}>
+                <Virtuoso
+                    ref={virtuosoRef}
+                    style={{ height: "100%" }}
+                    data={displayListItems}
+                    customScrollParent={nodeRef.current}
+                    itemContent={(index, item) => renderItem(item, index)}
+                />
+            </Listbox>
+        );
+    };
+
     const renderList = () => {
         return (
             <List ref={listRef} data-testid="dropdown-list">
@@ -494,9 +509,7 @@ export const DropdownList = <T, V>({
                 {renderNoResults()}
                 {renderLoading()}
                 {renderTryAgain()}
-                <Listbox role="listbox" id={listboxId}>
-                    {renderItems()}
-                </Listbox>
+                {renderVirtualisedList()}
             </List>
         );
     };

@@ -6,6 +6,7 @@ import { Layout } from "src/layout";
 import { StoryContainer } from "../../storybook-common";
 import { Container } from "../shared-doc-elements";
 import {
+    bigOptions,
     longLabelOptions,
     options,
     searchOptions,
@@ -110,6 +111,22 @@ export const WithSearch: StoryObj<Component> = {
                     <Form.NestedSelect
                         label="This has searchable options"
                         options={searchOptions}
+                        enableSearch
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
+export const Virtualisation: StoryObj<Component> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.NestedSelect
+                        label="The options are rendered using virtualisation"
+                        options={bigOptions}
                         enableSearch
                     />
                 </Container>

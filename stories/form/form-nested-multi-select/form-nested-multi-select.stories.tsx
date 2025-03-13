@@ -5,6 +5,7 @@ import { InputNestedMultiSelect } from "src/input-nested-multi-select";
 import { Layout } from "src/layout";
 import { StoryContainer } from "../../storybook-common";
 import {
+    bigOptions,
     longLabelOptions,
     options,
     searchOptions,
@@ -94,6 +95,22 @@ export const WithSearch: StoryObj<Component> = {
                     <Form.NestedMultiSelect
                         label="This has searchable options"
                         options={searchOptions}
+                        enableSearch
+                    />
+                </Container>
+            </StoryContainer>
+        );
+    },
+};
+
+export const Virtualisation: StoryObj<Component> = {
+    render: () => {
+        return (
+            <StoryContainer>
+                <Container>
+                    <Form.NestedMultiSelect
+                        label="The options are rendered using virtualisation"
+                        options={bigOptions}
                         enableSearch
                     />
                 </Container>

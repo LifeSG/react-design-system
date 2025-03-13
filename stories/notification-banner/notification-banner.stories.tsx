@@ -267,19 +267,21 @@ export const HandlingLongContent: StoryObj<Component> = {
     render: () => {
         return (
             <div>
-                <NotificationBanner maxCollapsedHeight={100}
-                actionButton={{
-                    children: (
-                        <>
-                            View more
-                            <ArrowRightIcon />
-                        </>
-                    ),
-                    onClick: (event) => {
-                        event.preventDefault();
-                        alert("I got clicked");
-                    },
-                }}>
+                <NotificationBanner
+                    maxCollapsedHeight={100}
+                    actionButton={{
+                        children: (
+                            <>
+                                View more
+                                <ArrowRightIcon />
+                            </>
+                        ),
+                        onClick: (event) => {
+                            event.preventDefault();
+                            alert("I got clicked");
+                        },
+                    }}
+                >
                     This is a notification banner with maxCollapsedHeight set.
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna

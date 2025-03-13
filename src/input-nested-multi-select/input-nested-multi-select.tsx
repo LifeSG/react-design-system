@@ -7,6 +7,7 @@ import {
     NestedDropdownList,
     NestedDropdownListItemProps,
     NestedDropdownListLocalItem,
+    buildKeyPathToSet,
 } from "../shared/dropdown-list-v2";
 import {
     DropdownRenderProps,
@@ -53,8 +54,10 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     // CONST, STATE
     // =========================================================================
     const options = _options as NestedDropdownListItemProps<V1 | V2 | V3>[];
-    const [selectedKeyPaths, setSelectedKeyPaths] = useState<string[][]>(
-        _selectedKeyPaths || []
+    const [selectedKeyPaths, setSelectedKeyPaths] = useState<Set<string>>(
+        _selectedKeyPaths
+            ? buildKeyPathToSet(_selectedKeyPaths)
+            : new Set<string>()
     );
     const [selectedItems, setSelectedItems] = useState<
         SelectedItem<V1 | V2 | V3>[]
@@ -75,7 +78,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         const newKeyPath = _selectedKeyPaths || [];
         const selectedItems = getSelectedItems(options, newKeyPath);
 
-        setSelectedKeyPaths(newKeyPath);
+        setSelectedKeyPaths(buildKeyPathToSet(newKeyPath));
         setSelectedItems(selectedItems);
     }, [_selectedKeyPaths, options]);
 
@@ -91,7 +94,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             label: item.item.label,
             value: item.item.value,
         }));
-        setSelectedKeyPaths(keyPaths);
+        setSelectedKeyPaths(buildKeyPathToSet(keyPaths));
         setSelectedItems(selectedItems);
         performOnSelectOptions(keyPaths, selectedItems);
     };
@@ -103,7 +106,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             getNewSelection(listItem);
         const newKeyPaths = newSelectedItems.map((item) => item.keyPath);
         setSelectedItems(newSelectedItems);
-        setSelectedKeyPaths(newKeyPaths);
+        setSelectedKeyPaths(buildKeyPathToSet(newKeyPaths));
         performOnSelectOptions(newKeyPaths, newSelectedItems);
     };
 
