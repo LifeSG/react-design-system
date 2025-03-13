@@ -1,6 +1,7 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { ColourScheme, SemanticColourSet, ThemeCollectionSpec } from "../types";
 import { LifeSGColourSet } from "./specs/lifesg-semantic-tokens";
+import { PAColourSet } from "./specs/pa-semantic-tokens";
 import { SemanticColourCollectionMap } from "./types";
 
 const ColourSpec: ThemeCollectionSpec<
@@ -13,7 +14,7 @@ const ColourSpec: ThemeCollectionSpec<
         rbs: LifeSGColourSet,
         mylegacy: LifeSGColourSet,
         ccube: LifeSGColourSet,
-        pa: LifeSGColourSet,
+        pa: PAColourSet,
     },
     defaultValue: "lifesg",
 };
