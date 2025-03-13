@@ -104,12 +104,12 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         </>
     );
 
-    const renderWithThumbnail = (thumbnailImageDataUrl: string) => (
+    const renderWithThumbnail = (thumbnailSrc: string) => (
         <>
             <ThumbnailContainer data-testid={`${id}-thumbnail`}>
                 <Thumbnail
                     data-testid={`${id}-thumbnail-image`}
-                    src={thumbnailImageDataUrl}
+                    src={thumbnailSrc}
                 />
             </ThumbnailContainer>
             <ExtendedNameSection>
