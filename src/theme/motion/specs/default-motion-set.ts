@@ -1,6 +1,6 @@
 import { MotionSet } from "../types";
 
-export const LifeSgMotionSet: MotionSet = {
+export const DefaultMotionSet: MotionSet = {
     "duration-150": "150ms",
     "duration-250": "250ms",
     "duration-350": "350ms",

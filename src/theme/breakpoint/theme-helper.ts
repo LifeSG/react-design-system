@@ -1,6 +1,6 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { BreakpointScheme, ThemeCollectionSpec } from "../types";
-import { LifeSgBreakpointSet } from "./specs/lifesg-breakpoint-set";
+import { DefaultBreakpointSet } from "./specs/default-breakpoint-set";
 import { BreakpointCollectionsMap, BreakpointSet } from "./types";
 
 const BreakpointSpec: ThemeCollectionSpec<
@@ -8,9 +8,9 @@ const BreakpointSpec: ThemeCollectionSpec<
     BreakpointScheme
 > = {
     collections: {
-        lifesg: LifeSgBreakpointSet,
+        default: DefaultBreakpointSet,
     },
-    defaultValue: "lifesg",
+    defaultValue: "default",
 };
 
 export const getBreakpoint = (key: keyof BreakpointSet) => {

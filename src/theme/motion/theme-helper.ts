@@ -1,13 +1,13 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { MotionScheme, ThemeCollectionSpec } from "../types";
-import { LifeSgMotionSet } from "./specs/lifesg-motion-set";
+import { DefaultMotionSet } from "./specs/default-motion-set";
 import { MotionCollectionsMap, MotionSet } from "./types";
 
 const MotionSpec: ThemeCollectionSpec<MotionCollectionsMap, MotionScheme> = {
     collections: {
-        lifesg: LifeSgMotionSet,
+        default: DefaultMotionSet,
     },
-    defaultValue: "lifesg",
+    defaultValue: "default",
 };
 
 export const getMotion = (key: keyof MotionSet) => {

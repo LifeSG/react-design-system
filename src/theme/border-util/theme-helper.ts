@@ -1,7 +1,7 @@
 import { CSSProp } from "styled-components";
 import { StyledComponentProps, getCollection } from "../helpers";
 import { BorderScheme, ThemeCollectionSpec } from "../types";
-import { LifeSgBorderUtilSet } from "./specs/lifesg-border-util-set";
+import { DefaultBorderUtilSet } from "./specs/default-border-util-set";
 import { BorderUtilCollectionMap, BorderUtilSet } from "./types";
 
 const BorderUtilSpec: ThemeCollectionSpec<
@@ -9,9 +9,9 @@ const BorderUtilSpec: ThemeCollectionSpec<
     BorderScheme
 > = {
     collections: {
-        lifesg: LifeSgBorderUtilSet,
+        default: DefaultBorderUtilSet,
     },
-    defaultValue: "lifesg",
+    defaultValue: "default",
 };
 
 const isStyledProps = (args: any): args is [StyledComponentProps] =>

@@ -16,7 +16,7 @@ const generateFontCSS = (
     letter-spacing: ${getFontSpec(letterSpacingKey)};
 `;
 
-export const LifeSgFontSet: FontSet = {
+export const DefaultFontSet: FontSet = {
     "header-xxl-light": generateFontCSS(
         "header-size-xxl",
         "weight-light",

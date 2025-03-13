@@ -1,6 +1,6 @@
 import { BreakpointSet } from "../types";
 
-export const LifeSgBreakpointSet: BreakpointSet = {
+export const DefaultBreakpointSet: BreakpointSet = {
     "xxs-min": 0,
     "xxs-max": 320,
     "xs-min": 321,

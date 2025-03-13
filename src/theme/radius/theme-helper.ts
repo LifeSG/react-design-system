@@ -1,13 +1,13 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { RadiusScheme, ThemeCollectionSpec } from "../types";
-import { LifeSgRadiusSet } from "./specs/lifesg-radius-set";
+import { DefaultRadiusSet } from "./specs/default-radius-set";
 import { RadiusCollectionsMap, RadiusSet } from "./types";
 
 const RadiusSpec: ThemeCollectionSpec<RadiusCollectionsMap, RadiusScheme> = {
     collections: {
-        lifesg: LifeSgRadiusSet,
+        default: DefaultRadiusSet,
     },
-    defaultValue: "lifesg",
+    defaultValue: "default",
 };
 
 export const getRadius = (key: keyof RadiusSet) => {

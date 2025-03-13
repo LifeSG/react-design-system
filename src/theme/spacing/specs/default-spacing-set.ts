@@ -1,6 +1,6 @@
 import { SpacingSet } from "../types";
 
-export const LifeSgSpacingSet: SpacingSet = {
+export const DefaultSpacingSet: SpacingSet = {
     "spacing-0": 0,
     "spacing-4": 4,
     "spacing-8": 8,

@@ -1,6 +1,6 @@
 import { RadiusSet } from "../types";
 
-export const LifeSgRadiusSet: RadiusSet = {
+export const DefaultRadiusSet: RadiusSet = {
     none: 0,
     xs: 2,
     sm: 4,

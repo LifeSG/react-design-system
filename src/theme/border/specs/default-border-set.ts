@@ -1,6 +1,6 @@
 import { BorderSet } from "../types";
 
-export const LifeSgBorderSet: BorderSet = {
+export const DefaultBorderSet: BorderSet = {
     "width-005": 0.5,
     "width-010": 1,
     "width-020": 2,

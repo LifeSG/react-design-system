@@ -39,7 +39,6 @@ export type ColourScheme =
     | "mylegacy"
     | "ccube"
     | "pa";
-
 export type FontScheme =
     | "lifesg"
     | "bookingsg"
@@ -47,11 +46,11 @@ export type FontScheme =
     | "mylegacy"
     | "ccube"
     | "pa";
-export type MotionScheme = "lifesg";
-export type BorderScheme = "lifesg";
-export type SpacingScheme = "lifesg";
-export type RadiusScheme = "lifesg";
-export type BreakpointScheme = "lifesg";
+export type MotionScheme = "default";
+export type BorderScheme = "default";
+export type SpacingScheme = "default";
+export type RadiusScheme = "default";
+export type BreakpointScheme = "default";
 export type ResourceScheme =
     | "lifesg"
     | "bookingsg"

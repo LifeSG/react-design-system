@@ -1,13 +1,13 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { SpacingScheme, ThemeCollectionSpec } from "../types";
-import { LifeSgSpacingSet } from "./specs/lifesg-spacing-set";
+import { DefaultSpacingSet } from "./specs/default-spacing-set";
 import { SpacingCollectionsMap, SpacingSet } from "./types";
 
 const SpacingSpec: ThemeCollectionSpec<SpacingCollectionsMap, SpacingScheme> = {
     collections: {
-        lifesg: LifeSgSpacingSet,
+        default: DefaultSpacingSet,
     },
-    defaultValue: "lifesg",
+    defaultValue: "default",
 };
 
 export const getSpace = (key: keyof SpacingSet) => {

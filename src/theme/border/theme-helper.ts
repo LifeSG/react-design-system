@@ -1,13 +1,13 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { BorderScheme, ThemeCollectionSpec } from "../types";
-import { LifeSgBorderSet } from "./specs/lifesg-border-set";
+import { DefaultBorderSet } from "./specs/default-border-set";
 import { BorderCollectionMap, BorderSet } from "./types";
 
 const BorderSpec: ThemeCollectionSpec<BorderCollectionMap, BorderScheme> = {
     collections: {
-        lifesg: LifeSgBorderSet,
+        default: DefaultBorderSet,
     },
-    defaultValue: "lifesg",
+    defaultValue: "default",
 };
 
 export const getBorderWidth = (

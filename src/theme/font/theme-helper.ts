@@ -1,17 +1,17 @@
 import { CSSProp } from "styled-components";
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { FontScheme, ThemeCollectionSpec } from "../types";
-import { LifeSgFontSet } from "./specs/lifesg-font-set";
+import { DefaultFontSet } from "./specs/default-font-set";
 import { FontCollectionMap, FontSet } from "./types";
 
 const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
     collections: {
-        lifesg: LifeSgFontSet,
-        bookingsg: LifeSgFontSet,
-        rbs: LifeSgFontSet,
-        mylegacy: LifeSgFontSet,
-        ccube: LifeSgFontSet,
-        pa: LifeSgFontSet,
+        lifesg: DefaultFontSet,
+        bookingsg: DefaultFontSet,
+        rbs: DefaultFontSet,
+        mylegacy: DefaultFontSet,
+        ccube: DefaultFontSet,
+        pa: DefaultFontSet,
     },
     defaultValue: "lifesg",
 };
