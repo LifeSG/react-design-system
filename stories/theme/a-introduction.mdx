@@ -34,3 +34,51 @@ A theme is a collection of design tokens. You can customise certain visual
 properties of components by configuring the theme in your project.
 
 Learn more about themes [here](/docs/foundations-themes-introduction--docs).
+
+## General usage
+
+### With styled components
+
+```tsx
+import { Colour } from "@lifesg/react-design-system/theme";
+import styled, { css } from "styled-components";
+
+const SomeComponent = styled.div`
+    background: ${Colour["background-error"]};
+`;
+
+// If you extract the props, remember to wrap nested interpolations with the css helper
+const AnotherComponent = styled.div`
+    ${(props) => {
+        return css`
+            background: ${Colour["background-error"]};
+        `;
+    }}
+`;
+```
+
+### As a constant
+
+If you require the token as a constant value, you could do this:
+
+```tsx
+import { Colour, LifeSGTheme } from "@lifesg/react-design-system/theme";
+import { useTheme } from "styled-components";
+
+const colour = Colour["text"]({ theme: LifeSGTheme });
+```
+
+### In React components
+
+If you require the token as a constant value based on the current theme, you
+could do this:
+
+```tsx
+import { Colour, LifeSGTheme } from "@lifesg/react-design-system/theme";
+import { useTheme } from "styled-components";
+
+const Component = () => {
+    const theme = useTheme();
+    const colour = Colour["text"]({ theme });
+};
+```
