@@ -217,6 +217,7 @@ export const DropdownList = <T, V>({
     useEffect(() => {
         if (!topScrollItem && virtuosoRef.current) {
             virtuosoRef.current.scrollTo({ top: 0 });
+            return;
         }
         // Delay to ensure render is complete
         const timer = setTimeout(() => {
@@ -364,7 +365,6 @@ export const DropdownList = <T, V>({
                     onClick={() => handleListItemClick(item, index)}
                     onMouseEnter={() => handleListItemHover(index)}
                     ref={(element) => {
-                        if (!element) return;
                         listItemRefs.current[index] = element;
                     }}
                     role="option"
