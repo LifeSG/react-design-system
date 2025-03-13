@@ -16,12 +16,14 @@ interface Props {
     controlledMode?: boolean | undefined;
     "data-testid"?: string | undefined;
     onTabClick?: ((title: string, order: number) => void) | undefined;
+    fullWidthIndicatorLine?: boolean | undefined;
 }
 
 export const TabLinkChain = ({
     controlledMode,
     "data-testid": testId,
     onTabClick,
+    fullWidthIndicatorLine,
 }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
@@ -77,7 +79,10 @@ export const TabLinkChain = ({
     // =========================================================================
     return (
         <CustomFadeWrapper onResize={handleResize} data-testid={testId}>
-            <Chain role="tablist">
+            <Chain
+                role="tablist"
+                $fullWidthIndicatorLine={fullWidthIndicatorLine}
+            >
                 {tabLinks.map((linkChain, index) => {
                     const isActive = currentActiveIndex === index;
 

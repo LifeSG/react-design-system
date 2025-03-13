@@ -20,6 +20,7 @@ const TabBase = ({
     initialActive = 0,
     onTabClick,
     "data-testid": testId,
+    fullWidthIndicatorLine,
     ...otherProps
 }: TabProps) => {
     // =========================================================================
@@ -84,6 +85,7 @@ const TabBase = ({
                     controlledMode={typeof currentActiveIndex === "number"}
                     onTabClick={onTabClick}
                     data-testid={`${testId}-tabs`}
+                    fullWidthIndicatorLine={fullWidthIndicatorLine}
                 />
                 {renderChildren()}
             </TabContext.Provider>
