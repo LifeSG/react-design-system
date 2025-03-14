@@ -49,6 +49,12 @@ const TAB_DATA: ApiTableSectionProps[] = [
                 description: "Called when a tab item selector is clicked",
                 propTypes: ["(title: string, index: number) => void"],
             },
+            {
+                name: "fullWidthIndicatorLine",
+                description:
+                    "Extends the bottom border to the full width of the container",
+                propTypes: ["boolean"],
+            },
         ],
     },
 ];

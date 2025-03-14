@@ -167,6 +167,12 @@ export const Label = styled.div<LabelStyleProps>`
         const { $disabled, $type } = props;
 
         if ($disabled) {
+            if ($type === "hidden") {
+                return css`
+                    visibility: hidden;
+                `;
+            }
+
             return css`
                 color: ${Colour["text-disabled-subtlest"]};
             `;

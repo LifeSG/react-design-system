@@ -11,19 +11,38 @@ interface LabelStyleProps {
 }
 
 interface ChainStyleProps {
+    $fullWidthIndicatorLine?: boolean;
+}
+
+interface ChainItemStyleProps {
     $active?: boolean;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Chain = styled.ul`
+export const Chain = styled.ul<ChainStyleProps>`
     display: inline-flex;
     width: 100%;
     list-style-type: none;
+
+    ${(props) => {
+        if (props.$fullWidthIndicatorLine) {
+            return css`
+                ::after {
+                    content: "";
+                    height: inherit;
+                    flex-grow: 1;
+                    /* follows the border in ChainItem */
+                    border-bottom: ${Border["width-040"]} ${Border.solid}
+                        ${Colour.border};
+                }
+            `;
+        }
+    }}
 `;
 
-export const ChainItem = styled.li<ChainStyleProps>`
+export const ChainItem = styled.li<ChainItemStyleProps>`
     display: flex;
     flex-shrink: 0;
     border-bottom: ${Border["width-040"]} ${Border.solid} ${Colour.border};

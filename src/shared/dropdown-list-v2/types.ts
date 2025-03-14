@@ -133,7 +133,7 @@ export interface NestedDropdownListProps<T>
     extends DropdownSearchProps<NestedDropdownListItemProps<T>>,
         DropdownConfigProps {
     listItems: NestedDropdownListItemProps<T>[];
-    selectedKeyPaths: string[][];
+    selectedKeyPaths: Set<string>;
     listboxId?: string | undefined;
     /** Specifies if items are expanded or collapsed when the dropdown is opened */
     mode?: ExpandMode | undefined;

@@ -1,7 +1,8 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { FormTimeRangePicker } from "../../src/form/form-time-range-picker";
 import { TimeRangePicker } from "../../src/time-range-picker/time-range-picker";
-import userEvent from "@testing-library/user-event";
+import { MockVirtuosoContextWrapper } from "../__test-utils__/virtuoso/virtuoso-test-mocks";
 
 // =============================================================================
 // UNIT TESTS
@@ -11,6 +12,10 @@ const END_LABEL = "End time input";
 const DROPDOWN_TESTID = "dropdown-list";
 
 describe("TimeRangePicker", () => {
+    const renderComponent = (component: JSX.Element) => {
+        return render(component, { wrapper: MockVirtuosoContextWrapper });
+    };
+
     beforeEach(() => {
         jest.clearAllMocks();
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
@@ -69,7 +74,7 @@ describe("TimeRangePicker", () => {
 
         describe("generated dropdown options", () => {
             it("should have end first option be after start time", async () => {
-                render(
+                renderComponent(
                     <TimeRangePicker
                         variant={"combobox"}
                         value={{ start: "9:00am", end: "" }}
@@ -83,7 +88,7 @@ describe("TimeRangePicker", () => {
             });
 
             it("should have correct options for 24hr format", async () => {
-                render(
+                renderComponent(
                     <TimeRangePicker variant={"combobox"} format={"24hr"} />
                 );
 
@@ -94,7 +99,7 @@ describe("TimeRangePicker", () => {
             });
 
             it("should have correct start/end limits", async () => {
-                render(
+                renderComponent(
                     <TimeRangePicker
                         variant={"combobox"}
                         startLimit="1:00pm"
@@ -113,7 +118,7 @@ describe("TimeRangePicker", () => {
             });
 
             it("should have correct interval between options", async () => {
-                render(
+                renderComponent(
                     <TimeRangePicker
                         variant={"combobox"}
                         startLimit="1:00pm"
@@ -225,7 +230,7 @@ describe("TimeRangePicker", () => {
                 const mockOnChange = jest.fn();
                 const mockOnBlur = jest.fn();
 
-                render(
+                renderComponent(
                     <TimeRangePicker
                         variant={"combobox"}
                         onChange={mockOnChange}
@@ -245,7 +250,6 @@ describe("TimeRangePicker", () => {
                 });
                 await waitFor(() => expect(startInput).toHaveValue("9:00am"));
                 expect(mockOnChange).toHaveBeenCalledTimes(1);
-
                 // Click end dropdown option
                 await act(async () => {
                     await user.click(screen.getByText("10:00am"));
@@ -429,7 +433,7 @@ describe("TimeRangePicker", () => {
                 const mockOnBlur = jest.fn();
                 const mockOnFocus = jest.fn();
 
-                render(
+                renderComponent(
                     <>
                         <button data-testid="before" />
                         <TimeRangePicker

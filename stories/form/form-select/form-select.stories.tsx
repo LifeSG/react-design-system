@@ -34,6 +34,11 @@ const OPTIONS_DATA = [
     { value: "D", label: "Option D" },
 ];
 
+const LARGE_OPTIONS_DATA = [...Array(50000)].map((_, i) => ({
+    value: i + 1,
+    label: `Option ${i + 1}`,
+}));
+
 export const Select: StoryObj<Component> = {
     render: (_args) => {
         return (
@@ -135,6 +140,22 @@ export const WithSearch: StoryObj<Component> = {
             <Form.Select
                 label="This has searchable options"
                 options={OPTIONS_DATA}
+                valueExtractor={(item) => item.value}
+                listExtractor={(item) => item.label}
+                displayValueExtractor={(item) => item.label}
+                enableSearch
+            />
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const Virtualisation: StoryObj<StandaloneComponent> = {
+    render: (_args) => {
+        return (
+            <Form.Select
+                label="The options are rendered using virtualisation"
+                options={LARGE_OPTIONS_DATA}
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
                 displayValueExtractor={(item) => item.label}

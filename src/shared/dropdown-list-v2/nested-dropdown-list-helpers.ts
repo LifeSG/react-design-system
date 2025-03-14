@@ -12,7 +12,7 @@ import {
  */
 export const flattenList = <T>(
     nestedList: NestedDropdownListItemProps<T>[],
-    selectedKeyPaths: string[][],
+    selectedKeyPaths: Set<string>,
     multiSelect: boolean,
     searchTerm: string,
     initialExpanded: boolean
@@ -24,21 +24,23 @@ export const flattenList = <T>(
         parentItem: NestedDropdownListLocalItem<T> | undefined
     ) => {
         const current: NestedDropdownListLocalItem<T>[] = [];
-        const hasNestedSiblings = !!list.find(
+        const hasNestedSiblings = list.some(
             (option) => option.subItems?.length
         );
 
-        for (let i = 0; i < list.length; i++) {
-            const option = list[i];
+        list.forEach((option, i) => {
             const level = parentItem ? parentItem.level + 1 : 0;
+            const keyPath = parentItem
+                ? [...parentItem.keyPath, option.key]
+                : [option.key];
+            const keyPathString = buildKeyPath(keyPath);
+
             const item: (typeof items)[number] = {
                 item: option,
                 index: items.length,
                 indexInParent: i,
                 parentSetSize: list.length,
-                keyPath: parentItem
-                    ? [...parentItem.keyPath, option.key]
-                    : [option.key],
+                keyPath,
                 parentIndex: parentItem ? parentItem.index : -1,
                 parentKeyPath: parentItem ? parentItem.keyPath : [],
                 level,
@@ -48,7 +50,7 @@ export const flattenList = <T>(
                     parentItem?.expanded ||
                     false,
                 expanded: initialExpanded,
-                checked: false,
+                checked: selectedKeyPaths.has(keyPathString),
                 hasSubItems: !!option.subItems?.length,
                 subItemIndexes: [],
                 hasNestedSiblings,
@@ -57,9 +59,6 @@ export const flattenList = <T>(
                     : false,
                 hasMatchedSubItems: false,
             };
-            item.checked = !!selectedKeyPaths.find((keyPath) =>
-                isEqual(keyPath, item.keyPath)
-            );
             current.push(item);
             items.push(item);
 
@@ -86,12 +85,11 @@ export const flattenList = <T>(
                 );
                 item.subItemIndexes = children.map((child) => child.index);
             }
-        }
+        });
         return current;
     };
 
     flatten(nestedList, undefined);
-
     return items;
 };
 
@@ -202,16 +200,14 @@ export const toggleSubtree = <T>(
 
 export const updateSelectedState = <T>(
     list: NestedDropdownListLocalItem<T>[],
-    selectedKeyPaths: string[][],
+    selectedKeyPaths: Set<string>,
     multiSelect: boolean
 ) => {
-    return produce(list, (draft) => {
+    const res = produce(list, (draft) => {
         for (let i = draft.length - 1; i >= 0; i--) {
             const item = draft[i];
-            item.checked = !!selectedKeyPaths.find((keyPath) =>
-                isEqual(keyPath, item.keyPath)
-            );
-
+            const itemKeyPathString = buildKeyPath(item.keyPath);
+            item.checked = selectedKeyPaths.has(itemKeyPathString);
             if (item.hasSubItems) {
                 if (multiSelect && item.checked !== true) {
                     const children = item.subItemIndexes.map(
@@ -234,34 +230,35 @@ export const updateSelectedState = <T>(
             }
         }
     });
+    return res;
 };
 
-export const findIndexFromStart = <T>(
+export const findItemFromStart = <T>(
     arr: T[],
     predicate: (e: T) => boolean,
     start: number
-): number => {
+): T | undefined => {
     for (let i = start; i < arr.length; i++) {
         if (predicate(arr[i])) {
-            return i;
+            return arr[i];
         }
     }
 
-    return -1;
+    return undefined;
 };
 
-export const findIndexFromEnd = <T>(
+export const findItemFromEnd = <T>(
     arr: T[],
     predicate: (e: T) => boolean,
     end: number
-): number => {
+): T | undefined => {
     for (let i = end; i >= 0; i--) {
         if (predicate(arr[i])) {
-            return i;
+            return arr[i];
         }
     }
 
-    return -1;
+    return undefined;
 };
 
 export const findItemByKeyPath = <T>(
@@ -280,4 +277,12 @@ export const findItemByKeyPath = <T>(
     }
 
     return findItemByKeyPath(item.subItems, nextKeyPath);
+};
+
+export const buildKeyPath = (keyPath: string[]): string => {
+    return keyPath.join(",");
+};
+
+export const buildKeyPathToSet = (keyPathArr: string[][]): Set<string> => {
+    return new Set<string>(keyPathArr.map((keyPath) => keyPath.join(",")));
 };

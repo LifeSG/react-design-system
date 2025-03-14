@@ -8,6 +8,7 @@ import {
     StoryDecorator,
 } from "stories/storybook-common";
 import {
+    bigOptions,
     longLabelOptions,
     options,
     searchOptions,
@@ -105,6 +106,19 @@ export const WithSearch: StoryObj<Component> = {
             <Form.NestedSelect
                 label="This has searchable options"
                 options={searchOptions}
+                enableSearch
+            />
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const Virtualisation: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Form.NestedSelect
+                label="The options are rendered using virtualisation"
+                options={bigOptions}
                 enableSearch
             />
         );

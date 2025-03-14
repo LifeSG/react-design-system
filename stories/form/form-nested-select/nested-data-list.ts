@@ -1,3 +1,22 @@
+const createSubItems = (length: number, depth: number, prefix = "") =>
+    Array.from({ length }, (_, index): any => {
+        const currentIndex = index + 1;
+        const label = prefix ? `${prefix}.${currentIndex}` : `${currentIndex}`;
+        const value = { id: label, name: label };
+        const key = label;
+
+        return depth > 1
+            ? {
+                  label,
+                  value,
+                  key,
+                  subItems: createSubItems(length, depth - 1, label),
+              }
+            : { label, value, key };
+    });
+
+export const bigOptions = createSubItems(46, 3);
+
 export const options = [
     {
         label: "1",

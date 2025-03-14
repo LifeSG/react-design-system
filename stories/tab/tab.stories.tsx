@@ -74,3 +74,24 @@ export const ControlledMode: StoryObj<Component> = {
         );
     },
 };
+
+export const FullWidthIndicatorLine: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Tab fullWidthIndicatorLine>
+                <Tab.Item title="Section A">
+                    <ContentA />
+                </Tab.Item>
+                <Tab.Item title="Section B">
+                    <ContentB />
+                </Tab.Item>
+                <Tab.Item title="Section C">
+                    <ContentC />
+                </Tab.Item>
+                <Tab.Item title="Section D">
+                    <ContentD />
+                </Tab.Item>
+            </Tab>
+        );
+    },
+};

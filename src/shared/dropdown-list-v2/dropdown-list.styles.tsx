@@ -36,7 +36,6 @@ interface ListItemStyleProps {
 // -----------------------------------------------------------------------------
 // MAIN STYLES
 // -----------------------------------------------------------------------------
-
 export const Container = styled.div<ContainerStyleProps>`
     overflow: hidden;
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
