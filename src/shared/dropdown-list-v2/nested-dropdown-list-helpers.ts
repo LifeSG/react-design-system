@@ -21,7 +21,7 @@ export const flattenList = <T>(
 
     const flatten = (
         list: NestedDropdownListItemProps<T>[],
-        parentItem: NestedDropdownListLocalItem<T>
+        parentItem: NestedDropdownListLocalItem<T> | undefined
     ) => {
         const current: NestedDropdownListLocalItem<T>[] = [];
         const hasNestedSiblings = !!list.find(
@@ -42,7 +42,11 @@ export const flattenList = <T>(
                 parentIndex: parentItem ? parentItem.index : -1,
                 parentKeyPath: parentItem ? parentItem.keyPath : [],
                 level,
-                visible: level === 0 || initialExpanded || parentItem.expanded,
+                visible:
+                    level === 0 ||
+                    initialExpanded ||
+                    parentItem?.expanded ||
+                    false,
                 expanded: initialExpanded,
                 checked: false,
                 hasSubItems: !!option.subItems?.length,
@@ -261,15 +265,15 @@ export const findIndexFromEnd = <T>(
 };
 
 export const findItemByKeyPath = <T>(
-    nestedList: NestedDropdownListItemProps<T>[],
+    nestedList: NestedDropdownListItemProps<T>[] | undefined,
     keyPath: string[]
-) => {
+): NestedDropdownListItemProps<T> | undefined => {
     const [currentKey, ...nextKeyPath] = keyPath;
     if (isEmpty(nestedList) || isEmpty(currentKey)) {
         return undefined;
     }
 
-    const item = nestedList.find((item) => item.key === currentKey);
+    const item = nestedList!.find((item) => item.key === currentKey);
 
     if (!item || !nextKeyPath.length) {
         return item;

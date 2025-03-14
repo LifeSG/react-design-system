@@ -48,16 +48,16 @@ describe("DateInput", () => {
 
         render(<DateInput data-testid="e2e" />);
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() =>
             expect(screen.queryByTestId(CALENDAR_TESTID)).toBeVisible()
         );
         expect(
-            within(screen.queryByTestId(CALENDAR_TESTID)).getByText("Feb")
+            within(screen.getByTestId(CALENDAR_TESTID)).getByText("Feb")
         ).toBeVisible();
         expect(
-            within(screen.queryByTestId(CALENDAR_TESTID)).getByText("2024")
+            within(screen.getByTestId(CALENDAR_TESTID)).getByText("2024")
         ).toBeVisible();
     });
 
@@ -68,7 +68,7 @@ describe("DateInput", () => {
 
         render(<DateInput data-testid="e2e" value="2023-01-01" />);
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() =>
             expect(screen.queryByTestId(CALENDAR_TESTID)).toBeVisible()
@@ -85,7 +85,7 @@ describe("DateInput", () => {
 
         render(<DateInput data-testid="e2e" readOnly onFocus={mockOnFocus} />);
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         expect(screen.queryByTestId(CALENDAR_TESTID)).not.toBeInTheDocument();
         expect(mockOnFocus).not.toHaveBeenCalled();
@@ -99,7 +99,7 @@ describe("DateInput", () => {
 
         render(<DateInput data-testid="e2e" disabled onFocus={mockOnFocus} />);
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         expect(screen.queryByTestId(CALENDAR_TESTID)).not.toBeInTheDocument();
         expect(mockOnFocus).not.toHaveBeenCalled();
@@ -121,7 +121,7 @@ describe("DateInput", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
@@ -158,7 +158,7 @@ describe("DateInput", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
@@ -192,7 +192,7 @@ describe("DateInput", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
@@ -286,7 +286,7 @@ describe("DateInput", () => {
 
             render(<DateInput data-testid="e2e" onChange={mockOnChange} />);
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
@@ -315,7 +315,7 @@ describe("DateInput", () => {
 
             render(<DateInput data-testid="e2e" onChange={mockOnChange} />);
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
@@ -324,10 +324,10 @@ describe("DateInput", () => {
             await user.type(screen.getByLabelText("year"), "2023");
 
             expect(
-                within(screen.queryByTestId(CALENDAR_TESTID)).getByText("Jan")
+                within(screen.getByTestId(CALENDAR_TESTID)).getByText("Jan")
             ).toBeVisible();
             expect(
-                within(screen.queryByTestId(CALENDAR_TESTID)).getByText("2023")
+                within(screen.getByTestId(CALENDAR_TESTID)).getByText("2023")
             ).toBeVisible();
 
             expect(mockOnChange).not.toHaveBeenCalled();
@@ -358,7 +358,7 @@ describe("DateInput", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
@@ -391,7 +391,7 @@ describe("DateInput", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
@@ -467,7 +467,7 @@ describe("DateInput", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
@@ -497,7 +497,7 @@ describe("DateInput", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 

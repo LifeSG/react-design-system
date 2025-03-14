@@ -23,11 +23,13 @@ export interface AccordionItemProps {
     collapsible?: boolean | undefined;
 }
 
-export type AccordionItemHandle = HTMLDivElement & {
+export interface AccordionItemApi {
     expand: () => void;
     collapse: () => void;
     isExpanded: () => boolean;
-};
+}
+
+export type AccordionItemHandle = HTMLDivElement & AccordionItemApi;
 
 /**
  * Transient props are denoted with $

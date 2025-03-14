@@ -9,7 +9,7 @@ import {
 describe("TimeTable", () => {
     const date = dayjs("2024-09-11");
 
-    const timeTableMockProps: TimeTableProps = {
+    const timeTableMockProps = {
         date: date.format("YYYY-MM-DD"),
         minTime: "06:20:00",
         maxTime: "22:00:00",
@@ -20,7 +20,7 @@ describe("TimeTable", () => {
         emptyContentMessage: "empty content message",
         onPreviousDayClick: jest.fn(),
         onNextDayClick: jest.fn(),
-    };
+    } satisfies TimeTableProps;
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -118,10 +118,10 @@ describe("TimeTable", () => {
         );
 
         const rowHeaderParent = screen.getByTestId("row-header-column-id");
-        const firstRowHeader = rowHeaderParent.firstElementChild;
+        const firstRowHeader = rowHeaderParent.firstElementChild!;
 
         const contentContainer = screen.getByTestId("content-container-id");
-        const firstRowBar = contentContainer.firstElementChild;
+        const firstRowBar = contentContainer.firstElementChild!;
         const blockedCell = firstRowBar.children[0];
         const filledCell = firstRowBar.children[1];
 
@@ -156,9 +156,9 @@ describe("TimeTable", () => {
         );
 
         const rowHeaderParent = screen.getByTestId("row-header-column-id");
-        const firstRowHeader = rowHeaderParent.firstElementChild;
+        const firstRowHeader = rowHeaderParent.firstElementChild!;
         const contentContainer = screen.getByTestId("content-container-id");
-        const firstRowBar = contentContainer.firstElementChild;
+        const firstRowBar = contentContainer.firstElementChild!;
         const blockedCell = firstRowBar.children[0];
         const filledCell = firstRowBar.children[1];
 

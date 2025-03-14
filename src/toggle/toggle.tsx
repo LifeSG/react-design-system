@@ -52,7 +52,7 @@ export const Toggle = ({
         initialExpanded,
     } = compositeSection || {};
     const [selected, setSelected] = useState<boolean | undefined>(checked);
-    const [expanded, setExpanded] = useState<boolean>(initialExpanded);
+    const [expanded, setExpanded] = useState<boolean>(!!initialExpanded);
     const hasCompositeSectionError = useMemo(() => {
         const hasErrorList = Array.isArray(errors) && errors?.length > 0;
         const hasErrorElement = !Array.isArray(errors) && !!errors;
@@ -61,7 +61,7 @@ export const Toggle = ({
     const [uniqueId] = useState(SimpleIdGenerator.generate());
     const generatedId = id ? `${id}` : `tg-${uniqueId}`;
 
-    const inputRef = useRef<HTMLInputElement>();
+    const inputRef = useRef<HTMLInputElement>(null);
 
     // =============================================================================
     // EFFECTS

@@ -17,7 +17,7 @@ import { Typography } from "../typography";
 // STYLE INTERFACES
 // =============================================================================
 interface SignatureAreaProps {
-    $disabled: boolean;
+    $disabled: boolean | undefined;
 }
 
 // =============================================================================

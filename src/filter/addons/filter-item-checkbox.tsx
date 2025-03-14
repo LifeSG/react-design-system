@@ -28,8 +28,8 @@ export const FilterItemCheckbox = <T,>({
     const [minimisedHeight, setMinimisedHeight] = useState<number>();
     const [lastVisibleElementIndex, setLastVisibleElementIndex] =
         useState<number>(options.length);
-    const parentRef = useRef<HTMLDivElement>();
-    const lastVisibleElement = useRef<HTMLLabelElement>();
+    const parentRef = useRef<HTMLDivElement>(null);
+    const lastVisibleElement = useRef<HTMLLabelElement>(null);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -61,13 +61,13 @@ export const FilterItemCheckbox = <T,>({
     const getLabel = (item: T): React.ReactNode => {
         return labelExtractor
             ? labelExtractor(item)
-            : (item as any).label ?? item.toString();
+            : (item as any).label ?? item?.toString();
     };
 
     const getValue = (item: T): string => {
         return valueExtractor
             ? valueExtractor(item)
-            : (item as any).value ?? item.toString();
+            : (item as any).value ?? item?.toString();
     };
 
     const setVisibleItemsWhenMinimised = () => {
@@ -176,7 +176,7 @@ export const FilterItemCheckbox = <T,>({
                 checked={checked}
                 $visible={
                     !minimised ||
-                    (minimisedHeight && index <= lastVisibleElementIndex)
+                    (!!minimisedHeight && index <= lastVisibleElementIndex)
                 }
                 onChange={handleItemClick(option)}
                 useContentWidth={useToggleContentWidth}

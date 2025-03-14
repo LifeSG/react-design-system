@@ -12,5 +12,6 @@
         "mdx"
     ],
     "editor.rulers": [80],
-    "typescript.preferences.importModuleSpecifier": "relative"
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

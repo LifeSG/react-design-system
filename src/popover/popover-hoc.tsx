@@ -7,7 +7,10 @@ import { PopoverHOCOptionsProps, PopoverHOCProps } from "./types";
 
 /** @deprecated Use `PopoverTrigger` for improved positioning behaviour. This component will be removed in DS v3. */
 export const withPopover =
-    <T,>(Component: React.ComponentType<T>, options: PopoverHOCOptionsProps) =>
+    <T extends object>(
+        Component: React.ComponentType<T>,
+        options: PopoverHOCOptionsProps
+    ) =>
     // eslint-disable-next-line react/display-name
     (props: T & PopoverHOCProps): JSX.Element => {
         // =============================================================================
@@ -17,7 +20,7 @@ export const withPopover =
         const triggerBehaviour = options.trigger || "click";
         const innerProps = otherProps as T;
         const [visible, setVisible] = useState<boolean>(false);
-        const nodeRef = useRef<HTMLDivElement>();
+        const nodeRef = useRef<HTMLDivElement>(null);
         const isMobile = useMediaQuery({
             maxWidth: MediaWidths.mobileL,
         });

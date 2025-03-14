@@ -6,7 +6,7 @@ import { CommonCalendarProps } from "../types";
 import { WeekDayCell } from "./week-day-cell";
 
 interface WeekCalendarDayViewProps extends CommonCalendarProps {
-    selectedStartDate: string;
+    selectedStartDate: string | undefined;
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;

@@ -81,7 +81,7 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: [
-                    "(string | ((props: unknown) => string | undefined))[]",
+                    "(string | ((props: ThemeStyleProps) => string | undefined))[]",
                 ],
             },
             {

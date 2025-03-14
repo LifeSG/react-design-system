@@ -153,7 +153,10 @@ export const Popover = ({
                 <Card>{renderContent()}</Card>
             </BubbleWrap>
             {isMobile && (
-                <Modal show={visible} onOverlayClick={handleMobileClose}>
+                <Modal
+                    show={visible ?? false}
+                    onOverlayClick={handleMobileClose}
+                >
                     <MobileModalBox onClose={handleMobileClose}>
                         <ContentWrapper>{renderContent()}</ContentWrapper>
                     </MobileModalBox>

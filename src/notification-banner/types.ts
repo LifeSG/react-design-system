@@ -2,7 +2,7 @@ import { TypographyLinkProps, TypographyProps } from "../typography";
 
 export interface NotificationBannerProps
     extends React.HTMLAttributes<HTMLDivElement> {
-    children?: JSX.Element | JSX.Element[] | string | undefined;
+    children?: React.ReactNode | undefined;
     dismissible?: boolean | undefined;
     visible?: boolean | undefined;
     sticky?: boolean | undefined;

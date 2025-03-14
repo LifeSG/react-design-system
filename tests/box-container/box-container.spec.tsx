@@ -47,7 +47,7 @@ describe("BoxContainer", () => {
          * two traversals up to the div container that contains the styles
          */
         expect(
-            screen.getByText(DEFAULT_TEXT).parentElement.parentElement
+            screen.getByText(DEFAULT_TEXT).parentElement?.parentElement
         ).toHaveStyle({
             height: 0,
         });

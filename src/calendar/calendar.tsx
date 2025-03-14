@@ -14,7 +14,7 @@ export const Calendar = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [selectedDate, setSelectedDate] = useState<string>(value); // YYYY-MM-DD
+    const [selectedDate, setSelectedDate] = useState<string | undefined>(value); // YYYY-MM-DD
 
     // =============================================================================
     // EFFECTS

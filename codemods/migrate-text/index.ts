@@ -105,7 +105,9 @@ export default function transformer(file: FileInfo, api: API) {
             }
 
             if (startsWithTypography) {
-                const propertyName = propertyNameParts.join(".");
+                const propertyName = propertyNameParts.join(
+                    "."
+                ) as keyof typeof textComponentMap;
                 const newTypographyValue = textComponentMap[propertyName];
                 if (newTypographyValue) {
                     replaceWithNewComponent(path, newTypographyValue);

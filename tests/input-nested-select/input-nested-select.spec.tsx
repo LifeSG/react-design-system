@@ -60,7 +60,7 @@ describe("InputNestedSelect", () => {
             <InputNestedSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -78,13 +78,13 @@ describe("InputNestedSelect", () => {
             <InputNestedSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(
@@ -105,13 +105,13 @@ describe("InputNestedSelect", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByText("Child 1.1.1 item"));
+        await user.click(screen.getByText("Child 1.1.1 item"));
 
         await waitFor(() => {
             expect(
@@ -138,13 +138,13 @@ describe("InputNestedSelect", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByText("Parent 1.1 item"));
+        await user.click(screen.getByText("Parent 1.1 item"));
 
         await waitFor(() => {
             expect(
@@ -168,7 +168,7 @@ describe("InputNestedSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
             await waitFor(() =>
@@ -179,7 +179,7 @@ describe("InputNestedSelect", () => {
 
             expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
-            await user.click(screen.queryByText("Child 1.1.1 item"));
+            await user.click(screen.getByText("Child 1.1.1 item"));
 
             await waitForElementToBeRemoved(() =>
                 screen.queryByTestId(DROPDOWN_TESTID)
@@ -204,7 +204,7 @@ describe("InputNestedSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
             await waitFor(() =>
@@ -237,7 +237,7 @@ describe("InputNestedSelect", () => {
             );
 
             await act(async () => {
-                await user.click(screen.queryByTestId(FIELD_TESTID));
+                await user.click(screen.getByTestId(FIELD_TESTID));
             });
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
@@ -335,7 +335,7 @@ describe("InputNestedSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => {
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CounterLabel } from "./textara-counter.style";
 
 interface Props {
-    value: string | number | readonly string[];
+    value: string | number | readonly string[] | undefined;
     maxLength: number;
     renderCustomCounter?: (
         maxLength: number,

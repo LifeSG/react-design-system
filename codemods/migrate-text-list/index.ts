@@ -106,7 +106,8 @@ export default function transformer(file: FileInfo, api: API) {
                         attribute.name.name === "size" &&
                         j.StringLiteral.check(attribute.value)
                     ) {
-                        const sizeValue = attribute.value.value;
+                        const sizeValue = attribute.value
+                            .value as keyof typeof sizePropMapping;
                         if (sizePropMapping[sizeValue]) {
                             attribute.value = j.literal(
                                 sizePropMapping[sizeValue]

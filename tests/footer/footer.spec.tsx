@@ -1,11 +1,24 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { DisclaimerLinks, Footer, FooterLinkProps } from "../../src";
-import { FooterHelper } from "../../src/footer/footer-helper";
+import {
+    FooterHelper,
+    InternalDisclaimerLinks,
+} from "../../src/footer/footer-helper";
+import { KeyOf } from "../../src/util/utility-types";
 
 // =============================================================================
 // UNIT TESTS
 // =============================================================================
 describe("Footer", () => {
+    const defaultDisclaimerLinks = FooterHelper.getDisclaimerLinks(
+        undefined,
+        undefined
+    );
+
+    const linkTypes = Object.keys(
+        defaultDisclaimerLinks
+    ) as KeyOf<InternalDisclaimerLinks>[];
+
     beforeEach(() => {
         jest.resetAllMocks();
         jest.useFakeTimers();
@@ -19,13 +32,9 @@ describe("Footer", () => {
     it("should be able to render the component", () => {
         render(<Footer />);
 
-        const defaultDisclaimerLinks =
-            FooterHelper.getDisclaimerLinks(undefined);
-
-        for (const link in defaultDisclaimerLinks) {
-            expect(
-                screen.getByText(defaultDisclaimerLinks[link].children)
-            ).toBeInTheDocument();
+        for (const type of linkTypes) {
+            const text = defaultDisclaimerLinks[type]?.children as string;
+            expect(screen.getByText(text)).toBeInTheDocument();
         }
     });
 
@@ -103,15 +112,11 @@ describe("Footer", () => {
 
             render(<Footer disclaimerLinks={disclaimerLinks} />);
 
-            const defaultDisclaimerLinks =
-                FooterHelper.getDisclaimerLinks(undefined);
+            for (const type of linkTypes) {
+                const text = defaultDisclaimerLinks[type]?.children as string;
+                const anchor = getAnchorElement(text);
 
-            for (const link in defaultDisclaimerLinks) {
-                const anchor = getAnchorElement(
-                    defaultDisclaimerLinks[link].children
-                );
-
-                expect(anchor.href).toBe(disclaimerLinks[link].href);
+                expect(anchor.href).toBe(disclaimerLinks[type]?.href);
             }
         });
 

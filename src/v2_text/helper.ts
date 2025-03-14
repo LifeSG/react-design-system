@@ -9,7 +9,10 @@ import { V2_TextStyle } from "./text-style";
 // =============================================================================
 const FONTS_WITH_WEIGHTS = [FontFamily.OpenSans, FontFamily.PlusJakartaSans];
 
-const getFont = (fontFamily: FontWeightSpec, weight: V2_TextWeight) => {
+const getFont = (
+    fontFamily: FontWeightSpec,
+    weight: V2_TextWeight | undefined
+) => {
     switch (weight) {
         case 700:
         case "bold":
@@ -33,10 +36,10 @@ const getFontFamily = (
     weight?: V2_TextWeight
 ) => {
     return (props: any) => {
-        const fontFamilyFromTheme = V2_TextStyle[type].fontFamily(
+        const fontFamilyFromTheme = V2_TextStyle[type].fontFamily?.(
             props
         ) as string;
-        const fontWeightFromTheme = V2_TextStyle[type].fontWeight(
+        const fontWeightFromTheme = V2_TextStyle[type].fontWeight?.(
             props
         ) as V2_TextWeight;
 
@@ -61,7 +64,7 @@ const getFontFamily = (
     };
 };
 
-const getFontWeight = (weight: V2_TextWeight) => {
+const getFontWeight = (weight: V2_TextWeight | undefined) => {
     switch (weight) {
         case 300:
         case "light":
@@ -87,7 +90,7 @@ const getFontWeight = (weight: V2_TextWeight) => {
 // TEXT STYLE
 // =============================================================================
 const getMaxLinesLineStyle = (maxLines: number | undefined) => {
-    if (maxLines > 0) {
+    if (maxLines) {
         return css`
             display: -webkit-box;
             -webkit-box-orient: vertical;
@@ -100,12 +103,12 @@ const getMaxLinesLineStyle = (maxLines: number | undefined) => {
 
 const getTextStyle = (
     type: V2_TextSizeType | V2_TextLinkSizeType,
-    weight: V2_TextWeight,
+    weight: V2_TextWeight | undefined,
     paragraph = false
 ) => {
     return (props: any) => {
         const attrs = V2_TextStyle[type];
-        const fontSize = attrs.fontSize(props) as number;
+        const fontSize = (attrs.fontSize?.(props) as number) || 1;
 
         // Add extra margin for paragraphs
         const getMarginBottomStyle = () => {
@@ -119,7 +122,7 @@ const getTextStyle = (
             ${getFontFamily(type, weight)}
             font-size: ${fontSize}rem !important;
             line-height: ${attrs.lineHeight}rem !important;
-            letter-spacing: ${attrs.letterSpacing(props) || 0}rem !important;
+            letter-spacing: ${attrs.letterSpacing?.(props) || 0}rem !important;
             ${getMarginBottomStyle()}
         `;
     };

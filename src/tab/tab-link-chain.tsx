@@ -61,7 +61,7 @@ export const TabLinkChain = ({
             content &&
             wrapper &&
             window.innerWidth <= tabletBreakpoint &&
-            activeLinkRef
+            activeLinkRef.current
         ) {
             content.scrollLeft =
                 activeLinkRef.current.getBoundingClientRect().left;

@@ -55,7 +55,7 @@ export const DataTable = ({
     // CONST, STATE, REF
     // =============================================================================
     const tableRef = useRef<HTMLTableElement>(null);
-    const tableEndRef = useRef<HTMLDivElement>(null);
+    const tableEndRef = useRef<HTMLDivElement | null>(null);
     const headerRef = useRef<HTMLTableSectionElement>(null);
     const actionBarRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
@@ -118,12 +118,14 @@ export const DataTable = ({
     // HELPER FUNCTIONS
     // ===========================================================================
     const isAllCheckboxSelected = (): boolean => {
-        return selectedIds?.length === rows.length;
+        return selectedIds?.length === rows?.length;
     };
 
     const isIndeterminateCheckbox = (): boolean => {
         return (
-            selectedIds && selectedIds.length !== 0 && !isAllCheckboxSelected()
+            !!selectedIds &&
+            selectedIds.length !== 0 &&
+            !isAllCheckboxSelected()
         );
     };
 
@@ -411,6 +413,8 @@ export const DataTable = ({
     };
 
     const renderSelectionBar = () => {
+        const count = selectedIds?.length ?? 0;
+
         return (
             <ActionBarWrapper
                 ref={actionBarRef}
@@ -424,10 +428,8 @@ export const DataTable = ({
                     }
                     $scrollable={scrollable}
                 >
-                    <Typography.BodyMD weight="semibold">{`${
-                        selectedIds.length
-                    } item${
-                        selectedIds.length > 1 ? "s" : ""
+                    <Typography.BodyMD weight="semibold">{`${count} item${
+                        count > 1 ? "s" : ""
                     } selected`}</Typography.BodyMD>
                     <TextButton type="button" onClick={onClearSelectionClick}>
                         Clear selection

@@ -7,7 +7,7 @@ export const renderDescriptionWithProps =
     (type: "maintenance" | "inactivity") =>
     // eslint-disable-next-line react/display-name
     (
-        attrs: MaintenanceAdditionalAttributes | InactivityAdditionalAttributes
+        attrs?: MaintenanceAdditionalAttributes | InactivityAdditionalAttributes
     ) => {
         switch (type) {
             case "maintenance": {

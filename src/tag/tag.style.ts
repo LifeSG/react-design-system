@@ -29,10 +29,10 @@ export const Wrapper = styled.div<StyleProps>`
 
     ${(props) => {
         let backgroundColor: (props: any) => string;
-        let borderColor: (props: any) => string;
+        let borderColor: ((props: any) => string) | undefined;
         let color: (props: any) => string;
         let hoverBackgroundColor: (props: any) => string;
-        let hoverBorderColor: (props: any) => string;
+        let hoverBorderColor: ((props: any) => string) | undefined;
 
         if (props.$type === "solid") {
             color = Colour["text-inverse"];

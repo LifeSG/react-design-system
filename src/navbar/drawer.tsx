@@ -20,7 +20,7 @@ const Component = (
     // =============================================================================
     const {
         show,
-        resources,
+        resources = {},
         children,
         hideNavBranding,
         onClose,
@@ -62,14 +62,16 @@ const Component = (
     const renderBrand = () => {
         return (
             <>
-                <Brand
-                    resources={primary}
-                    compress
-                    onClick={onBrandClick}
-                    data-id="drawer-brand-primary"
-                    data-testid="drawer__brand"
-                    type="primary"
-                />
+                {primary && (
+                    <Brand
+                        resources={primary}
+                        compress
+                        onClick={onBrandClick}
+                        data-id="drawer-brand-primary"
+                        data-testid="drawer__brand"
+                        type="primary"
+                    />
+                )}
                 {secondary && (
                     <>
                         <NavSeparator />

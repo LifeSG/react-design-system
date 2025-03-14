@@ -76,8 +76,9 @@ export const LoadingDisplay: StoryObj<Component> = {
         const DEFAULT_VALUE = "S•••567D";
         const [value, setValue] = useState<string>(DEFAULT_VALUE);
         const [attempt, setAttempt] = useState<number>(0);
-        const [loadState, setLoadState] =
-            useState<MaskedInputLoadState>(undefined);
+        const [loadState, setLoadState] = useState<
+            MaskedInputLoadState | undefined
+        >(undefined);
 
         const handleUnmask = () => {
             setLoadState("loading");

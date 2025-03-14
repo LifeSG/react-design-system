@@ -205,7 +205,9 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
 
 export const CombinedUsage: StoryObj = {
     render: (_args) => {
-        const [selectedIndex, setSelectedIndex] = useState(undefined);
+        const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
+            undefined
+        );
         const theme = useTheme();
         const isMobile = useMediaQuery({
             maxWidth: Breakpoint["sm-max"]({ theme }),

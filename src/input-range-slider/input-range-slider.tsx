@@ -52,7 +52,7 @@ export const InputRangeSlider = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleChange = (value: number | number[], index: number) => {
+    const handleChange = (value: number | readonly number[], index: number) => {
         if (typeof value === "number") {
             const val = [value];
             setSelection(val);
@@ -62,19 +62,21 @@ export const InputRangeSlider = ({
                 // skip unnecessary update when dragging the start thumb across the end thumb
                 return;
             }
-            setSelection(value);
-            onChange?.(value);
+            const newSelection = [...value];
+            setSelection(newSelection);
+            onChange?.(newSelection);
         }
     };
 
-    const handleChangeEnd = (value: number | number[]) => {
+    const handleChangeEnd = (value: number | readonly number[]) => {
         if (typeof value === "number") {
             const val = [value];
             setSelection(val);
             onChangeEnd?.(val);
         } else {
-            setSelection(value);
-            onChangeEnd?.(value);
+            const newSelection = [...value];
+            setSelection(newSelection);
+            onChangeEnd?.(newSelection);
         }
     };
 

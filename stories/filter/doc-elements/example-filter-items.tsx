@@ -9,7 +9,7 @@ import styled from "styled-components";
 
 interface Props<T> {
     mode: Mode;
-    value: T;
+    value: T | undefined;
     onChange: (val: T) => void;
 }
 
@@ -67,7 +67,7 @@ export const useFilters = <T extends Record<string, any>>(initialState: T) => {
         isEmpty(filter)
     );
 
-    const updateFilter = (mode: Mode, filterKey: string) => (val) => {
+    const updateFilter = (mode: Mode, filterKey: string) => (val: unknown) => {
         if (mode === "default") {
             setCurrentFilters((filters) => ({
                 ...filters,

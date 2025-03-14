@@ -40,7 +40,7 @@ describe("InputMultiSelect", () => {
             <InputMultiSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -58,13 +58,13 @@ describe("InputMultiSelect", () => {
             <InputMultiSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(
@@ -85,13 +85,13 @@ describe("InputMultiSelect", () => {
             />
         );
 
-        await user.click(screen.queryByTestId(FIELD_TESTID));
+        await user.click(screen.getByTestId(FIELD_TESTID));
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.queryByText("Option 1"));
+        await user.click(screen.getByText("Option 1"));
 
         expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         expect(mockOnSelectOptions).toHaveBeenCalledWith(["Option 1"]);
@@ -110,7 +110,7 @@ describe("InputMultiSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
             await waitFor(() =>
@@ -121,7 +121,7 @@ describe("InputMultiSelect", () => {
 
             expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitForElementToBeRemoved(() =>
                 screen.queryByTestId(DROPDOWN_TESTID)
@@ -146,7 +146,7 @@ describe("InputMultiSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
             await waitFor(() =>
@@ -179,7 +179,7 @@ describe("InputMultiSelect", () => {
             );
 
             await act(async () => {
-                await user.click(screen.queryByTestId(FIELD_TESTID));
+                await user.click(screen.getByTestId(FIELD_TESTID));
             });
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
@@ -277,7 +277,7 @@ describe("InputMultiSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => {
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -311,7 +311,7 @@ describe("InputMultiSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => {
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -347,7 +347,7 @@ describe("InputMultiSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => {
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -380,7 +380,7 @@ describe("InputMultiSelect", () => {
                 />
             );
 
-            await user.click(screen.queryByTestId(FIELD_TESTID));
+            await user.click(screen.getByTestId(FIELD_TESTID));
 
             await waitFor(() => {
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();

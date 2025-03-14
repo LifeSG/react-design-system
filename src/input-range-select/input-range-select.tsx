@@ -55,10 +55,10 @@ export const InputRangeSelect = <T, V>({
     const [selectedFromValue, setSelectedFromValue] = useState<T | undefined>();
     const [selectedToValue, setSelectedToValue] = useState<T | undefined>();
 
-    const selectorRef = useRef<HTMLButtonElement>();
+    const selectorRef = useRef<HTMLButtonElement>(null);
     const labelContainerRef = {
-        from: useRef<HTMLDivElement>(),
-        to: useRef<HTMLDivElement>(),
+        from: useRef<HTMLDivElement>(null),
+        to: useRef<HTMLDivElement>(null),
     };
     const [focusedInput, setFocusedInput] = useState<RangeType | "none">(
         "none"
@@ -95,14 +95,14 @@ export const InputRangeSelect = <T, V>({
     const handleListItemClick = (
         item: T,
         extractedValue: V,
-        rangeType?: RangeType
+        rangeType: RangeType
     ) => {
         rangeType === "from"
             ? setSelectedFromValue(item)
             : setSelectedToValue(item);
         triggerOptionDisplayCallback(false);
         if (selectorRef) {
-            selectorRef.current.focus();
+            selectorRef.current?.focus();
         }
         if (onSelectOption) {
             onSelectOption({ [rangeType]: item }, extractedValue);
@@ -121,7 +121,7 @@ export const InputRangeSelect = <T, V>({
         triggerOptionDisplayCallback(false);
 
         if (selectorRef) {
-            selectorRef.current.focus();
+            selectorRef.current?.focus();
         }
 
         if (!selectedFromValue || !selectedToValue) {
@@ -151,28 +151,27 @@ export const InputRangeSelect = <T, V>({
     // =============================================================================
     // HELPER FUNCTION
     // =============================================================================
-    const getDisplayValue = (rangeType: RangeType): string | V => {
+    const getDisplayValue = (rangeType: RangeType): string => {
         const selected =
             rangeType === "from" ? selectedFromValue : selectedToValue;
+
+        if (!selected) return "";
+
         if (displayValueExtractor) {
             return displayValueExtractor(selected);
         }
 
         if (valueExtractor) {
-            return valueExtractor(selected);
+            const value = valueExtractor(selected);
+            return valueToStringFunction
+                ? valueToStringFunction(value)
+                : value?.toString() ?? "";
         }
-        return selected?.toString();
+
+        return selected.toString();
     };
 
-    const convertValueToString = (value: V | string): string => {
-        if (typeof value === "string") {
-            return value;
-        } else {
-            return valueToStringFunction(value) || value.toString();
-        }
-    };
-
-    const truncateValue = (type: RangeType, value: string | V) => {
+    const truncateValue = (type: RangeType, value: string) => {
         if (optionTruncationType === "middle") {
             let widthOfElement = 0;
             if (labelContainerRef[type] && labelContainerRef[type].current) {
@@ -180,12 +179,7 @@ export const InputRangeSelect = <T, V>({
                     labelContainerRef[type].current.getBoundingClientRect()
                         .width;
             }
-            return StringHelper.truncateOneLine(
-                convertValueToString(value),
-                widthOfElement,
-                120,
-                8
-            );
+            return StringHelper.truncateOneLine(value, widthOfElement, 120, 8);
         }
         return value;
     };
@@ -220,7 +214,7 @@ export const InputRangeSelect = <T, V>({
         if (!selected) {
             return (
                 <PlaceholderLabel truncateType={optionTruncationType}>
-                    {truncateValue(rangeType, placeholders[rangeType])}
+                    {truncateValue(rangeType, placeholders[rangeType] || "")}
                 </PlaceholderLabel>
             );
         } else if (renderCustomSelectedOption) {
@@ -286,7 +280,6 @@ export const InputRangeSelect = <T, V>({
     return (
         <DropdownWrapper
             show={focusedInput !== "none"}
-            data-testid={otherProps["data-testid"]}
             error={error && !(focusedInput !== "none")}
             disabled={disabled}
             readOnly={readOnly}

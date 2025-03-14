@@ -40,12 +40,14 @@ export const DateInput = ({
     const [selectedDate, setSelectedDate] = useState<string>(
         DateInputHelper.sanitizeInput(value)
     );
-    const [hoveredDate, setHoveredDate] = useState<string>(undefined);
+    const [hoveredDate, setHoveredDate] = useState<string | undefined>(
+        undefined
+    );
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
-    const inputRef = useRef<StandaloneDateInputRef>();
+    const inputRef = useRef<StandaloneDateInputRef>(null);
 
     // =============================================================================
     // EFFECTS
@@ -60,7 +62,7 @@ export const DateInput = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleClose = () => {
-        inputRef.current.resetInput();
+        inputRef.current?.resetInput();
         setSelectedDate(initialDate);
         setCalendarOpen(false);
         setFocused(false);
@@ -68,8 +70,8 @@ export const DateInput = ({
     };
 
     const handleDismiss = () => {
-        inputRef.current.resetInput();
-        nodeRef.current.focus();
+        inputRef.current?.resetInput();
+        nodeRef.current?.focus();
         setSelectedDate(initialDate);
         setCalendarOpen(false);
     };
@@ -104,7 +106,7 @@ export const DateInput = ({
             performOnChangeHandler(val);
             setInitialDate(val);
             if (val) {
-                nodeRef.current.focus();
+                nodeRef.current?.focus();
                 setCalendarOpen(false);
             }
 
@@ -133,9 +135,10 @@ export const DateInput = ({
         if (
             focused &&
             !calendarOpen &&
+            nodeRef.current &&
             !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
-            inputRef.current.resetInput();
+            inputRef.current?.resetInput();
             setSelectedDate(initialDate);
             setFocused(false);
             performOnBlurHandler();
@@ -158,14 +161,14 @@ export const DateInput = ({
                 break;
         }
 
-        nodeRef.current.focus();
+        nodeRef.current?.focus();
         setCalendarOpen(false);
     };
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const performOnChangeHandler = (changeValue?: string) => {
+    const performOnChangeHandler = (changeValue: string) => {
         if (onChange) {
             onChange(changeValue);
         }

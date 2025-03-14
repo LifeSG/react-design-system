@@ -3,7 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { expectedOutputCode, inputCode } from "./test-data";
 
-describe("Codemod Transformer for V2_Color to Colour", () => {
+describe("Codemod Transformer for V2_MediaQuery to MediaQuery", () => {
     const inputPath = path.join(__dirname, "input.tsx");
     const outputPath = path.join(__dirname, "output.tsx");
 
@@ -19,12 +19,12 @@ describe("Codemod Transformer for V2_Color to Colour", () => {
         fs.unlinkSync(outputPath);
     });
 
-    it("should transform V2_Color tokens to Colour tokens and map theme correctly", () => {
+    it("should transform V2_MediaQuery to MediaQuery and map the breakpoints correctly", () => {
         fs.copyFileSync(inputPath, outputPath);
 
         // Execute the jscodeshift command for the codemod
         execSync(
-            `jscodeshift --parser=tsx --verbose=2 -t ./codemods/migrate-colour --mapping=lifesg ${outputPath}`
+            `jscodeshift --parser=tsx -t ./codemods/migrate-media-query/index.ts ${outputPath}`
         );
 
         // Check the transformed code

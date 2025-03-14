@@ -6,11 +6,11 @@ import { CommonCalendarProps } from "../types";
 import { FixedRangeDayCell } from "./fixed-range-cell";
 
 interface FixedRangeCalendarDayViewProps extends CommonCalendarProps {
-    selectedStartDate: string;
+    selectedStartDate: string | undefined;
+    numberOfDays: number | undefined;
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
-    numberOfDays: number;
 }
 
 export const FixedRangeCalendarDayView = ({

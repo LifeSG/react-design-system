@@ -3,7 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { expectedOutputCode, inputCode } from "./test-data";
 
-describe("Codemod Transformer for V2_TextList to TextList", () => {
+describe("Codemod Transformer for V2_Text to Typography", () => {
     const inputPath = path.join(__dirname, "input.tsx");
     const outputPath = path.join(__dirname, "output.tsx");
 
@@ -19,12 +19,12 @@ describe("Codemod Transformer for V2_TextList to TextList", () => {
         fs.unlinkSync(outputPath);
     });
 
-    it("should transform V2_TextList components to TextList components", () => {
+    it("should transform V2_Text components to Typography components", () => {
         fs.copyFileSync(inputPath, outputPath);
 
         // Execute the jscodeshift command for the codemod
         execSync(
-            `jscodeshift --parser=tsx -t ./codemods/migrate-text-list ${outputPath}`
+            `jscodeshift --parser=tsx -t ./codemods/migrate-text/index.ts ${outputPath}`
         );
 
         // Check the transformed code

@@ -54,14 +54,13 @@ const Component = (
     const isMobile = useMediaQuery({
         maxWidth: mobileBreakpoint,
     });
-    const options: PageSizeItemProps[] = pageSizeOptions;
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const [inputText, setInputText] = useState<string>("");
 
-    const [selectedOption, setSelectedOption] = useState<PageSizeItemProps>(
-        options && options.length >= 1 ? options[0] : null
-    );
+    const [selectedOption, setSelectedOption] = useState<
+        PageSizeItemProps | undefined
+    >(pageSizeOptions[0]);
     const [pageSizeLocal, setPageSize] = useState<number>(
         !isMobile && showPageSizeChanger
             ? selectedOption
@@ -109,7 +108,7 @@ const Component = (
     useEffect(() => {
         setPageSize(pageSize);
         setSelectedOption(
-            options.find((option) => option.value === pageSize) ?? null
+            pageSizeOptions.find((option) => option.value === pageSize)
         );
     }, [pageSize]);
 
@@ -167,7 +166,7 @@ const Component = (
     const handleInputSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         if (inputText) {
-            onPageChange(parseInt(inputText));
+            onPageChange?.(parseInt(inputText));
         }
     };
 
@@ -380,7 +379,7 @@ const Component = (
             {showPageSizeChanger && !isMobile && (
                 <InputSelectWrapper>
                     <InputSelect
-                        options={options}
+                        options={pageSizeOptions}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
