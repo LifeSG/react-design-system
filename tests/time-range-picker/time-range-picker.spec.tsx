@@ -13,7 +13,9 @@ const DROPDOWN_TESTID = "dropdown-list";
 
 describe("TimeRangePicker", () => {
     const renderComponent = (component: JSX.Element) => {
-        return render(component, { wrapper: MockVirtuosoContextWrapper });
+        return render(component, {
+            wrapper: MockVirtuosoContextWrapper,
+        });
     };
 
     beforeEach(() => {
@@ -27,7 +29,7 @@ describe("TimeRangePicker", () => {
 
     describe("Combobox variant", () => {
         it("should render the component", () => {
-            render(<TimeRangePicker variant={"combobox"} />);
+            renderComponent(<TimeRangePicker variant={"combobox"} />);
 
             expect(screen.queryByLabelText(START_LABEL)).toBeInTheDocument();
             expect(screen.queryByLabelText(END_LABEL)).toBeInTheDocument();
@@ -37,7 +39,7 @@ describe("TimeRangePicker", () => {
         });
 
         it("should render with initial values", () => {
-            render(
+            renderComponent(
                 <TimeRangePicker
                     variant={"combobox"}
                     value={{ start: "9:00am", end: "3:00pm" }}
@@ -50,7 +52,7 @@ describe("TimeRangePicker", () => {
 
         it("should handle clear button click", async () => {
             const user = userEvent.setup();
-            render(
+            renderComponent(
                 <TimeRangePicker
                     variant={"combobox"}
                     value={{ start: "9:00am", end: "3:00pm" }}
@@ -65,7 +67,7 @@ describe("TimeRangePicker", () => {
 
         it("should open dropdown on input click", async () => {
             const user = userEvent.setup();
-            render(<TimeRangePicker variant={"combobox"} />);
+            renderComponent(<TimeRangePicker variant={"combobox"} />);
             user.click(screen.getByLabelText(START_LABEL));
             await waitFor(() =>
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible()
@@ -143,7 +145,7 @@ describe("TimeRangePicker", () => {
         describe("validation errors", () => {
             it("should show error if start time is after end time", async () => {
                 const user = userEvent.setup();
-                render(
+                renderComponent(
                     <TimeRangePicker
                         variant={"combobox"}
                         value={{ start: "3:00pm", end: "2:00pm" }}
@@ -171,7 +173,7 @@ describe("TimeRangePicker", () => {
             it("should show error if start input cannot be parsed", async () => {
                 const user = userEvent.setup();
                 const mockOnChange = jest.fn();
-                render(
+                renderComponent(
                     <TimeRangePicker
                         variant={"combobox"}
                         onChange={mockOnChange}
@@ -198,7 +200,7 @@ describe("TimeRangePicker", () => {
 
             it("should show error if end input cannot be parsed", async () => {
                 const user = userEvent.setup();
-                render(<TimeRangePicker variant={"combobox"} />);
+                renderComponent(<TimeRangePicker variant={"combobox"} />);
 
                 screen.getByLabelText(END_LABEL).focus();
                 await act(async () => {
@@ -211,7 +213,7 @@ describe("TimeRangePicker", () => {
             });
 
             it("should show error message when 'errorMessage' prop is true", async () => {
-                render(
+                renderComponent(
                     <FormTimeRangePicker
                         variant="combobox"
                         value={{ start: "abc", end: "xyz" }}
@@ -270,7 +272,7 @@ describe("TimeRangePicker", () => {
             it("should handle Enter key", async () => {
                 const user = userEvent.setup();
                 const mockOnChange = jest.fn();
-                render(
+                renderComponent(
                     <TimeRangePicker
                         variant={"combobox"}
                         onChange={mockOnChange}
@@ -288,7 +290,7 @@ describe("TimeRangePicker", () => {
             it("should handle Tab key", async () => {
                 const user = userEvent.setup();
                 const mockOnChange = jest.fn();
-                render(
+                renderComponent(
                     <TimeRangePicker
                         variant={"combobox"}
                         onChange={mockOnChange}
@@ -310,7 +312,7 @@ describe("TimeRangePicker", () => {
                 const user = userEvent.setup();
                 const mockOnFocus = jest.fn();
 
-                render(
+                renderComponent(
                     <TimeRangePicker
                         variant={"combobox"}
                         onFocus={mockOnFocus}
@@ -325,7 +327,7 @@ describe("TimeRangePicker", () => {
                 const user = userEvent.setup();
                 const mockOnBlur = jest.fn();
 
-                render(
+                renderComponent(
                     <TimeRangePicker variant={"combobox"} onBlur={mockOnBlur} />
                 );
 
@@ -348,7 +350,7 @@ describe("TimeRangePicker", () => {
                 const user = userEvent.setup();
                 const mockOnBlur = jest.fn();
 
-                render(
+                renderComponent(
                     <TimeRangePicker variant={"combobox"} onBlur={mockOnBlur} />
                 );
 
@@ -378,7 +380,7 @@ describe("TimeRangePicker", () => {
                 const user = userEvent.setup();
                 const mockOnBlur = jest.fn();
 
-                render(
+                renderComponent(
                     <TimeRangePicker variant={"combobox"} onBlur={mockOnBlur} />
                 );
 
@@ -402,7 +404,7 @@ describe("TimeRangePicker", () => {
                 const mockOnBlur = jest.fn();
                 const mockOnFocus = jest.fn();
 
-                render(
+                renderComponent(
                     <>
                         <TimeRangePicker
                             variant={"combobox"}
@@ -494,7 +496,7 @@ describe("TimeRangePicker", () => {
                 const user = userEvent.setup();
                 const mockOnFocus = jest.fn();
 
-                render(
+                renderComponent(
                     <>
                         <TimeRangePicker
                             variant={"combobox"}
@@ -535,7 +537,9 @@ describe("TimeRangePicker", () => {
         describe("readonly/disabled behavior", () => {
             it("should be disabled when 'disabled' prop is true", async () => {
                 const user = userEvent.setup();
-                render(<TimeRangePicker variant={"combobox"} disabled />);
+                renderComponent(
+                    <TimeRangePicker variant={"combobox"} disabled />
+                );
 
                 const start = screen.getByLabelText(START_LABEL);
                 const end = screen.getByLabelText(END_LABEL);
@@ -552,7 +556,9 @@ describe("TimeRangePicker", () => {
 
             it("should be readOnly when 'readOnly' prop is true", async () => {
                 const user = userEvent.setup();
-                render(<TimeRangePicker variant={"combobox"} readOnly />);
+                renderComponent(
+                    <TimeRangePicker variant={"combobox"} readOnly />
+                );
 
                 const start = screen.getByLabelText(START_LABEL);
                 await user.click(start);
