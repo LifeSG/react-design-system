@@ -27,6 +27,7 @@ export const BookingSgFontSpecSet: FontSpecSet = {
     "weight-semibold": "600",
     "weight-bold": "700",
     "font-family": "Plus Jakarta Sans",
+    "font-variant": "no-common-ligatures",
 
     "body-size-baseline": "1.125rem",
     "body-size-md": "1rem",

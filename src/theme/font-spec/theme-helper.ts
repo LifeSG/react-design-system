@@ -62,6 +62,7 @@ export const FontSpecValues: {
     "weight-semibold": getFontSpec("weight-semibold"),
     "weight-bold": getFontSpec("weight-bold"),
     "font-family": getFontSpec("font-family"),
+    "font-variant": getFontSpec("font-variant"),
 
     "body-size-baseline": getFontSpec("body-size-baseline"),
     "body-size-md": getFontSpec("body-size-md"),

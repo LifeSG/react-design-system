@@ -27,6 +27,7 @@ export const LifeSgFontSpecSet: FontSpecSet = {
     "weight-semibold": "600",
     "weight-bold": "700",
     "font-family": "Open Sans",
+    "font-variant": "normal",
 
     "body-size-baseline": "1.125rem",
     "body-size-md": "1rem",

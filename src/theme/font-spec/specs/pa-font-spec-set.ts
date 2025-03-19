@@ -27,6 +27,7 @@ export const PAFontSpecSet: FontSpecSet = {
     "weight-semibold": "600",
     "weight-bold": "700",
     "font-family": "Lato",
+    "font-variant": "normal",
 
     "body-size-baseline": "1.125rem",
     "body-size-md": "1rem",
