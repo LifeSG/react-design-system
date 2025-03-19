@@ -1,4 +1,14 @@
-export interface OverlayProps {
+type OverlayClickProps =
+    | {
+          enableOverlayClick?: false | undefined;
+          onOverlayClick?: (() => void) | undefined;
+      }
+    | {
+          enableOverlayClick: true;
+          onOverlayClick: () => void;
+      };
+
+export type OverlayProps = {
     children?: JSX.Element | undefined;
     show?: boolean | undefined;
     rootId?:
@@ -7,11 +17,9 @@ export interface OverlayProps {
     backgroundOpacity?: number | undefined;
     backgroundBlur?: boolean | undefined;
     disableTransition?: boolean | undefined;
-    enableOverlayClick?: boolean | undefined;
     zIndex?: number | undefined;
-    onOverlayClick?: (() => void) | undefined;
     id?: string | undefined;
-}
+} & OverlayClickProps;
 
 /**
  * Transient props are denoted with $
