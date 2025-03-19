@@ -12,6 +12,7 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("D1.fontWeight"),
         lineHeight: getThemeTextStyles("D1.lineHeight"),
         letterSpacing: getThemeTextStyles("D1.letterSpacing"),
+        fontVariant: getThemeTextStyles("D1.fontVariant"),
     },
     D2: {
         fontFamily: getThemeTextStyles("D2.fontFamily"),
@@ -19,6 +20,7 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("D2.fontWeight"),
         lineHeight: getThemeTextStyles("D2.lineHeight"),
         letterSpacing: getThemeTextStyles("D2.letterSpacing"),
+        fontVariant: getThemeTextStyles("D2.fontVariant"),
     },
     D3: {
         fontFamily: getThemeTextStyles("D3.fontFamily"),
@@ -26,6 +28,7 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("D3.fontWeight"),
         lineHeight: getThemeTextStyles("D3.lineHeight"),
         letterSpacing: getThemeTextStyles("D3.letterSpacing"),
+        fontVariant: getThemeTextStyles("D3.fontVariant"),
     },
     D4: {
         fontFamily: getThemeTextStyles("D4.fontFamily"),
@@ -33,6 +36,7 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("D4.fontWeight"),
         lineHeight: getThemeTextStyles("D4.lineHeight"),
         letterSpacing: getThemeTextStyles("D4.letterSpacing"),
+        fontVariant: getThemeTextStyles("D4.fontVariant"),
     },
     DBody: {
         fontFamily: getThemeTextStyles("DBody.fontFamily"),
@@ -40,6 +44,7 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("DBody.fontWeight"),
         lineHeight: getThemeTextStyles("DBody.lineHeight"),
         letterSpacing: getThemeTextStyles("DBody.letterSpacing"),
+        fontVariant: getThemeTextStyles("DBody.fontVariant"),
     },
     H1: {
         fontFamily: getThemeTextStyles("H1.fontFamily"),
@@ -47,6 +52,7 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("H1.fontWeight"),
         lineHeight: getThemeTextStyles("H1.lineHeight"),
         letterSpacing: getThemeTextStyles("H1.letterSpacing"),
+        fontVariant: getThemeTextStyles("H1.fontVariant"),
     },
     H2: {
         fontFamily: getThemeTextStyles("H2.fontFamily"),
@@ -54,6 +60,7 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("H2.fontWeight"),
         lineHeight: getThemeTextStyles("H2.lineHeight"),
         letterSpacing: getThemeTextStyles("H2.letterSpacing"),
+        fontVariant: getThemeTextStyles("H2.fontVariant"),
     },
     H3: {
         fontFamily: getThemeTextStyles("H3.fontFamily"),
@@ -61,6 +68,7 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("H3.fontWeight"),
         lineHeight: getThemeTextStyles("H3.lineHeight"),
         letterSpacing: getThemeTextStyles("H3.letterSpacing"),
+        fontVariant: getThemeTextStyles("H3.fontVariant"),
     },
     H4: {
         fontFamily: getThemeTextStyles("H4.fontFamily"),
@@ -68,6 +76,7 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("H4.fontWeight"),
         lineHeight: getThemeTextStyles("H4.lineHeight"),
         letterSpacing: getThemeTextStyles("H4.letterSpacing"),
+        fontVariant: getThemeTextStyles("H4.fontVariant"),
     },
     H5: {
         fontFamily: getThemeTextStyles("H5.fontFamily"),
@@ -75,6 +84,7 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("H5.fontWeight"),
         lineHeight: getThemeTextStyles("H5.lineHeight"),
         letterSpacing: getThemeTextStyles("H5.letterSpacing"),
+        fontVariant: getThemeTextStyles("H5.fontVariant"),
     },
     H6: {
         fontFamily: getThemeTextStyles("H6.fontFamily"),
@@ -82,6 +92,7 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("H6.fontWeight"),
         lineHeight: getThemeTextStyles("H6.lineHeight"),
         letterSpacing: getThemeTextStyles("H6.letterSpacing"),
+        fontVariant: getThemeTextStyles("H6.fontVariant"),
     },
     Body: {
         fontFamily: getThemeTextStyles("Body.fontFamily"),
@@ -89,6 +100,7 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("Body.fontWeight"),
         lineHeight: getThemeTextStyles("Body.lineHeight"),
         letterSpacing: getThemeTextStyles("Body.letterSpacing"),
+        fontVariant: getThemeTextStyles("Body.fontVariant"),
     },
     BodySmall: {
         fontFamily: getThemeTextStyles("BodySmall.fontFamily"),
@@ -96,6 +108,7 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("BodySmall.fontWeight"),
         lineHeight: getThemeTextStyles("BodySmall.lineHeight"),
         letterSpacing: getThemeTextStyles("BodySmall.letterSpacing"),
+        fontVariant: getThemeTextStyles("BodySmall.fontVariant"),
     },
     XSmall: {
         fontFamily: getThemeTextStyles("XSmall.fontFamily"),
@@ -103,5 +116,6 @@ export const TextStyle: PropertiesToType<
         fontWeight: getThemeTextStyles("XSmall.fontWeight"),
         lineHeight: getThemeTextStyles("XSmall.lineHeight"),
         letterSpacing: getThemeTextStyles("XSmall.letterSpacing"),
+        fontVariant: getThemeTextStyles("XSmall.fontVariant"),
     },
 };
