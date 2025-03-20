@@ -73,3 +73,7 @@ export type FontSet = {
     "form-label": CSSProp | string;
     "form-description": CSSProp | string;
 };
+
+export type FontSetAdditionalOptions = {
+    disableLigatures?: boolean;
+};
