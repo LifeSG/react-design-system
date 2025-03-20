@@ -118,7 +118,7 @@ const getTextStyle = (
             font-size: ${fontSize}rem !important;
             line-height: ${attrs.lineHeight}rem !important;
             letter-spacing: ${attrs.letterSpacing(props) || 0}rem !important;
-            font-variant: ${attrs.fontVariant(props) || "normal"} !important;
+            font-variant: ${attrs.fontVariant(props) || "normal"};
             ${getMarginBottomStyle()}
         `;
     };
