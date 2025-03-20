@@ -27,6 +27,7 @@ export interface V2_TextStyleSpec {
     fontWeight?: number | undefined;
     lineHeight?: number | undefined;
     letterSpacing?: number | undefined;
+    fontVariant?: string | undefined;
 }
 
 /** @deprecated */
