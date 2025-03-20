@@ -1,5 +1,6 @@
 import { Meta } from "@storybook/blocks";
 import { BookingSGTheme } from "src/theme";
+import { DocInfo } from "stories/storybook-common";
 import { FontDisplay } from "../doc-elements";
 
 <Meta title="Foundations/Font/BookingSG" />
@@ -21,6 +22,10 @@ This stylesheet should be loaded in your app.
 https://assets.life.gov.sg/react-design-system/v3/css/plus-jakarta-sans.css
 ```
 
-Note that the _font ligatures_ is **_disabled_** by default for this `fontScheme`.
+<DocInfo>
+    [Common
+    ligatures](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures)
+    are **disabled** for this font
+</DocInfo>
 
 <FontDisplay theme={BookingSGTheme} />
