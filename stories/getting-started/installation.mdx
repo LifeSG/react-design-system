@@ -157,3 +157,31 @@ export default App;
 
 For more information on the usage of themes, you can visit our
 [documentation](/docs/foundations-themes-introduction--docs) about it.
+
+### 4. Augment theme types (optional, recommended)
+
+If you access the theme object via the `useTheme` hook in a Typescript project,
+you can type it by adding a custom declaration file. Read more at the [Styled
+Components api
+docs](https://styled-components.com/docs/api#create-a-declarations-file).
+
+```ts
+// styled.d.ts
+import "styled-components";
+
+import { ThemeSpec } from "@lifesg/react-design-system/theme/types";
+
+declare module "styled-components" {
+    export interface DefaultTheme extends ThemeSpec {
+        maxColumns?: {
+            xxs: 8;
+            xs: 8;
+            sm: 8;
+            md: 8;
+            lg: 12;
+            xl: 12;
+            xxl: 12;
+        };
+    }
+}
+```
