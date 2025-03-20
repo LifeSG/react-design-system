@@ -199,14 +199,14 @@ export const CustomPopovers: StoryObj<Component> = {
                         content: () => (
                             <StyledCustomPopoverCard>
                                 <div>
-                                    <Typography.HeaderSM weight="semibold">
+                                    <Typography.HeadingSM weight="semibold">
                                         {row.name}
-                                    </Typography.HeaderSM>
-                                    <Typography.HeaderXS weight="semibold">
+                                    </Typography.HeadingSM>
+                                    <Typography.HeadingXS weight="semibold">
                                         {`${formatTime(
                                             cell.startTime
                                         )} - ${formatTime(cell.endTime)}`}
-                                    </Typography.HeaderXS>
+                                    </Typography.HeadingXS>
                                 </div>
                                 <div>
                                     <Typography.BodyBL weight="semibold">

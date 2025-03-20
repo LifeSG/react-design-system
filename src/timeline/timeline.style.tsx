@@ -122,7 +122,7 @@ export const TimelineWrapper = styled.div<TimelineWrapperStyleProps>`
     }
 `;
 
-export const TimelineTitle = styled(Typography.HeaderSM).attrs({
+export const TimelineTitle = styled(Typography.HeadingSM).attrs({
     as: "div", // TODO: allow overriding of the a11y header level
 })`
     margin-bottom: 1rem;
@@ -132,7 +132,7 @@ export const TimelineTitle = styled(Typography.HeaderSM).attrs({
     }
 `;
 
-export const TimelineItemTitle = styled(Typography.HeaderXS).attrs({
+export const TimelineItemTitle = styled(Typography.HeadingXS).attrs({
     as: "div", // TODO: allow overriding of the a11y header level
 })`
     margin-top: -0.125rem;

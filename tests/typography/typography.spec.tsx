@@ -37,13 +37,13 @@ describe("Typography Components", () => {
         });
     });
 
-    describe("Header Components", () => {
-        it("renders HeaderXXL with correct text", () => {
+    describe("Heading Components", () => {
+        it("renders HeadingXXL with correct text", () => {
             const { getByText } = render(
                 <ThemeProvider theme={MOCK_THEME}>
-                    <Typography.HeaderXXL weight="bold" inline>
+                    <Typography.HeadingXXL weight="bold" inline>
                         Hello World
-                    </Typography.HeaderXXL>
+                    </Typography.HeadingXXL>
                 </ThemeProvider>
             );
 

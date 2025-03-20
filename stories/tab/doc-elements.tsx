@@ -7,7 +7,7 @@ export const Content = styled.div`
 
 export const ContentA = () => (
     <Content>
-        <Typography.HeaderMD>Section A</Typography.HeaderMD>
+        <Typography.HeadingMD>Section A</Typography.HeadingMD>
         <br />
         <Typography.BodyBL>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
@@ -20,7 +20,7 @@ export const ContentA = () => (
 
 export const ContentB = () => (
     <Content>
-        <Typography.HeaderMD>Section B</Typography.HeaderMD>
+        <Typography.HeadingMD>Section B</Typography.HeadingMD>
         <br />
         <Typography.BodyBL>
             Donec metus augue, vulputate ut laoreet pretium, cursus sed odio.
@@ -33,7 +33,7 @@ export const ContentB = () => (
 
 export const ContentC = () => (
     <Content>
-        <Typography.HeaderMD>Section C</Typography.HeaderMD>
+        <Typography.HeadingMD>Section C</Typography.HeadingMD>
         <br />
         <Typography.BodyBL>
             Maecenas tempor dolor sit amet turpis interdum convallis. Nunc ut
@@ -45,7 +45,7 @@ export const ContentC = () => (
 
 export const ContentD = () => (
     <Content>
-        <Typography.HeaderMD>Section D</Typography.HeaderMD>
+        <Typography.HeadingMD>Section D</Typography.HeadingMD>
         <br />
         <Typography.BodyBL>
             Nullam sit amet tortor purus. Sed eget nulla sapien. Proin a lacus

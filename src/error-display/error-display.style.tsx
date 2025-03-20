@@ -39,7 +39,7 @@ export const TextContainer = styled.div`
     white-space: pre-wrap;
 `;
 
-export const Title = styled(Typography.HeaderMD)`
+export const Title = styled(Typography.HeadingMD)`
     margin: ${Spacing["spacing-32"]} 0 ${Spacing["spacing-16"]};
     text-align: center;
 `;

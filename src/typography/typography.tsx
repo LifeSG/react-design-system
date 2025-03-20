@@ -6,7 +6,7 @@ import { createTypographyStyles, getTextStyle } from "./helper";
 import { TypographyLinkProps, TypographyProps } from "./types";
 
 export namespace Typography {
-    const createHeader = (
+    const createHeading = (
         tag: keyof JSX.IntrinsicElements,
         textStyle: TypographySizeType,
         displayName: string
@@ -20,12 +20,12 @@ export namespace Typography {
         return Header;
     };
 
-    export const HeaderXXL = createHeader("h1", "heading-xxl", "HeaderXXL");
-    export const HeaderXL = createHeader("h2", "heading-xl", "HeaderXL");
-    export const HeaderLG = createHeader("h3", "heading-lg", "HeaderLG");
-    export const HeaderMD = createHeader("h4", "heading-md", "HeaderMD");
-    export const HeaderSM = createHeader("h5", "heading-sm", "HeaderSM");
-    export const HeaderXS = createHeader("h6", "heading-xs", "HeaderXS");
+    export const HeadingXXL = createHeading("h1", "heading-xxl", "HeadingXXL");
+    export const HeadingXL = createHeading("h2", "heading-xl", "HeadingXL");
+    export const HeadingLG = createHeading("h3", "heading-lg", "HeadingLG");
+    export const HeadingMD = createHeading("h4", "heading-md", "HeadingMD");
+    export const HeadingSM = createHeading("h5", "heading-sm", "HeadingSM");
+    export const HeadingXS = createHeading("h6", "heading-xs", "HeadingXS");
 
     const createBody = (textStyle: TypographySizeType, displayName: string) => {
         const Body = styled.p.attrs<TypographyProps>(({ inline }) => ({

@@ -42,13 +42,13 @@ const TITLE_STYLE = (isCollapsed?: boolean) => css`
     transition: all ${Motion["duration-250"]} ${Motion["ease-standard"]};
 `;
 
-export const Title = styled(Typography.HeaderSM)<StyleProps>`
+export const Title = styled(Typography.HeadingSM)<StyleProps>`
     ${(props) => {
         return TITLE_STYLE(props.$isCollapsed);
     }}
 `;
 
-export const TitleH4 = styled(Typography.HeaderXS)<StyleProps>`
+export const TitleH4 = styled(Typography.HeadingXS)<StyleProps>`
     ${(props) => {
         return TITLE_STYLE(props.$isCollapsed);
     }}

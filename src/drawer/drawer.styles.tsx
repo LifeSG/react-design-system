@@ -97,7 +97,7 @@ export const CloseButton = styled(ClickableIcon)`
     }
 `;
 
-export const Heading = styled(Typography.HeaderMD)`
+export const Heading = styled(Typography.HeadingMD)`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

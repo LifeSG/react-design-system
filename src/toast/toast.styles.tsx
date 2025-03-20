@@ -126,7 +126,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
 `;
 
-export const Title = styled(Typography.HeaderXS)<StyleProps>`
+export const Title = styled(Typography.HeadingXS)<StyleProps>`
     display: flex;
 
     ${(props) => {

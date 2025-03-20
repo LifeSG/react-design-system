@@ -161,9 +161,9 @@ export const WithCustomDisplay: StoryObj<Component> = {
             <Toast
                 type="warning"
                 title={
-                    <Typography.HeaderXS weight="regular">
+                    <Typography.HeadingXS weight="regular">
                         This is a <strong>JSX Element</strong>
-                    </Typography.HeaderXS>
+                    </Typography.HeadingXS>
                 }
                 label={
                     <Typography.BodyMD>

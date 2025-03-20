@@ -32,7 +32,7 @@ export const Wrapper = styled(Layout.Content)<WrapperStyleProps>`
     padding-bottom: 2rem;
 `;
 
-export const Title = styled(Typography.HeaderSM)<ContentStyleProps>`
+export const Title = styled(Typography.HeadingSM)<ContentStyleProps>`
     margin-bottom: 1rem;
     ${columnWidthStyle}
 `;

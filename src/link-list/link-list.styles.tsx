@@ -28,14 +28,14 @@ export const Container = styled.div`
     border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 `;
 
-export const ItemTitleDefault = styled(Typography.HeaderSM).attrs({
+export const ItemTitleDefault = styled(Typography.HeadingSM).attrs({
     as: "div",
 })`
     color: ${Colour["text-primary"]};
     margin-bottom: 0.5rem;
 `;
 
-export const ItemTitleSmall = styled(Typography.HeaderXS).attrs({
+export const ItemTitleSmall = styled(Typography.HeadingXS).attrs({
     as: "div",
 })`
     color: ${Colour["text-primary"]};

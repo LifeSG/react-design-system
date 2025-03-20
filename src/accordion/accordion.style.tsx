@@ -35,7 +35,7 @@ export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
     }}
 `;
 
-export const Title = styled(Typography.HeaderMD)<TitleStyleProps>`
+export const Title = styled(Typography.HeadingMD)<TitleStyleProps>`
     display: flex;
     align-self: flex-start;
     flex: 1;
