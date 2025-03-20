@@ -24,6 +24,7 @@ export interface TextStyleSpec {
     fontWeight?: number | undefined;
     lineHeight?: number | undefined;
     letterSpacing?: number | undefined;
+    fontVariant?: string | undefined;
 }
 
 export type TextStyleSetType = { [key in TextSizeType]: TextStyleSpec };

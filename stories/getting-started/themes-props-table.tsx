@@ -135,6 +135,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["number"],
             },
             {
+                name: "fontVariant",
+                description: <></>,
+                propTypes: ["string"],
+            },
+            {
                 name: "lineHeight",
                 description: <></>,
                 propTypes: ["number"],
