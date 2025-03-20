@@ -1,0 +1,16 @@
+export const sizePropMapping = {
+    D1: "header-xxl",
+    D2: "header-xl",
+    D3: "header-md",
+    D4: "header-sm",
+    H1: "header-lg",
+    H2: "header-md",
+    H3: "header-sm",
+    H4: "header-xs",
+    H5: "body-md",
+    H6: "body-sm",
+    DBody: "header-sm",
+    Body: "body-baseline",
+    BodySmall: "body-md",
+    XSmall: "body-xs",
+};
