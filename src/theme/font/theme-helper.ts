@@ -3,11 +3,12 @@ import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { FontScheme, ThemeCollectionSpec } from "../types";
 import { DefaultFontSet } from "./specs/default-font-set";
 import { FontCollectionMap, FontSet } from "./types";
+import { BookingSgFontSet } from "./specs/bookingsg-font-set";
 
 const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
     collections: {
         lifesg: DefaultFontSet,
-        bookingsg: DefaultFontSet,
+        bookingsg: BookingSgFontSet,
         rbs: DefaultFontSet,
         mylegacy: DefaultFontSet,
         ccube: DefaultFontSet,
