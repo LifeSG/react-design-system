@@ -26,172 +26,172 @@ export const generateFontCSS = (
 export const getFontSet = (
     options: FontSetAdditionalOptions = {}
 ): FontSet => ({
-    "header-xxl-light": generateFontCSS(
-        "header-size-xxl",
+    "heading-xxl-light": generateFontCSS(
+        "heading-size-xxl",
         "weight-light",
-        "header-lh-xxl",
-        "header-ls-xxl",
+        "heading-lh-xxl",
+        "heading-ls-xxl",
         options
     ),
-    "header-xxl-regular": generateFontCSS(
-        "header-size-xxl",
+    "heading-xxl-regular": generateFontCSS(
+        "heading-size-xxl",
         "weight-regular",
-        "header-lh-xxl",
-        "header-ls-xxl",
+        "heading-lh-xxl",
+        "heading-ls-xxl",
         options
     ),
-    "header-xxl-semibold": generateFontCSS(
-        "header-size-xxl",
+    "heading-xxl-semibold": generateFontCSS(
+        "heading-size-xxl",
         "weight-semibold",
-        "header-lh-xxl",
-        "header-ls-xxl",
+        "heading-lh-xxl",
+        "heading-ls-xxl",
         options
     ),
-    "header-xxl-bold": generateFontCSS(
-        "header-size-xxl",
+    "heading-xxl-bold": generateFontCSS(
+        "heading-size-xxl",
         "weight-bold",
-        "header-lh-xxl",
-        "header-ls-xxl",
+        "heading-lh-xxl",
+        "heading-ls-xxl",
         options
     ),
-    "header-xl-light": generateFontCSS(
-        "header-size-xl",
+    "heading-xl-light": generateFontCSS(
+        "heading-size-xl",
         "weight-light",
-        "header-lh-xl",
-        "header-ls-xl",
+        "heading-lh-xl",
+        "heading-ls-xl",
         options
     ),
-    "header-xl-regular": generateFontCSS(
-        "header-size-xl",
+    "heading-xl-regular": generateFontCSS(
+        "heading-size-xl",
         "weight-regular",
-        "header-lh-xl",
-        "header-ls-xl",
+        "heading-lh-xl",
+        "heading-ls-xl",
         options
     ),
-    "header-xl-semibold": generateFontCSS(
-        "header-size-xl",
+    "heading-xl-semibold": generateFontCSS(
+        "heading-size-xl",
         "weight-semibold",
-        "header-lh-xl",
-        "header-ls-xl",
+        "heading-lh-xl",
+        "heading-ls-xl",
         options
     ),
-    "header-xl-bold": generateFontCSS(
-        "header-size-xl",
+    "heading-xl-bold": generateFontCSS(
+        "heading-size-xl",
         "weight-bold",
-        "header-lh-xl",
-        "header-ls-xl",
+        "heading-lh-xl",
+        "heading-ls-xl",
         options
     ),
-    "header-lg-light": generateFontCSS(
-        "header-size-lg",
+    "heading-lg-light": generateFontCSS(
+        "heading-size-lg",
         "weight-light",
-        "header-lh-lg",
-        "header-ls-lg",
+        "heading-lh-lg",
+        "heading-ls-lg",
         options
     ),
-    "header-lg-regular": generateFontCSS(
-        "header-size-lg",
+    "heading-lg-regular": generateFontCSS(
+        "heading-size-lg",
         "weight-regular",
-        "header-lh-lg",
-        "header-ls-lg",
+        "heading-lh-lg",
+        "heading-ls-lg",
         options
     ),
-    "header-lg-semibold": generateFontCSS(
-        "header-size-lg",
+    "heading-lg-semibold": generateFontCSS(
+        "heading-size-lg",
         "weight-semibold",
-        "header-lh-lg",
-        "header-ls-lg",
+        "heading-lh-lg",
+        "heading-ls-lg",
         options
     ),
-    "header-lg-bold": generateFontCSS(
-        "header-size-lg",
+    "heading-lg-bold": generateFontCSS(
+        "heading-size-lg",
         "weight-bold",
-        "header-lh-lg",
-        "header-ls-lg",
+        "heading-lh-lg",
+        "heading-ls-lg",
         options
     ),
-    "header-md-light": generateFontCSS(
-        "header-size-md",
+    "heading-md-light": generateFontCSS(
+        "heading-size-md",
         "weight-light",
-        "header-lh-md",
-        "header-ls-md",
+        "heading-lh-md",
+        "heading-ls-md",
         options
     ),
-    "header-md-regular": generateFontCSS(
-        "header-size-md",
+    "heading-md-regular": generateFontCSS(
+        "heading-size-md",
         "weight-regular",
-        "header-lh-md",
-        "header-ls-md",
+        "heading-lh-md",
+        "heading-ls-md",
         options
     ),
-    "header-md-semibold": generateFontCSS(
-        "header-size-md",
+    "heading-md-semibold": generateFontCSS(
+        "heading-size-md",
         "weight-semibold",
-        "header-lh-md",
-        "header-ls-md",
+        "heading-lh-md",
+        "heading-ls-md",
         options
     ),
-    "header-md-bold": generateFontCSS(
-        "header-size-md",
+    "heading-md-bold": generateFontCSS(
+        "heading-size-md",
         "weight-bold",
-        "header-lh-md",
-        "header-ls-md",
+        "heading-lh-md",
+        "heading-ls-md",
         options
     ),
-    "header-sm-light": generateFontCSS(
-        "header-size-sm",
+    "heading-sm-light": generateFontCSS(
+        "heading-size-sm",
         "weight-light",
-        "header-lh-sm",
-        "header-ls-sm",
+        "heading-lh-sm",
+        "heading-ls-sm",
         options
     ),
-    "header-sm-regular": generateFontCSS(
-        "header-size-sm",
+    "heading-sm-regular": generateFontCSS(
+        "heading-size-sm",
         "weight-regular",
-        "header-lh-sm",
-        "header-ls-sm",
+        "heading-lh-sm",
+        "heading-ls-sm",
         options
     ),
-    "header-sm-semibold": generateFontCSS(
-        "header-size-sm",
+    "heading-sm-semibold": generateFontCSS(
+        "heading-size-sm",
         "weight-semibold",
-        "header-lh-sm",
-        "header-ls-sm",
+        "heading-lh-sm",
+        "heading-ls-sm",
         options
     ),
-    "header-sm-bold": generateFontCSS(
-        "header-size-sm",
+    "heading-sm-bold": generateFontCSS(
+        "heading-size-sm",
         "weight-bold",
-        "header-lh-sm",
-        "header-ls-sm",
+        "heading-lh-sm",
+        "heading-ls-sm",
         options
     ),
-    "header-xs-light": generateFontCSS(
-        "header-size-xs",
+    "heading-xs-light": generateFontCSS(
+        "heading-size-xs",
         "weight-light",
-        "header-lh-xs",
-        "header-ls-xs",
+        "heading-lh-xs",
+        "heading-ls-xs",
         options
     ),
-    "header-xs-regular": generateFontCSS(
-        "header-size-xs",
+    "heading-xs-regular": generateFontCSS(
+        "heading-size-xs",
         "weight-regular",
-        "header-lh-xs",
-        "header-ls-xs",
+        "heading-lh-xs",
+        "heading-ls-xs",
         options
     ),
-    "header-xs-semibold": generateFontCSS(
-        "header-size-xs",
+    "heading-xs-semibold": generateFontCSS(
+        "heading-size-xs",
         "weight-semibold",
-        "header-lh-xs",
-        "header-ls-xs",
+        "heading-lh-xs",
+        "heading-ls-xs",
         options
     ),
-    "header-xs-bold": generateFontCSS(
-        "header-size-xs",
+    "heading-xs-bold": generateFontCSS(
+        "heading-size-xs",
         "weight-bold",
-        "header-lh-xs",
-        "header-ls-xs",
+        "heading-lh-xs",
+        "heading-ls-xs",
         options
     ),
     "body-baseline-light": generateFontCSS(

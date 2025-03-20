@@ -8,28 +8,28 @@ export type FontSpecSetOptions = Partial<FontSpecSet>;
 
 export type FontSpecSet = {
     // Header sizes
-    "header-size-xxl": string;
-    "header-size-xl": string;
-    "header-size-lg": string;
-    "header-size-md": string;
-    "header-size-sm": string;
-    "header-size-xs": string;
+    "heading-size-xxl": string;
+    "heading-size-xl": string;
+    "heading-size-lg": string;
+    "heading-size-md": string;
+    "heading-size-sm": string;
+    "heading-size-xs": string;
 
     // Header line heights
-    "header-lh-xxl": string;
-    "header-lh-xl": string;
-    "header-lh-lg": string;
-    "header-lh-md": string;
-    "header-lh-sm": string;
-    "header-lh-xs": string;
+    "heading-lh-xxl": string;
+    "heading-lh-xl": string;
+    "heading-lh-lg": string;
+    "heading-lh-md": string;
+    "heading-lh-sm": string;
+    "heading-lh-xs": string;
 
     // Header letter spacing
-    "header-ls-xxl": string;
-    "header-ls-xl": string;
-    "header-ls-lg": string;
-    "header-ls-md": string;
-    "header-ls-sm": string;
-    "header-ls-xs": string;
+    "heading-ls-xxl": string;
+    "heading-ls-xl": string;
+    "heading-ls-lg": string;
+    "heading-ls-md": string;
+    "heading-ls-sm": string;
+    "heading-ls-xs": string;
 
     // Font weights
     "weight-light": string;

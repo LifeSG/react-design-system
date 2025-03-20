@@ -79,7 +79,7 @@ export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
 `;
 
 export const FilterItemTitle = styled.p`
-    ${Font["header-xs-semibold"]}
+    ${Font["heading-xs-semibold"]}
     color: ${Colour["text"]};
 
     margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}

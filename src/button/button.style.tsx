@@ -136,7 +136,7 @@ export const Main = styled.button<MainStyleProps>`
             case "large":
                 return css`
                     height: 4rem;
-                    ${Font["header-md-semibold"]}
+                    ${Font["heading-md-semibold"]}
 
                     ${MediaQuery.MaxWidth.xxs} {
                         height: auto;
@@ -146,7 +146,7 @@ export const Main = styled.button<MainStyleProps>`
             default:
                 return css`
                     height: 3rem;
-                    ${Font["header-xs-semibold"]}
+                    ${Font["heading-xs-semibold"]}
 
                     ${MediaQuery.MaxWidth.xxs} {
                         height: auto;

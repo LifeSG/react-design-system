@@ -20,12 +20,12 @@ export namespace Typography {
         return Header;
     };
 
-    export const HeaderXXL = createHeader("h1", "header-xxl", "HeaderXXL");
-    export const HeaderXL = createHeader("h2", "header-xl", "HeaderXL");
-    export const HeaderLG = createHeader("h3", "header-lg", "HeaderLG");
-    export const HeaderMD = createHeader("h4", "header-md", "HeaderMD");
-    export const HeaderSM = createHeader("h5", "header-sm", "HeaderSM");
-    export const HeaderXS = createHeader("h6", "header-xs", "HeaderXS");
+    export const HeaderXXL = createHeader("h1", "heading-xxl", "HeaderXXL");
+    export const HeaderXL = createHeader("h2", "heading-xl", "HeaderXL");
+    export const HeaderLG = createHeader("h3", "heading-lg", "HeaderLG");
+    export const HeaderMD = createHeader("h4", "heading-md", "HeaderMD");
+    export const HeaderSM = createHeader("h5", "heading-sm", "HeaderSM");
+    export const HeaderXS = createHeader("h6", "heading-xs", "HeaderXS");
 
     const createBody = (textStyle: TypographySizeType, displayName: string) => {
         const Body = styled.p.attrs<TypographyProps>(({ inline }) => ({
