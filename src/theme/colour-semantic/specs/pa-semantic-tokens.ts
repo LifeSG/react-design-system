@@ -58,7 +58,7 @@ export const PAColourSet: SemanticColourSet = {
     "border-hover": getPrimitiveColour("neutral-80"),
     "border-hover-strong": getPrimitiveColour("neutral-10"),
 
-    "border-selected": getPrimitiveColour("neutral-20"),
+    "border-selected": getPrimitiveColour("brand-20"),
     "border-selected-subtle": getPrimitiveColour("neutral-40"),
     "border-selected-subtlest": getPrimitiveColour("neutral-70"),
     "border-selected-hover": getPrimitiveColour("neutral-10"),
