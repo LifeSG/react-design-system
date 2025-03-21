@@ -8,14 +8,11 @@ import { PAFontSet } from "./specs/pa-font-set";
 
 const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
     collections: {
-        lifesg: DefaultFontSet,
+        default: DefaultFontSet,
         bookingsg: BookingSgFontSet,
-        rbs: DefaultFontSet,
-        mylegacy: DefaultFontSet,
-        ccube: DefaultFontSet,
         pa: PAFontSet,
     },
-    defaultValue: "lifesg",
+    defaultValue: "default",
 };
 
 export const getFont = (key: keyof FontSet) => {

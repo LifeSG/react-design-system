@@ -1,6 +1,6 @@
 import { FontSpecSet } from "../types";
 
-export const LifeSgFontSpecSet: FontSpecSet = {
+export const DefaultFontSpecSet: FontSpecSet = {
     "heading-size-xxl": "3rem",
     "heading-size-xl": "2.5rem",
     "heading-size-lg": "2rem",

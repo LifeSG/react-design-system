@@ -46,7 +46,7 @@ export const MediaQuery = MediaQueryValues;
 
 export const LifeSGTheme: ThemeSpec = {
     colourScheme: "lifesg",
-    fontScheme: "lifesg",
+    fontScheme: "default",
     motionScheme: "default",
     borderScheme: "default",
     spacingScheme: "default",
@@ -80,7 +80,7 @@ export const BookingSGTheme: ThemeSpec = {
 
 export const CCubeTheme: ThemeSpec = {
     colourScheme: "ccube",
-    fontScheme: "ccube",
+    fontScheme: "default",
     motionScheme: "default",
     borderScheme: "default",
     spacingScheme: "default",
@@ -97,7 +97,7 @@ export const CCubeTheme: ThemeSpec = {
 
 export const MyLegacyTheme: ThemeSpec = {
     colourScheme: "mylegacy",
-    fontScheme: "mylegacy",
+    fontScheme: "default",
     motionScheme: "default",
     borderScheme: "default",
     spacingScheme: "default",
@@ -114,7 +114,7 @@ export const MyLegacyTheme: ThemeSpec = {
 
 export const RBSTheme: ThemeSpec = {
     colourScheme: "rbs",
-    fontScheme: "rbs",
+    fontScheme: "default",
     motionScheme: "default",
     borderScheme: "default",
     spacingScheme: "default",
