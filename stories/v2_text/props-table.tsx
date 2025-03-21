@@ -54,7 +54,6 @@ const TEXT_DATA: ApiTableSectionProps[] = [
                     "Specifies the number of lines visible, the additional lines will be truncated",
                 propTypes: ["number"],
             },
-            // TODO: Ask Ruo Ling whether necessary to expose fontVariant
         ],
     },
 ];
