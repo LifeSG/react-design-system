@@ -1,7 +1,7 @@
+import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import type { Meta, StoryObj } from "@storybook/react";
 import { ButtonWithIcon } from "../../src/button-with-icon";
 import { Container } from "../button/doc-elements";
-import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 
 type Component = typeof ButtonWithIcon.Default;
 
@@ -117,6 +117,8 @@ export const RightPositioned: StoryObj<Component> = {
                     <ButtonWithIcon.Small
                         icon={<PlaceholderIcon />}
                         iconPosition="right"
+                        loading={true}
+                        disabled={true}
                     >
                         Small
                     </ButtonWithIcon.Small>
@@ -208,6 +210,81 @@ export const Danger: StoryObj<Component> = {
                         danger
                     >
                         Link
+                    </ButtonWithIcon.Small>
+                </Container>
+            </>
+        );
+    },
+};
+
+export const LoadingState: StoryObj<Component> = {
+    render: () => {
+        return (
+            <>
+                <Container>
+                    <ButtonWithIcon.Default icon={<PlaceholderIcon />} loading>
+                        Loading
+                    </ButtonWithIcon.Default>
+                    <ButtonWithIcon.Default
+                        icon={<PlaceholderIcon />}
+                        styleType="secondary"
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Default>
+                    <ButtonWithIcon.Default
+                        icon={<PlaceholderIcon />}
+                        styleType="light"
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Default>
+                    <ButtonWithIcon.Default
+                        icon={<PlaceholderIcon />}
+                        styleType="link"
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Default>
+                    <ButtonWithIcon.Default
+                        icon={<PlaceholderIcon />}
+                        disabled
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Default>
+                </Container>
+                <Container>
+                    <ButtonWithIcon.Small icon={<PlaceholderIcon />} loading>
+                        Small
+                    </ButtonWithIcon.Small>
+                    <ButtonWithIcon.Small
+                        icon={<PlaceholderIcon />}
+                        styleType="secondary"
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Small>
+                    <ButtonWithIcon.Small
+                        icon={<PlaceholderIcon />}
+                        styleType="light"
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Small>
+                    <ButtonWithIcon.Small
+                        icon={<PlaceholderIcon />}
+                        styleType="link"
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Small>
+                    <ButtonWithIcon.Small
+                        icon={<PlaceholderIcon />}
+                        disabled
+                        loading
+                    >
+                        Loading
                     </ButtonWithIcon.Small>
                 </Container>
             </>

@@ -1,6 +1,6 @@
-import { ButtonBaseProps, ButtonRef } from "../button/types";
+import { ButtonProps, ButtonRef } from "../button/types";
 
-export interface ButtonWithIconProps extends ButtonBaseProps {
+export interface ButtonWithIconProps extends ButtonProps {
     /** The icon to be rendered in the button */
     icon: JSX.Element;
     /** Specifies where the icon will be positioned */
