@@ -1,4 +1,5 @@
 import React from "react";
+import { Spinner } from "../button/button.style";
 import {
     MainButtonWithIcon,
     MainStylePropsWithIcon,
@@ -22,6 +23,7 @@ const DefaultComponent = (
         danger = false,
         icon,
         iconPosition = "left",
+        loading = false,
         ...otherProps
     } = props;
 
@@ -40,7 +42,7 @@ const DefaultComponent = (
             {...mainStyle}
             {...otherProps}
         >
-            {icon}
+            {loading ? <Spinner {...mainStyle} size={16} /> : icon}
             <span>{children}</span>
         </MainButtonWithIcon>
     );
@@ -54,6 +56,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
         danger = false,
         icon,
         iconPosition = "left",
+        loading = false,
         ...otherProps
     } = props;
 
@@ -72,7 +75,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
             {...mainStyle}
             {...otherProps}
         >
-            {icon}
+            {loading ? <Spinner {...mainStyle} size={16} /> : icon}
             <span>{children}</span>
         </MainButtonWithIcon>
     );
