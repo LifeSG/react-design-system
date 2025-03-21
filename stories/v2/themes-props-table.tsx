@@ -144,6 +144,11 @@ const DATA: ApiTableSectionProps[] = [
                 description: <></>,
                 propTypes: ["number"],
             },
+            {
+                name: "fontVariant",
+                description: <></>,
+                propTypes: ["string"],
+            },
         ],
     },
     {

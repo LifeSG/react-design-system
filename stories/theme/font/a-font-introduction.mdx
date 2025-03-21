@@ -37,7 +37,8 @@ A **font** token is a combination of these font spec tokens.
 </DocInfo>
 
 The `Font` namespace provides tokens to apply text styling within style
-declarations. You will rarely need to use the font spec tokens directly, but they are available via `Font.Spec`.
+declarations. You will rarely need to use the font spec tokens directly, but
+they are available via `Font.Spec`.
 
 ```tsx
 import { Font } from "@lifesg/react-design-system/theme";
@@ -58,6 +59,24 @@ const Icon = styled.svg`
     For inline icons, you can use the `em` and `lh` units instead to scale them
     based on font
 </DocNote>
+
+To avoid overwriting other values, do use longhand properties when further
+customisation is required.
+
+```tsx
+const Incorrect = styled.p`
+    ${Font["header-xxl-bold"]}
+    font: 1rem serif;
+    font-variant: small-caps;
+`;
+
+const Correct = styled.p`
+    ${Font["header-xxl-bold"]}
+    font-size: 1rem;
+    font-family: serif;
+    font-variant-caps: small-caps;
+`;
+```
 
 ## Overriding
 
