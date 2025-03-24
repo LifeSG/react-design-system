@@ -1,5 +1,5 @@
 import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
-import { fireEvent, getByText, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { ButtonWithIcon } from "../../src/button-with-icon";
 
 // =============================================================================
@@ -53,6 +53,46 @@ describe("ButtonWithIcon", () => {
         fireEvent.click(button);
 
         expect(onClickMock).toHaveBeenCalledTimes(1);
+    });
+
+    it("should render the loading spinner - Default", () => {
+        render(
+            <ButtonWithIcon.Default
+                icon={<PlaceholderIcon />}
+                iconPosition="left"
+                data-testid="test-button"
+                loading
+            >
+                {BUTTON_TEXT}
+            </ButtonWithIcon.Default>
+        );
+
+        const button = screen.getByTestId("test-button");
+        const icon = button.querySelector("svg");
+        const spinner = screen.getByTestId("component-loading-spinner");
+
+        expect(icon).not.toBeInTheDocument();
+        expect(spinner).toBeInTheDocument();
+    });
+
+    it("should render the loading spinner - Small", () => {
+        render(
+            <ButtonWithIcon.Small
+                icon={<PlaceholderIcon />}
+                iconPosition="left"
+                data-testid="test-button"
+                loading
+            >
+                {BUTTON_TEXT}
+            </ButtonWithIcon.Small>
+        );
+
+        const button = screen.getByTestId("test-button");
+        const icon = button.querySelector("svg");
+        const spinner = screen.getByTestId("component-loading-spinner");
+
+        expect(icon).not.toBeInTheDocument();
+        expect(spinner).toBeInTheDocument();
     });
 });
 
