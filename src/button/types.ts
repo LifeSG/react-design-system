@@ -29,4 +29,5 @@ export interface MainStyleProps extends ComponentLoadingSpinnerProps {
     $buttonStyle: MainButtonStyle;
     $buttonSizeStyle?: MainButtonSize | undefined;
     $buttonIsDanger?: boolean;
+    $buttonWithIcon?: boolean;
 }

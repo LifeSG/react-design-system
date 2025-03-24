@@ -117,8 +117,6 @@ export const RightPositioned: StoryObj<Component> = {
                     <ButtonWithIcon.Small
                         icon={<PlaceholderIcon />}
                         iconPosition="right"
-                        loading={true}
-                        disabled={true}
                     >
                         Small
                     </ButtonWithIcon.Small>

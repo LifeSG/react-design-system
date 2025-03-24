@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
 import { Color } from "../color/color";
+import { DesignToken } from "../design-token";
 import { MediaQuery } from "../media/media";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import { TextStyleHelper } from "../text";
 import { MainStyleProps } from "./types";
-import { DesignToken } from "../design-token";
 
 export const Main = styled.button<MainStyleProps>`
     padding: 0.5rem 1rem;
@@ -125,7 +125,6 @@ export const Main = styled.button<MainStyleProps>`
 `;
 
 export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
-    margin-right: 0.5rem;
     ${(props) => {
         let color = props.$buttonIsDanger
             ? DesignToken.Button.Danger.Primary
@@ -144,6 +143,8 @@ export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
         }
 
         return css`
+            margin-right: ${props.$buttonWithIcon ? 0 : "0.5rem"};
+
             #inner1,
             #inner2,
             #inner3,

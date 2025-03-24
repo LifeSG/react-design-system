@@ -32,6 +32,7 @@ const DefaultComponent = (
         $buttonStyle: disabled ? "disabled" : styleType,
         $buttonSizeStyle: "default",
         $buttonIsDanger: danger,
+        $buttonWithIcon: true,
     };
 
     return (
@@ -42,7 +43,7 @@ const DefaultComponent = (
             {...mainStyle}
             {...otherProps}
         >
-            {loading ? <Spinner {...mainStyle} size={16} /> : icon}
+            {loading ? <Spinner {...mainStyle} /> : icon}
             <span>{children}</span>
         </MainButtonWithIcon>
     );
@@ -65,6 +66,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
         $buttonStyle: disabled ? "disabled" : styleType,
         $buttonSizeStyle: "small",
         $buttonIsDanger: danger,
+        $buttonWithIcon: true,
     };
 
     return (
