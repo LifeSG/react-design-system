@@ -1,4 +1,5 @@
 import React from "react";
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
 import {
     MainButtonWithIcon,
     MainStylePropsWithIcon,
@@ -22,6 +23,7 @@ const DefaultComponent = (
         danger = false,
         icon,
         iconPosition = "left",
+        loading = false,
         ...otherProps
     } = props;
 
@@ -40,7 +42,7 @@ const DefaultComponent = (
             {...mainStyle}
             {...otherProps}
         >
-            {icon}
+            {loading ? <ComponentLoadingSpinner /> : icon}
             <span>{children}</span>
         </MainButtonWithIcon>
     );
@@ -55,6 +57,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
         danger = false,
         icon,
         iconPosition = "left",
+        loading = false,
         ...otherProps
     } = props;
 
@@ -73,7 +76,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
             {...mainStyle}
             {...otherProps}
         >
-            {icon}
+            {loading ? <ComponentLoadingSpinner /> : icon}
             <span>{children}</span>
         </MainButtonWithIcon>
     );

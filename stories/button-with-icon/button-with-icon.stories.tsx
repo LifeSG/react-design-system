@@ -214,3 +214,78 @@ export const Danger: StoryObj<Component> = {
         );
     },
 };
+
+export const LoadingState: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Container>
+                    <ButtonWithIcon.Default icon={<PlaceholderIcon />} loading>
+                        Default
+                    </ButtonWithIcon.Default>
+                    <ButtonWithIcon.Default
+                        icon={<PlaceholderIcon />}
+                        styleType="secondary"
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Default>
+                    <ButtonWithIcon.Default
+                        icon={<PlaceholderIcon />}
+                        styleType="light"
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Default>
+                    <ButtonWithIcon.Default
+                        icon={<PlaceholderIcon />}
+                        styleType="link"
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Default>
+                    <ButtonWithIcon.Default
+                        icon={<PlaceholderIcon />}
+                        disabled
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Default>
+                </Container>
+                <Container>
+                    <ButtonWithIcon.Small icon={<PlaceholderIcon />} loading>
+                        Small
+                    </ButtonWithIcon.Small>
+                    <ButtonWithIcon.Small
+                        icon={<PlaceholderIcon />}
+                        styleType="secondary"
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Small>
+                    <ButtonWithIcon.Small
+                        icon={<PlaceholderIcon />}
+                        styleType="light"
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Small>
+                    <ButtonWithIcon.Small
+                        icon={<PlaceholderIcon />}
+                        styleType="link"
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Small>
+                    <ButtonWithIcon.Small
+                        icon={<PlaceholderIcon />}
+                        disabled
+                        loading
+                    >
+                        Loading
+                    </ButtonWithIcon.Small>
+                </Container>
+            </>
+        );
+    },
+};

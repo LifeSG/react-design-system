@@ -49,6 +49,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },
+            {
+                name: "loading",
+                description: "The icon will become a loading spinner",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
         ],
     },
 ];
