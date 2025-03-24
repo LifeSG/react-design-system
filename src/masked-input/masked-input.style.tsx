@@ -1,7 +1,7 @@
 import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
 import styled from "styled-components";
 import { InputGroup } from "../input-group";
-import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
 import { Colour, Font, Spacing } from "../theme";
 import { Typography } from "../typography";
 import { BasicButton } from "../shared/input-wrapper";

@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
 import {
     MainButtonWithIcon,
     MainStylePropsWithIcon,

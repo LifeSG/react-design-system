@@ -12,7 +12,7 @@ import {
     Radius,
     Spacing,
 } from "../../theme";
-import { ComponentLoadingSpinner } from "../component-loading-spinner/component-loading-spinner";
+import { ComponentLoadingSpinner } from "../component-loading-spinner";
 import { DropdownVariantType } from "../dropdown-list/types";
 import { BasicButton } from "../input-wrapper/input-wrapper";
 

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
 import {
     Border,
     Colour,
