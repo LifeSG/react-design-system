@@ -7,7 +7,6 @@ import {
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { InputNestedSelect, L1OptionProps } from "../../src";
-import { MockVirtuosoContextWrapper } from "../__test-utils__/virtuoso/virtuoso-test-mocks";
 
 const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";
@@ -35,10 +34,6 @@ const OPTIONS: L1OptionProps<string, string, string>[] = [
 ];
 
 describe("InputNestedSelect", () => {
-    const renderDropdown = (dropdown: JSX.Element) => {
-        return render(dropdown, { wrapper: MockVirtuosoContextWrapper });
-    };
-
     beforeEach(() => {
         jest.clearAllMocks();
 
@@ -50,7 +45,7 @@ describe("InputNestedSelect", () => {
     });
 
     it("should render the component", async () => {
-        renderDropdown(
+        render(
             <InputNestedSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
@@ -61,7 +56,7 @@ describe("InputNestedSelect", () => {
     it("should open dropdown list when selector is clicked", async () => {
         const user = userEvent.setup();
 
-        renderDropdown(
+        render(
             <InputNestedSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
@@ -79,7 +74,7 @@ describe("InputNestedSelect", () => {
     it("should toggle dropdown list when selector is clicked", async () => {
         const user = userEvent.setup();
 
-        renderDropdown(
+        render(
             <InputNestedSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
@@ -102,7 +97,7 @@ describe("InputNestedSelect", () => {
         const user = userEvent.setup();
         const mockOnSelectOption = jest.fn();
 
-        renderDropdown(
+        render(
             <InputNestedSelect
                 data-testid={FIELD_TESTID}
                 options={OPTIONS}
@@ -134,7 +129,7 @@ describe("InputNestedSelect", () => {
         const user = userEvent.setup();
         const mockOnSelectOption = jest.fn();
 
-        renderDropdown(
+        render(
             <InputNestedSelect
                 data-testid={FIELD_TESTID}
                 options={OPTIONS}
@@ -165,7 +160,7 @@ describe("InputNestedSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            renderDropdown(
+            render(
                 <InputNestedSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -201,7 +196,7 @@ describe("InputNestedSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            renderDropdown(
+            render(
                 <InputNestedSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -233,7 +228,7 @@ describe("InputNestedSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            renderDropdown(
+            render(
                 <InputNestedSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -276,7 +271,7 @@ describe("InputNestedSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            renderDropdown(
+            render(
                 <>
                     <button data-testid="before" />
                     <InputNestedSelect
@@ -332,7 +327,7 @@ describe("InputNestedSelect", () => {
         it("should support default search for string options", async () => {
             const user = userEvent.setup();
 
-            renderDropdown(
+            render(
                 <InputNestedSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
