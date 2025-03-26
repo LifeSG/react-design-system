@@ -496,6 +496,14 @@ export const DropdownList = <T, V>({
                     data={displayListItems}
                     customScrollParent={nodeRef.current}
                     itemContent={(index, item) => renderItem(item, index)}
+                    // disable virtualisation in tests
+                    // https://github.com/petyosi/react-virtuoso/issues/26#issuecomment-1040316576
+                    {...(process.env.NODE_ENV === "test"
+                        ? {
+                              initialItemCount: displayListItems.length,
+                              key: displayListItems.length,
+                          }
+                        : {})}
                 />
             </Listbox>
         );

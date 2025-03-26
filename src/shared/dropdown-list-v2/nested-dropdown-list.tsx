@@ -607,6 +607,14 @@ export const NestedDropdownList = <T,>({
                     customScrollParent={nodeRef.current}
                     data={visibleItems}
                     itemContent={(vIndex, item) => renderItem(item, vIndex)}
+                    // disable virtualisation in tests
+                    // https://github.com/petyosi/react-virtuoso/issues/26#issuecomment-1040316576
+                    {...(process.env.NODE_ENV === "test"
+                        ? {
+                              initialItemCount: visibleItems.length,
+                              key: visibleItems.length,
+                          }
+                        : {})}
                 />
             </div>
         );
