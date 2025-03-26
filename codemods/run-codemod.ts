@@ -64,10 +64,10 @@ function runCodemods(selection: UserSelection): void {
 
     selectedCodemods.forEach((codemod) => {
         const codemodPath = path.join(codemodsDir, codemod, "index.ts");
-        let command = `jscodeshift --parser=tsx -t ${codemodPath} ${targetPath}`;
+        let command = `npx --yes jscodeshift --parser=tsx -t ${codemodPath} ${targetPath}`;
 
         if (codemod === Codemod.MigrateColour && selectedTheme) {
-            command = `jscodeshift --parser=tsx -t ${codemodPath} --mapping=${selectedTheme} ${targetPath}`;
+            command = `npx --yes jscodeshift --parser=tsx -t ${codemodPath} --mapping=${selectedTheme} ${targetPath}`;
         }
 
         console.log(
