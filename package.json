@@ -108,7 +108,7 @@
         "jest-environment-jsdom": "^29.7.0",
         "jest-junit": "^16.0.0",
         "jest-styled-components": "^7.2.0",
-        "jscodeshift": "^0.16.1",
+        "jscodeshift": "^17.3.0",
         "lint-staged": "^12.3.7",
         "lodash": "^4.17.21",
         "lottie-colorify": "^0.8.0",
