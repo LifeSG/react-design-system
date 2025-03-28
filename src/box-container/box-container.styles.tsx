@@ -72,7 +72,7 @@ export const Header = styled.div<HeaderStyleProps>`
 `;
 
 export const LabelText = styled.div`
-    ${Font["header-sm-semibold"]}
+    ${Font["heading-sm-semibold"]}
     color: ${Colour["text"]};
     word-wrap: break-word;
     overflow-wrap: anywhere;
@@ -111,8 +111,8 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
 `;
 
 export const AlertIcon = styled(ExclamationCircleFillIcon)`
-    height: ${Font.Spec["header-size-sm"]};
-    width: ${Font.Spec["header-size-sm"]};
+    height: ${Font.Spec["heading-size-sm"]};
+    width: ${Font.Spec["heading-size-sm"]};
 `;
 
 export const CallToActionContainer = styled.div<StyleProps>`
@@ -158,6 +158,6 @@ export const HandleIconContainer = styled.div<StyleProps>`
 
 export const HandleIcon = styled(ChevronDownIcon)`
     color: ${Colour["icon"]};
-    height: ${Font.Spec["header-size-sm"]};
-    width: ${Font.Spec["header-size-sm"]};
+    height: ${Font.Spec["heading-size-sm"]};
+    width: ${Font.Spec["heading-size-sm"]};
 `;

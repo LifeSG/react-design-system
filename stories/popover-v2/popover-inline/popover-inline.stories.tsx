@@ -17,14 +17,14 @@ export const InlineText: StoryObj<Component> = {
     render: (_args) => {
         return (
             <>
-                <Typography.HeaderSM weight="semibold">
+                <Typography.HeadingSM weight="semibold">
                     The{" "}
                     <PopoverInline
                         content="fox"
                         popoverContent="It is quick and brown"
                     />{" "}
                     jumps over the dog
-                </Typography.HeaderSM>
+                </Typography.HeadingSM>
                 <Typography.BodyBL>
                     The{" "}
                     <PopoverInline
@@ -43,13 +43,13 @@ export const InlineIcon: StoryObj<Component> = {
     render: (_args) => {
         return (
             <>
-                <Typography.HeaderSM weight="semibold">
+                <Typography.HeadingSM weight="semibold">
                     Get a free slice of pizza today{" "}
                     <PopoverInline
                         popoverContent="Terms and conditions apply"
                         icon={<ICircleFillIcon />}
                     />
-                </Typography.HeaderSM>
+                </Typography.HeadingSM>
                 <Typography.BodyBL>
                     Get a free slice of pizza today{" "}
                     <PopoverInline

@@ -6,11 +6,11 @@ import { Font } from "../../src";
 import { MOCK_THEME } from "./mock-theme-data";
 
 const StyledFontTest = styled.div`
-    ${Font["header-xxl-bold"]};
+    ${Font["heading-xxl-bold"]};
 `;
 
 const StyledFontSpecSet = styled.div`
-    font-size: ${Font.Spec["header-size-xs"]};
+    font-size: ${Font.Spec["heading-size-xs"]};
 `;
 
 describe("StyledFontTests", () => {
@@ -40,7 +40,7 @@ describe("StyledFontTests", () => {
             ...MOCK_THEME,
             overrides: {
                 font: {
-                    "header-xxl-bold": {
+                    "heading-xxl-bold": {
                         "font-size": "4rem",
                         "font-weight": "800",
                         "line-height": "4.5rem",

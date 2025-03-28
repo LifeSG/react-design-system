@@ -1,4 +1,3 @@
-import React from "react";
 import {
     InnerRing1,
     InnerRing2,
@@ -36,7 +35,12 @@ export const ComponentLoadingSpinner = ({
     size,
 }: ComponentLoadingSpinnerProps): JSX.Element => {
     return (
-        <OuterRing className={className} $size={size} $color={color}>
+        <OuterRing
+            className={className}
+            $size={size}
+            $color={color}
+            data-testid={"component-loading-spinner"}
+        >
             <InnerRing1 id="inner1" />
             <InnerRing2 id="inner2" />
             <InnerRing3 id="inner3" />

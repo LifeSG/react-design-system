@@ -39,9 +39,9 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                 />
             )}
             <ChildContainer>
-                <Typography.HeaderSM as="div" weight="semibold">
+                <Typography.HeadingSM as="div" weight="semibold">
                     {componentDescription}
-                </Typography.HeaderSM>
+                </Typography.HeadingSM>
                 <FeedbackRatingStarsContainer
                     description={componentDescription}
                     rating={rating}

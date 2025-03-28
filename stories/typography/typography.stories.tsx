@@ -111,12 +111,14 @@ export const TypographySet: StoryObj = {
     tags: ["pattern"],
     render: (_args) => (
         <>
-            <Typography.HeaderXXL>HeaderXXL: Lorem ipsum</Typography.HeaderXXL>
-            <Typography.HeaderXL>HeaderXL: Lorem ipsum</Typography.HeaderXL>
-            <Typography.HeaderLG>HeaderLG: Lorem ipsum</Typography.HeaderLG>
-            <Typography.HeaderMD>HeaderMD: Lorem ipsum</Typography.HeaderMD>
-            <Typography.HeaderSM>HeaderSM: Lorem ipsum</Typography.HeaderSM>
-            <Typography.HeaderXS>HeaderXS: Lorem ipsum</Typography.HeaderXS>
+            <Typography.HeadingXXL>
+                HeadingXXL: Lorem ipsum
+            </Typography.HeadingXXL>
+            <Typography.HeadingXL>HeadingXL: Lorem ipsum</Typography.HeadingXL>
+            <Typography.HeadingLG>HeadingLG: Lorem ipsum</Typography.HeadingLG>
+            <Typography.HeadingMD>HeadingMD: Lorem ipsum</Typography.HeadingMD>
+            <Typography.HeadingSM>HeadingSM: Lorem ipsum</Typography.HeadingSM>
+            <Typography.HeadingXS>HeadingXS: Lorem ipsum</Typography.HeadingXS>
             <Typography.BodyBL>BodyBL: Lorem ipsum</Typography.BodyBL>
             <Typography.BodyMD>BodyMD: Lorem ipsum</Typography.BodyMD>
             <Typography.BodySM>BodySM: Lorem ipsum</Typography.BodySM>

@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentLoadingSpinnerProps } from "../shared/component-loading-spinner/component-loading-spinner";
+import { ComponentLoadingSpinnerProps } from "../shared/component-loading-spinner";
 
 export type ButtonStyleType = "default" | "secondary" | "light" | "link";
 
@@ -35,4 +35,5 @@ export interface MainStyleProps extends ComponentLoadingSpinnerProps {
     $buttonStyle: MainButtonStyle;
     $buttonSizeStyle?: MainButtonSize | undefined;
     $buttonIsDanger?: boolean;
+    $buttonWithIcon?: boolean;
 }

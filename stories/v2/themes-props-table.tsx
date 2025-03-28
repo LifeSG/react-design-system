@@ -135,6 +135,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["number"],
             },
             {
+                name: "fontVariant",
+                description: <></>,
+                propTypes: ["string"],
+            },
+            {
                 name: "lineHeight",
                 description: <></>,
                 propTypes: ["number"],
@@ -143,6 +148,11 @@ const DATA: ApiTableSectionProps[] = [
                 name: "letterSpacing",
                 description: <></>,
                 propTypes: ["number"],
+            },
+            {
+                name: "fontVariant",
+                description: <></>,
+                propTypes: ["string"],
             },
         ],
     },

@@ -55,69 +55,69 @@ export const FontDisplay = ({ theme }: FontDisplayProps) => {
                 </HeaderRow>
                 <FontCollection
                     tokens={[
-                        "header-xxl-light",
-                        "header-xxl-regular",
-                        "header-xxl-semibold",
-                        "header-xxl-bold",
+                        "heading-xxl-light",
+                        "heading-xxl-regular",
+                        "heading-xxl-semibold",
+                        "heading-xxl-bold",
                     ]}
-                    fontSizeToken="header-size-xxl"
-                    lineHeightToken="header-lh-xxl"
-                    letterSpacingToken="header-ls-xxl"
+                    fontSizeToken="heading-size-xxl"
+                    lineHeightToken="heading-lh-xxl"
+                    letterSpacingToken="heading-ls-xxl"
                 />
                 <FontCollection
                     tokens={[
-                        "header-xl-light",
-                        "header-xl-regular",
-                        "header-xl-semibold",
-                        "header-xl-bold",
+                        "heading-xl-light",
+                        "heading-xl-regular",
+                        "heading-xl-semibold",
+                        "heading-xl-bold",
                     ]}
-                    fontSizeToken="header-size-xl"
-                    lineHeightToken="header-lh-xl"
-                    letterSpacingToken="header-ls-xl"
+                    fontSizeToken="heading-size-xl"
+                    lineHeightToken="heading-lh-xl"
+                    letterSpacingToken="heading-ls-xl"
                 />
                 <FontCollection
                     tokens={[
-                        "header-lg-light",
-                        "header-lg-regular",
-                        "header-lg-semibold",
-                        "header-lg-bold",
+                        "heading-lg-light",
+                        "heading-lg-regular",
+                        "heading-lg-semibold",
+                        "heading-lg-bold",
                     ]}
-                    fontSizeToken="header-size-lg"
-                    lineHeightToken="header-lh-lg"
-                    letterSpacingToken="header-ls-lg"
+                    fontSizeToken="heading-size-lg"
+                    lineHeightToken="heading-lh-lg"
+                    letterSpacingToken="heading-ls-lg"
                 />
                 <FontCollection
                     tokens={[
-                        "header-md-light",
-                        "header-md-regular",
-                        "header-md-semibold",
-                        "header-md-bold",
+                        "heading-md-light",
+                        "heading-md-regular",
+                        "heading-md-semibold",
+                        "heading-md-bold",
                     ]}
-                    fontSizeToken="header-size-md"
-                    lineHeightToken="header-lh-md"
-                    letterSpacingToken="header-ls-md"
+                    fontSizeToken="heading-size-md"
+                    lineHeightToken="heading-lh-md"
+                    letterSpacingToken="heading-ls-md"
                 />
                 <FontCollection
                     tokens={[
-                        "header-sm-light",
-                        "header-sm-regular",
-                        "header-sm-semibold",
-                        "header-sm-bold",
+                        "heading-sm-light",
+                        "heading-sm-regular",
+                        "heading-sm-semibold",
+                        "heading-sm-bold",
                     ]}
-                    fontSizeToken="header-size-sm"
-                    lineHeightToken="header-lh-sm"
-                    letterSpacingToken="header-ls-sm"
+                    fontSizeToken="heading-size-sm"
+                    lineHeightToken="heading-lh-sm"
+                    letterSpacingToken="heading-ls-sm"
                 />
                 <FontCollection
                     tokens={[
-                        "header-xs-light",
-                        "header-xs-regular",
-                        "header-xs-semibold",
-                        "header-xs-bold",
+                        "heading-xs-light",
+                        "heading-xs-regular",
+                        "heading-xs-semibold",
+                        "heading-xs-bold",
                     ]}
-                    fontSizeToken="header-size-xs"
-                    lineHeightToken="header-lh-xs"
-                    letterSpacingToken="header-ls-xs"
+                    fontSizeToken="heading-size-xs"
+                    lineHeightToken="heading-lh-xs"
+                    letterSpacingToken="heading-ls-xs"
                 />
                 <FontCollection
                     tokens={[

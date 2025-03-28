@@ -41,7 +41,7 @@ const ExampleComponent = () => (
         <V2_Layout.Container>Test</V2_Layout.Container>
         <Typography.BodyBL weight="bold">This is body text</Typography.BodyBL>
         <Typography.LinkBL weight="bold">This is body text</Typography.LinkBL>
-        <Typography.HeaderLG>This is a heading</Typography.HeaderLG>
+        <Typography.HeadingLG>This is a heading</Typography.HeadingLG>
         <Typography.BodyMD>This is smaller body text</Typography.BodyMD>
 
         <Typography.BodyBL paragraph={true}>

@@ -21,9 +21,9 @@ Page.displayName = "Page";
 
 const renderSection = (index: number) => (
     <div>
-        <Typography.HeaderMD style={{ margin: "1rem 0" }}>
+        <Typography.HeadingMD style={{ margin: "1rem 0" }}>
             Title {index}
-        </Typography.HeaderMD>
+        </Typography.HeadingMD>
         <Typography.BodyBL style={{ margin: "1rem 0" }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a
             tortor vitae magna sagittis bibendum.

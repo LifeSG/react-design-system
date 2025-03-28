@@ -251,7 +251,7 @@ export const LoaderWrapper = styled.div`
     padding: 4rem 0;
 `;
 
-export const ErrorDisplayTitle = styled(Typography.HeaderSM)`
+export const ErrorDisplayTitle = styled(Typography.HeadingSM)`
     margin-top: 2rem;
     margin-bottom: 1rem;
 `;

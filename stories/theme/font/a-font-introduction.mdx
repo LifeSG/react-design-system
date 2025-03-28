@@ -37,7 +37,8 @@ A **font** token is a combination of these font spec tokens.
 </DocInfo>
 
 The `Font` namespace provides tokens to apply text styling within style
-declarations. You will rarely need to use the font spec tokens directly, but they are available via `Font.Spec`.
+declarations. You will rarely need to use the font spec tokens directly, but
+they are available via `Font.Spec`.
 
 ```tsx
 import { Font } from "@lifesg/react-design-system/theme";
@@ -45,12 +46,12 @@ import styled, { css } from "styled-components";
 
 // A common use case is to initialise text style in a parent container to be inherited by child elements
 const Container = styled.div`
-    ${Font["header-xxl-bold"]}
+    ${Font["heading-xxl-bold"]}
 `;
 
 // A common use case is to match an image, such as an icon, to the text size
 const Icon = styled.svg`
-    height: ${Font.Spec["header-size-xxl"]};
+    height: ${Font.Spec["heading-size-xxl"]};
 `;
 ```
 
@@ -58,6 +59,24 @@ const Icon = styled.svg`
     For inline icons, you can use the `em` and `lh` units instead to scale them
     based on font
 </DocNote>
+
+To avoid overwriting other values, do use longhand properties when further
+customisation is required.
+
+```tsx
+const Incorrect = styled.p`
+    ${Font["heading-xxl-bold"]}
+    font: 1rem serif;
+    font-variant: small-caps;
+`;
+
+const Correct = styled.p`
+    ${Font["heading-xxl-bold"]}
+    font-size: 1rem;
+    font-family: serif;
+    font-variant-caps: small-caps;
+`;
+```
 
 ## Overriding
 
@@ -76,10 +95,10 @@ const customTheme: ThemeSpec = {
     ...LifeSGTheme,
     overrides: {
         fontSpec: {
-            "header-size-xxl": "5rem", // specify a custom value
+            "heading-size-xxl": "5rem", // specify a custom value
         },
         font: {
-            "header-body-light": css`
+            "heading-body-light": css`
                 font-family: serif;
                 font-size: 1rem;
                 font-weight: 300;

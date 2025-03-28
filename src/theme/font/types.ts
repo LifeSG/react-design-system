@@ -8,47 +8,47 @@ export type FontCollectionMap = {
 export type FontSetOptions = Partial<FontSet>;
 
 export type TypographySizeType =
-    | "header-xxl"
-    | "header-xl"
-    | "header-lg"
-    | "header-md"
-    | "header-sm"
-    | "header-xs"
+    | "heading-xxl"
+    | "heading-xl"
+    | "heading-lg"
+    | "heading-md"
+    | "heading-sm"
+    | "heading-xs"
     | "body-baseline"
     | "body-md"
     | "body-sm"
     | "body-xs";
 
 export type FontSet = {
-    "header-xxl-light": CSSProp | string;
-    "header-xxl-regular": CSSProp | string;
-    "header-xxl-semibold": CSSProp | string;
-    "header-xxl-bold": CSSProp | string;
+    "heading-xxl-light": CSSProp | string;
+    "heading-xxl-regular": CSSProp | string;
+    "heading-xxl-semibold": CSSProp | string;
+    "heading-xxl-bold": CSSProp | string;
 
-    "header-xl-light": CSSProp | string;
-    "header-xl-regular": CSSProp | string;
-    "header-xl-semibold": CSSProp | string;
-    "header-xl-bold": CSSProp | string;
+    "heading-xl-light": CSSProp | string;
+    "heading-xl-regular": CSSProp | string;
+    "heading-xl-semibold": CSSProp | string;
+    "heading-xl-bold": CSSProp | string;
 
-    "header-lg-light": CSSProp | string;
-    "header-lg-regular": CSSProp | string;
-    "header-lg-semibold": CSSProp | string;
-    "header-lg-bold": CSSProp | string;
+    "heading-lg-light": CSSProp | string;
+    "heading-lg-regular": CSSProp | string;
+    "heading-lg-semibold": CSSProp | string;
+    "heading-lg-bold": CSSProp | string;
 
-    "header-md-light": CSSProp | string;
-    "header-md-regular": CSSProp | string;
-    "header-md-semibold": CSSProp | string;
-    "header-md-bold": CSSProp | string;
+    "heading-md-light": CSSProp | string;
+    "heading-md-regular": CSSProp | string;
+    "heading-md-semibold": CSSProp | string;
+    "heading-md-bold": CSSProp | string;
 
-    "header-sm-light": CSSProp | string;
-    "header-sm-regular": CSSProp | string;
-    "header-sm-semibold": CSSProp | string;
-    "header-sm-bold": CSSProp | string;
+    "heading-sm-light": CSSProp | string;
+    "heading-sm-regular": CSSProp | string;
+    "heading-sm-semibold": CSSProp | string;
+    "heading-sm-bold": CSSProp | string;
 
-    "header-xs-light": CSSProp | string;
-    "header-xs-regular": CSSProp | string;
-    "header-xs-semibold": CSSProp | string;
-    "header-xs-bold": CSSProp | string;
+    "heading-xs-light": CSSProp | string;
+    "heading-xs-regular": CSSProp | string;
+    "heading-xs-semibold": CSSProp | string;
+    "heading-xs-bold": CSSProp | string;
 
     "body-baseline-light": CSSProp | string;
     "body-baseline-regular": CSSProp | string;
@@ -72,4 +72,8 @@ export type FontSet = {
 
     "form-label": CSSProp | string;
     "form-description": CSSProp | string;
+};
+
+export type FontSetAdditionalOptions = {
+    disableLigatures?: boolean;
 };

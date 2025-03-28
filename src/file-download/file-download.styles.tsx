@@ -40,13 +40,13 @@ export const TextContainer = styled.div`
 `;
 
 export const Title = styled.p`
-    ${Font["header-xs-regular"]}
+    ${Font["heading-xs-regular"]}
     color: ${Colour["text"]};
     margin-bottom: ${Spacing["spacing-8"]};
 `;
 
 export const TitleContainer = styled.div`
-    ${applyHtmlContentStyle({ textSize: "header-xs" })}
+    ${applyHtmlContentStyle({ textSize: "heading-xs" })}
     color: ${Colour["text"]};
 `;
 

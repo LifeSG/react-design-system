@@ -53,7 +53,7 @@ export const FilterHeader = styled.div`
     }
 `;
 
-export const FilterTitle = styled(Typography.HeaderXS).attrs({ as: "p" })`
+export const FilterTitle = styled(Typography.HeadingXS).attrs({ as: "p" })`
     flex: 1;
     margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
         ${Spacing["spacing-20"]};

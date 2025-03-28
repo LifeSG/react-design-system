@@ -3,17 +3,16 @@ import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { FontScheme, ThemeCollectionSpec } from "../types";
 import { DefaultFontSet } from "./specs/default-font-set";
 import { FontCollectionMap, FontSet } from "./types";
+import { BookingSgFontSet } from "./specs/bookingsg-font-set";
+import { PAFontSet } from "./specs/pa-font-set";
 
 const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
     collections: {
-        lifesg: DefaultFontSet,
-        bookingsg: DefaultFontSet,
-        rbs: DefaultFontSet,
-        mylegacy: DefaultFontSet,
-        ccube: DefaultFontSet,
-        pa: DefaultFontSet,
+        default: DefaultFontSet,
+        bookingsg: BookingSgFontSet,
+        pa: PAFontSet,
     },
-    defaultValue: "lifesg",
+    defaultValue: "default",
 };
 
 export const getFont = (key: keyof FontSet) => {
@@ -36,35 +35,35 @@ export const getFont = (key: keyof FontSet) => {
 export const FontValues: {
     [key in keyof FontSet]: (props: StyledComponentProps) => CSSProp;
 } = {
-    "header-xxl-light": getFont("header-xxl-light"),
-    "header-xxl-regular": getFont("header-xxl-regular"),
-    "header-xxl-semibold": getFont("header-xxl-semibold"),
-    "header-xxl-bold": getFont("header-xxl-bold"),
+    "heading-xxl-light": getFont("heading-xxl-light"),
+    "heading-xxl-regular": getFont("heading-xxl-regular"),
+    "heading-xxl-semibold": getFont("heading-xxl-semibold"),
+    "heading-xxl-bold": getFont("heading-xxl-bold"),
 
-    "header-xl-light": getFont("header-xl-light"),
-    "header-xl-regular": getFont("header-xl-regular"),
-    "header-xl-semibold": getFont("header-xl-semibold"),
-    "header-xl-bold": getFont("header-xl-bold"),
+    "heading-xl-light": getFont("heading-xl-light"),
+    "heading-xl-regular": getFont("heading-xl-regular"),
+    "heading-xl-semibold": getFont("heading-xl-semibold"),
+    "heading-xl-bold": getFont("heading-xl-bold"),
 
-    "header-lg-light": getFont("header-lg-light"),
-    "header-lg-regular": getFont("header-lg-regular"),
-    "header-lg-semibold": getFont("header-lg-semibold"),
-    "header-lg-bold": getFont("header-lg-bold"),
+    "heading-lg-light": getFont("heading-lg-light"),
+    "heading-lg-regular": getFont("heading-lg-regular"),
+    "heading-lg-semibold": getFont("heading-lg-semibold"),
+    "heading-lg-bold": getFont("heading-lg-bold"),
 
-    "header-md-light": getFont("header-md-light"),
-    "header-md-regular": getFont("header-md-regular"),
-    "header-md-semibold": getFont("header-md-semibold"),
-    "header-md-bold": getFont("header-md-bold"),
+    "heading-md-light": getFont("heading-md-light"),
+    "heading-md-regular": getFont("heading-md-regular"),
+    "heading-md-semibold": getFont("heading-md-semibold"),
+    "heading-md-bold": getFont("heading-md-bold"),
 
-    "header-sm-light": getFont("header-sm-light"),
-    "header-sm-regular": getFont("header-sm-regular"),
-    "header-sm-semibold": getFont("header-sm-semibold"),
-    "header-sm-bold": getFont("header-sm-bold"),
+    "heading-sm-light": getFont("heading-sm-light"),
+    "heading-sm-regular": getFont("heading-sm-regular"),
+    "heading-sm-semibold": getFont("heading-sm-semibold"),
+    "heading-sm-bold": getFont("heading-sm-bold"),
 
-    "header-xs-light": getFont("header-xs-light"),
-    "header-xs-regular": getFont("header-xs-regular"),
-    "header-xs-semibold": getFont("header-xs-semibold"),
-    "header-xs-bold": getFont("header-xs-bold"),
+    "heading-xs-light": getFont("heading-xs-light"),
+    "heading-xs-regular": getFont("heading-xs-regular"),
+    "heading-xs-semibold": getFont("heading-xs-semibold"),
+    "heading-xs-bold": getFont("heading-xs-bold"),
 
     "body-baseline-light": getFont("body-baseline-light"),
     "body-baseline-regular": getFont("body-baseline-regular"),

@@ -88,7 +88,7 @@ const LINK_DATA: ApiTableSectionProps[] = [
 
 const PROPS_TABLE_DATA: TabAttribute[] = [
     {
-        title: "Header/Body",
+        title: "Heading/Body",
         component: <ApiTable sections={TEXT_DATA} />,
     },
     {
