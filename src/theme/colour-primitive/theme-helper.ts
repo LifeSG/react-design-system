@@ -5,6 +5,7 @@ import { BookingSgColourSet } from "./specs/bookingsg-colour-set";
 import { CCubeColourSet } from "./specs/ccube-colour-set";
 import { LifeSgColourSet } from "./specs/lifesg-colour-set";
 import { MyLegacyColourSet } from "./specs/mylegacy-colour-set";
+import { OneServiceColourSet } from "./specs/oneservice-colour-set";
 import { PAColourSet } from "./specs/pa-colour-set";
 import { RBSColourSet } from "./specs/rbs-colour-set";
 import { ColourCollectionsMap } from "./types";
@@ -19,6 +20,7 @@ export const ColourSpec: ThemeCollectionSpec<
         rbs: RBSColourSet,
         mylegacy: MyLegacyColourSet,
         ccube: CCubeColourSet,
+        oneservice: OneServiceColourSet,
         pa: PAColourSet,
     },
     defaultValue: "lifesg",

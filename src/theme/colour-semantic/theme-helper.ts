@@ -15,6 +15,7 @@ const ColourSpec: ThemeCollectionSpec<
         rbs: LifeSGColourSet,
         mylegacy: LifeSGColourSet,
         ccube: LifeSGColourSet,
+        oneservice: LifeSGColourSet,
         pa: PAColourSet,
     },
     defaultValue: "lifesg",

@@ -38,6 +38,7 @@ export type ColourScheme =
     | "rbs"
     | "mylegacy"
     | "ccube"
+    | "oneservice"
     | "pa";
 export type FontScheme = "default" | "bookingsg" | "pa";
 export type MotionScheme = "default";
@@ -51,6 +52,7 @@ export type ResourceScheme =
     | "rbs"
     | "mylegacy"
     | "ccube"
+    | "oneservice"
     | "pa";
 
 export interface ThemeSpecOptions {

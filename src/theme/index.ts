@@ -131,6 +131,17 @@ export const RBSTheme: ThemeSpec = {
     },
 };
 
+export const OneServiceTheme: ThemeSpec = {
+    colourScheme: "oneservice",
+    fontScheme: "default",
+    motionScheme: "default",
+    borderScheme: "default",
+    spacingScheme: "default",
+    radiusScheme: "default",
+    breakpointScheme: "default",
+    resourceScheme: "oneservice",
+};
+
 export const PATheme: ThemeSpec = {
     colourScheme: "pa",
     fontScheme: "pa",
