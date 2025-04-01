@@ -1,5 +1,6 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { RadiusScheme, ThemeCollectionSpec } from "../types";
+import { ThemeCollectionSpec } from "../internal-types";
+import { RadiusScheme } from "../types";
 import { DefaultRadiusSet } from "./specs/default-radius-set";
 import { RadiusCollectionsMap, RadiusSet } from "./types";
 

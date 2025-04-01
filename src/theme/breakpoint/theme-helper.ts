@@ -1,5 +1,6 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { BreakpointScheme, ThemeCollectionSpec } from "../types";
+import { ThemeCollectionSpec } from "../internal-types";
+import { BreakpointScheme } from "../types";
 import { DefaultBreakpointSet } from "./specs/default-breakpoint-set";
 import { BreakpointCollectionsMap, BreakpointSet } from "./types";
 

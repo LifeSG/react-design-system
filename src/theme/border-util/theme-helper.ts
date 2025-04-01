@@ -1,6 +1,7 @@
 import { CSSProp } from "styled-components";
 import { StyledComponentProps, getCollection } from "../helpers";
-import { BorderScheme, ThemeCollectionSpec } from "../types";
+import { ThemeCollectionSpec } from "../internal-types";
+import { BorderScheme } from "../types";
 import { DefaultBorderUtilSet } from "./specs/default-border-util-set";
 import { BorderUtilCollectionMap, BorderUtilSet } from "./types";
 

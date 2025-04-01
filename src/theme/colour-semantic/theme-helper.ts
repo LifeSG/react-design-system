@@ -1,5 +1,6 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { ColourScheme, SemanticColourSet, ThemeCollectionSpec } from "../types";
+import { ThemeCollectionSpec } from "../internal-types";
+import { ColourScheme, SemanticColourSet } from "../types";
 import { LifeSGColourSet } from "./specs/lifesg-semantic-tokens";
 import { PAColourSet } from "./specs/pa-semantic-tokens";
 import { SemanticColourCollectionMap } from "./types";

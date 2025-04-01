@@ -1,5 +1,6 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { FontScheme, ThemeCollectionSpec } from "../types";
+import { ThemeCollectionSpec } from "../internal-types";
+import { FontScheme } from "../types";
 import { BookingSgFontSpecSet } from "./specs/bookingsg-font-spec-set";
 import { DefaultFontSpecSet } from "./specs/default-font-spec-set";
 import { PAFontSpecSet } from "./specs/pa-font-spec-set";

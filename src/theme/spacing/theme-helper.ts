@@ -1,5 +1,6 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { SpacingScheme, ThemeCollectionSpec } from "../types";
+import { ThemeCollectionSpec } from "../internal-types";
+import { SpacingScheme } from "../types";
 import { DefaultSpacingSet } from "./specs/default-spacing-set";
 import { SpacingCollectionsMap, SpacingSet } from "./types";
 

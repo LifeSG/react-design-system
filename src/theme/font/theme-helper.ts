@@ -1,10 +1,11 @@
 import { CSSProp } from "styled-components";
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { FontScheme, ThemeCollectionSpec } from "../types";
-import { DefaultFontSet } from "./specs/default-font-set";
-import { FontCollectionMap, FontSet } from "./types";
+import { ThemeCollectionSpec } from "../internal-types";
+import { FontScheme } from "../types";
 import { BookingSgFontSet } from "./specs/bookingsg-font-set";
+import { DefaultFontSet } from "./specs/default-font-set";
 import { PAFontSet } from "./specs/pa-font-set";
+import { FontCollectionMap, FontSet } from "./types";
 
 const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
     collections: {

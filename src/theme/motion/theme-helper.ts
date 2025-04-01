@@ -1,5 +1,6 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { MotionScheme, ThemeCollectionSpec } from "../types";
+import { ThemeCollectionSpec } from "../internal-types";
+import { MotionScheme } from "../types";
 import { DefaultMotionSet } from "./specs/default-motion-set";
 import { MotionCollectionsMap, MotionSet } from "./types";
 

@@ -1,9 +1,6 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import {
-    ColourScheme,
-    PrimitiveColourSet,
-    ThemeCollectionSpec,
-} from "../types";
+import { ThemeCollectionSpec } from "../internal-types";
+import { ColourScheme, PrimitiveColourSet } from "../types";
 import { BookingSgColourSet } from "./specs/bookingsg-colour-set";
 import { CCubeColourSet } from "./specs/ccube-colour-set";
 import { LifeSgColourSet } from "./specs/lifesg-colour-set";

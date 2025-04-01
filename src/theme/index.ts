@@ -11,6 +11,8 @@ import { RadiusValues } from "./radius/theme-helper";
 import { SpacingValues } from "./spacing/theme-helper";
 import { ThemeSpec } from "./types";
 
+export * from "./types";
+
 // =============================================================================
 // TOKENS
 // =============================================================================

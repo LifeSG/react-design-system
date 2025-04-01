@@ -1,5 +1,6 @@
 import get from "lodash/get";
-import { ThemeCollectionSpec, ThemeSpec } from "./types";
+import { ThemeCollectionSpec } from "./internal-types";
+import { ThemeSpec } from "./types";
 
 export interface StyledComponentProps {
     theme: ThemeSpec;
