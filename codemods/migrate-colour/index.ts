@@ -5,6 +5,7 @@ import {
     ccubeMapping,
     lifesgMapping,
     mylegacyMapping,
+    oneServiceMapping,
     rbsMapping,
 } from "./data";
 
@@ -29,6 +30,7 @@ const COLOR_MAPPINGS = {
     mylegacy: mylegacyMapping,
     ccube: ccubeMapping,
     rbs: rbsMapping,
+    oneservice: oneServiceMapping,
 };
 
 interface Options {

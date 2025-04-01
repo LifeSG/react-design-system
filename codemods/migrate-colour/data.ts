@@ -82,3 +82,14 @@ export const ccubeMapping = {
 export const rbsMapping = {
     ...defaultMapping,
 };
+
+export const oneServiceMapping = {
+    ...defaultMapping,
+    Primary: "primary-50",
+    PrimaryDark: "primary-40",
+    Secondary: "secondary-40",
+    "Brand[1]": "brand-60",
+    "Accent.Dark[1]": "secondary-50",
+    "Accent.Dark[2]": "secondary-60",
+    "Accent.Dark[3]": "secondary-70",
+};

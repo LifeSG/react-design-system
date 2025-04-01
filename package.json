@@ -23,7 +23,8 @@
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
         "build-fabric": "test -d ./node_modules/fabric && cd ./node_modules/fabric && node build.js modules=ALL exclude=assessors || true",
-        "postinstall": "npm run build-fabric"
+        "postinstall": "npm run build-fabric",
+        "codemod": "ENV=dev npx tsx codemods/run-codemod.ts"
     },
     "repository": {
         "type": "git",

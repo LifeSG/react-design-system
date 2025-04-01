@@ -4,10 +4,13 @@ import * as fs from "fs";
 import * as path from "path";
 import { Theme } from "./common";
 
-const codemodsDir: string = path.join(
-    process.cwd(),
-    "node_modules/@lifesg/react-design-system/codemods"
-);
+const codemodsDir =
+    process.env.ENV === "dev"
+        ? path.join(process.cwd(), "codemods")
+        : path.join(
+              process.cwd(),
+              "node_modules/@lifesg/react-design-system/codemods"
+          );
 
 enum Codemod {
     DeprecateV2Tokens = "deprecate-v2-tokens",
@@ -132,6 +135,10 @@ async function chooseTheme(): Promise<Theme | null> {
     const themeOptions = [
         { name: "LifeSG", value: Theme.LifeSG },
         { name: "BookingSG", value: Theme.BookingSG },
+        { name: "MyLegacy", value: Theme.MyLegacy },
+        { name: "CCube", value: Theme.CCube },
+        { name: "RBS", value: Theme.RBS },
+        { name: "OneService", value: Theme.OneService },
     ];
 
     const selectedTheme = await select({
