@@ -1,7 +1,6 @@
-export const inputCode = `
-
-
-import { V2_Text } from "@lifesg/react-design-system/v2_text";
+export const TypicalUsage = {
+    input: `
+import { V2_Text, V2_TextStyleHelper } from "@lifesg/react-design-system/v2_text";
 import { V2_Layout } from "@lifesg/react-design-system/v2_layout";
 
 const ExampleComponent = () => (
@@ -28,11 +27,14 @@ const ExampleComponent = () => (
 
 export default ExampleComponent;
 
-const Text = styled(V2_Text.Body)\`\`;
-`;
-
-export const expectedOutputCode = `
-
+const Text = styled(V2_Text.Body)\`
+    \${V2_TextStyleHelper.getTextStyle("D1", "semibold")}
+    \${V2_TextStyleHelper.getTextStyle("H1", 400)}
+    \${V2_TextStyleHelper.getTextStyle("BodySmall")}
+\`;
+`,
+    expectedOutput: `
+import { Font } from "@lifesg/react-design-system/theme";
 import { Typography } from "@lifesg/react-design-system/typography";
 import { V2_Layout } from "@lifesg/react-design-system/v2_layout";
 
@@ -60,5 +62,76 @@ const ExampleComponent = () => (
 
 export default ExampleComponent;
 
-const Text = styled(Typography.BodyBL)\`\`;
-`;
+const Text = styled(Typography.BodyBL)\`
+    \${Font["heading-xxl-semibold"]}
+    \${Font["heading-lg-regular"]}
+    \${Font["body-md-regular"]}
+\`;
+`,
+};
+
+export const RootImport = {
+    input: `
+import { V2_Text, V2_TextStyleHelper } from "@lifesg/react-design-system";
+
+const ExampleComponent = () => (
+    <V2_Text.Body weight="bold">This is body text</V2_Text.Body>
+);
+
+export default ExampleComponent;
+
+const Text = styled(V2_Text.Body)\`
+    \${V2_TextStyleHelper.getTextStyle("Body", "regular")}
+    \${V2_TextStyleHelper.getDisplayStyle()}
+\`;
+`,
+    expectedOutput: `
+import { Font } from "@lifesg/react-design-system/theme";
+import { Typography } from "@lifesg/react-design-system/typography";
+import { V2_TextStyleHelper } from "@lifesg/react-design-system";
+
+const ExampleComponent = () => (
+    <Typography.BodyBL weight="bold">This is body text</Typography.BodyBL>
+);
+
+export default ExampleComponent;
+
+const Text = styled(Typography.BodyBL)\`
+    \${Font["body-baseline-regular"]}
+    \${V2_TextStyleHelper.getDisplayStyle()}
+\`;
+`,
+};
+
+export const TextStyleHelperReferences = {
+    input: `
+import { V2_Text, V2_TextStyleHelper } from "@lifesg/react-design-system/v2_text";
+
+const ExampleComponent = () => (
+    <V2_Text.Body weight="bold">This is body text</V2_Text.Body>
+);
+
+export default ExampleComponent;
+
+const Text = styled(V2_Text.Body)\`
+    \${V2_TextStyleHelper.getTextStyle("Body", "regular")}
+    \${V2_TextStyleHelper.getDisplayStyle()}
+\`;
+`,
+    expectedOutput: `
+import { Font } from "@lifesg/react-design-system/theme";
+import { Typography } from "@lifesg/react-design-system/typography";
+import { V2_TextStyleHelper } from "@lifesg/react-design-system/v2_text";
+
+const ExampleComponent = () => (
+    <Typography.BodyBL weight="bold">This is body text</Typography.BodyBL>
+);
+
+export default ExampleComponent;
+
+const Text = styled(Typography.BodyBL)\`
+    \${Font["body-baseline-regular"]}
+    \${V2_TextStyleHelper.getDisplayStyle()}
+\`;
+`,
+};

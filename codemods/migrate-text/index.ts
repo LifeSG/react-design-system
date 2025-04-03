@@ -1,5 +1,12 @@
-import { API, FileInfo, JSCodeshift } from "jscodeshift";
-import { textComponentMap } from "./data";
+import {
+    API,
+    ASTPath,
+    FileInfo,
+    JSCodeshift,
+    MemberExpression,
+} from "jscodeshift";
+import { CodemodUtils } from "../codemod-utils";
+import { textComponentMap, textStyleFontMap, weightMap } from "./data";
 
 // ======= Constants ======= //
 
@@ -7,16 +14,23 @@ const IMPORT_PATHS = {
     V2_TEXT: "@lifesg/react-design-system/v2_text",
     DESIGN_SYSTEM: "@lifesg/react-design-system",
     TYPOGRAPHY: "@lifesg/react-design-system/typography",
+    THEME: "@lifesg/react-design-system/theme",
 };
 
 const IMPORT_SPECIFIERS = {
     V2_TEXT: "V2_Text",
+    V2_TEXT_STYLE_HELPER: "V2_TextStyleHelper",
     TYPOGRAPHY: "Typography",
+    FONT: "Font",
 };
 
 const JSX_IDENTIFIERS = {
     V2_TEXT: "V2_Text",
     TYPOGRAPHY: "Typography",
+};
+
+const IDENTIFIERS = {
+    V2_GET_TEXT_STYLE: "getTextStyle",
 };
 
 // ======= Transformer Function ======= //
@@ -25,43 +39,23 @@ export default function transformer(file: FileInfo, api: API) {
     const j: JSCodeshift = api.jscodeshift;
     const source = j(file.source);
 
-    let isLifesgImport = false;
+    const importsText = CodemodUtils.hasImport(
+        source,
+        api,
+        [IMPORT_PATHS.DESIGN_SYSTEM, IMPORT_PATHS.V2_TEXT],
+        IMPORT_SPECIFIERS.V2_TEXT
+    );
+    const importsTextStyleHelper = CodemodUtils.hasImport(
+        source,
+        api,
+        [IMPORT_PATHS.DESIGN_SYSTEM, IMPORT_PATHS.V2_TEXT],
+        IMPORT_SPECIFIERS.V2_TEXT_STYLE_HELPER
+    );
 
-    source.find(j.ImportDeclaration).forEach((path) => {
-        const importPath = path.node.source.value;
-
-        if (
-            importPath === IMPORT_PATHS.V2_TEXT ||
-            importPath === IMPORT_PATHS.DESIGN_SYSTEM
-        ) {
-            // Update V2 modules to V3 modules
-            path.node.specifiers?.forEach((specifier) => {
-                if (
-                    j.ImportSpecifier.check(specifier) &&
-                    specifier.imported.name === IMPORT_SPECIFIERS.V2_TEXT
-                ) {
-                    specifier.imported.name = IMPORT_SPECIFIERS.TYPOGRAPHY;
-
-                    if (
-                        specifier.local &&
-                        specifier.local.name === IMPORT_SPECIFIERS.V2_TEXT
-                    ) {
-                        specifier.local.name = IMPORT_SPECIFIERS.TYPOGRAPHY;
-                    }
-
-                    // Replace import subpath only
-                    if (importPath === IMPORT_PATHS.V2_TEXT) {
-                        path.node.source.value = IMPORT_PATHS.TYPOGRAPHY;
-                    }
-
-                    isLifesgImport = true;
-                }
-            });
-        }
-    });
-
-    // Create updated Typography component
-    const replaceWithNewComponent = (path: any, newComponentValue: string) => {
+    const replaceWithTypography = (
+        path: ASTPath<MemberExpression>,
+        newComponentValue: string
+    ) => {
         path.replace(
             j.memberExpression(
                 j.identifier(JSX_IDENTIFIERS.TYPOGRAPHY),
@@ -70,18 +64,32 @@ export default function transformer(file: FileInfo, api: API) {
         );
     };
 
-    if (isLifesgImport) {
-        // Rename Identifiers from V2_Text to Typography
+    if (importsText) {
+        CodemodUtils.addImport(
+            source,
+            api,
+            IMPORT_PATHS.TYPOGRAPHY,
+            IMPORT_SPECIFIERS.TYPOGRAPHY
+        );
+
+        CodemodUtils.removeImport(
+            source,
+            api,
+            [IMPORT_PATHS.DESIGN_SYSTEM, IMPORT_PATHS.V2_TEXT],
+            IMPORT_SPECIFIERS.V2_TEXT
+        );
+
         source
             .find(j.Identifier, { name: JSX_IDENTIFIERS.V2_TEXT })
             .forEach((path) => {
+                // Replace V2_Text with Typography
                 path.node.name = JSX_IDENTIFIERS.TYPOGRAPHY;
             });
 
-        // Map V2 Text component usage to respective V3 Typography component usage
+        // Map to respective V3 Typography component usage
         source.find(j.MemberExpression).forEach((path) => {
-            let currentPath = path.node;
             const propertyNameParts: string[] = [];
+            let currentPath = path.node;
             let startsWithTypography = false;
 
             while (j.MemberExpression.check(currentPath)) {
@@ -110,10 +118,77 @@ export default function transformer(file: FileInfo, api: API) {
                 ) as keyof typeof textComponentMap;
                 const newTypographyValue = textComponentMap[propertyName];
                 if (newTypographyValue) {
-                    replaceWithNewComponent(path, newTypographyValue);
+                    replaceWithTypography(path, newTypographyValue);
                 }
             }
         });
+    }
+
+    if (importsTextStyleHelper) {
+        let usesTextStyleHelper = false;
+
+        source.find(j.CallExpression).forEach((path) => {
+            if (
+                !j.CallExpression.check(path.node) ||
+                !j.MemberExpression.check(path.node.callee) ||
+                !j.Identifier.check(path.node.callee.object) ||
+                path.node.callee.object.name !==
+                    IMPORT_SPECIFIERS.V2_TEXT_STYLE_HELPER ||
+                !j.Identifier.check(path.node.callee.property) ||
+                path.node.callee.property.name !== IDENTIFIERS.V2_GET_TEXT_STYLE
+            ) {
+                return;
+            }
+
+            const style = j.Literal.check(path.node.arguments[0])
+                ? path.node.arguments[0].value
+                : undefined;
+            const weight = j.Literal.check(path.node.arguments[1])
+                ? path.node.arguments[1].value
+                : "regular";
+
+            if (!style) {
+                return;
+            }
+
+            const mappedType =
+                textStyleFontMap[style as keyof typeof textStyleFontMap];
+            const mappedWeight = weightMap[weight as keyof typeof weightMap];
+
+            j(path).replaceWith(() => {
+                return j.memberExpression(
+                    j.identifier("Font"),
+                    j.literal(`${mappedType}-${mappedWeight}`)
+                );
+            });
+
+            usesTextStyleHelper = true;
+        });
+
+        if (usesTextStyleHelper) {
+            CodemodUtils.addImport(
+                source,
+                api,
+                IMPORT_PATHS.THEME,
+                IMPORT_SPECIFIERS.FONT
+            );
+        }
+
+        if (
+            !CodemodUtils.hasReferences(
+                source,
+                api,
+                [IMPORT_PATHS.DESIGN_SYSTEM, IMPORT_PATHS.V2_TEXT],
+                IMPORT_SPECIFIERS.V2_TEXT_STYLE_HELPER
+            )
+        ) {
+            CodemodUtils.removeImport(
+                source,
+                api,
+                [IMPORT_PATHS.DESIGN_SYSTEM, IMPORT_PATHS.V2_TEXT],
+                IMPORT_SPECIFIERS.V2_TEXT_STYLE_HELPER
+            );
+        }
     }
 
     return source.toSource();
