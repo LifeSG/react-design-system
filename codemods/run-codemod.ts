@@ -31,7 +31,8 @@ const CodemodDescriptions: { [key in Codemod]: string } = {
     [Codemod.MigrateLayout]: "Replace V2_Layout with new Layout components",
     [Codemod.MigrateMediaQuery]:
         "Replace V2 media queries with new Breakpoint tokens",
-    [Codemod.MigrateText]: "Replace V2_Text with new Typography components",
+    [Codemod.MigrateText]:
+        "Replace V2_Text with new Typography components and V2_TextStyleHelper.getTextStyle() with Font",
     [Codemod.MigrateTextList]:
         "Replace V2_TextList with new Textlist components",
 };
