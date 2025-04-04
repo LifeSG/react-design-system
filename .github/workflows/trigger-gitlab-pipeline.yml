@@ -63,7 +63,7 @@ jobs:
           GITLAB_PAT: ${{ secrets.GITLAB_PAT }}
           GITLAB_ENDPOINT: ${{ vars.GITLAB_ENDPOINT }}
           GITLAB_PROJECT_ID: ${{ vars.GITLAB_PROJECT_ID }}
-          SLEEP_DURATION_MINUTES: 30
+          SLEEP_DURATION_MINUTES: 20
           CHECK_INTERVAL_MINUTES: 5
           MAX_RETRY_ATTEMPTS: 5
           DOWNSTREAM_PIPELINE_NAME: library
