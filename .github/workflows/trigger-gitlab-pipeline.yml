@@ -63,8 +63,9 @@ jobs:
           GITLAB_PAT: ${{ secrets.GITLAB_PAT }}
           GITLAB_ENDPOINT: ${{ vars.GITLAB_ENDPOINT }}
           GITLAB_PROJECT_ID: ${{ vars.GITLAB_PROJECT_ID }}
-          SLEEP_DURATION_MINUTES: 15
+          SLEEP_DURATION_MINUTES: 20
           CHECK_INTERVAL_MINUTES: 5
+          MAX_RETRY_ATTEMPTS: 5
           DOWNSTREAM_PIPELINE_NAME: library
           DOWNSTREAM_JOB_NAME: build-dist-job
         run: |
@@ -74,7 +75,7 @@ jobs:
 
           num_attempts=1
           job_status=""
-          until [[ $num_attempts -gt 5 || $job_status == "success" || $job_status == "failed" || $job_status == "canceled" || $job_status == "skipped" ]]
+          until [[ $num_attempts -gt $MAX_RETRY_ATTEMPTS || $job_status == "success" || $job_status == "failed" || $job_status == "canceled" || $job_status == "skipped" ]]
           do
             echo "Attempt: $num_attempts"
 
@@ -90,11 +91,14 @@ jobs:
 
             if [[ $job_status == "running" ]]; then
               num_attempts=$((num_attempts+1))
+            fi
+
+            if [[ $num_attempts -lt $MAX_RETRY_ATTEMPTS ]]; then
               sleep $(($CHECK_INTERVAL_MINUTES*60))
             fi
           done
 
-          [[ $num_attempts -gt 5 ]] && echo "Number of retries exceeded, please head to the GitLab job to check what happened" && exit 1
+          [[ $num_attempts -gt $MAX_RETRY_ATTEMPTS ]] && echo "Number of retries exceeded, please head to the GitLab job to check what happened" && exit 1
 
           [[ $job_status == "canceled" ]] && echo "GitLab job was cancelled"
 
