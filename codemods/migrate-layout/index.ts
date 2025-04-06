@@ -1,4 +1,5 @@
 import { API, FileInfo, JSCodeshift } from "jscodeshift";
+import { CodemodUtils } from "../codemod-utils";
 import { propMapping } from "./data";
 
 const IMPORT_PATHS = {
@@ -16,43 +17,28 @@ export default function transformer(file: FileInfo, api: API) {
     const j: JSCodeshift = api.jscodeshift;
     const source = j(file.source);
 
-    let isLifesgImport = false;
-
-    source.find(j.ImportDeclaration).forEach((path) => {
-        const importPath = path.node.source.value;
-
-        if (
-            importPath === IMPORT_PATHS.V2_LAYOUT ||
-            importPath === IMPORT_PATHS.DESIGN_SYSTEM
-        ) {
-            // Update V2 modules to V3 modules
-            if (path.node.specifiers && path.node.specifiers.length > 0) {
-                path.node.specifiers.forEach((specifier) => {
-                    if (
-                        j.ImportSpecifier.check(specifier) &&
-                        specifier.imported.name === IMPORT_SPECIFIERS.V2_LAYOUT
-                    ) {
-                        specifier.imported.name = IMPORT_SPECIFIERS.LAYOUT;
-                        if (
-                            specifier.local &&
-                            specifier.local.name === IMPORT_SPECIFIERS.V2_LAYOUT
-                        ) {
-                            specifier.local.name = IMPORT_SPECIFIERS.LAYOUT;
-                        }
-
-                        // Replace import subpath only
-                        if (importPath === IMPORT_PATHS.V2_LAYOUT) {
-                            path.node.source.value = IMPORT_PATHS.LAYOUT;
-                        }
-
-                        isLifesgImport = true;
-                    }
-                });
-            }
-        }
-    });
+    const isLifesgImport = CodemodUtils.hasImport(
+        source,
+        api,
+        [IMPORT_PATHS.DESIGN_SYSTEM, IMPORT_PATHS.V2_LAYOUT],
+        IMPORT_SPECIFIERS.V2_LAYOUT
+    );
 
     if (isLifesgImport) {
+        CodemodUtils.addImport(
+            source,
+            api,
+            IMPORT_PATHS.LAYOUT,
+            IMPORT_SPECIFIERS.LAYOUT
+        );
+
+        CodemodUtils.removeImport(
+            source,
+            api,
+            [IMPORT_PATHS.DESIGN_SYSTEM, IMPORT_PATHS.V2_LAYOUT],
+            IMPORT_SPECIFIERS.V2_LAYOUT
+        );
+
         // Update V2_Layout to Layout
         source.find(j.JSXMemberExpression).forEach((path) => {
             const { object } = path.node;
@@ -71,7 +57,7 @@ export default function transformer(file: FileInfo, api: API) {
                 path.node.name = IMPORT_SPECIFIERS.LAYOUT;
             });
 
-        // Update Layout props to its V3 Mapped version
+        // Update ColDiv column props to its V3 version
         source.find(j.JSXOpeningElement).forEach((path) => {
             const { name, attributes } = path.node;
 

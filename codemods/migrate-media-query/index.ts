@@ -1,4 +1,5 @@
 import { API, FileInfo, JSCodeshift } from "jscodeshift";
+import { CodemodUtils } from "../codemod-utils";
 import { mediaQueryMap } from "./data";
 
 // ======= Constants ======= //
@@ -33,103 +34,36 @@ export default function transformer(file: FileInfo, api: API) {
     const j: JSCodeshift = api.jscodeshift;
     const source = j(file.source);
 
-    let isV2MediaQueryImported = false;
-    let isV2MediaWidthsImported = false;
+    const isV2MediaQueryImported = CodemodUtils.hasImport(
+        source,
+        api,
+        [IMPORT_PATHS.DESIGN_SYSTEM, IMPORT_PATHS.V2_MEDIA],
+        IMPORT_SPECIFIERS.V2_MEDIA_QUERY
+    );
+    const isV2MediaWidthsImported = CodemodUtils.hasImport(
+        source,
+        api,
+        [IMPORT_PATHS.DESIGN_SYSTEM, IMPORT_PATHS.V2_MEDIA],
+        IMPORT_SPECIFIERS.V2_MEDIA_WIDTHS
+    );
 
-    source.find(j.ImportDeclaration).forEach((path) => {
-        const importPath = path.node.source.value;
-
-        if (
-            importPath === IMPORT_PATHS.V2_MEDIA ||
-            importPath === IMPORT_PATHS.DESIGN_SYSTEM
-        ) {
-            const specifiers = path.node.specifiers;
-
-            if (specifiers && specifiers.length > 0) {
-                let hasV2MediaWidths = false;
-                let hasV2MediaQuery = false;
-
-                specifiers.forEach((specifier) => {
-                    if (j.ImportSpecifier.check(specifier)) {
-                        // Detect usage of V2_MediaQuery
-                        // Replace V2_MediaQuery with V3 MediaQuery
-                        if (
-                            specifier.imported.name ===
-                            IMPORT_SPECIFIERS.V2_MEDIA_QUERY
-                        ) {
-                            hasV2MediaQuery = true;
-                            isV2MediaQueryImported = true;
-
-                            specifier.imported.name =
-                                IMPORT_SPECIFIERS.MEDIA_QUERY;
-                            if (
-                                specifier.local &&
-                                specifier.local.name ===
-                                    IMPORT_SPECIFIERS.V2_MEDIA_QUERY
-                            ) {
-                                specifier.local.name =
-                                    IMPORT_SPECIFIERS.MEDIA_QUERY;
-                            }
-                        }
-
-                        // Detect usage of V2_MediaWidths
-                        if (
-                            specifier.imported.name ===
-                            IMPORT_SPECIFIERS.V2_MEDIA_WIDTHS
-                        ) {
-                            hasV2MediaWidths = true;
-                            isV2MediaWidthsImported = true;
-                        }
-                    }
-                });
-
-                // Create separate import for V2_MediaWidths
-                if (hasV2MediaQuery && hasV2MediaWidths) {
-                    path.node.specifiers = specifiers.filter((specifier) => {
-                        if (j.ImportSpecifier.check(specifier)) {
-                            return (
-                                specifier.imported.name !==
-                                IMPORT_SPECIFIERS.V2_MEDIA_WIDTHS
-                            );
-                        }
-                        return true;
-                    });
-                    const newImportDeclaration = j.importDeclaration(
-                        [
-                            j.importSpecifier(
-                                j.identifier(IMPORT_SPECIFIERS.V2_MEDIA_WIDTHS)
-                            ),
-                        ],
-                        j.literal(IMPORT_PATHS.V2_MEDIA)
-                    );
-
-                    j(path).insertAfter(newImportDeclaration);
-                }
-
-                // Update import path for V2_MediaQuery
-                if (hasV2MediaQuery) {
-                    if (importPath === IMPORT_PATHS.V2_MEDIA) {
-                        path.node.source.value = IMPORT_PATHS.THEME;
-                    }
-                }
-            }
-        }
-    });
-
-    // Link to migration docs for V2_MediaWidths deprecation
-    if (isV2MediaWidthsImported) {
-        const hasV2MediaWidths =
-            source.find(j.Identifier, {
-                name: IMPORT_SPECIFIERS.V2_MEDIA_WIDTHS,
-            }).length > 0;
-
-        if (hasV2MediaWidths) {
-            console.error(`${WARNINGS.DEPRECATED_USAGE} ${file.path}`);
-        }
-    }
-
-    // Update MediaQuery usages
+    // Detect usage of V2_MediaQuery
+    // Replace V2_MediaQuery with V3 MediaQuery
     if (isV2MediaQueryImported) {
+        CodemodUtils.addImport(
+            source,
+            api,
+            IMPORT_PATHS.THEME,
+            IMPORT_SPECIFIERS.MEDIA_QUERY
+        );
+
+        CodemodUtils.removeImport(
+            source,
+            api,
+            [IMPORT_PATHS.DESIGN_SYSTEM, IMPORT_PATHS.V2_MEDIA],
+            IMPORT_SPECIFIERS.V2_MEDIA_QUERY
+        );
+
         // Rename all instances of V2_MediaQuery to MediaQuery
         source
             .find(j.Identifier, { name: IMPORT_SPECIFIERS.V2_MEDIA_QUERY })
@@ -167,6 +101,11 @@ export default function transformer(file: FileInfo, api: API) {
                 }
             }
         });
+    }
+
+    // Link to migration docs for V2_MediaWidths deprecation
+    if (isV2MediaWidthsImported) {
+        console.error(`${WARNINGS.DEPRECATED_USAGE} ${file.path}`);
     }
 
     return source.toSource();

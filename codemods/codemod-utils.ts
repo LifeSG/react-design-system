@@ -1,4 +1,10 @@
-import { API, Collection, JSCodeshift } from "jscodeshift";
+import {
+    API,
+    ASTPath,
+    Collection,
+    JSCodeshift,
+    MemberExpression,
+} from "jscodeshift";
 
 export namespace CodemodUtils {
     export function hasImport(
@@ -137,5 +143,17 @@ export namespace CodemodUtils {
         }
 
         return false;
+    }
+
+    export function getObjectPath(
+        source: Collection,
+        api: API,
+        path: ASTPath<MemberExpression>
+    ) {
+        const j: JSCodeshift = api.jscodeshift;
+
+        if (j.MemberExpression.check(path.node)) {
+            return j(path.node).toSource();
+        }
     }
 }
