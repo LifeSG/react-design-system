@@ -1,4 +1,5 @@
 import { API, FileInfo, JSCodeshift } from "jscodeshift";
+import { CodemodUtils } from "../codemod-utils";
 import { sizePropMapping } from "./data";
 
 // ======= Constants ======= //
@@ -25,42 +26,28 @@ export default function transformer(file: FileInfo, api: API) {
     const j: JSCodeshift = api.jscodeshift;
     const source = j(file.source);
 
-    let isV2TextListImport = false;
-
-    source.find(j.ImportDeclaration).forEach((path) => {
-        const importPath = path.node.source.value;
-
-        if (
-            importPath === IMPORT_PATHS.V2_TEXT_LIST ||
-            importPath === IMPORT_PATHS.DESIGN_SYSTEM
-        ) {
-            // Update V2 modules to V3 modules
-            path.node.specifiers?.forEach((specifier) => {
-                if (
-                    j.ImportSpecifier.check(specifier) &&
-                    specifier.imported.name === IMPORT_SPECIFIERS.V2_TEXT_LIST
-                ) {
-                    specifier.imported.name = IMPORT_SPECIFIERS.TEXT_LIST;
-
-                    if (
-                        specifier.local &&
-                        specifier.local.name === IMPORT_SPECIFIERS.V2_TEXT_LIST
-                    ) {
-                        specifier.local.name = IMPORT_SPECIFIERS.TEXT_LIST;
-                    }
-
-                    // Replace import subpath only
-                    if (importPath === IMPORT_PATHS.V2_TEXT_LIST) {
-                        path.node.source.value = IMPORT_PATHS.TEXT_LIST;
-                    }
-
-                    isV2TextListImport = true;
-                }
-            });
-        }
-    });
+    const isV2TextListImport = CodemodUtils.hasImport(
+        source,
+        api,
+        [IMPORT_PATHS.DESIGN_SYSTEM, IMPORT_PATHS.V2_TEXT_LIST],
+        IMPORT_SPECIFIERS.V2_TEXT_LIST
+    );
 
     if (isV2TextListImport) {
+        CodemodUtils.addImport(
+            source,
+            api,
+            IMPORT_PATHS.TEXT_LIST,
+            IMPORT_SPECIFIERS.TEXT_LIST
+        );
+
+        CodemodUtils.removeImport(
+            source,
+            api,
+            [IMPORT_PATHS.DESIGN_SYSTEM, IMPORT_PATHS.V2_TEXT_LIST],
+            IMPORT_SPECIFIERS.V2_TEXT_LIST
+        );
+
         source
             .find(j.Identifier, { name: JSX_IDENTIFIERS.V2_TEXT_LIST })
             .forEach((path) => {

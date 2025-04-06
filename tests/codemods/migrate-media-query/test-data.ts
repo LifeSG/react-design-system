@@ -48,7 +48,6 @@ const StyledContainer = styled.div<StyleProps>\`
 
 export const expectedOutputCode = `
 import { MediaQuery } from "@lifesg/react-design-system/theme";
-
 import { V2_MediaWidths } from "@lifesg/react-design-system/v2_media";
 
 const StyledContainer = styled.div<StyleProps>\`
