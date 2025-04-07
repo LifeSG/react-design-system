@@ -1,13 +1,13 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
+import { DocAlert } from "stories/storybook-common";
 import * as FormUnitNumberInputStories from "./form-unit-number-input.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormUnitNumberInputStories} />
 
-<Title>Form.UnitNumberInput</Title>
+# Form.UnitNumberInput
 
-<Secondary>Overview</Secondary>
+## Overview
 
 The field that allows a user to enter a unit number value.
 
@@ -15,18 +15,20 @@ The field that allows a user to enter a unit number value.
 import { Form } from "@lifesg/react-design-system/form";
 ```
 
-> **Important note**: This component currently does not do unit number value validation
+<DocAlert>
+    This component currently does not do unit number value validation
+</DocAlert>
 
 <Canvas of={FormUnitNumberInputStories.Default} />
 
-<Heading3>Rendering in grid layouts</Heading3>
+## Rendering in grid layouts
 
-You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--docs)
+You can also specify [ColDiv's](/docs/core-layout-coldiv--docs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormUnitNumberInputStories.RenderingInGridLayout} />
 
-<Heading3>Using the field as a standalone</Heading3>
+## Using the field as a standalone
 
 In the case that you require the unit number input field as a standalone, you can do this.
 
@@ -36,6 +38,6 @@ import { UnitNumberInput } from "@lifesg/react-design-system/unit-number";
 
 <Canvas of={FormUnitNumberInputStories.StandaloneUsage} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

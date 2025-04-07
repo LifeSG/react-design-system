@@ -15,7 +15,7 @@ const OverlayComponent = ({
     rootId,
     onOverlayClick,
     children,
-    backgroundOpacity,
+    backgroundOpacity: _backgroundOpacity,
     backgroundBlur = true,
     disableTransition = false,
     enableOverlayClick = false,
@@ -191,9 +191,7 @@ const OverlayComponent = ({
             <Wrapper
                 data-testid={"overlay-wrapper"}
                 $show={show}
-                $backgroundOpacity={
-                    backgroundOpacity || (isStacked ? 0.5 : 0.8)
-                }
+                $stacked={isStacked}
                 $backgroundBlur={backgroundBlur}
                 $disableTransition={disableTransition}
                 onClick={handleWrapperClick}

@@ -49,14 +49,14 @@ const Component = (
     // CONST, STATE, REFS
     // =============================================================================
     const isEmptyReadOnlyState = readOnly && isEmpty(value);
-    const [isMasked, setIsMasked] = useState(!disableMask);
-    const [updatedValue, setUpdatedValue] = useState(value || "");
+    const [isMasked, setIsMasked] = useState<boolean>(!disableMask);
+    const [updatedValue, setUpdatedValue] = useState<string>(value || "");
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        setUpdatedValue(value);
+        setUpdatedValue(value || "");
     }, [value]);
 
     // =============================================================================
@@ -68,9 +68,9 @@ const Component = (
         onFocus && onFocus(event);
     };
 
-    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const handleBlur = (event?: React.FocusEvent<HTMLInputElement>) => {
         toggleMasking(true);
-        onBlur && onBlur(event);
+        onBlur && onBlur(event!);
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,7 +118,7 @@ const Component = (
         }
 
         return isMasked && !disableMask
-            ? StringHelper.maskValue(updatedValue?.toString(), {
+            ? StringHelper.maskValue(updatedValue, {
                   maskChar,
                   maskRange,
                   unmaskRange,
@@ -136,20 +136,22 @@ const Component = (
     // =============================================================================
 
     const renderIcon = () => {
+        if (isEmptyReadOnlyState) {
+            return <></>;
+        }
+
         const isDisabled = shouldDisableMasking();
 
         return (
-            !isEmptyReadOnlyState && (
-                <IconContainer
-                    data-testid={`icon-${isMasked ? "masked" : "unmasked"}`}
-                    onClick={!isDisabled ? handleToggleMask : undefined}
-                    $isDisabled={isDisabled}
-                    $inactiveColor={maskIconInactiveColor}
-                    $activeColor={maskIconActiveColor}
-                >
-                    {isMasked ? iconUnmask : iconMask}
-                </IconContainer>
-            )
+            <IconContainer
+                data-testid={`icon-${isMasked ? "masked" : "unmasked"}`}
+                onClick={!isDisabled ? handleToggleMask : undefined}
+                $isDisabled={isDisabled}
+                $inactiveColor={maskIconInactiveColor}
+                $activeColor={maskIconActiveColor}
+            >
+                {isMasked ? iconUnmask : iconMask}
+            </IconContainer>
         );
     };
 
@@ -166,9 +168,7 @@ const Component = (
                                 <ErrorIcon />
                                 <ErrorLabel>Error</ErrorLabel>
                             </ErrorTextContainer>
-                            <TryAgainLabel weight="semibold">
-                                Try again?
-                            </TryAgainLabel>
+                            <TryAgainLabel>Try again?</TryAgainLabel>
                         </ClickableErrorWrapper>
                     );
                 case "loading":

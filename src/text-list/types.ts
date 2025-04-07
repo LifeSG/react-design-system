@@ -1,9 +1,12 @@
-import { TextSizeType } from "../text/types";
+import { TypographySizeType } from "../theme/font/types";
 
 interface BaseListProps {
     children: JSX.Element | JSX.Element[];
     bottomMargin?: number | undefined;
-    size?: TextSizeType | undefined;
+    size?: TypographySizeType | undefined;
+    id?: string | undefined;
+    "data-testid"?: string | undefined;
+    className?: string | undefined;
 }
 
 export type CounterType = "lower-alpha" | "decimal" | "lower-roman";

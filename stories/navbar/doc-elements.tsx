@@ -1,21 +1,23 @@
-import styled from "styled-components";
 import { InboxIcon } from "@lifesg/react-icons/inbox";
-import { Text } from "../../src/text/text";
-import { Color } from "../../src/color";
-import { Button } from "../../src/button";
-import React from "react";
+import { Button } from "src/button";
+import { Divider } from "src/divider";
+import { IconButton } from "src/icon-button";
+import { PopoverTrigger } from "src/popover-v2";
+import { Colour } from "src/theme";
+import { Typography } from "src/typography";
+import styled from "styled-components";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const MobileCustomComponentWrapper = styled.div`
+const MobileCustomComponentWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
     padding: 1rem 1.25rem 0.5rem 1.25rem;
 `;
 
-export const DesktopCustomComponentWrapper = styled.div`
+const DesktopCustomComponentWrapper = styled.div`
     display: flex;
     position: relative;
     align-items: center;
@@ -24,8 +26,8 @@ export const DesktopCustomComponentWrapper = styled.div`
     margin-left: 1rem;
 `;
 
-export const SubLabel = styled(Text.H6)`
-    color: ${Color.Neutral[4]};
+const SubLabel = styled(Typography.BodySM)`
+    color: ${Colour["text-subtle"]};
 `;
 
 // =============================================================================
@@ -35,16 +37,14 @@ interface Props {
     onClick?: () => void;
 }
 
-export const DesktopCustomComponent = ({ onClick }: Props) => {
+export const DesktopCustomComponent = () => {
     return (
         <DesktopCustomComponentWrapper>
-            <InboxIcon
-                style={{
-                    width: "1.25rem",
-                    height: "1.25rem",
-                }}
-                onClick={onClick}
-            />
+            <PopoverTrigger popoverContent="Popover content" zIndex={100}>
+                <IconButton sizeType="small" styleType="light">
+                    <InboxIcon />
+                </IconButton>
+            </PopoverTrigger>
         </DesktopCustomComponentWrapper>
     );
 };
@@ -53,7 +53,7 @@ export const MobileCustomComponent = ({ onClick }: Props) => {
     return (
         <>
             <MobileCustomComponentWrapper>
-                <Text.BodySmall>John Smith</Text.BodySmall>
+                <Typography.BodyMD>John Smith</Typography.BodyMD>
                 <SubLabel>john_smith@tech.gov.sg</SubLabel>
                 <Button.Small
                     style={{
@@ -65,7 +65,7 @@ export const MobileCustomComponent = ({ onClick }: Props) => {
                     Click to close the drawer
                 </Button.Small>
             </MobileCustomComponentWrapper>
-            <hr />
+            <Divider />
         </>
     );
 };

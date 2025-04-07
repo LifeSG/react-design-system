@@ -21,7 +21,7 @@ export const flattenList = <T>(
 
     const flatten = (
         list: NestedDropdownListItemProps<T>[],
-        parentItem: NestedDropdownListLocalItem<T>
+        parentItem: NestedDropdownListLocalItem<T> | undefined
     ) => {
         const current: NestedDropdownListLocalItem<T>[] = [];
         const hasNestedSiblings = list.some(
@@ -44,7 +44,11 @@ export const flattenList = <T>(
                 parentIndex: parentItem ? parentItem.index : -1,
                 parentKeyPath: parentItem ? parentItem.keyPath : [],
                 level,
-                visible: level === 0 || initialExpanded || parentItem?.expanded,
+                visible:
+                    level === 0 ||
+                    initialExpanded ||
+                    parentItem?.expanded ||
+                    false,
                 expanded: initialExpanded,
                 checked: selectedKeyPaths.has(keyPathString),
                 hasSubItems: !!option.subItems?.length,
@@ -233,7 +237,7 @@ export const findItemFromStart = <T>(
     arr: T[],
     predicate: (e: T) => boolean,
     start: number
-): T => {
+): T | undefined => {
     for (let i = start; i < arr.length; i++) {
         if (predicate(arr[i])) {
             return arr[i];
@@ -247,7 +251,7 @@ export const findItemFromEnd = <T>(
     arr: T[],
     predicate: (e: T) => boolean,
     end: number
-): T => {
+): T | undefined => {
     for (let i = end; i >= 0; i--) {
         if (predicate(arr[i])) {
             return arr[i];
@@ -258,15 +262,15 @@ export const findItemFromEnd = <T>(
 };
 
 export const findItemByKeyPath = <T>(
-    nestedList: NestedDropdownListItemProps<T>[],
+    nestedList: NestedDropdownListItemProps<T>[] | undefined,
     keyPath: string[]
-) => {
+): NestedDropdownListItemProps<T> | undefined => {
     const [currentKey, ...nextKeyPath] = keyPath;
     if (isEmpty(nestedList) || isEmpty(currentKey)) {
         return undefined;
     }
 
-    const item = nestedList.find((item) => item.key === currentKey);
+    const item = nestedList!.find((item) => item.key === currentKey);
 
     if (!item || !nextKeyPath.length) {
         return item;
@@ -279,8 +283,6 @@ export const buildKeyPath = (keyPath: string[]): string => {
     return keyPath.join(",");
 };
 
-export const buildKeyPathToSet = (
-    keyPathArr: string[][]
-): Set<string> | undefined => {
+export const buildKeyPathToSet = (keyPathArr: string[][]): Set<string> => {
     return new Set<string>(keyPathArr.map((keyPath) => keyPath.join(",")));
 };

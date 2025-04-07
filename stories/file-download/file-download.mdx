@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as FileDownloadStories from "./file-download.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FileDownloadStories} />
 
-<Title>FileDownload</Title>
+# FileDownload
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that allows for downloading files.
 
@@ -17,7 +16,7 @@ import { FileDownload } from "@lifesg/react-design-system/file-download";
 
 <Canvas of={FileDownloadStories.Default} />
 
-<Heading3>With error display</Heading3>
+## With error display
 
 An error will be displayed when the file download has failed.
 
@@ -27,7 +26,7 @@ A custom error message can be specified for each item.
 
 <Canvas of={FileDownloadStories.WithCustomError} />
 
-<Heading3>Download readiness</Heading3>
+## Download readiness
 
 The `ready` prop allows users to manage the availability of a file.
 
@@ -35,6 +34,12 @@ This can be used in scenarios where an image needs time to be generated and is n
 
 <Canvas of={FileDownloadStories.DownloadReadiness} />
 
-<Secondary>Component API</Secondary>
+## Default text styling
+
+The title and description support styling for commonly used markup such as `<strong>` or `<a>`.
+
+<Canvas of={FileDownloadStories.TextStyling} />
+
+## Component API
 
 <PropsTable />

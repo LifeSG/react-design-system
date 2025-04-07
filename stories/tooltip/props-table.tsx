@@ -6,7 +6,6 @@ import {
     Table,
 } from "../storybook-common/api-table";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
-import { Heading4 } from "../storybook-common/text.style";
 
 export const TooltipTable = () => (
     <Table>
@@ -94,7 +93,8 @@ const PROPS_TABLE_DATA: TabAttribute[] = [
                         "withTooltip(component: JSX.Element, options: TooltipHOCOptionsProps);"
                     }
                 </code>
-                <Heading4>TooltipHOCOptionsProps</Heading4>
+                <br />
+                <h4>TooltipHOCOptionsProps</h4>
                 <HOCTable />
             </div>
         ),

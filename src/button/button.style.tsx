@@ -1,26 +1,40 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color/color";
-import { DesignToken } from "../design-token";
-import { MediaQuery } from "../media/media";
-import { ComponentLoadingSpinner } from "../shared/component-loading-spinner/component-loading-spinner";
-import { TextStyleHelper } from "../text";
-import { MainStyleProps } from "./types";
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
+import {
+    Border,
+    Colour,
+    Font,
+    MediaQuery,
+    Motion,
+    Radius,
+    Spacing,
+} from "../theme";
+
+export type MainButtonStyle =
+    | "default"
+    | "disabled"
+    | "secondary"
+    | "light"
+    | "link";
+
+export type MainButtonSize = "default" | "small" | "large";
+
+export interface MainStyleProps {
+    $buttonStyle: MainButtonStyle;
+    $buttonSizeStyle?: MainButtonSize | undefined;
+    $buttonIsDanger?: boolean;
+}
 
 export const Main = styled.button<MainStyleProps>`
-    padding: 0.5rem 1rem;
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
     min-width: 4rem;
-    border-radius: 4px;
-    transition: all 200ms ease;
+    border: ${Border["width-010"]} ${Border["solid"]} transparent;
+    border-radius: ${Radius["sm"]};
+    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    @media (hover: hover) {
-        &:hover {
-            box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.2);
-        }
-    }
 
     // -----------------------------------------------------------------------------
     // BUTTON STYLE + TEXT COLOR
@@ -29,70 +43,77 @@ export const Main = styled.button<MainStyleProps>`
         switch (props.$buttonStyle) {
             case "secondary":
                 return css`
-                    background-color: ${Color.Neutral[8]};
-                    border: 1px solid
-                        ${props.$buttonIsDanger
-                            ? DesignToken.Button.Danger.Border
-                            : Color.Primary};
+                    background-color: ${Colour.Primitive.white};
+                    border-color: ${props.$buttonIsDanger
+                        ? Colour["border-error-strong"]
+                        : Colour["border-primary"]};
 
                     color: ${props.$buttonIsDanger
-                        ? DesignToken.Button.Danger.Primary
-                        : Color.Primary};
+                        ? Colour["text-error"]
+                        : Colour["text-primary"]};
+
+                    &:hover,
+                    &:active {
+                        background-color: ${Colour["bg-hover-neutral"]};
+                    }
                 `;
             case "light":
                 return css`
-                    background-color: ${Color.Neutral[8]};
-                    border: 1px solid ${Color.Neutral[5]};
+                    background-color: ${Colour.bg};
+                    border-color: ${Colour.border};
 
                     color: ${props.$buttonIsDanger
-                        ? DesignToken.Button.Danger.Primary
-                        : Color.Primary};
+                        ? Colour["text-error"]
+                        : Colour["text-primary"]};
+
+                    &:hover,
+                    &:active {
+                        background-color: ${Colour["bg-hover-neutral"]};
+                    }
+                `;
+
+            case "link":
+                return css`
+                    background-color: transparent;
+
+                    color: ${props.$buttonIsDanger
+                        ? Colour["text-error"]
+                        : Colour["text-primary"]};
+                    &:hover,
+                    &:active {
+                        background-color: ${Colour["bg-hover-neutral"]};
+                    }
                 `;
             case "disabled":
                 return css`
-                    background-color: ${Color.Neutral[6]};
-                    border: 1px solid transparent;
+                    background-color: ${Colour["bg-disabled"]};
+
                     cursor: not-allowed;
 
                     &:hover {
                         box-shadow: none;
                     }
 
-                    color: ${Color.Neutral[3]};
-                `;
-            case "link":
-                return css`
-                    background-color: transparent;
-                    border: none;
-                    border-radius: unset;
-
-                    &:hover {
-                        box-shadow: none;
-                    }
-
-                    color: ${props.$buttonIsDanger
-                        ? DesignToken.Button.Danger.Primary
-                        : Color.Primary};
-                    :hover,
-                    :active,
-                    :focus {
-                        color: ${props.$buttonIsDanger
-                            ? DesignToken.Button.Danger.Hover
-                            : Color.Secondary};
-                    }
+                    color: ${Colour["text-disabled"]};
                 `;
             default:
                 return css`
                     background-color: ${props.$buttonIsDanger
-                        ? DesignToken.Button.Danger.BackgroundColor
-                        : Color.Primary};
-                    border: 1px solid transparent;
+                        ? Colour["bg-error-strong"]
+                        : Colour["bg-primary"]};
 
-                    ${MediaQuery.MaxWidth.mobileL} {
+                    ${MediaQuery.MaxWidth.md} {
                         width: 100%;
                     }
 
-                    color: ${Color.Neutral[8]};
+                    color: ${Colour["text-inverse"]};
+
+                    &:hover,
+                    &:active {
+                        background-color: ${props.$buttonIsDanger
+                            ? Colour["bg-error-strong-hover"]
+                            : Colour["bg-primary-hover"]};
+                    }
                 `;
         }
     }}
@@ -105,18 +126,29 @@ export const Main = styled.button<MainStyleProps>`
             case "small":
                 return css`
                     height: 2.5rem;
-                    ${TextStyleHelper.getTextStyle("H5", "semibold")}
+                    ${Font["body-md-semibold"]}
 
-                    ${MediaQuery.MaxWidth.mobileS} {
+                    ${MediaQuery.MaxWidth.xxs} {
                         height: auto;
                     }
                 `;
+
+            case "large":
+                return css`
+                    height: 4rem;
+                    ${Font["heading-md-semibold"]}
+
+                    ${MediaQuery.MaxWidth.xxs} {
+                        height: auto;
+                    }
+                `;
+
             default:
                 return css`
                     height: 3rem;
-                    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+                    ${Font["heading-xs-semibold"]}
 
-                    ${MediaQuery.MaxWidth.mobileS} {
+                    ${MediaQuery.MaxWidth.xxs} {
                         height: auto;
                     }
                 `;
@@ -124,33 +156,6 @@ export const Main = styled.button<MainStyleProps>`
     }}
 `;
 
-export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
-    ${(props) => {
-        let color = props.$buttonIsDanger
-            ? DesignToken.Button.Danger.Primary
-            : Color.Primary(props);
-        switch (props.$buttonStyle) {
-            case "secondary":
-            case "light":
-            case "link":
-                break;
-            case "disabled":
-                color = Color.Neutral[3](props);
-                break;
-            default:
-                color = Color.Neutral[8](props);
-                break;
-        }
-
-        return css`
-            margin-right: ${props.$buttonWithIcon ? 0 : "0.5rem"};
-
-            #inner1,
-            #inner2,
-            #inner3,
-            #inner4 {
-                border-color: ${color} transparent transparent transparent;
-            }
-        `;
-    }}
+export const Spinner = styled(ComponentLoadingSpinner)`
+    margin-right: 0.5rem;
 `;

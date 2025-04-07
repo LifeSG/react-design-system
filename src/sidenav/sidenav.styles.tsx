@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
 import { animated } from "react-spring";
+import { Border, Colour, MediaQuery, Radius } from "../theme";
 
 //=============================================================================
 // STYLE INTERFACE
@@ -29,8 +28,8 @@ const Container = styled.nav`
     align-items: center;
     overflow-y: auto;
     width: 8.5rem;
-    border: 1px solid ${Color.Neutral[5]};
-    background-color: ${Color.Accent.Light[6]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour.border};
+    background-color: ${Colour["bg-primary-subtlest"]};
     padding: 0.5rem 0 1.5rem 0;
 `;
 
@@ -38,7 +37,7 @@ export const DesktopContainer = styled(Container)`
     height: 100vh;
     left: 0;
     top: 0;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         display: none;
         visibility: hidden;
     }
@@ -47,7 +46,7 @@ export const DesktopContainer = styled(Container)`
 export const MobileContainer = styled(Container)`
     display: none;
     visibility: hidden;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         display: none; // NOTE: Since mobile view not supported yet
     }
 `;
@@ -61,14 +60,16 @@ export const DesktopDrawer = styled(animated.ul)<DrawerStyleProps>`
     width: 15rem;
     z-index: 10;
     padding: 1rem 0.5rem;
-    background-color: ${Color.Accent.Light[6]};
-    border-radius: 0 8px 8px 0;
-    border: 1px solid ${Color.Neutral[5]};
+    background-color: ${Colour["bg-primary-subtlest"]};
+    border-top-right-radius: ${Radius["md"]};
+    border-bottom-right-radius: ${Radius["md"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour.border};
 
     ${(props) =>
         props.$showDrawer
             ? css`
-                  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                  box-shadow: 0 0 4px
+                      rgb(from ${Colour.Primitive["neutral-20"]} r g b / 25%);
               `
             : css`
                   border: 0;

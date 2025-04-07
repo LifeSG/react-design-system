@@ -1,3 +1,5 @@
+import { ThemeStyleProps } from "../theme/types";
+
 export type SlotStyle = "default" | "stripes";
 
 export type Direction = "right" | "left";
@@ -10,9 +12,9 @@ interface TimeSlotBarStyleAttributes {
     /** The label color */
     color?: string;
     /** The background color */
-    backgroundColor: string;
+    backgroundColor: string | ((props: ThemeStyleProps) => string);
     /** The secondary background color. Used in conjunction if styleType is "stripes" */
-    backgroundColor2?: string;
+    backgroundColor2?: string | ((props: ThemeStyleProps) => string);
 }
 
 export interface TimeSlotBarProps {

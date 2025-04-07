@@ -1,19 +1,9 @@
+import { Layout } from "src/layout";
 import styled from "styled-components";
-import { Layout } from "../../src/layout";
-import { Text } from "../../src/text";
 
-export const Wrapper = styled(Layout.Content)`
-    padding: 5rem;
+export const LayoutGrid = styled(Layout.Content)`
+    [data-id="container"] {
+        gap: 1rem;
+    }
 `;
-
-export const TextComponent = styled(Text.Body)`
-    margin-bottom: 1rem;
-`;
-
-export const DisplayText = ({ children }: { children: React.ReactNode }) => {
-    return (
-        <Layout.ColDiv desktopCols={12} tabletCols={8} mobileCols={4}>
-            <TextComponent>{children}</TextComponent>
-        </Layout.ColDiv>
-    );
-};
+LayoutGrid.displayName = "Layout.Content";

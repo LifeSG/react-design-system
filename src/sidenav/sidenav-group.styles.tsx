@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../color";
+import { Colour } from "../theme";
 
 //=============================================================================
 // STYLING
@@ -13,8 +13,8 @@ export const Container = styled.ul`
 `;
 
 export const Divider = styled.li`
-    margin: 0.5rem 0;
+    margin-top: 1rem;
     width: 6.5rem;
     height: 1px;
-    background-color: ${Color.Neutral[5]};
+    background-color: ${Colour.border};
 `;

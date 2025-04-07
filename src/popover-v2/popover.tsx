@@ -1,7 +1,8 @@
 import { useMediaQuery } from "react-responsive";
+import { useTheme } from "styled-components";
 import { Modal } from "../modal/modal";
-import { MediaWidths } from "../spec/media-spec";
-import { Text } from "../text/text";
+import { Breakpoint } from "../theme";
+import { Typography } from "../typography";
 import {
     ContentWrapper,
     MobileModalBox,
@@ -20,9 +21,9 @@ export const PopoverV2 = ({
     // CONST, STATE, REF
     // =============================================================================
     const testId = otherProps["data-testid"] || "popover";
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -38,7 +39,7 @@ export const PopoverV2 = ({
     // =============================================================================
     const renderContent = () =>
         typeof children === "string" ? (
-            <Text.BodySmall>{children}</Text.BodySmall>
+            <Typography.BodyMD>{children}</Typography.BodyMD>
         ) : (
             children
         );
@@ -51,7 +52,10 @@ export const PopoverV2 = ({
                 </PopoverContainer>
             )}
             {isMobile && (
-                <Modal show={visible} onOverlayClick={handleMobileClose}>
+                <Modal
+                    show={visible ?? false}
+                    onOverlayClick={handleMobileClose}
+                >
                     <MobileModalBox onClose={handleMobileClose}>
                         <ContentWrapper>{renderContent()}</ContentWrapper>
                     </MobileModalBox>

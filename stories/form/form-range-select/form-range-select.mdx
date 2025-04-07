@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormRangeSelectStories from "./form-range-select.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormRangeSelectStories} />
 
-<Title>Form.RangeSelect</Title>
+# Form.RangeSelect
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A field that provides a way to select options based on a range.
 
@@ -17,24 +16,24 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormRangeSelectStories.Default} />
 
-<Heading3>With custom list item display</Heading3>
+## With custom list item display
 
 You are able to customise the display of the dropdown list items as well as the selected option.
 
 <Canvas of={FormRangeSelectStories.WithCustomListDisplay} />
 
-<Heading3>With search capabilities</Heading3>
+## With search capabilities
 
 <Canvas of={FormRangeSelectStories.WithSearch} />
 
-<Heading3>Rendering in grid layouts</Heading3>
+## Rendering in grid layouts
 
-You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--docs)
+You can also specify [ColDiv's](/docs/core-layout-coldiv--docs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormRangeSelectStories.RenderingInGridLayout} />
 
-<Heading3>Using the field as a standalone</Heading3>
+## Using the field as a standalone
 
 In the case that you require the select field as a standalone, you can do this.
 
@@ -44,6 +43,6 @@ import { InputRangeSelect } from "@lifesg/react-design-system/input-range-select
 
 <Canvas of={FormRangeSelectStories.StandaloneUsage} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

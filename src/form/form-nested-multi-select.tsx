@@ -12,6 +12,13 @@ export const FormNestedMultiSelect = <V1, V2, V3>({
     mobileCols,
     tabletCols,
     desktopCols,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
     ...otherProps
 }: FormNestedMultiSelectProps<V1, V2, V3>): JSX.Element => {
     return (
@@ -25,6 +32,13 @@ export const FormNestedMultiSelect = <V1, V2, V3>({
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <InputNestedMultiSelect
                 id={`${id}-base`}

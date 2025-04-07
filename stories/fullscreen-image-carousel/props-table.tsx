@@ -1,9 +1,8 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
 import {
+    ApiTable,
     ApiTableAttributeRowProps,
     ApiTableSectionProps,
-} from "../storybook-common/api-table/types";
+} from "stories/storybook-common";
 
 const MODAL_PROPS: ApiTableAttributeRowProps[] = [
     {

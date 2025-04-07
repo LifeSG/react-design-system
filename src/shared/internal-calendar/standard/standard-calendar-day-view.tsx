@@ -1,7 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import { useMemo, useState } from "react";
-import { Text } from "../../../text/text";
 import { CalendarHelper } from "../../../util/calendar-helper";
 import { CommonCalendarProps, FocusType } from "../types";
 import {
@@ -17,8 +16,8 @@ dayjs.extend(isBetween);
 export type DayVariant = "default" | "other-month" | "today";
 
 interface CalendarDayViewProps extends CommonCalendarProps {
-    selectedStartDate: string;
-    selectedEndDate: string;
+    selectedStartDate: string | undefined;
+    selectedEndDate: string | undefined;
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
     isNewSelection: boolean;
@@ -76,7 +75,7 @@ export const StandardCalendarDayView = ({
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
             <HeaderCell key={`week-day-${index}`}>
-                <Text.H6 weight="semibold">{dayjs(day).format("ddd")}</Text.H6>
+                {dayjs(day).format("ddd")}
             </HeaderCell>
         ));
     };

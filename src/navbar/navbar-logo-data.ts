@@ -1,4 +1,4 @@
-import { ResourceScheme } from "../theme";
+import { ResourceScheme } from "../theme/types";
 import { NavbarResourcesProps } from "./types";
 
 const DEFAULT_RESOURCES_LOGO: NavbarResourcesProps = {
@@ -17,14 +17,14 @@ const BOOKINGSG_RESOURCES_LOGO: NavbarResourcesProps = {
 
 const CCUBE_RESOURCES_LOGO: NavbarResourcesProps = {
     primary: {
-        brandName: "MyLegacy",
+        brandName: "CCube",
         logoSrc: "https://assets.life.gov.sg/ccube/logo-ccube.svg",
     },
 };
 
 const MYLEGACY_RESOURCES_LOGO: NavbarResourcesProps = {
     primary: {
-        brandName: "CCube",
+        brandName: "MyLegacy",
         logoSrc: "https://mylegacy.life.gov.sg/images/site-logo.png",
     },
 };

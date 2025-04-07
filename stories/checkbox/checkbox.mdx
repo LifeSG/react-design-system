@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as CheckboxStories from "./checkbox.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={CheckboxStories} />
 
-<Title>Checkbox</Title>
+# Checkbox
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A field that allows a user to enter a response by clicking, and shown with a tick (checked) when
 activated.
@@ -23,13 +22,13 @@ There are 2 display sizes available for the `Checkbox`.
 
 <Canvas of={CheckboxStories.Default} />
 
-<Heading3>Indeterminate state</Heading3>
+## Indeterminate state
 
 A common use case for the indeterminate state is to represent the partial selection of sub-options.
 
 <Canvas of={CheckboxStories.IndeterminateState} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 The component also inherits the [HTMLInputElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement).
 

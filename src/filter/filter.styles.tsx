@@ -1,26 +1,24 @@
-import { FilterIcon } from "@lifesg/react-icons/filter";
 import styled from "styled-components";
-import { Button } from "../button/button";
-import { Color } from "../color/color";
-import { MediaQuery } from "../media/media";
-import { ClickableIcon } from "../shared/clickable-icon";
-import { Text } from "../text/text";
+import { Button } from "../button";
 import { ButtonWithIcon } from "../button-with-icon";
+import { ClickableIcon } from "../shared/clickable-icon";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // CONTAINER STYLES
 // =============================================================================
 
 export const DesktopContainer = styled.div`
-    background-color: ${Color.Neutral[8]};
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 0.5rem;
+    background-color: ${Colour["bg"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["md"]};
     overflow: hidden;
     width: 100%;
 `;
 
 export const MobileContainer = styled.div`
-    background-color: ${Color.Neutral[7]};
+    background-color: ${Colour["bg-strong"]};
     height: 100%;
     width: 100%;
     display: flex;
@@ -28,7 +26,7 @@ export const MobileContainer = styled.div`
 `;
 
 export const MobileOverlayContainer = styled.div`
-    background-color: ${Color.Neutral[8]};
+    background-color: ${Colour["bg"]};
     height: 100%;
     width: 100%;
 `;
@@ -47,27 +45,29 @@ export const FilterHeader = styled.div`
     display: flex;
     align-items: center;
 
-    background-color: ${Color.Neutral[8]};
+    background-color: ${Colour["bg"]};
 
-    ${MediaQuery.MaxWidth.tablet} {
-        border-bottom: 1px solid ${Color.Neutral[5]};
+    ${MediaQuery.MaxWidth.lg} {
+        border-bottom: ${Border["width-010"]} ${Border["solid"]}
+            ${Colour["border"]};
     }
 `;
 
-export const FilterTitle = styled(Text.H4)`
+export const FilterTitle = styled(Typography.HeadingXS).attrs({ as: "p" })`
     flex: 1;
-    margin: 1.5rem 0 1rem 1.25rem;
+    margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
+        ${Spacing["spacing-20"]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         text-align: center;
-        margin: 1.5rem 0;
+        margin: ${Spacing["spacing-24"]} 0;
     }
 `;
 
 export const FilterHeaderButton = styled(ClickableIcon)`
-    padding: 1.5rem 1.25rem;
+    padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
     margin-right: auto;
-    color: ${Color.Neutral[3]};
+    color: ${Colour["icon"]};
 
     svg {
         height: 1.5rem;
@@ -75,17 +75,18 @@ export const FilterHeaderButton = styled(ClickableIcon)`
     }
 
     &:hover {
-        color: ${Color.Neutral[2]};
+        color: ${Colour["icon-hover"]};
     }
 `;
 
 export const FilterClearButton = styled(Button.Small)`
     background-color: transparent;
-    padding: 1.5rem 1.25rem 1rem 1.25rem;
-    height: auto;
+    padding-right: ${Spacing["spacing-20"]};
+    padding-left: ${Spacing["spacing-20"]};
+    height: 100%;
 
-    ${MediaQuery.MaxWidth.tablet} {
-        padding: 1.5rem 1.25rem;
+    ${MediaQuery.MaxWidth.lg} {
+        padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
     }
 `;
 
@@ -98,9 +99,9 @@ export const FilterButton = styled(ButtonWithIcon.Default)`
 `;
 
 export const FilterFooter = styled.div`
-    padding: 1.5rem 1.25rem;
-    background-color: ${Color.Neutral[8]};
-    border-top: 1px solid ${Color.Neutral[5]};
+    padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
+    background-color: ${Colour["bg"]};
+    border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 `;
 
 export const FilterDoneButton = styled(Button.Default)`

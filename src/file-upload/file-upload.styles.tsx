@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import { Alert } from "../alert";
 import { Button } from "../button";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Text, TextStyleHelper } from "../text";
+import { Colour, Font, MediaQuery, Spacing } from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLING
@@ -12,30 +11,28 @@ import { Text, TextStyleHelper } from "../text";
 export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 2rem;
+    margin-bottom: ${Spacing["spacing-32"]};
+    gap: ${Spacing["spacing-8"]};
 `;
 
-export const Title = styled(Text.H4)`
-    margin-bottom: 0.5rem;
-`;
+export const Title = styled(Typography.BodyBL)``;
 
 export const TitleContainer = styled.div`
-    color: ${Color.Neutral[1]};
-    ${applyHtmlContentStyle({ textSize: "Body" })}
+    color: ${Colour.text};
+    ${applyHtmlContentStyle({ textSize: "body-baseline" })}
 `;
 
-export const Description = styled(Text.BodySmall)`
-    margin-bottom: 0;
-    color: ${Color.Neutral[3]};
+export const Description = styled(Typography.BodyMD)`
+    color: ${Colour["text-subtler"]};
 `;
 
 export const DescriptionContainer = styled.div`
-    color: ${Color.Neutral[3]};
-    ${applyHtmlContentStyle({ textSize: "BodySmall" })}
+    color: ${Colour.text};
+    ${applyHtmlContentStyle({ textSize: "body-md" })}
 `;
 
 export const WarningAlert = styled(Alert)`
-    margin-bottom: 2rem;
+    margin-bottom: ${Spacing["spacing-32"]};
 `;
 
 export const UploadButtonContainer = styled.div`
@@ -44,7 +41,7 @@ export const UploadButtonContainer = styled.div`
     flex-direction: column;
     align-items: flex-end;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         align-items: flex-start;
     }
 `;
@@ -52,22 +49,23 @@ export const UploadButtonContainer = styled.div`
 export const UploadButton = styled(Button.Small)`
     width: 10rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         width: 100%;
     }
 `;
+
 export const UploadButtonLabel = styled.label`
-    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
-    color: ${Color.Neutral[3]};
-    margin-top: 0.5rem;
+    ${Font["body-md-semibold"]}
+    color: ${Colour["text-subtler"]};
+    margin-top: ${Spacing["spacing-8"]};
     width: 10rem;
     text-align: center;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         display: none;
         visibility: hidden;
     }
 `;
 
 export const ErrorAlert = styled(Alert)`
-    margin-bottom: 2rem;
+    margin-bottom: ${Spacing["spacing-32"]};
 `;

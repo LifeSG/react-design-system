@@ -42,7 +42,6 @@ export const Menu = <T,>({
                 <MenuItem key={index}>
                     <Link
                         data-testid={testId}
-                        weight="bold"
                         {...otherItemAttrs}
                         onClick={handleLinkClick(item)}
                         {...options}

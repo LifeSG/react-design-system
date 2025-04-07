@@ -18,8 +18,9 @@ import {
 } from "@floating-ui/react";
 import { useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { MediaWidths } from "../../media";
+import { useTheme } from "styled-components";
 import { useFloatingChild } from "../../overlay/use-floating-context";
+import { Breakpoint } from "../../theme";
 import { DropdownContainer } from "./element-with-dropdown.styles";
 import { DropdownAlignmentType } from "./types";
 
@@ -31,7 +32,7 @@ interface ElementWithDropdownProps {
     enabled: boolean;
     isOpen: boolean;
     onOpen?: () => void | undefined;
-    onClose?: (reason: OpenChangeReason) => void | undefined;
+    onClose?: (reason: OpenChangeReason | undefined) => void | undefined;
     onDismiss?: () => void | undefined;
     renderElement: () => React.ReactNode;
     renderDropdown: (props: DropdownRenderProps) => React.ReactNode;
@@ -73,9 +74,11 @@ export const ElementWithDropdown = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const elementRef = useRef<HTMLDivElement>(null);
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const elementRef = useRef<HTMLDivElement | null>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const { width: referenceWidth } = useResizeDetector({
+    const { width: referenceWidth = 0 } = useResizeDetector({
         targetRef: elementRef,
         handleHeight: false,
     });
@@ -84,7 +87,7 @@ export const ElementWithDropdown = ({
         fn: ({ x, rects }) => {
             const noGapInBetween =
                 x === 0 || x + rects.floating.width === window.innerWidth;
-            const isMobileScreen = window.innerWidth < MediaWidths.mobileL;
+            const isMobileScreen = window.innerWidth < mobileBreakpoint;
             return {
                 x:
                     noGapInBetween && isMobileScreen

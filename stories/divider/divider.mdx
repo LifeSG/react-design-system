@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as DividerStories from "./divider.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={DividerStories} />
 
-<Title>Divider</Title>
+# Divider
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that renders a horizontal line.
 
@@ -17,20 +16,24 @@ import { Divider } from "@lifesg/react-design-system/divider";
 
 <Canvas of={DividerStories.Default} />
 
-<Heading3>Using in grid layouts</Heading3>
+## Using in grid layouts
 
-When rendering in grid layouts, you will need to specify the `layoutType` correctly
-to allow the `Divider` to span across the full width of it's parent container. Doing so
-will enable you to make use of the grid column props.
+When rendering in grid layouts, you will need to specify the `layoutType`
+correctly to allow the `Divider` to span across the full width of its parent
+container. Doing so will enable you to make use of the grid column props.
 
 <Canvas of={DividerStories.UsingInGridLayout} />
 
-<Heading3>Customisations</Heading3>
+You can also set the grid columns.
+
+<Canvas of={DividerStories.SettingGridColumns} />
+
+## Customisations
 
 Props like `color` and `thickness` makes it easier to customise the `Divider`.
 
 <Canvas of={DividerStories.Customisations} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

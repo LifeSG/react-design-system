@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo } from "react";
 import { CalendarHelper } from "../../util/calendar-helper";
-import { CellLabel, Wrapper, YearCell } from "./internal-calendar-year.style";
+import { Wrapper, YearCell } from "./internal-calendar-year.style";
 import { FocusType, InternalCalendarProps } from "./types";
 
 export type YearVariant =
@@ -13,11 +13,11 @@ export type YearVariant =
 interface Props
     extends Pick<
         InternalCalendarProps,
-        "type" | "minDate" | "maxDate" | "allowDisabledSelection"
+        "minDate" | "maxDate" | "allowDisabledSelection"
     > {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
-    selectedStartDate: string;
+    selectedStartDate: string | undefined;
     selectedEndDate?: string | undefined;
     viewCalendarDate: Dayjs;
     isNewSelection: boolean;
@@ -30,7 +30,6 @@ export const InternalCalendarYear = ({
     selectedStartDate,
     selectedEndDate,
     viewCalendarDate,
-    type,
     isNewSelection,
     minDate,
     maxDate,
@@ -81,7 +80,7 @@ export const InternalCalendarYear = ({
             day.isBefore(selectedStartDate, "year") &&
             isNewSelection;
 
-        return isStartAfterEnd || isEndBeforeStart;
+        return !!(isStartAfterEnd || isEndBeforeStart);
     };
 
     const generateYearStatus = (date: Dayjs) => {
@@ -113,7 +112,7 @@ export const InternalCalendarYear = ({
     if (!years.length) return null;
 
     return (
-        <Wrapper $type={type}>
+        <Wrapper>
             {years.map((date) => {
                 const { disabledDisplay, interactive, variant, year } =
                     generateYearStatus(date);
@@ -123,17 +122,10 @@ export const InternalCalendarYear = ({
                         key={year}
                         $variant={variant}
                         $disabledDisplay={disabledDisplay}
-                        $interactive={interactive}
+                        $interactive={!!interactive}
                         onClick={() => handleYearClick(date, !interactive)}
                     >
-                        <CellLabel
-                            weight="regular"
-                            $variant={variant}
-                            $disabledDisplay={disabledDisplay}
-                            $interactive={interactive}
-                        >
-                            {year}
-                        </CellLabel>
+                        {year}
                     </YearCell>
                 );
             })}

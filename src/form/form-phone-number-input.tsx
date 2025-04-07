@@ -12,6 +12,13 @@ export const FormPhoneNumberInput = ({
     mobileCols,
     tabletCols,
     desktopCols,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
     ...otherProps
 }: FormPhoneNumberInputProps): JSX.Element => {
     return (
@@ -25,6 +32,13 @@ export const FormPhoneNumberInput = ({
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <PhoneNumberInput
                 id={`${id}-base`}

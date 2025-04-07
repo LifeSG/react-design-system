@@ -1,6 +1,4 @@
-import React from "react";
-import { ApiTable, code } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps, code } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {

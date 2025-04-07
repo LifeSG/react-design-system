@@ -7,7 +7,7 @@ import {
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { LabelContainer } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
-import { Text } from "../text";
+import { Typography } from "../typography";
 import { SimpleIdGenerator } from "../util";
 import {
     HistogramSliderDropdownContainer,
@@ -55,9 +55,9 @@ export const SelectHistogram = ({
     const values = bins.map((item) => item.minValue);
     const minValue = Math.min(...values);
 
-    const nodeRef = useRef<HTMLDivElement>();
-    const selectorRef = useRef<HTMLButtonElement>();
-    const labelContainerRef = useRef<HTMLDivElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const selectorRef = useRef<HTMLButtonElement>(null);
+    const labelContainerRef = useRef<HTMLDivElement>(null);
 
     const testId = otherProps["data-testid"] || "select-histogram";
     // =========================================================================
@@ -82,7 +82,7 @@ export const SelectHistogram = ({
     };
 
     const handleDismiss = () => {
-        selectorRef.current.focus();
+        selectorRef.current?.focus();
         setShowOptions(false);
     };
 
@@ -106,6 +106,7 @@ export const SelectHistogram = ({
         if (
             focused &&
             !showOptions &&
+            nodeRef.current &&
             !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
             setFocused(false);
@@ -128,11 +129,11 @@ export const SelectHistogram = ({
         }
 
         return (
-            <Text.Body>
+            <Typography.BodyBL>
                 {rangeLabelPrefix}
                 {value}
                 {rangeLabelSuffix}
-            </Text.Body>
+            </Typography.BodyBL>
         );
     };
 

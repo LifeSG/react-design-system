@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormTimepickerStories from "./form-timepicker.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormTimepickerStories} />
 
-<Title>Form.Timepicker</Title>
+# Form.Timepicker
 
-<Secondary>Overview</Secondary>
+## Overview
 
 The field that allows a user to enter a time value.
 
@@ -17,18 +16,18 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormTimepickerStories.Default} />
 
-<Heading3>12hr format</Heading3>
+## 12hr format
 
 <Canvas of={FormTimepickerStories.TwelveHourFormat} />
 
-<Heading3>Rendering in grid layouts</Heading3>
+## Rendering in grid layouts
 
-You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--docs)
+You can also specify [ColDiv's](/docs/core-layout-coldiv--docs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormTimepickerStories.RenderingInGridLayout} />
 
-<Heading3>Using the field as a standalone</Heading3>
+## Using the field as a standalone
 
 In the case that you require the timepicker field as a standalone, you can do this.
 
@@ -38,6 +37,6 @@ import { Timepicker } from "@lifesg/react-design-system/timepicker";
 
 <Canvas of={FormTimepickerStories.StandaloneUsage} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

@@ -1,10 +1,12 @@
 import { EraserIcon, PencilIcon } from "@lifesg/react-icons";
 import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useTheme } from "styled-components";
+import { Button } from "../button";
 import { ButtonWithIcon } from "../button-with-icon";
-import { MediaWidths } from "../media";
 import { ProgressBar } from "../shared/progress-bar";
-import { Text } from "../text";
+import { Breakpoint } from "../theme";
+import { Typography } from "../typography";
 import { ESignatureCanvasRef } from "./e-signature-canvas";
 import {
     AddSignatureButton,
@@ -41,27 +43,34 @@ export const ESignature = (props: EsignatureProps) => {
         loadingLabel = "Uploading...",
         onChange,
         value,
+        disabled,
         ...otherProps
     } = props;
     const [showModal, setShowModal] = useState(false);
     const eSignatureCanvasRef = useRef<ESignatureCanvasRef>(null);
-    const [dataURL, setDataURL] = useState<string>(value);
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
+    const [dataURL, setDataURL] = useState<string | null | undefined>(value);
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const isMobileLandscape = useMediaQuery({
+        maxHeight: mobileBreakpoint,
+        orientation: "landscape",
     });
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handleClearDrawing = () => {
-        eSignatureCanvasRef.current.clear();
+        eSignatureCanvasRef.current?.clear();
     };
 
     const handleClickSave = () => {
-        const dataURL = eSignatureCanvasRef.current.export();
-        setDataURL(dataURL);
-        setShowModal(false);
-        onChange?.(dataURL);
+        if (eSignatureCanvasRef.current) {
+            const dataURL = eSignatureCanvasRef.current.export();
+            setDataURL(dataURL);
+            setShowModal(false);
+            onChange?.(dataURL);
+        }
     };
 
     // =============================================================================
@@ -83,6 +92,7 @@ export const ESignature = (props: EsignatureProps) => {
                     aria-label="Add signature"
                     id={id}
                     onClick={() => setShowModal(true)}
+                    disabled={disabled}
                 >
                     Add signature
                 </AddSignatureButton>
@@ -97,6 +107,7 @@ export const ESignature = (props: EsignatureProps) => {
                     onClick={() => setShowModal(true)}
                     id={id}
                     aria-label="Edit signature"
+                    disabled={disabled}
                 >
                     <PencilIcon />
                 </EditSignatureButton>
@@ -108,10 +119,10 @@ export const ESignature = (props: EsignatureProps) => {
         return (
             <ProgressBox>
                 {loadingLabel && (
-                    <Text.BodySmall>{loadingLabel}</Text.BodySmall>
+                    <Typography.BodyMD>{loadingLabel}</Typography.BodyMD>
                 )}
                 <ProgressBar
-                    progress={loadingProgress}
+                    progress={loadingProgress ?? 0}
                     data-testid={`${id || "e-signature"}-progress-bar`}
                 />
             </ProgressBox>
@@ -139,15 +150,28 @@ export const ESignature = (props: EsignatureProps) => {
                         </ESignatureContainer>
                         <ModalButtons>
                             <ModalActionButton
-                                as={ButtonWithIcon.Default}
+                                as={
+                                    isMobileLandscape
+                                        ? ButtonWithIcon.Small
+                                        : ButtonWithIcon.Default
+                                }
                                 type="button"
-                                styleType={isMobile ? "light" : "link"}
+                                styleType={
+                                    isMobile && !isMobileLandscape
+                                        ? "light"
+                                        : "link"
+                                }
                                 icon={<EraserIcon />}
                                 onClick={handleClearDrawing}
                             >
                                 Clear
                             </ModalActionButton>
                             <ModalActionButton
+                                as={
+                                    isMobileLandscape
+                                        ? Button.Small
+                                        : Button.Default
+                                }
                                 type="button"
                                 onClick={handleClickSave}
                             >
@@ -162,19 +186,15 @@ export const ESignature = (props: EsignatureProps) => {
 
     const renderDescription = () => {
         if (!description) return null;
-        return (
-            <Instructions weight="regular" as="p">
-                {description}
-            </Instructions>
-        );
+        return <Instructions>{description}</Instructions>;
     };
 
     return (
         <div {...otherProps}>
-            <SignatureArea>
-                {isNaN(loadingProgress)
-                    ? renderSignatureArea()
-                    : renderLoadingIndicator()}
+            <SignatureArea $disabled={disabled}>
+                {typeof loadingProgress === "number"
+                    ? renderLoadingIndicator()
+                    : renderSignatureArea()}
             </SignatureArea>
             {renderModal()}
             {renderDescription()}

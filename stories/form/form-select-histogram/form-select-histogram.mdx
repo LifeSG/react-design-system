@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormSelectHistogramStories from "./form-select-histogram.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormSelectHistogramStories} />
 
-<Title>Form.SelectHistogarm</Title>
+# Form.SelectHistogram
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A field that provides a set of options shown as a histogram for a user to select.
 
@@ -17,24 +16,24 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormSelectHistogramStories.Default} />
 
-<Heading3>With labels</Heading3>
+## With labels
 
 <Canvas of={FormSelectHistogramStories.WithLabels} />
 
-<Heading3>Empty bins</Heading3>
+## Empty bins
 
 If there are no results across any of the bins, you may specify a custom display.
 
 <Canvas of={FormSelectHistogramStories.EmptyBins} />
 
-<Heading3>Rendering in grid layouts</Heading3>
+## Rendering in grid layouts
 
-You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--column-divs)
+You can also specify [ColDiv's](/docs/core-layout-coldiv--docs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormSelectHistogramStories.RenderingInGridLayout} />
 
-<Heading3>Z-index conflicts</Heading3>
+## Z-index conflicts
 
 The dropdown uses z-index to display above elements. It is `Modal` and
 `Overlay`-aware by default; when rendered as a child of either component, it
@@ -42,7 +41,7 @@ will automatically adjust its z-index to remain visible.
 
 If you still encounter z-index issues, try setting a custom `dropdownZIndex`.
 
-<Heading3>Using the field as a standalone</Heading3>
+## Using the field as a standalone
 
 In the case that you require the select histogram field as a standalone, you can do this.
 
@@ -52,5 +51,6 @@ import { SelectHistogram } from "@lifesg/react-design-system/select-histogram";
 
 <Canvas of={FormSelectHistogramStories.StandaloneUsage} />
 
-<Heading3>Component API</Heading3>
+## Component API
+
 <PropsTable />

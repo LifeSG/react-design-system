@@ -4,8 +4,10 @@ import { useState } from "react";
 import { DateInput } from "src/date-input";
 import { Form } from "src/form";
 import { Layout } from "src/layout";
-import { StoryContainer } from "../../storybook-common";
-import { Container } from "../shared-doc-elements";
+import {
+    FullWidthStoryDecorator,
+    StoryDecorator,
+} from "stories/storybook-common";
 
 type Component = typeof Form.DateInput;
 type StandaloneComponent = typeof DateInput;
@@ -18,9 +20,9 @@ const meta: Meta<Component> = {
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
+            <>
                 <Form.DateInput label="This is the default date input" />
                 <Form.DateInput
                     label="This has the input keyboard hidden"
@@ -36,99 +38,81 @@ export const Default: StoryObj<Component> = {
                     label="This is the error state"
                     errorMessage="Invalid date"
                 />
-            </StoryContainer>
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const WithDisabledDates: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [disabledDates] = useState([
             dayjs().date(10).format("YYYY-MM-DD"),
             dayjs().date(15).format("YYYY-MM-DD"),
             dayjs().date(25).format("YYYY-MM-DD"),
         ]);
         return (
-            <StoryContainer>
-                <Form.DateInput
-                    label="This is a date input with disabled dates"
-                    disabledDates={disabledDates}
-                />
-            </StoryContainer>
+            <Form.DateInput
+                label="This is a date input with disabled dates"
+                disabledDates={disabledDates}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const MinAndMaxDates: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.DateInput
-                        label="This date input has restricted selection"
-                        minDate={dayjs()
-                            .subtract(2, "days")
-                            .format("YYYY-MM-DD")}
-                        maxDate={dayjs().add(20, "days").format("YYYY-MM-DD")}
-                    />
-                </Container>
-            </StoryContainer>
+            <Form.DateInput
+                label="This date input has restricted selection"
+                minDate={dayjs().subtract(2, "days").format("YYYY-MM-DD")}
+                maxDate={dayjs().add(20, "days").format("YYYY-MM-DD")}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const AllowDisabledSelection: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [disabledDates] = useState([
             dayjs().date(10).format("YYYY-MM-DD"),
             dayjs().date(15).format("YYYY-MM-DD"),
             dayjs().date(25).format("YYYY-MM-DD"),
         ]);
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.DateInput
-                        label="This date input allows selection of disabled dates"
-                        disabledDates={disabledDates}
-                        minDate={dayjs()
-                            .subtract(6, "weeks")
-                            .format("YYYY-MM-DD")}
-                        maxDate={dayjs().add(6, "weeks").format("YYYY-MM-DD")}
-                        allowDisabledSelection
-                    />
-                </Container>
-            </StoryContainer>
+            <Form.DateInput
+                label="This date input allows selection of disabled dates"
+                disabledDates={disabledDates}
+                minDate={dayjs().subtract(6, "weeks").format("YYYY-MM-DD")}
+                maxDate={dayjs().add(6, "weeks").format("YYYY-MM-DD")}
+                allowDisabledSelection
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const RenderingInGridLayout: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <Layout.Content type="grid">
                 <Form.DateInput
                     label="A shorter form input"
-                    mobileCols={[1, 5]}
+                    xxsCols={[1, 9]}
+                    lgCols={[1, 5]}
                 />
-                <Form.DateInput
-                    label="A longer form input"
-                    mobileCols={[1, 5]}
-                    tabletCols={[1, 9]}
-                />
+                <Form.DateInput label="A longer form input" xxsCols={[1, 9]} />
             </Layout.Content>
         );
     },
-    parameters: {
-        layout: "fullscreen",
-    },
+    decorators: [FullWidthStoryDecorator()],
 };
 
 export const StandaloneUsage: StoryObj<StandaloneComponent> = {
-    render: () => {
-        return (
-            <StoryContainer>
-                <DateInput />
-            </StoryContainer>
-        );
+    render: (_args) => {
+        return <DateInput />;
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };

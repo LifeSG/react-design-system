@@ -1,5 +1,5 @@
 import React from "react";
-import { Spinner } from "../button/button.style";
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
 import {
     MainButtonWithIcon,
     MainStylePropsWithIcon,
@@ -32,7 +32,6 @@ const DefaultComponent = (
         $buttonStyle: disabled ? "disabled" : styleType,
         $buttonSizeStyle: "default",
         $buttonIsDanger: danger,
-        $buttonWithIcon: true,
     };
 
     return (
@@ -43,11 +42,12 @@ const DefaultComponent = (
             {...mainStyle}
             {...otherProps}
         >
-            {loading ? <Spinner {...mainStyle} /> : icon}
+            {loading ? <ComponentLoadingSpinner /> : icon}
             <span>{children}</span>
         </MainButtonWithIcon>
     );
 };
+DefaultComponent.displayName = "ButtonWithIcon.Default";
 
 const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
     const {
@@ -66,7 +66,6 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
         $buttonStyle: disabled ? "disabled" : styleType,
         $buttonSizeStyle: "small",
         $buttonIsDanger: danger,
-        $buttonWithIcon: true,
     };
 
     return (
@@ -77,11 +76,12 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
             {...mainStyle}
             {...otherProps}
         >
-            {loading ? <Spinner {...mainStyle} size={16} /> : icon}
+            {loading ? <ComponentLoadingSpinner /> : icon}
             <span>{children}</span>
         </MainButtonWithIcon>
     );
 };
+SmallComponent.displayName = "ButtonWithIcon.Small";
 
 export const ButtonWithIcon = {
     Default: React.forwardRef(DefaultComponent),

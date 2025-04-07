@@ -1,27 +1,14 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
-import { Color } from "../color";
-import { ClickableIcon } from "../shared/clickable-icon";
+import { IconButton } from "../icon-button";
+import { Colour, Radius, Spacing } from "../theme";
 
 interface StyledDateTextProps {
     $enableDateClick?: boolean;
 }
 
-export const HeaderArrowButton = styled(ClickableIcon)`
-    height: 2.5rem;
-    width: 2.5rem;
-    padding: 0;
-    margin: 0.5rem 0.5rem;
-    border-radius: 0.25rem;
-    border: 1px solid ${Color.Neutral[5]};
-    background-color: ${Color.Neutral[8]};
-    :hover {
-        background-color: ${Color.Neutral[7]};
-    }
-    :disabled {
-        cursor: not-allowed;
-        background-color: ${Color.Neutral[6]};
-    }
+export const HeaderArrowButton = styled(IconButton)`
+    margin: ${Spacing["spacing-8"]};
 `;
 
 export const Container = styled.div`
@@ -29,19 +16,23 @@ export const Container = styled.div`
     position: relative;
     align-items: center;
     justify-content: space-between;
-    background-color: ${Color.Neutral[7]};
-    border-radius: 0.25rem;
+    background-color: ${Colour["bg-strong"]};
+    border-radius: ${Radius["sm"]};
 `;
 
 export const StyledDateTextButton = styled(Button.Default)<StyledDateTextProps>`
     color: ${(props) =>
-        props.$enableDateClick ? Color.Primary : Color.Neutral[1]};
+        props.$enableDateClick ? Colour["text-primary"] : Colour["text"]};
     white-space: nowrap;
     display: inline-block;
     text-wrap: auto;
     text-align: center;
-    margin: 0.5rem 0;
+    margin: 0;
     padding: 0;
+    background: transparent;
+    height: unset;
+    cursor: default;
+
     ${(props) => {
         if (props.$enableDateClick) {
             return css`
@@ -52,11 +43,5 @@ export const StyledDateTextButton = styled(Button.Default)<StyledDateTextProps>`
                 }
             `;
         }
-        return css`
-            background-color: ${Color.Neutral[7]};
-            :hover {
-                cursor: default;
-            }
-        `;
     }}
 `;

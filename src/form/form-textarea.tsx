@@ -29,13 +29,20 @@ const FormTextareaComponent = (
         mobileCols,
         tabletCols,
         desktopCols,
+        xxsCols,
+        xsCols,
+        smCols,
+        mdCols,
+        lgCols,
+        xlCols,
+        xxlCols,
         transformValue,
         prefix = "",
         ...otherProps
     } = props;
 
     const [stateValue, setStateValue] = useState<
-        string | number | readonly string[]
+        string | number | readonly string[] | undefined
     >(value);
 
     // =============================================================================
@@ -72,7 +79,6 @@ const FormTextareaComponent = (
                 {errorMessage && (
                     <ErrorMessageContainer>
                         <ErrorMessageLabel
-                            weight="semibold"
                             data-testid={getErrorTestMessageId()}
                         >
                             {errorMessage}
@@ -81,7 +87,6 @@ const FormTextareaComponent = (
                 )}
                 {otherProps.maxLength && (
                     <TextareaCounter
-                        disabled={otherProps.disabled}
                         value={stateValue}
                         maxLength={otherProps.maxLength}
                         renderCustomCounter={otherProps.renderCustomCounter}
@@ -100,6 +105,13 @@ const FormTextareaComponent = (
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <TextareaBase
                 id={`${id}-base`}

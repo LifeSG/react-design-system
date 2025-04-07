@@ -44,7 +44,7 @@ export const FileUpload = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const dropzoneRef = useRef<DropzoneElement>();
+    const dropzoneRef = useRef<DropzoneElement>(null);
     const [activeId, setActiveId] = useState<string>();
 
     // =========================================================================
@@ -89,7 +89,7 @@ export const FileUpload = ({
     // HELPER FUNCTIONS
     // =========================================================================
     const reachedMaxFiles = () => {
-        return maxFiles ? fileItems.length >= maxFiles : false;
+        return maxFiles && fileItems ? fileItems.length >= maxFiles : false;
     };
 
     // =========================================================================
@@ -101,7 +101,7 @@ export const FileUpload = ({
         }
 
         if (typeof title === "string") {
-            return <Title weight="regular">{title}</Title>;
+            return <Title>{title}</Title>;
         }
 
         return <TitleContainer>{title}</TitleContainer>;
@@ -113,7 +113,7 @@ export const FileUpload = ({
         }
 
         if (typeof description === "string") {
-            return <Description weight="regular">{description}</Description>;
+            return <Description>{description}</Description>;
         }
 
         return <DescriptionContainer>{description}</DescriptionContainer>;
@@ -134,13 +134,13 @@ export const FileUpload = ({
                 multiple={multiple}
                 disabled={disabled || reachedMaxFiles() || readOnly}
             >
-                {(title || description) && (
+                {!!(title || description) && (
                     <TextContainer>
                         {renderTitle()}
                         {renderDescription()}
                     </TextContainer>
                 )}
-                {warning && (
+                {!!warning && (
                     <WarningAlert type="warning">{warning}</WarningAlert>
                 )}
                 <FileList

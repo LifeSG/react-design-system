@@ -47,7 +47,8 @@ export const FilterItem = ({
         height: expanded ? itemResizeDetector.height : 0,
     });
     const contentHeight = contentMinimised
-        ? minimisedHeight ?? Math.min(contentResizeDetector.height * 0.5, 216)
+        ? minimisedHeight ??
+          Math.min((contentResizeDetector.height ?? 0) * 0.5, 216)
         : contentResizeDetector.height;
 
     // =============================================================================
@@ -94,7 +95,7 @@ export const FilterItem = ({
     // =============================================================================
 
     const renderAddon = () => {
-        switch (addon.type) {
+        switch (addon?.type) {
             case "popover":
                 return (
                     <PopoverAddon
@@ -116,7 +117,7 @@ export const FilterItem = ({
             {(title || collapsible) && (
                 <FilterItemHeader>
                     {title && (
-                        <FilterItemTitle weight="semibold">
+                        <FilterItemTitle>
                             {title} {addon && renderAddon()}
                         </FilterItemTitle>
                     )}
@@ -170,3 +171,5 @@ export const FilterItem = ({
         </FilterItemWrapper>
     );
 };
+
+FilterItem.displayName = "Filter.Item";

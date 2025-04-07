@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
-import { MediaQuery } from "../media";
-import { Text } from "../text";
+import { MediaQuery, Spacing } from "../theme";
+import { Typography } from "../typography/typography";
 
 // =============================================================================
 // WRAPPER
@@ -9,10 +9,10 @@ import { Text } from "../text";
 export const Wrapper = styled.ul`
     display: flex;
     list-style: none;
-    margin-left: 4rem;
+    margin-left: ${Spacing["spacing-64"]};
     flex-shrink: 0;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: none;
     }
 `;
@@ -20,10 +20,10 @@ export const Wrapper = styled.ul`
 export const MobileWrapper = styled.ul`
     display: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
         list-style: none;
-        margin-left: 4rem;
+        margin-left: ${Spacing["spacing-64"]};
         flex-shrink: 0;
     }
 `;
@@ -32,16 +32,16 @@ export const DrawerWrapper = styled.ul`
     display: none;
     list-style: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
         flex-direction: column;
-        margin-top: 2.5rem;
+        margin-top: ${Spacing["spacing-40"]};
         width: max-content;
         min-width: 22rem;
         max-width: 24rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         width: 100%;
         max-width: unset;
         min-width: unset;
@@ -57,25 +57,26 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
     align-items: center;
 
     :not(:last-of-type) {
-        margin-right: 1rem;
+        margin-right: ${Spacing["spacing-16"]};
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         width: 100%;
-        padding: 0 0 0 1rem;
+        padding: 0 0 0 ${Spacing["spacing-16"]};
         justify-content: center;
 
         :not(:last-of-type) {
             margin-right: 0;
-            margin-bottom: ${(props) => (props.$mobile ? "1rem" : "0")};
+            margin-bottom: ${(props) =>
+                props.$mobile ? Spacing["spacing-16"] : "0"};
         }
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         ${(props) => {
             if (props.$mobile) {
                 return css`
-                    padding: 0 1rem;
+                    padding: 0 ${Spacing["spacing-16"]};
                 `;
             }
         }}
@@ -83,9 +84,8 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
 `;
 
 export const ActionButton = styled(Button.Small)`
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         width: 100%;
-        padding: 0.685rem 1rem;
     }
 `;
 
@@ -95,15 +95,15 @@ export const ActionButton = styled(Button.Small)`
 export const DownloadAppWrapper = styled.div`
     display: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
         flex-direction: column;
-        margin-top: 2.5rem;
+        margin-top: ${Spacing["spacing-40"]};
     }
 `;
 
-export const DownloadAppTitle = styled(Text.BodySmall)`
-    margin-bottom: 0.5rem;
+export const DownloadAppTitle = styled(Typography.BodyMD)`
+    margin-bottom: ${Spacing["spacing-8"]};
 `;
 
 export const DownloadAppImageLinkWrapper = styled.div`
@@ -112,7 +112,7 @@ export const DownloadAppImageLinkWrapper = styled.div`
 
 export const DownloadAppImageLink = styled.a`
     :not(:last-child) {
-        margin-right: 1rem;
+        margin-right: ${Spacing["spacing-16"]};
     }
 
     img {
@@ -121,13 +121,13 @@ export const DownloadAppImageLink = styled.a`
         object-fit: contain;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         img {
             max-width: 11rem;
         }
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         img {
             max-width: 100%;
         }

@@ -1,0 +1,48 @@
+export const textComponentMap = {
+    D1: "HeadingXXL",
+    D2: "HeadingXL",
+    D3: "HeadingMD",
+    D4: "HeadingSM",
+    H1: "HeadingLG",
+    H2: "HeadingMD",
+    H3: "HeadingSM",
+    H4: "HeadingXS",
+    H5: "BodyMD",
+    H6: "BodySM",
+    DBody: "HeadingSM",
+    Body: "BodyBL",
+    BodySmall: "BodyMD",
+    XSmall: "BodyXS",
+    "Hyperlink.Default": "LinkBL",
+    "Hyperlink.Small": "LinkSM",
+};
+
+export const textStyleFontMap = {
+    D1: "heading-xxl",
+    D2: "heading-xl",
+    D3: "heading-md",
+    D4: "heading-sm",
+    H1: "heading-lg",
+    H2: "heading-md",
+    H3: "heading-sm",
+    H4: "heading-xs",
+    H5: "body-md",
+    H6: "body-sm",
+    DBody: "heading-sm",
+    Body: "body-baseline",
+    BodySmall: "body-md",
+    XSmall: "body-xs",
+};
+
+export const weightMap = {
+    regular: "regular",
+    semibold: "semibold",
+    bold: "bold",
+    light: "light",
+    black: "bold",
+    400: "regular",
+    600: "semibold",
+    700: "bold",
+    300: "light",
+    900: "bold",
+};

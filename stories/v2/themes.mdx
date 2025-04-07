@@ -1,0 +1,203 @@
+import { Meta } from "@storybook/blocks";
+import { DocAlert } from "stories/storybook-common";
+import { PropsTable } from "./themes-props-table";
+
+<Meta title="V2/Themes" />
+
+# Themes
+
+<DocAlert
+    storybookLink={"../?path=/docs/foundations-themes-introduction--docs"}
+>
+    New theme specifications were introduced in v3.0.0.
+</DocAlert>
+
+## Overview
+
+The design system uses themes to customise the color and text display of the components.
+
+```tsx
+// The LifeSG theme
+import { BaseTheme } from "@lifesg/react-design-system/theme";
+
+// The BookingSG theme
+import { BookingSGTheme } from "@lifesg/react-design-system/theme";
+
+// The CCube theme
+import { CCubeTheme } from "@lifesg/react-design-system/theme";
+
+// The MyLegacy theme
+import { MyLegacyTheme } from "@lifesg/react-design-system/theme";
+
+// The RBS theme
+import { RBSTheme } from "@lifesg/react-design-system/theme";
+
+// The OneService theme
+import { OneServiceTheme } from "@lifesg/react-design-system/theme";
+```
+
+## Basics
+
+A V2 theme object is composed as such:
+
+```tsx
+{
+    colorScheme: "base",
+    textStyleScheme: "base",
+    designTokenScheme: "base",
+    resourceScheme: "base"
+}
+```
+
+All the components will use a default theme if the theme object is not being specified. To specify a theme there are 2 ways you can do so.
+
+1. Using the `ThemeProvider`
+2. On individual elements using the modified props
+
+> Note to use the themes, you will need [**Styled Components**](https://styled-components.com/docs)
+
+### Using the ThemeProvider
+
+The `ThemeProvider` takes in theme object via a `theme` prop.
+
+```tsx
+// app.tsx
+import { ThemeProvider } from "styled-components";
+import { ThemeSpec } from "@lifesg/react-design-system/theme";
+import { Component } from "./index";
+
+const myTheme: ThemeSpec = {
+    colorScheme: "base",
+    textStyleScheme: "base",
+    designTokenScheme: "base",
+    resourceScheme: "base",
+};
+
+const App = () => {
+    return (
+        <ThemeProvider theme={myTheme}>
+            <Component />
+        </ThemeProvider>
+    );
+};
+
+export default App;
+```
+
+### Modified props on individual elements
+
+If you are using this, you are attempting to change the theme on an element specific level. Note that this does not
+change all the other components in your UI.
+
+In this example, here is how we usually specify properties that are dependent on the theme. E.g. `Color`
+
+```tsx
+import styled, { css } from "styled-components";
+import { V2_Color } from "@lifesg/react-design-system/V2_color";
+
+const SomeComponent = styled.div`
+    background: ${V2_Color.Primary};
+`;
+
+// Or if you extract the props
+const AnotherComponent = styled.div`
+    ${(props) => {
+        return css`
+            background: ${V2_Color.Primary(props)};
+        `;
+    }}
+`;
+```
+
+But with the modified props approach, here's an extra step you will need to do.
+
+```tsx
+const SomeComponent = styled.div`
+    ${(props) => {
+        const modifiedProps = {
+            ...props,
+            theme: {
+                ...props.theme,
+                colorScheme: "bookingsg",
+            },
+        };
+
+        return css`
+            background: ${V2_Color.Primary(modifiedProps)};
+        `;
+    }}
+`;
+```
+
+## Using the preset themes
+
+There are currently 6 preset themes. To use them, simply import them and pass it via the 2 methods mentioned [above](#basics).
+
+```tsx
+// app.tsx
+import { BaseTheme } from "@lifesg/react-design-system/theme";
+import { ThemeProvider } from "styled-components";
+import { Component } from "./index";
+
+const App = () => {
+    return (
+        <ThemeProvider theme={BaseTheme}>
+            <Component />
+        </ThemeProvider>
+    );
+};
+
+export default App;
+```
+
+## Customising preset themes
+
+There are also cases where the design style you are going for is a modification of the preset theme. You can do so by using the `options` prop. Instead of having to pass in the entire set, you can pass a subset of your modifications to the `options` prop.
+
+```tsx
+// app.tsx
+import { ThemeProvider } from "styled-components";
+import { BaseTheme, ThemeSpec } from "@lifesg/react-design-system/theme";
+import { Component } from "./index";
+
+const myCustomTheme: ThemeSpec = {
+    ...BaseTheme,
+    options: {
+        color: {
+            Primary: "#F3C85C",
+            PrimaryDark: "#E1BB5C",
+        },
+        textStyle: {
+            D1: {
+                fontSize: 5, // in rem
+            },
+        },
+        designToken: {
+            InputBoxShadow: "inset 0 0 6px 1px blue",
+            Table: {
+                Header: "#EF413D"
+                Cell: {
+                    Primary: "#F58E8B"
+                    Hover: "#F26664"
+                }
+            }
+        },
+    },
+};
+
+const App = () => {
+    return (
+        <ThemeProvider theme={myCustomTheme}>
+            <Component />
+        </ThemeProvider>
+    );
+};
+
+export default App;
+```
+
+## Component API
+
+## ThemeSpec
+
+<PropsTable />

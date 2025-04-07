@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
-import { Text, TextStyleHelper } from "../text";
-import { Color } from "../color";
-import { Button } from "../button";
+import { BasicButton } from "../shared/input-wrapper";
+import { lineClampCss } from "../shared/styles";
+import { Colour, Font, Motion, Radius } from "../theme";
+import { Typography } from "../typography";
 
 //=============================================================================
 // STYLE INTERFACE
@@ -17,67 +18,60 @@ export const Container = styled.li`
     width: 100%;
 `;
 
-export const DefaultButton = styled(Button.Default)<StyleProps>`
-    width: 100%;
-    height: unset;
+export const IconContainer = styled.span`
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    span {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    padding: 0.25rem 1rem;
+    border-radius: ${Radius.md};
+    color: ${Colour["icon-primary"]};
+    transition: ${Motion["duration-250"]} ${Motion["ease-default"]};
 
-        svg {
-            height: 1.25rem;
-            width: 1.25rem;
-            margin-top: 0.25rem;
-        }
-
-        span {
-            ${TextStyleHelper.getFontFamily("XSmall", "regular")}
-            font-size: 0.75rem !important;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
+    svg {
+        height: 1.25rem;
+        width: 1.25rem;
     }
+`;
 
-    :hover,
-    :focus {
-        span {
-            div {
-                background-color: ${Color.Accent.Light[5]};
-                color: ${Color.Primary} !important;
-            }
+export const TitleText = styled(Typography.BodyXS)`
+    ${lineClampCss(2)}
+    margin-top: 0.25rem;
+    transition: ${Motion["duration-250"]} ${Motion["ease-default"]};
+`;
 
-            span {
-                ${TextStyleHelper.getFontFamily("XSmall", "semibold")}
-                color: ${Color.Primary} !important;
-            }
+export const DefaultButton = styled(BasicButton)<StyleProps>`
+    width: 100%;
+    margin-top: 1rem;
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &:hover,
+    &:focus {
+        ${IconContainer} {
+            background-color: ${Colour["bg-hover"]};
+        }
+
+        ${TitleText} {
+            ${Font["body-xs-semibold"]}
+            color: ${Colour["text-hover"]};
         }
     }
 
     ${(props) =>
         props.$highlight &&
         css`
-            span {
-                div {
-                    background-color: ${Color.Accent.Light[5]};
-                }
+            ${IconContainer} {
+                background-color: ${Colour["bg-hover"]};
+            }
 
-                span {
-                    ${TextStyleHelper.getFontFamily("XSmall", "semibold")}
-                    color: ${Color.Primary};
-                }
+            ${TitleText} {
+                ${Font["body-xs-semibold"]}
+                color: ${Colour["text-selected"]};
             }
         `}
 `;
-
-export const IconContainer = styled.div`
-    height: 1.75rem;
-    width: 3.25rem;
-    border-radius: 0.5rem;
-    margin-bottom: 0.25rem;
-`;
-
-export const TitleText = styled(Text.XSmall)``;

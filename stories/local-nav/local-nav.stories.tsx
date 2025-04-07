@@ -6,14 +6,15 @@ import {
     LocalNavItemProps,
     LocalNavMenu,
 } from "src/local-nav";
-import { MediaWidths } from "src/media";
+import { Breakpoint } from "src/theme";
+import { useTheme } from "styled-components";
 import { Content, Page, TopContent } from "./doc-elements";
 
 type MenuComponent = typeof LocalNavMenu;
 type DropdownComponent = typeof LocalNavDropdown;
 
 const meta: Meta = {
-    title: "Modules/LocalNav",
+    title: "Navigation/LocalNav",
 };
 
 export default meta;
@@ -25,7 +26,7 @@ const NAV_ITEMS = [
 ];
 
 export const Menu: StoryObj<MenuComponent> = {
-    render: () => {
+    render: (_args) => {
         const [selectedIndex, setSelectedIndex] = useState(-1);
 
         const handleNavItemClick = (
@@ -49,7 +50,7 @@ export const Menu: StoryObj<MenuComponent> = {
 };
 
 export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
-    render: () => {
+    render: (_args) => {
         const [selectedIndex, setSelectedIndex] = useState(-1);
 
         const handleNavItemClick = (
@@ -72,15 +73,15 @@ export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
                         style={{
                             padding: "8px 16px",
                             fontWeight: selected ? "bold" : "normal",
-                            color: selected ? "red" : "green",
+                            color: selected ? "tomato" : "darkcyan",
                             display: "flex",
                             alignItems: "center",
                         }}
                     >
-                        {selected && (
-                            <span style={{ marginRight: "8px" }}>✔</span>
-                        )}
                         {item.title}
+                        {selected && (
+                            <span style={{ marginLeft: "8px" }}>✔</span>
+                        )}
                     </div>
                 )}
             />
@@ -89,7 +90,7 @@ export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
 };
 
 export const Dropdown: StoryObj<DropdownComponent> = {
-    render: () => {
+    render: (_args) => {
         const [selectedIndex, setSelectedIndex] = useState(-1);
         const contentRef = useRef<HTMLDivElement>(null);
 
@@ -139,8 +140,9 @@ export const Dropdown: StoryObj<DropdownComponent> = {
 };
 
 export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
-    render: () => {
+    render: (_args) => {
         const [selectedIndex, setSelectedIndex] = useState(-1);
+        const contentRef = useRef<HTMLDivElement>(null);
 
         const handleNavItemClick = (
             e: React.MouseEvent,
@@ -148,10 +150,23 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
             index: number
         ) => {
             setSelectedIndex(index);
+
+            // Scroll to the selected section
+            const section = NAV_ITEMS[index];
+            if (section) {
+                const element = contentRef.current?.children[index];
+                if (element) {
+                    const top =
+                        element.getBoundingClientRect().top +
+                        window.scrollY -
+                        200;
+                    window.scrollTo({ top, behavior: "smooth" });
+                }
+            }
         };
 
         return (
-            <div>
+            <div style={{ height: "200vh", padding: "2rem" }}>
                 <TopContent />
                 <LocalNavDropdown
                     defaultLabel="Initial"
@@ -164,28 +179,38 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
                             style={{
                                 padding: "8px 16px",
                                 fontWeight: selected ? "bold" : "normal",
-                                color: selected ? "red" : "green",
+                                color: selected ? "tomato" : "darkcyan",
                                 display: "flex",
                                 alignItems: "center",
                             }}
                         >
-                            {selected && (
-                                <span style={{ marginRight: "8px" }}>✔</span>
-                            )}
                             {item.title}
+                            {selected && (
+                                <span style={{ marginLeft: "8px" }}>✔</span>
+                            )}
                         </div>
                     )}
                 />
+                <div style={{ padding: "1rem" }} ref={contentRef}>
+                    <Content />
+                </div>
             </div>
         );
+    },
+    parameters: {
+        layout: "fullscreen",
+        docs: { story: { inline: false, iframeHeight: 500 } },
     },
 };
 
 export const CombinedUsage: StoryObj = {
-    render: () => {
-        const [selectedIndex, setSelectedIndex] = useState(undefined);
+    render: (_args) => {
+        const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
+            undefined
+        );
+        const theme = useTheme();
         const isMobile = useMediaQuery({
-            maxWidth: MediaWidths.mobileL,
+            maxWidth: Breakpoint["sm-max"]({ theme }),
         });
 
         const handleNavItemClick = (

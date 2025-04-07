@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
-import { Text } from "../text";
+import { Colour, MediaQuery } from "../theme";
+import { Typography } from "../typography/typography";
 
 // Units in rem
-export const INDICATOR_BAR_MARGIN_RIGHT_MOBILE = 0.5;
+export const INDICATOR_BAR_MARGIN_RIGHT_TABLET = 0.5;
 
 // =============================================================================
 // STYLE TYPES
@@ -23,11 +22,11 @@ export const Wrapper = styled.div`
 
     margin: 2rem 0;
 
-    ${MediaQuery.MaxWidth.desktopM} {
+    ${MediaQuery.MaxWidth.xl} {
         margin: 1.5rem 0;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin: 1rem 0;
     }
 `;
@@ -45,25 +44,29 @@ export const IndicatorBar = styled.div<IndicatorProps>`
     border-radius: 0.25rem;
     ${(props) => {
         const { highlighted } = props;
-        const color = highlighted ? Color.Accent.Light[1] : Color.Neutral[6];
+        const color = highlighted
+            ? Colour["bg-primary-subtle"]
+            : Colour["bg-disabled"];
         return `
             background-color: ${color(props)};
         `;
     }};
 `;
 
-export const IndicatorTitleDesktop = styled(Text.BodySmall)<IndicatorProps>`
+export const IndicatorTitleDesktop = styled(Typography.BodyMD)<IndicatorProps>`
     overflow-wrap: anywhere;
     ${(props) => {
         const { highlighted } = props;
-        const color = highlighted ? Color.Primary : Color.Neutral[3];
+        const color = highlighted
+            ? Colour["text-primary"]
+            : Colour["text-disabled"];
         return `color: ${color(props)};`;
     }};
 `;
 
-export const IndicatorTitleMobile = styled(Text.BodySmall)`
+export const IndicatorTitleTablet = styled(Typography.BodyMD)`
     overflow-wrap: anywhere;
-    color: ${Color.Neutral[1]};
+    color: ${Colour.text};
 `;
 
 export const Indicator = styled.div`
@@ -72,6 +75,6 @@ export const Indicator = styled.div`
     flex: 1;
 
     &:not(:last-child) {
-        margin-right: ${INDICATOR_BAR_MARGIN_RIGHT_MOBILE + "rem"};
+        margin-right: ${INDICATOR_BAR_MARGIN_RIGHT_TABLET + "rem"};
     }
 `;

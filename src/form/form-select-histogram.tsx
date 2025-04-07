@@ -12,6 +12,13 @@ export const FormSelectHistogram = ({
     mobileCols,
     tabletCols,
     desktopCols,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
     histogramSlider,
     ...otherProps
 }: FormSelectHistogramProps): JSX.Element => {
@@ -26,6 +33,13 @@ export const FormSelectHistogram = ({
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <SelectHistogram
                 histogramSlider={histogramSlider}

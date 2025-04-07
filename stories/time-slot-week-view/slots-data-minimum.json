@@ -7,8 +7,8 @@
             "clickable": false,
             "styleAttributes": {
                 "styleType": "stripes",
-                "backgroundColor": "#ECEFEF",
-                "backgroundColor2": "#E0E4E5"
+                "backgroundColor": "#EDEFEF",
+                "backgroundColor2": "#DDE1E2"
             }
         }
     ],
@@ -19,8 +19,8 @@
             "endTime": "14:30",
             "styleAttributes": {
                 "styleType": "stripes",
-                "backgroundColor": "#ECEFEF",
-                "backgroundColor2": "#E0E4E5"
+                "backgroundColor": "#EDEFEF",
+                "backgroundColor2": "#DDE1E2"
             }
         }
     ],
@@ -31,8 +31,8 @@
             "endTime": "16:45",
             "styleAttributes": {
                 "styleType": "stripes",
-                "backgroundColor": "#ECEFEF",
-                "backgroundColor2": "#E0E4E5"
+                "backgroundColor": "#EDEFEF",
+                "backgroundColor2": "#DDE1E2"
             }
         }
     ],
@@ -43,8 +43,8 @@
             "endTime": "16:45",
             "styleAttributes": {
                 "styleType": "stripes",
-                "backgroundColor": "#ECEFEF",
-                "backgroundColor2": "#E0E4E5"
+                "backgroundColor": "#EDEFEF",
+                "backgroundColor2": "#DDE1E2"
             }
         }
     ],
@@ -55,8 +55,8 @@
             "endTime": "16:45",
             "styleAttributes": {
                 "styleType": "stripes",
-                "backgroundColor": "#ECEFEF",
-                "backgroundColor2": "#E0E4E5"
+                "backgroundColor": "#EDEFEF",
+                "backgroundColor2": "#DDE1E2"
             }
         }
     ],
@@ -67,8 +67,8 @@
             "endTime": "09:30",
             "styleAttributes": {
                 "styleType": "stripes",
-                "backgroundColor": "#ECEFEF",
-                "backgroundColor2": "#E0E4E5"
+                "backgroundColor": "#EDEFEF",
+                "backgroundColor2": "#DDE1E2"
             }
         }
     ],
@@ -79,8 +79,8 @@
             "endTime": "16:45",
             "styleAttributes": {
                 "styleType": "stripes",
-                "backgroundColor": "#ECEFEF",
-                "backgroundColor2": "#E0E4E5"
+                "backgroundColor": "#EDEFEF",
+                "backgroundColor2": "#DDE1E2"
             }
         }
     ]

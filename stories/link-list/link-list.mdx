@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as LinkListStories from "./link-list.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={LinkListStories} />
 
-<Title>LinkList</Title>
+# LinkList
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that displays a continuous group of link elements.
 
@@ -17,13 +16,15 @@ import { LinkList } from "@lifesg/react-design-system/link-list";
 
 <Canvas of={LinkListStories.Default} />
 
-<Heading3>Minimizing the list</Heading3>
+<Canvas of={LinkListStories.Small} />
+
+## Minimizing the list
 
 You are able to specify the number of items to show in the minimized view by using the `maxShown` property. Specifying
 this property will allow you to show only the specified number of items while minimizing the rest.
 
 <Canvas of={LinkListStories.MinimizedList} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

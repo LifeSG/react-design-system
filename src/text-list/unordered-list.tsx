@@ -1,15 +1,23 @@
-import React from "react";
 import { StyledUnorderedList } from "./text-list.styles";
 import { UnorderedListProps } from "./types";
 
 export const UnorderedList = ({
-    size = "Body",
+    size,
+    bulletType,
+    bottomMargin,
     children,
     ...otherProps
 }: UnorderedListProps) => {
     return (
-        <StyledUnorderedList size={size} {...otherProps}>
+        <StyledUnorderedList
+            $size={size}
+            $bulletType={bulletType}
+            $bottomMargin={bottomMargin}
+            {...otherProps}
+        >
             {children}
         </StyledUnorderedList>
     );
 };
+
+UnorderedList.displayName = "TextList.Ul";

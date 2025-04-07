@@ -1,14 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Alert } from "src/alert";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as TimeTableStories from "./timetable.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={TimeTableStories} />
 
-<Title>TimeTable</Title>
+# TimeTable
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that displays a timetable to view a schedule for a specific day
 
@@ -22,7 +20,7 @@ import { TimeTable } from "@lifesg/react-design-system/timetable";
 
 <Canvas of={TimeTableStories.Default} />
 
-<Secondary>Lazy loading</Secondary>
+## Lazy loading
 
 Optional `onRefresh` and `totalRecords` props can also be passed in to show the
 total count and for refreshing results.
@@ -32,7 +30,7 @@ callback.
 
 <Canvas of={TimeTableStories.LazyLoading} />
 
-<Secondary>Custom popovers</Secondary>
+## Custom popovers
 
 Custom popovers can be added onto row header names and row cells. There is also
 the flexibility to have custom popovers on auto generated blocked cells through
@@ -45,13 +43,13 @@ with the onClick callback for each cell.
 
 <Canvas of={TimeTableStories.CustomPopovers} />
 
-<Secondary>No results found</Secondary>
+## No results found
 
 `emptyContentMessage` can be passed in to control what description to show when there are no
 results to display.
 
 <Canvas of={TimeTableStories.EmptyContent} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

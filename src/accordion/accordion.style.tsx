@@ -1,16 +1,16 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
-import { Text } from "../text/text";
 import { TitleStyleProps, TitleWrapperStyleProps } from "./types";
+import { Border, MediaQuery } from "../theme";
+import { Colour } from "../theme";
+import { Typography } from "../typography";
 
 // ============================================================================
 // STYLING
 // =============================================================================
 export const Content = styled.div`
     width: 100%;
-    border-bottom: 1px solid ${Color.Neutral[6]};
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 `;
 
 export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
@@ -20,14 +20,14 @@ export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
     justify-content: flex-end;
     padding-bottom: 1rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         justify-content: flex-end;
     }
 
     ${(props) => {
         if (!props.$showTitleInMobile && !props.$hasExpandAll) {
             return css`
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${MediaQuery.MaxWidth.sm} {
                     display: none;
                 }
             `;
@@ -35,18 +35,18 @@ export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
     }}
 `;
 
-export const Title = styled(Text.H2)<TitleStyleProps>`
+export const Title = styled(Typography.HeadingMD)<TitleStyleProps>`
     display: flex;
     align-self: flex-start;
     flex: 1;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         text-align: left;
     }
 
     ${(props) => {
         if (!props.$showInMobile) {
             return css`
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${MediaQuery.MaxWidth.sm} {
                     display: none;
                     visibility: hidden;
                 }

@@ -1,8 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useTheme } from "styled-components";
-import { TextStyle } from "../../text";
-import { BaseTheme } from "../../theme";
+import { Font } from "../../theme";
 import { StringHelper } from "../../util/string-helper";
 import { DropdownVariantType, LabelDisplayType } from "../dropdown-list/types";
 import {
@@ -35,11 +34,14 @@ export const DropdownLabel = ({
     selected,
     sublabel,
     truncationType = "middle",
-    variant,
+    variant = "default",
 }: DropdownLabelProps): JSX.Element => {
-    const theme = useTheme() || BaseTheme;
-    const fontSize = TextStyle.Body.fontSize({ theme });
-    const fontFamily = TextStyle.Body.fontFamily({ theme });
+    const theme = useTheme();
+    const fontSize =
+        variant === "small"
+            ? Font.Spec["body-size-md"]({ theme })
+            : Font.Spec["body-size-baseline"]({ theme });
+    const fontFamily = Font.Spec["font-family"]({ theme });
     const { ref, width } = useResizeDetector();
 
     // =========================================================================
@@ -47,7 +49,7 @@ export const DropdownLabel = ({
     // =========================================================================
     const hasExceededContainer = useCallback(
         (displayText: string) => {
-            if (displayType !== "inline") {
+            if (displayType !== "inline" || !width) {
                 return false;
             }
 
@@ -56,7 +58,7 @@ export const DropdownLabel = ({
             // but might not be performant for large lists
             const textWidth = StringHelper.getTextWidth(
                 displayText,
-                `${fontSize}rem '${fontFamily}'`
+                `${fontSize} '${fontFamily}'`
             );
 
             // there's less space than expected due to word breaks, so an
@@ -124,14 +126,13 @@ export const DropdownLabel = ({
     };
 
     return (
-        <Label ref={ref} $labelDisplayType={itemDisplayType}>
+        <Label ref={ref} $labelDisplayType={itemDisplayType} $variant={variant}>
             <PrimaryText
                 aria-label={label}
                 $bold={bold}
                 $maxLines={maxLines}
                 $selected={selected}
                 $truncateType={truncationType}
-                $variant={variant}
             >
                 {truncationType === "middle" && shouldTruncateTitle
                     ? renderTruncatedText(label)

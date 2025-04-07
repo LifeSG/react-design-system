@@ -1,5 +1,5 @@
-import { MediaQuery } from "src/media";
-import { Text } from "src/text";
+import { MediaQuery } from "src/theme";
+import { Typography } from "src/typography";
 import styled from "styled-components";
 
 export const Page = styled.div`
@@ -9,7 +9,7 @@ export const Page = styled.div`
     gap: 1rem;
     grid-template-columns: 1fr 2fr;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         grid-template-columns: 1fr;
     }
 
@@ -17,14 +17,17 @@ export const Page = styled.div`
         padding: 1rem;
     }
 `;
+Page.displayName = "Page";
 
 const renderSection = (index: number) => (
     <div>
-        <Text.H2 style={{ margin: "1rem 0" }}>Title {index}</Text.H2>
-        <Text.Body style={{ margin: "1rem 0" }}>
+        <Typography.HeadingMD style={{ margin: "1rem 0" }}>
+            Title {index}
+        </Typography.HeadingMD>
+        <Typography.BodyBL style={{ margin: "1rem 0" }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a
             tortor vitae magna sagittis bibendum.
-        </Text.Body>
+        </Typography.BodyBL>
     </div>
 );
 
@@ -37,12 +40,12 @@ export const Content = () => (
 );
 
 export const TopContent = () => (
-    <Text.Body style={{ margin: "1rem 0" }}>
+    <Typography.BodyBL style={{ margin: "1rem 0" }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a
         tortor vitae magna sagittis bibendum. Proin dui risus, rhoncus eget
         ligula non, tincidunt volutpat erat. Suspendisse vitae mauris pharetra,
         ullamcorper massa id, luctus elit. Aliquam at vestibulum nisi. In hac
         habitasse platea dictumst. Vestibulum sit amet mollis justo, in iaculis
         sem. Vivamus eu blandit sem.
-    </Text.Body>
+    </Typography.BodyBL>
 );

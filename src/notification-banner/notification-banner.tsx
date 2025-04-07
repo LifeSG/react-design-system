@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { NamedExoticComponent, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import {
     AccessibleBannerButton,
@@ -28,14 +28,14 @@ export const NBComponent = ({
     onClick,
     actionButton,
     ...otherProps
-}: NotificationBannerWithForwardedRefProps): JSX.Element => {
+}: NotificationBannerWithForwardedRefProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const testId = otherProps["data-testid"];
 
     const [isVisible, setVisible] = useState<boolean>(visible);
-    const { height: contentHeight, ref: contentRef } = useResizeDetector();
+    const { height: contentHeight = 0, ref: contentRef } = useResizeDetector();
 
     // =============================================================================
     // EFFECTS
@@ -57,7 +57,7 @@ export const NBComponent = ({
     const handleActionButtonOnClick = (
         event: React.MouseEvent<HTMLButtonElement>
     ) => {
-        if (!actionButton.onClick) {
+        if (!actionButton?.onClick) {
             // let it bubble
             return;
         }
@@ -83,17 +83,21 @@ export const NBComponent = ({
         </StyledIconButton>
     );
 
-    const renderActionButton = () => (
-        <ActionButton
-            id={formatId("action-button", id)}
-            data-testid={formatId("action-button", testId)}
-            type="button"
-            {...actionButton}
-            onClick={handleActionButtonOnClick}
-        >
-            {actionButton.children}
-        </ActionButton>
-    );
+    const renderActionButton = () => {
+        if (!actionButton) return null;
+
+        return (
+            <ActionButton
+                id={formatId("action-button", id)}
+                data-testid={formatId("action-button", testId)}
+                type="button"
+                {...actionButton}
+                onClick={handleActionButtonOnClick}
+            >
+                {actionButton.children}
+            </ActionButton>
+        );
+    };
 
     const renderContent = () => (
         <Content
@@ -123,7 +127,7 @@ export const NBComponent = ({
             <Container id={formatId("container", id)}>
                 <ContentContainer>
                     {renderContent()}
-                    {actionButton && renderActionButton()}
+                    {renderActionButton()}
                 </ContentContainer>
                 {dismissible && renderDismissButton()}
             </Container>
@@ -153,6 +157,7 @@ const formatId = (componentName: string, id = "wrapper"): string => {
 // EXPORTABLE
 // =============================================================================
 const Base = React.forwardRef(NBWithRef);
+(Base as NamedExoticComponent).displayName = "NotificationBanner";
 export const NotificationBanner = Object.assign(Base, {
     Link: NBLink,
 });

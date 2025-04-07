@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import styled from "styled-components";
+import { Spacing } from "../../theme";
 import { BaseAnimationProps } from "../types";
 
 // lazy load to fix next.js SSR errors
@@ -34,5 +35,5 @@ const Placeholder = () => {
 
 const Container = styled.div`
     margin: 0 auto;
-    padding: 2rem 1rem;
+    padding: ${Spacing["spacing-32"]} ${Spacing["spacing-16"]};
 `;

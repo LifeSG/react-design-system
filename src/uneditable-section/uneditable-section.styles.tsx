@@ -1,8 +1,7 @@
 import styled, { css } from "styled-components";
 import { Layout } from "../layout";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
-import { Text } from "../text";
+import { Colour, MediaQuery } from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -12,7 +11,7 @@ interface WrapperStyleProps {
 }
 
 interface ContentStyleProps {
-    $stretch: boolean;
+    $stretch: boolean | undefined;
 }
 
 // =============================================================================
@@ -21,24 +20,24 @@ interface ContentStyleProps {
 const columnWidthStyle = css<ContentStyleProps>`
     grid-column: ${(props) => (props.$stretch ? "1 / -1" : "span 8")};
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         grid-column: 1 / -1;
     }
 `;
 
 export const Wrapper = styled(Layout.Content)<WrapperStyleProps>`
     background: ${({ $background }) =>
-        $background ? Color.Neutral[7] : "transparent"};
+        $background ? Colour["bg-strong"] : "transparent"};
     padding-top: 2rem;
     padding-bottom: 2rem;
 `;
 
-export const Title = styled(Text.H3)<ContentStyleProps>`
+export const Title = styled(Typography.HeadingSM)<ContentStyleProps>`
     margin-bottom: 1rem;
     ${columnWidthStyle}
 `;
 
-export const Description = styled(Text.Body)<ContentStyleProps>`
+export const Description = styled(Typography.BodyBL)<ContentStyleProps>`
     margin-bottom: 2rem;
     ${columnWidthStyle}
 `;
@@ -54,13 +53,12 @@ export const GridUl = styled.ul<ContentStyleProps>`
     display: grid;
     grid-template-columns: repeat(8, minmax(0, 1fr));
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         column-gap: 1.5rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         column-gap: 1rem;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     :not(:last-child) {

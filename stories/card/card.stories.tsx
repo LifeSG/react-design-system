@@ -1,31 +1,24 @@
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Button } from "src/button";
 import { Card } from "src/card";
-import { Text } from "src/text";
+import { Typography } from "src/typography";
 
 type Component = typeof Card;
 
 const meta: Meta<Component> = {
-    title: "Modules/Card",
+    title: "Content/Card",
     component: Card,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
-        return (
-            <Card>
-                This is a Card with a string as its children. A default styling
-                of Text.Body is applied to the string.
-            </Card>
-        );
+    render: (_args) => {
+        return <Card>This is string content with default text styling.</Card>;
     },
 };
 
 export const CustomContent: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Card>
                 <div
@@ -36,13 +29,14 @@ export const CustomContent: StoryObj<Component> = {
                         gap: "1rem",
                     }}
                 >
-                    <ExclamationCircleFillIcon
-                        style={{ height: "1.5rem", width: "1.5rem" }}
-                    />
-                    <Text.BodySmall>
-                        This is a Card with a JSX.Element as its children.
-                    </Text.BodySmall>
-                    <Button.Small>Click me</Button.Small>
+                    <Typography.BodySM>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing
+                        elit.
+                    </Typography.BodySM>
+                    <Typography.BodySM>
+                        Consectetur, esse. Eum eaque alias, veniam optio nihil
+                        nemo.
+                    </Typography.BodySM>
                 </div>
             </Card>
         );

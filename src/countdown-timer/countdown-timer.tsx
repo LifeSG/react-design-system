@@ -1,19 +1,20 @@
 import throttle from "lodash/throttle";
 import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import { useInView } from "react-intersection-observer";
-import { useTimer } from "./use-timer";
-import { CountdownTimerProps } from "./types";
+import { useMediaQuery } from "react-responsive";
+import { useTheme } from "styled-components";
+import { Breakpoint } from "../theme";
+import { TimeHelper } from "../util/time-helper";
 import {
     Countdown,
     FixedCountdown,
     TimeLeft,
     Timer,
+    TimerIcon,
     Wrapper,
 } from "./countdown-timer.style";
-import { TimeHelper } from "../util/time-helper";
-import { ClockIcon } from "@lifesg/react-icons";
-import { MediaWidths } from "../spec/media-spec";
+import { CountdownTimerProps } from "./types";
+import { useTimer } from "./use-timer";
 
 export const CountdownTimer = ({
     className,
@@ -35,24 +36,26 @@ export const CountdownTimer = ({
     // CONST, STATE, REF
     // =============================================================================
 
-    const wrapperRef = useRef<HTMLDivElement>();
+    const wrapperRef = useRef<HTMLDivElement>(null);
     const isNotified = useRef<boolean>(false);
     const [offsetY, setOffsetY] = useState<number>(0);
     const [clientRectRight, setClientRectRight] = useState<number>(0);
     const [clientRectX, setClientRectX] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState(false);
 
-    const [remainingSeconds] = useTimer(timer, isPlaying, timestamp);
+    const [remainingSeconds] = useTimer(timer, timestamp, isPlaying);
     const { ref: stickyRef, inView } = useInView({
         threshold: 1,
         rootMargin: `${offsetY * -1}px 0px 0px 0px`,
         initialInView: true,
     });
     const isVisible = !fixed || inView;
+    const warn =
+        typeof notifyTimer === "number" && remainingSeconds <= notifyTimer;
 
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
 
     // =============================================================================
     // EFFECTS
@@ -65,7 +68,10 @@ export const CountdownTimer = ({
     useEffect(() => {
         if (remainingSeconds === 0) {
             performOnFinishHandler();
-        } else if (remainingSeconds <= notifyTimer) {
+        } else if (
+            typeof notifyTimer === "number" &&
+            remainingSeconds <= notifyTimer
+        ) {
             performOnTickHandler();
             performOnNotifyHandler();
         }
@@ -98,7 +104,9 @@ export const CountdownTimer = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleWindowResize = () => {
-        const clientRect = wrapperRef.current?.getBoundingClientRect();
+        if (!wrapperRef.current) return;
+
+        const clientRect = wrapperRef.current.getBoundingClientRect();
 
         setClientRectX(clientRect.x);
         setClientRectRight(clientRect.right);
@@ -147,7 +155,7 @@ export const CountdownTimer = ({
 
         return (
             <>
-                <ClockIcon />
+                <TimerIcon $warn={warn} />
                 <TimeLeft>Time left:</TimeLeft>
                 <Timer>
                     {minutes} {m} {String(seconds).padStart(2, "0")} {s}
@@ -164,7 +172,7 @@ export const CountdownTimer = ({
                 ref={wrapperRef}
                 inert={isVisible ? undefined : ""}
                 $visible={isVisible}
-                $warn={remainingSeconds <= notifyTimer}
+                $warn={warn}
             >
                 {renderTimer()}
             </Countdown>
@@ -185,7 +193,7 @@ export const CountdownTimer = ({
             <FixedCountdown
                 data-testid={testId}
                 data-id="fixed-countdown-wrapper"
-                $warn={remainingSeconds <= notifyTimer}
+                $warn={warn}
                 $top={offsetY}
                 $left={left}
                 $right={right}
@@ -194,8 +202,6 @@ export const CountdownTimer = ({
             </FixedCountdown>
         );
     };
-
-    if (typeof window === undefined) return;
 
     if (!isPlaying && remainingSeconds !== 0) return <></>;
 

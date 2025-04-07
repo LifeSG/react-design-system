@@ -3,8 +3,7 @@ import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 import { Button } from "../../button";
-import { Color } from "../../color";
-import { TextStyleHelper } from "../../text";
+import { Colour, Font } from "../../theme";
 import { ClickableIcon } from "../clickable-icon";
 
 // =============================================================================
@@ -26,7 +25,7 @@ interface OverlayStyleProps {
 // ICONS
 // -----------------------------------------------------------------------------
 const iconStyle = css`
-    color: ${Color.Neutral[3]};
+    color: ${Colour.icon};
     height: 1rem;
     width: 1rem;
 `;
@@ -53,6 +52,9 @@ export const Container = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
+
+    padding-top: var(--vertical-inset);
+    padding-bottom: var(--vertical-inset);
 `;
 
 export const ToggleZone = styled.div`
@@ -64,6 +66,9 @@ export const ToggleZone = styled.div`
 export const DefaultView = styled.div`
     isolation: isolate;
     width: 100%;
+
+    padding-left: var(--horizontal-inset);
+    padding-right: var(--horizontal-inset);
 `;
 
 export const OptionsOverlay = styled.div<OverlayStyleProps>`
@@ -72,7 +77,10 @@ export const OptionsOverlay = styled.div<OverlayStyleProps>`
     left: 0;
     height: 100%;
     width: 100%;
-    background: ${Color.Neutral[8]};
+    background: ${Colour.bg};
+
+    padding-left: var(--horizontal-inset);
+    padding-right: var(--horizontal-inset);
 
     ${(props) => {
         if (!props.$visible) {
@@ -89,7 +97,10 @@ export const OptionsOverlay = styled.div<OverlayStyleProps>`
 export const Header = styled.div`
     display: flex;
     justify-content: space-between;
-    margin: 0 0 0.5rem 0;
+
+    padding-left: var(--header-horizontal-inset, var(--horizontal-inset));
+    padding-right: var(--header-horizontal-inset, var(--horizontal-inset));
+    padding-bottom: var(--header-bottom-spacing);
 `;
 
 export const HeaderInputDropdown = styled.div`
@@ -118,11 +129,12 @@ export const DropdownButton = styled.button<DropdownButtonStyleProps>`
                 }
             `;
         }
-    }}
+    }};
 `;
 
-export const DropdownText = styled.p`
-    ${TextStyleHelper.getTextStyle("H5", "regular")}
+export const DropdownText = styled.span`
+    ${Font["body-md-regular"]}
+    color: ${Colour["text"]};
 `;
 
 export const HeaderArrows = styled.div`
@@ -145,6 +157,9 @@ export const ActionButtonSection = styled.div`
     display: flex;
     gap: 0.5rem;
     margin-top: 1.5rem;
+
+    padding-left: var(--horizontal-inset);
+    padding-right: var(--horizontal-inset);
 `;
 
 export const ActionButton = styled(Button.Small)`

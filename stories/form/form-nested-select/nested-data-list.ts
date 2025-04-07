@@ -1,5 +1,5 @@
-const createSubItems = (length, depth, prefix = "") =>
-    Array.from({ length }, (_, index) => {
+const createSubItems = (length: number, depth: number, prefix = "") =>
+    Array.from({ length }, (_, index): any => {
         const currentIndex = index + 1;
         const label = prefix ? `${prefix}.${currentIndex}` : `${currentIndex}`;
         const value = { id: label, name: label };

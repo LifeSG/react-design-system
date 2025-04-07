@@ -1,8 +1,11 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
-import { getThemeColors } from "../../theme/color-theme-helper";
+import { Border, Colour, Radius } from "../../theme";
+import type { getPrimitiveColour } from "../../theme/colour-primitive/theme-helper";
+import type { getSemanticColour } from "../../theme/colour-semantic/theme-helper";
 
-type ThemeColorFunctions = ReturnType<typeof getThemeColors>;
+type ThemeColorFunctions = ReturnType<
+    typeof getSemanticColour | typeof getPrimitiveColour
+>;
 
 interface Props {
     className?: string | undefined;
@@ -27,6 +30,7 @@ export const ProgressBar = ({
         <progress value={progress * 100} max={100} />
     </Bar>
 );
+
 // =============================================================================
 // STYLE INTERFACE
 // =============================================================================
@@ -55,18 +59,18 @@ const Bar = styled.div<StyleProps>`
 
     ${(props) => {
         const { $color: color } = props;
-        let colorToUse;
+        let colorToUse: string;
         if (color && typeof color === "string") {
             colorToUse = color;
         } else if (color) {
             colorToUse = (color as ThemeColorFunctions)(props);
         } else {
-            colorToUse = Color.Accent.Light[1](props);
+            colorToUse = Colour["icon-primary-subtle"](props);
         }
 
         return css`
-            border: 1px solid ${colorToUse};
-            border-radius: 4px;
+            border: ${Border["width-010"]} ${Border["solid"]} ${colorToUse};
+            border-radius: ${Radius["sm"]};
 
             :after {
                 content: "";

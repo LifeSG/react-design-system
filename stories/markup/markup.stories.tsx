@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Color } from "src/color";
 import { Markup } from "src/markup";
+import { Colour } from "src/theme";
 
 type Component = typeof Markup;
 
 const meta: Meta<Component> = {
-    title: "General/Markup",
+    title: "Core/Markup",
     component: Markup,
 };
 
@@ -13,7 +13,7 @@ export default meta;
 
 export const Default: StoryObj<Component> = {
     render: () => (
-        <Markup baseTextColor={Color.Neutral[1]} baseTextSize="Body">
+        <Markup baseTextColor={Colour.text} baseTextSize="body-baseline">
             <p>
                 You can use <strong>bold text</strong> to emphasise important
                 information

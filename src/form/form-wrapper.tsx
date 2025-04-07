@@ -4,10 +4,14 @@
  *
  */
 
-import { Children, cloneElement } from "react";
+import { Children, ComponentType, cloneElement } from "react";
 import { FormLabel } from "./form-label";
 import { ErrorMessage } from "./form-label.style";
-import { ColDivContainer, Container } from "./form-wrapper.style";
+import {
+    ColDivContainer,
+    Container,
+    V2_ColDivContainer,
+} from "./form-wrapper.style";
 import { FormElementLayoutType, FormWrapperProps } from "./types";
 
 export const FormWrapper = ({
@@ -20,6 +24,13 @@ export const FormWrapper = ({
     mobileCols,
     tabletCols,
     desktopCols,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
     "data-error-testid": errorTestId,
 }: FormWrapperProps): JSX.Element => {
     // =============================================================================
@@ -41,6 +52,17 @@ export const FormWrapper = ({
 
     function getLayoutType(): FormElementLayoutType {
         if (!layoutType && (mobileCols || tabletCols || desktopCols)) {
+            return "v2-grid";
+        } else if (
+            !layoutType &&
+            (xxsCols ||
+                xsCols ||
+                smCols ||
+                mdCols ||
+                lgCols ||
+                xlCols ||
+                xxlCols)
+        ) {
             return "grid";
         } else if (!layoutType) {
             return "flex";
@@ -51,14 +73,37 @@ export const FormWrapper = ({
 
     const getContainerLayoutProps = (layoutType: FormElementLayoutType) => {
         switch (layoutType) {
-            case "grid":
+            case "v2-grid":
                 return {
                     mobileCols,
                     tabletCols,
                     desktopCols,
                 };
+            case "grid":
+                return {
+                    xxsCols,
+                    xsCols,
+                    smCols,
+                    mdCols,
+                    lgCols,
+                    xlCols,
+                    xxlCols,
+                };
             case "flex":
                 return undefined;
+        }
+    };
+
+    const getContainerComponent = (
+        layoutType: FormElementLayoutType
+    ): ComponentType => {
+        switch (layoutType) {
+            case "v2-grid":
+                return V2_ColDivContainer;
+            case "grid":
+                return ColDivContainer;
+            case "flex":
+                return Container;
         }
     };
 
@@ -98,8 +143,7 @@ export const FormWrapper = ({
         );
     };
 
-    const ContainerComponent =
-        updatedLayoutType === "grid" ? ColDivContainer : Container;
+    const ContainerComponent = getContainerComponent(updatedLayoutType);
 
     return (
         <ContainerComponent {...getContainerLayoutProps(updatedLayoutType)}>
@@ -108,7 +152,6 @@ export const FormWrapper = ({
             {errorMessage && (
                 <ErrorMessage
                     id={getErrorTestMessageId()}
-                    weight="semibold"
                     tabIndex={0}
                     data-testid={getErrorTestMessageId()}
                 >

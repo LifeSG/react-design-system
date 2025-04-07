@@ -1,36 +1,58 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { RadioButton } from "src/radio-button";
-import { Container, Label, OptionContainer } from "./doc-elements";
+import { GridDecorator } from "stories/storybook-common";
+import { Label, OptionContainer } from "./doc-elements";
 
 type Component = typeof RadioButton;
 
 const meta: Meta<Component> = {
-    title: "Data Input/RadioButton",
+    title: "Selection and input/RadioButton",
     component: RadioButton,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
-        const [checked, setChecked] = useState(false);
-        const handleChange = () => {
-            if (!checked) setChecked(true);
-        };
-        return <RadioButton checked={checked} onChange={handleChange} />;
+    render: (_args) => {
+        return (
+            <>
+                <RadioButton />
+                <RadioButton checked />
+                <RadioButton disabled />
+                <RadioButton disabled checked />
+                <RadioButton displaySize="small" />
+                <RadioButton displaySize="small" checked />
+                <RadioButton displaySize="small" disabled />
+                <RadioButton displaySize="small" disabled checked />
+            </>
+        );
     },
+    decorators: [
+        GridDecorator({
+            columns: 2,
+            columnHeaders: ["Unchecked", "Checked"],
+            rowHeaders: [
+                "Default",
+                "Default Disabled",
+                "Small",
+                "Small Disabled",
+            ],
+        }),
+    ],
 };
 
 export const MultipleOptions: StoryObj<Component> = {
     render: () => {
         const [value, setValue] = useState("");
-        const handleSelection = (event) => {
+        const handleSelection = (
+            event: React.ChangeEvent<HTMLInputElement>
+        ) => {
             setValue(event.target.value);
         };
         return (
-            <Container>
-                <OptionContainer key="A">
+            <>
+                <OptionContainer>
                     <RadioButton
                         value="A"
                         id="options-a"
@@ -40,7 +62,7 @@ export const MultipleOptions: StoryObj<Component> = {
                     />
                     <Label htmlFor="options-a">Option A</Label>
                 </OptionContainer>
-                <OptionContainer key="B">
+                <OptionContainer>
                     <RadioButton
                         value="B"
                         id="options-b"
@@ -50,7 +72,7 @@ export const MultipleOptions: StoryObj<Component> = {
                     />
                     <Label htmlFor="options-b">Option B</Label>
                 </OptionContainer>
-            </Container>
+            </>
         );
     },
 };

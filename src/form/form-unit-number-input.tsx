@@ -12,6 +12,13 @@ export const FormUnitNumberInput = ({
     mobileCols,
     tabletCols,
     desktopCols,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
     ...otherProps
 }: FormUnitNumberInputProps): JSX.Element => {
     return (
@@ -25,6 +32,13 @@ export const FormUnitNumberInput = ({
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <UnitNumberInput
                 id={`${id}-base`}

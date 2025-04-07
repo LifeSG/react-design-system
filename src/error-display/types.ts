@@ -1,5 +1,5 @@
 import { ButtonProps } from "../button";
-import { ResourceScheme } from "../theme";
+import { ResourceScheme } from "../theme/types";
 
 export type ErrorDisplayType =
     | "400"

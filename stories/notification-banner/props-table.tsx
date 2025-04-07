@@ -1,8 +1,10 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
-import { Heading4 } from "../storybook-common/text.style";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+    TabAttribute,
+    Tabs,
+} from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -93,13 +95,9 @@ const LINK_DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         This component also inherits props from&nbsp;
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#component-api"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            TextLinkProps
-                        </a>
+                        <StorybookLink path="/docs/core-typography--docs#component-api">
+                            TypographyLinkProps
+                        </StorybookLink>
                     </>
                 ),
             },
@@ -132,21 +130,13 @@ const HOC_DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: (
                     <>
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#component-api"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            <code>TextLinkProps</code>
-                        </a>
+                        <StorybookLink path="/docs/core-typography--docs#component-api">
+                            <code>TypographyLinkProps</code>
+                        </StorybookLink>
                         &nbsp;
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#component-api"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            <code>TextProps</code>
-                        </a>
+                        <StorybookLink path="/docs/core-typography--docs#component-api">
+                            <code>TypographyProps</code>
+                        </StorybookLink>
                         &nbsp;
                     </>
                 ),
@@ -181,7 +171,8 @@ const PROPS_TABLE_DATA: TabAttribute[] = [
                         "withNotificationBanner(data: NotificationContentAttributes[]);"
                     }
                 </code>
-                <Heading4>NotificationContentAttributes</Heading4>
+                <br />
+                <h4>NotificationContentAttributes</h4>
                 <HOCTable />
             </div>
         ),

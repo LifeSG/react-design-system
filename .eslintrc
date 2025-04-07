@@ -92,6 +92,21 @@
             {
                 "additionalHooks": "useIsomorphicLayoutEffect"
             }
+        ],
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "argsIgnorePattern": "^_",
+                "varsIgnorePattern": "^_"
+            }
         ]
-    }
+    },
+    "overrides": [
+        {
+            "files": ["src/v2_*/**/*.{ts,tsx}"],
+            "rules": {
+                "@typescript-eslint/naming-convention": "off"
+            }
+        }
+    ]
 }

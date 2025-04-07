@@ -1,76 +1,44 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { TextStyleHelper } from "../text/helper";
+import { BasicButton, BasicInput, InputBox } from "../shared/input-wrapper";
+import { Colour, Spacing } from "../theme";
+import { InputStyleType } from "./types";
 
 // =============================================================================
-// STYLE INTERFACe
+// STYLE INTERFACE
 // =============================================================================
 export interface InputStyleProps {
-    type?: React.HTMLInputTypeAttribute;
+    $showClear?: boolean | undefined;
+    $styleType?: InputStyleType | undefined;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const InputElement = styled.input<InputStyleProps>`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[1]};
-
-    // overwrite default styles
-    background: transparent;
-    border: none;
-    height: calc(3rem - 2px); // exclude top and bottom borders
+export const InputElement = styled(BasicInput)<InputStyleProps>`
     width: 100%;
-    padding: 0;
+    height: calc(3rem - 2px); // exclude top and bottom borders
 
-    :focus,
-    :active {
-        outline: none;
-        border: none;
-        box-shadow: none;
-    }
-
-    ::placeholder,
-    ::-webkit-input-placeholder {
-        color: ${Color.Neutral[3]};
-    }
-
-    ${(props) => {
-        // Hiding of spinners for number type input
-        if (props.type === "number") {
-            return css`
-                // Chrome, Safari, Edge, Opera
-                ::-webkit-outer-spin-button,
-                ::-webkit-inner-spin-button {
-                    -webkit-appearance: none;
-                    margin: 0;
-                }
-
-                // Firefox
-                -moz-appearance: textfield;
-            `;
-        }
-
-        if (props.disabled) {
-            return css`
-                cursor: not-allowed;
-            `;
-        }
-    }}
+    ${(props) =>
+        props.$styleType !== "no-border" &&
+        css`
+            padding-left: ${Spacing["spacing-16"]};
+            padding-right: ${props.$showClear ? 0 : Spacing["spacing-16"]};
+        `}
 `;
 
-export const ClearContainer = styled.button<InputStyleProps>`
-    position: relative;
+export const ClearButton = styled(BasicButton)<InputStyleProps>`
     height: auto;
-    padding: 0.75rem 1rem;
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
 
-    margin-right: -1rem; // offset the padding
     cursor: pointer;
+    color: ${Colour["icon"]};
 
-    color: ${Color.Neutral[3]};
-    background-color: transparent;
-    border: none;
+    ${(props) =>
+        props.$styleType === "no-border" &&
+        css`
+            margin-right: -${Spacing["spacing-12"]};
+        `}
 `;
 
 export const ClearIcon = styled(CrossIcon)`
@@ -79,7 +47,13 @@ export const ClearIcon = styled(CrossIcon)`
     vertical-align: middle;
 `;
 
-export const BasicWrapper = styled.div`
+export const NoBorderWrapper = styled.div`
     display: flex;
+    width: 100%;
+`;
+
+export const DefaultWrapper = styled(InputBox)`
+    display: flex;
+    align-items: center;
     width: 100%;
 `;

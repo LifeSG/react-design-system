@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useEffect, useState } from "react";
-import { FileDownload, FileItemDownloadProps } from "../../src/file-download";
+import { FileDownload, FileItemDownloadProps } from "src/file-download";
 
 type Component = typeof FileDownload;
 
 const meta: Meta<Component> = {
-    title: "Modules/FileDownload",
+    title: "Selection and input/FileDownload",
     component: FileDownload,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [fileItems] = useState<FileItemDownloadProps[]>([
             {
                 id: "1",
@@ -64,7 +64,7 @@ export const Default: StoryObj<Component> = {
 };
 
 export const ErrorDisplay: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [fileItems] = useState<FileItemDownloadProps[]>([
             {
                 id: "1",
@@ -94,7 +94,7 @@ export const ErrorDisplay: StoryObj<Component> = {
 };
 
 export const WithCustomError: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [fileItems] = useState<FileItemDownloadProps[]>([
             {
                 id: "1",
@@ -155,6 +155,56 @@ export const DownloadReadiness: StoryObj<Component> = {
                     "Ready status will be set to true after 5 seconds."
                 }
                 onDownload={handleDemoDownload}
+            />
+        );
+    },
+};
+
+export const TextStyling: StoryObj<Component> = {
+    render: (_args) => {
+        const [fileItems] = useState<FileItemDownloadProps[]>([
+            {
+                id: "1",
+                name: "lorem.pdf",
+                mimeType: "application/pdf",
+                size: 150000,
+                filePath:
+                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+            },
+        ]);
+
+        return (
+            <FileDownload
+                fileItems={fileItems}
+                onDownload={handleDemoDownload}
+                title={
+                    <>
+                        <p>
+                            You can add <strong>bold text</strong>, <a>links</a>{" "}
+                            and list items to the title:
+                        </p>
+                        <ul>
+                            <li>List item</li>
+                        </ul>
+                        <ol>
+                            <li>List item</li>
+                        </ol>
+                    </>
+                }
+                description={
+                    <>
+                        <p>
+                            You can also add <strong>bold text</strong>,{" "}
+                            <a>links</a> and list items to the description:
+                        </p>
+                        <ul>
+                            <li>List item</li>
+                        </ul>
+                        <ol>
+                            <li>List item</li>
+                        </ol>
+                    </>
+                }
             />
         );
     },

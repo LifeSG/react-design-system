@@ -1,20 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import dayjs from "dayjs";
 import { useState } from "react";
-import { DateNavigator } from "../../src/date-navigator/date-navigator";
-import { StoryContainer } from "../storybook-common";
+import { DateNavigator } from "src/date-navigator";
+import { StoryDecorator } from "stories/storybook-common";
 
 type Component = typeof DateNavigator;
 
 const meta: Meta<Component> = {
-    title: "Modules/DateNavigator",
+    title: "Selection and input/DateNavigator",
     component: DateNavigator,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const today = dayjs().toString();
         const [selectedDate, setSelectedDate] = useState<string>(today);
 
@@ -27,19 +27,18 @@ export const Default: StoryObj<Component> = {
         };
 
         return (
-            <StoryContainer>
-                <DateNavigator
-                    selectedDate={selectedDate}
-                    onLeftArrowClick={onLeftArrowClick}
-                    onRightArrowClick={onRightArrowClick}
-                />
-            </StoryContainer>
+            <DateNavigator
+                selectedDate={selectedDate}
+                onLeftArrowClick={onLeftArrowClick}
+                onRightArrowClick={onRightArrowClick}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const ShortFormDate: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const today = dayjs().toString();
         const [selectedDate, setSelectedDate] = useState<string>(today);
 
@@ -52,21 +51,20 @@ export const ShortFormDate: StoryObj<Component> = {
         };
 
         return (
-            <StoryContainer>
-                <DateNavigator
-                    selectedDate={selectedDate}
-                    onLeftArrowClick={onLeftArrowClick}
-                    onRightArrowClick={onRightArrowClick}
-                    showDateAsShortForm
-                    showCurrentDateAsToday
-                />
-            </StoryContainer>
+            <DateNavigator
+                selectedDate={selectedDate}
+                onLeftArrowClick={onLeftArrowClick}
+                onRightArrowClick={onRightArrowClick}
+                showDateAsShortForm
+                showCurrentDateAsToday
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const WithCalendarNavigation: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const today = dayjs().toString();
         const [selectedDate, setSelectedDate] = useState<string>(today);
 
@@ -83,20 +81,19 @@ export const WithCalendarNavigation: StoryObj<Component> = {
         };
 
         return (
-            <StoryContainer>
-                <DateNavigator
-                    selectedDate={selectedDate}
-                    onLeftArrowClick={onLeftArrowClick}
-                    onRightArrowClick={onRightArrowClick}
-                    onCalendarDateSelect={onCalendarDateSelect}
-                />
-            </StoryContainer>
+            <DateNavigator
+                selectedDate={selectedDate}
+                onLeftArrowClick={onLeftArrowClick}
+                onRightArrowClick={onRightArrowClick}
+                onCalendarDateSelect={onCalendarDateSelect}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const LoadingState: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const today = dayjs().toString();
         const [selectedDate, setSelectedDate] = useState<string>(today);
         const [loading, setLoading] = useState<boolean>(false);
@@ -122,21 +119,20 @@ export const LoadingState: StoryObj<Component> = {
         };
 
         return (
-            <StoryContainer>
-                <DateNavigator
-                    selectedDate={selectedDate}
-                    loading={loading}
-                    onLeftArrowClick={onLeftArrowClick}
-                    onRightArrowClick={onRightArrowClick}
-                    onCalendarDateSelect={onCalendarDateSelect}
-                />
-            </StoryContainer>
+            <DateNavigator
+                selectedDate={selectedDate}
+                loading={loading}
+                onLeftArrowClick={onLeftArrowClick}
+                onRightArrowClick={onRightArrowClick}
+                onCalendarDateSelect={onCalendarDateSelect}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const WithMinAndMaxDate: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const today = dayjs().toString();
         const minDate = dayjs(today).subtract(6, "day").toString();
         const maxDate = dayjs(today).add(6, "day").toString();
@@ -155,16 +151,15 @@ export const WithMinAndMaxDate: StoryObj<Component> = {
         };
 
         return (
-            <StoryContainer>
-                <DateNavigator
-                    selectedDate={selectedDate}
-                    onLeftArrowClick={onLeftArrowClick}
-                    onRightArrowClick={onRightArrowClick}
-                    minDate={minDate}
-                    maxDate={maxDate}
-                    onCalendarDateSelect={onCalendarDateSelect}
-                />
-            </StoryContainer>
+            <DateNavigator
+                selectedDate={selectedDate}
+                onLeftArrowClick={onLeftArrowClick}
+                onRightArrowClick={onRightArrowClick}
+                minDate={minDate}
+                maxDate={maxDate}
+                onCalendarDateSelect={onCalendarDateSelect}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };

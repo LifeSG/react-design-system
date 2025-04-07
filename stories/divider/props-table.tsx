@@ -1,6 +1,9 @@
-import React from "react";
-import { ApiTable, code } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+    code,
+} from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -43,7 +46,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "color",
                 description: <>The color for the {code("Divider")} line</>,
-                propTypes: ["string", "(props: unknown) => string"],
+                propTypes: ["string", "(props: ThemeStyleProps) => string"],
             },
             // Copied from `layout/col-div-props-table.tsx`
             {
@@ -51,13 +54,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Refer to{" "}
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-layout-column-divs--docs"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
+                        <StorybookLink path="/docs/core-layout-coldiv--docs">
                             ColDiv
-                        </a>
+                        </StorybookLink>
                         &nbsp; for more details
                         <br />
                         <em>
@@ -74,13 +73,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Refer to{" "}
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-layout-column-divs--docs"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
+                        <StorybookLink path="/docs/core-layout-coldiv--docs">
                             ColDiv
-                        </a>
+                        </StorybookLink>
                         &nbsp; for more details
                         <br />
                         <em>
@@ -97,13 +92,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Refer to{" "}
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-layout-column-divs--docs"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
+                        <StorybookLink path="/docs/core-layout-coldiv--docs">
                             ColDiv
-                        </a>
+                        </StorybookLink>
                         &nbsp; for more details
                         <br />
                         <em>

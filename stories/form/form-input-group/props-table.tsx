@@ -1,6 +1,8 @@
-import React from "react";
-import { ApiTable } from "../../storybook-common/api-table";
-import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+} from "stories/storybook-common";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
@@ -12,12 +14,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         This also inherits props from&nbsp;
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/form-input--docs#component-api"
-                            rel="noreferrer"
-                        >
+                        <StorybookLink path="/docs/form-input--docs#component-api">
                             Input
-                        </a>
+                        </StorybookLink>
                     </>
                 ),
             },

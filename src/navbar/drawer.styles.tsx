@@ -1,8 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
 import { ClickableIcon } from "../shared/clickable-icon";
+import { Colour, MediaQuery, Motion, Spacing } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -20,14 +19,14 @@ const VISIBILITY_STYLE = (show: boolean | undefined) => {
     if (show) {
         return css`
             right: 0;
-            transition: all 300ms cubic-bezier(0.21, 0.79, 0.53, 1);
+            transition: all 300ms ${Motion["ease-entrance"]};
             transition-delay: 200ms;
         `;
     }
 
     return css`
         right: -100%;
-        transition: all 300ms cubic-bezier(0.4, 0.34, 0.38, 1);
+        transition: all 300ms ${Motion["ease-exit"]};
     `;
 };
 
@@ -37,7 +36,7 @@ const VISIBILITY_STYLE = (show: boolean | undefined) => {
 export const Wrapper = styled.div`
     display: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
     }
 `;
@@ -48,7 +47,7 @@ export const Container = styled.div<StyleProps>`
     overflow-x: hidden;
     height: 100vh;
     display: block;
-    padding: 0 0 1rem;
+    padding: 0 0 ${Spacing["spacing-16"]};
     background-color: white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     visibility: ${(props) => (props.$show ? "visible" : "hidden")};
@@ -61,11 +60,11 @@ export const Container = styled.div<StyleProps>`
         `;
     }}
 
-	${MediaQuery.MaxWidth.tablet} {
+	${MediaQuery.MaxWidth.lg} {
         width: 75%;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         width: 100%;
     }
 `;
@@ -81,24 +80,29 @@ export const Content = styled.div`
 export const TopBar = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
     position: relative;
-    padding: 2.5rem 1.25rem 2rem;
+    padding: ${Spacing["spacing-40"]} ${Spacing["spacing-20"]}
+        ${Spacing["spacing-32"]};
 `;
 
 export const CloseIcon = styled(CrossIcon)`
     height: 1.5rem;
     width: 1.5rem;
-    margin-right: -0.25rem;
 `;
 
 export const CloseButton = styled(ClickableIcon)`
     position: absolute;
-    right: -0.25rem;
-    bottom: 0.65rem;
-    color: ${Color.Neutral[1]};
+    right: -${Spacing["spacing-4"]};
+    color: ${Colour["icon"]};
 
     :active,
     :focus {
-        color: ${Color.Primary};
+        color: ${Colour["icon-hover"]};
+    }
+
+    svg {
+        height: 1.5rem;
+        width: 1.5rem;
     }
 `;

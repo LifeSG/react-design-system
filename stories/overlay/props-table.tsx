@@ -38,13 +38,16 @@ export const PropsTable = () => (
             <DefaultCol />
         </tr>
         <tr>
-            <NameCol>backgroundOpacity</NameCol>
+            <NameCol>backgroundOpacity (deprecated)</NameCol>
             <DescriptionCol propTypes={["number"]}>
                 <>
                     The opacity value of the <code>Overlay</code>
+                    <br />
+                    <strong>Note:</strong> This attribute has no effect and will
+                    be removed in a future version
                 </>
             </DescriptionCol>
-            <DefaultCol>{["0.8"]}</DefaultCol>
+            <DefaultCol />
         </tr>
         <tr>
             <NameCol>backgroundBlur</NameCol>

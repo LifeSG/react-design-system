@@ -1,8 +1,7 @@
-import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
-import { Text } from "../text";
 import { CloudArrowUpFillIcon } from "@lifesg/react-icons/cloud-arrow-up-fill";
+import styled, { css } from "styled-components";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -22,14 +21,16 @@ export const Container = styled.div<StyleProps>`
 
     ${(props) => {
         if (props.$border) {
-            const color = encodeURIComponent(Color.Neutral[5](props));
             return css`
-                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='4' ry='4' stroke='${color}' stroke-width='4' stroke-dasharray='8%2c 8' stroke-dashoffset='8' stroke-linecap='round'/%3e%3c/svg%3e");
-                border-radius: 4px;
-                padding: 2rem;
+                ${Border.Util["dashed-default"]({
+                    radius: Radius["sm"],
+                    thickness: Border["width-040"],
+                    colour: Colour["border"],
+                })}
+                padding: ${Spacing["spacing-32"]};
 
-                ${MediaQuery.MaxWidth.mobileL} {
-                    padding: 2rem 1.25rem;
+                ${MediaQuery.MaxWidth.sm} {
+                    padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]};
                 }
             `;
         }
@@ -46,28 +47,27 @@ export const DragOverlay = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: ${Color.Accent.Light[5]};
+
+    background: ${Colour["bg-primary-subtler"]};
+    ${Border.Util["dashed-default"]({
+        radius: Radius["sm"],
+        thickness: Border["width-040"],
+        colour: Colour["border-primary"],
+    })}
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    ${(props) => {
-        const color = encodeURIComponent(Color.Primary(props));
-        return css`
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='4' ry='4' stroke='${color}' stroke-width='4' stroke-dasharray='8%2c 8' stroke-dashoffset='8' stroke-linecap='square'/%3e%3c/svg%3e");
-            border-radius: 4px;
-        `;
-    }}
 `;
 
-export const OverlayText = styled(Text.BodySmall)`
-    color: ${Color.Primary};
+export const OverlayText = styled(Typography.BodyMD)`
+    color: ${Colour["text-primary"]};
     text-align: center;
 `;
 
 export const OverlayIcon = styled(CloudArrowUpFillIcon)`
-    color: ${Color.Primary};
+    color: ${Colour["icon-primary"]};
     height: 4rem;
     width: 4rem;
 `;

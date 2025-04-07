@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormNestedMultiSelectStories from "./form-nested-multi-select.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormNestedMultiSelectStories} />
 
-<Title>Form.NestedMultiSelect</Title>
+# Form.NestedMultiSelect
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A field that provides a nested set of options for a user to select.
 
@@ -17,28 +16,40 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormNestedMultiSelectStories.Default} />
 
-<Heading3>Specifying mode</Heading3>
+## Specifying mode
 
 <Canvas of={FormNestedMultiSelectStories.SpecifyingMode} />
 
-<Heading3>With search capabilities</Heading3>
+## With search capabilities
 
 <Canvas of={FormNestedMultiSelectStories.WithSearch} />
 
-<Heading3>With Virtualisation</Heading3>
+## With Virtualisation
 
-The dropdown nested list displays large data sets using virtualised rendering to optimise performance.
+The dropdown list displays large data sets using virtualised rendering to optimise performance.
 
 <Canvas of={FormNestedMultiSelectStories.Virtualisation} />
 
-<Heading3>Rendering in grid layouts</Heading3>
+## Rendering in grid layouts
 
-You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--docs)
+You can also specify [ColDiv's](/docs/core-layout-coldiv--docs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormNestedMultiSelectStories.RenderingInGridLayout} />
 
-<Heading3>Using the field as a standalone</Heading3>
+## Small variant
+
+<Canvas of={FormNestedMultiSelectStories.SmallVariant} />
+
+## Z-index conflicts
+
+The dropdown uses z-index to display above elements. It is `Modal` and
+`Overlay`-aware by default; when rendered as a child of either component, it
+will automatically adjust its z-index to remain visible.
+
+If you still encounter z-index issues, try setting a custom `dropdownZIndex`.
+
+## Using the field as a standalone
 
 In the case that you require the nested select field as a standalone, you can do this.
 
@@ -48,6 +59,6 @@ import { InputNestedMultiSelect } from "@lifesg/react-design-system/input-nested
 
 <Canvas of={FormNestedMultiSelectStories.StandaloneUsage} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

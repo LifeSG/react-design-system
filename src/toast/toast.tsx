@@ -8,8 +8,6 @@ import {
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { easings, useSpring } from "react-spring";
-import { MediaWidths } from "../spec/media-spec";
-import { Text } from "../text";
 import {
     ActionButton,
     ContentWrapper,
@@ -22,6 +20,9 @@ import {
 } from "./toast.styles";
 import { ToastProps } from "./types";
 import React from "react";
+import { Breakpoint } from "../theme";
+import { useTheme } from "styled-components";
+import { Typography } from "../typography/typography";
 
 const DEFAULT_AUTO_DISMISS_TIME = 4000;
 
@@ -42,8 +43,11 @@ export const Toast = ({
 
     const [isVisible, setVisible] = useState<boolean>(false);
 
+    const theme = useTheme();
+
+    const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.tablet,
+        maxWidth: mobileBreakpoint,
     });
     // =============================================================================
     // EFFECTS
@@ -112,9 +116,9 @@ export const Toast = ({
         if (React.isValidElement(label)) {
             return label;
         } else if (title) {
-            return <Text.BodySmall>{label}</Text.BodySmall>;
+            return <Typography.BodyMD>{label}</Typography.BodyMD>;
         } else {
-            return <Text.Body>{label}</Text.Body>;
+            return <Typography.BodyBL>{label}</Typography.BodyBL>;
         }
     };
 

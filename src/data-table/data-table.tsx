@@ -1,6 +1,12 @@
+import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import { useResizeDetector } from "react-resize-detector";
 import { LoadingDotsSpinner } from "../animations";
+import { Checkbox } from "../checkbox";
+import { ErrorDisplay } from "../error-display";
+import { Typography } from "../typography";
+import { useEventListener } from "../util/use-event-listener";
 import {
     ActionBar,
     ActionBarWrapper,
@@ -9,7 +15,7 @@ import {
     BodyRow,
     CheckBoxWrapper,
     EmptyViewCell,
-    ErrorDisplayElement,
+    ErrorDisplayTitle,
     HeaderCell,
     HeaderCellWrapper,
     HeaderRow,
@@ -18,14 +24,9 @@ import {
     TableBody,
     TableContainer,
     TableWrapper,
+    TextButton,
 } from "./data-table.styles";
 import { DataTableProps, HeaderProps, RowProps } from "./types";
-import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
-import { Text } from "../text";
-import { Checkbox } from "../checkbox";
-import { Button } from "../button";
-import { useEventListener } from "../util/use-event-listener";
-import { useResizeDetector } from "react-resize-detector";
 
 export const DataTable = ({
     id,
@@ -54,7 +55,7 @@ export const DataTable = ({
     // CONST, STATE, REF
     // =============================================================================
     const tableRef = useRef<HTMLTableElement>(null);
-    const tableEndRef = useRef<HTMLDivElement>(null);
+    const tableEndRef = useRef<HTMLDivElement | null>(null);
     const headerRef = useRef<HTMLTableSectionElement>(null);
     const actionBarRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
@@ -117,12 +118,14 @@ export const DataTable = ({
     // HELPER FUNCTIONS
     // ===========================================================================
     const isAllCheckboxSelected = (): boolean => {
-        return selectedIds?.length === rows.length;
+        return selectedIds?.length === rows?.length;
     };
 
     const isIndeterminateCheckbox = (): boolean => {
         return (
-            selectedIds && selectedIds.length !== 0 && !isAllCheckboxSelected()
+            !!selectedIds &&
+            selectedIds.length !== 0 &&
+            !isAllCheckboxSelected()
         );
     };
 
@@ -236,7 +239,9 @@ export const DataTable = ({
             >
                 <HeaderCellWrapper>
                     {typeof label === "string" ? (
-                        <Text.H4 weight="bold">{label}</Text.H4>
+                        <Typography.BodyBL weight="bold">
+                            {label}
+                        </Typography.BodyBL>
                     ) : (
                         label
                     )}
@@ -276,7 +281,6 @@ export const DataTable = ({
                 <CheckBoxWrapper>
                     {enableSelectAll && (
                         <Checkbox
-                            displaySize="small"
                             checked={isAllCheckboxSelected()}
                             indeterminate={isIndeterminateCheckbox()}
                             onClick={() => {
@@ -354,7 +358,6 @@ export const DataTable = ({
             >
                 <CheckBoxWrapper>
                     <Checkbox
-                        displaySize="small"
                         checked={isRowSelected(rowId)}
                         onClick={() => {
                             if (onSelect) {
@@ -370,18 +373,22 @@ export const DataTable = ({
 
     const renderBasicEmptyView = () => {
         return (
-            <ErrorDisplayElement
+            <ErrorDisplay
                 type={"no-item-found"}
                 {...emptyView}
                 title={
                     emptyView?.title ? (
                         typeof emptyView.title === "string" ? (
-                            <Text.H3>{emptyView.title}</Text.H3>
+                            <ErrorDisplayTitle weight="bold">
+                                {emptyView.title}
+                            </ErrorDisplayTitle>
                         ) : (
                             emptyView.title
                         )
                     ) : (
-                        <Text.H3>{"No <items> found"}</Text.H3>
+                        <ErrorDisplayTitle weight="bold">
+                            {"No <items> found"}
+                        </ErrorDisplayTitle>
                     )
                 }
                 description={
@@ -406,6 +413,8 @@ export const DataTable = ({
     };
 
     const renderSelectionBar = () => {
+        const count = selectedIds?.length ?? 0;
+
         return (
             <ActionBarWrapper
                 ref={actionBarRef}
@@ -419,15 +428,12 @@ export const DataTable = ({
                     }
                     $scrollable={scrollable}
                 >
-                    <Text.H5 weight="semibold">{`${selectedIds.length} item${
-                        selectedIds.length > 1 ? "s" : ""
-                    } selected`}</Text.H5>
-                    <Button.Small
-                        styleType="link"
-                        onClick={onClearSelectionClick}
-                    >
+                    <Typography.BodyMD weight="semibold">{`${count} item${
+                        count > 1 ? "s" : ""
+                    } selected`}</Typography.BodyMD>
+                    <TextButton type="button" onClick={onClearSelectionClick}>
                         Clear selection
-                    </Button.Small>
+                    </TextButton>
                     {actionBarContent}
                 </ActionBar>
             </ActionBarWrapper>

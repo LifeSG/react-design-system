@@ -1,143 +1,73 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import { Text } from "../../src/text";
-import { MediaQuery } from "../../src/media";
-
-interface StyleProps {
-    $layout?: "default" | "vertical";
-}
+import { ReactRenderer } from "@storybook/react";
+import { DecoratorFunction } from "@storybook/types";
+import { Typography } from "src/typography";
+import styled from "styled-components";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled.div<StyleProps>`
-    ${(props) => {
-        if (props.$layout === "vertical") {
-            return css`
-                width: 100%;
-                display: grid;
-                grid-template: auto / repeat(3, minmax(0, 1fr));
-                column-gap: 2rem;
-
-                > div {
-                    display: grid;
-                    column-gap: 1.5rem;
-                    row-gap: 1.5rem;
-                    margin: 1rem 0;
-
-                    ${HeadingLabel} {
-                        text-align: left;
-                        align-self: center;
-                    }
-                }
-
-                ${MediaQuery.MaxWidth.mobileL} {
-                    width: 100%;
-                    display: flex;
-                    flex-direction: column;
-                }
-            `;
-        } else {
-            return css`
-                > div {
-                    display: grid;
-                    grid-template: auto / repeat(5, minmax(0, 1fr));
-                    column-gap: 1.5rem;
-                    row-gap: 1.5rem;
-                    margin: 1rem 0;
-                }
-
-                @media only screen and (max-width: 900px) {
-                    width: 100%;
-                    display: grid;
-                    grid-template-columns: max-content 1fr;
-                    column-gap: 2rem;
-
-                    > div {
-                        grid-template: unset;
-                    }
-                }
-            `;
-        }
-    }}
-`;
-
-export const HeadingLabel = styled(Text.H6)`
-    text-align: center;
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        text-align: left;
-        align-self: center;
-    }
-`;
-
-export const SimpleContainer = styled.ul`
+export const SimpleStoryWrapper = styled.div`
     display: flex;
-    list-style: none;
-
-    li {
-        :not(:last-child) {
-            margin-right: 1.5rem;
-        }
-    }
+    gap: 1.5rem;
+    flex-wrap: wrap;
 `;
 
-const VariantWrapper = styled.div`
-    width: 100%;
+export const VariantStoryWrapper = styled.div`
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 2rem;
-
-    > div {
-        display: flex;
-        flex-direction: column;
-        ${HeadingLabel} {
-            margin: 1rem;
-            min-width: 100px;
-        }
-    }
+    align-items: center;
 
     @media only screen and (max-width: 1200px) {
-        grid-template-columns: 1fr;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: repeat(5, auto);
+        grid-auto-flow: column;
+    }
+`;
 
-        > div {
-            flex-direction: row;
-        }
+export const VariantHeading = styled(Typography.BodyMD)`
+    text-align: center;
+
+    @media only screen and (max-width: 1200px) {
+        text-align: left;
+    }
+`;
+
+export const SubLabelStoryWrapper = styled.div`
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+
+    // 1 variant per column
+    grid-auto-flow: column;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, auto);
+
+    // 1 column
+    @media only screen and (max-width: 900px) {
+        grid-auto-flow: row;
+        grid-template-columns: 1fr;
     }
 `;
 
 // =============================================================================
 // COMPONENTS
 // =============================================================================
-const VARIANTS = [
-    "Default",
-    "Selected",
-    "Disabled",
-    "Disabled Selected",
-    "Error",
-];
-
-export const Headings = () => {
+const VariantHeadings = () => {
     return (
-        <div>
-            <HeadingLabel weight="semibold">Default</HeadingLabel>
-            <HeadingLabel weight="semibold">Selected</HeadingLabel>
-            <HeadingLabel weight="semibold">Disabled</HeadingLabel>
-            <HeadingLabel weight="semibold">Disabled Selected</HeadingLabel>
-            <HeadingLabel weight="semibold">Error</HeadingLabel>
-        </div>
+        <>
+            <VariantHeading weight="semibold">Default</VariantHeading>
+            <VariantHeading weight="semibold">Selected</VariantHeading>
+            <VariantHeading weight="semibold">Disabled</VariantHeading>
+            <VariantHeading weight="semibold">Disabled Selected</VariantHeading>
+            <VariantHeading weight="semibold">Error</VariantHeading>
+        </>
     );
 };
 
-export const Variants = ({ children }: { children: React.ReactNode }) => {
-    return (
-        <VariantWrapper>
-            {React.Children.map(children, (child, i) => (
-                <div>
-                    <HeadingLabel>{VARIANTS[i]}</HeadingLabel>
-                    {child}
-                </div>
-            ))}
-        </VariantWrapper>
-    );
-};
+export const VariantDecorator: DecoratorFunction<ReactRenderer> = (Story) => (
+    <VariantStoryWrapper>
+        <VariantHeadings />
+        <Story />
+    </VariantStoryWrapper>
+);

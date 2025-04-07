@@ -1,11 +1,17 @@
 import dayjs, { Dayjs } from "dayjs";
 import { CalendarHelper, DateHelper } from "../../../util";
-import { CellStyleProps, CellType, DayCell, DayCellProps } from "../day-cell";
+import {
+    CellStyleProps,
+    CellType,
+    DayCell,
+    DayCellProps,
+    LabelType,
+} from "../day-cell";
 
 interface Props {
     date: Dayjs;
     calendarDate: Dayjs;
-    selectedDate: string;
+    selectedDate: string | undefined;
     hoverDate: string;
     minDate?: string | undefined;
     maxDate?: string | undefined;
@@ -72,18 +78,22 @@ export const WeekDayCell = ({
     const getRangeStyle = (): CellStyleProps => {
         const props: CellStyleProps = {};
 
-        let type: CellType = undefined;
+        let type: CellType | undefined = undefined;
+        let labelType: LabelType | undefined = undefined;
         if (isSelected && isHover) {
-            type = "hover-current";
-            props.shadow = true;
-            props.circleShadow = isStart || isEnd;
+            type = "selected-hover-outline";
+            labelType = "selected-hover";
         } else if (isSelected) {
             type = "selected-outline";
+            labelType = "selected";
         } else if (isHover) {
-            type = "hover-dash";
+            type = "hover";
+            labelType = "hover";
         }
 
         if (type) {
+            props.labelType = labelType;
+
             if (isStart) {
                 props.circleLeft = type;
             } else {
@@ -103,14 +113,10 @@ export const WeekDayCell = ({
     const getCellStyle = () => {
         const props: CellStyleProps = {};
 
-        if (isSelected || isHover) {
-            props.labelType = "selected";
-        } else if (calendarDate.month() !== date.month()) {
+        if (calendarDate.month() !== date.month()) {
             props.labelType = "unavailable";
         } else if (dayjs().isSame(date, "day") && !disabled) {
             props.labelType = "current";
-            props.circleLeft = "current";
-            props.circleRight = "current";
         }
 
         return props;
@@ -125,6 +131,7 @@ export const WeekDayCell = ({
         calendarDate,
         disabled,
         interactive,
+        currentDateIndicator: true,
         onSelect: handleSelect,
         onHover: handleHover,
     };

@@ -1,9 +1,6 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
-import { TextStyleHelper } from "../../text/helper";
-import { Text } from "../../text/text";
+import { Border, Colour, Font, Motion, Radius } from "../../theme";
 import { MonthVariant } from "./internal-calendar-month";
-import { CalendarType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -15,14 +12,10 @@ interface StyleProps {
     $interactive?: boolean;
 }
 
-interface WrapperStyleProps {
-    $type: CalendarType;
-}
-
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled.div<WrapperStyleProps>`
+export const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     display: grid;
@@ -31,36 +24,30 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     align-content: center;
     justify-content: center;
 
-    ${(props) => {
-        switch (props.$type) {
-            case "standalone":
-                return css`
-                    gap: 0.5rem 2.5rem;
-                `;
-            case "input":
-                return css`
-                    gap: 0.5rem 1rem;
-                `;
-        }
-    }}
+    gap: 0.5rem 0;
 `;
 
 export const MonthCell = styled.div<StyleProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: default;
-    border-radius: 5rem;
+    border-radius: ${Radius.md};
     margin: 0 0.5rem;
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
+    // default styles
+    ${Font["body-md-regular"]}
+    border-radius: ${Radius.md};
+    border: ${Border["width-010"]} ${Border.solid} transparent;
+    background-clip: border-box;
+    color: ${Colour["text"]};
+    cursor: default;
+
+    // cursor style
     ${(props) => {
         if (props.$interactive) {
             return css`
                 cursor: pointer;
-                &:hover {
-                    box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
-                    border: 1px solid ${Color.Accent.Light[1]};
-                }
             `;
         }
         if (props.$disabledDisplay) {
@@ -70,43 +57,63 @@ export const MonthCell = styled.div<StyleProps>`
         }
     }}
 
-    ${(props) => {
-        switch (props.$variant) {
-            case "current-month":
-                return css`
-                    background-color: ${Color.Accent.Light[6](props)};
-                `;
-            case "selected-month":
-                return css`
-                    background-color: ${Color.Accent.Light[5](props)};
-                    border: 1px solid ${Color.Primary(props)};
-                `;
-            case "default":
-                break;
-        }
-    }}
-`;
-
-export const CellLabel = styled(Text.H5)<StyleProps>`
-    ${(props) => {
-        if (props.$disabledDisplay) {
+    // background, border and text styles
+    ${({ $variant, $interactive, $disabledDisplay }) => {
+        if ($variant === "selected-month") {
             return css`
-                color: ${Color.Neutral[4]};
+                background: ${Colour["bg-selected"]};
+                border-color: ${Colour["border-selected"]};
+                color: ${Colour["text-selected"]};
+                font-weight: ${Font.Spec["weight-semibold"]};
+
+                ${$interactive &&
+                css`
+                    &:hover {
+                        background: ${Colour["bg-selected-hover"]};
+                        border-color: ${Colour["border-selected-hover"]};
+                        color: ${Colour["text-selected-hover"]};
+                    }
+                `}
             `;
         }
 
-        switch (props.$variant) {
-            case "current-month":
-                return css`
-                    color: ${Color.Neutral[3](props)};
-                `;
-            case "selected-month":
-                return css`
-                    ${TextStyleHelper.getTextStyle("H5", "semibold")}
-                    color: ${Color.Primary(props)};
-                `;
-            case "default":
-                break;
+        if ($variant === "current-month") {
+            return css`
+                color: ${Colour["text-primary"]};
+                font-weight: ${Font.Spec["weight-semibold"]};
+            `;
         }
+
+        if ($disabledDisplay) {
+            return css`
+                color: ${Colour["text-disabled-subtlest"]};
+            `;
+        }
+    }}
+
+    // hover styles
+    ${({ $variant, $interactive }) => {
+        if (!$interactive) {
+            return;
+        }
+
+        if ($variant === "selected-month") {
+            return css`
+                &:hover {
+                    background: ${Colour["bg-selected-hover"]};
+                    border-color: ${Colour["border-selected-hover"]};
+                    color: ${Colour["text-selected-hover"]};
+                    font-weight: ${Font.Spec["weight-semibold"]};
+                }
+            `;
+        }
+
+        return css`
+            &:hover {
+                background: ${Colour["bg-hover"]};
+                color: ${Colour["text-hover"]};
+                font-weight: ${Font.Spec["weight-semibold"]};
+            }
+        `;
     }}
 `;

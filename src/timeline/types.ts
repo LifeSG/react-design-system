@@ -19,6 +19,7 @@ export interface TimelineProps {
     items: TimelineItemProps[];
     title?: string | undefined;
     className?: string | undefined;
+    id?: string | undefined;
     startCol?: number | undefined;
     colSpan?: number | undefined;
     "data-testid"?: string | undefined;

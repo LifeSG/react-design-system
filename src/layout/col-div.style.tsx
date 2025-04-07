@@ -1,44 +1,75 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../media/media";
+import { MediaQuery } from "../theme/breakpoint/media-query-helper";
 
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
 export interface StyledDivStyleProps {
-    $desktopStart?: number | undefined;
-    $desktopSpan?: number | undefined;
-    $tabletStart?: number | undefined;
-    $tabletSpan?: number | undefined;
-    $mobileStart?: number | undefined;
-    $mobileSpan?: number | undefined;
+    $xxsStart?: number | undefined;
+    $xxsSpan?: number | undefined;
+    $xsStart?: number | undefined;
+    $xsSpan?: number | undefined;
+    $smStart?: number | undefined;
+    $smSpan?: number | undefined;
+    $mdStart?: number | undefined;
+    $mdSpan?: number | undefined;
+    $lgStart?: number | undefined;
+    $lgSpan?: number | undefined;
+    $xlStart?: number | undefined;
+    $xlSpan?: number | undefined;
+    $xxlStart?: number | undefined;
+    $xxlSpan?: number | undefined;
 }
 
-// =============================================================================
-// STYLING
-// =============================================================================
 export const StyledDiv = styled.div<StyledDivStyleProps>`
     position: relative;
+
     ${(props) => {
         const {
-            $desktopStart,
-            $desktopSpan,
-            $tabletStart,
-            $tabletSpan,
-            $mobileStart,
-            $mobileSpan,
+            $xxlStart,
+            $xxlSpan,
+
+            $xlStart,
+            $xlSpan,
+
+            $lgStart,
+            $lgSpan,
+
+            $mdStart,
+            $mdSpan,
+
+            $smStart,
+            $smSpan,
+
+            $xsStart,
+            $xsSpan,
+
+            $xxsStart,
+            $xxsSpan,
         } = props;
 
         return css`
-            grid-column: ${$desktopStart || "auto"} / span ${$desktopSpan || 1};
+            grid-column: ${$xxlStart || "auto"} / span ${$xxlSpan || 1};
 
-            ${MediaQuery.MaxWidth.tablet} {
-                grid-column: ${$tabletStart || "auto"} / span
-                    ${$tabletSpan || 1};
+            ${MediaQuery.MaxWidth.xl} {
+                grid-column: ${$xlStart || "auto"} / span ${$xlSpan || 1};
             }
 
-            ${MediaQuery.MaxWidth.mobileL} {
-                grid-column: ${$mobileStart || "auto"} / span
-                    ${$mobileSpan || 1};
+            ${MediaQuery.MaxWidth.lg} {
+                grid-column: ${$lgStart || "auto"} / span ${$lgSpan || 1};
+            }
+
+            ${MediaQuery.MaxWidth.md} {
+                grid-column: ${$mdStart || "auto"} / span ${$mdSpan || 1};
+            }
+
+            ${MediaQuery.MaxWidth.sm} {
+                grid-column: ${$smStart || "auto"} / span ${$smSpan || 1};
+            }
+
+            ${MediaQuery.MaxWidth.xs} {
+                grid-column: ${$xsStart || "auto"} / span ${$xsSpan || 1};
+            }
+
+            ${MediaQuery.MaxWidth.xxs} {
+                grid-column: ${$xxsStart || "auto"} / span ${$xxsSpan || 1};
             }
         `;
     }}

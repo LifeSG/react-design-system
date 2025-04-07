@@ -35,7 +35,7 @@ export const Modal = ({
                 handleViewportResize
             );
             return () => {
-                window.visualViewport.removeEventListener(
+                window.visualViewport?.removeEventListener(
                     "resize",
                     handleViewportResize
                 );
@@ -66,9 +66,11 @@ export const Modal = ({
     };
 
     const handleViewportResize = () => {
-        const newVerticalHeight = window.visualViewport.height * 0.01;
-        setVerticalHeight(newVerticalHeight);
-        setOffsetTop(window.visualViewport.offsetTop);
+        if (window.visualViewport) {
+            const newVerticalHeight = window.visualViewport.height * 0.01;
+            setVerticalHeight(newVerticalHeight);
+            setOffsetTop(window.visualViewport.offsetTop);
+        }
     };
 
     // =============================================================================

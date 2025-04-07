@@ -40,7 +40,7 @@ describe("Drawer", () => {
             <Drawer show onClose={onClose} onOverlayClick={onOverlayClick} />
         );
 
-        fireEvent.click(screen.queryByLabelText("Close drawer"));
+        fireEvent.click(screen.getByLabelText("Close drawer"));
 
         expect(onClose).toBeCalled();
         expect(onOverlayClick).not.toBeCalled();
@@ -53,7 +53,7 @@ describe("Drawer", () => {
             <Drawer show onClose={onClose} onOverlayClick={onOverlayClick} />
         );
 
-        fireEvent.click(screen.queryByTestId("overlay-wrapper"));
+        fireEvent.click(screen.getByTestId("overlay-wrapper"));
 
         expect(onClose).not.toBeCalled();
         expect(onOverlayClick).toBeCalled();

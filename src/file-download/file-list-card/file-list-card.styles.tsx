@@ -1,11 +1,9 @@
 import styled, { css } from "styled-components";
-import { MainStyleProps } from "../../button";
-import { Color } from "../../color";
 import { IconButton as DSIconButton } from "../../icon-button";
-import { MediaQuery } from "../../media";
-import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner/component-loading-spinner";
-import { Text } from "../../text";
+import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
+import { lineClampCss } from "../../shared/styles";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -21,28 +19,33 @@ interface ContentSectionStyleProps {
 export const Item = styled.li`
     display: flex;
     align-items: center;
+
     width: 100%;
     border: none;
 
     :not(:last-child) {
-        margin-bottom: 1rem;
+        margin-bottom: ${Spacing["spacing-16"]};
     }
 `;
 
 export const Box = styled.div`
-    background: ${Color.Accent.Light[6]};
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
-    padding: 1rem 2rem;
     display: flex;
     align-items: center;
+
     width: 100%;
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-32"]};
     cursor: pointer;
-    ${MediaQuery.MaxWidth.mobileL} {
-        padding: 1rem;
+
+    background: ${Colour["bg-primary-subtlest"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+
+    ${MediaQuery.MaxWidth.lg} {
+        padding: ${Spacing["spacing-16"]};
     }
+
     :hover {
-        background: ${Color.Accent.Light[5]};
+        background: ${Colour["bg-hover"]};
     }
 `;
 
@@ -51,16 +54,16 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     flex: 1;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.lg} {
         flex-direction: column;
-        width: 100%;
         align-items: flex-start;
+        width: 100%;
     }
 
     ${(props) => {
         if (props.$hasThumbnail) {
             return css`
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${MediaQuery.MaxWidth.lg} {
                     flex-direction: row;
                     align-items: center;
                 }
@@ -73,7 +76,9 @@ export const NameSection = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
+
     width: 100%;
+
     overflow-wrap: break-word;
     word-break: break-all;
     white-space: normal;
@@ -84,7 +89,7 @@ export const ExtendedNameSection = styled.div`
     flex: 1;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.lg} {
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
@@ -93,39 +98,47 @@ export const ExtendedNameSection = styled.div`
 
 export const FileSizeSection = styled.div`
     display: flex;
-    width: 5rem;
-    margin-left: 0.5rem;
     justify-content: flex-end;
-    ${MediaQuery.MaxWidth.mobileL} {
+
+    width: 5rem;
+    margin-left: ${Spacing["spacing-8"]};
+
+    ${Font["body-md-regular"]}
+    color: ${Colour["text"]};
+
+    ${MediaQuery.MaxWidth.lg} {
+        justify-content: flex-start;
+
         width: 100%;
         margin-left: 0;
-        margin-top: 0.5rem;
-        justify-content: flex-start;
+        margin-top: ${Spacing["spacing-8"]};
+
+        ${lineClampCss(2)}
     }
 `;
 
-export const ItemText = styled(Text.BodySmall)`
-    ${MediaQuery.MaxWidth.mobileL} {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        white-space: normal;
+export const ItemNameText = styled.div`
+    ${Font["body-md-regular"]}
+    color: ${Colour["text"]};
+
+    ${MediaQuery.MaxWidth.lg} {
+        ${lineClampCss(2)}
     }
 `;
 
-export const ItemDescriptionText = styled(ItemText)`
-    margin-top: 0.25rem;
+export const ItemDescriptionText = styled(ItemNameText)`
+    ${Font["body-md-regular"]}
+    margin-top: ${Spacing["spacing-4"]};
 `;
 
-export const BaseErrorMessage = styled(Text.XSmall)`
-    font-size: 0.875rem !important;
-    color: ${Color.Validation.Red.Text};
+const BaseErrorMessage = styled.div`
+    ${Font["body-sm-semibold"]}
+    color: ${Colour["text-error"]};
 `;
 
 export const DesktopErrorMessage = styled(BaseErrorMessage)`
-    margin-top: 0.25rem;
-    ${MediaQuery.MaxWidth.mobileL} {
+    margin-top: ${Spacing["spacing-4"]};
+    ${MediaQuery.MaxWidth.lg} {
         display: none;
         visibility: hidden;
     }
@@ -134,50 +147,26 @@ export const DesktopErrorMessage = styled(BaseErrorMessage)`
 export const MobileErrorMessage = styled(BaseErrorMessage)`
     display: none;
     visibility: hidden;
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.lg} {
         display: block;
         visibility: visible;
-        margin-top: 0.5rem;
+        margin-top: ${Spacing["spacing-8"]};
     }
 `;
 
-export const Spinner = styled(ComponentLoadingSpinner)<MainStyleProps>`
-    ${(props) => {
-        let color = Color.Primary(props);
-        switch (props.$buttonStyle) {
-            case "secondary":
-            case "light":
-            case "link":
-                break;
-            case "disabled":
-                color = Color.Neutral[3](props);
-                break;
-            default:
-                color = Color.Neutral[8](props);
-                break;
-        }
-
-        return css`
-            #inner1,
-            #inner2,
-            #inner3,
-            #inner4 {
-                border-color: ${color} transparent transparent transparent;
-            }
-        `;
-    }}
+export const Spinner = styled(ComponentLoadingSpinner)`
+    color: ${Colour["icon-primary"]};
 `;
 
 export const ActionContainer = styled.div`
-    width: 6rem;
-    margin-left: 2rem;
     display: flex;
     justify-content: flex-end;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        width: fit-content;
-        margin-left: 1rem;
+    margin-left: ${Spacing["spacing-32"]};
+
+    ${MediaQuery.MaxWidth.lg} {
+        margin-left: ${Spacing["spacing-16"]};
     }
 `;
 
@@ -185,32 +174,35 @@ export const IconButton = styled(DSIconButton)`
     min-width: unset;
 
     :not(:last-child) {
-        margin-right: 1rem;
+        margin-right: ${Spacing["spacing-16"]};
     }
 `;
 
 export const ThumbnailContainer = styled.div`
     width: auto;
-    margin-right: 2rem;
+    margin-right: ${Spacing["spacing-32"]};
+
     display: flex;
     flex-shrink: 0;
     flex-direction: column;
     justify-content: center;
-    ${MediaQuery.MaxWidth.mobileL} {
-        margin-right: 1rem;
+
+    ${MediaQuery.MaxWidth.lg} {
+        margin-right: ${Spacing["spacing-16"]};
     }
 `;
 
 export const Thumbnail = styled(ImageWithFallback)`
-    width: 6rem;
-    height: 6rem;
+    border-radius: ${Radius["sm"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+
+    width: 96px;
+    height: 96px;
     aspect-ratio: 1;
-    border-radius: 4px;
-    border: 1px solid ${Color.Neutral[5]};
     object-fit: cover;
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        width: 4rem;
-        height: 4rem;
+    ${MediaQuery.MaxWidth.lg} {
+        width: 64px;
+        height: 64px;
     }
 `;

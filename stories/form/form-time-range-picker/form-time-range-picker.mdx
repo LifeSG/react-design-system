@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormTimeRangePickerStories from "./form-time-range-picker.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormTimeRangePickerStories} />
 
-<Title>Form.TimeRangePicker</Title>
+# Form.TimeRangePicker
 
-<Secondary>Overview</Secondary>
+## Overview
 
 The field that allows a user to enter a time range.
 
@@ -17,18 +16,18 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormTimeRangePickerStories.Default} />
 
-<Heading3>12 hour format</Heading3>
+## 12 hour format
 
 <Canvas of={FormTimeRangePickerStories.TwelveHourFormat} />
 
-<Heading3>Rendering in grid layouts</Heading3>
+## Rendering in grid layouts
 
-You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--docs)
+You can also specify [ColDiv's](/docs/core-layout-coldiv--docs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormTimeRangePickerStories.RenderingInGridLayout} />
 
-<Heading3>Using the field as a standalone</Heading3>
+## Using the field as a standalone
 
 In the case that you require the timepicker field as a standalone, you can do this.
 
@@ -38,7 +37,7 @@ import { TimeRangePicker } from "@lifesg/react-design-system/TimeRangePicker";
 
 <Canvas of={FormTimeRangePickerStories.StandaloneUsage} />
 
-<Heading3>Combobox variant</Heading3>
+## Combobox variant
 
 You can also use a `combobox` variant that allows users to either select a time
 from a dropdown list of options, or manually type in a time which is
@@ -50,6 +49,6 @@ invalid time range (start is greater than end).
 
 <Canvas of={FormTimeRangePickerStories.ComboboxVariant} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

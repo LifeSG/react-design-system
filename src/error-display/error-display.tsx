@@ -1,6 +1,5 @@
 import React from "react";
 import { useTheme } from "styled-components";
-import { BaseTheme } from "../theme";
 import { getErrorDisplayData } from "./error-display-data";
 import {
     ActionButton,
@@ -15,6 +14,7 @@ import {
     InactivityAdditionalAttributes,
     MaintenanceAdditionalAttributes,
 } from "./types";
+import { LifeSGTheme } from "../theme";
 
 export const ErrorDisplay = ({
     type,
@@ -26,14 +26,15 @@ export const ErrorDisplay = ({
     imageOnly,
     illustrationScheme,
     ...otherProps
-}: ErrorDisplayProps): JSX.Element => {
+}: ErrorDisplayProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const theme = useTheme();
     const defaultAssets = getErrorDisplayData(
         type,
-        illustrationScheme || (theme || BaseTheme).resourceScheme
+        illustrationScheme || (theme || LifeSGTheme).resourceScheme,
+        theme
     );
 
     const testId = otherProps["data-testid"] || "error-display";
@@ -47,14 +48,14 @@ export const ErrorDisplay = ({
                 const typecastProps =
                     additionalProps as MaintenanceAdditionalAttributes;
                 return additionalProps && typecastProps.dateString
-                    ? defaultAssets.renderDescription(typecastProps)
+                    ? defaultAssets?.renderDescription?.(typecastProps)
                     : description || undefined;
             }
             case "inactivity": {
                 const typecastProps =
                     additionalProps as InactivityAdditionalAttributes;
                 return additionalProps && typecastProps.secondsLeft
-                    ? defaultAssets.renderDescription(typecastProps)
+                    ? defaultAssets?.renderDescription?.(typecastProps)
                     : description || undefined;
             }
             default:

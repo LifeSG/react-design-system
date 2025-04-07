@@ -81,7 +81,7 @@ export namespace DateHelper {
         return endTime.diff(startTime, "minute");
     };
 
-    export const toDayjs = (date: string): Dayjs => {
+    export const toDayjs = (date: string | undefined): Dayjs => {
         return date ? dayjs(date) : dayjs();
     };
 

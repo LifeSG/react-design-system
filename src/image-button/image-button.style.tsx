@@ -1,7 +1,6 @@
-import { MediaQuery } from "../media";
 import styled, { css } from "styled-components";
-import { Color } from "../color/color";
-import { TextStyleHelper } from "../text/helper";
+import { Border, Colour, Font, Motion, Radius } from "../theme";
+import { MediaQuery } from "../theme";
 
 export const Main = styled.button<{
     $selected?: boolean;
@@ -14,14 +13,15 @@ export const Main = styled.button<{
     justify-content: center;
     align-items: center;
     padding: 1.5rem 1rem;
-    background-color: ${Color.Neutral[8]};
-    border: 1px solid transparent;
-    border-radius: 0.5rem;
+    background-color: ${Colour.bg};
+    border: ${Border["width-010"]} ${Border.solid} transparent;
+    border-radius: ${Radius.md};
     cursor: pointer;
     max-width: 13rem;
-    transition: all 200ms ease;
-    ${TextStyleHelper.getTextStyle("Body", "semibold")}
-    color: ${({ $selected }) => $selected && Color.Primary};
+    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
+    ${Font["body-baseline-semibold"]}
+    color: ${({ $selected }) =>
+        $selected ? Colour["text-primary"] : Colour["text"]};
     overflow-wrap: anywhere;
 
     img {
@@ -31,36 +31,36 @@ export const Main = styled.button<{
         object-fit: contain;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         padding: 0.5rem 0.25rem;
         gap: 0.25rem;
-        ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+        ${Font["body-md-semibold"]}
     }
 
     ${(props) => {
         if (props.$error) {
             return css`
-                background: ${Color.Neutral[8]};
-                border: 1px solid ${Color.Validation.Red.Border};
-
-                :hover {
-                    box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
-                }
+                background: ${Colour.bg};
+                border: ${Border["width-010"]} ${Border.solid}
+                    ${Colour["border-error"]};
             `;
         } else if (props.$selected) {
             return css`
-                background: ${Color.Accent.Light[5]};
-                border: 1px solid ${Color.Primary};
+                background: ${Colour["bg-selected"]};
+                border: ${Border["width-010"]} ${Border.solid}
+                    ${Colour["border-selected"]};
 
-                :hover {
-                    box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
+                &:hover {
+                    background: ${Colour["bg-selected-hover"]};
+                    border: ${Border["width-010"]} ${Border.solid}
+                        ${Colour["border-selected-hover"]};
                 }
             `;
         } else {
             return css`
                 &:hover {
-                    border: 1px solid ${Color.Accent.Light[1]};
-                    box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
+                    border: ${Border["width-010"]} ${Border.solid}
+                        ${Colour["border-hover-strong"]};
                 }
             `;
         }
@@ -68,13 +68,13 @@ export const Main = styled.button<{
 
     :disabled {
         &:hover {
-            border: 1px solid transparent;
+            border: ${Border["width-010"]} ${Border.solid} transparent;
         }
         box-shadow: none;
         img {
             filter: grayscale(100%);
         }
-        color: ${Color.Neutral[3]};
+        color: ${Colour["text-disabled"]};
 
         outline: none;
         cursor: not-allowed;

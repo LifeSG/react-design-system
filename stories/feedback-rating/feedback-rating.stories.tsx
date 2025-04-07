@@ -7,7 +7,7 @@ import { ModalBoxDiv } from "./doc-elements";
 type Component = typeof FeedbackRating;
 
 const meta: Meta<Component> = {
-    title: "Modules/FeedbackRating",
+    title: "Selection and input/FeedbackRating",
     component: FeedbackRating,
 };
 
@@ -20,13 +20,12 @@ export const Default: StoryObj<Component> = {
         const openModal = () => setShow(true);
         const closeModal = () => setShow(false);
         return (
-            <div>
+            <>
                 <Modal show={show} onOverlayClick={closeModal}>
                     <Modal.Box onClose={closeModal}>
                         <ModalBoxDiv>
-                            <span>{`You have rated: ${rating} star${
-                                rating === 1 ? "" : "s"
-                            }`}</span>
+                            You have rated: {rating} star
+                            {rating === 1 ? "" : "s"}
                         </ModalBoxDiv>
                     </Modal.Box>
                 </Modal>
@@ -35,7 +34,7 @@ export const Default: StoryObj<Component> = {
                     onRatingChange={setRating}
                     onSubmit={openModal}
                 />
-            </div>
+            </>
         );
     },
 };

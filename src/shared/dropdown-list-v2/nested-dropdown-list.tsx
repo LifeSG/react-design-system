@@ -11,9 +11,9 @@ import {
     LabelIcon,
     List,
     ResultStateContainer,
-    ResultStateText,
     SelectAllButton,
     SelectAllContainer,
+    SelectedIndicator,
     TryAgainButton,
 } from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
@@ -33,7 +33,6 @@ import {
     Indent,
     ListItem,
     ListItemContainer,
-    SelectedIndicator,
     SelectionIndicator,
     UnexpandableIndicator,
 } from "./nested-dropdown-list.styles";
@@ -45,7 +44,7 @@ import {
 
 export const NestedDropdownList = <T,>({
     listItems,
-    multiSelect,
+    multiSelect = false,
     selectedKeyPaths,
     itemsLoadState = "success",
     itemTruncationType = "end",
@@ -71,10 +70,10 @@ export const NestedDropdownList = <T,>({
     const [searchValue, setSearchValue] = useState<string>("");
     const searchTerm = searchValue.toLowerCase().trim();
     const [searchActive, setSearchActive] = useState<boolean>(false);
-    const nodeRef = useRef<HTMLDivElement>();
-    const listRef = useRef<HTMLDivElement>();
-    const listItemRefs = useRef<HTMLElement[]>([]);
-    const searchInputRef = useRef<HTMLInputElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
+    const listItemRefs = useRef<(HTMLElement | null)[]>([]);
+    const searchInputRef = useRef<HTMLInputElement>(null);
     const mounted = useIsMounted();
 
     // maintaining a separate list for search and non-search as we need to
@@ -130,7 +129,7 @@ export const NestedDropdownList = <T,>({
                 if (upcomingItem) {
                     setVirtuosoIndex((vIndex) => vIndex + 1);
                     setFocusedIndex(upcomingItem.index);
-                    listItemRefs.current[upcomingItem.index].focus();
+                    listItemRefs.current[upcomingItem.index]?.focus();
                 }
                 break;
             }
@@ -144,7 +143,7 @@ export const NestedDropdownList = <T,>({
                 if (upcomingItem) {
                     setVirtuosoIndex((vIndex) => vIndex - 1);
                     setFocusedIndex(upcomingItem.index);
-                    listItemRefs.current[upcomingItem.index].focus();
+                    listItemRefs.current[upcomingItem.index]?.focus();
                 } else if (virtuosoIndex === 0 && searchInputRef.current) {
                     searchInputRef.current.focus();
                     setVirtuosoIndex(-1);
@@ -197,7 +196,7 @@ export const NestedDropdownList = <T,>({
     const handleOnClear = () => {
         setSearchValue("");
         setSearchActive(false);
-        searchInputRef.current.focus();
+        searchInputRef.current?.focus();
 
         onSearch?.();
     };
@@ -335,7 +334,7 @@ export const NestedDropdownList = <T,>({
     useEventListener("keydown", handleKeyboardPress);
 
     useEffect(() => {
-        let list: NestedDropdownListLocalItem<T>[];
+        let list: NestedDropdownListLocalItem<T>[] = [];
         if (mode === "default") {
             list = flattenDefaultMode(listItems);
         } else if (mode === "expand") {
@@ -440,10 +439,8 @@ export const NestedDropdownList = <T,>({
         ) {
             return (
                 <ResultStateContainer data-testid="list-no-results">
-                    <LabelIcon $variant={variant} />
-                    <ResultStateText $variant={variant}>
-                        No results found.
-                    </ResultStateText>
+                    <LabelIcon data-testid="no-result-icon" />
+                    No results found.
                 </ResultStateContainer>
             );
         }
@@ -451,14 +448,10 @@ export const NestedDropdownList = <T,>({
 
     const renderLoading = () => {
         if (onRetry && itemsLoadState === "loading") {
-            const spinnerSize = variant === "small" ? 16 : 18;
-
             return (
                 <ResultStateContainer data-testid="list-loading">
-                    <Spinner $buttonStyle="secondary" size={spinnerSize} />
-                    <ResultStateText $variant={variant}>
-                        Loading...
-                    </ResultStateText>
+                    <Spinner />
+                    Loading...
                 </ResultStateContainer>
             );
         }
@@ -468,14 +461,8 @@ export const NestedDropdownList = <T,>({
         if (onRetry && itemsLoadState === "fail") {
             return (
                 <ResultStateContainer data-testid="list-fail">
-                    <LabelIcon
-                        data-testid="load-error-icon"
-                        $variant={variant}
-                    />
-                    <ResultStateText $variant={variant}>
-                        Failed to load.
-                    </ResultStateText>
-                    &nbsp;
+                    <LabelIcon data-testid="load-error-icon" />
+                    Failed to load.&nbsp;
                     <TryAgainButton
                         onClick={handleTryAgain}
                         type="button"
@@ -604,7 +591,7 @@ export const NestedDropdownList = <T,>({
             >
                 <Virtuoso
                     style={{ height: "100%" }}
-                    customScrollParent={nodeRef.current}
+                    customScrollParent={nodeRef.current ?? undefined}
                     data={visibleItems}
                     itemContent={(vIndex, item) => renderItem(item, vIndex)}
                     // disable virtualisation in tests
@@ -638,6 +625,7 @@ export const NestedDropdownList = <T,>({
             data-testid="dropdown-container"
             ref={nodeRef}
             $width={width}
+            $variant={variant}
         >
             {renderList()}
         </Container>

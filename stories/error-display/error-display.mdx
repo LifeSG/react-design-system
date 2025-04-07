@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
 import * as ErrorDisplayStories from "./error-display.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={ErrorDisplayStories} />
 
-<Title>ErrorDisplay</Title>
+# ErrorDisplay
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that displays an error or issue that has occurred.
 
@@ -17,29 +16,29 @@ import { ErrorDisplay } from "@lifesg/react-design-system/error-display";
 
 <Canvas of={ErrorDisplayStories.Default} />
 
-<Secondary>Other usages</Secondary>
+## Other usages
 
-<Heading3>With action button</Heading3>
+## With action button
 
 You can also add an action button to be present in the `ErrorDisplay`. The action button will
 appear at the bottom of the component.
 
 <Canvas of={ErrorDisplayStories.WithActionButton} />
 
-<Heading3>With custom attributes</Heading3>
+## With custom attributes
 
 Some variants of the `ErrorDisplay` accept custom attributes to alter the text content with
 dynamic variables. Currently only the types `"maintenance"` and `"inactivity"` have such a support.
 
-<Heading4>Maintenance</Heading4>
+### Maintenance
 
 <Canvas of={ErrorDisplayStories.Maintenance} />
 
-<Heading4>Inactivity</Heading4>
+### Inactivity
 
 <Canvas of={ErrorDisplayStories.Inactivity} />
 
-<Heading3>Customisation</Heading3>
+## Customisation
 
 The `ErrorDisplay` component is customisable according to your project's needs. Customisation includes
 
@@ -57,8 +56,6 @@ If you require customisations down to the style, you can use the relevant `data-
 | title       | `"error-display-title"`       |
 | description | `"error-display-description"` |
 
-> **Note**: For the title and description, you will need to use the `!important` flag when modifying the size, line height and letter spacing
-
 ```tsx
 // If you are using Styled Components
 
@@ -69,12 +66,12 @@ export const CustomErrorDisplay = styled(ErrorDisplay)`
 `;
 ```
 
-<Secondary>Variants</Secondary>
+## Variants
 
 > **Note**: Switch to the standalone story and use the Controls add-on to view the different error types
 
 <Canvas of={ErrorDisplayStories.Variants} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

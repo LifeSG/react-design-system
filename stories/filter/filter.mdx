@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as FilterStories from "./filter.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FilterStories} />
 
-<Title>Filter</Title>
+# Filter
 
-<Secondary>Overview</Secondary>
+## Overview
 
 Displays widgets under collapsible panels to filter data results.
 
@@ -17,13 +16,13 @@ import { Filter } from "@lifesg/react-design-system/filter";
 
 <Canvas of={FilterStories.Default} />
 
-<Heading3>Configuring filter item</Heading3>
+## Configuring filter item
 
 Each item can be configured with `collapsible`, `showDivider` and `showMobileDivider` props.
 
 <Canvas of={FilterStories.ConfiguringFilterItem} />
 
-<Heading3>Expanded state</Heading3>
+## Expanded state
 
 By default, the expanded state is handled by the component. For advanced use cases, the filter item can be used as a controlled component.
 
@@ -31,28 +30,29 @@ By default, the expanded state is handled by the component. For advanced use cas
 
 <Canvas of={FilterStories.HandlingExpandedState} />
 
-<Heading3>Minimising content</Heading3>
+## Minimising content
 
 For longer filter items, content can be minimised with the `minimisable` prop.
 
 <Canvas of={FilterStories.Minimised} />
 
-<Heading3>Accessing mode</Heading3>
+## Accessing mode
 
 If you need the current visible mode, you may pass in a render prop as a child of `Filter` or `Filter.Item`.
 
 <Canvas of={FilterStories.AccessingMode} />
 
-<Heading3>Floating content</Heading3>
+## Floating content
 
 If some child elements are positioned absolutely, content may be clipped if they exceed the parent's boundaries.
-For such scenarios, you may increase the height of the container by adding some padding.
+It is recommended to use a smart positioning library such as [Floating UI](https://floating-ui.com/) to render such content.
+If you are unable to do so, an alternative is to increase the height of the container by adding some padding.
 
-In the example below, extra padding is applied when the dropdown list is expanded.
+In the example below, extra padding is applied when the item is expanded.
 
 <Canvas of={FilterStories.WithFloatingContent} />
 
-<Heading3>Displaying filter in fullscreen</Heading3>
+## Displaying filter in fullscreen
 
 Some filters may need to rendered as a fullscreen page while editing. A display component is provided for this purpose and can be combined with the `Overlay` component.
 

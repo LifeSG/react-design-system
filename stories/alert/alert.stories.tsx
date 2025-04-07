@@ -1,76 +1,68 @@
 import { CalendarEventIcon } from "@lifesg/react-icons/calendar-event";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Alert } from "src/alert";
+import { StackDecorator, StoryDecorator } from "stories/storybook-common";
 
 type Component = typeof Alert;
 
 const meta: Meta<Component> = {
-    title: "Modules/Alert",
+    title: "Feedback indicators/Alert",
     component: Alert,
+    decorators: [StackDecorator(), StoryDecorator()],
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
                 <Alert type="error">
                     This will notify users of an error that has occurred.
                 </Alert>
-                <br />
                 <Alert type="warning">
                     This serves as a warning or disclaimer to users.
                 </Alert>
-                <br />
                 <Alert type="success">
                     This serves as an acknowledgement of a successful action.
                 </Alert>
-                <br />
                 <Alert type="info">
                     This provides non-critical information to users.
                 </Alert>
-                <br />
                 <Alert type="description">
                     This provides non-critical information to users.
                 </Alert>
-                <br />
             </>
         );
     },
 };
 
 export const WithIcon: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
                 <Alert type="error" showIcon>
                     This will notify users of an error that has occurred.
                 </Alert>
-                <br />
                 <Alert type="warning" showIcon>
                     This serves as a warning or disclaimer to users.
                 </Alert>
-                <br />
                 <Alert type="success" showIcon>
                     This serves as an acknowledgement of a successful action.
                 </Alert>
-                <br />
                 <Alert type="info" showIcon>
                     This provides non-critical information to users.
                 </Alert>
-                <br />
                 <Alert type="description" showIcon>
                     This provides non-critical information to users.
                 </Alert>
-                <br />
             </>
         );
     },
 };
 
 export const WithBoldText: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Alert type="success">
                 <p>
@@ -100,7 +92,7 @@ export const WithBoldText: StoryObj<Component> = {
 };
 
 export const WithCustomDisplay: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Alert type="error">
                 <ul style={{ display: "flex", listStyle: "none" }}>
@@ -141,7 +133,7 @@ export const WithCustomDisplay: StoryObj<Component> = {
 };
 
 export const WithHyperlink: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Alert
                 type="warning"
@@ -162,7 +154,7 @@ export const WithHyperlink: StoryObj<Component> = {
 };
 
 export const SmallSize: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
                 <Alert type="description" sizeType="small">
@@ -170,7 +162,6 @@ export const SmallSize: StoryObj<Component> = {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     </p>
                 </Alert>
-                <br />
                 <Alert
                     type="description"
                     sizeType="small"
@@ -185,13 +176,11 @@ export const SmallSize: StoryObj<Component> = {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     </p>
                 </Alert>
-                <br />
                 <Alert type="description" showIcon sizeType="small">
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     </p>
                 </Alert>
-                <br />
                 <Alert
                     type="description"
                     showIcon
@@ -207,7 +196,6 @@ export const SmallSize: StoryObj<Component> = {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     </p>
                 </Alert>
-                <br />
                 <Alert
                     type="description"
                     showIcon
@@ -230,25 +218,18 @@ export const SmallSize: StoryObj<Component> = {
 };
 
 export const WithCustomIcon: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <>
-                <Alert
-                    type="warning"
-                    showIcon
-                    customIcon={<CalendarEventIcon />}
-                >
-                    An alert box with a custom icon that can be passed in using
-                    customIcon.
-                </Alert>
-                <br />
-            </>
+            <Alert type="warning" showIcon customIcon={<CalendarEventIcon />}>
+                An alert box with a custom icon that can be passed in using
+                customIcon.
+            </Alert>
         );
     },
 };
 
 export const WithMaxCollapsedHeight: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
                 <Alert
@@ -274,7 +255,6 @@ export const WithMaxCollapsedHeight: StoryObj<Component> = {
                     Donec faucibus condimentum nibh, non tempus augue bibendum
                     non. Cras in mattis ex.
                 </Alert>
-                <br />
                 <Alert type="error" showIcon maxCollapsedHeight={50}>
                     <div
                         style={{
@@ -286,7 +266,6 @@ export const WithMaxCollapsedHeight: StoryObj<Component> = {
                         Custom content
                     </div>
                 </Alert>
-                <br />
             </>
         );
     },

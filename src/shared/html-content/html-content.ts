@@ -1,10 +1,9 @@
 import { css } from "styled-components";
-import { Color } from "../../color";
-import { FontFamily } from "../../spec/text-spec/font-spec";
-import { TextSizeType, TextStyleHelper } from "../../text";
+import { Colour, Font } from "../../theme";
+import { TypographySizeType } from "../../theme/font/types";
 
 export interface HtmlContentStyleOptions {
-    textSize?: TextSizeType | undefined;
+    textSize?: TypographySizeType | undefined;
 }
 
 export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
@@ -12,11 +11,11 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
 
     return css`
         // Text styling
-        ${textSize && TextStyleHelper.getTextStyle(textSize, "regular")}
+        ${textSize && Font[`${textSize}-regular`]}
 
         strong {
-            font-family: ${FontFamily.OpenSans.Semibold};
-            ${textSize && TextStyleHelper.getTextStyle(textSize, "semibold")}
+            font-weight: ${Font.Spec["weight-semibold"]};
+            ${textSize && Font[`${textSize}-semibold`]};
         }
 
         p {
@@ -25,27 +24,27 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
 
         // Link styling
         a {
-            font-family: ${FontFamily.OpenSans.Semibold};
-            ${textSize && TextStyleHelper.getTextStyle(textSize, "semibold")}
-            color: ${Color.Primary};
+            font-weight: ${Font.Spec["weight-semibold"]};
+            ${textSize && Font[`${textSize}-semibold`]}
+            color: ${Colour.hyperlink};
             text-decoration: none;
 
             svg {
-                color: ${Color.Primary};
-                height: 1rem;
-                width: 1rem;
+                color: ${Colour["icon-primary"]};
+                height: 1lh;
+                width: 1em;
                 margin-left: 0.4rem;
-                vertical-align: baseline;
+                vertical-align: middle;
             }
 
             :hover,
             :active,
             :visited,
             :focus {
-                color: ${Color.Secondary};
+                color: ${Colour["hyperlink-hover"]};
 
                 svg {
-                    color: ${Color.Secondary};
+                    color: ${Colour["icon-hover"]};
                 }
             }
         }

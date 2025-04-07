@@ -330,7 +330,7 @@ describe("NestedDropdownList", () => {
             />
         );
 
-        await user.click(screen.queryByText("Parent 1 item"));
+        await user.click(screen.getByText("Parent 1 item"));
 
         expect(screen.queryByText("Parent 1 item")).toBeVisible();
         expect(screen.queryByText("Parent 1.1 item")).toBeVisible();
@@ -340,7 +340,7 @@ describe("NestedDropdownList", () => {
         expect(screen.queryByText("Parent 1.3 item")).toBeVisible();
         expect(screen.queryByText("Child 1.3.1 item")).not.toBeInTheDocument();
 
-        await user.click(screen.queryByText("Parent 1.1 item"));
+        await user.click(screen.getByText("Parent 1.1 item"));
 
         expect(screen.queryByText("Parent 1 item")).toBeVisible();
         expect(screen.queryByText("Parent 1.1 item")).toBeVisible();
@@ -430,7 +430,7 @@ describe("NestedDropdownList", () => {
             />
         );
 
-        await user.click(screen.queryByText("Parent 1.1 item"));
+        await user.click(screen.getByText("Parent 1.1 item"));
 
         expect(screen.queryByText("Parent 1 item")).toBeVisible();
         expect(screen.queryByText("Parent 1.1 item")).toBeVisible();
@@ -440,7 +440,7 @@ describe("NestedDropdownList", () => {
         expect(screen.queryByText("Parent 1.3 item")).toBeVisible();
         expect(screen.queryByText("Child 1.3.1 item")).toBeVisible();
 
-        await user.click(screen.queryByText("Parent 1 item"));
+        await user.click(screen.getByText("Parent 1 item"));
 
         expect(screen.queryByText("Parent 1 item")).toBeVisible();
         expect(screen.queryByText("Parent 1.1 item")).not.toBeInTheDocument();
@@ -531,7 +531,7 @@ describe("NestedDropdownList", () => {
                 />
             );
 
-            await user.click(screen.queryByText("Parent 1.1 item"));
+            await user.click(screen.getByText("Parent 1.1 item"));
 
             expect(mockOnSelectItem).toHaveBeenCalledWith(
                 expect.objectContaining({ keyPath: ["1", "1.1"] })
@@ -567,7 +567,7 @@ describe("NestedDropdownList", () => {
             await user.click(
                 within(
                     screen.getByRole("treeitem", { name: "Parent 1.1 item" })
-                ).queryByTestId("toggle-category-button")
+                ).getByTestId("toggle-category-button")
             );
 
             expect(mockOnSelectItem).not.toHaveBeenCalled();

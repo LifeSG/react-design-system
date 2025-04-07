@@ -187,7 +187,7 @@ describe("StringHelper", () => {
         it("should render the correct masked value based on the mask transformer", () => {
             const testString = "S1234567D";
             const options = {
-                maskTransformer: (value) => value.replace(/\D/g, "*"),
+                maskTransformer: (value: string) => value.replace(/\D/g, "*"),
             };
 
             expect(StringHelper.maskValue(testString, options)).toEqual(

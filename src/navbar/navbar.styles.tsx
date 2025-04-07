@@ -1,9 +1,7 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Transition } from "../transition";
+import { Colour, MediaQuery, Motion } from "../theme";
 
 // =============================================================================
 // CONSTANTS
@@ -49,9 +47,9 @@ export const Nav = styled.nav<StyleProps>`
     justify-content: space-between;
     align-items: center;
     position: relative;
-    transition: ${Transition.Base};
+    transition: ${Motion["duration-350"]} ${Motion["ease-standard"]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         height: ${NAVBAR_MOBILE_HEIGHT}rem;
     }
 `;
@@ -63,7 +61,7 @@ export const NavElementsContainer = styled.div<StyleProps>`
     flex: 1;
     justify-content: flex-end;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin-left: 0rem;
     }
 `;
@@ -71,7 +69,7 @@ export const NavElementsContainer = styled.div<StyleProps>`
 export const MobileMenuButton = styled(ClickableIcon)`
     display: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
         padding: 0 1.5rem;
         margin-right: -1.5rem;
@@ -81,7 +79,7 @@ export const MobileMenuButton = styled(ClickableIcon)`
 export const MobileMenuIcon = styled(MenuIcon)`
     height: 1.5rem;
     width: 1.5rem;
-    color: ${Color.Neutral[1]};
+    color: ${Colour.icon};
 `;
 
 export const NavBrandContainer = styled.div<StyleProps>`
@@ -92,28 +90,27 @@ export const NavBrandContainer = styled.div<StyleProps>`
 
     height: ${(props) => (props.$compress ? 1.5 : 2)}rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         height: 1.5rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${MediaQuery.MaxWidth.xxs} {
         height: 1.25rem;
     }
 `;
 
 export const NavSeparator = styled.div<StyleProps>`
     display: flex;
-    background-color: ${Color.Neutral[5]};
+    background-color: ${Colour.border};
     height: 100%;
-    width: 1px;
+    width: 2px;
     margin: 0 ${(props) => (props.$compress ? 1 : 1.5)}rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin: 0 1rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileS} {
-        width: 2px;
+    ${MediaQuery.MaxWidth.sm} {
         margin: 0 0.75rem;
     }
 `;

@@ -5,7 +5,7 @@ import { useCallback, useLayoutEffect, useRef } from "react";
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useEvent<T extends (...args: any[]) => any>(callback: T): T {
-    const ref = useRef<T>(null);
+    const ref = useRef<T | null>(null);
 
     useLayoutEffect(() => {
         ref.current = callback;
@@ -14,7 +14,7 @@ export function useEvent<T extends (...args: any[]) => any>(callback: T): T {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     return useCallback(
         ((...args) => {
-            return ref.current(...args);
+            return ref.current?.(...args);
         }) as T,
         []
     );

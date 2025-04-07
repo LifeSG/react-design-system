@@ -1,0 +1,51 @@
+import { Meta } from "@storybook/blocks";
+import { DocInfo, DocNote } from "stories/storybook-common";
+
+<Meta title="Foundations/Spacing/Introduction" />
+
+# Spacing
+
+```tsx
+import { Spacing } from "@lifesg/react-design-system/theme";
+```
+
+There are two types of tokens: **layout** and **spacing**. Layout tokens should
+be used for page layouts, while spacing tokens should be used for
+component-level spacing.
+
+The tokens are pixel-based since as a general rule of thumb, layouts are
+intended to match the viewport instead of the user's font size.
+
+## Collections
+
+[Default](/docs/foundations-spacing-default--docs)
+
+## Usage
+
+Apply the spacing tokens when defining margin or padding styles.
+
+```tsx
+import { Spacing } from "@lifesg/react-design-system/theme";
+import styled from "styled-components";
+
+const Container = styled.div`
+    padding: ${Spacing["spacing-8"]};
+    margin-bottom: ${Spacing["layout-md"]};
+`;
+```
+
+## Overriding
+
+```tsx
+import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+
+const customTheme: ThemeSpec = {
+    ...LifeSGTheme,
+    overrides: {
+        spacing: {
+            "spacing-4": 4, // specify a custom pixel-based value
+            "layout-md": 20, // specify a custom pixel-based value
+        },
+    },
+};
+```

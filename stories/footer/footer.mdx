@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as FooterStories from "./footer.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FooterStories} />
 
-<Title>Footer</Title>
+# Footer
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that holds the directory and disclaimer information at the bottom of the website.
 
@@ -17,19 +16,19 @@ import { Footer } from "@lifesg/react-design-system/footer";
 
 <Canvas of={FooterStories.Default} />
 
-<Secondary>Other usages</Secondary>
+## Other usages
 
-<Heading3>Minimal version</Heading3>
+## Minimal version
 
 This version is useful to be used as footers for dedicated apps that do not have other web pages.
 
 <Canvas of={FooterStories.MinimalVersion} />
 
-<Heading3>With custom content</Heading3>
+## With custom content
 
 <Canvas of={FooterStories.WithCustomContent} />
 
-<Heading3>With other customisations</Heading3>
+## With other customisations
 
 You are also able to customise the logo, copyright text and disclaimerLinks. In this example, we will customise the
 
@@ -39,11 +38,11 @@ You are also able to customise the logo, copyright text and disclaimerLinks. In 
 
 <Canvas of={FooterStories.OtherCustomisations} />
 
-<Secondary>About disclaimer links</Secondary>
+## About disclaimer links
 
 As the disclaimer links are mandated to be in the `Footer`, the component already comes with a predefined set of values.
 
-<Heading3>Predefined values</Heading3>
+## Predefined values
 
 |            | privacy                                   | termsOfUse                           | reportVulnerability                       |
 | ---------- | ----------------------------------------- | ------------------------------------ | ----------------------------------------- |
@@ -56,7 +55,7 @@ As the disclaimer links are mandated to be in the `Footer`, the component alread
 
 <br />
 
-<Heading3>Customising the links</Heading3>
+## Customising the links
 
 You are given the flexibility to customise any of the links **except the link text**. You can do so as such:
 
@@ -77,13 +76,13 @@ return (
 );
 ```
 
-<Heading3>Stretched layout</Heading3>
+## Stretched layout
 
 In this example, the content of the footer is stretched to the full width of
 the screen with a fixed padding, ignoring the masthead's alignment.
 
 <Canvas of={FooterStories.StretchedLayout} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

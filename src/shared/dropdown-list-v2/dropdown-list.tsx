@@ -8,7 +8,6 @@ import React, {
     useState,
 } from "react";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
-import { Spinner } from "../../button/button.style";
 import {
     useCompare,
     useEvent,
@@ -26,10 +25,10 @@ import {
     ListItem,
     Listbox,
     ResultStateContainer,
-    ResultStateText,
     SelectAllButton,
     SelectAllContainer,
     SelectedIndicator,
+    Spinner,
     TryAgainButton,
     UnselectedIndicator,
 } from "./dropdown-list.styles";
@@ -75,14 +74,14 @@ export const DropdownList = <T, V>({
         DropdownListStateContext
     );
     const [searchValue, setSearchValue] = useState<string>("");
-    const [displayListItems, setDisplayListItems] = useState(listItems);
+    const [displayListItems, setDisplayListItems] = useState(listItems ?? []);
     const itemsLoadStateChanged = useCompare(itemsLoadState);
     const mounted = useIsMounted();
 
-    const nodeRef = useRef<HTMLDivElement>();
-    const listRef = useRef<HTMLDivElement>();
-    const listItemRefs = useRef<HTMLElement[]>([]);
-    const searchInputRef = useRef<HTMLInputElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
+    const listItemRefs = useRef<(HTMLElement | null)[]>([]);
+    const searchInputRef = useRef<HTMLInputElement>(null);
     const virtuosoRef = useRef<VirtuosoHandle>(null);
 
     // =========================================================================
@@ -98,8 +97,14 @@ export const DropdownList = <T, V>({
         return `item_${index}__${formattedValue}`;
     };
 
-    const getOptionLabel = (item: T): string | ListItemDisplayProps => {
-        return listExtractor ? listExtractor(item) : item.toString();
+    const getOptionLabel = (item: T): ListItemDisplayProps => {
+        const value = listExtractor ? listExtractor(item) : item?.toString();
+
+        if (typeof value === "object") {
+            return { title: value.title, secondaryLabel: value.secondaryLabel };
+        }
+
+        return { title: value ?? "" };
     };
 
     const checkListItemSelected = useCallback(
@@ -112,20 +117,12 @@ export const DropdownList = <T, V>({
     );
 
     const filterItemsByCustomSearch = useEvent(() => {
-        return searchFunction(searchValue);
+        return searchFunction?.(searchValue);
     });
 
     const filterItemsByLabel = useEvent(() => {
-        return listItems.filter((item) => {
-            const label = getOptionLabel(item);
-            const title =
-                typeof label === "object"
-                    ? label.title.toLowerCase()
-                    : label.toLowerCase();
-            const secondaryLabel =
-                typeof label === "string"
-                    ? undefined
-                    : label.secondaryLabel?.toLowerCase();
+        return listItems?.filter((item) => {
+            const { title, secondaryLabel } = getOptionLabel(item);
             const updatedSearchValue = searchValue.trim().toLowerCase();
             return (
                 title.includes(updatedSearchValue) ||
@@ -215,12 +212,14 @@ export const DropdownList = <T, V>({
     useEventListener("keydown", handleKeyboardPress);
 
     useEffect(() => {
-        if (!topScrollItem && virtuosoRef.current) {
-            virtuosoRef.current.scrollTo({ top: 0 });
+        if (!topScrollItem) {
+            virtuosoRef.current?.scrollTo({ top: 0 });
             return;
         }
         // Delay to ensure render is complete
         const timer = setTimeout(() => {
+            if (!listItems) return;
+
             const index = listItems.indexOf(topScrollItem);
             if (virtuosoRef.current && index !== -1) {
                 virtuosoRef.current.scrollToIndex({ index });
@@ -237,7 +236,7 @@ export const DropdownList = <T, V>({
             return;
         }
 
-        if (disableItemFocus) return;
+        if (disableItemFocus || !listItems) return;
 
         const index = listItems.findIndex((item) =>
             checkListItemSelected(item)
@@ -249,19 +248,19 @@ export const DropdownList = <T, V>({
             setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
         } else if (focusedIndex > 0) {
             // Else focus on the specified element
-            virtuosoRef.current.scrollToIndex({
+            virtuosoRef.current?.scrollToIndex({
                 index: focusedIndex,
                 align: "center",
             });
             setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
         } else if (index !== -1) {
             // Else focus on the selected element
-            virtuosoRef.current.scrollToIndex({ index, align: "center" });
+            virtuosoRef.current?.scrollToIndex({ index, align: "center" });
             setFocusedIndex(index);
             setTimeout(() => listItemRefs.current[index]?.focus(), 200);
         } else {
             // Else focus on the first list item
-            virtuosoRef.current.scrollToIndex({ index: 0 });
+            virtuosoRef.current?.scrollToIndex({ index: 0 });
             setFocusedIndex(0);
             setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
@@ -308,7 +307,7 @@ export const DropdownList = <T, V>({
             }
         };
 
-        setDisplayListItems(filterItems());
+        setDisplayListItems(filterItems() ?? []);
     }, [
         filterItemsByCustomSearch,
         filterItemsByLabel,
@@ -337,10 +336,7 @@ export const DropdownList = <T, V>({
     };
 
     const renderDropdownLabel = (item: T, selected: boolean) => {
-        const label = getOptionLabel(item);
-        const title = typeof label === "string" ? label : label.title;
-        const secondaryLabel =
-            typeof label == "string" ? undefined : label.secondaryLabel;
+        const { title, secondaryLabel } = getOptionLabel(item);
 
         return (
             <DropdownLabel
@@ -356,7 +352,7 @@ export const DropdownList = <T, V>({
     };
 
     const renderItem = (item: T, index: number) => {
-        if (!onRetry || (onRetry && itemsLoadState === "success")) {
+        if (!onRetry || itemsLoadState === "success") {
             const selected = checkListItemSelected(item);
             const active = index === focusedIndex;
             return (
@@ -373,6 +369,7 @@ export const DropdownList = <T, V>({
                     role="option"
                     tabIndex={active ? 0 : -1}
                     $active={active}
+                    $selected={selected}
                 >
                     {renderListItem ? (
                         renderListItem(item, { selected })
@@ -406,6 +403,7 @@ export const DropdownList = <T, V>({
 
     const renderSelectAll = () => {
         if (
+            selectedItems &&
             multiSelect &&
             displayListItems.length > 0 &&
             !searchValue &&
@@ -436,13 +434,8 @@ export const DropdownList = <T, V>({
         ) {
             return (
                 <ResultStateContainer data-testid="list-no-results">
-                    <LabelIcon
-                        data-testid="no-result-icon"
-                        $variant={variant}
-                    />
-                    <ResultStateText $variant={variant}>
-                        No results found.
-                    </ResultStateText>
+                    <LabelIcon data-testid="no-result-icon" />
+                    No results found.
                 </ResultStateContainer>
             );
         }
@@ -450,14 +443,10 @@ export const DropdownList = <T, V>({
 
     const renderLoading = () => {
         if (onRetry && itemsLoadState === "loading") {
-            const spinnerSize = variant === "small" ? 16 : 18;
-
             return (
                 <ResultStateContainer data-testid="list-loading">
-                    <Spinner $buttonStyle="secondary" size={spinnerSize} />
-                    <ResultStateText $variant={variant}>
-                        Loading...
-                    </ResultStateText>
+                    <Spinner />
+                    Loading...
                 </ResultStateContainer>
             );
         }
@@ -467,14 +456,8 @@ export const DropdownList = <T, V>({
         if (onRetry && itemsLoadState === "fail") {
             return (
                 <ResultStateContainer data-testid="list-fail">
-                    <LabelIcon
-                        data-testid="load-error-icon"
-                        $variant={variant}
-                    />
-                    <ResultStateText $variant={variant}>
-                        Failed to load.
-                    </ResultStateText>
-                    &nbsp;
+                    <LabelIcon data-testid="load-error-icon" />
+                    Failed to load.&nbsp;
                     <TryAgainButton
                         onClick={handleTryAgain}
                         type="button"
@@ -494,7 +477,7 @@ export const DropdownList = <T, V>({
                     ref={virtuosoRef}
                     style={{ height: "100%" }}
                     data={displayListItems}
-                    customScrollParent={nodeRef.current}
+                    customScrollParent={nodeRef.current ?? undefined}
                     itemContent={(index, item) => renderItem(item, index)}
                     // disable virtualisation in tests
                     // https://github.com/petyosi/react-virtuoso/issues/26#issuecomment-1040316576
@@ -527,9 +510,10 @@ export const DropdownList = <T, V>({
             return;
         }
 
+        // FIXME: implement onDismiss handling
         return (
             <div data-testid="custom-cta">
-                {renderCustomCallToAction(onDismiss, displayListItems)}
+                {renderCustomCallToAction(onDismiss as any, displayListItems)}
             </div>
         );
     };
@@ -539,6 +523,7 @@ export const DropdownList = <T, V>({
             data-testid="dropdown-container"
             ref={nodeRef}
             $width={width}
+            $variant={variant}
         >
             {renderList()}
             {renderBottomCta()}

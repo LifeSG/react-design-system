@@ -1,3 +1,4 @@
+import { StorybookLink } from "../storybook-common";
 import { ApiTable, code } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
@@ -24,20 +25,16 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "The default font size. If not specified, inherited from the parent",
                 propTypes: (
-                    <a
-                        href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-base-style--docs"
-                        rel="noreferrer"
-                        target="_blank"
-                    >
-                        TextSizeType
-                    </a>
+                    <StorybookLink path="/docs/core-typography--docs">
+                        TypographySizeType
+                    </StorybookLink>
                 ),
             },
             {
                 name: "baseTextColor",
                 description:
                     "The default font color. Supports theming. If not specified, inherited from the parent",
-                propTypes: ["string", "(props: unknown) => string"],
+                propTypes: ["string", "(props: ThemeStyleProps) => string"],
             },
             {
                 name: "inline",

@@ -32,3 +32,5 @@ export const FilterItemPage = ({
         </FilterItemPageContainer>
     );
 };
+
+FilterItemPage.displayName = "Filter.Page";

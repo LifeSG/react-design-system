@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as NavbarStories from "./navbar.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={NavbarStories} />
 
-<Title>Navbar</Title>
+# Navbar
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that displays navigation links, action buttons and a brand at the top of the web page.
 
@@ -17,7 +16,7 @@ import { Navbar } from "@lifesg/react-design-system/navbar";
 
 <Canvas of={NavbarStories.Default} />
 
-<Heading3>Anatomy</Heading3>
+## Anatomy
 
 The Navbar comes with 3 main components:
 
@@ -31,39 +30,39 @@ In the mobile viewports, the navigation links are presented in a drawer and is t
 
 <br />
 
-<Secondary>Usage examples</Secondary>
+## Usage examples
 
-<Heading3>Single action button</Heading3>
+## Single action button
 
 This is a common use case among web apps where it requires a Logout button on the navigation bar.
 
 <Canvas of={NavbarStories.SingleActionButton} />
 
-<Heading3>Multiple action buttons</Heading3>
+## Multiple action buttons
 
 > **Note**: In the mobile view, the `download` action button will always be positioned last
 
 <Canvas of={NavbarStories.MultipleActionButtons} />
 
-<Heading3>Custom component action buttons</Heading3>
+## Custom component action buttons
 
 You can also choose to render a custom component of your choice as an action button.
 
 <Canvas of={NavbarStories.CustomActionButtons} />
 
-<Heading3>Uncollapsible action buttons</Heading3>
+## Uncollapsible action buttons
 
 You can set an action button to be uncollapsible, so it remains visible in the navigation bar on mobile viewports.
 
 <Canvas of={NavbarStories.UncollapsibleActionButtons} />
 
-<Heading3>Custom component items</Heading3>
+## Custom component items
 
 You can also choose to render a custom component of your choice as a navigation bar item.
 
 <Canvas of={NavbarStories.CustomItems} />
 
-<Heading3>Prevent dismissal of drawer on specific actions</Heading3>
+## Prevent dismissal of drawer on specific actions
 
 In this example, we are preventing the drawer's dismissal on the brand logo click. We'll make use of
 the `blockDrawerDismissalMethods` prop to do just that.
@@ -72,38 +71,38 @@ the `blockDrawerDismissalMethods` prop to do just that.
 
 <Canvas of={NavbarStories.PreventDrawerDismissal} />
 
-<Heading3>Sub menu</Heading3>
+## Sub menu
 
 A sub menu is shown if the selected nav item has sublinks.
 
 <Canvas of={NavbarStories.SubMenu} />
 
-<Heading3>Secondary branding</Heading3>
+## Secondary branding
 
 In this example, a co-brand is displayed next to the primary brand.
 
 <Canvas of={NavbarStories.SecondaryBranding} />
 
-<Heading3>Hidden masthead</Heading3>
+## Hidden masthead
 
 In this example, the masthead is hidden.
 
 <Canvas of={NavbarStories.HiddenMasthead} />
 
-<Heading3>Stretched layout</Heading3>
+## Stretched layout
 
 In this example, the content of the navbar is stretched to the full width of
 the screen with a fixed padding, ignoring the masthead's alignment.
 
 <Canvas of={NavbarStories.StretchedLayout} />
 
-<Heading3>Hide branding</Heading3>
+## Hide branding
 
 When the branding elements are hidden, navigation items will be aligned to the left on desktop.
 
 <Canvas of={NavbarStories.HiddenBranding} />
 
-<Secondary>Troubleshooting</Secondary>
+## Troubleshooting
 
 > The component also uses a custom script. Should you encounter a content security
 > policy error, do add this script in the `scriptSrc` blob.
@@ -111,6 +110,6 @@ When the branding elements are hidden, navigation items will be aligned to the l
 
 <br />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

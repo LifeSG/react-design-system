@@ -9,7 +9,6 @@ import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal"
 import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { InputSelect } from "../input-select";
-import { MediaWidths } from "../spec/media-spec";
 import {
     EllipsisContainer,
     Hover,
@@ -26,6 +25,8 @@ import {
     PaginationWrapper,
 } from "./pagination.styles";
 import { PageSizeItemProps, PaginationProps } from "./types";
+import { useTheme } from "styled-components";
+import { Breakpoint } from "../theme";
 
 const Component = (
     {
@@ -46,17 +47,20 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
+        maxWidth: mobileBreakpoint,
     });
-    const options: PageSizeItemProps[] = pageSizeOptions;
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const [inputText, setInputText] = useState<string>("");
 
-    const [selectedOption, setSelectedOption] = useState<PageSizeItemProps>(
-        options && options.length >= 1 ? options[0] : null
-    );
+    const [selectedOption, setSelectedOption] = useState<
+        PageSizeItemProps | undefined
+    >(pageSizeOptions[0]);
     const [pageSizeLocal, setPageSize] = useState<number>(
         !isMobile && showPageSizeChanger
             ? selectedOption
@@ -104,7 +108,7 @@ const Component = (
     useEffect(() => {
         setPageSize(pageSize);
         setSelectedOption(
-            options.find((option) => option.value === pageSize) ?? null
+            pageSizeOptions.find((option) => option.value === pageSize)
         );
     }, [pageSize]);
 
@@ -162,7 +166,7 @@ const Component = (
     const handleInputSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         if (inputText) {
-            onPageChange(parseInt(inputText));
+            onPageChange?.(parseInt(inputText));
         }
     };
 
@@ -375,7 +379,7 @@ const Component = (
             {showPageSizeChanger && !isMobile && (
                 <InputSelectWrapper>
                     <InputSelect
-                        options={options}
+                        options={pageSizeOptions}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}

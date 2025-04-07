@@ -1,76 +1,75 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
-import { TextStyleHelper } from "../../text";
+import { Colour, Font } from "../../theme";
 import {
     DropdownVariantType,
     LabelDisplayType,
     TruncateType,
 } from "../dropdown-list/types";
+import { lineClampCss } from "../styles";
 
 // =============================================================================
 // STYLE INTERFACE
 // =============================================================================
 interface LabelStyleProps {
-    $bold?: boolean;
+    $labelDisplayType: LabelDisplayType;
+    $variant: DropdownVariantType;
+}
+
+interface LabelTextStyleProps {
     $labelDisplayType?: LabelDisplayType;
     $maxLines?: number;
     $selected?: boolean;
     $truncateType?: TruncateType;
-    $variant?: DropdownVariantType;
+    $bold?: boolean;
+}
+
+interface MatchedTextStyleProps {
+    $variant: DropdownVariantType;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
 
-const lineClampCss = css<LabelStyleProps>`
-    overflow: hidden;
-    display: -webkit-inline-box;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: ${(props) => props.$maxLines || 2};
-    -webkit-box-orient: vertical;
+export const PrimaryText = styled.div<LabelTextStyleProps>`
+    font-weight: ${(props) =>
+        props.$bold
+            ? Font.Spec["weight-semibold"]
+            : Font.Spec["weight-regular"]};
+    color: ${(props) =>
+        props.$selected ? Colour["text-selected"] : Colour["text"]};
+    width: 100%;
+
+    ${(props) =>
+        props.$truncateType === "end" && lineClampCss(props.$maxLines || 2)}
     overflow-wrap: break-word;
 `;
 
-export const PrimaryText = styled.div<LabelStyleProps>`
+export const SecondaryText = styled.div<LabelTextStyleProps>`
+    color: ${Colour["text-subtlest"]};
+    width: 100%;
+
     ${(props) =>
-        TextStyleHelper.getTextStyle(
-            props.$variant === "small" ? "BodySmall" : "Body",
-            props.$bold ? "semibold" : "regular"
-        )}
-    color: ${(props) => (props.$selected ? Color.Primary : Color.Neutral[1])};
-    width: 100%;
-
-    ${(props) => props.$truncateType === "end" && lineClampCss}
-`;
-
-export const SecondaryText = styled.div<LabelStyleProps>`
-    color: ${Color.Neutral[4]};
-    width: 100%;
-
-    ${(props) => props.$truncateType === "end" && lineClampCss}
+        props.$truncateType === "end" && lineClampCss(props.$maxLines || 2)}
+    overflow-wrap: break-word;
 
     ${(props) => {
         switch (props.$labelDisplayType) {
             case "next-line":
                 return css`
-                    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+                    ${Font["body-md-semibold"]}
                 `;
             case "inline":
             default:
                 return css`
-                    ${TextStyleHelper.getTextStyle("Body", "regular")}
+                    ${Font["body-baseline-regular"]}
                 `;
         }
     }}
 `;
 
-export const MatchedText = styled.span<LabelStyleProps>`
-    ${(props) =>
-        TextStyleHelper.getTextStyle(
-            props.$variant === "small" ? "BodySmall" : "Body",
-            "semibold"
-        )}
+export const MatchedText = styled.span<MatchedTextStyleProps>`
+    font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
 export const Label = styled.div<LabelStyleProps>`
@@ -78,6 +77,11 @@ export const Label = styled.div<LabelStyleProps>`
     width: 100%;
     overflow: hidden;
     overflow-wrap: break-word;
+
+    ${(props) =>
+        props.$variant === "small"
+            ? Font["body-md-regular"]
+            : Font["body-baseline-regular"]}
 
     ${(props) => {
         switch (props.$labelDisplayType) {
@@ -101,18 +105,18 @@ export const Label = styled.div<LabelStyleProps>`
     }}
 `;
 
-export const TruncateFirstLine = styled.div<LabelStyleProps>`
+export const TruncateFirstLine = styled.div<LabelTextStyleProps>`
     display: inline-block;
     width: ${(props) => (props.$maxLines === 1 ? 50 : 100)}%;
-    height: 1.5rem;
+    height: 1lh;
     word-break: break-all;
     overflow: hidden;
 `;
 
-export const TruncateSecondLine = styled.div<LabelStyleProps>`
+export const TruncateSecondLine = styled.div<LabelTextStyleProps>`
     display: inline-block;
     width: ${(props) => (props.$maxLines === 1 ? 50 : 100)}%;
-    height: 1.5rem;
+    height: 1lh;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

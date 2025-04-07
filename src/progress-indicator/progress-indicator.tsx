@@ -1,10 +1,11 @@
-import { MediaWidths } from "../media";
+import { useTheme } from "styled-components";
+import { Breakpoint } from "../theme";
 import {
     Content,
     Indicator,
     IndicatorBar,
     IndicatorTitleDesktop,
-    IndicatorTitleMobile,
+    IndicatorTitleTablet,
     Wrapper,
 } from "./progress-indicator.style";
 import { ProgressIndicatorProps } from "./types";
@@ -15,15 +16,17 @@ export const ProgressIndicator = <T,>({
     steps,
     currentIndex,
     displayExtractor,
-    fadeColor,
-    fadePosition = "both",
+    fadeColor: _fadeColor,
+    fadePosition: _fadePosition,
     ...otherProps
 }: ProgressIndicatorProps<T>) => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.tablet,
+    const theme = useTheme();
+    const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
+    const isTablet = useMediaQuery({
+        maxWidth: tabletBreakpoint,
     });
 
     // =============================================================================
@@ -37,8 +40,11 @@ export const ProgressIndicator = <T,>({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const getDisplayValue = (item: T) => {
-        return displayExtractor ? displayExtractor(item) : item.toString();
+    const getDisplayValue = (item: T): string => {
+        if (displayExtractor) {
+            return displayExtractor(item);
+        }
+        return item?.toString() ?? "";
     };
 
     const getAriaLabel = (stepIndex: number, currentIndex: number) => {
@@ -98,24 +104,24 @@ export const ProgressIndicator = <T,>({
         });
     };
 
-    const renderStepTitleMobile = () => {
+    const renderStepTitleTablet = () => {
         return (
             <Indicator
                 key={currentIndex}
                 id={getId(currentIndex, currentIndex)}
             >
-                <IndicatorTitleMobile
+                <IndicatorTitleTablet
                     weight={"semibold"}
                     id={`${getId(currentIndex, currentIndex)}-counter`}
                 >
                     Step {currentIndex + 1} of {steps.length}
-                </IndicatorTitleMobile>
-                <IndicatorTitleMobile
+                </IndicatorTitleTablet>
+                <IndicatorTitleTablet
                     weight={"regular"}
                     id={`${getId(currentIndex, currentIndex)}-title`}
                 >
                     {getDisplayValue(steps[currentIndex])}
-                </IndicatorTitleMobile>
+                </IndicatorTitleTablet>
             </Indicator>
         );
     };
@@ -124,7 +130,7 @@ export const ProgressIndicator = <T,>({
         <Wrapper {...otherProps}>
             <Content>{renderBars()}</Content>
             <Content>
-                {isMobile ? renderStepTitleMobile() : renderStepTitleDesktop()}
+                {isTablet ? renderStepTitleTablet() : renderStepTitleDesktop()}
             </Content>
         </Wrapper>
     );

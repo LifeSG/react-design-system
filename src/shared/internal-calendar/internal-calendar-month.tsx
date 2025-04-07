@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo } from "react";
 import { CalendarHelper } from "../../util/calendar-helper";
-import { CellLabel, MonthCell, Wrapper } from "./internal-calendar-month.style";
+import { MonthCell, Wrapper } from "./internal-calendar-month.style";
 import { FocusType, InternalCalendarProps } from "./types";
 
 export type MonthVariant = "default" | "current-month" | "selected-month";
@@ -9,11 +9,11 @@ export type MonthVariant = "default" | "current-month" | "selected-month";
 interface Props
     extends Pick<
         InternalCalendarProps,
-        "type" | "minDate" | "maxDate" | "allowDisabledSelection"
+        "minDate" | "maxDate" | "allowDisabledSelection"
     > {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
-    selectedStartDate: string;
+    selectedStartDate: string | undefined;
     selectedEndDate?: string | undefined;
     viewCalendarDate: Dayjs;
     isNewSelection: boolean;
@@ -26,7 +26,6 @@ export const InternalCalendarMonth = ({
     selectedStartDate,
     selectedEndDate,
     viewCalendarDate,
-    type,
     isNewSelection,
     minDate,
     maxDate,
@@ -77,7 +76,7 @@ export const InternalCalendarMonth = ({
             day.isBefore(selectedStartDate, "month") &&
             isNewSelection;
 
-        return isStartAfterEnd || isEndBeforeStart;
+        return !!(isStartAfterEnd || isEndBeforeStart);
     };
 
     const generateMonthStatus = (date: Dayjs) => {
@@ -104,7 +103,7 @@ export const InternalCalendarMonth = ({
     if (!months.length) return null;
 
     return (
-        <Wrapper $type={type}>
+        <Wrapper>
             {months.map((date) => {
                 const { disabledDisplay, interactive, variant, month } =
                     generateMonthStatus(date);
@@ -117,13 +116,7 @@ export const InternalCalendarMonth = ({
                         $interactive={interactive}
                         onClick={() => handleMonthClick(date, !interactive)}
                     >
-                        <CellLabel
-                            weight="regular"
-                            $variant={variant}
-                            $disabledDisplay={disabledDisplay}
-                        >
-                            {month}
-                        </CellLabel>
+                        {month}
                     </MonthCell>
                 );
             })}

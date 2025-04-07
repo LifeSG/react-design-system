@@ -118,9 +118,11 @@ const TextareaBaseComponent = (
             value={getDisplayValue()}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            error={error}
+            $error={error}
             rows={rows}
-            maxLength={prefix ? prefix.length + maxLength : maxLength}
+            maxLength={
+                prefix && maxLength ? prefix.length + maxLength : maxLength
+            }
             {...otherProps}
         />
     );
@@ -150,7 +152,7 @@ const TextareaComponent = (
     // CONST, STATE, REF
     // -------------------------------------------------------------------------
     const [stateValue, setStateValue] = useState<
-        string | number | readonly string[]
+        string | number | readonly string[] | undefined
     >(value);
 
     // -------------------------------------------------------------------------
@@ -187,7 +189,6 @@ const TextareaComponent = (
             />
             {maxLength && (
                 <TextareaCounter
-                    disabled={disabled}
                     value={stateValue}
                     maxLength={maxLength}
                     renderCustomCounter={renderCustomCounter}

@@ -1,13 +1,12 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo, useState } from "react";
-import { Text } from "../../../text/text";
 import { CalendarHelper } from "../../../util/calendar-helper";
 import { HeaderCell, RowDayCell, Wrapper } from "../standard";
 import { CommonCalendarProps } from "../types";
 import { WeekDayCell } from "./week-day-cell";
 
 interface WeekCalendarDayViewProps extends CommonCalendarProps {
-    selectedStartDate: string;
+    selectedStartDate: string | undefined;
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
@@ -64,7 +63,7 @@ export const WeekCalendarDayView = ({
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
             <HeaderCell key={`week-day-${index}`}>
-                <Text.H6 weight="semibold">{dayjs(day).format("ddd")}</Text.H6>
+                {dayjs(day).format("ddd")}
             </HeaderCell>
         ));
     };

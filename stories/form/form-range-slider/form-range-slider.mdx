@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
 import * as FormRangeSliderStories from "./form-range-slider.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormRangeSliderStories} />
 
-<Title>Form.RangeSlider</Title>
+# Form.RangeSlider
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A field that allows a user to select a range of values within a numeric range.
 
@@ -17,19 +16,19 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormRangeSliderStories.RangeSlider} />
 
-<Heading3>Minimum range</Heading3>
+## Minimum range
 
 A minimum difference between each value can be specified.
 
 <Canvas of={FormRangeSliderStories.MinimumRange} />
 
-<Heading3>Color customisation</Heading3>
+## Color customisation
 
 For advanced styling, each segment of the slider track can be individually colored.
 
 <Canvas of={FormRangeSliderStories.ColorCustomisation} />
 
-<Heading3>With labels</Heading3>
+## With labels
 
 You can display labels for the min and max values with `showSliderLabels`. A prefix or
 suffix can be specified to act as a unit. A render function is also supported for advanced customisation.
@@ -38,14 +37,14 @@ You can indicate the current selection with `showIndicatorLabel`.
 
 <Canvas of={FormRangeSliderStories.WithLabels} />
 
-<Heading3>Rendering in grid layouts</Heading3>
+## Rendering in grid layouts
 
-You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--column-divs)
+You can also specify [ColDiv's](/docs/core-layout-coldiv--docs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormRangeSliderStories.RenderingInGridLayout} />
 
-<Heading3>Using the field as a standalone</Heading3>
+## Using the field as a standalone
 
 In the case that you require the range slider field as a standalone, you can do this.
 
@@ -55,6 +54,6 @@ import { InputRangeSlider } from "@lifesg/react-design-system/input-range-slider
 
 <Canvas of={FormRangeSliderStories.StandaloneUsage} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

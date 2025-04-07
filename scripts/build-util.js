@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+
 export const getFolders = (entry) => {
     const dirs = fs.readdirSync(entry);
 
@@ -7,8 +8,8 @@ export const getFolders = (entry) => {
     const dirsToIgnore = [
         "custom-types",
         "shared",
-        "spec",
         "util",
+        "v2_spec",
         "__mocks__",
     ];
 

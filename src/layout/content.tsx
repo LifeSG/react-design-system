@@ -1,9 +1,12 @@
 import React from "react";
 import { Container } from "./container";
+import { ContentProps } from "./types";
 import { Section } from "./section";
-import { ContentProps, DivRef } from "./types";
 
-const Component = (props: ContentProps, ref: DivRef): JSX.Element => {
+const Component = (
+    props: ContentProps,
+    ref: React.Ref<HTMLDivElement>
+): JSX.Element => {
     const {
         children,
         "data-testid": testId = "content",
@@ -33,7 +36,4 @@ const Component = (props: ContentProps, ref: DivRef): JSX.Element => {
     );
 };
 
-// =============================================================================
-// EXPORT
-// =============================================================================
 export const Content = React.forwardRef(Component);

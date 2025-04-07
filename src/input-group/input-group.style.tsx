@@ -1,8 +1,7 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { DesignToken } from "../design-token";
 import { Input } from "../input/input";
-import { TextStyleHelper } from "../text";
+import { InputBox, InputWrapperStyleProps } from "../shared/input-wrapper";
+import { Colour, Font, Spacing } from "../theme";
 import { InputGroupAddonPosition } from "./types";
 
 // =============================================================================
@@ -12,7 +11,7 @@ import { InputGroupAddonPosition } from "./types";
 
 // Need to export since the component could be extended
 export interface AddonStyleProps {
-    disabled?: boolean;
+    $disabled?: boolean;
     $error?: boolean;
     $readOnly?: boolean;
     $position?: InputGroupAddonPosition;
@@ -21,101 +20,44 @@ export interface AddonStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div<AddonStyleProps>`
+export const AddonWrapper = styled(InputBox)<InputWrapperStyleProps>`
     display: flex;
-    position: relative;
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
-    background: ${Color.Neutral[8]};
-    height: max-content;
+    align-items: center;
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 ${Spacing["spacing-16"]};
     flex-direction: ${(props) =>
         props.$position === "right" ? "row-reverse" : "row"};
-
-    :focus-within {
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
-    }
-
-    ${(props) => {
-        if (props.$readOnly) {
-            return css`
-                border: none;
-                padding: 0;
-                background: transparent !important;
-
-                :focus-within {
-                    border: none;
-                    box-shadow: none;
-                }
-            `;
-        } else if (props.disabled) {
-            return css`
-                background: ${Color.Neutral[6](props)};
-                :hover {
-                    cursor: not-allowed;
-                }
-
-                :focus-within {
-                    border: 1px solid ${Color.Neutral[5](props)};
-                    box-shadow: none;
-                }
-            `;
-        } else if (props.$error) {
-            return css`
-                border: 1px solid ${Color.Validation.Red.Border(props)};
-
-                :focus-within {
-                    border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: ${DesignToken.InputErrorBoxShadow};
-                }
-            `;
-        }
-    }}
 `;
 
-export const MainInput = styled(Input)`
-    // overwrite default styles
-    &&& {
-        background: transparent;
-        border: none;
-        padding: 0;
-
-        :focus-within {
-            outline: none;
-            border: none;
-            box-shadow: none;
-        }
-    }
+export const NoAddonWrapper = styled(InputBox)<AddonStyleProps>`
+    display: flex;
+    position: relative;
+    width: 100%;
+    padding: 0 ${Spacing["spacing-16"]};
+    flex-direction: ${(props) =>
+        props.$position === "right" ? "row-reverse" : "row"};
 `;
 
-export const AddOnContainer = styled.div<AddonStyleProps>`
+export const MainInput = styled(Input)``;
+
+export const LabelAddonContainer = styled.div<AddonStyleProps>`
     position: relative;
     display: flex;
     align-items: center;
 
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[1]};
+    ${Font["body-baseline-regular"]}
+    color: ${Colour["text"]};
 
     /* SVG Icon */
     svg {
-        height: 1.5rem;
-        width: 1.5rem;
-        #path {
-            fill: ${Color.Neutral[1]};
-        }
+        height: 1em;
+        width: 1em;
     }
 
     ${(props) => {
-        if (props.disabled) {
+        if (props.$disabled) {
             return css`
-                color: ${Color.Neutral[4](props)};
-                svg {
-                    #path {
-                        fill: ${Color.Neutral[4](props)};
-                    }
-                }
+                color: ${Colour["text-subtler"]};
             `;
         }
     }}
@@ -124,12 +66,16 @@ export const AddOnContainer = styled.div<AddonStyleProps>`
         switch (props.$position) {
             case "right":
                 return css`
-                    margin-left: ${props.$readOnly ? "0.25rem" : "0.75rem"};
+                    margin-left: ${props.$readOnly
+                        ? Spacing["spacing-4"]
+                        : Spacing["spacing-12"]};
                 `;
             case "left":
             default:
                 return css`
-                    margin-right: ${props.$readOnly ? "0.25rem" : "0.75rem"};
+                    margin-right: ${props.$readOnly
+                        ? Spacing["spacing-4"]
+                        : Spacing["spacing-12"]};
                 `;
         }
     }};

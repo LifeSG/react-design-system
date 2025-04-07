@@ -1,20 +1,20 @@
 import dayjs from "dayjs";
-import { TextLinkProps } from "../text";
-import { ResourceScheme } from "../theme";
+import { ResourceScheme } from "../theme/types";
+import { TypographyLinkProps } from "../typography";
 import { getDefaultDisclaimerLinks } from "./footer-disclaimer-links-data";
 import { DisclaimerLinks } from "./types";
 
 /* Internally used.  Not to be exported */
 export interface InternalDisclaimerLinks {
-    privacy?: TextLinkProps | undefined;
-    termsOfUse?: TextLinkProps | undefined;
-    reportVulnerability?: TextLinkProps | undefined;
+    privacy?: TypographyLinkProps | undefined;
+    termsOfUse?: TypographyLinkProps | undefined;
+    reportVulnerability?: TypographyLinkProps | undefined;
 }
 
 export namespace FooterHelper {
     export const getCopyrightInfo = (
         lastUpdated: Date = new Date(),
-        resourceScheme?: ResourceScheme
+        resourceScheme: ResourceScheme | undefined
     ): string => {
         const copyrightText = getCopyrightText(resourceScheme);
         const copyright = `${new Date().getFullYear()} ${copyrightText}`;
@@ -23,7 +23,7 @@ export namespace FooterHelper {
         return `${copyright} Last Updated ${lastUpdatedDateString}`;
     };
 
-    const getCopyrightText = (resourceScheme: ResourceScheme) => {
+    const getCopyrightText = (resourceScheme: ResourceScheme | undefined) => {
         switch (resourceScheme) {
             case "bookingsg":
                 return "BookingSG, Government of Singapore.";
@@ -51,7 +51,7 @@ export namespace FooterHelper {
 
     export const getDisclaimerLinks = (
         resourceScheme: ResourceScheme | undefined,
-        customDisclaimerLinks?: DisclaimerLinks
+        customDisclaimerLinks: DisclaimerLinks | undefined
     ): InternalDisclaimerLinks => {
         const defaultDisclaimerLinks =
             getDefaultDisclaimerLinks(resourceScheme);

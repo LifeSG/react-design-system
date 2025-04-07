@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { CheckboxProps } from "./types";
-import { Container, Input } from "./checkbox.style";
 import {
-    MinusSquareFillIcon,
-    SquareFillIcon,
-    SquareIcon,
-    SquareTickFillIcon,
-} from "@lifesg/react-icons";
+    Container,
+    Input,
+    StyledCheckedIcon,
+    StyledInteremediateIcon,
+    StyledUncheckedDisabledIcon,
+    StyledUncheckedIcon,
+} from "./checkbox.style";
 
 export const Checkbox = ({
     className,
@@ -21,10 +22,12 @@ export const Checkbox = ({
     // =============================================================================
     // REFS, EFFECTS
     // =============================================================================
-    const checkRef = useRef<HTMLInputElement>();
+    const checkRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        checkRef.current.indeterminate = indeterminate;
+        if (checkRef.current) {
+            checkRef.current.indeterminate = indeterminate ?? false;
+        }
     }, [indeterminate]);
 
     // =============================================================================
@@ -59,14 +62,35 @@ export const Checkbox = ({
     // RENDER FUNCTION
     // =============================================================================
     const renderIcon = () => {
-        return indeterminate ? (
-            <MinusSquareFillIcon data-testid="indeterminate" />
-        ) : checked ? (
-            <SquareTickFillIcon data-testid="checkmark" />
-        ) : disabled ? (
-            <SquareFillIcon data-testid="disabled-empty-checkbox" />
-        ) : (
-            <SquareIcon data-testid="empty-checkbox" />
+        if (indeterminate) {
+            return (
+                <StyledInteremediateIcon
+                    $disabled={disabled}
+                    data-testid="indeterminate"
+                />
+            );
+        }
+
+        if (checked) {
+            return (
+                <StyledCheckedIcon
+                    $disabled={disabled}
+                    data-testid="checkmark"
+                />
+            );
+        }
+
+        if (disabled) {
+            return (
+                <StyledUncheckedDisabledIcon data-testid="empty-disabled-checkbox" />
+            );
+        }
+
+        return (
+            <StyledUncheckedIcon
+                $disabled={disabled}
+                data-testid="empty-checkbox"
+            />
         );
     };
 

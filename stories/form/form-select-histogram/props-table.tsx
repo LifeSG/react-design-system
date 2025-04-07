@@ -1,6 +1,9 @@
-import React from "react";
-import { ApiTable, code } from "../../storybook-common/api-table";
-import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+    code,
+} from "stories/storybook-common";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
@@ -128,9 +131,9 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "A list of histogram bins grouped by their lower limit",
                 propTypes: (
-                    <a href="https://designsystem.life.gov.sg/react/index.html?path=/docs/form-histogramslider--docs#component-api">
+                    <StorybookLink path="/docs/form-histogramslider--docs#component-api">
                         HistogramBinProps
-                    </a>
+                    </StorybookLink>
                 ),
             },
             {

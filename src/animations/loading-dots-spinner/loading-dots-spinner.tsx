@@ -1,7 +1,6 @@
 import { Suspense, lazy } from "react";
 import styled, { useTheme } from "styled-components";
-import { Color } from "../../color";
-import { BaseTheme } from "../../theme";
+import { Colour } from "../../theme";
 import { CustomisableAnimationProps } from "../types";
 
 // lazy load to fix next.js SSR errors
@@ -14,8 +13,7 @@ export const LoadingDotsSpinner = ({
     ...otherProps
 }: CustomisableAnimationProps) => {
     const theme = useTheme();
-    const animationColor =
-        color || Color.Primary({ theme: theme || BaseTheme });
+    const animationColor = color || Colour["icon-primary"]({ theme });
     return (
         <Container {...otherProps}>
             <Suspense fallback={<Placeholder />}>

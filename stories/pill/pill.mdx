@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as PillStories from "./pill.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={PillStories} />
 
-<Title>Pill</Title>
+# Pill
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A static element that is used to communicate selections, statuses and categories.
 
@@ -17,16 +16,16 @@ import { Pill } from "@lifesg/react-design-system/pill";
 
 <Canvas of={PillStories.Default} />
 
-<Heading3>Pill with icon</Heading3>
+## Pill with icon
 
 <Canvas of={PillStories.WithIcon} />
 
-<Heading3>Variations</Heading3>
+## Variations
 
 The `Pill` comes in 2 display formats, `outline` and `solid` and there are 6 color variations that can be denoted using the `colorType` prop.
 
 <Canvas of={PillStories.Variations} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

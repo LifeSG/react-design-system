@@ -49,7 +49,7 @@ export const UnitNumberInput = ({
     const unitValueStateRef = useRef<string>(unitValue);
     const currentFocusStateRef = useRef<FieldType>(currentFocus);
 
-    const formatter = (value) =>
+    const formatter = (value: string) =>
         value.toLocaleUpperCase().replace(/[^0-9A-Za-z]/g, "");
     const getNextFloorInputState = useNextInputState({
         ref: floorInputRef,
@@ -114,7 +114,7 @@ export const UnitNumberInput = ({
             if (formattedInput !== floorValue) {
                 performOnChangeHandler(formattedInput, targetName);
             }
-        } else {
+        } else if (targetName === "unit") {
             setUnitValue(formattedInput);
             if (formattedInput !== unitValue) {
                 performOnChangeHandler(formattedInput, targetName);
@@ -126,12 +126,18 @@ export const UnitNumberInput = ({
         const targetName = event.target.name as FieldType;
 
         if (targetName === "floor") {
-            const { nextValue, updateCaretPosition } = getNextFloorInputState();
+            const nextInputState = getNextFloorInputState();
+            if (!nextInputState) return;
+
+            const { nextValue, updateCaretPosition } = nextInputState;
             updateCaretPosition();
             setFloorValue(nextValue);
             performOnChangeHandler(nextValue, targetName);
-        } else {
-            const { nextValue, updateCaretPosition } = getNextUnitInputState();
+        } else if (targetName === "unit") {
+            const nextInputState = getNextUnitInputState();
+            if (!nextInputState) return;
+
+            const { nextValue, updateCaretPosition } = nextInputState;
             updateCaretPosition();
             setUnitValue(nextValue);
             performOnChangeHandler(nextValue, targetName);
@@ -162,7 +168,7 @@ export const UnitNumberInput = ({
          */
         if (event.code === "Backspace" || event.key === "Backspace") {
             if (currentFocus === "unit" && unitValue.length === 0) {
-                floorInputRef.current.focus();
+                floorInputRef.current?.focus();
             }
         }
     };
@@ -198,7 +204,10 @@ export const UnitNumberInput = ({
         }
     };
 
-    const performOnChangeHandler = (changeValue: string, field: FieldType) => {
+    const performOnChangeHandler = (
+        changeValue: string,
+        field: ValueFieldTypes
+    ) => {
         if (!onChange && !onChangeRaw) {
             return;
         }
@@ -282,6 +291,7 @@ export const UnitNumberInput = ({
                         : getPlaceholder(placeholder)[0]
                 }
                 autoComplete={autoComplete}
+                styleType="no-border"
             />
             <UnitNumberDivider $inactive={floorValue.length === 0}>
                 -
@@ -307,12 +317,13 @@ export const UnitNumberInput = ({
                         : getPlaceholder(placeholder)[1]
                 }
                 autoComplete={autoComplete}
+                styleType="no-border"
             />
         </>
     );
 
-    const renderReadOnly = () => {
-        const displayValueArr = value.split("-");
+    const renderReadOnly = (displayValue: string) => {
+        const displayValueArr = displayValue.split("-");
 
         return (
             <ReadOnlyContainer>
@@ -336,12 +347,12 @@ export const UnitNumberInput = ({
         >
             <HashContainer
                 data-testid="addon"
-                disabled={disabled}
+                $disabled={disabled}
                 $readOnly={readOnly}
             >
                 #
             </HashContainer>
-            {readOnly && value ? renderReadOnly() : renderInputs()}
+            {readOnly && value ? renderReadOnly(value) : renderInputs()}
         </InputWrapper>
     );
 };

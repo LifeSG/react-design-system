@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
-import * as TextListStories from "./text-list.stories";
 import { PropsTable } from "./props-table";
+import * as TextListStories from "./text-list.stories";
 
 <Meta of={TextListStories} />
 
-<Title>TextList</Title>
+# TextList
 
-<Secondary>Overview</Secondary>
+## Overview
 
 Renders a group of related contents within a list format.
 
@@ -15,43 +14,45 @@ Renders a group of related contents within a list format.
 import { TextList } from "@lifesg/react-design-system/text-list";
 ```
 
-<Heading3>Unordered List</Heading3>
+## Unordered List
 
-This list is used when order does not matter and it does not follow a numbering system for each list item.
+This list is used when order does not matter and it does not follow a numbering
+system for each list item.
 
-You can also choose the bullet type from the selection. Types include `disc`, `circle`, `square`, `none`.
+You can also choose the bullet type from the selection. Types include `disc`,
+`circle`, `square`, `none`.
 
 <Canvas of={TextListStories.Unordered} />
 
-<Heading3>Ordered List</Heading3>
+## Ordered List
 
-This list is used when order matters and it follows a numbering system for each list item.
+This list is used when order matters and it follows a numbering system for each
+list item.
 
-You can also customize counter type and the counter separator as well. Counter types
-include `lower-alpha`, `decimal`, `lower-roman`.
+You can also customize counter type and the counter separator as well. Counter
+types include `lower-alpha`, `decimal`, `lower-roman`.
 
 <Canvas of={TextListStories.Ordered} />
 
-<Heading3>Nested Lists</Heading3>
+## Nested Lists
 
 <Canvas of={TextListStories.Nested} />
 
-<Heading3>Other features</Heading3>
-
-Here are other examples the list can do.
+## Other features
 
 <Canvas of={TextListStories.OtherFeatures} />
 
-<Heading3>Advanced Usage</Heading3>
+## Advanced Usage
 
-Under some circumstances, you might want to customise the counter to suit your use case.
+Under some circumstances, you might want to customise the counter to suit your
+use case.
 
 <Canvas of={TextListStories.AdvancedUsage} />
 
 You can do so by overriding the default styling.
 
 ```tsx
-export const CustomOrderedList = styled(TextList.Ol)`
+export const CustomOrderedList = styled(V2_TextList.Ol)`
     margin-left: 2rem;
 
     li {
@@ -62,18 +63,9 @@ export const CustomOrderedList = styled(TextList.Ol)`
         content: counters(list, ".") ".";
         left: -3rem;
     }
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        li {
-            margin-left: 1rem;
-        }
-        li:before {
-            left: -3rem;
-        }
-    }
 `;
 ```
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

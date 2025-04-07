@@ -156,7 +156,7 @@ export namespace StringHelper {
         return metrics.width;
     };
 
-    export const maskValue = (value: string, options?: MaskValueOptions) => {
+    export const maskValue = (value: string, options: MaskValueOptions) => {
         if (!value) {
             return value;
         }

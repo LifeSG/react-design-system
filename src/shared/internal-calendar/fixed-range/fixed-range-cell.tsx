@@ -5,13 +5,13 @@ import { CellStyleProps, CellType, DayCell, DayCellProps } from "../day-cell";
 interface Props {
     date: Dayjs;
     calendarDate: Dayjs;
-    selectedDate: string;
-    hoverDate: string;
+    selectedDate: string | undefined;
+    hoverDate: string | undefined;
     minDate?: string | undefined;
     maxDate?: string | undefined;
     disabledDates?: string[] | undefined;
     allowDisabledSelection?: boolean | undefined;
-    numberOfDays?: number;
+    numberOfDays?: number | undefined;
     onSelect: (value: Dayjs, disabled: boolean) => void;
     onHover: (value: string, disabled: boolean) => void;
 }
@@ -25,7 +25,7 @@ export const FixedRangeDayCell = ({
     maxDate,
     disabledDates,
     allowDisabledSelection,
-    numberOfDays,
+    numberOfDays = 1,
     onSelect,
     onHover,
 }: Props) => {
@@ -53,9 +53,9 @@ export const FixedRangeDayCell = ({
         : { start: undefined, end: undefined };
 
     const isSelected =
-        selectedDate && date.isBetween(rangeStart, rangeEnd, "day", "[]");
+        !!selectedDate && date.isBetween(rangeStart, rangeEnd, "day", "[]");
     const isHover =
-        hoverDate && date.isBetween(hoverStart, hoverEnd, "day", "[]");
+        !!hoverDate && date.isBetween(hoverStart, hoverEnd, "day", "[]");
     const isStart =
         (isSelected && date.isSame(rangeStart, "day")) ||
         (isHover && date.isSame(hoverStart, "day"));
@@ -104,7 +104,7 @@ export const FixedRangeDayCell = ({
         if (isHover) {
             applyRange(
                 props,
-                "hover-dash",
+                "hover",
                 formattedDate === hoverStart,
                 formattedDate === hoverEnd
             );
@@ -112,32 +112,16 @@ export const FixedRangeDayCell = ({
         if (isSelected) {
             applyRange(
                 props,
-                "selected",
+                "selected-outline",
                 formattedDate === rangeStart,
                 formattedDate === rangeEnd
             );
         }
         if (isSelected && isHover) {
-            applyRange(props, "overlap", isStart, isEnd);
-        }
+            applyRange(props, "selected-hover-outline", isStart, isEnd);
 
-        if (formattedDate === rangeStart) {
-            if (isHover) {
-                props.circleLeft = "overlap-outline";
-                props.circleRight = "overlap-outline";
-            } else {
-                props.circleRight = "selected-outline";
-                props.circleLeft = "selected-outline";
-            }
-        }
-
-        if (formattedDate === hoverStart) {
-            props.circleLeft = "hover-current";
-            props.circleRight = "hover-current";
-            props.circleShadow = true;
-            if (hoverStart >= rangeStart && hoverStart < rangeEnd) {
-                props.circleLeft = "overlap-outline";
-                props.circleRight = "overlap-outline";
+            if (formattedDate === hoverStart && formattedDate !== rangeStart) {
+                props.circleLeft = "selected-hover";
             }
         }
 
@@ -153,8 +137,6 @@ export const FixedRangeDayCell = ({
             props.labelType = "unavailable";
         } else if (dayjs().isSame(date, "day") && !disabled) {
             props.labelType = "current";
-            props.circleLeft = "current";
-            props.circleRight = "current";
         }
 
         return props;
@@ -169,6 +151,7 @@ export const FixedRangeDayCell = ({
         calendarDate,
         disabled,
         interactive,
+        currentDateIndicator: true,
         onSelect: handleSelect,
         onHover: handleHover,
     };

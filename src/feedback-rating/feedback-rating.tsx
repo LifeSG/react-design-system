@@ -1,4 +1,4 @@
-import { Text } from "../text";
+import { Typography } from "../typography/typography";
 import { FeedbackRatingData } from "./feedback-rating-data";
 import { FeedbackRatingStarsContainer } from "./feedback-rating-stars-container";
 import {
@@ -39,7 +39,9 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                 />
             )}
             <ChildContainer>
-                <Text.H3 weight={"semibold"}>{componentDescription}</Text.H3>
+                <Typography.HeadingSM as="div" weight="semibold">
+                    {componentDescription}
+                </Typography.HeadingSM>
                 <FeedbackRatingStarsContainer
                     description={componentDescription}
                     rating={rating}

@@ -2,11 +2,12 @@ import commonjs from "@rollup/plugin-commonjs";
 import image from "@rollup/plugin-image";
 import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
-import typescript from "rollup-plugin-typescript2";
+import terser from "@rollup/plugin-terser";
+import copy from "rollup-plugin-copy";
+import generatePackageJson from "rollup-plugin-generate-package-json";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
-import terser from "@rollup/plugin-terser";
-import generatePackageJson from "rollup-plugin-generate-package-json";
+import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 import { getFolders } from "./scripts/build-util";
 
@@ -27,6 +28,7 @@ export const plugins = [
                 "**/custom-types/jpg.d.ts",
                 "**/custom-types/mdx.d.ts",
                 "**/custom-types/svg.d.ts",
+                "codemods",
             ],
         },
     }),
@@ -68,6 +70,25 @@ const folderBuildConfigs = getFolders("./src").map((folder) => {
     };
 });
 
+const codemodBuildConfigs = [
+    {
+        input: `codemods/run-codemod.ts`,
+        output: {
+            banner: "#!/usr/bin/env node",
+            file: `dist/codemods/run-codemod.js`,
+            sourcemap: true,
+            exports: "named",
+            format: "cjs",
+        },
+        plugins: [
+            ...plugins,
+            copy({
+                targets: [{ src: "codemods/**/*", dest: "dist/codemods" }],
+            }),
+        ],
+    },
+];
+
 export default [
     {
         input: "src/index.ts",
@@ -93,4 +114,5 @@ export default [
         external: ["react", "react-dom", "styled-components"],
     },
     ...folderBuildConfigs,
+    ...codemodBuildConfigs,
 ];

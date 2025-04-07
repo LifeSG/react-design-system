@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Text } from "../text";
+import { Typography } from "../typography";
 import {
     Bar,
     Histogram,
@@ -69,14 +69,18 @@ export const HistogramSlider = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleChange = (values: [number, number]) => {
-        setSelection(values);
-        onChange?.(values);
+    const handleChange = (values: number[]) => {
+        const [val1, val2] = values;
+        const newSelection: [number, number] = [val1, val2];
+        setSelection(newSelection);
+        onChange?.(newSelection);
     };
 
-    const handleChangeEnd = (values: [number, number]) => {
-        setSelection(values);
-        onChangeEnd?.(values);
+    const handleChangeEnd = (values: number[]) => {
+        const [val1, val2] = values;
+        const newSelection: [number, number] = [val1, val2];
+        setSelection(newSelection);
+        onChangeEnd?.(newSelection);
     };
 
     // =========================================================================
@@ -94,11 +98,11 @@ export const HistogramSlider = ({
             return renderRangeLabel(value);
         }
         return (
-            <Text.Body>
+            <Typography.BodyBL>
                 {rangeLabelPrefix}
                 {value}
                 {rangeLabelSuffix}
-            </Text.Body>
+            </Typography.BodyBL>
         );
     };
 

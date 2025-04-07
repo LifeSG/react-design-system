@@ -4,20 +4,20 @@ import { ErrorDisplay } from "src/error-display";
 type Component = typeof ErrorDisplay;
 
 const meta: Meta<Component> = {
-    title: "Modules/ErrorDisplay",
+    title: "Core/ErrorDisplay",
     component: ErrorDisplay,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return <ErrorDisplay type="404" />;
     },
 };
 
 export const WithActionButton: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <ErrorDisplay
                 type="unsupported-browser"
@@ -34,7 +34,7 @@ export const WithActionButton: StoryObj<Component> = {
 
 export const Maintenance: StoryObj<Component> = {
     name: "Custom attributes - Maintenance",
-    render: () => {
+    render: (_args) => {
         return (
             <ErrorDisplay
                 type="maintenance"
@@ -46,7 +46,7 @@ export const Maintenance: StoryObj<Component> = {
 
 export const Inactivity: StoryObj<Component> = {
     name: "Custom attributes - Inactivity",
-    render: () => {
+    render: (_args) => {
         return (
             <ErrorDisplay
                 type="inactivity"
@@ -57,7 +57,7 @@ export const Inactivity: StoryObj<Component> = {
 };
 
 export const CustomError: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <ErrorDisplay
                 type="404"

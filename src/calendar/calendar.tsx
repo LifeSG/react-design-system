@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
 import { InternalCalendar } from "../shared/internal-calendar";
+import { Border, Colour, Radius, Spacing } from "../theme";
 import { CalendarProps } from "./types";
 
 export const Calendar = ({
@@ -14,7 +14,7 @@ export const Calendar = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [selectedDate, setSelectedDate] = useState<string>(value); // YYYY-MM-DD
+    const [selectedDate, setSelectedDate] = useState<string | undefined>(value); // YYYY-MM-DD
 
     // =============================================================================
     // EFFECTS
@@ -29,7 +29,6 @@ export const Calendar = ({
     return (
         <Wrapper className={className} $hasBorder={styleType === "bordered"}>
             <InternalCalendar
-                type="standalone"
                 value={selectedDate}
                 initialCalendarDate={selectedDate}
                 onSelect={(value) => {
@@ -53,13 +52,17 @@ interface StyleProps {
 // STYLING
 // =============================================================================
 const Wrapper = styled.div<StyleProps>`
+    --vertical-inset: ${Spacing["spacing-24"]};
+    --horizontal-inset: ${Spacing["spacing-32"]};
+    --header-bottom-spacing: ${Spacing["spacing-8"]};
+
     width: 41rem;
 
     ${(props) => {
         if (props.$hasBorder) {
             return css`
-                border: 1px solid ${Color.Neutral[5](props)};
-                border-radius: 12px;
+                border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+                border-radius: ${Radius.lg};
                 overflow: hidden;
             `;
         }

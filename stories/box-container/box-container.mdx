@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as BoxContainerStories from "./box-container.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={BoxContainerStories} />
 
-<Title>BoxContainer</Title>
+# BoxContainer
 
-<Secondary>Overview</Secondary>
+## Overview
 
 Displays contents in a box styling layout that can be collapsible if specified.
 
@@ -17,11 +16,11 @@ import { BoxContainer } from "@lifesg/react-design-system/box-container";
 
 <Canvas of={BoxContainerStories.Default} />
 
-<Heading3>Non-collapsible</Heading3>
+## Non-collapsible
 
 <Canvas of={BoxContainerStories.NonCollapsible} />
 
-<Heading3>With a display state</Heading3>
+## With a display state
 
 Specifying the display state allows you to render an icon alongside the title. It is good to indicate if the contents
 of the `BoxContainer` has some special attention required.
@@ -36,12 +35,12 @@ In this example, we are using the `error` display state.
 
 <Canvas of={BoxContainerStories.WithDisplayState} />
 
-<Heading3>Specifying a custom call to action</Heading3>
+## Specifying a custom call to action
 
 You can also specify a custom call to action that will appear on the header of the `BoxContainer`.
 
 <Canvas of={BoxContainerStories.WithCustomCallToAction} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

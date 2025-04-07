@@ -21,7 +21,7 @@ export const ToggleIcon = ({
     disabled,
     className,
 }: ToggleIconProps) => {
-    let component: JSX.Element;
+    let component: JSX.Element | null;
 
     switch (type) {
         case "checkbox":
@@ -42,7 +42,7 @@ export const ToggleIcon = ({
     }
 
     return (
-        <Wrapper className={className} $active={active} disabled={disabled}>
+        <Wrapper className={className} $active={active} $disabled={disabled}>
             {component}
         </Wrapper>
     );

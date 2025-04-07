@@ -1,24 +1,21 @@
 import { Canvas, Meta } from "@storybook/blocks";
 import { Alert } from "src/alert";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
 import * as TooltipStories from "./tooltip.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={TooltipStories} />
 
-<Title>Tooltip</Title>
+# Tooltip
 
 <Alert type="warning">
     This component is deprecated and will be removed in a future version. Switch
-    to [PopoverV2](/docs/modules-popoverv2--docs) instead.
+    to [PopoverV2](/docs/overlays-popoverv2--docs) instead.
 </Alert>
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component which appears when hovering or clicking on a target element and
 displays information about a certain element in the page.
-
-> **If the content within the bubble is long, it is recommended to use the [Popover](/docs/modules-popover--docs) instead.**
 
 ```tsx
 import { withTooltip } from "@lifesg/react-design-system/tooltip";
@@ -28,12 +25,12 @@ import { withTooltip } from "@lifesg/react-design-system/tooltip";
 
 {/* USAGE */}
 
-<Heading3>Usage</Heading3>
+## Usage
 
 We recommend using the `withTooltip` higher order component (HOC) to construct the component. Here
 is how you can do it.
 
-<Heading4>Step 1: Create the trigger component</Heading4>
+### Step 1: Create the trigger component
 
 ```tsx
 import { Button, ButtonProps } from "@lifesg/react-design-system/button";
@@ -43,7 +40,7 @@ const TriggerComponent = (props: ButtonProps) => (
 );
 ```
 
-<Heading4>Step 2: Use the HOC function to create a HOC</Heading4>
+### Step 2: Use the HOC function to create a HOC
 
 ```tsx
 const WrappedComponent = withTooltip(TriggerComponent, {
@@ -51,7 +48,7 @@ const WrappedComponent = withTooltip(TriggerComponent, {
 });
 ```
 
-<Heading4>Step 3: Compose the component with the HOC</Heading4>
+### Step 3: Compose the component with the HOC
 
 You may choose to handle the visibility of the `Tooltip` within the composed function or
 expose props to allow the usage from parent elements.
@@ -120,7 +117,7 @@ export const CorrectExample = () => {
 
 {/* USING AS A COMPONENT */}
 
-<Heading3>Using as a component</Heading3>
+## Using as a component
 
 You also have the freedom to construct the `Tooltip` as a separate component from its trigger.
 
@@ -132,7 +129,7 @@ import { Tooltip } from "@lifesg/react-design-system/tooltip";
 
 {/* POSITIONS */}
 
-<Heading3>Available positions</Heading3>
+## Available positions
 
 There are 4 types of positions that the `Tooltip` can appear. You can specify so using the `position` prop.
 
@@ -140,6 +137,6 @@ In this example, click to interact with the buttons.
 
 <Canvas of={TooltipStories.AvailablePositions} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

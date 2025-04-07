@@ -12,6 +12,13 @@ export const FormTimeRangePicker = ({
     mobileCols,
     tabletCols,
     desktopCols,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
     ...otherProps
 }: FormTimeRangePickerProps): JSX.Element => {
     return (
@@ -25,6 +32,13 @@ export const FormTimeRangePicker = ({
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <TimeRangePicker
                 id={`${id}-base`}

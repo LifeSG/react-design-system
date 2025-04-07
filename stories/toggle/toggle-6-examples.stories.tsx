@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { Toggle } from "../../src";
-import { Form } from "../../src/form";
-import { Text } from "../../src/text";
+import { Toggle } from "src/toggle";
+import { Form } from "src/form";
 
 type Component = typeof Toggle;
 
 const meta: Meta<Component> = {
-    title: "Data Input/Toggle/Common patterns",
+    title: "Selection and input/Toggle/Common patterns",
     component: Toggle,
 };
 export default meta;
@@ -33,21 +32,29 @@ export const AdditionalInputs: StoryObj<Component> = {
                     checked={selected}
                     error={error}
                     compositeSection={
-                        selected && {
-                            children: (
-                                <Form.Input
-                                    label="Label"
-                                    errorMessage={error && "Invalid field"}
-                                    value={value}
-                                    onChange={(e) => {
-                                        setValue(e.target.value);
-                                        setError(e.target.value === "x");
-                                    }}
-                                />
-                            ),
-                            collapsible: true,
-                            errors: error && ["Something went wrong"],
-                        }
+                        selected
+                            ? {
+                                  children: (
+                                      <Form.Input
+                                          label="Label"
+                                          errorMessage={
+                                              error
+                                                  ? "Invalid field"
+                                                  : undefined
+                                          }
+                                          value={value}
+                                          onChange={(e) => {
+                                              setValue(e.target.value);
+                                              setError(e.target.value === "x");
+                                          }}
+                                      />
+                                  ),
+                                  collapsible: true,
+                                  errors: error
+                                      ? ["Something went wrong"]
+                                      : undefined,
+                              }
+                            : undefined
                     }
                     onChange={() => {
                         const nextState = !selected;
@@ -92,35 +99,6 @@ export const DynamicOption: StoryObj<Component> = {
                     Text
                 </Toggle>
             </div>
-        );
-    },
-};
-
-export const InteractiveSublabel: StoryObj<Component> = {
-    render: () => {
-        return (
-            <Toggle
-                indicator
-                subLabel={() => (
-                    <div>
-                        Clicking here toggles the button.
-                        <div style={{ pointerEvents: "auto" }}>
-                            Clicking here does not and{" "}
-                            <Text.Hyperlink.Small
-                                href="https://example.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                external
-                            >
-                                this link
-                            </Text.Hyperlink.Small>{" "}
-                            is accessible
-                        </div>
-                    </div>
-                )}
-            >
-                Hello
-            </Toggle>
         );
     },
 };

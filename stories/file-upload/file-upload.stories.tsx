@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useEffect, useState } from "react";
-import { FileUpload } from "src/file-upload";
+import { FileItemProps, FileUpload } from "src/file-upload";
 import { SimpleIdGenerator } from "src/util/simple-id-generator";
 
 type Component = typeof FileUpload;
 
 const meta: Meta<Component> = {
-    title: "Modules/FileUpload",
+    title: "Selection and input/FileUpload",
     component: FileUpload,
 };
 
@@ -14,8 +14,8 @@ export default meta;
 
 export const Default: StoryObj<Component> = {
     render: () => {
-        const [fileItems, setFileItems] = useState([]);
-        const handleChange = (files) => {
+        const [fileItems, setFileItems] = useState<FileItemProps[]>([]);
+        const handleChange = (files: File[]) => {
             const newFileItems = files.map((file) => {
                 return {
                     id: SimpleIdGenerator.generate(),
@@ -28,7 +28,7 @@ export const Default: StoryObj<Component> = {
                 return prevItems.concat(newFileItems);
             });
         };
-        const handleDelete = (fileItem) => {
+        const handleDelete = (fileItem: FileItemProps) => {
             const newArr = [...fileItems];
             newArr.splice(newArr.indexOf(fileItem), 1);
             setFileItems(newArr);
@@ -54,8 +54,8 @@ export const Default: StoryObj<Component> = {
 
 export const WithErrorDisplay: StoryObj<Component> = {
     render: () => {
-        const [fileItems, setFileItems] = useState([]);
-        const handleChange = (files) => {
+        const [fileItems, setFileItems] = useState<FileItemProps[]>([]);
+        const handleChange = (files: File[]) => {
             const newFileItems = files.map((file) => {
                 return {
                     id: SimpleIdGenerator.generate(),
@@ -69,7 +69,7 @@ export const WithErrorDisplay: StoryObj<Component> = {
                 return prevItems.concat(newFileItems);
             });
         };
-        const handleDelete = (fileItem) => {
+        const handleDelete = (fileItem: FileItemProps) => {
             const newArr = [...fileItems];
             newArr.splice(newArr.indexOf(fileItem), 1);
             setFileItems(newArr);
@@ -96,41 +96,43 @@ export const WithErrorDisplay: StoryObj<Component> = {
 
 export const WithLoadingIndicator: StoryObj<Component> = {
     render: () => {
-        const [fileItems, setFileItems] = useState([]);
+        const [fileItems, setFileItems] = useState<FileItemProps[]>([]);
         useEffect(() => {
             if (fileItems.length > 0) {
                 updateProgress();
             }
         }, [fileItems]);
-        const handleChange = (files) => {
+        const handleChange = (files: File[]) => {
             const newFileItems = files.map((file) => {
                 return {
                     id: SimpleIdGenerator.generate(),
                     name: file.name,
                     size: file.size,
                     type: file.type,
-                    progress: 0,
                 };
             });
             setFileItems((prevItems) => {
                 return prevItems.concat(newFileItems);
             });
         };
-        const handleDelete = (fileItem) => {
+        const handleDelete = (fileItem: FileItemProps) => {
             const newArr = [...fileItems];
             newArr.splice(newArr.indexOf(fileItem), 1);
             setFileItems(newArr);
         };
         const updateProgress = () => {
             const hasInProgressItems = fileItems.some(
-                (item) => item.progress < 1
+                (item) => typeof item.progress === "number" && item.progress < 1
             );
             if (hasInProgressItems) {
                 const updatedFileItems = fileItems.map((item) => {
                     let newProgress;
                     if (item.progress === 1) {
                         newProgress = undefined;
-                    } else if (item.progress < 1) {
+                    } else if (
+                        typeof item.progress === "number" &&
+                        item.progress < 1
+                    ) {
                         newProgress = item.progress + 0.25;
                     }
                     return {
@@ -164,7 +166,7 @@ export const WithLoadingIndicator: StoryObj<Component> = {
 
 export const EditableFileItems: StoryObj<Component> = {
     render: () => {
-        const [fileItems, setFileItems] = useState([
+        const [fileItems, setFileItems] = useState<FileItemProps[]>([
             {
                 id: "1",
                 name: "img-1.jpg",
@@ -174,7 +176,7 @@ export const EditableFileItems: StoryObj<Component> = {
                     "https://picsum.photos/seed/picsum/200/300",
             },
         ]);
-        const handleChange = (files) => {
+        const handleChange = (files: File[]) => {
             const newFileItems = files.map((file) => {
                 return {
                     id: SimpleIdGenerator.generate(),
@@ -187,7 +189,7 @@ export const EditableFileItems: StoryObj<Component> = {
                 return prevItems.concat(newFileItems);
             });
         };
-        const handleDelete = (fileItem) => {
+        const handleDelete = (fileItem: FileItemProps) => {
             if (fileItems.length === 1) {
                 setFileItems([]);
             } else {
@@ -196,7 +198,7 @@ export const EditableFileItems: StoryObj<Component> = {
                 setFileItems(newArr);
             }
         };
-        const handleEdit = (fileItem) => {
+        const handleEdit = (fileItem: FileItemProps) => {
             setFileItems((prevItems) => {
                 return prevItems.map((item) => {
                     if (item.id === fileItem.id) {
@@ -232,8 +234,8 @@ export const EditableFileItems: StoryObj<Component> = {
 
 export const SortableFileItems: StoryObj<Component> = {
     render: () => {
-        const [fileItems, setFileItems] = useState([]);
-        const handleChange = (files) => {
+        const [fileItems, setFileItems] = useState<FileItemProps[]>([]);
+        const handleChange = (files: File[]) => {
             const newFileItems = files.map((file) => {
                 return {
                     id: SimpleIdGenerator.generate(),
@@ -246,7 +248,7 @@ export const SortableFileItems: StoryObj<Component> = {
                 return prevItems.concat(newFileItems);
             });
         };
-        const handleDelete = (fileItem) => {
+        const handleDelete = (fileItem: FileItemProps) => {
             if (fileItems.length === 1) {
                 setFileItems([]);
             } else {
@@ -255,7 +257,7 @@ export const SortableFileItems: StoryObj<Component> = {
                 setFileItems(newArr);
             }
         };
-        const handleSort = (fileItems) => {
+        const handleSort = (fileItems: FileItemProps[]) => {
             setFileItems(fileItems);
         };
         return (
@@ -282,8 +284,8 @@ export const SortableFileItems: StoryObj<Component> = {
 };
 
 export const ReadonlyState: StoryObj<Component> = {
-    render: () => {
-        const [fileItems, setFileItems] = useState([
+    render: (_args) => {
+        const [fileItems] = useState([
             {
                 id: "1",
                 name: "img-1.jpg",
@@ -312,9 +314,9 @@ export const ReadonlyState: StoryObj<Component> = {
 };
 
 export const TextStyling: StoryObj<Component> = {
-    render: (args) => {
-        const [fileItems, setFileItems] = useState([]);
-        const handleChange = (files) => {
+    render: (_args) => {
+        const [fileItems, setFileItems] = useState<FileItemProps[]>([]);
+        const handleChange = (files: File[]) => {
             const newFileItems = files.map((file) => {
                 return {
                     id: SimpleIdGenerator.generate(),
@@ -327,7 +329,7 @@ export const TextStyling: StoryObj<Component> = {
                 return prevItems.concat(newFileItems);
             });
         };
-        const handleDelete = (fileItem) => {
+        const handleDelete = (fileItem: FileItemProps) => {
             const newArr = [...fileItems];
             newArr.splice(newArr.indexOf(fileItem), 1);
             setFileItems(newArr);
@@ -365,7 +367,6 @@ export const TextStyling: StoryObj<Component> = {
                         </ol>
                     </>
                 }
-                {...args}
             />
         );
     },

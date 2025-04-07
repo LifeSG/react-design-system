@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { MediaWidths } from "../spec/media-spec";
 import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
 import {
     Caret,
@@ -12,6 +11,8 @@ import {
     Wrapper,
 } from "./breadcrumb.style";
 import { BreadcrumbProps, FadeColorSet } from "./types";
+import { useTheme } from "styled-components";
+import { Breakpoint } from "../theme";
 
 export const Breadcrumb = ({
     links,
@@ -38,6 +39,10 @@ export const Breadcrumb = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
+
+    const theme = useTheme();
+    const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
+
     const onResize = useEvent(() => {
         const content = contentRef.current;
         const wrapper = wrapperRef.current;
@@ -47,14 +52,14 @@ export const Breadcrumb = ({
             wrapper &&
             links &&
             links.length > 1 &&
-            window.innerWidth <= MediaWidths.tablet
+            window.innerWidth <= tabletBreakpoint
         ) {
             content.scrollLeft = content.scrollWidth - wrapper.offsetWidth;
         }
     });
 
     const handleShowFadeToggle = useEvent(() => {
-        const nextShowFade = window.innerWidth <= MediaWidths.tablet;
+        const nextShowFade = window.innerWidth <= tabletBreakpoint;
         setShowFade(nextShowFade);
 
         const content = contentRef.current;

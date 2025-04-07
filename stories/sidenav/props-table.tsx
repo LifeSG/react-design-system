@@ -1,10 +1,11 @@
-import React from "react";
-import { ApiTable, code } from "../storybook-common/api-table";
 import {
+    ApiTable,
     ApiTableAttributeRowProps,
     ApiTableSectionProps,
-} from "../storybook-common/api-table/types";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
+    TabAttribute,
+    Tabs,
+    code,
+} from "stories/storybook-common";
 
 const BASE_ATTRIBUTES: ApiTableAttributeRowProps[] = [
     {

@@ -1,5 +1,7 @@
 import React from "react";
 
+export type InputStyleType = "no-border" | "bordered";
+
 export interface InputProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
     /** Sets the number of characters before a space is added (works only with type `tel` input) */
@@ -8,7 +10,7 @@ export interface InputProps
     allowClear?: boolean | undefined;
     onClear?: () => void | undefined;
     "data-testid"?: string | undefined;
-    styleType?: "no-border" | "bordered" | undefined;
+    styleType?: InputStyleType | undefined;
 }
 
 /** To be exposed for Form component inheritance */

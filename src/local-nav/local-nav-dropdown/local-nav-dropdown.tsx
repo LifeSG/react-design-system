@@ -4,14 +4,15 @@ import { LocalNavDropdownItemComponentProps } from "../internal-types";
 import { LocalNavDropdownProps, LocalNavItemProps } from "../types";
 import {
     Backdrop,
-    LabelText,
-    NavIcon,
     NavItem,
+    NavItemLabel,
     NavItemList,
-    NavLabel,
+    NavSelect,
+    NavSelectIcon,
     NavWrapper,
     StyledTickIcon,
 } from "./local-nav-dropdown.styles";
+import { Typography } from "../../typography";
 
 const Component = (
     {
@@ -41,10 +42,12 @@ const Component = (
     const [dynamicMargin, setDynamicMargin] = useState(0);
     const navTestId = testId || "local-nav-dropdown";
 
-    useImperativeHandle(ref, () => navWrapperRef.current);
+    useImperativeHandle(ref, () => navWrapperRef.current!);
 
     const labelText =
-        selectedItemIndex >= 0 && isStickied
+        typeof selectedItemIndex === "number" &&
+        selectedItemIndex >= 0 &&
+        isStickied
             ? items[selectedItemIndex].title
             : defaultLabel;
 
@@ -222,7 +225,7 @@ const Component = (
                 onClick={handleClick}
             >
                 {isSelected && <StyledTickIcon />}
-                <LabelText $isSelected={isSelected}>{title}</LabelText>
+                <NavItemLabel $isSelected={isSelected}>{title}</NavItemLabel>
             </NavItem>
         );
     };
@@ -239,15 +242,17 @@ const Component = (
                 data-testid={navTestId}
                 className={className}
             >
-                <NavLabel
+                <NavSelect
                     ref={dropdownRef}
                     onClick={handleToggleDropdown}
                     data-testid={`${navTestId}-label`}
                     $isDropdownExpanded={isDropdownExpanded}
                 >
-                    <LabelText weight="semibold">{labelText}</LabelText>
-                    <NavIcon $isDropdownExpanded={isDropdownExpanded} />
-                </NavLabel>
+                    <Typography.BodyBL weight="semibold">
+                        {labelText}
+                    </Typography.BodyBL>
+                    <NavSelectIcon $isDropdownExpanded={isDropdownExpanded} />
+                </NavSelect>
                 {isDropdownExpanded && (
                     <NavItemList
                         data-testid={`${navTestId}-dropdown-list`}

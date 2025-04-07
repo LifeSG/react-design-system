@@ -1,6 +1,8 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+} from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -182,13 +184,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         This also inherits props from&nbsp;
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#component-api"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            TextLinkProps
-                        </a>
+                        <StorybookLink path="/docs/core-typography--docs#component-api">
+                            TypographyLinkProps
+                        </StorybookLink>
                     </>
                 ),
             },
@@ -258,9 +256,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The props for the action button",
                 propTypes: (
                     <>
-                        <a href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-button--docs#component-api">
+                        <StorybookLink path="/docs/selection-and-input-button-base--docs#component-api">
                             <code>ButtonProps</code>
-                        </a>
+                        </StorybookLink>
                         &nbsp;
                         <code>NavbarButtonComponentProps</code>
                     </>

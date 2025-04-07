@@ -13,6 +13,13 @@ export const FormRangeSelect = <T, V>({
     mobileCols,
     tabletCols,
     desktopCols,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
     ...otherProps
 }: FormInputRangeSelectProps<T, V>): JSX.Element => {
     return (
@@ -26,6 +33,13 @@ export const FormRangeSelect = <T, V>({
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <InputRangeSelect
                 id={`${id}-base`}

@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
+import { Colour, Font, Spacing } from "../../theme";
 import { BasicInput } from "../input-wrapper/input-wrapper";
-import { TextStyleHelper } from "../../text/helper";
-import { Text } from "../../text/text";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -41,7 +39,7 @@ export const InputContainer = styled.div<InputContainerStyleProps>`
         if (props.$hover) {
             return css`
                 ${BaseInput}, ${Divider} {
-                    color: ${Color.Neutral[4]};
+                    color: ${Colour["text-subtler"]};
                 }
             `;
         }
@@ -55,7 +53,7 @@ const BaseInput = styled(BasicInput)`
 
 export const DayInput = styled(BaseInput)`
     width: 2rem;
-    margin-right: 0.25rem;
+    margin-right: ${Spacing["spacing-4"]};
 `;
 
 export const MonthInput = styled(BaseInput)`
@@ -64,23 +62,24 @@ export const MonthInput = styled(BaseInput)`
 
 export const YearInput = styled(BaseInput)`
     width: 3rem;
-    margin-left: 0.25rem;
+    margin-left: ${Spacing["spacing-4"]};
 `;
 
-export const Divider = styled(Text.Body)<DividerStyleProps>`
+export const Divider = styled.span<DividerStyleProps>`
+    ${Font["body-baseline-regular"]}
     ${(props) => {
         if (props.$inactive) {
             return css`
-                color: ${Color.Neutral[3](props)};
+                color: ${Colour["text"]};
             `;
         }
     }}
 `;
 
 export const Placeholder = styled.div<PlaceholderStyleProps>`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    background-color: ${Color.Neutral[8]};
-    color: ${Color.Neutral[3]};
+    ${Font["body-baseline-regular"]}
+    background-color: ${Colour["bg"]};
+    color: ${Colour["text-subtler"]};
     position: absolute;
     display: flex;
     align-items: center;
@@ -90,7 +89,7 @@ export const Placeholder = styled.div<PlaceholderStyleProps>`
     ${(props) => {
         if (props.$disabled) {
             return css`
-                background-color: ${Color.Neutral[6](props)};
+                background-color: ${Colour["bg-disabled"]};
                 cursor: not-allowed;
             `;
         } else if (props.$hide) {

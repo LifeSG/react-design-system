@@ -1,20 +1,20 @@
-import { MediaQuery } from "../media";
-import { Text } from "../text";
 import styled from "styled-components";
+import { MediaQuery, Spacing } from "../theme";
+import { Typography } from "../typography";
 
 export const Wrapper = styled.div`
     display: flex;
     align-items: flex-start;
     flex-direction: column;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         justify-content: flex-start;
         padding: 0;
     }
 `;
 
-export const Label = styled(Text.H5).attrs({ as: "p" })`
-    margin-bottom: 1rem;
+export const Label = styled(Typography.BodyMD)`
+    margin-bottom: ${Spacing["spacing-16"]};
 `;
 
 export const Items = styled.div`
@@ -24,7 +24,7 @@ export const Items = styled.div`
 
 export const AppStoreLink = styled.a`
     &:not(:last-child) {
-        margin-right: 2rem;
+        margin-right: ${Spacing["spacing-32"]};
     }
 
     img {
@@ -33,13 +33,13 @@ export const AppStoreLink = styled.a`
         object-fit: contain;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         &:not(:last-child) {
-            margin-right: 1rem;
+            margin-right: ${Spacing["spacing-16"]};
         }
 
         img {
-            width: auto;
+            width: 100%;
             height: auto;
             object-fit: contain;
         }

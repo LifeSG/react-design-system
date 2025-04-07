@@ -1,14 +1,11 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { DesignToken } from "../design-token";
-import { TextStyleHelper } from "../text";
-import { Transition } from "../transition";
+import { Border, Colour, Font, Radius, Spacing } from "../theme";
 
 // =============================================================================
-// STYLE INTERFACe
+// STYLE INTERFACE
 // =============================================================================
 interface StyleProps {
-    error?: boolean;
+    $error?: boolean;
 }
 
 // =============================================================================
@@ -21,62 +18,59 @@ export const Wrapper = styled.div`
 `;
 
 export const Element = styled.textarea<StyleProps>`
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
-    display: block;
-    padding: 0.75rem 1rem;
-    width: 100%;
-    transition: ${Transition.Base};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    background: ${Colour["bg"]};
+    outline: none;
+    overflow: hidden;
 
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[1]};
-    background: ${Color.Neutral[8]};
+    display: block;
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
+    width: 100%;
+
+    ${Font["body-baseline-regular"]}
+    color: ${Colour["text"]};
 
     :focus,
     :active {
-        outline: none;
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
+        outline-offset: -1px;
+        outline: ${Border["width-020"]} ${Border["solid"]}
+            ${Colour["border-focus"]};
     }
 
     ::placeholder,
     ::-webkit-input-placeholder {
-        color: ${Color.Neutral[3]};
+        color: ${Colour["text-subtler"]};
     }
 
     ${(props) => {
         if (props.readOnly) {
             return css`
-                border: none;
-                padding: 0.75rem 0;
+                border-color: transparent;
                 background: transparent !important;
 
                 :focus,
                 :active {
-                    border: none;
-                    box-shadow: none;
+                    outline-color: ${Colour["border-focus"]};
                 }
             `;
         } else if (props.disabled) {
             return css`
-                background: ${Color.Neutral[6](props)};
+                background: ${Colour["bg-disabled"]};
                 cursor: not-allowed;
 
                 :focus,
                 :active {
-                    outline: none;
-                    border: 1px solid ${Color.Neutral[5](props)};
-                    box-shadow: none;
+                    outline-color: ${Colour["border-disabled"]};
                 }
             `;
-        } else if (props.error) {
+        } else if (props.$error) {
             return css`
-                border: 1px solid ${Color.Validation.Red.Border(props)};
+                border-color: ${Colour["border-error"]};
 
                 :focus,
                 :active {
-                    border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: ${DesignToken.InputErrorBoxShadow};
+                    outline-color: ${Colour["border-error-focus"]};
                 }
             `;
         }

@@ -1,39 +1,37 @@
-import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Tag } from "src/tag";
-import { Text } from "src/text";
-import { StoryContainer } from "../storybook-common";
-import { Grid, Row, Wrapper } from "./doc-elements";
+import { GridDecorator, RowDecorator } from "stories/storybook-common";
 
 type Component = typeof Tag;
 
 const meta: Meta<Component> = {
-    title: "Modules/Tag",
+    title: "Feedback indicators/Tag",
     component: Tag,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Wrapper>
+            <>
                 <Tag type="outline" colorType="green">
                     Outline style tag
                 </Tag>
                 <Tag type="solid" colorType="red">
                     Solid style tag
                 </Tag>
-            </Wrapper>
+            </>
         );
     },
+    decorators: [RowDecorator()],
 };
 
 export const Interactive: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Wrapper>
+            <>
                 <Tag
                     type="outline"
                     interactive={true}
@@ -42,15 +40,16 @@ export const Interactive: StoryObj<Component> = {
                     Interactive tag
                 </Tag>
                 <Tag type="outline">Non interactive tag</Tag>
-            </Wrapper>
+            </>
         );
     },
+    decorators: [RowDecorator()],
 };
 
 export const WithIcon: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Wrapper>
+            <>
                 <Tag
                     type="outline"
                     icon={<PlusCircleFillIcon />}
@@ -68,69 +67,60 @@ export const WithIcon: StoryObj<Component> = {
                 >
                     Icon on right
                 </Tag>
-            </Wrapper>
+            </>
         );
     },
+    decorators: [RowDecorator()],
 };
 
 export const Variations: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Grid>
-                    <Row>
-                        <span />
-                        <Text.H6 weight="semibold">Black</Text.H6>
-                        <Text.H6 weight="semibold">Grey</Text.H6>
-                        <Text.H6 weight="semibold">Green</Text.H6>
-                        <Text.H6 weight="semibold">Yellow</Text.H6>
-                        <Text.H6 weight="semibold">Red</Text.H6>
-                        <Text.H6 weight="semibold">Blue</Text.H6>
-                    </Row>
-                    <Row>
-                        <Text.H6 weight="semibold">Outline</Text.H6>
-                        <Tag type="outline" colorType="black">
-                            Label
-                        </Tag>
-                        <Tag type="outline" colorType="grey">
-                            Label
-                        </Tag>
-                        <Tag type="outline" colorType="green">
-                            Label
-                        </Tag>
-                        <Tag type="outline" colorType="yellow">
-                            Label
-                        </Tag>
-                        <Tag type="outline" colorType="red">
-                            Label
-                        </Tag>
-                        <Tag type="outline" colorType="blue">
-                            Label
-                        </Tag>
-                    </Row>
-                    <Row>
-                        <Text.H6 weight="semibold">Solid</Text.H6>
-                        <Tag type="solid" colorType="black">
-                            Label
-                        </Tag>
-                        <Tag type="solid" colorType="grey">
-                            Label
-                        </Tag>
-                        <Tag type="solid" colorType="green">
-                            Label
-                        </Tag>
-                        <Tag type="solid" colorType="yellow">
-                            Label
-                        </Tag>
-                        <Tag type="solid" colorType="red">
-                            Label
-                        </Tag>
-                        <Tag type="solid" colorType="blue">
-                            Label
-                        </Tag>
-                    </Row>
-                </Grid>
-            </StoryContainer>
+            <>
+                <Tag type="outline" colorType="black">
+                    Label
+                </Tag>
+                <Tag type="outline" colorType="grey">
+                    Label
+                </Tag>
+                <Tag type="outline" colorType="green">
+                    Label
+                </Tag>
+                <Tag type="outline" colorType="yellow">
+                    Label
+                </Tag>
+                <Tag type="outline" colorType="red">
+                    Label
+                </Tag>
+                <Tag type="outline" colorType="blue">
+                    Label
+                </Tag>
+                <Tag type="solid" colorType="black">
+                    Label
+                </Tag>
+                <Tag type="solid" colorType="grey">
+                    Label
+                </Tag>
+                <Tag type="solid" colorType="green">
+                    Label
+                </Tag>
+                <Tag type="solid" colorType="yellow">
+                    Label
+                </Tag>
+                <Tag type="solid" colorType="red">
+                    Label
+                </Tag>
+                <Tag type="solid" colorType="blue">
+                    Label
+                </Tag>
+            </>
         );
     },
+    decorators: [
+        GridDecorator({
+            columns: 6,
+            columnHeaders: ["Black", "Grey", "Green", "Yellow", "Red", "Blue"],
+            rowHeaders: ["Outline", "Solid"],
+        }),
+    ],
 };

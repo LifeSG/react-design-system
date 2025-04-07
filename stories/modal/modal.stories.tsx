@@ -6,7 +6,7 @@ import { Modal } from "src/modal";
 type Component = typeof Modal;
 
 const meta: Meta<Component> = {
-    title: "Modules/Modal",
+    title: "Overlays/Modal",
     component: Modal,
 };
 
@@ -74,10 +74,10 @@ export const StackedModals: StoryObj<Component> = {
     render: () => {
         const [showFirst, setShowFirst] = useState(false);
         const [showStacked, setShowStacked] = useState(false);
-        const handleFirst = (show) => () => {
+        const handleFirst = (show: boolean) => () => {
             setShowFirst(show);
         };
-        const handleStacked = (show) => () => {
+        const handleStacked = (show: boolean) => () => {
             setShowStacked(show);
         };
         return (

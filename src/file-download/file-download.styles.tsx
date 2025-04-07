@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Text } from "../text";
-import { MediaQuery } from "../media";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
@@ -19,14 +17,16 @@ export const Container = styled.div<StyleProps>`
 
     ${(props) => {
         if (props.$border) {
-            const color = encodeURIComponent(Color.Neutral[5](props));
             return css`
-                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='4' ry='4' stroke='${color}' stroke-width='4' stroke-dasharray='8%2c 8' stroke-dashoffset='8' stroke-linecap='round'/%3e%3c/svg%3e");
-                border-radius: 4px;
-                padding: 2rem;
+                ${Border.Util["dashed-default"]({
+                    radius: Radius["sm"],
+                    thickness: Border["width-040"],
+                    colour: Colour["border"],
+                })}
+                padding: ${Spacing["spacing-32"]};
 
-                ${MediaQuery.MaxWidth.mobileL} {
-                    padding: 2rem 1.25rem;
+                ${MediaQuery.MaxWidth.sm} {
+                    padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]};
                 }
             `;
         }
@@ -36,26 +36,28 @@ export const Container = styled.div<StyleProps>`
 export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 2rem;
+    margin-bottom: ${Spacing["spacing-32"]};
 `;
 
-export const Title = styled(Text.H4)`
-    margin-bottom: 0.5rem;
+export const Title = styled.p`
+    ${Font["heading-xs-regular"]}
+    color: ${Colour["text"]};
+    margin-bottom: ${Spacing["spacing-8"]};
 `;
 
 export const TitleContainer = styled.div`
-    color: ${Color.Neutral[1]};
-    ${applyHtmlContentStyle({ textSize: "Body" })}
+    ${applyHtmlContentStyle({ textSize: "heading-xs" })}
+    color: ${Colour["text"]};
 `;
 
-export const Description = styled(Text.BodySmall)`
-    margin-bottom: 0;
-    color: ${Color.Neutral[3]};
+export const Description = styled.p`
+    ${Font["body-md-regular"]}
+    color: ${Colour["text-subtler"]};
 `;
 
 export const DescriptionContainer = styled.div`
-    color: ${Color.Neutral[3]};
-    ${applyHtmlContentStyle({ textSize: "BodySmall" })}
+    ${applyHtmlContentStyle({ textSize: "body-md" })}
+    color: ${Colour["text-subtler"]};
 `;
 
 export const ListWrapper = styled.ul`

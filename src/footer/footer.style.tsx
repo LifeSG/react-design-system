@@ -1,31 +1,34 @@
 import styled from "styled-components";
+import { Colour, MediaQuery, Spacing } from "../theme";
+import { Typography } from "../typography";
 import { Layout } from "../layout";
-import { MediaQuery } from "../media";
-import { Color } from "../color";
-import { Text, TextStyleHelper } from "../text";
+import { Divider } from "../divider";
 
 // =============================================================================
 // GENERIC
 // =============================================================================
 
 export const BaseFooter = styled.footer`
-    background: ${Color.Neutral[7]};
+    background: ${Colour["bg-strong"]};
 `;
 
-export const StyledFooterLink = styled(Text.Hyperlink.Small)`
-    color: ${Color.Neutral[1]};
+export const StyledFooterLink = styled(Typography.LinkSM)`
+    color: ${Colour.text};
 `;
 
 // =============================================================================
 // TOP SECTION
 // =============================================================================
 
-export const TopSection = styled(Layout.Content)`
-    padding: 4rem 0;
-    border-bottom: 1px solid ${Color.Neutral[5]};
+export const FullWidthDivider = styled(Divider)`
+    width: 100%;
+`;
 
-    ${MediaQuery.MaxWidth.tablet} {
-        padding: 2rem 0;
+export const TopSection = styled(Layout.Content)`
+    padding: ${Spacing["spacing-64"]} 0;
+
+    ${MediaQuery.MaxWidth.lg} {
+        padding: ${Spacing["spacing-32"]} 0;
     }
 `;
 
@@ -38,40 +41,48 @@ export const LogoSection = styled.div`
         object-fit: contain;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
-        grid-column: 1 / span 8;
-        margin-bottom: 2rem;
+    ${MediaQuery.MaxWidth.lg} {
+        grid-column: 1 / span 12;
+        margin-bottom: ${Spacing["spacing-32"]};
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        grid-column: 1 / span 4;
-        margin-bottom: 2rem;
+    ${MediaQuery.MaxWidth.md} {
+        grid-column: 1 / span 8;
+        margin-bottom: ${Spacing["spacing-32"]};
     }
 `;
 
 export const LinkSection = styled.ul`
     // first col
-    grid-column: 3 / span 2;
+    grid-column: 3 / span 4;
     list-style-type: none;
 
     :nth-of-type(2) {
         // 2nd col
-        grid-column: 5 / span 2;
+        grid-column: 7 / span 4;
     }
 
     li {
         :not(:last-child) {
-            margin-bottom: 0.5rem;
+            margin-bottom: ${Spacing["spacing-8"]};
         }
 
         a {
             display: inline-block;
-            vertical-align: top;
-            line-height: 1rem;
         }
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
+        // first col
+        grid-column: 1 / span 6;
+
+        :nth-of-type(2) {
+            // 2nd col
+            grid-column: 7 / span 6;
+        }
+    }
+
+    ${MediaQuery.MaxWidth.md} {
         // first col
         grid-column: 1 / span 4;
 
@@ -80,28 +91,18 @@ export const LinkSection = styled.ul`
             grid-column: 5 / span 4;
         }
     }
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        // first col
-        grid-column: 1 / span 2;
-
-        :nth-of-type(2) {
-            // 2nd col
-            grid-column: 3 / span 2;
-        }
-    }
 `;
 
 export const AddonSection = styled.div`
-    grid-column: 9 / span 4;
+    grid-column: 13 / span 6;
 
-    ${MediaQuery.MaxWidth.tablet} {
-        grid-column: 1 / span 8;
-        margin-top: 2rem;
+    ${MediaQuery.MaxWidth.lg} {
+        grid-column: 1 / span 12;
+        margin-top: ${Spacing["spacing-32"]};
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        grid-column: 1 / span 4;
+    ${MediaQuery.MaxWidth.md} {
+        grid-column: 1 / span 8;
     }
 `;
 
@@ -109,23 +110,13 @@ export const AddonSection = styled.div`
 // BOTTOM SECTION
 // =============================================================================
 
-export const MobileOnlyBorder = styled.div`
-    display: none;
-
-    ${MediaQuery.MaxWidth.tablet} {
-        display: block;
-        height: 1px;
-        background: ${Color.Neutral[6]};
-    }
-`;
-
 export const BottomSection = styled(Layout.Content)`
-    padding: 1.375rem 0;
+    padding: ${Spacing["spacing-20"]} 0;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         border-top: none;
         flex-direction: column;
-        padding: 1rem 0;
+        padding: ${Spacing["spacing-16"]} 0;
     }
 `;
 
@@ -134,19 +125,19 @@ export const BottomSectionContent = styled.div`
     display: flex;
 
     &:not(:last-child) {
-        margin-right: 1rem;
+        margin-right: ${Spacing["spacing-16"]};
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
-        grid-column: 1 / span 8;
+    ${MediaQuery.MaxWidth.lg} {
+        grid-column: 1 / span 12;
         flex-direction: column;
         &:not(:last-child) {
             margin-right: 0;
         }
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        grid-column: 1 / span 4;
+    ${MediaQuery.MaxWidth.md} {
+        grid-column: 1 / span 8;
     }
 `;
 
@@ -154,44 +145,42 @@ export const CopyrightSection = styled(BottomSectionContent)`
     grid-column: 7 / span 6;
     justify-content: flex-end;
 
-    ${MediaQuery.MaxWidth.tablet} {
-        margin-top: 1rem;
+    ${MediaQuery.MaxWidth.lg} {
+        margin-top: ${Spacing["spacing-16"]};
         justify-content: flex-start;
-        grid-column: 1 / span 8;
+        grid-column: 1 / span 12;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        grid-column: 1 / span 4;
+    ${MediaQuery.MaxWidth.md} {
+        grid-column: 1 / span 8;
     }
 `;
 
-export const DisclaimerTextLink = styled(Text.Hyperlink.Small)`
-    ${TextStyleHelper.getTextStyle("XSmall", "regular")}
-    color: ${Color.Neutral[1]};
+export const DisclaimerTextLink = styled(Typography.LinkXS)`
+    color: ${Colour.text};
     &:not(:last-child) {
-        margin-right: 1.5rem;
+        margin-right: ${Spacing["spacing-16"]};
     }
 
     svg {
-        color: ${Color.Neutral[1]};
-        vertical-align: sub;
+        color: ${Colour.icon};
     }
 
     &:hover {
-        color: ${Color.Neutral[3]};
+        color: ${Colour["text-subtler"]};
         svg {
-            color: ${Color.Neutral[3]};
+            color: ${Colour["icon-subtle"]};
         }
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
-        margin-bottom: 1rem;
+    ${MediaQuery.MaxWidth.lg} {
+        margin-bottom: ${Spacing["spacing-12"]};
         &:not(:last-child) {
             margin-right: 0;
         }
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
-        margin-bottom: 0.625rem;
+    ${MediaQuery.MaxWidth.lg} {
+        margin-bottom: ${Spacing["spacing-8"]};
     }
 `;

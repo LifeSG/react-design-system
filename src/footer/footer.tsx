@@ -1,7 +1,8 @@
 import React from "react";
-import { Text } from "../text";
+import { useTheme } from "styled-components";
+import { Typography } from "../typography";
 import { DownloadApp } from "./footer-download-app";
-import { FooterHelper } from "./footer-helper";
+import { FooterHelper, InternalDisclaimerLinks } from "./footer-helper";
 import {
     AddonSection,
     BaseFooter,
@@ -9,14 +10,13 @@ import {
     BottomSectionContent,
     CopyrightSection,
     DisclaimerTextLink,
+    FullWidthDivider,
     LinkSection,
     LogoSection,
-    MobileOnlyBorder,
     StyledFooterLink,
     TopSection,
 } from "./footer.style";
 import { FooterLinkProps, FooterProps } from "./types";
-import { useTheme } from "styled-components";
 
 export const Footer = <T,>({
     children,
@@ -66,14 +66,16 @@ export const Footer = <T,>({
             disclaimerLinks
         );
 
-        return Object.keys(links).map((key) => {
-            return <DisclaimerTextLink key={key} {...links[key]} />;
-        });
+        return (Object.keys(links) as (keyof InternalDisclaimerLinks)[]).map(
+            (key) => {
+                return <DisclaimerTextLink key={key} {...links[key]} />;
+            }
+        );
     };
 
     const renderFooterLinks = (links: FooterLinkProps<T>[]) => {
         return links.map((link, index) => {
-            const { "data-options": options, ...otherProps } = link;
+            const { "data-options": _options, ...otherProps } = link;
 
             return (
                 <li key={index}>
@@ -87,7 +89,7 @@ export const Footer = <T,>({
     };
 
     const renderTopSection = () => {
-        let component: JSX.Element | JSX.Element[] = null;
+        let component: React.ReactNode = null;
 
         if (children) {
             return children;
@@ -129,25 +131,26 @@ export const Footer = <T,>({
 
         if (component) {
             return (
-                <TopSection type="grid" stretch={isStretch}>
-                    {component}
-                </TopSection>
+                <>
+                    <TopSection type="grid" stretch={isStretch}>
+                        {component}
+                    </TopSection>
+                    <FullWidthDivider />
+                </>
             );
         }
 
         return null;
     };
-
     return (
         <BaseFooter {...otherProps}>
             {renderTopSection()}
-            <MobileOnlyBorder />
             <BottomSection type="grid" stretch={isStretch}>
                 <BottomSectionContent key="disclaimer">
                     {renderDisclaimerLinks()}
                 </BottomSectionContent>
                 <CopyrightSection key="copyright">
-                    <Text.XSmall data-testid={"copyright-text"}>
+                    <Typography.BodyXS data-testid={"copyright-text"}>
                         {copyrightInfo || (
                             <>
                                 &copy;{" "}
@@ -157,7 +160,7 @@ export const Footer = <T,>({
                                 )}
                             </>
                         )}
-                    </Text.XSmall>
+                    </Typography.BodyXS>
                 </CopyrightSection>
             </BottomSection>
         </BaseFooter>

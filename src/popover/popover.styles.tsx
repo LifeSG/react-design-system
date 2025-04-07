@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../media";
+import { V2_MediaQuery } from "../v2_media";
 import { ModalBox } from "../modal/modal-box";
-import { Transition } from "../transition";
+import { V2_Transition } from "../v2_transition";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -23,19 +23,19 @@ interface PopoverStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-const getVisibilityStyle = (visible: boolean) => {
+const getVisibilityStyle = (visible: boolean | undefined) => {
     if (visible) {
         return css`
             visibility: visible;
             opacity: 1;
-            transition: ${Transition.Base};
+            transition: ${V2_Transition.Base};
             z-index: 50;
         `;
     } else {
         return css`
             visibility: hidden;
             opacity: 0;
-            transition: ${Transition.Base};
+            transition: ${V2_Transition.Base};
             z-index: -1;
         `;
     }
@@ -102,7 +102,7 @@ export const BubbleWrap = styled.div<PopoverStyleProps>`
     ${(props) => getVisibilityStyle(props.$visible)}
     ${(props) => getBubblePosition(props.$offset)}
 
-	${MediaQuery.MaxWidth.mobileL} {
+	${V2_MediaQuery.MaxWidth.mobileL} {
         display: none;
     }
 `;

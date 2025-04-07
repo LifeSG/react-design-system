@@ -3,24 +3,26 @@ import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import type { Preview } from "@storybook/react";
 import { ThemeProvider } from "styled-components";
 import {
-    BaseTheme,
+    LifeSGTheme,
     BookingSGTheme,
     CCubeTheme,
     MyLegacyTheme,
-    OneServiceTheme,
     RBSTheme,
+    PATheme,
 } from "../src/theme";
 
 const preview: Preview = {
     decorators: [
         withThemeFromJSXProvider({
             themes: {
-                LifeSG: BaseTheme,
+                LifeSG: LifeSGTheme,
                 BookingSG: BookingSGTheme,
                 CCube: CCubeTheme,
                 MyLegacy: MyLegacyTheme,
                 RBS: RBSTheme,
-                OneService: OneServiceTheme,
+                // TODO: update when OS theme is added
+                // OneService: V2_OneServiceTheme,
+                PA: PATheme,
             },
             Provider: ThemeProvider,
         }),
@@ -31,11 +33,40 @@ const preview: Preview = {
                 order: [
                     "Getting started",
                     ["Installation", "Themes", "Media Query", "Layout"],
+                    "Foundations",
+                    [
+                        "Introduction",
+                        "Themes",
+                        "Colours",
+                        "Font",
+                        "Breakpoint",
+                        "Spacing",
+                        "Motion",
+                        "Radius",
+                        "Border",
+                    ],
+                    "Core",
+                    ["Typography", "Layout", "Icon"],
+                    "Content",
+                    "Navigation",
+                    "Selection and input",
+                    ["Button", ["Base", "With Icon"]],
+                    "Feedback indicators",
+                    "Overlays",
                     "General",
-                    ["Animations", "Button", ["Base", "With Icon"], "*"],
+                    ["Animations", "*"],
                     "Form",
                     "Data Input",
                     "Modules",
+                    "V2",
+                    [
+                        "Introduction",
+                        "Themes",
+                        "Color",
+                        "Text",
+                        "Media Query",
+                        "Layout",
+                    ],
                 ],
             },
         },

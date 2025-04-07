@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as CalendarStories from "./calendar.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={CalendarStories} />
 
-<Title>Calendar</Title>
+# Calendar
 
-<Secondary>Overview</Secondary>
+## Overview
 
 Displays a calendar component.
 
@@ -17,7 +16,7 @@ import { Calendar } from "@lifesg/react-design-system/calendar";
 
 <Canvas of={CalendarStories.Default} />
 
-<Heading3>With disabled dates</Heading3>
+## With disabled dates
 
 You can use `disabledDates` to specify dates that are not available for selection.
 
@@ -25,24 +24,24 @@ _(In this example,2 days before today and 2 days after today are disabled)_
 
 <Canvas of={CalendarStories.WithDisabledDates} />
 
-<Heading3>Within minimum and maximum dates</Heading3>
+## Within minimum and maximum dates
 
 You can specify the `minDate` and/or `maxDate` to control the selection range.
 
 <Canvas of={CalendarStories.MinAndMaxDates} />
 
-<Heading3>Allow selection of disabled dates</Heading3>
+## Allow selection of disabled dates
 
 When `allowDisabledSelection` is set, dates are visually disabled, but still selectable.
 
 <Canvas of={CalendarStories.AllowDisabledSelection} />
 
-<Heading3>Show active month days only</Heading3>
+## Show active month days only
 
 You can use `showActiveMonthDaysOnly` to display only dates for the selected month.
 
 <Canvas of={CalendarStories.ShowActiveMonthDaysOnly} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

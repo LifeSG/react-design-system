@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color/color";
 import { TagColorType, TagType } from "./types";
-import { TextStyleHelper } from "../text";
-import { MediaQuery } from "../media";
+import { Border, Colour, Font, MediaQuery } from "../theme";
 
 // =============================================================================
 // STYLING
@@ -18,7 +16,7 @@ export const Wrapper = styled.div<StyleProps>`
     padding: 0.125rem 0.5rem;
     width: fit-content;
     max-width: 100%;
-    ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
+    ${Font["body-xs-semibold"]}
     transition: all 200ms ease;
     cursor: ${({ $interactive }) => ($interactive ? "pointer" : "default")};
     display: flex;
@@ -31,93 +29,101 @@ export const Wrapper = styled.div<StyleProps>`
 
     ${(props) => {
         let backgroundColor: (props: any) => string;
-        let borderColor: (props: any) => string;
+        let borderColor: ((props: any) => string) | undefined;
         let color: (props: any) => string;
-        let boxShadow: string;
+        let hoverBackgroundColor: (props: any) => string;
+        let hoverBorderColor: ((props: any) => string) | undefined;
 
         if (props.$type === "solid") {
-            color = Color.Neutral[8];
-            boxShadow = `0px 0px 4px 1px ${Color.Neutral[4](props)}`;
+            color = Colour["text-inverse"];
             switch (props.$color) {
                 case "grey":
-                    backgroundColor = Color.Neutral[3];
-                    borderColor = Color.Neutral[3];
+                    backgroundColor = Colour["bg-inverse-subtler"];
+                    hoverBackgroundColor = Colour["bg-inverse-hover"];
                     break;
                 case "green":
-                    backgroundColor = Color.Validation.Green.Text;
-                    borderColor = Color.Validation.Green.Text;
+                    backgroundColor = Colour["bg-success-strong"];
+                    hoverBackgroundColor = Colour["bg-success-strong-hover"];
                     break;
                 case "yellow":
-                    backgroundColor = Color.Validation.Orange.Text;
-                    borderColor = Color.Validation.Orange.Text;
+                    backgroundColor = Colour["bg-warning-strong"];
+                    hoverBackgroundColor = Colour["bg-warning-strong-hover"];
                     break;
                 case "red":
-                    backgroundColor = Color.Validation.Red.Text;
-                    borderColor = Color.Validation.Red.Text;
+                    backgroundColor = Colour["bg-error-strong"];
+                    hoverBackgroundColor = Colour["bg-error-strong-hover"];
                     break;
                 case "blue":
-                    backgroundColor = Color.Validation.Blue.Text;
-                    borderColor = Color.Validation.Blue.Text;
+                    backgroundColor = Colour["bg-info-strong"];
+                    hoverBackgroundColor = Colour["bg-info-strong-hover"];
                     break;
                 default:
-                    backgroundColor = Color.Neutral[1];
-                    borderColor = Color.Neutral[1];
+                    backgroundColor = Colour["bg-inverse"];
+                    hoverBackgroundColor = Colour["bg-inverse-hover"];
                     break;
             }
         } else {
-            boxShadow = `0px 0px 4px 1px rgba(164, 164, 164, 0.70)`;
             switch (props.$color) {
                 case "grey":
-                    backgroundColor = Color.Neutral[6];
-                    borderColor = Color.Neutral[4];
-                    color = Color.Neutral[3];
+                    backgroundColor = Colour["bg-strong"];
+                    borderColor = Colour["border-strong"];
+                    color = Colour["text-subtle"];
+                    hoverBackgroundColor = Colour["bg-hover-neutral-strong"];
                     break;
                 case "green":
-                    backgroundColor = Color.Validation.Green.Background;
-                    borderColor = Color.Validation.Green.Border;
-                    color = Color.Validation.Green.Text;
+                    backgroundColor = Colour["bg-success"];
+                    borderColor = Colour["border-success"];
+                    color = Colour["text-success"];
+                    hoverBackgroundColor = Colour["bg-success-hover"];
                     break;
                 case "yellow":
-                    backgroundColor = Color.Validation.Orange.Background;
-                    borderColor = Color.Validation.Orange.Border;
-                    color = Color.Validation.Orange.Text;
+                    backgroundColor = Colour["bg-warning"];
+                    borderColor = Colour["border-warning"];
+                    color = Colour["text-warning"];
+                    hoverBackgroundColor = Colour["bg-warning-hover"];
                     break;
                 case "red":
-                    backgroundColor = Color.Validation.Red.Background;
-                    borderColor = Color.Validation.Red.Border;
-                    color = Color.Validation.Red.Text;
+                    backgroundColor = Colour["bg-error"];
+                    borderColor = Colour["border-error"];
+                    color = Colour["text-error"];
+                    hoverBackgroundColor = Colour["bg-error-hover"];
                     break;
                 case "blue":
-                    backgroundColor = Color.Validation.Blue.Background;
-                    borderColor = Color.Validation.Blue.Border;
-                    color = Color.Validation.Blue.Text;
+                    backgroundColor = Colour["bg-info"];
+                    borderColor = Colour["border-info"];
+                    color = Colour["text-info"];
+                    hoverBackgroundColor = Colour["bg-info-hover"];
                     break;
                 default:
-                    backgroundColor = Color.Neutral[8];
-                    borderColor = Color.Neutral[5];
-                    color = Color.Neutral[1];
-                    boxShadow = `0px 0px 4px 1px rgba(164, 164, 164, 0.50)`;
+                    backgroundColor = Colour.bg;
+                    borderColor = Colour.border;
+                    color = Colour.text;
+                    hoverBackgroundColor = Colour["bg-hover-neutral"];
                     break;
             }
         }
         return css`
             background: ${backgroundColor};
-            border: 1px solid ${borderColor};
+            border: ${Border["width-010"]} ${Border.solid} ${borderColor};
             color: ${color};
-
             @media (hover: hover) {
                 &:hover {
-                    box-shadow: ${props.$interactive ? boxShadow : "none"};
+                    ${props.$interactive &&
+                    hoverBackgroundColor &&
+                    `background: ${hoverBackgroundColor(props)};`}
+                    ${props.$interactive &&
+                    hoverBorderColor &&
+                    `border-color: ${hoverBorderColor(props)};`}
                 }
             }
         `;
     }}
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         ${({ $interactive }) => {
             if ($interactive) {
                 return css`
-                    ${TextStyleHelper.getTextStyle("H5", "semibold")};
+                    ${Font["body-md-semibold"]}
                     padding: calc(0.5rem - 1px) 1rem;
                 `;
             }

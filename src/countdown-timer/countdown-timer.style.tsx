@@ -1,7 +1,6 @@
+import { ClockIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { TextStyleHelper } from "../text";
-import { MediaQuery } from "../media";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // STYLE TYPES
@@ -24,24 +23,25 @@ export const Wrapper = styled.div`
 `;
 
 export const BaseCountdown = styled.div<CountdownStyleProps>`
-    ${TextStyleHelper.getTextStyle("H4", "semibold")}
+    ${Font["body-baseline-regular"]}
     display: flex;
     align-items: center;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    color: ${Color.Primary};
-    border: 1px solid ${Color.Primary};
-    background-color: ${Color.Neutral[8]};
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
+    border-radius: ${Radius["sm"]};
+    color: ${Colour["text-primary"]};
+    border: ${Border["width-010"]} ${Border["solid"]};
+    border-color: ${Colour["border-primary"]};
+    background-color: ${Colour["bg"]};
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        padding: 1rem;
+    ${MediaQuery.MaxWidth.sm} {
+        padding: ${Spacing["spacing-16"]};
     }
 
     ${(props) => {
         if (props.$warn) {
             return css`
-                color: ${Color.Validation.Red.Text};
-                border: 1px solid ${Color.Validation.Red.Border};
+                color: ${Colour["text-error"]};
+                border-color: ${Colour["border-error"]};
             `;
         }
     }}
@@ -61,30 +61,39 @@ export const FixedCountdown = styled(BaseCountdown)`
         return css`
             /* style object will be converted to px */
             ${{ top: $top, left: $left, right: $right }}
-            box-shadow: 0px 0px 4px 1px
-                ${$warn ? Color.Validation.Red.Border : Color.Accent.Light[2]};
 
-            ${MediaQuery.MaxWidth.mobileL} {
+            box-shadow: 0px 0px 4px 1px rgb(from ${$warn
+                ? Colour["border-error"]
+                : Colour["border-primary-subtle"]} r g b / 50%);
+
+            ${MediaQuery.MaxWidth.sm} {
                 left: 0;
                 right: 0;
                 border-radius: 0;
                 border-left: none;
                 border-right: none;
+                box-shadow: none;
             }
         `;
     }}
 `;
 
 export const TimeLeft = styled.div`
-    ${TextStyleHelper.getTextStyle("H4", "bold")}
-    margin-left: 0.5rem;
-    margin-right: 1.5rem;
+    font-weight: ${Font.Spec["weight-bold"]};
+    margin-left: ${Spacing["spacing-8"]};
+    margin-right: ${Spacing["spacing-24"]};
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        margin-right: 3rem;
+    ${MediaQuery.MaxWidth.sm} {
+        margin-right: ${Spacing["spacing-48"]};
     }
 `;
 
 export const Timer = styled.div`
+    font-weight: ${Font.Spec["weight-semibold"]};
     margin-left: auto;
+`;
+
+export const TimerIcon = styled(ClockIcon)<CountdownStyleProps>`
+    color: ${(props) =>
+        props.$warn ? Colour["icon-error"] : Colour["icon-primary"]};
 `;

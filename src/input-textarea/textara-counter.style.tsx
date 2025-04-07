@@ -1,26 +1,11 @@
-import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { Text } from "../text";
-
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface StyleProps {
-    disabled?: boolean;
-}
+import styled from "styled-components";
+import { Colour, Font } from "../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const CounterLabel = styled(Text.H6)<StyleProps>`
+export const CounterLabel = styled.p`
     text-align: right;
-    color: ${Color.Neutral[3]};
-
-    ${(props) => {
-        if (props.disabled) {
-            return css`
-                color: ${Color.Neutral[4](props)};
-            `;
-        }
-    }}
+    ${Font["body-sm-semibold"]}
+    color: ${Colour["text-subtler"]};
 `;

@@ -1,4 +1,9 @@
-export const mockFetchOptions = async (input: string) => {
+export interface Option {
+    label: string;
+    value: string;
+}
+
+export const mockFetchOptions = async (input: string): Promise<Option[]> => {
     // Mock delay
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -16,6 +21,12 @@ export const mockFetchOptions = async (input: string) => {
         { label: `Option ${input}-3`, value: `${input}3` },
     ];
 };
+
+export interface OptionWithSecondaryLabel {
+    title: string;
+    secondaryLabel: string;
+    value: string;
+}
 
 export const mockFetchOptionsWithSecondaryLabel = async (input: string) => {
     // Mock delay

@@ -27,7 +27,7 @@ describe("ESignature", () => {
             screen.getByTestId("e-signature-progress-bar")
         ).toBeInTheDocument();
         expect(screen.getByText("Uploading...")).toBeInTheDocument();
-        expect(getAddSignatureButton(true)).not.toBeInTheDocument();
+        expect(queryAddSignatureButton()).not.toBeInTheDocument();
     });
 
     it("should render the loading text according to the loadingLabel", () => {
@@ -39,7 +39,7 @@ describe("ESignature", () => {
     it("should show edit button instead of add signature button if field has a value", () => {
         render(<ESignature value={PNG_BASE64} />);
 
-        expect(getAddSignatureButton(true)).not.toBeInTheDocument();
+        expect(queryAddSignatureButton()).not.toBeInTheDocument();
         expect(getEditSignatureButton()).toBeInTheDocument();
     });
 
@@ -66,7 +66,7 @@ describe("ESignature", () => {
         fireEvent.click(screen.getByRole("button", { name: "Save" }));
 
         expect(getSignatureModal()).not.toBeVisible();
-        expect(getAddSignatureButton(true)).not.toBeInTheDocument();
+        expect(queryAddSignatureButton()).not.toBeInTheDocument();
         expect(getEditSignatureButton()).toBeInTheDocument();
         expect(changeFn).toHaveBeenCalled();
         expect(screen.getByAltText("Signature preview")).toBeInTheDocument();
@@ -101,16 +101,16 @@ describe("ESignature", () => {
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
-const getAddSignatureButton = (isQuery = false) =>
-    screen[!isQuery ? "getByRole" : "queryByRole"]("button", {
-        name: "Add signature",
-    });
+const queryAddSignatureButton = () =>
+    screen.queryByRole("button", { name: "Add signature" });
+const getAddSignatureButton = () =>
+    screen.getByRole("button", { name: "Add signature" });
 const getEditSignatureButton = () =>
     screen.getByRole("button", { name: "Edit signature" });
 const getSignatureModal = () => screen.queryByTestId("signature-modal");
 
 const drawSignature = () => {
-    const canvas = document.querySelector(".upper-canvas");
+    const canvas = document.querySelector(".upper-canvas")!;
     fireEvent.mouseDown(canvas, { clientX: 20, clientY: 20 });
     fireEvent.mouseMove(canvas, { clientX: 100, clientY: 100 });
     fireEvent.mouseUp(canvas, { clientX: 120, clientY: 120 });

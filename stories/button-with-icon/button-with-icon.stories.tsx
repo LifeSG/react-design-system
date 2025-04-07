@@ -1,19 +1,19 @@
 import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import type { Meta, StoryObj } from "@storybook/react";
-import { ButtonWithIcon } from "../../src/button-with-icon";
+import { ButtonWithIcon } from "src/button-with-icon";
 import { Container } from "../button/doc-elements";
 
 type Component = typeof ButtonWithIcon.Default;
 
 const meta: Meta<Component> = {
-    title: "General/Button/With Icon",
+    title: "Selection and input/Button/With Icon",
     component: ButtonWithIcon.Default,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
                 <Container>
@@ -74,7 +74,7 @@ export const Default: StoryObj<Component> = {
 };
 
 export const RightPositioned: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
                 <Container>
@@ -155,7 +155,7 @@ export const RightPositioned: StoryObj<Component> = {
 };
 
 export const Danger: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
                 <Container>
@@ -216,12 +216,12 @@ export const Danger: StoryObj<Component> = {
 };
 
 export const LoadingState: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
                 <Container>
                     <ButtonWithIcon.Default icon={<PlaceholderIcon />} loading>
-                        Loading
+                        Default
                     </ButtonWithIcon.Default>
                     <ButtonWithIcon.Default
                         icon={<PlaceholderIcon />}

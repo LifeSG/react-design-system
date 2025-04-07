@@ -1,15 +1,15 @@
 import styled from "styled-components";
-import { Color } from "../../src/color";
-import { TextStyleHelper } from "../../src/text";
+import { V2_Color } from "../../src/v2_color";
+import { V2_TextStyleHelper } from "../../src/v2_text";
 
 export const DemoContainer = styled.div`
     display: flex;
     width: 100%;
     justify-content: center;
     align-items: center;
-    background: ${Color.Accent.Light[3]};
+    background: ${V2_Color.Accent.Light[3]};
     height: 6rem;
 
-    ${TextStyleHelper.getTextStyle("Body", "semibold")}
+    ${V2_TextStyleHelper.getTextStyle("Body", "semibold")}
     text-align: center;
 `;

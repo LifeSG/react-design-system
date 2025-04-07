@@ -4,7 +4,7 @@ import { Masthead } from "src/masthead";
 type Component = typeof Masthead;
 
 const meta: Meta<Component> = {
-    title: "Modules/Masthead",
+    title: "Navigation/Masthead",
     component: Masthead,
 };
 

@@ -1,10 +1,13 @@
 {
     "name": "@lifesg/react-design-system",
-    "version": "2.10.0-canary.6",
+    "version": "3.0.0-alpha.6",
     "description": "A component design system for LifeSG web apps",
     "main": "dist/cjs/index.js",
     "module": "dist/index.js",
     "typings": "dist/index.d.ts",
+    "bin": {
+        "lifesg-react-design-system": "./codemods/run-codemod.js"
+    },
     "scripts": {
         "build": "npm run rollup && npm run post:build",
         "build-check": "npm run rollup rollup.check.config.js",
@@ -20,7 +23,8 @@
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
         "build-fabric": "test -d ./node_modules/fabric && cd ./node_modules/fabric && node build.js modules=ALL exclude=assessors || true",
-        "postinstall": "npm run build-fabric"
+        "postinstall": "npm run build-fabric",
+        "codemod": "ENV=dev npx tsx codemods/run-codemod.ts"
     },
     "repository": {
         "type": "git",
@@ -43,14 +47,15 @@
         "react-zoom-pan-pinch": "^3.3.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.17.8",
+        "@babel/core": "^7.25.2",
         "@babel/preset-env": "^7.16.11",
-        "@babel/preset-react": "^7.16.7",
-        "@babel/preset-typescript": "^7.16.7",
+        "@babel/preset-react": "^7.24.7",
+        "@babel/preset-typescript": "^7.24.7",
         "@dnd-kit/core": "^6.0.8",
         "@dnd-kit/sortable": "^7.0.2",
         "@floating-ui/dom": "^1.6.10",
         "@floating-ui/react": "^0.26.23",
+        "@inquirer/prompts": "^7.0.0",
         "@lifesg/react-icons": "^1.6.0",
         "@playwright/test": "^1.45.0",
         "@rollup/plugin-commonjs": "^25.0.7",
@@ -73,8 +78,10 @@
         "@testing-library/jest-dom": "^5.16.3",
         "@testing-library/react": "^12.1.4",
         "@testing-library/user-event": "^14.5.2",
+        "@types/dompurify": "^2.4.0",
         "@types/fabric": "^5.3.7",
         "@types/jest": "^29.5.12",
+        "@types/jscodeshift": "^0.11.11",
         "@types/lodash": "^4.14.180",
         "@types/node": "^20.6.4",
         "@types/react": "^17.0.43",
@@ -101,7 +108,8 @@
         "jest-canvas-mock": "^2.3.1",
         "jest-environment-jsdom": "^29.7.0",
         "jest-junit": "^16.0.0",
-        "jest-styled-components": "^7.0.8",
+        "jest-styled-components": "^7.2.0",
+        "jscodeshift": "^17.3.0",
         "lint-staged": "^12.3.7",
         "lodash": "^4.17.21",
         "lottie-colorify": "^0.8.0",
@@ -121,6 +129,7 @@
         "react-spring": "~9.7.3",
         "remark-gfm": "^4.0.0",
         "rollup": "^3.29.4",
+        "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-generate-package-json": "^3.2.0",
         "rollup-plugin-peer-deps-external": "^2.2.4",
         "rollup-plugin-postcss": "^4.0.2",
@@ -128,7 +137,7 @@
         "storybook": "^8.1.6",
         "style-loader": "^2.0.0",
         "styled-components": "^5.3.5",
-        "typescript": "^4.8.2"
+        "typescript": "^5.7.3"
     },
     "peerDependencies": {
         "@floating-ui/dom": "^1.6.10",

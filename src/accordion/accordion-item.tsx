@@ -19,7 +19,11 @@ import {
     TitleContainer,
     TitleH4,
 } from "./accordion-item.style";
-import { AccordionItemHandle, AccordionItemProps } from "./types";
+import {
+    AccordionItemApi,
+    AccordionItemHandle,
+    AccordionItemProps,
+} from "./types";
 
 function Component(
     {
@@ -35,7 +39,7 @@ function Component(
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const elementRef = useRef<HTMLDivElement>();
+    const elementRef = useRef<HTMLDivElement>(null);
     const expandAll = useContext(AccordionContext);
     const [expand, setExpand] = useState<boolean>(
         collapsible ? expanded ?? expandAll : true
@@ -50,17 +54,20 @@ function Component(
     useImperativeHandle(
         ref,
         () =>
-            Object.assign(elementRef.current, {
-                expand(): void {
-                    setExpand(true);
-                },
-                collapse(): void {
-                    setExpand(false);
-                },
-                isExpanded() {
-                    return expand;
-                },
-            }),
+            Object.assign<HTMLDivElement, AccordionItemApi>(
+                elementRef.current!,
+                {
+                    expand(): void {
+                        setExpand(true);
+                    },
+                    collapse(): void {
+                        setExpand(false);
+                    },
+                    isExpanded() {
+                        return expand;
+                    },
+                }
+            ),
         [expand]
     );
 
@@ -76,7 +83,7 @@ function Component(
 
     useEffect(() => {
         if (hasFirstLoad) {
-            setExpand(expanded);
+            setExpand(!!expanded);
         }
     }, [expanded]);
 
@@ -123,6 +130,7 @@ function Component(
             case "small":
                 return (
                     <TitleH4
+                        weight="bold"
                         data-testid={`${testId}-title`}
                         $isCollapsed={expand}
                     >
@@ -132,6 +140,7 @@ function Component(
             default:
                 return (
                     <Title
+                        weight="bold"
                         data-testid={`${testId}-title`}
                         $isCollapsed={expand}
                     >

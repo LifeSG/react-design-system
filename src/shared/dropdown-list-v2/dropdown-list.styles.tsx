@@ -3,9 +3,16 @@ import { SquareIcon } from "@lifesg/react-icons/square";
 import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
-import { MediaQuery } from "../../media";
-import { TextStyleHelper } from "../../text";
+import {
+    Border,
+    Breakpoint,
+    Colour,
+    Font,
+    MediaQuery,
+    Radius,
+    Spacing,
+} from "../../theme";
+import { ComponentLoadingSpinner } from "../component-loading-spinner";
 import { DropdownVariantType } from "../dropdown-list/types";
 import { BasicButton } from "../input-wrapper/input-wrapper";
 
@@ -14,14 +21,12 @@ import { BasicButton } from "../input-wrapper/input-wrapper";
 // =============================================================================
 interface ContainerStyleProps {
     $width?: number;
-}
-
-interface ListStyleProps {
-    $variant?: DropdownVariantType;
+    $variant: DropdownVariantType;
 }
 
 interface ListItemStyleProps {
-    $active?: boolean;
+    $active: boolean;
+    $selected: boolean;
 }
 
 // =============================================================================
@@ -33,19 +38,32 @@ interface ListItemStyleProps {
 // -----------------------------------------------------------------------------
 export const Container = styled.div<ContainerStyleProps>`
     overflow: hidden;
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
-    background: ${Color.Neutral[8]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    background: ${Colour["bg"]};
 
     min-width: 23rem;
     ${(props) => props.$width && `width: ${props.$width}px;`}
     max-height: 27rem;
     overflow-y: auto;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${(props) =>
+        props.$variant === "small"
+            ? Font["body-md-regular"]
+            : Font["body-baseline-regular"]}
+
+    ${MediaQuery.MaxWidth.sm} {
         min-width: unset;
-        width: calc(100vw - 2.5rem);
+        width: calc(100vw - ${Breakpoint["sm-margin"]} * 2);
         max-height: 15rem;
+    }
+
+    ${MediaQuery.MaxWidth.xs} {
+        width: calc(100vw - ${Breakpoint["xs-margin"]} * 2);
+    }
+
+    ${MediaQuery.MaxWidth.xxs} {
+        width: calc(100vw - ${Breakpoint["xxs-margin"]} * 2);
     }
 
     ::-webkit-scrollbar {
@@ -57,7 +75,7 @@ export const Container = styled.div<ContainerStyleProps>`
     }
 
     ::-webkit-scrollbar-thumb {
-        background: ${Color.Neutral[4]};
+        background: ${Colour["bg-inverse-subtlest"]};
         border: 5px solid transparent;
         border-radius: 9999px;
         background-clip: padding-box;
@@ -66,7 +84,7 @@ export const Container = styled.div<ContainerStyleProps>`
 
 export const List = styled.div`
     background: transparent;
-    padding: 0.5rem;
+    padding: ${Spacing["spacing-8"]};
 `;
 
 export const Listbox = styled.ul`
@@ -80,44 +98,50 @@ export const Listbox = styled.ul`
 export const ListItem = styled.li<ListItemStyleProps>`
     display: flex;
     align-items: flex-start;
-    gap: 0.5rem;
-    padding: 0.75rem 0.5rem;
+    gap: ${Spacing["spacing-8"]};
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
     cursor: pointer;
 
-    outline-color: ${Color.Accent.Light[3]};
+    outline: none;
 
-    ${(props) =>
-        props.$active &&
-        css`
-            background: ${Color.Accent.Light[5]};
-        `}
+    ${(props) => {
+        if (props.$active && props.$selected) {
+            return css`
+                background: ${Colour["bg-hover"]};
+            `;
+        } else if (props.$active) {
+            return css`
+                background: ${Colour["bg-hover-subtle"]};
+            `;
+        }
+    }}
 `;
 
 export const SelectedIndicator = styled(TickIcon)`
     flex-shrink: 0;
-    height: 1.625rem;
+    height: 1lh;
     width: 1rem;
-    color: ${Color.Primary};
+    color: ${Colour["icon-selected"]};
 `;
 
 export const UnselectedIndicator = styled.div`
     flex-shrink: 0;
-    height: 1.625rem;
+    height: 1lh;
     width: 1rem;
 `;
 
 export const CheckboxSelectedIndicator = styled(SquareTickFillIcon)`
     flex-shrink: 0;
-    height: 1.625rem;
-    width: 1.625rem;
-    color: ${Color.Primary};
+    height: 1lh;
+    width: 1lh;
+    color: ${Colour["icon-selected"]};
 `;
 
 export const CheckboxUnselectedIndicator = styled(SquareIcon)`
     flex-shrink: 0;
-    height: 1.625rem;
-    width: 1.625rem;
-    color: ${Color.Accent.Light[2]};
+    height: 1lh;
+    width: 1lh;
+    color: ${Colour["icon-primary-subtlest"]};
 `;
 
 // -----------------------------------------------------------------------------
@@ -130,48 +154,37 @@ export const SelectAllContainer = styled.div`
     justify-content: flex-end;
 `;
 
-export const DropdownCommonButton = styled(BasicButton)<ListStyleProps>`
-    ${(props) =>
-        TextStyleHelper.getTextStyle(
-            props.$variant === "small" ? "BodySmall" : "Body",
-            "semibold"
-        )}
+export const DropdownCommonButton = styled(BasicButton)`
     cursor: pointer;
     overflow: hidden;
-    color: ${Color.Primary};
+    color: ${Colour["text-primary"]};
+    font-size: inherit;
 `;
 
 export const TryAgainButton = styled(DropdownCommonButton)`
-    outline-offset: 0.25rem;
+    ${Font["body-baseline-semibold"]}
 `;
 
 export const SelectAllButton = styled(DropdownCommonButton)`
-    padding: 0.5rem 1rem;
+    ${Font["body-md-semibold"]}
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-8"]};
 `;
 
 export const ResultStateContainer = styled.div`
     width: 100%;
     display: flex;
-    padding: 1rem 0.5rem;
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
     align-items: center;
 `;
 
-export const ResultStateText = styled.div<ListStyleProps>`
-    ${(props) =>
-        TextStyleHelper.getTextStyle(
-            props.$variant === "small" ? "BodySmall" : "Body",
-            "regular"
-        )}
+export const LabelIcon = styled(ExclamationCircleFillIcon)`
+    margin-right: ${Spacing["spacing-4"]};
+    color: ${Colour["icon-error"]};
+    height: 1em;
+    width: 1em;
 `;
 
-export const LabelIcon = styled(ExclamationCircleFillIcon)<ListStyleProps>`
-    ${(props) => {
-        const size = props.$variant === "small" ? 1 : 1.125;
-        return css`
-            height: ${size}rem;
-            width: ${size}rem;
-        `;
-    }}
-    margin-right: 0.625rem;
-    color: ${Color.Validation.Red.Icon};
+export const Spinner = styled(ComponentLoadingSpinner)`
+    margin-right: ${Spacing["spacing-8"]};
+    color: ${Colour["icon"]};
 `;

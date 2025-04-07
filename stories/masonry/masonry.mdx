@@ -1,21 +1,19 @@
 import { Canvas, Meta } from "@storybook/blocks";
 import { Alert } from "src/alert";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as MasonryStories from "./masonry.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={MasonryStories} />
 
-<Title>Masonry</Title>
+# Masonry
 
 <Alert type="warning">
     This component is deprecated and will be removed in a future version.
-    Consider switching to
-    [Layout.ColDiv](/docs/getting-started-layout-column-divs--docs) to manage
-    grid layouts
+    Consider switching to [Layout.ColDiv](/docs/core-layout-coldiv--docs) to
+    manage grid layouts
 </Alert>
 
-<Secondary>Overview</Secondary>
+## Overview
 
 The component that produces a masonry-tile like layout.
 
@@ -30,7 +28,7 @@ The component has 2 sub components:
 
 <Canvas of={MasonryStories.Default} />
 
-<Heading3>Guidelines</Heading3>
+## Guidelines
 
 While you may specify any number of columns to be present on the `Masonry.Grid`, there are still
 some restrictions to ensure that the design principles are met. These restrictions are:
@@ -49,12 +47,12 @@ Here are some of the guidelines for the different layouts:
 
 <br />
 
-<Heading3>Layouts for different media widths</Heading3>
+## Layouts for different media widths
 
 Here is an example how you can specify the different layouts for different media widths. (Reduce your viewport size to view)
 
 <Canvas of={MasonryStories.DifferentMediaWidths} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

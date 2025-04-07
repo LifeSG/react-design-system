@@ -1,18 +1,17 @@
 import { Meta } from "@storybook/blocks";
-import { Alert } from "src/alert";
-import { Secondary, Title } from "../storybook-common";
+import { DocInfo } from "stories/storybook-common";
 
 <Meta title="Getting started/Installation" />
 
-<Title>Installation</Title>
+# Installation
 
-<Alert type="warning">
+<DocInfo type="warning">
     {
         <p>
-            You are referring to v2 of the design system. You can find the v1
+            You are referring to v3 of the design system. You can find the v2
             documentation{" "}
             <a
-                href="https://designsystem.life.gov.sg/react/v1/index.html?path=/story/getting-started-installation--page"
+                href="https://designsystem.life.gov.sg/react/v2/index.html"
                 target="_blank"
             >
                 here
@@ -20,11 +19,9 @@ import { Secondary, Title } from "../storybook-common";
             .
         </p>
     }
-</Alert>
+</DocInfo>
 
-<br />
-
-Install the LifeSG Design System package.
+### 1. Install the LifeSG Design System package
 
 ```
 npm i @lifesg/react-design-system
@@ -36,46 +33,120 @@ The following peer dependencies should be installed:
 {
     "@floating-ui/dom": "^1.6.10",
     "@floating-ui/react": "^0.26.23",
-    "@lifesg/react-icons": "^1.5.0",
+    "@lifesg/react-icons": "^1.10.0",
     "react": "^17.0.2 || ^18.0.0",
     "react-dom": "^17.0.2 || ^18.0.0",
     "styled-components": "^5.3.5"
 }
 ```
 
-The module requires some custom css for certain components to work properly. As the module does not ship with css, you will need to add this into the `head` of your html file.
+### 2. Add the CSS stylesheet
+
+The module requires some custom css for fonts and certain components to work
+properly. You will need to load the corresponding stylesheets in your app.
+
+<details open name="css">
+
+<summary>Instructions for LifeSG theme</summary>
+
+Add this into the `head` of your html file:
 
 ```tsx
 <link
     rel="stylesheet"
     type="text/css"
-    href="https://assets.life.gov.sg/react-design-system/v2/css/main.css"
+    href="https://assets.life.gov.sg/react-design-system/v3/css/main.css"
+/>
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css"
 />
 ```
 
-Or if you are importing to an existing css file
+Or if you are importing to an existing css file:
 
 ```css
-@import url("https://assets.life.gov.sg/react-design-system/v2/css/main.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/main.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css");
 ```
+
+</details>
 
 <br />
 
-<Secondary>Setting up the theme</Secondary>
+<details name="css">
 
-If you are intending to make use of the themes, you will need [**Styled Components**](https://styled-components.com/docs).
+<summary>Instructions for BookingSG theme</summary>
 
-Styled components provide us with the `ThemeProvider` which you could make use of.
+Add this into the `head` of your html file:
+
+```html
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="https://assets.life.gov.sg/react-design-system/v3/css/main.css"
+/>
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="https://assets.life.gov.sg/react-design-system/v3/css/plus-jakarta-sans.css"
+/>
+```
+
+Or if you are importing to an existing css file:
+
+```css
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/main.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/plus-jakarta-sans.css");
+```
+
+</details>
+
+<br />
+
+<details name="css">
+
+<summary>Instructions for PA theme</summary>
+
+Add this into the `head` of your html file:
+
+```html
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="https://assets.life.gov.sg/react-design-system/v3/css/main.css"
+/>
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="https://assets.life.gov.sg/react-design-system/v3/css/lato.css"
+/>
+```
+
+Or if you are importing to an existing css file:
+
+```css
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/main.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/lato.css");
+```
+
+</details>
+
+### 3. Set up the theme
+
+If you are intending to make use of the themes, you will need [**Styled
+Components**](https://styled-components.com/docs).
 
 ```tsx
 // app.tsx
 import { ThemeProvider } from "styled-components";
-import { BaseTheme } from "@lifesg/react-design-system/theme";
+import { LifeSGTheme } from "@lifesg/react-design-system/theme";
 import { Component } from "./index";
 
 const App = () => {
     return (
-        <ThemeProvider theme={BaseTheme}>
+        <ThemeProvider theme={LifeSGTheme}>
             <Component />
         </ThemeProvider>
     );
@@ -84,6 +155,33 @@ const App = () => {
 export default App;
 ```
 
-For more information on the usage of themes, you can visit our [documentation](/docs/getting-started-themes--docs) about it.
+For more information on the usage of themes, you can visit our
+[documentation](/docs/foundations-themes-introduction--docs) about it.
 
-<br />
+### 4. Augment theme types (optional, recommended)
+
+If you access the theme object via the `useTheme` hook in a Typescript project,
+you can type it by adding a custom declaration file. Read more at the [Styled
+Components api
+docs](https://styled-components.com/docs/api#create-a-declarations-file).
+
+```ts
+// styled.d.ts
+import "styled-components";
+
+import { ThemeSpec } from "@lifesg/react-design-system/theme/types";
+
+declare module "styled-components" {
+    export interface DefaultTheme extends ThemeSpec {
+        maxColumns?: {
+            xxs: 8;
+            xs: 8;
+            sm: 8;
+            md: 8;
+            lg: 12;
+            xl: 12;
+            xxl: 12;
+        };
+    }
+}
+```

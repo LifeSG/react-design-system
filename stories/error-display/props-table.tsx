@@ -1,7 +1,5 @@
-import React from "react";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 import styled from "styled-components";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
 // =============================================================================
 // CUSTOM STYLING

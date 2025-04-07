@@ -5,14 +5,14 @@ import { Layout } from "src/layout";
 type Component = typeof Footer;
 
 const meta: Meta<Component> = {
-    title: "Modules/Footer",
+    title: "Navigation/Footer",
     component: Footer,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Footer
                 lastUpdated={new Date()}
@@ -58,13 +58,13 @@ export const Default: StoryObj<Component> = {
 };
 
 export const MinimalVersion: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return <Footer lastUpdated={new Date()} />;
     },
 };
 
 export const WithCustomContent: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Footer lastUpdated={new Date()}>
                 <Layout.Content>
@@ -87,7 +87,7 @@ export const WithCustomContent: StoryObj<Component> = {
 };
 
 export const OtherCustomisations: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Footer
                 lastUpdated={new Date()}
@@ -141,7 +141,7 @@ export const OtherCustomisations: StoryObj<Component> = {
 };
 
 export const StretchedLayout: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Footer
                 layout={"stretch"}

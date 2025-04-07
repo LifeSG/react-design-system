@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
 import * as TabStories from "./tab.stories";
 
 <Meta of={TabStories} />
 
-<Title>Tab</Title>
+# Tab
 
-<Secondary>Overview</Secondary>
+## Overview
 
 Used to organise content into multiple panes. Users can toggle between the different tabs to view different categories of information.
 
@@ -17,23 +16,21 @@ import { Tab } from "@lifesg/react-design-system/tab";
 
 <Canvas of={TabStories.Default} />
 
-<Secondary>Anatomy</Secondary>
+## Anatomy
 
 The `Tab` component comprises of 2 components:
 
 -   `Tab` which is the main component that will come with the selectors and controls the contents to be displayed
 -   `Tab.Item` is the component that will be used to wrap the contents of each tab item
 
-<br />
-
-<Secondary>Handling longer tab labels</Secondary>
+## Handling longer tab labels
 
 It is important to note that on tablet and mobile viewports, anything more than 20 characters will be truncated
 to ensure that all tab items are accessible within a few scrolls. Here is an example:
 
 <Canvas of={TabStories.LongerLabels} />
 
-<Secondary>Controlled mode</Secondary>
+## Controlled mode
 
 While the `Tab` handles the rendering logic automatically upon a tab link click,
 it also offers the ability to control the behaviour entirely yourself. You will
@@ -43,12 +40,12 @@ state on our own.
 
 <Canvas of={TabStories.ControlledMode} />
 
-<Secondary>Full width bottom border</Secondary>
+## Full width indicator
 
 If you want the bottom border to extend to the full container, use the `fullWidthIndicatorLine` prop
 
 <Canvas of={TabStories.FullWidthIndicatorLine} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

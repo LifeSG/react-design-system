@@ -87,7 +87,6 @@ export const DateNavigator = ({
     const renderCalendar = ({ elementWidth }: DropdownRenderProps) => {
         return (
             <CalendarDropdown
-                type="input"
                 variant="single"
                 initialCalendarDate={selectedDate}
                 value={selectedDate}
@@ -106,10 +105,10 @@ export const DateNavigator = ({
                     <HeaderArrowButton
                         data-testid="date-navigator-left-arrow-btn"
                         disabled={loading || isLeftArrowDisabled()}
-                        focusHighlight={false}
-                        focusOutline="browser"
                         aria-label="Previous day"
                         onClick={navigatePrevious}
+                        styleType="light"
+                        sizeType="small"
                     >
                         <ArrowLeft />
                     </HeaderArrowButton>
@@ -131,10 +130,10 @@ export const DateNavigator = ({
                     <HeaderArrowButton
                         data-testid="date-navigator-right-arrow-btn"
                         disabled={loading || isRightArrowDisabled()}
-                        focusHighlight={false}
-                        focusOutline="browser"
                         aria-label="Next day"
                         onClick={navigateNext}
+                        styleType="light"
+                        sizeType="small"
                     >
                         <ArrowRight />
                     </HeaderArrowButton>

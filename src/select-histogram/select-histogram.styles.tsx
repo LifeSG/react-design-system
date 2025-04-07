@@ -1,21 +1,36 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
 import { ValueLabelStyleProps } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
-import { TextStyleHelper } from "../text";
+import { lineClampCss } from "../shared/styles";
+import {
+    Border,
+    Breakpoint,
+    Colour,
+    Font,
+    MediaQuery,
+    Radius,
+    Spacing,
+} from "../theme";
 
 export const HistogramSliderDropdownContainer = styled.div`
     overflow: hidden;
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
-    background: ${Color.Neutral[8]};
-    padding: 1rem;
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    background: ${Colour["bg"]};
+    padding: ${Spacing["spacing-16"]};
     min-width: 23rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         min-width: unset;
-        width: calc(100vw - 2.5rem);
+        width: calc(100vw - ${Breakpoint["sm-margin"]} * 2);
         max-height: 15rem;
+    }
+
+    ${MediaQuery.MaxWidth.xs} {
+        width: calc(100vw - ${Breakpoint["xs-margin"]} * 2);
+    }
+
+    ${MediaQuery.MaxWidth.xxs} {
+        width: calc(100vw - ${Breakpoint["xxs-margin"]} * 2);
     }
 `;
 
@@ -30,12 +45,10 @@ export const Separator = styled.div`
 
 export const ValueLabel = styled.div<ValueLabelStyleProps>`
     ${(props) =>
-        TextStyleHelper.getTextStyle(
-            props.$variant === "small" ? "BodySmall" : "Body",
-            "regular"
-        )}
+        props.$variant === "small"
+            ? Font["body-md-regular"]
+            : Font["body-baseline-regular"]}
     text-align: left;
-    line-height: 1.375rem;
     ${(props) => {
         switch (props.truncateType) {
             case "middle":
@@ -43,10 +56,7 @@ export const ValueLabel = styled.div<ValueLabelStyleProps>`
             case "end":
             default:
                 return css`
-                    display: -webkit-box;
-                    -webkit-line-clamp: 1;
-                    -webkit-box-orient: vertical;
-                    text-overflow: ellipsis;
+                    ${lineClampCss(1)}
                 `;
         }
     }}
@@ -54,5 +64,5 @@ export const ValueLabel = styled.div<ValueLabelStyleProps>`
 `;
 
 export const PlaceholderLabel = styled(ValueLabel)`
-    color: ${Color.Neutral[3]};
+    color: ${Colour["text-subtler"]};
 `;

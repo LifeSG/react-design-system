@@ -20,6 +20,7 @@ import { SelectHistogramProps } from "../select-histogram";
 import { TimeRangePickerProps } from "../time-range-picker/types";
 import { TimepickerProps } from "../timepicker/types";
 import { UnitNumberInputProps } from "../unit-number/types";
+import { V2_ColProps } from "../v2_layout/types";
 
 export type FormLabelAddonType = "tooltip" | "popover";
 
@@ -46,9 +47,9 @@ export interface FormLabelProps
     "data-testid"?: string | undefined;
 }
 
-export type FormElementLayoutType = "flex" | "grid";
+export type FormElementLayoutType = "flex" | "grid" | "v2-grid";
 
-export interface BaseFormElementProps extends ColProps {
+export interface BaseFormElementProps extends V2_ColProps, ColProps {
     label?: FormLabelProps | string | undefined;
     errorMessage?: string | undefined;
     "data-error-testid"?: string | undefined;

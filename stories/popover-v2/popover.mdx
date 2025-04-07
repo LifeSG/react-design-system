@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
 import * as PopoverStories from "./popover.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={PopoverStories} />
 
-<Title>PopoverV2</Title>
+# PopoverV2
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component which appears when hovering or clicking on a target element and displays information about a certain element in the page.
 
@@ -15,7 +14,7 @@ This module contains:
 
 -   PopoverV2 - the presentational component
 -   PopoverTrigger - a utility component that handles triggering of the popover
--   [PopoverInline](/docs/modules-popoverv2-popoverinline--docs) - a utility component that displays a text or icon-based trigger
+-   [PopoverInline](/docs/overlays-popoverinline--docs) - a utility component that displays a text or icon-based trigger
 
 ```tsx
 import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
@@ -25,7 +24,7 @@ import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
 
 <Canvas of={PopoverStories.HoverInteraction} />
 
-<Heading4>Behaviour</Heading4>
+### Behaviour
 
 **Appearance**
 
@@ -42,19 +41,19 @@ The example below illustrates the positioning behaviour when viewed on desktop.
 
 <Canvas of={PopoverStories.Appearance} />
 
-<Heading3>Default styling</Heading3>
+## Default styling
 
 The component comes with basic styling for commonly used markup such as `<strong>` or `<a>`.
 
 <Canvas of={PopoverStories.DefaultStyling} />
 
-<Heading3>Customisation</Heading3>
+## Customisation
 
 You can opt out of the default appearance to display custom content such as menus and dialogs.
 
 <Canvas of={PopoverStories.Customisation} />
 
-<Heading3>Z-index conflicts</Heading3>
+## Z-index conflicts
 
 The popover uses z-index to display above elements. It may end up rendering
 below another element with a higher z-index.
@@ -68,6 +67,6 @@ If you still encounter z-index issues, try setting a custom `zIndex` or
 
 <Canvas of={PopoverStories.UsageInOverlay} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

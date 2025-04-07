@@ -4,7 +4,10 @@ import { useState } from "react";
 import { DateRangeInput } from "src/date-range-input";
 import { Form } from "src/form";
 import { Layout } from "src/layout";
-import { StoryContainer } from "../../storybook-common";
+import {
+    FullWidthStoryDecorator,
+    StoryDecorator,
+} from "stories/storybook-common";
 
 type Component = typeof Form.DateRangeInput;
 type StandaloneComponent = typeof DateRangeInput;
@@ -17,13 +20,13 @@ const meta: Meta<Component> = {
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [start, setStart] = useState(
             dayjs().subtract(1, "month").date(21).format("YYYY-MM-DD")
         );
         const [end, setEnd] = useState(dayjs().date(7).format("YYYY-MM-DD"));
         return (
-            <StoryContainer>
+            <>
                 <Form.DateRangeInput
                     label="This is the date range input"
                     value={start}
@@ -60,13 +63,14 @@ export const Default: StoryObj<Component> = {
                     withButton={false}
                     errorMessage="Invalid date"
                 />
-            </StoryContainer>
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const WeekInput: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [start, setStart] = useState(
             dayjs()
                 .subtract(1, "month")
@@ -88,7 +92,7 @@ export const WeekInput: StoryObj<Component> = {
             dayjs().subtract(1, "month").date(25).format("YYYY-MM-DD"),
         ]);
         return (
-            <StoryContainer>
+            <>
                 <Form.DateRangeInput
                     label="This is the week selection"
                     variant="week"
@@ -111,13 +115,14 @@ export const WeekInput: StoryObj<Component> = {
                     valueEnd={end}
                     disabledDates={disabledDates}
                 />
-            </StoryContainer>
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const FixedRangeInput: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [disabledDates] = useState([
             dayjs().date(10).format("YYYY-MM-DD"),
             dayjs().date(15).format("YYYY-MM-DD"),
@@ -125,7 +130,7 @@ export const FixedRangeInput: StoryObj<Component> = {
             dayjs().date(25).format("YYYY-MM-DD"),
         ]);
         return (
-            <StoryContainer>
+            <>
                 <Form.DateRangeInput
                     label="This has fixed range selection (default 7 days)"
                     variant="fixed-range"
@@ -145,51 +150,50 @@ export const FixedRangeInput: StoryObj<Component> = {
                     variant="fixed-range"
                     disabledDates={disabledDates}
                 />
-            </StoryContainer>
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const WithDisabledDates: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [disabledDates] = useState([
             dayjs().subtract(2, "days").format("YYYY-MM-DD"),
             dayjs().add(2, "days").format("YYYY-MM-DD"),
         ]);
         return (
-            <StoryContainer>
-                <Form.DateRangeInput
-                    label="This has disabled dates"
-                    disabledDates={disabledDates}
-                />
-            </StoryContainer>
+            <Form.DateRangeInput
+                label="This has disabled dates"
+                disabledDates={disabledDates}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const MinAndMaxDates: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Form.DateRangeInput
-                    label="This has restricted selection"
-                    minDate={dayjs().subtract(2, "days").format("YYYY-MM-DD")}
-                    maxDate={dayjs().add(20, "days").format("YYYY-MM-DD")}
-                />
-            </StoryContainer>
+            <Form.DateRangeInput
+                label="This has restricted selection"
+                minDate={dayjs().subtract(2, "days").format("YYYY-MM-DD")}
+                maxDate={dayjs().add(20, "days").format("YYYY-MM-DD")}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const AllowDisabledSelection: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [disabledDates] = useState([
             dayjs().date(10).format("YYYY-MM-DD"),
             dayjs().date(15).format("YYYY-MM-DD"),
             dayjs().date(25).format("YYYY-MM-DD"),
         ]);
         return (
-            <StoryContainer>
+            <>
                 <Form.DateRangeInput
                     label="This allows selection of disabled dates"
                     disabledDates={disabledDates}
@@ -205,39 +209,34 @@ export const AllowDisabledSelection: StoryObj<Component> = {
                     maxDate={dayjs().add(6, "weeks").format("YYYY-MM-DD")}
                     allowDisabledSelection
                 />
-            </StoryContainer>
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const RenderingInGridLayout: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <Layout.Content type="grid">
                 <Form.DateRangeInput
                     label="Using grid columns"
-                    mobileCols={[1, 5]}
-                    tabletCols={[1, 7]}
+                    xxsCols={[1, 9]}
+                    lgCols={[1, 5]}
                 />
                 <Form.DateRangeInput
                     label="Using a longer grid layout"
-                    mobileCols={[1, 5]}
-                    tabletCols={[1, 9]}
+                    xxsCols={[1, 9]}
                 />
             </Layout.Content>
         );
     },
-    parameters: {
-        layout: "fullscreen",
-    },
+    decorators: [FullWidthStoryDecorator()],
 };
 
 export const StandaloneUsage: StoryObj<StandaloneComponent> = {
-    render: () => {
-        return (
-            <StoryContainer>
-                <DateRangeInput />
-            </StoryContainer>
-        );
+    render: (_args) => {
+        return <DateRangeInput />;
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };

@@ -7,7 +7,7 @@ import { CountdownView } from "./doc-elements";
 type Component = typeof CountdownTimer;
 
 const meta: Meta<Component> = {
-    title: "Modules/CountdownTimer",
+    title: "Feedback indicators/CountdownTimer",
     component: CountdownTimer,
 };
 

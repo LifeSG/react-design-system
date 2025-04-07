@@ -1,0 +1,18 @@
+import { Meta } from "@storybook/blocks";
+import { LifeSGTheme } from "src/theme";
+import { RadiusDisplay } from "../doc-elements";
+
+<Meta title="Foundations/Radius/Default" />
+
+# Default radius
+
+This is the radius set used when the `radiusScheme` is `"default"`.
+
+```tsx
+const theme: ThemeSpec = {
+    radiusScheme: "default",
+    // ...other specifications
+};
+```
+
+<RadiusDisplay theme={LifeSGTheme} />

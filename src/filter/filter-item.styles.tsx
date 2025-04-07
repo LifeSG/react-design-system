@@ -1,11 +1,9 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { animated } from "react-spring";
 import styled from "styled-components";
-import { Button } from "../button/button";
-import { Color } from "../color/color";
-import { MediaQuery } from "../media/media";
+import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text, TextStyleHelper } from "../text";
+import { Colour, Font, MediaQuery, Motion, Spacing } from "../theme";
 
 // =============================================================================
 // STYLES INTERFACE
@@ -20,27 +18,31 @@ interface DividerStyleProps {
     $showMobileDivider: boolean;
 }
 
+interface MinimisableContentProps {
+    $height?: number;
+    $minimisable: boolean;
+}
+
 // =============================================================================
 // FILTER ITEM STYLES
 // =============================================================================
 
 export const FilterItemWrapper = styled.div<StyleProps>`
     background-color: ${(props) =>
-        props.$collapsible ? Color.Neutral[7](props) : Color.Neutral[8](props)};
-
-    ${MediaQuery.MaxWidth.tablet} {
-        background-color: ${Color.Neutral[7]};
+        props.$collapsible ? Colour["bg-strong"] : Colour["bg"]};
+    ${MediaQuery.MaxWidth.lg} {
+        background-color: ${Colour["bg-strong"]};
     }
 `;
 
 export const Divider = styled.div<DividerStyleProps>`
     display: ${(props) => (props.$showDivider ? "block" : "none")};
     height: 1px;
-    background-color: ${Color.Neutral[5]};
+    background-color: ${Colour["border"]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: ${(props) => (props.$showMobileDivider ? "block" : "none")};
-        margin: 0 1rem;
+        margin: 0 ${Spacing["spacing-16"]};
     }
 `;
 
@@ -52,36 +54,43 @@ export const FilterItemHeader = styled.div`
     display: flex;
     align-items: center;
 
-    background-color: ${Color.Neutral[8]};
+    background-color: ${Colour["bg"]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         background-color: transparent;
     }
 `;
 
 export const FilterItemExpandButton = styled(ClickableIcon)`
     margin: 0 0 0 auto;
-`;
 
-export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
-    height: 1.125rem;
-    width: 1.125rem;
-    color: ${Color.Neutral[3]};
-
-    transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
-    transition: transform 300ms ease-in-out;
-
+    color: ${Colour["icon"]};
     &:hover {
-        color: ${Color.Neutral[2]};
+        color: ${Colour["icon-hover"]};
     }
 `;
 
-export const FilterItemTitle = styled(Text.H4)`
-    margin: 1.5rem 0 1.5rem 1.25rem;
+export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
+    height: ${Font.Spec["body-size-baseline"]};
+    width: ${Font.Spec["body-size-baseline"]};
 
-    ${MediaQuery.MaxWidth.tablet} {
-        ${TextStyleHelper.getTextStyle("H5", "semibold")}
-        margin: 1.5rem 1.25rem 0 1.25rem;
+    transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
+    transition: transform ${Motion["duration-350"]} ${Motion["ease-standard"]};
+`;
+
+export const FilterItemTitle = styled.p`
+    ${Font["heading-xs-semibold"]}
+    color: ${Colour["text"]};
+
+    margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
+        ${Spacing["spacing-20"]};
+
+    ${MediaQuery.MaxWidth.lg} {
+        ${Font["body-md-semibold"]}
+        color: ${Colour["text-subtle"]};
+
+        margin: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]} 0
+            ${Spacing["spacing-20"]};
     }
 `;
 
@@ -94,13 +103,10 @@ export const ExpandableItem = styled(animated.div)`
 `;
 
 export const FilterItemBody = styled.div`
-    padding: 1rem 1.25rem;
+    padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
 `;
 
-export const MinimisableContent = styled(animated.div)<{
-    $height?: number;
-    $minimisable: boolean;
-}>`
+export const MinimisableContent = styled(animated.div)<MinimisableContentProps>`
     ${(props) => props.$minimisable && "overflow: hidden;"}
     ${(props) => props.$height && `height: ${props.$height}px;`}
 `;
@@ -108,5 +114,5 @@ export const MinimisableContent = styled(animated.div)<{
 export const FilterItemMinimiseButton = styled(Button.Small)`
     height: fit-content;
     padding: 0;
-    margin: 1rem 0 0 0;
+    margin: ${Spacing["spacing-16"]} 0 0 0;
 `;

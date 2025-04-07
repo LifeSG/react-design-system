@@ -1,4 +1,4 @@
-import { FullscreenCarouselItemProps } from "../../src/fullscreen-image-carousel";
+import { FullscreenCarouselItemProps } from "src/fullscreen-image-carousel";
 
 const RESOLUTIONS = [
     [1600, 900],

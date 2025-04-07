@@ -4,6 +4,7 @@ export interface OverlayProps {
     rootId?:
         | string
         | undefined /* the id of the root element to attach the overlay to */;
+    /** @deprecated no longer has effect */
     backgroundOpacity?: number | undefined;
     backgroundBlur?: boolean | undefined;
     disableTransition?: boolean | undefined;
@@ -14,15 +15,10 @@ export interface OverlayProps {
 }
 
 /**
- * Transient props are denoted with $
- * https://styled-components.com/docs/api#transient-props
- */
-/**
  * @deprecated For library internal use only
  */
 export interface StyleProps {
     $show: boolean;
-    $backgroundOpacity?: number | undefined;
     $backgroundBlur?: boolean | undefined;
     $disableTransition?: boolean | undefined;
     $enableOverlayClick?: boolean | undefined;

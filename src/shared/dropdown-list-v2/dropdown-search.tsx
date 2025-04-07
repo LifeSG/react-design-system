@@ -20,9 +20,9 @@ const Component = (
     ref: React.Ref<HTMLInputElement>
 ): JSX.Element => {
     return (
-        <Container>
-            <SearchBox>
-                <SearchIcon $variant={variant} aria-hidden />
+        <Container $variant={variant}>
+            <SearchBox $variant={variant}>
+                <SearchIcon aria-hidden />
                 <SearchInput
                     ref={ref}
                     value={value}
@@ -35,7 +35,6 @@ const Component = (
                     aria-label="Clear search"
                     focusOutline="browser"
                     onClick={onClear}
-                    $variant={variant}
                 >
                     <CrossIcon aria-hidden />
                 </ClearButton>

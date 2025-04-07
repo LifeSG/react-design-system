@@ -1,48 +1,30 @@
 import styled from "styled-components";
-import { Color } from "../color";
-import { Text, TextStyleHelper } from "../text";
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
+import { Colour, Font, Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
 export const Label = styled.label`
-    ${TextStyleHelper.getTextStyle("H5", "semibold")}
-    color: ${Color.Neutral[2]};
-    margin-bottom: 0.5rem;
+    color: ${Colour["text-subtle"]};
+    margin-bottom: ${Spacing["spacing-8"]};
     display: inline-block;
 
-    a,
-    span,
-    p {
-        ${TextStyleHelper.getTextStyle("H5", "semibold")}
-    }
-
-    a {
-        color: ${Color.Primary};
-        text-decoration: none;
-
-        :hover,
-        :active,
-        :focus {
-            color: ${Color.Secondary};
-
-            svg {
-                color: ${Color.Secondary};
-            }
-        }
-    }
+    ${Font["form-label"]}
+    ${applyHtmlContentStyle()}
+    font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
-export const ErrorMessage = styled(Text.H6)`
-    color: ${Color.Validation.Red.Text};
-    margin-top: 0.5rem;
+export const ErrorMessage = styled.p`
+    ${Font["body-sm-semibold"]}
+    color: ${Colour["text-error"]};
+    margin-top: ${Spacing["spacing-8"]};
     margin-bottom: 0;
     outline: none;
 `;
 
-export const Subtitle = styled(Text.BodySmall)`
-    && {
-        color: ${Color.Neutral[3]};
-        ${TextStyleHelper.getFontFamily("BodySmall", "regular")}
-    }
+export const Subtitle = styled.span`
+    ${Font["form-description"]}
+    color: ${Colour["text-subtler"]};
+    display: block;
 `;

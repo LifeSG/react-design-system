@@ -1,18 +1,19 @@
 import ReactSlider from "react-slider";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { Text } from "../text";
+import { Border, Colour, Radius, Spacing } from "../theme";
+import { ThemeStyleProps } from "../theme/types";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
 interface TrackStyleProps {
-    $color: string | ((props: unknown) => string);
+    $color: string | ((props: ThemeStyleProps) => string) | undefined;
 }
 
 interface ThumbStyleProps {
-    $disabled: boolean;
-    $readOnly: boolean;
+    $disabled: boolean | undefined;
+    $readOnly: boolean | undefined;
 }
 
 // =============================================================================
@@ -23,17 +24,17 @@ export const Wrapper = styled.div`
 `;
 
 export const LabelContainer = styled.div`
-    margin-top: 1rem;
+    margin-top: ${Spacing["spacing-8"]};
     display: flex;
     justify-content: space-between;
-    gap: 1rem;
+    gap: ${Spacing["spacing-8"]};
 `;
 
 export const IndicatorLabelContainer = styled.div`
-    margin-bottom: 1rem;
+    margin-bottom: ${Spacing["spacing-8"]};
 `;
 
-export const LabelText = styled(Text.Body)`
+export const LabelText = styled(Typography.BodyBL)`
     overflow-wrap: anywhere;
 `;
 
@@ -75,9 +76,13 @@ export const Knob = styled.div<ThumbStyleProps>`
         left: 50%;
         transform: translate(-50%, -50%);
 
-        background-color: ${Color.Neutral[8]};
+        background-color: ${Colour["bg"]};
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
-        border: 1px solid ${Color.Neutral[4]};
+        border: ${Border["width-010"]} ${Border["solid"]}
+            ${(props) =>
+                props.$disabled
+                    ? Colour["border-selected-disabled"]
+                    : Colour["border-strong"]};
         border-radius: 50%;
     }
 `;
@@ -88,8 +93,10 @@ export const SliderThumb = styled.div`
     position: relative;
     outline: none;
 
-    :focus-visible ${Knob}:after {
-        border: 1px solid ${Color.Primary};
+    :focus ${Knob}:after {
+        outline-offset: -1px;
+        outline: ${Border["width-040"]} ${Border["solid"]}
+            ${Colour["border-selected"]};
     }
 `;
 
@@ -97,13 +104,13 @@ export const SliderTrack = styled.div<TrackStyleProps>`
     height: 0.25rem;
     top: 50%;
     transform: translateY(-50%);
-    border-radius: 1rem;
+    border-radius: ${Radius["full"]};
 
     background: ${(props) => {
         if (props.$color && typeof props.$color === "function") {
             return props.$color(props);
         } else {
-            return props.$color || Color.Neutral[4](props);
+            return props.$color || Colour["border-strong"](props);
         }
     }};
 `;

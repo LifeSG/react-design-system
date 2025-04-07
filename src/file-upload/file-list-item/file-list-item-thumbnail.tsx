@@ -1,8 +1,6 @@
 import styled from "styled-components";
-import { Color } from "../../color";
-import { MediaQuery } from "../../media";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
-import { TextStyleHelper } from "../../text";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
 
 interface Props {
     thumbnailImageDataUrl: string;
@@ -17,7 +15,7 @@ export const FileListItemThumbnail = ({
     renderReplaceButton,
     onReplaceClick,
 }: Props) => {
-    const handleReplace = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleReplace = () => {
         if (onReplaceClick) {
             onReplaceClick();
         }
@@ -43,7 +41,7 @@ export const FileListItemThumbnail = ({
 // =============================================================================
 export const Container = styled.div`
     width: auto;
-    margin-right: 2rem;
+    margin-right: ${Spacing["spacing-32"]};
     display: flex;
     flex-shrink: 0;
     flex-direction: column;
@@ -51,29 +49,31 @@ export const Container = styled.div`
 `;
 
 export const Thumbnail = styled(ImageWithFallback)`
-    width: 6rem;
-    height: 6rem;
+    width: 96px;
+    height: 96px;
     aspect-ratio: 1;
-    border-radius: 4px;
-    border: 1px solid ${Color.Neutral[5]};
+    border-radius: ${Radius["sm"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     object-fit: cover;
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        width: 4rem;
-        height: 4rem;
+    ${MediaQuery.MaxWidth.sm} {
+        width: 64px;
+        height: 64px;
     }
 `;
 
 export const ReplaceButton = styled.button`
     width: 100%;
     height: 1.625rem;
-    margin-top: 0.5rem;
+    margin-top: ${Spacing["spacing-8"]};
     border: none;
     background: transparent;
     cursor: pointer;
-    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")};
-    color: ${Color.Primary};
+
+    ${Font["body-md-semibold"]}
+    color: ${Colour["text-primary"]};
+
     :hover {
-        color: ${Color.PrimaryDark};
+        color: ${Colour["text-hover"]};
     }
 `;

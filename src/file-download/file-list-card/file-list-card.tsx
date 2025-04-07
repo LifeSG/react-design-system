@@ -1,8 +1,9 @@
 import { DownloadIcon } from "@lifesg/react-icons";
 import { memo, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useTheme } from "styled-components";
 import { FileUploadHelper } from "../../file-upload/helper";
-import { MediaWidths } from "../../media";
+import { Breakpoint } from "../../theme";
 import { StringHelper } from "../../util";
 import {
     ActionContainer,
@@ -13,7 +14,7 @@ import {
     FileSizeSection,
     IconButton,
     Item,
-    ItemText,
+    ItemNameText,
     MobileErrorMessage,
     NameSection,
     Spinner,
@@ -40,16 +41,15 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const [displayText, setDisplayText] = useState<string>();
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // =========================================================================
     // EFFECTS
     // =========================================================================
-
     useEffect(() => {
         if (!containerRef.current) return;
         isMobile
@@ -60,18 +60,6 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-
-    const getTruncatedText = (value: string) => {
-        if (!truncateText) return value;
-
-        const widthOfElement =
-            containerRef && containerRef.current
-                ? containerRef.current.getBoundingClientRect().width
-                : 0;
-
-        return StringHelper.truncateTwoLines(value, widthOfElement, 16, 1.5);
-    };
-
     const handleDownload = async () => {
         if (!ready || isLoading) {
             return;
@@ -91,38 +79,44 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
+    const getTruncatedText = (value: string) => {
+        if (!truncateText) return value;
+
+        const widthOfElement =
+            containerRef && containerRef.current
+                ? containerRef.current.getBoundingClientRect().width
+                : 0;
+
+        return StringHelper.truncateTwoLines(value, widthOfElement, 16, 1.5);
+    };
 
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     const renderNameDescription = () => (
         <>
-            <ItemText weight={"regular"} ref={containerRef}>
-                {displayText}
-            </ItemText>
+            <ItemNameText ref={containerRef}>{displayText}</ItemNameText>
             {isError && (
-                <DesktopErrorMessage weight="semibold">
+                <DesktopErrorMessage>
                     {errorMessage ? errorMessage : "Something went wrong"}
                 </DesktopErrorMessage>
             )}
         </>
     );
 
-    const renderWithThumbnail = () => (
+    const renderWithThumbnail = (thumbnailSrc: string) => (
         <>
             <ThumbnailContainer data-testid={`${id}-thumbnail`}>
                 <Thumbnail
                     data-testid={`${id}-thumbnail-image`}
-                    src={thumbnailImageDataUrl}
+                    src={thumbnailSrc}
                 />
             </ThumbnailContainer>
             <ExtendedNameSection>
                 <NameSection>{renderNameDescription()}</NameSection>
-                <FileSizeSection>
-                    <ItemText>{fileSize ? fileSize : "-"}</ItemText>
-                </FileSizeSection>
+                <FileSizeSection>{fileSize ? fileSize : "-"}</FileSizeSection>
                 {isError && (
-                    <MobileErrorMessage weight="semibold">
+                    <MobileErrorMessage>
                         {errorMessage ? errorMessage : "Something went wrong"}
                     </MobileErrorMessage>
                 )}
@@ -133,11 +127,9 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     const renderDefault = () => (
         <>
             <NameSection>{renderNameDescription()}</NameSection>
-            <FileSizeSection>
-                <ItemText>{fileSize ? fileSize : "-"}</ItemText>
-            </FileSizeSection>
+            <FileSizeSection>{fileSize ? fileSize : "-"}</FileSizeSection>
             {isError && (
-                <MobileErrorMessage weight="semibold">
+                <MobileErrorMessage>
                     {errorMessage ? errorMessage : "Something went wrong"}
                 </MobileErrorMessage>
             )}
@@ -148,7 +140,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         let content: JSX.Element;
 
         if (thumbnailImageDataUrl) {
-            content = renderWithThumbnail();
+            content = renderWithThumbnail(thumbnailImageDataUrl);
         } else {
             content = renderDefault();
         }
@@ -171,12 +163,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
                     aria-label={`download ${name}`}
                 >
                     {isLoading || !ready ? (
-                        <Spinner
-                            $buttonStyle="light"
-                            $buttonSizeStyle="small"
-                            size={16}
-                            aria-hidden
-                        />
+                        <Spinner size={16} aria-hidden />
                     ) : (
                         <DownloadIcon aria-hidden />
                     )}

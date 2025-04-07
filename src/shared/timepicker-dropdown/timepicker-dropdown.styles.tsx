@@ -1,33 +1,27 @@
 import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../../button";
-import { Color } from "../../color";
-import { MediaQuery } from "../../media";
-import { Text } from "../../text";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "../../theme";
 import { Toggle } from "../../toggle";
+import { Typography } from "../../typography";
 import { ClickableIcon } from "../clickable-icon";
-import { BasicInput } from "../input-wrapper/input-wrapper";
+import { BasicInput, InputBox } from "../input-wrapper/input-wrapper";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-
-const BORDER_RADIUS = "4px";
 
 // -----------------------------------------------------------------------------
 // MAIN WRAPPER
 // -----------------------------------------------------------------------------
 export const AnimatedDiv = styled(animated.div)`
     position: absolute;
-    top: 3.5rem;
+    top: calc(3rem + ${Spacing["spacing-8"]});
     left: 0;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-    background: ${Color.Neutral[8]};
-    border-radius: ${BORDER_RADIUS};
     overflow: hidden;
     z-index: 1;
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${MediaQuery.MaxWidth.xxs} {
         max-width: 100%;
     }
 `;
@@ -35,9 +29,13 @@ export const AnimatedDiv = styled(animated.div)`
 export const Container = styled.div`
     position: relative;
     width: 100%;
-    padding: 0.5rem 1.25rem 1.5rem 1.25rem;
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-20"]}
+        ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
     display: flex;
     flex-direction: column;
+    background: ${Colour["bg"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
 `;
 
 export const InputSection = styled.div`
@@ -45,7 +43,7 @@ export const InputSection = styled.div`
     align-items: center;
     justify-content: space-between;
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${MediaQuery.MaxWidth.xxs} {
         flex-direction: column;
         width: 100%;
     }
@@ -54,12 +52,12 @@ export const InputSection = styled.div`
 export const ControlSection = styled.div`
     display: flex;
     justify-content: flex-end;
-    margin-top: 1rem;
-    gap: 0.5rem 1rem;
+    margin-top: ${Spacing["spacing-16"]};
+    gap: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${MediaQuery.MaxWidth.xxs} {
         flex-direction: column-reverse; // FIXME: this breaks tab focus
-        margin-top: 2rem;
+        margin-top: ${Spacing["spacing-32"]};
     }
 `;
 
@@ -69,9 +67,9 @@ export const ControlSection = styled.div`
 export const HourMinuteSection = styled.div`
     display: flex;
     align-items: center;
-    margin-right: 2rem;
+    margin-right: ${Spacing["spacing-32"]};
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${MediaQuery.MaxWidth.xxs} {
         margin-right: 0;
         width: 100%;
     }
@@ -79,13 +77,13 @@ export const HourMinuteSection = styled.div`
 
 export const TimePeriodSection = styled.div`
     display: flex;
-    gap: 0.5rem;
+    gap: ${Spacing["spacing-8"]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         flex-direction: column;
     }
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${MediaQuery.MaxWidth.xxs} {
         flex-direction: row;
         width: 100%;
     }
@@ -96,15 +94,15 @@ export const InputContainer = styled.div`
     flex-direction: column;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${MediaQuery.MaxWidth.xxs} {
         width: 6rem;
     }
 `;
 
 export const SwitchButton = styled(ClickableIcon)`
     width: 5rem;
-    padding: 1rem 0;
-    color: ${Color.Neutral[3]};
+    padding: ${Spacing["spacing-16"]} 0;
+    color: ${Colour["icon"]};
 
     svg {
         height: 1rem;
@@ -112,44 +110,34 @@ export const SwitchButton = styled(ClickableIcon)`
     }
 
     &:hover {
-        color: ${Color.Primary};
+        color: ${Colour["icon-hover"]};
     }
 `;
 
-export const DividerLabel = styled(Text.Body)`
+export const DividerLabel = styled(Typography.BodyBL)`
+    flex-shrink: 0;
     width: 1.5rem;
-    margin: 0 0.25rem;
     text-align: center;
+`;
 
-    ${MediaQuery.MaxWidth.tablet} {
-        margin: 0;
-    }
+export const TimeInputBox = styled(InputBox)`
+    height: calc(3rem - 2px);
+    width: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    ${MediaQuery.MaxWidth.mobileS} {
-        margin: 0 0.25rem;
+    ${MediaQuery.MaxWidth.xxs} {
+        width: 100%;
     }
 `;
 
 export const TimeInput = styled(BasicInput)`
-    border-radius: ${BORDER_RADIUS};
-    height: 3rem;
-    width: 5rem;
     text-align: center;
-    border: 1px solid ${Color.Neutral[5]};
-    background: ${Color.Neutral[8]};
-
-    :focus,
-    :active {
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: inset 0 0 5px 1px ${Color.Shadow.Accent};
-    }
+    width: 100%;
 
     :focus::placeholder {
         color: transparent;
-    }
-
-    ${MediaQuery.MaxWidth.mobileS} {
-        width: 100%;
     }
 `;
 
@@ -164,11 +152,11 @@ export const TimePeriodToggle = styled(Toggle)`
 export const ControlButton = styled(Button.Small)`
     width: 7rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         flex: 1;
     }
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${MediaQuery.MaxWidth.xxs} {
         width: 100%;
     }
 `;

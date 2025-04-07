@@ -1,13 +1,20 @@
 import React, { useImperativeHandle, useRef } from "react";
-import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { StringHelper, useNextInputState } from "../util";
 import {
-    BasicWrapper,
-    ClearContainer,
+    ClearButton,
     ClearIcon,
+    DefaultWrapper,
     InputElement,
+    NoBorderWrapper,
 } from "./input.style";
 import { InputProps, InputRef } from "./types";
+
+const shouldAllowSpacing = (
+    type: string | undefined,
+    spacing: number | undefined
+): spacing is number => {
+    return type === "tel" && !!spacing;
+};
 
 const Component = (
     {
@@ -29,12 +36,17 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const elementRef = useRef<HTMLInputElement>();
-    useImperativeHandle(ref, () => elementRef.current, []);
+    const allowSpacing = shouldAllowSpacing(type, spacing);
+    const elementRef = useRef<HTMLInputElement>(null);
+    useImperativeHandle(ref, () => elementRef.current!, []);
 
     const getNextInputState = useNextInputState({
         ref: elementRef,
-        formatter: (value) => StringHelper.transformWithSpaces(value, spacing),
+        formatter: (value) => {
+            return allowSpacing
+                ? StringHelper.transformWithSpaces(value, spacing)
+                : value;
+        },
     });
 
     // =============================================================================
@@ -42,7 +54,7 @@ const Component = (
     // =============================================================================
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (onChange) {
-            if (shouldAllowSpacing()) {
+            if (allowSpacing) {
                 handleSpacingAndCaretPosition(event);
             } else {
                 onChange(event);
@@ -61,13 +73,9 @@ const Component = (
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const shouldAllowSpacing = () => {
-        return type === "tel" && spacing;
-    };
-
     const convertInputString = (value: string | number | readonly string[]) => {
         if (!value) return "";
-        if (shouldAllowSpacing()) {
+        if (allowSpacing) {
             return StringHelper.transformWithSpaces(value, spacing);
         }
         return value;
@@ -76,12 +84,15 @@ const Component = (
     const handleSpacingAndCaretPosition = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
-        const { nextValue, updateCaretPosition } = getNextInputState();
+        const nextState = getNextInputState();
+        if (!nextState) return;
+
+        const { nextValue, updateCaretPosition } = nextState;
 
         // Send to handler unspaced value
         const valueWithoutSpace = nextValue.replace(/\s/g, "");
         event.target.value = valueWithoutSpace;
-        onChange(event);
+        onChange?.(event);
 
         updateCaretPosition();
     };
@@ -101,6 +112,7 @@ const Component = (
      * be set to empty string)
      */
     const updatedValue = value ? convertInputString(value) : value;
+    const showClear = shouldShowClear();
 
     const renderInputElement = () => {
         return (
@@ -113,12 +125,18 @@ const Component = (
                     onChange={handleChange}
                     type={type}
                     readOnly={readOnly}
+                    $showClear={showClear}
+                    $styleType={styleType}
                     {...otherProps}
                 />
-                {shouldShowClear() && (
-                    <ClearContainer onClick={handleClear} type="button">
+                {showClear && (
+                    <ClearButton
+                        onClick={handleClear}
+                        type="button"
+                        $styleType={styleType}
+                    >
                         <ClearIcon aria-hidden />
-                    </ClearContainer>
+                    </ClearButton>
                 )}
             </>
         );
@@ -127,18 +145,18 @@ const Component = (
     return (
         <>
             {styleType === "no-border" ? (
-                <BasicWrapper className={className}>
+                <NoBorderWrapper className={className}>
                     {renderInputElement()}
-                </BasicWrapper>
+                </NoBorderWrapper>
             ) : (
-                <InputWrapper
+                <DefaultWrapper
                     $disabled={disabled}
                     $error={error}
                     $readOnly={readOnly}
                     className={className}
                 >
                     {renderInputElement()}
-                </InputWrapper>
+                </DefaultWrapper>
             )}
         </>
     );

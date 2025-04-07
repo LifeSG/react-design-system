@@ -1,11 +1,10 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
 import { Selector as DropdownSelector } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
-import { Text } from "../text/text";
-import { TextStyle } from "../text/text-style";
-import { Transition } from "../transition";
+import { Border, Colour, Font, Motion, Spacing } from "../theme";
+import { Typography } from "../typography";
 import { InputGroupAddonPosition } from "./types";
+import { lineClampCss } from "../shared/styles";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -30,11 +29,11 @@ export const DisplayContainer = styled.div<StyleProps>`
     position: relative;
     display: flex;
     align-items: center;
-    margin: 0 1rem;
     ${(props) => {
         if (props.$expanded) {
             return css`
-                border-bottom: 1px solid ${Color.Neutral[5](props)};
+                border-bottom: ${Border["width-010"]} ${Border["solid"]}
+                    ${Colour["border"]};
             `;
         }
     }}
@@ -50,11 +49,12 @@ export const DisplayContainer = styled.div<StyleProps>`
                 case "right":
                     return css`
                         flex-direction: row-reverse;
-                        margin: 0 0 0 1rem;
+                        margin: 0 ${Spacing["spacing-16"]};
                     `;
                 default:
                     return css`
                         flex-direction: row;
+                        margin: 0 ${Spacing["spacing-16"]};
                     `;
             }
         }
@@ -67,25 +67,26 @@ export const Selector = styled(DropdownSelector)`
 `;
 
 export const SelectorReadOnly = styled.div`
-    height: calc(3rem - 2px); // exclude top and bottom borders
+    padding: 10px 0; // TODO: confirm vertical spacing
     display: flex;
     align-items: center;
     padding: 0;
     background: transparent;
-    margin-right: 0.75rem;
+    margin-right: ${Spacing["spacing-12"]};
 `;
 
 export const IconContainer = styled.div<StyleProps>`
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
-    transition: ${Transition.Base};
-    margin: 0 0.75rem;
+    transition: ${Motion["duration-250"]} ${Motion["ease-default"]};
+    margin: 0 ${Spacing["spacing-12"]};
+    display: flex;
+    align-items: center;
 `;
 
 export const StyledChevronIcon = styled(ChevronDownIcon)`
-    color: ${Color.Neutral[3]};
-    height: ${TextStyle.Body.fontSize}rem;
-    width: ${TextStyle.Body.fontSize}rem;
-    vertical-align: bottom;
+    color: ${Colour["icon"]};
+    height: ${Font.Spec["body-size-baseline"]};
+    width: ${Font.Spec["body-size-baseline"]};
 `;
 
 export const LabelContainer = styled.div`
@@ -93,22 +94,19 @@ export const LabelContainer = styled.div`
     flex: 1 1 auto;
 `;
 
-export const ValueLabel = styled(Text.Body)`
+export const ValueLabel = styled(Typography.BodyBL)`
     text-align: left;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    ${lineClampCss(2)}
     text-overflow: ellipsis;
 `;
 
 export const PlaceholderLabel = styled(ValueLabel)`
-    color: ${Color.Neutral[3]};
+    color: ${Colour["text-subtler"]};
 `;
 
 export const Divider = styled.div<DividerStyleProps>`
     width: 1px;
-    background: ${Color.Neutral[5]};
+    background: ${Colour["border"]};
     flex-shrink: 0;
     height: 1.25rem;
 
@@ -124,11 +122,11 @@ export const Divider = styled.div<DividerStyleProps>`
         switch (props.$position) {
             case "right":
                 return css`
-                    margin: 0 0.75rem;
+                    margin: 0 ${Spacing["spacing-12"]};
                 `;
             default:
                 return css`
-                    margin: 0 0.75rem 0 0;
+                    margin: 0 ${Spacing["spacing-12"]} 0 0;
                 `;
         }
     }}

@@ -1,0 +1,71 @@
+import { Meta } from "@storybook/blocks";
+import { DocInfo } from "stories/storybook-common";
+
+<Meta title="Foundations/Colours/Introduction" />
+
+# Colours
+
+```tsx
+import { Colour } from "@lifesg/react-design-system/theme";
+```
+
+There are two types of colour tokens: **primitive** and **semantic**. Primitive
+tokens define raw colour values. Semantic tokens are meaningful aliases of
+primitive tokens.
+
+<img src="./img/colour-tokens.png" style={{ maxWidth: "800px" }} />
+
+<DocInfo>
+    Use semantic tokens whenever possible to maintain a consistent look and feel
+    within your product.
+</DocInfo>
+
+## Collections
+
+[LifeSG](/docs/foundations-colours-lifesg--docs) |
+[BookingSG](/docs/foundations-colours-bookingsg--docs) |
+[RBS](/docs/foundations-colours-rbs--docs) |
+[CCUBE](/docs/foundations-colours-ccube--docs) |
+[MyLegacy](/docs/foundations-colours-mylegacy--docs) |
+[OneService](/docs/foundations-colours-oneservice--docs) |
+[PA](/docs/foundations-colours-pa--docs)
+
+## Usage
+
+The `Colour` namespace provides semantic tokens to specify colours within style
+declarations. In the case where no appropriate semantic token is available, an
+escape hatch for primitive tokens can be accessed via `Colour.Primitive`.
+
+```tsx
+import { Colour } from "@lifesg/react-design-system/theme";
+import styled, { css } from "styled-components";
+
+const Container = styled.div`
+    color: ${Colour["text"]};
+    color: ${Colour.Primitve["neutral-100"]};
+`;
+```
+
+## Overriding
+
+Primitive and semantic tokens can be overriden separately.
+
+When you modify a primitive token, any semantic token referring to it will also
+reflect the new colour.
+
+```tsx
+import { Colour, LifeSGTheme } from "@lifesg/react-design-system/theme";
+
+const customTheme: ThemeSpec = {
+    ...LifeSGTheme,
+    overrides: {
+        primitiveColour: {
+            "primary-10": "#F3C85C", // specify a custom value
+        },
+        semanticColour: {
+            "text-warning": Colour.Primitive["warning-10"]; // use another primitive colour token
+            "text-error": "#A04747"; // or specify a custom value
+        }
+    },
+};
+```

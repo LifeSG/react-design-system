@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
+import { Spacing } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -17,7 +18,7 @@ export const Container = styled(InputWrapper)<StyleProps>`
     ${(props) =>
         props.$wrap &&
         css`
-            padding: 0.75rem 1rem;
+            padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
         `}
 `;
 

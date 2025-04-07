@@ -4,7 +4,6 @@ import {
     LoadingDotsSpinner,
     LoadingSpinner,
 } from "src/animations";
-import { Secondary, Title } from "../storybook-common";
 import {
     AnimationDisplay,
     AnimationItem,
@@ -13,11 +12,11 @@ import {
 } from "./doc-elements";
 import { PropsTable } from "./props-table";
 
-<Meta title="General/Animations/Overview" />
+<Meta title="Feedback indicators/Animations/Overview" />
 
-<Title>Animations</Title>
+# Animations
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that renders an animation on the UI.
 
@@ -25,49 +24,50 @@ A component that renders an animation on the UI.
 import { <Component_name> } from "@lifesg/react-design-system/animations";
 ```
 
-<Secondary>Collection</Secondary>
+## Collection
 
 <AnimationDisplay>
-    <AnimationItem>
-        <AnimationPane>
-            <LoadingSpinner />
-        </AnimationPane>
-        <Content>
-            `<LoadingSpinner />`
-            <p>
-                An animation that can be shown in between page transitions or
-                while waiting for fetching of data.
-            </p>
-        </Content>
-    </AnimationItem>
-    <AnimationItem>
-        <AnimationPane>
-            <LoadingDots />
-        </AnimationPane>
-        <Content>
-            `<LoadingDots />`
-            <p>
-                An animation that can be shown in between page transitions or
-                while waiting for fetching of data.
-            </p>
-        </Content>
-    </AnimationItem>
-    <AnimationItem>
-        <AnimationPane>
-            <LoadingDotsSpinner />
-        </AnimationPane>
-        <Content>
-            `<LoadingDotsSpinner />`
-            <p>
-                An animation that can be shown in between page transitions or
-                while waiting for fetching of data.
-            </p>
-            <p>This is a customisable animation. [See here](/docs/general-animations-customisable-animations--docs) to find out more.</p>
-        </Content>
-    </AnimationItem>
+  <AnimationItem>
+    <AnimationPane>
+      <LoadingSpinner />
+    </AnimationPane>
+    <Content>
+      `<LoadingSpinner />`
+      <p>
+        An animation that can be shown in between page transitions or
+        while waiting for fetching of data.
+      </p>
+    </Content>
+  </AnimationItem>
+
+  <AnimationItem>
+    <AnimationPane>
+      <LoadingDots />
+    </AnimationPane>
+    <Content>
+      `<LoadingDots />`
+      <p>
+        An animation that can be shown in between page transitions or
+        while waiting for fetching of data.
+      </p>
+    </Content>
+  </AnimationItem>
+  <AnimationItem>
+    <AnimationPane>
+      <LoadingDotsSpinner />
+    </AnimationPane>
+    <Content>
+      `<LoadingDotsSpinner />`
+      <p>
+        An animation that can be shown in between page transitions or
+        while waiting for fetching of data.
+      </p>
+      <p>This is a customisable animation. [See here](/docs/feedback-indicators-animations-customisable-animations--docs) to find out more.</p>
+    </Content>
+  </AnimationItem>
 </AnimationDisplay>
 
-<Secondary>Usage</Secondary>
+## Usage
 
 ```tsx
 import { LoadingSpinner } from "@lifesg/react-design-system/animations";
@@ -81,6 +81,6 @@ export const SomeComponent = () => {
 };
 ```
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

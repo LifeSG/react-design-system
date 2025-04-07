@@ -2,7 +2,6 @@ import find from "lodash/find";
 import isEqual from "lodash/isEqual";
 import React, { useEffect, useRef, useState } from "react";
 import { useSpring } from "react-spring";
-import { Spinner } from "../../button/button.style";
 import { StringHelper } from "../../util/string-helper";
 import {
     Container,
@@ -15,9 +14,9 @@ import {
     ListItemSelector,
     PrimaryText,
     ResultStateContainer,
-    ResultStateText,
     SecondaryText,
     SelectAllContainer,
+    Spinner,
     TruncateFirstLine,
     TruncateSecondLine,
 } from "./dropdown-list.styles";
@@ -61,7 +60,9 @@ export const DropdownList = <T, V>({
     // =============================================================================
     const [focusedListIndex, _setFocusedIndex] = useState<number>(0);
     const [searchValue, setSearchValue] = useState<string>("");
-    const [displayListItems, _setDisplayListItems] = useState<T[]>(listItems);
+    const [displayListItems, _setDisplayListItems] = useState<T[]>(
+        listItems ?? []
+    );
     const [contentHeight, setContentHeight] = useState<number>(0);
 
     // React spring animation configuration
@@ -69,11 +70,11 @@ export const DropdownList = <T, V>({
         height: contentHeight,
     });
 
-    const nodeRef = useRef<HTMLDivElement>();
-    const listRef = useRef<HTMLUListElement>();
-    const listItemRefs = useRef<HTMLButtonElement[]>([]);
-    const searchInputRef = useRef<HTMLInputElement>();
-    const customCallToActionRef = useRef<HTMLDivElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const listRef = useRef<HTMLUListElement>(null);
+    const listItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
+    const searchInputRef = useRef<HTMLInputElement>(null);
+    const customCallToActionRef = useRef<HTMLDivElement>(null);
 
     /**
      * Have to use refs to allow the state values to be accessible
@@ -145,7 +146,7 @@ export const DropdownList = <T, V>({
     }, [displayListItems, itemsLoadState]);
 
     useEffect(() => {
-        setDisplayListItems(listItems);
+        setDisplayListItems(listItems ?? []);
 
         // Reset
         setSearchValue("");
@@ -165,8 +166,14 @@ export const DropdownList = <T, V>({
         return `item_${index}__${formattedValue}`;
     };
 
-    const getOptionLabel = (item: T): string | ListItemDisplayProps => {
-        return listExtractor ? listExtractor(item) : item.toString();
+    const getOptionLabel = (item: T): ListItemDisplayProps => {
+        const value = listExtractor ? listExtractor(item) : item?.toString();
+
+        if (typeof value === "object") {
+            return { title: value.title, secondaryLabel: value.secondaryLabel };
+        }
+
+        return { title: value ?? "" };
     };
 
     const hasExceededContainer = (displayText: string) => {
@@ -195,21 +202,13 @@ export const DropdownList = <T, V>({
     const filterAndUpdateList = (searchValue: string) => {
         if (searchValue === "") {
             // reset
-            setDisplayListItems(listItems);
+            setDisplayListItems(listItems ?? []);
         } else if (searchFunction) {
             const updated = searchFunction(searchValue);
             setDisplayListItems(updated);
         } else {
-            const updated = listItems.filter((item) => {
-                const label = getOptionLabel(item);
-                const title =
-                    typeof label === "object"
-                        ? label.title.toLowerCase()
-                        : label.toLowerCase();
-                const secondaryLabel =
-                    typeof label === "string"
-                        ? undefined
-                        : label.secondaryLabel?.toLowerCase();
+            const updated = listItems?.filter((item) => {
+                const { title, secondaryLabel } = getOptionLabel(item);
                 const updatedSearchValue = searchValue.trim().toLowerCase();
                 return (
                     title.includes(updatedSearchValue) ||
@@ -217,7 +216,7 @@ export const DropdownList = <T, V>({
                         secondaryLabel.includes(updatedSearchValue))
                 );
             });
-            setDisplayListItems(updated);
+            setDisplayListItems(updated ?? []);
         }
     };
 
@@ -256,7 +255,7 @@ export const DropdownList = <T, V>({
                     ) {
                         const upcomingIndex =
                             focusedListIndexStateRef.current + 1;
-                        listItemRefs.current[upcomingIndex].focus();
+                        listItemRefs.current[upcomingIndex]?.focus();
 
                         setFocusedIndex(upcomingIndex);
                     }
@@ -266,7 +265,7 @@ export const DropdownList = <T, V>({
                     if (focusedListIndexStateRef.current > 0) {
                         const upcomingIndex =
                             focusedListIndexStateRef.current - 1;
-                        listItemRefs.current[upcomingIndex].focus();
+                        listItemRefs.current[upcomingIndex]?.focus();
 
                         setFocusedIndex(focusedListIndexStateRef.current - 1);
                     }
@@ -299,7 +298,7 @@ export const DropdownList = <T, V>({
 
     const handleOnClear = () => {
         setSearchValue("");
-        searchInputRef.current.focus();
+        searchInputRef.current?.focus();
 
         if (onSearch) onSearch();
     };
@@ -329,10 +328,7 @@ export const DropdownList = <T, V>({
     };
 
     const renderDropdownLabels = (item: T) => {
-        const label = getOptionLabel(item);
-        const title = typeof label === "string" ? label : label.title;
-        const secondaryLabel =
-            typeof label == "string" ? undefined : label.secondaryLabel;
+        const { title, secondaryLabel } = getOptionLabel(item);
 
         const shouldTruncateTitle = hasExceededContainer(title);
         const shouldTruncateLabel =
@@ -373,7 +369,7 @@ export const DropdownList = <T, V>({
     };
 
     const renderItems = () => {
-        if (!onRetry || (onRetry && itemsLoadState === "success")) {
+        if (!onRetry || itemsLoadState === "success") {
             return displayListItems.map((item, index) => {
                 return (
                     <ListItem
@@ -435,6 +431,7 @@ export const DropdownList = <T, V>({
 
     const renderSelectAll = () => {
         if (
+            selectedItems &&
             multiSelect &&
             displayListItems.length > 0 &&
             !searchValue &&
@@ -467,14 +464,13 @@ export const DropdownList = <T, V>({
                 <ResultStateContainer
                     key="noResults"
                     data-testid="list-no-results"
+                    $variant={variant}
                 >
                     <LabelIcon
                         data-testid="no-result-icon"
                         $variant={variant}
                     />
-                    <ResultStateText $variant={variant}>
-                        No results found.
-                    </ResultStateText>
+                    No results found.
                 </ResultStateContainer>
             );
         }
@@ -482,14 +478,14 @@ export const DropdownList = <T, V>({
 
     const renderLoading = () => {
         if (onRetry && itemsLoadState === "loading") {
-            const spinnerSize = variant === "small" ? 16 : 24;
-
             return (
-                <ResultStateContainer key="loading" data-testid="list-loading">
-                    <Spinner $buttonStyle="secondary" size={spinnerSize} />
-                    <ResultStateText $variant={variant}>
-                        Loading...
-                    </ResultStateText>
+                <ResultStateContainer
+                    key="loading"
+                    data-testid="list-loading"
+                    $variant={variant}
+                >
+                    <Spinner />
+                    Loading...
                 </ResultStateContainer>
             );
         }
@@ -498,15 +494,16 @@ export const DropdownList = <T, V>({
     const renderTryAgain = () => {
         if (onRetry && itemsLoadState === "fail") {
             return (
-                <ResultStateContainer key="noResults" data-testid="list-fail">
+                <ResultStateContainer
+                    key="noResults"
+                    data-testid="list-fail"
+                    $variant={variant}
+                >
                     <LabelIcon
                         data-testid="load-error-icon"
                         $variant={variant}
                     />
-                    <ResultStateText $variant={variant}>
-                        Failed to load.
-                    </ResultStateText>
-                    &nbsp;
+                    Failed to load.&nbsp;
                     <DropdownCommonButton
                         onClick={handleTryAgain}
                         type="button"
@@ -546,9 +543,10 @@ export const DropdownList = <T, V>({
             return;
         }
 
+        // FIXME: add onDismiss handling
         return (
             <div ref={customCallToActionRef} data-testid="custom-cta">
-                {renderCustomCallToAction(onDismiss, displayListItems)}
+                {renderCustomCallToAction(onDismiss as any, displayListItems)}
             </div>
         );
     };

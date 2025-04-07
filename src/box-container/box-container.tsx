@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useMediaQuery } from "react-responsive";
 import { useSpring } from "react-spring";
-import { MediaWidths } from "../media";
+import { useTheme } from "styled-components";
+import { Breakpoint } from "../theme";
 import {
     AlertIcon,
     CallToActionContainer,
@@ -39,9 +40,10 @@ export const BoxContainer = ({
     );
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
+    const theme = useTheme();
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const interactiveHeader = clickableHeader && collapsible;
 
     // =============================================================================
     // EVENT HANDLERS
@@ -120,14 +122,12 @@ export const BoxContainer = ({
         <Container {...otherProps}>
             <Header
                 data-testid="header"
-                onClick={clickableHeader && collapsible && onHandleClick}
-                $interactive={clickableHeader && collapsible}
+                onClick={interactiveHeader ? onHandleClick : undefined}
+                $interactive={interactiveHeader}
             >
                 <LabelWrapper>
                     <LabelText
-                        id="title"
                         data-testid={subComponentTestIds?.title || "title"}
-                        weight="semibold"
                     >
                         {title}
                     </LabelText>

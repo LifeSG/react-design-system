@@ -1,50 +1,48 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Text } from "src/text";
 import { TextList } from "src/text-list";
-import { Container, CustomOrderedList, SubContainer } from "./doc-elements";
+import { GridDecorator, StoryDecorator } from "stories/storybook-common";
+import { CustomOrderedList } from "./doc-elements";
 
 const meta: Meta = {
-    title: "General/TextList",
+    title: "Core/TextList",
 };
 
 export default meta;
 
 export const Unordered: StoryObj = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Container>
+            <>
                 <TextList.Ul>
                     <li>First</li>
                     <li>Second</li>
                     <li>Third</li>
                 </TextList.Ul>
-                <br />
                 <TextList.Ul bulletType="circle">
                     <li>First</li>
                     <li>Second</li>
                     <li>Third</li>
                 </TextList.Ul>
-                <br />
                 <TextList.Ul bulletType="square">
                     <li>First</li>
                     <li>Second</li>
                     <li>Third</li>
                 </TextList.Ul>
-                <br />
                 <TextList.Ul bulletType="none">
                     <li>First</li>
                     <li>Second</li>
                     <li>Third</li>
                 </TextList.Ul>
-            </Container>
+            </>
         );
     },
+    decorators: [GridDecorator({ columns: 4 })],
 };
 
 export const Ordered: StoryObj = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Container>
+            <>
                 <TextList.Ol>
                     <li>First</li>
                     <li>Second</li>
@@ -65,13 +63,14 @@ export const Ordered: StoryObj = {
                     <li>Second</li>
                     <li>Third</li>
                 </TextList.Ol>
-            </Container>
+            </>
         );
     },
+    decorators: [GridDecorator({ columns: 4 })],
 };
 
 export const Nested: StoryObj = {
-    render: () => {
+    render: (_args) => {
         return (
             <TextList.Ol>
                 <li>First</li>
@@ -95,37 +94,36 @@ export const Nested: StoryObj = {
             </TextList.Ol>
         );
     },
+    decorators: [StoryDecorator()],
 };
 
 export const OtherFeatures: StoryObj = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Container>
-                <SubContainer>
-                    <Text.H5>Reverse count</Text.H5>
-                    <br />
-                    <TextList.Ol reversed start={3}>
-                        <li>Item A</li>
-                        <li>Item B</li>
-                        <li>Item C</li>
-                    </TextList.Ol>
-                </SubContainer>
-                <SubContainer>
-                    <Text.H5>Custom start count</Text.H5>
-                    <br />
-                    <TextList.Ol start={7}>
-                        <li>First</li>
-                        <li>Second</li>
-                        <li>Third</li>
-                    </TextList.Ol>
-                </SubContainer>
-            </Container>
+            <>
+                <TextList.Ol reversed start={3}>
+                    <li>Item A</li>
+                    <li>Item B</li>
+                    <li>Item C</li>
+                </TextList.Ol>
+                <TextList.Ol start={7}>
+                    <li>First</li>
+                    <li>Second</li>
+                    <li>Third</li>
+                </TextList.Ol>
+            </>
         );
     },
+    decorators: [
+        GridDecorator({
+            columns: 2,
+            columnHeaders: ["Reverse count", "Custom start count"],
+        }),
+    ],
 };
 
 export const AdvancedUsage: StoryObj = {
-    render: () => {
+    render: (_args) => {
         return (
             <TextList.Ol counterSeparator=".">
                 <li>Item A</li>
@@ -147,4 +145,5 @@ export const AdvancedUsage: StoryObj = {
             </TextList.Ol>
         );
     },
+    decorators: [StoryDecorator()],
 };

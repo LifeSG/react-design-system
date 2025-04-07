@@ -1,14 +1,13 @@
 import { Canvas, Meta } from "@storybook/blocks";
 import { Alert } from "src/alert";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import * as DateNavigatorStories from "./date-navigator.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={DateNavigatorStories} />
 
-<Title>DateNavigator</Title>
+# DateNavigator
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that displays the current date and day, with support for navigating
 the dates.
@@ -19,30 +18,32 @@ import { DateNavigator } from "@lifesg/react-design-system/date-navigator";
 
 <Canvas of={DateNavigatorStories.Default} />
 
-<Heading3>With short form date display</Heading3>
+## With short form date display
+
 You can specify `showDateAsShortForm` for short form date display, and `showCurrentDateAsToday`
 to show system today's date as "Today"
+
 <Canvas of={DateNavigatorStories.ShortFormDate} />
 
-<Heading3>With calendar navigation</Heading3>
+## With navigation
 
 A calendar dropdown can be enabled by specifying the `onCalendarDateSelect` callback.
 
 <Canvas of={DateNavigatorStories.WithCalendarNavigation} />
 
-<Heading3>Loading state</Heading3>
+## Loading state
 
 You can specify the `loading` prop to disable date navigation while asynchronous
 tasks are running.
 
 <Canvas of={DateNavigatorStories.LoadingState} />
 
-<Heading3>With date range</Heading3>
+## With date range
 
 You can constraint the `minDate` and `maxDate` for both the arrow buttons and the calendar dropdown selections.
 
 <Canvas of={DateNavigatorStories.WithMinAndMaxDate} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

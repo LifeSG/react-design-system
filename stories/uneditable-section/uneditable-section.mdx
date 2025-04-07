@@ -1,13 +1,12 @@
 import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
 import { PropsTable } from "./props-table";
 import * as UneditableSectionStories from "./uneditable-section.stories";
 
 <Meta of={UneditableSectionStories} />
 
-<Title>UneditableSection</Title>
+# UneditableSection
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that renders uneditable data fields and information.
 
@@ -17,14 +16,14 @@ import { UneditableSection } from "@lifesg/react-design-system/uneditable-sectio
 
 <Canvas of={UneditableSectionStories.Default} />
 
-<Heading3>With no background</Heading3>
+## With no background
 
 The `UneditableSection` comes default with a grey background. However you have the
 choice to render it transparent as well.
 
 <Canvas of={UneditableSectionStories.NoBackground} />
 
-<Heading3>With masked values</Heading3>
+## With masked values
 
 You can render values that are masked, with various customisations. Here is an
 example of the different variations.
@@ -36,35 +35,35 @@ need to intercept the `onMask` and `onUnmask` callbacks.
 
 <Canvas of={UneditableSectionStories.ControlledMaskUnmask} />
 
-<Heading3>With loading indicator</Heading3>
+## With loading indicator
 
 In some cases, the mask or unmask action requires an API call or an action that has
 some loading time. The component also supports such instances.
 
 <Canvas of={UneditableSectionStories.MaskUnmaskWithLoading} />
 
-<Heading3>With error display</Heading3>
+## With error display
 
 In the event that there is an error, a display will appear with the ability to
 try again.
 
 <Canvas of={UneditableSectionStories.MaskUnmaskWithError} />
 
-<Heading3>With alert display</Heading3>
+## With alert display
 
 Sometimes you might have some extra information which you would like to inform users of.
 As such you can make use of the `Alert` to render those information.
 
 <Canvas of={UneditableSectionStories.MaskUnmaskWithAlert} />
 
-<Heading3>With custom content</Heading3>
+## With custom content
 
 You are able to compose custom content on the top and bottom of the details to suit
 your requirements.
 
 <Canvas of={UneditableSectionStories.WithCustomContent} />
 
-<Heading3>Composing from scratch</Heading3>
+## Composing from scratch
 
 For added flexibility, you are able to compose the entire section from scratch
 without using the `items` prop. This is useful if you have additional components
@@ -75,13 +74,13 @@ to render the details at any position you intend.
 
 <Canvas of={UneditableSectionStories.ComposingFromScratch} />
 
-<Heading3>Stretch</Heading3>
+## Stretch
 
 If rendering this inside of another container, the contents can take up the full
 width using the `stretch` prop.
 
 <Canvas of={UneditableSectionStories.Stretch} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

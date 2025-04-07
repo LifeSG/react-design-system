@@ -1,17 +1,16 @@
 import dayjs, { Dayjs } from "dayjs";
 import { useMemo, useState } from "react";
-import { Text } from "../../../text/text";
 import { CalendarHelper } from "../../../util/calendar-helper";
 import { HeaderCell, RowDayCell, Wrapper } from "../standard";
 import { CommonCalendarProps } from "../types";
 import { FixedRangeDayCell } from "./fixed-range-cell";
 
 interface FixedRangeCalendarDayViewProps extends CommonCalendarProps {
-    selectedStartDate: string;
+    selectedStartDate: string | undefined;
+    numberOfDays: number | undefined;
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
-    numberOfDays: number;
 }
 
 export const FixedRangeCalendarDayView = ({
@@ -64,7 +63,7 @@ export const FixedRangeCalendarDayView = ({
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
             <HeaderCell key={`week-day-${index}`}>
-                <Text.H6 weight="semibold">{dayjs(day).format("ddd")}</Text.H6>
+                {dayjs(day).format("ddd")}
             </HeaderCell>
         ));
     };

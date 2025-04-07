@@ -1,4 +1,6 @@
-type CustomColor = string | ((props: unknown) => string);
+import { ThemeStyleProps } from "../theme/types";
+
+type CustomColor = string | ((props: ThemeStyleProps) => string);
 
 export interface BaseSliderProps {
     className?: string | undefined;

@@ -1,60 +1,63 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../../color";
-import { Text, TextStyleHelper } from "../../../text";
+import { Border, Colour, Font, Motion, Radius } from "../../../theme";
 import { CellType, LabelType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
 interface StyleProps {
-    $type?: CellType;
-    $shadow?: boolean;
+    $type: CellType | undefined;
 }
 
 interface LabelStyleProps {
-    $type: LabelType;
-    $disabled: boolean;
-    $interactive: boolean | null;
+    $type: LabelType | undefined;
+    $disabled: boolean | undefined;
+    $interactive: boolean | null | undefined;
+}
+
+interface IndicatorStyleProps {
+    $disabled: boolean | undefined;
 }
 
 // =============================================================================
 // HELPERS
 // =============================================================================
 const getCellStyle = (props: StyleProps) => {
-    let color = Color.Neutral[8];
-    let border = "1px solid transparent";
+    let color = Colour.bg;
+    let borderColor: typeof color | string = "transparent";
 
     switch (props.$type) {
-        case "current":
-            color = Color.Accent.Light[5];
+        case "hover-subtle":
+            color = Colour["bg-hover"];
+            borderColor = Colour["bg-hover"];
             break;
-        case "hover-dash":
-            color = Color.Accent.Light[6];
-            border = `1px dashed ${Color.Accent.Light[4](props)}`;
+        case "hover":
+            color = Colour["bg-hover-strong"];
+            borderColor = Colour["bg-hover-strong"];
             break;
-        case "hover-current":
-            color = Color.Neutral[8];
-            border = `1px solid ${Color.Primary(props)}`;
-            break;
-        case "selected":
-            color = Color.Accent.Light[5];
-            border = `1px solid ${Color.Accent.Light[4](props)}`;
+        case "hover-outline":
+            color = Colour["bg-hover-subtle"];
+            borderColor = Colour["border-hover"];
             break;
         case "selected-outline":
-            color = Color.Accent.Light[5];
-            border = `1px solid ${Color.Primary(props)}`;
+            color = Colour["bg-selected"];
+            borderColor = Colour["border-selected"];
             break;
-        case "overlap":
-            color = Color.Accent.Light[4];
-            border = `1px solid ${Color.Accent.Light[4](props)}`;
+        case "selected-outline-subtle":
+            color = Colour["bg-selected"];
+            borderColor = Colour["border-selected-subtle"];
             break;
-        case "overlap-outline":
-            color = Color.Accent.Light[4];
-            border = `1px solid ${Color.Primary(props)}`;
+        case "selected-hover":
+            color = Colour["bg-selected-hover"];
+            // no border to give it an overlay effect
+            break;
+        case "selected-hover-outline":
+            color = Colour["bg-selected-hover"];
+            borderColor = Colour["border-selected-hover"];
             break;
     }
 
-    return { color, border };
+    return { color, borderColor };
 };
 
 // =============================================================================
@@ -73,17 +76,21 @@ const Half = styled.div<StyleProps>`
     position: absolute;
     height: 2.5rem;
     width: 50%;
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+    border: ${Border["width-010"]} ${Border["solid"]} transparent;
+    border-left: none;
+    border-right: none;
 
     ${(props) => {
         if (!props.$type) {
             return;
         }
-        const { color, border } = getCellStyle(props);
+        const { color, borderColor } = getCellStyle(props);
         return css`
             background-color: ${color};
-            background-clip: content-box;
-            border-top: ${border};
-            border-bottom: ${border};
+            background-clip: border-box;
+            border-top-color: ${borderColor};
+            border-bottom-color: ${borderColor};
         `;
     }}
 `;
@@ -96,25 +103,6 @@ export const RightHalf = styled(Half)`
     right: 0;
 `;
 
-const HalfShadow = styled.div<StyleProps>`
-    z-index: -1;
-    box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
-    position: absolute;
-    height: 100%;
-    width: 50%;
-    display: none;
-
-    ${(props) => props.$shadow && "display: block;"}
-`;
-
-export const LeftHalfShadow = styled(HalfShadow)`
-    left: 0;
-`;
-
-export const RightHalfShadow = styled(HalfShadow)`
-    right: 0;
-`;
-
 export const Circle = styled.div<StyleProps>`
     position: absolute;
     z-index: 1;
@@ -124,51 +112,34 @@ export const Circle = styled.div<StyleProps>`
     justify-content: center;
     height: 2.5rem;
     width: 2.5rem;
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
-    border: 1px solid transparent;
-    border-radius: 50%;
+    border: ${Border["width-010"]} ${Border["solid"]} transparent;
+    border-radius: ${Radius.md};
 
     ${(props) => {
         if (props.$type) {
-            const { color, border } = getCellStyle(props);
+            const { color, borderColor } = getCellStyle(props);
             return css`
                 background-color: ${color};
                 background-clip: content-box;
-                border: ${border};
+                border-color: ${borderColor};
             `;
         }
     }}
-
-    ${(props) =>
-        props.$shadow &&
-        css`
-            &:before {
-                content: "";
-                border-radius: 50%;
-                position: absolute;
-                height: 100%;
-                width: 100%;
-            }
-        `}
 `;
 
 export const LeftCircle = styled(Circle)`
     right: calc(50% - 1.25rem);
     clip-path: inset(-3px 1.25rem -3px -3px);
-    &:before {
-        box-shadow: -1px 0 4px 1px ${Color.Shadow.Accent};
-    }
 `;
 
 export const RightCircle = styled(Circle)`
     left: calc(50% - 1.25rem);
     clip-path: inset(-3px -3px -3px 1.25rem);
-    &:before {
-        box-shadow: 1px 0 4px 1px ${Color.Shadow.Accent};
-    }
 `;
 
-export const Label = styled(Text.H5)<LabelStyleProps>`
+export const Label = styled.div<LabelStyleProps>`
     position: absolute;
     top: 0;
     bottom: 0;
@@ -179,7 +150,8 @@ export const Label = styled(Text.H5)<LabelStyleProps>`
     justify-content: center;
     height: 2.5rem;
     width: 2.5rem;
-    border-radius: 50%;
+    ${Font["body-md-regular"]}
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
     cursor: ${(props) => {
         if (props.$interactive) {
@@ -195,13 +167,6 @@ export const Label = styled(Text.H5)<LabelStyleProps>`
         const { $disabled, $type } = props;
 
         if ($disabled) {
-            if ($type === "selected") {
-                return css`
-                    ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                    color: ${Color.Accent.Light[2]};
-                `;
-            }
-
             if ($type === "hidden") {
                 return css`
                     visibility: hidden;
@@ -209,23 +174,34 @@ export const Label = styled(Text.H5)<LabelStyleProps>`
             }
 
             return css`
-                color: ${Color.Neutral[4]};
+                color: ${Colour["text-disabled-subtlest"]};
             `;
         }
 
         switch ($type) {
             case "selected":
                 return css`
-                    ${TextStyleHelper.getTextStyle("H5", "semibold")};
-                    color: ${Color.Primary};
+                    font-weight: ${Font.Spec["weight-semibold"]};
+                    color: ${Colour["text-selected"]};
+                `;
+            case "selected-hover":
+                return css`
+                    font-weight: ${Font.Spec["weight-semibold"]};
+                    color: ${Colour["text-selected-hover"]};
                 `;
             case "current":
                 return css`
-                    color: ${Color.Neutral[3]};
+                    font-weight: ${Font.Spec["weight-semibold"]};
+                    color: ${Colour["text-primary"]};
+                `;
+            case "hover":
+                return css`
+                    font-weight: ${Font.Spec["weight-semibold"]};
+                    color: ${Colour["text-hover"]};
                 `;
             case "unavailable":
                 return css`
-                    color: ${Color.Neutral[4]};
+                    color: ${Colour["text-disabled-subtlest"]};
                 `;
             case "hidden":
                 return css`
@@ -234,8 +210,17 @@ export const Label = styled(Text.H5)<LabelStyleProps>`
             case "available":
             default:
                 return css`
-                    color: ${Color.Neutral[1]};
+                    color: ${Colour.text};
                 `;
         }
     }}
+`;
+
+export const Indicator = styled.div<IndicatorStyleProps>`
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: currentColor;
+    border-radius: 50%;
+    bottom: 4px;
 `;

@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color/color";
 import { SizeType, StyleType } from "./types";
-
+import { Border, Colour } from "../theme";
 interface StyleProps {
     $styleType: StyleType;
     $sizeType: SizeType;
@@ -9,9 +8,7 @@ interface StyleProps {
 
 export const Main = styled.button<StyleProps>`
     align-items: center;
-    background-color: ${Color.Primary};
     border-radius: 0.25rem;
-    color: ${Color.Neutral[8]};
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -62,37 +59,46 @@ export const Main = styled.button<StyleProps>`
         switch (props.$styleType) {
             case "secondary":
                 return css`
-                    background-color: ${Color.Neutral[8]};
-                    border: 1px solid ${Color.Primary};
-                    color: ${Color.Primary};
+                    background-color: ${Colour.bg};
+                    border: ${Border["width-010"]} ${Border.solid}
+                        ${Colour["border-primary"]};
+                    color: ${Colour["text-primary"]};
+
+                    :hover {
+                        background-color: ${Colour["bg-hover-neutral"]};
+                    }
                 `;
 
             case "light":
                 return css`
-                    background-color: ${Color.Neutral[8]};
-                    border: 1px solid ${Color.Neutral[5]};
-                    color: ${Color.Primary};
+                    background-color: ${Colour.bg};
+                    border: ${Border["width-010"]} ${Border.solid}
+                        ${Colour.border};
+                    color: ${Colour["text-primary"]};
+
+                    :hover {
+                        background-color: ${Colour["bg-hover-neutral"]};
+                    }
                 `;
             case "primary":
             default:
                 return css`
-                    background-color: ${Color.Primary};
+                    background-color: ${Colour["bg-primary"]};
                     border: none;
-                    color: ${Color.Neutral[8]};
+                    color: ${Colour["text-inverse"]};
+
+                    :hover {
+                        background-color: ${Colour["bg-primary-hover"]};
+                    }
                 `;
         }
     }}
-    &:hover {
-        box-shadow: 1px 1px 4px 2px rgba(0, 0, 0, 0.2);
-    }
-    &:disabled {
-        background-color: ${Color.Neutral[6]};
-        border: 1px solid ${Color.Neutral[6]};
-        color: ${Color.Neutral[3]};
-        cursor: not-allowed;
 
-        &:hover {
-            box-shadow: none;
-        }
+    &:disabled {
+        background-color: ${Colour["bg-disabled"]};
+        border: ${Border["width-010"]} ${Border["solid"]}
+            ${Colour["border-disabled"]};
+        color: ${Colour["text-disabled"]};
+        cursor: not-allowed;
     }
 `;

@@ -9,17 +9,18 @@ import { Sidenav } from "src/sidenav";
 type Component = typeof Sidenav;
 
 const meta: Meta<Component> = {
-    title: "Modules/Sidenav",
+    title: "Navigation/Sidenav",
     component: Sidenav,
     parameters: {
         layout: "fullscreen",
+        docs: { story: { inline: false, iframeHeight: 600 } },
     },
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Sidenav fixed={false} /* For storybook purposes */>
                 <Sidenav.Group separator={true}>
@@ -53,7 +54,7 @@ export const Default: StoryObj<Component> = {
 };
 
 export const SubitemDrawer: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Sidenav fixed={false} /* For storybook purposes */>
                 <Sidenav.Group separator={true}>

@@ -1,8 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
-import { DesignToken } from "../../design-token";
-import { TextStyleHelper } from "../../text";
-import { DropdownVariantType } from "../dropdown-list/types";
+import { Border, Colour, Font, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -17,30 +14,27 @@ export interface InputWrapperStyleProps {
 }
 
 export interface InputStyleProps {
-    $variant?: DropdownVariantType | undefined;
+    $variant?: "small" | "default" | undefined;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
 const defaultFocusCss = css`
-    border: 1px solid ${Color.Accent.Light[1]};
-    box-shadow: ${DesignToken.InputBoxShadow};
+    outline-offset: -1px;
+    outline: ${Border["width-020"]} ${Border["solid"]} ${Colour["border-focus"]};
 `;
 
 const readOnlyFocusCss = css`
-    border: 1px solid ${Color.Accent.Light[1]};
-    box-shadow: none;
+    outline-color: ${Colour["border-focus"]};
 `;
 
 const disabledFocusCss = css`
-    border: 1px solid ${Color.Neutral[5]};
-    box-shadow: none;
+    outline-color: ${Colour["border-disabled"]};
 `;
 
 const errorFocusCss = css`
-    border: 1px solid ${Color.Validation.Red.Border};
-    box-shadow: ${DesignToken.InputErrorBoxShadow};
+    outline-color: ${Colour["border-error-focus"]};
 `;
 
 /**
@@ -48,9 +42,9 @@ const errorFocusCss = css`
  * prescibe any layout for content
  */
 export const InputBox = styled.div<InputWrapperStyleProps>`
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
-    background: ${Color.Neutral[8]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    background: ${Colour["bg"]};
 
     :focus-within {
         ${defaultFocusCss}
@@ -60,7 +54,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
     ${(props) => {
         if (props.$readOnly) {
             return css`
-                border: 1px solid transparent;
+                border-color: transparent;
                 padding: 0;
                 background: transparent !important;
 
@@ -71,7 +65,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
             `;
         } else if (props.$disabled) {
             return css`
-                background: ${Color.Neutral[6]};
+                background: ${Colour["bg-disabled"]};
                 cursor: not-allowed;
 
                 :focus-within {
@@ -81,7 +75,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
             `;
         } else if (props.$error) {
             return css`
-                border: 1px solid ${Color.Validation.Red.Border};
+                border-color: ${Colour["border-error"]};
 
                 :focus-within {
                     ${errorFocusCss}
@@ -98,7 +92,7 @@ export const InputWrapper = styled(InputBox)<InputWrapperStyleProps>`
     position: relative;
     height: max-content;
     width: 100%;
-    padding: 0 1rem;
+    padding: 0 ${Spacing["spacing-16"]};
     flex-direction: ${(props) =>
         props.$position === "right" ? "row-reverse" : "row"};
 `;
@@ -109,11 +103,10 @@ export const InputWrapper = styled(InputBox)<InputWrapperStyleProps>`
  */
 export const BasicInput = styled.input<InputStyleProps>`
     ${(props) =>
-        TextStyleHelper.getTextStyle(
-            props.$variant === "small" ? "BodySmall" : "Body",
-            "regular"
-        )}
-    color: ${Color.Neutral[1]};
+        props.$variant === "small"
+            ? Font["body-md-regular"]
+            : Font["body-baseline-regular"]}
+    color: ${Colour["text"]};
     display: block;
     background: transparent;
     border: none;
@@ -123,6 +116,8 @@ export const BasicInput = styled.input<InputStyleProps>`
     margin: 0;
 
     :disabled {
+        color: ${Colour["text-subtler"]};
+
         :hover {
             cursor: not-allowed;
         }
@@ -130,7 +125,7 @@ export const BasicInput = styled.input<InputStyleProps>`
 
     ::placeholder,
     ::-webkit-input-placeholder {
-        color: ${Color.Neutral[3]};
+        color: ${Colour["text-subtler"]};
     }
 
     // Chrome, Safari, Edge, Opera
@@ -161,6 +156,8 @@ export const BasicButton = styled.button<InputStyleProps>`
     }
 
     :focus-visible {
-        outline: 2px auto ${Color.Primary};
+        outline: ${Border["width-010"]} ${Border["solid"]}
+            ${Colour["border-focus"]};
+        border-radius: ${Radius["sm"]};
     }
 `;
