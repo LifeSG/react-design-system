@@ -22,7 +22,7 @@ const MEMBER_EXPRESSION_PROPERTIES = {
 };
 
 const WARNINGS = {
-    DEPRECATED_USAGE: `\x1b[31m[MIGRATION] V2_MediaWidths requires manual migration to Breakpoint. Refer to <"https://github.com/LifeSG/react-design-system/wiki/Migration-to-V3-(WIP)">. File:\x1b[0m`,
+    DEPRECATED_USAGE: `\x1b[31m[MIGRATION] V2_MediaWidths requires manual migration to Breakpoint. Refer to <"https://github.com/LifeSG/react-design-system/wiki/Migrating-to-V3">. File:\x1b[0m`,
 };
 
 const IDENTIFIERS = {
