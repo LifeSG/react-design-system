@@ -3,7 +3,7 @@ import { PrimitiveColourSet } from "../../types";
 export const PAColourSet: PrimitiveColourSet = {
     "brand-10": "#881317",
     "brand-20": "#B5191E",
-    "brand-30": "#E21F26",
+    "brand-30": "#B5040A",
     "brand-40": "#D0333F",
     "brand-50": "#DC666F",
     "brand-60": "#E28087",
