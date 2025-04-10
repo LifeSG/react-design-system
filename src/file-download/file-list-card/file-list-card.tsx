@@ -66,7 +66,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
 
         const widthOfElement =
             containerRef && containerRef.current
-                ? containerRef.current.getBoundingClientRect().width
+                ? containerRef.current?.getBoundingClientRect().width
                 : 0;
 
         return StringHelper.truncateTwoLines(value, widthOfElement, 16, 1.5);

@@ -88,7 +88,7 @@ export const UnitNumberInput = ({
             floorValue.length === 3 &&
             unitInputRef.current
         ) {
-            unitInputRef.current.focus();
+            unitInputRef.current?.focus();
         }
     }, [floorValue]);
 
@@ -140,12 +140,12 @@ export const UnitNumberInput = ({
 
     const handleNodeClick = () => {
         if (currentFocus === "none" && floorInputRef.current) {
-            floorInputRef.current.focus();
+            floorInputRef.current?.focus();
         }
     };
 
     const handleNodeBlur = (event: React.FocusEvent) => {
-        if (nodeRef.current && nodeRef.current.contains(event.relatedTarget)) {
+        if (nodeRef.current && nodeRef.current?.contains(event.relatedTarget)) {
             // internal element received focus
             return;
         }
@@ -162,7 +162,7 @@ export const UnitNumberInput = ({
          */
         if (event.code === "Backspace" || event.key === "Backspace") {
             if (currentFocus === "unit" && unitValue.length === 0) {
-                floorInputRef.current.focus();
+                floorInputRef.current?.focus();
             }
         }
     };

@@ -51,7 +51,7 @@ const Component = (
     // HELPER FUNCTIONS
     // =============================================================================
     const exportAsImage = () => {
-        if (!fabricCanvas.current.getObjects().length) return null;
+        if (!fabricCanvas.current?.getObjects().length) return null;
         const dataURL = fabricCanvas.current?.toDataURL({
             format: "png",
             quality: 1,
@@ -64,15 +64,15 @@ const Component = (
         // slight delay for fabricjs to update on orientation change
         await new Promise((resolve) => setTimeout(resolve));
         if (containerRef.current && canvasRef.current && fabricCanvas.current) {
-            const canvasWidth = containerRef.current.clientWidth;
-            const canvasHeight = containerRef.current.clientHeight;
+            const canvasWidth = containerRef.current?.clientWidth;
+            const canvasHeight = containerRef.current?.clientHeight;
             canvasRef.current.width = canvasWidth;
             canvasRef.current.height = canvasHeight;
-            fabricCanvas.current.setWidth(canvasWidth);
-            fabricCanvas.current.setHeight(canvasHeight);
+            fabricCanvas.current?.setWidth(canvasWidth);
+            fabricCanvas.current?.setHeight(canvasHeight);
 
             // change x and y position of the viewport to centralise the drawing
-            const viewport = fabricCanvas.current.viewportTransform;
+            const viewport = fabricCanvas.current?.viewportTransform;
             viewport[4] = (canvasWidth - 640) / 2;
             viewport[5] = (canvasHeight - 320) * 0.75;
         }
@@ -119,13 +119,13 @@ const Component = (
                     fabricCanvas.current?.clear();
                     img.selectable = false;
                     img.hoverCursor = "default";
-                    img.scale(fabricCanvas.current.width / img.width);
+                    img.scale(fabricCanvas.current?.width / img.width);
 
-                    const viewport = fabricCanvas.current.viewportTransform;
+                    const viewport = fabricCanvas.current?.viewportTransform;
                     img.left = -viewport[4];
                     img.top = -viewport[5];
 
-                    fabricCanvas.current.add(img);
+                    fabricCanvas.current?.add(img);
                 }
             });
         }

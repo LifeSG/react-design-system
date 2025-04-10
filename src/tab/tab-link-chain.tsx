@@ -59,7 +59,7 @@ export const TabLinkChain = ({
             activeLinkRef
         ) {
             content.scrollLeft =
-                activeLinkRef.current.getBoundingClientRect().left;
+                activeLinkRef.current?.getBoundingClientRect().left;
         }
     };
 

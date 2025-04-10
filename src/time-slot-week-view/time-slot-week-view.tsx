@@ -57,7 +57,7 @@ export const TimeSlotWeekView = ({
     const handleOnCalendarDateChange = (value: Dayjs) => {
         if (
             !previousCalendarDate.current ||
-            !previousCalendarDate.current.isSame(value, "week")
+            !previousCalendarDate.current?.isSame(value, "week")
         ) {
             performDisplayChangeHandler(value);
         }

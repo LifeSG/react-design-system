@@ -120,7 +120,7 @@ const Component = ({
 
         const widthOfElement =
             detailSectionRef && detailSectionRef.current
-                ? detailSectionRef.current.getBoundingClientRect().width
+                ? detailSectionRef.current?.getBoundingClientRect().width
                 : 0;
 
         return StringHelper.truncateOneLine(

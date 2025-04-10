@@ -64,7 +64,7 @@ export const FileItemEdit = ({
     // EVENT HANDLERS
     // =========================================================================
     const handleSave = () => {
-        onSave(textareaRef.current.value.trim());
+        onSave(textareaRef.current?.value.trim());
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -83,7 +83,7 @@ export const FileItemEdit = ({
 
         const widthOfElement =
             nameSectionRef && nameSectionRef.current
-                ? nameSectionRef.current.getBoundingClientRect().width
+                ? nameSectionRef.current?.getBoundingClientRect().width
                 : 0;
 
         return StringHelper.truncateOneLine(

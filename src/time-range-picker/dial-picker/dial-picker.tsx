@@ -129,7 +129,7 @@ export const DialPicker = ({
     };
 
     const runOutsideFocusHandler = (event: MouseEvent | KeyboardEvent) => {
-        if (nodeRef && !nodeRef.current.contains(event.target as any)) {
+        if (nodeRef && !nodeRef.current?.contains(event.target as any)) {
             if (showEndTimeSelector || showStartTimeSelector) {
                 runOnBlurHandler();
             }

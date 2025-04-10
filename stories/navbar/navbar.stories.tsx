@@ -336,7 +336,7 @@ export const CustomItems: StoryObj<Component> = {
                             children: (
                                 <MobileCustomComponent
                                     onClick={() => {
-                                        navbarRef.current.dismissDrawer();
+                                        navbarRef.current?.dismissDrawer();
                                     }}
                                 />
                             ),

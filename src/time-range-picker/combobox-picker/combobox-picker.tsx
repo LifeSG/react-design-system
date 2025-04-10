@@ -145,7 +145,7 @@ export const ComboboxPicker = ({
 
         setActiveTimeSelector(selector);
         setDropdownOpen(true);
-        (selector === "start" ? startInputRef : endInputRef).current.select();
+        (selector === "start" ? startInputRef : endInputRef).current?.select();
     };
 
     function handleKeyDownEvent(event: React.KeyboardEvent<HTMLInputElement>) {
@@ -156,7 +156,7 @@ export const ComboboxPicker = ({
                 } else if (activeTimeSelector === "end") {
                     // Let handleBlur call handleTimeChange instead
                     if (dropdownOpen) handleEndTime(endTimeVal);
-                    endInputRef.current.blur();
+                    endInputRef.current?.blur();
                 }
                 break;
             case "Tab":
@@ -199,7 +199,7 @@ export const ComboboxPicker = ({
         // Go to end input only if start is a valid time
         if (goToNextInput && parseInput(startInput) !== undefined) {
             setActiveTimeSelector("end");
-            endInputRef.current.select();
+            endInputRef.current?.select();
         }
 
         if (triggerOnBlur) {
@@ -233,14 +233,14 @@ export const ComboboxPicker = ({
         (activeTimeSelector === "start"
             ? startInputRef
             : endInputRef
-        ).current.focus();
+        ).current?.focus();
         setDropdownOpen(false);
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLDivElement, Element>) => {
         if (
             nodeRef.current &&
-            !nodeRef.current.contains(event.relatedTarget) &&
+            !nodeRef.current?.contains(event.relatedTarget) &&
             activeTimeSelector &&
             !dropdownOpen // Necessary because dropdown floating ui is not a child
         ) {
