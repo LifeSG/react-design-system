@@ -25,6 +25,14 @@ export const Masthead = (): JSX.Element => {
             script.type = "module";
             script.src = SCRIPT_SRC;
 
+            if (!document.getElementById(STYLE_ID)) {
+                const link = document.createElement("link");
+                link.id = STYLE_ID;
+                link.rel = "stylesheet";
+                link.href = STYLE_HREF;
+                document.head.appendChild(link);
+            }
+
             document.head.appendChild(script);
         }
     };
@@ -47,9 +55,16 @@ export const Masthead = (): JSX.Element => {
     return <Wrapper dangerouslySetInnerHTML={createContent()} />;
 };
 
+/**
+ * Note: the links are from
+ * https://v1.designsystem.tech.gov.sg/docs/masthead/
+ */
 // =============================================================================
 // CONSTANTS
 // =============================================================================
 const SCRIPT_ID = "lifesg-ds-masthead-script";
 const SCRIPT_SRC =
-    "https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component/Masthead/index.js";
+    "https://cdn.jsdelivr.net/npm/@govtechsg/sgds-masthead/dist/sgds-masthead/sgds-masthead.js";
+const STYLE_ID = "lifesg-ds-masthead-style";
+const STYLE_HREF =
+    "https://cdn.jsdelivr.net/npm/@govtechsg/sgds-masthead/dist/sgds-masthead/sgds-masthead.css";
