@@ -169,6 +169,7 @@ const RowStoryContainer = styled.div`
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    align-items: center;
 `;
 
 // -----------------------------------------------------------------------------
