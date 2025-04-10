@@ -55,7 +55,7 @@ export const flattenList = <T>(
                     : false,
                 hasMatchedSubItems: false,
             };
-            current.push(item);
+            current?.push(item);
             items.push(item);
 
             if (option.subItems?.length) {

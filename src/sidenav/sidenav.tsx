@@ -72,7 +72,7 @@ const SidenavBase = ({
     const handleOutsideClicks = (e: PointerEvent) => {
         if (
             wrapperRef.current &&
-            !wrapperRef.current.contains(e.target as Node)
+            !wrapperRef.current?.contains(e.target as Node)
         ) {
             setSelectedItem({
                 itemId: previouslySelectedItemId

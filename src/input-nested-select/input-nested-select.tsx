@@ -127,7 +127,7 @@ export const InputNestedSelect = <V1, V2, V3>({
         if (
             focused &&
             !showOptions &&
-            !nodeRef.current.contains(e.relatedTarget as Node)
+            !nodeRef.current?.contains(e.relatedTarget as Node)
         ) {
             setFocused(false);
             onBlur?.();
@@ -152,7 +152,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     };
 
     const handleDismiss = () => {
-        selectorRef.current.focus();
+        selectorRef.current?.focus();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };
@@ -175,7 +175,7 @@ export const InputNestedSelect = <V1, V2, V3>({
             let widthOfElement = 0;
             if (labelContainerRef && labelContainerRef.current) {
                 widthOfElement =
-                    labelContainerRef.current.getBoundingClientRect().width;
+                    labelContainerRef.current?.getBoundingClientRect().width;
             }
             return StringHelper.truncateOneLine(value, widthOfElement, 120, 6);
         }

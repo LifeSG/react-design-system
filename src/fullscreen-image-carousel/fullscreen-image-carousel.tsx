@@ -111,7 +111,7 @@ export const Component = (
     };
 
     const handleTouchEnd = () => {
-        if (Math.abs(diff) > containerRef.current.offsetWidth / 3) {
+        if (Math.abs(diff) > containerRef.current?.offsetWidth / 3) {
             if (diff > 0) {
                 goToNextSlide();
             } else {

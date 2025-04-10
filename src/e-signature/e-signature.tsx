@@ -54,11 +54,11 @@ export const ESignature = (props: EsignatureProps) => {
     // EVENT HANDLERS
     // =============================================================================
     const handleClearDrawing = () => {
-        eSignatureCanvasRef.current.clear();
+        eSignatureCanvasRef.current?.clear();
     };
 
     const handleClickSave = () => {
-        const dataURL = eSignatureCanvasRef.current.export();
+        const dataURL = eSignatureCanvasRef.current?.export();
         setDataURL(dataURL);
         setShowModal(false);
         onChange?.(dataURL);

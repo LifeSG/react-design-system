@@ -102,7 +102,7 @@ export const InputRangeSelect = <T, V>({
             : setSelectedToValue(item);
         triggerOptionDisplayCallback(false);
         if (selectorRef) {
-            selectorRef.current.focus();
+            selectorRef.current?.focus();
         }
         if (onSelectOption) {
             onSelectOption({ [rangeType]: item }, extractedValue);
@@ -121,7 +121,7 @@ export const InputRangeSelect = <T, V>({
         triggerOptionDisplayCallback(false);
 
         if (selectorRef) {
-            selectorRef.current.focus();
+            selectorRef.current?.focus();
         }
 
         if (!selectedFromValue || !selectedToValue) {
@@ -177,7 +177,7 @@ export const InputRangeSelect = <T, V>({
             let widthOfElement = 0;
             if (labelContainerRef[type] && labelContainerRef[type].current) {
                 widthOfElement =
-                    labelContainerRef[type].current.getBoundingClientRect()
+                    labelContainerRef[type].current?.getBoundingClientRect()
                         .width;
             }
             return StringHelper.truncateOneLine(

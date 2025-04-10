@@ -111,7 +111,7 @@ export const Component = <T, V>(
         triggerOptionDisplayCallback(false);
 
         if (selectorRef) {
-            selectorRef.current.focus();
+            selectorRef.current?.focus();
         }
 
         if (onSelectOption) {
@@ -132,7 +132,7 @@ export const Component = <T, V>(
         triggerOptionDisplayCallback(false);
 
         if (selectorRef) {
-            selectorRef.current.focus();
+            selectorRef.current?.focus();
         }
     };
 

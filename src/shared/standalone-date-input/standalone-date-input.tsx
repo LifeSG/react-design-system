@@ -93,9 +93,9 @@ export const Component = (
             !day &&
             !month &&
             !year &&
-            nodeRef.current.contains(document.activeElement)
+            nodeRef.current?.contains(document.activeElement)
         )
-            dayInputRef.current.focus();
+            dayInputRef.current?.focus();
     }, [value]);
 
     useEffect(() => {
@@ -108,8 +108,8 @@ export const Component = (
         if (focused) {
             setHidePlaceholder(true);
 
-            if (!nodeRef.current.contains(document.activeElement)) {
-                dayInputRef.current.focus();
+            if (!nodeRef.current?.contains(document.activeElement)) {
+                dayInputRef.current?.focus();
             }
         }
     }, [focused]);
@@ -142,8 +142,8 @@ export const Component = (
 
         setHidePlaceholder(true);
 
-        if (!nodeRef.current.contains(document.activeElement)) {
-            dayInputRef.current.focus();
+        if (!nodeRef.current?.contains(document.activeElement)) {
+            dayInputRef.current?.focus();
         }
     };
 
@@ -211,7 +211,7 @@ export const Component = (
             onChange(value);
         }
 
-        if (!nodeRef.current.contains(event.relatedTarget)) {
+        if (!nodeRef.current?.contains(event.relatedTarget)) {
             // entire field was blurred
             setCurrentFocus("none");
             onBlur?.(isEmpty || isValid);
@@ -239,7 +239,7 @@ export const Component = (
                 setDayValue(targetValue);
                 // auto focus the next input once filled in
                 if (targetValue.length === 2) {
-                    monthInputRef.current.focus();
+                    monthInputRef.current?.focus();
                 }
                 break;
             case names[1]:
@@ -247,7 +247,7 @@ export const Component = (
                 setMonthValue(targetValue);
                 // auto focus the next input once filled in
                 if (targetValue.length === 2) {
-                    yearInputRef.current.focus();
+                    yearInputRef.current?.focus();
                 }
                 break;
             case names[2]:
@@ -278,11 +278,11 @@ export const Component = (
          */
         if (event.code === "Backspace" || event.key === "Backspace") {
             if (currentFocus === names[1] && monthValue.length === 0) {
-                dayInputRef.current.focus();
+                dayInputRef.current?.focus();
             }
 
             if (currentFocus === names[2] && yearValue.length === 0) {
-                monthInputRef.current.focus();
+                monthInputRef.current?.focus();
             }
         }
     };

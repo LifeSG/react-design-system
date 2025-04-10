@@ -60,7 +60,7 @@ export const DateInput = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleClose = () => {
-        inputRef.current.resetInput();
+        inputRef.current?.resetInput();
         setSelectedDate(initialDate);
         setCalendarOpen(false);
         setFocused(false);
@@ -68,8 +68,8 @@ export const DateInput = ({
     };
 
     const handleDismiss = () => {
-        inputRef.current.resetInput();
-        nodeRef.current.focus();
+        inputRef.current?.resetInput();
+        nodeRef.current?.focus();
         setSelectedDate(initialDate);
         setCalendarOpen(false);
     };
@@ -104,7 +104,7 @@ export const DateInput = ({
             performOnChangeHandler(val);
             setInitialDate(val);
             if (val) {
-                nodeRef.current.focus();
+                nodeRef.current?.focus();
                 setCalendarOpen(false);
             }
 
@@ -133,9 +133,9 @@ export const DateInput = ({
         if (
             focused &&
             !calendarOpen &&
-            !nodeRef.current.contains(e.relatedTarget as Node)
+            !nodeRef.current?.contains(e.relatedTarget as Node)
         ) {
-            inputRef.current.resetInput();
+            inputRef.current?.resetInput();
             setSelectedDate(initialDate);
             setFocused(false);
             performOnBlurHandler();
@@ -158,7 +158,7 @@ export const DateInput = ({
                 break;
         }
 
-        nodeRef.current.focus();
+        nodeRef.current?.focus();
         setCalendarOpen(false);
     };
 

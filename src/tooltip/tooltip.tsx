@@ -45,7 +45,7 @@ export const Tooltip = ({
     // =============================================================================
     const recalculatePosition = () => {
         if (bubbleRef.current) {
-            const bubbleRect = bubbleRef.current.getBoundingClientRect();
+            const bubbleRect = bubbleRef.current?.getBoundingClientRect();
             if (bubbleRect.x < 0) {
                 switch (position) {
                     case "left":
