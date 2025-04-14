@@ -63,8 +63,8 @@ export const PAColourSet: SemanticColourSet = {
     "border-selected-subtlest": getPrimitiveColour("neutral-70"),
     "border-selected-hover": getPrimitiveColour("neutral-10"),
 
-    "border-focus": getPrimitiveColour("brand-60"),
-    "border-focus-strong": getPrimitiveColour("brand-40"),
+    "border-focus": getPrimitiveColour("neutral-20"),
+    "border-focus-strong": getPrimitiveColour("neutral-10"),
 
     "border-disabled": getPrimitiveColour("neutral-90"),
     "border-selected-disabled": getPrimitiveColour("neutral-80"),
@@ -89,9 +89,9 @@ export const PAColourSet: SemanticColourSet = {
     "bg-hover-neutral": getPrimitiveColour("neutral-90"),
     "bg-hover-neutral-strong": getPrimitiveColour("neutral-90"),
 
-    "bg-selected": getPrimitiveColour("brand-50"),
-    "bg-selected-hover": getPrimitiveColour("brand-70"),
-    "bg-selected-strong": getPrimitiveColour("brand-90"),
+    "bg-selected": getPrimitiveColour("brand-100"),
+    "bg-selected-hover": getPrimitiveColour("brand-30"),
+    "bg-selected-strong": getPrimitiveColour("brand-50"),
     "bg-selected-stronger": getPrimitiveColour("brand-40"),
     "bg-selected-strongest": getPrimitiveColour("brand-20"),
     "bg-selected-strongest-hover": getPrimitiveColour("brand-10"),
