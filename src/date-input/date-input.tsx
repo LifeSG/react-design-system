@@ -133,7 +133,8 @@ export const DateInput = ({
         if (
             focused &&
             !calendarOpen &&
-            !nodeRef.current?.contains(e.relatedTarget as Node)
+            nodeRef.current &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
             inputRef.current?.resetInput();
             setSelectedDate(initialDate);

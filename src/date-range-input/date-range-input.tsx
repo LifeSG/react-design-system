@@ -409,6 +409,7 @@ export const DateRangeInput = ({
         if (
             focused &&
             !calendarOpen &&
+            nodeRef.current &&
             !nodeRef.current?.contains(e.relatedTarget as Node)
         ) {
             actions.blur();

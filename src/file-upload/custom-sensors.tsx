@@ -28,10 +28,10 @@ export class KeyboardSensor extends LibKeyboardSensor {
 function shouldHandleEvent(element: HTMLElement | null) {
     let current = element;
     while (current) {
-        if (current?.dataset && current?.dataset.noDnd) {
+        if (current.dataset && current.dataset.noDnd) {
             return false;
         }
-        current = current?.parentElement;
+        current = current.parentElement;
     }
 
     return true;
