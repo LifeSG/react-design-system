@@ -120,7 +120,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         if (
             focused &&
             !showOptions &&
-            !nodeRef.current &&
+            nodeRef.current &&
             !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
             setFocused(false);

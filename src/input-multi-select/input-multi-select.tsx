@@ -117,7 +117,7 @@ export const InputMultiSelect = <T, V>({
         if (
             focused &&
             !showOptions &&
-            !nodeRef.current &&
+            nodeRef.current &&
             !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
             setFocused(false);
