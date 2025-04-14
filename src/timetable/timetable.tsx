@@ -77,8 +77,8 @@ export const TimeTable = ({
     useEffect(() => {
         const handleScroll = throttle(() => {
             if (tableContainerRef.current) {
-                setIsScrolledX(tableContainerRef.current?.scrollLeft > 0);
-                setIsScrolledY(tableContainerRef.current?.scrollTop > 0);
+                setIsScrolledX(tableContainerRef.current.scrollLeft > 0);
+                setIsScrolledY(tableContainerRef.current.scrollTop > 0);
             }
 
             if (loadMore) return;
@@ -133,7 +133,7 @@ export const TimeTable = ({
                 (hourlyIntervals.length * 60) / ROW_INTERVAL
             );
             const tableContainerWidth =
-                tableContainerRef.current?.clientWidth - ROW_HEADER_WIDTH;
+                tableContainerRef.current.clientWidth - ROW_HEADER_WIDTH;
             const calcWidth = tableContainerWidth / numberOfIntervalsPerRowBar;
             const width =
                 calcWidth > MIN_INTERVAL_WIDTH ? calcWidth : MIN_INTERVAL_WIDTH;

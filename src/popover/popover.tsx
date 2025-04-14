@@ -89,7 +89,7 @@ export const Popover = ({
 
     const getOffsetPosition = (): OffsetPosition | undefined => {
         if (bubbleRef.current) {
-            const bubbleRect = bubbleRef.current?.getBoundingClientRect();
+            const bubbleRect = bubbleRef.current.getBoundingClientRect();
             const paddingBuffer = 24; // buffer for all sides
             const hasExceededTop = bubbleRect.y < paddingBuffer;
             const rightLimit = window.innerWidth - paddingBuffer;

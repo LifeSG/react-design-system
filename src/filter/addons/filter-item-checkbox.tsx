@@ -73,8 +73,8 @@ export const FilterItemCheckbox = <T,>({
 
     const setVisibleItemsWhenMinimised = () => {
         const elementBottom = lastVisibleElement.current
-            ? lastVisibleElement.current?.offsetTop +
-              lastVisibleElement.current?.clientHeight
+            ? lastVisibleElement.current.offsetTop +
+              lastVisibleElement.current.clientHeight
             : undefined;
 
         setMinimisedHeight(elementBottom);
@@ -86,7 +86,7 @@ export const FilterItemCheckbox = <T,>({
             return;
         }
 
-        const children = Array.from(parentRef.current?.children);
+        const children = Array.from(parentRef.current.children);
 
         let lastElementInRow = 0;
         let rowCount = 0;

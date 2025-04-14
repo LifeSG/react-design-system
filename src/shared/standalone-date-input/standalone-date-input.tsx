@@ -93,7 +93,8 @@ export const Component = (
             !day &&
             !month &&
             !year &&
-            nodeRef.current?.contains(document.activeElement)
+            nodeRef.current &&
+            nodeRef.current.contains(document.activeElement)
         )
             dayInputRef.current?.focus();
     }, [value]);
@@ -108,8 +109,12 @@ export const Component = (
         if (focused) {
             setHidePlaceholder(true);
 
-            if (!nodeRef.current?.contains(document.activeElement)) {
-                dayInputRef.current?.focus();
+            if (
+                dayInputRef.current &&
+                nodeRef.current &&
+                !nodeRef.current.contains(document.activeElement)
+            ) {
+                dayInputRef.current.focus();
             }
         }
     }, [focused]);
@@ -142,8 +147,12 @@ export const Component = (
 
         setHidePlaceholder(true);
 
-        if (!nodeRef.current?.contains(document.activeElement)) {
-            dayInputRef.current?.focus();
+        if (
+            dayInputRef.current &&
+            nodeRef.current &&
+            !nodeRef.current.contains(document.activeElement)
+        ) {
+            dayInputRef.current.focus();
         }
     };
 
@@ -211,7 +220,7 @@ export const Component = (
             onChange(value);
         }
 
-        if (!nodeRef.current?.contains(event.relatedTarget)) {
+        if (nodeRef.current && !nodeRef.current.contains(event.relatedTarget)) {
             // entire field was blurred
             setCurrentFocus("none");
             onBlur?.(isEmpty || isValid);

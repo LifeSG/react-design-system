@@ -66,13 +66,13 @@ export const TimeSlotBar = ({
 
     const handleScroll = () => {
         if (barRef.current) {
-            setScrollPosition(barRef.current?.scrollLeft);
+            setScrollPosition(barRef.current.scrollLeft);
         }
     };
 
     const handleArrowButtonClick = (direction: Direction) => {
         if (barRef.current) {
-            barRef.current?.scrollBy({
+            barRef.current.scrollBy({
                 left:
                     direction === "left" ? -SCROLL_INCREMENT : SCROLL_INCREMENT,
                 behavior: "smooth",
@@ -82,7 +82,7 @@ export const TimeSlotBar = ({
 
     const handleResize = () => {
         if (barRef.current) {
-            setClientWidth(barRef.current?.clientWidth);
+            setClientWidth(barRef.current.clientWidth);
         }
     };
 

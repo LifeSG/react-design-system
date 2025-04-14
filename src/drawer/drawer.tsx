@@ -42,9 +42,13 @@ export const Drawer = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleDialogVisibility = (e: React.TransitionEvent) => {
-        if (e.propertyName === "visibility" && show) {
+        if (
+            e.propertyName === "visibility" &&
+            show &&
+            initialFocusRef.current
+        ) {
             // focus the first element so that the screenreader enters the dialog
-            initialFocusRef.current?.focus();
+            initialFocusRef.current.focus();
         }
     };
 

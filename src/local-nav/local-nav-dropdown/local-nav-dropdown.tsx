@@ -55,7 +55,7 @@ const Component = (
     useEffect(() => {
         if (dropdownRef.current) {
             const dropdownHeight =
-                dropdownRef.current?.getBoundingClientRect().height;
+                dropdownRef.current.getBoundingClientRect().height;
             setDropdownHeight(dropdownHeight);
         }
     }, []);

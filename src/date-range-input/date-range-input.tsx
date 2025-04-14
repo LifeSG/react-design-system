@@ -311,9 +311,9 @@ export const DateRangeInput = ({
         const isInvalidRange = dayjs(val).isBefore(selectedStart, "day");
 
         // if date range is invalid, set selected value as start and reselect end
-        if (isInvalidRange) {
+        if (isInvalidRange && calendarRef.current) {
             actions.changeStart(val);
-            calendarRef.current?.setCalendarDate(val);
+            calendarRef.current.setCalendarDate(val);
             actions.reselectEnd();
             return;
         }

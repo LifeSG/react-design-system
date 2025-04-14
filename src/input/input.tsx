@@ -54,7 +54,7 @@ const Component = (
         if (onClear) onClear();
 
         if (elementRef && elementRef.current) {
-            elementRef.current?.focus();
+            elementRef.current.focus();
         }
     };
 

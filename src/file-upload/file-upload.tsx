@@ -68,7 +68,7 @@ export const FileUpload = ({
         if (!disabled) {
             event.preventDefault();
             if (dropzoneRef.current) {
-                dropzoneRef.current?.openFileDialog();
+                dropzoneRef.current.openFileDialog();
             }
         }
     };

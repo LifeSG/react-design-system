@@ -118,7 +118,7 @@ export const ElementWithDropdown = ({
                     if (!dropdownRef.current) {
                         return;
                     }
-                    Object.assign(dropdownRef.current?.style, {
+                    Object.assign(dropdownRef.current.style, {
                         maxHeight: fitAvailableHeight
                             ? `${availableHeight}px`
                             : undefined,

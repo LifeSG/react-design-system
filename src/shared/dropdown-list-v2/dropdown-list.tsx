@@ -156,7 +156,7 @@ export const DropdownList = <T, V>({
                     listItemRefs.current[upcomingIndex]?.focus();
                     setFocusedIndex(upcomingIndex);
                 } else if (focusedIndex === 0 && searchInputRef.current) {
-                    searchInputRef.current?.focus();
+                    searchInputRef.current.focus();
                     setFocusedIndex(-1);
                 }
                 break;
@@ -216,14 +216,14 @@ export const DropdownList = <T, V>({
 
     useEffect(() => {
         if (!topScrollItem && virtuosoRef.current) {
-            virtuosoRef.current?.scrollTo({ top: 0 });
+            virtuosoRef.current.scrollTo({ top: 0 });
             return;
         }
         // Delay to ensure render is complete
         const timer = setTimeout(() => {
             const index = listItems.indexOf(topScrollItem);
             if (virtuosoRef.current && index !== -1) {
-                virtuosoRef.current?.scrollToIndex({ index });
+                virtuosoRef.current.scrollToIndex({ index });
                 setFocusedIndex(index);
             }
         }, 0);
@@ -246,7 +246,7 @@ export const DropdownList = <T, V>({
         // Focus search input if there is one
         if (searchInputRef.current) {
             setFocusedIndex(-1);
-            setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
+            setTimeout(() => searchInputRef.current.focus(), 200); // Wait for animation
         } else if (focusedIndex > 0) {
             // Else focus on the specified element
             virtuosoRef.current?.scrollToIndex({
@@ -286,7 +286,7 @@ export const DropdownList = <T, V>({
         if (itemsLoadState === "success") {
             if (searchInputRef.current) {
                 setFocusedIndex(-1);
-                searchInputRef.current?.focus();
+                searchInputRef.current.focus();
             }
         }
     }, [

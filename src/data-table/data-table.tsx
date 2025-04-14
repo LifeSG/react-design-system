@@ -74,7 +74,7 @@ export const DataTable = ({
             return;
         }
         const scrollable =
-            wrapperRef.current?.scrollHeight > wrapperRef.current?.clientHeight;
+            wrapperRef.current.scrollHeight > wrapperRef.current.clientHeight;
         setScrollable(scrollable);
 
         if (scrollable) {
@@ -101,7 +101,7 @@ export const DataTable = ({
 
         if (wrapperRef.current) {
             setTableEnd(
-                wrapperRef.current?.getBoundingClientRect().bottom <=
+                wrapperRef.current.getBoundingClientRect().bottom <=
                     window.innerHeight
             );
         }
@@ -151,7 +151,7 @@ export const DataTable = ({
         if (!wrapperRef.current) {
             return;
         }
-        const wrapperBounds = wrapperRef.current?.getBoundingClientRect();
+        const wrapperBounds = wrapperRef.current.getBoundingClientRect();
         setIsFloatingActionBar(
             wrapperBounds.bottom > window.innerHeight + 30 &&
                 wrapperBounds.top < window.innerHeight - 200
@@ -169,13 +169,13 @@ export const DataTable = ({
             return;
         }
 
-        const endBounds = tableEndRef.current?.getBoundingClientRect();
+        const endBounds = tableEndRef.current.getBoundingClientRect();
 
         if (endBounds.top > window.innerHeight) {
             const bottomOffset = endBounds.bottom - window.innerHeight;
             const bottomToHeaderOffset =
-                tableRef.current?.getBoundingClientRect().height -
-                headerRef.current?.clientHeight -
+                tableRef.current.getBoundingClientRect().height -
+                headerRef.current.clientHeight -
                 32;
             const maxBottomOffset = Math.min(
                 bottomOffset,
@@ -194,8 +194,8 @@ export const DataTable = ({
         }
         // 56 pixels added due to the behavior of action bar
         setShowLastBorder(
-            tableRef.current?.clientHeight + (enableActionBar ? 56 : 0) <
-                wrapperRef.current?.clientHeight
+            tableRef.current.clientHeight + (enableActionBar ? 56 : 0) <
+                wrapperRef.current.clientHeight
         );
     };
 
@@ -443,9 +443,9 @@ export const DataTable = ({
             onScroll={() => {
                 if (scrollable && wrapperRef.current) {
                     setScrollEnd(
-                        wrapperRef.current?.scrollTop +
-                            wrapperRef.current?.clientHeight >=
-                            wrapperRef.current?.scrollHeight
+                        wrapperRef.current.scrollTop +
+                            wrapperRef.current.clientHeight >=
+                            wrapperRef.current.scrollHeight
                     );
                 }
             }}

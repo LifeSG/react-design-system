@@ -106,7 +106,8 @@ export const SelectHistogram = ({
         if (
             focused &&
             !showOptions &&
-            !nodeRef.current?.contains(e.relatedTarget as Node)
+            !nodeRef.current &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
             setFocused(false);
             onBlur?.();

@@ -71,7 +71,7 @@ export const Component = (
     const handleCalendarDateChange = (value: Dayjs) => {
         if (
             !previousCalendarDate.current ||
-            !previousCalendarDate.current?.isSame(value, "month")
+            !previousCalendarDate.current.isSame(value, "month")
         ) {
             performDisplayChangeHandler(value);
         }

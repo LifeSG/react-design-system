@@ -240,7 +240,7 @@ export const ComboboxPicker = ({
     const handleBlur = (event: React.FocusEvent<HTMLDivElement, Element>) => {
         if (
             nodeRef.current &&
-            !nodeRef.current?.contains(event.relatedTarget) &&
+            !nodeRef.current.contains(event.relatedTarget) &&
             activeTimeSelector &&
             !dropdownOpen // Necessary because dropdown floating ui is not a child
         ) {

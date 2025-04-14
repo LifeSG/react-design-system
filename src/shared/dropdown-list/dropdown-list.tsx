@@ -125,7 +125,7 @@ export const DropdownList = <T, V>({
 
             // Focus search input if there is a search input
             if (searchInputRef && searchInputRef.current) {
-                searchInputRef.current?.focus();
+                searchInputRef.current.focus();
                 setFocusedIndex(-1);
             } else if (listItemRefs.current[focusedListIndex]) {
                 // Else focus on the first/last focused element
@@ -176,8 +176,7 @@ export const DropdownList = <T, V>({
 
         let widthOfElement = 0;
         if (listRef && listRef.current) {
-            widthOfElement =
-                listRef.current?.getBoundingClientRect().width - 60;
+            widthOfElement = listRef.current.getBoundingClientRect().width - 60;
         }
 
         const textWidth = StringHelper.getTextWidth(
@@ -225,10 +224,10 @@ export const DropdownList = <T, V>({
     const getContentHeight = () => {
         const listHeight =
             listRef && listRef.current
-                ? listRef.current?.getBoundingClientRect().height
+                ? listRef.current.getBoundingClientRect().height
                 : 0;
         const customCallToActionHeight = customCallToActionRef.current
-            ? customCallToActionRef.current?.getBoundingClientRect().height
+            ? customCallToActionRef.current.getBoundingClientRect().height
             : 0;
         return listHeight + customCallToActionHeight;
     };
@@ -252,8 +251,10 @@ export const DropdownList = <T, V>({
                 case "ArrowDown":
                     // Cannot go further than last element
                     if (
+                        focusedListIndexStateRef.current &&
+                        displayListItemStateRef.current &&
                         focusedListIndexStateRef.current <
-                        displayListItemStateRef.current?.length - 1
+                            displayListItemStateRef.current.length - 1
                     ) {
                         const upcomingIndex =
                             focusedListIndexStateRef.current + 1;
