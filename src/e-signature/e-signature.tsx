@@ -58,10 +58,12 @@ export const ESignature = (props: EsignatureProps) => {
     };
 
     const handleClickSave = () => {
-        const dataURL = eSignatureCanvasRef.current?.export();
-        setDataURL(dataURL);
-        setShowModal(false);
-        onChange?.(dataURL);
+        if (eSignatureCanvasRef.current) {
+            const dataURL = eSignatureCanvasRef.current?.export();
+            setDataURL(dataURL);
+            setShowModal(false);
+            onChange?.(dataURL);
+        }
     };
 
     // =============================================================================

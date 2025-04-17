@@ -146,7 +146,7 @@ export const NestedDropdownList = <T,>({
                     setFocusedIndex(upcomingItem.index);
                     listItemRefs.current[upcomingItem.index].focus();
                 } else if (virtuosoIndex === 0 && searchInputRef.current) {
-                    searchInputRef.current?.focus();
+                    searchInputRef.current.focus();
                     setVirtuosoIndex(-1);
                     setFocusedIndex(-1);
                 }
