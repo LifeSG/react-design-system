@@ -51,7 +51,7 @@ const Component = (
     // HELPER FUNCTIONS
     // =============================================================================
     const exportAsImage = () => {
-        if (!fabricCanvas.current.getObjects().length) return null;
+        if (!fabricCanvas.current?.getObjects().length) return null;
         const dataURL = fabricCanvas.current?.toDataURL({
             format: "png",
             quality: 1,
@@ -116,7 +116,7 @@ const Component = (
         if (baseImageDataURL) {
             fabric.Image.fromURL(baseImageDataURL, (img) => {
                 if (fabricCanvas.current) {
-                    fabricCanvas.current?.clear();
+                    fabricCanvas.current.clear();
                     img.selectable = false;
                     img.hoverCursor = "default";
                     img.scale(fabricCanvas.current.width / img.width);

@@ -246,22 +246,22 @@ export const DropdownList = <T, V>({
         // Focus search input if there is one
         if (searchInputRef.current) {
             setFocusedIndex(-1);
-            setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
+            setTimeout(() => searchInputRef.current.focus(), 200); // Wait for animation
         } else if (focusedIndex > 0) {
             // Else focus on the specified element
-            virtuosoRef.current.scrollToIndex({
+            virtuosoRef.current?.scrollToIndex({
                 index: focusedIndex,
                 align: "center",
             });
             setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
         } else if (index !== -1) {
             // Else focus on the selected element
-            virtuosoRef.current.scrollToIndex({ index, align: "center" });
+            virtuosoRef.current?.scrollToIndex({ index, align: "center" });
             setFocusedIndex(index);
             setTimeout(() => listItemRefs.current[index]?.focus(), 200);
         } else {
             // Else focus on the first list item
-            virtuosoRef.current.scrollToIndex({ index: 0 });
+            virtuosoRef.current?.scrollToIndex({ index: 0 });
             setFocusedIndex(0);
             setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }

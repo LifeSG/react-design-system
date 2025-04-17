@@ -118,7 +118,7 @@ const Component = (
             setCurrentView("month-options");
 
             // Maintain focus when selecting month dropdown
-            containerRef.current.focus();
+            containerRef.current?.focus();
         } else {
             setCurrentView("default");
             setCalendarDate(viewCalendarDate);
@@ -141,7 +141,7 @@ const Component = (
 
     const handleLeftArrowClick = () => {
         // Maintain focus as button could become disabled
-        containerRef.current.focus();
+        containerRef.current?.focus();
 
         const nextDate = getLeftArrowDate
             ? getLeftArrowDate(calendarDate)
@@ -163,7 +163,7 @@ const Component = (
 
     const handleRightArrowClick = () => {
         // Maintain focus as button could become disabled
-        containerRef.current.focus();
+        containerRef.current?.focus();
 
         const nextDate = getRightArrowDate
             ? getRightArrowDate(calendarDate)

@@ -117,6 +117,7 @@ export const InputMultiSelect = <T, V>({
         if (
             focused &&
             !showOptions &&
+            nodeRef.current &&
             !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
             setFocused(false);
@@ -142,7 +143,7 @@ export const InputMultiSelect = <T, V>({
     };
 
     const handleDismiss = () => {
-        selectorRef.current.focus();
+        selectorRef.current?.focus();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };

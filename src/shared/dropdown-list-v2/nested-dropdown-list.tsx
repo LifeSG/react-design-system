@@ -197,7 +197,7 @@ export const NestedDropdownList = <T,>({
     const handleOnClear = () => {
         setSearchValue("");
         setSearchActive(false);
-        searchInputRef.current.focus();
+        searchInputRef.current?.focus();
 
         onSearch?.();
     };

@@ -49,8 +49,10 @@ const Component = (
     useImperativeHandle(ref, () => ({
         ...inputRef.current,
         openFileDialog: () => {
-            inputRef.current.value = null; // Reset the input to enable same file upload
-            inputRef.current?.click();
+            if (inputRef.current) {
+                inputRef.current.value = null; // Reset the input to enable same file upload
+                inputRef.current.click();
+            }
         },
     }));
 

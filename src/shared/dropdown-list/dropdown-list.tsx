@@ -251,8 +251,10 @@ export const DropdownList = <T, V>({
                 case "ArrowDown":
                     // Cannot go further than last element
                     if (
+                        focusedListIndexStateRef.current &&
+                        displayListItemStateRef.current &&
                         focusedListIndexStateRef.current <
-                        displayListItemStateRef.current.length - 1
+                            displayListItemStateRef.current.length - 1
                     ) {
                         const upcomingIndex =
                             focusedListIndexStateRef.current + 1;
@@ -299,7 +301,7 @@ export const DropdownList = <T, V>({
 
     const handleOnClear = () => {
         setSearchValue("");
-        searchInputRef.current.focus();
+        searchInputRef.current?.focus();
 
         if (onSearch) onSearch();
     };

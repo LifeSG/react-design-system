@@ -110,7 +110,7 @@ export const Component = <T, V>(
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
-        if (selectorRef) {
+        if (selectorRef && selectorRef.current) {
             selectorRef.current.focus();
         }
 
@@ -131,7 +131,7 @@ export const Component = <T, V>(
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
-        if (selectorRef) {
+        if (selectorRef && selectorRef.current) {
             selectorRef.current.focus();
         }
     };

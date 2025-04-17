@@ -161,7 +161,11 @@ export const UnitNumberInput = ({
          * on an empty field
          */
         if (event.code === "Backspace" || event.key === "Backspace") {
-            if (currentFocus === "unit" && unitValue.length === 0) {
+            if (
+                floorInputRef.current &&
+                currentFocus === "unit" &&
+                unitValue.length === 0
+            ) {
                 floorInputRef.current.focus();
             }
         }
