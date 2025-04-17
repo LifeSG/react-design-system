@@ -278,7 +278,11 @@ export const Component = (
     };
 
     return (
-        <Modal {...otherProps} data-testid="image-carousel-modal">
+        <Modal
+            {...otherProps}
+            data-testid="image-carousel-modal"
+            enableOverlayClick={false}
+        >
             <CloseButton
                 aria-label="Close image carousel"
                 onClick={onClose}
