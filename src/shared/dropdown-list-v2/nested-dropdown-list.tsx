@@ -582,6 +582,8 @@ export const NestedDropdownList = <T,>({
     };
 
     const renderVirtualisedList = () => {
+        const isTestEnv = process.env.NODE_ENV === "test";
+
         return (
             <div
                 aria-multiselectable={multiSelect}
@@ -596,10 +598,12 @@ export const NestedDropdownList = <T,>({
                     itemContent={(vIndex, item) => renderItem(item, vIndex)}
                     // disable virtualisation in tests
                     // https://github.com/petyosi/react-virtuoso/issues/26#issuecomment-1040316576
-                    {...(process.env.NODE_ENV === "test"
+                    // explicitly set the `key` prop to avoid React warning
+                    key={isTestEnv ? visibleItems.length : undefined}
+                    // omit the `initialItemCount` prop to resolve NaN error
+                    {...(isTestEnv
                         ? {
                               initialItemCount: visibleItems.length,
-                              key: visibleItems.length,
                           }
                         : {})}
                 />
