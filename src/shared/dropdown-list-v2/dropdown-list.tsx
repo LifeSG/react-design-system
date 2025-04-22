@@ -488,6 +488,8 @@ export const DropdownList = <T, V>({
     };
 
     const renderVirtualisedList = () => {
+        const isTestEnv = process.env.NODE_ENV === "test";
+
         return (
             <Listbox role="listbox" id={listboxId}>
                 <Virtuoso
@@ -498,10 +500,12 @@ export const DropdownList = <T, V>({
                     itemContent={(index, item) => renderItem(item, index)}
                     // disable virtualisation in tests
                     // https://github.com/petyosi/react-virtuoso/issues/26#issuecomment-1040316576
-                    {...(process.env.NODE_ENV === "test"
+                    // explicitly set the `key` prop to avoid React warning
+                    key={isTestEnv ? displayListItems.length : undefined}
+                    // omit the `initialItemCount` prop to resolve NaN error
+                    {...(isTestEnv
                         ? {
                               initialItemCount: displayListItems.length,
-                              key: displayListItems.length,
                           }
                         : {})}
                 />
