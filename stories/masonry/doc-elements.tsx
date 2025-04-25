@@ -13,3 +13,7 @@ export const DemoContainer = styled.div`
     ${V2_TextStyleHelper.getTextStyle("Body", "semibold")}
     text-align: center;
 `;
+
+export const Container = styled.div`
+    width: 100vw;
+`;

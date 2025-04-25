@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Form } from "src/form";
 import { Toggle } from "src/toggle";
-import { StoryContainer } from "../storybook-common";
 import { VariantDecorator } from "./doc-elements";
 
 type Component = typeof Toggle;
@@ -92,13 +91,6 @@ export const Collapsible: StoryObj<Component> = {
     render: (_args) => {
         return _Collapsible;
     },
-    decorators: [
-        (Story) => (
-            <StoryContainer>
-                <Story />
-            </StoryContainer>
-        ),
-    ],
 };
 
 const _Collapsible = (
@@ -119,13 +111,6 @@ export const CollapsedWithError: StoryObj<Component> = {
     render: (_args) => {
         return _CollapsedWithError;
     },
-    decorators: [
-        (Story) => (
-            <StoryContainer>
-                <Story />
-            </StoryContainer>
-        ),
-    ],
 };
 
 const _CollapsedWithError = (
@@ -149,13 +134,6 @@ export const CollapsedWithErrorAndDisabled: StoryObj<Component> = {
     render: (_args) => {
         return _CollapsedWithErrorAndDisabled;
     },
-    decorators: [
-        (Story) => (
-            <StoryContainer>
-                <Story />
-            </StoryContainer>
-        ),
-    ],
 };
 
 const _CollapsedWithErrorAndDisabled = (

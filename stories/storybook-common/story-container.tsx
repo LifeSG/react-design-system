@@ -1,64 +1,7 @@
 import { ReactRenderer } from "@storybook/react";
 import { DecoratorFunction } from "@storybook/types";
-import { MediaWidths } from "src/v2_spec/media-spec";
 import { Typography } from "src/typography";
-import { V2_MediaQuery } from "src/v2_media";
 import styled from "styled-components";
-
-const MINIMUM_SIDE_PADDING = 48;
-const SIDEBAR_WIDTH = 210;
-const SPACER = 600;
-
-/** @deprecated */
-export const StoryContainer = styled.div`
-    min-width: 500px;
-    margin: auto;
-    width: calc(
-        ${MediaWidths.desktopM}px -
-            ${MINIMUM_SIDE_PADDING + SIDEBAR_WIDTH + SPACER}px
-    );
-
-    ${V2_MediaQuery.MaxWidth.tablet} {
-        min-width: 400px;
-        width: calc(
-            ${MediaWidths.tablet}px -
-                ${MINIMUM_SIDE_PADDING + SIDEBAR_WIDTH + SPACER}px
-        );
-    }
-
-    ${V2_MediaQuery.MaxWidth.mobileL} {
-        min-width: 350px;
-        width: calc(
-            ${MediaWidths.mobileL}px - ${MINIMUM_SIDE_PADDING + SPACER}px
-        );
-    }
-
-    ${V2_MediaQuery.MaxWidth.mobileM} {
-        min-width: 0;
-        width: calc(${MediaWidths.mobileM}px - ${MINIMUM_SIDE_PADDING}px);
-    }
-
-    ${V2_MediaQuery.MaxWidth.mobileS} {
-        width: calc(${MediaWidths.mobileS}px - ${MINIMUM_SIDE_PADDING}px);
-    }
-`;
-
-/** @deprecated */
-export const FullWidthStoryContainer = styled.div`
-    margin: auto;
-    display: flex;
-    justify-content: center;
-`;
-
-/** @deprecated */
-export const FlexStoryContainer = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding: 2rem 1.25rem;
-    gap: 2rem;
-`;
 
 // =============================================================================
 // STYLE INTERFACES
@@ -91,6 +34,7 @@ export const FullWidthStoryDecorator: (options?: {
         parameters.layout = "fullscreen";
         return (
             <FullWidthContainer
+                data-testid="full-width-story"
                 $fullHeight={options?.fullHeight}
                 $fullWidth={options?.fullWidth}
                 $fixedWidth={viewMode === "story"}
@@ -119,14 +63,20 @@ export const StoryDecorator: (options?: {
     function StoryWrapper(Story, { viewMode }) {
         if (viewMode === "docs") {
             return (
-                <DocsViewModeContainer $maxWidth={options?.maxWidth}>
+                <DocsViewModeContainer
+                    data-testid="story"
+                    $maxWidth={options?.maxWidth}
+                >
                     <Story />
                 </DocsViewModeContainer>
             );
         }
 
         return (
-            <StoryViewModeContainer $maxWidth={options?.maxWidth}>
+            <StoryViewModeContainer
+                data-testid="story"
+                $maxWidth={options?.maxWidth}
+            >
                 <Story />
             </StoryViewModeContainer>
         );
@@ -159,7 +109,7 @@ const DocsViewModeContainer = styled.div<StoryStyleProps>`
 export const RowDecorator: () => DecoratorFunction<ReactRenderer> = () =>
     function Row(Story) {
         return (
-            <RowStoryContainer>
+            <RowStoryContainer data-testid="row-story">
                 <Story />
             </RowStoryContainer>
         );
@@ -169,6 +119,7 @@ const RowStoryContainer = styled.div`
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    align-items: center;
 `;
 
 // -----------------------------------------------------------------------------
@@ -179,7 +130,7 @@ const RowStoryContainer = styled.div`
 export const StackDecorator: () => DecoratorFunction<ReactRenderer> = () =>
     function Stack(Story) {
         return (
-            <StackStoryContainer>
+            <StackStoryContainer data-testid="stack-story">
                 <Story />
             </StackStoryContainer>
         );
@@ -207,7 +158,11 @@ export const GridDecorator: (options: {
 }) =>
     function Grid(Story) {
         return (
-            <GridStoryContainer $grid={columns} $rowHeader={!!rowHeaders}>
+            <GridStoryContainer
+                data-testid="grid-story"
+                $grid={columns}
+                $rowHeader={!!rowHeaders}
+            >
                 {rowHeaders && columnHeaders ? <GridStoryRowHeader /> : null}
                 {columnHeaders
                     ? columnHeaders.map((header) => (
