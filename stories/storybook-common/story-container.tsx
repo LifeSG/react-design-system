@@ -34,6 +34,7 @@ export const FullWidthStoryDecorator: (options?: {
         parameters.layout = "fullscreen";
         return (
             <FullWidthContainer
+                data-testid="full-width-story"
                 $fullHeight={options?.fullHeight}
                 $fullWidth={options?.fullWidth}
                 $fixedWidth={viewMode === "story"}
@@ -62,14 +63,20 @@ export const StoryDecorator: (options?: {
     function StoryWrapper(Story, { viewMode }) {
         if (viewMode === "docs") {
             return (
-                <DocsViewModeContainer $maxWidth={options?.maxWidth}>
+                <DocsViewModeContainer
+                    data-testid="story"
+                    $maxWidth={options?.maxWidth}
+                >
                     <Story />
                 </DocsViewModeContainer>
             );
         }
 
         return (
-            <StoryViewModeContainer $maxWidth={options?.maxWidth}>
+            <StoryViewModeContainer
+                data-testid="story"
+                $maxWidth={options?.maxWidth}
+            >
                 <Story />
             </StoryViewModeContainer>
         );
@@ -102,7 +109,7 @@ const DocsViewModeContainer = styled.div<StoryStyleProps>`
 export const RowDecorator: () => DecoratorFunction<ReactRenderer> = () =>
     function Row(Story) {
         return (
-            <RowStoryContainer>
+            <RowStoryContainer data-testid="row-story">
                 <Story />
             </RowStoryContainer>
         );
@@ -123,7 +130,7 @@ const RowStoryContainer = styled.div`
 export const StackDecorator: () => DecoratorFunction<ReactRenderer> = () =>
     function Stack(Story) {
         return (
-            <StackStoryContainer>
+            <StackStoryContainer data-testid="stack-story">
                 <Story />
             </StackStoryContainer>
         );
@@ -151,7 +158,11 @@ export const GridDecorator: (options: {
 }) =>
     function Grid(Story) {
         return (
-            <GridStoryContainer $grid={columns} $rowHeader={!!rowHeaders}>
+            <GridStoryContainer
+                data-testid="grid-story"
+                $grid={columns}
+                $rowHeader={!!rowHeaders}
+            >
                 {rowHeaders && columnHeaders ? <GridStoryRowHeader /> : null}
                 {columnHeaders
                     ? columnHeaders.map((header) => (
