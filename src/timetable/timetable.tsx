@@ -58,11 +58,15 @@ export const TimeTable = ({
     // =============================================================================
     const testId = otherProps["data-testid"] || "timetable";
     const timetableMinTime = TimeHelper.roundToNearestHour(minTime);
-    const timetableMaxTime = TimeHelper.roundToNearestHour(maxTime, true);
+    const timetableMaxTime =
+        maxTime === "23:59"
+            ? "24:00"
+            : TimeHelper.roundToNearestHour(maxTime, true); // Interpret 23:59 as 24:00 for end of day
     const hourlyIntervals = TimeHelper.generateHourlyIntervals(
         timetableMinTime,
         timetableMaxTime
     );
+
     const isEmptyContent = totalRecords === 0 || isEmpty(rowData);
     const allRecordsLoaded = isEmptyContent || rowData.length === totalRecords;
     const tableContainerRef = useRef<HTMLDivElement>(null);

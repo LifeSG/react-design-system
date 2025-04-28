@@ -36,9 +36,11 @@ const Component = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const isOnTheHour = dayjs(endTime, "HH:mm").get("minutes") === 0;
+    const roundedEndTime = endTime === "23:59" ? "24:00" : endTime; // Round 23:59 to 24:00 for appropriate width calculations
+    const isOnTheHour = dayjs(roundedEndTime, "HH:mm").get("minutes") === 0;
     const numberOfIntervals =
-        DateHelper.getTimeDiffInMinutes(startTime, endTime) / ROW_INTERVAL;
+        DateHelper.getTimeDiffInMinutes(startTime, roundedEndTime) /
+        ROW_INTERVAL;
     const totalCellWidth = numberOfIntervals * intervalWidth;
     const adjustedCellWidth = totalCellWidth - ROW_CELL_GAP;
     const isClickable =

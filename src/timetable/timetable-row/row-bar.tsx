@@ -102,6 +102,7 @@ export const RowBar = ({
 
         // Handle non-op after hours
         if (
+            rowMaxTime !== "23:59" &&
             dayjs(timetableMaxTime, "HH:mm").isAfter(dayjs(rowMaxTime, "HH:mm"))
         ) {
             rowCellArray.push({
