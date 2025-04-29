@@ -264,4 +264,8 @@ export const timetableDefaultData: TimeTableRowData[] = [
             alert(`Clicked on row header for ${rowData.name}`);
         },
     },
+    {
+        name: "sit",
+        rowCells: [],
+    },
 ];

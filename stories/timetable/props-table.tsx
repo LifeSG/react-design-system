@@ -204,7 +204,9 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The array of row cells to be rendered in this row of
                         data. This component will sort the cells array by start
-                        time.
+                        time. If empty and <code>rowMinTime</code> and{" "}
+                        <code>rowMaxTime</code> are not provided, it will be
+                        blocked from start to end.
                     </>
                 ),
                 propTypes: ["TimeTableRowCellData[]"],
@@ -253,7 +255,8 @@ const DATA: ApiTableSectionProps[] = [
                         <code>TimeTableProps</code>.<br />
                         This component will automatically fill
                         <code>blocked</code>cells till<code>maxTime</code>from
-                        this time.
+                        this time. <code>23:59</code> will be interpreted as
+                        00:00 of the next day.
                     </>
                 ),
                 propTypes: ["string"],
