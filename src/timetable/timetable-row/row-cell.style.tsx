@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { Border, Colour, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
+import { ROW_BAR_COLOR_SEQUENCE_TO_STRIPE_MAP, RowBarColors } from "../const";
 import { TimeTableCellType } from "../types";
 
 interface BlockStyleProps {
@@ -65,6 +66,20 @@ export const Block = styled.div<BlockStyleProps>`
             case "disabled":
                 return css`
                     background: ${Colour["bg-disabled"]};
+                    &:hover {
+                        cursor: ${$isClickable ? "pointer" : "not-allowed"};
+                    }
+                `;
+            case "pending":
+                return css`
+                    background: repeating-linear-gradient(
+                        135deg,
+                        ${$bgColour} 0px 6px,
+                        ${ROW_BAR_COLOR_SEQUENCE_TO_STRIPE_MAP[
+                                $bgColour as RowBarColors
+                            ]}
+                            6px 12px
+                    );
                     &:hover {
                         cursor: ${$isClickable ? "pointer" : "not-allowed"};
                     }
