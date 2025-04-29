@@ -4,6 +4,7 @@ import { MediaQuery as MediaQueryValues } from "./breakpoint/media-query-helper"
 import { BreakpointValues } from "./breakpoint/theme-helper";
 import { PrimitiveColour } from "./colour-primitive/theme-helper";
 import { ColourSemantic } from "./colour-semantic/theme-helper";
+import { ComponentSet } from "./components/theme-helper";
 import { FontSpecValues } from "./font-spec/theme-helper";
 import { FontValues } from "./font/theme-helper";
 import { MotionValues } from "./motion/theme-helper";
@@ -41,6 +42,8 @@ export const Radius = RadiusValues;
 export const Breakpoint = BreakpointValues;
 
 export const MediaQuery = MediaQueryValues;
+
+export const Components = ComponentSet;
 
 // =============================================================================
 // THEME PRESETS
@@ -151,4 +154,5 @@ export const PATheme: ThemeSpec = {
     radiusScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "pa",
+    components: "pa",
 };

@@ -46,6 +46,7 @@ export type BorderScheme = "default";
 export type SpacingScheme = "default";
 export type RadiusScheme = "default";
 export type BreakpointScheme = "default";
+export type ComponentScheme = "default" | "pa";
 export type ResourceScheme =
     | "lifesg"
     | "bookingsg"
@@ -77,6 +78,7 @@ export interface ThemeSpec {
     radiusScheme: RadiusScheme;
     breakpointScheme: BreakpointScheme;
     resourceScheme: ResourceScheme;
+    components?: ComponentScheme;
     overrides?: ThemeSpecOptions | undefined;
 
     maxColumns?: any;

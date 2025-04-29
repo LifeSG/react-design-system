@@ -1,4 +1,6 @@
 import { css } from "styled-components";
+import { ThemeStyleProps } from "../../theme";
+import { StyledComponentProps } from "../../theme/helpers";
 
 export const lineClampCss = (lines: number) => css`
     display: -webkit-box;
@@ -6,3 +8,17 @@ export const lineClampCss = (lines: number) => css`
     -webkit-box-orient: vertical;
     overflow: hidden;
 `;
+
+export const getTokenValue = (
+    token: string | number | ((props: StyledComponentProps) => string),
+    props: ThemeStyleProps
+) => {
+    switch (typeof token) {
+        case "function":
+            return token(props);
+        case "number":
+            return token + "px";
+        case "string":
+            return token;
+    }
+};
