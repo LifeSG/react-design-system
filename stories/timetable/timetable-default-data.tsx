@@ -196,36 +196,7 @@ export const timetableDefaultData = [
     },
     {
         name: "sit",
-        rowMinTime: "08:30",
-        rowMaxTime: "21:00",
-        rowCells: [
-            {
-                title: "330 mins",
-                startTime: "08:30",
-                endTime: "14:00",
-                status: "filled" as TimeTableCellType,
-            },
-            {
-                startTime: "14:00",
-                endTime: "15:00",
-                status: "default" as TimeTableCellType,
-            },
-            {
-                startTime: "15:00",
-                endTime: "16:00",
-                status: "default" as TimeTableCellType,
-            },
-            {
-                startTime: "16:00",
-                endTime: "17:00",
-                status: "default" as TimeTableCellType,
-            },
-            {
-                startTime: "17:00",
-                endTime: "18:00",
-                status: "default" as TimeTableCellType,
-            },
-        ],
+        rowCells: [],
     },
     {
         name: "amet",
