@@ -14,6 +14,7 @@ const cellTypeMap: Record<string, TimeTableCellType> = {
     OCCUPIED: "filled",
     DISABLED: "blocked",
     DEFAULT: "default",
+    PENDING: "pending",
 };
 
 export const fetchTimeTableData = async (): Promise<TimeTableRowData[]> => {

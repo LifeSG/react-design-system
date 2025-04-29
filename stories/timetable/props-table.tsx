@@ -307,7 +307,13 @@ const DATA: ApiTableSectionProps[] = [
                         will be rendered in.
                     </>
                 ),
-                propTypes: [`"filled"`, `"blocked"`, `"default"`],
+                propTypes: [
+                    `"filled"`,
+                    `"blocked"`,
+                    `"default"`,
+                    `"pending"`,
+                    `"disabled"`,
+                ],
             },
             {
                 name: "title",

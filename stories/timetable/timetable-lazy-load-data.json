@@ -37,7 +37,9 @@
                         {
                             "startTime": "12:00:00",
                             "endTime": "13:00:00",
-                            "status": "DEFAULT",
+                            "status": "PENDING",
+                            "label": "This is a pending status slot",
+                            "title": "pending slot",
                             "id": "3"
                         },
                         {
@@ -153,7 +155,9 @@
                         {
                             "startTime": "19:00:00",
                             "endTime": "20:00:00",
-                            "status": "DEFAULT",
+                            "status": "PENDING",
+                            "label": "This is another pending status slot",
+                            "title": "pending slot",
                             "id": "3"
                         }
                     ],
