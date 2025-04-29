@@ -172,8 +172,7 @@ export const RowHeader = styled.div<RowHeaderProps>`
     text-align: right;
     padding: 0 ${Spacing["spacing-16"]} 0 ${Spacing["spacing-32"]};
     border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    border-left: ${Border["width-010"]} ${Border["solid"]}
-        ${Colour["border-primary"]};
+    border-left: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     transition: all 0.5s ease-in-out;
     ${(props) => {
         if (props.$isScrolled) {

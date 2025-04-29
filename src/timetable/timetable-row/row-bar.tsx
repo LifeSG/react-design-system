@@ -96,6 +96,7 @@ export const RowBar = ({
 
         // Handle non-op after hours
         if (
+            rowMaxTime !== "23:59" &&
             dayjs(timetableMaxTime, "HH:mm").isAfter(dayjs(rowMaxTime, "HH:mm"))
         ) {
             rowCellArray.push({
@@ -107,6 +108,16 @@ export const RowBar = ({
             });
         }
 
+        // Handle empty row cells
+        if (sortedRowCells.length === 0) {
+            rowCellArray.push({
+                id,
+                startTime: timetableMinTime,
+                endTime: timetableMaxTime,
+                status: "blocked",
+                customPopover: outOfRangeCellPopover,
+            });
+        }
         return rowCellArray;
     }, [
         id,
