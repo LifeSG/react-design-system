@@ -17,6 +17,7 @@ const cellTypeMap: Record<string, TimeTableCellType> = {
     OCCUPIED: "filled",
     DISABLED: "blocked",
     DEFAULT: "default",
+    PENDING: "pending",
 };
 
 const fetchRowData = (date: Dayjs) => {
