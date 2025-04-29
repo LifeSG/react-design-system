@@ -66,7 +66,6 @@ export const TimeTable = ({
         timetableMinTime,
         timetableMaxTime
     );
-
     const isEmptyContent = totalRecords === 0 || isEmpty(rowData);
     const allRecordsLoaded = isEmptyContent || rowData.length === totalRecords;
     const tableContainerRef = useRef<HTMLDivElement>(null);

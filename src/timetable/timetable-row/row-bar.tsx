@@ -114,6 +114,16 @@ export const RowBar = ({
             });
         }
 
+        // Handle empty row cells
+        if (sortedRowCells.length === 0) {
+            rowCellArray.push({
+                id,
+                startTime: timetableMinTime,
+                endTime: timetableMaxTime,
+                status: "blocked",
+                customPopover: outOfRangeCellPopover,
+            });
+        }
         return rowCellArray;
     }, [
         id,
