@@ -32,7 +32,7 @@ export namespace TimeHelper {
      * Rounds time to the nearest hour, e.g 6:30 will be clamped to 6:00
      * @param time the input time in HH:mm format
      * @param toNextHour to clamp to next hour instead, e.g. 6:30 will be clamped to 7:00
-     * @returns
+     * @returns the time rounded to the nearest hour in HH:mm format
      */
     export const roundToNearestHour = (time: string, toNextHour?: boolean) => {
         const formattedTime = dayjs(time, "HH:mm");
@@ -42,7 +42,11 @@ export namespace TimeHelper {
                 : toNextHour
                 ? formattedTime.minute(0).add(1, "hour")
                 : formattedTime.minute(0);
-        return roundedTime.format("HH:mm");
+
+        // Get the difference in hours from 00:00 of today to rounded time
+        const today = dayjs("00:00", "HH:mm");
+        const hourDifference = roundedTime.diff(today, "hour");
+        return `${hourDifference}:00`;
     };
 
     export const generateHourlyIntervals = (
