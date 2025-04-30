@@ -2,6 +2,43 @@ import { TimeTableCellType } from "../../src";
 
 export const timetableDefaultData = [
     {
+        name: "Different statuses",
+        rowMinTime: "06:00",
+        rowMaxTime: "23:00",
+        rowCells: [
+            {
+                startTime: "06:00",
+                endTime: "09:00",
+                status: "default" as TimeTableCellType,
+                title: "default status",
+            },
+            {
+                startTime: "09:00",
+                endTime: "14:00",
+                status: "filled" as TimeTableCellType,
+                title: "filled status",
+            },
+            {
+                startTime: "14:00",
+                endTime: "17:00",
+                status: "blocked" as TimeTableCellType,
+                title: "blocked status",
+            },
+            {
+                startTime: "17:00",
+                endTime: "19:00",
+                status: "disabled" as TimeTableCellType,
+                title: "disabled status",
+            },
+            {
+                startTime: "19:00",
+                endTime: "23:00",
+                status: "pending" as TimeTableCellType,
+                title: "pending status",
+            },
+        ],
+    },
+    {
         name: "lorem",
         rowMinTime: "08:00",
         rowMaxTime: "18:00",

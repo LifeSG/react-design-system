@@ -3,7 +3,7 @@ import React, { MutableRefObject } from "react";
 import { PopoverTrigger, PopoverV2TriggerProps } from "../../popover-v2";
 import { DateHelper } from "../../util";
 import { ROW_CELL_GAP, ROW_INTERVAL } from "../const";
-import { TimeTableRowCellData } from "../types";
+import { RowBarColors, TimeTableRowCellData } from "../types";
 import {
     Block,
     BlockContainer,
@@ -16,7 +16,7 @@ import {
 interface RowCellProps extends TimeTableRowCellData {
     containerRef: MutableRefObject<HTMLDivElement>;
     intervalWidth: number;
-    rowBarColor: string;
+    rowBarColor: RowBarColors;
 }
 
 const Component = ({
@@ -110,7 +110,8 @@ const Component = ({
                     <Block
                         $width={adjustedCellWidth}
                         $status={status}
-                        $bgColour={rowBarColor}
+                        $mainColor={rowBarColor.mainColor}
+                        $altColor={rowBarColor.alternateColor}
                         $isClickable={isClickable}
                         onClick={handleCellClick}
                     >
