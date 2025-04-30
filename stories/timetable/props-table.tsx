@@ -290,7 +290,11 @@ const DATA: ApiTableSectionProps[] = [
                 name: "startTime",
                 mandatory: true,
                 description: (
-                    <>The starting time of this cell. In {TIME_FORMAT}.</>
+                    <>
+                        The starting time of this cell. In {TIME_FORMAT}.
+                        <b>Note</b>: Duration between start-end should be
+                        multiples of 15
+                    </>
                 ),
                 propTypes: ["string"],
             },
@@ -298,7 +302,11 @@ const DATA: ApiTableSectionProps[] = [
                 name: "endTime",
                 mandatory: true,
                 description: (
-                    <>The ending time of this cell. In {TIME_FORMAT}.</>
+                    <>
+                        The ending time of this cell. In {TIME_FORMAT}.
+                        <b>Note</b>: Duration between start-end should be
+                        multiples of 15
+                    </>
                 ),
                 propTypes: ["string"],
             },

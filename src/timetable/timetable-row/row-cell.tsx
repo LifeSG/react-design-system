@@ -2,8 +2,7 @@ import dayjs from "dayjs";
 import React, { RefObject } from "react";
 import { DateHelper } from "../../util";
 import { ROW_CELL_GAP, ROW_INTERVAL } from "../const";
-import { RowBarColors } from "../internal-types";
-import { TimeTableRowCellData } from "../types";
+import { InternalTimeTableRowCellData, RowBarColors } from "../internal-types";
 import {
     Block,
     BlockContainer,
@@ -14,7 +13,7 @@ import {
 } from "./row-cell.style";
 import { WithOptionalPopover } from "./with-optional-popover";
 
-interface RowCellProps extends TimeTableRowCellData {
+interface RowCellProps extends InternalTimeTableRowCellData {
     containerRef: RefObject<HTMLDivElement>;
     intervalWidth: number;
     rowBarColor: RowBarColors;
@@ -31,15 +30,16 @@ const Component = ({
     rowBarColor,
     containerRef,
     customPopover,
+    roundedStartTime = startTime,
+    roundedEndTime = endTime,
     onClick,
 }: RowCellProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const roundedEndTime = endTime === "23:59" ? "24:00" : endTime; // Round 23:59 to 24:00 for appropriate width calculations
     const isOnTheHour = dayjs(roundedEndTime, "HH:mm").get("minutes") === 0;
     const numberOfIntervals =
-        DateHelper.getTimeDiffInMinutes(startTime, roundedEndTime) /
+        DateHelper.getTimeDiffInMinutes(roundedStartTime, roundedEndTime) /
         ROW_INTERVAL;
     const totalCellWidth = numberOfIntervals * intervalWidth;
     const adjustedCellWidth = totalCellWidth - ROW_CELL_GAP;
