@@ -195,7 +195,7 @@ export const timetableDefaultData = [
         ],
     },
     {
-        name: "sit",
+        name: "No cells",
         rowCells: [],
     },
     {

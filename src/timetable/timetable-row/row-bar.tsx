@@ -17,8 +17,8 @@ export const RowBar = ({
     id,
     timetableMinTime,
     timetableMaxTime,
-    rowMinTime = timetableMinTime,
-    rowMaxTime = timetableMaxTime,
+    rowMinTime,
+    rowMaxTime,
     rowCells,
     rowBarColor,
     intervalWidth,
@@ -46,6 +46,7 @@ export const RowBar = ({
 
         // Handle non-op before hours
         if (
+            rowMinTime &&
             dayjs(timetableMinTime, "HH:mm").isBefore(
                 dayjs(rowMinTime, "HH:mm")
             )
@@ -102,6 +103,7 @@ export const RowBar = ({
 
         // Handle non-op after hours
         if (
+            rowMaxTime &&
             rowMaxTime !== "23:59" &&
             dayjs(timetableMaxTime, "HH:mm").isAfter(dayjs(rowMaxTime, "HH:mm"))
         ) {
@@ -114,8 +116,8 @@ export const RowBar = ({
             });
         }
 
-        // Handle empty row cells
-        if (sortedRowCells.length === 0) {
+        // Handle empty row cells and no min/max time to block from timetable min to max
+        if (sortedRowCells.length === 0 && !rowMinTime && !rowMaxTime) {
             rowCellArray.push({
                 id,
                 startTime: timetableMinTime,
