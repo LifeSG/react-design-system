@@ -3,6 +3,43 @@ import { TimeTableRowCellData, TimeTableRowData } from "src/timetable";
 
 export const timetableDefaultData: TimeTableRowData[] = [
     {
+        name: "Different statuses",
+        rowMinTime: "06:00",
+        rowMaxTime: "23:00",
+        rowCells: [
+            {
+                startTime: "06:00",
+                endTime: "09:00",
+                status: "default",
+                title: "default status",
+            },
+            {
+                startTime: "09:00",
+                endTime: "14:00",
+                status: "filled",
+                title: "filled status",
+            },
+            {
+                startTime: "14:00",
+                endTime: "17:00",
+                status: "blocked",
+                title: "blocked status",
+            },
+            {
+                startTime: "17:00",
+                endTime: "19:00",
+                status: "disabled",
+                title: "disabled status",
+            },
+            {
+                startTime: "19:00",
+                endTime: "23:00",
+                status: "pending",
+                title: "pending status",
+            },
+        ],
+    },
+    {
         name: "1 hour intervals",
         rowMinTime: "08:00",
         rowMaxTime: "21:00",

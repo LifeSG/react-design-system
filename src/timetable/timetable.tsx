@@ -5,6 +5,7 @@ import { PopoverV2TriggerProps } from "../popover-v2";
 import { TimeHelper } from "../util/time-helper";
 import {
     MIN_INTERVAL_WIDTH,
+    ROW_BAR_COLOR_ALTERNATE_COLOR,
     ROW_BAR_COLOR_SEQUENCE,
     ROW_HEADER_WIDTH,
     ROW_INTERVAL,
@@ -169,9 +170,10 @@ export const TimeTable = ({
         const colorSequenceLength = ROW_BAR_COLOR_SEQUENCE.length;
 
         return () => {
-            const color = ROW_BAR_COLOR_SEQUENCE[colorIndex];
+            const mainColor = ROW_BAR_COLOR_SEQUENCE[colorIndex];
+            const alternateColor = ROW_BAR_COLOR_ALTERNATE_COLOR[colorIndex];
             colorIndex = (colorIndex + 1) % colorSequenceLength;
-            return color;
+            return { mainColor, alternateColor };
         };
     })();
 

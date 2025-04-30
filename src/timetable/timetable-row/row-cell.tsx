@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import React, { RefObject } from "react";
 import { DateHelper } from "../../util";
 import { ROW_CELL_GAP, ROW_INTERVAL } from "../const";
-import { TimeTableRowCellData } from "../types";
+import { RowBarColors, TimeTableRowCellData } from "../types";
 import {
     Block,
     BlockContainer,
@@ -16,7 +16,7 @@ import { WithOptionalPopover } from "./with-optional-popover";
 interface RowCellProps extends TimeTableRowCellData {
     containerRef: RefObject<HTMLDivElement>;
     intervalWidth: number;
-    rowBarColor: string;
+    rowBarColor: RowBarColors;
 }
 
 const Component = ({
@@ -80,7 +80,8 @@ const Component = ({
                     <Block
                         $width={adjustedCellWidth}
                         $status={status}
-                        $bgColour={rowBarColor}
+                        $mainColor={rowBarColor.mainColor}
+                        $altColor={rowBarColor.alternateColor}
                         $isClickable={isClickable}
                         onClick={handleCellClick}
                     >

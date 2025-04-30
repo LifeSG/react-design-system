@@ -1,13 +1,13 @@
 import styled, { css } from "styled-components";
 import { Border, Colour, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
-import { ROW_BAR_COLOR_SEQUENCE_TO_STRIPE_MAP, RowBarColors } from "../const";
 import { TimeTableCellType } from "../types";
 
 interface BlockStyleProps {
     $width: number;
     $status: TimeTableCellType;
-    $bgColour: string;
+    $mainColor: string;
+    $altColor: string;
     $isClickable?: boolean;
 }
 
@@ -43,7 +43,7 @@ export const Block = styled.div<BlockStyleProps>`
     border-radius: ${Radius["sm"]};
     box-sizing: border-box;
     padding: ${Spacing["spacing-4"]};
-    ${({ $status, $bgColour, $isClickable }) => {
+    ${({ $status, $mainColor, $isClickable, $altColor }) => {
         switch ($status) {
             case "blocked":
                 return css`
@@ -58,7 +58,7 @@ export const Block = styled.div<BlockStyleProps>`
                 `;
             case "filled":
                 return css`
-                    background: ${$bgColour};
+                    background: ${$mainColor};
                     &:hover {
                         cursor: ${$isClickable ? "pointer" : "default"};
                     }
@@ -74,11 +74,8 @@ export const Block = styled.div<BlockStyleProps>`
                 return css`
                     background: repeating-linear-gradient(
                         135deg,
-                        ${$bgColour} 0px 6px,
-                        ${ROW_BAR_COLOR_SEQUENCE_TO_STRIPE_MAP[
-                                $bgColour as RowBarColors
-                            ]}
-                            6px 12px
+                        ${$mainColor} 0px 6px,
+                        ${$altColor} 6px 12px
                     );
                     &:hover {
                         cursor: ${$isClickable ? "pointer" : "not-allowed"};
