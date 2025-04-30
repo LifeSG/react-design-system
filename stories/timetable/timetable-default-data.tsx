@@ -265,7 +265,7 @@ export const timetableDefaultData: TimeTableRowData[] = [
         },
     },
     {
-        name: "sit",
+        name: "No cells",
         rowCells: [],
     },
 ];
