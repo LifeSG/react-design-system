@@ -1,5 +1,4 @@
 import { PopoverV2TriggerType } from "../popover-v2";
-import { RowBarAlternateColors, RowBarMainColors } from "./const";
 
 export type TimeTableCellType =
     | "filled"
@@ -7,11 +6,6 @@ export type TimeTableCellType =
     | "default"
     | "disabled"
     | "pending";
-
-export interface RowBarColors {
-    mainColor: RowBarMainColors;
-    alternateColor: RowBarAlternateColors;
-}
 
 export interface TimeTableRowData {
     id?: string | undefined;

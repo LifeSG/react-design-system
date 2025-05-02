@@ -2,7 +2,8 @@ import dayjs from "dayjs";
 import React, { RefObject } from "react";
 import { DateHelper } from "../../util";
 import { ROW_CELL_GAP, ROW_INTERVAL } from "../const";
-import { RowBarColors, TimeTableRowCellData } from "../types";
+import { RowBarColors } from "../internal-types";
+import { TimeTableRowCellData } from "../types";
 import {
     Block,
     BlockContainer,
