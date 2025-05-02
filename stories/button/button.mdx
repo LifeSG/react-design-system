@@ -1,6 +1,7 @@
-import { Canvas, Meta } from "@storybook/blocks";
+import { Canvas, Meta, Story } from "@storybook/blocks";
 import * as ButtonStories from "./button.stories";
 import { PropsTable } from "./props-table";
+import { TokensTable } from "./tokens-table";
 
 <Meta of={ButtonStories} />
 
@@ -31,6 +32,28 @@ apply a red scheme over the buttons.
 <Canvas of={ButtonStories.Danger} />
 
 <Canvas of={ButtonStories.DangerLoadingState} />
+
+## Component Token
+
+### Overriding
+
+```tsx
+import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+
+const customTheme: ThemeSpec = {
+    ...LifeSGTheme,
+    componentOverrides: {
+        Button: {
+            "button-radius": 15, // specify a custom pixel-based value or Radius token
+            "button-default-colour-bg": Colour["bg-primary"], // specify a Colour token or a custom colour value
+        },
+    },
+};
+```
+
+### Default preset
+
+<Story of={ButtonStories.TokenTable} />
 
 ## Component API
 

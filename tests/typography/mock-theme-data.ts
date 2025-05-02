@@ -9,4 +9,5 @@ export const MOCK_THEME: ThemeSpec = {
     radiusScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "lifesg",
+    componentScheme: "default",
 };
