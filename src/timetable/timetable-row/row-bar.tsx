@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { MutableRefObject, useMemo } from "react";
-import { RowBarColors } from "../const";
+import { RowBarColors } from "../internal-types";
 import { TimeTableRowCellData, TimeTableRowData } from "../types";
 import { RowCellContainer } from "./row-bar.style";
 import { RowCell } from "./row-cell";

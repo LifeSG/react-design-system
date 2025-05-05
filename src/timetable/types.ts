@@ -1,6 +1,11 @@
 import { PopoverV2TriggerType } from "../popover-v2";
 
-export type TimeTableCellType = "filled" | "blocked" | "default" | "disabled";
+export type TimeTableCellType =
+    | "filled"
+    | "blocked"
+    | "default"
+    | "disabled"
+    | "pending";
 
 export interface TimeTableRowData {
     id?: string | undefined;

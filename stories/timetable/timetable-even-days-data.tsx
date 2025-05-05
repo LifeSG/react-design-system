@@ -157,7 +157,7 @@ export const evenDaysData = [
             {
                 startTime: "16:00:00",
                 endTime: "20:00:00",
-                status: "default" as TimeTableCellType,
+                status: "filled" as TimeTableCellType,
                 onClick: (data: TimeTableRowCellData) => {
                     alert(
                         `Clicked on cell start: ${data.startTime}, end: ${data.endTime}`

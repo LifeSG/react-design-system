@@ -6,7 +6,8 @@ import { TimeTableCellType } from "../types";
 interface BlockStyleProps {
     $width: number;
     $status: TimeTableCellType;
-    $bgColour: string;
+    $mainColor: string;
+    $altColor: string;
     $isClickable?: boolean;
 }
 
@@ -42,7 +43,7 @@ export const Block = styled.div<BlockStyleProps>`
     border-radius: 4px;
     box-sizing: border-box;
     padding: 4px;
-    ${({ $status, $bgColour, $isClickable }) => {
+    ${({ $status, $mainColor, $altColor, $isClickable }) => {
         switch ($status) {
             case "blocked":
                 return css`
@@ -57,7 +58,7 @@ export const Block = styled.div<BlockStyleProps>`
                 `;
             case "filled":
                 return css`
-                    background: ${$bgColour};
+                    background: ${$mainColor};
                     &:hover {
                         cursor: ${$isClickable ? "pointer" : "default"};
                     }
@@ -65,6 +66,17 @@ export const Block = styled.div<BlockStyleProps>`
             case "disabled":
                 return css`
                     background: ${Color.Neutral[6]};
+                    &:hover {
+                        cursor: ${$isClickable ? "pointer" : "not-allowed"};
+                    }
+                `;
+            case "pending":
+                return css`
+                    background: repeating-linear-gradient(
+                        135deg,
+                        ${$mainColor} 0px 6px,
+                        ${$altColor} 6px 12px
+                    );
                     &:hover {
                         cursor: ${$isClickable ? "pointer" : "not-allowed"};
                     }
