@@ -1,4 +1,4 @@
-import { Meta } from "@storybook/blocks";
+import { Meta, Story } from "@storybook/blocks";
 import {
     LoadingDots,
     LoadingDotsSpinner,
@@ -11,6 +11,7 @@ import {
     Content,
 } from "./doc-elements";
 import { PropsTable } from "./props-table";
+import { ThemedLoadingSpinnerItem } from "./1-animations-overview.stories";
 
 <Meta title="Feedback indicators/Animations/Overview" />
 
@@ -54,7 +55,19 @@ import { <Component_name> } from "@lifesg/react-design-system/animations";
   </AnimationItem>
   <AnimationItem>
     <AnimationPane>
-      <LoadingDotsSpinner />
+        <Story of={ThemedLoadingSpinnerItem} />
+    </AnimationPane>
+    <Content>
+      `<ThemedLoadingSpinner />`
+      <p>
+        An animation that can be different across the themes
+      </p>
+    </Content>
+
+  </AnimationItem>
+  <AnimationItem>
+    <AnimationPane>
+      <LoadingDotsSpinner/>
     </AnimationPane>
     <Content>
       `<LoadingDotsSpinner />`
