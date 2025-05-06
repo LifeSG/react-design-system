@@ -76,13 +76,29 @@ export const RowBar = ({
             return 0;
         });
 
+        let lastRoundedEndTime: string | undefined;
+
         sortedRowCells.forEach((cell, index) => {
             const { startTime, endTime } = cell;
-            const roundedStartTime = TimeHelper.roundToNearestInterval(
+            let roundedStartTime = TimeHelper.roundToNearestInterval(
                 startTime,
-                ROW_INTERVAL,
-                index !== 0
+                ROW_INTERVAL
             );
+
+            // NOTE - Prevent overlapping rounded start time and end time cells
+            const isStartTimeBeforePreviousEndTime =
+                lastRoundedEndTime &&
+                dayjs(roundedStartTime, "HH:mm").isBefore(
+                    dayjs(lastRoundedEndTime, "HH:mm")
+                );
+            if (isStartTimeBeforePreviousEndTime) {
+                roundedStartTime = TimeHelper.roundToNearestInterval(
+                    startTime,
+                    ROW_INTERVAL,
+                    true
+                );
+            }
+
             const roundedEndTime = TimeHelper.roundToNearestInterval(
                 endTime,
                 ROW_INTERVAL,
@@ -91,12 +107,11 @@ export const RowBar = ({
             rowCellArray.push({ ...cell, roundedStartTime, roundedEndTime });
 
             const nextSlotStartTime =
-                rowCells[index + 1]?.startTime || roundedMaxTime; // Get next cell start time, if next cell don't exist, use current row max time
+                sortedRowCells[index + 1]?.startTime || roundedMaxTime; // Get next cell start time, if next cell don't exist, use current row max time
             const roundedNextSlotStartTime = dayjs(
                 TimeHelper.roundToNearestInterval(
                     nextSlotStartTime,
-                    ROW_INTERVAL,
-                    true
+                    ROW_INTERVAL
                 ),
                 "HH:mm"
             );
@@ -125,6 +140,7 @@ export const RowBar = ({
                     curr = roundedNextSlotStartTime;
                 }
             }
+            lastRoundedEndTime = curr.format("HH:mm").toString();
         });
 
         // Handle non-op after hours

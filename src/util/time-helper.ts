@@ -31,12 +31,14 @@ export namespace TimeHelper {
     /**
      * Rounds time to the nearest interval, e.g 6:30 will be clamped to 6:00 when interval = 60
      * @param time the input time in HH:mm format
-     * @param toNextHour to clamp to next interval instead, e.g. 6:30 will be clamped to 7:00 when interval = 60
-     * @returns the time rounded to the nearest hour in HH:mm format
+     * @param interval the interval in minutes (e.g., 15 for 15 minutes, 60 for 1 hour)
+     * @param toNextInterval to clamp to next interval instead, e.g. 6:30 will be clamped to 7:00 when interval = 60.
+     * If the time is already a valid interval, it will not be rounded
+     * @returns the rounded time in HH:mm format,
      */
     export const roundToNearestInterval = (
         time: string,
-        interval: number, // Interval in minutes (e.g., 15 for 15 minutes, 60 for 1 hour)
+        interval: number,
         toNextInterval?: boolean
     ): string => {
         const [hoursStr, minutesStr] = time.split(":");
