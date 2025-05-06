@@ -53,3 +53,143 @@ describe("parseInput tests", () => {
         expect(TimeHelper.parseInput("11111")).toBeUndefined();
     });
 });
+
+describe("roundToNearestInterval tests", () => {
+    it("should return the same time if already aligned with the interval", () => {
+        expect(TimeHelper.roundToNearestInterval("08:00", 15, false)).toBe(
+            "08:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("08:15", 15, false)).toBe(
+            "08:15"
+        );
+        expect(TimeHelper.roundToNearestInterval("08:00", 15, true)).toBe(
+            "08:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("08:15", 15, true)).toBe(
+            "08:15"
+        );
+        expect(TimeHelper.roundToNearestInterval("00:45", 45, false)).toBe(
+            "00:45"
+        );
+        expect(TimeHelper.roundToNearestInterval("01:30", 45, false)).toBe(
+            "01:30"
+        );
+        expect(TimeHelper.roundToNearestInterval("08:00", 60, false)).toBe(
+            "08:00"
+        );
+    });
+
+    it("should round down to the previous interval when toNextInterval is false", () => {
+        expect(TimeHelper.roundToNearestInterval("08:03", 15, false)).toBe(
+            "08:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("08:14", 15, false)).toBe(
+            "08:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("08:29", 15, false)).toBe(
+            "08:15"
+        );
+        expect(TimeHelper.roundToNearestInterval("00:44", 45, false)).toBe(
+            "00:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("00:55", 45, false)).toBe(
+            "00:45"
+        );
+        expect(TimeHelper.roundToNearestInterval("01:30", 45, false)).toBe(
+            "01:30"
+        );
+    });
+
+    it("should round up to the next interval when toNextInterval is true", () => {
+        expect(TimeHelper.roundToNearestInterval("08:03", 15, true)).toBe(
+            "08:15"
+        );
+        expect(TimeHelper.roundToNearestInterval("08:14", 15, true)).toBe(
+            "08:15"
+        );
+        expect(TimeHelper.roundToNearestInterval("08:29", 15, true)).toBe(
+            "08:30"
+        );
+    });
+
+    it("should handle edge cases like 00:00 and 24:00", () => {
+        expect(TimeHelper.roundToNearestInterval("00:00", 15, false)).toBe(
+            "00:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("00:14", 15, false)).toBe(
+            "00:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("00:14", 15, true)).toBe(
+            "00:15"
+        );
+        expect(TimeHelper.roundToNearestInterval("23:59", 15, true)).toBe(
+            "24:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("23:59", 15, false)).toBe(
+            "23:45"
+        );
+    });
+
+    it("should handle times exceeding 24:00", () => {
+        expect(TimeHelper.roundToNearestInterval("24:01", 15, false)).toBe(
+            "24:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("25:55", 15, true)).toBe(
+            "26:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("27:30", 30, true)).toBe(
+            "27:30"
+        );
+        expect(TimeHelper.roundToNearestInterval("27:45", 30, false)).toBe(
+            "27:30"
+        );
+    });
+
+    it("should handle 1-hour intervals", () => {
+        expect(TimeHelper.roundToNearestInterval("08:30", 60, false)).toBe(
+            "08:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("08:30", 60, true)).toBe(
+            "09:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("23:59", 60, true)).toBe(
+            "24:00"
+        );
+    });
+
+    it("should throw an error for invalid time formats", () => {
+        expect(() =>
+            TimeHelper.roundToNearestInterval("invalid", 15, true)
+        ).toThrow("Invalid time format");
+        expect(() =>
+            TimeHelper.roundToNearestInterval("25:99", 15, true)
+        ).toThrow("Invalid time format");
+        expect(() =>
+            TimeHelper.roundToNearestInterval("12:60", 15, true)
+        ).toThrow("Invalid time format");
+    });
+
+    it("should handle large intervals (e.g., 120 minutes)", () => {
+        expect(TimeHelper.roundToNearestInterval("08:30", 120, false)).toBe(
+            "08:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("08:30", 120, true)).toBe(
+            "10:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("23:59", 120, true)).toBe(
+            "24:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("00:15", 480, true)).toBe(
+            "08:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("08:00", 480, true)).toBe(
+            "08:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("08:15", 480, true)).toBe(
+            "16:00"
+        );
+        expect(TimeHelper.roundToNearestInterval("00:15", 480, false)).toBe(
+            "00:00"
+        );
+    });
+});

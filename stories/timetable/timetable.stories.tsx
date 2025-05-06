@@ -79,7 +79,7 @@ export const Default: StoryObj<Component> = {
             <StyledTimeTable
                 date={date}
                 minTime={"06:00"}
-                maxTime={"23:00"}
+                maxTime={"23:59"}
                 rowData={results}
                 loading={loading}
                 onNextDayClick={onNextDayClick}
