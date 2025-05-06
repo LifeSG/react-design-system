@@ -42,7 +42,7 @@ export const timetableDefaultData: TimeTableRowData[] = [
     {
         name: "1 hour intervals",
         rowMinTime: "08:00",
-        rowMaxTime: "21:00",
+        rowMaxTime: "23:59",
         rowCells: [
             {
                 title: "60 mins",
@@ -79,7 +79,7 @@ export const timetableDefaultData: TimeTableRowData[] = [
             },
             {
                 startTime: "18:00",
-                endTime: "20:00",
+                endTime: "23:59",
                 status: "default",
             },
         ],
@@ -263,5 +263,9 @@ export const timetableDefaultData: TimeTableRowData[] = [
         onRowNameClick: (rowData: TimeTableRowData) => {
             alert(`Clicked on row header for ${rowData.name}`);
         },
+    },
+    {
+        name: "No cells",
+        rowCells: [],
     },
 ];

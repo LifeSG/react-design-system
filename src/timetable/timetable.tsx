@@ -57,12 +57,17 @@ export const TimeTable = ({
     // CONST, STATE, REF
     // =============================================================================
     const testId = otherProps["data-testid"] || "timetable";
-    const timetableMinTime = TimeHelper.roundToNearestHour(minTime);
-    const timetableMaxTime = TimeHelper.roundToNearestHour(maxTime, true);
+    const timetableMinTime = TimeHelper.roundToNearestInterval(minTime, 60);
+    const timetableMaxTime = TimeHelper.roundToNearestInterval(
+        maxTime,
+        60,
+        true
+    );
     const hourlyIntervals = TimeHelper.generateHourlyIntervals(
         timetableMinTime,
         timetableMaxTime
     );
+
     const isEmptyContent = totalRecords === 0 || isEmpty(rowData);
     const allRecordsLoaded = isEmptyContent || rowData.length === totalRecords;
     const tableContainerRef = useRef<HTMLDivElement>(null);

@@ -255,6 +255,32 @@ describe("TimeTable", () => {
 
         expect(await screen.findByTestId("lazy-loader")).toBeInTheDocument();
     });
+
+    it("should render a full bar of blocked slot when row cells are empty and rowMinTime and rowMaxTime are omitted for that row", async () => {
+        render(
+            <TimeTable
+                date={timeTableMockProps.date}
+                rowData={[
+                    {
+                        name: "blocked row",
+                        rowCells: [],
+                    },
+                ]}
+                minTime={"00:00"}
+                maxTime={"23:59"}
+                loading={false}
+                emptyContentMessage={timeTableMockProps.emptyContentMessage}
+                onPreviousDayClick={timeTableMockProps.onPreviousDayClick}
+                onNextDayClick={timeTableMockProps.onNextDayClick}
+            />
+        );
+        const timetableRow = screen.findByTestId("timetable-row");
+        expect(
+            (await timetableRow).querySelectorAll(
+                '[data-testid="block-container"]'
+            ).length
+        ).toBe(1);
+    });
 });
 
 // =============================================================================

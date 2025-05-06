@@ -29,20 +29,50 @@ interface TimeValuesPlain {
 // =============================================================================
 export namespace TimeHelper {
     /**
-     * Rounds time to the nearest hour, e.g 6:30 will be clamped to 6:00
+     * Rounds time to the nearest interval, e.g 6:30 will be clamped to 6:00 when interval = 60
      * @param time the input time in HH:mm format
-     * @param toNextHour to clamp to next hour instead, e.g. 6:30 will be clamped to 7:00
-     * @returns
+     * @param interval the interval in minutes (e.g., 15 for 15 minutes, 60 for 1 hour)
+     * @param toNextInterval to clamp to next interval instead, e.g. 6:30 will be clamped to 7:00 when interval = 60.
+     * If the time is already a valid interval, it will not be rounded
+     * @returns the rounded time in HH:mm format,
      */
-    export const roundToNearestHour = (time: string, toNextHour?: boolean) => {
-        const formattedTime = dayjs(time, "HH:mm");
-        const roundedTime =
-            formattedTime.minute() === 0
-                ? formattedTime
-                : toNextHour
-                ? formattedTime.minute(0).add(1, "hour")
-                : formattedTime.minute(0);
-        return roundedTime.format("HH:mm");
+    export const roundToNearestInterval = (
+        time: string,
+        interval: number,
+        toNextInterval?: boolean
+    ): string => {
+        const [hoursStr, minutesStr] = time.split(":");
+        const hours = parseInt(hoursStr, 10);
+        const minutes = parseInt(minutesStr, 10);
+
+        // Handle invalid inputs
+        if (isNaN(hours) || isNaN(minutes) || minutes < 0 || minutes >= 60) {
+            throw new Error("Invalid time format");
+        }
+
+        // Convert the time to total minutes
+        const totalMinutes = hours * 60 + minutes;
+        const remainder = totalMinutes % interval;
+
+        // Calculate the rounded total minutes
+        const roundedMinutes =
+            remainder === 0
+                ? totalMinutes
+                : toNextInterval
+                ? totalMinutes + (interval - remainder)
+                : totalMinutes - remainder;
+
+        // Convert the rounded total minutes back to hours and minutes
+        const roundedHours = Math.floor(roundedMinutes / 60);
+        const roundedMinutesWithinHour = roundedMinutes % 60;
+
+        // Format the result as HH:mm, allowing for hours >= 24
+        const formattedHours = roundedHours.toString().padStart(2, "0");
+        const formattedMinutes = roundedMinutesWithinHour
+            .toString()
+            .padStart(2, "0");
+
+        return `${formattedHours}:${formattedMinutes}`;
     };
 
     export const generateHourlyIntervals = (

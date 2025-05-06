@@ -204,7 +204,10 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The array of row cells to be rendered in this row of
                         data. This component will sort the cells array by start
-                        time.
+                        time. If empty and <code>rowMinTime</code> and{" "}
+                        <code>rowMaxTime</code> are not provided, the row will
+                        be blocked from <code>minTime</code> to{" "}
+                        <code>maxTime</code>.
                     </>
                 ),
                 propTypes: ["TimeTableRowCellData[]"],
@@ -234,11 +237,12 @@ const DATA: ApiTableSectionProps[] = [
                 name: "rowMinTime",
                 description: (
                     <>
-                        The starting time for this row in {TIME_FORMAT}. <br />
+                        The starting time for this row in {TIME_FORMAT}.
                         Defaults to <code>minTime</code>from
                         <code>TimeTableProps</code>.<br />
+                        <br />
                         This component will automatically fill
-                        <code>blocked</code>cells from<code>minTime</code>to
+                        <code>blocked</code>cells from <code>minTime</code> to
                         this time.
                     </>
                 ),
@@ -248,11 +252,12 @@ const DATA: ApiTableSectionProps[] = [
                 name: "rowMaxTime",
                 description: (
                     <>
-                        The ending time in for this row in {TIME_FORMAT}. <br />
+                        The ending time in for this row in {TIME_FORMAT}.
                         Defaults to <code>maxTime</code>from
                         <code>TimeTableProps</code>.<br />
+                        <br />
                         This component will automatically fill
-                        <code>blocked</code>cells till<code>maxTime</code>from
+                        <code>blocked</code>cells till <code>maxTime</code> from
                         this time.
                     </>
                 ),
@@ -287,7 +292,11 @@ const DATA: ApiTableSectionProps[] = [
                 name: "startTime",
                 mandatory: true,
                 description: (
-                    <>The starting time of this cell. In {TIME_FORMAT}.</>
+                    <>
+                        The starting time of this cell. In {TIME_FORMAT}.<br />
+                        <b>Note</b>: Duration between start-end should be
+                        multiples of 15
+                    </>
                 ),
                 propTypes: ["string"],
             },
@@ -295,7 +304,11 @@ const DATA: ApiTableSectionProps[] = [
                 name: "endTime",
                 mandatory: true,
                 description: (
-                    <>The ending time of this cell. In {TIME_FORMAT}.</>
+                    <>
+                        The ending time of this cell. In {TIME_FORMAT}.<br />
+                        <b>Note</b>: Duration between start-end should be
+                        multiples of 15
+                    </>
                 ),
                 propTypes: ["string"],
             },
