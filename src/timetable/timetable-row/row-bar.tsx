@@ -1,7 +1,9 @@
 import dayjs from "dayjs";
 import { MutableRefObject, useMemo } from "react";
-import { RowBarColors } from "../internal-types";
-import { TimeTableRowCellData, TimeTableRowData } from "../types";
+import { TimeHelper } from "../../util/time-helper";
+import { ROW_INTERVAL } from "../const";
+import { InternalTimeTableRowCellData, RowBarColors } from "../internal-types";
+import { TimeTableRowData } from "../types";
 import { RowCellContainer } from "./row-bar.style";
 import { RowCell } from "./row-cell";
 
@@ -17,8 +19,8 @@ export const RowBar = ({
     id,
     timetableMinTime,
     timetableMaxTime,
-    rowMinTime = timetableMinTime,
-    rowMaxTime = timetableMaxTime,
+    rowMinTime,
+    rowMaxTime,
     rowCells,
     rowBarColor,
     intervalWidth,
@@ -30,6 +32,12 @@ export const RowBar = ({
     // CONST, STATE, REF
     // =============================================================================
     const testId = otherProps["data-testid"] || "timetable-row";
+    const roundedMinTime = rowMinTime
+        ? TimeHelper.roundToNearestInterval(rowMinTime, ROW_INTERVAL)
+        : timetableMinTime;
+    const roundedMaxTime = rowMaxTime
+        ? TimeHelper.roundToNearestInterval(rowMaxTime, ROW_INTERVAL, true)
+        : timetableMaxTime;
 
     // ===========================================================================
     // HELPER FUNCTIONS
@@ -42,18 +50,19 @@ export const RowBar = ({
     };
 
     const rowCellArray = useMemo(() => {
-        const rowCellArray: TimeTableRowCellData[] = [];
+        const rowCellArray: InternalTimeTableRowCellData[] = [];
 
         // Handle non-op before hours
         if (
+            roundedMinTime &&
             dayjs(timetableMinTime, "HH:mm").isBefore(
-                dayjs(rowMinTime, "HH:mm")
+                dayjs(roundedMinTime, "HH:mm")
             )
         ) {
             rowCellArray.push({
                 id,
                 startTime: timetableMinTime,
-                endTime: rowMinTime,
+                endTime: roundedMinTime,
                 status: "blocked",
                 customPopover: outOfRangeCellPopover,
             });
@@ -67,19 +76,50 @@ export const RowBar = ({
             return 0;
         });
 
-        sortedRowCells.forEach((cell, index) => {
-            const { endTime } = cell;
-            rowCellArray.push(cell);
+        let lastRoundedEndTime: string | undefined;
 
-            const nextSlotStartTime = dayjs(
-                rowCells[index + 1]?.startTime || rowMaxTime, // Get next cell start time, if next cell don't exist, use current row max time
+        sortedRowCells.forEach((cell, index) => {
+            const { startTime, endTime } = cell;
+            let roundedStartTime = TimeHelper.roundToNearestInterval(
+                startTime,
+                ROW_INTERVAL
+            );
+
+            // NOTE - Prevent overlapping rounded start time and end time cells
+            const isStartTimeBeforePreviousEndTime =
+                lastRoundedEndTime &&
+                dayjs(roundedStartTime, "HH:mm").isBefore(
+                    dayjs(lastRoundedEndTime, "HH:mm")
+                );
+            if (isStartTimeBeforePreviousEndTime) {
+                roundedStartTime = TimeHelper.roundToNearestInterval(
+                    startTime,
+                    ROW_INTERVAL,
+                    true
+                );
+            }
+
+            const roundedEndTime = TimeHelper.roundToNearestInterval(
+                endTime,
+                ROW_INTERVAL,
+                true
+            );
+            rowCellArray.push({ ...cell, roundedStartTime, roundedEndTime });
+
+            const nextSlotStartTime =
+                sortedRowCells[index + 1]?.startTime || roundedMaxTime; // Get next cell start time, if next cell don't exist, use current row max time
+            const roundedNextSlotStartTime = dayjs(
+                TimeHelper.roundToNearestInterval(
+                    nextSlotStartTime,
+                    ROW_INTERVAL
+                ),
                 "HH:mm"
             );
-            const parsedEndTime = dayjs(endTime, "HH:mm");
+            const parsedEndTime = dayjs(roundedEndTime, "HH:mm");
 
             let curr = parsedEndTime;
-            while (curr.isBefore(nextSlotStartTime)) {
-                if (!isOnTheSameHour(curr, nextSlotStartTime)) {
+            while (curr.isBefore(roundedNextSlotStartTime)) {
+                if (!isOnTheSameHour(curr, roundedNextSlotStartTime)) {
                     const nextHour = curr.add(1, "hour").startOf("hour"); // Round to the next hour
                     rowCellArray.push({
                         id,
@@ -92,35 +132,53 @@ export const RowBar = ({
                     rowCellArray.push({
                         id,
                         startTime: curr.format("HH:mm").toString(),
-                        endTime: nextSlotStartTime.format("HH:mm").toString(),
+                        endTime: roundedNextSlotStartTime
+                            .format("HH:mm")
+                            .toString(),
                         status: "disabled",
                     });
-                    curr = nextSlotStartTime;
+                    curr = roundedNextSlotStartTime;
                 }
             }
+            lastRoundedEndTime = curr.format("HH:mm").toString();
         });
 
         // Handle non-op after hours
         if (
-            dayjs(timetableMaxTime, "HH:mm").isAfter(dayjs(rowMaxTime, "HH:mm"))
+            roundedMaxTime &&
+            dayjs(timetableMaxTime, "HH:mm").isAfter(
+                dayjs(roundedMaxTime, "HH:mm")
+            )
         ) {
             rowCellArray.push({
                 id,
-                startTime: rowMaxTime,
+                startTime: roundedMaxTime,
                 endTime: timetableMaxTime,
                 status: "blocked",
                 customPopover: outOfRangeCellPopover,
             });
         }
 
+        // Handle empty row cells and no min/max time to block from timetable min to max
+        if (sortedRowCells.length === 0 && !rowMinTime && !rowMaxTime) {
+            rowCellArray.push({
+                id,
+                startTime: timetableMinTime,
+                endTime: timetableMaxTime,
+                status: "blocked",
+                customPopover: outOfRangeCellPopover,
+            });
+        }
         return rowCellArray;
     }, [
-        id,
+        roundedMinTime,
         timetableMinTime,
+        rowCells,
+        roundedMaxTime,
         timetableMaxTime,
         rowMinTime,
         rowMaxTime,
-        rowCells,
+        id,
         outOfRangeCellPopover,
     ]);
 

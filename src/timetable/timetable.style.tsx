@@ -162,7 +162,7 @@ export const RowHeader = styled.div<RowHeaderProps>`
     text-align: right;
     padding: 0 1rem 0 2rem;
     border-bottom: 1px solid ${Color.Neutral[5]};
-    border-left: 1px solid ${Color.Accent.Light[1]};
+    border-left: 1px solid ${Color.Neutral[5]};
     transition: all 0.5s ease-in-out;
     ${(props) => {
         if (props.$isScrolled) {
