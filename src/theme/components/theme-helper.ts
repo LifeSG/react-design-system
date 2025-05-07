@@ -26,15 +26,11 @@ export const getComponentTokenValue = <
             theme?.componentScheme
         );
 
-        if (theme?.componentOverrides?.[component]?.[token]) {
-            return getTokenValue(
-                theme.componentOverrides[component][
-                    token
-                ] as ComponentTokenSet[Component][Token],
-                props
-            );
-        }
-        return getTokenValue(components[component][token], props);
+        return getTokenValue(
+            theme?.componentOverrides?.[component]?.[token] ||
+                components[component][token],
+            props
+        );
     };
 };
 
