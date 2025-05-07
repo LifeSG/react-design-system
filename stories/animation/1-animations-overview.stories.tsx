@@ -7,9 +7,9 @@ const meta: Meta = {
 
 export default meta;
 
-export const ThemedLoadingSpinnerItem: StoryObj<typeof ThemedLoadingSpinner> = {
-    name: "ThemedLoadingSpinnerItem",
-    render: () => {
+export const ThemedAnimation: StoryObj<typeof ThemedLoadingSpinner> = {
+    name: "ThemedLoadingSpinner",
+    render: (_args) => {
         return <ThemedLoadingSpinner />;
     },
 };
