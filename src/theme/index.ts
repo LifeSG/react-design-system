@@ -55,7 +55,6 @@ export const LifeSGTheme: ThemeSpec = {
     radiusScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "lifesg",
-    componentScheme: "default",
     _v2: {
         colorScheme: "base",
         textStyleScheme: "base",
@@ -73,7 +72,6 @@ export const BookingSGTheme: ThemeSpec = {
     radiusScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "bookingsg",
-    componentScheme: "default",
     _v2: {
         colorScheme: "bookingsg",
         textStyleScheme: "base",
@@ -91,7 +89,6 @@ export const CCubeTheme: ThemeSpec = {
     radiusScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "ccube",
-    componentScheme: "default",
     _v2: {
         colorScheme: "ccube",
         textStyleScheme: "base",
@@ -109,7 +106,6 @@ export const MyLegacyTheme: ThemeSpec = {
     radiusScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "mylegacy",
-    componentScheme: "default",
     _v2: {
         colorScheme: "mylegacy",
         textStyleScheme: "base",
@@ -127,7 +123,6 @@ export const RBSTheme: ThemeSpec = {
     radiusScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "rbs",
-    componentScheme: "default",
     _v2: {
         colorScheme: "rbs",
         textStyleScheme: "base",
@@ -145,7 +140,6 @@ export const OneServiceTheme: ThemeSpec = {
     radiusScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "oneservice",
-    componentScheme: "default",
 };
 
 export const PATheme: ThemeSpec = {

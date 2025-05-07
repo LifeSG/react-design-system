@@ -1,9 +1,12 @@
 import styled, { useTheme } from "styled-components";
-import { ThemeButton } from "../../src/theme/components/theme-helper";
-import { ThemeButtonToken } from "../../src/theme/components/types";
+import {
+    ThemeButton,
+    getTokenValue,
+} from "../../src/theme/components/theme-helper";
+import { ButtonTokens } from "../../src/theme/components/types";
 import { ApiTable, ApiTableSectionProps } from "../storybook-common";
 
-const ButtonToken = ({ token }: { token: keyof ThemeButtonToken }) => {
+const ButtonToken = ({ token }: { token: keyof ButtonTokens }) => {
     const theme = useTheme();
     switch (token) {
         case "button-radius":
@@ -11,7 +14,11 @@ const ButtonToken = ({ token }: { token: keyof ThemeButtonToken }) => {
                 <SwatchItem key={token}>
                     <Reference>{ThemeButton[token]({ theme })}</Reference>
                     <div>
-                        <RadiusExample $radius={ThemeButton[token]} />
+                        <RadiusExample
+                            $radius={getTokenValue(ThemeButton[token], {
+                                theme,
+                            })}
+                        />
                     </div>
                 </SwatchItem>
             );
@@ -20,7 +27,11 @@ const ButtonToken = ({ token }: { token: keyof ThemeButtonToken }) => {
                 <Swatch>
                     <SwatchItem key={token}>
                         <Reference>{ThemeButton[token]({ theme })}</Reference>
-                        <SwatchColour $colour={ThemeButton[token]} />
+                        <SwatchColour
+                            $colour={getTokenValue(ThemeButton[token], {
+                                theme,
+                            })}
+                        />
                     </SwatchItem>
                 </Swatch>
             );
@@ -31,18 +42,15 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
-                name: "",
-                description: "This is the preset of this component",
-            },
-            {
                 name: "button-radius",
-                description: "",
+                description: "The radius of the button",
                 propTypes: [],
                 defaultValue: <ButtonToken token={"button-radius"} />,
             },
             {
                 name: "button-default-colour-bg",
-                description: "",
+                description:
+                    "The background color of the button in its default style",
                 propTypes: [],
                 defaultValue: (
                     <ButtonToken token={"button-default-colour-bg"} />
@@ -50,7 +58,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "button-default-colour-text",
-                description: "",
+                description:
+                    "The text color of the button in its default style",
                 propTypes: [],
                 defaultValue: (
                     <ButtonToken token={"button-default-colour-text"} />
@@ -58,7 +67,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "button-default-colour-bg-hover",
-                description: "",
+                description: "The background color of the button when hovered",
                 propTypes: [],
                 defaultValue: (
                     <ButtonToken token={"button-default-colour-bg-hover"} />
@@ -66,7 +75,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "button-secondary-colour-text",
-                description: "",
+                description:
+                    "The text color of the button in its secondary style",
                 propTypes: [],
                 defaultValue: (
                     <ButtonToken token={"button-secondary-colour-text"} />
@@ -74,7 +84,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "button-light-colour-text",
-                description: "",
+                description: "The text color of the button in its light style",
                 propTypes: [],
                 defaultValue: (
                     <ButtonToken token={"button-light-colour-text"} />
@@ -82,7 +92,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "button-secondary-colour-border",
-                description: "",
+                description:
+                    "The border color of the button in its secondary style",
                 propTypes: [],
                 defaultValue: (
                     <ButtonToken token={"button-secondary-colour-border"} />
@@ -92,7 +103,7 @@ const DATA: ApiTableSectionProps[] = [
     },
 ];
 
-export const TokensTable = () => {
+export const TokenTable = () => {
     return <ApiTable sections={DATA} />;
 };
 
@@ -151,6 +162,6 @@ const Reference = styled.div`
 const RadiusExample = styled.div<RadiusStyleProps>`
     height: 48px;
     width: 128px;
-    background: tomato;
+    background: ${ThemeButton["button-default-colour-bg"]};
     border-radius: ${(props) => props.$radius};
 `;

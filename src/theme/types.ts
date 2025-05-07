@@ -3,7 +3,7 @@ import { BorderSetOptions } from "./border/types";
 import { BreakpointSetOptions } from "./breakpoint/types";
 import { PrimitiveColourSetOptions } from "./colour-primitive/types";
 import { SemanticColourSetOptions } from "./colour-semantic/types";
-import { ThemeButtonToken } from "./components/types";
+import { ComponentOverrideOptions } from "./components/types";
 import { FontSpecSetOptions } from "./font-spec/types";
 import { FontSetOptions } from "./font/types";
 import { MotionSetOptions } from "./motion/types";
@@ -70,10 +70,6 @@ export interface ThemeSpecOptions {
     breakpoint?: BreakpointSetOptions | undefined;
 }
 
-export interface ComponentOverrideOptions {
-    Button?: Partial<ThemeButtonToken>;
-}
-
 export interface ThemeSpec {
     colourScheme: ColourScheme;
     fontScheme: FontScheme;
@@ -83,15 +79,14 @@ export interface ThemeSpec {
     radiusScheme: RadiusScheme;
     breakpointScheme: BreakpointScheme;
     resourceScheme: ResourceScheme;
-    componentScheme: ComponentScheme;
-    componentOverrides?: ComponentOverrideOptions;
+    componentScheme?: ComponentScheme | undefined;
+    componentOverrides?: ComponentOverrideOptions | undefined;
     overrides?: ThemeSpecOptions | undefined;
 
     maxColumns?: any;
     /** @deprecated For backwards compatibility with V2 theme */
     _v2?: V2_ThemeSpec;
 }
-
 export interface ThemeStyleProps {
     theme: ThemeSpec;
 }

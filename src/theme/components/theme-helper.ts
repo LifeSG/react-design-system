@@ -1,71 +1,89 @@
-import { getTokenValue } from "../../shared/styles";
 import { StyledComponentProps, getCollection } from "../helpers";
-import { DefaultComponents } from "./specs/default-components.tokens";
-import { PaComponents } from "./specs/pa-components-tokens";
-import { Components, ThemeButtonToken } from "./types";
+import { ThemeStyleProps } from "../types";
+import { DefaultComponentTokenSet } from "./specs/default-component-token-set";
+import { PAComponentTokenSet } from "./specs/pa-component-token-set";
+import { ButtonTokens, ComponentTokenSet } from "./types";
 
-const ComponentSpec = {
+const ComponentTokenSpec = {
     collections: {
-        default: DefaultComponents,
-        pa: PaComponents,
+        default: DefaultComponentTokenSet,
+        pa: PAComponentTokenSet,
     },
     defaultValue: "default",
 };
 
-export const getComponentValue = (
-    name: keyof Components,
-    property: keyof ThemeButtonToken
+export const getComponentTokenValue = <
+    Component extends keyof ComponentTokenSet,
+    Token extends keyof ComponentTokenSet[Component]
+>(
+    component: Component,
+    token: Token
 ) => {
-    return (
-        props: StyledComponentProps
-    ): string | ((props: StyledComponentProps) => string) => {
+    return (props: StyledComponentProps): string => {
         const theme = props.theme;
-        const components: Components = getCollection(
-            ComponentSpec,
+        const components: ComponentTokenSet = getCollection(
+            ComponentTokenSpec,
             theme?.componentScheme
         );
-        const value = components[name][property];
 
-        if (theme?.componentOverrides?.[name]?.[property]) {
+        if (theme?.componentOverrides?.[component]?.[token]) {
             return getTokenValue(
-                theme?.componentOverrides?.[name]?.[property],
+                theme.componentOverrides[component][
+                    token
+                ] as ComponentTokenSet[Component][Token],
                 props
             );
         }
-
-        return getTokenValue(value, props);
+        return getTokenValue(components[component][token], props);
     };
 };
 
+export const getTokenValue = <
+    Component extends keyof ComponentTokenSet,
+    Token extends keyof ComponentTokenSet[Component]
+>(
+    token: ComponentTokenSet[Component][Token],
+    props: ThemeStyleProps
+) => {
+    switch (typeof token) {
+        case "function":
+            return token(props);
+        case "number":
+            return token + "px";
+        case "string":
+            return token;
+    }
+};
+
 export const ThemeButton: {
-    [key in keyof ThemeButtonToken]: any;
+    [key in keyof ButtonTokens]: (props: StyledComponentProps) => string;
 } = {
-    "button-radius": getComponentValue("Button", "button-radius"),
-    "button-default-colour-bg": getComponentValue(
+    "button-radius": getComponentTokenValue("Button", "button-radius"),
+    "button-default-colour-bg": getComponentTokenValue(
         "Button",
         "button-default-colour-bg"
     ),
-    "button-default-colour-bg-hover": getComponentValue(
+    "button-default-colour-bg-hover": getComponentTokenValue(
         "Button",
         "button-default-colour-bg-hover"
     ),
-    "button-default-colour-text": getComponentValue(
+    "button-default-colour-text": getComponentTokenValue(
         "Button",
         "button-default-colour-text"
     ),
-    "button-secondary-colour-border": getComponentValue(
+    "button-secondary-colour-border": getComponentTokenValue(
         "Button",
         "button-secondary-colour-border"
     ),
-    "button-secondary-colour-text": getComponentValue(
+    "button-secondary-colour-text": getComponentTokenValue(
         "Button",
         "button-secondary-colour-text"
     ),
-    "button-light-colour-text": getComponentValue(
+    "button-light-colour-text": getComponentTokenValue(
         "Button",
         "button-light-colour-text"
     ),
-    "button-link-colour-text": getComponentValue(
+    "button-link-colour-text": getComponentTokenValue(
         "Button",
         "button-link-colour-text"
     ),

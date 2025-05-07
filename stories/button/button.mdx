@@ -1,7 +1,6 @@
 import { Canvas, Meta, Story } from "@storybook/blocks";
 import * as ButtonStories from "./button.stories";
 import { PropsTable } from "./props-table";
-import { TokensTable } from "./tokens-table";
 
 <Meta of={ButtonStories} />
 
@@ -33,7 +32,7 @@ apply a red scheme over the buttons.
 
 <Canvas of={ButtonStories.DangerLoadingState} />
 
-## Component Token
+## Component tokens
 
 ### Overriding
 
@@ -53,7 +52,7 @@ const customTheme: ThemeSpec = {
 
 ### Default preset
 
-<Story of={ButtonStories.TokenTable} />
+<Story of={ButtonStories.TokenCustomisation} />
 
 ## Component API
 

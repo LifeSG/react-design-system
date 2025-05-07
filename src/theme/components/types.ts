@@ -1,11 +1,15 @@
 import { StyledComponentProps } from "../helpers";
 
-export type ComponentProps = ThemeButtonToken;
-export type Components = {
-    Button: ThemeButtonToken;
+export type ComponentTokenSet = {
+    Button: ButtonTokens;
+};
+export type ComponentOverrideOptions = {
+    [Component in keyof ComponentTokenSet]?:
+        | Partial<ComponentTokenSet[Component]>
+        | undefined;
 };
 
-export type ThemeButtonToken = {
+export type ButtonTokens = {
     "button-radius": number | ((props: StyledComponentProps) => string);
     "button-default-colour-bg":
         | string

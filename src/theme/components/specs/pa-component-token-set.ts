@@ -1,8 +1,8 @@
 import { ColourSemantic } from "../../colour-semantic/theme-helper";
 import { RadiusValues } from "../../radius/theme-helper";
-import { Components } from "../types";
+import { ComponentTokenSet } from "../types";
 
-export const PaComponents: Components = {
+export const PAComponentTokenSet: ComponentTokenSet = {
     Button: {
         "button-radius": RadiusValues.full,
         "button-default-colour-bg": ColourSemantic["bg-primary"],
