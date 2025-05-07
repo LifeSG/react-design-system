@@ -6,7 +6,7 @@ import { BaseAnimationProps } from "../types";
 export const ThemedLoadingSpinner = (props: BaseAnimationProps) => {
     const theme = useTheme();
 
-    if (theme.resourceScheme === "lifesg") {
+    if (theme?.resourceScheme === "lifesg") {
         return <LoadingSpinner {...props} />;
     }
     return <LoadingDotsSpinner {...props} />;
