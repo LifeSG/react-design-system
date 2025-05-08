@@ -1,14 +1,7 @@
 import styled, { css } from "styled-components";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
-import {
-    Border,
-    Colour,
-    Font,
-    MediaQuery,
-    Motion,
-    Radius,
-    Spacing,
-} from "../theme";
+import { Border, Colour, Font, MediaQuery, Motion, Spacing } from "../theme";
+import { ThemeButton } from "../theme/components/theme-helper";
 
 export type MainButtonStyle =
     | "default"
@@ -29,8 +22,8 @@ export const Main = styled.button<MainStyleProps>`
     padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
     min-width: 4rem;
     border: ${Border["width-010"]} ${Border["solid"]} transparent;
-    border-radius: ${Radius["sm"]};
     transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
+    border-radius: ${ThemeButton["button-radius"]};
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -46,11 +39,11 @@ export const Main = styled.button<MainStyleProps>`
                     background-color: ${Colour.Primitive.white};
                     border-color: ${props.$buttonIsDanger
                         ? Colour["border-error-strong"]
-                        : Colour["border-primary"]};
+                        : ThemeButton["button-secondary-colour-border"]};
 
                     color: ${props.$buttonIsDanger
                         ? Colour["text-error"]
-                        : Colour["text-primary"]};
+                        : ThemeButton["button-secondary-colour-text"]};
 
                     &:hover,
                     &:active {
@@ -64,7 +57,7 @@ export const Main = styled.button<MainStyleProps>`
 
                     color: ${props.$buttonIsDanger
                         ? Colour["text-error"]
-                        : Colour["text-primary"]};
+                        : ThemeButton["button-light-colour-text"]};
 
                     &:hover,
                     &:active {
@@ -78,7 +71,7 @@ export const Main = styled.button<MainStyleProps>`
 
                     color: ${props.$buttonIsDanger
                         ? Colour["text-error"]
-                        : Colour["text-primary"]};
+                        : ThemeButton["button-link-colour-text"]};
                     &:hover,
                     &:active {
                         background-color: ${Colour["bg-hover-neutral"]};
@@ -98,21 +91,26 @@ export const Main = styled.button<MainStyleProps>`
                 `;
             default:
                 return css`
-                    background-color: ${props.$buttonIsDanger
-                        ? Colour["bg-error-strong"]
-                        : Colour["bg-primary"]};
+                    background-color: ${
+                        props.$buttonIsDanger
+                            ? Colour["bg-error-strong"]
+                            : ThemeButton["button-default-colour-bg"]
+                    };};
 
                     ${MediaQuery.MaxWidth.md} {
                         width: 100%;
                     }
 
-                    color: ${Colour["text-inverse"]};
+                    color: ${ThemeButton["button-default-colour-text"]}};
 
                     &:hover,
                     &:active {
-                        background-color: ${props.$buttonIsDanger
-                            ? Colour["bg-error-strong-hover"]
-                            : Colour["bg-primary-hover"]};
+                        background-color: ${
+                            props.$buttonIsDanger
+                                ? Colour["bg-error-strong-hover"]
+                                : ThemeButton["button-default-colour-bg-hover"]
+                        }
+                        };
                     }
                 `;
         }

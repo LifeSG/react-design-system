@@ -151,4 +151,5 @@ export const PATheme: ThemeSpec = {
     radiusScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "pa",
+    componentScheme: "pa",
 };
