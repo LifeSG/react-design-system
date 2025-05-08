@@ -127,7 +127,7 @@ export const TimelineTitle = styled(Typography.HeadingSM).attrs({
 })`
     margin-bottom: 1rem;
 
-    ${MediaQuery.MaxWidth.md} {
+    ${MediaQuery.MaxWidth.lg} {
         margin-bottom: 1.5rem;
     }
 `;

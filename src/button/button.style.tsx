@@ -97,7 +97,7 @@ export const Main = styled.button<MainStyleProps>`
                             : ThemeButton["button-default-colour-bg"]
                     };};
 
-                    ${MediaQuery.MaxWidth.md} {
+                    ${MediaQuery.MaxWidth.sm} {
                         width: 100%;
                     }
 
