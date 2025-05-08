@@ -1,4 +1,4 @@
-import { Meta } from "@storybook/blocks";
+import { Canvas, Meta } from "@storybook/blocks";
 import {
     LoadingDots,
     LoadingDotsSpinner,
@@ -11,6 +11,7 @@ import {
     Content,
 } from "./doc-elements";
 import { PropsTable } from "./props-table";
+import * as AnimationStories from "./1-animations-overview.stories";
 
 <Meta title="Feedback indicators/Animations/Overview" />
 
@@ -24,7 +25,17 @@ A component that renders an animation on the UI.
 import { <Component_name> } from "@lifesg/react-design-system/animations";
 ```
 
+## Themed loading spinner
+
+The `ThemedLoadingSpinner` automatically adapts to your theme's
+`resourceScheme`.
+
+<Canvas of={AnimationStories.ThemedAnimation} />
+
 ## Collection
+
+If you need to render a specific animation regardless of theme, you can use the
+standalone component.
 
 <AnimationDisplay>
   <AnimationItem>
@@ -40,21 +51,24 @@ import { <Component_name> } from "@lifesg/react-design-system/animations";
     </Content>
   </AnimationItem>
 
-  <AnimationItem>
+{" "}
+
+<AnimationItem>
     <AnimationPane>
-      <LoadingDots />
+        <LoadingDots />
     </AnimationPane>
     <Content>
-      `<LoadingDots />`
-      <p>
-        An animation that can be shown in between page transitions or
-        while waiting for fetching of data.
-      </p>
+        `<LoadingDots />`
+        <p>
+            An animation that can be shown in between page transitions or while
+            waiting for fetching of data.
+        </p>
     </Content>
-  </AnimationItem>
+</AnimationItem>
+
   <AnimationItem>
     <AnimationPane>
-      <LoadingDotsSpinner />
+      <LoadingDotsSpinner/>
     </AnimationPane>
     <Content>
       `<LoadingDotsSpinner />`
