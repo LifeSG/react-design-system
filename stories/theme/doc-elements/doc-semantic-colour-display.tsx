@@ -1,10 +1,6 @@
-import { ColourSpec } from "src/theme/colour-primitive/theme-helper";
 import { getSemanticColour } from "src/theme/colour-semantic/theme-helper";
-import {
-    PrimitiveColourSet,
-    SemanticColourSet,
-    ThemeSpec,
-} from "src/theme/types";
+import { SemanticColourSet, ThemeSpec } from "src/theme/types";
+import { ColourTokenInspector } from "stories/storybook-common";
 import styled, { ThemeProvider, useTheme } from "styled-components";
 
 interface SemanticColourPalette {
@@ -14,33 +10,22 @@ interface SemanticColourPalette {
 const SemanticColourPalette = ({ tokens }: SemanticColourPalette) => {
     const theme = useTheme();
 
-    // apply proxy to spy on the primitive token being accessed
-    let colourToken: string | undefined;
-    const scheme = theme.colourScheme;
-    const original = ColourSpec.collections[scheme];
-
-    const proxy = {
-        get(target: typeof original, prop: keyof PrimitiveColourSet) {
-            colourToken = prop;
-            return target[prop];
-        },
-    };
-    ColourSpec.collections[scheme] = new Proxy(original, proxy);
-
     const component = (
         <Palette>
             <Swatch>
                 {tokens.map((token) => {
-                    colourToken = undefined;
-                    const colour = getSemanticColour(token)({ theme });
-                    const reference = colourToken || colour;
-                    colourToken = undefined;
+                    const { primitive, result: colour } =
+                        ColourTokenInspector.from(theme).inspect(() =>
+                            getSemanticColour(token)({ theme })
+                        );
                     return (
                         <SwatchItem key={token}>
                             <SwatchColour $colour={colour} />
                             <div>
                                 <SwatchLabel>{token}</SwatchLabel>
-                                <SwatchReference>{reference}</SwatchReference>
+                                <SwatchReference>
+                                    {primitive || colour}
+                                </SwatchReference>
                             </div>
                         </SwatchItem>
                     );
@@ -48,9 +33,6 @@ const SemanticColourPalette = ({ tokens }: SemanticColourPalette) => {
             </Swatch>
         </Palette>
     );
-
-    // clean up proxy
-    ColourSpec.collections[scheme] = original;
 
     return component;
 };
