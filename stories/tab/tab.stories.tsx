@@ -231,3 +231,39 @@ export const FullWidthIndicatorLine: StoryObj<Component> = {
         );
     },
 };
+
+export const OverrideTabWidthAndCenterTabLabel: StoryObj<Component> = {
+    render: () => {
+        return (
+            <Tab>
+                <Tab.Item title="Section A" width="50%">
+                    <Content>
+                        <Text.H1>Section A</Text.H1>
+                        <br />
+                        <Text.Body>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit. Nullam commodo eget turpis sit amet luctus.
+                            Duis fringilla, libero ac eleifend vehicula, sem
+                            arcu mattis diam, eget pellentesque urna libero
+                            feugiat sem.
+                        </Text.Body>
+                    </Content>
+                </Tab.Item>
+                <Tab.Item title="Section B" width="50%">
+                    <Content>
+                        <Text.H1>Section B</Text.H1>
+                        <br />
+                        <Text.Body>
+                            Donec metus augue, vulputate ut laoreet pretium,
+                            cursus sed odio. Aenean imperdiet sapien nec lectus
+                            gravida, vitae tincidunt sem feugiat. Nullam sit
+                            amet tortor purus. Sed eget nulla sapien. Proin a
+                            lacus pellentesque, facilisis augue quis, vestibulum
+                            sem.
+                        </Text.Body>
+                    </Content>
+                </Tab.Item>
+            </Tab>
+        );
+    },
+};
