@@ -12,7 +12,7 @@ import {
 } from "./tab-link-chain.style";
 import { ResizeCallbackParams } from "../shared/fade-wrapper";
 
-interface Props {
+export interface TabLinkChainProps {
     controlledMode?: boolean | undefined;
     "data-testid"?: string | undefined;
     onTabClick?: ((title: string, order: number) => void) | undefined;
@@ -24,7 +24,7 @@ export const TabLinkChain = ({
     "data-testid": testId,
     onTabClick,
     fullWidthIndicatorLine,
-}: Props) => {
+}: TabLinkChainProps) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
@@ -92,6 +92,7 @@ export const TabLinkChain = ({
                             role="none"
                             $active={isActive}
                             ref={isActive ? activeLinkRef : null}
+                            $width={linkChain.width}
                         >
                             <ChainLink
                                 role="tab"
