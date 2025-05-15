@@ -1,4 +1,10 @@
-export interface TabProps {
+import { TabLinkChainProps } from "./tab-link-chain";
+
+export interface TabProps
+    extends Pick<
+        TabLinkChainProps,
+        "fullWidthIndicatorLine" | "onTabClick" | "data-testid"
+    > {
     children: JSX.Element | JSX.Element[];
     /** Specify the initial tab index that is to be displayed */
     initialActive?: number | undefined;
@@ -9,9 +15,6 @@ export interface TabProps {
     currentActive?: number;
     className?: string | undefined;
     id?: string | undefined;
-    "data-testid"?: string | undefined;
-    onTabClick?: ((title: string, index: number) => void) | undefined;
-    fullWidthIndicatorLine?: boolean | undefined;
 }
 
 export interface TabItemProps {
@@ -20,9 +23,11 @@ export interface TabItemProps {
     className?: string | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
+    width?: string | undefined;
 }
 
 export interface TabLinkProps {
     title: string;
     counter?: number | undefined;
+    width?: string | undefined;
 }

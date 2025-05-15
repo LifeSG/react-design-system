@@ -10,7 +10,7 @@ import { TabContext } from "./tab-context";
 import { TabItem } from "./tab-item";
 import { TabLinkChain } from "./tab-link-chain";
 import { Wrapper } from "./tab.style";
-import { TabItemProps, TabProps } from "./types";
+import { TabItemProps, TabLinkProps, TabProps } from "./types";
 
 // =============================================================================
 // COMPONENT
@@ -37,8 +37,8 @@ const TabBase = ({
         ) as ReactElement<TabItemProps>[];
 
         return validChildren.map((child) => {
-            return { title: child.props.title };
-        });
+            return { title: child.props.title, width: child.props.width };
+        }) as TabLinkProps[];
     }, [children]);
 
     // =========================================================================
