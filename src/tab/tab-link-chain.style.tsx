@@ -16,6 +16,7 @@ interface ChainStyleProps {
 
 interface ChainItemStyleProps {
     $active?: boolean;
+    $width?: string;
 }
 
 // =============================================================================
@@ -46,6 +47,15 @@ export const ChainItem = styled.li<ChainItemStyleProps>`
     display: flex;
     flex-shrink: 0;
     border-bottom: ${Border["width-040"]} ${Border.solid} ${Colour.border};
+
+    ${(props) => {
+        if (props.$width) {
+            return css`
+                width: ${props.$width};
+                justify-content: center;
+            `;
+        }
+    }}
 
     ${(props) => {
         if (props.$active) {
