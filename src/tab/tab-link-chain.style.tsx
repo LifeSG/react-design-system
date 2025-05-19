@@ -45,6 +45,7 @@ export const Chain = styled.ul<ChainStyleProps>`
 
 export const ChainItem = styled.li<ChainItemStyleProps>`
     display: flex;
+    justify-content: center;
     flex-shrink: 0;
     border-bottom: 4px solid ${Color.Neutral[5]};
 
@@ -52,7 +53,6 @@ export const ChainItem = styled.li<ChainItemStyleProps>`
         if (props.$width) {
             return css`
                 width: ${props.$width};
-                justify-content: center;
             `;
         }
     }}
