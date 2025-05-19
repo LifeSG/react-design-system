@@ -232,7 +232,7 @@ export const FullWidthIndicatorLine: StoryObj<Component> = {
     },
 };
 
-export const OverrideTabWidthAndCenterTabLabel: StoryObj<Component> = {
+export const CustomTabWidth: StoryObj<Component> = {
     render: () => {
         return (
             <Tab>
