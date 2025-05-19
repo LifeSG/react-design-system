@@ -16,7 +16,7 @@ export const PAFontSpecSet: FontSpecSet = {
     "heading-lh-xs": "1.75rem",
 
     "heading-ls-xxl": "-0.032rem",
-    "heading-ls-xl": "0rem",
+    "heading-ls-xl": "-0.032rem",
     "heading-ls-lg": "0rem",
     "heading-ls-md": "0rem",
     "heading-ls-sm": "0rem",
@@ -39,7 +39,7 @@ export const PAFontSpecSet: FontSpecSet = {
     "body-lh-xs": "1.25rem",
 
     "body-ls-baseline": "0rem",
-    "body-ls-md": "0.012rem",
+    "body-ls-md": "0.014rem",
     "body-ls-sm": "0.012rem",
     "body-ls-xs": "0.012rem",
 
