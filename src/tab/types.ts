@@ -20,9 +20,11 @@ export interface TabItemProps {
     className?: string | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
+    width?: string | undefined;
 }
 
 export interface TabLinkProps {
     title: string;
     counter?: number | undefined;
+    width?: string | undefined;
 }

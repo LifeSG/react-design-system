@@ -1,5 +1,8 @@
 import { useContext, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useTheme } from "styled-components";
+import { ResizeCallbackParams } from "../shared/fade-wrapper";
+import { Breakpoint } from "../theme";
 import { TabContext } from "./tab-context";
 import {
     BoldLabel,
@@ -9,15 +12,14 @@ import {
     CustomFadeWrapper,
     Label,
 } from "./tab-link-chain.style";
-import { ResizeCallbackParams } from "../shared/fade-wrapper";
-import { Breakpoint } from "../theme";
-import { useTheme } from "styled-components";
+import { TabProps } from "./types";
 
-interface Props {
+interface Props
+    extends Pick<
+        TabProps,
+        "fullWidthIndicatorLine" | "onTabClick" | "data-testid"
+    > {
     controlledMode?: boolean | undefined;
-    "data-testid"?: string | undefined;
-    onTabClick?: ((title: string, order: number) => void) | undefined;
-    fullWidthIndicatorLine?: boolean | undefined;
 }
 
 export const TabLinkChain = ({
@@ -99,6 +101,7 @@ export const TabLinkChain = ({
                             role="none"
                             $active={isActive}
                             ref={isActive ? activeLinkRef : null}
+                            $width={linkChain.width}
                         >
                             <ChainLink
                                 role="tab"

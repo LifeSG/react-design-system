@@ -95,3 +95,18 @@ export const FullWidthIndicatorLine: StoryObj<Component> = {
         );
     },
 };
+
+export const CustomTabWidth: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Tab>
+                <Tab.Item title="Section A" width="50%">
+                    <ContentA />
+                </Tab.Item>
+                <Tab.Item title="Section B" width="50%">
+                    <ContentB />
+                </Tab.Item>
+            </Tab>
+        );
+    },
+};
