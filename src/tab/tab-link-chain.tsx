@@ -12,12 +12,14 @@ import {
     CustomFadeWrapper,
     Label,
 } from "./tab-link-chain.style";
+import { TabProps } from "./types";
 
-export interface TabLinkChainProps {
+interface Props
+    extends Pick<
+        TabProps,
+        "fullWidthIndicatorLine" | "onTabClick" | "data-testid"
+    > {
     controlledMode?: boolean | undefined;
-    "data-testid"?: string | undefined;
-    onTabClick?: ((title: string, order: number) => void) | undefined;
-    fullWidthIndicatorLine?: boolean | undefined;
 }
 
 export const TabLinkChain = ({
@@ -25,7 +27,7 @@ export const TabLinkChain = ({
     "data-testid": testId,
     onTabClick,
     fullWidthIndicatorLine,
-}: TabLinkChainProps) => {
+}: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
