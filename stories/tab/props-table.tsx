@@ -89,6 +89,11 @@ const TAB_ITEM_DATA: ApiTableSectionProps[] = [
                 description: "The test identifier for the component",
                 propTypes: ["string"],
             },
+            {
+                name: "width",
+                description: "The tab selector width",
+                propTypes: ["string"],
+            },
         ],
     },
 ];
