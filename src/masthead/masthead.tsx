@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { Wrapper } from "./masthead.style";
+import { MastheadProps } from "./types";
 
-export const Masthead = (): JSX.Element => {
+export const Masthead = ({ stretch = false }: MastheadProps): JSX.Element => {
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -44,7 +45,9 @@ export const Masthead = (): JSX.Element => {
     // RENDER FUNCTIONS
     // =============================================================================
 
-    return <Wrapper dangerouslySetInnerHTML={createContent()} />;
+    return (
+        <Wrapper dangerouslySetInnerHTML={createContent()} $stretch={stretch} />
+    );
 };
 
 // =============================================================================
