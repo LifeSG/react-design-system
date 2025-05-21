@@ -167,6 +167,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "noResultsDesc",
+                description:
+                    "If specified, the no result description will display under the default no results display",
+                propTypes: ["string"],
+            },
+            {
                 name: "renderCustomCallToAction",
                 description:
                     "Function to render a custom call to action component at the bottom of dropdown list",

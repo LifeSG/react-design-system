@@ -188,3 +188,12 @@ export const Spinner = styled(ComponentLoadingSpinner)`
     margin-right: ${Spacing["spacing-8"]};
     color: ${Colour["icon"]};
 `;
+
+export const NoResultDescContainer = styled.div<ContainerStyleProps>`
+    padding: 0 ${Spacing["spacing-16"]} ${Spacing["spacing-12"]}
+        ${Spacing["spacing-16"]};
+    ${(props) =>
+        props.$variant === "small"
+            ? Font["body-sm-regular"]
+            : Font["body-md-regular"]}
+`;

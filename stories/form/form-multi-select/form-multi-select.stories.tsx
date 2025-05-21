@@ -79,6 +79,7 @@ export const WithSearch: StoryObj<Component> = {
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
                 enableSearch
+                noResultsDesc="no result found description"
             />
         );
     },

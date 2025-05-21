@@ -24,6 +24,7 @@ import {
     List,
     ListItem,
     Listbox,
+    NoResultDescContainer,
     ResultStateContainer,
     SelectAllButton,
     SelectAllContainer,
@@ -63,6 +64,7 @@ export const DropdownList = <T, V>({
     /* DropdownSearchProps */
     enableSearch,
     hideNoResultsDisplay,
+    noResultsDesc,
     searchPlaceholder = "Search",
     searchFunction,
     onSearch,
@@ -433,10 +435,20 @@ export const DropdownList = <T, V>({
             itemsLoadState === "success"
         ) {
             return (
-                <ResultStateContainer data-testid="list-no-results">
-                    <LabelIcon data-testid="no-result-icon" />
-                    No results found.
-                </ResultStateContainer>
+                <>
+                    <ResultStateContainer data-testid="list-no-results">
+                        <LabelIcon data-testid="no-result-icon" />
+                        No results found.
+                    </ResultStateContainer>
+                    {noResultsDesc && (
+                        <NoResultDescContainer
+                            $variant={variant}
+                            data-testid="no-result-desc"
+                        >
+                            {noResultsDesc}
+                        </NoResultDescContainer>
+                    )}
+                </>
             );
         }
     };
