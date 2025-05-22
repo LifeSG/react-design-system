@@ -1,6 +1,6 @@
 import { OpenChangeReason } from "@floating-ui/react";
 import findIndex from "lodash/findIndex";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
     DropdownList,
     DropdownListState,
@@ -48,6 +48,7 @@ export const InputMultiSelect = <T, V>({
     readOnly,
     alignment,
     dropdownZIndex,
+    maxSelected,
 }: InputMultiSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -60,6 +61,10 @@ export const InputMultiSelect = <T, V>({
     const nodeRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);
 
+    const hasSelectedMax = useMemo(
+        () => maxSelected && maxSelected < options?.length && maxSelected > 1,
+        [maxSelected, options?.length]
+    );
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -71,7 +76,7 @@ export const InputMultiSelect = <T, V>({
     // EVENT HANDLERS
     // =============================================================================
     const handleSelectAllClick = () => {
-        if (selected && selected.length > 0) {
+        if ((selected && selected.length > 0) || hasSelectedMax) {
             setSelected([]);
             performOnSelectOptions([]);
         } else {
@@ -243,6 +248,7 @@ export const InputMultiSelect = <T, V>({
                 searchFunction={searchFunction}
                 searchPlaceholder={searchPlaceholder}
                 multiSelect
+                maxSelected={maxSelected}
                 selectedItems={selected}
                 onSelectAll={handleSelectAllClick}
                 onRetry={onRetry}

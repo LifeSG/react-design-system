@@ -4,6 +4,7 @@ import React, {
     useCallback,
     useContext,
     useEffect,
+    useMemo,
     useRef,
     useState,
 } from "react";
@@ -17,6 +18,7 @@ import {
 import { DropdownLabel } from "./dropdown-label";
 import { DropdownListStateContext } from "./dropdown-list-state";
 import {
+    CheckboxDisabledIndicator,
     CheckboxSelectedIndicator,
     CheckboxUnselectedIndicator,
     Container,
@@ -42,6 +44,7 @@ import { DropdownListProps, ListItemDisplayProps } from "./types";
 export const DropdownList = <T, V>({
     listItems,
     multiSelect,
+    maxSelected,
     selectedItems,
     disableItemFocus,
     itemsLoadState = "success",
@@ -85,6 +88,15 @@ export const DropdownList = <T, V>({
     const listItemRefs = useRef<(HTMLElement | null)[]>([]);
     const searchInputRef = useRef<HTMLInputElement>(null);
     const virtuosoRef = useRef<VirtuosoHandle>(null);
+
+    const hasSelectedMax = useMemo(
+        () =>
+            maxSelected &&
+            listItems &&
+            maxSelected < listItems.length &&
+            maxSelected > 1,
+        [listItems, maxSelected]
+    );
 
     // =========================================================================
     // HELPER FUNCTIONS
@@ -180,6 +192,16 @@ export const DropdownList = <T, V>({
     };
 
     const handleListItemClick = (item: T, upcomingIndex: number) => {
+        if (
+            hasSelectedMax &&
+            selectedItems &&
+            selectedItems?.length === maxSelected &&
+            !selectedItems.some((selectedItem) => {
+                return selectedItem === item;
+            })
+        ) {
+            return;
+        }
         setFocusedIndex(upcomingIndex);
         onSelectItem?.(item, getValue(item));
     };
@@ -323,6 +345,14 @@ export const DropdownList = <T, V>({
     // =========================================================================
     const renderListItemIcon = (selected: boolean) => {
         if (multiSelect) {
+            if (
+                hasSelectedMax &&
+                !selected &&
+                selectedItems?.length === maxSelected
+            ) {
+                return <CheckboxDisabledIndicator aria-hidden />;
+            }
+
             return selected ? (
                 <CheckboxSelectedIndicator aria-hidden />
             ) : (
@@ -418,7 +448,9 @@ export const DropdownList = <T, V>({
                         type="button"
                         $variant={variant}
                     >
-                        {selectedItems.length === 0
+                        {hasSelectedMax
+                            ? "Clear"
+                            : selectedItems.length === 0
                             ? "Select all"
                             : "Clear all"}
                     </SelectAllButton>

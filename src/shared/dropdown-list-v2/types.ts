@@ -49,6 +49,7 @@ export interface DropdownSearchProps<T> {
 
 export interface DropdownConfigProps {
     multiSelect?: boolean | undefined;
+    maxSelected?: number | undefined;
     width?: number | undefined;
     /**
      * Used when items are loaded from an api call.
