@@ -79,6 +79,24 @@ export const WithSearch: StoryObj<Component> = {
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
                 enableSearch
+                noResultsDesc="no result found description"
+            />
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const LimitSelections: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Form.MultiSelect
+                label="The maximum selected options are limited"
+                options={OPTIONS_DATA}
+                valueExtractor={(item) => item.value}
+                listExtractor={(item) => item.label}
+                enableSearch
+                noResultsDesc="no result found description"
+                maxSelected={2}
             />
         );
     },

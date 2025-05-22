@@ -1,5 +1,6 @@
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { SquareIcon } from "@lifesg/react-icons/square";
+import { SquareFillIcon } from "@lifesg/react-icons/square-fill";
 import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
@@ -144,6 +145,13 @@ export const CheckboxUnselectedIndicator = styled(SquareIcon)`
     color: ${Colour["icon-primary-subtlest"]};
 `;
 
+export const CheckboxDisabledIndicator = styled(SquareFillIcon)`
+    flex-shrink: 0;
+    height: 1lh;
+    width: 1lh;
+    color: ${Colour["icon-disabled"]};
+`;
+
 // -----------------------------------------------------------------------------
 // ELEMENT STYLES
 // -----------------------------------------------------------------------------
@@ -187,4 +195,13 @@ export const LabelIcon = styled(ExclamationCircleFillIcon)`
 export const Spinner = styled(ComponentLoadingSpinner)`
     margin-right: ${Spacing["spacing-8"]};
     color: ${Colour["icon"]};
+`;
+
+export const NoResultDescContainer = styled.div<ContainerStyleProps>`
+    padding: 0 ${Spacing["spacing-16"]} ${Spacing["spacing-12"]}
+        ${Spacing["spacing-16"]};
+    ${(props) =>
+        props.$variant === "small"
+            ? Font["body-sm-regular"]
+            : Font["body-md-regular"]}
 `;

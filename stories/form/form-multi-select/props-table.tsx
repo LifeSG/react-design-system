@@ -150,6 +150,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["number"],
                 defaultValue: "50",
             },
+            {
+                name: "maxSelected",
+                description:
+                    "Specifies the maximum options that can be selected",
+                propTypes: ["number"],
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,
