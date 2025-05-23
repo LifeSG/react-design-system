@@ -1,12 +1,23 @@
 import React from "react";
 import { StyledComponentProps } from "src/theme/helpers";
 import styled, { DefaultTheme, useTheme } from "styled-components";
-import { DocTable } from "../doc-table";
+import { DocTable, DocTextStyle } from "../doc-table";
 import { ColourTokenInspector } from "../token-inspector";
 import {
     TokenTableDefaultValueColourTokenProps,
     TokenTableDefaultValueDefaultProps,
 } from "./types";
+
+export const Usage = styled.div`
+    margin: 16px 0;
+    ${DocTextStyle}
+
+    svg {
+        width: 0.75lh;
+        height: 0.75lh;
+        vertical-align: middle;
+    }
+`;
 
 // =============================================================================
 // TABLE
