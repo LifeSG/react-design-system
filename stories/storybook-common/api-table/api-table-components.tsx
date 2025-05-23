@@ -1,6 +1,5 @@
-import React from "react";
 import styled, { css } from "styled-components";
-import { V2_Color } from "../../../src/v2_color";
+import { DocTable } from "../doc-table";
 import { DefaultColProps, DescriptionColProps } from "./types";
 
 // =============================================================================
@@ -25,45 +24,7 @@ export const Table = ({ children }: TableProps) => {
     );
 };
 
-const StyledTable = styled.table`
-    width: 100%;
-    position: relative;
-    border-collapse: collapse;
-    border-spacing: 0;
-    line-height: 1.5;
-
-    a {
-        color: ${V2_Color.Primary};
-        cursor: pointer;
-        text-decoration: none;
-    }
-
-    code {
-        background-color: #f5f5f5;
-        color: #d0021b;
-        font-family: monospace;
-        font-size: 0.725rem;
-        font-weight: 400;
-        padding: 0.25rem 0.5rem;
-        white-space: pre-wrap;
-    }
-
-    td,
-    th {
-        font-family: "Nunito Sans", -apple-system, ".SFNSText-Regular",
-            "San Francisco", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
-            Helvetica, Arial, sans-serif;
-        padding: 0.5rem;
-        font-size: 0.875rem;
-        text-align: left;
-        vertical-align: top;
-    }
-
-    thead,
-    th {
-        font-weight: bold;
-    }
-
+const StyledTable = styled(DocTable)`
     td {
         :first-child {
             width: 20%;
@@ -71,26 +32,6 @@ const StyledTable = styled.table`
 
         :last-child {
             width: 20%;
-        }
-    }
-
-    tbody {
-        tr {
-            border: none;
-            border-bottom: 1px solid ${V2_Color.Neutral[6]};
-            :nth-child(even) {
-                background: ${V2_Color.Neutral[7]};
-            }
-        }
-    }
-
-    thead {
-        tr {
-            border-bottom: 2px solid ${V2_Color.Primary};
-        }
-
-        th {
-            color: ${V2_Color.Primary};
         }
     }
 `;
@@ -110,7 +51,7 @@ export const Section = ({ children }: SectionProps) => (
 );
 
 const SectionRow = styled.tr`
-    background: ${V2_Color.Neutral[3]} !important;
+    background: #686868 !important;
     color: white;
     font-weight: bold;
 `;
@@ -143,7 +84,7 @@ const Label = styled.td<NameColStyleProps>`
     ${(props) => {
         if (props.$isFunction) {
             return css`
-                color: ${V2_Color.PrimaryDark};
+                color: #1768be;
             `;
         }
     }}
@@ -153,13 +94,13 @@ const Mandatory = styled.td<NameColStyleProps>`
     font-weight: bold;
     :after {
         content: " *";
-        color: ${V2_Color.Validation.Red.Text};
+        color: #9e130f;
     }
 
     ${(props) => {
         if (props.$isFunction) {
             return css`
-                color: ${V2_Color.PrimaryDark};
+                color: #1768be;
             `;
         }
     }}
