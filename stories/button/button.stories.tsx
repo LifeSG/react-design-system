@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "src/button";
 import { Container } from "./doc-elements";
-import { TokenTable } from "./tokens-table";
+import { TokensTable } from "./tokens-table";
 
 type Component = typeof Button.Default;
 
@@ -196,5 +196,5 @@ export const DangerLoadingState: StoryObj<Component> = {
 
 export const TokenCustomisation: StoryObj = {
     tags: ["!dev"],
-    render: () => <TokenTable />,
+    render: () => <TokensTable />,
 };

@@ -34,24 +34,6 @@ apply a red scheme over the buttons.
 
 ## Component tokens
 
-### Overriding
-
-```tsx
-import { LifeSGTheme } from "@lifesg/react-design-system/theme";
-
-const customTheme: ThemeSpec = {
-    ...LifeSGTheme,
-    componentOverrides: {
-        Button: {
-            "button-radius": 15, // specify a custom pixel-based value or Radius token
-            "button-default-colour-bg": Colour["bg-primary"], // specify a Colour token or a custom colour value
-        },
-    },
-};
-```
-
-### Default preset
-
 <Story of={ButtonStories.TokenCustomisation} />
 
 ## Component API

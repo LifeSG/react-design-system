@@ -5,7 +5,7 @@ import { LifeSGColourSet } from "./specs/lifesg-semantic-tokens";
 import { PAColourSet } from "./specs/pa-semantic-tokens";
 import { SemanticColourCollectionMap } from "./types";
 
-const ColourSpec: ThemeCollectionSpec<
+export const ColourSpec: ThemeCollectionSpec<
     SemanticColourCollectionMap,
     ColourScheme
 > = {

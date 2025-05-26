@@ -1,0 +1,64 @@
+import { Meta } from "@storybook/blocks";
+import { DocInfo, DocNote } from "stories/storybook-common";
+
+<Meta title="Foundations/Component tokens/Introduction" />
+
+# Component tokens
+
+Some components offer limited style customisation on the theme level. For
+details on what can be overridden, refer to their respective docs.
+
+Supported components:
+
+-   [Button](/docs/selection-and-input-button-base--docs#component-tokens)
+
+## Usage
+
+Component tokens can be selectively customised by setting `componentOverrides`.
+
+```tsx
+import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+
+const customTheme: ThemeSpec = {
+    ...LifeSGTheme,
+    componentOverrides: {
+        Button: {
+            "button-radius": 15,
+            "button-default-colour-bg": Colour["bg-primary"],
+        },
+    },
+};
+
+<ThemeProvider theme={customTheme}>
+    <App />
+</ThemeProvider>;
+```
+
+You can nest `ThemeProvider`s; a component will pick up the theme from the
+nearest `ThemeProvider` ancestor. This is useful if you need to customise
+component tokens only in a specific context.
+
+In this example, the first button follows the default colours, while the second
+button has the custom styling.
+
+```tsx
+import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+
+const customTheme: ThemeSpec = {
+    ...LifeSGTheme,
+    componentOverrides: {
+        Button: {
+            "button-default-colour-bg": "#fab",
+        },
+    },
+};
+
+const App = (
+    <ThemeProvider theme={LifeSGTheme}>
+        <Button />
+        <ThemeProvider theme={customTheme}>
+            <Button />
+        </ThemeProvider>
+    </ThemeProvider>
+);
+```
