@@ -21,7 +21,7 @@ export type {
 
 export type { FontSpecSet, FontSpecSetOptions } from "./font-spec/types";
 
-export type { FontSet, FontSetOptions } from "./font/types";
+export type { FontSet, FontSetOptions, TypographySizeType } from "./font/types";
 
 export type { MotionSet, MotionSetOptions } from "./motion/types";
 
