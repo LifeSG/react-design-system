@@ -89,10 +89,10 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
-                name: "noResultsDesc",
+                name: "noResultsDescription",
                 description:
                     "If specified, the no result description will display under the default no results display",
-                propTypes: ["string"],
+                propTypes: ["React.ReactNode"],
             },
             {
                 name: "listStyleWidth (deprecated)",

@@ -79,7 +79,7 @@ export const WithSearch: StoryObj<Component> = {
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
                 enableSearch
-                noResultsDesc="no result found description"
+                noResultsDescription="no result found description"
             />
         );
     },
@@ -95,8 +95,8 @@ export const LimitSelections: StoryObj<Component> = {
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
                 enableSearch
-                noResultsDesc="no result found description"
-                maxSelected={2}
+                noResultsDescription="no result found description"
+                maxSelectable={2}
             />
         );
     },

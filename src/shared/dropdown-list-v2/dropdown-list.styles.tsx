@@ -15,6 +15,7 @@ import {
 } from "../../theme";
 import { ComponentLoadingSpinner } from "../component-loading-spinner";
 import { DropdownVariantType } from "../dropdown-list/types";
+import { applyHtmlContentStyle } from "../html-content/html-content";
 import { BasicButton } from "../input-wrapper/input-wrapper";
 
 // =============================================================================
@@ -149,7 +150,7 @@ export const CheckboxDisabledIndicator = styled(SquareFillIcon)`
     flex-shrink: 0;
     height: 1lh;
     width: 1lh;
-    color: ${Colour["icon-disabled"]};
+    color: ${Colour["icon-disabled-subtle"]};
 `;
 
 // -----------------------------------------------------------------------------
@@ -197,11 +198,9 @@ export const Spinner = styled(ComponentLoadingSpinner)`
     color: ${Colour["icon"]};
 `;
 
-export const NoResultDescContainer = styled.div<ContainerStyleProps>`
+export const NoResultDescContainer = styled.div`
+    ${applyHtmlContentStyle()}
+    color: ${Colour["text-subtle"]};
     padding: 0 ${Spacing["spacing-16"]} ${Spacing["spacing-12"]}
         ${Spacing["spacing-16"]};
-    ${(props) =>
-        props.$variant === "small"
-            ? Font["body-sm-regular"]
-            : Font["body-md-regular"]}
 `;

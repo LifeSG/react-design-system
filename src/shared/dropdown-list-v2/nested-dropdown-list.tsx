@@ -61,7 +61,7 @@ export const NestedDropdownList = <T,>({
     /* DropdownSearchProps */
     enableSearch,
     hideNoResultsDisplay,
-    noResultsDesc,
+    noResultsDescription,
     searchPlaceholder = "Search",
     onSearch,
 }: NestedDropdownListProps<T>) => {
@@ -445,12 +445,9 @@ export const NestedDropdownList = <T,>({
                         <LabelIcon data-testid="no-result-icon" />
                         No results found.
                     </ResultStateContainer>
-                    {noResultsDesc && (
-                        <NoResultDescContainer
-                            $variant={variant}
-                            data-testid="no-result-desc"
-                        >
-                            {noResultsDesc}
+                    {noResultsDescription && (
+                        <NoResultDescContainer data-testid="no-result-desc">
+                            {noResultsDescription}
                         </NoResultDescContainer>
                     )}
                 </>

@@ -151,7 +151,7 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "50",
             },
             {
-                name: "maxSelected",
+                name: "maxSelectable",
                 description:
                     "Specifies the maximum options that can be selected",
                 propTypes: ["number"],

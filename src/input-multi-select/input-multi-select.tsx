@@ -1,6 +1,6 @@
 import { OpenChangeReason } from "@floating-ui/react";
 import findIndex from "lodash/findIndex";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     DropdownList,
     DropdownListState,
@@ -41,14 +41,14 @@ export const InputMultiSelect = <T, V>({
     optionTruncationType = "end",
     renderListItem,
     hideNoResultsDisplay,
-    noResultsDesc,
+    noResultsDescription,
     renderCustomCallToAction,
     onBlur,
     variant = "default",
     readOnly,
     alignment,
     dropdownZIndex,
-    maxSelected,
+    maxSelectable,
 }: InputMultiSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -61,10 +61,6 @@ export const InputMultiSelect = <T, V>({
     const nodeRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);
 
-    const hasSelectedMax = useMemo(
-        () => maxSelected && maxSelected < options?.length && maxSelected > 1,
-        [maxSelected, options?.length]
-    );
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -76,7 +72,7 @@ export const InputMultiSelect = <T, V>({
     // EVENT HANDLERS
     // =============================================================================
     const handleSelectAllClick = () => {
-        if ((selected && selected.length > 0) || hasSelectedMax) {
+        if ((selected && selected.length > 0) || maxSelectable) {
             setSelected([]);
             performOnSelectOptions([]);
         } else {
@@ -248,7 +244,7 @@ export const InputMultiSelect = <T, V>({
                 searchFunction={searchFunction}
                 searchPlaceholder={searchPlaceholder}
                 multiSelect
-                maxSelected={maxSelected}
+                maxSelectable={maxSelectable}
                 selectedItems={selected}
                 onSelectAll={handleSelectAllClick}
                 onRetry={onRetry}
@@ -256,7 +252,7 @@ export const InputMultiSelect = <T, V>({
                 itemTruncationType={optionTruncationType}
                 renderListItem={renderListItem}
                 hideNoResultsDisplay={hideNoResultsDisplay}
-                noResultsDesc={noResultsDesc}
+                noResultsDescription={noResultsDescription}
                 renderCustomCallToAction={renderCustomCallToAction}
                 variant={variant}
                 width={elementWidth}

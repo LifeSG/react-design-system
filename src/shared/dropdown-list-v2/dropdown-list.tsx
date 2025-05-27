@@ -4,7 +4,6 @@ import React, {
     useCallback,
     useContext,
     useEffect,
-    useMemo,
     useRef,
     useState,
 } from "react";
@@ -44,7 +43,7 @@ import { DropdownListProps, ListItemDisplayProps } from "./types";
 export const DropdownList = <T, V>({
     listItems,
     multiSelect,
-    maxSelected,
+    maxSelectable,
     selectedItems,
     disableItemFocus,
     itemsLoadState = "success",
@@ -67,7 +66,7 @@ export const DropdownList = <T, V>({
     /* DropdownSearchProps */
     enableSearch,
     hideNoResultsDisplay,
-    noResultsDesc,
+    noResultsDescription,
     searchPlaceholder = "Search",
     searchFunction,
     onSearch,
@@ -89,14 +88,10 @@ export const DropdownList = <T, V>({
     const searchInputRef = useRef<HTMLInputElement>(null);
     const virtuosoRef = useRef<VirtuosoHandle>(null);
 
-    const hasSelectedMax = useMemo(
-        () =>
-            maxSelected &&
-            listItems &&
-            maxSelected < listItems.length &&
-            maxSelected > 1,
-        [listItems, maxSelected]
-    );
+    const hasSelectedMax =
+        maxSelectable &&
+        selectedItems &&
+        selectedItems?.length === maxSelectable;
 
     // =========================================================================
     // HELPER FUNCTIONS
@@ -192,14 +187,7 @@ export const DropdownList = <T, V>({
     };
 
     const handleListItemClick = (item: T, upcomingIndex: number) => {
-        if (
-            hasSelectedMax &&
-            selectedItems &&
-            selectedItems?.length === maxSelected &&
-            !selectedItems.some((selectedItem) => {
-                return selectedItem === item;
-            })
-        ) {
+        if (hasSelectedMax && !checkListItemSelected(item)) {
             return;
         }
         setFocusedIndex(upcomingIndex);
@@ -345,11 +333,7 @@ export const DropdownList = <T, V>({
     // =========================================================================
     const renderListItemIcon = (selected: boolean) => {
         if (multiSelect) {
-            if (
-                hasSelectedMax &&
-                !selected &&
-                selectedItems?.length === maxSelected
-            ) {
+            if (hasSelectedMax && !selected) {
                 return <CheckboxDisabledIndicator aria-hidden />;
             }
 
@@ -391,6 +375,7 @@ export const DropdownList = <T, V>({
                 <ListItem
                     aria-selected={selected}
                     aria-multiselectable={multiSelect}
+                    aria-disabled={hasSelectedMax as boolean}
                     data-testid="list-item"
                     key={getItemKey(item, index)}
                     onClick={() => handleListItemClick(item, index)}
@@ -448,7 +433,7 @@ export const DropdownList = <T, V>({
                         type="button"
                         $variant={variant}
                     >
-                        {hasSelectedMax
+                        {maxSelectable
                             ? "Clear"
                             : selectedItems.length === 0
                             ? "Select all"
@@ -472,12 +457,9 @@ export const DropdownList = <T, V>({
                         <LabelIcon data-testid="no-result-icon" />
                         No results found.
                     </ResultStateContainer>
-                    {noResultsDesc && (
-                        <NoResultDescContainer
-                            $variant={variant}
-                            data-testid="no-result-desc"
-                        >
-                            {noResultsDesc}
+                    {noResultsDescription && (
+                        <NoResultDescContainer data-testid="no-result-desc">
+                            {noResultsDescription}
                         </NoResultDescContainer>
                     )}
                 </>

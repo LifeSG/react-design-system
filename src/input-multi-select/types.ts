@@ -22,7 +22,7 @@ export interface InputMultiSelectProps<T, V>
     variant?: DropdownVariantType | undefined;
     alignment?: DropdownAlignmentType | undefined;
     dropdownZIndex?: number | undefined;
-    maxSelected?: number | undefined;
+    maxSelectable?: number | undefined;
     /** @deprecated this has no effect as the dropdown will automatically resize */
     listStyleWidth?: string | undefined;
 }

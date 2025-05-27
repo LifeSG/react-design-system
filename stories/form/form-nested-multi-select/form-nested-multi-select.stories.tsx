@@ -94,7 +94,7 @@ export const WithSearch: StoryObj<Component> = {
                 label="This has searchable options"
                 options={searchOptions}
                 enableSearch
-                noResultsDesc="No results found description"
+                noResultsDescription="No results found description"
             />
         );
     },
