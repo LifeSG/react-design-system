@@ -95,7 +95,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "noResultsDescription",
                 description:
-                    "If specified, the no result description will display under the default no results display",
+                    "Additional description rendered after the default no results display",
                 propTypes: ["React.ReactNode"],
             },
             {

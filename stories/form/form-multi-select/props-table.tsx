@@ -131,6 +131,18 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["() => void"],
             },
             {
+                name: "hideNoResultsDisplay",
+                description:
+                    "If specified, the default no results display will not be rendered",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "noResultsDescription",
+                description:
+                    "Additional description rendered after the default no results display",
+                propTypes: ["React.ReactNode"],
+            },
+            {
                 name: "variant",
                 description: "The display variant of the component",
                 propTypes: [`"small"`, `"default"`],
@@ -153,7 +165,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "maxSelectable",
                 description:
-                    "Specifies the maximum options that can be selected",
+                    "Specifies the maximum number of options that can be selected",
                 propTypes: ["number"],
             },
         ],
