@@ -73,6 +73,9 @@ export const Component = (
             !previousCalendarDate.current ||
             !previousCalendarDate.current.isSame(value, "month")
         ) {
+            calendarManagerRef.current?.setCalendarDate(
+                value.format("YYYY-MM-DD")
+            );
             performDisplayChangeHandler(value);
         }
         previousCalendarDate.current = value;
@@ -188,6 +191,9 @@ export const Component = (
                         showActiveMonthDaysOnly={showActiveMonthDaysOnly}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
+                        setCalendarDate={
+                            calendarManagerRef.current?.setCalendarDate
+                        }
                     />
                 );
         }

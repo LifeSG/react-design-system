@@ -67,13 +67,51 @@ export const StandardCell = ({
         onFocus(date.format("YYYY-MM-DD"));
     };
 
-    const handleKeyNavigation = (event: React.KeyboardEvent) => {
+    const handleKeyNavigation = (
+        event: React.KeyboardEvent,
+        referenceDate: Dayjs
+    ) => {
+        let newFocusSelection: Dayjs | undefined;
+
+        const keyActions: Record<string, () => dayjs.Dayjs> = {
+            ArrowLeft: () => referenceDate.subtract(1, "day"),
+            ArrowRight: () => referenceDate.add(1, "day"),
+            ArrowUp: () => referenceDate.subtract(7, "day"),
+            ArrowDown: () => referenceDate.add(7, "day"),
+            Home: () => referenceDate.startOf("week"),
+            End: () => referenceDate.endOf("week"),
+            PageUp: () => {
+                return event.shiftKey
+                    ? referenceDate.subtract(1, "year")
+                    : referenceDate.add(1, "month");
+            },
+            PageDown: () => {
+                return event.shiftKey
+                    ? referenceDate.subtract(1, "year")
+                    : referenceDate.add(1, "month");
+            },
+        };
+
+        const action = keyActions[event.key];
+        if (action) {
+            newFocusSelection = action();
+            if (newFocusSelection) {
+                onFocus(newFocusSelection.format("YYYY-MM-DD"));
+            }
+        }
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent) => {
         const keyboardEvent = event as React.KeyboardEvent<HTMLInputElement>;
         const validKeys = [
             "ArrowLeft",
             "ArrowRight",
             "ArrowUp",
             "ArrowDown",
+            "Home",
+            "End",
+            "PageDown",
+            "PageUp",
             "Enter",
             " ",
         ];
@@ -86,42 +124,22 @@ export const StandardCell = ({
         event.preventDefault();
         const referenceDate = hoverDate ? dayjs(hoverDate) : date;
 
-        let newFocusSelection: Dayjs | undefined;
-        switch (selectedKey) {
-            case "Enter":
-            case " ": {
-                const isReferenceDateDisabled = CalendarHelper.isDisabledDay(
-                    referenceDate,
-                    disabledDates,
-                    minDate,
-                    maxDate
-                );
-                const isReferenceDateInteractive =
-                    !isReferenceDateDisabled || allowDisabledSelection;
-                if (isReferenceDateInteractive) {
-                    onSelect(referenceDate, !isReferenceDateInteractive);
-                }
-                break;
+        if (selectedKey === "Enter" || selectedKey === " ") {
+            const isReferenceDateDisabled = CalendarHelper.isDisabledDay(
+                referenceDate,
+                disabledDates,
+                minDate,
+                maxDate
+            );
+            const isReferenceDateInteractive =
+                !isReferenceDateDisabled || allowDisabledSelection;
+            if (isReferenceDateInteractive) {
+                onSelect(referenceDate, !isReferenceDateInteractive);
             }
+            return;
+        }
 
-            case "ArrowLeft":
-                newFocusSelection = referenceDate.subtract(1, "day");
-                break;
-            case "ArrowRight":
-                newFocusSelection = referenceDate.add(1, "day");
-                break;
-            case "ArrowUp":
-                newFocusSelection = referenceDate.subtract(7, "day");
-                break;
-            case "ArrowDown":
-                newFocusSelection = referenceDate.add(7, "day");
-                break;
-            default:
-                break;
-        }
-        if (newFocusSelection) {
-            onFocus(newFocusSelection.format("YYYY-MM-DD"));
-        }
+        handleKeyNavigation(event, referenceDate);
     };
 
     // =========================================================================
@@ -299,7 +317,7 @@ export const StandardCell = ({
         onSelect: handleSelect,
         onHover: handleHover,
         onFocus: handleFocus,
-        onKeyDown: handleKeyNavigation,
+        onKeyDown: handleKeyDown,
         role: "gridcell",
         tabIndex,
     };

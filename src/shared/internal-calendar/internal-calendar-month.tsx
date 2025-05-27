@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { CalendarHelper } from "../../util/calendar-helper";
 import { MonthCell, Wrapper } from "./internal-calendar-month.style";
 import { FocusType, InternalCalendarProps } from "./types";
@@ -39,6 +39,9 @@ export const InternalCalendarMonth = ({
         () => CalendarHelper.generateMonths(dayjs(calendarDate)),
         [calendarDate]
     );
+    const monthRefs = useRef<Array<HTMLDivElement | null>>(
+        new Array(months.length).fill(null)
+    );
 
     // =============================================================================
     // EVENT HANDLERS
@@ -47,6 +50,60 @@ export const InternalCalendarMonth = ({
         if (isDisabled) return;
 
         onMonthSelect(value);
+    };
+
+    const handleKeyDown = (
+        event: React.KeyboardEvent<HTMLDivElement>,
+        value: Dayjs,
+        isDisabled: boolean
+    ) => {
+        const keyboardEvent = event as React.KeyboardEvent<HTMLInputElement>;
+        const validKeys = [
+            "ArrowLeft",
+            "ArrowRight",
+            "ArrowUp",
+            "ArrowDown",
+            "Enter",
+            " ",
+        ];
+        const selectedKey = keyboardEvent.key;
+        const isValid = validKeys.includes(selectedKey);
+        if (!isValid) {
+            return;
+        }
+
+        event.preventDefault();
+
+        let newMonthSelection: number | undefined;
+        const currentIndex = months.indexOf(value);
+        switch (selectedKey) {
+            case "Enter":
+            case " ":
+                handleMonthClick(value, isDisabled);
+                break;
+            case "ArrowLeft":
+                newMonthSelection = currentIndex - 1;
+                break;
+            case "ArrowRight":
+                newMonthSelection = currentIndex + 1;
+                break;
+            case "ArrowUp":
+                newMonthSelection = currentIndex - 2;
+                break;
+            case "ArrowDown":
+                newMonthSelection = currentIndex + 2;
+                break;
+            default:
+                break;
+        }
+
+        if (
+            newMonthSelection !== undefined &&
+            newMonthSelection >= 0 &&
+            newMonthSelection < months.length
+        ) {
+            monthRefs.current[newMonthSelection]?.focus();
+        }
     };
 
     // =============================================================================
@@ -90,11 +147,21 @@ export const InternalCalendarMonth = ({
             ? "current-month"
             : "default";
 
+        // Only selected month in tab order
+        const tabIndex = viewCalendarDate.isSame(date, "year")
+            ? isSelectedMonth
+                ? 0
+                : -1
+            : date.month() === 0
+            ? 0
+            : -1;
+
         return {
             disabledDisplay: disabled || isOutsideSelectedRange(date),
             interactive: !disabled || allowDisabledSelection,
             month,
             variant,
+            tabIndex,
         };
     };
 
@@ -105,15 +172,22 @@ export const InternalCalendarMonth = ({
 
     return (
         <Wrapper>
-            {months.map((date) => {
-                const { disabledDisplay, interactive, variant, month } =
-                    generateMonthStatus(date);
+            {months.map((date, index) => {
+                const {
+                    disabledDisplay,
+                    interactive,
+                    variant,
+                    month,
+                    tabIndex,
+                } = generateMonthStatus(date);
 
                 return (
                     <MonthCell
+                        ref={(el) => (monthRefs.current[index] = el)}
+                        tabIndex={tabIndex}
                         role="button"
                         aria-label={month}
-                        aria-disabled={disabledDisplay}
+                        aria-disabled={!interactive}
                         aria-selected={
                             variant === "selected-month" ? "true" : "false"
                         }
@@ -122,6 +196,9 @@ export const InternalCalendarMonth = ({
                         $disabledDisplay={disabledDisplay}
                         $interactive={interactive}
                         onClick={() => handleMonthClick(date, !interactive)}
+                        onKeyDown={(event) => {
+                            handleKeyDown(event, date, !interactive);
+                        }}
                     >
                         {month}
                     </MonthCell>

@@ -76,6 +76,7 @@ const Component = (
     const doneButtonRef = useRef<HTMLButtonElement>(null);
     const cancelButtonRef = useRef<HTMLButtonElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const yearDropdownRef = useRef<HTMLButtonElement>(null);
 
     // =============================================================================
     // EFFECTS
@@ -107,13 +108,8 @@ const Component = (
     }, [initialCalendarDate]);
 
     useEffect(() => {
-        if (calendarDate) {
-            setAccessibleName(calendarDate.format("MMMM, YYYY"));
-        }
-    }, [calendarDate]);
-
-    useEffect(() => {
         performOnCalendarDateChange(viewCalendarDate);
+        setAccessibleName(viewCalendarDate.format("MMMM, YYYY"));
         // more accurate than calendarDate since it accounts for selection state
         // in month/year views
     }, [viewCalendarDate]);
@@ -133,6 +129,31 @@ const Component = (
         }
     };
 
+    const handleMonthDropdownKeydown = (
+        event: React.KeyboardEvent<HTMLButtonElement>
+    ) => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            handleMonthDropdownClick();
+            yearDropdownRef.current?.focus(); // Focus on year dropdown after month selection
+        }
+
+        // Up and Down arrow keys will change the month
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+            event.preventDefault();
+            const nextDate =
+                event.key === "ArrowUp"
+                    ? calendarDate.subtract(1, "month")
+                    : calendarDate.add(1, "month");
+
+            setCalendarDate(nextDate);
+
+            if (currentView === "default") {
+                setViewCalendarDate(nextDate);
+            }
+        }
+    };
+
     const handleYearDropdownClick = () => {
         /**
          * If the view is in the month options view,
@@ -144,6 +165,42 @@ const Component = (
             setCalendarDate(viewCalendarDate);
         } else {
             setCurrentView("year-options");
+        }
+    };
+
+    const handleYearDropdownKeydown = (
+        event: React.KeyboardEvent<HTMLButtonElement>
+    ) => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            handleYearDropdownClick();
+        }
+
+        // Up and Down arrow keys will change the year
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+            event.preventDefault();
+            const isYearView = currentView === "year-options";
+            let nextDate: Dayjs;
+
+            if (isYearView) {
+                // In year options view, change decade
+                nextDate =
+                    event.key === "ArrowUp"
+                        ? calendarDate.subtract(10, "year")
+                        : calendarDate.add(10, "year");
+            } else {
+                // In default view, change year
+                nextDate =
+                    event.key === "ArrowUp"
+                        ? calendarDate.subtract(1, "year")
+                        : calendarDate.add(1, "year");
+            }
+
+            setCalendarDate(nextDate);
+
+            if (currentView === "default") {
+                setViewCalendarDate(nextDate);
+            }
         }
     };
 
@@ -303,7 +360,7 @@ const Component = (
             ? getMonthHeaderLabel(calendarDate)
             : calendarDate.format("MMM");
 
-        const fullMonthLabel = calendarDate.format("MMMM");
+        const fullMonthLabel = dayjs(monthLabel, "MMM").format("MMMM");
 
         const yearLabel = getYearHeaderText();
         const viewToYearLabel: Record<View, string> = {
@@ -317,22 +374,23 @@ const Component = (
                 <DropdownButton
                     aria-label={`${fullMonthLabel}, Select month`}
                     type="button"
-                    tabIndex={-1}
                     $expanded={currentView === "month-options"}
                     $visible={currentView === "default"}
                     id="month-dropdown"
                     onClick={handleMonthDropdownClick}
+                    onKeyDown={handleMonthDropdownKeydown}
                 >
                     <DropdownText>{monthLabel}</DropdownText>
                     <IconChevronDown />
                 </DropdownButton>
                 <DropdownButton
+                    ref={yearDropdownRef}
                     aria-label={viewToYearLabel[currentView]}
                     type="button"
-                    tabIndex={-1}
                     $expanded={currentView !== "default"}
                     id="year-dropdown"
                     onClick={handleYearDropdownClick}
+                    onKeyDown={handleYearDropdownKeydown}
                 >
                     <DropdownText>{yearLabel}</DropdownText>
                     <IconChevronDown />
@@ -361,6 +419,7 @@ const Component = (
             case "year-options":
                 return (
                     <InternalCalendarYear
+                        setCalendarDate={setCalendarDate}
                         calendarDate={calendarDate}
                         currentFocus={currentFocus}
                         minDate={minDate}

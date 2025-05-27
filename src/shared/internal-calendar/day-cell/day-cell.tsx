@@ -1,10 +1,10 @@
 import dayjs from "dayjs";
-import React from "react";
 import {
     Cell,
     CellContent,
     Indicator,
     Label,
+    LabelWrapper,
     LeftCircle,
     LeftHalf,
     RightCircle,
@@ -66,29 +66,32 @@ export const DayCell = ({
             <LeftCircle $type={circleLeft} />
             <RightHalf $type={bgRight}></RightHalf>
             <RightCircle $type={circleRight} />
-            <Label
-                tabIndex={tabIndex}
-                role={role}
-                aria-label={dayName}
-                aria-disabled={!interactive}
-                $type={labelType}
-                $disabled={disabled}
-                $interactive={interactive}
-                onClick={handleClick}
-                onKeyDown={(event) => {
-                    onKeyDown && onKeyDown(event);
-                }}
-                onMouseEnter={handleHover}
-                onMouseLeave={handleMouseout}
-                onFocus={handleFocus}
-            >
-                <CellContent>
-                    {date.date()}
-                    {currentDateIndicator && today && (
-                        <Indicator $disabled={disabled} />
-                    )}
-                </CellContent>
-            </Label>
+            <LabelWrapper $interactive={interactive}>
+                <Label
+                    tabIndex={tabIndex}
+                    role={role}
+                    aria-label={dayName}
+                    aria-disabled={!interactive}
+                    aria-selected={labelType === "selected" ? "true" : "false"}
+                    $type={labelType}
+                    $disabled={disabled}
+                    $interactive={interactive}
+                    onClick={handleClick}
+                    onKeyDown={(event) => {
+                        onKeyDown && onKeyDown(event);
+                    }}
+                    onMouseEnter={handleHover}
+                    onMouseLeave={handleMouseout}
+                    onFocus={handleFocus}
+                >
+                    <CellContent>
+                        {date.date()}
+                        {currentDateIndicator && today && (
+                            <Indicator $disabled={disabled} />
+                        )}
+                    </CellContent>
+                </Label>
+            </LabelWrapper>
         </Cell>
     );
 };
