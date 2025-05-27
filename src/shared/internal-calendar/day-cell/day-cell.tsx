@@ -24,7 +24,10 @@ export const DayCell = ({
     date,
     onSelect,
     onHover,
+    onFocus,
     onHoverEnd,
+    onKeyDown,
+    tabIndex = -1,
     role = "button",
 }: DayCellProps) => {
     // =========================================================================
@@ -46,6 +49,10 @@ export const DayCell = ({
         onHover(date);
     };
 
+    const handleFocus = () => {
+        onFocus && onFocus(date);
+    };
+
     const handleMouseout = () => {
         onHoverEnd && onHoverEnd(date);
     };
@@ -60,17 +67,22 @@ export const DayCell = ({
             <RightHalf $type={bgRight}></RightHalf>
             <RightCircle $type={circleRight} />
             <Label
+                tabIndex={tabIndex}
                 role={role}
                 aria-label={dayName}
-                aria-disabled={disabled}
+                aria-disabled={!interactive}
                 $type={labelType}
                 $disabled={disabled}
                 $interactive={interactive}
                 onClick={handleClick}
+                onKeyDown={(event) => {
+                    onKeyDown && onKeyDown(event);
+                }}
                 onMouseEnter={handleHover}
                 onMouseLeave={handleMouseout}
+                onFocus={handleFocus}
             >
-                <CellContent aria-hidden>
+                <CellContent>
                     {date.date()}
                     {currentDateIndicator && today && (
                         <Indicator $disabled={disabled} />

@@ -19,6 +19,8 @@ interface Props {
     showActiveMonthDaysOnly?: boolean | undefined;
     onSelect: (value: Dayjs, disabled: boolean) => void;
     onHover: (value: string, disabled: boolean) => void;
+    onFocus: (value: string) => void;
+    tabIndex?: number;
 }
 
 export const StandardCell = ({
@@ -36,6 +38,8 @@ export const StandardCell = ({
     showActiveMonthDaysOnly,
     onSelect,
     onHover,
+    onFocus,
+    tabIndex = -1,
 }: Props) => {
     // =========================================================================
     // CONSTS
@@ -57,6 +61,67 @@ export const StandardCell = ({
 
     const handleHover = () => {
         onHover(date.format("YYYY-MM-DD"), !interactive);
+    };
+
+    const handleFocus = () => {
+        onFocus(date.format("YYYY-MM-DD"));
+    };
+
+    const handleKeyNavigation = (event: React.KeyboardEvent) => {
+        const keyboardEvent = event as React.KeyboardEvent<HTMLInputElement>;
+        const validKeys = [
+            "ArrowLeft",
+            "ArrowRight",
+            "ArrowUp",
+            "ArrowDown",
+            "Enter",
+            " ",
+        ];
+        const selectedKey = keyboardEvent.key;
+        const isValid = validKeys.includes(selectedKey);
+        if (!isValid) {
+            return;
+        }
+
+        event.preventDefault();
+        const referenceDate = hoverDate ? dayjs(hoverDate) : date;
+
+        let newFocusSelection: Dayjs | undefined;
+        switch (selectedKey) {
+            case "Enter":
+            case " ": {
+                const isReferenceDateDisabled = CalendarHelper.isDisabledDay(
+                    referenceDate,
+                    disabledDates,
+                    minDate,
+                    maxDate
+                );
+                const isReferenceDateInteractive =
+                    !isReferenceDateDisabled || allowDisabledSelection;
+                if (isReferenceDateInteractive) {
+                    onSelect(referenceDate, !isReferenceDateInteractive);
+                }
+                break;
+            }
+
+            case "ArrowLeft":
+                newFocusSelection = referenceDate.subtract(1, "day");
+                break;
+            case "ArrowRight":
+                newFocusSelection = referenceDate.add(1, "day");
+                break;
+            case "ArrowUp":
+                newFocusSelection = referenceDate.subtract(7, "day");
+                break;
+            case "ArrowDown":
+                newFocusSelection = referenceDate.add(7, "day");
+                break;
+            default:
+                break;
+        }
+        if (newFocusSelection) {
+            onFocus(newFocusSelection.format("YYYY-MM-DD"));
+        }
     };
 
     // =========================================================================
@@ -233,7 +298,10 @@ export const StandardCell = ({
         currentDateIndicator: true,
         onSelect: handleSelect,
         onHover: handleHover,
+        onFocus: handleFocus,
+        onKeyDown: handleKeyNavigation,
         role: "gridcell",
+        tabIndex,
     };
 
     return (

@@ -34,6 +34,9 @@ export interface DayCellProps extends CellStyleProps {
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     onHover: (value: Dayjs) => void;
+    onFocus?: (value: Dayjs) => void;
+    onKeyDown?: (event: React.KeyboardEvent) => void;
     onHoverEnd?: ((value: Dayjs) => void) | undefined;
+    tabIndex?: number;
     role?: string;
 }

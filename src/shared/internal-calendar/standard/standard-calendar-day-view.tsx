@@ -23,6 +23,7 @@ interface CalendarDayViewProps extends CommonCalendarProps {
     isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
+    setCalendarDate?: (date: string | undefined) => void;
 }
 
 export const StandardCalendarDayView = ({
@@ -38,6 +39,7 @@ export const StandardCalendarDayView = ({
     maxDate,
     allowDisabledSelection,
     showActiveMonthDaysOnly,
+    setCalendarDate,
 }: CalendarDayViewProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -46,7 +48,45 @@ export const StandardCalendarDayView = ({
         (): Dayjs[][] => CalendarHelper.generateDays(calendarDate),
         [calendarDate]
     );
+    const dateToFocus = useMemo((): Dayjs => {
+        // As specified in the Grid Pattern, only one element in the calendar grid is in the Tab sequence.
+        // This function determines which date should be focused based on the state of the calendar.
+
+        // Selected start date is in the current month
+        if (
+            selectedStartDate &&
+            dayjs(selectedStartDate).isSame(calendarDate, "month")
+        ) {
+            return dayjs(selectedStartDate);
+        }
+        // Selected end date is in the current month
+        if (
+            selectedEndDate &&
+            dayjs(selectedEndDate).isSame(calendarDate, "month")
+        ) {
+            return dayjs(selectedEndDate);
+        }
+
+        // Today is in the current month
+        if (dayjs().isSame(calendarDate, "month")) {
+            return dayjs();
+        }
+
+        // Otherwise, choose the first day of the month
+        return dayjs(calendarDate).startOf("month");
+    }, [calendarDate, selectedStartDate, selectedEndDate]);
+
     const [hoverValue, setHoverValue] = useState<string>("");
+
+    const isWithinGeneratedDays = (value: Dayjs) => {
+        if (showActiveMonthDaysOnly) {
+            return value.isSame(calendarDate, "month");
+        }
+        const firstDay = weeksOfTheMonth[0][0];
+        const lastDay = weeksOfTheMonth[weeksOfTheMonth.length - 1][6];
+
+        return value.isBetween(firstDay, lastDay, null, "[]");
+    };
 
     // =============================================================================
     // EVENT HANDLERS
@@ -60,6 +100,14 @@ export const StandardCalendarDayView = ({
     const handleHoverCell = (value: string, isDisabled: boolean) => {
         if (isDisabled && !allowDisabledSelection) return;
 
+        setHoverValue(value);
+        onHover(value);
+    };
+
+    const handleFocusCell = (value: string) => {
+        if (!isWithinGeneratedDays(dayjs(value))) {
+            setCalendarDate?.(value);
+        }
         setHoverValue(value);
         onHover(value);
     };
@@ -91,6 +139,16 @@ export const StandardCalendarDayView = ({
                     onBlur={handleMouseLeaveCell}
                 >
                     {week.map((day, dayIndex) => {
+                        const isDateToFocus = dayjs(day).isSame(
+                            dateToFocus,
+                            "day"
+                        );
+
+                        // First day of the month, should always be in tab order
+                        const isFirstDayOfMonth =
+                            dayjs(day).date() === 1 &&
+                            dayjs(day).month() === calendarDate.month();
+
                         return (
                             <StandardCell
                                 key={`day-${dayIndex}`}
@@ -110,6 +168,10 @@ export const StandardCalendarDayView = ({
                                 }
                                 onSelect={handleDayClick}
                                 onHover={handleHoverCell}
+                                onFocus={handleFocusCell}
+                                tabIndex={
+                                    isDateToFocus || isFirstDayOfMonth ? 0 : -1
+                                }
                             />
                         );
                     })}
