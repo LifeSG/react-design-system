@@ -10,6 +10,9 @@
         /** Module settings **/
         "moduleResolution": "node", // use Nodejs module resolution strategy (else uses classic TS strategy)
         "baseUrl": "./", // for absolute file resolution
+        "paths": {
+            "@/theme": ["./src/theme"]
+        },
         "esModuleInterop": true, // allow interop between ESM and CJS/AMD/UMD modules
         "resolveJsonModule": true, // allow importing .json files
         /** Output files **/
