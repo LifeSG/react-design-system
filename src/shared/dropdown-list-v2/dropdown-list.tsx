@@ -89,8 +89,8 @@ export const DropdownList = <T, V>({
     const virtuosoRef = useRef<VirtuosoHandle>(null);
 
     const hasSelectedMax =
-        maxSelectable &&
-        selectedItems &&
+        !!maxSelectable &&
+        !!selectedItems &&
         selectedItems?.length === maxSelectable;
 
     // =========================================================================
@@ -375,7 +375,7 @@ export const DropdownList = <T, V>({
                 <ListItem
                     aria-selected={selected}
                     aria-multiselectable={multiSelect}
-                    aria-disabled={hasSelectedMax as boolean}
+                    aria-disabled={hasSelectedMax}
                     data-testid="list-item"
                     key={getItemKey(item, index)}
                     onClick={() => handleListItemClick(item, index)}
