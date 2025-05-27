@@ -5,7 +5,7 @@ import { StarHalfIcon } from "@lifesg/react-icons/star-half";
 import styled, { css, keyframes } from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, Font, MediaQuery, Radius } from "../theme";
+import { Colour, Font, MediaQuery, Radius } from "@/theme";
 import { Typography } from "../typography/typography";
 
 const slideDown = keyframes`

@@ -2,7 +2,7 @@ import { ChevronUpIcon } from "@lifesg/react-icons";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Button } from "../button";
-import { Colour, Font, Motion, Radius, Spacing } from "../theme";
+import { Colour, Font, Motion, Radius, Spacing } from "@/theme";
 import {
     TimeSlot,
     TimeSlotStyleProps,

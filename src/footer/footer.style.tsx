@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, MediaQuery, Spacing } from "../theme";
+import { Colour, MediaQuery, Spacing } from "@/theme";
 import { Typography } from "../typography";
 import { Layout } from "../layout";
 import { Divider } from "../divider";

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, MediaQuery, Motion, Radius, Spacing } from "../theme";
+import { Border, Colour, MediaQuery, Motion, Radius, Spacing } from "@/theme";
 import { Typography } from "../typography";
 
 // =============================================================================

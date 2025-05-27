@@ -20,7 +20,7 @@ import { useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useTheme } from "styled-components";
 import { useFloatingChild } from "../../overlay/use-floating-context";
-import { Breakpoint } from "../../theme";
+import { Breakpoint } from "@/theme";
 import { DropdownContainer } from "./element-with-dropdown.styles";
 import { DropdownAlignmentType } from "./types";
 

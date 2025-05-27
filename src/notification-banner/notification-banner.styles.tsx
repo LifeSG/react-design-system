@@ -1,7 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, Font, Motion } from "../theme";
+import { Colour, Font, Motion } from "@/theme";
 import { Layout } from "../layout";
 import { Typography } from "../typography";
 

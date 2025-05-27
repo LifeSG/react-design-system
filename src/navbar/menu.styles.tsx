@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { lineClampCss } from "../shared/styles";
-import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "@/theme";
 import { Typography } from "../typography";
 
 // =============================================================================

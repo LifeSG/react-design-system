@@ -12,7 +12,7 @@ import {
 } from "./breadcrumb.style";
 import { BreadcrumbProps, FadeColorSet } from "./types";
 import { useTheme } from "styled-components";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "@/theme";
 
 export const Breadcrumb = ({
     links,

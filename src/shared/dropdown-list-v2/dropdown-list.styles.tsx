@@ -11,7 +11,7 @@ import {
     MediaQuery,
     Radius,
     Spacing,
-} from "../../theme";
+} from "@/theme";
 import { ComponentLoadingSpinner } from "../component-loading-spinner";
 import { DropdownVariantType } from "../dropdown-list/types";
 import { BasicButton } from "../input-wrapper/input-wrapper";

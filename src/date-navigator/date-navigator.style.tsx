@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { IconButton } from "../icon-button";
-import { Colour, Radius, Spacing } from "../theme";
+import { Colour, Radius, Spacing } from "@/theme";
 
 interface StyledDateTextProps {
     $enableDateClick?: boolean;

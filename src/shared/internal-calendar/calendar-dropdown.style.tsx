@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../../theme";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "@/theme";
 
 // =============================================================================
 // STYLE INTERFACE

@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 import styled from "styled-components";
-import { Spacing } from "../../theme";
+import { Spacing } from "@/theme";
 import { BaseAnimationProps } from "../types";
 
 // lazy load to fix next.js SSR errors

@@ -1,7 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { BasicButton, BasicInput, InputBox } from "../shared/input-wrapper";
-import { Colour, Spacing } from "../theme";
+import { Colour, Spacing } from "@/theme";
 import { InputStyleType } from "./types";
 
 // =============================================================================

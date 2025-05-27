@@ -1,8 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { TitleStyleProps, TitleWrapperStyleProps } from "./types";
-import { Border, MediaQuery } from "../theme";
-import { Colour } from "../theme";
+import { Border, Colour, MediaQuery } from "@/theme";
 import { Typography } from "../typography";
 
 // ============================================================================

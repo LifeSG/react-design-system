@@ -1,6 +1,6 @@
 import { CloudArrowUpFillIcon } from "@lifesg/react-icons/cloud-arrow-up-fill";
 import styled, { css } from "styled-components";
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "@/theme";
 import { Typography } from "../typography";
 
 // =============================================================================

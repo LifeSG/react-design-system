@@ -3,7 +3,7 @@ import isBetween from "dayjs/plugin/isBetween";
 import { useMemo, useState } from "react";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
-import { Colour } from "../theme";
+import { Colour } from "@/theme";
 import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.styles";
 import { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Layout } from "../layout";
-import { Colour, MediaQuery } from "../theme";
+import { Colour, MediaQuery } from "@/theme";
 import { Typography } from "../typography";
 
 // =============================================================================

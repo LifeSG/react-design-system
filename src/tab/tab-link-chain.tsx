@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useTheme } from "styled-components";
 import { ResizeCallbackParams } from "../shared/fade-wrapper";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "@/theme";
 import { TabContext } from "./tab-context";
 import {
     BoldLabel,

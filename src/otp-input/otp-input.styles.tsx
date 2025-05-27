@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Button } from "../button";
 import { Input } from "../input";
-import { MediaQuery, Spacing } from "../theme";
+import { MediaQuery, Spacing } from "@/theme";
 
 export const Wrapper = styled.div`
     display: flex;

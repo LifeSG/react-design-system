@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { SizeType, StyleType } from "./types";
-import { Border, Colour } from "../theme";
+import { Border, Colour } from "@/theme";
 interface StyleProps {
     $styleType: StyleType;
     $sizeType: SizeType;

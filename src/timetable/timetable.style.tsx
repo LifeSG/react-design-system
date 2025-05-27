@@ -2,7 +2,7 @@ import styled, { css, keyframes } from "styled-components";
 import { LoadingDotsSpinner } from "../animations";
 import { ErrorDisplay } from "../error-display";
 import { PopoverTrigger } from "../popover-v2";
-import { Border, Colour, Spacing } from "../theme";
+import { Border, Colour, Spacing } from "@/theme";
 import { Typography } from "../typography";
 import {
     MIN_HOURLY_INTERVAL_WIDTH,

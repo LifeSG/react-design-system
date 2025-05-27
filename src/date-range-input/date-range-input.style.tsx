@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
-import { Spacing } from "../theme";
+import { Spacing } from "@/theme";
 
 // =============================================================================
 // STYLE INTERFACE

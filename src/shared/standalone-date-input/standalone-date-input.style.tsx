@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour, Font, Spacing } from "../../theme";
+import { Colour, Font, Spacing } from "@/theme";
 import { BasicInput } from "../input-wrapper/input-wrapper";
 
 // =============================================================================

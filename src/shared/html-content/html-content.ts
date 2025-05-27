@@ -1,5 +1,5 @@
 import { css } from "styled-components";
-import { Colour, Font } from "../../theme";
+import { Colour, Font } from "@/theme";
 import { TypographySizeType } from "../../theme/font/types";
 
 export interface HtmlContentStyleOptions {

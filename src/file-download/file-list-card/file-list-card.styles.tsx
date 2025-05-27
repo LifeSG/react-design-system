@@ -3,7 +3,7 @@ import { IconButton as DSIconButton } from "../../icon-button";
 import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { lineClampCss } from "../../shared/styles";
-import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "@/theme";
 
 // =============================================================================
 // STYLE INTERFACES

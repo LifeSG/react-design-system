@@ -1,6 +1,6 @@
 import { ClockIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "@/theme";
 
 // =============================================================================
 // STYLE TYPES

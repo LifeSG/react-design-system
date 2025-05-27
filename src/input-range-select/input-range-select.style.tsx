@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { ClearButton } from "../input/input.style";
 import { Selector } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
-import { Spacing } from "../theme";
+import { Spacing } from "@/theme";
 
 // =============================================================================
 // STYLING

@@ -9,7 +9,7 @@ import { useTheme } from "styled-components";
 import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "@/theme";
 import { Brand } from "./brand";
 import { Drawer } from "./drawer";
 import { NavbarActionButtons } from "./navbar-action-buttons";

@@ -2,7 +2,7 @@ import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour } from "../theme";
+import { Border, Colour } from "@/theme";
 import { ThemeStyleProps } from "../theme/types";
 import { Typography } from "../typography";
 import { Direction, SlotStyle, TimeSlotBarVariant } from "./types";

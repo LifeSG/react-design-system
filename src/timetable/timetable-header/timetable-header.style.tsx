@@ -1,7 +1,7 @@
 import styled, { css, keyframes } from "styled-components";
 import { DateNavigator } from "../../date-navigator";
 import { IconButton } from "../../icon-button";
-import { Colour, Spacing } from "../../theme";
+import { Colour, Spacing } from "@/theme";
 import { Typography } from "../../typography";
 
 const spin = keyframes`

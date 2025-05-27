@@ -5,7 +5,7 @@ import {
     SquareTickFillIcon,
 } from "@lifesg/react-icons";
 import styled, { css, keyframes } from "styled-components";
-import { Colour, Motion } from "../theme";
+import { Colour, Motion } from "@/theme";
 import { CheckboxProps, CheckboxSize } from "./types";
 
 // =============================================================================

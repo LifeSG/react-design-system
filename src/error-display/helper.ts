@@ -1,4 +1,4 @@
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "@/theme";
 import { ThemeSpec } from "../theme/types";
 
 export namespace ErrorDisplayHelper {

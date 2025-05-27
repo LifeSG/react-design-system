@@ -20,7 +20,7 @@ import {
 } from "./toast.styles";
 import { ToastProps } from "./types";
 import React from "react";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "@/theme";
 import { useTheme } from "styled-components";
 import { Typography } from "../typography/typography";
 

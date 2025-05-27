@@ -3,7 +3,7 @@ import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
-import { Colour, Font, Motion, Radius } from "../theme";
+import { Colour, Font, Motion, Radius } from "@/theme";
 
 //=============================================================================
 // STYLE INTERFACE

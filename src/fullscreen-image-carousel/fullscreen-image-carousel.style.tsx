@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ImagePlaceholder } from "../shared/image-placeholder";
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "@/theme";
 import { Typography } from "../typography";
 import { StatefulImage } from "./stateful-image";
 

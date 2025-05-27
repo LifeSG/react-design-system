@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour, Font } from "../../theme";
+import { Colour, Font } from "@/theme";
 import {
     DropdownVariantType,
     LabelDisplayType,

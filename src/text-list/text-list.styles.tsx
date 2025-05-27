@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour, Font, MediaQuery } from "../theme";
+import { Colour, Font, MediaQuery } from "@/theme";
 import { TypographySizeType } from "../theme/font/types";
 import { BulletType, CounterType } from "./types";
 

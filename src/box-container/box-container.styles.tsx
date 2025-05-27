@@ -10,7 +10,7 @@ import {
     Motion,
     Radius,
     Spacing,
-} from "../theme";
+} from "@/theme";
 import { BoxContainerDisplayState } from "./types";
 
 // =============================================================================

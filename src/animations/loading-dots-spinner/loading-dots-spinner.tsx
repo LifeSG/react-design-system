@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 import styled, { useTheme } from "styled-components";
-import { Colour } from "../../theme";
+import { Colour } from "@/theme";
 import { CustomisableAnimationProps } from "../types";
 
 // lazy load to fix next.js SSR errors

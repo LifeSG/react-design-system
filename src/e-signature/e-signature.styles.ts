@@ -10,7 +10,7 @@ import {
     MediaQuery,
     Radius,
     Spacing,
-} from "../theme";
+} from "@/theme";
 import { Typography } from "../typography";
 
 // =============================================================================

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius } from "../../theme";
+import { Border, Colour, Radius } from "@/theme";
 import type { getPrimitiveColour } from "../../theme/colour-primitive/theme-helper";
 import type { getSemanticColour } from "../../theme/colour-semantic/theme-helper";
 

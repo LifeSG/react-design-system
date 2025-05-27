@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { InternalCalendar } from "../shared/internal-calendar";
-import { Border, Colour, Radius, Spacing } from "../theme";
+import { Border, Colour, Radius, Spacing } from "@/theme";
 import { CalendarProps } from "./types";
 
 export const Calendar = ({

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Button } from "../button";
 import { ButtonWithIcon } from "../button-with-icon";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "@/theme";
 import { Typography } from "../typography";
 
 // =============================================================================

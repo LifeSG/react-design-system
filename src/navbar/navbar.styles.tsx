@@ -1,7 +1,7 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, MediaQuery, Motion } from "../theme";
+import { Colour, MediaQuery, Motion } from "@/theme";
 
 // =============================================================================
 // CONSTANTS

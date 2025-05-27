@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css } from "styled-components";
 import { Selector as DropdownSelector } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
-import { Border, Colour, Font, Motion, Spacing } from "../theme";
+import { Border, Colour, Font, Motion, Spacing } from "@/theme";
 import { Typography } from "../typography";
 import { InputGroupAddonPosition } from "./types";
 import { lineClampCss } from "../shared/styles";

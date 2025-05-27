@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MediaQuery, Spacing } from "../theme";
+import { MediaQuery, Spacing } from "@/theme";
 import { Typography } from "../typography";
 
 export const Wrapper = styled.div`

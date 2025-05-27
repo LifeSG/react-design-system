@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ModalAnimationDirection } from "./types";
-import { MediaQuery } from "../theme";
+import { MediaQuery } from "@/theme";
 
 interface Props {
     show: boolean;

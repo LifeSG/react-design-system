@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, Font, Motion, Spacing } from "../../theme";
+import { Colour, Font, Motion, Spacing } from "@/theme";
 import { BasicButton } from "../input-wrapper/input-wrapper";
 import { DropdownVariantType } from "./types";
 

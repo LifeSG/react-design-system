@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
-import { Colour, Font, Motion, Spacing } from "../../theme";
+import { Colour, Font, Motion, Spacing } from "@/theme";
 
 // =============================================================================
 // STYLE INTERFACE

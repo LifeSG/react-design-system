@@ -2,7 +2,7 @@ import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, MediaQuery } from "../theme";
+import { Colour, MediaQuery } from "@/theme";
 import { SemanticColourSet } from "../theme/types";
 import { Typography } from "../typography/typography";
 import { ToastType } from "./types";

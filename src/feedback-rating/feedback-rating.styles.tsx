@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../button";
-import { Colour, MediaQuery } from "../theme";
+import { Colour, MediaQuery } from "@/theme";
 
 export const Image = styled.img`
     width: 9.5rem;

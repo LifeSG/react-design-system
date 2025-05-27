@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
-import { Colour, Font, Motion, Radius } from "../../theme";
+import { Colour, Font, Motion, Radius } from "@/theme";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $

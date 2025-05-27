@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour, Spacing } from "../../theme";
+import { Colour, Spacing } from "@/theme";
 
 interface StyleProps {
     $outline: "none" | "browser";

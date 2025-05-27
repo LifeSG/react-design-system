@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, Font, Radius } from "../theme";
+import { Colour, Font, Radius } from "@/theme";
 import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
 

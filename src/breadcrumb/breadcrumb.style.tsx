@@ -1,6 +1,6 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
-import { Colour, Font, MediaQuery, Spacing } from "../theme";
+import { Colour, Font, MediaQuery, Spacing } from "@/theme";
 import { Typography } from "../typography/typography";
 
 // =============================================================================

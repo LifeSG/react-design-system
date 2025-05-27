@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { ColDiv } from "../layout/col-div";
-import { Spacing } from "../theme";
+import { Spacing } from "@/theme";
 import { V2_ColDiv } from "../v2_layout/col-div";
 
 const commonStyles = css`

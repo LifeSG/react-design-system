@@ -8,7 +8,7 @@ import {
     useRef,
 } from "react";
 import { useTheme } from "styled-components";
-import { Colour } from "../theme";
+import { Colour } from "@/theme";
 import {
     SignatureCanvas,
     SignatureCanvasContainer,

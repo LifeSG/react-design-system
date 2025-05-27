@@ -3,7 +3,7 @@ import { MinusIcon } from "@lifesg/react-icons/minus";
 import { PlusIcon } from "@lifesg/react-icons/plus";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
-import { Border, Colour } from "../theme";
+import { Border, Colour } from "@/theme";
 import { Typography } from "../typography";
 
 // =============================================================================

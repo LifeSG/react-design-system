@@ -1,6 +1,6 @@
 import { css } from "styled-components";
 import { lineClampCss } from "../shared/styles";
-import { Colour, Font } from "../theme";
+import { Colour, Font } from "@/theme";
 import { FontSet, TypographySizeType } from "../theme/font/types";
 import { TypographyProps, TypographyWeight } from "./types";
 

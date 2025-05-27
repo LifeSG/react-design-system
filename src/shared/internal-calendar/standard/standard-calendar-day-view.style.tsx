@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, Font } from "../../../theme";
+import { Colour, Font } from "@/theme";
 
 export const Wrapper = styled.div`
     width: 100%;

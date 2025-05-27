@@ -1,7 +1,7 @@
 import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../../button";
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../../theme";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "@/theme";
 import { Toggle } from "../../toggle";
 import { Typography } from "../../typography";
 import { ClickableIcon } from "../clickable-icon";

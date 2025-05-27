@@ -3,7 +3,7 @@ import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 import { Button } from "../../button";
-import { Colour, Font } from "../../theme";
+import { Colour, Font } from "@/theme";
 import { ClickableIcon } from "../clickable-icon";
 
 // =============================================================================

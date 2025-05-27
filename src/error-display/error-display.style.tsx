@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Button } from "../button";
-import { Colour, MediaQuery, Spacing } from "../theme";
+import { Colour, MediaQuery, Spacing } from "@/theme";
 import { Typography } from "../typography";
 
 export const Container = styled.div`

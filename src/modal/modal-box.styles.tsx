@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, MediaQuery, Spacing } from "../theme";
+import { Colour, MediaQuery, Spacing } from "@/theme";
 
 // =============================================================================
 // STYLE INTERFACES

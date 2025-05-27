@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { FadeWrapper } from "../shared/fade-wrapper";
-import { Border, Colour, MediaQuery, Spacing } from "../theme";
+import { Border, Colour, MediaQuery, Spacing } from "@/theme";
 import { Typography } from "../typography/typography";
 
 // =============================================================================

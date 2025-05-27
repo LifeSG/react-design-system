@@ -26,7 +26,7 @@ import {
 } from "./pagination.styles";
 import { PageSizeItemProps, PaginationProps } from "./types";
 import { useTheme } from "styled-components";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "@/theme";
 
 const Component = (
     {

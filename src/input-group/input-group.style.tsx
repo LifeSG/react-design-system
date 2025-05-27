@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Input } from "../input/input";
 import { InputBox, InputWrapperStyleProps } from "../shared/input-wrapper";
-import { Colour, Font, Spacing } from "../theme";
+import { Colour, Font, Spacing } from "@/theme";
 import { InputGroupAddonPosition } from "./types";
 
 // =============================================================================

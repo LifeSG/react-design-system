@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour } from "../../theme";
+import { Colour } from "@/theme";
 
 interface StyleProps {
     $active?: boolean;

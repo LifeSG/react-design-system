@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { animated } from "react-spring";
-import { Border, Colour, MediaQuery, Radius } from "../theme";
+import { Border, Colour, MediaQuery, Radius } from "@/theme";
 
 //=============================================================================
 // STYLE INTERFACE

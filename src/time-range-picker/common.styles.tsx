@@ -3,7 +3,7 @@ import {
     BasicInput,
     InputWrapper,
 } from "../shared/input-wrapper/input-wrapper";
-import { Spacing } from "../theme";
+import { Spacing } from "@/theme";
 
 // =============================================================================
 // STYLING

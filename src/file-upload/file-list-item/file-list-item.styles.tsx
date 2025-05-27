@@ -2,7 +2,7 @@ import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-han
 import styled, { css } from "styled-components";
 import { IconButton as DSIconButton } from "../../icon-button";
 import { ClickableIcon } from "../../shared/clickable-icon";
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../../theme";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "@/theme";
 import { Typography } from "../../typography";
 
 // =============================================================================

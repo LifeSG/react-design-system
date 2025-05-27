@@ -1,7 +1,7 @@
 import { useMediaQuery } from "react-responsive";
 import { useTheme } from "styled-components";
 import { Modal } from "../modal/modal";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "@/theme";
 import { Typography } from "../typography";
 import {
     ContentWrapper,

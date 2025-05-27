@@ -2,7 +2,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { AlertSizeType, AlertType } from "./types";
-import { Border, Colour, Font, Motion, Spacing } from "../theme";
+import { Border, Colour, Font, Motion, Spacing } from "@/theme";
 import { Typography } from "../typography";
 
 // =============================================================================

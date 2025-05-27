@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Radius, Spacing } from "../../theme";
+import { Border, Colour, Font, Radius, Spacing } from "@/theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

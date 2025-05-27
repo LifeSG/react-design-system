@@ -16,7 +16,7 @@ import { useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useTheme } from "styled-components";
 import { useFloatingChild } from "../overlay/use-floating-context";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "@/theme";
 import { PopoverV2 } from "./popover";
 import { TriggerContainer } from "./popover-trigger.styles";
 import { PopoverV2TriggerProps, PopoverV2TriggerType } from "./types";

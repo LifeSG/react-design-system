@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../../button";
 import { Checkbox } from "../../checkbox";
-import { Colour, Font, MediaQuery, Spacing } from "../../theme";
+import { Colour, Font, MediaQuery, Spacing } from "@/theme";
 import { Toggle } from "../../toggle";
 import { FilterItem } from "../filter-item";
 

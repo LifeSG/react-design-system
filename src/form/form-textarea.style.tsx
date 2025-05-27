@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Spacing } from "../theme";
+import { Spacing } from "@/theme";
 import { ErrorMessage } from "./form-label.style";
 
 export const LabelContainer = styled.div`

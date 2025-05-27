@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { InputRangeSlider } from "../input-range-slider";
-import { Colour, Radius, Spacing } from "../theme";
+import { Colour, Radius, Spacing } from "@/theme";
 
 interface BarStyleProps {
     $selected: boolean;

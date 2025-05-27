@@ -1,7 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, MediaQuery, Motion, Spacing } from "../theme";
+import { Colour, MediaQuery, Motion, Spacing } from "@/theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

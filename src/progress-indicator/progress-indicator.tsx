@@ -1,5 +1,5 @@
 import { useTheme } from "styled-components";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "@/theme";
 import {
     Content,
     Indicator,

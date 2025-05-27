@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button/button";
-import { Border, Colour, MediaQuery, Spacing } from "../theme";
+import { Border, Colour, MediaQuery, Spacing } from "@/theme";
 import { Typography } from "../typography";
 
 // =============================================================================

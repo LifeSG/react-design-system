@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Colour } from "../theme";
+import { Colour } from "@/theme";
 import {
     IndicatorLabelContainer,
     Knob,

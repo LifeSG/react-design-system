@@ -2,7 +2,7 @@ import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangl
 import styled, { css } from "styled-components";
 import { Alert } from "../alert";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
-import { Colour, Font, MediaQuery } from "../theme";
+import { Colour, Font, MediaQuery } from "@/theme";
 import { UneditableSectionItemDisplayWidth } from "./types";
 
 // =============================================================================

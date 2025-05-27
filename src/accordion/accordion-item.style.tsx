@@ -2,8 +2,7 @@ import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, Motion } from "../theme";
-import { MediaQuery } from "../theme";
+import { Border, Colour, MediaQuery, Motion } from "@/theme";
 import { Typography } from "../typography";
 
 // =============================================================================

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Breakpoint, MediaQuery } from "../theme";
+import { Breakpoint, MediaQuery } from "@/theme";
 import { ContainerType } from "./types";
 
 interface StyleProps {

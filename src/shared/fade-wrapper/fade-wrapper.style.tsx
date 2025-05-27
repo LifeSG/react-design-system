@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour, MediaQuery, Spacing } from "../../theme";
+import { Colour, MediaQuery, Spacing } from "@/theme";
 import { ClickableIcon } from "../clickable-icon";
 
 // =============================================================================

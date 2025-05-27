@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Pill } from "../pill";
-import { Colour, MediaQuery } from "../theme";
+import { Colour, MediaQuery } from "@/theme";
 import { Typography } from "../typography";
 import { Variant } from "./types";
 

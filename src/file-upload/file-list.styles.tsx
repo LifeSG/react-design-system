@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Border, Colour, Spacing } from "../theme";
+import { Border, Colour, Spacing } from "@/theme";
 
 // =============================================================================
 // STYLE INTERFACE

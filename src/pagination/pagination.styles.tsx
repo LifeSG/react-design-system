@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Input } from "../input";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, Font, MediaQuery, Radius } from "../theme";
+import { Border, Colour, Font, MediaQuery, Radius } from "@/theme";
 import { Typography } from "../typography";
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

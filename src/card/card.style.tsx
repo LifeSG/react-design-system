@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, Radius, Spacing } from "../theme";
+import { Colour, Radius, Spacing } from "@/theme";
 
 // =============================================================================
 // STYLING

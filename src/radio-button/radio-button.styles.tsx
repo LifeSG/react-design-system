@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { RadioButtonProps, RadioButtonSize } from "./types";
-import { Colour, Motion } from "../theme";
+import { Colour, Motion } from "@/theme";
 import { CircleDotIcon, CircleIcon } from "@lifesg/react-icons";
 
 // =============================================================================

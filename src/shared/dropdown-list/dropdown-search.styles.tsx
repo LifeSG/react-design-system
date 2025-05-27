@@ -1,6 +1,6 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import styled, { css } from "styled-components";
-import { Colour, Radius, Spacing } from "../../theme";
+import { Colour, Radius, Spacing } from "@/theme";
 import { ClickableIcon } from "../clickable-icon";
 import { BasicInput, InputStyleProps } from "../input-wrapper/input-wrapper";
 import { DropdownVariantType, IconProps } from "./types";

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
 import { useTheme } from "styled-components";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "@/theme";
 import { TimeHelper } from "../util/time-helper";
 import {
     Countdown,

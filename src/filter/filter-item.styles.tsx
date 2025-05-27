@@ -3,7 +3,7 @@ import { animated } from "react-spring";
 import styled from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, Font, MediaQuery, Motion, Spacing } from "../theme";
+import { Colour, Font, MediaQuery, Motion, Spacing } from "@/theme";
 
 // =============================================================================
 // STYLES INTERFACE

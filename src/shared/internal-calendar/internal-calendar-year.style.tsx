@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Motion, Radius } from "../../theme";
+import { Border, Colour, Font, Motion, Radius } from "@/theme";
 import { YearVariant } from "./internal-calendar-year";
 
 // =============================================================================

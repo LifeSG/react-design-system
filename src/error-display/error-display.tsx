@@ -14,7 +14,7 @@ import {
     InactivityAdditionalAttributes,
     MaintenanceAdditionalAttributes,
 } from "./types";
-import { LifeSGTheme } from "../theme";
+import { LifeSGTheme } from "@/theme";
 
 export const ErrorDisplay = ({
     type,
