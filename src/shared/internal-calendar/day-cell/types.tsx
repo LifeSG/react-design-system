@@ -35,4 +35,5 @@ export interface DayCellProps extends CellStyleProps {
     onSelect: (value: Dayjs) => void;
     onHover: (value: Dayjs) => void;
     onHoverEnd?: ((value: Dayjs) => void) | undefined;
+    role?: string;
 }

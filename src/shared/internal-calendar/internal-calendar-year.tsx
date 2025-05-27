@@ -85,8 +85,9 @@ export const InternalCalendarYear = ({
 
     const generateYearStatus = (date: Dayjs) => {
         const otherDecadeIndexes = [0, 11];
+        const yearIndex = years.indexOf(date);
 
-        const isOtherDecade = otherDecadeIndexes.includes(years.indexOf(date));
+        const isOtherDecade = otherDecadeIndexes.includes(yearIndex);
         const year = date.year();
         const disabled = isDisabled(date);
 
@@ -119,6 +120,12 @@ export const InternalCalendarYear = ({
 
                 return (
                     <YearCell
+                        role="button"
+                        aria-label={`${year}`}
+                        aria-disabled={disabledDisplay}
+                        aria-selected={
+                            variant === "selected-year" ? "true" : "false"
+                        }
                         key={year}
                         $variant={variant}
                         $disabledDisplay={disabledDisplay}

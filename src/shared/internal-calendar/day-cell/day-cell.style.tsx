@@ -214,6 +214,15 @@ export const Label = styled.div<LabelStyleProps>`
                 `;
         }
     }}
+
+    &:focus {
+        outline: none;
+    }
+`;
+
+export const CellContent = styled.span`
+    display: flex;
+    justify-content: center;
 `;
 
 export const Indicator = styled.div<IndicatorStyleProps>`

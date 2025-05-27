@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
+import React from "react";
 import {
     Cell,
+    CellContent,
     Indicator,
     Label,
     LeftCircle,
@@ -23,11 +25,15 @@ export const DayCell = ({
     onSelect,
     onHover,
     onHoverEnd,
+    role = "button",
 }: DayCellProps) => {
     // =========================================================================
     // CONST
     // =========================================================================
     const today = dayjs().isSame(date, "day");
+    const dayName = `${date.format("D MMMM YYYY dddd")}, ${
+        disabled ? "Unavailable" : "Available"
+    }`; // e.g. 1 January 2025 Tuesday, Unavailable
 
     // =========================================================================
     // EVENT HANDLERS
@@ -54,6 +60,9 @@ export const DayCell = ({
             <RightHalf $type={bgRight}></RightHalf>
             <RightCircle $type={circleRight} />
             <Label
+                role={role}
+                aria-label={dayName}
+                aria-disabled={disabled}
                 $type={labelType}
                 $disabled={disabled}
                 $interactive={interactive}
@@ -61,10 +70,12 @@ export const DayCell = ({
                 onMouseEnter={handleHover}
                 onMouseLeave={handleMouseout}
             >
-                {date.date()}
-                {currentDateIndicator && today && (
-                    <Indicator $disabled={disabled} />
-                )}
+                <CellContent aria-hidden>
+                    {date.date()}
+                    {currentDateIndicator && today && (
+                        <Indicator $disabled={disabled} />
+                    )}
+                </CellContent>
             </Label>
         </Cell>
     );

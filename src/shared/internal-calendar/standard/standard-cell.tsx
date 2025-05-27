@@ -233,6 +233,7 @@ export const StandardCell = ({
         currentDateIndicator: true,
         onSelect: handleSelect,
         onHover: handleHover,
+        role: "gridcell",
     };
 
     return (

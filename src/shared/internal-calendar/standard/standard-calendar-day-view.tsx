@@ -74,7 +74,7 @@ export const StandardCalendarDayView = ({
     // =============================================================================
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
-            <HeaderCell key={`week-day-${index}`}>
+            <HeaderCell key={`week-day-${index}`} aria-hidden>
                 {dayjs(day).format("ddd")}
             </HeaderCell>
         ));
@@ -83,7 +83,13 @@ export const StandardCalendarDayView = ({
     const renderDayCells = () => {
         return weeksOfTheMonth.map((week, weekIndex) => {
             return (
-                <RowDayCell key={weekIndex} onMouseLeave={handleMouseLeaveCell}>
+                <RowDayCell
+                    role="row"
+                    aria-label={`Week ${weekIndex + 1}`}
+                    key={weekIndex}
+                    onMouseLeave={handleMouseLeaveCell}
+                    onBlur={handleMouseLeaveCell}
+                >
                     {week.map((day, dayIndex) => {
                         return (
                             <StandardCell
@@ -113,7 +119,11 @@ export const StandardCalendarDayView = ({
     };
 
     return (
-        <Wrapper data-testid="calendar-content">
+        <Wrapper
+            role="grid"
+            aria-label="Calendar grid"
+            data-testid="calendar-content"
+        >
             {renderHeader()}
             {renderDayCells()}
         </Wrapper>

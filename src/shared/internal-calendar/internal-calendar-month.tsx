@@ -82,8 +82,9 @@ export const InternalCalendarMonth = ({
     const generateMonthStatus = (date: Dayjs) => {
         const month = date.format("MMMM");
         const disabled = isDisabled(date);
+        const isSelectedMonth = viewCalendarDate.isSame(date, "month");
 
-        const variant: MonthVariant = viewCalendarDate.isSame(date, "month")
+        const variant: MonthVariant = isSelectedMonth
             ? "selected-month"
             : dayjs().isSame(date, "month")
             ? "current-month"
@@ -110,6 +111,12 @@ export const InternalCalendarMonth = ({
 
                 return (
                     <MonthCell
+                        role="button"
+                        aria-label={month}
+                        aria-disabled={disabledDisplay}
+                        aria-selected={
+                            variant === "selected-month" ? "true" : "false"
+                        }
                         key={month}
                         $variant={variant}
                         $disabledDisplay={disabledDisplay}
