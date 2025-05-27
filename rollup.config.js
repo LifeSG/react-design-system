@@ -1,3 +1,4 @@
+import alias from "@rollup/plugin-alias";
 import commonjs from "@rollup/plugin-commonjs";
 import image from "@rollup/plugin-image";
 import json from "@rollup/plugin-json";
@@ -42,17 +43,97 @@ export const plugins = [
     terser(), // Helps remove comments, whitespace or logging codes
 ];
 
-const subfolderPlugins = (folderName) => [
-    ...plugins,
-    generatePackageJson({
-        baseContents: {
-            name: `${pkg.name}/${folderName}`,
-            private: true,
-            main: "../cjs/index.js", // point to cjs format entry point
-            module: "./index.js", // point to esm format entry point of indiv components
-            types: "./index.d.ts", // point to esm format entry point of indiv components
+const themeAliasEsm = alias({
+    entries: [
+        {
+            find: /^@\/theme/,
+            replacement: "@lifesg/react-design-system/theme/index.js",
         },
-    }),
+    ],
+});
+
+const themeAliasCjs = alias({
+    entries: [
+        {
+            find: /^@\/theme/,
+            replacement: "@lifesg/react-design-system/theme",
+        },
+    ],
+});
+
+// modules that should not be bundled
+const externals = [
+    "react",
+    "react-dom",
+    "styled-components",
+    /^@lifesg\/react-design-system\/theme.*/,
+];
+
+export const mainBuildConfigs = [
+    {
+        input: "src/index.ts",
+        output: [
+            {
+                dir: "dist",
+                format: "esm",
+                sourcemap: true,
+                exports: "named",
+                interop: "compat",
+                chunkFileNames: "chunks/[name].[hash].js",
+            },
+        ],
+        plugins: [themeAliasEsm, ...plugins],
+        external: externals,
+    },
+    {
+        input: "src/index.ts",
+        output: [
+            {
+                dir: "dist/cjs",
+                format: "cjs",
+                sourcemap: true,
+                exports: "named",
+                interop: "compat",
+                chunkFileNames: "chunks/[name].[hash].js",
+            },
+        ],
+        plugins: [themeAliasCjs, ...plugins],
+        external: externals,
+    },
+];
+
+const themeBuildConfigs = [
+    {
+        input: `src/theme/index.ts`,
+        output: [
+            {
+                sourcemap: true,
+                exports: "named",
+                format: "esm",
+                file: "dist/theme/index.js",
+            },
+            {
+                sourcemap: true,
+                exports: "named",
+                format: "cjs",
+                interop: "compat",
+                file: "dist/theme/cjs/index.js",
+            },
+        ],
+        plugins: [
+            ...plugins,
+            generatePackageJson({
+                baseContents: {
+                    name: `${pkg.name}/theme`,
+                    private: true,
+                    main: "./cjs/index.js", // point to cjs format entry point
+                    module: "./index.js", // point to esm format entry point of indiv components
+                    types: "./index.d.ts", // point to esm format entry point of indiv components
+                },
+            }),
+        ],
+        external: externals,
+    },
 ];
 
 const folderBuildConfigs = getFolders("./src").map((folder) => {
@@ -65,8 +146,20 @@ const folderBuildConfigs = getFolders("./src").map((folder) => {
             format: "esm",
             chunkFileNames: "chunks/[name].[hash].js",
         },
-        plugins: subfolderPlugins(folder),
-        external: ["react", "react-dom", "styled-components"],
+        plugins: [
+            themeAliasEsm,
+            ...plugins,
+            generatePackageJson({
+                baseContents: {
+                    name: `${pkg.name}/${folder}`,
+                    private: true,
+                    main: "../cjs/index.js", // point to cjs format entry point
+                    module: "./index.js", // point to esm format entry point of indiv components
+                    types: "./index.d.ts", // point to esm format entry point of indiv components
+                },
+            }),
+        ],
+        external: externals,
     };
 });
 
@@ -90,29 +183,8 @@ const codemodBuildConfigs = [
 ];
 
 export default [
-    {
-        input: "src/index.ts",
-        output: [
-            {
-                dir: "dist",
-                format: "esm",
-                sourcemap: true,
-                exports: "named",
-                interop: "compat",
-                chunkFileNames: "chunks/[name].[hash].js",
-            },
-            {
-                dir: "dist/cjs",
-                format: "cjs",
-                sourcemap: true,
-                exports: "named",
-                interop: "compat",
-                chunkFileNames: "chunks/[name].[hash].js",
-            },
-        ],
-        plugins,
-        external: ["react", "react-dom", "styled-components"],
-    },
+    ...mainBuildConfigs,
+    ...themeBuildConfigs,
     ...folderBuildConfigs,
     ...codemodBuildConfigs,
 ];

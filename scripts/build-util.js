@@ -12,10 +12,15 @@ export const getFolders = (entry) => {
         "v2_spec",
         "__mocks__",
     ];
+    const commonModules = ["theme"];
 
     const dirsToUse = dirs
         .filter((dirName) => path.extname(dirName) === "") // exclude non-folders
-        .filter((dirName) => dirsToIgnore.indexOf(dirName) === -1);
+        .filter(
+            (dirName) =>
+                !dirsToIgnore.includes(dirName) &&
+                !commonModules.includes(dirName)
+        );
 
     return dirsToUse;
 };
