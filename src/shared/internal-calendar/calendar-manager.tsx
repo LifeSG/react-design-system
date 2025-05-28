@@ -53,6 +53,7 @@ const Component = (
         isRightArrowDisabled: _isRightArrowDisabled,
         getMonthHeaderLabel,
         getYearHeaderLabel,
+        isFocusable = false,
         ...otherProps
     }: CalendarManagerProps,
     ref: React.ForwardedRef<CalendarManagerRef>
@@ -379,6 +380,7 @@ const Component = (
                     id="month-dropdown"
                     onClick={handleMonthDropdownClick}
                     onKeyDown={handleMonthDropdownKeydown}
+                    tabIndex={isFocusable ? 0 : -1}
                 >
                     <DropdownText>{monthLabel}</DropdownText>
                     <IconChevronDown />
@@ -391,6 +393,7 @@ const Component = (
                     id="year-dropdown"
                     onClick={handleYearDropdownClick}
                     onKeyDown={handleYearDropdownKeydown}
+                    tabIndex={isFocusable ? 0 : -1}
                 >
                     <DropdownText>{yearLabel}</DropdownText>
                     <IconChevronDown />
@@ -459,6 +462,7 @@ const Component = (
                         focusHighlight={false}
                         focusOutline="browser"
                         onClick={handleLeftArrowClick}
+                        tabIndex={isFocusable ? 0 : -1}
                     >
                         <ArrowLeft />
                     </HeaderArrowButton>
@@ -469,6 +473,7 @@ const Component = (
                         focusHighlight={false}
                         focusOutline="browser"
                         onClick={handleRightArrowClick}
+                        tabIndex={isFocusable ? 0 : -1}
                     >
                         <ArrowRight />
                     </HeaderArrowButton>

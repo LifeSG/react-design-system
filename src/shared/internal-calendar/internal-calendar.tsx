@@ -31,6 +31,7 @@ export const Component = (
         initialCalendarDate,
         numberOfDays,
         showActiveMonthDaysOnly = false,
+        isFocusable = false,
     }: InternalCalendarProps,
     ref: React.ForwardedRef<InternalCalendarRef>
 ) => {
@@ -194,6 +195,7 @@ export const Component = (
                         setCalendarDate={
                             calendarManagerRef.current?.setCalendarDate
                         }
+                        isFocusable={isFocusable}
                     />
                 );
         }
@@ -215,6 +217,7 @@ export const Component = (
                 allowDisabledSelection={allowDisabledSelection}
                 onCalendarDateChange={handleCalendarDateChange}
                 initialCalendarDate={initialCalendarDate}
+                isFocusable={isFocusable}
             >
                 {({ calendarDate }) => renderCalendarDay(calendarDate)}
             </CalendarManager>

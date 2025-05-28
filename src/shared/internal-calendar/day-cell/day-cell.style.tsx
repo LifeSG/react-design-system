@@ -233,11 +233,6 @@ export const Label = styled.div<LabelStyleProps>`
     }
 `;
 
-export const CellContent = styled.span`
-    display: flex;
-    justify-content: center;
-`;
-
 export const Indicator = styled.div<IndicatorStyleProps>`
     position: absolute;
     width: 4px;

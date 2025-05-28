@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import {
     Cell,
-    CellContent,
     Indicator,
     Label,
     LabelWrapper,
@@ -84,12 +83,10 @@ export const DayCell = ({
                     onMouseLeave={handleMouseout}
                     onFocus={handleFocus}
                 >
-                    <CellContent>
-                        {date.date()}
-                        {currentDateIndicator && today && (
-                            <Indicator $disabled={disabled} />
-                        )}
-                    </CellContent>
+                    {date.date()}
+                    {currentDateIndicator && today && (
+                        <Indicator $disabled={disabled} />
+                    )}
                 </Label>
             </LabelWrapper>
         </Cell>

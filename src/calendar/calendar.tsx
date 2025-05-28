@@ -31,6 +31,7 @@ export const Calendar = ({
             <InternalCalendar
                 value={selectedDate}
                 initialCalendarDate={selectedDate}
+                isFocusable={true}
                 onSelect={(value) => {
                     setSelectedDate(value);
                     onSelect?.(value);

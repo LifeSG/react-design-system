@@ -15,6 +15,8 @@ export interface CommonCalendarProps {
     allowDisabledSelection?: boolean | undefined;
     /** Specifies if the calendar should display only dates for the selected month */
     showActiveMonthDaysOnly?: boolean | undefined;
+    /** Indicates whether calendar is focusable */
+    isFocusable?: boolean | undefined;
 }
 
 // =============================================================================

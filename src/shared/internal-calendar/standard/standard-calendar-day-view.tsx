@@ -40,6 +40,7 @@ export const StandardCalendarDayView = ({
     allowDisabledSelection,
     showActiveMonthDaysOnly,
     setCalendarDate,
+    isFocusable = false,
 }: CalendarDayViewProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -170,7 +171,11 @@ export const StandardCalendarDayView = ({
                                 onHover={handleHoverCell}
                                 onFocus={handleFocusCell}
                                 tabIndex={
-                                    isDateToFocus || isFirstDayOfMonth ? 0 : -1
+                                    isFocusable
+                                        ? isDateToFocus || isFirstDayOfMonth
+                                            ? 0
+                                            : -1
+                                        : -1
                                 }
                             />
                         );
