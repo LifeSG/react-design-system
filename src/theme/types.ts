@@ -40,8 +40,9 @@ export type ColourScheme =
     | "mylegacy"
     | "ccube"
     | "oneservice"
-    | "pa";
-export type FontScheme = "default" | "bookingsg" | "pa";
+    | "pa"
+    | "a11y";
+export type FontScheme = "default" | "bookingsg" | "pa" | "a11y";
 export type MotionScheme = "default";
 export type BorderScheme = "default";
 export type SpacingScheme = "default";
@@ -55,7 +56,8 @@ export type ResourceScheme =
     | "mylegacy"
     | "ccube"
     | "oneservice"
-    | "pa";
+    | "pa"
+    | "a11y";
 
 export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;

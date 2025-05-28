@@ -1,0 +1,31 @@
+import { Meta } from "@storybook/blocks";
+import { A11yTheme } from "src/theme";
+import { DocInfo } from "stories/storybook-common";
+import { FontDisplay } from "../doc-elements";
+
+<Meta title="Foundations/Font/A11yPlayground" />
+
+# A11y Playground font
+
+This is the font set used when the `fontScheme` is `"a11y"`.
+
+```tsx
+const theme: ThemeSpec = {
+    fontScheme: "a11y",
+    // ...other specifications
+};
+```
+
+This stylesheet should be loaded in your app.
+
+```
+https://assets.life.gov.sg/react-design-system/v3/css/atkinson-hyperlegible-next.css
+```
+
+<DocInfo>
+    [Common
+    ligatures](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures)
+    are **disabled** for this font
+</DocInfo>
+
+<FontDisplay theme={A11yTheme} />

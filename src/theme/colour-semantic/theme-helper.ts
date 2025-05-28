@@ -17,6 +17,7 @@ const ColourSpec: ThemeCollectionSpec<
         ccube: LifeSGColourSet,
         oneservice: LifeSGColourSet,
         pa: PAColourSet,
+        a11y: LifeSGColourSet,
     },
     defaultValue: "lifesg",
 };

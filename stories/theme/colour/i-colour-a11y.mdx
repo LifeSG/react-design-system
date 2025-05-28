@@ -1,0 +1,24 @@
+import { Meta } from "@storybook/blocks";
+import { A11yTheme } from "src/theme";
+import { PrimitiveColourDisplay, SemanticColourDisplay } from "../doc-elements";
+
+<Meta title="Foundations/Colours/A11yPlayground" />
+
+# A11y Playground colours
+
+These are the palettes used when the `colourScheme` is `"a11y"`.
+
+```tsx
+const theme: ThemeSpec = {
+    colourScheme: "a11y",
+    // ...other specifications
+};
+```
+
+## Semantic colours
+
+<SemanticColourDisplay theme={A11yTheme} />
+
+## Primitive colours
+
+<PrimitiveColourDisplay theme={A11yTheme} />

@@ -5,6 +5,7 @@ import { FontScheme } from "../types";
 import { BookingSgFontSet } from "./specs/bookingsg-font-set";
 import { DefaultFontSet } from "./specs/default-font-set";
 import { PAFontSet } from "./specs/pa-font-set";
+import { A11yFontSet } from "./specs/a11y-font-set";
 import { FontCollectionMap, FontSet } from "./types";
 
 const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
@@ -12,6 +13,7 @@ const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
         default: DefaultFontSet,
         bookingsg: BookingSgFontSet,
         pa: PAFontSet,
+        a11y: A11yFontSet,
     },
     defaultValue: "default",
 };
