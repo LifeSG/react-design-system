@@ -360,6 +360,7 @@ export const DropdownList = <T, V>({
                 label={title}
                 maxLines={itemMaxLines}
                 selected={selected}
+                disabled={!selected && hasSelectedMax}
                 sublabel={secondaryLabel}
                 truncationType={itemTruncationType}
                 variant={variant}
@@ -387,6 +388,7 @@ export const DropdownList = <T, V>({
                     tabIndex={active ? 0 : -1}
                     $active={active}
                     $selected={selected}
+                    $disabled={hasSelectedMax}
                 >
                     {renderListItem ? (
                         renderListItem(item, { selected })

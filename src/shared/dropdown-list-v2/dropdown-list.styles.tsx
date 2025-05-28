@@ -29,6 +29,7 @@ interface ContainerStyleProps {
 interface ListItemStyleProps {
     $active: boolean;
     $selected: boolean;
+    $disabled: boolean;
 }
 
 // =============================================================================
@@ -110,6 +111,10 @@ export const ListItem = styled.li<ListItemStyleProps>`
         if (props.$active && props.$selected) {
             return css`
                 background: ${Colour["bg-hover"]};
+            `;
+        } else if (props.$disabled) {
+            return css`
+                cursor: not-allowed;
             `;
         } else if (props.$active) {
             return css`

@@ -19,6 +19,7 @@ interface LabelTextStyleProps {
     $labelDisplayType?: LabelDisplayType;
     $maxLines?: number;
     $selected?: boolean;
+    $disabled?: boolean;
     $truncateType?: TruncateType;
     $bold?: boolean;
 }
@@ -36,8 +37,22 @@ export const PrimaryText = styled.div<LabelTextStyleProps>`
         props.$bold
             ? Font.Spec["weight-semibold"]
             : Font.Spec["weight-regular"]};
-    color: ${(props) =>
-        props.$selected ? Colour["text-selected"] : Colour["text"]};
+
+    ${(props) => {
+        if (props.$disabled) {
+            return css`
+                color: ${Colour["text-disabled"]};
+            `;
+        } else if (props.$selected) {
+            return css`
+                color: ${Colour["text-selected"]};
+            `;
+        } else {
+            return css`
+                color: ${Colour["text"]};
+            `;
+        }
+    }}
     width: 100%;
 
     ${(props) =>
