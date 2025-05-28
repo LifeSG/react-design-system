@@ -41,8 +41,8 @@ export type ColourScheme =
     | "ccube"
     | "oneservice"
     | "pa"
-    | "a11y";
-export type FontScheme = "default" | "bookingsg" | "pa" | "a11y";
+    | "a11yplayground";
+export type FontScheme = "default" | "bookingsg" | "pa" | "a11yplayground";
 export type MotionScheme = "default";
 export type BorderScheme = "default";
 export type SpacingScheme = "default";
@@ -57,7 +57,7 @@ export type ResourceScheme =
     | "ccube"
     | "oneservice"
     | "pa"
-    | "a11y";
+    | "a11yplayground";
 
 export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;

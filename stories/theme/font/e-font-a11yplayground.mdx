@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/blocks";
-import { A11yTheme } from "src/theme";
+import { A11yPlaygroundTheme } from "src/theme";
 import { DocInfo } from "stories/storybook-common";
 import { FontDisplay } from "../doc-elements";
 
@@ -7,11 +7,11 @@ import { FontDisplay } from "../doc-elements";
 
 # A11y Playground font
 
-This is the font set used when the `fontScheme` is `"a11y"`.
+This is the font set used when the `fontScheme` is `"a11yplayground"`.
 
 ```tsx
 const theme: ThemeSpec = {
-    fontScheme: "a11y",
+    fontScheme: "a11yplayground",
     // ...other specifications
 };
 ```
@@ -28,4 +28,4 @@ https://assets.life.gov.sg/react-design-system/v3/css/atkinson-hyperlegible-next
     are **disabled** for this font
 </DocInfo>
 
-<FontDisplay theme={A11yTheme} />
+<FontDisplay theme={A11yPlaygroundTheme} />

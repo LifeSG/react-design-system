@@ -9,7 +9,7 @@ import {
     MyLegacyTheme,
     RBSTheme,
     PATheme,
-    A11yTheme,
+    A11yPlaygroundTheme,
 } from "../src/theme";
 
 const preview: Preview = {
@@ -24,7 +24,7 @@ const preview: Preview = {
                 // TODO: update when OS theme is added
                 // OneService: V2_OneServiceTheme,
                 PA: PATheme,
-                A11y: A11yTheme,
+                A11yPlayground: A11yPlaygroundTheme,
             },
             Provider: ThemeProvider,
         }),

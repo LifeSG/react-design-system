@@ -8,7 +8,7 @@ import { MyLegacyColourSet } from "./specs/mylegacy-colour-set";
 import { OneServiceColourSet } from "./specs/oneservice-colour-set";
 import { PAColourSet } from "./specs/pa-colour-set";
 import { RBSColourSet } from "./specs/rbs-colour-set";
-import { A11yColourSet } from "./specs/a11y-colour-set";
+import { A11yPlaygroundColourSet } from "./specs/a11yplayground-colour-set";
 import { ColourCollectionsMap } from "./types";
 
 export const ColourSpec: ThemeCollectionSpec<
@@ -23,7 +23,7 @@ export const ColourSpec: ThemeCollectionSpec<
         ccube: CCubeColourSet,
         oneservice: OneServiceColourSet,
         pa: PAColourSet,
-        a11y: A11yColourSet,
+        a11yplayground: A11yPlaygroundColourSet,
     },
     defaultValue: "lifesg",
 };

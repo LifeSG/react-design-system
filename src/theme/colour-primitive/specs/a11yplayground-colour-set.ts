@@ -1,6 +1,6 @@
 import { PrimitiveColourSet } from "../../types";
 
-export const A11yColourSet: PrimitiveColourSet = {
+export const A11yPlaygroundColourSet: PrimitiveColourSet = {
     "brand-10": "#170F39",
     "brand-20": "#281C62",
     "brand-30": "#38268B",

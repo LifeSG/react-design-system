@@ -1,6 +1,6 @@
 import { FontSpecSet } from "../types";
 
-export const A11yFontSpecSet: FontSpecSet = {
+export const A11yPlaygroundFontSpecSet: FontSpecSet = {
     "heading-size-xxl": "3rem",
     "heading-size-xl": "2.5rem",
     "heading-size-lg": "2rem",
@@ -43,12 +43,12 @@ export const A11yFontSpecSet: FontSpecSet = {
     "body-ls-sm": "0.012rem",
     "body-ls-xs": "0.012rem",
 
-    "form-label-size": "1rem",
-    "form-description-size": "0.875rem",
+    "form-label-size": "1.125rem",
+    "form-description-size": "1rem",
 
     "form-label-lh": "1.5rem",
-    "form-description-lh": "1.6rem",
+    "form-description-lh": "1.625rem",
 
-    "form-label-ls": "0.014rem",
-    "form-description-ls": "0.012rem",
+    "form-label-ls": "0rem",
+    "form-description-ls": "0.00875rem",
 };
