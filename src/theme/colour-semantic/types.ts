@@ -1,4 +1,4 @@
-import { ColourScheme } from "../types";
+import { ColourScheme, ThemeStyleProps } from "../types";
 
 export type SemanticColourCollectionMap = {
     [key in ColourScheme]: SemanticColourSet;
@@ -6,7 +6,7 @@ export type SemanticColourCollectionMap = {
 
 export type SemanticColourSetOptions = Partial<SemanticColourSet>;
 
-type SemanticColourValue = string | ((props: any) => string);
+type SemanticColourValue = string | ((props: ThemeStyleProps) => string);
 
 export type SemanticColourSet = {
     // text

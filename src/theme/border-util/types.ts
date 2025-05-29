@@ -1,18 +1,21 @@
 import { CSSProp } from "styled-components";
-import { BorderScheme } from "../types";
-import { StyledComponentProps } from "../helpers";
+import {
+    BorderScheme,
+    ThemeStyleInterpolation,
+    ThemeStyleProps,
+} from "../types";
 
 export interface BorderUtilSet {
     solid: (options?: {
-        thickness?: number | ((props: StyledComponentProps) => string);
-        radius?: number | ((props: StyledComponentProps) => string);
-        colour?: string | ((props: StyledComponentProps) => string);
-    }) => (props: StyledComponentProps) => CSSProp;
+        thickness?: number | ThemeStyleInterpolation;
+        radius?: number | ThemeStyleInterpolation;
+        colour?: string | ThemeStyleInterpolation;
+    }) => (props: ThemeStyleProps) => CSSProp;
     "dashed-default": (options?: {
-        thickness?: number | ((props: StyledComponentProps) => string);
-        radius?: number | ((props: StyledComponentProps) => string);
-        colour?: string | ((props: StyledComponentProps) => string);
-    }) => (props: StyledComponentProps) => CSSProp;
+        thickness?: number | ThemeStyleInterpolation;
+        radius?: number | ThemeStyleInterpolation;
+        colour?: string | ThemeStyleInterpolation;
+    }) => (props: ThemeStyleProps) => CSSProp;
 }
 
 export type BorderUtilCollectionMap = {

@@ -1,6 +1,6 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
+import { getCollection, getValue } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
-import { ColourScheme, PrimitiveColourSet } from "../types";
+import { ColourScheme, PrimitiveColourSet, ThemeStyleProps } from "../types";
 import { BookingSgColourSet } from "./specs/bookingsg-colour-set";
 import { CCubeColourSet } from "./specs/ccube-colour-set";
 import { LifeSgColourSet } from "./specs/lifesg-colour-set";
@@ -27,7 +27,7 @@ export const ColourSpec: ThemeCollectionSpec<
 };
 
 export const getPrimitiveColour = (key: keyof PrimitiveColourSet) => {
-    return (props: StyledComponentProps): string => {
+    return (props: ThemeStyleProps): string => {
         const theme = props.theme;
         const colorSet: PrimitiveColourSet = getCollection(
             ColourSpec,
@@ -43,7 +43,7 @@ export const getPrimitiveColour = (key: keyof PrimitiveColourSet) => {
 };
 
 export const PrimitiveColour: {
-    [key in keyof PrimitiveColourSet]: (props: StyledComponentProps) => string;
+    [key in keyof PrimitiveColourSet]: (props: ThemeStyleProps) => string;
 } = {
     "brand-10": getPrimitiveColour("brand-10"),
     "brand-20": getPrimitiveColour("brand-20"),

@@ -1,4 +1,4 @@
-import { StyledComponentProps, getCollection } from "../helpers";
+import { getCollection } from "../helpers";
 import { ThemeStyleProps } from "../types";
 import { DefaultComponentTokenSet } from "./specs/default-component-token-set";
 import { PAComponentTokenSet } from "./specs/pa-component-token-set";
@@ -19,7 +19,7 @@ export const getComponentTokenValue = <
     component: Component,
     token: Token
 ) => {
-    return (props: StyledComponentProps): string => {
+    return (props: ThemeStyleProps): string => {
         const theme = props.theme;
         const components: ComponentTokenSet = getCollection(
             ComponentTokenSpec,
@@ -52,7 +52,7 @@ export const getTokenValue = <
 };
 
 export const ThemeButton: {
-    [key in keyof ButtonTokens]: (props: StyledComponentProps) => string;
+    [key in keyof ButtonTokens]: (props: ThemeStyleProps) => string;
 } = {
     "button-radius": getComponentTokenValue("Button", "button-radius"),
     "button-default-colour-bg": getComponentTokenValue(

@@ -1,6 +1,6 @@
-import { ThemeStyleProps } from "@/theme";
+import { ThemeStyleInterpolation } from "@/theme";
 
-type CustomColor = string | ((props: ThemeStyleProps) => string);
+type CustomColor = string | ThemeStyleInterpolation;
 
 export interface BaseSliderProps {
     className?: string | undefined;

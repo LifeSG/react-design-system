@@ -1,7 +1,7 @@
 import { CSSProp } from "styled-components";
-import { StyledComponentProps, getCollection } from "../helpers";
+import { getCollection } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
-import { BorderScheme } from "../types";
+import { BorderScheme, ThemeStyleProps } from "../types";
 import { DefaultBorderUtilSet } from "./specs/default-border-util-set";
 import { BorderUtilCollectionMap, BorderUtilSet } from "./types";
 
@@ -15,16 +15,14 @@ const BorderUtilSpec: ThemeCollectionSpec<
     defaultValue: "default",
 };
 
-const isStyledProps = (args: any): args is [StyledComponentProps] =>
+const isStyledProps = (args: any): args is [ThemeStyleProps] =>
     args.length === 1 && "theme" in args[0];
 
 export const getBorderStyle = (key: keyof BorderUtilSet) => {
     return (
-            ...args:
-                | Parameters<BorderUtilSet[typeof key]>
-                | [StyledComponentProps]
+            ...args: Parameters<BorderUtilSet[typeof key]> | [ThemeStyleProps]
         ) =>
-        (props: StyledComponentProps): CSSProp => {
+        (props: ThemeStyleProps): CSSProp => {
             const resolvedOptions = isStyledProps(args) ? [] : args;
             const resolvedStyledProps = isStyledProps(args) ? args[0] : props;
 

@@ -10,6 +10,9 @@ import { MotionSetOptions } from "./motion/types";
 import { RadiusSetOptions } from "./radius/types";
 import { SpacingSetOptions } from "./spacing/types";
 
+// =============================================================================
+// TOKENS
+// =============================================================================
 export type {
     PrimitiveColourSet,
     PrimitiveColourSetOptions,
@@ -33,6 +36,9 @@ export type { SpacingSet, SpacingSetOptions } from "./spacing/types";
 
 export type { BreakpointSet, BreakpointSetOptions } from "./breakpoint/types";
 
+// =============================================================================
+// THEMES
+// =============================================================================
 export type ColourScheme =
     | "lifesg"
     | "bookingsg"
@@ -87,6 +93,12 @@ export interface ThemeSpec {
     /** @deprecated For backwards compatibility with V2 theme */
     _v2?: V2_ThemeSpec;
 }
+
+// =============================================================================
+// STYLE UTILITIES
+// =============================================================================
 export interface ThemeStyleProps {
     theme: ThemeSpec;
 }
+
+export type ThemeStyleInterpolation = (props: ThemeStyleProps) => string;

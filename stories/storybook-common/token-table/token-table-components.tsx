@@ -1,5 +1,5 @@
 import React from "react";
-import { StyledComponentProps } from "src/theme/helpers";
+import { ThemeStyleProps } from "src/theme";
 import styled, { DefaultTheme, useTheme } from "styled-components";
 import { DocTable, DocTextStyle } from "../doc-table";
 import { ColourTokenInspector } from "../token-inspector";
@@ -182,7 +182,7 @@ export const DefaultCol = ({ attributes }: DefaultColProps) => {
 };
 
 const getTokenValue = (
-    token: string | number | ((props: StyledComponentProps) => string | number),
+    token: string | number | ((props: ThemeStyleProps) => string | number),
     theme: DefaultTheme
 ): string | number => {
     if (typeof token === "function") {

@@ -1,6 +1,6 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
+import { getCollection, getValue } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
-import { MotionScheme } from "../types";
+import { MotionScheme, ThemeStyleProps } from "../types";
 import { DefaultMotionSet } from "./specs/default-motion-set";
 import { MotionCollectionsMap, MotionSet } from "./types";
 
@@ -12,7 +12,7 @@ const MotionSpec: ThemeCollectionSpec<MotionCollectionsMap, MotionScheme> = {
 };
 
 export const getMotion = (key: keyof MotionSet) => {
-    return (props: StyledComponentProps): string => {
+    return (props: ThemeStyleProps): string => {
         const theme = props.theme;
         const motionSet: MotionSet = getCollection(
             MotionSpec,
@@ -28,7 +28,7 @@ export const getMotion = (key: keyof MotionSet) => {
 };
 
 export const MotionValues: {
-    [key in keyof MotionSet]: (props: StyledComponentProps) => string;
+    [key in keyof MotionSet]: (props: ThemeStyleProps) => string;
 } = {
     "duration-150": getMotion("duration-150"),
     "duration-250": getMotion("duration-250"),

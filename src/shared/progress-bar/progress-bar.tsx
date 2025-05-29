@@ -1,17 +1,11 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius } from "@/theme";
-import type { getPrimitiveColour } from "../../theme/colour-primitive/theme-helper";
-import type { getSemanticColour } from "../../theme/colour-semantic/theme-helper";
-
-type ThemeColorFunctions = ReturnType<
-    typeof getSemanticColour | typeof getPrimitiveColour
->;
+import { Border, Colour, Radius, ThemeStyleInterpolation } from "@/theme";
 
 interface Props {
     className?: string | undefined;
     /** Progress from 0 to 1 */
     progress: number;
-    color?: string | ThemeColorFunctions | undefined;
+    color?: string | ThemeStyleInterpolation | undefined;
     "data-testid"?: string | undefined;
 }
 
@@ -35,7 +29,7 @@ export const ProgressBar = ({
 // STYLE INTERFACE
 // =============================================================================
 interface StyleProps {
-    $color?: string | ThemeColorFunctions | undefined;
+    $color?: string | ThemeStyleInterpolation | undefined;
     $innerWidth: number;
 }
 
@@ -60,10 +54,12 @@ const Bar = styled.div<StyleProps>`
     ${(props) => {
         const { $color: color } = props;
         let colorToUse: string;
-        if (color && typeof color === "string") {
-            colorToUse = color;
-        } else if (color) {
-            colorToUse = (color as ThemeColorFunctions)(props);
+        if (color) {
+            if (typeof color === "string") {
+                colorToUse = color;
+            } else {
+                colorToUse = color(props);
+            }
         } else {
             colorToUse = Colour["icon-primary-subtle"](props);
         }

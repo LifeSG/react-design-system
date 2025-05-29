@@ -1,6 +1,6 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
+import { getCollection, getValue } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
-import { RadiusScheme } from "../types";
+import { RadiusScheme, ThemeStyleProps } from "../types";
 import { DefaultRadiusSet } from "./specs/default-radius-set";
 import { RadiusCollectionsMap, RadiusSet } from "./types";
 
@@ -12,7 +12,7 @@ const RadiusSpec: ThemeCollectionSpec<RadiusCollectionsMap, RadiusScheme> = {
 };
 
 export const getRadius = (key: keyof RadiusSet) => {
-    return (props: StyledComponentProps): string => {
+    return (props: ThemeStyleProps): string => {
         const theme = props.theme;
         const radiusSet: RadiusSet = getCollection(
             RadiusSpec,
@@ -28,7 +28,7 @@ export const getRadius = (key: keyof RadiusSet) => {
 };
 
 export const RadiusValues: {
-    [key in keyof RadiusSet]: (props: StyledComponentProps) => string;
+    [key in keyof RadiusSet]: (props: ThemeStyleProps) => string;
 } = {
     none: getRadius("none"),
     xs: getRadius("xs"),

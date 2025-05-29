@@ -1,6 +1,6 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
+import { getCollection, getValue } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
-import { ColourScheme, SemanticColourSet } from "../types";
+import { ColourScheme, SemanticColourSet, ThemeStyleProps } from "../types";
 import { LifeSGColourSet } from "./specs/lifesg-semantic-tokens";
 import { PAColourSet } from "./specs/pa-semantic-tokens";
 import { SemanticColourCollectionMap } from "./types";
@@ -22,7 +22,7 @@ export const ColourSpec: ThemeCollectionSpec<
 };
 
 export const getSemanticColour = (key: keyof SemanticColourSet) => {
-    return (props: StyledComponentProps): string => {
+    return (props: ThemeStyleProps): string => {
         const theme = props.theme;
         const colorSet: SemanticColourSet = getCollection(
             ColourSpec,
@@ -44,7 +44,7 @@ export const getSemanticColour = (key: keyof SemanticColourSet) => {
 };
 
 export const ColourSemantic: {
-    [key in keyof SemanticColourSet]: (props: StyledComponentProps) => string;
+    [key in keyof SemanticColourSet]: (props: ThemeStyleProps) => string;
 } = {
     // text
     text: getSemanticColour("text"),

@@ -1,5 +1,5 @@
+import { ThemeStyleProps } from "../types";
 import { BreakpointValues } from "./theme-helper";
-import { StyledComponentProps } from "../helpers";
 
 // Typings for MedaiQuery
 type MaxWidthBreakpoints = "xxs" | "xs" | "sm" | "md" | "lg" | "xl";
@@ -7,7 +7,7 @@ type MinWidthBreakpoints = MaxWidthBreakpoints | "xxl";
 type MediaQueryMinMax = "max-width" | "min-width";
 type MediaQuerySpec<T extends string> = Record<
     T,
-    (props: StyledComponentProps) => string
+    (props: ThemeStyleProps) => string
 >;
 
 const createMediaQueryFunction = <T extends string>(
@@ -18,7 +18,7 @@ const createMediaQueryFunction = <T extends string>(
     const breakpointFunction =
         BreakpointValues[mappedKey as keyof typeof BreakpointValues];
 
-    return (props: StyledComponentProps) => {
+    return (props: ThemeStyleProps) => {
         const value = breakpointFunction(props);
         return `@media screen and (${type}: ${value}px)`;
     };

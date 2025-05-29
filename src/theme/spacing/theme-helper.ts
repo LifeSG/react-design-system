@@ -1,6 +1,6 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
+import { getCollection, getValue } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
-import { SpacingScheme } from "../types";
+import { SpacingScheme, ThemeStyleProps } from "../types";
 import { DefaultSpacingSet } from "./specs/default-spacing-set";
 import { SpacingCollectionsMap, SpacingSet } from "./types";
 
@@ -12,7 +12,7 @@ const SpacingSpec: ThemeCollectionSpec<SpacingCollectionsMap, SpacingScheme> = {
 };
 
 export const getSpace = (key: keyof SpacingSet) => {
-    return (props: StyledComponentProps): string => {
+    return (props: ThemeStyleProps): string => {
         const theme = props.theme;
         const spacingSet: SpacingSet = getCollection(
             SpacingSpec,
@@ -28,7 +28,7 @@ export const getSpace = (key: keyof SpacingSet) => {
 };
 
 export const SpacingValues: {
-    [key in keyof SpacingSet]: (props: StyledComponentProps) => string;
+    [key in keyof SpacingSet]: (props: ThemeStyleProps) => string;
 } = {
     "spacing-0": getSpace("spacing-0"),
     "spacing-4": getSpace("spacing-4"),

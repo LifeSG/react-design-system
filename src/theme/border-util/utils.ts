@@ -1,15 +1,15 @@
 import { css } from "styled-components";
 import { BorderValues } from "../border/theme-helper";
 import { ColourSemantic } from "../colour-semantic/theme-helper";
-import { StyledComponentProps } from "../helpers";
+import { ThemeStyleInterpolation, ThemeStyleProps } from "../types";
 
 export const solidBorderStyle =
     (options?: {
-        thickness?: number | ((props: StyledComponentProps) => string);
-        radius?: number | ((props: StyledComponentProps) => string);
-        colour?: string | ((props: StyledComponentProps) => string);
+        thickness?: number | ThemeStyleInterpolation;
+        radius?: number | ThemeStyleInterpolation;
+        colour?: string | ThemeStyleInterpolation;
     }) =>
-    (props: StyledComponentProps) => {
+    (props: ThemeStyleProps) => {
         const { thickness, radius, colour } = options || {};
         // Resolve design tokens to their underlying value
         const resolvedThickness =
@@ -30,11 +30,11 @@ export const solidBorderStyle =
 
 export const dashedBorderStyle =
     (options?: {
-        thickness?: number | ((props: StyledComponentProps) => string);
-        radius?: number | ((props: StyledComponentProps) => string);
-        colour?: string | ((props: StyledComponentProps) => string);
+        thickness?: number | ThemeStyleInterpolation;
+        radius?: number | ThemeStyleInterpolation;
+        colour?: string | ThemeStyleInterpolation;
     }) =>
-    (props: StyledComponentProps) => {
+    (props: ThemeStyleProps) => {
         const { thickness, radius, colour } = options || {};
         // Resolve design tokens to their underlying value
         const resolvedThickness =

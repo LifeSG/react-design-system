@@ -1,6 +1,6 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
+import { getCollection, getValue } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
-import { BorderScheme } from "../types";
+import { BorderScheme, ThemeStyleProps } from "../types";
 import { DefaultBorderSet } from "./specs/default-border-set";
 import { BorderCollectionMap, BorderSet } from "./types";
 
@@ -14,7 +14,7 @@ const BorderSpec: ThemeCollectionSpec<BorderCollectionMap, BorderScheme> = {
 export const getBorderWidth = (
     key: "width-005" | "width-010" | "width-020" | "width-040"
 ) => {
-    return (props: StyledComponentProps) => {
+    return (props: ThemeStyleProps) => {
         const theme = props.theme;
         const borderSet: BorderSet = getCollection(
             BorderSpec,
@@ -30,7 +30,7 @@ export const getBorderWidth = (
 };
 
 export const getBorder = (key: "solid") => {
-    return (props: StyledComponentProps): string => {
+    return (props: ThemeStyleProps): string => {
         const theme = props.theme;
         const borderSet: BorderSet = getCollection(
             BorderSpec,

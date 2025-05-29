@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, ThemeStyleProps } from "@/theme";
+import { Border, Colour, Font, ThemeStyleInterpolation } from "@/theme";
 import { PillColorType, PillType } from "./types";
 
 // =============================================================================
@@ -25,9 +25,9 @@ export const Wrapper = styled.div<StyleProps>`
     }
 
     ${(props) => {
-        let backgroundColor: (props: ThemeStyleProps) => string;
-        let borderColor: ((props: ThemeStyleProps) => string) | undefined;
-        let color: (props: ThemeStyleProps) => string;
+        let backgroundColor: ThemeStyleInterpolation;
+        let borderColor: ThemeStyleInterpolation | undefined;
+        let color: ThemeStyleInterpolation;
 
         if (props.$type === "solid") {
             color = Colour["text-inverse"];

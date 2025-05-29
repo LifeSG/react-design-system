@@ -1,13 +1,13 @@
 import styled, { css } from "styled-components";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { ThemeStyleProps, TypographySizeType } from "@/theme";
+import { ThemeStyleInterpolation, TypographySizeType } from "@/theme";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
 interface ContainerStyleProps {
     $textSize?: TypographySizeType | undefined;
-    $textColor?: string | ((props: ThemeStyleProps) => string) | undefined;
+    $textColor?: string | ThemeStyleInterpolation | undefined;
 }
 
 // =============================================================================

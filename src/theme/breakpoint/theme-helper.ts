@@ -1,6 +1,6 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
+import { getCollection, getValue } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
-import { BreakpointScheme } from "../types";
+import { BreakpointScheme, ThemeStyleProps } from "../types";
 import { DefaultBreakpointSet } from "./specs/default-breakpoint-set";
 import { BreakpointCollectionsMap, BreakpointSet } from "./types";
 
@@ -15,7 +15,7 @@ const BreakpointSpec: ThemeCollectionSpec<
 };
 
 export const getBreakpoint = (key: keyof BreakpointSet) => {
-    return (props: StyledComponentProps): number => {
+    return (props: ThemeStyleProps): number => {
         const theme = props.theme;
         const breakpointSet: BreakpointSet = getCollection(
             BreakpointSpec,

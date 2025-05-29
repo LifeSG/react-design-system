@@ -1,13 +1,19 @@
 import ReactSlider from "react-slider";
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius, Spacing, ThemeStyleProps } from "@/theme";
+import {
+    Border,
+    Colour,
+    Radius,
+    Spacing,
+    ThemeStyleInterpolation,
+} from "@/theme";
 import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
 interface TrackStyleProps {
-    $color: string | ((props: ThemeStyleProps) => string) | undefined;
+    $color: string | ThemeStyleInterpolation | undefined;
 }
 
 interface ThumbStyleProps {

@@ -1,7 +1,7 @@
 import { CSSProp } from "styled-components";
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
+import { getCollection, getValue } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
-import { FontScheme } from "../types";
+import { FontScheme, ThemeStyleProps } from "../types";
 import { BookingSgFontSet } from "./specs/bookingsg-font-set";
 import { DefaultFontSet } from "./specs/default-font-set";
 import { PAFontSet } from "./specs/pa-font-set";
@@ -17,7 +17,7 @@ const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
 };
 
 export const getFont = (key: keyof FontSet) => {
-    return (props: StyledComponentProps): CSSProp | string => {
+    return (props: ThemeStyleProps): CSSProp | string => {
         const theme = props.theme;
         const fontSet: FontSet = getCollection(FontSpec, theme?.fontScheme);
 
@@ -34,7 +34,7 @@ export const getFont = (key: keyof FontSet) => {
 };
 
 export const FontValues: {
-    [key in keyof FontSet]: (props: StyledComponentProps) => CSSProp;
+    [key in keyof FontSet]: (props: ThemeStyleProps) => CSSProp;
 } = {
     "heading-xxl-light": getFont("heading-xxl-light"),
     "heading-xxl-regular": getFont("heading-xxl-regular"),

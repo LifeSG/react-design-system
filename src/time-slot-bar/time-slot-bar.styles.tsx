@@ -2,7 +2,7 @@ import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, ThemeStyleProps } from "@/theme";
+import { Border, Colour, ThemeStyleInterpolation } from "@/theme";
 import { Typography } from "../typography";
 import { Direction, SlotStyle, TimeSlotBarVariant } from "./types";
 
@@ -46,8 +46,8 @@ export interface TimeSlotStyleProps {
     $width?: number;
     $left?: number;
     $styleType: SlotStyle;
-    $bgColor: string | ((props: ThemeStyleProps) => string);
-    $bgColor2?: string | ((props: ThemeStyleProps) => string);
+    $bgColor: string | ThemeStyleInterpolation;
+    $bgColor2?: string | ThemeStyleInterpolation;
     $clickable?: boolean;
 }
 

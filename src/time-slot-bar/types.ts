@@ -1,4 +1,4 @@
-import { ThemeStyleProps } from "@/theme";
+import { ThemeStyleInterpolation } from "@/theme";
 
 export type SlotStyle = "default" | "stripes";
 
@@ -12,9 +12,9 @@ interface TimeSlotBarStyleAttributes {
     /** The label color */
     color?: string;
     /** The background color */
-    backgroundColor: string | ((props: ThemeStyleProps) => string);
+    backgroundColor: string | ThemeStyleInterpolation;
     /** The secondary background color. Used in conjunction if styleType is "stripes" */
-    backgroundColor2?: string | ((props: ThemeStyleProps) => string);
+    backgroundColor2?: string | ThemeStyleInterpolation;
 }
 
 export interface TimeSlotBarProps {

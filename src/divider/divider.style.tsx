@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour, ThemeStyleProps } from "@/theme";
+import { Colour, ThemeStyleInterpolation, ThemeStyleProps } from "@/theme";
 import { DividerLineStyleType } from "./types";
 
 // =============================================================================
@@ -7,7 +7,7 @@ import { DividerLineStyleType } from "./types";
 // =============================================================================
 interface StyleProps {
     $thickness: number;
-    $color?: string | ((props: ThemeStyleProps) => string);
+    $color?: string | ThemeStyleInterpolation;
     $lineStyle?: DividerLineStyleType;
 }
 
