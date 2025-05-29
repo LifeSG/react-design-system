@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { OtpInputProps } from "./types";
+import { FormErrorMessage } from "src/form/form-label";
+import { SimpleIdGenerator, StringHelper } from "../util";
 import {
     CTAButton,
     InputContainer,
     InputField,
     Wrapper,
 } from "./otp-input.styles";
-
-import { FormErrorMessage } from "src/form/form-label";
+import { OtpInputProps } from "./types";
 
 export const OtpInput = ({
     id,
@@ -40,6 +40,9 @@ export const OtpInput = ({
     );
     const [countDown, setCountDown] = useState<number>(cooldownDuration);
     const [lastCtaTimestamp, setLastCtaTimestamp] = useState<Date>(new Date());
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+
+    const hasError = !!errorMessage;
 
     // =============================================================================
     // EFFECTS
@@ -198,7 +201,10 @@ export const OtpInput = ({
 
     return (
         <Wrapper id={id} data-testid={dataTestId} className={className}>
-            <InputContainer>
+            <InputContainer
+                role="group"
+                aria-label={`${numOfInput}-digit OTP input field`}
+            >
                 {otpValues.map((data, index) => {
                     return (
                         <InputField
@@ -208,13 +214,17 @@ export const OtpInput = ({
                                 "otp-input",
                                 dataTestId
                             )}
-                            aria-label={`Enter OTP character ${index + 1}`}
+                            aria-label={`${StringHelper.formatOrdinal(
+                                index + 1
+                            )} digit`}
+                            aria-invalid={hasError}
+                            aria-describedby={hasError ? internalId : undefined}
                             key={index}
                             ref={(el) => (inputRefs.current[index] = el)}
                             type="text"
                             inputMode="numeric"
                             value={data}
-                            error={!!errorMessage}
+                            error={hasError}
                             onChange={handleChange(index)}
                             onKeyDown={handleKeyDown(index)}
                             autoComplete="off"
@@ -224,7 +234,9 @@ export const OtpInput = ({
                 })}
             </InputContainer>
             {errorMessage && (
-                <FormErrorMessage>{errorMessage}</FormErrorMessage>
+                <FormErrorMessage id={internalId}>
+                    {errorMessage}
+                </FormErrorMessage>
             )}
             <CTAButton
                 styleType={styleType}
