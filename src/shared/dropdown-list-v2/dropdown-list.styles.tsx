@@ -1,5 +1,6 @@
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { SquareIcon } from "@lifesg/react-icons/square";
+import { SquareFillIcon } from "@lifesg/react-icons/square-fill";
 import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
@@ -14,6 +15,7 @@ import {
 } from "../../theme";
 import { ComponentLoadingSpinner } from "../component-loading-spinner";
 import { DropdownVariantType } from "../dropdown-list/types";
+import { applyHtmlContentStyle } from "../html-content/html-content";
 import { BasicButton } from "../input-wrapper/input-wrapper";
 
 // =============================================================================
@@ -27,6 +29,7 @@ interface ContainerStyleProps {
 interface ListItemStyleProps {
     $active: boolean;
     $selected: boolean;
+    $disabled: boolean;
 }
 
 // =============================================================================
@@ -105,7 +108,11 @@ export const ListItem = styled.li<ListItemStyleProps>`
     outline: none;
 
     ${(props) => {
-        if (props.$active && props.$selected) {
+        if (props.$disabled) {
+            return css`
+                cursor: not-allowed;
+            `;
+        } else if (props.$active && props.$selected) {
             return css`
                 background: ${Colour["bg-hover"]};
             `;
@@ -142,6 +149,13 @@ export const CheckboxUnselectedIndicator = styled(SquareIcon)`
     height: 1lh;
     width: 1lh;
     color: ${Colour["icon-primary-subtlest"]};
+`;
+
+export const CheckboxDisabledIndicator = styled(SquareFillIcon)`
+    flex-shrink: 0;
+    height: 1lh;
+    width: 1lh;
+    color: ${Colour["icon-disabled-subtle"]};
 `;
 
 // -----------------------------------------------------------------------------
@@ -187,4 +201,11 @@ export const LabelIcon = styled(ExclamationCircleFillIcon)`
 export const Spinner = styled(ComponentLoadingSpinner)`
     margin-right: ${Spacing["spacing-8"]};
     color: ${Colour["icon"]};
+`;
+
+export const NoResultDescContainer = styled.div`
+    ${applyHtmlContentStyle()}
+    color: ${Colour["text-subtle"]};
+    padding: 0 ${Spacing["spacing-16"]} ${Spacing["spacing-12"]}
+        ${Spacing["spacing-16"]};
 `;

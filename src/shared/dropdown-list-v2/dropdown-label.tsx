@@ -20,6 +20,7 @@ interface DropdownLabelProps {
     maxLines?: number | undefined;
     searchTerm?: string | undefined;
     selected?: boolean | undefined;
+    disabled?: boolean | undefined;
     sublabel?: string | undefined;
     truncationType?: "middle" | "end" | undefined;
     variant?: DropdownVariantType | undefined;
@@ -32,6 +33,7 @@ export const DropdownLabel = ({
     searchTerm,
     maxLines = 2,
     selected,
+    disabled,
     sublabel,
     truncationType = "middle",
     variant = "default",
@@ -132,6 +134,7 @@ export const DropdownLabel = ({
                 $bold={bold}
                 $maxLines={maxLines}
                 $selected={selected}
+                $disabled={disabled}
                 $truncateType={truncationType}
             >
                 {truncationType === "middle" && shouldTruncateTitle

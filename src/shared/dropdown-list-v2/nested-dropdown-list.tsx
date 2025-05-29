@@ -10,6 +10,7 @@ import {
     Container,
     LabelIcon,
     List,
+    NoResultDescContainer,
     ResultStateContainer,
     SelectAllButton,
     SelectAllContainer,
@@ -60,6 +61,7 @@ export const NestedDropdownList = <T,>({
     /* DropdownSearchProps */
     enableSearch,
     hideNoResultsDisplay,
+    noResultsDescription,
     searchPlaceholder = "Search",
     onSearch,
 }: NestedDropdownListProps<T>) => {
@@ -438,10 +440,17 @@ export const NestedDropdownList = <T,>({
             itemsLoadState === "success"
         ) {
             return (
-                <ResultStateContainer data-testid="list-no-results">
-                    <LabelIcon data-testid="no-result-icon" />
-                    No results found.
-                </ResultStateContainer>
+                <>
+                    <ResultStateContainer data-testid="list-no-results">
+                        <LabelIcon data-testid="no-result-icon" />
+                        No results found.
+                    </ResultStateContainer>
+                    {noResultsDescription && (
+                        <NoResultDescContainer data-testid="no-result-desc">
+                            {noResultsDescription}
+                        </NoResultDescContainer>
+                    )}
+                </>
             );
         }
     };

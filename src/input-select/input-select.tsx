@@ -44,6 +44,7 @@ export const InputSelect = <T, V>({
     renderCustomSelectedOption,
     renderListItem,
     hideNoResultsDisplay,
+    noResultsDescription,
     renderCustomCallToAction,
     onBlur,
     variant = "default",
@@ -252,6 +253,7 @@ export const InputSelect = <T, V>({
                 itemTruncationType={optionTruncationType}
                 renderListItem={renderListItem}
                 hideNoResultsDisplay={hideNoResultsDisplay}
+                noResultsDescription={noResultsDescription}
                 renderCustomCallToAction={renderCustomCallToAction}
                 variant={variant}
                 width={elementWidth}

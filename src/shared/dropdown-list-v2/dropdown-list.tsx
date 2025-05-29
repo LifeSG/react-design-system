@@ -17,6 +17,7 @@ import {
 import { DropdownLabel } from "./dropdown-label";
 import { DropdownListStateContext } from "./dropdown-list-state";
 import {
+    CheckboxDisabledIndicator,
     CheckboxSelectedIndicator,
     CheckboxUnselectedIndicator,
     Container,
@@ -24,6 +25,7 @@ import {
     List,
     ListItem,
     Listbox,
+    NoResultDescContainer,
     ResultStateContainer,
     SelectAllButton,
     SelectAllContainer,
@@ -41,6 +43,7 @@ import { DropdownListProps, ListItemDisplayProps } from "./types";
 export const DropdownList = <T, V>({
     listItems,
     multiSelect,
+    maxSelectable,
     selectedItems,
     disableItemFocus,
     itemsLoadState = "success",
@@ -63,6 +66,7 @@ export const DropdownList = <T, V>({
     /* DropdownSearchProps */
     enableSearch,
     hideNoResultsDisplay,
+    noResultsDescription,
     searchPlaceholder = "Search",
     searchFunction,
     onSearch,
@@ -83,6 +87,11 @@ export const DropdownList = <T, V>({
     const listItemRefs = useRef<(HTMLElement | null)[]>([]);
     const searchInputRef = useRef<HTMLInputElement>(null);
     const virtuosoRef = useRef<VirtuosoHandle>(null);
+
+    const hasSelectedMax =
+        !!maxSelectable &&
+        !!selectedItems &&
+        selectedItems?.length === maxSelectable;
 
     // =========================================================================
     // HELPER FUNCTIONS
@@ -178,6 +187,9 @@ export const DropdownList = <T, V>({
     };
 
     const handleListItemClick = (item: T, upcomingIndex: number) => {
+        if (hasSelectedMax && !checkListItemSelected(item)) {
+            return;
+        }
         setFocusedIndex(upcomingIndex);
         onSelectItem?.(item, getValue(item));
     };
@@ -321,6 +333,10 @@ export const DropdownList = <T, V>({
     // =========================================================================
     const renderListItemIcon = (selected: boolean) => {
         if (multiSelect) {
+            if (hasSelectedMax && !selected) {
+                return <CheckboxDisabledIndicator aria-hidden />;
+            }
+
             return selected ? (
                 <CheckboxSelectedIndicator aria-hidden />
             ) : (
@@ -344,6 +360,7 @@ export const DropdownList = <T, V>({
                 label={title}
                 maxLines={itemMaxLines}
                 selected={selected}
+                disabled={!selected && hasSelectedMax}
                 sublabel={secondaryLabel}
                 truncationType={itemTruncationType}
                 variant={variant}
@@ -359,6 +376,7 @@ export const DropdownList = <T, V>({
                 <ListItem
                     aria-selected={selected}
                     aria-multiselectable={multiSelect}
+                    aria-disabled={!selected && hasSelectedMax}
                     data-testid="list-item"
                     key={getItemKey(item, index)}
                     onClick={() => handleListItemClick(item, index)}
@@ -370,6 +388,7 @@ export const DropdownList = <T, V>({
                     tabIndex={active ? 0 : -1}
                     $active={active}
                     $selected={selected}
+                    $disabled={!selected && hasSelectedMax}
                 >
                     {renderListItem ? (
                         renderListItem(item, { selected })
@@ -416,9 +435,9 @@ export const DropdownList = <T, V>({
                         type="button"
                         $variant={variant}
                     >
-                        {selectedItems.length === 0
-                            ? "Select all"
-                            : "Clear all"}
+                        {maxSelectable || selectedItems.length !== 0
+                            ? "Clear all"
+                            : "Select all"}
                     </SelectAllButton>
                 </SelectAllContainer>
             );
@@ -433,10 +452,17 @@ export const DropdownList = <T, V>({
             itemsLoadState === "success"
         ) {
             return (
-                <ResultStateContainer data-testid="list-no-results">
-                    <LabelIcon data-testid="no-result-icon" />
-                    No results found.
-                </ResultStateContainer>
+                <>
+                    <ResultStateContainer data-testid="list-no-results">
+                        <LabelIcon data-testid="no-result-icon" />
+                        No results found.
+                    </ResultStateContainer>
+                    {noResultsDescription && (
+                        <NoResultDescContainer data-testid="no-result-desc">
+                            {noResultsDescription}
+                        </NoResultDescContainer>
+                    )}
+                </>
             );
         }
     };

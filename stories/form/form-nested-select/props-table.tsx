@@ -93,6 +93,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "noResultsDescription",
+                description:
+                    "Additional description rendered after the default no results display",
+                propTypes: ["React.ReactNode"],
+            },
+            {
                 name: "listStyleWidth (deprecated)",
                 description: (
                     <>

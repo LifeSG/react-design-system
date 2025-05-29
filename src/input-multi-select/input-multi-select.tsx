@@ -41,12 +41,14 @@ export const InputMultiSelect = <T, V>({
     optionTruncationType = "end",
     renderListItem,
     hideNoResultsDisplay,
+    noResultsDescription,
     renderCustomCallToAction,
     onBlur,
     variant = "default",
     readOnly,
     alignment,
     dropdownZIndex,
+    maxSelectable,
 }: InputMultiSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -70,7 +72,7 @@ export const InputMultiSelect = <T, V>({
     // EVENT HANDLERS
     // =============================================================================
     const handleSelectAllClick = () => {
-        if (selected && selected.length > 0) {
+        if ((selected && selected.length > 0) || maxSelectable) {
             setSelected([]);
             performOnSelectOptions([]);
         } else {
@@ -242,6 +244,7 @@ export const InputMultiSelect = <T, V>({
                 searchFunction={searchFunction}
                 searchPlaceholder={searchPlaceholder}
                 multiSelect
+                maxSelectable={maxSelectable}
                 selectedItems={selected}
                 onSelectAll={handleSelectAllClick}
                 onRetry={onRetry}
@@ -249,6 +252,7 @@ export const InputMultiSelect = <T, V>({
                 itemTruncationType={optionTruncationType}
                 renderListItem={renderListItem}
                 hideNoResultsDisplay={hideNoResultsDisplay}
+                noResultsDescription={noResultsDescription}
                 renderCustomCallToAction={renderCustomCallToAction}
                 variant={variant}
                 width={elementWidth}
