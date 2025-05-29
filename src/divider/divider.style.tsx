@@ -1,7 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour } from "@/theme";
-import { StyledComponentProps } from "../theme/helpers";
-import { ThemeStyleProps } from "../theme/types";
+import { Colour, ThemeStyleProps } from "@/theme";
 import { DividerLineStyleType } from "./types";
 
 // =============================================================================
@@ -16,7 +14,7 @@ interface StyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-const dashedLineStyle = () => (props: StyleProps & StyledComponentProps) => {
+const dashedLineStyle = () => (props: StyleProps & ThemeStyleProps) => {
     let color: string;
 
     if (typeof props.$color === "function") {

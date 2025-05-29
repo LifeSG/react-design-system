@@ -1,9 +1,8 @@
 import React from "react";
-import { ColDivProps } from "./types";
-import { StyledDiv } from "./col-div.style";
-import { BreakpointValues } from "../theme/breakpoint/theme-helper";
-import { ThemeSpec } from "../theme/types";
 import { useTheme } from "styled-components";
+import { Breakpoint, ThemeSpec } from "../theme";
+import { StyledDiv } from "./col-div.style";
+import { ColDivProps } from "./types";
 
 const Component = (
     props: ColDivProps,
@@ -57,13 +56,13 @@ const Component = (
     };
 
     const getStyleProps = () => {
-        const xxlColumnCount = BreakpointValues["xxl-column"]({ theme });
-        const xlColumnCount = BreakpointValues["xl-column"]({ theme });
-        const lgColumnCount = BreakpointValues["lg-column"]({ theme });
-        const mdColumnCount = BreakpointValues["md-column"]({ theme });
-        const smColumnCount = BreakpointValues["sm-column"]({ theme });
-        const xsColumnCount = BreakpointValues["xs-column"]({ theme });
-        const xxsColumnCount = BreakpointValues["xxs-column"]({ theme });
+        const xxlColumnCount = Breakpoint["xxl-column"]({ theme });
+        const xlColumnCount = Breakpoint["xl-column"]({ theme });
+        const lgColumnCount = Breakpoint["lg-column"]({ theme });
+        const mdColumnCount = Breakpoint["md-column"]({ theme });
+        const smColumnCount = Breakpoint["sm-column"]({ theme });
+        const xsColumnCount = Breakpoint["xs-column"]({ theme });
+        const xxsColumnCount = Breakpoint["xxs-column"]({ theme });
 
         const xxlStartSpan = getColSpan(
             xxlCols ||

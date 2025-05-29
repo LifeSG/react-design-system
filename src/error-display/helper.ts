@@ -1,5 +1,4 @@
-import { Breakpoint } from "@/theme";
-import { ThemeSpec } from "../theme/types";
+import { Breakpoint, ThemeSpec } from "@/theme";
 
 export namespace ErrorDisplayHelper {
     export interface ImagePathAttributes {

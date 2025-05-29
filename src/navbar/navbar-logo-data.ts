@@ -1,4 +1,4 @@
-import { ResourceScheme } from "../theme/types";
+import { ResourceScheme } from "@/theme";
 import { NavbarResourcesProps } from "./types";
 
 const DEFAULT_RESOURCES_LOGO: NavbarResourcesProps = {

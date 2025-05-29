@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font } from "@/theme";
-import { ThemeStyleProps } from "../theme/types";
+import { Border, Colour, Font, ThemeStyleProps } from "@/theme";
 import { PillColorType, PillType } from "./types";
 
 // =============================================================================

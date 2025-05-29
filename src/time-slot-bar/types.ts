@@ -1,4 +1,4 @@
-import { ThemeStyleProps } from "../theme/types";
+import { ThemeStyleProps } from "@/theme";
 
 export type SlotStyle = "default" | "stripes";
 

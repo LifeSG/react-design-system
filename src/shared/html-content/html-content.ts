@@ -1,6 +1,5 @@
 import { css } from "styled-components";
-import { Colour, Font } from "@/theme";
-import { TypographySizeType } from "../../theme/font/types";
+import { Colour, Font, TypographySizeType } from "@/theme";
 
 export interface HtmlContentStyleOptions {
     textSize?: TypographySizeType | undefined;

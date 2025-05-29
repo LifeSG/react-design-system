@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../theme/breakpoint/media-query-helper";
+import { MediaQuery } from "@/theme";
 
 export interface StyledDivStyleProps {
     $xxsStart?: number | undefined;

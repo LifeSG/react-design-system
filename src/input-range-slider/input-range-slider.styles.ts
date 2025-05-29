@@ -1,7 +1,6 @@
 import ReactSlider from "react-slider";
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius, Spacing } from "@/theme";
-import { ThemeStyleProps } from "../theme/types";
+import { Border, Colour, Radius, Spacing, ThemeStyleProps } from "@/theme";
 import { Typography } from "../typography";
 
 // =============================================================================

@@ -1,7 +1,6 @@
 import { css } from "styled-components";
 import { lineClampCss } from "../shared/styles";
-import { Colour, Font } from "@/theme";
-import { FontSet, TypographySizeType } from "../theme/font/types";
+import { Colour, Font, FontSet, TypographySizeType } from "@/theme";
 import { TypographyProps, TypographyWeight } from "./types";
 
 export const getTextStyle = (

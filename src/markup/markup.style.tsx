@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { TypographySizeType } from "../theme/font/types";
-import { ThemeStyleProps } from "../theme/types";
+import { ThemeStyleProps, TypographySizeType } from "@/theme";
 
 // =============================================================================
 // STYLE INTERFACES
