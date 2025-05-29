@@ -108,13 +108,13 @@ export const ListItem = styled.li<ListItemStyleProps>`
     outline: none;
 
     ${(props) => {
-        if (props.$active && props.$selected) {
-            return css`
-                background: ${Colour["bg-hover"]};
-            `;
-        } else if (props.$disabled) {
+        if (props.$disabled) {
             return css`
                 cursor: not-allowed;
+            `;
+        } else if (props.$active && props.$selected) {
+            return css`
+                background: ${Colour["bg-hover"]};
             `;
         } else if (props.$active) {
             return css`

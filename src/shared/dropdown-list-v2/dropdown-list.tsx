@@ -376,7 +376,7 @@ export const DropdownList = <T, V>({
                 <ListItem
                     aria-selected={selected}
                     aria-multiselectable={multiSelect}
-                    aria-disabled={hasSelectedMax}
+                    aria-disabled={!selected && hasSelectedMax}
                     data-testid="list-item"
                     key={getItemKey(item, index)}
                     onClick={() => handleListItemClick(item, index)}
@@ -388,7 +388,7 @@ export const DropdownList = <T, V>({
                     tabIndex={active ? 0 : -1}
                     $active={active}
                     $selected={selected}
-                    $disabled={hasSelectedMax}
+                    $disabled={!selected && hasSelectedMax}
                 >
                     {renderListItem ? (
                         renderListItem(item, { selected })
@@ -435,11 +435,9 @@ export const DropdownList = <T, V>({
                         type="button"
                         $variant={variant}
                     >
-                        {maxSelectable
-                            ? "Clear"
-                            : selectedItems.length === 0
-                            ? "Select all"
-                            : "Clear all"}
+                        {maxSelectable || selectedItems.length !== 0
+                            ? "Clear all"
+                            : "Select all"}
                     </SelectAllButton>
                 </SelectAllContainer>
             );
