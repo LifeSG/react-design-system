@@ -43,31 +43,8 @@ export const plugins = [
     terser(), // Helps remove comments, whitespace or logging codes
 ];
 
-const themeAliasEsm = alias({
-    entries: [
-        {
-            find: /^@\/theme/,
-            replacement: "@lifesg/react-design-system/theme/index.js",
-        },
-    ],
-});
-
-const themeAliasCjs = alias({
-    entries: [
-        {
-            find: /^@\/theme/,
-            replacement: "@lifesg/react-design-system/theme",
-        },
-    ],
-});
-
 // modules that should not be bundled
-const externals = [
-    "react",
-    "react-dom",
-    "styled-components",
-    /^@lifesg\/react-design-system\/theme.*/,
-];
+const externals = ["react", "react-dom", "styled-components", "@/theme"];
 
 export const mainBuildConfigs = [
     {
@@ -80,9 +57,12 @@ export const mainBuildConfigs = [
                 exports: "named",
                 interop: "compat",
                 chunkFileNames: "chunks/[name].[hash].js",
+                paths: {
+                    "@/theme": "./theme",
+                },
             },
         ],
-        plugins: [themeAliasEsm, ...plugins],
+        plugins: [...plugins],
         external: externals,
     },
     {
@@ -95,9 +75,12 @@ export const mainBuildConfigs = [
                 exports: "named",
                 interop: "compat",
                 chunkFileNames: "chunks/[name].[hash].js",
+                paths: {
+                    "@/theme": "./theme/cjs",
+                },
             },
         ],
-        plugins: [themeAliasCjs, ...plugins],
+        plugins: [...plugins],
         external: externals,
     },
 ];
@@ -132,7 +115,7 @@ const themeBuildConfigs = [
                 },
             }),
         ],
-        external: externals,
+        external: ["react", "react-dom", "styled-components"],
     },
 ];
 
@@ -145,9 +128,11 @@ const folderBuildConfigs = getFolders("./src").map((folder) => {
             exports: "named",
             format: "esm",
             chunkFileNames: "chunks/[name].[hash].js",
+            paths: {
+                "@/theme": "../theme",
+            },
         },
         plugins: [
-            themeAliasEsm,
             ...plugins,
             generatePackageJson({
                 baseContents: {
@@ -183,8 +168,8 @@ const codemodBuildConfigs = [
 ];
 
 export default [
-    ...mainBuildConfigs,
     ...themeBuildConfigs,
+    ...mainBuildConfigs,
     ...folderBuildConfigs,
-    ...codemodBuildConfigs,
+    // ...codemodBuildConfigs,
 ];
