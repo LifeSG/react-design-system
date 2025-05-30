@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { OtpInput } from "src/otp-input";
 
 // =============================================================================
@@ -90,5 +91,31 @@ describe("OtpInput", () => {
             screen.getByRole("button", { name: "Resend OTP" })
         ).toBeEnabled();
         expect(onCooldownEnd).toHaveBeenCalled();
+    });
+
+    it("should support keyboard navigation", async () => {
+        const user = userEvent.setup({ delay: null });
+
+        render(<OtpInput numOfInput={3} cooldownDuration={10} />);
+
+        await user.click(screen.getByLabelText("1st digit"));
+
+        expect(screen.getByLabelText("1st digit")).toHaveFocus();
+
+        await user.keyboard("{ArrowRight}{ArrowRight}");
+
+        expect(screen.getByLabelText("3rd digit")).toHaveFocus();
+
+        await user.keyboard("{ArrowRight}");
+
+        expect(screen.getByLabelText("3rd digit")).toHaveFocus();
+
+        await user.keyboard("{ArrowLeft}{ArrowLeft}");
+
+        expect(screen.getByLabelText("1st digit")).toHaveFocus();
+
+        await user.keyboard("{ArrowLeft}");
+
+        expect(screen.getByLabelText("1st digit")).toHaveFocus();
     });
 });

@@ -111,6 +111,10 @@ export const OtpInput = ({
                 if (onChange) {
                     onChange(newOtpValues);
                 }
+            } else if (event.code === "ArrowRight") {
+                inputRefs.current[index + 1]?.focus();
+            } else if (event.code === "ArrowLeft") {
+                inputRefs.current[index - 1]?.focus();
             }
         };
 
