@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CalendarHelper } from "../../util/calendar-helper";
 import { MonthCell, Wrapper } from "./internal-calendar-month.style";
 import { FocusType, InternalCalendarProps } from "./types";
@@ -43,9 +43,23 @@ export const InternalCalendarMonth = ({
         new Array(months.length).fill(null)
     );
 
+    const [focusedMonthIndex, setFocusedMonthIndex] = useState<number | null>(
+        months.findIndex((month) => month.isSame(viewCalendarDate, "month"))
+    );
+    useEffect(() => {
+        // Focus the month cell that corresponds to the focused month
+        if (!months.length || focusedMonthIndex === null) return;
+        monthRefs.current[focusedMonthIndex]?.focus();
+    }, [focusedMonthIndex, months]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
+    const handleOnBlur = () => {
+        // Reset focused year when the component loses focus
+        setFocusedMonthIndex(null);
+    };
+
     const handleMonthClick = (value: Dayjs, isDisabled: boolean) => {
         if (isDisabled) return;
 
@@ -102,7 +116,7 @@ export const InternalCalendarMonth = ({
             newMonthSelection >= 0 &&
             newMonthSelection < months.length
         ) {
-            monthRefs.current[newMonthSelection]?.focus();
+            setFocusedMonthIndex(newMonthSelection);
         }
     };
 
@@ -171,7 +185,7 @@ export const InternalCalendarMonth = ({
     if (!months.length) return null;
 
     return (
-        <Wrapper>
+        <Wrapper onBlur={handleOnBlur}>
             {months.map((date, index) => {
                 const {
                     disabledDisplay,

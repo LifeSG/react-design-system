@@ -48,7 +48,7 @@ export const InternalCalendarYear = ({
     const yearRefs = useRef<Array<HTMLDivElement | null>>(
         new Array(years.length).fill(null)
     );
-    const [focusedYear, setFocusedYear] = useState<Dayjs | null>();
+    const [focusedYear, setFocusedYear] = useState<Dayjs | null>(calendarDate);
 
     useEffect(() => {
         if (!years.length || focusedYear === null) return;

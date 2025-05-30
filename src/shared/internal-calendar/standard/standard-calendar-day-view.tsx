@@ -73,7 +73,12 @@ export const StandardCalendarDayView = ({
             return dayjs();
         }
 
-        // Otherwise, choose the first day of the month
+        // Choose min date if it is in the current month
+        if (minDate && calendarDate.isSame(dayjs(minDate), "month")) {
+            return dayjs(minDate);
+        }
+
+        // Otherwise, return the first day of the month
         return dayjs(calendarDate).startOf("month");
     }, [calendarDate, selectedStartDate, selectedEndDate]);
 
@@ -106,11 +111,21 @@ export const StandardCalendarDayView = ({
     };
 
     const handleFocusCell = (value: string) => {
-        if (!isWithinGeneratedDays(dayjs(value))) {
-            setCalendarDate?.(value);
+        const valueDayjs = dayjs(value);
+
+        if (
+            CalendarHelper.isWithinRange(
+                valueDayjs,
+                minDate ? dayjs(minDate) : undefined,
+                maxDate ? dayjs(maxDate) : undefined
+            )
+        ) {
+            if (!isWithinGeneratedDays(valueDayjs)) {
+                setCalendarDate?.(value);
+            }
+            setHoverValue(value);
+            onHover(value);
         }
-        setHoverValue(value);
-        onHover(value);
     };
 
     const handleMouseLeaveCell = () => {
@@ -130,6 +145,10 @@ export const StandardCalendarDayView = ({
     };
 
     const renderDayCells = () => {
+        const firstDay =
+            minDate && calendarDate.isSame(dayjs(minDate), "month")
+                ? dayjs(minDate).date()
+                : 1;
         return weeksOfTheMonth.map((week, weekIndex) => {
             return (
                 <RowDayCell
@@ -140,15 +159,12 @@ export const StandardCalendarDayView = ({
                     onBlur={handleMouseLeaveCell}
                 >
                     {week.map((day, dayIndex) => {
-                        const isDateToFocus = dayjs(day).isSame(
-                            dateToFocus,
-                            "day"
-                        );
+                        const isDateToFocus = day.isSame(dateToFocus, "day");
 
                         // First day of the month, should always be in tab order
                         const isFirstDayOfMonth =
-                            dayjs(day).date() === 1 &&
-                            dayjs(day).month() === calendarDate.month();
+                            day.date() === firstDay &&
+                            day.month() === calendarDate.month();
 
                         return (
                             <StandardCell

@@ -69,9 +69,6 @@ const Component = (
     const [viewCalendarDate, setViewCalendarDate] = useState<Dayjs>(
         DateHelper.toDayjs(initialCalendarDate)
     );
-    const [accessibleName, setAccessibleName] = useState<string | undefined>(
-        undefined
-    );
     const [currentView, setCurrentView] = useState<View>("default");
 
     const doneButtonRef = useRef<HTMLButtonElement>(null);
@@ -110,7 +107,6 @@ const Component = (
 
     useEffect(() => {
         performOnCalendarDateChange(viewCalendarDate);
-        setAccessibleName(viewCalendarDate.format("MMMM, YYYY"));
         // more accurate than calendarDate since it accounts for selection state
         // in month/year views
     }, [viewCalendarDate]);
@@ -147,6 +143,15 @@ const Component = (
                     ? calendarDate.subtract(1, "month")
                     : calendarDate.add(1, "month");
 
+            if (
+                !CalendarHelper.isWithinRange(
+                    nextDate,
+                    minDate ? dayjs(minDate) : undefined,
+                    maxDate ? dayjs(maxDate) : undefined,
+                    "month"
+                )
+            )
+                return;
             setCalendarDate(nextDate);
 
             if (currentView === "default") {
@@ -196,6 +201,16 @@ const Component = (
                         ? calendarDate.subtract(1, "year")
                         : calendarDate.add(1, "year");
             }
+
+            if (
+                !CalendarHelper.isWithinRange(
+                    nextDate,
+                    minDate ? dayjs(minDate) : undefined,
+                    maxDate ? dayjs(maxDate) : undefined,
+                    "year"
+                )
+            )
+                return;
 
             setCalendarDate(nextDate);
 
@@ -547,7 +562,7 @@ const Component = (
             ref={containerRef}
             data-id="calendar-container"
             data-testid="calendar-container"
-            aria-label={accessibleName}
+            aria-label={viewCalendarDate.format("MMMM, YYYY")}
             role="group"
             {...otherProps}
         >
