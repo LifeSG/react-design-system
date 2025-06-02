@@ -205,4 +205,21 @@ export namespace StringHelper {
             ? { startIndex: index0, endIndex: index1 }
             : { startIndex: index1, endIndex: index0 };
     };
+
+    const ordinalPluralRules = new Intl.PluralRules("en", {
+        type: "ordinal",
+    });
+
+    const suffixes = new Map([
+        ["one", "st"],
+        ["two", "nd"],
+        ["few", "rd"],
+        ["other", "th"],
+    ]);
+
+    export const formatOrdinal = (n: number) => {
+        const rule = ordinalPluralRules.select(n);
+        const suffix = suffixes.get(rule);
+        return `${n}${suffix}`;
+    };
 }
