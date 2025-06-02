@@ -326,7 +326,7 @@ const Component = <T,>(
             id={id || "navbar-wrapper"}
             data-testid={otherProps["data-testid"] || "navbar-wrapper"}
         >
-            {masthead && <Masthead />}
+            {masthead && <Masthead stretch={isStretch} />}
             {renderNavbar()}
         </Wrapper>
     );

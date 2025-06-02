@@ -1,5 +1,6 @@
 import { Canvas, Meta } from "@storybook/blocks";
 import * as MastheadStories from "./masthead.stories";
+import { PropsTable } from "./props-table";
 
 <Meta of={MastheadStories} />
 
@@ -14,10 +15,16 @@ visit the [Singapore Government Design System](https://designsystem.tech.gov.sg/
 import { Masthead } from "@lifesg/react-design-system/masthead";
 ```
 
-> The masthead is a styled version from the original and is integrated with the [Navbar](/docs/navigation-navbar--docs) as well
+The masthead is a styled version from the original and is integrated with the
+[Navbar](/docs/navigation-navbar--docs) as well. The horizontal spacing is
+customised to align with the [Layout](/docs/core-layout--docs) container.
 
 <Canvas of={MastheadStories.Default} />
 
 > The component also uses a custom script. Should you encounter a content security
 > policy error, do add this script in the `scriptSrc` blob.
 > https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component/Masthead/index.js
+
+## Component API
+
+<PropsTable />
