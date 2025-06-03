@@ -48,7 +48,8 @@ export const InternalCalendarMonth = ({
     );
     useEffect(() => {
         // Focus the month cell that corresponds to the focused month
-        if (!months.length || focusedMonthIndex === null) return;
+        if (focusedMonthIndex === null) return;
+
         monthRefs.current[focusedMonthIndex]?.focus();
     }, [focusedMonthIndex, months]);
 
@@ -72,27 +73,14 @@ export const InternalCalendarMonth = ({
         isDisabled: boolean
     ) => {
         const keyboardEvent = event as React.KeyboardEvent<HTMLInputElement>;
-        const validKeys = [
-            "ArrowLeft",
-            "ArrowRight",
-            "ArrowUp",
-            "ArrowDown",
-            "Enter",
-            " ",
-        ];
         const selectedKey = keyboardEvent.key;
-        const isValid = validKeys.includes(selectedKey);
-        if (!isValid) {
-            return;
-        }
-
-        event.preventDefault();
 
         let newMonthSelection: number | undefined;
         const currentIndex = months.indexOf(value);
         switch (selectedKey) {
             case "Enter":
             case " ":
+                event.preventDefault();
                 handleMonthClick(value, isDisabled);
                 break;
             case "ArrowLeft":
@@ -116,6 +104,7 @@ export const InternalCalendarMonth = ({
             newMonthSelection >= 0 &&
             newMonthSelection < months.length
         ) {
+            event.preventDefault();
             setFocusedMonthIndex(newMonthSelection);
         }
     };
@@ -202,9 +191,7 @@ export const InternalCalendarMonth = ({
                         role="button"
                         aria-label={month}
                         aria-disabled={!interactive}
-                        aria-selected={
-                            variant === "selected-month" ? "true" : "false"
-                        }
+                        aria-selected={variant === "selected-month"}
                         key={month}
                         $variant={variant}
                         $disabledDisplay={disabledDisplay}

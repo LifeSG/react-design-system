@@ -22,7 +22,7 @@ interface Props
     viewCalendarDate: Dayjs;
     isNewSelection: boolean;
     onYearSelect: (value: Dayjs) => void;
-    setCalendarDate?: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
+    setCalendarDate: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
 }
 
 export const InternalCalendarYear = ({
@@ -51,12 +51,12 @@ export const InternalCalendarYear = ({
     const [focusedYear, setFocusedYear] = useState<Dayjs | null>(calendarDate);
 
     useEffect(() => {
-        if (!years.length || focusedYear === null) return;
+        if (focusedYear === null) return;
         // Focus the year cell that corresponds to the focused year
         const focusedYearIndex = years.findIndex((year) =>
             year.isSame(focusedYear, "year")
         );
-        if (focusedYearIndex >= 0 && focusedYearIndex < years.length) {
+        if (focusedYearIndex >= 0) {
             yearRefs.current[focusedYearIndex]?.focus();
         }
     }, [focusedYear, years]);
@@ -81,26 +81,13 @@ export const InternalCalendarYear = ({
         isDisabled: boolean
     ) => {
         const keyboardEvent = event as React.KeyboardEvent<HTMLInputElement>;
-        const validKeys = [
-            "ArrowLeft",
-            "ArrowRight",
-            "ArrowUp",
-            "ArrowDown",
-            "Enter",
-            " ",
-        ];
         const selectedKey = keyboardEvent.key;
-        const isValid = validKeys.includes(selectedKey);
-        if (!isValid) {
-            return;
-        }
-
-        event.preventDefault();
 
         let newYearSelection: Dayjs | undefined;
         switch (selectedKey) {
             case "Enter":
             case " ":
+                event.preventDefault();
                 handleYearClick(value, isDisabled);
                 break;
             case "ArrowLeft":
@@ -121,10 +108,10 @@ export const InternalCalendarYear = ({
 
         if (newYearSelection === undefined) return;
 
-        if (setCalendarDate) {
-            setCalendarDate(newYearSelection);
-            setFocusedYear(newYearSelection);
-        }
+        event.preventDefault();
+
+        setCalendarDate(newYearSelection);
+        setFocusedYear(newYearSelection);
     };
 
     // =============================================================================
@@ -173,7 +160,17 @@ export const InternalCalendarYear = ({
             ? "current-year"
             : "default";
 
-        const tabIndex = yearIndex === 0 ? 0 : -1;
+        const isSelectedYearInDecade =
+            viewCalendarDate.year() >= years[0].year() &&
+            viewCalendarDate.year() <= years[years.length - 1].year();
+
+        const tabIndex = isSelectedYearInDecade
+            ? variant === "selected-year"
+                ? 0
+                : -1
+            : yearIndex === 1
+            ? 0
+            : -1;
 
         return {
             disabledDisplay: disabled || isOutsideSelectedRange(date),
@@ -209,9 +206,7 @@ export const InternalCalendarYear = ({
                         role="button"
                         aria-label={`${year}`}
                         aria-disabled={!interactive}
-                        aria-selected={
-                            variant === "selected-year" ? "true" : "false"
-                        }
+                        aria-selected={variant === "selected-year"}
                         key={year}
                         $variant={variant}
                         $disabledDisplay={disabledDisplay}
