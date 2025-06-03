@@ -32,6 +32,9 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
     ${(props) => {
         switch (props.$variant) {
             case "current":
+                return css`
+                    background-color: ${Colour["icon-primary-subtle"]};
+                `;
             case "upcoming-active":
                 return css`
                     border: 4px solid ${Colour["icon-primary-subtle"]};
