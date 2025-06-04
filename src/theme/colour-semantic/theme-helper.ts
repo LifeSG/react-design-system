@@ -17,6 +17,7 @@ export const ColourSpec: ThemeCollectionSpec<
         ccube: LifeSGColourSet,
         oneservice: LifeSGColourSet,
         pa: PAColourSet,
+        a11yplayground: LifeSGColourSet,
     },
     defaultValue: "lifesg",
 };

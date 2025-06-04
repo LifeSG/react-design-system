@@ -153,3 +153,15 @@ export const PATheme: ThemeSpec = {
     resourceScheme: "pa",
     componentScheme: "pa",
 };
+
+export const A11yPlaygroundTheme: ThemeSpec = {
+    colourScheme: "a11yplayground",
+    fontScheme: "a11yplayground",
+    motionScheme: "default",
+    borderScheme: "default",
+    spacingScheme: "default",
+    radiusScheme: "default",
+    breakpointScheme: "default",
+    resourceScheme: "a11yplayground",
+    componentScheme: "default",
+};
