@@ -189,7 +189,6 @@ export const InternalCalendarMonth = ({
                         ref={(el) => (monthRefs.current[index] = el)}
                         tabIndex={tabIndex}
                         role="button"
-                        aria-label={month}
                         aria-disabled={!interactive}
                         aria-selected={variant === "selected-month"}
                         key={month}

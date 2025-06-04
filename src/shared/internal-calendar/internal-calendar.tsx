@@ -195,7 +195,6 @@ export const Component = (
                         setCalendarDate={
                             calendarManagerRef.current?.setCalendarDate
                         }
-                        isFocusable={isFocusable}
                     />
                 );
         }

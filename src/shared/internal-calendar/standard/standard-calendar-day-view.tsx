@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CalendarHelper } from "../../../util/calendar-helper";
 import { CommonCalendarProps, FocusType } from "../types";
 import {
@@ -23,7 +23,7 @@ interface CalendarDayViewProps extends CommonCalendarProps {
     isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
-    setCalendarDate?: (date: string | undefined) => void;
+    setCalendarDate?: (date: string | undefined) => void | undefined;
 }
 
 export const StandardCalendarDayView = ({
@@ -40,16 +40,24 @@ export const StandardCalendarDayView = ({
     allowDisabledSelection,
     showActiveMonthDaysOnly,
     setCalendarDate,
-    isFocusable = false,
 }: CalendarDayViewProps) => {
     // =============================================================================
-    // CONST, STATE, REF
+    // REFS, EFFECTS
     // =============================================================================
-    const weeksOfTheMonth = useMemo(
-        (): Dayjs[][] => CalendarHelper.generateDays(calendarDate),
-        [calendarDate]
-    );
-    const dateToFocus = useMemo((): Dayjs => {
+    const pendingFocusRef = useRef<string | null>(null);
+
+    useEffect(() => {
+        if (pendingFocusRef.current) {
+            const next = pendingFocusRef.current;
+            pendingFocusRef.current = null;
+            setFocusValue(next);
+        }
+    }, [calendarDate]);
+
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
+    const getDateToFocus = useCallback(() => {
         // As specified in the Grid Pattern, only one element in the calendar grid is in the Tab sequence.
         // This function determines which date should be focused based on the state of the calendar.
 
@@ -80,19 +88,42 @@ export const StandardCalendarDayView = ({
 
         // Otherwise, return the first day of the month
         return dayjs(calendarDate).startOf("month");
-    }, [calendarDate, selectedStartDate, selectedEndDate]);
+    }, [selectedStartDate, calendarDate, selectedEndDate, minDate]);
 
-    const [hoverValue, setHoverValue] = useState<string>("");
+    const setFocusCell = (value: string) => {
+        const valueDayjs = dayjs(value);
 
-    const isWithinGeneratedDays = (value: Dayjs) => {
-        if (showActiveMonthDaysOnly) {
-            return value.isSame(calendarDate, "month");
+        if (
+            CalendarHelper.isWithinRange(
+                valueDayjs,
+                minDate ? dayjs(minDate) : undefined,
+                maxDate ? dayjs(maxDate) : undefined
+            )
+        ) {
+            if (!valueDayjs.isSame(calendarDate, "month")) {
+                setCalendarDate?.(value);
+                pendingFocusRef.current = value;
+                return;
+            }
+            setFocusValue(value);
         }
-        const firstDay = weeksOfTheMonth[0][0];
-        const lastDay = weeksOfTheMonth[weeksOfTheMonth.length - 1][6];
-
-        return value.isBetween(firstDay, lastDay, null, "[]");
     };
+
+    // =============================================================================
+    // CONST, STATE
+    // =============================================================================
+    const weeksOfTheMonth = useMemo(
+        (): Dayjs[][] => CalendarHelper.generateDays(calendarDate),
+        [calendarDate]
+    );
+
+    const dateToFocus = useMemo(
+        (): Dayjs => getDateToFocus(),
+        [getDateToFocus]
+    );
+
+    const [focusValue, setFocusValue] = useState<string>("");
+    const [hoverValue, setHoverValue] = useState<string>("");
 
     // =============================================================================
     // EVENT HANDLERS
@@ -111,24 +142,23 @@ export const StandardCalendarDayView = ({
     };
 
     const handleFocusCell = (value: string) => {
-        const valueDayjs = dayjs(value);
-
-        if (
-            CalendarHelper.isWithinRange(
-                valueDayjs,
-                minDate ? dayjs(minDate) : undefined,
-                maxDate ? dayjs(maxDate) : undefined
-            )
-        ) {
-            if (!isWithinGeneratedDays(valueDayjs)) {
-                setCalendarDate?.(value);
-            }
-            setHoverValue(value);
-            onHover(value);
-        }
+        // Always hover the cell when it is focused
+        setHoverValue(value);
+        onHover(value);
     };
 
     const handleMouseLeaveCell = () => {
+        setHoverValue("");
+        onHover("");
+    };
+
+    const handleOnBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+        if (e.currentTarget.contains(e.relatedTarget as Node)) {
+            return;
+        }
+
+        // Reset focus date when the component loses focus
+        setFocusValue("");
         setHoverValue("");
         onHover("");
     };
@@ -145,10 +175,6 @@ export const StandardCalendarDayView = ({
     };
 
     const renderDayCells = () => {
-        const firstDay =
-            minDate && calendarDate.isSame(dayjs(minDate), "month")
-                ? dayjs(minDate).date()
-                : 1;
         return weeksOfTheMonth.map((week, weekIndex) => {
             return (
                 <RowDayCell
@@ -156,16 +182,8 @@ export const StandardCalendarDayView = ({
                     aria-label={`Week ${weekIndex + 1}`}
                     key={weekIndex}
                     onMouseLeave={handleMouseLeaveCell}
-                    onBlur={handleMouseLeaveCell}
                 >
                     {week.map((day, dayIndex) => {
-                        const isDateToFocus = day.isSame(dateToFocus, "day");
-
-                        // First day of the month, should always be in tab order
-                        const isFirstDayOfMonth =
-                            day.date() === firstDay &&
-                            day.month() === calendarDate.month();
-
                         return (
                             <StandardCell
                                 key={`day-${dayIndex}`}
@@ -174,6 +192,7 @@ export const StandardCalendarDayView = ({
                                 startDate={selectedStartDate}
                                 endDate={selectedEndDate}
                                 hoverDate={hoverValue}
+                                focusDate={focusValue}
                                 currentFocus={currentFocus}
                                 minDate={minDate}
                                 maxDate={maxDate}
@@ -186,12 +205,9 @@ export const StandardCalendarDayView = ({
                                 onSelect={handleDayClick}
                                 onHover={handleHoverCell}
                                 onFocus={handleFocusCell}
+                                setFocusCell={setFocusCell}
                                 tabIndex={
-                                    isFocusable
-                                        ? isDateToFocus || isFirstDayOfMonth
-                                            ? 0
-                                            : -1
-                                        : -1
+                                    day.isSame(dateToFocus, "day") ? 0 : -1
                                 }
                             />
                         );
@@ -204,8 +220,9 @@ export const StandardCalendarDayView = ({
     return (
         <Wrapper
             role="grid"
-            aria-label="Calendar grid"
+            aria-label="Date grid"
             data-testid="calendar-content"
+            onBlur={handleOnBlur}
         >
             {renderHeader()}
             {renderDayCells()}

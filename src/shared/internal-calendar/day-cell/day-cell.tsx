@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { useEffect, useRef } from "react";
 import {
     Cell,
     Indicator,
@@ -28,6 +29,7 @@ export const DayCell = ({
     onKeyDown,
     tabIndex = -1,
     role = "button",
+    focusDate,
 }: DayCellProps) => {
     // =========================================================================
     // CONST
@@ -36,6 +38,18 @@ export const DayCell = ({
     const dayName = `${date.format("D MMMM YYYY dddd")}, ${
         disabled ? "Unavailable" : "Available"
     }`; // e.g. 1 January 2025 Tuesday, Unavailable
+    const isFocused = focusDate ? focusDate.isSame(date, "day") : false;
+
+    // =============================================================================
+    // REFS, EFFECTS
+    // =============================================================================
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (isFocused && ref.current) {
+            ref.current?.focus();
+        }
+    }, [isFocused]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -67,11 +81,15 @@ export const DayCell = ({
             <RightCircle $type={circleRight} />
             <LabelWrapper $interactive={interactive}>
                 <Label
+                    ref={ref}
                     tabIndex={tabIndex}
                     role={role}
                     aria-label={dayName}
                     aria-disabled={!interactive}
-                    aria-selected={labelType === "selected" ? "true" : "false"}
+                    aria-selected={
+                        labelType === "selected" ||
+                        labelType === "selected-hover"
+                    }
                     $type={labelType}
                     $disabled={disabled}
                     $interactive={interactive}
