@@ -32,7 +32,12 @@ export interface CellStyleProps {
 export interface DayCellProps extends CellStyleProps {
     date: Dayjs;
     calendarDate: Dayjs;
+    focusDate?: Dayjs | undefined;
     onSelect: (value: Dayjs) => void;
     onHover: (value: Dayjs) => void;
+    onKeyDown?: (event: React.KeyboardEvent) => void | undefined;
     onHoverEnd?: ((value: Dayjs) => void) | undefined;
+    role?: string | undefined;
+    onFocus?: ((value: Dayjs) => void) | undefined;
+    tabIndex?: number | undefined;
 }

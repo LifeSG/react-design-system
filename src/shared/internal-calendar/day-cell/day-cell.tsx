@@ -1,8 +1,10 @@
 import dayjs from "dayjs";
+import { useEffect, useRef } from "react";
 import {
     Cell,
     Indicator,
     Label,
+    LabelWrapper,
     LeftCircle,
     LeftHalf,
     RightCircle,
@@ -22,12 +24,32 @@ export const DayCell = ({
     date,
     onSelect,
     onHover,
+    onFocus,
     onHoverEnd,
+    onKeyDown,
+    tabIndex = -1,
+    role = "button",
+    focusDate,
 }: DayCellProps) => {
     // =========================================================================
     // CONST
     // =========================================================================
     const today = dayjs().isSame(date, "day");
+    const dayName = `${date.format("D MMMM YYYY dddd")}, ${
+        disabled ? "Unavailable" : "Available"
+    }`; // e.g. 1 January 2025 Tuesday, Unavailable
+    const isFocused = focusDate ? focusDate.isSame(date, "day") : false;
+
+    // =============================================================================
+    // REFS, EFFECTS
+    // =============================================================================
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (isFocused && ref.current) {
+            ref.current?.focus();
+        }
+    }, [isFocused]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -38,6 +60,10 @@ export const DayCell = ({
 
     const handleHover = () => {
         onHover(date);
+    };
+
+    const handleFocus = () => {
+        onFocus && onFocus(date);
     };
 
     const handleMouseout = () => {
@@ -53,19 +79,34 @@ export const DayCell = ({
             <LeftCircle $type={circleLeft} />
             <RightHalf $type={bgRight}></RightHalf>
             <RightCircle $type={circleRight} />
-            <Label
-                $type={labelType}
-                $disabled={disabled}
-                $interactive={interactive}
-                onClick={handleClick}
-                onMouseEnter={handleHover}
-                onMouseLeave={handleMouseout}
-            >
-                {date.date()}
-                {currentDateIndicator && today && (
-                    <Indicator $disabled={disabled} />
-                )}
-            </Label>
+            <LabelWrapper $interactive={interactive}>
+                <Label
+                    ref={ref}
+                    tabIndex={tabIndex}
+                    role={role}
+                    aria-label={dayName}
+                    aria-disabled={!interactive}
+                    aria-selected={
+                        labelType === "selected" ||
+                        labelType === "selected-hover"
+                    }
+                    $type={labelType}
+                    $disabled={disabled}
+                    $interactive={interactive}
+                    onClick={handleClick}
+                    onKeyDown={(event) => {
+                        onKeyDown && onKeyDown(event);
+                    }}
+                    onMouseEnter={handleHover}
+                    onMouseLeave={handleMouseout}
+                    onFocus={handleFocus}
+                >
+                    {date.date()}
+                    {currentDateIndicator && today && (
+                        <Indicator $disabled={disabled} />
+                    )}
+                </Label>
+            </LabelWrapper>
         </Cell>
     );
 };

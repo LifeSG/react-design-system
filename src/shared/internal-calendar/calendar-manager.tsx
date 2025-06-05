@@ -53,6 +53,7 @@ const Component = (
         isRightArrowDisabled: _isRightArrowDisabled,
         getMonthHeaderLabel,
         getYearHeaderLabel,
+        isFocusable = false,
         ...otherProps
     }: CalendarManagerProps,
     ref: React.ForwardedRef<CalendarManagerRef>
@@ -73,6 +74,7 @@ const Component = (
     const doneButtonRef = useRef<HTMLButtonElement>(null);
     const cancelButtonRef = useRef<HTMLButtonElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const yearDropdownRef = useRef<HTMLButtonElement>(null);
 
     // =============================================================================
     // EFFECTS
@@ -124,6 +126,40 @@ const Component = (
         }
     };
 
+    const handleMonthDropdownKeydown = (
+        event: React.KeyboardEvent<HTMLButtonElement>
+    ) => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            handleMonthDropdownClick();
+            yearDropdownRef.current?.focus(); // Focus on year dropdown after month selection
+        }
+
+        // Up and Down arrow keys will change the month
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+            event.preventDefault();
+            const nextDate =
+                event.key === "ArrowUp"
+                    ? calendarDate.subtract(1, "month")
+                    : calendarDate.add(1, "month");
+
+            if (
+                !CalendarHelper.isWithinRange(
+                    nextDate,
+                    minDate ? dayjs(minDate) : undefined,
+                    maxDate ? dayjs(maxDate) : undefined,
+                    "month"
+                )
+            )
+                return;
+            setCalendarDate(nextDate);
+
+            if (currentView === "default") {
+                setViewCalendarDate(nextDate);
+            }
+        }
+    };
+
     const handleYearDropdownClick = () => {
         /**
          * If the view is in the month options view,
@@ -135,6 +171,52 @@ const Component = (
             setCalendarDate(viewCalendarDate);
         } else {
             setCurrentView("year-options");
+        }
+    };
+
+    const handleYearDropdownKeydown = (
+        event: React.KeyboardEvent<HTMLButtonElement>
+    ) => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            handleYearDropdownClick();
+        }
+
+        // Up and Down arrow keys will change the year
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+            event.preventDefault();
+            const isYearView = currentView === "year-options";
+            let nextDate: Dayjs;
+
+            if (isYearView) {
+                // In year options view, change decade
+                nextDate =
+                    event.key === "ArrowUp"
+                        ? calendarDate.subtract(10, "year")
+                        : calendarDate.add(10, "year");
+            } else {
+                // In default view, change year
+                nextDate =
+                    event.key === "ArrowUp"
+                        ? calendarDate.subtract(1, "year")
+                        : calendarDate.add(1, "year");
+            }
+
+            if (
+                !CalendarHelper.isWithinRange(
+                    nextDate,
+                    minDate ? dayjs(minDate) : undefined,
+                    maxDate ? dayjs(maxDate) : undefined,
+                    "year"
+                )
+            )
+                return;
+
+            setCalendarDate(nextDate);
+
+            if (currentView === "default") {
+                setViewCalendarDate(nextDate);
+            }
         }
     };
 
@@ -293,27 +375,42 @@ const Component = (
         const monthLabel = getMonthHeaderLabel
             ? getMonthHeaderLabel(calendarDate)
             : calendarDate.format("MMM");
+
+        const fullMonthLabel = dayjs(monthLabel, "MMM").format("MMMM");
+
+        const yearLabel = getYearHeaderText();
+        const viewToYearLabel: Record<View, string> = {
+            "month-options": `${yearLabel}, Close month selection`,
+            "year-options": `${yearLabel}, Close year selection`,
+            default: `${yearLabel}, Select year`,
+        };
+
         return (
             <>
                 <DropdownButton
+                    aria-label={`${fullMonthLabel}, Select month`}
                     type="button"
-                    tabIndex={-1}
                     $expanded={currentView === "month-options"}
                     $visible={currentView === "default"}
                     id="month-dropdown"
                     onClick={handleMonthDropdownClick}
+                    onKeyDown={handleMonthDropdownKeydown}
+                    tabIndex={isFocusable ? 0 : -1}
                 >
                     <DropdownText>{monthLabel}</DropdownText>
                     <IconChevronDown />
                 </DropdownButton>
                 <DropdownButton
+                    ref={yearDropdownRef}
+                    aria-label={viewToYearLabel[currentView]}
                     type="button"
-                    tabIndex={-1}
                     $expanded={currentView !== "default"}
                     id="year-dropdown"
                     onClick={handleYearDropdownClick}
+                    onKeyDown={handleYearDropdownKeydown}
+                    tabIndex={isFocusable ? 0 : -1}
                 >
-                    <DropdownText>{getYearHeaderText()}</DropdownText>
+                    <DropdownText>{yearLabel}</DropdownText>
                     <IconChevronDown />
                 </DropdownButton>
             </>
@@ -340,6 +437,7 @@ const Component = (
             case "year-options":
                 return (
                     <InternalCalendarYear
+                        setCalendarDate={setCalendarDate}
                         calendarDate={calendarDate}
                         currentFocus={currentFocus}
                         minDate={minDate}
@@ -358,6 +456,14 @@ const Component = (
     };
 
     const renderHeader = () => {
+        const viewToSelection: Record<View, string> = {
+            "month-options": "year",
+            "year-options": "decade",
+            default: "month",
+        };
+
+        const selection = viewToSelection[currentView];
+
         return (
             <Header data-id="calendar-header" data-testid="calendar-header">
                 <HeaderInputDropdown>
@@ -365,22 +471,24 @@ const Component = (
                 </HeaderInputDropdown>
                 <HeaderArrows>
                     <HeaderArrowButton
-                        aria-label="Previous month"
+                        aria-label={`Previous ${selection}`}
                         data-testid="left-arrow-btn"
                         disabled={isLeftArrowDisabled()}
                         focusHighlight={false}
-                        tabIndex={-1}
+                        focusOutline="browser"
                         onClick={handleLeftArrowClick}
+                        tabIndex={isFocusable ? 0 : -1}
                     >
                         <ArrowLeft />
                     </HeaderArrowButton>
                     <HeaderArrowButton
-                        aria-label="Next month"
+                        aria-label={`Next ${selection}`}
                         data-testid="right-arrow-btn"
                         disabled={isRightArrowDisabled()}
                         focusHighlight={false}
-                        tabIndex={-1}
+                        focusOutline="browser"
                         onClick={handleRightArrowClick}
+                        tabIndex={isFocusable ? 0 : -1}
                     >
                         <ArrowRight />
                     </HeaderArrowButton>
@@ -434,10 +542,14 @@ const Component = (
                 </>
             );
         } else {
+            const isDefaultView = currentView === "default";
             return (
+                // Prevent interaction with the default view when options are open
                 <>
-                    <DefaultView>{defaultView}</DefaultView>
-                    <OptionsOverlay $visible={currentView !== "default"}>
+                    <DefaultView inert={isDefaultView ? undefined : ""}>
+                        {defaultView}
+                    </DefaultView>
+                    <OptionsOverlay $visible={!isDefaultView}>
                         {renderOptionsOverlay()}
                     </OptionsOverlay>
                 </>
@@ -450,6 +562,8 @@ const Component = (
             ref={containerRef}
             data-id="calendar-container"
             data-testid="calendar-container"
+            aria-label={viewCalendarDate.format("MMMM, YYYY")}
+            role="group"
             {...otherProps}
         >
             {showNavigationHeader && renderHeader()}

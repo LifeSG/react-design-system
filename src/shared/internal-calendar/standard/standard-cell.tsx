@@ -10,6 +10,7 @@ interface Props {
     startDate: string | undefined;
     endDate: string | undefined;
     hoverDate: string;
+    focusDate: string;
     minDate?: string | undefined;
     maxDate?: string | undefined;
     disabledDates?: string[] | undefined;
@@ -19,6 +20,9 @@ interface Props {
     showActiveMonthDaysOnly?: boolean | undefined;
     onSelect: (value: Dayjs, disabled: boolean) => void;
     onHover: (value: string, disabled: boolean) => void;
+    onFocus: (value: string) => void;
+    setFocusCell: (value: string) => void;
+    tabIndex?: number;
 }
 
 export const StandardCell = ({
@@ -28,6 +32,7 @@ export const StandardCell = ({
     endDate,
     currentFocus,
     hoverDate,
+    focusDate,
     minDate,
     maxDate,
     disabledDates,
@@ -36,6 +41,9 @@ export const StandardCell = ({
     showActiveMonthDaysOnly,
     onSelect,
     onHover,
+    onFocus,
+    setFocusCell,
+    tabIndex = -1,
 }: Props) => {
     // =========================================================================
     // CONSTS
@@ -57,6 +65,55 @@ export const StandardCell = ({
 
     const handleHover = () => {
         onHover(date.format("YYYY-MM-DD"), !interactive);
+    };
+
+    const handleFocus = () => {
+        onFocus(date.format("YYYY-MM-DD"));
+    };
+
+    const handleKeyNavigation = (event: React.KeyboardEvent) => {
+        let newFocusSelection: Dayjs | undefined;
+
+        const keyActions: Record<string, () => dayjs.Dayjs> = {
+            ArrowLeft: () => date.subtract(1, "day"),
+            ArrowRight: () => date.add(1, "day"),
+            ArrowUp: () => date.subtract(7, "day"),
+            ArrowDown: () => date.add(7, "day"),
+            Home: () => date.startOf("week"),
+            End: () => date.endOf("week"),
+            PageUp: () => {
+                return event.shiftKey
+                    ? date.subtract(1, "year")
+                    : date.add(1, "month");
+            },
+            PageDown: () => {
+                return event.shiftKey
+                    ? date.subtract(1, "year")
+                    : date.add(1, "month");
+            },
+        };
+
+        const action = keyActions[event.key];
+        if (action) {
+            event.preventDefault();
+            newFocusSelection = action();
+            setFocusCell(newFocusSelection.format("YYYY-MM-DD"));
+        }
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        const keyboardEvent = event as React.KeyboardEvent<HTMLInputElement>;
+        const selectedKey = keyboardEvent.key;
+
+        if (selectedKey === "Enter" || selectedKey === " ") {
+            event.preventDefault();
+            if (interactive) {
+                handleSelect();
+            }
+            return;
+        }
+
+        handleKeyNavigation(event);
     };
 
     // =========================================================================
@@ -233,6 +290,11 @@ export const StandardCell = ({
         currentDateIndicator: true,
         onSelect: handleSelect,
         onHover: handleHover,
+        onFocus: handleFocus,
+        onKeyDown: handleKeyDown,
+        role: "gridcell",
+        focusDate: dayjs(focusDate),
+        tabIndex,
     };
 
     return (

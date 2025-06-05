@@ -31,6 +31,7 @@ export const Component = (
         initialCalendarDate,
         numberOfDays,
         showActiveMonthDaysOnly = false,
+        isFocusable = false,
     }: InternalCalendarProps,
     ref: React.ForwardedRef<InternalCalendarRef>
 ) => {
@@ -73,6 +74,9 @@ export const Component = (
             !previousCalendarDate.current ||
             !previousCalendarDate.current.isSame(value, "month")
         ) {
+            calendarManagerRef.current?.setCalendarDate(
+                value.format("YYYY-MM-DD")
+            );
             performDisplayChangeHandler(value);
         }
         previousCalendarDate.current = value;
@@ -188,6 +192,9 @@ export const Component = (
                         showActiveMonthDaysOnly={showActiveMonthDaysOnly}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
+                        setCalendarDate={
+                            calendarManagerRef.current?.setCalendarDate
+                        }
                     />
                 );
         }
@@ -209,6 +216,7 @@ export const Component = (
                 allowDisabledSelection={allowDisabledSelection}
                 onCalendarDateChange={handleCalendarDateChange}
                 initialCalendarDate={initialCalendarDate}
+                isFocusable={isFocusable}
             >
                 {({ calendarDate }) => renderCalendarDay(calendarDate)}
             </CalendarManager>

@@ -15,6 +15,10 @@ interface LabelStyleProps {
     $interactive: boolean | null | undefined;
 }
 
+interface LabelWrapperProps {
+    $interactive: boolean | null | undefined;
+}
+
 interface IndicatorStyleProps {
     $disabled: boolean | undefined;
 }
@@ -139,12 +143,23 @@ export const RightCircle = styled(Circle)`
     clip-path: inset(-3px -3px -3px 1.25rem);
 `;
 
-export const Label = styled.div<LabelStyleProps>`
+export const LabelWrapper = styled.span<LabelWrapperProps>`
     position: absolute;
     top: 0;
     bottom: 0;
     z-index: 2;
+    cursor: ${(props) => {
+        if (props.$interactive) {
+            return "pointer";
+        } else if (props.$interactive === null) {
+            return "default";
+        } else {
+            return "not-allowed";
+        }
+    }};
+`;
 
+export const Label = styled.div<LabelStyleProps>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -153,13 +168,11 @@ export const Label = styled.div<LabelStyleProps>`
     ${Font["body-md-regular"]}
     transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
-    cursor: ${(props) => {
-        if (props.$interactive) {
-            return "pointer";
-        } else if (props.$interactive === null) {
-            return "default";
+    pointer-events: ${(props) => {
+        if (props.$interactive || props.$interactive === null) {
+            return "auto";
         } else {
-            return "not-allowed";
+            return "none";
         }
     }};
 
@@ -214,6 +227,10 @@ export const Label = styled.div<LabelStyleProps>`
                 `;
         }
     }}
+
+    &:focus {
+        outline: none;
+    }
 `;
 
 export const Indicator = styled.div<IndicatorStyleProps>`

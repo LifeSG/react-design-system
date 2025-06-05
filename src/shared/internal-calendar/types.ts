@@ -45,6 +45,8 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     onHover?: ((value: string) => void) | undefined;
     /** Indicate the number of days used in fixed-range variant */
     numberOfDays?: number | undefined;
+    /** Indicates whether calendar is focusable */
+    isFocusable?: boolean | undefined;
 }
 
 export interface CalendarDropdownProps extends InternalCalendarProps {
@@ -90,6 +92,7 @@ export interface CalendarManagerProps extends CommonCalendarProps {
     isRightArrowDisabled?: ((calendarDate: Dayjs) => boolean) | undefined;
     getMonthHeaderLabel?: ((calendarDate: Dayjs) => string) | undefined;
     getYearHeaderLabel?: ((calendarDate: Dayjs) => string) | undefined;
+    isFocusable?: boolean | undefined;
 }
 
 export interface DefaultViewProps {
