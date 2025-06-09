@@ -134,8 +134,9 @@ export const DropdownList = <T, V>({
             const { title, secondaryLabel } = getOptionLabel(item);
             const updatedSearchValue = searchValue.trim().toLowerCase();
             return (
-                title.includes(updatedSearchValue) ||
-                (secondaryLabel && secondaryLabel.includes(updatedSearchValue))
+                title.toLowerCase().includes(updatedSearchValue) ||
+                (secondaryLabel &&
+                    secondaryLabel.toLowerCase().includes(updatedSearchValue))
             );
         });
     });
