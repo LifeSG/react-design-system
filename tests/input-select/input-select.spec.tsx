@@ -303,8 +303,8 @@ describe("InputSelect", () => {
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
                     listExtractor={(item) => ({
-                        title: item + " title",
-                        secondaryLabel: item + " label",
+                        title: item + " tItLe",
+                        secondaryLabel: item + " LaBeL",
                     })}
                     enableSearch
                 />
@@ -322,12 +322,12 @@ describe("InputSelect", () => {
             });
 
             await act(async () => {
-                await user.keyboard("1 t");
+                await user.keyboard("1 T");
             });
 
-            expect(screen.getByText("Option 1 title")).toBeVisible();
+            expect(screen.getByText("Option 1 tItLe")).toBeVisible();
             expect(
-                screen.queryByText("Option 2 title")
+                screen.queryByText("Option 2 tItLe")
             ).not.toBeInTheDocument();
         });
 
@@ -339,8 +339,8 @@ describe("InputSelect", () => {
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
                     listExtractor={(item) => ({
-                        title: item + " title",
-                        secondaryLabel: item + " label",
+                        title: item + " tItLe",
+                        secondaryLabel: item + " LaBeL",
                     })}
                     enableSearch
                 />
@@ -361,9 +361,9 @@ describe("InputSelect", () => {
                 await user.keyboard("1 l");
             });
 
-            expect(screen.getByText("Option 1 label")).toBeVisible();
+            expect(screen.getByText("Option 1 LaBeL")).toBeVisible();
             expect(
-                screen.queryByText("Option 2 label")
+                screen.queryByText("Option 2 LaBeL")
             ).not.toBeInTheDocument();
         });
 
