@@ -75,20 +75,29 @@ describe("OtpInput", () => {
         );
 
         expect(
-            screen.getByRole("button", { name: "Resend OTP in 10 seconds" })
+            screen.getByRole("button", {
+                name: "Resend OTP in 10 seconds",
+                description: "10 seconds remaining",
+            })
         ).toBeDisabled();
         expect(onCooldownStart).toHaveBeenCalled();
+
+        act(() => jest.advanceTimersByTime(9000));
+
+        expect(
+            screen.getByRole("button", {
+                name: "Resend OTP in 10 seconds",
+                description: "1 second remaining",
+            })
+        ).toBeDisabled();
 
         act(() => jest.advanceTimersByTime(1000));
 
         expect(
-            screen.getByRole("button", { name: "Resend OTP in 9 seconds" })
-        ).toBeDisabled();
-
-        act(() => jest.advanceTimersByTime(10000));
-
-        expect(
-            screen.getByRole("button", { name: "Resend OTP" })
+            screen.getByRole("button", {
+                name: "Resend OTP",
+                description: "0 seconds remaining",
+            })
         ).toBeEnabled();
         expect(onCooldownEnd).toHaveBeenCalled();
     });

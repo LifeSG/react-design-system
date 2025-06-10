@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FormErrorMessage } from "src/form/form-label";
+import { VisuallyHidden } from "../shared/accessibility";
 import { SimpleIdGenerator, StringHelper } from "../util";
 import {
     CTAButton,
@@ -43,6 +44,8 @@ export const OtpInput = ({
     const [internalId] = useState(() => SimpleIdGenerator.generate());
 
     const hasError = !!errorMessage;
+    const errorId = `${internalId}-error`;
+    const timerId = `${internalId}-timer`;
 
     // =============================================================================
     // EFFECTS
@@ -190,19 +193,33 @@ export const OtpInput = ({
             : `${name}-${index + 1}`;
     };
 
+    const displaySeconds = (time: number) => {
+        return `${time} second${time === 1 ? "" : "s"}`;
+    };
+
+    const getCTALabelProps = (): Partial<
+        React.HTMLAttributes<HTMLButtonElement>
+    > => {
+        return otherCtaProps.children
+            ? { children: otherCtaProps.children }
+            : {
+                  children:
+                      countDown > 0
+                          ? `Resend OTP in ${displaySeconds(countDown)}`
+                          : "Resend OTP",
+                  // use a fixed label to avoid repeated screen reader updates when the button is focused
+                  "aria-label":
+                      countDown > 0
+                          ? `Resend OTP in ${displaySeconds(cooldownDuration)}`
+                          : "Resend OTP",
+                  // use a secondary element to reflect the latest countdown
+                  "aria-describedby": timerId,
+              };
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderCTALabel = () => {
-        return otherCtaProps.children
-            ? otherCtaProps.children
-            : `Resend OTP${
-                  countDown
-                      ? ` in ${countDown} second${countDown > 1 ? "s" : ""}`
-                      : ""
-              }`;
-    };
-
     return (
         <Wrapper id={id} data-testid={dataTestId} className={className}>
             <InputContainer
@@ -222,7 +239,7 @@ export const OtpInput = ({
                                 index + 1
                             )} digit`}
                             aria-invalid={hasError}
-                            aria-describedby={hasError ? internalId : undefined}
+                            aria-describedby={hasError ? errorId : undefined}
                             key={index}
                             ref={(el) => (inputRefs.current[index] = el)}
                             type="text"
@@ -238,9 +255,7 @@ export const OtpInput = ({
                 })}
             </InputContainer>
             {errorMessage && (
-                <FormErrorMessage id={internalId}>
-                    {errorMessage}
-                </FormErrorMessage>
+                <FormErrorMessage id={errorId}>{errorMessage}</FormErrorMessage>
             )}
             <CTAButton
                 styleType={styleType}
@@ -248,9 +263,14 @@ export const OtpInput = ({
                 {...otherCtaProps}
                 onClick={handleClick}
                 disabled={disabled || isWithinCooldown()}
-            >
-                {renderCTALabel()}
-            </CTAButton>
+                {...getCTALabelProps()}
+            ></CTAButton>
+            <VisuallyHidden role="timer" id={timerId}>
+                {displaySeconds(countDown)} remaining
+            </VisuallyHidden>
+            <VisuallyHidden aria-live="polite">
+                {countDown > 0 ? "" : "Ready to resend OTP"}
+            </VisuallyHidden>
         </Wrapper>
     );
 };
