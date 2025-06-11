@@ -1,3 +1,4 @@
+import { RefObject } from "react";
 import { HistogramSliderProps } from "../histogram-slider";
 import { TruncateType } from "../shared/dropdown-list-v2/types";
 import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
@@ -23,6 +24,13 @@ export interface SelectHistogramProps {
     rangeLabelSuffix?: string | undefined;
     readOnly?: boolean | undefined;
     value?: [number, number] | undefined;
+    /**
+     * The root element that contains the popover element. Defaults to the document body.
+     *
+     * If the parent that contains the trigger element has a higher z-index than the popover,
+     * the popover may not be visible. Specify the parent element here instead
+     */
+    rootNode?: RefObject<HTMLElement> | undefined;
     onBlur?: (() => void) | undefined;
     onChange?: ((value: [number, number]) => void) | undefined;
     onChangeEnd?: ((value: [number, number]) => void) | undefined;

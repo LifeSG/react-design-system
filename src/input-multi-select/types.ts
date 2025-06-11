@@ -1,3 +1,4 @@
+import { RefObject } from "react";
 import {
     InputSelectOptionsProps,
     InputSelectSharedProps,
@@ -25,6 +26,13 @@ export interface InputMultiSelectProps<T, V>
     maxSelectable?: number | undefined;
     /** @deprecated this has no effect as the dropdown will automatically resize */
     listStyleWidth?: string | undefined;
+    /**
+     * The root element that contains the popover element. Defaults to the document body.
+     *
+     * If the parent that contains the trigger element has a higher z-index than the popover,
+     * the popover may not be visible. Specify the parent element here instead
+     */
+    rootNode?: RefObject<HTMLElement> | undefined;
 }
 
 /** To be exposed for Form component inheritance */

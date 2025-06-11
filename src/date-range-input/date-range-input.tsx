@@ -68,6 +68,7 @@ export const DateRangeInput = ({
     id,
     allowDisabledSelection,
     zIndex,
+    rootNode,
     ...otherProps
 }: DateRangeInputProps) => {
     // =============================================================================
@@ -661,6 +662,7 @@ export const DateRangeInput = ({
             renderDropdown={renderCalendar}
             customZIndex={zIndex}
             offset={16}
+            rootNode={rootNode}
         />
     );
 };
