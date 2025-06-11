@@ -133,6 +133,28 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "50",
             },
             {
+                name: "rootNode",
+                description: (
+                    <>
+                        The root element that hosts the dropdown calendar
+                        element. Try specifying this if <code>zIndex</code> does
+                        not work.
+                        <br />
+                        <br />
+                        For example, if the parent of the date input element has
+                        a higher z-index than the date input, the date input
+                        dropdown may not be visible. Specify the parent here
+                        instead so that they share the same stacking context.
+                    </>
+                ),
+                propTypes: ["RefObject<HTMLElement>"],
+                defaultValue: (
+                    <>
+                        document<code>body</code>
+                    </>
+                ),
+            },
+            {
                 name: "onChange",
                 description: (
                     <>

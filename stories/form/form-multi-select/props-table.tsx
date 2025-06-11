@@ -168,6 +168,32 @@ const DATA: ApiTableSectionProps[] = [
                     "Specifies the maximum number of options that can be selected",
                 propTypes: ["number"],
             },
+            {
+                name: "rootNode",
+                description: (
+                    <>
+                        The root element that hosts the dropdown element. Only
+                        specify this if you absolutely need to change the parent
+                        of the dropdown component.
+                        <br />
+                        <br />
+                        For example, the dropdown component is rendered in{" "}
+                        <code>body</code> by default. This could cause scroll
+                        issues if your UI only scrolls within a certain
+                        container. In that case, you can specify the{" "}
+                        <code>rootNode</code> prop so that they share the same
+                        stacking context. However, note that this might cause
+                        z-index issues since it will no longer be rendered in{" "}
+                        <code>body</code>.
+                    </>
+                ),
+                propTypes: ["RefObject<HTMLElement>"],
+                defaultValue: (
+                    <>
+                        document<code>body</code>
+                    </>
+                ),
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,
