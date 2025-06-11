@@ -257,6 +257,13 @@ export const OtpInput = ({
             {errorMessage && (
                 <FormErrorMessage id={errorId}>{errorMessage}</FormErrorMessage>
             )}
+            {/* visually hidden elements need to be rendered before the button so that Voiceover/Chrome doesn't skip the button */}
+            <VisuallyHidden role="timer" id={timerId}>
+                {displaySeconds(countDown)} remaining
+            </VisuallyHidden>
+            <VisuallyHidden aria-live="polite">
+                {countDown > 0 ? "" : "Ready to resend OTP"}
+            </VisuallyHidden>
             <CTAButton
                 styleType={styleType}
                 type="button"
@@ -264,13 +271,7 @@ export const OtpInput = ({
                 onClick={handleClick}
                 disabled={disabled || isWithinCooldown()}
                 {...getCTALabelProps()}
-            ></CTAButton>
-            <VisuallyHidden role="timer" id={timerId}>
-                {displaySeconds(countDown)} remaining
-            </VisuallyHidden>
-            <VisuallyHidden aria-live="polite">
-                {countDown > 0 ? "" : "Ready to resend OTP"}
-            </VisuallyHidden>
+            />
         </Wrapper>
     );
 };
