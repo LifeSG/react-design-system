@@ -1,0 +1,23 @@
+import { Canvas, Meta, Story } from "@storybook/blocks";
+import * as SingpassButtonStories from "./singpass-button.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={SingpassButtonStories} />
+
+# Button
+
+## Overview
+
+The primary call to action component.
+
+```tsx
+import { SingpassButton } from "@lifesg/react-design-system/singpass-button";
+```
+
+The `Button` component comes in 2 sizes, a default and small size.
+
+<Canvas of={SingpassButtonStories.Default} />
+
+## Component API
+
+<PropsTable />
