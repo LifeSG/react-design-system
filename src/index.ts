@@ -59,6 +59,7 @@ export * from "./progress-indicator";
 export * from "./radio-button";
 export * from "./select-histogram";
 export * from "./sidenav";
+export * from "./singpass-button";
 export * from "./smart-app-banner";
 export * from "./tab";
 export * from "./tag";
