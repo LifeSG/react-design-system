@@ -30,7 +30,7 @@ export interface SelectHistogramProps {
      * If the parent that contains the trigger element has a higher z-index than the popover,
      * the popover may not be visible. Specify the parent element here instead
      */
-    rootNode?: RefObject<HTMLElement> | undefined;
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
     onBlur?: (() => void) | undefined;
     onChange?: ((value: [number, number]) => void) | undefined;
     onChangeEnd?: ((value: [number, number]) => void) | undefined;

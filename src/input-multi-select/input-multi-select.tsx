@@ -49,7 +49,7 @@ export const InputMultiSelect = <T, V>({
     alignment,
     dropdownZIndex,
     maxSelectable,
-    rootNode,
+    dropdownRootNode,
 }: InputMultiSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -276,7 +276,7 @@ export const InputMultiSelect = <T, V>({
                 alignment={alignment}
                 fitAvailableHeight
                 customZIndex={dropdownZIndex}
-                rootNode={rootNode}
+                rootNode={dropdownRootNode}
             />
         </DropdownListState>
     );

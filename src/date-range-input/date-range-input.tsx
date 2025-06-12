@@ -68,7 +68,7 @@ export const DateRangeInput = ({
     id,
     allowDisabledSelection,
     zIndex,
-    rootNode,
+    dropdownRootNode: rootNode,
     ...otherProps
 }: DateRangeInputProps) => {
     // =============================================================================

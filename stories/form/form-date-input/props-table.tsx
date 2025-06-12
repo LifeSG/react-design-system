@@ -136,7 +136,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "rootNode",
                 description: (
                     <>
-                        The root element that hosts the dropdown calendar
+                        The root element that hosts the calendar dropdown
                         element. Try specifying this if <code>zIndex</code> does
                         not work.
                         <br />

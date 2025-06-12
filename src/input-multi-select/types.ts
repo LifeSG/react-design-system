@@ -32,7 +32,7 @@ export interface InputMultiSelectProps<T, V>
      * If the parent that contains the trigger element has a higher z-index than the popover,
      * the popover may not be visible. Specify the parent element here instead
      */
-    rootNode?: RefObject<HTMLElement> | undefined;
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
 }
 
 /** To be exposed for Form component inheritance */

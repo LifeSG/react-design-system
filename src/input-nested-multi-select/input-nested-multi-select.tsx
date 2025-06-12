@@ -50,7 +50,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     variant = "default",
     alignment,
     dropdownZIndex,
-    rootNode,
+    dropdownRootNode,
 }: InputNestedMultiSelectProps<V1, V2, V3>): JSX.Element => {
     // =========================================================================
     // CONST, STATE
@@ -332,7 +332,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
             alignment={alignment}
             fitAvailableHeight
             customZIndex={dropdownZIndex}
-            rootNode={rootNode}
+            rootNode={dropdownRootNode}
         />
     );
 };

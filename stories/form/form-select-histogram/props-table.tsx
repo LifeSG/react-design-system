@@ -118,12 +118,12 @@ const DATA: ApiTableSectionProps[] = [
                 name: "rootNode",
                 description: (
                     <>
-                        The root element that hosts the slider element. Only
+                        The root element that hosts the dropdown element. Only
                         specify this if you absolutely need to change the parent
                         of the slider component.
                         <br />
                         <br />
-                        For example, the slider component is rendered in{" "}
+                        For example, the dropdown component is rendered in{" "}
                         <code>body</code> by default. This could cause scroll
                         issues if your UI only scrolls within a certain
                         container. In that case, you can specify the{" "}

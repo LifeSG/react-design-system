@@ -35,7 +35,7 @@ export const SelectHistogram = ({
     readOnly,
     renderRangeLabel,
     value,
-    rootNode,
+    dropdownRootNode,
     ...otherProps
 }: SelectHistogramProps): JSX.Element => {
     const {
@@ -221,7 +221,7 @@ export const SelectHistogram = ({
                 alignment={alignment}
                 fitAvailableHeight
                 customZIndex={dropdownZIndex}
-                rootNode={rootNode}
+                rootNode={dropdownRootNode}
             />
         </DropdownListState>
     );
