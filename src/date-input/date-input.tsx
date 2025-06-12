@@ -29,7 +29,7 @@ export const DateInput = ({
     id,
     allowDisabledSelection,
     zIndex,
-    dropdownRootNode: rootNode,
+    dropdownRootNode,
     ...otherProps
 }: DateInputProps) => {
     // =============================================================================
@@ -244,7 +244,7 @@ export const DateInput = ({
             onDismiss={handleDismiss}
             customZIndex={zIndex}
             offset={16}
-            rootNode={rootNode}
+            rootNode={dropdownRootNode}
         />
     );
 };
