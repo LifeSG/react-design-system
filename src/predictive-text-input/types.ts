@@ -1,4 +1,3 @@
-import { RefObject } from "react";
 import { ListItemDisplayProps } from "../shared/dropdown-list/types";
 import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
@@ -14,13 +13,6 @@ export interface PredictiveTextInputProps<T, V> {
     error?: boolean | undefined;
     selectedOption?: T | undefined;
     alignment?: DropdownAlignmentType | undefined;
-    /**
-     * The root element that contains the popover element. Defaults to the document body.
-     *
-     * If the parent that contains the trigger element has a higher z-index than the popover,
-     * the popover may not be visible. Specify the parent element here instead
-     */
-    rootNode?: RefObject<HTMLElement> | undefined;
     /** Async Function to populate options */
     fetchOptions: (input: string) => Promise<T[]>;
     /** Function to derive value from an item */

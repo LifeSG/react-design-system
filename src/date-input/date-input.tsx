@@ -29,7 +29,7 @@ export const DateInput = ({
     id,
     allowDisabledSelection,
     zIndex,
-    rootNode,
+    dropdownRootNode: rootNode,
     ...otherProps
 }: DateInputProps) => {
     // =============================================================================
