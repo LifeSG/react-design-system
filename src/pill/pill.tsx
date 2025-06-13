@@ -7,10 +7,11 @@ export const Pill = ({
     colorType = "black",
     children,
     icon,
+    size = "default",
     ...otherProps
 }: PillProps): JSX.Element => {
     return (
-        <Wrapper $type={type} $color={colorType} {...otherProps}>
+        <Wrapper $type={type} $color={colorType} $size={size} {...otherProps}>
             {icon}
             <Label>{children}</Label>
         </Wrapper>

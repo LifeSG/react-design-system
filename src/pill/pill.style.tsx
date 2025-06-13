@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Border, Colour, Font } from "../theme";
 import { ThemeStyleProps } from "../theme/types";
-import { PillColorType, PillType } from "./types";
+import { PillColorType, PillSize, PillType } from "./types";
 
 // =============================================================================
 // STYLING
@@ -9,17 +9,28 @@ import { PillColorType, PillType } from "./types";
 interface StyleProps {
     $type: PillType;
     $color: PillColorType;
+    $size: PillSize;
 }
 
 export const Wrapper = styled.div<StyleProps>`
     border-radius: 1rem;
-    padding: 0.125rem 0.5rem;
     width: fit-content;
     max-width: 100%;
-    ${Font["body-xs-semibold"]}
     display: flex;
     align-items: center;
     gap: 0.25rem;
+    padding: 0.125rem 0.5rem;
+
+    ${(props) =>
+        props.$size === "default"
+            ? css`
+                  ${Font["body-xs-semibold"]}
+                  padding: 0.125rem 0.5rem;
+              `
+            : css`
+                  ${Font["body-baseline-regular"]}
+                  padding: 0.25rem 0.75rem;
+              `}
 
     svg {
         flex-shrink: 0;

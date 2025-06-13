@@ -29,6 +29,22 @@ export const Default: StoryObj<Component> = {
     decorators: [RowDecorator()],
 };
 
+export const Large: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Pill type="outline" colorType="blue" size="large">
+                    Outline style pill
+                </Pill>
+                <Pill type="solid" colorType="red" size="large">
+                    Solid style pill
+                </Pill>
+            </>
+        );
+    },
+    decorators: [RowDecorator()],
+};
+
 export const WithIcon: StoryObj<Component> = {
     render: (_args) => {
         return (
