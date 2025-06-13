@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { Divider } from "../divider";
+import { Layout } from "../layout";
 import { Colour, MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography";
-import { Layout } from "../layout";
-import { Divider } from "../divider";
 
 // =============================================================================
 // GENERIC
@@ -33,10 +33,12 @@ export const TopSection = styled(Layout.Content)`
 `;
 
 export const LogoSection = styled.div`
-    grid-column: 1 / span 2;
+    grid-column: ${(props) =>
+        props.theme.colourScheme === "mylegacy" ? "1 / span 3" : "1 / span 2"};
 
     img {
-        max-height: 4rem;
+        max-height: ${(props) =>
+            props.theme.colourScheme === "mylegacy" ? "2.1rem" : "4rem"};
         max-width: 100%;
         object-fit: contain;
     }
@@ -53,14 +55,24 @@ export const LogoSection = styled.div`
 `;
 
 export const LinkSection = styled.ul`
-    // first col
-    grid-column: 3 / span 4;
-    list-style-type: none;
+    ${(props) =>
+        props.theme.colourScheme === "mylegacy"
+            ? css`
+                  grid-column: 4 / span 3;
+                  list-style-type: none;
 
-    :nth-of-type(2) {
-        // 2nd col
-        grid-column: 7 / span 4;
-    }
+                  :nth-of-type(2) {
+                      grid-column: 7 / span 3;
+                  }
+              `
+            : css`
+                  grid-column: 3 / span 4;
+                  list-style-type: none;
+
+                  :nth-of-type(2) {
+                      grid-column: 7 / span 4;
+                  }
+              `}
 
     li {
         :not(:last-child) {
@@ -95,6 +107,19 @@ export const LinkSection = styled.ul`
 
 export const AddonSection = styled.div`
     grid-column: 13 / span 6;
+
+    ${MediaQuery.MaxWidth.lg} {
+        grid-column: 1 / span 12;
+        margin-top: ${Spacing["spacing-32"]};
+    }
+
+    ${MediaQuery.MaxWidth.md} {
+        grid-column: 1 / span 8;
+    }
+`;
+
+export const ResourceAddonSection = styled.div`
+    grid-column: 12 / span 12;
 
     ${MediaQuery.MaxWidth.lg} {
         grid-column: 1 / span 12;
