@@ -1,5 +1,5 @@
 import React from "react";
-import { getSpLogoText } from "./singpass-assets";
+import { getSpLogo } from "./singpass-assets";
 import { Main, MainStyleProps, SvgContainer } from "./singpass-button.style";
 import { SingpassButtonProps, SingpassButtonRef } from "./types";
 
@@ -29,7 +29,7 @@ const DefaultComponent = (
             aria-label="Log in with sing pass"
         >
             <SvgContainer $buttonSizeStyle="default">
-                {getSpLogoText(styleType)}
+                <img src={getSpLogo(styleType)} width="100%" />
             </SvgContainer>
         </Main>
     );
@@ -53,7 +53,7 @@ const SmallComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
             aria-label="Log in with sing pass"
         >
             <SvgContainer $buttonSizeStyle="small">
-                {getSpLogoText(styleType)}
+                <img src={getSpLogo(styleType)} width="100%" />
             </SvgContainer>
         </Main>
     );
@@ -77,7 +77,7 @@ const LargeComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
             aria-label="Log in with sing pass"
         >
             <SvgContainer $buttonSizeStyle="large">
-                {getSpLogoText(styleType)}
+                <img src={getSpLogo(styleType)} width="100%" />
             </SvgContainer>
         </Main>
     );
