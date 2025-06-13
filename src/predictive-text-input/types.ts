@@ -1,5 +1,4 @@
 import { ListItemDisplayProps } from "../shared/dropdown-list/types";
-import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export interface PredictiveTextInputProps<T, V> {
     id?: string | undefined;
@@ -12,7 +11,6 @@ export interface PredictiveTextInputProps<T, V> {
     disabled?: boolean | undefined;
     error?: boolean | undefined;
     selectedOption?: T | undefined;
-    alignment?: DropdownAlignmentType | undefined;
     /** Async Function to populate options */
     fetchOptions: (input: string) => Promise<T[]>;
     /** Function to derive value from an item */
