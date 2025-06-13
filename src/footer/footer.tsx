@@ -3,6 +3,7 @@ import { useTheme } from "styled-components";
 import { Typography } from "../typography";
 import { DownloadApp } from "./footer-download-app";
 import { FooterHelper, InternalDisclaimerLinks } from "./footer-helper";
+import { ResourceAddon } from "./footer-resource-addon";
 import {
     AddonSection,
     BaseFooter,
@@ -13,6 +14,7 @@ import {
     FullWidthDivider,
     LinkSection,
     LogoSection,
+    ResourceAddonSection,
     StyledFooterLink,
     TopSection,
 } from "./footer.style";
@@ -24,6 +26,7 @@ export const Footer = <T,>({
     lastUpdated,
     disclaimerLinks,
     showDownloadAddon,
+    showResourceAddon,
     logoSrc,
     copyrightInfo,
     onFooterLinkClick,
@@ -124,6 +127,11 @@ export const Footer = <T,>({
                         <AddonSection>
                             <DownloadApp />
                         </AddonSection>
+                    )}
+                    {!showDownloadAddon && showResourceAddon && (
+                        <ResourceAddonSection>
+                            <ResourceAddon theme={theme} />
+                        </ResourceAddonSection>
                     )}
                 </>
             );

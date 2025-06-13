@@ -16,7 +16,7 @@ export const Default: StoryObj<Component> = {
         return (
             <Footer
                 lastUpdated={new Date()}
-                showDownloadAddon
+                showResourceAddon
                 links={[
                     [
                         { children: "Home", href: "https://www.life.gov.sg" },

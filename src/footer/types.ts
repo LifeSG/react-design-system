@@ -1,3 +1,4 @@
+import { DefaultTheme } from "styled-components";
 import { TypographyLinkProps } from "../typography";
 
 type DisclaimerTextLinkProps = Omit<TypographyLinkProps, "children">;
@@ -19,6 +20,8 @@ export interface FooterProps<T = void> {
     links?: FooterLinkProps<T>[][] | undefined;
     /** Indicates if the download app icons are to be present */
     showDownloadAddon?: boolean | undefined;
+    /** Indicates if additional app resources should be displayed */
+    showResourceAddon?: boolean | undefined;
     /** Custom component. This overrides the logo, links and download section */
     children?: JSX.Element | JSX.Element[] | undefined;
     /** Custom disclaimer link attributes */
@@ -38,3 +41,7 @@ export interface FooterProps<T = void> {
 }
 
 // TODO: Update component and migration
+
+export interface ResourceAddonProps {
+    theme: DefaultTheme;
+}
