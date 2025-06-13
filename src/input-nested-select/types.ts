@@ -1,3 +1,4 @@
+import { RefObject } from "react";
 import {
     InputSelectOptionsProps,
     InputSelectSharedProps,
@@ -25,6 +26,13 @@ export interface InputNestedSelectSharedProps<V1, V2, V3>
     variant?: DropdownVariantType | undefined;
     alignment?: DropdownAlignmentType | undefined;
     dropdownZIndex?: number | undefined;
+    /**
+     * The root element that contains the dropdown element. Defaults to the document body.
+     *
+     * If the parent that contains the trigger element has a higher z-index than the dropdown,
+     * the dropdown may not be visible. Specify the parent element here instead
+     */
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
     /** Function to convert selected value into a string */
     valueToStringFunction?: ((value: V1 | V2 | V3) => string) | undefined;
 }

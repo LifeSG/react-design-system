@@ -27,6 +27,7 @@ export const DateNavigator = ({
     onLeftArrowClick,
     onRightArrowClick,
     onCalendarDateSelect,
+    dropdownRootNode,
     ...otherProps
 }: DateNavigatorProps) => {
     // =============================================================================
@@ -151,6 +152,7 @@ export const DateNavigator = ({
             onDismiss={() => setIsCalendarOpen(false)}
             onClose={() => setIsCalendarOpen(false)}
             offset={8}
+            rootNode={dropdownRootNode}
         />
     );
 };

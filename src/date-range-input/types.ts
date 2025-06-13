@@ -1,3 +1,4 @@
+import { RefObject } from "react";
 import {
     CommonCalendarProps,
     Variant,
@@ -34,6 +35,13 @@ export interface DateRangeInputProps extends CommonCalendarProps {
     withButton?: boolean | undefined;
     /** The z-index of the calendar dropdown */
     zIndex?: number | undefined;
+    /**
+     * The root element that contains the dropdown element. Defaults to the document body.
+     *
+     * If the parent that contains the trigger element has a higher z-index than the dropdown,
+     * the dropdown may not be visible. Specify the parent element here instead
+     */
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
     /**
      * Function that returns when a valid selection is made. Returns the start and
      * end date in "YYYY-MM-DD" string format.

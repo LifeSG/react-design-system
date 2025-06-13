@@ -16,7 +16,7 @@ import {
     useInteractions,
     useTransitionStyles,
 } from "@floating-ui/react";
-import { useRef } from "react";
+import { RefObject, useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useTheme } from "styled-components";
 import { useFloatingChild } from "../../overlay/use-floating-context";
@@ -43,6 +43,13 @@ interface ElementWithDropdownProps {
     /* the alignment of the dropdown to the left or right of the reference element */
     alignment?: DropdownAlignmentType | undefined;
     fitAvailableHeight?: boolean | undefined;
+    /**
+     * The root element that contains the popover element. Defaults to the document body.
+     *
+     * If the parent that contains the trigger element has a higher z-index than the popover,
+     * the popover may not be visible. Specify the parent element here instead
+     */
+    rootNode?: RefObject<HTMLElement> | undefined;
 }
 
 const getFloatingPlacement = (alignment: DropdownAlignmentType): Placement => {
@@ -70,6 +77,7 @@ export const ElementWithDropdown = ({
     offset: dropdownOffset = 0,
     alignment = "left",
     fitAvailableHeight,
+    rootNode,
 }: ElementWithDropdownProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -163,7 +171,7 @@ export const ElementWithDropdown = ({
                 {renderElement()}
             </div>
             {isMounted && (
-                <FloatingPortal>
+                <FloatingPortal root={rootNode}>
                     <FloatingFocusManager
                         context={context}
                         modal={false}

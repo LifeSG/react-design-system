@@ -51,6 +51,7 @@ export const InputSelect = <T, V>({
     readOnly,
     alignment,
     dropdownZIndex,
+    dropdownRootNode,
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -276,6 +277,7 @@ export const InputSelect = <T, V>({
                 alignment={alignment}
                 fitAvailableHeight
                 customZIndex={dropdownZIndex}
+                rootNode={dropdownRootNode}
             />
         </DropdownListState>
     );
