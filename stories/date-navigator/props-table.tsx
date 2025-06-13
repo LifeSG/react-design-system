@@ -79,28 +79,27 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(currentDate: string) => void"],
             },
             {
-                name: "rootNode",
+                name: "dropdownRootNode",
                 description: (
                     <>
-                        The root element that hosts the date navigator element.
-                        Only specify this if you absolutely need to change the
-                        parent of the calendar dropdown component.
+                        The root element that hosts the calendar dropdown
+                        element. Only specify this if you absolutely need to
+                        change the parent of the dropdown.
                         <br />
                         <br />
-                        For example, the calendar dropdown component is rendered
-                        in <code>body</code> by default. This could cause scroll
+                        For example, the dropdown is rendered in{" "}
+                        <code>body</code> by default. This could cause scroll
                         issues if your UI only scrolls within a certain
-                        container. In that case, you can specify the{" "}
-                        <code>rootNode</code> prop so that they share the same
-                        stacking context. However, note that this might cause
-                        z-index issues since it will no longer be rendered in{" "}
-                        <code>body</code>.
+                        container. In that case, you can specify this prop so
+                        that they share the same stacking context. However, note
+                        that this might cause z-index issues since it will no
+                        longer be rendered in <code>body</code>.
                     </>
                 ),
                 propTypes: ["RefObject<HTMLElement>"],
                 defaultValue: (
                     <>
-                        document<code>body</code>
+                        document <code>body</code>
                     </>
                 ),
             },
