@@ -27,7 +27,7 @@ export const Main = styled.button<MainStyleProps>`
 
                 &:hover,
                 &:active {
-                    background-color: #B0262D};
+                    background-color: #b0262d;
                 }
             `;
         }
@@ -38,7 +38,7 @@ export const Main = styled.button<MainStyleProps>`
 
             &:hover,
             &:active {
-                background-color: #F5F5F7};
+                background-color: #f5f5f7;
             }
         `;
     }}
@@ -47,24 +47,24 @@ export const Main = styled.button<MainStyleProps>`
         switch (props.$buttonSizeStyle) {
             case "small":
                 return css`
-                    height: 2.5rem;
+                    min-height: 2.5rem;
 
                     ${MediaQuery.MaxWidth.xxs} {
-                        height: auto;
+                        min-height: auto;
                     }
                 `;
 
             case "large":
                 return css`
-                    height: 4rem;
+                    min-height: 4rem;
                 `;
 
             default:
                 return css`
-                    height: 3rem;
+                    min-height: 3rem;
 
                     ${MediaQuery.MaxWidth.xxs} {
-                        height: auto;
+                        min-height: auto;
                     }
                 `;
         }
