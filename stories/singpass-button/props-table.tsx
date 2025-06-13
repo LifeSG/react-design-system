@@ -30,20 +30,6 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: [`"red-filled"`, `"white-filled"`],
                 defaultValue: `"white-filled"`,
             },
-            {
-                name: "singpassLogoStyleOverride",
-                mandatory: true,
-                description: (
-                    <>Use this prop to finely place the singpass logo</>
-                ),
-                propTypes: [
-                    `{
-    height?: number;
-    translateY?: number;
-    paddingLeft?: number;
-}`,
-                ],
-            },
         ],
     },
 ];

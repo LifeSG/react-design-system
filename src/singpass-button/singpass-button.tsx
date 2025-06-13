@@ -1,8 +1,7 @@
 import React from "react";
-import { getSpLogo } from "./singpass-assets";
-import { Main, MainStyleProps } from "./singpass-button.style";
+import { getSpLogoText } from "./singpass-assets";
+import { Main, MainStyleProps, SvgContainer } from "./singpass-button.style";
 import { SingpassButtonProps, SingpassButtonRef } from "./types";
-import { Typography } from "../typography";
 
 /**
  * NOTE: Due to the way we intend to customise both components, with forwardRef behaviour
@@ -14,16 +13,11 @@ const DefaultComponent = (
     props: SingpassButtonProps,
     ref: SingpassButtonRef
 ) => {
-    const {
-        styleType = "white-filled",
-        singpassLogoStyleOverride,
-        ...otherProps
-    } = props;
+    const { styleType = "white-filled", ...otherProps } = props;
 
     const mainStyle: MainStyleProps = {
         $buttonStyle: styleType,
         $buttonSizeStyle: "default",
-        $singpassLogoOverride: singpassLogoStyleOverride,
     };
 
     return (
@@ -34,26 +28,20 @@ const DefaultComponent = (
             {...otherProps}
             aria-label="Log in with sing pass"
         >
-            <Typography.HeadingXS inline weight="semibold">
-                Log in with
-            </Typography.HeadingXS>
-            <img src={getSpLogo(styleType)} />
+            <SvgContainer $buttonSizeStyle="default">
+                {getSpLogoText(styleType)}
+            </SvgContainer>
         </Main>
     );
 };
-DefaultComponent.displayName = "Button.Default";
+DefaultComponent.displayName = "SingpassButton.Default";
 
 const SmallComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
-    const {
-        styleType = "white-filled",
-        singpassLogoStyleOverride,
-        ...otherProps
-    } = props;
+    const { styleType = "white-filled", ...otherProps } = props;
 
     const mainStyle: MainStyleProps = {
         $buttonStyle: styleType,
         $buttonSizeStyle: "small",
-        $singpassLogoOverride: singpassLogoStyleOverride,
     };
 
     return (
@@ -64,26 +52,20 @@ const SmallComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
             {...otherProps}
             aria-label="Log in with sing pass"
         >
-            <Typography.BodyMD inline weight="semibold">
-                Log in with
-            </Typography.BodyMD>
-            <img src={getSpLogo(styleType)} />
+            <SvgContainer $buttonSizeStyle="small">
+                {getSpLogoText(styleType)}
+            </SvgContainer>
         </Main>
     );
 };
-SmallComponent.displayName = "Button.Small";
+SmallComponent.displayName = "SingpassButton.Small";
 
 const LargeComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
-    const {
-        styleType = "white-filled",
-        singpassLogoStyleOverride,
-        ...otherProps
-    } = props;
+    const { styleType = "white-filled", ...otherProps } = props;
 
     const mainStyle: MainStyleProps = {
         $buttonStyle: styleType,
         $buttonSizeStyle: "large",
-        $singpassLogoOverride: singpassLogoStyleOverride,
     };
 
     return (
@@ -94,14 +76,13 @@ const LargeComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
             {...otherProps}
             aria-label="Log in with sing pass"
         >
-            <Typography.HeadingMD inline weight="semibold">
-                Log in with
-            </Typography.HeadingMD>
-            <img src={getSpLogo(styleType)} />
+            <SvgContainer $buttonSizeStyle="large">
+                {getSpLogoText(styleType)}
+            </SvgContainer>
         </Main>
     );
 };
-LargeComponent.displayName = "Button.Large";
+LargeComponent.displayName = "SingpassButton.Large";
 
 export const SingpassButton = {
     Default: React.forwardRef(DefaultComponent),

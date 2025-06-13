@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
 import { Colour, MediaQuery, Motion, Spacing } from "../theme";
 import { ThemeButton } from "../theme/components/theme-helper";
 import { SingpassButtonStyleType } from "./types";
@@ -9,18 +8,10 @@ export type MainButtonSize = "default" | "small" | "large";
 export interface MainStyleProps {
     $buttonStyle: SingpassButtonStyleType;
     $buttonSizeStyle?: MainButtonSize | undefined;
-    $singpassLogoOverride?: SingpassLogoOverride;
-}
-
-export interface SingpassLogoOverride {
-    height?: number;
-    translateY?: number;
-    paddingLeft?: number;
 }
 
 export const Main = styled.button<MainStyleProps>`
-    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
-    min-width: 4rem;
+    padding: 10px ${Spacing["spacing-16"]} 6px;
     transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
     border-radius: ${ThemeButton["button-radius"]};
     cursor: pointer;
@@ -33,7 +24,6 @@ export const Main = styled.button<MainStyleProps>`
             return css`
                 background-color: #f4333d;
                 border: none;
-                color: ${Colour.Primitive.white};
 
                 &:hover,
                 &:active {
@@ -59,20 +49,6 @@ export const Main = styled.button<MainStyleProps>`
                 return css`
                     height: 2.5rem;
 
-                    img {
-                        height: ${props.$singpassLogoOverride
-                            ? props.$singpassLogoOverride.height
-                            : 1.7}ex;
-                        transform: translateY(
-                            ${props.$singpassLogoOverride
-                                ? props.$singpassLogoOverride.translateY
-                                : 0.45}ex
-                        );
-                        padding-left: ${props.$singpassLogoOverride
-                            ? props.$singpassLogoOverride.paddingLeft
-                            : 0.7}ex;
-                    }
-
                     ${MediaQuery.MaxWidth.xxs} {
                         height: auto;
                     }
@@ -81,42 +57,11 @@ export const Main = styled.button<MainStyleProps>`
             case "large":
                 return css`
                     height: 4rem;
-
-                    img {
-                        height: ${props.$singpassLogoOverride
-                            ? props.$singpassLogoOverride.height
-                            : 2.8}ex;
-                        transform: translateY(
-                            ${props.$singpassLogoOverride
-                                ? props.$singpassLogoOverride.translateY
-                                : 0.8}ex
-                        );
-                        padding-left: ${props.$singpassLogoOverride
-                            ? props.$singpassLogoOverride.paddingLeft
-                            : 1}ex;
-                    }
-                    ${MediaQuery.MaxWidth.xxs} {
-                        height: auto;
-                    }
                 `;
 
             default:
                 return css`
                     height: 3rem;
-
-                    img {
-                        height: ${props.$singpassLogoOverride
-                            ? props.$singpassLogoOverride.height
-                            : 2}ex;
-                        transform: translateY(
-                            ${props.$singpassLogoOverride
-                                ? props.$singpassLogoOverride.translateY
-                                : 0.6}ex
-                        );
-                        padding-left: ${props.$singpassLogoOverride
-                            ? props.$singpassLogoOverride.paddingLeft
-                            : 0.75}ex;
-                    }
 
                     ${MediaQuery.MaxWidth.xxs} {
                         height: auto;
@@ -126,6 +71,18 @@ export const Main = styled.button<MainStyleProps>`
     }}
 `;
 
-export const Spinner = styled(ComponentLoadingSpinner)`
-    margin-right: 0.5rem;
+interface SvgContainerProps {
+    $buttonSizeStyle?: MainButtonSize | undefined;
+}
+export const SvgContainer = styled.div<SvgContainerProps>`
+    width: ${(props) => {
+        switch (props.$buttonSizeStyle) {
+            case "large":
+                return 16;
+            case "small":
+                return 9;
+            default:
+                return 11;
+        }
+    }}rem;
 `;
