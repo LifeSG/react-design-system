@@ -5,7 +5,7 @@ import { SemanticColourSet } from "../../types";
 // LIGHT MODE COLOURS
 // ============================================================================
 
-export const LifeSGColourSet: SemanticColourSet = {
+export const A11yPlaygroundColourSet: SemanticColourSet = {
     // text
     text: getPrimitiveColour("neutral-20"),
     "text-subtle": getPrimitiveColour("neutral-30"),
@@ -156,9 +156,8 @@ export const LifeSGColourSet: SemanticColourSet = {
 // DARK MODE COLOURS
 // ============================================================================
 
-// currently used for testing and fallback for dark mode
-export const LifeSGDarkColourSet: SemanticColourSet = {
-    // text
+export const A11yPlaygroundDarkColourSet: SemanticColourSet = {
+    // text - lighter colours for dark backgrounds
     text: getPrimitiveColour("neutral-100"),
     "text-subtle": getPrimitiveColour("neutral-80"),
     "text-subtler": getPrimitiveColour("neutral-60"),

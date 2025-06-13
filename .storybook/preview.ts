@@ -2,30 +2,12 @@ import { withThemeFromJSXProvider } from "@storybook/addon-themes";
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import type { Preview } from "@storybook/react";
 import { ThemeProvider } from "styled-components";
-import {
-    LifeSGTheme,
-    BookingSGTheme,
-    CCubeTheme,
-    MyLegacyTheme,
-    RBSTheme,
-    PATheme,
-    A11yPlaygroundTheme,
-} from "../src/theme";
+import { AllThemes } from "../src/theme";
 
 const preview: Preview = {
     decorators: [
         withThemeFromJSXProvider({
-            themes: {
-                LifeSG: LifeSGTheme,
-                BookingSG: BookingSGTheme,
-                CCube: CCubeTheme,
-                MyLegacy: MyLegacyTheme,
-                RBS: RBSTheme,
-                // TODO: update when OS theme is added
-                // OneService: V2_OneServiceTheme,
-                PA: PATheme,
-                A11yPlayground: A11yPlaygroundTheme,
-            },
+            themes: AllThemes,
             Provider: ThemeProvider,
         }),
     ],
@@ -77,6 +59,19 @@ const preview: Preview = {
         layout: "centered",
         viewport: {
             viewports: INITIAL_VIEWPORTS,
+        },
+        backgrounds: {
+            default: "light",
+            values: [
+                {
+                    name: "light",
+                    value: "#ffffff",
+                },
+                {
+                    name: "dark",
+                    value: "#000000",
+                },
+            ],
         },
     },
 };
