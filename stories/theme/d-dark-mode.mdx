@@ -1,0 +1,222 @@
+import { Meta } from "@storybook/blocks";
+import { DocInfo } from "stories/storybook-common";
+
+<Meta title="Foundations/Themes/Dark Mode" />
+
+# Dark Mode
+
+<DocInfo>
+    To use dark mode themes, you will need [**Styled
+    Components**](https://styled-components.com/docs)
+</DocInfo>
+
+The design system provides built-in support for dark mode themes that automatically adapt to system preferences or can be explicitly controlled.
+
+## How it works
+
+Dark mode support is built on a simple architecture:
+
+1. **Combined Theme Objects**: Each theme contains both light and dark variants
+2. **Automatic Detection**: System preference detection via `prefers-color-scheme`
+3. **Explicit Control**: Manual override of colour mode when needed
+4. **Semantic Tokens**: All colour tokens automatically resolve to appropriate values
+5. **Custom Overrides**: Separate override options for light and dark modes
+
+## Basic implementation
+
+### Recommended: Automatic system detection
+
+**Use `DSThemeProvider` for automatic light/dark mode switching** based on the user's system preference:
+
+```tsx
+// app.tsx
+import {
+    DSThemeProvider,
+    LifeSGTheme,
+} from "@lifesg/react-design-system/theme";
+import { Component } from "./index";
+
+const App = () => {
+    return (
+        <DSThemeProvider theme={LifeSGTheme.light}>
+            <Component />
+        </DSThemeProvider>
+    );
+};
+
+export default App;
+```
+
+**How it works:**
+
+-   `DSThemeProvider` automatically detects the user's system preference (`prefers-color-scheme`)
+-   When system is set to dark mode → automatically uses `LifeSGTheme.dark`
+-   When system is set to light mode → uses `LifeSGTheme.light`
+-   **You will only need to specify the base theme** (`LifeSGTheme.light`) and the provider handles the switching
+
+### When to use explicit variants
+
+You can use explicit `.light` or `.dark` variants when you need to **override** the automatic behavior:
+
+#### Force light mode only
+
+```tsx
+// Always light mode, ignores system preference
+<DSThemeProvider theme={LifeSGTheme.light} colourMode="light">
+    <Component />
+</DSThemeProvider>
+```
+
+#### Force dark mode only
+
+```tsx
+// Always dark mode, ignores system preference
+<DSThemeProvider theme={LifeSGTheme.dark} colourMode="dark">
+    <Component />
+</DSThemeProvider>
+```
+
+#### Manual toggle (user preference)
+
+```tsx
+// When you have a toggle switch in your UI - see Advanced usage section for complete example
+const [userPreference, setUserPreference] = useState<"light" | "dark" | "auto">(
+    "auto"
+);
+const currentTheme =
+    userPreference === "dark" ? LifeSGTheme.dark : LifeSGTheme.light;
+
+<DSThemeProvider theme={currentTheme} colourMode={userPreference}>
+    <Component />
+</DSThemeProvider>;
+```
+
+## Theme customisation
+
+### Extending dark mode themes
+
+You can extend existing themes and customise colours for both light and dark modes:
+
+```tsx
+// app.tsx
+import { LifeSGTheme, ThemeSpec } from "@lifesg/react-design-system/theme";
+import { DSThemeProvider } from "@lifesg/react-design-system/theme";
+import { Component } from "./index";
+
+const customTheme: ThemeSpec = {
+    ...LifeSGTheme.light,
+    overrides: {
+        // Light mode overrides
+        semanticColour: {
+            text: "#2c2c2c",
+            "bg-primary": "#0066cc",
+        },
+        // Dark mode specific overrides
+        semanticColourDark: {
+            text: "#f0f0f0",
+            "bg-primary": "#4d94ff",
+        },
+    },
+};
+
+const App = () => {
+    return (
+        <DSThemeProvider theme={customTheme}>
+            <Component />
+        </DSThemeProvider>
+    );
+};
+
+export default App;
+```
+
+### Creating custom themes with dark mode
+
+For entirely custom themes, define both light and dark colour overrides:
+
+```tsx
+const myCustomTheme: ThemeSpec = {
+    colourScheme: "lifesg",
+    fontScheme: "default",
+    // ... other schemes
+    overrides: {
+        semanticColour: {
+            text: "#1a1a1a",
+            bg: "#ffffff",
+        },
+        semanticColourDark: {
+            text: "#e6e6e6",
+            bg: "#1a1a1a",
+        },
+    },
+};
+```
+
+## Advanced usage
+
+### Accessing current theme mode
+
+Use the `useThemeMode` hook to access the current colour mode in your components:
+
+```tsx
+import { useThemeMode } from "@lifesg/react-design-system/theme";
+
+const MyComponent = () => {
+    const { colourMode, theme } = useThemeMode();
+
+    return (
+        <div>
+            Current mode: {colourMode}
+            {colourMode === "dark" && <span>🌙</span>}
+            {colourMode === "light" && <span>☀️</span>}
+        </div>
+    );
+};
+```
+
+## Migration from existing themes
+
+### Step 1: Update your ThemeProvider
+
+```tsx
+// Before - Old approach
+import { ThemeProvider } from "styled-components";
+import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+
+<ThemeProvider theme={LifeSGTheme}>
+    <App />
+</ThemeProvider>;
+
+// After - Recommended approach with automatic dark mode
+import {
+    DSThemeProvider,
+    LifeSGTheme,
+} from "@lifesg/react-design-system/theme";
+
+<DSThemeProvider theme={LifeSGTheme.light}>
+    <App />
+</DSThemeProvider>;
+```
+
+### Step 2: Add dark mode overrides (if you have custom colours)
+
+```tsx
+// Before
+const customTheme = {
+    ...LifeSGTheme,
+    overrides: { semanticColour: { text: "#custom" } },
+};
+
+// After
+const customTheme = {
+    ...LifeSGTheme.light,
+    overrides: {
+        semanticColour: { text: "#custom-light" },
+        semanticColourDark: { text: "#custom-dark" },
+    },
+};
+```
+
+### Step 3: Test both modes
+
+Test by changing your system preference or using browser dev tools to simulate `prefers-color-scheme`. Your existing styled components will automatically adapt.

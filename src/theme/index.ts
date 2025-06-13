@@ -12,6 +12,8 @@ import { SpacingValues } from "./spacing/theme-helper";
 import { ThemeSpec } from "./types";
 
 export * from "./types";
+export * from "./ds-theme-provider";
+export * from "./use-theme-mode";
 
 // =============================================================================
 // TOKENS
@@ -46,7 +48,8 @@ export const MediaQuery = MediaQueryValues;
 // THEME PRESETS
 // =============================================================================
 
-export const LifeSGTheme: ThemeSpec = {
+// Theme definitions
+const LifeSGThemeBase: ThemeSpec = {
     colourScheme: "lifesg",
     fontScheme: "default",
     motionScheme: "default",
@@ -63,7 +66,7 @@ export const LifeSGTheme: ThemeSpec = {
     },
 };
 
-export const BookingSGTheme: ThemeSpec = {
+const BookingSGThemeBase: ThemeSpec = {
     colourScheme: "bookingsg",
     fontScheme: "bookingsg",
     motionScheme: "default",
@@ -80,7 +83,7 @@ export const BookingSGTheme: ThemeSpec = {
     },
 };
 
-export const CCubeTheme: ThemeSpec = {
+const CCubeThemeBase: ThemeSpec = {
     colourScheme: "ccube",
     fontScheme: "default",
     motionScheme: "default",
@@ -97,7 +100,7 @@ export const CCubeTheme: ThemeSpec = {
     },
 };
 
-export const MyLegacyTheme: ThemeSpec = {
+const MyLegacyThemeBase: ThemeSpec = {
     colourScheme: "mylegacy",
     fontScheme: "default",
     motionScheme: "default",
@@ -114,7 +117,7 @@ export const MyLegacyTheme: ThemeSpec = {
     },
 };
 
-export const RBSTheme: ThemeSpec = {
+const RBSThemeBase: ThemeSpec = {
     colourScheme: "rbs",
     fontScheme: "default",
     motionScheme: "default",
@@ -131,7 +134,7 @@ export const RBSTheme: ThemeSpec = {
     },
 };
 
-export const OneServiceTheme: ThemeSpec = {
+const OneServiceThemeBase: ThemeSpec = {
     colourScheme: "oneservice",
     fontScheme: "default",
     motionScheme: "default",
@@ -142,7 +145,7 @@ export const OneServiceTheme: ThemeSpec = {
     resourceScheme: "oneservice",
 };
 
-export const PATheme: ThemeSpec = {
+const PAThemeBase: ThemeSpec = {
     colourScheme: "pa",
     fontScheme: "pa",
     motionScheme: "default",
@@ -154,7 +157,7 @@ export const PATheme: ThemeSpec = {
     componentScheme: "pa",
 };
 
-export const A11yPlaygroundTheme: ThemeSpec = {
+const A11yPlaygroundThemeBase: ThemeSpec = {
     colourScheme: "a11yplayground",
     fontScheme: "a11yplayground",
     motionScheme: "default",
@@ -165,3 +168,61 @@ export const A11yPlaygroundTheme: ThemeSpec = {
     resourceScheme: "a11yplayground",
     componentScheme: "default",
 };
+
+// =============================================================================
+// THEME COLLECTIONS
+// =============================================================================
+
+// Theme presets with light and dark variants
+export const LifeSGTheme = {
+    light: LifeSGThemeBase,
+    dark: { ...LifeSGThemeBase, colourMode: "dark" as const },
+} as const;
+
+export const BookingSGTheme = {
+    light: BookingSGThemeBase,
+    dark: { ...BookingSGThemeBase, colourMode: "dark" as const },
+} as const;
+
+export const CCubeTheme = {
+    light: CCubeThemeBase,
+    dark: { ...CCubeThemeBase, colourMode: "dark" as const },
+} as const;
+
+export const MyLegacyTheme = {
+    light: MyLegacyThemeBase,
+    dark: { ...MyLegacyThemeBase, colourMode: "dark" as const },
+} as const;
+
+export const RBSTheme = {
+    light: RBSThemeBase,
+    dark: { ...RBSThemeBase, colourMode: "dark" as const },
+} as const;
+
+export const OneServiceTheme = {
+    light: OneServiceThemeBase,
+    dark: { ...OneServiceThemeBase, colourMode: "dark" as const },
+} as const;
+
+export const PATheme = {
+    light: PAThemeBase,
+    dark: { ...PAThemeBase, colourMode: "dark" as const },
+} as const;
+
+export const A11yPlaygroundTheme = {
+    light: A11yPlaygroundThemeBase,
+    dark: { ...A11yPlaygroundThemeBase, colourMode: "dark" as const },
+} as const;
+
+export const AllThemes = {
+    "LifeSG (Light)": LifeSGTheme.light,
+    "BookingSG (Light)": BookingSGTheme.light,
+    "CCube (Light)": CCubeTheme.light,
+    "MyLegacy (Light)": MyLegacyTheme.light,
+    "RBS (Light)": RBSTheme.light,
+    // TODO: update when OS theme is added
+    //"OneService (Light)": OneServiceTheme.light,
+    "PA (Light)": PATheme.light,
+    "A11yPlayground (Light)": A11yPlaygroundTheme.light,
+    "A11yPlayground (Dark)": A11yPlaygroundTheme.dark,
+} as const;

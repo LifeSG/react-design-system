@@ -1,8 +1,15 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
 import { ColourScheme, SemanticColourSet } from "../types";
-import { LifeSGColourSet } from "./specs/lifesg-semantic-tokens";
+import {
+    LifeSGColourSet,
+    LifeSGDarkColourSet,
+} from "./specs/lifesg-semantic-tokens";
 import { PAColourSet } from "./specs/pa-semantic-tokens";
+import {
+    A11yPlaygroundColourSet,
+    A11yPlaygroundDarkColourSet,
+} from "./specs/a11yplayground-semantic-tokens";
 import { SemanticColourCollectionMap } from "./types";
 
 export const ColourSpec: ThemeCollectionSpec<
@@ -17,7 +24,25 @@ export const ColourSpec: ThemeCollectionSpec<
         ccube: LifeSGColourSet,
         oneservice: LifeSGColourSet,
         pa: PAColourSet,
-        a11yplayground: LifeSGColourSet,
+        a11yplayground: A11yPlaygroundColourSet,
+    },
+    defaultValue: "lifesg",
+};
+
+// Explicit dark semantic colour sets with LifeSG fallback
+const DarkColourSpec: ThemeCollectionSpec<
+    SemanticColourCollectionMap,
+    ColourScheme
+> = {
+    collections: {
+        lifesg: LifeSGDarkColourSet,
+        bookingsg: LifeSGDarkColourSet,
+        rbs: LifeSGDarkColourSet,
+        mylegacy: LifeSGDarkColourSet,
+        ccube: LifeSGDarkColourSet,
+        oneservice: LifeSGDarkColourSet,
+        pa: LifeSGDarkColourSet,
+        a11yplayground: A11yPlaygroundDarkColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -25,14 +50,25 @@ export const ColourSpec: ThemeCollectionSpec<
 export const getSemanticColour = (key: keyof SemanticColourSet) => {
     return (props: StyledComponentProps): string => {
         const theme = props.theme;
+        const isDarkMode = theme?.colourMode === "dark";
+
+        // Select the appropriate color spec based on theme mode
+        const spec = isDarkMode ? DarkColourSpec : ColourSpec;
         const colorSet: SemanticColourSet = getCollection(
-            ColourSpec,
+            spec,
             theme?.colourScheme
         );
 
-        // check for an override
-        const colorValue = theme?.overrides?.semanticColour
-            ? getValue(colorSet, key, theme.overrides.semanticColour)
+        // Check for mode-specific overrides first,
+        // then fallback to general overrides
+        const overrideKey = isDarkMode
+            ? "semanticColourDark"
+            : "semanticColour";
+        const overrides =
+            theme?.overrides?.[overrideKey] || theme?.overrides?.semanticColour;
+
+        const colorValue = overrides
+            ? getValue(colorSet, key, overrides)
             : colorSet[key];
 
         // If function, resolve with props

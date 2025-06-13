@@ -28,11 +28,62 @@ export const ColourSpec: ThemeCollectionSpec<
     defaultValue: "lifesg",
 };
 
+const getDarkColourSet = (scheme: ColourScheme): PrimitiveColourSet => {
+    // Check if explicit dark colour set exists
+    const explicitDarkSet = ExplicitDarkColourSpec.collections[scheme];
+    if (explicitDarkSet) {
+        return explicitDarkSet;
+    }
+
+    // Fallback to light colours (products can add explicit dark sets as needed)
+    const lightSet = ColourSpec.collections[scheme];
+    return lightSet;
+};
+
+// Explicit dark colour sets for brands that have custom dark palettes
+// Uses light primitive colours if dark mode is handled through semantic tokens
+const ExplicitDarkColourSpec: ThemeCollectionSpec<
+    ColourCollectionsMap,
+    ColourScheme
+> = {
+    collections: {
+        lifesg: LifeSgColourSet,
+        bookingsg: BookingSgColourSet,
+        rbs: RBSColourSet,
+        mylegacy: MyLegacyColourSet,
+        ccube: CCubeColourSet,
+        oneservice: OneServiceColourSet,
+        pa: PAColourSet,
+        a11yplayground: A11yPlaygroundColourSet,
+    },
+    defaultValue: "lifesg",
+};
+
+// Dynamic dark colour spec that uses explicit colours
+const DarkColourSpec: ThemeCollectionSpec<ColourCollectionsMap, ColourScheme> =
+    {
+        collections: {
+            lifesg: getDarkColourSet("lifesg"),
+            bookingsg: getDarkColourSet("bookingsg"),
+            rbs: getDarkColourSet("rbs"),
+            mylegacy: getDarkColourSet("mylegacy"),
+            ccube: getDarkColourSet("ccube"),
+            oneservice: getDarkColourSet("oneservice"),
+            pa: getDarkColourSet("pa"),
+            a11yplayground: getDarkColourSet("a11yplayground"),
+        },
+        defaultValue: "lifesg",
+    };
+
 export const getPrimitiveColour = (key: keyof PrimitiveColourSet) => {
     return (props: StyledComponentProps): string => {
         const theme = props.theme;
+        const isDarkMode = theme?.colourMode === "dark";
+
+        // Select the appropriate color spec based on theme mode
+        const spec = isDarkMode ? DarkColourSpec : ColourSpec;
         const colorSet: PrimitiveColourSet = getCollection(
-            ColourSpec,
+            spec,
             theme?.colourScheme
         );
 
