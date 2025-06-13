@@ -50,6 +50,12 @@ const DATA: ApiTableSectionProps[] = [
                 description: "A component to be displayed as the icon",
                 propTypes: ["JSX.Element"],
             },
+            {
+                name: "size",
+                description: "The size of the pill displayed",
+                propTypes: ["default", "large"],
+                defaultValue: `"default"`,
+            },
         ],
     },
 ];
