@@ -19,12 +19,16 @@ describe("ErrorDisplay", () => {
 
     it("should render the component", () => {
         render(
-            <ThemeProvider theme={LifeSGTheme}>
+            <ThemeProvider theme={LifeSGTheme.light}>
                 <ErrorDisplay type="404" />
             </ThemeProvider>
         );
 
-        const title = getErrorDisplayData("404", "lifesg", LifeSGTheme)!.title;
+        const title = getErrorDisplayData(
+            "404",
+            "lifesg",
+            LifeSGTheme.light
+        )!.title;
         expect(screen.getByRole("heading", { level: 4, name: title }));
     });
 
@@ -37,7 +41,7 @@ describe("ErrorDisplay", () => {
         };
 
         render(
-            <ThemeProvider theme={LifeSGTheme}>
+            <ThemeProvider theme={LifeSGTheme.light}>
                 <ErrorDisplay type="404" actionButton={actionButton} />
             </ThemeProvider>
         );
@@ -49,7 +53,7 @@ describe("ErrorDisplay", () => {
 
     it("should be able to render custom title if specified", () => {
         render(
-            <ThemeProvider theme={LifeSGTheme}>
+            <ThemeProvider theme={LifeSGTheme.light}>
                 <ErrorDisplay type="404" title={CUSTOM_TITLE} />
             </ThemeProvider>
         );
@@ -61,7 +65,7 @@ describe("ErrorDisplay", () => {
 
     it("should not render any text content if the imageOnly prop is specified", () => {
         render(
-            <ThemeProvider theme={LifeSGTheme}>
+            <ThemeProvider theme={LifeSGTheme.light}>
                 <ErrorDisplay
                     type="404"
                     title={CUSTOM_TITLE}
@@ -80,7 +84,7 @@ describe("ErrorDisplay", () => {
     describe("description", () => {
         it("should be able to render custom description", () => {
             render(
-                <ThemeProvider theme={LifeSGTheme}>
+                <ThemeProvider theme={LifeSGTheme.light}>
                     <ErrorDisplay type="404" description={CUSTOM_DESCRIPTION} />
                 </ThemeProvider>
             );
@@ -90,7 +94,7 @@ describe("ErrorDisplay", () => {
 
         it("should be able to render JSX.Element", () => {
             render(
-                <ThemeProvider theme={LifeSGTheme}>
+                <ThemeProvider theme={LifeSGTheme.light}>
                     <ErrorDisplay
                         type="404"
                         description={<div>{CUSTOM_DESCRIPTION}</div>}
@@ -130,12 +134,16 @@ describe("ErrorDisplay", () => {
             "should render %s error correctly",
             (type: ErrorDisplayType) => {
                 render(
-                    <ThemeProvider theme={LifeSGTheme}>
+                    <ThemeProvider theme={LifeSGTheme.light}>
                         <ErrorDisplay type={type} />
                     </ThemeProvider>
                 );
 
-                const error = getErrorDisplayData(type, "lifesg", LifeSGTheme)!;
+                const error = getErrorDisplayData(
+                    type,
+                    "lifesg",
+                    LifeSGTheme.light
+                )!;
 
                 expect(
                     screen.getByRole("heading", { level: 4, name: error.title })
@@ -156,7 +164,7 @@ describe("ErrorDisplay", () => {
             "should render bookingsg %s error correctly",
             (type: ErrorDisplayType) => {
                 render(
-                    <ThemeProvider theme={BookingSGTheme}>
+                    <ThemeProvider theme={BookingSGTheme.light}>
                         <ErrorDisplay type={type} />
                     </ThemeProvider>
                 );
@@ -164,7 +172,7 @@ describe("ErrorDisplay", () => {
                 const error = getErrorDisplayData(
                     type,
                     "bookingsg",
-                    BookingSGTheme
+                    BookingSGTheme.light
                 )!;
 
                 expect(
@@ -187,12 +195,16 @@ describe("ErrorDisplay", () => {
 
         test("should use the specified illustration based on the illustrationScheme prop", () => {
             render(
-                <ThemeProvider theme={BookingSGTheme}>
+                <ThemeProvider theme={BookingSGTheme.light}>
                     <ErrorDisplay type={"400"} illustrationScheme="lifesg" />
                 </ThemeProvider>
             );
 
-            const error = getErrorDisplayData("400", "lifesg", LifeSGTheme)!;
+            const error = getErrorDisplayData(
+                "400",
+                "lifesg",
+                LifeSGTheme.light
+            )!;
 
             expect(
                 screen.getByRole("heading", {
@@ -218,7 +230,7 @@ describe("ErrorDisplay", () => {
             const additionalProps = { dateString: "01/01/2023" };
 
             render(
-                <ThemeProvider theme={LifeSGTheme}>
+                <ThemeProvider theme={LifeSGTheme.light}>
                     <ErrorDisplay
                         type={type}
                         additionalProps={additionalProps}
@@ -226,7 +238,11 @@ describe("ErrorDisplay", () => {
                 </ThemeProvider>
             );
 
-            const error = getErrorDisplayData(type, "lifesg", LifeSGTheme)!;
+            const error = getErrorDisplayData(
+                type,
+                "lifesg",
+                LifeSGTheme.light
+            )!;
             const errorDescription = transformJSXElementToString(
                 error.renderDescription!(additionalProps) as JSX.Element
             );

@@ -59,9 +59,12 @@ export type ResourceScheme =
     | "pa"
     | "a11yplayground";
 
+export type ColourMode = "light" | "dark";
+
 export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;
     semanticColour?: SemanticColourSetOptions | undefined;
+    semanticColourDark?: SemanticColourSetOptions | undefined;
     fontSpec?: FontSpecSetOptions | undefined;
     font?: FontSetOptions | undefined;
     motion?: MotionSetOptions | undefined;
@@ -74,6 +77,7 @@ export interface ThemeSpecOptions {
 
 export interface ThemeSpec {
     colourScheme: ColourScheme;
+    colourMode?: ColourMode | undefined;
     fontScheme: FontScheme;
     motionScheme: MotionScheme;
     borderScheme: BorderScheme;
