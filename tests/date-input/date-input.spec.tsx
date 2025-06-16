@@ -238,10 +238,15 @@ describe("DateInput", () => {
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
-            expect(screen.getByLabelText("day")).toHaveFocus();
+            expect(screen.getByLabelText("Date")).toHaveFocus();
             expect(mockOnFocus).toHaveBeenCalledTimes(1);
             expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
+            await user.keyboard("{Tab}");
+            await user.keyboard("{Tab}");
+            await user.keyboard("{Tab}");
+            await user.keyboard("{Tab}");
+            await user.keyboard("{Tab}");
             await user.keyboard("{Tab}");
             await user.keyboard("{Tab}");
             await user.keyboard("{Tab}");
@@ -269,7 +274,7 @@ describe("DateInput", () => {
             });
 
             await waitFor(() => {
-                expect(screen.getByLabelText("year")).toHaveFocus();
+                expect(screen.getByLabelText("Year")).toHaveFocus();
                 expect(screen.getByTestId(CALENDAR_TESTID)).toBeVisible();
                 expect(mockOnFocus).toHaveBeenCalledTimes(2);
                 expect(mockOnBlur).toHaveBeenCalledTimes(1);
@@ -301,9 +306,9 @@ describe("DateInput", () => {
                 screen.queryByTestId(CALENDAR_TESTID)
             );
 
-            expect(screen.getByLabelText("day")).toHaveValue("15");
-            expect(screen.getByLabelText("month")).toHaveValue("02");
-            expect(screen.getByLabelText("year")).toHaveValue("2024");
+            expect(screen.getByLabelText("Date")).toHaveValue("15");
+            expect(screen.getByLabelText("Month")).toHaveValue("02");
+            expect(screen.getByLabelText("Year")).toHaveValue("2024");
             expect(mockOnChange).toHaveBeenCalledWith("2024-02-15");
         });
 
@@ -319,9 +324,9 @@ describe("DateInput", () => {
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
-            await user.type(screen.getByLabelText("day"), "01");
-            await user.type(screen.getByLabelText("month"), "01");
-            await user.type(screen.getByLabelText("year"), "2023");
+            await user.type(screen.getByLabelText("Date"), "01");
+            await user.type(screen.getByLabelText("Month"), "01");
+            await user.type(screen.getByLabelText("Year"), "2023");
 
             expect(
                 within(screen.getByTestId(CALENDAR_TESTID)).getByText("Jan")
@@ -338,9 +343,9 @@ describe("DateInput", () => {
                 screen.queryByTestId(CALENDAR_TESTID)
             );
 
-            expect(screen.getByLabelText("day")).toHaveValue("01");
-            expect(screen.getByLabelText("month")).toHaveValue("01");
-            expect(screen.getByLabelText("year")).toHaveValue("2023");
+            expect(screen.getByLabelText("Date")).toHaveValue("01");
+            expect(screen.getByLabelText("Month")).toHaveValue("01");
+            expect(screen.getByLabelText("Year")).toHaveValue("2023");
             expect(mockOnChange).toHaveBeenCalledWith("2023-01-01");
         });
 
@@ -371,9 +376,9 @@ describe("DateInput", () => {
                 screen.queryByTestId(CALENDAR_TESTID)
             );
 
-            expect(screen.getByLabelText("day")).toHaveValue("30");
-            expect(screen.getByLabelText("month")).toHaveValue("04");
-            expect(screen.getByLabelText("year")).toHaveValue("2024");
+            expect(screen.getByLabelText("Date")).toHaveValue("30");
+            expect(screen.getByLabelText("Month")).toHaveValue("04");
+            expect(screen.getByLabelText("Year")).toHaveValue("2024");
             expect(mockOnChange).not.toHaveBeenCalled();
         });
 
@@ -396,9 +401,9 @@ describe("DateInput", () => {
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
             await act(async () => {
-                await user.type(screen.getByLabelText("day"), "01");
-                await user.type(screen.getByLabelText("month"), "01");
-                await user.type(screen.getByLabelText("year"), "2023");
+                await user.type(screen.getByLabelText("Date"), "01");
+                await user.type(screen.getByLabelText("Month"), "01");
+                await user.type(screen.getByLabelText("Year"), "2023");
                 await user.click(document.body);
             });
 
@@ -406,9 +411,9 @@ describe("DateInput", () => {
                 screen.queryByTestId(CALENDAR_TESTID)
             );
 
-            expect(screen.getByLabelText("day")).toHaveValue("30");
-            expect(screen.getByLabelText("month")).toHaveValue("04");
-            expect(screen.getByLabelText("year")).toHaveValue("2024");
+            expect(screen.getByLabelText("Date")).toHaveValue("30");
+            expect(screen.getByLabelText("Month")).toHaveValue("04");
+            expect(screen.getByLabelText("Year")).toHaveValue("2024");
             expect(mockOnChange).not.toHaveBeenCalled();
         });
 
@@ -426,7 +431,7 @@ describe("DateInput", () => {
                 />
             );
 
-            await user.click(screen.getByLabelText("year"));
+            await user.click(screen.getByLabelText("Year"));
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
@@ -445,9 +450,9 @@ describe("DateInput", () => {
                 screen.queryByTestId(CALENDAR_TESTID)
             );
 
-            expect(screen.getByLabelText("day")).toHaveValue("");
-            expect(screen.getByLabelText("month")).toHaveValue("");
-            expect(screen.getByLabelText("year")).toHaveValue("");
+            expect(screen.getByLabelText("Date")).toHaveValue("");
+            expect(screen.getByLabelText("Month")).toHaveValue("");
+            expect(screen.getByLabelText("Year")).toHaveValue("");
             expect(mockOnChange).toHaveBeenCalledWith("");
         });
     });
@@ -477,9 +482,9 @@ describe("DateInput", () => {
                 screen.queryByTestId(CALENDAR_TESTID)
             );
 
-            expect(screen.getByLabelText("day")).toHaveValue("15");
-            expect(screen.getByLabelText("month")).toHaveValue("02");
-            expect(screen.getByLabelText("year")).toHaveValue("2024");
+            expect(screen.getByLabelText("Date")).toHaveValue("15");
+            expect(screen.getByLabelText("Month")).toHaveValue("02");
+            expect(screen.getByLabelText("Year")).toHaveValue("2024");
             expect(mockOnChange).toHaveBeenCalledWith("2024-02-15");
         });
 
@@ -501,17 +506,17 @@ describe("DateInput", () => {
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
-            await user.type(screen.getByLabelText("day"), "01");
-            await user.type(screen.getByLabelText("month"), "01");
-            await user.type(screen.getByLabelText("year"), "2023");
+            await user.type(screen.getByLabelText("Date"), "01");
+            await user.type(screen.getByLabelText("Month"), "01");
+            await user.type(screen.getByLabelText("Year"), "2023");
 
             await waitForElementToBeRemoved(() =>
                 screen.queryByTestId(CALENDAR_TESTID)
             );
 
-            expect(screen.getByLabelText("day")).toHaveValue("01");
-            expect(screen.getByLabelText("month")).toHaveValue("01");
-            expect(screen.getByLabelText("year")).toHaveValue("2023");
+            expect(screen.getByLabelText("Date")).toHaveValue("01");
+            expect(screen.getByLabelText("Month")).toHaveValue("01");
+            expect(screen.getByLabelText("Year")).toHaveValue("2023");
             expect(mockOnChange).toHaveBeenCalledWith("2023-01-01");
         });
 
@@ -530,7 +535,7 @@ describe("DateInput", () => {
                 />
             );
 
-            await user.click(screen.getByLabelText("year"));
+            await user.click(screen.getByLabelText("Year"));
 
             await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
 
@@ -551,9 +556,9 @@ describe("DateInput", () => {
                 screen.queryByTestId(CALENDAR_TESTID)
             );
 
-            expect(screen.getByLabelText("day")).toHaveValue("");
-            expect(screen.getByLabelText("month")).toHaveValue("");
-            expect(screen.getByLabelText("year")).toHaveValue("");
+            expect(screen.getByLabelText("Date")).toHaveValue("");
+            expect(screen.getByLabelText("Month")).toHaveValue("");
+            expect(screen.getByLabelText("Year")).toHaveValue("");
             expect(mockOnChange).toHaveBeenCalledWith("");
         });
     });
