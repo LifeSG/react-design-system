@@ -648,6 +648,7 @@ export const DateRangeInput = ({
                 onYearMonthDisplayChange={onYearMonthDisplayChange}
                 numberOfDays={numberOfDays}
                 width={elementWidth}
+                isFocusable={!readOnly && !disabled && variant !== "range"}
             />
         );
     };
