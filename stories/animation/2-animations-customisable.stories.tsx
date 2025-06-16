@@ -24,7 +24,7 @@ export const CustomLoadingDotsSpinner: StoryObj<typeof LoadingDotsSpinner> = {
                     <LoadingDotsSpinner
                         id="custom-2"
                         color={Colour["icon-primary-subtlest"]({
-                            theme: LifeSGTheme.light,
+                            theme: LifeSGTheme,
                         })}
                     />
                 </AnimationItem>

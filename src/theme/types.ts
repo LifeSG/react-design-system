@@ -63,6 +63,7 @@ export type ColourMode = "light" | "dark";
 
 export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;
+    primitiveColourDark?: PrimitiveColourSetOptions | undefined;
     semanticColour?: SemanticColourSetOptions | undefined;
     semanticColourDark?: SemanticColourSetOptions | undefined;
     fontSpec?: FontSpecSetOptions | undefined;

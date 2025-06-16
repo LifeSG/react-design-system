@@ -28,49 +28,21 @@ export const ColourSpec: ThemeCollectionSpec<
     defaultValue: "lifesg",
 };
 
-const getDarkColourSet = (scheme: ColourScheme): PrimitiveColourSet => {
-    // Check if explicit dark colour set exists
-    const explicitDarkSet = ExplicitDarkColourSpec.collections[scheme];
-    if (explicitDarkSet) {
-        return explicitDarkSet;
-    }
-
-    // Fallback to light colours (products can add explicit dark sets as needed)
-    const lightSet = ColourSpec.collections[scheme];
-    return lightSet;
-};
-
-// Explicit dark colour sets for brands that have custom dark palettes
-// Uses light primitive colours if dark mode is handled through semantic tokens
-const ExplicitDarkColourSpec: ThemeCollectionSpec<
-    ColourCollectionsMap,
-    ColourScheme
-> = {
-    collections: {
-        lifesg: LifeSgColourSet,
-        bookingsg: BookingSgColourSet,
-        rbs: RBSColourSet,
-        mylegacy: MyLegacyColourSet,
-        ccube: CCubeColourSet,
-        oneservice: OneServiceColourSet,
-        pa: PAColourSet,
-        a11yplayground: A11yPlaygroundColourSet,
-    },
-    defaultValue: "lifesg",
-};
-
-// Dynamic dark colour spec that uses explicit colours
+// Dark colour spec - uses explicit dark sets where available, falls back to light sets
 const DarkColourSpec: ThemeCollectionSpec<ColourCollectionsMap, ColourScheme> =
     {
         collections: {
-            lifesg: getDarkColourSet("lifesg"),
-            bookingsg: getDarkColourSet("bookingsg"),
-            rbs: getDarkColourSet("rbs"),
-            mylegacy: getDarkColourSet("mylegacy"),
-            ccube: getDarkColourSet("ccube"),
-            oneservice: getDarkColourSet("oneservice"),
-            pa: getDarkColourSet("pa"),
-            a11yplayground: getDarkColourSet("a11yplayground"),
+            // Currently all schemes use light primitive colours as fallback
+            // In the future, add custom dark primitive sets like:
+            // lifesg: LifeSgDarkColourSet,
+            lifesg: LifeSgColourSet,
+            bookingsg: BookingSgColourSet,
+            rbs: RBSColourSet,
+            mylegacy: MyLegacyColourSet,
+            ccube: CCubeColourSet,
+            oneservice: OneServiceColourSet,
+            pa: PAColourSet,
+            a11yplayground: A11yPlaygroundColourSet,
         },
         defaultValue: "lifesg",
     };
@@ -80,17 +52,37 @@ export const getPrimitiveColour = (key: keyof PrimitiveColourSet) => {
         const theme = props.theme;
         const isDarkMode = theme?.colourMode === "dark";
 
-        // Select the appropriate color spec based on theme mode
+        // Select the appropriate colour spec based on theme mode
         const spec = isDarkMode ? DarkColourSpec : ColourSpec;
-        const colorSet: PrimitiveColourSet = getCollection(
+        const colourSet: PrimitiveColourSet = getCollection(
             spec,
             theme?.colourScheme
         );
 
-        if (theme?.overrides?.primitiveColour) {
-            return getValue(colorSet, key, theme.overrides.primitiveColour);
+        // Handle case where colourSet might be undefined
+        if (!colourSet) {
+            console.warn(
+                `No primitive colour set found for scheme: ${theme?.colourScheme}`
+            );
+            // Fallback to default scheme
+            const fallbackSet: PrimitiveColourSet = getCollection(
+                spec,
+                spec.defaultValue
+            );
+            return fallbackSet?.[key] || "#000000"; // Ultimate fallback to black
+        }
+
+        // Check for mode-specific overrides first,
+        // then fallback to general overrides
+        const overrideKey = isDarkMode
+            ? "primitiveColourDark"
+            : "primitiveColour";
+        const overrides = theme?.overrides?.[overrideKey];
+
+        if (overrides) {
+            return getValue(colourSet, key, overrides);
         } else {
-            return colorSet[key];
+            return colourSet[key];
         }
     };
 };

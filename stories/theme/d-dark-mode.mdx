@@ -12,19 +12,7 @@ import { DocInfo } from "stories/storybook-common";
 
 The design system provides built-in support for dark mode themes that automatically adapt to system preferences or can be explicitly controlled.
 
-## How it works
-
-Dark mode support is built on a simple architecture:
-
-1. **Combined Theme Objects**: Each theme contains both light and dark variants
-2. **Automatic Detection**: System preference detection via `prefers-color-scheme`
-3. **Explicit Control**: Manual override of colour mode when needed
-4. **Semantic Tokens**: All colour tokens automatically resolve to appropriate values
-5. **Custom Overrides**: Separate override options for light and dark modes
-
 ## Basic implementation
-
-### Recommended: Automatic system detection
 
 **Use `DSThemeProvider` for automatic light/dark mode switching** based on the user's system preference:
 
@@ -38,7 +26,7 @@ import { Component } from "./index";
 
 const App = () => {
     return (
-        <DSThemeProvider theme={LifeSGTheme.light}>
+        <DSThemeProvider theme={LifeSGTheme}>
             <Component />
         </DSThemeProvider>
     );
@@ -47,12 +35,7 @@ const App = () => {
 export default App;
 ```
 
-**How it works:**
-
--   `DSThemeProvider` automatically detects the user's system preference (`prefers-color-scheme`)
--   When system is set to dark mode → automatically uses `LifeSGTheme.dark`
--   When system is set to light mode → uses `LifeSGTheme.light`
--   **You will only need to specify the base theme** (`LifeSGTheme.light`) and the provider handles the switching
+The `DSThemeProvider` automatically detects the user's system preference and applies the appropriate colors. Use the base theme (`LifeSGTheme`) and the provider handles the switching automatically.
 
 ### When to use explicit variants
 
@@ -140,13 +123,27 @@ const myCustomTheme: ThemeSpec = {
     fontScheme: "default",
     // ... other schemes
     overrides: {
+        // Primitive colours (foundation layer)
+        primitiveColour: {
+            "primary-50": "#0066cc", // Custom brand blue
+            "primary-100": "#004499", // Darker brand blue
+            "neutral-50": "#6c757d", // Custom neutral grey
+        },
+        primitiveColourDark: {
+            "primary-50": "#4d94ff", // Lighter brand blue for dark mode
+            "primary-100": "#3d7acc", // Adjusted darker blue
+            "neutral-50": "#adb5bd", // Lighter neutral for dark mode
+        },
+        // Semantic colours (application layer)
         semanticColour: {
-            text: "#1a1a1a",
-            bg: "#ffffff",
+            text: "#1a1a1a", // How text appears in light mode
+            bg: "#ffffff", // Background in light mode
+            "bg-primary": "#0066cc", // Uses primitive primary-50
         },
         semanticColourDark: {
-            text: "#e6e6e6",
-            bg: "#1a1a1a",
+            text: "#e6e6e6", // How text appears in dark mode
+            bg: "#1a1a1a", // Background in dark mode
+            "bg-primary": "#4d94ff", // Uses primitive primary-50 dark
         },
     },
 };
@@ -156,13 +153,13 @@ const myCustomTheme: ThemeSpec = {
 
 ### Accessing current theme mode
 
-Use the `useThemeMode` hook to access the current colour mode in your components:
+Use the `useDSTheme` hook to access the current colour mode in your components:
 
 ```tsx
-import { useThemeMode } from "@lifesg/react-design-system/theme";
+import { useDSTheme } from "@lifesg/react-design-system/theme";
 
 const MyComponent = () => {
-    const { colourMode, theme } = useThemeMode();
+    const { colourMode, theme } = useDSTheme();
 
     return (
         <div>
@@ -179,7 +176,7 @@ const MyComponent = () => {
 ### Step 1: Update your ThemeProvider
 
 ```tsx
-// Before - Old approach
+// Before - Basic theme usage (still works!)
 import { ThemeProvider } from "styled-components";
 import { LifeSGTheme } from "@lifesg/react-design-system/theme";
 
@@ -193,7 +190,7 @@ import {
     LifeSGTheme,
 } from "@lifesg/react-design-system/theme";
 
-<DSThemeProvider theme={LifeSGTheme.light}>
+<DSThemeProvider theme={LifeSGTheme}>
     <App />
 </DSThemeProvider>;
 ```
@@ -201,18 +198,25 @@ import {
 ### Step 2: Add dark mode overrides (if you have custom colours)
 
 ```tsx
-// Before
+// Before - Basic customization (still works!)
 const customTheme = {
     ...LifeSGTheme,
-    overrides: { semanticColour: { text: "#custom" } },
+    overrides: {
+        semanticColour: { text: "#custom" },
+        primitiveColour: { "primary-50": "#custom" },
+    },
 };
 
-// After
+// After - With explicit dark mode customization
 const customTheme = {
-    ...LifeSGTheme.light,
+    ...LifeSGTheme,
     overrides: {
+        // Semantic colours
         semanticColour: { text: "#custom-light" },
         semanticColourDark: { text: "#custom-dark" },
+        // Primitive colours
+        primitiveColour: { "primary-50": "#0066cc" },
+        primitiveColourDark: { "primary-50": "#4d94ff" },
     },
 };
 ```

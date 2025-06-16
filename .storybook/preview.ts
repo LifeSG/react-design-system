@@ -2,12 +2,31 @@ import { withThemeFromJSXProvider } from "@storybook/addon-themes";
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import type { Preview } from "@storybook/react";
 import { ThemeProvider } from "styled-components";
-import { AllThemes } from "../src/theme";
+import {
+    LifeSGTheme,
+    BookingSGTheme,
+    CCubeTheme,
+    MyLegacyTheme,
+    RBSTheme,
+    PATheme,
+    A11yPlaygroundTheme,
+} from "../src/theme";
 
 const preview: Preview = {
     decorators: [
         withThemeFromJSXProvider({
-            themes: AllThemes,
+            themes: {
+                "LifeSG (Light)": LifeSGTheme.light,
+                "BookingSG (Light)": BookingSGTheme.light,
+                "CCube (Light)": CCubeTheme.light,
+                "MyLegacy (Light)": MyLegacyTheme.light,
+                "RBS (Light)": RBSTheme.light,
+                // TODO: update when OS theme is added
+                //"OneService (Light)": OneServiceTheme.light,
+                "PA (Light)": PATheme.light,
+                "A11yPlayground (Light)": A11yPlaygroundTheme.light,
+                "A11yPlayground (Dark)": A11yPlaygroundTheme.dark,
+            },
             Provider: ThemeProvider,
         }),
     ],
@@ -21,6 +40,7 @@ const preview: Preview = {
                     [
                         "Introduction",
                         "Themes",
+                        ["Introduction", "Advanced Usage", "Dark Mode", "*"],
                         "Colours",
                         "Font",
                         "Breakpoint",

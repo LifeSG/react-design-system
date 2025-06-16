@@ -57,8 +57,8 @@ describe("BoxContainer", () => {
         it.each`
             state        | color
             ${"default"} | ${"no"}
-            ${"error"}   | ${Colour["icon-error"]({ theme: LifeSGTheme.light })}
-            ${"warning"} | ${Colour["icon-warning"]({ theme: LifeSGTheme.light })}
+            ${"error"}   | ${Colour["icon-error"]({ theme: LifeSGTheme })}
+            ${"warning"} | ${Colour["icon-warning"]({ theme: LifeSGTheme })}
         `(
             "should render $state state with $color color icon",
             ({ state, color }) => {

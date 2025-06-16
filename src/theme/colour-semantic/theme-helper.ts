@@ -64,8 +64,7 @@ export const getSemanticColour = (key: keyof SemanticColourSet) => {
         const overrideKey = isDarkMode
             ? "semanticColourDark"
             : "semanticColour";
-        const overrides =
-            theme?.overrides?.[overrideKey] || theme?.overrides?.semanticColour;
+        const overrides = theme?.overrides?.[overrideKey];
 
         const colorValue = overrides
             ? getValue(colorSet, key, overrides)

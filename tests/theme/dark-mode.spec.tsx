@@ -5,7 +5,7 @@ import {
     Colour,
     DSThemeProvider,
     LifeSGTheme,
-    useThemeMode,
+    useDSTheme,
 } from "../../src/theme";
 
 // Test component that uses theme colors
@@ -14,9 +14,9 @@ const TestComponent = styled.div`
     color: ${Colour["text"]};
 `;
 
-// Component to test the useThemeMode hook
+// Component to test the useDSTheme hook
 const ThemeModeDisplay = () => {
-    const { colourMode } = useThemeMode();
+    const { colourMode } = useDSTheme();
     return <div data-testid="theme-mode">{colourMode}</div>;
 };
 
@@ -79,12 +79,12 @@ describe("Dark Mode Theme", () => {
     });
 });
 
-describe("useThemeMode hook", () => {
+describe("useDSTheme hook", () => {
     it("should return light mode and theme when used with light theme", () => {
         let hookResult: any;
 
         const TestHookComponent = () => {
-            hookResult = useThemeMode();
+            hookResult = useDSTheme();
             return null;
         };
 
@@ -103,7 +103,7 @@ describe("useThemeMode hook", () => {
         let hookResult: any;
 
         const TestHookComponent = () => {
-            hookResult = useThemeMode();
+            hookResult = useDSTheme();
             return null;
         };
 

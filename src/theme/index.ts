@@ -10,6 +10,7 @@ import { MotionValues } from "./motion/theme-helper";
 import { RadiusValues } from "./radius/theme-helper";
 import { SpacingValues } from "./spacing/theme-helper";
 import { ThemeSpec } from "./types";
+import { createThemeWithColourMode } from "./use-theme-mode";
 
 export * from "./types";
 export * from "./ds-theme-provider";
@@ -173,56 +174,51 @@ const A11yPlaygroundThemeBase: ThemeSpec = {
 // THEME COLLECTIONS
 // =============================================================================
 
-// Theme presets with light and dark variants
+// Theme presets with backward compatibility and light/dark variants
 export const LifeSGTheme = {
-    light: LifeSGThemeBase,
-    dark: { ...LifeSGThemeBase, colourMode: "dark" as const },
-} as const;
+    ...LifeSGThemeBase,
+    light: createThemeWithColourMode(LifeSGThemeBase, "light"),
+    dark: createThemeWithColourMode(LifeSGThemeBase, "dark"),
+};
 
 export const BookingSGTheme = {
-    light: BookingSGThemeBase,
-    dark: { ...BookingSGThemeBase, colourMode: "dark" as const },
-} as const;
+    ...BookingSGThemeBase,
+    light: createThemeWithColourMode(BookingSGThemeBase, "light"),
+    dark: createThemeWithColourMode(BookingSGThemeBase, "dark"),
+};
 
 export const CCubeTheme = {
-    light: CCubeThemeBase,
-    dark: { ...CCubeThemeBase, colourMode: "dark" as const },
-} as const;
+    ...CCubeThemeBase,
+    light: createThemeWithColourMode(CCubeThemeBase, "light"),
+    dark: createThemeWithColourMode(CCubeThemeBase, "dark"),
+};
 
 export const MyLegacyTheme = {
-    light: MyLegacyThemeBase,
-    dark: { ...MyLegacyThemeBase, colourMode: "dark" as const },
-} as const;
+    ...MyLegacyThemeBase,
+    light: createThemeWithColourMode(MyLegacyThemeBase, "light"),
+    dark: createThemeWithColourMode(MyLegacyThemeBase, "dark"),
+};
 
 export const RBSTheme = {
-    light: RBSThemeBase,
-    dark: { ...RBSThemeBase, colourMode: "dark" as const },
-} as const;
+    ...RBSThemeBase,
+    light: createThemeWithColourMode(RBSThemeBase, "light"),
+    dark: createThemeWithColourMode(RBSThemeBase, "dark"),
+};
 
 export const OneServiceTheme = {
-    light: OneServiceThemeBase,
-    dark: { ...OneServiceThemeBase, colourMode: "dark" as const },
-} as const;
+    ...OneServiceThemeBase,
+    light: createThemeWithColourMode(OneServiceThemeBase, "light"),
+    dark: createThemeWithColourMode(OneServiceThemeBase, "dark"),
+};
 
 export const PATheme = {
-    light: PAThemeBase,
-    dark: { ...PAThemeBase, colourMode: "dark" as const },
-} as const;
+    ...PAThemeBase,
+    light: createThemeWithColourMode(PAThemeBase, "light"),
+    dark: createThemeWithColourMode(PAThemeBase, "dark"),
+};
 
 export const A11yPlaygroundTheme = {
-    light: A11yPlaygroundThemeBase,
-    dark: { ...A11yPlaygroundThemeBase, colourMode: "dark" as const },
-} as const;
-
-export const AllThemes = {
-    "LifeSG (Light)": LifeSGTheme.light,
-    "BookingSG (Light)": BookingSGTheme.light,
-    "CCube (Light)": CCubeTheme.light,
-    "MyLegacy (Light)": MyLegacyTheme.light,
-    "RBS (Light)": RBSTheme.light,
-    // TODO: update when OS theme is added
-    //"OneService (Light)": OneServiceTheme.light,
-    "PA (Light)": PATheme.light,
-    "A11yPlayground (Light)": A11yPlaygroundTheme.light,
-    "A11yPlayground (Dark)": A11yPlaygroundTheme.dark,
-} as const;
+    ...A11yPlaygroundThemeBase,
+    light: createThemeWithColourMode(A11yPlaygroundThemeBase, "light"),
+    dark: createThemeWithColourMode(A11yPlaygroundThemeBase, "dark"),
+};
