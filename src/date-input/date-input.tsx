@@ -230,6 +230,7 @@ export const DateInput = ({
                 onDismiss={handleCalendarAction}
                 onYearMonthDisplayChange={onYearMonthDisplayChange}
                 width={elementWidth}
+                isFocusable={!readOnly && !disabled}
             />
         );
     };
