@@ -59,19 +59,6 @@ export const getPrimitiveColour = (key: keyof PrimitiveColourSet) => {
             theme?.colourScheme
         );
 
-        // Handle case where colourSet might be undefined
-        if (!colourSet) {
-            console.warn(
-                `No primitive colour set found for scheme: ${theme?.colourScheme}`
-            );
-            // Fallback to default scheme
-            const fallbackSet: PrimitiveColourSet = getCollection(
-                spec,
-                spec.defaultValue
-            );
-            return fallbackSet?.[key] || "#000000"; // Ultimate fallback to black
-        }
-
         // Check for mode-specific overrides first,
         // then fallback to general overrides
         const overrideKey = isDarkMode

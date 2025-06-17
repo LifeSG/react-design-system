@@ -1,11 +1,6 @@
 import { useContext } from "react";
 import { ThemeContext } from "styled-components";
-import { ColourMode, ThemeSpec } from "./types";
-
-export interface DSTheme {
-    colourMode: ColourMode;
-    theme: ThemeSpec | null;
-}
+import { ColourMode, DSTheme, ThemeSpec } from "./types";
 
 // Hook to access the current theme mode and theme object
 export const useDSTheme = (): DSTheme => {
@@ -16,7 +11,7 @@ export const useDSTheme = (): DSTheme => {
             "useDSTheme must be used within a DSThemeProvider or ThemeProvider"
         );
         return {
-            colourMode: "light" as ColourMode,
+            colourMode: "light",
             theme: null,
         };
     }

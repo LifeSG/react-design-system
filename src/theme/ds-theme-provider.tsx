@@ -1,12 +1,7 @@
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
-import { ColourMode, ThemeSpec } from "./types";
+import { ColourMode, DSThemeProviderProps, ThemeSpec } from "./types";
 import { getSystemColourMode } from "./use-theme-mode";
-
-export interface DSThemeProviderProps {
-    theme: ThemeSpec;
-    children: ReactNode;
-}
 
 // Wraps styled-components ThemeProvider and automatically handles colourMode
 // detection based on system preferences when not explicitly set in theme

@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { V2_ThemeSpec } from "../v2_theme/types";
 import { BorderSetOptions } from "./border/types";
 import { BreakpointSetOptions } from "./breakpoint/types";
@@ -96,4 +97,14 @@ export interface ThemeSpec {
 }
 export interface ThemeStyleProps {
     theme: ThemeSpec;
+}
+
+export interface DSThemeProviderProps {
+    theme: ThemeSpec;
+    children: ReactNode;
+}
+
+export interface DSTheme {
+    colourMode: ColourMode;
+    theme: ThemeSpec | null;
 }
