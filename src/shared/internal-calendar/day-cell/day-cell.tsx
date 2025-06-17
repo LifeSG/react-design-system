@@ -30,14 +30,17 @@ export const DayCell = ({
     tabIndex = -1,
     role = "button",
     focusDate,
+    dayName,
 }: DayCellProps) => {
     // =========================================================================
     // CONST
     // =========================================================================
     const today = dayjs().isSame(date, "day");
-    const dayName = `${date.format("D MMMM YYYY dddd")}, ${
-        disabled ? "Unavailable" : "Available"
-    }`; // e.g. 1 January 2025 Tuesday, Unavailable
+    const label =
+        dayName ??
+        `${date.format("D MMMM YYYY dddd")}, ${
+            disabled ? "Unavailable" : "Available"
+        }`; // e.g. 1 January 2025 Tuesday, Unavailable
     const isFocused = focusDate ? focusDate.isSame(date, "day") : false;
 
     // =============================================================================
@@ -84,7 +87,7 @@ export const DayCell = ({
                     ref={ref}
                     tabIndex={tabIndex}
                     role={role}
-                    aria-label={dayName}
+                    aria-label={label}
                     aria-disabled={!interactive}
                     aria-selected={
                         labelType === "selected" ||
