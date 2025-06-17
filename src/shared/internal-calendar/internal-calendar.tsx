@@ -40,6 +40,7 @@ export const Component = (
     // =============================================================================
     const calendarManagerRef = useRef<CalendarManagerRef>(null);
     const previousCalendarDate = useRef<Dayjs | undefined>(undefined);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // HOOKS
@@ -51,6 +52,9 @@ export const Component = (
             },
             setCalendarDate(value?: string) {
                 calendarManagerRef.current?.setCalendarDate(value);
+            },
+            contains(node: Node) {
+                return containerRef.current?.contains(node) || false;
             },
         };
     });
@@ -203,7 +207,7 @@ export const Component = (
     };
 
     return (
-        <Container>
+        <Container ref={containerRef}>
             <CalendarManager
                 ref={calendarManagerRef}
                 withButton={withButton}

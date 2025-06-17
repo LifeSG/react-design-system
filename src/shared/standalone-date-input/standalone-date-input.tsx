@@ -41,6 +41,7 @@ export interface StandaloneDateInputRef {
     ref: React.RefObject<HTMLDivElement>;
     resetPlaceholder: () => void;
     resetInput: () => void;
+    focusYearRef: () => void;
 }
 
 export const Component = (
@@ -132,8 +133,11 @@ export const Component = (
                 setMonthValue(month);
                 setYearValue(year);
             },
+            focusYearRef() {
+                yearInputRef.current?.focus();
+            },
         }),
-        [value]
+        [setDayValue, setMonthValue, setYearValue, value]
     );
 
     // =============================================================================
