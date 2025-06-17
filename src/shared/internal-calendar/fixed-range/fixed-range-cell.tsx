@@ -71,6 +71,11 @@ export const FixedRangeDayCell = ({
         (isSelected && date.isSame(rangeEnd, "day")) ||
         (isHover && date.isSame(hoverEnd, "day"));
 
+    // For accessible label
+    const dayName = `From ${dayjs(hoverStart).format("D MMMM")} to ${dayjs(
+        hoverEnd
+    ).format("D MMMM")}, ${disabled ? "Unavailable" : "Available"}`;
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
@@ -216,6 +221,7 @@ export const FixedRangeDayCell = ({
         role: "gridcell",
         focusDate: dayjs(focusDate),
         tabIndex,
+        dayName,
     };
 
     return (

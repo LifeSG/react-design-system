@@ -69,6 +69,11 @@ export const WeekDayCell = ({
         (isSelected && date.isSame(weekEnd)) ||
         (isHover && date.isSame(hoverEnd));
 
+    // For accessible label
+    const dayName = `From ${dayjs(hoverStart).format("D MMMM")} to ${dayjs(
+        hoverEnd
+    ).format("D MMMM")}, ${disabled ? "Unavailable" : "Available"}`;
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
@@ -194,6 +199,7 @@ export const WeekDayCell = ({
         onKeyDown: handleKeyDown,
         focusDate: dayjs(focusDate),
         tabIndex,
+        dayName,
     };
 
     return (
