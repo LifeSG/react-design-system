@@ -21,10 +21,9 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "styleType",
-                mandatory: true,
                 description: (
                     <>
-                        The style of the <code>Singpass Button</code>
+                        The style of the <code>SingpassButton</code>
                     </>
                 ),
                 propTypes: [`"red-filled"`, `"white-filled"`],
