@@ -29,7 +29,7 @@ const DefaultComponent = (
             aria-label="Log in with sing pass"
         >
             <SvgContainer $buttonSizeStyle="default">
-                <img src={getSpLogo(styleType)} width="100%" />
+                <img src={getSpLogo(styleType)} alt="" />
             </SvgContainer>
         </Main>
     );
@@ -53,7 +53,7 @@ const SmallComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
             aria-label="Log in with sing pass"
         >
             <SvgContainer $buttonSizeStyle="small">
-                <img src={getSpLogo(styleType)} width="100%" />
+                <img src={getSpLogo(styleType)} alt="" />
             </SvgContainer>
         </Main>
     );
@@ -77,7 +77,7 @@ const LargeComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
             aria-label="Log in with sing pass"
         >
             <SvgContainer $buttonSizeStyle="large">
-                <img src={getSpLogo(styleType)} width="100%" />
+                <img src={getSpLogo(styleType)} alt="" />
             </SvgContainer>
         </Main>
     );

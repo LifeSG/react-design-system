@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour, MediaQuery, Motion, Spacing } from "../theme";
+import { Colour, Motion, Spacing } from "../theme";
 import { ThemeButton } from "../theme/components/theme-helper";
 import { SingpassButtonStyleType } from "./types";
 
@@ -11,7 +11,7 @@ export interface MainStyleProps {
 }
 
 export const Main = styled.button<MainStyleProps>`
-    padding: 10px ${Spacing["spacing-16"]} 6px;
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
     transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
     border-radius: ${ThemeButton["button-radius"]};
     cursor: pointer;
@@ -47,11 +47,7 @@ export const Main = styled.button<MainStyleProps>`
         switch (props.$buttonSizeStyle) {
             case "small":
                 return css`
-                    min-height: 2.5rem;
-
-                    ${MediaQuery.MaxWidth.xxs} {
-                        min-height: auto;
-                    }
+                    height: 2.5rem;
                 `;
 
             case "large":
@@ -62,10 +58,6 @@ export const Main = styled.button<MainStyleProps>`
             default:
                 return css`
                     min-height: 3rem;
-
-                    ${MediaQuery.MaxWidth.xxs} {
-                        min-height: auto;
-                    }
                 `;
         }
     }}
@@ -74,15 +66,19 @@ export const Main = styled.button<MainStyleProps>`
 interface SvgContainerProps {
     $buttonSizeStyle?: MainButtonSize | undefined;
 }
-export const SvgContainer = styled.div<SvgContainerProps>`
-    width: ${(props) => {
+export const SvgContainer = styled.span<SvgContainerProps>`
+    img {
+        height: 100%;
+    }
+
+    height: ${(props) => {
         switch (props.$buttonSizeStyle) {
             case "large":
-                return 16;
+                return 2.5;
             case "small":
-                return 9;
+                return 1.5;
             default:
-                return 11;
+                return 1.5;
         }
     }}rem;
 `;
