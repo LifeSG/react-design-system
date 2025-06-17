@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import {
     DropdownRenderProps,
@@ -107,7 +108,7 @@ export const DateInput = ({
             performOnChangeHandler(val);
             setInitialDate(val);
             if (val) {
-                nodeRef.current?.focus();
+                inputRef.current?.focusYearRef();
                 setCalendarOpen(false);
             }
 
@@ -162,7 +163,10 @@ export const DateInput = ({
                 break;
         }
 
-        nodeRef.current?.focus();
+        const isValid = dayjs(selectedDate, "YYYY-MM-DD", true).isValid();
+
+        // Focus on year input if the selected date is valid to avoid restarting entire tab order
+        isValid ? inputRef.current?.focusYearRef() : nodeRef.current?.focus();
         setCalendarOpen(false);
     };
 
@@ -187,7 +191,7 @@ export const DateInput = ({
     const renderInput = () => {
         return (
             <Container
-                tabIndex={-1}
+                tabIndex={0}
                 ref={nodeRef}
                 onBlur={handleBlur}
                 onFocus={handleFocus}
@@ -197,6 +201,8 @@ export const DateInput = ({
                 $error={error}
                 id={id}
                 data-testid={otherProps["data-testid"]}
+                aria-disabled={disabled}
+                aria-readonly={readOnly}
                 {...otherProps}
             >
                 <StandaloneDateInput
