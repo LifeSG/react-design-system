@@ -96,6 +96,18 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The test identifier for the component",
                 propTypes: ["string"],
             },
+            {
+                name: "showResourceAddon",
+                description: (
+                    <>
+                        When enabled, this will display theme-specific resources
+                        in the footer. If both <code>showDownloadAddon</code>{" "}
+                        and <code>showResourceAddon</code> are set to true, the
+                        download addon will take precedence.
+                    </>
+                ),
+                propTypes: ["boolean"],
+            },
         ],
     },
     {
