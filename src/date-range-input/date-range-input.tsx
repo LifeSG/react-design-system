@@ -187,6 +187,7 @@ export const DateRangeInput = ({
 
     // tracks if current value in focused input is allowed for selection
     const isUnselectable = useRef<boolean>(false);
+    const blurFired = useRef<boolean>(false); // To guard against multiple blur events from handleClose and handleBlur
     const nodeRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<InternalCalendarRef>(null);
     const startInputRef = useRef<StandaloneDateInputRef>(null);
@@ -242,7 +243,7 @@ export const DateRangeInput = ({
         startInputRef.current?.resetPlaceholder();
         endInputRef.current?.resetPlaceholder();
 
-        onBlur?.();
+        performOnBlurHandler();
     };
 
     const handleDismiss = () => {
@@ -414,6 +415,8 @@ export const DateRangeInput = ({
             setIsStartDisabled(true);
         }
 
+        blurFired.current = false;
+
         if (readOnly || disabled || focused) return;
 
         actions.focus("start");
@@ -421,19 +424,18 @@ export const DateRangeInput = ({
     };
 
     const handleBlur = (e: React.FocusEvent) => {
-        if (
-            calendarRef.current &&
-            calendarRef.current.contains(e.relatedTarget as Node)
-        ) {
-            return;
-        }
+        const target = e.relatedTarget as Node;
 
-        if (
-            focused &&
-            !calendarOpen &&
-            nodeRef.current &&
-            nodeRef.current.contains(e.relatedTarget as Node)
-        ) {
+        const isInsideCalendar = calendarRef.current?.contains(target);
+        const isInsideNode = nodeRef.current?.contains(target);
+        // focus guard exists in the tab order between the input and the calendar
+        const isFocusGuard = (e.relatedTarget as HTMLElement)?.matches?.(
+            "[data-floating-ui-focus-guard]"
+        );
+
+        if (isInsideCalendar) return;
+
+        if (focused && !calendarOpen && !isInsideNode) {
             actions.blur();
 
             if (!isWeekSelection && !isFixedRangeSelection) {
@@ -446,15 +448,10 @@ export const DateRangeInput = ({
             startInputRef.current?.resetPlaceholder();
             endInputRef.current?.resetPlaceholder();
 
-            onBlur?.();
-        } else if (
-            nodeRef.current &&
-            !nodeRef.current.contains(e.relatedTarget as Node) &&
-            // focus guard exists in the tab order between the input and the calendar
-            !e.relatedTarget?.matches?.("[data-floating-ui-focus-guard]")
-        ) {
+            performOnBlurHandler();
+        } else if (!isInsideNode && !isFocusGuard) {
             actions.blur();
-            onBlur?.();
+            performOnBlurHandler();
         }
     };
 
@@ -554,6 +551,13 @@ export const DateRangeInput = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const performOnBlurHandler = () => {
+        if (onBlur && !blurFired.current) {
+            blurFired.current = true;
+            onBlur();
+        }
+    };
+
     const isDateUnselectable = (val: string) => {
         return (
             !allowDisabledSelection &&
