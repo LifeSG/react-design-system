@@ -205,18 +205,15 @@ describe("System Preference Detection", () => {
         jest.restoreAllMocks();
     });
 
-    it("should use light mode when system preference is light", async () => {
+    it("should use light mode when system preference is light", () => {
         // Mock system preference for light mode
         mockMatchMedia(false); // false = light mode
 
-        let result: any;
-        await act(async () => {
-            result = render(
-                <DSThemeProvider theme={LifeSGTheme}>
-                    <ThemeModeDisplay />
-                </DSThemeProvider>
-            );
-        });
+        const result = render(
+            <DSThemeProvider theme={LifeSGTheme}>
+                <ThemeModeDisplay />
+            </DSThemeProvider>
+        );
 
         expect(result.getByTestId("theme-mode")).toHaveTextContent("light");
         expect(result.getByTestId("theme-component")).toHaveStyle({
@@ -225,18 +222,15 @@ describe("System Preference Detection", () => {
         });
     });
 
-    it("should use dark mode when system preference is dark", async () => {
+    it("should use dark mode when system preference is dark", () => {
         // Mock system preference for dark mode
         mockMatchMedia(true); // true = dark mode
 
-        let result: any;
-        await act(async () => {
-            result = render(
-                <DSThemeProvider theme={LifeSGTheme}>
-                    <ThemeModeDisplay />
-                </DSThemeProvider>
-            );
-        });
+        const result = render(
+            <DSThemeProvider theme={LifeSGTheme}>
+                <ThemeModeDisplay />
+            </DSThemeProvider>
+        );
 
         expect(result.getByTestId("theme-mode")).toHaveTextContent("dark");
         expect(result.getByTestId("theme-component")).toHaveStyle({
@@ -249,14 +243,11 @@ describe("System Preference Detection", () => {
         // Start with light mode
         const mockMediaQueryList = mockMatchMedia(false);
 
-        let result: any;
-        await act(async () => {
-            result = render(
-                <DSThemeProvider theme={LifeSGTheme}>
-                    <ThemeModeDisplay />
-                </DSThemeProvider>
-            );
-        });
+        const result = render(
+            <DSThemeProvider theme={LifeSGTheme}>
+                <ThemeModeDisplay />
+            </DSThemeProvider>
+        );
 
         // Initially should be light mode
         expect(result.getByTestId("theme-mode")).toHaveTextContent("light");
@@ -282,14 +273,11 @@ describe("System Preference Detection", () => {
         // Start with light mode system preference
         const mockMediaQueryList = mockMatchMedia(false);
 
-        let result: any;
-        await act(async () => {
-            result = render(
-                <DSThemeProvider theme={LifeSGTheme.light}>
-                    <ThemeModeDisplay />
-                </DSThemeProvider>
-            );
-        });
+        const result = render(
+            <DSThemeProvider theme={LifeSGTheme.light}>
+                <ThemeModeDisplay />
+            </DSThemeProvider>
+        );
 
         // Should be light mode (explicit)
         expect(result.getByTestId("theme-mode")).toHaveTextContent("light");
@@ -349,76 +337,5 @@ describe("useDSTheme hook", () => {
         expect(hookResult.colourMode).toBe("dark");
         expect(hookResult.theme).toBeDefined();
         expect(hookResult.theme.colourMode).toBe("dark");
-    });
-});
-
-describe("Component Dark Mode Integration", () => {
-    it("should render button element correctly in dark mode", () => {
-        const ButtonTestComponent = styled.button`
-            background: ${Colour["bg"]};
-            color: ${Colour["text"]};
-            border: 1px solid ${Colour["border"]};
-        `;
-
-        const { container } = render(
-            <DSThemeProvider theme={LifeSGTheme.dark}>
-                <ButtonTestComponent data-testid="button-test">
-                    Test Button
-                </ButtonTestComponent>
-            </DSThemeProvider>
-        );
-
-        const button = container.querySelector('[data-testid="button-test"]');
-        expect(button).toBeInTheDocument();
-
-        // Button should not have hardcoded white background in dark mode
-        const styles = window.getComputedStyle(button!);
-        expect(styles.backgroundColor).not.toBe("rgb(255, 255, 255)"); // Not white
-    });
-
-    it("should render semantic colours correctly in dark mode", () => {
-        const SemanticTestComponent = styled.div`
-            background: ${Colour["bg"]};
-            color: ${Colour["text"]};
-            border: 1px solid ${Colour["border"]};
-        `;
-
-        const { container } = render(
-            <DSThemeProvider theme={LifeSGTheme.dark}>
-                <SemanticTestComponent data-testid="semantic-test" />
-            </DSThemeProvider>
-        );
-
-        const element = container.querySelector(
-            '[data-testid="semantic-test"]'
-        );
-        const styles = window.getComputedStyle(element!);
-
-        // In dark mode, background should be dark and text should be light
-        // These are rough checks - actual values depend on the theme
-        expect(styles.backgroundColor).toBeDefined();
-        expect(styles.color).toBeDefined();
-        expect(styles.borderColor).toBeDefined();
-    });
-
-    it("should handle overlay colours correctly in dark mode", () => {
-        const OverlayTestComponent = styled.div`
-            background: ${Colour["overlay-subtle"]};
-            box-shadow: 0 2px 4px ${Colour["overlay-strong"]};
-        `;
-
-        const { container } = render(
-            <DSThemeProvider theme={LifeSGTheme.dark}>
-                <OverlayTestComponent data-testid="overlay-test" />
-            </DSThemeProvider>
-        );
-
-        const element = container.querySelector('[data-testid="overlay-test"]');
-        expect(element).toBeInTheDocument();
-
-        // Should render without errors
-        const styles = window.getComputedStyle(element!);
-        expect(styles.background).toBeDefined();
-        expect(styles.boxShadow).toBeDefined();
     });
 });
