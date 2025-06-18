@@ -29,23 +29,25 @@ export const ColourSpec: ThemeCollectionSpec<
 };
 
 // Dark colour spec - uses explicit dark sets where available, falls back to light sets
-const DarkColourSpec: ThemeCollectionSpec<ColourCollectionsMap, ColourScheme> =
-    {
-        collections: {
-            // Currently all schemes use light primitive colours as fallback
-            // In the future, add custom dark primitive sets like:
-            // lifesg: LifeSgDarkColourSet,
-            lifesg: LifeSgColourSet,
-            bookingsg: BookingSgColourSet,
-            rbs: RBSColourSet,
-            mylegacy: MyLegacyColourSet,
-            ccube: CCubeColourSet,
-            oneservice: OneServiceColourSet,
-            pa: PAColourSet,
-            a11yplayground: A11yPlaygroundColourSet,
-        },
-        defaultValue: "lifesg",
-    };
+export const DarkColourSpec: ThemeCollectionSpec<
+    ColourCollectionsMap,
+    ColourScheme
+> = {
+    collections: {
+        // Currently all schemes use light primitive colours as fallback
+        // In the future, add custom dark primitive sets like:
+        // lifesg: LifeSgDarkColourSet,
+        lifesg: LifeSgColourSet,
+        bookingsg: BookingSgColourSet,
+        rbs: RBSColourSet,
+        mylegacy: MyLegacyColourSet,
+        ccube: CCubeColourSet,
+        oneservice: OneServiceColourSet,
+        pa: PAColourSet,
+        a11yplayground: A11yPlaygroundColourSet,
+    },
+    defaultValue: "lifesg",
+};
 
 export const getPrimitiveColour = (key: keyof PrimitiveColourSet) => {
     return (props: StyledComponentProps): string => {

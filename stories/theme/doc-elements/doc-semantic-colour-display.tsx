@@ -1,7 +1,8 @@
 import { getSemanticColour } from "src/theme/colour-semantic/theme-helper";
 import { SemanticColourSet, ThemeSpec } from "src/theme/types";
 import { ColourTokenInspector } from "stories/storybook-common";
-import styled, { ThemeProvider, useTheme } from "styled-components";
+import styled, { useTheme } from "styled-components";
+import { ColourDisplay } from "./colour-display";
 
 interface SemanticColourPalette {
     tokens: (keyof SemanticColourSet)[];
@@ -45,7 +46,7 @@ export const SemanticColourDisplay = ({
     theme,
 }: SemanticColourDisplayProps) => {
     return (
-        <ThemeProvider theme={theme}>
+        <ColourDisplay theme={theme}>
             <PaletteLabel>Text</PaletteLabel>
             <Display>
                 <SemanticColourPalette
@@ -251,7 +252,7 @@ export const SemanticColourDisplay = ({
                     tokens={["focus-ring", "focus-ring-inverse"]}
                 />
             </Display>
-        </ThemeProvider>
+        </ColourDisplay>
     );
 };
 

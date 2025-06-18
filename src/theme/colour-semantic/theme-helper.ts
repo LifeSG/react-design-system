@@ -29,8 +29,7 @@ export const ColourSpec: ThemeCollectionSpec<
     defaultValue: "lifesg",
 };
 
-// Explicit dark semantic colour sets with LifeSG fallback
-const DarkColourSpec: ThemeCollectionSpec<
+export const DarkColourSpec: ThemeCollectionSpec<
     SemanticColourCollectionMap,
     ColourScheme
 > = {
