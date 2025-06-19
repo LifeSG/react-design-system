@@ -1,31 +1,30 @@
-import { withThemeFromJSXProvider } from "@storybook/addon-themes";
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import type { Preview } from "@storybook/react";
 import { ThemeProvider } from "styled-components";
 import {
-    LifeSGTheme,
+    A11yPlaygroundTheme,
     BookingSGTheme,
     CCubeTheme,
+    LifeSGTheme,
     MyLegacyTheme,
-    RBSTheme,
     PATheme,
-    A11yPlaygroundTheme,
+    RBSTheme,
 } from "../src/theme";
+import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
 const preview: Preview = {
     decorators: [
         withThemeFromJSXProvider({
             themes: {
-                "LifeSG (Light)": LifeSGTheme.light,
-                "BookingSG (Light)": BookingSGTheme.light,
-                "CCube (Light)": CCubeTheme.light,
-                "MyLegacy (Light)": MyLegacyTheme.light,
-                "RBS (Light)": RBSTheme.light,
+                LifeSG: LifeSGTheme,
+                BookingSG: BookingSGTheme,
+                CCube: CCubeTheme,
+                MyLegacy: MyLegacyTheme,
+                RBS: RBSTheme,
                 // TODO: update when OS theme is added
-                //"OneService (Light)": OneServiceTheme.light,
-                "PA (Light)": PATheme.light,
-                "A11yPlayground (Light)": A11yPlaygroundTheme.light,
-                "A11yPlayground (Dark)": A11yPlaygroundTheme.dark,
+                //"OneService": OneServiceTheme,
+                PA: PATheme,
+                A11yPlayground: A11yPlaygroundTheme,
             },
             Provider: ThemeProvider,
         }),
@@ -80,18 +79,10 @@ const preview: Preview = {
         viewport: {
             viewports: INITIAL_VIEWPORTS,
         },
-        backgrounds: {
-            default: "light",
-            values: [
-                {
-                    name: "light",
-                    value: "#ffffff",
-                },
-                {
-                    name: "dark",
-                    value: "#000000",
-                },
-            ],
+        darkMode: {
+            stylePreview: true,
+            darkClass: "storybook-dark-mode",
+            lightClass: "storybook-light-mode",
         },
     },
 };

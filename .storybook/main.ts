@@ -10,6 +10,7 @@ const config: StorybookConfig = {
         "@storybook/addon-essentials",
         "@storybook/addon-a11y",
         "@storybook/addon-themes",
+        "storybook-dark-mode",
         "@storybook/addon-interactions",
         {
             name: "@storybook/addon-docs",
