@@ -1,8 +1,9 @@
+import { Colour } from "src/theme";
 import styled from "styled-components";
 
 const CustomCounterLabel = styled.p`
     text-align: right;
-    color: #a4a4a4;
+    color: ${Colour["text"]};
     font-size: 14px;
     font-weight: 600;
 `;

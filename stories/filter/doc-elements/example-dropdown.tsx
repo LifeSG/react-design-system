@@ -1,7 +1,8 @@
 import { useState } from "react";
-import styled from "styled-components";
+import { Button } from "src/button";
 import { Card } from "src/card";
-import { Button } from "../../../src";
+import { Colour } from "src/theme";
+import styled from "styled-components";
 
 interface Props {
     onShowOptions: () => void;
@@ -38,5 +39,5 @@ const Dropdown = styled(Card)`
     position: absolute;
     top: calc(100% + 16px);
     height: 100px;
-    background-color: white;
+    background-color: ${Colour["bg"]};
 `;
