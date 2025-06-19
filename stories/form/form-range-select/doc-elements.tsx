@@ -1,6 +1,6 @@
 import { TickIcon } from "@lifesg/react-icons/tick";
+import { Colour } from "src/theme";
 import styled from "styled-components";
-import { V2_Color } from "../../../src/v2_color";
 
 export const ImageWrapper = styled.div`
     display: flex;
@@ -25,5 +25,5 @@ export const ImageWrapperSelected = styled.div`
 export const Checkmark = styled(TickIcon)`
     height: 32px;
     width: 32px;
-    color: ${V2_Color.Primary};
+    color: ${Colour["icon-primary"]};
 `;

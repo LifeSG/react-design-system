@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Filter } from "src/filter";
+import { Typography } from "src/typography";
 import { StoryDecorator } from "stories/storybook-common";
 import { ComponentWithFloatingElement } from "./doc-elements/example-dropdown";
 import {
@@ -78,16 +79,24 @@ export const ConfiguringFilterItem: StoryObj<Component> = {
                     showMobileDivider={false}
                     showDivider={false}
                 >
-                    Without divider
+                    <Typography.BodyBL>Without divider</Typography.BodyBL>
                 </Filter.Item>
-                <Filter.Item title="With divider">With divider</Filter.Item>
-                <Filter.Item title="Default">Collapsible</Filter.Item>
-                <Filter.Item>No title, collapsible</Filter.Item>
+                <Filter.Item title="With divider">
+                    <Typography.BodyBL>With divider</Typography.BodyBL>
+                </Filter.Item>
+                <Filter.Item title="Default">
+                    <Typography.BodyBL>Collapsible</Typography.BodyBL>
+                </Filter.Item>
+                <Filter.Item>
+                    <Typography.BodyBL>No title, collapsible</Typography.BodyBL>
+                </Filter.Item>
                 <Filter.Item collapsible={false}>
-                    No title, not collapsible
+                    <Typography.BodyBL>
+                        No title, not collapsible
+                    </Typography.BodyBL>
                 </Filter.Item>
                 <Filter.Item title="Not collapsible" collapsible={false}>
-                    Always visible
+                    <Typography.BodyBL>Always visible</Typography.BodyBL>
                 </Filter.Item>
             </Filter>
         );
@@ -106,21 +115,28 @@ export const HandlingExpandedState: StoryObj<Component> = {
                     showMobileDivider={false}
                     initialExpanded
                 >
-                    Expanded by default with <code>initialExpanded</code> prop
+                    <Typography.BodyBL>
+                        Expanded by default with <code>initialExpanded</code>{" "}
+                        prop
+                    </Typography.BodyBL>
                 </Filter.Item>
                 <Filter.Item
                     title="Controlled Item 1"
                     expanded={expanded === "item-1"}
                     onExpandChange={() => handleExpandChange("item-1")}
                 >
-                    Controlled by <code>expanded</code> prop
+                    <Typography.BodyBL>
+                        Controlled by <code>expanded</code> prop
+                    </Typography.BodyBL>
                 </Filter.Item>
                 <Filter.Item
                     title="Controlled Item 2"
                     expanded={expanded === "item-2"}
                     onExpandChange={() => handleExpandChange("item-2")}
                 >
-                    Controlled by <code>expanded</code> prop
+                    <Typography.BodyBL>
+                        Controlled by <code>expanded</code> prop
+                    </Typography.BodyBL>
                 </Filter.Item>
             </Filter>
         );
@@ -164,7 +180,9 @@ export const FilterItemTooltip: StoryObj<Component> = {
                     }}
                     showMobileDivider={false}
                 >
-                    This has a tooltip in the filter item title
+                    <Typography.BodyBL>
+                        This has a tooltip in the filter item title
+                    </Typography.BodyBL>
                 </Filter.Item>
             </Filter>
         );
@@ -177,11 +195,13 @@ export const AccessingMode: StoryObj<Component> = {
         return (
             <Filter>
                 <Filter.Item title="Mode" showMobileDivider={false}>
-                    {(mode) =>
-                        mode === "mobile"
-                            ? "Mobile view. Switch to a larger viewport to see default view."
-                            : "Default view. Switch to a smaller viewport to see mobile view."
-                    }
+                    {(mode) => (
+                        <Typography.BodyBL>
+                            {mode === "mobile"
+                                ? "Mobile view. Switch to a larger viewport to see default view."
+                                : "Default view. Switch to a smaller viewport to see mobile view."}
+                        </Typography.BodyBL>
+                    )}
                 </Filter.Item>
             </Filter>
         );

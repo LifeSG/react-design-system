@@ -1,5 +1,6 @@
 import { ReactRenderer } from "@storybook/react";
 import { DecoratorFunction } from "@storybook/types";
+import { Colour } from "src/theme";
 import { Typography } from "src/typography";
 import styled from "styled-components";
 
@@ -194,13 +195,13 @@ const GridStoryContainer = styled.div<{ $grid: number; $rowHeader: boolean }>`
 
 export const GridStoryColumnHeader = styled(Typography.BodySM)`
     text-align: center;
-    color: #282828;
+    color: ${Colour["text"]};
 `;
 
 export const GridStoryRowHeader = styled(Typography.BodySM)`
     justify-self: end;
     text-align: right;
-    color: #282828;
+    color: ${Colour["text"]};
 
     grid-column: 1 / 2;
 `;
