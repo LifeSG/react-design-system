@@ -47,14 +47,14 @@ export const SelectHistogram = ({
     // =============================================================================
     // CONST, STATE
     // =============================================================================
+    const values = bins.map((item) => item.minValue);
+    const minValue = Math.min(...values);
     const [selection, setSelection] = useState<[number, number]>(
         initSelection()
     );
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
-    const values = bins.map((item) => item.minValue);
-    const minValue = Math.min(...values);
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);
