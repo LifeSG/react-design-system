@@ -1,9 +1,14 @@
+import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import {
     DropdownRenderProps,
     ElementWithDropdown,
 } from "../shared/dropdown-wrapper";
-import { CalendarAction, CalendarDropdown } from "../shared/internal-calendar";
+import {
+    CalendarAction,
+    CalendarDropdown,
+    InternalCalendarRef,
+} from "../shared/internal-calendar";
 import {
     StandaloneDateInput,
     StandaloneDateInputRef,
@@ -49,6 +54,8 @@ export const DateInput = ({
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<StandaloneDateInputRef>(null);
+    const calendarRef = useRef<InternalCalendarRef>(null);
+    const blurFired = useRef<boolean>(false); // To guard against multiple blur events from handleClose and handleBlur
 
     // =============================================================================
     // EFFECTS
@@ -67,6 +74,7 @@ export const DateInput = ({
         setSelectedDate(initialDate);
         setCalendarOpen(false);
         setFocused(false);
+
         performOnBlurHandler();
     };
 
@@ -107,7 +115,7 @@ export const DateInput = ({
             performOnChangeHandler(val);
             setInitialDate(val);
             if (val) {
-                nodeRef.current?.focus();
+                inputRef.current?.focusYearRef();
                 setCalendarOpen(false);
             }
 
@@ -121,6 +129,7 @@ export const DateInput = ({
     const handleFocus = () => {
         if (readOnly || disabled) return;
 
+        blurFired.current = false;
         setCalendarOpen(true);
 
         if (focused) return;
@@ -133,14 +142,28 @@ export const DateInput = ({
     };
 
     const handleBlur = (e: React.FocusEvent) => {
-        if (
-            focused &&
-            !calendarOpen &&
-            nodeRef.current &&
-            !nodeRef.current.contains(e.relatedTarget as Node)
-        ) {
+        const target = e.relatedTarget as Node;
+
+        const isInsideCalendar = calendarRef.current?.contains(target);
+        const isInsideNode = nodeRef.current?.contains(target);
+        // focus guard exists in the tab order between the input and the calendar
+        const isFocusGuard = (e.relatedTarget as HTMLElement)?.matches?.(
+            "[data-floating-ui-focus-guard]"
+        );
+
+        // If focus moves into the calendar itself, don't blur
+        if (isInsideCalendar) return;
+
+        if (focused && !calendarOpen && !isInsideNode) {
             inputRef.current?.resetInput();
             setSelectedDate(initialDate);
+            setFocused(false);
+            performOnBlurHandler();
+            return;
+        }
+
+        if (!isInsideNode && !isFocusGuard) {
+            setCalendarOpen(false);
             setFocused(false);
             performOnBlurHandler();
         }
@@ -162,7 +185,10 @@ export const DateInput = ({
                 break;
         }
 
-        nodeRef.current?.focus();
+        const isValid = dayjs(selectedDate, "YYYY-MM-DD", true).isValid();
+
+        // Focus on year input if the selected date is valid to avoid restarting entire tab order
+        isValid ? inputRef.current?.focusYearRef() : nodeRef.current?.focus();
         setCalendarOpen(false);
     };
 
@@ -176,7 +202,8 @@ export const DateInput = ({
     };
 
     const performOnBlurHandler = () => {
-        if (onBlur) {
+        if (onBlur && !blurFired.current) {
+            blurFired.current = true;
             onBlur();
         }
     };
@@ -187,7 +214,7 @@ export const DateInput = ({
     const renderInput = () => {
         return (
             <Container
-                tabIndex={-1}
+                tabIndex={0}
                 ref={nodeRef}
                 onBlur={handleBlur}
                 onFocus={handleFocus}
@@ -197,6 +224,8 @@ export const DateInput = ({
                 $error={error}
                 id={id}
                 data-testid={otherProps["data-testid"]}
+                aria-disabled={disabled}
+                aria-readonly={readOnly}
                 {...otherProps}
             >
                 <StandaloneDateInput
@@ -218,6 +247,7 @@ export const DateInput = ({
         return (
             <CalendarDropdown
                 variant="single"
+                ref={calendarRef}
                 initialCalendarDate={selectedDate}
                 withButton={withButton}
                 value={selectedDate}
@@ -230,6 +260,7 @@ export const DateInput = ({
                 onDismiss={handleCalendarAction}
                 onYearMonthDisplayChange={onYearMonthDisplayChange}
                 width={elementWidth}
+                isFocusable={!readOnly && !disabled}
             />
         );
     };

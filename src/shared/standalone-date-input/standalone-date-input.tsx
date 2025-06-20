@@ -41,6 +41,7 @@ export interface StandaloneDateInputRef {
     ref: React.RefObject<HTMLDivElement>;
     resetPlaceholder: () => void;
     resetInput: () => void;
+    focusYearRef: () => void;
 }
 
 export const Component = (
@@ -132,8 +133,11 @@ export const Component = (
                 setMonthValue(month);
                 setYearValue(year);
             },
+            focusYearRef() {
+                yearInputRef.current?.focus();
+            },
         }),
-        [value]
+        [setDayValue, setMonthValue, setYearValue, value]
     );
 
     // =============================================================================
@@ -354,7 +358,7 @@ export const Component = (
                     inputMode={inputMode}
                     pattern="[0-9]{2}"
                     data-testid={`${names[0]}-input`}
-                    aria-label="day"
+                    aria-label="Date"
                     disabled={disabled}
                     readOnly={readOnly}
                     tabIndex={readOnly ? -1 : 0}
@@ -377,7 +381,7 @@ export const Component = (
                     inputMode={inputMode}
                     pattern="[0-9]{2}"
                     data-testid={`${names[1]}-input`}
-                    aria-label="month"
+                    aria-label="Month"
                     disabled={disabled}
                     readOnly={readOnly}
                     tabIndex={readOnly ? -1 : 0}
@@ -400,7 +404,7 @@ export const Component = (
                     inputMode={inputMode}
                     pattern="[0-9]{4}"
                     data-testid={`${names[2]}-input`}
-                    aria-label="year"
+                    aria-label="Year"
                     disabled={disabled}
                     readOnly={readOnly}
                     tabIndex={readOnly ? -1 : 0}

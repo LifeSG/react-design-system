@@ -76,10 +76,14 @@ export const DateRangeInput = ({
     // =============================================================================
     const [initialCalendarDate, setInitialCalendarDate] = useState<string>();
     const [hoverValue, setHoverValue] = useState<string | undefined>(undefined);
-    const [isStartDisabled, setIsStartDisabled] = useState<boolean>(false);
-    const [isEndDisabled, setIsEndDisabled] = useState<boolean>(false);
     const isWeekSelection = variant === "week";
     const isFixedRangeSelection = variant === "fixed-range";
+
+    const [isStartDisabled, setIsStartDisabled] =
+        useState<boolean>(isWeekSelection);
+    const [isEndDisabled, setIsEndDisabled] = useState<boolean>(
+        isWeekSelection || isFixedRangeSelection
+    );
 
     const [
         {
@@ -183,6 +187,7 @@ export const DateRangeInput = ({
 
     // tracks if current value in focused input is allowed for selection
     const isUnselectable = useRef<boolean>(false);
+    const blurFired = useRef<boolean>(false); // To guard against multiple blur events from handleClose and handleBlur
     const nodeRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<InternalCalendarRef>(null);
     const startInputRef = useRef<StandaloneDateInputRef>(null);
@@ -238,7 +243,7 @@ export const DateRangeInput = ({
         startInputRef.current?.resetPlaceholder();
         endInputRef.current?.resetPlaceholder();
 
-        onBlur?.();
+        performOnBlurHandler();
     };
 
     const handleDismiss = () => {
@@ -309,7 +314,7 @@ export const DateRangeInput = ({
             return;
         }
 
-        const isInvalidRange = dayjs(val).isBefore(selectedStart, "day");
+        const isInvalidRange = !isValidRange(selectedStart, val);
 
         // if date range is invalid, set selected value as start and reselect end
         if (isInvalidRange) {
@@ -394,12 +399,24 @@ export const DateRangeInput = ({
 
         if (!withButton) {
             actions.done({ start, end });
+            startInputRef.current?.focusYearRef();
+
             onChange?.(start, end);
             return;
         }
     };
 
     const handleFocus = () => {
+        if (isWeekSelection || isFixedRangeSelection) {
+            setIsEndDisabled(true);
+        }
+
+        if (isWeekSelection) {
+            setIsStartDisabled(true);
+        }
+
+        blurFired.current = false;
+
         if (readOnly || disabled || focused) return;
 
         actions.focus("start");
@@ -407,20 +424,34 @@ export const DateRangeInput = ({
     };
 
     const handleBlur = (e: React.FocusEvent) => {
-        if (
-            focused &&
-            !calendarOpen &&
-            nodeRef.current &&
-            nodeRef.current.contains(e.relatedTarget as Node)
-        ) {
+        const target = e.relatedTarget as Node;
+
+        const isInsideCalendar = calendarRef.current?.contains(target);
+        const isInsideNode = nodeRef.current?.contains(target);
+        // focus guard exists in the tab order between the input and the calendar
+        const isFocusGuard = (e.relatedTarget as HTMLElement)?.matches?.(
+            "[data-floating-ui-focus-guard]"
+        );
+
+        if (isInsideCalendar) return;
+
+        if (focused && !calendarOpen && !isInsideNode) {
             actions.blur();
 
-            setIsStartDisabled(false);
-            setIsEndDisabled(false);
+            if (!isWeekSelection && !isFixedRangeSelection) {
+                setIsEndDisabled(false);
+            }
+
+            if (!isWeekSelection) {
+                setIsStartDisabled(false);
+            }
             startInputRef.current?.resetPlaceholder();
             endInputRef.current?.resetPlaceholder();
 
-            onBlur?.();
+            performOnBlurHandler();
+        } else if (!isInsideNode && !isFocusGuard) {
+            actions.blur();
+            performOnBlurHandler();
         }
     };
 
@@ -501,6 +532,14 @@ export const DateRangeInput = ({
             case "confirmed":
                 actions.done({ start: selectedStart, end: selectedEnd });
                 onChange?.(selectedStart, selectedEnd);
+
+                if (isWeekSelection) break;
+
+                if (isValidRange(selectedStart, selectedEnd)) {
+                    variant === "range"
+                        ? endInputRef.current?.focusYearRef()
+                        : startInputRef.current?.focusYearRef();
+                }
                 break;
         }
     };
@@ -512,6 +551,13 @@ export const DateRangeInput = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const performOnBlurHandler = () => {
+        if (onBlur && !blurFired.current) {
+            blurFired.current = true;
+            onBlur();
+        }
+    };
+
     const isDateUnselectable = (val: string) => {
         return (
             !allowDisabledSelection &&
@@ -522,6 +568,11 @@ export const DateRangeInput = ({
                 maxDate,
             })
         );
+    };
+
+    const isValidRange = (startDate: string, endDate: string) => {
+        if (!startDate || !endDate) return false;
+        return dayjs(startDate).isBefore(endDate, "day");
     };
 
     const getHoverValue = (getValue: Exclude<FocusType, "none">) => {
@@ -568,7 +619,7 @@ export const DateRangeInput = ({
         return (
             <Container
                 ref={nodeRef}
-                tabIndex={-1}
+                tabIndex={0}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
                 $focused={focused}
@@ -578,6 +629,8 @@ export const DateRangeInput = ({
                 $wrap={shouldWrap}
                 id={id}
                 data-testid={otherProps["data-testid"]}
+                aria-disabled={disabled}
+                aria-readonly={readOnly}
                 onKeyDown={handleNodeKeyDown}
                 {...otherProps}
             >
@@ -648,6 +701,7 @@ export const DateRangeInput = ({
                 onYearMonthDisplayChange={onYearMonthDisplayChange}
                 numberOfDays={numberOfDays}
                 width={elementWidth}
+                isFocusable={!readOnly && !disabled}
             />
         );
     };

@@ -40,6 +40,7 @@ export const Component = (
     // =============================================================================
     const calendarManagerRef = useRef<CalendarManagerRef>(null);
     const previousCalendarDate = useRef<Dayjs | undefined>(undefined);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // HOOKS
@@ -51,6 +52,9 @@ export const Component = (
             },
             setCalendarDate(value?: string) {
                 calendarManagerRef.current?.setCalendarDate(value);
+            },
+            contains(node: Node) {
+                return containerRef.current?.contains(node) || false;
             },
         };
     });
@@ -134,6 +138,7 @@ export const Component = (
     // RENDER FUNCTIONS
     // =============================================================================
     const renderCalendarDay = (calendarDate: Dayjs) => {
+        const setCalendarDate = calendarManagerRef.current?.setCalendarDate;
         switch (variant) {
             case "week":
                 return (
@@ -146,6 +151,7 @@ export const Component = (
                         allowDisabledSelection={allowDisabledSelection}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
+                        setCalendarDate={setCalendarDate}
                     />
                 );
             case "fixed-range":
@@ -160,6 +166,7 @@ export const Component = (
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
                         numberOfDays={numberOfDays}
+                        setCalendarDate={setCalendarDate}
                     />
                 );
             case "single":
@@ -174,6 +181,7 @@ export const Component = (
                         showActiveMonthDaysOnly={showActiveMonthDaysOnly}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
+                        setCalendarDate={setCalendarDate}
                     />
                 );
             case "range":
@@ -192,16 +200,14 @@ export const Component = (
                         showActiveMonthDaysOnly={showActiveMonthDaysOnly}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
-                        setCalendarDate={
-                            calendarManagerRef.current?.setCalendarDate
-                        }
+                        setCalendarDate={setCalendarDate}
                     />
                 );
         }
     };
 
     return (
-        <Container>
+        <Container ref={containerRef}>
             <CalendarManager
                 ref={calendarManagerRef}
                 withButton={withButton}
