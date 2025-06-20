@@ -1,16 +1,16 @@
-import { withThemeFromJSXProvider } from "@storybook/addon-themes";
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
 import type { Preview } from "@storybook/react";
 import { ThemeProvider } from "styled-components";
 import {
-    LifeSGTheme,
+    A11yPlaygroundTheme,
     BookingSGTheme,
     CCubeTheme,
+    LifeSGTheme,
     MyLegacyTheme,
-    RBSTheme,
     PATheme,
-    A11yPlaygroundTheme,
+    RBSTheme,
 } from "../src/theme";
+import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
 const preview: Preview = {
     decorators: [
@@ -22,7 +22,7 @@ const preview: Preview = {
                 MyLegacy: MyLegacyTheme,
                 RBS: RBSTheme,
                 // TODO: update when OS theme is added
-                // OneService: V2_OneServiceTheme,
+                //"OneService": OneServiceTheme,
                 PA: PATheme,
                 A11yPlayground: A11yPlaygroundTheme,
             },
@@ -39,6 +39,7 @@ const preview: Preview = {
                     [
                         "Introduction",
                         "Themes",
+                        ["Introduction", "Advanced Usage", "Dark Mode", "*"],
                         "Colours",
                         "Font",
                         "Breakpoint",
@@ -77,6 +78,11 @@ const preview: Preview = {
         layout: "centered",
         viewport: {
             viewports: INITIAL_VIEWPORTS,
+        },
+        darkMode: {
+            stylePreview: true,
+            darkClass: "storybook-dark-mode",
+            lightClass: "storybook-light-mode",
         },
     },
 };

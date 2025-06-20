@@ -1,6 +1,10 @@
 import { getPrimitiveColour } from "../../colour-primitive/theme-helper";
 import { SemanticColourSet } from "../../types";
 
+// ============================================================================
+// LIGHT MODE COLOURS
+// ============================================================================
+
 export const PAColourSet: SemanticColourSet = {
     // text
     text: getPrimitiveColour("neutral-30"),

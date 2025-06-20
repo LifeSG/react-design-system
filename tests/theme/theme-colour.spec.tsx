@@ -1,14 +1,60 @@
 import { render } from "@testing-library/react";
+import { act } from "@testing-library/react";
 import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
-import { Colour } from "../../src/theme";
+import {
+    Colour,
+    DSThemeProvider,
+    LifeSGTheme,
+    useDSTheme,
+} from "../../src/theme";
 import { ThemeSpec } from "../../src/theme/types";
 import { MOCK_THEME } from "./mock-theme-data";
+
+// Mock window.matchMedia
+const mockMatchMedia = (matches: boolean) => {
+    const mockMediaQueryList = {
+        matches,
+        media: "(prefers-color-scheme: dark)",
+        onchange: null,
+        addListener: jest.fn(), // Deprecated
+        removeListener: jest.fn(), // Deprecated
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+    };
+
+    Object.defineProperty(window, "matchMedia", {
+        writable: true,
+        value: jest.fn().mockImplementation(() => mockMediaQueryList),
+    });
+
+    return mockMediaQueryList;
+};
 
 const StyledComponentTest = styled.div`
     background-color: ${Colour.Primitive["primary-10"]};
     color: ${Colour["border-primary"]};
 `;
+
+// Test component that uses theme colors for dark mode testing
+const TestComponent = styled.div`
+    background: ${Colour["bg"]};
+    color: ${Colour["text"]};
+`;
+
+// Component to test the useDSTheme hook
+const ThemeModeDisplay = () => {
+    const { colourMode } = useDSTheme();
+    return (
+        <div>
+            <div data-testid="theme-mode">{colourMode}</div>
+            <div>
+                <TestComponent data-testid="theme-component" />
+            </div>
+        </div>
+    );
+};
 
 describe("Colour Themeing Test", () => {
     it("should apply correct styles based on the theme", () => {
@@ -78,5 +124,218 @@ describe("Colour Themeing Test", () => {
             bgColor
         );
         expect(container.firstChild).toHaveStyleRule("color", textColor);
+    });
+});
+
+describe("Colour mode", () => {
+    it("should use light mode by default", () => {
+        const { getByTestId } = render(
+            <DSThemeProvider theme={LifeSGTheme}>
+                <ThemeModeDisplay />
+            </DSThemeProvider>
+        );
+
+        expect(getByTestId("theme-mode")).toHaveTextContent("light");
+        expect(getByTestId("theme-component")).toHaveStyle({
+            color: "#282828",
+            background: "#ffffff",
+        });
+    });
+
+    it("should use dark mode when explicitly set", () => {
+        const { getByTestId } = render(
+            <DSThemeProvider theme={LifeSGTheme.dark}>
+                <ThemeModeDisplay />
+            </DSThemeProvider>
+        );
+
+        expect(getByTestId("theme-mode")).toHaveTextContent("dark");
+        expect(getByTestId("theme-component")).toHaveStyle({
+            color: "#f9f9f9",
+            background: "#000000",
+        });
+    });
+
+    it("should handle theme with explicit colourMode", () => {
+        const customTheme = {
+            ...LifeSGTheme.light,
+            colourMode: "dark" as const,
+        };
+
+        const { getByTestId } = render(
+            <DSThemeProvider theme={customTheme}>
+                <ThemeModeDisplay />
+            </DSThemeProvider>
+        );
+
+        expect(getByTestId("theme-mode")).toHaveTextContent("dark");
+    });
+
+    it("should render without errors with dark theme overrides", () => {
+        const customTheme = {
+            ...LifeSGTheme.light,
+            colourMode: "dark" as const,
+            overrides: {
+                semanticColourDark: {
+                    text: "#custom-dark-color",
+                },
+            },
+        };
+
+        const { container } = render(
+            <DSThemeProvider theme={customTheme}>
+                <TestComponent data-testid="test-component" />
+            </DSThemeProvider>
+        );
+
+        expect(
+            container.querySelector('[data-testid="test-component"]')
+        ).toBeInTheDocument();
+    });
+});
+
+describe("System Preference Detection", () => {
+    beforeEach(() => {
+        // Clean up any existing matchMedia mock
+        delete (window as any).matchMedia;
+    });
+
+    afterEach(() => {
+        // Restore original matchMedia if it existed
+        jest.restoreAllMocks();
+    });
+
+    it("should use light mode when system preference is light", () => {
+        // Mock system preference for light mode
+        mockMatchMedia(false); // false = light mode
+
+        const result = render(
+            <DSThemeProvider theme={LifeSGTheme}>
+                <ThemeModeDisplay />
+            </DSThemeProvider>
+        );
+
+        expect(result.getByTestId("theme-mode")).toHaveTextContent("light");
+        expect(result.getByTestId("theme-component")).toHaveStyle({
+            color: "#282828",
+            background: "#ffffff",
+        });
+    });
+
+    it("should use dark mode when system preference is dark", () => {
+        // Mock system preference for dark mode
+        mockMatchMedia(true); // true = dark mode
+
+        const result = render(
+            <DSThemeProvider theme={LifeSGTheme}>
+                <ThemeModeDisplay />
+            </DSThemeProvider>
+        );
+
+        expect(result.getByTestId("theme-mode")).toHaveTextContent("dark");
+        expect(result.getByTestId("theme-component")).toHaveStyle({
+            color: "#f9f9f9",
+            background: "#000000",
+        });
+    });
+
+    it("should respond to system preference changes", async () => {
+        // Start with light mode
+        const mockMediaQueryList = mockMatchMedia(false);
+
+        const result = render(
+            <DSThemeProvider theme={LifeSGTheme}>
+                <ThemeModeDisplay />
+            </DSThemeProvider>
+        );
+
+        // Initially should be light mode
+        expect(result.getByTestId("theme-mode")).toHaveTextContent("light");
+
+        // Simulate system preference change to dark mode
+        const changeHandler =
+            mockMediaQueryList.addEventListener.mock.calls.find(
+                (call) => call[0] === "change"
+            )?.[1];
+
+        if (changeHandler) {
+            // Simulate the change event
+            await act(async () => {
+                changeHandler({ matches: true } as MediaQueryListEvent);
+            });
+        }
+
+        // Should now be dark mode
+        expect(result.getByTestId("theme-mode")).toHaveTextContent("dark");
+    });
+
+    it("should not respond to system changes when explicit colourMode is set", async () => {
+        // Start with light mode system preference
+        const mockMediaQueryList = mockMatchMedia(false);
+
+        const result = render(
+            <DSThemeProvider theme={LifeSGTheme.light}>
+                <ThemeModeDisplay />
+            </DSThemeProvider>
+        );
+
+        // Should be light mode (explicit)
+        expect(result.getByTestId("theme-mode")).toHaveTextContent("light");
+
+        // Simulate system preference change to dark mode
+        const changeHandler =
+            mockMediaQueryList.addEventListener.mock.calls.find(
+                (call) => call[0] === "change"
+            )?.[1];
+
+        if (changeHandler) {
+            // Simulate the change event
+            await act(async () => {
+                changeHandler({ matches: true } as MediaQueryListEvent);
+            });
+        }
+
+        // Should still be light mode (explicit colourMode overrides system)
+        expect(result.getByTestId("theme-mode")).toHaveTextContent("light");
+    });
+});
+
+describe("useDSTheme hook", () => {
+    it("should return light mode and theme when used with light theme", () => {
+        let hookResult: any;
+
+        const TestHookComponent = () => {
+            hookResult = useDSTheme();
+            return null;
+        };
+
+        render(
+            <DSThemeProvider theme={LifeSGTheme.light}>
+                <TestHookComponent />
+            </DSThemeProvider>
+        );
+
+        expect(hookResult.colourMode).toBe("light");
+        expect(hookResult.theme).toBeDefined();
+        expect(hookResult.theme.colourScheme).toBe("lifesg");
+    });
+
+    it("should return dark mode when used with dark theme", () => {
+        let hookResult: any;
+
+        const TestHookComponent = () => {
+            hookResult = useDSTheme();
+            return null;
+        };
+
+        render(
+            <DSThemeProvider theme={LifeSGTheme.dark}>
+                <TestHookComponent />
+            </DSThemeProvider>
+        );
+
+        expect(hookResult.colourMode).toBe("dark");
+        expect(hookResult.theme).toBeDefined();
+        expect(hookResult.theme.colourMode).toBe("dark");
     });
 });

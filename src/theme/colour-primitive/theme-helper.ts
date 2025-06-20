@@ -28,18 +28,50 @@ export const ColourSpec: ThemeCollectionSpec<
     defaultValue: "lifesg",
 };
 
+// Dark colour spec - uses explicit dark sets where available, falls back to light sets
+export const DarkColourSpec: ThemeCollectionSpec<
+    ColourCollectionsMap,
+    ColourScheme
+> = {
+    collections: {
+        // Currently all schemes use light primitive colours as fallback
+        // In the future, add custom dark primitive sets like:
+        // lifesg: LifeSgDarkColourSet,
+        lifesg: LifeSgColourSet,
+        bookingsg: BookingSgColourSet,
+        rbs: RBSColourSet,
+        mylegacy: MyLegacyColourSet,
+        ccube: CCubeColourSet,
+        oneservice: OneServiceColourSet,
+        pa: PAColourSet,
+        a11yplayground: A11yPlaygroundColourSet,
+    },
+    defaultValue: "lifesg",
+};
+
 export const getPrimitiveColour = (key: keyof PrimitiveColourSet) => {
     return (props: StyledComponentProps): string => {
         const theme = props.theme;
-        const colorSet: PrimitiveColourSet = getCollection(
-            ColourSpec,
+        const isDarkMode = theme?.colourMode === "dark";
+
+        // Select the appropriate colour spec based on theme mode
+        const spec = isDarkMode ? DarkColourSpec : ColourSpec;
+        const colourSet: PrimitiveColourSet = getCollection(
+            spec,
             theme?.colourScheme
         );
 
-        if (theme?.overrides?.primitiveColour) {
-            return getValue(colorSet, key, theme.overrides.primitiveColour);
+        // Check for mode-specific overrides first,
+        // then fallback to general overrides
+        const overrideKey = isDarkMode
+            ? "primitiveColourDark"
+            : "primitiveColour";
+        const overrides = theme?.overrides?.[overrideKey];
+
+        if (overrides) {
+            return getValue(colourSet, key, overrides);
         } else {
-            return colorSet[key];
+            return colourSet[key];
         }
     };
 };

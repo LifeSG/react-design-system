@@ -1,6 +1,12 @@
 import { PrimitiveColourSet, SemanticColourSet } from "src/theme";
-import { ColourSpec as PrimitiveColourSpec } from "src/theme/colour-primitive/theme-helper";
-import { ColourSpec as SematicColourSpec } from "src/theme/colour-semantic/theme-helper";
+import {
+    ColourSpec as PrimitiveColourSpec,
+    DarkColourSpec as PrimitiveDarkColourSpec,
+} from "src/theme/colour-primitive/theme-helper";
+import {
+    ColourSpec as SemanticColourSpec,
+    DarkColourSpec as SemanticDarkColourSpec,
+} from "src/theme/colour-semantic/theme-helper";
 import { DefaultTheme } from "styled-components";
 
 /**
@@ -37,27 +43,32 @@ export class ColourTokenInspector {
         const self = this;
 
         const scheme = this.theme.colourScheme;
+        const mode = this.theme.colourMode;
+        const primitiveSpec =
+            mode === "dark" ? PrimitiveDarkColourSpec : PrimitiveColourSpec;
+        const semanticSpec =
+            mode === "dark" ? SemanticDarkColourSpec : SemanticColourSpec;
 
-        this.primitiveOriginal = PrimitiveColourSpec.collections[scheme];
+        this.primitiveOriginal = primitiveSpec.collections[scheme];
         const primitiveProxy = {
             get(target: PrimitiveColourSet, prop: keyof PrimitiveColourSet) {
                 self.primitiveColourToken = prop;
                 return target[prop];
             },
         };
-        PrimitiveColourSpec.collections[scheme] = new Proxy(
+        primitiveSpec.collections[scheme] = new Proxy(
             this.primitiveOriginal,
             primitiveProxy
         );
 
-        this.semanticOriginal = SematicColourSpec.collections[scheme];
+        this.semanticOriginal = semanticSpec.collections[scheme];
         const semanticProxy = {
             get(target: SemanticColourSet, prop: keyof SemanticColourSet) {
                 self.semanticColourToken = prop;
                 return target[prop];
             },
         };
-        SematicColourSpec.collections[scheme] = new Proxy(
+        semanticSpec.collections[scheme] = new Proxy(
             this.semanticOriginal,
             semanticProxy
         );
@@ -72,7 +83,13 @@ export class ColourTokenInspector {
 
     public cleanup() {
         const scheme = this.theme.colourScheme;
-        PrimitiveColourSpec.collections[scheme] = this.primitiveOriginal;
-        SematicColourSpec.collections[scheme] = this.semanticOriginal;
+        const mode = this.theme.colourMode;
+        const primitiveSpec =
+            mode === "dark" ? PrimitiveDarkColourSpec : PrimitiveColourSpec;
+        const semanticSpec =
+            mode === "dark" ? SemanticDarkColourSpec : SemanticColourSpec;
+
+        primitiveSpec.collections[scheme] = this.primitiveOriginal;
+        semanticSpec.collections[scheme] = this.semanticOriginal;
     }
 }

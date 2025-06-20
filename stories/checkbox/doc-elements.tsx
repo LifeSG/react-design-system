@@ -1,4 +1,4 @@
-import { Font } from "src/theme";
+import { Colour, Font } from "src/theme";
 import styled from "styled-components";
 
 // =============================================================================
@@ -14,5 +14,6 @@ export const SubOption = styled.div`
 
 export const Label = styled.label`
     ${Font["body-baseline-regular"]}
+    color: ${Colour.text};
     cursor: pointer;
 `;

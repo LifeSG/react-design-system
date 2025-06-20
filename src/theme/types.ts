@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { V2_ThemeSpec } from "../v2_theme/types";
 import { BorderSetOptions } from "./border/types";
 import { BreakpointSetOptions } from "./breakpoint/types";
@@ -59,9 +60,13 @@ export type ResourceScheme =
     | "pa"
     | "a11yplayground";
 
+export type ColourMode = "light" | "dark";
+
 export interface ThemeSpecOptions {
     primitiveColour?: PrimitiveColourSetOptions | undefined;
+    primitiveColourDark?: PrimitiveColourSetOptions | undefined;
     semanticColour?: SemanticColourSetOptions | undefined;
+    semanticColourDark?: SemanticColourSetOptions | undefined;
     fontSpec?: FontSpecSetOptions | undefined;
     font?: FontSetOptions | undefined;
     motion?: MotionSetOptions | undefined;
@@ -74,6 +79,7 @@ export interface ThemeSpecOptions {
 
 export interface ThemeSpec {
     colourScheme: ColourScheme;
+    colourMode?: ColourMode | undefined;
     fontScheme: FontScheme;
     motionScheme: MotionScheme;
     borderScheme: BorderScheme;
@@ -91,4 +97,14 @@ export interface ThemeSpec {
 }
 export interface ThemeStyleProps {
     theme: ThemeSpec;
+}
+
+export interface DSThemeProviderProps {
+    theme: ThemeSpec;
+    children: ReactNode;
+}
+
+export interface DSTheme {
+    colourMode: ColourMode;
+    theme: ThemeSpec | null;
 }

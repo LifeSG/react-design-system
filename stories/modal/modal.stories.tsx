@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Modal } from "src/modal";
+import { Typography } from "src/typography";
 
 type Component = typeof Modal;
 
@@ -31,7 +32,7 @@ export const Default: StoryObj<Component> = {
                                 overflow: "auto",
                             }}
                         >
-                            <span>I am a Modal</span>
+                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
                         </div>
                     </Modal.Box>
                 </Modal>
@@ -92,7 +93,9 @@ export const StackedModals: StoryObj<Component> = {
                                 padding: "4rem 2rem",
                             }}
                         >
-                            <span>I am the first Modal</span>
+                            <Typography.BodyBL>
+                                I am the first Modal
+                            </Typography.BodyBL>
                             <br />
                             <br />
                             <Button.Default onClick={handleStacked(true)}>
@@ -110,10 +113,11 @@ export const StackedModals: StoryObj<Component> = {
                         <div
                             style={{
                                 padding: "4rem 2rem",
-                                height: "10rem",
                             }}
                         >
-                            <span>I am the stacked Modal</span>
+                            <Typography.BodyBL>
+                                I am the stacked Modal
+                            </Typography.BodyBL>
                         </div>
                     </Modal.Box>
                 </Modal>
