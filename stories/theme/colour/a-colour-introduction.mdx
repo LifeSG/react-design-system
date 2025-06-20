@@ -70,3 +70,22 @@ const customTheme: ThemeSpec = {
     },
 };
 ```
+
+If you use dark mode, specify the overrides for the dark colours instead.
+
+```tsx
+import { Colour, LifeSGTheme } from "@lifesg/react-design-system/theme";
+
+const customTheme: ThemeSpec = {
+    ...LifeSGTheme,
+    overrides: {
+        primitiveColourDark: {
+            "primary-10": "#F3C85C", // specify a custom value
+        },
+        semanticColourDark: {
+            "text-warning": Colour.Primitive["warning-10"]; // use another primitive colour token
+            "text-error": "#A04747"; // or specify a custom value
+        }
+    },
+};
+```
