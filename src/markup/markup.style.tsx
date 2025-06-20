@@ -17,8 +17,8 @@ interface ContainerStyleProps {
 export const Container = styled.div<ContainerStyleProps>`
     ${(props) => applyHtmlContentStyle({ textSize: props.$textSize })}
     ${(props) =>
-        props.color &&
+        props.$textColor &&
         css`
-            color: ${props.color};
+            color: ${props.$textColor};
         `}
 `;
