@@ -169,6 +169,17 @@ const A11yPlaygroundThemeBase: ThemeSpec = {
     resourceScheme: "a11yplayground",
     componentScheme: "default",
 };
+export const SupportGoWhereThemeBase: ThemeSpec = {
+    colourScheme: "supportgowhere",
+    fontScheme: "supportgowhere",
+    motionScheme: "default",
+    borderScheme: "default",
+    spacingScheme: "default",
+    radiusScheme: "default",
+    breakpointScheme: "default",
+    resourceScheme: "supportgowhere",
+    componentScheme: "default",
+};
 
 // =============================================================================
 // THEME COLLECTIONS
@@ -221,4 +232,10 @@ export const A11yPlaygroundTheme = {
     ...A11yPlaygroundThemeBase,
     light: createThemeWithColourMode(A11yPlaygroundThemeBase, "light"),
     dark: createThemeWithColourMode(A11yPlaygroundThemeBase, "dark"),
+};
+
+export const SupportGoWhereTheme = {
+    ...SupportGoWhereThemeBase,
+    light: createThemeWithColourMode(SupportGoWhereThemeBase, "light"),
+    dark: createThemeWithColourMode(SupportGoWhereThemeBase, "dark"),
 };

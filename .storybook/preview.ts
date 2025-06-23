@@ -9,6 +9,7 @@ import {
     MyLegacyTheme,
     PATheme,
     RBSTheme,
+    SupportGoWhereTheme,
 } from "../src/theme";
 import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
@@ -25,6 +26,7 @@ const preview: Preview = {
                 //"OneService": OneServiceTheme,
                 PA: PATheme,
                 A11yPlayground: A11yPlaygroundTheme,
+                SupportGoWhere: SupportGoWhereTheme,
             },
             Provider: ThemeProvider,
         }),
