@@ -1,0 +1,2 @@
+import { NestedDropdownListProps } from "./types";
+export declare const NestedDropdownList: <T>({ listItems, multiSelect, selectedKeyPaths, itemsLoadState, itemTruncationType, itemMaxLines, variant, listboxId, width, mode, selectableCategory: _selectableCategory, onSelectItem, onSelectAll, onRetry, enableSearch, hideNoResultsDisplay, noResultsDescription, searchPlaceholder, onSearch, }: NestedDropdownListProps<T>) => import("react/jsx-runtime").JSX.Element;
