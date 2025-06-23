@@ -65,13 +65,14 @@ export const Fade = styled.div<FadeProps>`
     ${(props) => {
         let positionStyle: string;
         const transparentColor = "rgba(255,255,255,0.001)";
+        const fadeColor = Colour.bg(props);
 
         if (props.$position === "left") {
             positionStyle = `
 				left: -2%;
 				background-image: linear-gradient(
 					to right, 
-					${props.$backgroundColor || "white"}, 
+					${props.$backgroundColor || fadeColor}, 
 					${transparentColor}
 				);
 			`;
@@ -80,7 +81,7 @@ export const Fade = styled.div<FadeProps>`
 				right: -2%;
 				background-image: linear-gradient(
 					to left,
-					${props.$backgroundColor || "white"},
+					${props.$backgroundColor || fadeColor},
 					${transparentColor}
 				);
 			`;

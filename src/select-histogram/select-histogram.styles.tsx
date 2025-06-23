@@ -41,6 +41,7 @@ export const Label = styled.div`
 
 export const Separator = styled.div`
     margin: 0 0.5rem;
+    color: ${Colour["text"]};
 `;
 
 export const ValueLabel = styled.div<ValueLabelStyleProps>`

@@ -27,7 +27,7 @@ interface StyleProps {
 // =============================================================================
 export const Wrapper = styled.div<StyleProps>`
     position: ${(props) => (props.$fixed ? "sticky" : "relative")};
-    background-color: white;
+    background-color: ${Colour.bg};
     z-index: 30;
     top: 0;
     left: 0;

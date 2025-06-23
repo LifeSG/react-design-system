@@ -36,6 +36,7 @@ export const Fade = styled.div<FadeProps>`
     ${(props) => {
         let positionStyle: string;
         const transparentColor = "rgba(255,255,255,0.001)";
+        const fadeColor = Colour.bg(props);
 
         if (props.$position === "left") {
             positionStyle = `
@@ -44,7 +45,9 @@ export const Fade = styled.div<FadeProps>`
                     to right,
                     ${
                         props.$backgroundColor ||
-                        (props.$showIndicator ? "white, white" : "white")
+                        (props.$showIndicator
+                            ? `${fadeColor}, ${fadeColor}`
+                            : `${fadeColor}`)
                     },
                     ${transparentColor}
                 );
@@ -56,7 +59,9 @@ export const Fade = styled.div<FadeProps>`
                     to left,
                     ${
                         props.$backgroundColor ||
-                        (props.$showIndicator ? "white, white" : "white")
+                        (props.$showIndicator
+                            ? `${fadeColor}, ${fadeColor}`
+                            : `${fadeColor}`)
                     },
                     ${transparentColor}
                 );
