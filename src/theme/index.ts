@@ -167,7 +167,7 @@ const A11yPlaygroundThemeBase: ThemeSpec = {
     radiusScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "a11yplayground",
-    componentScheme: "default",
+    componentScheme: "a11yplayground",
 };
 
 // =============================================================================

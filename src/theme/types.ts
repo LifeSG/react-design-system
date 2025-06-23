@@ -49,7 +49,7 @@ export type BorderScheme = "default";
 export type SpacingScheme = "default";
 export type RadiusScheme = "default";
 export type BreakpointScheme = "default";
-export type ComponentScheme = "default" | "pa";
+export type ComponentScheme = "default" | "pa" | "a11yplayground";
 export type ResourceScheme =
     | "lifesg"
     | "bookingsg"
