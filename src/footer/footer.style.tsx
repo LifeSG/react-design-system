@@ -1,7 +1,7 @@
 import styled from "styled-components";
+import { Color } from "../color";
 import { Layout } from "../layout";
 import { MediaQuery } from "../media";
-import { Color } from "../color";
 import { Text, TextStyleHelper } from "../text";
 
 // =============================================================================
@@ -33,7 +33,8 @@ export const LogoSection = styled.div`
     grid-column: 1 / span 2;
 
     img {
-        max-height: 4rem;
+        max-height: ${(props) =>
+            props.theme.resourceScheme === "mylegacy" ? "2rem" : "4rem"};
         max-width: 100%;
         object-fit: contain;
     }
