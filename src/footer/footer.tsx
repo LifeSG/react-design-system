@@ -99,7 +99,10 @@ export const Footer = <T,>({
             component = (
                 <>
                     <LogoSection data-testid="logo-section">
-                        {FooterHelper.getFooterLogo(theme?.resourceScheme)}
+                        {FooterHelper.getFooterLogo(
+                            theme?.resourceScheme,
+                            logoSrc
+                        )}
                     </LogoSection>
                     {links?.[0] && (
                         <LinkSection key="link-col-1" data-testid="link-col-1">
