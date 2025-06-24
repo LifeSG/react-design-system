@@ -33,8 +33,7 @@ export const LogoSection = styled.div`
     grid-column: 1 / span 2;
 
     img {
-        max-height: ${(props) =>
-            props.theme.resourceScheme === "mylegacy" ? "2rem" : "4rem"};
+        max-height: 4rem;
         max-width: 100%;
         object-fit: contain;
     }
