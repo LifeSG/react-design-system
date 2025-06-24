@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { SingpassButton } from "src/singpass-button";
 import { Container } from "./doc-elements";
+import { TokensTable } from "./tokens-table";
 
 type Component = typeof SingpassButton.Default;
 
@@ -30,4 +31,9 @@ export const Default: StoryObj<Component> = {
             </>
         );
     },
+};
+
+export const TokenCustomisation: StoryObj = {
+    tags: ["!dev"],
+    render: () => <TokensTable />,
 };
