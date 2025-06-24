@@ -36,16 +36,56 @@ export namespace FooterHelper {
         }
     };
 
-    export const getFooterLogo = (resourceScheme?: ResourceScheme) => {
+    export const getFooterLogo = (
+        resourceScheme?: ResourceScheme,
+        logoSrc?: string
+    ) => {
         switch (resourceScheme) {
             case "bookingsg":
-                return "https://home.booking.gov.sg/images/bookingsg/footer.svg";
+                return (
+                    <img
+                        src={
+                            logoSrc ||
+                            "https://home.booking.gov.sg/images/bookingsg/footer.svg"
+                        }
+                        alt="BookingSG"
+                        data-testid="logo"
+                    />
+                );
             case "mylegacy":
-                return "https://mylegacy.life.gov.sg/images/site-logo.png";
+                return (
+                    <img
+                        src={
+                            logoSrc ||
+                            "https://mylegacy.life.gov.sg/images/site-logo.png"
+                        }
+                        alt="MyLegacy"
+                        data-testid="logo"
+                        style={{ minWidth: "10rem", maxHeight: "2rem" }}
+                    />
+                );
             case "ccube":
-                return "https://assets.life.gov.sg/ccube/logo-ccube.svg";
+                return (
+                    <img
+                        src={
+                            logoSrc ||
+                            "https://assets.life.gov.sg/ccube/logo-ccube.svg"
+                        }
+                        alt="Ccube"
+                        data-testid="logo"
+                    />
+                );
             default:
-                return "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg";
+                return (
+                    <img
+                        src={
+                            logoSrc ||
+                            "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg"
+                        }
+                        alt="LifeSG"
+                        data-testid="logo"
+                    />
+                );
         }
     };
 

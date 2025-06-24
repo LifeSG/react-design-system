@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Img = styled.img`
-    max-height: 4.75rem;
+    max-height: 4.5rem;
     max-width: 100%;
 `;
 
