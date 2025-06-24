@@ -4,8 +4,9 @@ import { Img, Items } from "./footer-resource-addon.styles";
 
 export const ResourceAddon = (): JSX.Element => {
     const theme = useTheme();
-    function getResourceContent() {
-        switch (theme.resourceScheme) {
+
+    const getResourceContent = () => {
+        switch (theme?.resourceScheme) {
             case "mylegacy":
                 return (
                     <>
@@ -15,14 +16,15 @@ export const ResourceAddon = (): JSX.Element => {
                         </Text.XSmall>
                         <Items>
                             <Img
-                                id="footer-govtech-logo"
+                                data-testid="footer-govtech-logo"
                                 src="https://mylegacy.life.gov.sg/images/agencies/govtech-logo.png"
                                 alt="GovTech Singapore"
                             />
                             <Img
-                                id="footer-psd-logo"
+                                data-testid="footer-psd-logo"
                                 src="https://mylegacy.life.gov.sg/images/agencies/psd-logo.png"
                                 alt="Public Service Division"
+                                style={{ maxHeight: "3.5rem" }}
                             />
                         </Items>
                     </>
@@ -30,7 +32,7 @@ export const ResourceAddon = (): JSX.Element => {
             default:
                 return null;
         }
-    }
+    };
 
     return (
         <div data-testid="resource-addon-section">{getResourceContent()}</div>
