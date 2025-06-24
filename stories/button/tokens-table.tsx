@@ -61,6 +61,14 @@ const DATA: TokenTableSectionProps[] = [
                     token: ThemeButton["button-light-colour-text"],
                 },
             },
+            {
+                name: "button-link-colour-text",
+                description: "The text colour of the link button",
+                defaultValue: {
+                    type: "colour-token",
+                    token: ThemeButton["button-link-colour-text"],
+                },
+            },
         ],
     },
 ];

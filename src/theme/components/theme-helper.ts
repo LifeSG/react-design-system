@@ -1,5 +1,6 @@
 import { StyledComponentProps, getCollection } from "../helpers";
 import { ThemeStyleProps } from "../types";
+import { A11yPlaygroundComponentTokenSet } from "./specs/a11yplayground-component-token-set";
 import { DefaultComponentTokenSet } from "./specs/default-component-token-set";
 import { PAComponentTokenSet } from "./specs/pa-component-token-set";
 import { ButtonTokens, ComponentTokenSet } from "./types";
@@ -8,6 +9,7 @@ const ComponentTokenSpec = {
     collections: {
         default: DefaultComponentTokenSet,
         pa: PAComponentTokenSet,
+        a11yplayground: A11yPlaygroundComponentTokenSet,
     },
     defaultValue: "default",
 };
