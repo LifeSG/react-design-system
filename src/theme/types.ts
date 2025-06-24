@@ -42,8 +42,14 @@ export type ColourScheme =
     | "ccube"
     | "oneservice"
     | "pa"
-    | "a11yplayground";
-export type FontScheme = "default" | "bookingsg" | "pa" | "a11yplayground";
+    | "a11yplayground"
+    | "supportgowhere";
+export type FontScheme =
+    | "default"
+    | "bookingsg"
+    | "pa"
+    | "a11yplayground"
+    | "supportgowhere";
 export type MotionScheme = "default";
 export type BorderScheme = "default";
 export type SpacingScheme = "default";
@@ -58,7 +64,8 @@ export type ResourceScheme =
     | "ccube"
     | "oneservice"
     | "pa"
-    | "a11yplayground";
+    | "a11yplayground"
+    | "supportgowhere";
 
 export type ColourMode = "light" | "dark";
 

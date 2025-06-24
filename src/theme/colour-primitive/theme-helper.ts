@@ -9,6 +9,7 @@ import { OneServiceColourSet } from "./specs/oneservice-colour-set";
 import { PAColourSet } from "./specs/pa-colour-set";
 import { RBSColourSet } from "./specs/rbs-colour-set";
 import { A11yPlaygroundColourSet } from "./specs/a11yplayground-colour-set";
+import { SupportGoWhereColourSet } from "./specs/supportgowhere-colour-set";
 import { ColourCollectionsMap } from "./types";
 
 export const ColourSpec: ThemeCollectionSpec<
@@ -24,6 +25,7 @@ export const ColourSpec: ThemeCollectionSpec<
         oneservice: OneServiceColourSet,
         pa: PAColourSet,
         a11yplayground: A11yPlaygroundColourSet,
+        supportgowhere: SupportGoWhereColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -45,6 +47,7 @@ export const DarkColourSpec: ThemeCollectionSpec<
         oneservice: OneServiceColourSet,
         pa: PAColourSet,
         a11yplayground: A11yPlaygroundColourSet,
+        supportgowhere: SupportGoWhereColourSet,
     },
     defaultValue: "lifesg",
 };

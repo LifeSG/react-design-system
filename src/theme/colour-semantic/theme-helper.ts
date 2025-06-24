@@ -25,6 +25,7 @@ export const ColourSpec: ThemeCollectionSpec<
         oneservice: LifeSGColourSet,
         pa: PAColourSet,
         a11yplayground: A11yPlaygroundColourSet,
+        supportgowhere: LifeSGColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -42,6 +43,7 @@ export const DarkColourSpec: ThemeCollectionSpec<
         oneservice: LifeSGDarkColourSet,
         pa: LifeSGDarkColourSet,
         a11yplayground: A11yPlaygroundDarkColourSet,
+        supportgowhere: LifeSGDarkColourSet,
     },
     defaultValue: "lifesg",
 };
