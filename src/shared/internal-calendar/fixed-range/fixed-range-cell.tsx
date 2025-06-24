@@ -72,7 +72,7 @@ export const FixedRangeDayCell = ({
         (isHover && date.isSame(hoverEnd, "day"));
 
     // For accessible label
-    const dayName = `From ${dayjs(hoverStart).format("D MMMM")} to ${dayjs(
+    const label = `From ${dayjs(hoverStart).format("D MMMM")} to ${dayjs(
         hoverEnd
     ).format("D MMMM")}, ${disabled ? "Unavailable" : "Available"}`;
 
@@ -218,10 +218,9 @@ export const FixedRangeDayCell = ({
         onHover: handleHover,
         onFocus: handleFocus,
         onKeyDown: handleKeyDown,
-        role: "gridcell",
         focusDate: dayjs(focusDate),
         tabIndex,
-        dayName,
+        label,
     };
 
     return (

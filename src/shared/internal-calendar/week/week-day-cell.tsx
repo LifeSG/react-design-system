@@ -70,7 +70,7 @@ export const WeekDayCell = ({
         (isHover && date.isSame(hoverEnd));
 
     // For accessible label
-    const dayName = `From ${dayjs(hoverStart).format("D MMMM")} to ${dayjs(
+    const label = `From ${dayjs(hoverStart).format("D MMMM")} to ${dayjs(
         hoverEnd
     ).format("D MMMM")}, ${disabled ? "Unavailable" : "Available"}`;
 
@@ -199,7 +199,8 @@ export const WeekDayCell = ({
         onKeyDown: handleKeyDown,
         focusDate: dayjs(focusDate),
         tabIndex,
-        dayName,
+        label,
+        ariaHidden: !date.isSame(weekStart),
     };
 
     return (

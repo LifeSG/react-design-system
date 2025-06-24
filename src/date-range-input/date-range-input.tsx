@@ -1,3 +1,4 @@
+import { OpenChangeReason } from "@floating-ui/react";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -187,7 +188,6 @@ export const DateRangeInput = ({
 
     // tracks if current value in focused input is allowed for selection
     const isUnselectable = useRef<boolean>(false);
-    const blurFired = useRef<boolean>(false); // To guard against multiple blur events from handleClose and handleBlur
     const nodeRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<InternalCalendarRef>(null);
     const startInputRef = useRef<StandaloneDateInputRef>(null);
@@ -235,7 +235,12 @@ export const DateRangeInput = ({
         }
     };
 
-    const handleClose = () => {
+    const handleClose = (reason: OpenChangeReason | undefined) => {
+        if (reason && reason === "outside-press") {
+            // Outside press handled by handleBlur
+            return;
+        }
+
         actions.blur();
 
         setIsStartDisabled(false);
@@ -415,8 +420,6 @@ export const DateRangeInput = ({
             setIsStartDisabled(true);
         }
 
-        blurFired.current = false;
-
         if (readOnly || disabled || focused) return;
 
         actions.focus("start");
@@ -552,8 +555,7 @@ export const DateRangeInput = ({
     // HELPER FUNCTIONS
     // =============================================================================
     const performOnBlurHandler = () => {
-        if (onBlur && !blurFired.current) {
-            blurFired.current = true;
+        if (onBlur) {
             onBlur();
         }
     };
@@ -644,6 +646,11 @@ export const DateRangeInput = ({
                             ref={startInputRef}
                             placeholder="From"
                             names={["start-day", "start-month", "start-year"]}
+                            inputLabels={[
+                                "Start Date",
+                                "Start Month",
+                                "Start Year",
+                            ]}
                             value={selectedStart}
                             disabled={disabled}
                             readOnly={isStartDisabled || readOnly}
@@ -664,6 +671,7 @@ export const DateRangeInput = ({
                             ref={endInputRef}
                             placeholder="To"
                             names={["end-day", "end-month", "end-year"]}
+                            inputLabels={["End Date", "End Month", "End Year"]}
                             value={selectedEnd}
                             disabled={disabled}
                             readOnly={isEndDisabled || readOnly}

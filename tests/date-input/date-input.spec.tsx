@@ -242,14 +242,14 @@ describe("DateInput", () => {
             expect(mockOnFocus).toHaveBeenCalledTimes(1);
             expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
-            await user.keyboard("{Tab}");
-            await user.keyboard("{Tab}");
-            await user.keyboard("{Tab}");
-            await user.keyboard("{Tab}");
-            await user.keyboard("{Tab}");
-            await user.keyboard("{Tab}");
-            await user.keyboard("{Tab}");
-            await user.keyboard("{Tab}");
+            await user.keyboard("{Tab}"); // Month input
+            await user.keyboard("{Tab}"); // Year input
+            await user.keyboard("{Tab}"); // Enters calendar view
+            await user.keyboard("{Tab}"); // Calendar Month selector
+            await user.keyboard("{Tab}"); // Calendar Year selector
+            await user.keyboard("{Tab}"); // Calendar Left chevron button
+            await user.keyboard("{Tab}"); // Calendar Right chevron button
+            await user.keyboard("{Tab}"); // Day cell in calendar
 
             expect(
                 screen.getByRole("button", { name: "Cancel" })

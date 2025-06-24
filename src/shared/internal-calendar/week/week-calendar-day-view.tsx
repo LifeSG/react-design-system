@@ -54,7 +54,8 @@ export const WeekCalendarDayView = ({
 
         // Today is in the current month
         if (dayjs().isSame(calendarDate, "month")) {
-            return dayjs();
+            // Choose first day of the week of today
+            return dayjs().startOf("week");
         }
 
         // Choose min date if it is in the current month
