@@ -1,4 +1,4 @@
-import { fabric } from "fabric";
+import { Canvas as FabricCanvas, FabricImage, PencilBrush } from "fabric";
 import {
     Ref,
     forwardRef,
@@ -34,8 +34,8 @@ const Component = (
     const { baseImageDataURL } = props;
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const fabricCanvas = useRef<fabric.Canvas>();
-    const pencilBrush = useRef<fabric.PencilBrush>();
+    const fabricCanvas = useRef<FabricCanvas>();
+    const pencilBrush = useRef<PencilBrush>();
     const theme = useTheme();
 
     // =============================================================================
@@ -53,6 +53,7 @@ const Component = (
         if (!fabricCanvas.current) return null;
         if (!fabricCanvas.current.getObjects().length) return null;
         const dataURL = fabricCanvas.current.toDataURL({
+            multiplier: 1,
             format: "png",
             quality: 1,
             enableRetinaScaling: true,
@@ -68,8 +69,10 @@ const Component = (
             const canvasHeight = containerRef.current.clientHeight;
             canvasRef.current.width = canvasWidth;
             canvasRef.current.height = canvasHeight;
-            fabricCanvas.current.setWidth(canvasWidth);
-            fabricCanvas.current.setHeight(canvasHeight);
+            fabricCanvas.current.setDimensions({
+                width: canvasWidth,
+                height: canvasHeight,
+            });
 
             // change x and y position of the viewport to centralise the drawing
             const viewport = fabricCanvas.current.viewportTransform;
@@ -86,15 +89,19 @@ const Component = (
     // initialise fabric and brushes
     useEffect(() => {
         if (containerRef.current && canvasRef.current) {
-            fabricCanvas.current = new fabric.Canvas("eSignatureCanvas");
+            fabricCanvas.current = new FabricCanvas("eSignatureCanvas");
             fabricCanvas.current.selection = false;
             fabricCanvas.current.isDrawingMode = true;
 
-            pencilBrush.current = new fabric.PencilBrush(fabricCanvas.current);
-            pencilBrush.current.color = `#${Colour["text"]({ theme })}`;
+            pencilBrush.current = new PencilBrush(fabricCanvas.current);
+            pencilBrush.current.color = Colour["text"]({ theme });
             pencilBrush.current.width = 3;
 
             fabricCanvas.current.freeDrawingBrush = pencilBrush.current;
+
+            return () => {
+                fabricCanvas.current?.dispose();
+            };
         }
     }, []);
 
@@ -113,8 +120,9 @@ const Component = (
 
     // update base image
     useEffect(() => {
-        if (baseImageDataURL) {
-            fabric.Image.fromURL(baseImageDataURL, (img) => {
+        const updateImage = async () => {
+            if (baseImageDataURL) {
+                const img = await FabricImage.fromURL(baseImageDataURL);
                 if (fabricCanvas.current) {
                     fabricCanvas.current.clear();
                     img.selectable = false;
@@ -132,8 +140,10 @@ const Component = (
 
                     fabricCanvas.current.add(img);
                 }
-            });
-        }
+            }
+        };
+
+        updateImage();
     }, [baseImageDataURL]);
 
     // =============================================================================
