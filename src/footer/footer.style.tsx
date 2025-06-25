@@ -1,7 +1,7 @@
 import styled from "styled-components";
+import { Color } from "../color";
 import { Layout } from "../layout";
 import { MediaQuery } from "../media";
-import { Color } from "../color";
 import { Text, TextStyleHelper } from "../text";
 
 // =============================================================================

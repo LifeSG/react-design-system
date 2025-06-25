@@ -1,7 +1,9 @@
 import React from "react";
+import { useTheme } from "styled-components";
 import { Text } from "../text";
 import { DownloadApp } from "./footer-download-app";
 import { FooterHelper } from "./footer-helper";
+import { ResourceAddon } from "./footer-resource-addon";
 import {
     AddonSection,
     BaseFooter,
@@ -16,7 +18,6 @@ import {
     TopSection,
 } from "./footer.style";
 import { FooterLinkProps, FooterProps } from "./types";
-import { useTheme } from "styled-components";
 
 export const Footer = <T,>({
     children,
@@ -24,6 +25,7 @@ export const Footer = <T,>({
     lastUpdated,
     disclaimerLinks,
     showDownloadAddon,
+    showResourceAddon,
     logoSrc,
     copyrightInfo,
     onFooterLinkClick,
@@ -94,18 +96,15 @@ export const Footer = <T,>({
         }
 
         if (links || showDownloadAddon) {
+            const { src, ...otherLogoAttributes } =
+                FooterHelper.getFooterLogoAttribute(theme?.resourceScheme);
             component = (
                 <>
                     <LogoSection data-testid="logo-section">
                         <img
-                            src={
-                                logoSrc ||
-                                FooterHelper.getFooterLogo(
-                                    theme?.resourceScheme
-                                )
-                            }
-                            alt="LifeSG"
+                            src={logoSrc || src}
                             data-testid="logo"
+                            {...otherLogoAttributes}
                         />
                     </LogoSection>
                     {links?.[0] && (
@@ -121,6 +120,11 @@ export const Footer = <T,>({
                     {showDownloadAddon && (
                         <AddonSection>
                             <DownloadApp />
+                        </AddonSection>
+                    )}
+                    {!showDownloadAddon && showResourceAddon && (
+                        <AddonSection>
+                            <ResourceAddon />
                         </AddonSection>
                     )}
                 </>

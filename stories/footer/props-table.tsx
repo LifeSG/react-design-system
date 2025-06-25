@@ -1,4 +1,3 @@
-import React from "react";
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
@@ -66,6 +65,19 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["Date"],
+            },
+            {
+                name: "showResourceAddon",
+                description: (
+                    <>
+                        When enabled, this will display theme-specific content
+                        in the right section of the footer. If both{" "}
+                        <code>showDownloadAddon</code> and{" "}
+                        <code>showResourceAddon</code> are set to true, the
+                        download addon will take precedence.
+                    </>
+                ),
+                propTypes: ["boolean"],
             },
             {
                 name: "onFooterLinkClick",
