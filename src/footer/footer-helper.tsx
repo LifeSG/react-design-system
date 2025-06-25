@@ -36,56 +36,48 @@ export namespace FooterHelper {
         }
     };
 
-    export const getFooterLogo = (
+    export const getFooterLogoAttribute = (
         resourceScheme?: ResourceScheme,
         logoSrc?: string
-    ) => {
+    ): React.ImgHTMLAttributes<HTMLImageElement> & {
+        "data-testid"?: string;
+    } => {
         switch (resourceScheme) {
             case "bookingsg":
-                return (
-                    <img
-                        src={
-                            logoSrc ||
-                            "https://home.booking.gov.sg/images/bookingsg/footer.svg"
-                        }
-                        alt="BookingSG"
-                        data-testid="logo"
-                    />
-                );
+                return {
+                    src:
+                        logoSrc ||
+                        "https://home.booking.gov.sg/images/bookingsg/footer.svg",
+
+                    alt: "BookingSG",
+                    "data-testid": "logo",
+                };
             case "mylegacy":
-                return (
-                    <img
-                        src={
-                            logoSrc ||
-                            "https://mylegacy.life.gov.sg/images/site-logo.png"
-                        }
-                        alt="MyLegacy"
-                        data-testid="logo"
-                        style={{ minWidth: "10rem", maxHeight: "2rem" }}
-                    />
-                );
+                return {
+                    src:
+                        logoSrc ||
+                        "https://mylegacy.life.gov.sg/images/site-logo.png",
+                    alt: "MyLegacy",
+                    style: { minWidth: "10rem", maxHeight: "2rem" },
+                    "data-testid": "logo",
+                };
             case "ccube":
-                return (
-                    <img
-                        src={
-                            logoSrc ||
-                            "https://assets.life.gov.sg/ccube/logo-ccube.svg"
-                        }
-                        alt="Ccube"
-                        data-testid="logo"
-                    />
-                );
+                return {
+                    src:
+                        logoSrc ||
+                        "https://assets.life.gov.sg/ccube/logo-ccube.svg",
+                    alt: "Ccube",
+                    "data-testid": "logo",
+                };
+
             default:
-                return (
-                    <img
-                        src={
-                            logoSrc ||
-                            "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg"
-                        }
-                        alt="LifeSG"
-                        data-testid="logo"
-                    />
-                );
+                return {
+                    src:
+                        logoSrc ||
+                        "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg",
+                    alt: "LifeSG",
+                    "data-testid": "logo",
+                };
         }
     };
 
