@@ -1,4 +1,3 @@
-import { OpenChangeReason } from "@floating-ui/react";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -235,12 +234,7 @@ export const DateRangeInput = ({
         }
     };
 
-    const handleClose = (reason: OpenChangeReason | undefined) => {
-        if (reason && reason === "outside-press") {
-            // Outside press handled by handleBlur
-            return;
-        }
-
+    const handleClose = () => {
         actions.blur();
 
         setIsStartDisabled(false);
@@ -436,9 +430,12 @@ export const DateRangeInput = ({
             "[data-floating-ui-focus-guard]"
         );
 
-        if (isInsideCalendar) return;
-
-        if (focused && !calendarOpen && !isInsideNode) {
+        if (
+            focused &&
+            !calendarOpen &&
+            nodeRef.current &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
+        ) {
             actions.blur();
 
             if (!isWeekSelection && !isFixedRangeSelection) {
@@ -452,7 +449,12 @@ export const DateRangeInput = ({
             endInputRef.current?.resetPlaceholder();
 
             performOnBlurHandler();
-        } else if (!isInsideNode && !isFocusGuard) {
+        } else if (
+            calendarOpen &&
+            !isInsideNode &&
+            !isInsideCalendar &&
+            !isFocusGuard
+        ) {
             actions.blur();
             performOnBlurHandler();
         }

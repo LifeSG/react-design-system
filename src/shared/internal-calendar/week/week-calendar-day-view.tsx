@@ -159,10 +159,9 @@ export const WeekCalendarDayView = ({
         return weeksOfTheMonth.map((week, weekIndex) => {
             return (
                 <RowDayCell
-                    aria-label={`Week ${weekIndex + 1}`}
                     key={weekIndex}
-                    role="button"
                     onMouseLeave={handleMouseLeaveCell}
+                    role="group"
                 >
                     {week.map((day, dayIndex) => {
                         return (

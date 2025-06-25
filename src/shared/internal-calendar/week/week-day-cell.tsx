@@ -51,27 +51,29 @@ export const WeekDayCell = ({
         maxDate
     );
     const interactive = !disabled || allowDisabledSelection;
-    const { start: weekStart, end: weekEnd } = CalendarHelper.getWeekStartEnd(
-        DateHelper.toDayjs(selectedDate)
-    );
+    const { start: selectedStart, end: selectedEnd } =
+        CalendarHelper.getWeekStartEnd(DateHelper.toDayjs(selectedDate));
     const { start: hoverStart, end: hoverEnd } = CalendarHelper.getWeekStartEnd(
         DateHelper.toDayjs(hoverDate)
     );
 
+    const { start: weekStart, end: weekEnd } =
+        CalendarHelper.getWeekStartEnd(date);
+
     const isSelected =
-        selectedDate && date.isBetween(weekStart, weekEnd, "day", "[]");
+        selectedDate && date.isBetween(selectedStart, selectedEnd, "day", "[]");
     const isHover =
         hoverDate && date.isBetween(hoverStart, hoverEnd, "day", "[]");
     const isStart =
-        (isSelected && date.isSame(weekStart)) ||
+        (isSelected && date.isSame(selectedStart)) ||
         (isHover && date.isSame(hoverStart));
     const isEnd =
-        (isSelected && date.isSame(weekEnd)) ||
+        (isSelected && date.isSame(selectedEnd)) ||
         (isHover && date.isSame(hoverEnd));
 
     // For accessible label
-    const label = `From ${dayjs(hoverStart).format("D MMMM")} to ${dayjs(
-        hoverEnd
+    const label = `From ${dayjs(weekStart).format("D MMMM")} to ${dayjs(
+        weekEnd
     ).format("D MMMM")}, ${disabled ? "Unavailable" : "Available"}`;
 
     // =========================================================================
