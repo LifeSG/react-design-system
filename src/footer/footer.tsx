@@ -96,14 +96,15 @@ export const Footer = <T,>({
         }
 
         if (links || showDownloadAddon) {
+            const { src, ...otherLogoAttributes } =
+                FooterHelper.getFooterLogoAttribute(theme?.resourceScheme);
             component = (
                 <>
                     <LogoSection data-testid="logo-section">
                         <img
-                            {...FooterHelper.getFooterLogoAttribute(
-                                theme?.resourceScheme,
-                                logoSrc
-                            )}
+                            src={logoSrc || src}
+                            data-testid="logo"
+                            {...otherLogoAttributes}
                         />
                     </LogoSection>
                     {links?.[0] && (

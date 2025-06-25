@@ -37,46 +37,31 @@ export namespace FooterHelper {
     };
 
     export const getFooterLogoAttribute = (
-        resourceScheme?: ResourceScheme,
-        logoSrc?: string
-    ): React.ImgHTMLAttributes<HTMLImageElement> & {
-        "data-testid"?: string;
-    } => {
+        resourceScheme?: ResourceScheme
+    ): React.ImgHTMLAttributes<HTMLImageElement> => {
         switch (resourceScheme) {
             case "bookingsg":
                 return {
-                    src:
-                        logoSrc ||
-                        "https://home.booking.gov.sg/images/bookingsg/footer.svg",
+                    src: "https://home.booking.gov.sg/images/bookingsg/footer.svg",
 
                     alt: "BookingSG",
-                    "data-testid": "logo",
                 };
             case "mylegacy":
                 return {
-                    src:
-                        logoSrc ||
-                        "https://mylegacy.life.gov.sg/images/site-logo.png",
+                    src: "https://mylegacy.life.gov.sg/images/site-logo.png",
                     alt: "MyLegacy",
-                    style: { minWidth: "10rem", maxHeight: "2rem" },
-                    "data-testid": "logo",
+                    style: { width: "10rem", maxHeight: "2rem" },
                 };
             case "ccube":
                 return {
-                    src:
-                        logoSrc ||
-                        "https://assets.life.gov.sg/ccube/logo-ccube.svg",
+                    src: "https://assets.life.gov.sg/ccube/logo-ccube.svg",
                     alt: "Ccube",
-                    "data-testid": "logo",
                 };
 
             default:
                 return {
-                    src:
-                        logoSrc ||
-                        "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg",
+                    src: "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg",
                     alt: "LifeSG",
-                    "data-testid": "logo",
                 };
         }
     };
