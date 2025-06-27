@@ -79,11 +79,8 @@ export const DateRangeInput = ({
     const isWeekSelection = variant === "week";
     const isFixedRangeSelection = variant === "fixed-range";
 
-    const [isStartDisabled, setIsStartDisabled] =
-        useState<boolean>(isWeekSelection);
-    const [isEndDisabled, setIsEndDisabled] = useState<boolean>(
-        isWeekSelection || isFixedRangeSelection
-    );
+    const [isStartDisabled, setIsStartDisabled] = useState<boolean>(false);
+    const [isEndDisabled, setIsEndDisabled] = useState<boolean>(false);
 
     const [
         {
@@ -313,10 +310,10 @@ export const DateRangeInput = ({
             return;
         }
 
-        const isInvalidRange = !isValidRange(selectedStart, val);
+        const isBeforeStartDate = dayjs(val).isBefore(selectedStart, "day");
 
         // if date range is invalid, set selected value as start and reselect end
-        if (isInvalidRange) {
+        if (isBeforeStartDate) {
             actions.changeStart(val);
             calendarRef.current?.setCalendarDate(val);
             actions.reselectEnd();
@@ -362,6 +359,8 @@ export const DateRangeInput = ({
         isUnselectable.current = false;
 
         if (!withButton) {
+            endInputRef.current?.focusYearRef();
+
             actions.done({ start, end });
             onChange?.(start, end);
             return;
@@ -423,39 +422,31 @@ export const DateRangeInput = ({
     const handleBlur = (e: React.FocusEvent) => {
         const target = e.relatedTarget as Node;
 
-        const isInsideCalendar = calendarRef.current?.contains(target);
-        const isInsideNode = nodeRef.current?.contains(target);
+        const isInsideCalendar =
+            calendarRef.current && calendarRef.current.contains(target);
+        const isInsideNode =
+            nodeRef.current && nodeRef.current.contains(target);
         // focus guard exists in the tab order between the input and the calendar
         const isFocusGuard = (e.relatedTarget as HTMLElement)?.matches?.(
             "[data-floating-ui-focus-guard]"
         );
 
-        if (
-            focused &&
-            !calendarOpen &&
-            nodeRef.current &&
-            !nodeRef.current.contains(e.relatedTarget as Node)
-        ) {
+        // Condition when the calendar is closed and focus moved outside the component
+        const shouldBlurWhenClosed = focused && !calendarOpen && !isInsideNode;
+
+        // Condition when the calendar is open, and focus went outside both input and calendar
+        const shouldBlurWhenOpenOutside =
+            calendarOpen && !isInsideNode && !isInsideCalendar && !isFocusGuard;
+
+        if (shouldBlurWhenClosed || shouldBlurWhenOpenOutside) {
             actions.blur();
 
-            if (!isWeekSelection && !isFixedRangeSelection) {
-                setIsEndDisabled(false);
-            }
+            setIsEndDisabled(false);
+            setIsStartDisabled(false);
 
-            if (!isWeekSelection) {
-                setIsStartDisabled(false);
-            }
             startInputRef.current?.resetPlaceholder();
             endInputRef.current?.resetPlaceholder();
 
-            performOnBlurHandler();
-        } else if (
-            calendarOpen &&
-            !isInsideNode &&
-            !isInsideCalendar &&
-            !isFocusGuard
-        ) {
-            actions.blur();
             performOnBlurHandler();
         }
     };
@@ -634,7 +625,6 @@ export const DateRangeInput = ({
                 id={id}
                 data-testid={otherProps["data-testid"]}
                 aria-disabled={disabled}
-                aria-readonly={readOnly}
                 onKeyDown={handleNodeKeyDown}
                 {...otherProps}
             >

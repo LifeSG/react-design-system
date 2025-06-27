@@ -16,7 +16,7 @@ interface CalendarDayViewProps extends CommonCalendarProps {
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
-    setCalendarDate?: (date: string | undefined) => void | undefined;
+    setCalendarDate?: ((date: string | undefined) => void) | undefined;
 }
 
 export const SingleCalendarDayView = ({
@@ -147,7 +147,7 @@ export const SingleCalendarDayView = ({
     // =============================================================================
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
-            <HeaderCell key={`week-day-${index}`}>
+            <HeaderCell key={`week-day-${index}`} aria-hidden>
                 {dayjs(day).format("ddd")}
             </HeaderCell>
         ));
@@ -197,9 +197,9 @@ export const SingleCalendarDayView = ({
 
     return (
         <Wrapper
-            data-testid="calendar-content"
             role="grid"
             onBlur={handleOnBlur}
+            data-testid="calendar-content"
             aria-label="Date grid"
         >
             {renderHeader()}

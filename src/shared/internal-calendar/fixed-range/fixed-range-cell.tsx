@@ -17,7 +17,7 @@ interface Props {
     onHover: (value: string, disabled: boolean) => void;
     onFocus: (value: string) => void;
     setFocusCell: (value: string) => void;
-    tabIndex?: number;
+    tabIndex: number;
 }
 
 export const FixedRangeDayCell = ({
@@ -104,11 +104,11 @@ export const FixedRangeDayCell = ({
             PageUp: () => {
                 return event.shiftKey
                     ? date.subtract(1, "year")
-                    : date.add(1, "month");
+                    : date.subtract(1, "month");
             },
             PageDown: () => {
                 return event.shiftKey
-                    ? date.subtract(1, "year")
+                    ? date.add(1, "year")
                     : date.add(1, "month");
             },
         };
@@ -219,6 +219,7 @@ export const FixedRangeDayCell = ({
         onFocus: handleFocus,
         onKeyDown: handleKeyDown,
         focusDate: dayjs(focusDate),
+        role: "gridcell",
         tabIndex,
         label,
     };

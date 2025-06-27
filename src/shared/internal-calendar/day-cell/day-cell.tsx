@@ -27,11 +27,11 @@ export const DayCell = ({
     onFocus,
     onHoverEnd,
     onKeyDown,
-    tabIndex = -1,
-    role = "button",
     focusDate,
     label,
-    ariaHidden = false,
+    ariaHidden,
+    tabIndex = -1,
+    role = "button",
 }: DayCellProps) => {
     // =========================================================================
     // CONST

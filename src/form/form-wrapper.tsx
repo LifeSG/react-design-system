@@ -139,8 +139,9 @@ export const FormWrapper = ({
     const renderChildren = (): JSX.Element | JSX.Element[] => {
         const ariaState = {
             "aria-invalid": isInvalidState(),
-            "aria-describedby": isInvalidState() && getErrorTestMessageId(),
-            "aria-labelledby": labelId,
+            "aria-describedby": isInvalidState()
+                ? getErrorTestMessageId()
+                : undefined,
         };
         return Children.map(children, (child) =>
             cloneElement(child, ariaState)

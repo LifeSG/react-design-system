@@ -10,7 +10,7 @@ interface WeekCalendarDayViewProps extends CommonCalendarProps {
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
-    setCalendarDate?: (date: string | undefined) => void | undefined;
+    setCalendarDate?: ((date: string | undefined) => void) | undefined;
 }
 
 export const WeekCalendarDayView = ({
@@ -149,7 +149,7 @@ export const WeekCalendarDayView = ({
     // =============================================================================
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
-            <HeaderCell key={`week-day-${index}`}>
+            <HeaderCell key={`week-day-${index}`} aria-hidden>
                 {dayjs(day).format("ddd")}
             </HeaderCell>
         ));
@@ -197,7 +197,7 @@ export const WeekCalendarDayView = ({
         <Wrapper
             data-testid="calendar-content"
             onBlur={handleOnBlur}
-            aria-label="Date grid"
+            aria-label="Week selection"
         >
             {renderHeader()}
             {renderDayCells()}

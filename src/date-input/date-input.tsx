@@ -55,7 +55,6 @@ export const DateInput = ({
     const nodeRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<StandaloneDateInputRef>(null);
     const calendarRef = useRef<InternalCalendarRef>(null);
-    const blurFired = useRef<boolean>(false); // To guard against multiple blur events from handleClose and handleBlur
 
     // =============================================================================
     // EFFECTS
@@ -129,7 +128,6 @@ export const DateInput = ({
     const handleFocus = () => {
         if (readOnly || disabled) return;
 
-        blurFired.current = false;
         setCalendarOpen(true);
 
         if (focused) return;
@@ -144,27 +142,27 @@ export const DateInput = ({
     const handleBlur = (e: React.FocusEvent) => {
         const target = e.relatedTarget as Node;
 
-        const isInsideCalendar = calendarRef.current?.contains(target);
-        const isInsideNode = nodeRef.current?.contains(target);
+        const isInsideCalendar =
+            calendarRef.current && calendarRef.current.contains(target);
+        const isInsideNode =
+            nodeRef.current && nodeRef.current.contains(target);
         // focus guard exists in the tab order between the input and the calendar
         const isFocusGuard = (e.relatedTarget as HTMLElement)?.matches?.(
             "[data-floating-ui-focus-guard]"
         );
 
-        // If focus moves into the calendar itself, don't blur
-        if (isInsideCalendar) return;
+        // Condition when the calendar is closed and focus moved outside the component
+        const shouldBlurWhenClosed = focused && !calendarOpen && !isInsideNode;
 
-        if (focused && !calendarOpen && !isInsideNode) {
+        // Condition when the calendar is open, and focus went outside both input and calendar
+        const shouldBlurWhenOpenOutside =
+            calendarOpen && !isInsideNode && !isInsideCalendar && !isFocusGuard;
+
+        if (shouldBlurWhenClosed || shouldBlurWhenOpenOutside) {
             inputRef.current?.resetInput();
             setSelectedDate(initialDate);
             setFocused(false);
-            performOnBlurHandler();
-            return;
-        }
-
-        if (!isInsideNode && !isFocusGuard) {
             setCalendarOpen(false);
-            setFocused(false);
             performOnBlurHandler();
         }
     };
@@ -202,8 +200,7 @@ export const DateInput = ({
     };
 
     const performOnBlurHandler = () => {
-        if (onBlur && !blurFired.current) {
-            blurFired.current = true;
+        if (onBlur) {
             onBlur();
         }
     };
@@ -225,7 +222,6 @@ export const DateInput = ({
                 id={id}
                 data-testid={otherProps["data-testid"]}
                 aria-disabled={disabled}
-                aria-readonly={readOnly}
                 {...otherProps}
             >
                 <StandaloneDateInput

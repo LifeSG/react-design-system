@@ -22,7 +22,7 @@ interface Props {
     onHover: (value: string, disabled: boolean) => void;
     onFocus: (value: string) => void;
     setFocusCell: (value: string) => void;
-    tabIndex?: number;
+    tabIndex: number;
 }
 
 export const WeekDayCell = ({
@@ -59,6 +59,7 @@ export const WeekDayCell = ({
 
     const { start: weekStart, end: weekEnd } =
         CalendarHelper.getWeekStartEnd(date);
+    const isFirstDayOfWeek = date.isSame(weekStart, "day");
 
     const isSelected =
         selectedDate && date.isBetween(selectedStart, selectedEnd, "day", "[]");
@@ -103,11 +104,11 @@ export const WeekDayCell = ({
             PageUp: () => {
                 return event.shiftKey
                     ? date.subtract(1, "year")
-                    : date.add(1, "month");
+                    : date.subtract(1, "month");
             },
             PageDown: () => {
                 return event.shiftKey
-                    ? date.subtract(1, "year")
+                    ? date.add(1, "year")
                     : date.add(1, "month");
             },
         };
@@ -202,7 +203,10 @@ export const WeekDayCell = ({
         focusDate: dayjs(focusDate),
         tabIndex,
         label,
-        ariaHidden: !date.isSame(weekStart),
+        // Aria hidden for all but the first day of the week
+        // To ensure the same labels dont show in accessibility tree
+        ariaHidden: isFirstDayOfWeek ? undefined : true,
+        role: isFirstDayOfWeek ? "button" : "none",
     };
 
     return (

@@ -11,7 +11,7 @@ interface FixedRangeCalendarDayViewProps extends CommonCalendarProps {
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
-    setCalendarDate?: (date: string | undefined) => void | undefined;
+    setCalendarDate?: ((date: string | undefined) => void) | undefined;
 }
 
 export const FixedRangeCalendarDayView = ({
@@ -148,7 +148,7 @@ export const FixedRangeCalendarDayView = ({
     // =============================================================================
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
-            <HeaderCell key={`week-day-${index}`}>
+            <HeaderCell key={`week-day-${index}`} aria-hidden>
                 {dayjs(day).format("ddd")}
             </HeaderCell>
         ));
@@ -157,7 +157,11 @@ export const FixedRangeCalendarDayView = ({
     const renderDayCells = () => {
         return weeksOfTheMonth.map((week, weekIndex) => {
             return (
-                <RowDayCell key={weekIndex} onMouseLeave={handleMouseLeaveCell}>
+                <RowDayCell
+                    role="row"
+                    key={weekIndex}
+                    onMouseLeave={handleMouseLeaveCell}
+                >
                     {week.map((day, dayIndex) => {
                         return (
                             <FixedRangeDayCell
@@ -191,8 +195,9 @@ export const FixedRangeCalendarDayView = ({
 
     return (
         <Wrapper
-            data-testid="calendar-content"
+            role="grid"
             onBlur={handleOnBlur}
+            data-testid="calendar-content"
             aria-label="Date grid"
         >
             {renderHeader()}
