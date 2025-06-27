@@ -211,6 +211,7 @@ export const DateInput = ({
     const renderInput = () => {
         return (
             <Container
+                role="group"
                 tabIndex={0}
                 ref={nodeRef}
                 onBlur={handleBlur}

@@ -43,6 +43,7 @@ export const FormDateInput = ({
             <DateInput
                 id={`${id}-base`}
                 data-testid={testId || id}
+                aria-labelledby={`${id}-label`}
                 error={!!errorMessage}
                 {...otherProps}
             />

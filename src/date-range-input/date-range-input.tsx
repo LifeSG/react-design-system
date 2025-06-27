@@ -344,6 +344,8 @@ export const DateRangeInput = ({
         }
 
         if (!withButton) {
+            endInputRef.current?.focusYearRef();
+
             actions.done({ start: selectedStart, end: val });
             onChange?.(selectedStart, val);
             return;
@@ -613,6 +615,7 @@ export const DateRangeInput = ({
     const renderInput = () => {
         return (
             <Container
+                role="group"
                 ref={nodeRef}
                 tabIndex={0}
                 onFocus={handleFocus}
