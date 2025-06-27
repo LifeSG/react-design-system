@@ -34,7 +34,7 @@ export const YearCell = styled.div<StyleProps>`
 
     // default styles
     ${Font["body-md-regular"]}
-    border-radius: ${Radius.md};
+    border-radius: ${Radius["md"]};
     border: ${Border["width-010"]} ${Border.solid} transparent;
     background-clip: border-box;
     color: ${Colour["text"]};

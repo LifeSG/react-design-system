@@ -31,13 +31,13 @@ export const MonthCell = styled.div<StyleProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: ${Radius.md};
+    border-radius: ${Radius["md"]};
     margin: 0 0.5rem;
     transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
     // default styles
     ${Font["body-md-regular"]}
-    border-radius: ${Radius.md};
+    border-radius: ${Radius["md"]};
     border: ${Border["width-010"]} ${Border.solid} transparent;
     background-clip: border-box;
     color: ${Colour["text"]};

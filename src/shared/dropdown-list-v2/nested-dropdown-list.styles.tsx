@@ -1,6 +1,6 @@
 import { MinusSquareFillIcon } from "@lifesg/react-icons/minus-square-fill";
 import styled, { css } from "styled-components";
-import { Colour, Motion, Spacing } from "../../theme";
+import { Colour, Motion, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -43,7 +43,7 @@ export const ListItem = styled.div<ListItemStyleProps>`
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
     cursor: ${(props) => (props.$toggleable ? "default" : "pointer")};
     overflow: hidden; // required for label to truncate properly
-
+    border-radius: ${Radius["none"]};
     outline: none;
 
     ${(props) =>

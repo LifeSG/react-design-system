@@ -69,7 +69,7 @@ export const FixedCountdown = styled(BaseCountdown)`
             ${MediaQuery.MaxWidth.sm} {
                 left: 0;
                 right: 0;
-                border-radius: 0;
+                border-radius: ${Radius["none"]};
                 border-left: none;
                 border-right: none;
                 box-shadow: none;

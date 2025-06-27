@@ -4,6 +4,7 @@ import { V2_Color } from "../v2_color";
 import { V2_MediaQuery } from "../v2_media";
 import { V2_Transition } from "../v2_transition";
 import { TooltipPosition } from "./types";
+import { Radius } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -106,7 +107,7 @@ export const BubbleWrap = styled.div<TooltipStyleProps>`
 `;
 
 export const Bubble = styled(Card)`
-    border-radius: 4px;
+    border-radius: ${Radius["sm"]};
     box-shadow: 3px 2px 10px 1px rgba(91, 91, 91, 0.2);
 `;
 

@@ -119,7 +119,7 @@ export const Circle = styled.div<StyleProps>`
     transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
     border: ${Border["width-010"]} ${Border["solid"]} transparent;
-    border-radius: ${Radius.md};
+    border-radius: ${Radius["md"]};
 
     ${(props) => {
         if (props.$type) {
@@ -238,6 +238,6 @@ export const Indicator = styled.div<IndicatorStyleProps>`
     width: 4px;
     height: 4px;
     background-color: currentColor;
-    border-radius: 50%;
+    border-radius: ${Radius["full"]};
     bottom: 4px;
 `;

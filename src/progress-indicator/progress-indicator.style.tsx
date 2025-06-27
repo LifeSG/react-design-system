@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, MediaQuery } from "../theme";
+import { Colour, MediaQuery, Radius } from "../theme";
 import { Typography } from "../typography/typography";
 
 // Units in rem
@@ -41,7 +41,7 @@ export const Content = styled.div`
 export const IndicatorBar = styled.div<IndicatorProps>`
     height: 0.25rem;
     margin-bottom: 0.5rem;
-    border-radius: 0.25rem;
+    border-radius: ${Radius["sm"]};
     ${(props) => {
         const { highlighted } = props;
         const color = highlighted

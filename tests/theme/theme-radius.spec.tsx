@@ -6,7 +6,7 @@ import { Radius } from "../../src";
 import { MOCK_THEME } from "./mock-theme-data";
 
 const RadiusTestComponent = styled.div`
-    border-radius: ${Radius.sm};
+    border-radius: ${Radius["sm"]};
 `;
 
 describe("Radius Theming Test", () => {
