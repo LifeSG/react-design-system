@@ -83,7 +83,7 @@ export const Knob = styled.div<ThumbStyleProps>`
                 props.$disabled
                     ? Colour["border-selected-disabled"]
                     : Colour["border-strong"]};
-        border-radius: 50%;
+        border-radius: ${Radius["full"]};
     }
 `;
 

@@ -73,7 +73,7 @@ export const List = styled.ul<ListContainerProps>`
     ::-webkit-scrollbar-thumb {
         background: ${Colour["bg-inverse-subtlest"]};
         border: 5px solid transparent;
-        border-radius: 9999px;
+        border-radius: ${Radius["full"]};
         background-clip: padding-box;
     }
 
@@ -117,7 +117,7 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
         }
     }}
     margin: 0 -${Spacing["spacing-8"]};
-    border: none;
+    border-radius: ${Radius["none"]};
     background: transparent;
     width: 100%;
     cursor: pointer;

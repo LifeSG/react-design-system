@@ -1,7 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, Font, Motion } from "../theme";
+import { Colour, Font, Motion, Radius } from "../theme";
 import { Layout } from "../layout";
 import { Typography } from "../typography";
 
@@ -46,6 +46,7 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     width: 100%;
     transition: all ${Motion["duration-800"]} ${Motion["ease-default"]};
     background: ${Colour["bg-inverse-subtle"]};
+    border-radius: ${Radius["none"]};
     z-index: 25;
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
 `;

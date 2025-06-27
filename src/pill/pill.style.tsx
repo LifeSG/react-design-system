@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font } from "../theme";
+import { Border, Colour, Font, Radius } from "../theme";
 import { ThemeStyleProps } from "../theme/types";
 import { PillColorType, PillType } from "./types";
 
@@ -12,7 +12,7 @@ interface StyleProps {
 }
 
 export const Wrapper = styled.div<StyleProps>`
-    border-radius: 1rem;
+    border-radius: ${Radius["full"]};
     padding: 0.125rem 0.5rem;
     width: fit-content;
     max-width: 100%;

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { SizeType, StyleType } from "./types";
-import { Border, Colour } from "../theme";
+import { Border, Colour, Radius } from "../theme";
 interface StyleProps {
     $styleType: StyleType;
     $sizeType: SizeType;
@@ -8,7 +8,7 @@ interface StyleProps {
 
 export const Main = styled.button<StyleProps>`
     align-items: center;
-    border-radius: 0.25rem;
+    border-radius: ${Radius["sm"]};
     cursor: pointer;
     display: flex;
     justify-content: center;

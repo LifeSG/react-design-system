@@ -43,7 +43,7 @@ export const NavigationItem = styled(ClickableIcon)`
     padding: 0.625rem;
     justify-content: center;
     align-items: center;
-    border-radius: ${Radius.sm};
+    border-radius: ${Radius["sm"]};
     color: ${Colour["icon-primary"]};
     outline: none;
 
@@ -68,7 +68,7 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     padding: 0.625rem;
     justify-content: center;
     align-items: center;
-    border-radius: ${Radius.sm};
+    border-radius: ${Radius["sm"]};
     color: ${Colour["icon-primary"]};
     outline: none;
 
@@ -121,7 +121,7 @@ export const PageItem = styled.button<StyleProps>`
     min-width: 2.5rem;
     text-align: center;
     padding: 0.4rem 0.5rem;
-    border-radius: ${Radius.sm};
+    border-radius: ${Radius["sm"]};
     margin: 0.25rem;
     cursor: pointer;
     box-shadow: none;
@@ -160,7 +160,7 @@ export const EllipsisItem = styled(ClickableIcon)`
     justify-content: center;
     color: ${Colour["icon-primary"]};
     padding: 0.4rem 0.5rem;
-    border-radius: ${Radius.sm};
+    border-radius: ${Radius["sm"]};
     white-space: nowrap;
     outline: none;
 
@@ -182,7 +182,7 @@ export const EllipsisContainer = styled.div`
     cursor: pointer;
     min-width: 2.5rem;
     height: 2.5rem;
-    border-radius: ${Radius.sm};
+    border-radius: ${Radius["sm"]};
     justify-content: center;
     align-items: center;
     position: relative;
@@ -213,7 +213,7 @@ export const InputView = styled(Input)`
     justify-content: center;
     width: 3.5rem;
     height: 2.5rem;
-    border-radius: ${Radius.sm};
+    border-radius: ${Radius["sm"]};
     border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     padding: 0.5rem 0.5rem;
 
@@ -230,7 +230,7 @@ export const Hover = styled.div`
     ${Font["body-xs-regular"]}
     background-color: ${Colour["bg-hover"]};
     border: none;
-    border-radius: ${Radius.sm};
+    border-radius: ${Radius["sm"]};
     color: ${Colour["text-hover"]};
     align-items: center;
     position: fixed;

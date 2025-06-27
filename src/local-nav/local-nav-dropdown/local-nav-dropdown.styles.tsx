@@ -131,7 +131,7 @@ export const NavWrapper = styled.nav<DropdownNavStyleProps>`
             ${NavSelect} {
                 ${$sideMargin && `margin: 0 -${$sideMargin}px;`}
                 padding: 12px 16px;
-                border-radius: ${Radius.none};
+                border-radius: ${Radius["none"]};
             }
 
             ${NavItemList} {

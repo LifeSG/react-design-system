@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { TagColorType, TagType } from "./types";
-import { Border, Colour, Font, MediaQuery } from "../theme";
+import { Border, Colour, Font, MediaQuery, Radius } from "../theme";
 
 // =============================================================================
 // STYLING
@@ -12,7 +12,7 @@ interface StyleProps {
 }
 
 export const Wrapper = styled.div<StyleProps>`
-    border-radius: 4px;
+    border-radius: ${Radius["sm"]};
     padding: 0.125rem 0.5rem;
     width: fit-content;
     max-width: 100%;

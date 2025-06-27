@@ -15,7 +15,7 @@ export const Main = styled.button<{
     padding: 1.5rem 1rem;
     background-color: ${Colour.bg};
     border: ${Border["width-010"]} ${Border.solid} transparent;
-    border-radius: ${Radius.md};
+    border-radius: ${Radius["md"]};
     cursor: pointer;
     max-width: 13rem;
     transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
