@@ -18,9 +18,7 @@
         "test-e2e": "playwright test",
         "prepare": "(test -d ./.git && npx husky install) || true",
         "storybook": "storybook dev -p 6006",
-        "build-storybook": "storybook build",
-        "build-fabric": "test -d ./node_modules/fabric && cd ./node_modules/fabric && node build.js modules=ALL exclude=assessors || true",
-        "postinstall": "npm run build-fabric"
+        "build-storybook": "storybook build"
     },
     "repository": {
         "type": "git",
@@ -36,7 +34,7 @@
     },
     "homepage": "https://github.com/LifeSG/react-design-system#readme",
     "dependencies": {
-        "fabric": "^5.3.0",
+        "fabric": "^6.7.0",
         "immer": "^10.0.2",
         "react-slider": "^2.0.6",
         "react-virtuoso": "^4.12.5",
@@ -74,7 +72,6 @@
         "@testing-library/jest-dom": "^5.16.3",
         "@testing-library/react": "^12.1.4",
         "@testing-library/user-event": "^14.5.2",
-        "@types/fabric": "^5.3.7",
         "@types/jest": "^29.5.12",
         "@types/lodash": "^4.14.180",
         "@types/node": "^22.15.14",
