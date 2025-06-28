@@ -66,6 +66,7 @@ export interface YearMonthDisplay {
 export interface InternalCalendarRef {
     reset: () => void;
     setCalendarDate: (value?: string) => void;
+    contains: (node: Node) => boolean;
 }
 
 // =============================================================================

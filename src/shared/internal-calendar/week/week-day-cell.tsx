@@ -13,12 +13,16 @@ interface Props {
     calendarDate: Dayjs;
     selectedDate: string | undefined;
     hoverDate: string;
+    focusDate: string;
     minDate?: string | undefined;
     maxDate?: string | undefined;
     disabledDates?: string[] | undefined;
     allowDisabledSelection?: boolean | undefined;
     onSelect: (value: Dayjs, disabled: boolean) => void;
     onHover: (value: string, disabled: boolean) => void;
+    onFocus: (value: string) => void;
+    setFocusCell: (value: string) => void;
+    tabIndex: number;
 }
 
 export const WeekDayCell = ({
@@ -26,12 +30,16 @@ export const WeekDayCell = ({
     calendarDate,
     selectedDate,
     hoverDate,
+    focusDate,
     minDate,
     maxDate,
     disabledDates,
     allowDisabledSelection,
     onSelect,
     onHover,
+    onFocus,
+    setFocusCell,
+    tabIndex,
 }: Props) => {
     // =========================================================================
     // CONSTS
@@ -43,23 +51,31 @@ export const WeekDayCell = ({
         maxDate
     );
     const interactive = !disabled || allowDisabledSelection;
-    const { start: weekStart, end: weekEnd } = CalendarHelper.getWeekStartEnd(
-        DateHelper.toDayjs(selectedDate)
-    );
+    const { start: selectedStart, end: selectedEnd } =
+        CalendarHelper.getWeekStartEnd(DateHelper.toDayjs(selectedDate));
     const { start: hoverStart, end: hoverEnd } = CalendarHelper.getWeekStartEnd(
         DateHelper.toDayjs(hoverDate)
     );
 
+    const { start: weekStart, end: weekEnd } =
+        CalendarHelper.getWeekStartEnd(date);
+    const isFirstDayOfWeek = date.isSame(weekStart, "day");
+
     const isSelected =
-        selectedDate && date.isBetween(weekStart, weekEnd, "day", "[]");
+        selectedDate && date.isBetween(selectedStart, selectedEnd, "day", "[]");
     const isHover =
         hoverDate && date.isBetween(hoverStart, hoverEnd, "day", "[]");
     const isStart =
-        (isSelected && date.isSame(weekStart)) ||
+        (isSelected && date.isSame(selectedStart)) ||
         (isHover && date.isSame(hoverStart));
     const isEnd =
-        (isSelected && date.isSame(weekEnd)) ||
+        (isSelected && date.isSame(selectedEnd)) ||
         (isHover && date.isSame(hoverEnd));
+
+    // For accessible label
+    const label = `From ${dayjs(weekStart).format("D MMMM")} to ${dayjs(
+        weekEnd
+    ).format("D MMMM")}, ${disabled ? "Unavailable" : "Available"}`;
 
     // =========================================================================
     // EVENT HANDLERS
@@ -70,6 +86,54 @@ export const WeekDayCell = ({
 
     const handleHover = () => {
         onHover(date.format("YYYY-MM-DD"), !interactive);
+    };
+
+    const handleFocus = () => {
+        onFocus(date.format("YYYY-MM-DD"));
+    };
+
+    const handleKeyNavigation = (event: React.KeyboardEvent) => {
+        let newFocusSelection: Dayjs | undefined;
+
+        // No left and right arrow keys for week view
+        const keyActions: Record<string, () => dayjs.Dayjs> = {
+            ArrowUp: () => date.subtract(7, "day"),
+            ArrowDown: () => date.add(7, "day"),
+            Home: () => date.startOf("week"),
+            End: () => date.endOf("week"),
+            PageUp: () => {
+                return event.shiftKey
+                    ? date.subtract(1, "year")
+                    : date.subtract(1, "month");
+            },
+            PageDown: () => {
+                return event.shiftKey
+                    ? date.add(1, "year")
+                    : date.add(1, "month");
+            },
+        };
+
+        const action = keyActions[event.key];
+        if (action) {
+            event.preventDefault();
+            newFocusSelection = action();
+            setFocusCell(newFocusSelection.format("YYYY-MM-DD"));
+        }
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        const keyboardEvent = event as React.KeyboardEvent<HTMLInputElement>;
+        const selectedKey = keyboardEvent.key;
+
+        if (selectedKey === "Enter" || selectedKey === " ") {
+            event.preventDefault();
+            if (interactive) {
+                handleSelect();
+            }
+            return;
+        }
+
+        handleKeyNavigation(event);
     };
 
     // =========================================================================
@@ -134,6 +198,15 @@ export const WeekDayCell = ({
         currentDateIndicator: true,
         onSelect: handleSelect,
         onHover: handleHover,
+        onFocus: handleFocus,
+        onKeyDown: handleKeyDown,
+        focusDate: dayjs(focusDate),
+        tabIndex,
+        label,
+        // Aria hidden for all but the first day of the week
+        // To ensure the same labels dont show in accessibility tree
+        ariaHidden: isFirstDayOfWeek ? undefined : true,
+        role: isFirstDayOfWeek ? "button" : "none",
     };
 
     return (

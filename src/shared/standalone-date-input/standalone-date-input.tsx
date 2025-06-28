@@ -32,6 +32,7 @@ interface Props {
     focused: boolean;
     placeholder?: string | undefined;
     label?: string | undefined;
+    inputLabels?: string[] | undefined;
     onChange: (value: string) => void;
     onFocus?: ((event: React.FocusEvent) => void) | undefined;
     onBlur?: ((valid: boolean) => void) | undefined;
@@ -41,6 +42,7 @@ export interface StandaloneDateInputRef {
     ref: React.RefObject<HTMLDivElement>;
     resetPlaceholder: () => void;
     resetInput: () => void;
+    focusYearRef: () => void;
 }
 
 export const Component = (
@@ -57,6 +59,7 @@ export const Component = (
         onFocus,
         onBlur,
         hideInputKeyboard,
+        inputLabels = ["Date", "Month", "Year"],
     }: Props,
     ref: React.ForwardedRef<StandaloneDateInputRef>
 ) => {
@@ -132,8 +135,11 @@ export const Component = (
                 setMonthValue(month);
                 setYearValue(year);
             },
+            focusYearRef() {
+                yearInputRef.current?.focus();
+            },
         }),
-        [value]
+        [setDayValue, setMonthValue, setYearValue, value]
     );
 
     // =============================================================================
@@ -354,7 +360,7 @@ export const Component = (
                     inputMode={inputMode}
                     pattern="[0-9]{2}"
                     data-testid={`${names[0]}-input`}
-                    aria-label="day"
+                    aria-label={inputLabels[0]}
                     disabled={disabled}
                     readOnly={readOnly}
                     tabIndex={readOnly ? -1 : 0}
@@ -377,7 +383,7 @@ export const Component = (
                     inputMode={inputMode}
                     pattern="[0-9]{2}"
                     data-testid={`${names[1]}-input`}
-                    aria-label="month"
+                    aria-label={inputLabels[1]}
                     disabled={disabled}
                     readOnly={readOnly}
                     tabIndex={readOnly ? -1 : 0}
@@ -400,7 +406,7 @@ export const Component = (
                     inputMode={inputMode}
                     pattern="[0-9]{4}"
                     data-testid={`${names[2]}-input`}
-                    aria-label="year"
+                    aria-label={inputLabels[2]}
                     disabled={disabled}
                     readOnly={readOnly}
                     tabIndex={readOnly ? -1 : 0}

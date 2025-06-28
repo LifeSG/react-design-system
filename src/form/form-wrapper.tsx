@@ -37,6 +37,7 @@ export const FormWrapper = ({
     // CONST, STATE, REFS
     // =============================================================================
     const updatedLayoutType = getLayoutType();
+    const labelId = id ? `${id}-label` : undefined;
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -117,6 +118,7 @@ export const FormWrapper = ({
                 <FormLabel
                     htmlFor={`${id}-base`}
                     data-testid={id ? `${id}-label` : "form-label"}
+                    id={labelId}
                     disabled={disabled}
                 >
                     {label}
@@ -127,6 +129,7 @@ export const FormWrapper = ({
             <FormLabel
                 htmlFor={`${id}-base`}
                 data-testid={id ? `${id}-label` : "form-label"}
+                id={labelId}
                 disabled={disabled}
                 {...label}
             />
@@ -136,7 +139,9 @@ export const FormWrapper = ({
     const renderChildren = (): JSX.Element | JSX.Element[] => {
         const ariaState = {
             "aria-invalid": isInvalidState(),
-            "aria-describedby": isInvalidState() && getErrorTestMessageId(),
+            "aria-describedby": isInvalidState()
+                ? getErrorTestMessageId()
+                : undefined,
         };
         return Children.map(children, (child) =>
             cloneElement(child, ariaState)

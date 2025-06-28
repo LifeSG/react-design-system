@@ -40,4 +40,6 @@ export interface DayCellProps extends CellStyleProps {
     role?: string | undefined;
     onFocus?: ((value: Dayjs) => void) | undefined;
     tabIndex?: number | undefined;
+    label?: string | undefined;
+    ariaHidden?: boolean | undefined;
 }
