@@ -23,7 +23,7 @@ interface CalendarDayViewProps extends CommonCalendarProps {
     isNewSelection: boolean;
     onSelect: (value: Dayjs) => void;
     onHover: (value: string) => void;
-    setCalendarDate?: (date: string | undefined) => void | undefined;
+    setCalendarDate?: ((date: string | undefined) => void) | undefined;
 }
 
 export const StandardCalendarDayView = ({
