@@ -21,7 +21,7 @@ export const Box = styled.div`
     max-height: 70%;
     background: ${Colour.bg};
     box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.45);
-    border-radius: ${Radius["md"]};
+    border-radius: ${Radius["lg"]};
     overflow: hidden;
 
     ${MediaQuery.MaxWidth.md} {

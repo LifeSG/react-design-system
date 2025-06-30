@@ -238,6 +238,6 @@ export const Indicator = styled.div<IndicatorStyleProps>`
     width: 4px;
     height: 4px;
     background-color: currentColor;
-    border-radius: ${Radius["full"]};
+    border-radius: 100%;
     bottom: 4px;
 `;

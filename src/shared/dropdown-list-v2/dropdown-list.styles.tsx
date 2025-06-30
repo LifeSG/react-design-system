@@ -104,6 +104,7 @@ export const ListItem = styled.li<ListItemStyleProps>`
     gap: ${Spacing["spacing-8"]};
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
     cursor: pointer;
+    border: none;
     border-radius: ${Radius["none"]};
     outline: none;
 

@@ -27,7 +27,7 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
     align-items: center;
     width: 1.5rem;
     height: 1.5rem;
-    border-radius: ${Radius["full"]};
+    border-radius: 100%;
 
     ${(props) => {
         switch (props.$variant) {

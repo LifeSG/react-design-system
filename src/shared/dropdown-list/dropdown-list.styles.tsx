@@ -117,6 +117,7 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
         }
     }}
     margin: 0 -${Spacing["spacing-8"]};
+    border: none;
     border-radius: ${Radius["none"]};
     background: transparent;
     width: 100%;

@@ -1,5 +1,4 @@
 import styled, { keyframes } from "styled-components";
-import { Radius } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -39,7 +38,7 @@ export const InnerRing1 = styled.div`
     height: calc(100% - 2px);
     border-width: 2px;
     border-style: solid;
-    border-radius: ${Radius["full"]};
+    border-radius: 100%;
     border-color: currentColor transparent transparent transparent;
     animation: ${rotate} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 `;

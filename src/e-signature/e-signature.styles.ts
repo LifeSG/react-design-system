@@ -151,7 +151,7 @@ export const ModalBox = styled(Modal.Box)`
         flex-direction: column;
         max-width: none;
         height: 100%;
-        border-radius: ${Radius["none"]};
+        border-radius: 0;
         padding: 0;
 
         --close-button-top-inset: ${Spacing["spacing-8"]};
@@ -178,7 +178,7 @@ export const ESignatureContainer = styled.div`
     overflow: hidden;
 
     ${mobileMediaQuery} {
-        border-radius: ${Radius["none"]};
+        border-radius: 0;
         flex: 1;
     }
 

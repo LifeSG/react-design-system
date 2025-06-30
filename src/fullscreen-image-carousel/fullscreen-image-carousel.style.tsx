@@ -21,7 +21,7 @@ interface ThumbnailItemStyleProps {
 // =============================================================================
 const IconButton = styled(ClickableIcon)`
     padding: 0;
-    border-radius: ${Radius["full"]};
+    border-radius: 100%;
     background: ${Colour["bg"]};
     color: ${Colour["icon-primary"]};
     height: 2.5rem;
