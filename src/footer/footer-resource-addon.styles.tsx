@@ -8,6 +8,6 @@ export const Img = styled.img`
 export const Items = styled.div`
     display: flex;
     align-items: flex-start;
-    gap: 1rem;
+    gap: 2rem;
     margin-top: 1rem;
 `;
