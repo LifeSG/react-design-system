@@ -3,7 +3,7 @@ import { Alert } from "../alert";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { ToggleIcon } from "../shared/toggle-icon/toggle-icon";
 import { TextList } from "../text-list";
-import { Colour, Font, MediaQuery } from "../theme";
+import { Colour, Font, MediaQuery, Radius } from "../theme";
 import { Typography } from "../typography";
 import { ToggleStyleType } from "./types";
 
@@ -47,7 +47,7 @@ export const Container = styled.div<ContainerStyleProps>`
     position: relative;
     display: inline-flex;
     min-width: 10.375rem;
-    border-radius: 4px;
+    border-radius: ${Radius["sm"]};
     border-width: 1px;
     border-style: solid;
     overflow: hidden;

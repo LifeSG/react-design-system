@@ -139,12 +139,14 @@ export const ImageGallerySlide = styled.div`
 export const SlideImage = styled(StatefulImage)`
     height: 100%;
     width: 100%;
+    border-radius: ${Radius["none"]};
 `;
 
 export const SlidePlaceholderImage = styled(ImagePlaceholder)`
     width: 60vw;
     height: auto;
     max-height: 100%;
+    border-radius: ${Radius["none"]};
     aspect-ratio: 4 / 3;
 `;
 
@@ -166,7 +168,7 @@ export const Chip = styled(Typography.BodyXS)`
     padding: ${Spacing["spacing-4"]} ${Spacing["spacing-16"]};
     justify-content: center;
     align-items: center;
-    border-radius: ${Radius.full};
+    border-radius: ${Radius["full"]};
     background-color: ${Colour["bg"]};
     text-align: center;
 `;

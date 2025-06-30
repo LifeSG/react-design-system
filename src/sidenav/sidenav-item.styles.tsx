@@ -24,7 +24,7 @@ export const IconContainer = styled.span`
     justify-content: center;
 
     padding: 0.25rem 1rem;
-    border-radius: ${Radius.md};
+    border-radius: ${Radius["md"]};
     color: ${Colour["icon-primary"]};
     transition: ${Motion["duration-250"]} ${Motion["ease-default"]};
 

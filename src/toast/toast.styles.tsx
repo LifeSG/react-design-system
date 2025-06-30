@@ -2,7 +2,7 @@ import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, MediaQuery } from "../theme";
+import { Colour, MediaQuery, Radius } from "../theme";
 import { SemanticColourSet } from "../theme/types";
 import { Typography } from "../typography/typography";
 import { ToastType } from "./types";
@@ -69,7 +69,7 @@ export const Wrapper = styled(animated.div)<StyleProps>`
     top: 0;
     right: 0;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: ${Radius["md"]};
     z-index: 10;
     align-items: center;
     gap: 2rem;

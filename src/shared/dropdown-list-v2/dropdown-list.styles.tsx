@@ -80,7 +80,7 @@ export const Container = styled.div<ContainerStyleProps>`
     ::-webkit-scrollbar-thumb {
         background: ${Colour["bg-inverse-subtlest"]};
         border: 5px solid transparent;
-        border-radius: 9999px;
+        border-radius: ${Radius["full"]};
         background-clip: padding-box;
     }
 `;
@@ -104,7 +104,8 @@ export const ListItem = styled.li<ListItemStyleProps>`
     gap: ${Spacing["spacing-8"]};
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
     cursor: pointer;
-
+    border: none;
+    border-radius: ${Radius["none"]};
     outline: none;
 
     ${(props) => {

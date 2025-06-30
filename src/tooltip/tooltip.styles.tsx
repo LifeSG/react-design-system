@@ -4,7 +4,6 @@ import { V2_Color } from "../v2_color";
 import { V2_MediaQuery } from "../v2_media";
 import { V2_Transition } from "../v2_transition";
 import { TooltipPosition } from "./types";
-
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================

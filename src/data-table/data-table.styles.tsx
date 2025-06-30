@@ -158,7 +158,8 @@ export const ActionBar = styled.div<ActionBarProps>`
     height: 3.5rem;
     padding: 1rem;
     border-top: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
-    border-radius: 0 0 ${Radius["sm"]} ${Radius["sm"]};
+    border-radius: ${Radius["none"]} ${Radius["none"]} ${Radius["sm"]}
+        ${Radius["sm"]};
     background-color: ${Colour["bg-selected"]};
     transition: all 300ms ease;
 `;

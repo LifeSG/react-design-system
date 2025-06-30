@@ -63,7 +63,7 @@ const Wrapper = styled.div<StyleProps>`
         if (props.$hasBorder) {
             return css`
                 border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-                border-radius: ${Radius.lg};
+                border-radius: ${Radius["lg"]};
                 overflow: hidden;
             `;
         }

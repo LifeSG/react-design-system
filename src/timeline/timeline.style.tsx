@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Pill } from "../pill";
-import { Colour, MediaQuery } from "../theme";
+import { Colour, MediaQuery, Radius } from "../theme";
 import { Typography } from "../typography";
 import { Variant } from "./types";
 
@@ -27,7 +27,7 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
     align-items: center;
     width: 1.5rem;
     height: 1.5rem;
-    border-radius: 50%;
+    border-radius: 100%;
 
     ${(props) => {
         switch (props.$variant) {
@@ -75,7 +75,7 @@ export const LineIndicator = styled.div<VariantStyleProps>`
     flex-grow: 1;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    border-radius: 2px;
+    border-radius: ${Radius["full"]};
 
     ${(props) => {
         switch (props.$variant) {

@@ -14,7 +14,7 @@ export const LinkButton = styled(BasicButton)`
     border-radius: ${Radius["md"]};
 
     ${Font["body-md-regular"]}
-    color: ${Colour.text};
+    color: ${Colour["text"]};
     ${lineClampCss(2)}
     text-align: left;
 

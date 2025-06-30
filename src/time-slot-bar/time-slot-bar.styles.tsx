@@ -78,7 +78,7 @@ export const ArrowButton = styled(ClickableIcon)<ArrowStyleProps>`
     background-color: ${Colour.bg};
     box-shadow: 0px 2px 8px
         rgb(from ${Colour.Primitive["neutral-50"]} r g b / 50%);
-    border-radius: 50%;
+    border-radius: 100%;
     padding: 0.5rem;
     width: 2rem;
     height: 2rem;
