@@ -1,13 +1,7 @@
-import {
-    act,
-    render,
-    screen,
-    waitFor,
-    waitForElementToBeRemoved,
-    within,
-} from "@testing-library/react";
+import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DateRangeInput } from "src/date-range-input";
+import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
 
 const FIELD_TESTID = "e2e";
 const CALENDAR_TESTID = "calendar-dropdown";
