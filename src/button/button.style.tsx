@@ -36,7 +36,7 @@ export const Main = styled.button<MainStyleProps>`
         switch (props.$buttonStyle) {
             case "secondary":
                 return css`
-                    background-color: ${Colour.Primitive.white};
+                    background-color: ${Colour.bg};
                     border-color: ${props.$buttonIsDanger
                         ? Colour["border-error-strong"]
                         : ThemeButton["button-secondary-colour-border"]};
