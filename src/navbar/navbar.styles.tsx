@@ -1,7 +1,7 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, MediaQuery, Motion } from "../theme";
+import { Border, Colour, MediaQuery, Motion } from "../theme";
 
 // =============================================================================
 // CONSTANTS
@@ -33,7 +33,8 @@ export const Wrapper = styled.div<StyleProps>`
     left: 0;
     right: 0;
     width: 100%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    box-shadow: 0 2px 8px rgba(from ${Colour["bg-inverse-subtle"]} r g b / 16%);
 `;
 
 export const Nav = styled.nav<StyleProps>`

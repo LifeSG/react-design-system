@@ -28,8 +28,9 @@ export const Wrapper = styled.ul`
 
     background: ${Colour["bg"]};
     border-radius: ${Radius["md"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     box-shadow: 0px 2px 8px 0px
-        rgb(from ${Colour.Primitive["neutral-50"]} r g b / 25%);
+        rgb(from ${Colour["bg-inverse-subtle"]} r g b / 16%);
 `;
 
 export const MobileWrapper = styled.ul`
