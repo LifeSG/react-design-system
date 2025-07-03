@@ -32,7 +32,9 @@ function Component(
         expanded,
         type = "default",
         collapsible = true,
-        ...otherProps
+        className,
+        id,
+        "data-testid": testId = "accordion-item",
     }: AccordionItemProps,
     ref: React.Ref<AccordionItemHandle>
 ) {
@@ -45,8 +47,6 @@ function Component(
         collapsible ? expanded ?? expandAll : true
     );
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
-
-    const testId = otherProps["data-testid"] || "accordion-item";
 
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
@@ -153,7 +153,8 @@ function Component(
     return (
         <Container
             data-testid={testId}
-            className={otherProps.className}
+            className={className}
+            id={id}
             $isCollapsed={expand}
             ref={elementRef}
         >
