@@ -51,8 +51,9 @@ export const IndeterminateState: StoryObj<Component> = {
         const [checked1, setChecked1] = useState(true);
         const [checked2, setChecked2] = useState(false);
         return (
-            <>
+            <div role="group" aria-label="All options">
                 <Checkbox
+                    id="all-sub-options"
                     checked={checked1 && checked2}
                     indeterminate={checked1 !== checked2}
                     onChange={() => {
@@ -64,24 +65,28 @@ export const IndeterminateState: StoryObj<Component> = {
                             setChecked2(!checked1);
                         }
                     }}
+                    aria-controls="sub-option-1 sub-option-2"
                 />
-                <SubOption>
-                    <Checkbox
-                        id="sub-option-1"
-                        checked={checked1}
-                        onChange={() => setChecked1(!checked1)}
-                    />
-                    <Label htmlFor="sub-option-1">Sub-option 1</Label>
-                </SubOption>
-                <SubOption>
-                    <Checkbox
-                        id="sub-option-2"
-                        checked={checked2}
-                        onChange={() => setChecked2(!checked2)}
-                    />
-                    <Label htmlFor="sub-option-2">Sub-option 2</Label>
-                </SubOption>
-            </>
+                <div role="list">
+                    <SubOption role="listitem">
+                        <Checkbox
+                            id="sub-option-1"
+                            checked={checked1}
+                            onChange={() => setChecked1(!checked1)}
+                        />
+                        <Label htmlFor="sub-option-1">Sub-option 1</Label>
+                    </SubOption>
+
+                    <SubOption role="listitem">
+                        <Checkbox
+                            id="sub-option-2"
+                            checked={checked2}
+                            onChange={() => setChecked2(!checked2)}
+                        />
+                        <Label htmlFor="sub-option-2">Sub-option 2</Label>
+                    </SubOption>
+                </div>
+            </div>
         );
     },
 };

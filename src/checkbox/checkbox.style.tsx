@@ -30,18 +30,6 @@ const fadeIn = keyframes`
   }
 `;
 
-export const Container = styled.div<StyleProps>`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
-    ${(props) => css`
-        height: ${props.$displaySize === "small" ? "1.5rem" : "2rem"};
-        width: ${props.$displaySize === "small" ? "1.5rem" : "2rem"};
-    `}
-`;
-
 const BaseIconStyles = css`
     animation: ${Motion["duration-150"]} ${Motion["ease-default"]} ${fadeIn};
     width: 100%;
@@ -73,6 +61,28 @@ export const StyledInteremediateIcon = styled(MinusSquareFillIcon)<StyleProps>`
         props.$disabled
             ? Colour["icon-disabled-subtle"](props)
             : Colour["icon-selected"](props)};
+`;
+
+export const Container = styled.div<StyleProps>`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    ${(props) => css`
+        height: ${props.$displaySize === "small" ? "1.5rem" : "2rem"};
+        width: ${props.$displaySize === "small" ? "1.5rem" : "2rem"};
+    `}
+
+    // Show custom focus ring when input is focused
+    input:focus-visible + ${StyledUncheckedIcon},
+    input:focus-visible + ${StyledUncheckedDisabledIcon},
+    input:focus-visible + ${StyledCheckedIcon},
+    input:focus-visible + ${StyledInteremediateIcon} {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 0px;
+        border-radius: 4px;
+    }
 `;
 
 export const Input = styled.input<CheckboxProps>`
