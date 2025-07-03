@@ -11,6 +11,7 @@ import { useTheme } from "styled-components";
 import { InputSelect } from "../input-select";
 import { Breakpoint } from "../theme";
 import {
+    EllipsisButton,
     EllipsisContainer,
     Hover,
     InputSelectWrapper,
@@ -18,7 +19,6 @@ import {
     Label,
     LabelDivider,
     NavigationButton,
-    NavigationItem,
     PageItem,
     PaginationList,
     PaginationMenu,
@@ -269,7 +269,7 @@ const Component = (
 
     const renderStartEllipsis = (pageIndex: number) => (
         <EllipsisContainer key={pageIndex}>
-            <NavigationItem
+            <EllipsisButton
                 focusHighlight={false}
                 focusOutline="browser"
                 aria-label={"Previous 5 pages"}
@@ -284,14 +284,14 @@ const Component = (
                 ) : (
                     <EllipsisHorizontalIcon aria-hidden />
                 )}
-            </NavigationItem>
+            </EllipsisButton>
             {hoverLeftButton && <Hover>Previous 5 pages</Hover>}
         </EllipsisContainer>
     );
 
     const renderEndEllipsis = (pageIndex: number) => (
         <EllipsisContainer key={pageIndex}>
-            <NavigationItem
+            <EllipsisButton
                 focusHighlight={false}
                 focusOutline="browser"
                 aria-label={"Next 5 pages"}
@@ -306,7 +306,7 @@ const Component = (
                 ) : (
                     <EllipsisHorizontalIcon aria-hidden />
                 )}
-            </NavigationItem>
+            </EllipsisButton>
             {hoverRightButton && <Hover>Next 5 pages</Hover>}
         </EllipsisContainer>
     );
