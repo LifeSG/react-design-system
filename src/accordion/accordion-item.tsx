@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
+import { inertValue } from "../shared/accessibility";
 import { AccordionContext } from "./accordion-context";
 import {
     ChevronIcon,
@@ -113,8 +114,12 @@ function Component(
                 style={hasFirstLoad ? expandableStyles : resizeHeight}
                 $isCollapsed={expand}
                 data-testid={`${testId}-expandable-container`}
+                inert={inertValue(!expand)}
             >
-                <DescriptionContainer ref={childRef} id="content-container">
+                <DescriptionContainer
+                    ref={childRef}
+                    data-testid="content-container"
+                >
                     {children}
                 </DescriptionContainer>
             </Expandable>
