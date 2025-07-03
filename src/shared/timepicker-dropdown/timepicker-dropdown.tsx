@@ -20,6 +20,7 @@ import {
     TimePeriodSection,
     TimePeriodToggle,
 } from "./timepicker-dropdown.styles";
+import { inertValue } from "../accessibility";
 
 enum EInputButtonName {
     HOUR_UP = "hour-up",
@@ -396,7 +397,7 @@ export const TimepickerDropdown = ({
             <Container
                 ref={resizeDetector.ref}
                 data-testid={getTestId("timepicker-dropdown")}
-                inert={show ? undefined : ""}
+                inert={inertValue(!show)}
             >
                 <InputSection>
                     <HourMinuteSection>

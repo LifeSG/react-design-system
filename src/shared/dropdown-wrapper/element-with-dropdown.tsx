@@ -21,6 +21,7 @@ import { useResizeDetector } from "react-resize-detector";
 import { useTheme } from "styled-components";
 import { useFloatingChild } from "../../overlay/use-floating-context";
 import { Breakpoint } from "../../theme";
+import { inertValue } from "../accessibility";
 import { DropdownContainer } from "./element-with-dropdown.styles";
 import { DropdownAlignmentType } from "./types";
 
@@ -192,11 +193,9 @@ export const ElementWithDropdown = ({
                             <DropdownContainer
                                 ref={dropdownRef}
                                 style={{ ...styles }}
-                                inert={
+                                inert={inertValue(
                                     (styles.opacity as number) < 1
-                                        ? ""
-                                        : undefined
-                                }
+                                )}
                             >
                                 {renderDropdown({
                                     elementWidth: referenceWidth,

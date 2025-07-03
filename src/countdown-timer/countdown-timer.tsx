@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
 import { useTheme } from "styled-components";
+import { inertValue } from "../shared/accessibility";
 import { Breakpoint } from "../theme";
 import { TimeHelper } from "../util/time-helper";
 import {
@@ -170,7 +171,7 @@ export const CountdownTimer = ({
                 data-testid={testId}
                 data-id="countdown-wrapper"
                 ref={wrapperRef}
-                inert={isVisible ? undefined : ""}
+                inert={inertValue(!isVisible)}
                 $visible={isVisible}
                 $warn={warn}
             >
