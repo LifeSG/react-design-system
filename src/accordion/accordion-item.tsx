@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
+import { inertValue } from "../shared/accessibility";
 import { AccordionContext } from "./accordion-context";
 import {
     ChevronIcon,
@@ -32,7 +33,9 @@ function Component(
         expanded,
         type = "default",
         collapsible = true,
-        ...otherProps
+        className,
+        id,
+        "data-testid": testId = "accordion-item",
     }: AccordionItemProps,
     ref: React.Ref<AccordionItemHandle>
 ) {
@@ -45,8 +48,6 @@ function Component(
         collapsible ? expanded ?? expandAll : true
     );
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
-
-    const testId = otherProps["data-testid"] || "accordion-item";
 
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
@@ -113,8 +114,12 @@ function Component(
                 style={hasFirstLoad ? expandableStyles : resizeHeight}
                 $isCollapsed={expand}
                 data-testid={`${testId}-expandable-container`}
+                inert={inertValue(!expand)}
             >
-                <DescriptionContainer ref={childRef} id="content-container">
+                <DescriptionContainer
+                    ref={childRef}
+                    data-testid="content-container"
+                >
                     {children}
                 </DescriptionContainer>
             </Expandable>
@@ -153,7 +158,8 @@ function Component(
     return (
         <Container
             data-testid={testId}
-            className={otherProps.className}
+            className={className}
+            id={id}
             $isCollapsed={expand}
             ref={elementRef}
         >

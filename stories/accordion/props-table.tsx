@@ -42,8 +42,18 @@ const ACCORDION_DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
+                name: "id",
+                description: "The unique id of the component",
+                propTypes: ["string"],
+            },
+            {
                 name: "className",
-                description: "Class selector for the component",
+                description: "The class selector of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
                 propTypes: ["string"],
             },
         ],
@@ -91,8 +101,13 @@ const ACCORDION_ITEM_DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "id",
+                description: "The unique id of the component",
+                propTypes: ["string"],
+            },
+            {
                 name: "className",
-                description: "Class selector for the component",
+                description: "The class selector of the component",
                 propTypes: ["string"],
             },
             {
