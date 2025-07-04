@@ -33,7 +33,6 @@ const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
             disabled={disabled && !focusableWhenDisabled}
             aria-disabled={disabled}
             aria-busy={loading}
-            tabIndex={disabled && focusableWhenDisabled ? 0 : undefined}
             onClick={disabled ? undefined : onClick}
             {...mainStyle}
             {...otherProps}
@@ -70,7 +69,6 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
             disabled={disabled && !focusableWhenDisabled}
             aria-disabled={disabled}
             aria-busy={loading}
-            tabIndex={disabled && focusableWhenDisabled ? 0 : undefined}
             onClick={disabled ? undefined : onClick}
             {...mainStyle}
             {...otherProps}
@@ -107,7 +105,6 @@ const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
             disabled={disabled && !focusableWhenDisabled}
             aria-disabled={disabled}
             aria-busy={loading}
-            tabIndex={disabled && focusableWhenDisabled ? 0 : undefined}
             onClick={disabled ? undefined : onClick}
             {...mainStyle}
             {...otherProps}

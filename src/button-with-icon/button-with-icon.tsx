@@ -42,7 +42,6 @@ const DefaultComponent = (
             data-testid={otherProps["data-testid"] || "button-with-icon"}
             disabled={disabled && !focusableWhenDisabled}
             aria-disabled={disabled}
-            tabIndex={disabled && focusableWhenDisabled ? 0 : undefined}
             aria-busy={loading}
             onClick={disabled ? undefined : onClick}
             {...mainStyle}
@@ -86,7 +85,6 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
             data-testid={otherProps["data-testid"] || "button-with-icon"}
             disabled={disabled && !focusableWhenDisabled}
             aria-disabled={disabled}
-            tabIndex={disabled && focusableWhenDisabled ? 0 : undefined}
             aria-busy={loading}
             onClick={disabled ? undefined : onClick}
             {...mainStyle}
