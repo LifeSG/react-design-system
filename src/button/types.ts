@@ -10,6 +10,8 @@ export interface ButtonBaseProps
     styleType?: ButtonStyleType | undefined;
     /** If specified, the component will have a red color scheme being applied */
     danger?: boolean | undefined;
+    /** If true, the button remains focusable when disabled. Defaults to false. */
+    focusableWhenDisabled?: boolean | undefined;
 }
 
 export interface ButtonProps extends ButtonBaseProps {

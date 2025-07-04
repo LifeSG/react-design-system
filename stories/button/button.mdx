@@ -32,6 +32,41 @@ apply a red scheme over the buttons.
 
 <Canvas of={ButtonStories.DangerLoadingState} />
 
+## Accessibility
+
+By default, a disabled `<button>` cannot receive focus or events. In certain
+modes across screen readers, it is excluded from the focus order, which can make
+detecting its presence more difficult.
+
+To keep the disabled button focusable, specify `focusableWhenDisabled`. The
+`onClick` callback is not invoked when the user attempts to click on the button.
+
+There are some caveats:
+
+-   Other event listeners such as `onKeyDown`, `onTouchStart` remain triggered
+-   `onClick` events still bubble to ancestors
+
+<Canvas of={ButtonStories.FocusableWhenDisabled} />
+
+For best results, check the `disabled` state in your application.
+
+```tsx
+const Page = () => {
+    const [disabled, setDisabled] = useState(false);
+
+    return (
+        <div
+            onClick={() => {
+                if (disabled) return;
+                // application logic here
+            }}
+        >
+            <Button.Default disabled={disabled}>Add to cart</Button.Default>
+        </div>
+    );
+};
+```
+
 ## Component tokens
 
 This component can be customised via the `Button` tokens.

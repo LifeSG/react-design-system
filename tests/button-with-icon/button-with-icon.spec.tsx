@@ -55,6 +55,46 @@ describe("ButtonWithIcon", () => {
         expect(onClickMock).toHaveBeenCalledTimes(1);
     });
 
+    it("should not fire onClick when button is disabled", () => {
+        const onClickMock = jest.fn();
+        const { getByTestId } = render(
+            <ButtonWithIcon.Default
+                onClick={onClickMock}
+                icon={<PlaceholderIcon />}
+                data-testid="test-button"
+                disabled
+            >
+                {BUTTON_TEXT}
+            </ButtonWithIcon.Default>
+        );
+        const button = getByTestId("test-button");
+
+        fireEvent.click(button);
+
+        expect(onClickMock).not.toHaveBeenCalled();
+        expect(button).toBeDisabled();
+    });
+
+    it("should not fire onClick when Small button is disabled", () => {
+        const onClickMock = jest.fn();
+        const { getByTestId } = render(
+            <ButtonWithIcon.Small
+                onClick={onClickMock}
+                icon={<PlaceholderIcon />}
+                data-testid="test-button"
+                disabled
+            >
+                {BUTTON_TEXT}
+            </ButtonWithIcon.Small>
+        );
+        const button = getByTestId("test-button");
+
+        fireEvent.click(button);
+
+        expect(onClickMock).not.toHaveBeenCalled();
+        expect(button).toBeDisabled();
+    });
+
     it("should render the loading spinner - Default", () => {
         render(
             <ButtonWithIcon.Default

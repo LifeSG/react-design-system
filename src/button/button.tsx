@@ -15,6 +15,8 @@ const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
         loading = false,
         styleType = "default",
         danger = false,
+        focusableWhenDisabled = false,
+        onClick,
         ...otherProps
     } = props;
 
@@ -28,7 +30,10 @@ const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
         <Main
             ref={ref}
             data-testid={otherProps["data-testid"] || "button"}
-            disabled={disabled}
+            disabled={disabled && !focusableWhenDisabled}
+            aria-disabled={disabled}
+            aria-busy={loading}
+            onClick={disabled ? undefined : onClick}
             {...mainStyle}
             {...otherProps}
         >
@@ -46,6 +51,8 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
         loading = false,
         styleType = "default",
         danger = false,
+        focusableWhenDisabled = false,
+        onClick,
         ...otherProps
     } = props;
 
@@ -59,7 +66,10 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
         <Main
             ref={ref}
             data-testid={otherProps["data-testid"] || "button"}
-            disabled={disabled}
+            disabled={disabled && !focusableWhenDisabled}
+            aria-disabled={disabled}
+            aria-busy={loading}
+            onClick={disabled ? undefined : onClick}
             {...mainStyle}
             {...otherProps}
         >
@@ -77,6 +87,8 @@ const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
         loading = false,
         styleType = "default",
         danger = false,
+        focusableWhenDisabled = false,
+        onClick,
         ...otherProps
     } = props;
 
@@ -90,7 +102,10 @@ const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
         <Main
             ref={ref}
             data-testid={otherProps["data-testid"] || "button"}
-            disabled={disabled}
+            disabled={disabled && !focusableWhenDisabled}
+            aria-disabled={disabled}
+            aria-busy={loading}
+            onClick={disabled ? undefined : onClick}
             {...mainStyle}
             {...otherProps}
         >

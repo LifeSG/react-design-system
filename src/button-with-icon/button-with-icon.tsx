@@ -24,6 +24,8 @@ const DefaultComponent = (
         icon,
         iconPosition = "left",
         loading = false,
+        focusableWhenDisabled = false,
+        onClick,
         ...otherProps
     } = props;
 
@@ -38,11 +40,18 @@ const DefaultComponent = (
         <MainButtonWithIcon
             ref={ref}
             data-testid={otherProps["data-testid"] || "button-with-icon"}
-            disabled={disabled}
+            disabled={disabled && !focusableWhenDisabled}
+            aria-disabled={disabled}
+            aria-busy={loading}
+            onClick={disabled ? undefined : onClick}
             {...mainStyle}
             {...otherProps}
         >
-            {loading ? <ComponentLoadingSpinner /> : icon}
+            {loading ? (
+                <ComponentLoadingSpinner />
+            ) : (
+                React.cloneElement(icon, { "aria-hidden": "true" })
+            )}
             <span>{children}</span>
         </MainButtonWithIcon>
     );
@@ -58,6 +67,8 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
         icon,
         iconPosition = "left",
         loading = false,
+        focusableWhenDisabled = false,
+        onClick,
         ...otherProps
     } = props;
 
@@ -72,11 +83,18 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
         <MainButtonWithIcon
             ref={ref}
             data-testid={otherProps["data-testid"] || "button-with-icon"}
-            disabled={disabled}
+            disabled={disabled && !focusableWhenDisabled}
+            aria-disabled={disabled}
+            aria-busy={loading}
+            onClick={disabled ? undefined : onClick}
             {...mainStyle}
             {...otherProps}
         >
-            {loading ? <ComponentLoadingSpinner /> : icon}
+            {loading ? (
+                <ComponentLoadingSpinner />
+            ) : (
+                React.cloneElement(icon, { "aria-hidden": "true" })
+            )}
             <span>{children}</span>
         </MainButtonWithIcon>
     );
