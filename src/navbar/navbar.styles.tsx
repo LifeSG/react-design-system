@@ -1,7 +1,7 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, MediaQuery, Motion } from "../theme";
+import { Border, Colour, MediaQuery, Motion } from "../theme";
 
 // =============================================================================
 // CONSTANTS
@@ -33,14 +33,29 @@ export const Wrapper = styled.div<StyleProps>`
     left: 0;
     right: 0;
     width: 100%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-bottom: ${(props) =>
+        props.theme?.colourMode === "dark"
+            ? `${Border["width-010"](props)} ${Border["solid"](props)} ${Colour[
+                  "border"
+              ](props)}`
+            : "none"};
+    box-shadow: ${(props) =>
+        props.theme?.colourMode === "dark"
+            ? "none"
+            : `0 2px 8px rgba(from ${Colour.Primitive["neutral-30"](
+                  props
+              )} r g b / 16%)`};
 `;
 
 export const Nav = styled.nav<StyleProps>`
-    height: ${(props) =>
-        props.$compress
+    height: ${(props) => {
+        const baseHeight = props.$compress
             ? NAVBAR_HEIGHT.compress
-            : NAVBAR_HEIGHT.notCompress}rem;
+            : NAVBAR_HEIGHT.notCompress;
+        return props.theme?.colourMode === "dark"
+            ? `calc(${baseHeight}rem - 1px)`
+            : `${baseHeight}rem`;
+    }};
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -50,7 +65,10 @@ export const Nav = styled.nav<StyleProps>`
     transition: ${Motion["duration-350"]} ${Motion["ease-standard"]};
 
     ${MediaQuery.MaxWidth.lg} {
-        height: ${NAVBAR_MOBILE_HEIGHT}rem;
+        height: ${(props) =>
+            props.theme?.colourMode === "dark"
+                ? `calc(${NAVBAR_MOBILE_HEIGHT}rem - 1px)`
+                : `${NAVBAR_MOBILE_HEIGHT}rem`};
     }
 `;
 
