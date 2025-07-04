@@ -33,15 +33,29 @@ export const Wrapper = styled.div<StyleProps>`
     left: 0;
     right: 0;
     width: 100%;
-    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    box-shadow: 0 2px 8px rgba(from ${Colour["bg-inverse-subtle"]} r g b / 16%);
+    border-bottom: ${(props) =>
+        props.theme?.colourMode === "dark"
+            ? `${Border["width-010"](props)} ${Border["solid"](props)} ${Colour[
+                  "border"
+              ](props)}`
+            : "none"};
+    box-shadow: ${(props) =>
+        props.theme?.colourMode === "dark"
+            ? "none"
+            : `0 2px 8px rgba(from ${Colour.Primitive["neutral-30"](
+                  props
+              )} r g b / 16%)`};
 `;
 
 export const Nav = styled.nav<StyleProps>`
-    height: ${(props) =>
-        props.$compress
+    height: ${(props) => {
+        const baseHeight = props.$compress
             ? NAVBAR_HEIGHT.compress
-            : NAVBAR_HEIGHT.notCompress}rem;
+            : NAVBAR_HEIGHT.notCompress;
+        return props.theme?.colourMode === "dark"
+            ? `calc(${baseHeight}rem - 1px)`
+            : `${baseHeight}rem`;
+    }};
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -51,7 +65,10 @@ export const Nav = styled.nav<StyleProps>`
     transition: ${Motion["duration-350"]} ${Motion["ease-standard"]};
 
     ${MediaQuery.MaxWidth.lg} {
-        height: ${NAVBAR_MOBILE_HEIGHT}rem;
+        height: ${(props) =>
+            props.theme?.colourMode === "dark"
+                ? `calc(${NAVBAR_MOBILE_HEIGHT}rem - 1px)`
+                : `${NAVBAR_MOBILE_HEIGHT}rem`};
     }
 `;
 
