@@ -25,6 +25,7 @@ const DefaultComponent = (
         iconPosition = "left",
         loading = false,
         focusableWhenDisabled = false,
+        onClick,
         ...otherProps
     } = props;
 
@@ -43,6 +44,7 @@ const DefaultComponent = (
             aria-disabled={disabled}
             tabIndex={disabled && focusableWhenDisabled ? 0 : undefined}
             aria-busy={loading}
+            onClick={disabled ? undefined : onClick}
             {...mainStyle}
             {...otherProps}
         >
@@ -67,6 +69,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
         iconPosition = "left",
         loading = false,
         focusableWhenDisabled = false,
+        onClick,
         ...otherProps
     } = props;
 
@@ -85,6 +88,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
             aria-disabled={disabled}
             tabIndex={disabled && focusableWhenDisabled ? 0 : undefined}
             aria-busy={loading}
+            onClick={disabled ? undefined : onClick}
             {...mainStyle}
             {...otherProps}
         >

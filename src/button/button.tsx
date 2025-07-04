@@ -16,6 +16,7 @@ const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
         styleType = "default",
         danger = false,
         focusableWhenDisabled = false,
+        onClick,
         ...otherProps
     } = props;
 
@@ -33,6 +34,7 @@ const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
             aria-disabled={disabled}
             aria-busy={loading}
             tabIndex={disabled && focusableWhenDisabled ? 0 : undefined}
+            onClick={disabled ? undefined : onClick}
             {...mainStyle}
             {...otherProps}
         >
@@ -51,6 +53,7 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
         styleType = "default",
         danger = false,
         focusableWhenDisabled = false,
+        onClick,
         ...otherProps
     } = props;
 
@@ -68,6 +71,7 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
             aria-disabled={disabled}
             aria-busy={loading}
             tabIndex={disabled && focusableWhenDisabled ? 0 : undefined}
+            onClick={disabled ? undefined : onClick}
             {...mainStyle}
             {...otherProps}
         >
@@ -86,6 +90,7 @@ const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
         styleType = "default",
         danger = false,
         focusableWhenDisabled = false,
+        onClick,
         ...otherProps
     } = props;
 
@@ -103,6 +108,7 @@ const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
             aria-disabled={disabled}
             aria-busy={loading}
             tabIndex={disabled && focusableWhenDisabled ? 0 : undefined}
+            onClick={disabled ? undefined : onClick}
             {...mainStyle}
             {...otherProps}
         >
