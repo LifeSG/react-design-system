@@ -289,3 +289,16 @@ export const LoadingState: StoryObj<Component> = {
         );
     },
 };
+
+export const FocusableWhenDisabled: StoryObj<Component> = {
+    render: (_args) => (
+        <ButtonWithIcon.Default
+            icon={<PlaceholderIcon />}
+            disabled
+            focusableWhenDisabled
+            onClick={() => alert("I shouldn't be here!")}
+        >
+            Add to cart
+        </ButtonWithIcon.Default>
+    ),
+};

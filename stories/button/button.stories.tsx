@@ -194,6 +194,18 @@ export const DangerLoadingState: StoryObj<Component> = {
     },
 };
 
+export const FocusableWhenDisabled: StoryObj<Component> = {
+    render: (_args) => (
+        <Button.Default
+            disabled
+            focusableWhenDisabled
+            onClick={() => alert("I shouldn't be here!")}
+        >
+            Add to cart
+        </Button.Default>
+    ),
+};
+
 export const TokenCustomisation: StoryObj = {
     tags: ["!dev"],
     render: () => <TokensTable />,
