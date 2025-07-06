@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { Accordion, V2_Text } from "../../src";
+import { Accordion } from "src/accordion";
+import { Typography } from "src/typography";
 
 describe("Accordion", () => {
     beforeEach(() => {
@@ -18,9 +19,9 @@ describe("Accordion", () => {
         render(
             <Accordion>
                 <Accordion.Item data-testid="item1" title={ITEM_TITLE}>
-                    <V2_Text.Body data-testid="item1-content">
+                    <Typography.BodyBL data-testid="item1-content">
                         {DEFAULT_TEXT_CONTENT}
-                    </V2_Text.Body>
+                    </Typography.BodyBL>
                 </Accordion.Item>
             </Accordion>
         );
@@ -38,9 +39,9 @@ describe("Accordion", () => {
         render(
             <Accordion title={ACCORDION_TITLE}>
                 <Accordion.Item data-testid="item1" title="Item title">
-                    <V2_Text.Body data-testid="item1-content">
+                    <Typography.BodyBL data-testid="item1-content">
                         {DEFAULT_TEXT_CONTENT}
-                    </V2_Text.Body>
+                    </Typography.BodyBL>
                 </Accordion.Item>
             </Accordion>
         );
@@ -55,9 +56,9 @@ describe("Accordion", () => {
         render(
             <Accordion>
                 <Accordion.Item data-testid="item1" title="Item title">
-                    <V2_Text.Body data-testid="item1-content">
+                    <Typography.BodyBL data-testid="item1-content">
                         {DEFAULT_TEXT_CONTENT}
-                    </V2_Text.Body>
+                    </Typography.BodyBL>
                 </Accordion.Item>
             </Accordion>
         );
@@ -71,9 +72,9 @@ describe("Accordion", () => {
                 render(
                     <Accordion>
                         <Accordion.Item data-testid="item1" title="Item title">
-                            <V2_Text.Body data-testid="item1-content">
+                            <Typography.BodyBL data-testid="item1-content">
                                 {DEFAULT_TEXT_CONTENT}
-                            </V2_Text.Body>
+                            </Typography.BodyBL>
                         </Accordion.Item>
                     </Accordion>
                 );
@@ -85,9 +86,9 @@ describe("Accordion", () => {
                 render(
                     <Accordion>
                         <Accordion.Item data-testid="item1" title="Item title">
-                            <V2_Text.Body data-testid="item1-content">
+                            <Typography.BodyBL data-testid="item1-content">
                                 {DEFAULT_TEXT_CONTENT}
-                            </V2_Text.Body>
+                            </Typography.BodyBL>
                         </Accordion.Item>
                     </Accordion>
                 );
@@ -108,10 +109,14 @@ describe("Accordion", () => {
                 render(
                     <Accordion>
                         <Accordion.Item data-testid="item1" title="Item title">
-                            <V2_Text.Body>{DEFAULT_TEXT_CONTENT}</V2_Text.Body>
+                            <Typography.BodyBL>
+                                {DEFAULT_TEXT_CONTENT}
+                            </Typography.BodyBL>
                         </Accordion.Item>
                         <Accordion.Item data-testid="item2" title="Item title">
-                            <V2_Text.Body>{DEFAULT_TEXT_CONTENT}</V2_Text.Body>
+                            <Typography.BodyBL>
+                                {DEFAULT_TEXT_CONTENT}
+                            </Typography.BodyBL>
                         </Accordion.Item>
                     </Accordion>
                 );
@@ -140,9 +145,9 @@ describe("Accordion", () => {
                 render(
                     <Accordion enableExpandAll={false}>
                         <Accordion.Item data-testid="item1" title="Item title">
-                            <V2_Text.Body data-testid="item1-content">
+                            <Typography.BodyBL data-testid="item1-content">
                                 {DEFAULT_TEXT_CONTENT}
-                            </V2_Text.Body>
+                            </Typography.BodyBL>
                         </Accordion.Item>
                     </Accordion>
                 );
@@ -159,9 +164,9 @@ describe("Accordion", () => {
             render(
                 <Accordion>
                     <Accordion.Item data-testid="item1" title="Item title">
-                        <V2_Text.Body data-testid="my-content">
+                        <Typography.BodyBL data-testid="my-content">
                             {DEFAULT_TEXT_CONTENT}
-                        </V2_Text.Body>
+                        </Typography.BodyBL>
                     </Accordion.Item>
                 </Accordion>
             );
@@ -173,30 +178,44 @@ describe("Accordion", () => {
             );
         });
 
-        it("should render the expand/collapse button for each item", () => {
+        it("should enable expand/collapse functionality for each item", () => {
             render(
                 <Accordion>
-                    <Accordion.Item data-testid="item1" title="Item title">
-                        <V2_Text.Body>{DEFAULT_TEXT_CONTENT}</V2_Text.Body>
+                    <Accordion.Item data-testid="item1" title="Item title 1">
+                        <Typography.BodyBL>
+                            {DEFAULT_TEXT_CONTENT}
+                        </Typography.BodyBL>
                     </Accordion.Item>
-                    <Accordion.Item data-testid="item2" title="Item title">
-                        <V2_Text.Body>{DEFAULT_TEXT_CONTENT}</V2_Text.Body>
+                    <Accordion.Item data-testid="item2" title="Item title 2">
+                        <Typography.BodyBL>
+                            {DEFAULT_TEXT_CONTENT}
+                        </Typography.BodyBL>
                     </Accordion.Item>
                 </Accordion>
             );
 
-            const button1 = screen.getByTestId("item1-expand-collapse-button");
-            const button2 = screen.getByTestId("item1-expand-collapse-button");
+            expect(
+                screen.getByRole("button", { name: "Item title 1" })
+            ).toHaveAttribute("aria-disabled", "false");
+            expect(
+                screen.getByTestId("item2-expand-collapse-icon")
+            ).toBeInTheDocument();
 
-            expect(button1).toBeInTheDocument();
-            expect(button2).toBeInTheDocument();
+            expect(
+                screen.getByRole("button", { name: "Item title 2" })
+            ).toHaveAttribute("aria-disabled", "false");
+            expect(
+                screen.getByTestId("item2-expand-collapse-icon")
+            ).toBeInTheDocument();
         });
 
-        it("should minimize the contents if the expand/collapse button is clicked", async () => {
+        it("should minimize the contents if header is clicked", async () => {
             render(
                 <Accordion>
                     <Accordion.Item data-testid="item1" title="Item title">
-                        <V2_Text.Body>{DEFAULT_TEXT_CONTENT}</V2_Text.Body>
+                        <Typography.BodyBL>
+                            {DEFAULT_TEXT_CONTENT}
+                        </Typography.BodyBL>
                     </Accordion.Item>
                 </Accordion>
             );
@@ -214,25 +233,72 @@ describe("Accordion", () => {
             });
         });
 
-        it("should hide the expand button if collapsible=false specified", () => {
+        it("should disable expand/collapse functionality if collapsible=false specified", () => {
             const ACCORDION_TITLE = "Accordion Title";
+            const ITEM_TITLE = "Item title";
 
             render(
                 <Accordion title={ACCORDION_TITLE}>
                     <Accordion.Item
                         data-testid="item1"
-                        title="Item title"
+                        title={ITEM_TITLE}
                         collapsible={false}
                     >
-                        <V2_Text.Body data-testid="item1-content">
+                        <Typography.BodyBL data-testid="item1-content">
                             {DEFAULT_TEXT_CONTENT}
-                        </V2_Text.Body>
+                        </Typography.BodyBL>
                     </Accordion.Item>
                 </Accordion>
             );
 
-            const button = screen.queryByTestId("item1-expand-collapse-button");
-            expect(button).not.toBeInTheDocument();
+            expect(
+                screen.getByRole("button", { name: ITEM_TITLE })
+            ).toHaveAttribute("aria-disabled", "true");
+            expect(
+                screen.queryByTestId("item1-expand-collapse-icon")
+            ).not.toBeInTheDocument();
+        });
+    });
+
+    describe("Heading level", () => {
+        it("should apply the right heading level to the title and item title", () => {
+            const ACCORDION_TITLE = "Accordion Title";
+            const ITEM_TITLE = "Item title";
+
+            render(
+                <Accordion title={ACCORDION_TITLE} headingLevel={1}>
+                    <Accordion.Item data-testid="item1" title={ITEM_TITLE}>
+                        <Typography.BodyBL data-testid="item1-content">
+                            {DEFAULT_TEXT_CONTENT}
+                        </Typography.BodyBL>
+                    </Accordion.Item>
+                </Accordion>
+            );
+
+            expect(
+                screen.getByRole("heading", { level: 1, name: ACCORDION_TITLE })
+            ).toBeInTheDocument();
+            expect(
+                screen.getByRole("heading", { level: 2, name: ITEM_TITLE })
+            ).toBeInTheDocument();
+        });
+
+        it("should apply the right heading level to the item title", () => {
+            const ITEM_TITLE = "Item title";
+
+            render(
+                <Accordion headingLevel={1}>
+                    <Accordion.Item data-testid="item1" title={ITEM_TITLE}>
+                        <Typography.BodyBL data-testid="item1-content">
+                            {DEFAULT_TEXT_CONTENT}
+                        </Typography.BodyBL>
+                    </Accordion.Item>
+                </Accordion>
+            );
+
+            expect(
+                screen.getByRole("heading", { level: 1, name: ITEM_TITLE })
+            ).toBeInTheDocument();
         });
     });
 });

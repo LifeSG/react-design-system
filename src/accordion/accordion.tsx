@@ -15,9 +15,10 @@ const AccordionBase = ({
     enableExpandAll = true,
     initialDisplay = "expand-all",
     showTitleInMobile = false,
-    className,
     id,
     "data-testid": testId,
+    className,
+    headingLevel = 2,
 }: AccordionProps): JSX.Element => {
     const [expandAll, setExpandAll] = useState<boolean>(
         initialDisplay === "expand-all"
@@ -31,7 +32,7 @@ const AccordionBase = ({
     const renderCollapseExpandAll = () => {
         return (
             <ExpandCollapseLink
-                data-testid={"accordion-expand-collapse-button"}
+                data-testid="accordion-expand-collapse-button"
                 onClick={handleExpandCollapseClick}
                 styleType="link"
                 type="button"
@@ -46,6 +47,10 @@ const AccordionBase = ({
             return null;
         }
 
+        const headingProps = headingLevel
+            ? { "aria-level": headingLevel, role: "heading" }
+            : {};
+
         return (
             <TitleWrapper
                 $showTitleInMobile={showTitleInMobile}
@@ -53,9 +58,9 @@ const AccordionBase = ({
             >
                 {title && (
                     <Title
-                        weight="bold"
                         $showInMobile={showTitleInMobile}
                         data-testid="accordion-title"
+                        {...headingProps}
                     >
                         {title}
                     </Title>
@@ -66,8 +71,17 @@ const AccordionBase = ({
     };
 
     return (
-        <AccordionContext.Provider value={expandAll}>
-            <Content className={className} id={id} data-testid={testId}>
+        <AccordionContext.Provider
+            value={{
+                expandAll,
+                itemHeadingLevel: headingLevel
+                    ? title
+                        ? headingLevel + 1
+                        : headingLevel
+                    : undefined,
+            }}
+        >
+            <Content id={id} data-testid={testId} className={className}>
                 {renderTitleWrapper()}
                 {children}
             </Content>
