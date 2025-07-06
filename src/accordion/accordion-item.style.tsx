@@ -1,66 +1,97 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
-import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, Motion } from "../theme";
-import { MediaQuery } from "../theme";
-import { Typography } from "../typography";
+import {
+    Border,
+    Colour,
+    Font,
+    MediaQuery,
+    Motion,
+    Radius,
+    Spacing,
+} from "../theme";
+import { AccordionItemType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface StyleProps {
-    $isCollapsed?: boolean;
+interface ContainerStyleProps {
+    $expanded?: boolean | undefined;
+}
+
+interface ExpandCollapseButtonProps {
+    $expanded: boolean;
+    $collapsible: boolean;
+}
+
+interface TitleProps {
+    $type: AccordionItemType;
+    $isCollapsed?: boolean | undefined;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div<StyleProps>`
-    background-color: ${Colour.bg} !important;
+export const Container = styled.div<ContainerStyleProps>`
+    background-color: ${Colour.bg};
     border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-    padding: ${(props) => (props.$isCollapsed ? "0 0 1rem" : "0")};
-
-    ${MediaQuery.MaxWidth.sm} {
-        padding: ${(props) =>
-            props.$isCollapsed ? ".25rem 0 1.05rem" : "0.5rem 0"};
-    }
+    ${(props) =>
+        props.$expanded &&
+        css`
+            padding-bottom: ${Spacing["spacing-16"]};
+        `}
 `;
 
-export const TitleContainer = styled.div<StyleProps>`
+export const ExpandCollapseButton = styled.button<ExpandCollapseButtonProps>`
+    background: transparent;
+    border: none;
+    border-radius: ${Radius["sm"]};
+    outline: none;
+    text-align: left;
+    user-select: text;
+
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    cursor: ${(props) => (props.$isCollapsed ? "pointer" : "unset")};
+    gap: ${Spacing["spacing-48"]};
+    padding: ${Spacing["spacing-16"]} 0;
+
+    ${(props) =>
+        props.$expanded &&
+        css`
+            padding-bottom: ${Spacing["spacing-8"]};
+        `}
+
+    ${(props) =>
+        props.$collapsible &&
+        css`
+            cursor: pointer;
+        `}
+
+    :focus-visible {
+        outline: ${Border["width-020"]} ${Border["solid"]}
+            ${Colour["focus-ring"]};
+        outline-offset: 0;
+    }
 `;
 
-const TITLE_STYLE = (isCollapsed?: boolean) => css`
+export const Title = styled.span<TitleProps>`
     flex: 1;
-    margin: 1rem 2rem ${isCollapsed ? 0.5 : 1}rem 0;
     transition: all ${Motion["duration-250"]} ${Motion["ease-standard"]};
+    color: ${Colour["text"]};
+
+    ${(props) =>
+        props.$type === "small"
+            ? Font["heading-xs-bold"]
+            : Font["heading-sm-bold"]}
 `;
 
-export const Title = styled(Typography.HeadingSM)<StyleProps>`
-    ${(props) => {
-        return TITLE_STYLE(props.$isCollapsed);
-    }}
-`;
-
-export const TitleH4 = styled(Typography.HeadingXS)<StyleProps>`
-    ${(props) => {
-        return TITLE_STYLE(props.$isCollapsed);
-    }}
-`;
-
-export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
-    height: 3.25rem;
-    width: 3.25rem;
-    padding: 1rem;
-    transform: rotate(${(props) => (props.$isCollapsed ? 0 : 180)}deg);
+export const IconContainer = styled.span<ContainerStyleProps>`
+    transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
     transition: transform ${Motion["duration-250"]} ${Motion["ease-default"]};
-    margin: auto -1rem auto 0;
 `;
 
 export const ChevronIcon = styled(ChevronUpIcon)`
@@ -69,13 +100,13 @@ export const ChevronIcon = styled(ChevronUpIcon)`
     color: ${Colour["icon-primary"]};
 `;
 
-export const Expandable = styled(animated.div)<StyleProps>`
+export const Expandable = styled(animated.div)`
     overflow: hidden;
 `;
 
-export const DescriptionContainer = styled.div`
+export const ContentContainer = styled.div`
     display: inline-block;
-    padding-right: 4rem;
+    padding-right: ${Spacing["spacing-64"]};
 
     ${MediaQuery.MaxWidth.lg} {
         padding-right: 0;

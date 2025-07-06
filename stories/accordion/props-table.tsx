@@ -56,6 +56,13 @@ const ACCORDION_DATA: ApiTableSectionProps[] = [
                 description: "The test identifier for the component",
                 propTypes: ["string"],
             },
+            {
+                name: "headingLevel",
+                description:
+                    "Specify a custom heading level to match the component's position in the page",
+                propTypes: ["number"],
+                defaultValue: "2",
+            },
         ],
     },
 ];
