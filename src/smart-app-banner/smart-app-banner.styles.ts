@@ -39,8 +39,8 @@ export const SmartAppBannerContainer = styled.div<{
     ${(props) => {
         return props.theme?.colourMode === "dark"
             ? css`
-                  border: ${Border["width-010"](props)}
-                      ${Border["solid"](props)} ${Colour["border"]};
+                  border: ${Border["width-010"]} ${Border["solid"]}
+                      ${Colour["border"]};
               `
             : css`
                   box-shadow: 0 2px 8px

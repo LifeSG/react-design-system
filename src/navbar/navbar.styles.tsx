@@ -36,15 +36,12 @@ export const Wrapper = styled.div<StyleProps>`
     ${(props) => {
         return props.theme?.colourMode === "dark"
             ? css`
-                  border-bottom: ${Border["width-010"](props)}
-                      ${Border["solid"](props)} ${Colour["border"]};
+                  border-bottom: ${Border["width-010"]} ${Border["solid"]}
+                      ${Colour["border"]};
               `
             : css`
                   box-shadow: 0 2px 8px
-                      rgba(
-                          from ${Colour.Primitive["neutral-50"](props)} r g b /
-                              24%
-                      );
+                      rgba(from ${Colour.Primitive["neutral-50"]} r g b / 24%);
               `;
     }}
 `;
