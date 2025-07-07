@@ -36,8 +36,17 @@ export const SmartAppBannerContainer = styled.div<{
     min-height: 5.5rem;
     z-index: 9001;
     background: ${Colour.bg};
-    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    box-shadow: 0 2px 8px rgba(from ${Colour["bg-inverse-subtle"]} r g b / 16%);
+    ${(props) => {
+        return props.theme?.colourMode === "dark"
+            ? css`
+                  border: ${Border["width-010"](props)}
+                      ${Border["solid"](props)} ${Colour["border"]};
+              `
+            : css`
+                  box-shadow: 0 2px 8px
+                      rgba(from ${Colour.Primitive["neutral-50"]} r g b / 24%);
+              `;
+    }}
     border-radius: ${Radius["md"]};
     ${(props) => {
         if (props.$isAnimated)

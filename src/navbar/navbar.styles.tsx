@@ -1,5 +1,5 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Border, Colour, MediaQuery, Motion } from "../theme";
 
@@ -33,18 +33,20 @@ export const Wrapper = styled.div<StyleProps>`
     left: 0;
     right: 0;
     width: 100%;
-    border-bottom: ${(props) =>
-        props.theme?.colourMode === "dark"
-            ? `${Border["width-010"](props)} ${Border["solid"](props)} ${Colour[
-                  "border"
-              ](props)}`
-            : "none"};
-    box-shadow: ${(props) =>
-        props.theme?.colourMode === "dark"
-            ? "none"
-            : `0 2px 8px rgba(from ${Colour.Primitive["neutral-30"](
-                  props
-              )} r g b / 16%)`};
+    ${(props) => {
+        return props.theme?.colourMode === "dark"
+            ? css`
+                  border-bottom: ${Border["width-010"](props)}
+                      ${Border["solid"](props)} ${Colour["border"]};
+              `
+            : css`
+                  box-shadow: 0 2px 8px
+                      rgba(
+                          from ${Colour.Primitive["neutral-50"](props)} r g b /
+                              24%
+                      );
+              `;
+    }}
 `;
 
 export const Nav = styled.nav<StyleProps>`
