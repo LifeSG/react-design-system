@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { lineClampCss } from "../shared/styles";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 import { Typography } from "../typography";
@@ -28,8 +28,17 @@ export const Wrapper = styled.ul`
 
     background: ${Colour["bg"]};
     border-radius: ${Radius["md"]};
-    box-shadow: 0px 2px 8px 0px
-        rgb(from ${Colour.Primitive["neutral-50"]} r g b / 25%);
+    ${(props) => {
+        return props.theme?.colourMode === "dark"
+            ? css`
+                  border: ${Border["width-010"]} ${Border["solid"]}
+                      ${Colour["border"]};
+              `
+            : css`
+                  box-shadow: 0 2px 8px
+                      rgba(from ${Colour.Primitive["neutral-50"]} r g b / 24%);
+              `;
+    }}
 `;
 
 export const MobileWrapper = styled.ul`
