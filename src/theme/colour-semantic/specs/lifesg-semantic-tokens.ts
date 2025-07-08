@@ -148,7 +148,7 @@ export const LifeSGColourSet: SemanticColourSet = {
     "hyperlink-inverse": getPrimitiveColour("primary-inverse"),
 
     // focus ring
-    "focus-ring": getPrimitiveColour("black"),
+    "focus-ring": getPrimitiveColour("primary-50"),
     "focus-ring-inverse": getPrimitiveColour("white"),
 };
 
