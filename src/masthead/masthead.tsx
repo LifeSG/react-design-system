@@ -1,8 +1,12 @@
 import { useEffect } from "react";
+import { useTheme } from "styled-components";
 import { Wrapper } from "./masthead.style";
 import { MastheadProps } from "./types";
 
 export const Masthead = ({ stretch = false }: MastheadProps): JSX.Element => {
+    const theme = useTheme();
+    const isDarkMode = theme?.colourMode === "dark";
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -11,6 +15,18 @@ export const Masthead = ({ stretch = false }: MastheadProps): JSX.Element => {
             addAssets();
         }
     }, []);
+
+    useEffect(() => {
+        if (isDarkMode) {
+            document.documentElement.classList.add("sgds-night-theme");
+        } else {
+            document.documentElement.classList.remove("sgds-night-theme");
+        }
+
+        return () => {
+            document.documentElement.classList.remove("sgds-night-theme");
+        };
+    }, [isDarkMode]);
 
     // =============================================================================
     // HELPER FUNCTIONS
