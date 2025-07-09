@@ -1,4 +1,5 @@
-import { useContext, useEffect } from "react";
+import { HTMLAttributes, useContext, useEffect } from "react";
+import { SidenavContext } from "./sidenav-context";
 import {
     Container,
     DefaultButton,
@@ -6,7 +7,6 @@ import {
     TitleText,
 } from "./sidenav-item.styles";
 import { SidenavItemProps } from "./types";
-import { SidenavContext } from "./sidenav-context";
 
 export const SidenavItem = ({
     children,
@@ -20,6 +20,7 @@ export const SidenavItem = ({
     // =============================================================================
     const id = otherProps.id || title.toLowerCase().replaceAll(" ", "-");
     const {
+        internalId,
         currentItem,
         previouslySelectedItemId,
         selectedItem,
@@ -27,6 +28,8 @@ export const SidenavItem = ({
         setPreviouslySelectedItemId,
         setSelectedItem,
     } = useContext(SidenavContext);
+    const isSelected = !!selectedItem && selectedItem.itemId === id;
+    const isCurrent = !!currentItem && currentItem.itemId === id;
 
     // =============================================================================
     // EFFECTS
@@ -67,19 +70,28 @@ export const SidenavItem = ({
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
+    const ariaControlProps: HTMLAttributes<HTMLButtonElement> = children
+        ? {
+              "aria-controls": `${internalId}-drawer`,
+              "aria-haspopup": true,
+              "aria-expanded":
+                  (isCurrent && !!currentItem.content) ||
+                  (isSelected && !!selectedItem.content),
+          }
+        : {};
+
     return (
         <Container>
             <DefaultButton
                 type="button"
                 onClick={handleOnClick}
                 onMouseEnter={handleMouseEnter}
+                aria-current={isSelected ? "page" : undefined}
+                {...ariaControlProps}
                 {...otherProps}
-                $highlight={
-                    (!!selectedItem && selectedItem.itemId === id) ||
-                    (!!currentItem && currentItem.itemId === id)
-                }
+                $highlight={isSelected || isCurrent}
             >
-                <IconContainer>{icon}</IconContainer>
+                <IconContainer aria-hidden>{icon}</IconContainer>
                 <TitleText>{title}</TitleText>
             </DefaultButton>
         </Container>

@@ -1,4 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useSpring } from "react-spring";
+import { SimpleIdGenerator, useEventListener } from "../util";
+import { SidenavContext, SidenavContextItem } from "./sidenav-context";
+import { SidenavDrawerItem } from "./sidenav-drawer-item";
+import { SidenavDrawerSubitem } from "./sidenav-drawer-subitem";
+import { SidenavGroup } from "./sidenav-group";
+import { SidenavItem } from "./sidenav-item";
 import {
     DesktopContainer,
     DesktopDrawer,
@@ -6,13 +13,6 @@ import {
     Wrapper,
 } from "./sidenav.styles";
 import { SidenavProps } from "./types";
-import { SidenavItem } from "./sidenav-item";
-import { SidenavGroup } from "./sidenav-group";
-import { SidenavContext, SidenavContextItem } from "./sidenav-context";
-import { SidenavDrawerItem } from "./sidenav-drawer-item";
-import { SidenavDrawerSubitem } from "./sidenav-drawer-subitem";
-import { useSpring } from "react-spring";
-import { useEventListener } from "../util/use-event-listener";
 
 const SidenavBase = ({
     fixed = true,
@@ -23,6 +23,8 @@ const SidenavBase = ({
     // CONST, STATE, REF
     // =============================================================================
     const wrapperRef = useRef<HTMLDivElement>(null);
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const drawerId = `${internalId}-drawer`;
 
     const [currentItem, setCurrentItem] = useState<
         SidenavContextItem | undefined
@@ -34,25 +36,6 @@ const SidenavBase = ({
         string | undefined
     >(undefined);
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
-
-    const value = useMemo(
-        () => ({
-            currentItem,
-            selectedItem,
-            previouslySelectedItemId,
-            setCurrentItem,
-            setSelectedItem,
-            setPreviouslySelectedItemId,
-        }),
-        [
-            currentItem,
-            selectedItem,
-            previouslySelectedItemId,
-            setCurrentItem,
-            setSelectedItem,
-            setPreviouslySelectedItemId,
-        ]
-    );
 
     const drawerAnimationProps = useSpring({
         width: showDrawer ? 240 : 0,
@@ -104,7 +87,17 @@ const SidenavBase = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <SidenavContext.Provider value={value}>
+        <SidenavContext.Provider
+            value={{
+                internalId,
+                currentItem,
+                selectedItem,
+                previouslySelectedItemId,
+                setCurrentItem,
+                setSelectedItem,
+                setPreviouslySelectedItemId,
+            }}
+        >
             <Wrapper
                 $fixed={fixed}
                 {...otherProps}
@@ -113,6 +106,7 @@ const SidenavBase = ({
             >
                 <DesktopContainer>{children}</DesktopContainer>
                 <DesktopDrawer
+                    id={drawerId}
                     style={drawerAnimationProps}
                     $showDrawer={showDrawer}
                     data-testid="sidenav-drawer"
