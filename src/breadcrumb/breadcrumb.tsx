@@ -114,14 +114,7 @@ export const Breadcrumb = ({
 
             if (index === links.length - 1 || !link.href) {
                 element = (
-                    <CurrentLabel
-                        weight="semibold"
-                        tabIndex={0}
-                        role="text"
-                        {...(index === links.length - 1 && {
-                            "aria-current": "page",
-                        })}
-                    >
+                    <CurrentLabel weight="semibold">
                         {link.children}
                     </CurrentLabel>
                 );
@@ -130,7 +123,13 @@ export const Breadcrumb = ({
             }
 
             return (
-                <Item key={index} $styleProps={itemStyle}>
+                <Item
+                    key={index}
+                    $styleProps={itemStyle}
+                    {...(index === links.length - 1 && {
+                        "aria-current": "page",
+                    })}
+                >
                     {element}
                     {index < links.length - 1 && <Caret aria-hidden="true" />}
                 </Item>
