@@ -1,21 +1,41 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Colour } from "../theme";
+import { BadgeColor } from "./types";
 
-type BadgeColor = "default" | "important";
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+export interface BadgeWrapperProps {
+    $isOverlay?: boolean | undefined;
+}
 
-const getBackgroundColor = (color: BadgeColor) => {
-    return color === "important" ? Colour["icon-error"] : Colour["bg-primary"]; // gray for default
+export interface BadgeProps {
+    $color?: BadgeColor | undefined;
+}
+
+const getBackgroundColor = (props: BadgeProps) => {
+    return props.$color === "important"
+        ? Colour["icon-error"]
+        : Colour["bg-primary"];
 };
 
-export const BadgeWrapper = styled.div`
-    position: absolute;
+export const BadgeWrapper = styled.div<BadgeWrapperProps>`
+    ${(props) =>
+        props.$isOverlay
+            ? css`
+                  top: 0;
+                  right: 0;
+                  transform: translate(50%, -25%);
+                  position: absolute;
+              `
+            : ``};
 `;
 
-export const NumberBadge = styled.div<{ color: BadgeColor }>`
+export const NumberBadge = styled.div<BadgeProps>`
     min-width: 20px;
     height: 20px;
     padding: 2px 6px;
-    background-color: ${({ color }) => getBackgroundColor(color)};
+    background-color: ${(props) => getBackgroundColor(props)};
     color: white;
     font-weight: bold;
     font-size: 12px;
@@ -27,18 +47,18 @@ export const NumberBadge = styled.div<{ color: BadgeColor }>`
 `;
 
 export const NumberBadgeWithBorder = styled(NumberBadge)`
-    border: 2px solid ${({ color }) => getBackgroundColor(color)};
+    box-shadow: 0 0 0 2px ${Colour["bg"]};
 `;
 
-export const DotBadge = styled.div<{ color: BadgeColor }>`
+export const DotBadge = styled.div<BadgeProps>`
     width: 8px;
     height: 8px;
-    background-color: ${({ color }) => getBackgroundColor(color)};
+    background-color: ${(props) => getBackgroundColor(props)};
     border-radius: 50%;
 `;
 
 export const DotBadgeWithBorder = styled(DotBadge)`
-    border: 2px solid ${({ color }) => getBackgroundColor(color)};
+    box-shadow: 0 0 0 2px ${Colour["bg"]};
     width: 10px;
     height: 10px;
 `;

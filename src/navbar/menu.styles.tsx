@@ -7,16 +7,27 @@ import { Typography } from "../typography";
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
+interface DesktopWrapperProps {
+    $alignment?: "left" | "right";
+}
 
 // =============================================================================
 // WRAPPER
 // =============================================================================
 
-export const Wrapper = styled.ul`
+export const Wrapper = styled.ul<DesktopWrapperProps>`
     display: flex;
     flex-direction: column;
     position: absolute;
-    left: 0;
+    ${(props) => {
+        return props.$alignment === "right"
+            ? css`
+                  right: 0;
+              `
+            : css`
+                  left: 0;
+              `;
+    }}
     top: 100%;
 
     min-width: 15.625rem;

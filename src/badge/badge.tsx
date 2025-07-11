@@ -18,32 +18,23 @@ export const Badge: React.FC<BadgeProps> = ({
     count = 0,
     variant = "number",
     color = "default",
-    isOnAvatar = false,
+    isOverlay = false,
 }) => {
     const displayCount = getDisplayCount(count);
 
-    const offsets = {
-        number: isOnAvatar ? { x: 1, y: -7 } : { x: 4, y: 1 },
-        "number-with-border": isOnAvatar ? { x: 1, y: -7 } : { x: 4, y: 1 },
-        dot: { x: -1, y: -2 },
-        "dot-with-border": { x: -1, y: -2 },
-    };
-
-    const { x, y } = offsets[variant];
-
     return (
-        <BadgeWrapper style={{ top: `${y}px`, right: `${x}px` }}>
+        <BadgeWrapper $isOverlay={isOverlay}>
             {variant === "number" && (
-                <NumberBadge color={color}>{displayCount}</NumberBadge>
+                <NumberBadge $color={color}>{displayCount}</NumberBadge>
             )}
             {variant === "number-with-border" && (
-                <NumberBadgeWithBorder color={color}>
+                <NumberBadgeWithBorder $color={color}>
                     {displayCount}
                 </NumberBadgeWithBorder>
             )}
-            {variant === "dot" && <DotBadge color={color} />}
+            {variant === "dot" && <DotBadge $color={color} />}
             {variant === "dot-with-border" && (
-                <DotBadgeWithBorder color={color} />
+                <DotBadgeWithBorder $color={color} />
             )}
         </BadgeWrapper>
     );

@@ -7,9 +7,10 @@ import { TypographyLinkProps } from "../typography";
 
 export interface NavItemLinkProps<T> extends NavItemCommonProps<T> {
     itemType?: "link";
-    subMenu?: NavItemCommonProps<T>[] | undefined;
+    subMenu?: NavItemProps<T>[] | undefined;
 }
 export interface NavItemComponentProps {
+    id?: string | undefined;
     itemType: "component";
     children: JSX.Element;
 }

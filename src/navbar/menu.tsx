@@ -1,11 +1,12 @@
 import React from "react";
 import { Link, MenuItem, MobileWrapper, Wrapper } from "./menu.styles";
-import { NavItemCommonProps } from "./types";
+import { NavItemCommonProps, NavItemProps } from "./types";
 
 interface Props<T> {
-    items: NavItemCommonProps<T>[];
+    items: NavItemProps<T>[];
     /** toggle for mobile or desktop view */
     mobile?: boolean | undefined;
+    alignment?: "left" | "right";
     onItemClick: (
         event: React.MouseEvent<HTMLAnchorElement>,
         item: NavItemCommonProps<T>
@@ -15,6 +16,7 @@ interface Props<T> {
 export const Menu = <T,>({
     items,
     mobile = false,
+    alignment = "left",
     onItemClick,
 }: Props<T>): JSX.Element => {
     // =============================================================================
@@ -32,14 +34,19 @@ export const Menu = <T,>({
     // =============================================================================
     const renderItems = (isMobile = false) => {
         return items.map((item, index) => {
-            const { children, options, ...otherItemAttrs } = item;
+            const { children, itemType } = item;
 
             const testId = isMobile
                 ? `link__mobile-${index + 1}`
                 : `link__${index + 1}`;
 
-            return (
-                <MenuItem key={index}>
+            const renderItem = () => {
+                if (itemType === "component") {
+                    return children;
+                }
+
+                const { options, ...otherItemAttrs } = item;
+                return (
                     <Link
                         data-testid={testId}
                         {...otherItemAttrs}
@@ -48,14 +55,19 @@ export const Menu = <T,>({
                     >
                         {children}
                     </Link>
-                </MenuItem>
-            );
+                );
+            };
+
+            return <MenuItem key={index}>{renderItem()}</MenuItem>;
         });
     };
 
     if (items && items.length > 0) {
         const ContentWrapper = mobile ? MobileWrapper : Wrapper;
-        return <ContentWrapper>{renderItems(mobile)}</ContentWrapper>;
+        const props = mobile ? {} : { $alignment: alignment };
+        return (
+            <ContentWrapper {...props}>{renderItems(mobile)}</ContentWrapper>
+        );
     }
 
     return <></>;
