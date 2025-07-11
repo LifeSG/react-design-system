@@ -114,7 +114,7 @@ export const Breadcrumb = ({
 
             if (index === links.length - 1 || !link.href) {
                 element = (
-                    <CurrentLabel weight="semibold">
+                    <CurrentLabel weight="semibold" as="span">
                         {link.children}
                     </CurrentLabel>
                 );
@@ -131,7 +131,7 @@ export const Breadcrumb = ({
                     })}
                 >
                     {element}
-                    {index < links.length - 1 && <Caret aria-hidden="true" />}
+                    {index < links.length - 1 && <Caret aria-hidden />}
                 </Item>
             );
         });
