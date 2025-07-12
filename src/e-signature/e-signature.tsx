@@ -131,7 +131,11 @@ export const ESignature = (props: EsignatureProps) => {
 
     const renderModal = () => {
         return (
-            <ScrollableModal data-testid="signature-modal" show={showModal}>
+            <ScrollableModal
+                data-testid="signature-modal"
+                show={showModal}
+                enableOverlayClick={false}
+            >
                 <GrowContainer>
                     <ModalBox onClose={() => setShowModal(false)}>
                         <ModalTitle>Signature</ModalTitle>
