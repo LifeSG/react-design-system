@@ -1,0 +1,134 @@
+import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
+import * as SchedulerStories from "./scheduler.stories";
+
+<Meta of={SchedulerStories} />
+
+# Scheduler
+
+A comprehensive calendar component that supports day and week views with time slots for appointment scheduling and resource management.
+
+## Features
+
+-   **Day View**: Single day view with 30-minute time slots
+-   **Week View**: Week view from Sunday to Saturday with daily columns
+-   **Responsive Design**: Mobile-friendly with day-only view on smaller screens
+-   **Navigation**: Previous/next day navigation with date picker
+-   **Current Time Indicator**: Purple line showing current time across the calendar
+-   **Clickable Slots**: All time slots are clickable, including empty ones
+-   **Sticky Headers**: Headers remain visible during scroll for better UX
+-   **Loading States**: Built-in loading and empty states
+-   **Date Range Constraints**: Optional min/max date restrictions
+
+## Usage
+
+```jsx
+import { Scheduler } from "src/scheduler";
+
+<Scheduler
+    date="2024-01-15"
+    view="day"
+    rowData={appointmentData}
+    minTime="08:00"
+    maxTime="18:00"
+    onPreviousDayClick={handlePreviousDay}
+    onNextDayClick={handleNextDay}
+    onTodayClick={handleToday}
+    onSlotClick={handleSlotClick}
+    onViewChange={handleViewChange}
+    onCalendarDateSelect={onCalendarDateSelect}
+/>;
+```
+
+## Examples
+
+### Default Day View
+
+<Canvas of={SchedulerStories.Default} />
+
+### Week View
+
+<Canvas of={SchedulerStories.WeekView} />
+
+### Loading State
+
+<Canvas of={SchedulerStories.Loading} />
+
+### Empty State
+
+<Canvas of={SchedulerStories.Empty} />
+
+### With Date Range Constraints
+
+<Canvas of={SchedulerStories.WithDateRange} />
+
+## Data Structure
+
+The scheduler expects data in the following format:
+
+```typescript
+interface SchedulerRowData {
+    id?: string;
+    name: string; // Service/resource name
+    subtitle?: string | JSX.Element; // Optional subtitle
+    rowCells: SchedulerRowCellData[];
+    onRowNameClick?: (rowData: SchedulerRowData, e: React.MouseEvent) => void;
+}
+
+interface SchedulerRowCellData {
+    id?: string;
+    startTime: string; // HH:mm format
+    endTime: string; // HH:mm format
+    status:
+        | "filled"
+        | "blocked"
+        | "default"
+        | "disabled"
+        | "pending"
+        | "unavailable";
+    title?: string; // Slot title
+    subtitle?: string; // Slot subtitle
+    onClick?: (data: SchedulerRowCellData, e: React.MouseEvent) => void;
+}
+```
+
+## Props
+
+The Scheduler component accepts the following props:
+
+-   `date`: The current date to display (string in YYYY-MM-DD format)
+-   `view`: The view mode - "day" or "week" (default: "day")
+-   `rowData`: Array of row data for the scheduler
+-   `loading`: Whether the scheduler is in loading state (default: false)
+-   `minTime`: Minimum time to display (HH:mm format, default: "00:00")
+-   `maxTime`: Maximum time to display (HH:mm format, default: "23:59")
+-   `minDate`: Optional minimum date restriction
+-   `maxDate`: Optional maximum date restriction
+-   `onPreviousDayClick`: Callback for previous day navigation
+-   `onNextDayClick`: Callback for next day navigation
+-   `onTodayClick`: Callback for today button click
+-   `onSlotClick`: Callback for slot clicks
+-   `onViewChange`: Callback for view changes
+
+## Accessibility
+
+-   **Keyboard Navigation**: Full keyboard support for navigation and interaction
+-   **Screen Reader Support**: Proper ARIA labels and descriptions
+-   **Focus Management**: Logical tab order and focus indicators
+-   **Color Contrast**: Meets WCAG AA standards for color contrast
+
+## Mobile Responsiveness
+
+On mobile devices (screen width < 768px):
+
+-   Only day view is available
+-   View selector is hidden
+-   Today button is hidden
+-   Horizontal scrolling is disabled
+-   Single column layout
+
+## Browser Support
+
+-   Chrome 90+
+-   Firefox 88+
+-   Safari 14+
+-   Edge 90+
