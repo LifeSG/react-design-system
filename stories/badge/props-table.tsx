@@ -29,9 +29,9 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `"default"`,
             },
             {
-                name: "isOnAvatar",
+                name: "isOverlay",
                 description:
-                    "Adjusts the badge position to align correctly when placed on an avatar.",
+                    "Positions the badge in an overlaid manner on top of an icon or avatar. When set to `true`, positioning offsets are applied for proper placement.",
                 propTypes: ["boolean"],
                 defaultValue: `false`,
             },
