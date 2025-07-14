@@ -75,10 +75,7 @@ export const Container = styled.div<StyleProps>`
     `}
 
     // Show custom focus ring when input is focused
-    input:focus-visible + ${StyledUncheckedIcon},
-    input:focus-visible + ${StyledUncheckedDisabledIcon},
-    input:focus-visible + ${StyledCheckedIcon},
-    input:focus-visible + ${StyledInteremediateIcon} {
+    input:focus-visible + svg {
         outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: 0px;
         border-radius: 4px;

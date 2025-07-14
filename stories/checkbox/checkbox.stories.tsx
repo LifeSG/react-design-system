@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Checkbox } from "src/checkbox";
 import { GridDecorator } from "stories/storybook-common";
-import { Label, SubOption } from "./doc-elements";
+import { Label, SelectAll, SubOption } from "./doc-elements";
 
 type Component = typeof Checkbox;
 
@@ -51,22 +51,26 @@ export const IndeterminateState: StoryObj<Component> = {
         const [checked1, setChecked1] = useState(true);
         const [checked2, setChecked2] = useState(false);
         return (
-            <div role="group" aria-label="All options">
-                <Checkbox
-                    id="all-sub-options"
-                    checked={checked1 && checked2}
-                    indeterminate={checked1 !== checked2}
-                    onChange={() => {
-                        if (checked1 !== checked2) {
-                            setChecked1(true);
-                            setChecked2(true);
-                        } else {
-                            setChecked1(!checked1);
-                            setChecked2(!checked1);
-                        }
-                    }}
-                    aria-controls="sub-option-1 sub-option-2"
-                />
+            <div role="group">
+                <SelectAll>
+                    <Checkbox
+                        id="all-sub-options"
+                        checked={checked1 && checked2}
+                        indeterminate={checked1 !== checked2}
+                        onChange={() => {
+                            if (checked1 !== checked2) {
+                                setChecked1(true);
+                                setChecked2(true);
+                            } else {
+                                setChecked1(!checked1);
+                                setChecked2(!checked1);
+                            }
+                        }}
+                        aria-controls="sub-option-1 sub-option-2"
+                    />
+                    <Label htmlFor="all-sub-options">Select all</Label>
+                </SelectAll>
+
                 <div role="list">
                     <SubOption role="listitem">
                         <Checkbox

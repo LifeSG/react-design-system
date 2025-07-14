@@ -14,8 +14,6 @@ export const Checkbox = ({
     checked,
     disabled,
     indeterminate,
-    onChange,
-    onKeyPress, // will still need this for now else keyboard events are not handled
     displaySize = "default",
     id,
     ...otherProps
@@ -30,34 +28,6 @@ export const Checkbox = ({
             checkRef.current.indeterminate = indeterminate ?? false;
         }
     }, [indeterminate]);
-
-    // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
-    const handleOnCheck = (
-        event:
-            | React.ChangeEvent<HTMLInputElement>
-            | React.KeyboardEvent<HTMLDivElement>
-    ) => {
-        if (!disabled) {
-            const keyboardEvent =
-                event as React.KeyboardEvent<HTMLInputElement>;
-            const isValid =
-                keyboardEvent.key === " " || event.type === "change";
-
-            if (!isValid) {
-                return;
-            }
-
-            if (onChange) {
-                onChange(event as React.ChangeEvent<HTMLInputElement>);
-            }
-
-            if (onKeyPress) {
-                onKeyPress(keyboardEvent);
-            }
-        }
-    };
 
     // =============================================================================
     // RENDER FUNCTION
@@ -114,10 +84,8 @@ export const Checkbox = ({
                 checked={checked}
                 ref={checkRef}
                 tabIndex={disabled ? -1 : 0}
-                onChange={handleOnCheck}
                 disabled={disabled}
                 aria-checked={indeterminate ? "mixed" : checked}
-                aria-labelledby="checkbox-input"
                 {...otherProps}
             />
             {renderIcon()}
