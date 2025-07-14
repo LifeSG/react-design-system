@@ -79,7 +79,6 @@ export const Avatar = <T,>({
                 alignment={alignment}
                 items={items}
                 onItemClick={handleBlur}
-                aria-labelledby={`${testId}-avatar-button`}
             />
         );
     };
@@ -92,8 +91,6 @@ export const Avatar = <T,>({
                     onClick={handleAvatarClick}
                     $mobile={mobile}
                     data-testid={`${testId}-avatar-button`}
-                    aria-expanded={showMenu}
-                    aria-label={showMenu ? "expanded" : "collapse"}
                 >
                     {renderContent()}
                 </AvatarButton>
