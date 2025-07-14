@@ -8,7 +8,7 @@ interface AvatarMenuProps<T> {
 
 interface AvatarBadgeProps extends Omit<BadgeProps, "isOverlay" | "variant"> {}
 
-export interface AvatarProps<T> extends React.HTMLAttributes<HTMLElement> {
+export interface AvatarProps<T> extends React.HTMLAttributes<HTMLDivElement> {
     children: string | JSX.Element;
     menu?: AvatarMenuProps<T> | undefined;
     mobile?: boolean | undefined;

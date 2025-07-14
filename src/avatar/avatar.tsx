@@ -30,7 +30,7 @@ export const Avatar = <T,>({
     // EVENT HANDLERS
     // =============================================================================
     const handleAvatarClick = useCallback(
-        (event: React.MouseEvent<HTMLElement>) => {
+        (event: React.MouseEvent<HTMLDivElement>) => {
             setShowMenu(true);
             onClick?.(event);
         },
