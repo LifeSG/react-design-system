@@ -21,11 +21,11 @@ export const Tag = ({
         >
             {iconPosition === "left" &&
                 icon &&
-                React.cloneElement(icon, { "aria-hidden": "true" })}
+                React.cloneElement(icon, { "aria-hidden": true })}
             <Label role="presentation">{children}</Label>
             {iconPosition === "right" &&
                 icon &&
-                React.cloneElement(icon, { "aria-hidden": "true" })}
+                React.cloneElement(icon, { "aria-hidden": true })}
         </Wrapper>
     );
 };

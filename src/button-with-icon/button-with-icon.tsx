@@ -50,7 +50,7 @@ const DefaultComponent = (
             {loading ? (
                 <ComponentLoadingSpinner />
             ) : (
-                React.cloneElement(icon, { "aria-hidden": "true" })
+                React.cloneElement(icon, { "aria-hidden": true })
             )}
             <span>{children}</span>
         </MainButtonWithIcon>
@@ -93,7 +93,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
             {loading ? (
                 <ComponentLoadingSpinner />
             ) : (
-                React.cloneElement(icon, { "aria-hidden": "true" })
+                React.cloneElement(icon, { "aria-hidden": true })
             )}
             <span>{children}</span>
         </MainButtonWithIcon>
