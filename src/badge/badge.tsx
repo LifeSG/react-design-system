@@ -1,11 +1,4 @@
-import React from "react";
-import {
-    BadgeWrapper,
-    DotBadge,
-    DotBadgeWithBorder,
-    NumberBadge,
-    NumberBadgeWithBorder,
-} from "./badge.style";
+import { BadgeWrapper, StyledBadge } from "./badge.style";
 import { BadgeProps } from "./types";
 
 const getDisplayCount = (count: number): string => {
@@ -14,28 +7,22 @@ const getDisplayCount = (count: number): string => {
     return "1K+";
 };
 
-export const Badge: React.FC<BadgeProps> = ({
+export const Badge = ({
     count = 0,
     variant = "number",
     color = "default",
     isOverlay = false,
-}) => {
+}: BadgeProps) => {
     const displayCount = getDisplayCount(count);
+
+    const shouldShowCount =
+        variant === "number" || variant === "number-with-border";
 
     return (
         <BadgeWrapper $isOverlay={isOverlay}>
-            {variant === "number" && (
-                <NumberBadge $color={color}>{displayCount}</NumberBadge>
-            )}
-            {variant === "number-with-border" && (
-                <NumberBadgeWithBorder $color={color}>
-                    {displayCount}
-                </NumberBadgeWithBorder>
-            )}
-            {variant === "dot" && <DotBadge $color={color} />}
-            {variant === "dot-with-border" && (
-                <DotBadgeWithBorder $color={color} />
-            )}
+            <StyledBadge $variant={variant} $color={color}>
+                {shouldShowCount ? displayCount : null}
+            </StyledBadge>
         </BadgeWrapper>
     );
 };

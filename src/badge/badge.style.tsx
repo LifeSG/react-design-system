@@ -1,64 +1,73 @@
 import styled, { css } from "styled-components";
 import { Colour } from "../theme";
-import { BadgeColor } from "./types";
+import { BadgeProps } from "./types";
 
 // =============================================================================
-// STYLE INTERFACES
+// STYLING
 // =============================================================================
-export interface BadgeWrapperProps {
-    $isOverlay?: boolean | undefined;
-}
-
-export interface BadgeProps {
-    $color?: BadgeColor | undefined;
-}
-
-const getBackgroundColor = (props: BadgeProps) => {
-    return props.$color === "important"
-        ? Colour["icon-error"]
-        : Colour["bg-primary"];
-};
-
-export const BadgeWrapper = styled.div<BadgeWrapperProps>`
+export const BadgeWrapper = styled.div<{ $isOverlay?: boolean }>`
     ${(props) =>
-        props.$isOverlay
-            ? css`
-                  top: 0;
-                  right: 0;
-                  transform: translate(50%, -25%);
-                  position: absolute;
-              `
-            : ``};
+        props.$isOverlay &&
+        css`
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: translate(50%, -25%);
+        `}
 `;
 
-export const NumberBadge = styled.div<BadgeProps>`
+const numberBadgeStyles = css`
     min-width: 20px;
     height: 20px;
     padding: 2px 6px;
-    background-color: ${(props) => getBackgroundColor(props)};
-    color: white;
-    font-weight: bold;
     font-size: 12px;
     line-height: 1;
     border-radius: 999px;
+`;
+
+const dotBadgeStyles = css`
+    border-radius: 50%;
+    width: 8px;
+    height: 8px;
+`;
+
+export const StyledBadge = styled.div<{
+    $variant: BadgeProps["variant"];
+    $color: BadgeProps["color"];
+}>`
+    background-color: ${({ $color }) =>
+        $color === "important" ? Colour["icon-error"] : Colour["bg-primary"]};
+    color: white;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
-`;
 
-export const NumberBadgeWithBorder = styled(NumberBadge)`
-    box-shadow: 0 0 0 2px ${Colour["bg"]};
-`;
+    ${({ $variant }) => {
+        switch ($variant) {
+            case "number":
+                return numberBadgeStyles;
 
-export const DotBadge = styled.div<BadgeProps>`
-    width: 8px;
-    height: 8px;
-    background-color: ${(props) => getBackgroundColor(props)};
-    border-radius: 50%;
-`;
+            case "number-with-border":
+                return css`
+                    ${numberBadgeStyles}
+                    box-shadow: 0 0 0 2px ${Colour["bg"]};
+                `;
 
-export const DotBadgeWithBorder = styled(DotBadge)`
-    box-shadow: 0 0 0 2px ${Colour["bg"]};
-    width: 10px;
-    height: 10px;
+            case "dot":
+                return css`
+                    ${dotBadgeStyles}
+                `;
+
+            case "dot-with-border":
+                return css`
+                    ${dotBadgeStyles}
+
+                    box-shadow: 0 0 0 2px ${Colour["bg"]};
+                `;
+
+            default:
+                return "";
+        }
+    }}
 `;
