@@ -27,7 +27,12 @@ export const Badge = ({
 
     return (
         <BadgeWrapper $isOverlay={isOverlay}>
-            <StyledBadge $variant={variant} $color={color} data-testid={testId}>
+            <StyledBadge
+                $variant={variant}
+                $color={color}
+                data-testid={testId}
+                aria-label={shouldShowCount ? displayCount : "badge"}
+            >
                 {shouldShowCount ? displayCount : null}
             </StyledBadge>
         </BadgeWrapper>
