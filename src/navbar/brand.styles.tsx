@@ -25,3 +25,16 @@ export const Clickable = styled.a<StyleProps>`
         object-fit: contain;
     }
 `;
+
+export const NonClickable = styled.div<StyleProps>`
+    display: flex;
+    justify-content: center;
+    height: 100%;
+
+    img {
+        width: auto;
+        height: 100%;
+        transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+        object-fit: contain;
+    }
+`;

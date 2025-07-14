@@ -1,5 +1,5 @@
 import React from "react";
-import { Clickable } from "./brand.styles";
+import { Clickable, NonClickable } from "./brand.styles";
 import { BrandType, NavbarBrandingProps } from "./types";
 import { ImageWithFallback } from "../shared/image-with-fallback/image-with-fallback";
 
@@ -29,24 +29,41 @@ export const Brand = ({
     // =============================================================================
     const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
         if (onClick) {
+            event.preventDefault();
             onClick(event, type);
         }
     };
 
+    // Determine if this should be clickable - brands are clickable by default when onClick is provided
+    const isClickable = !!onClick;
+
+    const ariaLabel =
+        type === "primary"
+            ? `Go to ${resources.brandName} homepage`
+            : `Go to ${resources.brandName}`;
+
+    if (isClickable) {
+        return (
+            <Clickable
+                data-id={dataId}
+                data-testid={testId}
+                $type={type}
+                href="#"
+                onClick={handleClick}
+                aria-label={ariaLabel}
+            >
+                <ImageWithFallback src={resources.logoSrc} alt="" />
+            </Clickable>
+        );
+    }
+
     return (
-        <Clickable
-            role="link"
-            onClick={handleClick}
-            tabIndex={0}
-            data-id={dataId}
-            data-testid={testId}
-            $type={type}
-        >
+        <NonClickable data-id={dataId} data-testid={testId} $type={type}>
             <ImageWithFallback
                 src={resources.logoSrc}
                 alt={resources.brandName}
             />
-        </Clickable>
+        </NonClickable>
     );
 };
 

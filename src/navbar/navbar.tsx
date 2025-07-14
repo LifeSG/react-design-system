@@ -147,7 +147,6 @@ const Component = <T,>(
         type: BrandType
     ) => {
         if (onBrandClick) {
-            event.preventDefault();
             onBrandClick(type);
         }
 
@@ -216,7 +215,7 @@ const Component = <T,>(
     const renderDrawer = () => (
         <Overlay
             show={showOverlay}
-            enableOverlayClick={true}
+            enableOverlayClick
             onOverlayClick={handleDrawerClose}
         >
             <Drawer
@@ -292,7 +291,7 @@ const Component = <T,>(
     const renderNavbar = () => {
         return (
             <Layout.Content stretch={isStretch}>
-                <Nav $compress={compress}>
+                <Nav $compress={compress} aria-label="Main navigation menu">
                     {!hideNavBranding && renderBrand()}
                     {!hideNavElements && (
                         <NavElementsContainer
