@@ -35,6 +35,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
                 defaultValue: `false`,
             },
+            {
+                name: "data-testid",
+                description: "Test ID used for targeting elements in tests",
+                propTypes: ["string"],
+                defaultValue: `"badge"`,
+            },
         ],
     },
 ];
