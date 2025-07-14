@@ -30,7 +30,7 @@ export const Menu: StoryObj<MenuComponent> = {
         const [selectedIndex, setSelectedIndex] = useState(-1);
 
         const handleNavItemClick = (
-            e: React.MouseEvent,
+            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
             item: LocalNavItemProps,
             index: number
         ) => {
@@ -54,7 +54,7 @@ export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
         const [selectedIndex, setSelectedIndex] = useState(-1);
 
         const handleNavItemClick = (
-            e: React.MouseEvent,
+            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
             item: LocalNavItemProps,
             index: number
         ) => {
@@ -95,7 +95,7 @@ export const Dropdown: StoryObj<DropdownComponent> = {
         const contentRef = useRef<HTMLDivElement>(null);
 
         const handleNavItemClick = (
-            e: React.MouseEvent,
+            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
             item: LocalNavItemProps,
             index: number
         ) => {
@@ -145,7 +145,7 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
         const contentRef = useRef<HTMLDivElement>(null);
 
         const handleNavItemClick = (
-            e: React.MouseEvent,
+            e: React.MouseEvent | React.KeyboardEvent<HTMLElement>,
             item: LocalNavItemProps,
             index: number
         ) => {
@@ -214,7 +214,7 @@ export const CombinedUsage: StoryObj = {
         });
 
         const handleNavItemClick = (
-            e: React.MouseEvent,
+            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
             item: LocalNavItemProps,
             index: number
         ) => {

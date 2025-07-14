@@ -51,8 +51,21 @@ const Component = (
         };
 
         return (
-            <NavItem id={id} $isSelected={isSelected} onClick={handleClick}>
-                {renderTitle()}
+            <NavItem id={id} $isSelected={isSelected}>
+                <div
+                    role="link"
+                    onClick={handleClick}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            handleClick(e);
+                        }
+                    }}
+                    tabIndex={0}
+                    aria-current={isSelected ? true : undefined}
+                >
+                    {renderTitle()}
+                </div>
             </NavItem>
         );
     };
