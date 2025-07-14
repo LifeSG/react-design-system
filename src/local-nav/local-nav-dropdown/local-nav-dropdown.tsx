@@ -172,6 +172,90 @@ const Component = (
         }
     };
 
+    const focusFirstMenuItem = () => {
+        const firstMenuItem = navWrapperRef.current?.querySelector(
+            '[role="menuitem"]'
+        ) as HTMLElement;
+        firstMenuItem?.focus();
+    };
+
+    const focusLastMenuItem = () => {
+        const menuItems = navWrapperRef.current?.querySelectorAll(
+            '[role="menuitem"]'
+        ) as NodeListOf<HTMLElement>;
+        const lastMenuItem = menuItems[menuItems.length - 1];
+        lastMenuItem?.focus();
+    };
+
+    const handleNavItemKeyDown = (
+        e: React.KeyboardEvent<HTMLElement>,
+        handleClick: (
+            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>
+        ) => void
+    ) => {
+        const { key } = e;
+
+        if (key === "Enter" || key === " ") {
+            e.preventDefault();
+            handleClick(e);
+        }
+    };
+
+    const handleNavSelectKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+        const { key } = e;
+
+        if (key === "ArrowDown") {
+            e.preventDefault();
+            if (!isDropdownExpanded) {
+                setIsDropdownExpanded(true);
+            }
+            setTimeout(focusFirstMenuItem, 0);
+        } else if (key === "ArrowUp") {
+            e.preventDefault();
+            if (!isDropdownExpanded) {
+                setIsDropdownExpanded(true);
+            }
+            setTimeout(focusLastMenuItem, 0);
+        } else if (key === "Enter" || key === " ") {
+            e.preventDefault();
+            setIsDropdownExpanded(true);
+            setTimeout(focusFirstMenuItem, 0);
+        } else if (key === "Tab") {
+            setIsDropdownExpanded(false);
+        } else if (key === "Escape") {
+            setIsDropdownExpanded(false);
+        }
+    };
+
+    const handleNavItemListKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+        const { key } = e;
+
+        const menuItems = Array.from(
+            e.currentTarget.querySelectorAll('[role="menuitem"]')
+        ) as HTMLElement[];
+
+        const currentIndex = menuItems.indexOf(
+            document.activeElement as HTMLElement
+        );
+
+        if (key === "ArrowDown") {
+            e.preventDefault();
+            const nextIndex =
+                currentIndex < menuItems.length - 1 ? currentIndex + 1 : 0;
+            menuItems[nextIndex]?.focus();
+        } else if (key === "ArrowUp") {
+            e.preventDefault();
+            const prevIndex =
+                currentIndex > 0 ? currentIndex - 1 : menuItems.length - 1;
+            menuItems[prevIndex]?.focus();
+        } else if (key === "Tab") {
+            setIsDropdownExpanded(false);
+        } else if (key === "Escape") {
+            setIsDropdownExpanded(false);
+            dropdownRef.current?.focus();
+        }
+    };
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -185,7 +269,7 @@ const Component = (
     };
 
     const handleNavItemClick = (
-        e: React.MouseEvent,
+        e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
         item: LocalNavItemProps,
         index: number
     ) => {
@@ -209,7 +293,7 @@ const Component = (
 
         if (renderItem) {
             return (
-                <li id={id} onClick={handleClick}>
+                <li id={id} onClick={handleClick} role="none">
                     {renderItem(item, {
                         selected: isSelected,
                         stickied: isStickied,
@@ -221,8 +305,12 @@ const Component = (
         return (
             <NavItem
                 id={id}
+                role="menuitem"
                 $isSelected={isSelected && isStickied}
                 onClick={handleClick}
+                onKeyDown={(e) => handleNavItemKeyDown(e, handleClick)}
+                aria-current={isSelected ? true : undefined}
+                tabIndex={-1}
             >
                 {isSelected && <StyledTickIcon />}
                 <NavItemLabel $isSelected={isSelected}>{title}</NavItemLabel>
@@ -244,9 +332,14 @@ const Component = (
             >
                 <NavSelect
                     ref={dropdownRef}
+                    role="button"
                     onClick={handleToggleDropdown}
+                    onKeyDown={handleNavSelectKeyDown}
                     data-testid={`${navTestId}-label`}
                     $isDropdownExpanded={isDropdownExpanded}
+                    aria-haspopup="true"
+                    aria-expanded={isDropdownExpanded}
+                    tabIndex={0}
                 >
                     <Typography.BodyBL weight="semibold">
                         {labelText}
@@ -255,6 +348,8 @@ const Component = (
                 </NavSelect>
                 {isDropdownExpanded && (
                     <NavItemList
+                        role="menu"
+                        onKeyDown={handleNavItemListKeyDown}
                         data-testid={`${navTestId}-dropdown-list`}
                         $viewportHeight={
                             viewportHeight - dropdowntHeight - stickyOffset
