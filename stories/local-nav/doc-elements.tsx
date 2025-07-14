@@ -26,7 +26,7 @@ const renderSection = (index: number) => (
         </Typography.HeadingMD>
         <Typography.BodyBL style={{ margin: "1rem 0" }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a
-            tortor vitae magna sagittis bibendum.
+            tortor vitae magna sagittis bibendum. <a href="#">Link</a>
         </Typography.BodyBL>
     </div>
 );

@@ -5,7 +5,9 @@ import {
 } from "./types";
 
 interface LocalNavItemBaseComponentProps {
-    handleClick: React.MouseEventHandler<HTMLLIElement>;
+    handleClick: (
+        e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>
+    ) => void;
     isSelected: boolean;
     item: LocalNavItemProps;
 }
