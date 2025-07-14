@@ -19,11 +19,12 @@ export const Badge: React.FC<BadgeProps> = ({
     variant = "number",
     color = "default",
     isOverlay = false,
+    "data-testid": testId = "badge",
 }) => {
     const displayCount = getDisplayCount(count);
 
     return (
-        <BadgeWrapper $isOverlay={isOverlay}>
+        <BadgeWrapper $isOverlay={isOverlay} data-testid={testId}>
             {variant === "number" && (
                 <NumberBadge $color={color}>{displayCount}</NumberBadge>
             )}

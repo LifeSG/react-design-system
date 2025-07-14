@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Badge } from "../badge";
 import { Menu } from "../navbar/menu";
 import { useBlur } from "../util/use-blur";
@@ -12,44 +12,60 @@ import {
 import { AvatarProps } from "./types";
 
 export const Avatar = <T,>({
-    content,
+    children,
     menu,
-    onClick,
     mobile = false,
+    badge,
+    onClick,
+    "data-testid": testId = "avatar",
+    ...otherProps
 }: AvatarProps<T>): JSX.Element => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
     const [showMenu, setShowMenu] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
     // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleAvatarClick = useCallback(
+        (event: React.MouseEvent<HTMLElement>) => {
+            setShowMenu(true);
+            onClick?.(event);
+        },
+        [onClick]
+    );
+
+    const handleBlur = useCallback(() => {
+        setShowMenu(false);
+    }, []);
+
+    // =============================================================================
     // EFFECTS
     // =============================================================================
-    const handleBlur = () => {
-        setShowMenu(false);
-    };
-
     useBlur(ref, handleBlur);
 
     // =============================================================================
-    // HELPER FUNCTION
+    // RENDER FUNCTIONS
     // =============================================================================
-    const handleAvatarClick = () => {
-        setShowMenu(true);
-        onClick?.();
-    };
-
     const renderContent = () => {
-        if (typeof content === "string") {
+        if (!children) {
+            return <></>;
+        }
+
+        if (typeof children === "string") {
             const TextComponent = mobile
                 ? AvatarBodySmallText
                 : AvatarBaselineText;
             return (
                 <TextComponent weight="semibold">
-                    {content.charAt(0).toUpperCase()}
+                    {children.charAt(0).toUpperCase()}
                 </TextComponent>
             );
         }
 
-        return content;
+        return children;
     };
 
     const renderMenu = () => {
@@ -70,14 +86,22 @@ export const Avatar = <T,>({
     return (
         <Container ref={ref}>
             <AvatarWrapper>
-                <AvatarButton onClick={handleAvatarClick} $mobile={mobile}>
+                <AvatarButton
+                    {...otherProps}
+                    onClick={handleAvatarClick}
+                    $mobile={mobile}
+                    data-testid={`${testId}-avatar-button`}
+                >
                     {renderContent()}
                 </AvatarButton>
-                <Badge
-                    count={10}
-                    isOverlay={true}
-                    variant={mobile ? "dot" : "number-with-border"}
-                />
+                {badge && (
+                    <Badge
+                        {...badge}
+                        isOverlay={true}
+                        variant={mobile ? "dot" : "number-with-border"}
+                        data-testid={`${testId}-badge`}
+                    />
+                )}
             </AvatarWrapper>
             {showMenu && renderMenu()}
         </Container>

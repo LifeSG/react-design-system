@@ -11,4 +11,5 @@ export interface BadgeProps {
     variant?: BadgeVariant | undefined;
     color?: BadgeColor | undefined;
     isOverlay?: boolean | undefined;
+    "data-testid"?: string | undefined;
 }

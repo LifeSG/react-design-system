@@ -41,7 +41,6 @@ export const AvatarButton = styled.div<AvatarButtonProps>`
 
     align-items: center;
     justify-content: center;
-    padding: 0.4rem;
     display: flex;
 `;
 
