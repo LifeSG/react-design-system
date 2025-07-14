@@ -25,9 +25,10 @@ export const TextLabel = styled(Typography.BodyBL)<NavItemStyleProps>`
 `;
 
 export const NavItem = styled.li<NavItemStyleProps>`
+    display: block;
     position: relative;
     margin: 0;
-    padding: 1rem;
+    padding: 0;
     cursor: pointer;
 
     &::before {
@@ -44,7 +45,14 @@ export const NavItem = styled.li<NavItemStyleProps>`
         transition: all 250ms linear;
     }
 
-    &:hover {
+    &:hover,
+    &:focus-within {
         background-color: ${Colour["bg-hover-subtle"]};
+    }
+
+    div[role="link"] {
+        display: block;
+        padding: 16px;
+        padding-left: 20px; // Account for left border
     }
 `;
