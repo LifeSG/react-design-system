@@ -26,7 +26,7 @@ export const AvatarWrapper = styled.div`
 
 export const AvatarButton = styled.div<AvatarButtonProps>`
     border-radius: 50%;
-    background-color: ${Colour["bg-hover-subtle"]};
+    background-color: ${Colour["bg-primary-subtler"]};
     ${(props) => {
         return props.$mobile
             ? css`
