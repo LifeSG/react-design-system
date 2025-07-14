@@ -7,6 +7,7 @@ export const Badge = ({
     color = "default",
     isOverlay = false,
     "data-testid": testId = "badge",
+    ...otherProps
 }: BadgeProps) => {
     // =============================================================================
     // CONST
@@ -27,7 +28,12 @@ export const Badge = ({
 
     return (
         <BadgeWrapper $isOverlay={isOverlay}>
-            <StyledBadge $variant={variant} $color={color} data-testid={testId}>
+            <StyledBadge
+                $variant={variant}
+                $color={color}
+                data-testid={testId}
+                {...otherProps}
+            >
                 {shouldShowCount ? displayCount : null}
             </StyledBadge>
         </BadgeWrapper>
