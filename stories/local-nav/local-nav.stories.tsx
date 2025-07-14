@@ -145,7 +145,7 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
         const contentRef = useRef<HTMLDivElement>(null);
 
         const handleNavItemClick = (
-            e: React.MouseEvent | React.KeyboardEvent<HTMLElement>,
+            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
             item: LocalNavItemProps,
             index: number
         ) => {
