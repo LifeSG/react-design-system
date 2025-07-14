@@ -10,11 +10,11 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         This component also inherits props from&nbsp;
                         <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement"
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
                             target="_blank"
                             rel="noreferrer"
                         >
-                            HTMLAttributes&lt;HTMLElement&gt;
+                            HTMLAttributes&lt;HTMLDivElement&gt;
                         </a>
                     </>
                 ),

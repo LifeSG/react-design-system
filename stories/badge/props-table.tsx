@@ -4,6 +4,21 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
+                name: "",
+                description: (
+                    <>
+                        This component also inherits props from&nbsp;
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            HTMLAttributes&lt;HTMLDivElement&gt;
+                        </a>
+                    </>
+                ),
+            },
+            {
                 name: "count",
                 description:
                     "The number to display inside the badge. Applies to number-based badge variants only. ",
