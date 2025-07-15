@@ -1,35 +1,14 @@
-import { Divider } from "src/divider";
-import { Typography } from "src/typography";
 import styled from "styled-components";
-import { NavItemProps } from "../../src/navbar";
-
-// =============================================================================
-// STYLING
-// =============================================================================
-const MenuItemName = styled(Typography.BodyBL)`
-    margin: 0.5rem 1rem 1rem;
-`;
-const MenuItemWrapper = styled.div`
-    width: 100%;
-`;
+import { NavItemCommonProps } from "../../src/navbar";
 
 // =============================================================================
 // COMPONENTS
 // =============================================================================
 export const NAME = "Maximilian";
 
-export const menuItems: NavItemProps<undefined>[] = [
+export const menuItems: NavItemCommonProps<undefined>[] = [
     {
-        itemType: "component",
-        children: (
-            <MenuItemWrapper>
-                <MenuItemName weight="semibold">{NAME}</MenuItemName>
-                <Divider />
-            </MenuItemWrapper>
-        ),
-    },
-    {
-        id: "menu-item-2",
+        id: "menu-item-1",
         children: "Lorem ipsum dolor sit amet",
         href: "https://www.life.gov.sg",
     },

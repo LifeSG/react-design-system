@@ -67,12 +67,6 @@ const DATA: ApiTableSectionProps[] = [
         name: "AvatarMenuProps",
         attributes: [
             {
-                name: "alignment",
-                description: "Alignment of the menu relative to the avatar",
-                propTypes: [`"left"`, `"right"`],
-                defaultValue: `"right"`,
-            },
-            {
                 name: "items",
                 description: (
                     <>
@@ -82,12 +76,12 @@ const DATA: ApiTableSectionProps[] = [
                             target="_blank"
                             rel="noreferrer"
                         >
-                            NavItemProps
+                            NavItemCommonProps
                         </a>
                         .
                     </>
                 ),
-                propTypes: ["NavItemProps[]"],
+                propTypes: ["NavItemCommonProps[]"],
                 mandatory: true,
             },
         ],

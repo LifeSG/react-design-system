@@ -1,6 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TypographyWeight } from "../typography";
-import { useBlur } from "../util/use-blur";
 import { Menu } from "./menu";
 import {
     ChevronIcon,
@@ -44,15 +43,25 @@ export const NavbarItems = <T,>({
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    const handleBlur = () => {
-        setShowSubMenu(false);
-    };
-
-    useBlur(ref, handleBlur);
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (ref.current && !ref.current.contains(event.target as Node)) {
+                onBlur();
+            }
+        };
+        document.addEventListener("click", handleClickOutside, true);
+        return () => {
+            document.removeEventListener("click", handleClickOutside, true);
+        };
+    }, []);
 
     // =============================================================================
     // HELPER FUNCTION
     // =============================================================================
+    const onBlur = () => {
+        setShowSubMenu(false);
+    };
+
     const checkSelected = (item: NavItemLinkProps<T>): boolean => {
         if (item.id === selectedId) {
             return true;

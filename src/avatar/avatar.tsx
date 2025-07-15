@@ -73,14 +73,8 @@ export const Avatar = <T,>({
             return <></>;
         }
 
-        const { alignment = "right", items } = menu;
-        return (
-            <Menu
-                alignment={alignment}
-                items={items}
-                onItemClick={handleBlur}
-            />
-        );
+        const { items } = menu;
+        return <Menu items={items} onItemClick={handleBlur} />;
     };
 
     return (

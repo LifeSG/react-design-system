@@ -1,10 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Avatar } from "src/avatar";
-import {
-    FullWidthStoryDecorator,
-    GridDecorator,
-} from "stories/storybook-common";
-import { Navbar } from "../../src/navbar";
+import { GridDecorator } from "stories/storybook-common";
 import { DefaultComponentWrapper, NAME, menuItems } from "./doc-elements";
 
 type Component = typeof Avatar;
@@ -64,36 +60,6 @@ export const WithOnClick: StoryObj<Component> = {
                     {NAME}
                 </Avatar>
             </DefaultComponentWrapper>
-        );
-    },
-};
-
-export const WithNavBar: StoryObj<Component> = {
-    decorators: [FullWidthStoryDecorator({})],
-    parameters: { docs: { source: { type: "code" } }, layout: "fullscreen" }, // prevent Storybook from freezing
-    render: (_args) => {
-        return (
-            <Navbar
-                items={{ desktop: [] }}
-                actionButtons={{
-                    desktop: [
-                        {
-                            type: "component",
-                            args: {
-                                render: (
-                                    <Avatar
-                                        badge={{ count: 8, color: "important" }}
-                                        menu={{ items: menuItems }}
-                                    >
-                                        {NAME}
-                                    </Avatar>
-                                ),
-                            },
-                        },
-                    ],
-                }}
-                fixed={false}
-            />
         );
     },
 };

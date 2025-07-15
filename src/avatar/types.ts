@@ -1,9 +1,8 @@
 import { BadgeProps } from "../badge/types";
-import { NavItemProps } from "../navbar/types";
+import { NavItemCommonProps } from "../navbar/types";
 
 interface AvatarMenuProps<T> {
-    alignment?: "left" | "right";
-    items: NavItemProps<T>[];
+    items: NavItemCommonProps<T>[];
 }
 
 interface AvatarBadgeProps extends Omit<BadgeProps, "isOverlay" | "variant"> {}
