@@ -9,7 +9,7 @@ import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
 import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
-import { getFolders } from "./scripts/build-util";
+import { getFolders, injectCss } from "./scripts/build-util";
 
 export const plugins = [
     peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
@@ -33,9 +33,8 @@ export const plugins = [
         },
     }),
     postcss({
-        extract: true,
-        modules: false,
         plugins: [require("postcss-import")],
+        inject: injectCss,
     }),
     image(),
     json(),
