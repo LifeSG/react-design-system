@@ -92,7 +92,9 @@ export const Avatar = <T,>({
                     <Badge
                         {...badge}
                         isOverlay={true}
-                        variant={mobile ? "dot" : "number-with-border"}
+                        variant={
+                            mobile ? "dot-with-border" : "number-with-border"
+                        }
                         data-testid={`${testId}-badge`}
                     />
                 )}
