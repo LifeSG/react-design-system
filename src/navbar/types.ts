@@ -101,6 +101,8 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
               type: BrandType
           ) => void)
         | undefined;
+    /** Custom aria-label for the mobile navigation drawer */
+    drawerLabel?: string | undefined;
 }
 
 export type BrandType = "primary" | "secondary";
@@ -134,4 +136,6 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
     /** Specifies if masthead should be rendered */
     masthead?: boolean | undefined;
     layout?: "default" | "stretch" | undefined;
+    /** Custom aria-label for the main navigation header */
+    headerLabel?: string | undefined;
 }

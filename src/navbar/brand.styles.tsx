@@ -13,20 +13,7 @@ interface StyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Clickable = styled.a<StyleProps>`
-    display: flex;
-    justify-content: center;
-    height: 100%;
-
-    img {
-        width: auto;
-        height: 100%;
-        transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
-        object-fit: contain;
-    }
-`;
-
-export const NonClickable = styled.div<StyleProps>`
+export const Container = styled.a<StyleProps>`
     display: flex;
     justify-content: center;
     height: 100%;

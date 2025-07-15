@@ -55,6 +55,7 @@ const Component = <T,>(
         onBrandClick,
         masthead = true,
         layout = "default",
+        headerLabel = "Main navigation menu",
         ...otherProps
     }: NavbarProps<T>,
     ref: React.Ref<NavbarDrawerHandle>
@@ -275,7 +276,8 @@ const Component = <T,>(
         ) {
             return (
                 <MobileMenuButton
-                    aria-label="Open nav menu"
+                    aria-label={showDrawer ? "Close nav menu" : "Open nav menu"}
+                    aria-expanded={showDrawer}
                     data-testid="button__mobile-menu"
                     onClick={handleMobileMenuButtonClick}
                     focusHighlight={false}
@@ -291,7 +293,7 @@ const Component = <T,>(
     const renderNavbar = () => {
         return (
             <Layout.Content stretch={isStretch}>
-                <Nav $compress={compress} aria-label="Main navigation menu">
+                <Nav $compress={compress} aria-label={headerLabel}>
                     {!hideNavBranding && renderBrand()}
                     {!hideNavElements && (
                         <NavElementsContainer

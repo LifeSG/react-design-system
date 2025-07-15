@@ -31,6 +31,7 @@ const Component = (
         hideNavBranding,
         onClose,
         onBrandClick,
+        drawerLabel = "Mobile navigation menu",
     } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
     const [focusedIndex, setFocusedIndex] = useState<number>(-1);
@@ -127,30 +128,19 @@ const Component = (
         };
     }, []);
 
-    // Focus management for keyboard navigation - focus container after transition
+    // Focus management for keyboard navigation
     useLayoutEffect(() => {
         if (show) {
-            // Reset navigation state when drawer opens
             setFocusedIndex(-1);
             setIsNavigating(false);
 
-            // Focus the container after animation completes (300ms + 200ms delay = 500ms total)
             const timer = setTimeout(() => {
                 if (containerRef.current) {
                     containerRef.current.focus({ preventScroll: true });
-                    // Ensure the container is visually focused for screen readers
-                    containerRef.current.setAttribute("aria-live", "polite");
-                    containerRef.current.setAttribute("aria-expanded", "true");
                 }
             }, 550);
 
             return () => clearTimeout(timer);
-        } else {
-            // Clean up attributes when drawer closes
-            if (containerRef.current) {
-                containerRef.current.removeAttribute("aria-live");
-                containerRef.current.setAttribute("aria-expanded", "false");
-            }
         }
     }, [show]);
 
@@ -219,14 +209,13 @@ const Component = (
     return (
         <Wrapper ref={ref} data-testid="drawer">
             <Container
+                as="nav"
                 ref={containerRef}
                 $show={show}
                 $viewHeight={viewHeight}
                 onKeyDown={handleKeyDown}
                 tabIndex={show ? 0 : -1}
-                role="navigation"
-                aria-label="Mobile navigation menu"
-                style={{ outline: "none" }}
+                aria-label={drawerLabel}
             >
                 <Content>
                     {renderTopBar()}

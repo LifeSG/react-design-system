@@ -51,6 +51,7 @@ export const Container = styled.div<StyleProps>`
     background-color: ${Colour.bg};
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     visibility: ${(props) => (props.$show ? "visible" : "hidden")};
+    outline: none;
 
     ${(props) => VISIBILITY_STYLE(props.$show)}
     ${(props) => {

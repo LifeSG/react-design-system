@@ -1,5 +1,5 @@
 import React from "react";
-import { Clickable, NonClickable } from "./brand.styles";
+import { Container } from "./brand.styles";
 import { BrandType, NavbarBrandingProps } from "./types";
 import { ImageWithFallback } from "../shared/image-with-fallback/image-with-fallback";
 
@@ -34,36 +34,33 @@ export const Brand = ({
         }
     };
 
-    // Determine if this should be clickable - brands are clickable by default when onClick is provided
+    // Determine if this should be clickable - brands are clickable by default
     const isClickable = !!onClick;
 
-    const ariaLabel =
-        type === "primary"
+    const logoLabel = isClickable
+        ? type === "primary"
             ? `Go to ${resources.brandName} homepage`
-            : `Go to ${resources.brandName}`;
+            : `Go to ${resources.brandName}`
+        : resources.brandName;
 
-    if (isClickable) {
-        return (
-            <Clickable
-                data-id={dataId}
-                data-testid={testId}
-                $type={type}
-                href="#"
-                onClick={handleClick}
-                aria-label={ariaLabel}
-            >
-                <ImageWithFallback src={resources.logoSrc} alt="" />
-            </Clickable>
-        );
-    }
+    const props = isClickable
+        ? {
+              role: "link",
+              tabIndex: 0,
+              onClick: handleClick,
+          }
+        : {};
 
     return (
-        <NonClickable data-id={dataId} data-testid={testId} $type={type}>
-            <ImageWithFallback
-                src={resources.logoSrc}
-                alt={resources.brandName}
-            />
-        </NonClickable>
+        <Container
+            data-id={dataId}
+            data-testid={testId}
+            $type={type}
+            as={isClickable ? "a" : "div"}
+            {...props}
+        >
+            <ImageWithFallback src={resources.logoSrc} alt={logoLabel} />
+        </Container>
     );
 };
 

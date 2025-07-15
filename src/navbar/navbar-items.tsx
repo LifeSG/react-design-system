@@ -62,25 +62,6 @@ export const NavbarItems = <T,>({
         setShowSubMenu(false);
     };
 
-    const addAriaHiddenToIcon = (children: React.ReactNode) => {
-        // Only add aria-hidden to React elements (icons) that don't have text content
-        if (React.isValidElement(children)) {
-            const hasText = React.Children.toArray(
-                children.props?.children || []
-            ).some(
-                (child) => typeof child === "string" && child.trim().length > 0
-            );
-
-            if (!hasText) {
-                return React.cloneElement(children, {
-                    "aria-hidden": children.props["aria-hidden"] ?? true,
-                    ...children.props,
-                });
-            }
-        }
-        return children;
-    };
-
     const checkSelected = (item: NavItemLinkProps<T>): boolean => {
         if (item.id === selectedId) {
             return true;
@@ -158,9 +139,7 @@ export const NavbarItems = <T,>({
                                 }
                                 {...options}
                             >
-                                <LinkLabel>
-                                    {addAriaHiddenToIcon(children)}
-                                </LinkLabel>
+                                <LinkLabel>{children}</LinkLabel>
                                 {selected && (
                                     <LinkIndicator
                                         data-testid={`${testId}-indicator`}
