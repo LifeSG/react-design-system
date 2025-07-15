@@ -123,7 +123,7 @@ function Component(
 
     const renderTitleText = () => {
         if (typeof title !== "string") {
-            return React.cloneElement(title);
+            return title;
         }
 
         return (
