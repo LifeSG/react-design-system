@@ -8,6 +8,7 @@ import {
 } from "src/scheduler";
 import styled from "styled-components";
 type Component = typeof Scheduler;
+import { mockSchedulerData } from "./mockSchedulerData";
 
 const meta: Meta<Component> = {
     title: "Selection and input/Scheduler",
@@ -53,65 +54,9 @@ const StyledScheduler = styled(Scheduler)`
         height: 400px;
     }
 `;
-
-// Mock data for stories
-const createMockData = (): SchedulerRowData[] => {
-    const services = [
-        { id: "1", name: "Service A", color: "#FFE6BB" },
-        { id: "2", name: "Service B", color: "#D8EFEB" },
-        { id: "3", name: "Service C", color: "#E6EAFE" },
-        { id: "4", name: "Service D", color: "#FAE4E5" },
-    ];
-
-    return services.map((service) => ({
-        id: service.id,
-        name: service.name,
-        subtitle: `Available slots for ${service.name}`,
-        rowCells: [
-            {
-                id: `${service.id}-1`,
-                startTime: "09:00",
-                endTime: "10:00",
-                status: "filled",
-                title: "Booked",
-                subtitle: "John Doe",
-            },
-            {
-                id: `${service.id}-2`,
-                startTime: "10:00",
-                endTime: "11:00",
-                status: "default",
-                title: "Available",
-            },
-            {
-                id: `${service.id}-3`,
-                startTime: "11:00",
-                endTime: "12:00",
-                status: "blocked",
-                title: "Unavailable",
-            },
-            {
-                id: `${service.id}-4`,
-                startTime: "14:00",
-                endTime: "15:00",
-                status: "filled",
-                title: "Booked",
-                subtitle: "Jane Smith",
-            },
-            {
-                id: `${service.id}-5`,
-                startTime: "15:00",
-                endTime: "16:00",
-                status: "default",
-                title: "Available",
-            },
-        ],
-    }));
-};
-
 export const Default: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<SchedulerRowData[]>(createMockData());
+        const [results] = useState<SchedulerRowData[]>(mockSchedulerData);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(false);
 

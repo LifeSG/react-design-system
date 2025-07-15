@@ -15,7 +15,6 @@ export const Scheduler = ({
     "data-testid": dataTestId,
     view = "day",
     date,
-    emptyContentMessage = "No data available",
     rowData,
     loading = false,
     minTime = "00:00",
@@ -88,7 +87,6 @@ export const Scheduler = ({
                         loading={loading}
                         minTime={minTime}
                         maxTime={maxTime}
-                        emptyContentMessage={emptyContentMessage}
                         onSlotClick={onSlotClick}
                     />
                 ) : (

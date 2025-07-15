@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import { Colour } from "../../theme";
 import { SchedulerDayViewProps } from "./types";
+import dayjs from "dayjs";
 
-// Utility to generate time slots between minTime and maxTime
 function generateTimeSlots(minTime: string, maxTime: string, interval = 30) {
     const slots: string[] = [];
     let [h, m] = minTime.split(":").map(Number);
@@ -20,165 +21,190 @@ function generateTimeSlots(minTime: string, maxTime: string, interval = 30) {
     return slots;
 }
 
-function formatTimeLabel(time: string) {
-    const [h, m] = time.split(":").map(Number);
+function formatHourLabel(time: string) {
+    const [h] = time.split(":").map(Number);
     const ampm = h < 12 ? "am" : "pm";
     const hour = h % 12 === 0 ? 12 : h % 12;
-    return `${hour}${
-        m !== 0 ? ":" + m.toString().padStart(2, "0") : ""
-    } ${ampm}`;
+    return (
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+            }}
+        >
+            <p style={{ marginTop: "auto" }}>{hour}</p>
+            <p style={{ marginBottom: "4px" }}>{ampm}</p>
+        </div>
+    );
+}
+
+function calculateDuration(startTime: string, endTime: string): number {
+    const start = dayjs(startTime, "HH:mm");
+    const end = dayjs(endTime, "HH:mm");
+    return end.diff(start, "minute");
 }
 
 export const SchedulerDayView = ({
-    date,
     rowData,
-    loading,
     minTime,
     maxTime,
-    emptyContentMessage,
+    loading,
     onSlotClick,
 }: SchedulerDayViewProps) => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [currentTime, setCurrentTime] = useState(new Date());
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentTime(new Date());
-        }, 60000); // Update every minute
-        return () => clearInterval(interval);
-    }, []);
-
-    if (loading) {
-        return (
-            <LoadingWrapper>
-                <div>Loading...</div>
-            </LoadingWrapper>
-        );
-    }
-
-    if (!rowData || rowData.length === 0) {
-        return (
-            <EmptyWrapper>
-                <div>{emptyContentMessage}</div>
-            </EmptyWrapper>
-        );
-    }
-
     const timeSlots = generateTimeSlots(minTime, maxTime, 30);
+    const hourLabels = [
+        ...new Set(
+            timeSlots
+                .map((t) => (t.split(":")[1] === "00" ? t : null))
+                .filter(Boolean)
+        ),
+    ];
 
     return (
-        <GridWrapper ref={containerRef}>
-            {/* Header row */}
-            <HeaderRow>
-                <TimeHeaderCell />
+        <Container>
+            {/* Service Name Header Row */}
+            <ServiceHeaderRow>
+                <BlankCell />
                 {rowData.map((service, idx) => (
-                    <ServiceHeaderCell key={service.id || idx}>
-                        {service.name}
-                    </ServiceHeaderCell>
+                    <ServiceHeader key={idx}>{service.name}</ServiceHeader>
                 ))}
-            </HeaderRow>
-            {/* Time rows */}
-            {timeSlots.map((time, rowIdx) => (
-                <TimeRow key={time}>
-                    <TimeCell>{formatTimeLabel(time)}</TimeCell>
-                    {rowData.map((service, colIdx) => {
-                        // Find slot for this service at this time
-                        const slot = service.rowCells?.find(
-                            (cell) => cell.startTime === time
-                        );
-                        return (
-                            <SlotCell
-                                key={service.id || colIdx}
-                                status={slot?.status}
-                                onClick={
-                                    slot && onSlotClick
-                                        ? (e) => onSlotClick(slot, e)
-                                        : undefined
-                                }
-                                clickable={!!slot && !!onSlotClick}
-                            >
-                                {slot ? (
-                                    <>
-                                        <SlotTitle>{slot.title}</SlotTitle>
-                                        {slot.subtitle && (
-                                            <SlotSubtitle>
-                                                {slot.subtitle}
-                                            </SlotSubtitle>
+            </ServiceHeaderRow>
+
+            <GridBody>
+                {/* Time labels */}
+                <TimeColumn>
+                    {hourLabels.map((time) =>
+                        time ? (
+                            <TimeLabel key={time}>
+                                {formatHourLabel(time)}
+                            </TimeLabel>
+                        ) : null
+                    )}
+                </TimeColumn>
+
+                {/* Time slot grid */}
+                <SlotGrid>
+                    {timeSlots.map((time) => (
+                        <SlotRow key={time}>
+                            {rowData.map((service, idx) => {
+                                const slot = service.rowCells?.find(
+                                    (c) => c.startTime === time
+                                );
+                                return (
+                                    <SlotCell
+                                        key={idx}
+                                        startTime={time}
+                                        onClick={
+                                            slot && onSlotClick
+                                                ? (e) => onSlotClick(slot, e)
+                                                : undefined
+                                        }
+                                    >
+                                        {slot && (
+                                            <SlotContent
+                                                status={slot.status}
+                                                duration={calculateDuration(
+                                                    slot.startTime,
+                                                    slot.endTime
+                                                )}
+                                            >
+                                                {slot.title}
+                                                {slot.subtitle && (
+                                                    <Subtitle>
+                                                        {slot.subtitle}
+                                                    </Subtitle>
+                                                )}
+                                            </SlotContent>
                                         )}
-                                    </>
-                                ) : null}
-                            </SlotCell>
-                        );
-                    })}
-                </TimeRow>
-            ))}
-        </GridWrapper>
+                                    </SlotCell>
+                                );
+                            })}
+                        </SlotRow>
+                    ))}
+                </SlotGrid>
+            </GridBody>
+        </Container>
     );
 };
-
-// =============================================================================
-// STYLING
-// =============================================================================
-const GridWrapper = styled.div`
+const Container = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    overflow-x: auto;
 `;
 
-const HeaderRow = styled.div`
+const ServiceHeaderRow = styled.div`
     display: flex;
-    position: sticky;
-    top: 0;
-    background: #fff;
-    z-index: 2;
+    background: ${Colour["bg-strong"]};
+    border: 1px solid ${Colour["border"]};
 `;
 
-const TimeHeaderCell = styled.div`
+const BlankCell = styled.div`
     width: 80px;
     min-width: 80px;
-    border-right: 1px solid #e0e0e0;
 `;
 
-const ServiceHeaderCell = styled.div`
+const ServiceHeader = styled.div`
     flex: 1;
     min-width: 180px;
     padding: 12px;
     text-align: center;
-    font-weight: 600;
-    border-right: 1px solid #e0e0e0;
-    border-bottom: 1px solid #e0e0e0;
-    background: #fafbfc;
+    font-weight: bold;
+    border-right: 1px solid ${Colour["border"]};
 `;
 
-const TimeRow = styled.div`
+const GridBody = styled.div`
     display: flex;
-    min-height: 48px;
-    border-bottom: 1px solid #e0e0e0;
+    width: 100%;
 `;
 
-const TimeCell = styled.div`
+const TimeColumn = styled.div`
     width: 80px;
-    min-width: 80px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid ${Colour["border"]};
+`;
+
+const TimeLabel = styled.div`
+    height: 96px; /* 2 slots = 2 * 48px */
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    padding-right: 8px;
+    justify-content: center;
     font-size: 13px;
     color: #888;
-    border-right: 1px solid #e0e0e0;
-    background: #fff;
 `;
 
-const SlotCell = styled.div<{ status?: string; clickable?: boolean }>`
+const SlotGrid = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+`;
+
+const SlotRow = styled.div`
+    display: flex;
+    min-height: 48px;
+`;
+
+const SlotCell = styled.div<{
+    startTime?: string;
+}>`
     flex: 1;
     min-width: 180px;
-    padding: 8px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
-    cursor: ${({ clickable }) => (clickable ? "pointer" : "default")};
+    position: relative;
+    position: relative;
+    border-right: 1px solid #f0f0f0;
+    border-bottom: ${({ startTime }) =>
+        startTime?.endsWith(":00") ? "1px dashed #ccc" : "1px solid #ccc"};
+`;
+
+const SlotContent = styled.div<{
+    status?: string;
+    duration?: number;
+}>`
+    width: 90%;
     background: ${({ status }) =>
         status === "filled"
             ? "#e6f7ec"
@@ -187,35 +213,26 @@ const SlotCell = styled.div<{ status?: string; clickable?: boolean }>`
             : status === "unavailable"
             ? "#f5f5f5"
             : "#fff"};
-    border-right: 1px solid #f0f0f0;
-    border-bottom: 1px solid #f0f0f0;
+    border-radius: 0px 4px 4px 0px;
+    padding: 8px;
+    position: absolute;
+    font-size: 14px;
+    font-weight: 500;
+    box-sizing: border-box;
+    height: ${({ duration }) =>
+        duration ? `${(duration / 30) * 48}px` : "48px"}; // scale height
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     &:hover {
-        background: ${({ clickable }) => (clickable ? "#f5f5f5" : undefined)};
+        background: #f0f0f0;
     }
 `;
 
-const SlotTitle = styled.div`
-    font-size: 14px;
-    font-weight: 500;
-`;
-
-const SlotSubtitle = styled.div`
+const Subtitle = styled.div`
     font-size: 12px;
     color: #888;
     margin-top: 2px;
-`;
-
-const LoadingWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-`;
-
-const EmptyWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-    color: #666;
 `;
