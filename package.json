@@ -53,6 +53,7 @@
         "@dnd-kit/sortable": "^7.0.2",
         "@floating-ui/dom": "^1.6.10",
         "@floating-ui/react": "^0.26.23",
+        "@govtechsg/sgds-web-component": "^3.0.6",
         "@inquirer/prompts": "^7.0.0",
         "@lifesg/react-icons": "^1.6.0",
         "@playwright/test": "^1.45.0",
