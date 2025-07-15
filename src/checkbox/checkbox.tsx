@@ -38,7 +38,7 @@ export const Checkbox = ({
                 <StyledInteremediateIcon
                     $disabled={disabled}
                     data-testid="indeterminate"
-                    aria-hidden="true"
+                    aria-hidden
                 />
             );
         }
@@ -48,7 +48,7 @@ export const Checkbox = ({
                 <StyledCheckedIcon
                     $disabled={disabled}
                     data-testid="checkmark"
-                    aria-hidden="true"
+                    aria-hidden
                 />
             );
         }
@@ -57,7 +57,7 @@ export const Checkbox = ({
             return (
                 <StyledUncheckedDisabledIcon
                     data-testid="empty-disabled-checkbox"
-                    aria-hidden="true"
+                    aria-hidden
                 />
             );
         }
@@ -66,7 +66,7 @@ export const Checkbox = ({
             <StyledUncheckedIcon
                 $disabled={disabled}
                 data-testid="empty-checkbox"
-                aria-hidden="true"
+                aria-hidden
             />
         );
     };
