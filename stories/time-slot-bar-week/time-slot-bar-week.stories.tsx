@@ -23,7 +23,7 @@ export const Default: StoryObj<Component> = {
 
 export const Interval: StoryObj<Component> = {
     render: (_args) => {
-        return <TimeSlotBarWeek slots={getSlots()} interval={15} />;
+        return <TimeSlotBarWeek startTime="09:00" slots={getSlots()} interval={30} />;
     },
 };
 
@@ -32,7 +32,7 @@ export const Variations: StoryObj<Component> = {
         return (
             <TimeSlotBarWeek
                 slots={getSlots()}
-                interval={15}
+                interval={30}
                 variant={"fixed"}
             />
         );
