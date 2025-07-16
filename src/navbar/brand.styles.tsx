@@ -13,7 +13,7 @@ interface StyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Clickable = styled.a<StyleProps>`
+export const Container = styled.a<StyleProps>`
     display: flex;
     justify-content: center;
     height: 100%;
