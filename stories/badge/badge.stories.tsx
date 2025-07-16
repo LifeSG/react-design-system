@@ -32,7 +32,7 @@ const SingleBadge = ({
 );
 
 const BadgeGroup = ({
-    counts = [8, 209, 1000, 2090],
+    counts = [8, 88, 209, 1000, 2090],
     variant,
 }: {
     counts?: number[];

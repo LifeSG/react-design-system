@@ -25,6 +25,9 @@ export const Badge = ({
         return "1K+";
     }
 
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
     return (
         <BadgeWrapper $isOverlay={isOverlay}>
             <StyledBadge $variant={variant} $color={color} data-testid={testId}>
