@@ -41,7 +41,7 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const Container = styled.div<StyleProps>`
+export const Container = styled.nav<StyleProps>`
     position: absolute;
     overflow-y: auto;
     overflow-x: hidden;

@@ -32,6 +32,7 @@ const Component = (
         onClose,
         onBrandClick,
         drawerLabel = "Mobile navigation menu",
+        mobileMenuRef,
     } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -61,14 +62,11 @@ const Component = (
                 onClose?.();
                 // Return focus to the hamburger menu button
                 setTimeout(() => {
-                    const hamburgerButton = document.querySelector(
-                        '[data-testid="button__mobile-menu"]'
-                    ) as HTMLElement;
-                    hamburgerButton?.focus();
+                    mobileMenuRef?.current?.focus();
                 }, 300);
             }
         },
-        [show, onClose]
+        [show, onClose, mobileMenuRef]
     );
 
     // =============================================================================
@@ -147,7 +145,6 @@ const Component = (
     return (
         <Wrapper ref={ref} data-testid="drawer">
             <Container
-                as="nav"
                 ref={containerRef}
                 $show={show}
                 $viewHeight={viewHeight}

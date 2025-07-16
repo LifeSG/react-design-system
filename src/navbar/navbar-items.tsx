@@ -153,6 +153,9 @@ export const NavbarItems = <T,>({
                                             $selected={expanded}
                                             focusHighlight={false}
                                             focusOutline="browser"
+                                            aria-label={
+                                                expanded ? "Collapse" : "Expand"
+                                            }
                                         >
                                             <ChevronIcon $selected={selected} />
                                         </ExpandCollapseButton>

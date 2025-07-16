@@ -56,6 +56,7 @@ const Component = <T,>(
         masthead = true,
         layout = "default",
         headerLabel = "Main navigation menu",
+        drawerLabel,
         ...otherProps
     }: NavbarProps<T>,
     ref: React.Ref<NavbarDrawerHandle>
@@ -65,6 +66,7 @@ const Component = <T,>(
     // =============================================================================
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
+    const mobileMenuRef = useRef<HTMLButtonElement>(null);
     const isStretch = layout === "stretch";
     const elementRef = useRef<HTMLDivElement>(null);
     const theme = useTheme();
@@ -226,6 +228,8 @@ const Component = <T,>(
                 onBrandClick={handleBrandClick}
                 actionButtons={actionButtons}
                 hideNavBranding={hideNavBranding}
+                mobileMenuRef={mobileMenuRef}
+                drawerLabel={drawerLabel}
             >
                 <NavbarItems
                     items={items.mobile || items.desktop}
@@ -276,6 +280,7 @@ const Component = <T,>(
         ) {
             return (
                 <MobileMenuButton
+                    ref={mobileMenuRef}
                     aria-label={showDrawer ? "Close nav menu" : "Open nav menu"}
                     aria-expanded={showDrawer}
                     data-testid="button__mobile-menu"
