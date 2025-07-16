@@ -1,10 +1,4 @@
-import React, {
-    useCallback,
-    useEffect,
-    useLayoutEffect,
-    useRef,
-    useState,
-} from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Brand } from "./brand";
 import {
     CloseButton,
@@ -53,21 +47,18 @@ const Component = (
         }
     };
 
-    const handleKeyDown = useCallback(
-        (event: React.KeyboardEvent<HTMLDivElement>) => {
-            if (!show) return;
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (!show) return;
 
-            if (event.key === "Escape") {
-                event.preventDefault();
-                onClose?.();
-                // Return focus to the hamburger menu button
-                setTimeout(() => {
-                    mobileMenuRef?.current?.focus();
-                }, 300);
-            }
-        },
-        [show, onClose, mobileMenuRef]
-    );
+        if (event.key === "Escape") {
+            event.preventDefault();
+            onClose?.();
+            // Return focus to the hamburger menu button
+            setTimeout(() => {
+                mobileMenuRef?.current?.focus();
+            }, 300);
+        }
+    };
 
     // =============================================================================
     // EFFECTS
