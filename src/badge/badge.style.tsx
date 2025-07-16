@@ -14,12 +14,23 @@ interface StyledBadgeProps {
 // =============================================================================
 // STYLING
 // =============================================================================
+export const BadgeOverlay = styled.div<{ $isOverlay?: boolean }>`
+    ${(props) =>
+        props.$isOverlay &&
+        css`
+            position: relative;
+            width: fit-content;
+            height: fit-content;
+        `}
+`;
+
 export const BadgeWrapper = styled.div<{ $isOverlay?: boolean }>`
     position: absolute;
 
     ${(props) =>
         props.$isOverlay &&
         css`
+            position: absolute;
             top: 0;
             right: 0;
             transform: translate(50%, -25%);
@@ -50,6 +61,7 @@ export const StyledBadge = styled.div<StyledBadgeProps>`
     align-items: center;
     justify-content: center;
 
+    width: fit-content;
     ${({ $variant }) => {
         switch ($variant) {
             case "number":
@@ -58,7 +70,7 @@ export const StyledBadge = styled.div<StyledBadgeProps>`
             case "number-with-border":
                 return css`
                     ${numberBadgeStyles}
-                    border: ${Border["width-020"]} solid ${Colour["bg"]};
+                    box-shadow: 0 0 0  ${Border["width-020"]} ${Colour["bg"]};
                 `;
 
             case "dot":
@@ -69,11 +81,11 @@ export const StyledBadge = styled.div<StyledBadgeProps>`
             case "dot-with-border":
                 return css`
                     ${dotBadgeStyles}
-                    border: ${Border["width-020"]} solid ${Colour["bg"]};
+                    box-shadow: 0 0 0  ${Border["width-020"]} ${Colour["bg"]};
                 `;
 
             default:
                 return "";
         }
-    }}
+    }};
 `;

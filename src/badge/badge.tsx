@@ -1,11 +1,11 @@
-import { BadgeWrapper, StyledBadge } from "./badge.style";
+import { BadgeOverlay, BadgeWrapper, StyledBadge } from "./badge.style";
 import { BadgeProps } from "./types";
 
 export const Badge = ({
+    children,
     count = 0,
     variant = "number",
     color = "default",
-    isOverlay = false,
     "data-testid": testId = "badge",
     ...otherProps
 }: BadgeProps) => {
@@ -30,15 +30,18 @@ export const Badge = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <BadgeWrapper $isOverlay={isOverlay}>
-            <StyledBadge
-                $variant={variant}
-                $color={color}
-                data-testid={testId}
-                {...otherProps}
-            >
-                {shouldShowCount ? displayCount : null}
-            </StyledBadge>
-        </BadgeWrapper>
+        <BadgeOverlay $isOverlay={children !== undefined}>
+            <BadgeWrapper $isOverlay={children !== undefined}>
+                <StyledBadge
+                    $variant={variant}
+                    $color={color}
+                    data-testid={testId}
+                    {...otherProps}
+                >
+                    {shouldShowCount ? displayCount : null}
+                </StyledBadge>
+            </BadgeWrapper>
+            {children}
+        </BadgeOverlay>
     );
 };

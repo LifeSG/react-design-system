@@ -1,12 +1,10 @@
 import { useCallback, useRef, useState } from "react";
-import { Badge } from "../badge";
 import { Menu } from "../navbar/menu";
 import { useBlur } from "../util/use-blur";
 import {
     AvatarBaselineText,
     AvatarBodySmallText,
     AvatarButton,
-    AvatarWrapper,
     Container,
 } from "./avatar.style";
 import { AvatarProps } from "./types";
@@ -15,7 +13,6 @@ export const Avatar = <T,>({
     children,
     menu,
     mobile = false,
-    badge,
     onClick,
     "data-testid": testId = "avatar",
     ...otherProps
@@ -79,26 +76,14 @@ export const Avatar = <T,>({
 
     return (
         <Container ref={ref}>
-            <AvatarWrapper>
-                <AvatarButton
-                    {...otherProps}
-                    onClick={handleAvatarClick}
-                    $mobile={mobile}
-                    data-testid={`${testId}-avatar-button`}
-                >
-                    {renderContent()}
-                </AvatarButton>
-                {badge && (
-                    <Badge
-                        {...badge}
-                        isOverlay={true}
-                        variant={
-                            mobile ? "dot-with-border" : "number-with-border"
-                        }
-                        data-testid={`${testId}-badge`}
-                    />
-                )}
-            </AvatarWrapper>
+            <AvatarButton
+                {...otherProps}
+                onClick={handleAvatarClick}
+                $mobile={mobile}
+                data-testid={`${testId}-avatar-button`}
+            >
+                {renderContent()}
+            </AvatarButton>
             {showMenu && renderMenu()}
         </Container>
     );

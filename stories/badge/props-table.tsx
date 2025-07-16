@@ -44,17 +44,28 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `"default"`,
             },
             {
-                name: "isOverlay",
-                description:
-                    "Positions the badge in an overlaid manner on top of an icon or avatar. When set to `true`, positioning offsets are applied for proper placement.",
-                propTypes: ["boolean"],
-                defaultValue: `false`,
-            },
-            {
                 name: "data-testid",
                 description: "Test ID used for targeting elements in tests",
                 propTypes: ["string"],
                 defaultValue: `"badge"`,
+            },
+            {
+                name: "children",
+                description: (
+                    <>
+                        Content to display with the badge as an overlay.
+                        (See&nbsp;
+                        <a
+                            href="/?path=/story/navigation-avatar--default"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            Avatar
+                        </a>
+                        )
+                    </>
+                ),
+                propTypes: ["JSX.Element"],
             },
         ],
     },

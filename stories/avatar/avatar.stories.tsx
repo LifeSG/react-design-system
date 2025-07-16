@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Avatar } from "src/avatar";
+import { Badge } from "src/badge";
 import { GridDecorator } from "stories/storybook-common";
 import { DefaultComponentWrapper, NAME, menuItems } from "./doc-elements";
 
@@ -18,10 +19,12 @@ export const Default: StoryObj<Component> = {
             <>
                 <Avatar>{NAME}</Avatar>
                 <Avatar mobile={true}>{NAME}</Avatar>
-                <Avatar badge={{ count: 8, color: "important" }}>{NAME}</Avatar>
-                <Avatar badge={{ count: 8, color: "important" }} mobile={true}>
-                    {NAME}
-                </Avatar>
+                <Badge count={8} color="important" variant="number-with-border">
+                    <Avatar>{NAME}</Avatar>
+                </Badge>
+                <Badge count={8} color="important" variant="dot-with-border">
+                    <Avatar mobile={true}>{NAME}</Avatar>
+                </Badge>
             </>
         );
     },
@@ -38,12 +41,9 @@ export const WithMenu: StoryObj<Component> = {
     render: (_args) => {
         return (
             <DefaultComponentWrapper>
-                <Avatar
-                    menu={{ items: menuItems }}
-                    badge={{ count: 8, color: "important" }}
-                >
-                    {NAME}
-                </Avatar>
+                <Badge count={8} color="important" variant="number-with-border">
+                    <Avatar menu={{ items: menuItems }}>{NAME}</Avatar>
+                </Badge>
             </DefaultComponentWrapper>
         );
     },
@@ -53,12 +53,9 @@ export const WithOnClick: StoryObj<Component> = {
     render: (_args) => {
         return (
             <DefaultComponentWrapper>
-                <Avatar
-                    badge={{ count: 8, color: "important" }}
-                    onClick={() => alert("Clicked on Avatar")}
-                >
-                    {NAME}
-                </Avatar>
+                <Badge count={8} color="important" variant="number-with-border">
+                    <Avatar>{NAME}</Avatar>
+                </Badge>
             </DefaultComponentWrapper>
         );
     },

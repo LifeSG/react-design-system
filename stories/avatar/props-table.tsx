@@ -39,23 +39,6 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
-                name: "badge",
-                description: (
-                    <>
-                        Optional badge overlay on the avatar. Inherits
-                        from&nbsp;
-                        <a
-                            href="/?path=/docs/feedback-indicators-badge--docs"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            BadgeProps
-                        </a>
-                    </>
-                ),
-                propTypes: ['Omit<BadgeProps, "isOverlay" | "variant">'],
-            },
-            {
                 name: "data-testid",
                 description: "Test ID used for targeting elements in tests",
                 propTypes: ["string"],
