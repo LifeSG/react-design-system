@@ -1,12 +1,6 @@
 import { PopoverV2TriggerType } from "../popover-v2";
 
-export type SchedulerCellType =
-    | "filled"
-    | "blocked"
-    | "default"
-    | "disabled"
-    | "pending"
-    | "unavailable";
+export type SchedulerCellType = "booked" | "available" | "blocked" | "pending";
 
 export interface SchedulerRowData {
     id?: string | undefined;
@@ -70,8 +64,8 @@ export interface SchedulerRowCellData {
     // HH:mm format
     endTime: string;
     status: SchedulerCellType;
-    title?: string | undefined;
-    subtitle?: string | undefined;
+    capacity?: number;
+    booked?: number;
     customPopover?: SchedulerPopoverProps | undefined;
     onClick?:
         | ((data: SchedulerRowCellData, e: React.MouseEvent) => void)

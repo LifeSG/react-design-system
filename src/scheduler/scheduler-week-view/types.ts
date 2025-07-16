@@ -6,6 +6,5 @@ export interface SchedulerWeekViewProps {
     loading: boolean;
     minTime: string;
     maxTime: string;
-    emptyContentMessage: string;
     onSlotClick?: ((data: any, e: React.MouseEvent) => void) | undefined;
 }

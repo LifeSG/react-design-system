@@ -50,8 +50,7 @@ export default meta;
 
 const StyledScheduler = styled(Scheduler)`
     [data-id="scheduler-container"] {
-        width: 900px;
-        height: 400px;
+        weight: 100%;
     }
 `;
 export const Default: StoryObj<Component> = {
@@ -84,7 +83,7 @@ export const Default: StoryObj<Component> = {
         ) => {
             console.log("Slot clicked:", data);
             alert(
-                `Clicked on ${data.title} at ${data.startTime}-${data.endTime}`
+                `Clicked on slot ${data.startTime}-${data.endTime}`
             );
         };
 
@@ -112,7 +111,7 @@ export const Default: StoryObj<Component> = {
 
 export const WeekView: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<SchedulerRowData[]>(createMockData());
+        const [results] = useState<SchedulerRowData[]>(mockSchedulerData);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(false);
 
@@ -140,7 +139,7 @@ export const WeekView: StoryObj<Component> = {
         ) => {
             console.log("Slot clicked:", data);
             alert(
-                `Clicked on ${data.title} at ${data.startTime}-${data.endTime}`
+                `Clicked on slot ${data.startTime}-${data.endTime}`
             );
         };
 
@@ -244,7 +243,7 @@ export const Empty: StoryObj<Component> = {
 
 export const WithDateRange: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<SchedulerRowData[]>(createMockData());
+        const [results] = useState<SchedulerRowData[]>(mockSchedulerData);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(false);
 

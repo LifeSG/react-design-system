@@ -36,7 +36,6 @@ export const SchedulerWeekView = ({
     loading,
     minTime,
     maxTime,
-    emptyContentMessage,
     onSlotClick,
 }: SchedulerWeekViewProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -64,14 +63,6 @@ export const SchedulerWeekView = ({
             <LoadingWrapper>
                 <div>Loading...</div>
             </LoadingWrapper>
-        );
-    }
-
-    if (!rowData || rowData.length === 0) {
-        return (
-            <EmptyWrapper>
-                <div>{emptyContentMessage}</div>
-            </EmptyWrapper>
         );
     }
 
