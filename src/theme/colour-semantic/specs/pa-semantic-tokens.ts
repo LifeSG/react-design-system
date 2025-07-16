@@ -148,6 +148,6 @@ export const PAColourSet: SemanticColourSet = {
     "hyperlink-inverse": "#F8AE68",
 
     // focus ring
-    "focus-ring": getPrimitiveColour("black"),
+    "focus-ring": getPrimitiveColour("primary-50"),
     "focus-ring-inverse": getPrimitiveColour("white"),
 };

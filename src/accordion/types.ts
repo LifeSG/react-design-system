@@ -4,9 +4,10 @@ export interface AccordionProps {
     enableExpandAll?: boolean | undefined;
     initialDisplay?: "collapse-all" | "expand-all" | undefined;
     showTitleInMobile?: boolean | undefined;
-    className?: string | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
+    className?: string | undefined;
+    headingLevel?: number | undefined;
 }
 
 export type AccordionItemType = "default" | "small";
@@ -19,9 +20,9 @@ export interface AccordionItemProps {
      * for cases where we want the default expand behaviour
      */
     expanded?: boolean | undefined;
+    id?: string | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
-    id?: string | undefined;
     type?: AccordionItemType | undefined;
     collapsible?: boolean | undefined;
 }

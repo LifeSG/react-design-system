@@ -1,3 +1,10 @@
 import React from "react";
 
-export const AccordionContext = React.createContext(false);
+interface IAccordionContext {
+    expandAll: boolean;
+    itemHeadingLevel?: number | undefined;
+}
+
+export const AccordionContext = React.createContext<IAccordionContext>({
+    expandAll: false,
+});
