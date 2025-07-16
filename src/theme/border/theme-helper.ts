@@ -57,4 +57,5 @@ export const BorderValues = {
     "width-020": getBorderWidth("width-020"),
     "width-040": getBorderWidth("width-040"),
     solid: getBorder("solid"),
+    
 };

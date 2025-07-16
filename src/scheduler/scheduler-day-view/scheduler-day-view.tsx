@@ -1,86 +1,86 @@
-import React from "react";
 import styled from "styled-components";
-import { Colour } from "../../theme";
+import { Border, Colour, Radius, Spacing } from "../../theme";
 import { SchedulerDayViewProps } from "./types";
-import dayjs from "dayjs";
-
-function generateTimeSlots(minTime: string, maxTime: string, interval = 30) {
-    const slots: string[] = [];
-    let [h, m] = minTime.split(":").map(Number);
-    const [maxH, maxM] = maxTime.split(":").map(Number);
-    while (h < maxH || (h === maxH && m <= maxM)) {
-        slots.push(
-            `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`
-        );
-        m += interval;
-        if (m >= 60) {
-            h += 1;
-            m -= 60;
-        }
-    }
-    return slots;
-}
+import { TimeHelper } from "../../util/time-helper";
+import { Typography } from "../../typography";
 
 function formatHourLabel(time: string) {
     const [h] = time.split(":").map(Number);
     const ampm = h < 12 ? "am" : "pm";
     const hour = h % 12 === 0 ? 12 : h % 12;
-    return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-            }}
-        >
-            <p style={{ marginTop: "auto" }}>{hour}</p>
-            <p style={{ marginBottom: "4px" }}>{ampm}</p>
-        </div>
-    );
+    return { hour, ampm };
 }
 
-function calculateDuration(startTime: string, endTime: string): number {
-    const start = dayjs(startTime, "HH:mm");
-    const end = dayjs(endTime, "HH:mm");
-    return end.diff(start, "minute");
-}
+const getSlotStyle = (status?: string) => {
+    switch (status) {
+        case "pending":
+            return {
+                background: `repeating-linear-gradient(
+            135deg,
+            #FDF7F0,
+            #FDF7F0 5px,
+            #FCECD4 5px,
+            #FCECD4 10px
+        )`,
+            };
+        case "blocked":
+            return {
+                background: Colour["bg-inverse-subtle"],
+                color: Colour["text-inverse"],
+            };
+        case "available":
+            return {
+                background: Colour["bg-available"],
+                borderLeft: Colour["icon-success"],
+            };
+        case "booked":
+            return {
+                background: Colour["bg-primary-subtler"],
+            };
+        default:
+            return {
+                background: Colour["bg"],
+            };
+    }
+};
 
-export const SchedulerDayView = ({
+export const TimeSlotDayView = ({
     rowData,
     minTime,
     maxTime,
     loading,
     onSlotClick,
 }: SchedulerDayViewProps) => {
-    const timeSlots = generateTimeSlots(minTime, maxTime, 30);
-    const hourLabels = [
-        ...new Set(
-            timeSlots
-                .map((t) => (t.split(":")[1] === "00" ? t : null))
-                .filter(Boolean)
-        ),
-    ];
+    const timeSlots = TimeHelper.generateTimings(30, "24hr", minTime, maxTime);
+    const hourLabels = timeSlots.filter((t) => t.includes(":00"));
 
     return (
-        <Container>
+        <TimeSlotContainer>
             {/* Service Name Header Row */}
             <ServiceHeaderRow>
                 <BlankCell />
                 {rowData.map((service, idx) => (
-                    <ServiceHeader key={idx}>{service.name}</ServiceHeader>
+                    <ServiceHeader key={idx}>
+                        <Title>{service.name}</Title>
+                        <Description>
+                            <span>{service.rowCells.length}</span> available
+                        </Description>
+                    </ServiceHeader>
                 ))}
             </ServiceHeaderRow>
 
             <GridBody>
                 {/* Time labels */}
                 <TimeColumn>
-                    {hourLabels.map((time) =>
-                        time ? (
+                    {hourLabels.map((time) => {
+                        const { hour, ampm } = formatHourLabel(time);
+                        return (
                             <TimeLabel key={time}>
-                                {formatHourLabel(time)}
+                                <p>{hour}</p>
+                                <p>{ampm}</p>
                             </TimeLabel>
-                        ) : null
-                    )}
+                        );
+                    })}
                 </TimeColumn>
 
                 {/* Time slot grid */}
@@ -96,27 +96,56 @@ export const SchedulerDayView = ({
                                         key={idx}
                                         startTime={time}
                                         onClick={
-                                            slot && onSlotClick
-                                                ? (e) => onSlotClick(slot, e)
+                                            slot
+                                                ? (e) =>
+                                                      onSlotClick &&
+                                                      onSlotClick(slot, e)
                                                 : undefined
                                         }
                                     >
-                                        {slot && (
-                                            <SlotContent
-                                                status={slot.status}
-                                                duration={calculateDuration(
-                                                    slot.startTime,
-                                                    slot.endTime
-                                                )}
-                                            >
-                                                {slot.title}
-                                                {slot.subtitle && (
-                                                    <Subtitle>
-                                                        {slot.subtitle}
-                                                    </Subtitle>
-                                                )}
-                                            </SlotContent>
-                                        )}
+                                        {slot &&
+                                            (() => {
+                                                const style = getSlotStyle(
+                                                    slot.status
+                                                );
+                                                const duration =
+                                                    TimeHelper.calculateDuration(
+                                                        slot.startTime,
+                                                        slot.endTime
+                                                    );
+
+                                                return (
+                                                    <SlotContent
+                                                        background={
+                                                            style.background
+                                                        }
+                                                        color={style.color}
+                                                        borderLeft={
+                                                            style.borderLeft
+                                                        }
+                                                        duration={duration}
+                                                    >
+                                                        <SlotTime>
+                                                            {TimeHelper.parseInput(
+                                                                slot.startTime,
+                                                                "12hr"
+                                                            )}{" "}
+                                                            -{" "}
+                                                            {TimeHelper.parseInput(
+                                                                slot.endTime,
+                                                                "12hr"
+                                                            )}
+                                                        </SlotTime>
+
+                                                        <SlotAvailability>
+                                                            {slot.status ===
+                                                            "blocked"
+                                                                ? "Unavailable"
+                                                                : `${slot.booked} / ${slot.capacity}`}
+                                                        </SlotAvailability>
+                                                    </SlotContent>
+                                                );
+                                            })()}
                                     </SlotCell>
                                 );
                             })}
@@ -124,33 +153,55 @@ export const SchedulerDayView = ({
                     ))}
                 </SlotGrid>
             </GridBody>
-        </Container>
+        </TimeSlotContainer>
     );
 };
-const Container = styled.div`
+const TimeSlotContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    border-top-right-radius: ${Radius["md"]};
+    border-top-left-radius: ${Radius["md"]};
 `;
 
 const ServiceHeaderRow = styled.div`
     display: flex;
     background: ${Colour["bg-strong"]};
-    border: 1px solid ${Colour["border"]};
+    max-height: 130px;
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
 `;
 
 const BlankCell = styled.div`
-    width: 80px;
-    min-width: 80px;
+    width: 42px;
 `;
 
-const ServiceHeader = styled.div`
+const ServiceHeader = styled(Typography.BodyMD)`
     flex: 1;
     min-width: 180px;
-    padding: 12px;
-    text-align: center;
-    font-weight: bold;
-    border-right: 1px solid ${Colour["border"]};
+    padding: 24px;
+    color: ${Colour["text-primary"]};
+    font-weight: 600;
+    line-height: 24px;
+    border-left: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    &:nth-child(2) {
+        border-left: none;
+    }
+`;
+
+const Title = styled.div``;
+
+const Description = styled(Typography.BodySM)`
+    margin-top: 4px;
+    background-color: ${Colour["bg-available"]};
+    border-radius: 23px;
+    width: fit-content;
+    padding: 2px ${Spacing["spacing-8"]};
+    color: ${Colour["text-success"]};
+    font-weight: 400;
+    span {
+        font-weight: 600;
+    }
 `;
 
 const GridBody = styled.div`
@@ -158,20 +209,21 @@ const GridBody = styled.div`
     width: 100%;
 `;
 
-const TimeColumn = styled.div`
-    width: 80px;
+const TimeColumn = styled(Typography.BodySM)`
+    width: 42px;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid ${Colour["border"]};
+    font-weight: 700;
+    color: ${Colour["text-subtler"]};
 `;
 
 const TimeLabel = styled.div`
-    height: 96px; /* 2 slots = 2 * 48px */
+    height: 96px; /* 2 slots */
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
     justify-content: center;
-    font-size: 13px;
-    color: #888;
+    padding-right: 8px;
 `;
 
 const SlotGrid = styled.div`
@@ -188,51 +240,42 @@ const SlotRow = styled.div`
 const SlotCell = styled.div<{
     startTime?: string;
 }>`
+    width: 280px; /* TODO: fix the width */
     flex: 1;
     min-width: 180px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     position: relative;
-    position: relative;
-    border-right: 1px solid #f0f0f0;
-    border-bottom: ${({ startTime }) =>
-        startTime?.endsWith(":00") ? "1px dashed #ccc" : "1px solid #ccc"};
+    border-left: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    border-bottom: ${Border["width-010"]} ${Colour["border"]}
+        ${({ startTime }) => (startTime?.endsWith(":00") ? "dashed" : "solid")};
+    cursor: pointer;
 `;
 
-const SlotContent = styled.div<{
-    status?: string;
+const SlotContent = styled(Typography.BodyXS)<{
+    background: string;
+    borderLeft?: string;
+    color?: string;
     duration?: number;
 }>`
     width: 90%;
-    background: ${({ status }) =>
-        status === "filled"
-            ? "#e6f7ec"
-            : status === "blocked"
-            ? "#fff7e6"
-            : status === "unavailable"
-            ? "#f5f5f5"
-            : "#fff"};
-    border-radius: 0px 4px 4px 0px;
     padding: 8px;
     position: absolute;
-    font-size: 14px;
     font-weight: 500;
-    box-sizing: border-box;
+    border-radius: 4px;
+    z-index: 1;
     height: ${({ duration }) =>
-        duration ? `${(duration / 30) * 48}px` : "48px"}; // scale height
-    overflow: hidden;
+        duration ? `${(duration / 30) * 48}px` : "48px"};
+
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
 
-    &:hover {
-        background: #f0f0f0;
-    }
+    background: ${({ background }) => background};
+    color: ${({ color }) => color};
+    border-left: 4px solid ${({ borderLeft }) => borderLeft || "none"};
 `;
 
-const Subtitle = styled.div`
-    font-size: 12px;
-    color: #888;
-    margin-top: 2px;
-`;
+const SlotTime = styled.div``;
+
+const SlotAvailability = styled.div``;

@@ -7,7 +7,7 @@ import { SchedulerProps } from "./types";
 import { TimeSlotHeader } from "./timeslot-header";
 import { SchedulerBody } from "./scheduler-body";
 import { SchedulerWeekView } from "./scheduler-week-view";
-import { SchedulerDayView } from "./scheduler-day-view";
+import { TimeSlotDayView } from "./scheduler-day-view";
 
 export const Scheduler = ({
     id,
@@ -81,7 +81,7 @@ export const Scheduler = ({
 
             <SchedulerBody>
                 {effectiveView === "day" ? (
-                    <SchedulerDayView
+                    <TimeSlotDayView
                         date={date}
                         rowData={rowData}
                         loading={loading}
@@ -96,7 +96,6 @@ export const Scheduler = ({
                         loading={loading}
                         minTime={minTime}
                         maxTime={maxTime}
-                        emptyContentMessage={emptyContentMessage}
                         onSlotClick={onSlotClick}
                     />
                 )}
@@ -108,4 +107,6 @@ export const Scheduler = ({
 // =============================================================================
 // STYLING
 // =============================================================================
-const Container = styled.div``;
+const Container = styled.div`
+    width: 100%;
+`;
