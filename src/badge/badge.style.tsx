@@ -13,6 +13,9 @@ interface StyledBadgeProps {
 interface BadgeContainerProps {
     $isOverlay?: boolean;
 }
+interface BadgeWrapperProps extends BadgeContainerProps {
+    $offset?: string;
+}
 
 // =============================================================================
 // STYLING
@@ -27,16 +30,14 @@ export const BadgeOverlay = styled.div<BadgeContainerProps>`
         `}
 `;
 
-export const BadgeWrapper = styled.div<BadgeContainerProps>`
-    position: absolute;
-
+export const BadgeWrapper = styled.div<BadgeWrapperProps>`
     ${(props) =>
         props.$isOverlay &&
         css`
             position: absolute;
             top: 0;
             right: 0;
-            transform: translate(50%, -25%);
+            transform: translate(${props.$offset ?? "50%, -25%"});
         `}
 `;
 

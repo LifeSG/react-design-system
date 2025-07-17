@@ -6,6 +6,7 @@ export const Badge = ({
     count = 0,
     variant = "number",
     color = "default",
+    badgeOffset,
     "data-testid": testId = "badge",
     ...otherProps
 }: BadgeProps) => {
@@ -31,7 +32,10 @@ export const Badge = ({
     // =============================================================================
     return (
         <BadgeOverlay $isOverlay={children !== undefined}>
-            <BadgeWrapper $isOverlay={children !== undefined}>
+            <BadgeWrapper
+                $offset={badgeOffset}
+                $isOverlay={children !== undefined}
+            >
                 <StyledBadge
                     $variant={variant}
                     $color={color}
