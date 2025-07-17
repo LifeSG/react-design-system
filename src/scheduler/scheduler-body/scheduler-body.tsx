@@ -16,4 +16,5 @@ const Wrapper = styled.div`
     flex: 1;
     overflow: auto;
     position: relative;
+    max-height: 600px;
 `;

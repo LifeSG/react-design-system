@@ -118,4 +118,16 @@ export const mockSchedulerData: SchedulerRowData[] = [
         subtitle: "Available slots for Service D",
         rowCells: [],
     },
+    {
+        id: "5",
+        name: "Service E",
+        subtitle: "Available slots for Service E",
+        rowCells: [],
+    },
+    {
+        id: "6",
+        name: "Service F",
+        subtitle: "Available slots for Service F",
+        rowCells: [],
+    },
 ];
