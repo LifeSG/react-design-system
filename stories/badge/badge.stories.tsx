@@ -59,10 +59,10 @@ export const Anchored: StoryObj = {
             <Badge count={8} variant="dot">
                 <MagnifierIcon />
             </Badge>
-            <Badge count={8}>
+            <Badge count={8} badgeOffset="69%,-54%">
                 <MagnifierIcon />
             </Badge>
-            <Badge count={8} variant="dot">
+            <Badge count={8} variant="dot-with-border" badgeOffset="-3%, 14%">
                 <Avatar>Example</Avatar>
             </Badge>
             <Badge count={8}>
