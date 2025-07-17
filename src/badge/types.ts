@@ -7,7 +7,7 @@ export type BadgeVariant =
 export type BadgeColor = "default" | "important";
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
-    badgeOffset?: string | undefined;
+    badgeOffset?: [string, string] | undefined;
     children?: JSX.Element | undefined;
     count?: number | undefined;
     variant?: BadgeVariant | undefined;

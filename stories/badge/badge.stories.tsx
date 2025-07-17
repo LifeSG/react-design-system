@@ -24,6 +24,23 @@ export const Default: StoryObj = {
             <Badge count={8} color="important" variant="dot-with-border" />
             <Badge count={8} color="important" variant="number" />
             <Badge count={8} color="important" variant="number-with-border" />
+            <Badge count={8} variant="dot" badgeOffset={["-3%", "14%"]}>
+                <Avatar>Example</Avatar>
+            </Badge>
+            <Badge
+                count={8}
+                variant="dot-with-border"
+                badgeOffset={["-3%", "14%"]}
+            >
+                <Avatar>Example</Avatar>
+            </Badge>
+            <Badge count={8}>
+                <Avatar>Example</Avatar>
+            </Badge>
+
+            <Badge count={8} variant="number-with-border">
+                <Avatar>Example</Avatar>
+            </Badge>
         </>
     ),
     decorators: [
@@ -35,7 +52,7 @@ export const Default: StoryObj = {
                 "Number",
                 "Number with border",
             ],
-            rowHeaders: ["Default", "Important"],
+            rowHeaders: ["Default", "Important", "Anchored"],
         }),
     ],
 };
@@ -59,10 +76,15 @@ export const Anchored: StoryObj = {
             <Badge count={8} variant="dot">
                 <MagnifierIcon />
             </Badge>
-            <Badge count={8} badgeOffset="69%,-54%">
+            <Badge count={8} badgeOffset={["69%", "-54%"]}>
                 <MagnifierIcon />
             </Badge>
-            <Badge count={8} variant="dot-with-border" badgeOffset="-3%, 14%">
+
+            <Badge
+                count={8}
+                variant="dot-with-border"
+                badgeOffset={["-3%", "14%"]}
+            >
                 <Avatar>Example</Avatar>
             </Badge>
             <Badge count={8}>
