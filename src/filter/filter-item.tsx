@@ -17,6 +17,7 @@ import {
     MinimisableContent,
 } from "./filter-item.styles";
 import { FilterItemProps } from "./types";
+import { inertValue } from "../shared/accessibility";
 
 export const FilterItem = ({
     collapsible: desktopCollapsible = true,
@@ -137,6 +138,7 @@ export const FilterItem = ({
                 data-testid="expandable-container"
                 data-expanded={expanded}
                 style={itemAnimationStyles}
+                inert={inertValue(!expanded)}
             >
                 <div ref={itemResizeDetector.ref}>
                     <FilterItemBody {...otherProps}>
