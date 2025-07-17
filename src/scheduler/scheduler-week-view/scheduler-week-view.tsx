@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import { SchedulerWeekViewProps } from "./types";
+import { TimeHelper } from "../../util/time-helper";
+import { TimeIndicator } from "../time-indicator";
 
 // Utility to generate time slots between minTime and maxTime
 function generateTimeSlots(minTime: string, maxTime: string, interval = 30) {
@@ -112,11 +114,6 @@ export const SchedulerWeekView = ({
                                 {slot ? (
                                     <>
                                         <SlotTitle>{slot.title}</SlotTitle>
-                                        {slot.subtitle && (
-                                            <SlotSubtitle>
-                                                {slot.subtitle}
-                                            </SlotSubtitle>
-                                        )}
                                     </>
                                 ) : null}
                             </SlotCell>
