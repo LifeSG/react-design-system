@@ -1,13 +1,7 @@
-import { NavItemCommonProps } from "../navbar/types";
+export type AvatarSize = "default" | "small";
 
-interface AvatarMenuProps<T> {
-    items: NavItemCommonProps<T>[];
-}
-export type AvatarSizeType = "default" | "small";
-
-export interface AvatarProps<T> extends React.HTMLAttributes<HTMLDivElement> {
+export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
     children: string | JSX.Element;
-    menu?: AvatarMenuProps<T> | undefined;
-    sizeType?: AvatarSizeType | undefined;
+    sizeType?: AvatarSize | undefined;
     "data-testid"?: string | undefined;
 }

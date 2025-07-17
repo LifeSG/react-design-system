@@ -8,13 +8,25 @@ import { PropsTable } from "./props-table";
 
 ## Overview
 
-The primary call to action component.
+A visual indicator for notifications or status.
 
 ```tsx
 import { Badge } from "@lifesg/react-design-system/badge";
 ```
 
 <Canvas of={BadgeStories.Default} />
+
+## Count display
+
+When `count` is 1000 or greater, the display is truncated.
+
+<Canvas of={BadgeStories.Count} />
+
+## Anchored usage
+
+The badge can be used standalone, or anchored to other content.
+
+<Canvas of={BadgeStories.Anchored} />
 
 ## Component API
 

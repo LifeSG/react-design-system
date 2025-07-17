@@ -1,34 +1,23 @@
 import styled, { css } from "styled-components";
 import { Colour } from "../theme";
 import { Typography } from "../typography";
+import { AvatarSize } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
-export interface AvatarButtonProps {
-    $mobile?: boolean | undefined;
+export interface AvatarDisplayProps {
+    $sizeType?: AvatarSize;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div`
-    display: flex;
-    height: 100%;
-    align-items: center;
-`;
-
-export const AvatarWrapper = styled.div`
-    position: relative;
-    width: fit-content;
-    height: fit-content;
-`;
-
-export const AvatarButton = styled.div<AvatarButtonProps>`
+export const AvatarDisplay = styled.div<AvatarDisplayProps>`
     border-radius: 50%;
     background-color: ${Colour["bg-primary-subtler"]};
     ${(props) => {
-        return props.$mobile
+        return props.$sizeType === "small"
             ? css`
                   width: 1.5rem;
                   height: 1.5rem;
