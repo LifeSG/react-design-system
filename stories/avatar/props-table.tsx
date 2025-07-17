@@ -27,45 +27,16 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string", "JSX.Element"],
             },
             {
-                name: "menu",
-                description: "Optional dropdown menu configuration",
-                propTypes: ["AvatarMenuProps"],
-            },
-            {
-                name: "mobile",
-                description:
-                    "Applies mobile-specific styles for the avatar and badge",
-                propTypes: ["boolean"],
-                defaultValue: "false",
+                name: "sizeType",
+                description: "Size of avatar",
+                propTypes: ["default", "small"],
+                defaultValue: "default",
             },
             {
                 name: "data-testid",
                 description: "Test ID used for targeting elements in tests",
                 propTypes: ["string"],
                 defaultValue: `"avatar"`,
-            },
-        ],
-    },
-    {
-        name: "AvatarMenuProps",
-        attributes: [
-            {
-                name: "items",
-                description: (
-                    <>
-                        Array of menu items. Each item should follow&nbsp;
-                        <a
-                            href="/?path=/docs/navigation-navbar--docs"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            NavItemCommonProps
-                        </a>
-                        .
-                    </>
-                ),
-                propTypes: ["NavItemCommonProps[]"],
-                mandatory: true,
             },
         ],
     },
