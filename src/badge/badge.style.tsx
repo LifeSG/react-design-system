@@ -14,7 +14,7 @@ interface BadgeContainerProps {
     $isOverlay?: boolean;
 }
 interface BadgeWrapperProps extends BadgeContainerProps {
-    $offset?: string;
+    $offset?: [string, string];
 }
 
 // =============================================================================
@@ -37,7 +37,10 @@ export const BadgeWrapper = styled.div<BadgeWrapperProps>`
             position: absolute;
             top: 0;
             right: 0;
-            transform: translate(${props.$offset ?? "50%, -25%"});
+            transform: translate(
+                ${props.$offset?.[0] ?? "50%"},
+                ${props.$offset?.[1] ?? "-25%"}
+            );
         `}
 `;
 

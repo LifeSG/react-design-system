@@ -45,7 +45,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "badgeOffset",
                 description:
                     'Offsets the badge. Accepts a CSS translate value like "50%, -25%".',
-                propTypes: ["string"],
+                propTypes: ["[string, string]"],
             },
             {
                 name: "data-testid",
