@@ -65,6 +65,7 @@ export const StyledCheckbox = styled(Checkbox)`
 
 export const StyledToggle = styled(Toggle)<{ $visible: boolean }>`
     ${(props) => !props.$visible && "visibility: hidden;"}
+    min-width: 5rem;
 `;
 
 export const SelectAllButton = styled(Button.Small)`
