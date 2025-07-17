@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Avatar } from "src/avatar";
 import { Badge } from "src/badge";
 import { GridDecorator } from "stories/storybook-common";
-import { DefaultComponentWrapper, NAME } from "./doc-elements";
 
 type Component = typeof Avatar;
 
@@ -12,6 +11,8 @@ const meta: Meta<Component> = {
 };
 
 export default meta;
+
+const NAME = "Maximilian";
 
 export const Default: StoryObj<Component> = {
     render: (_args) => {
@@ -35,18 +36,4 @@ export const Default: StoryObj<Component> = {
             rowHeaders: ["Without badge", "With badge"],
         }),
     ],
-};
-
-export const WithOnClick: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <DefaultComponentWrapper>
-                <Badge count={8} color="important" variant="number-with-border">
-                    <Avatar onClick={() => alert("Clicked on Avatar")}>
-                        {NAME}
-                    </Avatar>
-                </Badge>
-            </DefaultComponentWrapper>
-        );
-    },
 };

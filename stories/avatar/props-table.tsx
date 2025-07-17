@@ -29,12 +29,12 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "sizeType",
                 description: "Size of avatar",
-                propTypes: ["default", "small"],
-                defaultValue: "default",
+                propTypes: [`"default"`, `"small"`],
+                defaultValue: `"default"`,
             },
             {
                 name: "data-testid",
-                description: "Test ID used for targeting elements in tests",
+                description: "The test identifier for the component",
                 propTypes: ["string"],
                 defaultValue: `"avatar"`,
             },

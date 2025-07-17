@@ -1,83 +1,74 @@
+import { MagnifierIcon } from "@lifesg/react-icons";
 import type { Meta, StoryObj } from "@storybook/react";
+import { Avatar } from "src/avatar";
 import { Badge } from "src/badge";
-import { StackDecorator, StoryDecorator } from "stories/storybook-common";
+import { GridDecorator, RowDecorator } from "stories/storybook-common";
 
 type Component = typeof Badge;
 
 const meta: Meta<Component> = {
     title: "Feedback indicators/Badge",
     component: Badge,
-    decorators: [StackDecorator(), StoryDecorator()],
 };
 
 export default meta;
 
-type BadgeVariant = "number" | "number-with-border" | "dot" | "dot-with-border";
-type BadgeColor = "default" | "important";
-
-type SingleBadgeProps = {
-    count?: number;
-    variant: BadgeVariant;
-    color?: BadgeColor;
-};
-
-const SingleBadge = ({
-    count,
-    variant,
-    color = "default",
-}: SingleBadgeProps) => (
-    <div style={{ position: "relative", width: 40, height: 40 }}>
-        <Badge count={count} variant={variant} color={color} />
-    </div>
-);
-
-const BadgeGroup = ({
-    counts = [8, 88, 209, 1000, 2090],
-    variant,
-}: {
-    counts?: number[];
-    variant: BadgeVariant;
-}) => (
-    <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-        {["default", "important"].map((color) => (
-            <div key={color} style={{ display: "flex", gap: "20px" }}>
-                {counts.map((count) => (
-                    <SingleBadge
-                        key={`${variant}-${color}-${count}`}
-                        count={count}
-                        variant={variant}
-                        color={color as BadgeColor}
-                    />
-                ))}
-            </div>
-        ))}
-    </div>
-);
-
-const DotBadgeRow = ({ variant }: { variant: BadgeVariant }) => (
-    <div style={{ display: "flex", gap: "20px" }}>
-        {["default", "important"].map((color) => (
-            <SingleBadge
-                key={`${variant}-${color}`}
-                variant={variant}
-                color={color as BadgeColor}
-            />
-        ))}
-    </div>
-);
-
 export const Default: StoryObj = {
-    render: () => <BadgeGroup variant="number" />,
+    render: (_args) => (
+        <>
+            <Badge count={8} variant="dot" />
+            <Badge count={8} variant="dot-with-border" />
+            <Badge count={8} variant="number" />
+            <Badge count={8} variant="number-with-border" />
+            <Badge count={8} color="important" variant="dot" />
+            <Badge count={8} color="important" variant="dot-with-border" />
+            <Badge count={8} color="important" variant="number" />
+            <Badge count={8} color="important" variant="number-with-border" />
+        </>
+    ),
+    decorators: [
+        GridDecorator({
+            columns: 4,
+            columnHeaders: [
+                "Dot",
+                "Dot with border",
+                "Number",
+                "Number with border",
+            ],
+            rowHeaders: ["Default", "Important"],
+        }),
+    ],
 };
 
-export const NumberBadgeWithBorder: StoryObj = {
-    render: () => <BadgeGroup variant="number-with-border" />,
+export const Count: StoryObj = {
+    render: (_args) => (
+        <>
+            <Badge count={8} />
+            <Badge count={88} />
+            <Badge count={209} />
+            <Badge count={1000} />
+            <Badge count={2090} />
+        </>
+    ),
+    decorators: [RowDecorator()],
 };
 
-export const DotBadge: StoryObj = {
-    render: () => <DotBadgeRow variant="dot" />,
-};
-
-export const DotWithBorderBadge: StoryObj = {
-    render: () => <DotBadgeRow variant="dot-with-border" />,
+export const Anchored: StoryObj = {
+    render: (_args) => (
+        <>
+            <Badge count={8} variant="dot">
+                <MagnifierIcon />
+            </Badge>
+            <Badge count={8}>
+                <MagnifierIcon />
+            </Badge>
+            <Badge count={8} variant="dot">
+                <Avatar>Example</Avatar>
+            </Badge>
+            <Badge count={8}>
+                <Avatar>Example</Avatar>
+            </Badge>
+        </>
+    ),
+    decorators: [RowDecorator()],
 };
