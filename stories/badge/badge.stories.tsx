@@ -1,8 +1,9 @@
-import { MagnifierIcon } from "@lifesg/react-icons";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Avatar } from "src/avatar";
 import { Badge } from "src/badge";
 import { GridDecorator, RowDecorator } from "stories/storybook-common";
+import { useDarkMode } from "storybook-dark-mode";
+import { Icon } from "./doc-elements";
 
 type Component = typeof Badge;
 
@@ -26,6 +27,10 @@ export const Default: StoryObj = {
             <Badge count={8} color="important" variant="number-with-border" />
         </>
     ),
+    parameters: {
+        docs: { canvas: { story: { inline: false } } },
+        layout: "fullscreen",
+    },
     decorators: [
         GridDecorator({
             columns: 4,
@@ -37,6 +42,24 @@ export const Default: StoryObj = {
             ],
             rowHeaders: ["Default", "Important"],
         }),
+        (Story) => {
+            const mode = useDarkMode();
+
+            return (
+                <div
+                    style={{
+                        background: mode ? "#323232" : "#eaeaea",
+                        padding: "1rem",
+                        width: "100%",
+                        overflow: "auto",
+                    }}
+                >
+                    <div style={{ width: "max-content", margin: "auto" }}>
+                        <Story />
+                    </div>
+                </div>
+            );
+        },
     ],
 };
 
@@ -55,24 +78,24 @@ export const Count: StoryObj = {
 
 export const Anchored: StoryObj = {
     render: (_args) => (
-        <div style={{ display: "flex", gap: "3rem" }}>
+        <>
             <Badge count={8} variant="dot">
-                <MagnifierIcon />
+                <Icon />
             </Badge>
-            <Badge count={8} badgeOffset={["69%", "-54%"]}>
-                <MagnifierIcon />
+            <Badge count={8} badgeOffset={["25%", "-50%"]}>
+                <Icon />
             </Badge>
             <Badge
                 count={8}
                 variant="dot-with-border"
-                badgeOffset={["-13%", "95%"]}
+                badgeOffset={["-4px", "4px"]}
             >
                 <Avatar>Example</Avatar>
             </Badge>
             <Badge count={8}>
                 <Avatar>Example</Avatar>
             </Badge>
-        </div>
+        </>
     ),
-    decorators: [RowDecorator()],
+    decorators: [GridDecorator({ columns: 4 })],
 };
