@@ -57,7 +57,9 @@ export const Avatar = <T,>({
                 : AvatarBaselineText;
             return (
                 <TextComponent weight="semibold">
-                    {children.charAt(0).toUpperCase()}
+                    {String.fromCodePoint(
+                        children.codePointAt(0) ?? 0
+                    ).toUpperCase()}
                 </TextComponent>
             );
         }

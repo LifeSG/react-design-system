@@ -10,11 +10,14 @@ interface StyledBadgeProps {
     $variant: BadgeProps["variant"];
     $color: BadgeProps["color"];
 }
+interface BadgeContainerProps {
+    $isOverlay?: boolean;
+}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const BadgeOverlay = styled.div<{ $isOverlay?: boolean }>`
+export const BadgeOverlay = styled.div<BadgeContainerProps>`
     ${(props) =>
         props.$isOverlay &&
         css`
@@ -24,7 +27,7 @@ export const BadgeOverlay = styled.div<{ $isOverlay?: boolean }>`
         `}
 `;
 
-export const BadgeWrapper = styled.div<{ $isOverlay?: boolean }>`
+export const BadgeWrapper = styled.div<BadgeContainerProps>`
     position: absolute;
 
     ${(props) =>
