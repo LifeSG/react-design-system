@@ -37,10 +37,10 @@ export const BadgeWrapper = styled.div<BadgeWrapperProps>`
             position: absolute;
             top: 0;
             right: 0;
-            transform: translate(
-                ${props.$offset?.[0] ?? "50%"},
-                ${props.$offset?.[1] ?? "-25%"}
-            );
+            transform: translate(50%, -25%)
+                ${props.$offset
+                    ? `translate(${props.$offset[0]},${props.$offset[1]})`
+                    : ""};
         `}
 `;
 

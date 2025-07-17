@@ -55,7 +55,7 @@ export const Count: StoryObj = {
 
 export const Anchored: StoryObj = {
     render: (_args) => (
-        <>
+        <div style={{ display: "flex", gap: "3rem" }}>
             <Badge count={8} variant="dot">
                 <MagnifierIcon />
             </Badge>
@@ -65,14 +65,14 @@ export const Anchored: StoryObj = {
             <Badge
                 count={8}
                 variant="dot-with-border"
-                badgeOffset={["-3%", "14%"]}
+                badgeOffset={["-13%", "95%"]}
             >
                 <Avatar>Example</Avatar>
             </Badge>
             <Badge count={8}>
                 <Avatar>Example</Avatar>
             </Badge>
-        </>
+        </div>
     ),
     decorators: [RowDecorator()],
 };
