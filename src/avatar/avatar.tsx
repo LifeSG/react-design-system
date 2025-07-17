@@ -12,7 +12,7 @@ import { AvatarProps } from "./types";
 export const Avatar = <T,>({
     children,
     menu,
-    mobile = false,
+    sizeType = "default",
     onClick,
     "data-testid": testId = "avatar",
     ...otherProps
@@ -52,9 +52,8 @@ export const Avatar = <T,>({
         }
 
         if (typeof children === "string") {
-            const TextComponent = mobile
-                ? AvatarBodySmallText
-                : AvatarBaselineText;
+            const TextComponent =
+                sizeType === "small" ? AvatarBodySmallText : AvatarBaselineText;
             return (
                 <TextComponent weight="semibold">
                     {String.fromCodePoint(
@@ -81,7 +80,7 @@ export const Avatar = <T,>({
             <AvatarButton
                 {...otherProps}
                 onClick={handleAvatarClick}
-                $mobile={mobile}
+                $mobile={sizeType === "small"}
                 data-testid={`${testId}-avatar-button`}
             >
                 {renderContent()}

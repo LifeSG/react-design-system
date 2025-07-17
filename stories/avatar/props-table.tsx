@@ -32,11 +32,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["AvatarMenuProps"],
             },
             {
-                name: "mobile",
+                name: "sizeType",
                 description:
-                    "Applies mobile-specific styles for the avatar and badge",
-                propTypes: ["boolean"],
-                defaultValue: "false",
+                    "Specifies the size of the component. small is for mobile and default is for laptop",
+                propTypes: [`"default"`, `"small"`],
+                defaultValue: `"default"`,
             },
             {
                 name: "data-testid",

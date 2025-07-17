@@ -18,12 +18,12 @@ export const Default: StoryObj<Component> = {
         return (
             <>
                 <Avatar>{NAME}</Avatar>
-                <Avatar mobile={true}>{NAME}</Avatar>
+                <Avatar sizeType={"small"}>{NAME}</Avatar>
                 <Badge count={8} color="important" variant="number-with-border">
                     <Avatar>{NAME}</Avatar>
                 </Badge>
                 <Badge count={8} color="important" variant="dot-with-border">
-                    <Avatar mobile={true}>{NAME}</Avatar>
+                    <Avatar sizeType={"small"}>{NAME}</Avatar>
                 </Badge>
             </>
         );
