@@ -1,7 +1,9 @@
 // Alphabetical order
 export * from "./accordion";
 export * from "./alert";
+export * from "./avatar";
 export * from "./animations";
+export * from "./badge";
 export * from "./box-container";
 export * from "./breadcrumb";
 export * from "./button";
