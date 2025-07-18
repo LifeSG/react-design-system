@@ -196,6 +196,13 @@ export const FilterItemCheckbox = <T,>({
                 styleType="link"
                 type="button"
                 onClick={handleSelectClearAll}
+                aria-label={
+                    selected.length
+                        ? "Clear all selections"
+                        : `Select all in ${
+                              parentRef.current?.ariaLabel || "this group"
+                          }`
+                }
             >
                 {selected.length ? "Clear all" : "Select all"}
             </SelectAllButton>
