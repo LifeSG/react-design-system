@@ -8,7 +8,7 @@ import { useTheme } from "styled-components";
 const Component = (
     props: ColDivProps,
     ref: React.Ref<HTMLDivElement>
-): JSX.Element => {
+): React.JSX.Element => {
     const theme = useTheme() as ThemeSpec;
 
     const {

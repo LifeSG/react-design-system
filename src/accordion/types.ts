@@ -1,5 +1,5 @@
 export interface AccordionProps {
-    children: JSX.Element | JSX.Element[];
+    children: React.JSX.Element | React.JSX.Element[];
     title?: string | undefined;
     enableExpandAll?: boolean | undefined;
     initialDisplay?: "collapse-all" | "expand-all" | undefined;
@@ -12,8 +12,8 @@ export interface AccordionProps {
 export type AccordionItemType = "default" | "small";
 
 export interface AccordionItemProps {
-    title: string | JSX.Element;
-    children: JSX.Element | JSX.Element[];
+    title: string | React.JSX.Element;
+    children: React.JSX.Element | React.JSX.Element[];
     /**
      * Omit or set this to undefined to allow 'Hide All'/'Show All' in parent to take precedence
      * for cases where we want the default expand behaviour

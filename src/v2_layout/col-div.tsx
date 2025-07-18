@@ -2,7 +2,10 @@ import React from "react";
 import { V2_ColDivProps, V2_DivRef } from "./types";
 import { StyledDiv, StyledDivStyleProps } from "./col-div.style";
 
-const Component = (props: V2_ColDivProps, ref: V2_DivRef): JSX.Element => {
+const Component = (
+    props: V2_ColDivProps,
+    ref: V2_DivRef
+): React.JSX.Element => {
     const { mobileCols, tabletCols, desktopCols, ...otherProps } = props;
 
     const getStyleProps = (): StyledDivStyleProps => {

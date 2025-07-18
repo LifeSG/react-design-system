@@ -10,7 +10,7 @@ export type InputGroupAddonType = "label" | "list" | "custom";
 export type InputGroupAddonPosition = "left" | "right" | undefined;
 
 export interface CustomAddon {
-    children?: JSX.Element | undefined;
+    children?: React.JSX.Element | undefined;
 }
 
 export interface LabelAddon {
@@ -19,7 +19,7 @@ export interface LabelAddon {
 
 export interface ListAddon<T, V>
     extends DropdownDisplayProps<T, V>,
-        DropdownSearchProps<T> {
+    DropdownSearchProps<T> {
     placeholder?: string | undefined;
     displayValueExtractor?: ((item: T) => string) | undefined;
     "data-selector-testid"?: string | undefined;

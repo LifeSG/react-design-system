@@ -8,7 +8,7 @@ import { MasonryGridProps, MasonryTileProps } from "./types";
 const GridComponent = (
     props: MasonryGridProps,
     ref: React.Ref<HTMLDivElement>
-): JSX.Element => {
+): React.JSX.Element => {
     const { children, ...otherProps } = props;
 
     return (
@@ -24,7 +24,7 @@ const GridComponent = (
 const TileComponent = (
     props: MasonryTileProps,
     ref: React.Ref<HTMLDivElement>
-): JSX.Element => {
+): React.JSX.Element => {
     const { children, ...otherProps } = props;
 
     return (

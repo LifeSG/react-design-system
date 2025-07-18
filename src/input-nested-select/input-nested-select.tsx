@@ -66,7 +66,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     alignment,
     dropdownZIndex,
     dropdownRootNode,
-}: InputNestedSelectProps<V1, V2, V3>): JSX.Element => {
+}: InputNestedSelectProps<V1, V2, V3>): React.JSX.Element => {
     // =========================================================================
     // CONST, STATE
     // =========================================================================

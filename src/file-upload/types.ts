@@ -36,12 +36,12 @@ export interface FileInputProps {
 
 export interface FileUploadProps extends FileInputProps {
     /** Component specific */
-    title?: string | JSX.Element | undefined;
-    description?: string | JSX.Element | undefined;
+    title?: string | React.JSX.Element | undefined;
+    description?: string | React.JSX.Element | undefined;
     /** The style type for the component. Values "bordered" | "no-border" */
     styleType?: FileUploadStyle | undefined;
     maxFiles?: number | undefined;
-    warning?: string | JSX.Element | undefined;
+    warning?: string | React.JSX.Element | undefined;
     fileItems?: FileItemProps[] | undefined;
     /** If set, file items will have editable descriptions (only image files) */
     editableFileItems?: boolean | undefined;
@@ -50,7 +50,7 @@ export interface FileUploadProps extends FileInputProps {
     /** Specifies if sorting is enabled for the file items */
     sortable?: boolean | undefined;
     /** The general error message for the component */
-    errorMessage?: string | JSX.Element | undefined;
+    errorMessage?: string | React.JSX.Element | undefined;
     /** Indicates if the component is in the readonly state */
     readOnly?: boolean | undefined;
     /** Called when an upload happens via drag drop or click */

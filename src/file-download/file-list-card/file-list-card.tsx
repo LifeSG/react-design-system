@@ -137,7 +137,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     );
 
     const renderContents = () => {
-        let content: JSX.Element;
+        let content: React.JSX.Element;
 
         if (thumbnailImageDataUrl) {
             content = renderWithThumbnail(thumbnailImageDataUrl);

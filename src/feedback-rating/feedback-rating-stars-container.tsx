@@ -10,7 +10,7 @@ import { FeedbackRatingStarsContainerProps } from "./types";
 
 export const FeedbackRatingStarsContainer = (
     props: FeedbackRatingStarsContainerProps
-): JSX.Element => {
+): React.JSX.Element => {
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================

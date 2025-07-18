@@ -21,7 +21,7 @@ export const FormRangeSelect = <T, V>({
     xlCols,
     xxlCols,
     ...otherProps
-}: FormInputRangeSelectProps<T, V>): JSX.Element => {
+}: FormInputRangeSelectProps<T, V>): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

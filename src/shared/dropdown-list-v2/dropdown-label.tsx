@@ -37,7 +37,7 @@ export const DropdownLabel = ({
     sublabel,
     truncationType = "middle",
     variant = "default",
-}: DropdownLabelProps): JSX.Element => {
+}: DropdownLabelProps): React.JSX.Element => {
     const theme = useTheme();
     const fontSize =
         variant === "small"
@@ -114,7 +114,7 @@ export const DropdownLabel = ({
         );
     };
 
-    const renderTruncatedText = (displayText: string): JSX.Element => {
+    const renderTruncatedText = (displayText: string): React.JSX.Element => {
         return (
             <>
                 <TruncateFirstLine $maxLines={maxLines} aria-hidden>

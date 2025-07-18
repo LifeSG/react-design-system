@@ -7,8 +7,8 @@ export interface TextareaProps
     transformValue?: ((value: string) => string) | undefined;
     prefix?: string | undefined;
     renderCustomCounter?:
-        | ((maxLength: number, currentValueLength: number) => JSX.Element)
-        | undefined;
+    | ((maxLength: number, currentValueLength: number) => React.JSX.Element)
+    | undefined;
 }
 
 /** To be exposed for Form component inheritance */

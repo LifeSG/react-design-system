@@ -11,7 +11,7 @@ export interface NavItemLinkProps<T> extends NavItemCommonProps<T> {
 }
 export interface NavItemComponentProps {
     itemType: "component";
-    children: JSX.Element;
+    children: React.JSX.Element;
 }
 
 export type NavItemProps<T> = NavItemLinkProps<T> | NavItemComponentProps;
@@ -45,7 +45,7 @@ export interface NavbarActionButtonCtaProps {
 }
 
 export interface NavbarButtonComponentProps {
-    render: JSX.Element;
+    render: React.JSX.Element;
 }
 
 export interface NavbarActionButtonComponentProps {
@@ -92,15 +92,15 @@ export type DrawerDismissalMethod =
 
 export interface NavbarDrawerProps extends NavbarSharedProps {
     show: boolean;
-    children: JSX.Element | JSX.Element[];
+    children: React.JSX.Element | React.JSX.Element[];
     onClose?: (() => void) | undefined;
     /** Triggered when the brand icon is being clicked */
     onBrandClick?:
-        | ((
-              event: React.MouseEvent<HTMLAnchorElement>,
-              type: BrandType
-          ) => void)
-        | undefined;
+    | ((
+        event: React.MouseEvent<HTMLAnchorElement>,
+        type: BrandType
+    ) => void)
+    | undefined;
 }
 
 export type BrandType = "primary" | "secondary";
@@ -126,11 +126,11 @@ export interface NavbarProps<T = void> extends NavbarSharedProps {
     hideNavElements?: boolean | undefined;
     onBrandClick?: ((type: BrandType) => void) | undefined; // override
     onItemClick?:
-        | ((item: NavItemProps<T> | NavItemCommonProps<T>) => void)
-        | undefined;
+    | ((item: NavItemProps<T> | NavItemCommonProps<T>) => void)
+    | undefined;
     onActionButtonClick?:
-        | ((actionButton: NavbarButtonProps) => void)
-        | undefined;
+    | ((actionButton: NavbarButtonProps) => void)
+    | undefined;
     /** Specifies if masthead should be rendered */
     masthead?: boolean | undefined;
     layout?: "default" | "stretch" | undefined;

@@ -1,5 +1,5 @@
 export interface TabProps {
-    children: JSX.Element | JSX.Element[];
+    children: React.JSX.Element | React.JSX.Element[];
     /** Specify the initial tab index that is to be displayed */
     initialActive?: number | undefined;
     /**
@@ -16,7 +16,7 @@ export interface TabProps {
 
 export interface TabItemProps {
     title: string;
-    children: JSX.Element | JSX.Element[];
+    children: React.JSX.Element | React.JSX.Element[];
     className?: string | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;

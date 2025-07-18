@@ -1,7 +1,7 @@
 import { V2_TextSizeType } from "../v2_text/types";
 
 interface BaseListProps {
-    children: JSX.Element | JSX.Element[];
+    children: React.JSX.Element | React.JSX.Element[];
     bottomMargin?: number | undefined;
     size?: V2_TextSizeType | undefined;
 }

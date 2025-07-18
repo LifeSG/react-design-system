@@ -19,18 +19,18 @@ export interface DropdownDisplayProps<T, V> {
     listExtractor?: ((item: T) => string | ListItemDisplayProps) | undefined;
     /** Function to render custom component */
     renderListItem?:
-        | ((item: T, args: ListItemRenderArgs) => JSX.Element)
-        | undefined;
+    | ((item: T, args: ListItemRenderArgs) => React.JSX.Element)
+    | undefined;
     /**
      * Function to render a custom call-to-action component at the bottom of the dropdown list.
      * @param hideOptions - A function that can be called to hide the dropdown list.
      * @param options - The currently displayed list items in the dropdown list.
-     * @returns A JSX.Element representing the custom call-to-action component.
+     * @returns A React.JSX.Element representing the custom call-to-action component.
      */
     renderCustomCallToAction?: (
         hideOptions: () => void,
         options: T[]
-    ) => JSX.Element | undefined;
+    ) => React.JSX.Element | undefined;
 }
 
 export interface DropdownStyleProps {
@@ -55,10 +55,10 @@ export interface DropdownSearchProps<T> {
 
 export interface DropdownListProps<T, V>
     extends React.HTMLAttributes<HTMLUListElement>,
-        DropdownEventHandlerProps<T, V>,
-        DropdownDisplayProps<T, V>,
-        DropdownSearchProps<T>,
-        DropdownStyleProps {
+    DropdownEventHandlerProps<T, V>,
+    DropdownDisplayProps<T, V>,
+    DropdownSearchProps<T>,
+    DropdownStyleProps {
     listItems?: T[] | undefined;
     visible?: boolean | undefined;
     multiSelect?: boolean | undefined;

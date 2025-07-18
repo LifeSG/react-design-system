@@ -4,7 +4,7 @@ import { InputRef } from "../input/types";
 import { FormWrapper } from "./form-wrapper";
 import { FormInputProps } from "./types";
 
-const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
+const Component = (props: FormInputProps, ref: InputRef): React.JSX.Element => {
     const {
         label,
         errorMessage,

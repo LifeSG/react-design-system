@@ -21,7 +21,7 @@ const OverlayComponent = ({
     enableOverlayClick = false,
     zIndex: customZIndex,
     id,
-}: OverlayProps): JSX.Element | null => {
+}: OverlayProps): React.JSX.Element | null => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================

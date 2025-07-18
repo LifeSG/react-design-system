@@ -6,7 +6,7 @@ import { MaskedInput } from "../masked-input/masked-input";
 const Component = (
     props: FormMaskedInputProps,
     ref: React.Ref<HTMLInputElement>
-): JSX.Element => {
+): React.JSX.Element => {
     const {
         label,
         errorMessage,

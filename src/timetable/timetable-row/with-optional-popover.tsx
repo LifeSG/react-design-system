@@ -4,7 +4,7 @@ import { TimeTablePopoverProps } from "../types";
 
 interface ConditionalCellWrapperProps {
     containerRef: RefObject<HTMLDivElement>;
-    children: JSX.Element;
+    children: React.JSX.Element;
     customPopover?: TimeTablePopoverProps | undefined;
 }
 

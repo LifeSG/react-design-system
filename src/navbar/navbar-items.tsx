@@ -32,7 +32,7 @@ export const NavbarItems = <T,>({
     mobile = false,
     hideNavBranding,
     onItemClick,
-}: Props<T>): JSX.Element => {
+}: Props<T>): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================

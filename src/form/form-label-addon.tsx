@@ -17,7 +17,7 @@ interface PopoverAddonProps {
 export const PopoverAddon = ({
     addon,
     rootNode,
-}: PopoverAddonProps): JSX.Element => {
+}: PopoverAddonProps): React.JSX.Element => {
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================

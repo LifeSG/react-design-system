@@ -42,7 +42,7 @@ export const ErrorDisplay = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const getCustomDescription = (): string | JSX.Element | undefined => {
+    const getCustomDescription = (): string | React.JSX.Element | undefined => {
         switch (type) {
             case "maintenance": {
                 const typecastProps =

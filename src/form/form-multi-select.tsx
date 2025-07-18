@@ -22,7 +22,7 @@ export const FormMultiSelect = <T, V>({
     xxlCols,
     variant,
     ...otherProps
-}: FormMultiSelectProps<T, V>): JSX.Element => {
+}: FormMultiSelectProps<T, V>): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

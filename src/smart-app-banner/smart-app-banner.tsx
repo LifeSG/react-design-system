@@ -26,7 +26,7 @@ const ID = "smart-app-banner";
 function SmartAppBannerComponent(
     props: SmartAppBannerProps,
     ref: React.Ref<HTMLDivElement>
-): JSX.Element {
+): React.JSX.Element {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================

@@ -20,7 +20,7 @@ export const FormTimeRangePicker = ({
     xlCols,
     xxlCols,
     ...otherProps
-}: FormTimeRangePickerProps): JSX.Element => {
+}: FormTimeRangePickerProps): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

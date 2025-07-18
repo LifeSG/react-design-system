@@ -27,7 +27,7 @@ const Component = (
         renderItem,
     }: LocalNavDropdownProps,
     ref: React.Ref<HTMLElement>
-): JSX.Element => {
+): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================

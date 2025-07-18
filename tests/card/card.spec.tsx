@@ -15,7 +15,7 @@ describe("Card", () => {
         expect(screen.getByText(DEFAULT_TEXT)).toBeInTheDocument();
     });
 
-    it("should be able to render a custom JSX.Element as children", () => {
+    it("should be able to render a custom React.JSX.Element as children", () => {
         const CUSTOM_TEXT = "custom element";
         render(
             <Card>

@@ -2,7 +2,10 @@ import { Typography } from "../typography/typography";
 import { StyledCard } from "./card.style";
 import { CardProps } from "./types";
 
-export const Card = ({ children, ...otherProps }: CardProps): JSX.Element => {
+export const Card = ({
+    children,
+    ...otherProps
+}: CardProps): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================

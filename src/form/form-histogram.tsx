@@ -20,7 +20,7 @@ export const FormHistogramSlider = ({
     xlCols,
     xxlCols,
     ...otherProps
-}: FormHistogramSliderProps): JSX.Element => {
+}: FormHistogramSliderProps): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

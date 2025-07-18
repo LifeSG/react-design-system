@@ -14,7 +14,7 @@ export const Modal = ({
     onOverlayClick,
     dismissKeyboardOnShow = true,
     ...otherProps
-}: ModalProps): JSX.Element => {
+}: ModalProps): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================

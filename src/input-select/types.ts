@@ -42,10 +42,10 @@ export interface InputSelectSharedProps<T> {
 // =============================================================================
 export interface InputSelectProps<T, V>
     extends React.HTMLAttributes<HTMLElement>,
-        InputSelectOptionsProps<T>,
-        InputSelectSharedProps<T>,
-        DropdownDisplayProps<T, V>,
-        DropdownSearchProps<T> {
+    InputSelectOptionsProps<T>,
+    InputSelectSharedProps<T>,
+    DropdownDisplayProps<T, V>,
+    DropdownSearchProps<T> {
     // TODO: should be a common state once all variants implement this
     readOnly?: boolean | undefined;
     selectedOption?: T | undefined;
@@ -55,7 +55,7 @@ export interface InputSelectProps<T, V>
     /** Function to convert value into a string */
     valueToStringFunction?: ((value: V) => string) | undefined;
     /** Function to render selected custom component */
-    renderCustomSelectedOption?: ((option: T) => JSX.Element) | undefined;
+    renderCustomSelectedOption?: ((option: T) => React.JSX.Element) | undefined;
     onBlur?: (() => void) | undefined;
     variant?: DropdownVariantType | undefined;
     alignment?: DropdownAlignmentType | undefined;

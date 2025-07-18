@@ -152,7 +152,7 @@ export const Toggle = ({
             return null;
         }
 
-        let component: string | JSX.Element;
+        let component: string | React.JSX.Element;
 
         if (typeof subLabel === "function") {
             component = subLabel();

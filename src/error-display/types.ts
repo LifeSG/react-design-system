@@ -34,15 +34,15 @@ export interface InactivityAdditionalAttributes {
 export interface ErrorDisplayAttributes {
     /** The custom image attributes */
     img?: React.ImgHTMLAttributes<HTMLImageElement> | undefined;
-    title?: string | JSX.Element | undefined;
-    description?: string | JSX.Element | undefined;
+    title?: string | React.JSX.Element | undefined;
+    description?: string | React.JSX.Element | undefined;
     /** The action button displayed at the bottom of the Error Display */
     actionButton?: ButtonProps | undefined;
     /** Additional pre-specified props to control specific content  */
     additionalProps?:
-        | MaintenanceAdditionalAttributes
-        | InactivityAdditionalAttributes
-        | undefined;
+    | MaintenanceAdditionalAttributes
+    | InactivityAdditionalAttributes
+    | undefined;
     /** Specifies if only the image is rendered */
     imageOnly?: boolean | undefined;
     /** Use specific resource scheme instead of theme resource scheme */
@@ -51,7 +51,7 @@ export interface ErrorDisplayAttributes {
 
 export interface ErrorDisplayProps
     extends Omit<React.HTMLAttributes<HTMLElement>, "title">,
-        ErrorDisplayAttributes {
+    ErrorDisplayAttributes {
     type: ErrorDisplayType;
     "data-testid"?: string | undefined;
 }

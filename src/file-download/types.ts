@@ -22,8 +22,8 @@ export type FileDownloadStyle = "bordered" | "no-border";
 
 export interface FileDownloadProps {
     /** Component specific */
-    title?: string | JSX.Element | undefined;
-    description?: string | JSX.Element | undefined;
+    title?: string | React.JSX.Element | undefined;
+    description?: string | React.JSX.Element | undefined;
     fileItems: FileItemDownloadProps[];
     /** The style type for the component. Values "bordered" | "no-border" */
     styleType?: FileDownloadStyle | undefined;

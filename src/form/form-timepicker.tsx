@@ -20,7 +20,7 @@ export const FormTimepicker = ({
     xlCols,
     xxlCols,
     ...otherProps
-}: FormTimepickerProps): JSX.Element => {
+}: FormTimepickerProps): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

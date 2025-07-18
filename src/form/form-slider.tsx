@@ -20,7 +20,7 @@ export const FormSlider = ({
     xlCols,
     xxlCols,
     ...otherProps
-}: FormSliderProps): JSX.Element => {
+}: FormSliderProps): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

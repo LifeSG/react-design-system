@@ -11,7 +11,7 @@ export interface TimeTableRowData {
     id?: string | undefined;
     name: string;
     rowCells: TimeTableRowCellData[];
-    subtitle?: string | JSX.Element | undefined;
+    subtitle?: string | React.JSX.Element | undefined;
     rowHeaderPopover?: TimeTablePopoverProps | undefined;
     outOfRangeCellPopover?: TimeTablePopoverProps | undefined;
     // HH:mm format, defaults to minTime
@@ -19,16 +19,16 @@ export interface TimeTableRowData {
     // HH:mm format, defaults to maxTime
     rowMaxTime?: string | undefined;
     onRowNameClick?:
-        | ((rowData: TimeTableRowData, e: React.MouseEvent) => void)
-        | undefined;
+    | ((rowData: TimeTableRowData, e: React.MouseEvent) => void)
+    | undefined;
 }
 
 export interface TimeTablePopoverProps {
     trigger: PopoverV2TriggerType;
-    content: string | JSX.Element | (() => React.ReactNode);
+    content: string | React.JSX.Element | (() => React.ReactNode);
     delay?:
-        | { open?: number | undefined; close?: number | undefined }
-        | undefined;
+    | { open?: number | undefined; close?: number | undefined }
+    | undefined;
     offset?: number | undefined;
 }
 
@@ -67,6 +67,6 @@ export interface TimeTableRowCellData {
     subtitle?: string | undefined;
     customPopover?: TimeTablePopoverProps | undefined;
     onClick?:
-        | ((data: TimeTableRowCellData, e: React.MouseEvent) => void)
-        | undefined;
+    | ((data: TimeTableRowCellData, e: React.MouseEvent) => void)
+    | undefined;
 }

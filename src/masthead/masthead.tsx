@@ -2,7 +2,9 @@ import { useEffect } from "react";
 import { Wrapper } from "./masthead.style";
 import { MastheadProps } from "./types";
 
-export const Masthead = ({ stretch = false }: MastheadProps): JSX.Element => {
+export const Masthead = ({
+    stretch = false,
+}: MastheadProps): React.JSX.Element => {
     // =============================================================================
     // EFFECTS
     // =============================================================================

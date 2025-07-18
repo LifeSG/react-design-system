@@ -88,7 +88,7 @@ describe("ErrorDisplay", () => {
             expect(screen.getByText(CUSTOM_DESCRIPTION)).toBeInTheDocument();
         });
 
-        it("should be able to render JSX.Element", () => {
+        it("should be able to render React.JSX.Element", () => {
             render(
                 <ThemeProvider theme={LifeSGTheme}>
                     <ErrorDisplay
@@ -228,7 +228,7 @@ describe("ErrorDisplay", () => {
 
             const error = getErrorDisplayData(type, "lifesg", LifeSGTheme)!;
             const errorDescription = transformJSXElementToString(
-                error.renderDescription!(additionalProps) as JSX.Element
+                error.renderDescription!(additionalProps) as React.JSX.Element
             );
 
             expect(
@@ -248,7 +248,7 @@ const ERROR_DESCRIPTION_TEST_ID = "error-display--description";
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
-const transformJSXElementToString = (element: JSX.Element): string => {
+const transformJSXElementToString = (element: React.JSX.Element): string => {
     let text = "";
 
     element.props.children.forEach((child: any) => {

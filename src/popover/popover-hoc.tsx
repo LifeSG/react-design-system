@@ -12,7 +12,7 @@ export const withPopover =
         options: PopoverHOCOptionsProps
     ) =>
     // eslint-disable-next-line react/display-name
-    (props: T & PopoverHOCProps): JSX.Element => {
+    (props: T & PopoverHOCProps): React.JSX.Element => {
         // =============================================================================
         // CONST, STATE, REF
         // =============================================================================

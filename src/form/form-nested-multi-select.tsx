@@ -20,7 +20,7 @@ export const FormNestedMultiSelect = <V1, V2, V3>({
     xlCols,
     xxlCols,
     ...otherProps
-}: FormNestedMultiSelectProps<V1, V2, V3>): JSX.Element => {
+}: FormNestedMultiSelectProps<V1, V2, V3>): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

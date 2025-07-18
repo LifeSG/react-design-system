@@ -5,7 +5,7 @@ import { StyledContainer } from "./container.styles";
 const Component = (
     props: ContainerProps,
     ref: React.Ref<HTMLDivElement>
-): JSX.Element => {
+): React.JSX.Element => {
     const {
         children,
         "data-testid": testId = "container",

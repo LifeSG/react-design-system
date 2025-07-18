@@ -47,7 +47,7 @@ export const InputRangeSelect = <T, V>({
     renderListItem,
     renderCustomCallToAction,
     ...otherProps
-}: InputRangeSelectProps<T, V>): JSX.Element => {
+}: InputRangeSelectProps<T, V>): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE
     // =============================================================================

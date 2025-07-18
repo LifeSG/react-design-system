@@ -52,7 +52,7 @@ export const TimeTable = ({
     onPreviousDayClick,
     onCalendarDateSelect,
     ...otherProps
-}: TimeTableProps): JSX.Element => {
+}: TimeTableProps): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -184,7 +184,7 @@ export const TimeTable = ({
 
     const buildPopoverTrigger = (
         data: TimeTableRowData,
-        child: JSX.Element
+        child: React.JSX.Element
     ) => {
         if (!data.rowHeaderPopover) {
             return child;
@@ -219,8 +219,8 @@ export const TimeTable = ({
         wrapper,
         children,
     }: {
-        wrapper: (child: JSX.Element) => JSX.Element;
-        children: JSX.Element;
+        wrapper: (child: React.JSX.Element) => React.JSX.Element;
+        children: React.JSX.Element;
     }) => {
         return wrapper(children);
     };
@@ -232,7 +232,7 @@ export const TimeTable = ({
                     return (
                         <ConditionalCellWrapper
                             key={index}
-                            wrapper={(child: JSX.Element) =>
+                            wrapper={(child: React.JSX.Element) =>
                                 buildPopoverTrigger(data, child)
                             }
                         >

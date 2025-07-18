@@ -6,7 +6,7 @@ export const FormCustomField = ({
     "data-error-testid": errorTestId,
     children,
     ...otherProps
-}: FormCustomFieldProps): JSX.Element => {
+}: FormCustomFieldProps): React.JSX.Element => {
     return (
         <FormWrapper id={id} data-error-testid={errorTestId} {...otherProps}>
             {children}

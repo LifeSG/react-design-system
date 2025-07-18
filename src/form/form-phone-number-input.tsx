@@ -20,7 +20,7 @@ export const FormPhoneNumberInput = ({
     xlCols,
     xxlCols,
     ...otherProps
-}: FormPhoneNumberInputProps): JSX.Element => {
+}: FormPhoneNumberInputProps): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

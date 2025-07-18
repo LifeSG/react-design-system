@@ -107,7 +107,7 @@ export const Breadcrumb = ({
 
     const renderLinks = () => {
         return links.map((link, index) => {
-            let element: JSX.Element;
+            let element: React.JSX.Element;
             if (!link.children) {
                 return null;
             }

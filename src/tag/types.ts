@@ -12,7 +12,7 @@ export type TagColorType =
 export interface TagProps extends React.HTMLAttributes<HTMLElement> {
     type: TagType;
     colorType?: TagColorType | undefined;
-    icon?: JSX.Element | undefined;
+    icon?: React.JSX.Element | undefined;
     iconPosition?: "left" | "right";
     interactive?: boolean | undefined;
 }

@@ -1,7 +1,7 @@
 import { TypographySizeType } from "../theme/font/types";
 
 interface BaseListProps {
-    children: JSX.Element | JSX.Element[];
+    children: React.JSX.Element | React.JSX.Element[];
     bottomMargin?: number | undefined;
     size?: TypographySizeType | undefined;
     id?: string | undefined;

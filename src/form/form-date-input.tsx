@@ -20,7 +20,7 @@ export const FormDateInput = ({
     xlCols,
     xxlCols,
     ...otherProps
-}: FormDateInputProps): JSX.Element => {
+}: FormDateInputProps): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

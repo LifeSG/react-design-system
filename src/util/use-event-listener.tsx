@@ -13,7 +13,7 @@ export const useEventListener = <K extends keyof WindowEventMap>(
     options?: AddEventListenerOptions | boolean
 ) => {
     // Create a ref that stores handler
-    const savedHandler = useRef<EventHandler<K>>();
+    const savedHandler = useRef<EventHandler<K>>(undefined);
     // Update ref.current value if handler changes.
     // This allows our effect below to always get latest handler ...
     useEffect(() => {

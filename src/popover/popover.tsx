@@ -21,7 +21,7 @@ export const Popover = ({
     visible,
     onMobileClose,
     ...otherProps
-}: PopoverProps): JSX.Element => {
+}: PopoverProps): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================

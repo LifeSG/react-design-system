@@ -3,7 +3,10 @@ import styled, { css } from "styled-components";
 import { V2_DivRef, V2_SectionProps } from "./types";
 import { V2_MediaQuery } from "../v2_media";
 
-const Component = (props: V2_SectionProps, ref: V2_DivRef): JSX.Element => {
+const Component = (
+    props: V2_SectionProps,
+    ref: V2_DivRef
+): React.JSX.Element => {
     const {
         children,
         "data-testid": testId = "section",

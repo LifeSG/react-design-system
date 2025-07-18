@@ -9,7 +9,9 @@ import {
 } from "./feedback-rating.styles";
 import { FeedbackRatingProps } from "./types";
 
-export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
+export const FeedbackRating = (
+    props: FeedbackRatingProps
+): React.JSX.Element => {
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================

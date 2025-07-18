@@ -54,7 +54,7 @@ export const DropdownList = <T, V>({
     renderCustomCallToAction,
     variant = "default",
     ...otherProps
-}: DropdownListProps<T, V>): JSX.Element => {
+}: DropdownListProps<T, V>): React.JSX.Element => {
     // =============================================================================
     // CONST, REF, STATE
     // =============================================================================
@@ -314,7 +314,7 @@ export const DropdownList = <T, V>({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderTruncatedText = (displayText: string): JSX.Element => {
+    const renderTruncatedText = (displayText: string): React.JSX.Element => {
         return (
             <>
                 <TruncateFirstLine $maxLines={itemMaxLines} aria-hidden>

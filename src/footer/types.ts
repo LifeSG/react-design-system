@@ -20,7 +20,7 @@ export interface FooterProps<T = void> {
     /** Indicates if the download app icons are to be present */
     showDownloadAddon?: boolean | undefined;
     /** Custom component. This overrides the logo, links and download section */
-    children?: JSX.Element | JSX.Element[] | undefined;
+    children?: React.JSX.Element | React.JSX.Element[] | undefined;
     /** Custom disclaimer link attributes */
     disclaimerLinks?: DisclaimerLinks | undefined;
     /** A custom copyright text */

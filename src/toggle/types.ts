@@ -3,7 +3,7 @@ export type ToggleStyleType = "default" | "no-border";
 
 export interface ToggleProps
     extends React.AriaAttributes,
-        React.DOMAttributes<HTMLInputElement> {
+    React.DOMAttributes<HTMLInputElement> {
     /**
      * The type of toggle. Values: "checkbox" | "radio" | "yes" | "no"
      *
@@ -23,14 +23,14 @@ export interface ToggleProps
     children: React.ReactNode;
     /** The number of lines visible. Additional lines will be truncated */
     childrenMaxLines?:
-        | {
-              mobile?: number | undefined;
-              desktop?: number | undefined;
-              tablet?: number | undefined;
-          }
-        | undefined;
+    | {
+        mobile?: number | undefined;
+        desktop?: number | undefined;
+        tablet?: number | undefined;
+    }
+    | undefined;
     // /** The description label displayed below the main label */
-    subLabel?: (() => JSX.Element) | JSX.Element | string | undefined;
+    subLabel?: (() => React.JSX.Element) | React.JSX.Element | string | undefined;
     disabled?: boolean | undefined;
     /** Specifies if the error display should be present */
     error?: boolean | undefined;
@@ -39,8 +39,8 @@ export interface ToggleProps
     id?: string | undefined;
     "data-testid"?: string | undefined;
     onChange?:
-        | ((event: React.ChangeEvent<HTMLInputElement>) => void)
-        | undefined;
+    | ((event: React.ChangeEvent<HTMLInputElement>) => void)
+    | undefined;
     /** The Toggle subsection */
     compositeSection?: ToggleCompositeSectionProps | undefined;
     /** Specifies if the remove button should be displayed */
@@ -57,5 +57,5 @@ export interface ToggleCompositeSectionProps {
     /** The initial expanded state. Only applicable if collapsible */
     initialExpanded?: boolean | undefined;
     /** Specifies errors to be displayed when the subsection is collapsed */
-    errors?: string[] | JSX.Element | undefined;
+    errors?: string[] | React.JSX.Element | undefined;
 }

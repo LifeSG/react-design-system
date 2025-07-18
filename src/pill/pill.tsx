@@ -8,7 +8,7 @@ export const Pill = ({
     children,
     icon,
     ...otherProps
-}: PillProps): JSX.Element => {
+}: PillProps): React.JSX.Element => {
     return (
         <Wrapper $type={type} $color={colorType} {...otherProps}>
             {icon}

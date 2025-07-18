@@ -26,14 +26,14 @@ export type FormLabelAddonType = "tooltip" | "popover";
 
 export interface FormLabelAddonTriggerProps {
     addonType?: FormLabelAddonType | undefined /* For informational purposes */;
-    icon?: JSX.Element | undefined;
+    icon?: React.JSX.Element | undefined;
     "data-testid"?: string | undefined;
 }
 
 export interface FormLabelAddonProps {
-    content: string | JSX.Element;
+    content: string | React.JSX.Element;
     type?: FormLabelAddonType | undefined;
-    icon?: JSX.Element | undefined;
+    icon?: React.JSX.Element | undefined;
     id?: string | undefined;
     zIndex?: number | undefined;
     "data-testid"?: string | undefined;
@@ -43,7 +43,7 @@ export interface FormLabelProps
     extends React.LabelHTMLAttributes<HTMLLabelElement> {
     addon?: FormLabelAddonProps | undefined;
     disabled?: boolean | undefined;
-    subtitle?: string | JSX.Element | undefined;
+    subtitle?: string | React.JSX.Element | undefined;
     "data-testid"?: string | undefined;
 }
 
@@ -58,95 +58,95 @@ export interface BaseFormElementProps extends V2_ColProps, ColProps {
 }
 
 export interface FormWrapperProps extends BaseFormElementProps {
-    children: JSX.Element | JSX.Element[];
+    children: React.JSX.Element | React.JSX.Element[];
     id?: string | undefined;
     disabled?: boolean | undefined;
 }
 
 export interface FormInputProps
     extends InputPartialProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormInputGroupProps<T, V>
     extends InputGroupPartialProps<T, V>,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormMaskedInputProps
     extends MaskedInputPartialProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormTextareaProps
     extends TextareaPartialProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormCustomFieldProps
     extends FormWrapperProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormInputSelectProps<T, V>
     extends InputSelectPartialProps<T, V>,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormInputRangeSelectProps<T, V>
     extends InputRangeSelectPartialProps<T, V>,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormMultiSelectProps<T, V>
     extends InputMultiSelectPartialProps<T, V>,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormNestedSelectProps<V1, V2, V3>
     extends InputNestedSelectPartialProps<V1, V2, V3>,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormNestedMultiSelectProps<V1, V2, V3>
     extends InputNestedMultiSelectPartialProps<V1, V2, V3>,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormDateInputProps
     extends DateInputProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormDateRangeInputProps
     extends DateRangeInputProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormTimepickerProps
     extends TimepickerProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormUnitNumberInputProps
     extends UnitNumberInputProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormPhoneNumberInputProps
     extends PhoneNumberInputProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormTimeRangePickerProps
     extends TimeRangePickerProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormPredictiveTextInputProps<T, V>
     extends PredictiveTextInputProps<T, V>,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormSliderProps
     extends InputSliderProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormRangeSliderProps
     extends InputRangeSliderProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormHistogramSliderProps
     extends HistogramSliderProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormESignatureProps
     extends EsignatureProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }
 
 export interface FormSelectHistogramProps
     extends SelectHistogramProps,
-        BaseFormElementProps {}
+    BaseFormElementProps { }

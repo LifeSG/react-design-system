@@ -13,13 +13,13 @@ export interface ColumnCountAttribute {
 /** @deprecated consider switching to `Layout.ColDiv` to manage grids */
 export interface MasonryGridProps extends React.HTMLAttributes<HTMLDivElement> {
     numOfCols: ColumnCountAttribute;
-    children: JSX.Element | JSX.Element[];
+    children: React.JSX.Element | React.JSX.Element[];
     "data-testid"?: string | undefined;
 }
 
 /** @deprecated consider switching to `Layout.ColDiv` to manage grids */
 export interface MasonryTileProps extends React.HTMLAttributes<HTMLDivElement> {
-    children: JSX.Element;
+    children: React.JSX.Element;
     /** the column to start on desktop resolutions */
     startLg?: number | undefined;
     /** the number of columns to span on desktop resolutions */

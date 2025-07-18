@@ -11,7 +11,7 @@ export interface ResizeCallbackParams {
 }
 
 export interface FadeWrapperProps {
-    children: JSX.Element | JSX.Element[];
+    children: React.JSX.Element | React.JSX.Element[];
     fadeColor?: string[] | FadeColorSet | undefined;
     fadePosition?: FadePosition | undefined;
     showIndicator?: boolean | undefined;

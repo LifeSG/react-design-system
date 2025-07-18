@@ -21,7 +21,7 @@ export const FormSelectHistogram = ({
     xxlCols,
     histogramSlider,
     ...otherProps
-}: FormSelectHistogramProps): JSX.Element => {
+}: FormSelectHistogramProps): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

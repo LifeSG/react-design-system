@@ -1,9 +1,9 @@
 export interface OverlayProps {
-    children?: JSX.Element | undefined;
+    children?: React.JSX.Element | undefined;
     show?: boolean | undefined;
     rootId?:
-        | string
-        | undefined /* the id of the root element to attach the overlay to */;
+    | string
+    | undefined /* the id of the root element to attach the overlay to */;
     /** @deprecated no longer has effect */
     backgroundOpacity?: number | undefined;
     backgroundBlur?: boolean | undefined;

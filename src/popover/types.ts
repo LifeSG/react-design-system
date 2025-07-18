@@ -1,6 +1,6 @@
 /** @deprecated Use `PopoverV2` */
 export interface PopoverProps {
-    children: string | JSX.Element;
+    children: string | React.JSX.Element;
     visible?: boolean | undefined;
     id?: string | undefined;
     className?: string | undefined;
@@ -16,7 +16,7 @@ export interface PopoverHOCProps {
 
 /** @deprecated Use `PopoverV2` */
 export interface PopoverHOCOptionsProps {
-    content: string | JSX.Element;
+    content: string | React.JSX.Element;
     trigger?: "click" | "hover" | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;

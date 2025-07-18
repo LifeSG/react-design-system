@@ -24,11 +24,13 @@ export const Timeline = ({
     colSpan,
     "data-base-indicator-testid": baseIndicatorTestId,
     "data-testid": testId = "timeline",
-}: TimelineProps): JSX.Element => {
+}: TimelineProps): React.JSX.Element => {
     // ===========================================================================
     // RENDER
     // ===========================================================================
-    const renderContent = (content: string | JSX.Element): JSX.Element => {
+    const renderContent = (
+        content: string | React.JSX.Element
+    ): React.JSX.Element => {
         if (typeof content === "string") {
             return (
                 <Typography.BodyMD className="timeline-item-content-text">
@@ -40,7 +42,9 @@ export const Timeline = ({
         return <>{content}</>;
     };
 
-    const renderTitle = (title: string | JSX.Element): JSX.Element => {
+    const renderTitle = (
+        title: string | React.JSX.Element
+    ): React.JSX.Element => {
         if (typeof title === "string") {
             return (
                 <TimelineItemTitle
@@ -55,7 +59,7 @@ export const Timeline = ({
         return <>{title}</>;
     };
 
-    const renderStatusPills = (statuses: PillProps[]): JSX.Element[] => {
+    const renderStatusPills = (statuses: PillProps[]): React.JSX.Element[] => {
         // maximum 2 pills allowed
         const renderableStatuses = statuses.slice(0, 2);
         return renderableStatuses.map((status: PillProps, index) => {

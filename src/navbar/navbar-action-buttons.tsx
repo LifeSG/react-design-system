@@ -34,7 +34,7 @@ export const NavbarActionButtons = ({
     actionButtons,
     mobile = false,
     onActionButtonClick,
-}: Props): JSX.Element => {
+}: Props): React.JSX.Element => {
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================

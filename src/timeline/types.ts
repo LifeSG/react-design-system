@@ -9,8 +9,8 @@ export type Variant =
     | "disabled";
 
 export interface TimelineItemProps {
-    title: string | JSX.Element;
-    content: string | JSX.Element;
+    title: string | React.JSX.Element;
+    content: string | React.JSX.Element;
     statuses?: PillProps[] | undefined;
     variant?: Variant | undefined;
 }

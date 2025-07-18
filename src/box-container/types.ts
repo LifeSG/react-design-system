@@ -7,11 +7,11 @@ export interface BoxContainerSubComponentTestIds {
 }
 
 export interface BoxContainerProps {
-    children: JSX.Element | JSX.Element[];
-    title: string | JSX.Element;
+    children: React.JSX.Element | React.JSX.Element[];
+    title: string | React.JSX.Element;
     collapsible?: boolean | undefined;
     expanded?: boolean | undefined;
-    callToActionComponent?: JSX.Element | undefined;
+    callToActionComponent?: React.JSX.Element | undefined;
     displayState?: BoxContainerDisplayState | undefined;
     className?: string | undefined;
     subComponentTestIds?: BoxContainerSubComponentTestIds | undefined;

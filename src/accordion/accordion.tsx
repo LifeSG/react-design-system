@@ -18,7 +18,7 @@ const AccordionBase = ({
     className,
     id,
     "data-testid": testId,
-}: AccordionProps): JSX.Element => {
+}: AccordionProps): React.JSX.Element => {
     const [expandAll, setExpandAll] = useState<boolean>(
         initialDisplay === "expand-all"
     );

@@ -16,7 +16,7 @@ export const Menu = <T,>({
     items,
     mobile = false,
     onItemClick,
-}: Props<T>): JSX.Element => {
+}: Props<T>): React.JSX.Element => {
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================

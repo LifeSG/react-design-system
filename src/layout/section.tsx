@@ -5,7 +5,7 @@ import { SectionProps } from "./types";
 const Component = (
     props: SectionProps,
     ref: React.Ref<HTMLDivElement>
-): JSX.Element => {
+): React.JSX.Element => {
     const {
         children,
         "data-testid": testId = "section",

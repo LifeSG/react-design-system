@@ -37,7 +37,7 @@ export const SelectHistogram = ({
     value,
     dropdownRootNode,
     ...otherProps
-}: SelectHistogramProps): JSX.Element => {
+}: SelectHistogramProps): React.JSX.Element => {
     const {
         interval,
         bins = [],

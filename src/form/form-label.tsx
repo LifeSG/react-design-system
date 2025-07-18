@@ -8,7 +8,7 @@ export const FormLabel = ({
     subtitle,
     "data-testid": testId,
     ...otherProps
-}: FormLabelProps): JSX.Element => {
+}: FormLabelProps): React.JSX.Element => {
     // -------------------------------------------------------------------------
     // RENDER FUNCTIONS
     // -------------------------------------------------------------------------
@@ -41,6 +41,6 @@ export const FormLabel = ({
 
 export const FormErrorMessage = (
     props: React.HTMLAttributes<HTMLElement>
-): JSX.Element => {
+): React.JSX.Element => {
     return <ErrorMessage {...props} />;
 };

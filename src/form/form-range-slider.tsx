@@ -20,7 +20,7 @@ export const FormRangeSlider = ({
     xlCols,
     xxlCols,
     ...otherProps
-}: FormRangeSliderProps): JSX.Element => {
+}: FormRangeSliderProps): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

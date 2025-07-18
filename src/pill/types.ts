@@ -12,5 +12,5 @@ export type PillColorType =
 export interface PillProps extends React.HTMLAttributes<HTMLDivElement> {
     type: PillType;
     colorType?: PillColorType | undefined;
-    icon?: JSX.Element | undefined;
+    icon?: React.JSX.Element | undefined;
 }

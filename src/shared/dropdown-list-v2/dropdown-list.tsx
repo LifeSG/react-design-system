@@ -70,7 +70,7 @@ export const DropdownList = <T, V>({
     searchPlaceholder = "Search",
     searchFunction,
     onSearch,
-}: DropdownListProps<T, V>): JSX.Element => {
+}: DropdownListProps<T, V>): React.JSX.Element => {
     // =========================================================================
     // CONST, REF, STATE
     // =========================================================================

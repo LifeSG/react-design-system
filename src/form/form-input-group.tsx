@@ -6,7 +6,7 @@ import { FormInputGroupProps } from "./types";
 const Component = <T, V>(
     props: FormInputGroupProps<T, V>,
     ref: React.Ref<HTMLInputElement>
-): JSX.Element => {
+): React.JSX.Element => {
     const {
         label,
         errorMessage,

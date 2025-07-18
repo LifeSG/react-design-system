@@ -200,7 +200,7 @@ const Component = ({
     );
 
     const renderContents = () => {
-        let content: JSX.Element;
+        let content: React.JSX.Element;
 
         if (errorMessage) {
             content = renderErrorState();
@@ -218,7 +218,7 @@ const Component = ({
     };
 
     const renderActions = () => {
-        let content: JSX.Element;
+        let content: React.JSX.Element;
 
         if (errorMessage) {
             content = (

@@ -1,7 +1,7 @@
 import { RefObject } from "react";
 
 export interface PopoverV2Props {
-    children: string | JSX.Element;
+    children: string | React.JSX.Element;
     visible?: boolean | undefined;
     id?: string | undefined;
     className?: string | undefined;
@@ -19,7 +19,7 @@ export type PopoverV2Position = Position | AlignedPosition;
 
 export interface PopoverV2TriggerProps {
     children: React.ReactNode;
-    popoverContent: string | JSX.Element | (() => React.ReactNode);
+    popoverContent: string | React.JSX.Element | (() => React.ReactNode);
     trigger?: PopoverV2TriggerType | undefined;
     position?: PopoverV2Position | undefined;
     id?: string | undefined;
@@ -36,8 +36,8 @@ export interface PopoverV2TriggerProps {
     customOffset?: number | undefined;
     // in milliseconds
     delay?:
-        | { open?: number | undefined; close?: number | undefined }
-        | undefined;
+    | { open?: number | undefined; close?: number | undefined }
+    | undefined;
     onPopoverAppear?: (() => void) | undefined;
     onPopoverDismiss?: (() => void) | undefined;
 }
@@ -48,7 +48,7 @@ export interface PopoverInlineProps
     extends Omit<PopoverV2TriggerProps, "children"> {
     ariaLabel?: string | undefined;
     content?: React.ReactNode | undefined;
-    icon?: JSX.Element | undefined;
+    icon?: React.JSX.Element | undefined;
     underlineStyle?: PopoverInlineStyle | undefined;
     underlineHoverStyle?: PopoverInlineStyle | undefined;
 }

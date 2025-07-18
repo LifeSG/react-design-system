@@ -20,7 +20,7 @@ export const FormPredictiveTextInput = <T, V>({
     xlCols,
     xxlCols,
     ...otherProps
-}: FormPredictiveTextInputProps<T, V>): JSX.Element => {
+}: FormPredictiveTextInputProps<T, V>): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

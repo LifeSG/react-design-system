@@ -7,19 +7,19 @@ interface Props {
     renderCustomCounter?: (
         maxLength: number,
         currentValueLength: number
-    ) => JSX.Element;
+    ) => React.JSX.Element;
 }
 
 export const TextareaCounter = ({
     value,
     maxLength,
     renderCustomCounter,
-}: Props): JSX.Element => {
+}: Props): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const [counterLabel, setCounterLabel] = useState<
-        string | number | readonly string[] | JSX.Element
+        string | number | readonly string[] | React.JSX.Element
     >("");
 
     // =============================================================================

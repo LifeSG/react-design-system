@@ -22,23 +22,23 @@ export interface InputRangeProp<T> {
 
 export interface InputRangeSelectProps<T, V>
     extends React.HTMLAttributes<HTMLElement>,
-        InputRangeSelectOptionsProps<T>,
-        Omit<InputSelectSharedProps<T>, "options">,
-        DropdownDisplayProps<T, V>,
-        DropdownSearchProps<T>,
-        DropdownStyleProps {
+    InputRangeSelectOptionsProps<T>,
+    Omit<InputSelectSharedProps<T>, "options">,
+    DropdownDisplayProps<T, V>,
+    DropdownSearchProps<T>,
+    DropdownStyleProps {
     readOnly?: boolean | undefined;
     placeholders?: InputRangeProp<string> | undefined;
     selectedOptions?: InputRangeProp<T> | undefined;
     onSelectOption?:
-        | ((option: InputRangeProp<T>, extractedValue: V | undefined) => void)
-        | undefined;
+    | ((option: InputRangeProp<T>, extractedValue: V | undefined) => void)
+    | undefined;
     // /** Function to derive display value for selected option */
     displayValueExtractor?: ((option: T) => string) | undefined;
     // /** Function to convert value into a string */
     valueToStringFunction?: ((value: V) => string) | undefined;
     // /** Function to render selected custom component */
-    renderCustomSelectedOption?: ((option: T) => JSX.Element) | undefined;
+    renderCustomSelectedOption?: ((option: T) => React.JSX.Element) | undefined;
 }
 
 /** To be exposed for Form component inheritance */

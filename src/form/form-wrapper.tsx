@@ -32,7 +32,7 @@ export const FormWrapper = ({
     xlCols,
     xxlCols,
     "data-error-testid": errorTestId,
-}: FormWrapperProps): JSX.Element => {
+}: FormWrapperProps): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
@@ -112,7 +112,7 @@ export const FormWrapper = ({
     // RENDER FUNCTIONS
     // =============================================================================
 
-    const renderFormLabel = (): JSX.Element => {
+    const renderFormLabel = (): React.JSX.Element => {
         if (typeof label === "string") {
             return (
                 <FormLabel
@@ -136,7 +136,7 @@ export const FormWrapper = ({
         );
     };
 
-    const renderChildren = (): JSX.Element | JSX.Element[] => {
+    const renderChildren = (): React.JSX.Element | React.JSX.Element[] => {
         const ariaState = {
             "aria-invalid": isInvalidState(),
             "aria-describedby": isInvalidState()

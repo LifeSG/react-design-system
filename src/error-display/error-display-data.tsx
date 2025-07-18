@@ -442,10 +442,10 @@ interface ErrorDisplayDataAttrs {
     img?: React.ImgHTMLAttributes<HTMLImageElement> | undefined;
     imgSrc?: string | undefined;
     title?: string | undefined;
-    description?: string | JSX.Element | undefined;
+    description?: string | React.JSX.Element | undefined;
     renderDescription?: (
         attrs?: MaintenanceAdditionalAttributes | InactivityAdditionalAttributes
-    ) => JSX.Element | string | undefined;
+    ) => React.JSX.Element | string | undefined;
 }
 
 export const generateErrorDisplayData = (

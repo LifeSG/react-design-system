@@ -34,8 +34,8 @@ const Component = (
     const { baseImageDataURL } = props;
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const fabricCanvas = useRef<FabricCanvas>();
-    const pencilBrush = useRef<PencilBrush>();
+    const fabricCanvas = useRef<FabricCanvas>(null);
+    const pencilBrush = useRef<PencilBrush>(null);
     const theme = useTheme();
 
     // =============================================================================

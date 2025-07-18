@@ -6,7 +6,7 @@ import { Section } from "./section";
 const Component = (
     props: ContentProps,
     ref: React.Ref<HTMLDivElement>
-): JSX.Element => {
+): React.JSX.Element => {
     const {
         children,
         "data-testid": testId = "content",

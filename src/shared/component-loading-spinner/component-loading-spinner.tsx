@@ -33,7 +33,7 @@ export const ComponentLoadingSpinner = ({
     color,
     className,
     size,
-}: ComponentLoadingSpinnerProps): JSX.Element => {
+}: ComponentLoadingSpinnerProps): React.JSX.Element => {
     return (
         <OuterRing
             className={className}

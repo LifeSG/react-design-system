@@ -80,9 +80,9 @@ export const Knob = styled.div<ThumbStyleProps>`
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
         border: ${Border["width-010"]} ${Border["solid"]}
             ${(props) =>
-                props.$disabled
-                    ? Colour["border-selected-disabled"]
-                    : Colour["border-strong"]};
+        props.$disabled
+            ? Colour["border-selected-disabled"]
+            : Colour["border-strong"]};
         border-radius: ${Radius["full"]};
     }
 `;

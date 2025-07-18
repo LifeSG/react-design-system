@@ -24,7 +24,7 @@ export const LinkList = <T,>({
     style = "default",
     onItemClick,
     ...otherProps
-}: LinkListProps<T>): JSX.Element => {
+}: LinkListProps<T>): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
@@ -71,7 +71,7 @@ export const LinkList = <T,>({
         index: number,
         title: string,
         description?: string,
-        secondaryDescription?: JSX.Element
+        secondaryDescription?: React.JSX.Element
     ) => {
         const ItemTitle = style === "small" ? ItemTitleSmall : ItemTitleDefault;
         return (

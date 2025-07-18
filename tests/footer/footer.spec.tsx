@@ -39,7 +39,7 @@ describe("Footer", () => {
     });
 
     describe("children", () => {
-        it("should be able to render custom JSX.Element", () => {
+        it("should be able to render custom React.JSX.Element", () => {
             const customText = "custom text";
             render(
                 <Footer>
@@ -50,7 +50,7 @@ describe("Footer", () => {
             expect(screen.getByText(customText)).toBeInTheDocument();
         });
 
-        it("should be able to render custom JSX.Element[]", () => {
+        it("should be able to render custom React.JSX.Element[]", () => {
             const customTextOne = "custom text one";
             const customTextTwo = "custom text two";
 

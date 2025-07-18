@@ -13,7 +13,7 @@ export const DropdownWrapper = ({
     readOnly,
     className,
     variant,
-}: DropdownSelectorProps): JSX.Element => {
+}: DropdownSelectorProps): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================

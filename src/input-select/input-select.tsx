@@ -52,7 +52,7 @@ export const InputSelect = <T, V>({
     alignment,
     dropdownZIndex,
     dropdownRootNode,
-}: InputSelectProps<T, V>): JSX.Element => {
+}: InputSelectProps<T, V>): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE
     // =============================================================================

@@ -2,7 +2,7 @@ export interface LinkListItemProps<T>
     extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     title: string;
     description?: string | undefined;
-    secondaryDescription?: JSX.Element | undefined;
+    secondaryDescription?: React.JSX.Element | undefined;
     "data-testid"?: string | undefined;
     options?: T | undefined; // Used to pass custom props
 }
@@ -19,9 +19,9 @@ export interface LinkListProps<T> {
     "data-testid"?: string | undefined;
     /** Captures item clicks on a component level */
     onItemClick?:
-        | ((
-              item: LinkListItemProps<T>,
-              event: React.MouseEvent<HTMLAnchorElement>
-          ) => void)
-        | undefined;
+    | ((
+        item: LinkListItemProps<T>,
+        event: React.MouseEvent<HTMLAnchorElement>
+    ) => void)
+    | undefined;
 }

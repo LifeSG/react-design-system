@@ -9,7 +9,7 @@ export const Tag = ({
     icon,
     iconPosition = "left",
     ...otherProps
-}: TagProps): JSX.Element => {
+}: TagProps): React.JSX.Element => {
     return (
         <Wrapper
             as={interactive ? "button" : "div"}

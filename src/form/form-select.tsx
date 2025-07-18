@@ -22,7 +22,7 @@ export const FormSelect = <T, V>({
     xxlCols,
     variant,
     ...otherProps
-}: FormInputSelectProps<T, V>): JSX.Element => {
+}: FormInputSelectProps<T, V>): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

@@ -18,7 +18,7 @@ export const Checkbox = ({
     onKeyPress, // will still need this for now else keyboard events are not handled
     displaySize = "default",
     ...otherProps
-}: CheckboxProps): JSX.Element => {
+}: CheckboxProps): React.JSX.Element => {
     // =============================================================================
     // REFS, EFFECTS
     // =============================================================================

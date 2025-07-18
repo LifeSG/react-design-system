@@ -1,4 +1,5 @@
 import { ExternalIcon } from "@lifesg/react-icons/external";
+import { JSX } from "react";
 import styled, { css } from "styled-components";
 import { Colour } from "../theme";
 import { TypographySizeType } from "../theme/font/types";

@@ -9,7 +9,7 @@ export const withTooltip =
         options: TooltipHOCOptionsProps
     ) =>
     // eslint-disable-next-line react/display-name
-    (props: T & TooltipHOCProps): JSX.Element => {
+    (props: T & TooltipHOCProps): React.JSX.Element => {
         const { tooltipVisible, position, ...otherProps } = props;
         const innerProps = otherProps as T;
 

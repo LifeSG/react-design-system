@@ -16,7 +16,7 @@ export const useContainerQuery = <T extends HTMLElement>({
     const [belowBreakpoint, setBelowBreakpoint] = useState(false);
 
     const handleResize = useCallback(
-        (width) => {
+        (width: any) => {
             setBelowBreakpoint(width <= maxWidth);
         },
         [maxWidth]

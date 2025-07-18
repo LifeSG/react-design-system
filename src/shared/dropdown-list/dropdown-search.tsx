@@ -17,7 +17,7 @@ interface Props extends React.HTMLAttributes<HTMLInputElement> {
 const Component = (
     props: Props,
     ref: React.Ref<HTMLInputElement>
-): JSX.Element => {
+): React.JSX.Element => {
     const { onClear, ...otherProps } = props;
 
     return (

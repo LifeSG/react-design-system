@@ -20,7 +20,7 @@ export const FormUnitNumberInput = ({
     xlCols,
     xxlCols,
     ...otherProps
-}: FormUnitNumberInputProps): JSX.Element => {
+}: FormUnitNumberInputProps): React.JSX.Element => {
     return (
         <FormWrapper
             id={id}

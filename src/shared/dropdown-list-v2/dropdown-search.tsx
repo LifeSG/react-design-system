@@ -18,7 +18,7 @@ interface Props extends React.HTMLAttributes<HTMLInputElement> {
 const Component = (
     { value, variant, onClear, ...otherProps }: Props,
     ref: React.Ref<HTMLInputElement>
-): JSX.Element => {
+): React.JSX.Element => {
     return (
         <Container $variant={variant}>
             <SearchBox $variant={variant}>

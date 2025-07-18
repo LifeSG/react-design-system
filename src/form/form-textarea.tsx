@@ -13,7 +13,7 @@ import { FormTextareaProps } from "./types";
 const FormTextareaComponent = (
     props: FormTextareaProps,
     ref: TextareaRef
-): JSX.Element => {
+): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================

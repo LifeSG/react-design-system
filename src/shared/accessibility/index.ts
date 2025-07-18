@@ -21,5 +21,5 @@ export const inertValue = (value: boolean | undefined) => {
         return value;
     }
 
-    return value ? "true" : undefined;
+    return value ? true : undefined;
 };

@@ -21,7 +21,7 @@ const Component = (
         renderItem,
     }: LocalNavMenuProps,
     ref: React.Ref<HTMLUListElement>
-): JSX.Element => {
+): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================

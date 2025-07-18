@@ -21,7 +21,7 @@ export const ToggleIcon = ({
     disabled,
     className,
 }: ToggleIconProps) => {
-    let component: JSX.Element | null;
+    let component: React.JSX.Element | null;
 
     switch (type) {
         case "checkbox":

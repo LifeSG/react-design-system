@@ -27,7 +27,7 @@ export const Alert = ({
     customIcon,
     maxCollapsedHeight,
     ...otherProps
-}: AlertProps): JSX.Element => {
+}: AlertProps): React.JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
