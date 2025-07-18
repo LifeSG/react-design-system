@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Border, Colour } from "../theme";
 import { Typography } from "../typography";
 import { TimeHelper } from "../util/time-helper";
+import { CELL_HEIGHT } from "./const";
 
 interface SchedulerTimeIndicatorProps {
     minTime: string;
@@ -28,8 +29,8 @@ export const TimeIndicator = ({
                 const { hour, ampm } = formatHourLabel(time);
                 return (
                     <TimeLabel key={time}>
-                        <p>{hour}</p>
-                        <p>{ampm}</p>
+                        <span>{hour}</span>
+                        <span>{ampm}</span>
                     </TimeLabel>
                 );
             })}
@@ -41,18 +42,17 @@ export const TimeIndicator = ({
 // STYLING
 // =============================================================================
 
-export const TimeColumn = styled(Typography.BodySM)`
-    width: 42px;
+export const TimeColumn = styled.div`
     display: flex;
     flex-direction: column;
     font-weight: 700;
     color: ${Colour["text-subtler"]};
-
-    border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    background: ${Colour["bg"]};
+    border-left: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
 `;
 
-export const TimeLabel = styled.div`
-    height: 96px; /* 2 slots */
+export const TimeLabel = styled(Typography.BodySM)`
+    height: ${CELL_HEIGHT * 2}px; /* 2 slots */
     display: flex;
     flex-direction: column;
     align-items: flex-end;

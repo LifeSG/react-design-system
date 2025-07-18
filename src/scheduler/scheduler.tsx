@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import { useTheme } from "styled-components";
 import { Breakpoint } from "../theme";
@@ -12,7 +12,6 @@ import { TimeSlotDayView } from "./scheduler-day-view";
 export const Scheduler = ({
     id,
     className,
-    "data-testid": dataTestId,
     view = "day",
     date,
     rowData,
@@ -62,10 +61,11 @@ export const Scheduler = ({
         <Container
             id={id}
             className={className}
-            data-testid={dataTestId || "scheduler-container"}
+            $loading={loading}
             {...otherProps}
         >
             <TimeSlotHeader
+                data-id="time-slot-header"
                 date={date}
                 view={effectiveView}
                 showTodayButton={!isMobile}
@@ -79,7 +79,7 @@ export const Scheduler = ({
                 onTodayClick={handleTodayClick}
             />
 
-            <SchedulerBody>
+            <SchedulerBody data-id="timeslot-container">
                 {effectiveView === "day" ? (
                     <TimeSlotDayView
                         date={date}
@@ -107,6 +107,20 @@ export const Scheduler = ({
 // =============================================================================
 // STYLING
 // =============================================================================
-const Container = styled.div`
+const Container = styled.div<TimeSlotProps>`
     width: 100%;
+    ${(props) => {
+        if (props.$loading) {
+            return css`
+                :hover {
+                    cursor: not-allowed;
+                    padding-bottom: 0;
+                }
+            `;
+        }
+    }}
 `;
+
+interface TimeSlotProps {
+    $loading: boolean | undefined;
+}

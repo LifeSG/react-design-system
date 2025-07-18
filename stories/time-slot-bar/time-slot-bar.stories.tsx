@@ -178,11 +178,6 @@ export const DifferentIndicators: StoryObj<Component> = {
                         },
                     },
                 ]}
-                styleAttributes={{
-                    styleType: "stripes",
-                    backgroundColor: Colour["bg-stronger"],
-                    backgroundColor2: Colour["bg-strongest"],
-                }}
             />
         );
     },
