@@ -96,8 +96,8 @@ export const CloseButton = styled(ClickableIcon)`
     right: -${Spacing["spacing-4"]};
     color: ${Colour["icon"]};
 
-    :active,
-    :focus {
+    &:active,
+    &:focus {
         color: ${Colour["icon-hover"]};
     }
 

@@ -38,15 +38,15 @@ export const LinkButton = styled(BasicButton)<LinkButtonStyleProp>`
     ${(props) =>
         props.$noChildren
             ? css`
-                  :hover,
-                  :focus {
+                  &:hover,
+                  &:focus {
                       background: ${Colour["bg-hover"]};
                       color: ${Colour["text-hover"]};
                   }
               `
             : css`
-                  :hover,
-                  :focus {
+                  &:hover,
+                  &:focus {
                       background: ${Colour["bg-hover-strong"]};
                   }
               `}

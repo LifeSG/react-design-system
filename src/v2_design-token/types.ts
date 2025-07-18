@@ -1,7 +1,7 @@
-import { SimpleInterpolation, css } from "styled-components";
+import { css } from "styled-components";
 
 /** @deprecated */
-export type CssValue = SimpleInterpolation | ReturnType<typeof css>;
+export type CssValue = ReturnType<typeof css>;
 
 /** @deprecated */
 export interface V2_DesignTokenSet {

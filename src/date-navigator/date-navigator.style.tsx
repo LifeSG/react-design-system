@@ -36,7 +36,7 @@ export const StyledDateTextButton = styled(Button.Default)<StyledDateTextProps>`
     ${(props) => {
         if (props.$enableDateClick) {
             return css`
-                :hover {
+                &:hover {
                     cursor: pointer;
                     text-decoration: underline;
                     text-underline-position: under;

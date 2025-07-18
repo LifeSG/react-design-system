@@ -242,14 +242,14 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
                       border-width: ${Border["width-020"]};
                   }
 
-                  :hover {
+                  &:hover {
                       border-color: ${Colour["border-selected-hover"]};
                   }
               `
             : css`
                   border-width: ${Border["width-010"]};
 
-                  :hover {
+                  &:hover {
                       border-color: ${Colour["border-hover"]};
                   }
               `};

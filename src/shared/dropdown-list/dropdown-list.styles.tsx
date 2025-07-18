@@ -83,18 +83,18 @@ export const List = styled.ul<ListContainerProps>`
 `;
 
 export const ListItem = styled.li<ListItemProps>`
-    :hover,
-    :focus,
-    :active {
+    &:hover,
+    &:focus,
+    &:active {
         background: ${Colour["bg-hover"]};
     }
     ${(props) => {
         if (props.$checked) {
             return css`
                 background: ${Colour["bg-selected"]};
-                :hover,
-                :focus,
-                :active {
+                &:hover,
+                &:focus,
+                &:active {
                     background: ${Colour["bg-selected-hover"]};
                 }
             `;
@@ -123,10 +123,10 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
     width: 100%;
     cursor: pointer;
 
-    :hover,
-    :visited,
-    :focus,
-    :active {
+    &:hover,
+    &:visited,
+    &:focus,
+    &:active {
         outline-color: ${Colour["border-focus"]};
     }
 

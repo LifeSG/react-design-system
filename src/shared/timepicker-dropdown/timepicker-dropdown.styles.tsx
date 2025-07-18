@@ -136,7 +136,7 @@ export const TimeInput = styled(BasicInput)`
     text-align: center;
     width: 100%;
 
-    :focus::placeholder {
+    &:focus::placeholder {
         color: transparent;
     }
 `;

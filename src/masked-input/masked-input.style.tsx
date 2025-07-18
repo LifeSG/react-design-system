@@ -108,7 +108,7 @@ export const ClickableErrorWrapper = styled(BasicButton)`
 
     ${Font["body-baseline-regular"]}
 
-    :hover, :active, :focus {
+    &:hover, &:active, &:focus {
         ${TryAgainLabel} {
             color: ${Colour["text-hover"]};
         }

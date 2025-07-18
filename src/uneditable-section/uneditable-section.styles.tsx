@@ -61,7 +61,7 @@ export const GridUl = styled.ul<ContentStyleProps>`
         column-gap: 1rem;
     }
 
-    :not(:last-child) {
+    &:not(:last-child) {
         margin-bottom: 2rem;
     }
 `;

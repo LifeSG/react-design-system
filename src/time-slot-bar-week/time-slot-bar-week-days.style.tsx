@@ -82,7 +82,7 @@ export const TimeColumn = styled.div<TimeColumnStyleProps>`
 
 export const TimeColumnWrapper = styled.div`
     min-height: 3.75rem;
-    :last-child {
+    &:last-child {
         min-height: 0;
     }
 `;
@@ -92,7 +92,7 @@ export const TimeColumnText = styled.div`
     color: ${Colour["text-subtler"]};
     text-align: center;
     line-height: 12px; // align with cell on the same row
-    :first-line {
+    &:first-line {
         font-size: ${Font.Spec["body-size-sm"]};
     }
 `;

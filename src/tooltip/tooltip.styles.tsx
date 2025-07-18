@@ -123,7 +123,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                     top: 100%;
                     left: 25%;
 
-                    ::before {
+                    &::before {
                         content: "";
                         position: absolute;
                         background: transparent;
@@ -133,7 +133,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         box-shadow: 3px 2px 14px 3px rgba(91, 91, 91, 0.5);
                     }
 
-                    ::after {
+                    &::after {
                         content: "";
                         position: absolute;
                         width: 0;
@@ -153,7 +153,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                     top: 0;
                     left: -30px;
 
-                    ::before {
+                    &::before {
                         content: "";
                         position: absolute;
                         background: red;
@@ -164,7 +164,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         box-shadow: 2px 3px 11px 3px rgba(91, 91, 91, 0.5);
                     }
 
-                    ::after {
+                    &::after {
                         content: "";
                         position: absolute;
                         width: 0;
@@ -184,7 +184,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                     top: 0;
                     right: -30px;
 
-                    ::before {
+                    &::before {
                         content: "";
                         position: absolute;
                         background: red;
@@ -195,7 +195,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         box-shadow: 4px 0px 11px 3px rgba(91, 91, 91, 0.5);
                     }
 
-                    ::after {
+                    &::after {
                         content: "";
                         position: absolute;
                         width: 0;
@@ -215,7 +215,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                     bottom: 100%;
                     left: 25%;
 
-                    ::before {
+                    &::before {
                         content: "";
                         position: absolute;
                         background: transparent;
@@ -226,7 +226,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         box-shadow: 3px -9px 14px 3px rgba(91, 91, 91, 0.5);
                     }
 
-                    ::after {
+                    &::after {
                         content: "";
                         position: absolute;
                         width: 0;

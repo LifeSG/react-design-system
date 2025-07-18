@@ -59,12 +59,12 @@ export const baseSelectorCSS = css<SelectorStyleProps>`
     border: none;
     background: transparent;
 
-    :focus,
-    :active {
+    &:focus,
+    &:active {
         outline: none;
     }
 
-    :focus-visible {
+    &:focus-visible {
         outline: 2px solid ${Colour["border-focus"]};
     }
 `;
@@ -102,7 +102,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
     background: ${Colour["bg"]};
     overflow: hidden;
 
-    :focus-within {
+    &:focus-within {
         border-color: ${Colour["border-focus"]};
         box-shadow: 0px 0px 4px 0px
             rgb(from ${Colour["border-focus"]} r g b / 50%) inset; // TODO: confirm shadow
@@ -133,7 +133,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
                     cursor: not-allowed;
                 }
 
-                :focus-within {
+                &:focus-within {
                     border-color: ${Colour["border"]};
                     box-shadow: none;
                 }
@@ -147,7 +147,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
                     padding: 0;
                 }
 
-                :focus-within {
+                &:focus-within {
                     border: none;
                     box-shadow: none;
                 }
@@ -156,7 +156,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
             return css`
                 border-color: ${Colour["border-error"]};
 
-                :focus-within {
+                &:focus-within {
                     border-color: ${Colour["border-error"]};
                     box-shadow: 0px 0px 4px 0px
                         rgb(from ${Colour["border-error"]} r g b / 50%) inset; // TODO: confirm shadow

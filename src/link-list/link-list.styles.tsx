@@ -52,11 +52,11 @@ export const Item = styled.a`
     align-items: center;
     min-height: 4rem;
 
-    :not(:last-of-type) {
+    &:not(:last-of-type) {
         border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     }
 
-    :hover {
+    &:hover {
         ${ItemTitleDefault},
         ${ItemTitleSmall},
         ${ItemIcon} {
@@ -109,7 +109,7 @@ export const ToggleButton = styled.button<ToggleStyleProps>`
     cursor: pointer;
     border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 
-    :hover {
+    &:hover {
         ${ToggleButtonLabel},
         ${ViewMoreIcon},
         ${ViewLessIcon} {

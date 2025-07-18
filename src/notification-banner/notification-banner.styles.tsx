@@ -28,10 +28,10 @@ const commonLinkStyle = css`
         color: ${Colour["icon-primary-inverse"]};
     }
 
-    :hover,
-    :active,
-    :visited,
-    :focus {
+    &:hover,
+    &:active,
+    &:visited,
+    &:focus {
         color: ${Colour["hyperlink-inverse"]};
         svg {
             color: ${Colour["icon-primary-inverse"]};
