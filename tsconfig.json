@@ -4,7 +4,8 @@
         "target": "es6",
         "module": "esnext",
         "lib": ["dom", "esnext"],
-        "jsx": "react-jsx", // transpile JSX to React.createElement
+        "jsx": "react-jsx", // Use React.createElement instead of react-jsx for better compatibility
+        "types": ["react", "jest", "@testing-library/jest-dom"],
         "isolatedModules": true, // warns if code can’t be correctly interpreted by a single-file transpilation process
         "noEmit": true, // declares that tsc is only used for type checking and compiler to not output transpiled code
         /** Module settings **/
