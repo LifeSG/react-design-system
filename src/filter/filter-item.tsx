@@ -130,7 +130,11 @@ export const FilterItem = ({
                             focusHighlight={false}
                             focusOutline="browser"
                             onClick={handleExpandCollapse}
-                            aria-label={expanded ? "Collapse" : "Expand"}
+                            aria-label={
+                                expanded
+                                    ? `Collapse ${title}`
+                                    : `Expand ${title}`
+                            }
                         >
                             <ChevronIcon $expanded={expanded} />
                         </FilterItemExpandButton>
