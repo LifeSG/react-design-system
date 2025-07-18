@@ -59,6 +59,9 @@ export const FilterItem = ({
         setExpanded(getInitialExpandState());
     }, [desktopCollapsible, controlledExpanded]);
 
+    useEffect(() => {
+        setContentMinimised(minimisable);
+    }, [minimisable]);
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
