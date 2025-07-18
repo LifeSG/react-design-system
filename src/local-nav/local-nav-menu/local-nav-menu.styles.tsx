@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour } from "../../theme";
+import { Colour, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
 
 // =============================================================================
@@ -25,9 +25,10 @@ export const TextLabel = styled(Typography.BodyBL)<NavItemStyleProps>`
 `;
 
 export const NavItem = styled.li<NavItemStyleProps>`
+    display: block;
     position: relative;
     margin: 0;
-    padding: 1rem;
+    padding: 0;
     cursor: pointer;
 
     &::before {
@@ -44,7 +45,20 @@ export const NavItem = styled.li<NavItemStyleProps>`
         transition: all 250ms linear;
     }
 
-    &:hover {
+    &:hover,
+    &:focus-within {
         background-color: ${Colour["bg-hover-subtle"]};
+    }
+`;
+
+export const NavItemContent = styled.div`
+    display: block;
+    padding: ${Spacing["spacing-16"]};
+    padding-left: ${Spacing["spacing-20"]};
+
+    &:focus-visible {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 2px;
+        border-radius: ${Radius["sm"]};
     }
 `;
