@@ -14,9 +14,8 @@ export const Checkbox = ({
     checked,
     disabled,
     indeterminate,
-    onChange,
-    onKeyPress, // will still need this for now else keyboard events are not handled
     displaySize = "default",
+    id,
     ...otherProps
 }: CheckboxProps): JSX.Element => {
     // =============================================================================
@@ -31,34 +30,6 @@ export const Checkbox = ({
     }, [indeterminate]);
 
     // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
-    const handleOnCheck = (
-        event:
-            | React.ChangeEvent<HTMLInputElement>
-            | React.KeyboardEvent<HTMLDivElement>
-    ) => {
-        if (!disabled) {
-            const keyboardEvent =
-                event as React.KeyboardEvent<HTMLInputElement>;
-            const isValid =
-                keyboardEvent.key === " " || event.type === "change";
-
-            if (!isValid) {
-                return;
-            }
-
-            if (onChange) {
-                onChange(event as React.ChangeEvent<HTMLInputElement>);
-            }
-
-            if (onKeyPress) {
-                onKeyPress(keyboardEvent);
-            }
-        }
-    };
-
-    // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
     const renderIcon = () => {
@@ -67,6 +38,7 @@ export const Checkbox = ({
                 <StyledInteremediateIcon
                     $disabled={disabled}
                     data-testid="indeterminate"
+                    aria-hidden
                 />
             );
         }
@@ -76,13 +48,17 @@ export const Checkbox = ({
                 <StyledCheckedIcon
                     $disabled={disabled}
                     data-testid="checkmark"
+                    aria-hidden
                 />
             );
         }
 
         if (disabled) {
             return (
-                <StyledUncheckedDisabledIcon data-testid="empty-disabled-checkbox" />
+                <StyledUncheckedDisabledIcon
+                    data-testid="empty-disabled-checkbox"
+                    aria-hidden
+                />
             );
         }
 
@@ -90,6 +66,7 @@ export const Checkbox = ({
             <StyledUncheckedIcon
                 $disabled={disabled}
                 data-testid="empty-checkbox"
+                aria-hidden
             />
         );
     };
@@ -98,25 +75,17 @@ export const Checkbox = ({
         <Container
             className={className}
             data-testid="checkbox"
-            role="checkbox"
-            aria-checked={indeterminate ? "mixed" : checked}
-            aria-labelledby="checkbox-input"
-            tabIndex={disabled ? -1 : 0}
-            onKeyDown={handleOnCheck}
             $displaySize={displaySize}
-            $disabled={disabled}
-            $unchecked={!(indeterminate || checked || disabled)}
         >
             <Input
-                id="checkbox-input"
+                id={id}
                 data-testid="checkbox-input"
-                aria-hidden="true"
                 type="checkbox"
                 checked={checked}
                 ref={checkRef}
-                tabIndex={-1}
-                onChange={handleOnCheck}
+                tabIndex={disabled ? -1 : 0}
                 disabled={disabled}
+                aria-checked={indeterminate ? "mixed" : checked}
                 {...otherProps}
             />
             {renderIcon()}

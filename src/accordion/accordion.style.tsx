@@ -1,9 +1,7 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
+import { Border, Colour, Font, MediaQuery } from "../theme";
 import { TitleStyleProps, TitleWrapperStyleProps } from "./types";
-import { Border, MediaQuery } from "../theme";
-import { Colour } from "../theme";
-import { Typography } from "../typography";
 
 // ============================================================================
 // STYLING
@@ -35,10 +33,14 @@ export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
     }}
 `;
 
-export const Title = styled(Typography.HeadingMD)<TitleStyleProps>`
+export const Title = styled.h2<TitleStyleProps>`
     display: flex;
     align-self: flex-start;
     flex: 1;
+
+    ${Font["heading-md-bold"]}
+    color: ${Colour["text"]};
+
     ${MediaQuery.MaxWidth.sm} {
         text-align: left;
     }

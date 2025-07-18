@@ -41,6 +41,35 @@ If you do not require a expand/collapse all button in the `Accordion`, use `enab
 
 <Canvas of={AccordionStories.NoExpandCollapseAll} />
 
+## Accessibility
+
+Depending on where the `Accordion` is used, set a custom `headingLevel` to
+ensure a logical hierarchy of headings in your page.
+
+```tsx
+<Accordion title="Accordion title" headingLevel={3}>
+    <Accordion.Item title="Item title">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    </Accordion.Item>
+</Accordion>
+```
+
+The `Accordion.Item` title is a `<button>` element, so if you are specifying
+custom JSX, make sure to render a valid child such as `<span>`.
+
+```tsx
+<Accordion title="Accordion title">
+    <Accordion.Item title={<span>Item title</span>}>
+        With custom JSX
+    </Accordion.Item>
+    <Accordion.Item title={<Typography.XL inline>Item title</Typography.XL>}>
+        Using Typography component
+    </Accordion.Item>
+</Accordion>
+```
+
+<Canvas of={AccordionStories.Accessibility} />
+
 ## Component API
 
 <PropsTable />
