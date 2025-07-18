@@ -7,6 +7,7 @@ import {
     CCubeTheme,
     LifeSGTheme,
     MyLegacyTheme,
+    OneServiceTheme,
     PATheme,
     RBSTheme,
     SupportGoWhereTheme,
@@ -22,8 +23,7 @@ const preview: Preview = {
                 CCube: CCubeTheme,
                 MyLegacy: MyLegacyTheme,
                 RBS: RBSTheme,
-                // TODO: update when OS theme is added
-                //"OneService": OneServiceTheme,
+                OneService: OneServiceTheme,
                 PA: PATheme,
                 A11yPlayground: A11yPlaygroundTheme,
                 SupportGoWhere: SupportGoWhereTheme,

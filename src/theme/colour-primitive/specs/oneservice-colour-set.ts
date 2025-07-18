@@ -1,6 +1,5 @@
 import { PrimitiveColourSet } from "../../types";
 
-// TODO: work in progress
 export const OneServiceColourSet: PrimitiveColourSet = {
     "brand-10": "#001A19",
     "brand-20": "#002D2B",
@@ -18,12 +17,12 @@ export const OneServiceColourSet: PrimitiveColourSet = {
     "primary-30": "#173D49",
     "primary-40": "#205666",
     "primary-50": "#2A7086",
-    "primary-60": "#2A7086",
+    "primary-60": "#5D97A9",
     "primary-70": "#8CB6C2",
     "primary-80": "#B2CED6",
     "primary-90": "#D1E2E7",
     "primary-95": "#E8F0F3",
-    "primary-100": "#F9F8FC",
+    "primary-100": "#F7FAFB",
     "secondary-10": "#001731",
     "secondary-20": "#002752",
     "secondary-30": "#003874",
@@ -82,7 +81,7 @@ export const OneServiceColourSet: PrimitiveColourSet = {
     "info-10": "#021824",
     "info-20": "#032B3F",
     "info-30": "#053D59",
-    "info-40": "#065478",
+    "info-40": "#06547B",
     "info-50": "#176E9B",
     "info-60": "#5296BE",
     "info-70": "#82B5DA",
