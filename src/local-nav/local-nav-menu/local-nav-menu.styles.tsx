@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour } from "../../theme";
+import { Colour, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
 
 // =============================================================================
@@ -49,10 +49,16 @@ export const NavItem = styled.li<NavItemStyleProps>`
     &:focus-within {
         background-color: ${Colour["bg-hover-subtle"]};
     }
+`;
 
-    div[role="link"] {
-        display: block;
-        padding: 16px;
-        padding-left: 20px; // Account for left border
+export const NavItemContent = styled.div`
+    display: block;
+    padding: ${Spacing["spacing-16"]};
+    padding-left: ${Spacing["spacing-20"]};
+
+    &:focus-visible {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 2px;
+        border-radius: ${Radius["sm"]};
     }
 `;
