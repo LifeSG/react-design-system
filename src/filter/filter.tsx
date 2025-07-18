@@ -96,7 +96,7 @@ const FilterBase = ({
                         onClick={handleDismissFilter}
                         focusOutline="browser"
                         focusHighlight={false}
-                        aria-label="Dismiss"
+                        aria-label={`close ${headerTitle}`}
                     >
                         <CrossIcon />
                     </FilterHeaderButton>
@@ -107,6 +107,7 @@ const FilterBase = ({
                     type="button"
                     onClick={handleClearClick}
                     disabled={clearButtonDisabled}
+                    aria-label={`clear ${headerTitle}`}
                 >
                     Clear
                 </FilterClearButton>

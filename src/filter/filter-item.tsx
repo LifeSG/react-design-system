@@ -113,7 +113,7 @@ export const FilterItem = ({
     };
 
     return (
-        <FilterItemWrapper $collapsible={collapsible}>
+        <FilterItemWrapper $collapsible={collapsible} aria-label={title}>
             <Divider
                 $showDivider={showDivider}
                 $showMobileDivider={showMobileDivider}
@@ -170,6 +170,11 @@ export const FilterItem = ({
                                 styleType="link"
                                 type="button"
                                 onClick={handleMinimise}
+                                aria-label={
+                                    contentMinimised
+                                        ? `view more in ${title}`
+                                        : `view less in ${title}`
+                                }
                             >
                                 View {contentMinimised ? "more" : "less"}
                             </FilterItemMinimiseButton>
