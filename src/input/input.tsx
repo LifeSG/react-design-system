@@ -120,13 +120,14 @@ const Component = (
                 <InputElement
                     data-testid="input"
                     ref={elementRef}
-                    disabled={disabled}
+                    aria-disabled={disabled}
                     value={updatedValue}
                     onChange={handleChange}
                     type={type}
-                    readOnly={readOnly}
+                    readOnly={readOnly || disabled}
                     $showClear={showClear}
                     $styleType={styleType}
+                    tabIndex={0}
                     {...otherProps}
                 />
                 {showClear && (

@@ -3,12 +3,13 @@ import { Input } from "../input";
 import { InputRef } from "../input/types";
 import { FormWrapper } from "./form-wrapper";
 import { FormInputProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 
 const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
     const {
         label,
         errorMessage,
-        id = "form-field",
+        id = `form-field-${SimpleIdGenerator.generate()}`,
         "data-error-testid": errorTestId,
         "data-testid": testId,
         layoutType,
