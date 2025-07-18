@@ -1,51 +1,57 @@
-import { TimeSlotDayViewProps } from "./types";
-import { TimeHelper } from "../../util/time-helper";
+import React from "react";
 import {
-    TimeSlotContainer,
-    ServiceHeaderRow,
-    BlankCell,
+    TimeSlotDayViewContainer,
+    TimeIndicatorColumn,
+    ServiceColumnsContainer,
+    ServiceColumn,
     ServiceHeader,
+    BlankCell,
     Title,
     Description,
-    GridBody,
-    SlotGrid,
-    SlotRow,
     SlotCell,
     SlotContent,
-    SlotTime,
-    SlotAvailability,
-} from "./timeslot-day-view.style";
-import { TimeIndicator } from "../time-indicator";
+} from "./timeslot-day-view.styles";
+import { TimeHelper } from "../../util/time-helper";
 import { SchedulerRowCellData } from "../types";
+import { TimeSlotDayViewProps } from "./types";
+import { TimeIndicator } from "../time-indicator";
+import { CELL_HEIGHT } from "../const";
 
-export const TimeSlotDayView = ({
+export const TimeSlotDayView: React.FC<TimeSlotDayViewProps> = ({
     rowData,
     minTime,
-    maxTime,
-    loading,
+    maxTime, 
     onSlotClick,
-    styleAttributes,
-}: TimeSlotDayViewProps) => {
+}) => {
     const renderSlotContent = (slot: SchedulerRowCellData) => {
         const duration = TimeHelper.calculateDuration(
             slot.startTime,
             slot.endTime
         );
         return (
-            <SlotContent status={slot.status} duration={duration}>
-                <SlotTime>
+            <SlotContent
+                status={slot.status}
+                duration={duration}
+                onClick={(e) => {
+                    console.log(
+                        "Slot duration:",
+                        (duration / 30) * CELL_HEIGHT
+                    );
+                    onSlotClick?.(slot, e);
+                }}
+            >
+                <span>
                     {TimeHelper.parseInput(slot.startTime, "12hr")} -{" "}
                     {TimeHelper.parseInput(slot.endTime, "12hr")}
-                </SlotTime>
-                <SlotAvailability>
+                </span>
+                <span>
                     {slot.status === "blocked"
                         ? "Unavailable"
                         : `${slot.booked} / ${slot.capacity}`}
-                </SlotAvailability>
+                </span>
             </SlotContent>
         );
     };
-
     const renderTimeSlotGrid = () => {
         const timeSlots = TimeHelper.generateTimings(
             30,
@@ -54,58 +60,41 @@ export const TimeSlotDayView = ({
             maxTime
         );
         return (
-            <SlotGrid>
-                {timeSlots.map((time) => (
-                    <SlotRow key={time}>
-                        {rowData.map((service, idx) => {
+            <ServiceColumnsContainer serviceCount={rowData.length}>
+                {rowData.map((service) => (
+                    <ServiceColumn key={service.id}>
+                        <ServiceHeader>
+                            <Title>{service.name}</Title>
+                            <Description>
+                                <span>{service.rowCells.length}</span> available
+                            </Description>
+                        </ServiceHeader>
+                        {timeSlots.map((time) => {
                             const slot = service.rowCells?.find(
                                 (c) => c.startTime === time
                             );
                             return (
-                                <SlotCell
-                                    key={idx}
-                                    startTime={time}
-                                    onClick={
-                                        slot
-                                            ? (e) => onSlotClick?.(slot, e)
-                                            : undefined
-                                    }
-                                >
+                                <SlotCell key={time} startTime={time}>
                                     {slot && renderSlotContent(slot)}
                                 </SlotCell>
                             );
                         })}
-                    </SlotRow>
+                    </ServiceColumn>
                 ))}
-            </SlotGrid>
+            </ServiceColumnsContainer>
         );
     };
-
     return (
-        <TimeSlotContainer>
-            {/* Service Name Header Row */}
-            <ServiceHeaderRow>
+        <TimeSlotDayViewContainer>
+            <TimeIndicatorColumn>
                 <BlankCell />
-                {rowData.map((service, idx) => (
-                    <ServiceHeader key={idx}>
-                        <Title>{service.name}</Title>
-                        <Description>
-                            <span>{service.rowCells.length}</span> available
-                        </Description>
-                    </ServiceHeader>
-                ))}
-            </ServiceHeaderRow>
-
-            <GridBody>
-                {/* Time labels */}
                 <TimeIndicator
                     minTime={minTime}
                     maxTime={maxTime}
                     format="24hr"
                 />
-                {/* Time slot grid */}
-                {renderTimeSlotGrid()}
-            </GridBody>
-        </TimeSlotContainer>
+            </TimeIndicatorColumn>
+            {renderTimeSlotGrid()}
+        </TimeSlotDayViewContainer>
     );
 };

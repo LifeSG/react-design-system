@@ -1,20 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-interface SchedulerBodyProps {
+interface SchedulerBodyProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
 }
-
-export const SchedulerBody = ({ children }: SchedulerBodyProps) => {
-    return <Wrapper>{children}</Wrapper>;
+export const SchedulerBody = ({
+    children,
+    ...otherprops
+}: SchedulerBodyProps) => {
+    return <Wrapper {...otherprops}>{children}</Wrapper>;
 };
 
 // =============================================================================
 // STYLING
 // =============================================================================
 const Wrapper = styled.div`
-    flex: 1;
-    overflow: auto;
-    position: relative;
-    max-height: 600px;
+    overflow-x: auto;
+    overflow-y: auto;
 `;

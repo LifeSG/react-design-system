@@ -1,41 +1,64 @@
 import styled from "styled-components";
 import { Border, Colour, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
+import { CELL_HEIGHT, HEADER_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
-export const TimeSlotContainer = styled.div`
+export const TimeSlotDayViewContainer = styled.div`
     display: flex;
-    flex-direction: column;
     width: 100%;
     border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
-    border-top-right-radius: ${Radius["md"]};
     border-top-left-radius: ${Radius["md"]};
-`;
-
-export const ServiceHeaderRow = styled.div`
-    display: flex;
-    background: ${Colour["bg-strong"]};
-    max-height: 130px;
-    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    border-top-right-radius: ${Radius["md"]};
 `;
 
 export const BlankCell = styled.div`
-    width: 42px;
+    height: ${HEADER_HEIGHT}px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: ${Colour["bg-strong"]};
 `;
 
-export const ServiceHeader = styled(Typography.BodyMD)`
+export const TimeIndicatorColumn = styled.div`
+    width: ${TIME_INDICATOR_WIDTH}px;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    z-index: 2;
+    left: 0;
+`;
+
+export const ServiceColumnsContainer = styled.div<{ serviceCount: number }>`
+    display: flex;
     flex: 1;
-    min-width: 180px;
-    padding: 24px;
-    color: ${Colour["text-primary"]};
-    font-weight: 600;
-    line-height: 24px;
+`;
+
+export const ServiceColumn = styled.div`
+    flex: 1;
+    min-width: 25%;
+    display: flex;
+    flex-direction: column;
+`;
+
+export const ServiceHeader = styled.div`
+    padding: 16px;
+    background: ${Colour["bg-strong"]};
+    padding: 24px 16px;
+    height: ${HEADER_HEIGHT}px;
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
     border-left: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
-    &:nth-child(2) {
+    &:first-child {
         border-left: none;
     }
+    position: sticky;
+    top: 0;
+    z-index: 1;
 `;
 
-export const Title = styled.div``;
+export const Title = styled(Typography.BodyMD)`
+    color: ${Colour["text-primary"]};
+    font-weight: 600;
+`;
 
 export const Description = styled(Typography.BodySM)`
     margin-top: 4px;
@@ -50,68 +73,30 @@ export const Description = styled(Typography.BodySM)`
     }
 `;
 
-export const GridBody = styled.div`
-    display: flex;
-    width: 100%;
-`;
-
-export const TimeColumn = styled(Typography.BodySM)`
-    width: 42px;
-    display: flex;
-    flex-direction: column;
-    font-weight: 700;
-    color: ${Colour["text-subtler"]};
-
-    border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
-`;
-
-export const TimeLabel = styled.div`
-    height: 96px; /* 2 slots */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    padding-right: 8px;
-`;
-
-export const SlotGrid = styled.div`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-`;
-
-export const SlotRow = styled.div`
-    display: flex;
-    min-height: 48px;
-`;
-
 export const SlotCell = styled.div<{
     startTime?: string;
 }>`
-    flex: 1;
-    min-width: 180px;
+    height: ${CELL_HEIGHT}px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     position: relative;
     border-left: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
     border-bottom: ${Border["width-010"]} ${Colour["border"]}
-        ${({ startTime }) => (startTime?.endsWith(":00") ? "dashed" : "solid")};
+        ${({ startTime }) => (startTime?.endsWith(":00") ? "solid" : "dashed")};
     cursor: pointer;
 `;
 
 export const SlotContent = styled(Typography.BodyXS)<{
     status?: string;
-    duration?: number;
+    duration: number;
 }>`
-    width: 90%;
+    width: calc(100% - 28px);
     padding: 8px;
     position: absolute;
-    font-weight: 500;
+    font-weight: 400;
     border-radius: 4px;
-    z-index: 1;
-    height: ${({ duration }) =>
-        duration ? `${(duration / 30) * 48}px` : "48px"};
+    height: ${({ duration }) => `${(duration / 30) * CELL_HEIGHT}px`};
 
     display: flex;
     justify-content: space-between;
@@ -144,10 +129,5 @@ export const SlotContent = styled(Typography.BodyXS)<{
         status === "available"
             ? `4px solid ${Colour["icon-success"]}`
             : "none"};
-
     border-bottom: 1px solid white;
 `;
-
-export const SlotTime = styled.div``;
-
-export const SlotAvailability = styled.div``;

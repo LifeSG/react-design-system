@@ -49,8 +49,9 @@ const meta: Meta<Component> = {
 export default meta;
 
 const StyledScheduler = styled(Scheduler)`
-    [data-id="scheduler-container"] {
-        weight: 100%;
+    [data-id="timeslot-container"] {
+        width: 1200px;
+        height: 600px;
     }
 `;
 export const Default: StoryObj<Component> = {
@@ -82,9 +83,7 @@ export const Default: StoryObj<Component> = {
             _e: React.MouseEvent
         ) => {
             console.log("Slot clicked:", data);
-            alert(
-                `Clicked on slot ${data.startTime}-${data.endTime}`
-            );
+            alert(`Clicked on slot ${data.startTime}-${data.endTime}`);
         };
 
         const onCalendarDateSelect = (date: string) => {
@@ -138,9 +137,7 @@ export const WeekView: StoryObj<Component> = {
             _e: React.MouseEvent
         ) => {
             console.log("Slot clicked:", data);
-            alert(
-                `Clicked on slot ${data.startTime}-${data.endTime}`
-            );
+            alert(`Clicked on slot ${data.startTime}-${data.endTime}`);
         };
 
         return (
