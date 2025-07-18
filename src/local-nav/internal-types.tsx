@@ -30,4 +30,5 @@ export interface LocalNavDropdownItemComponentProps
               renderProps: LocalNavDropdownItemRenderProps
           ) => React.ReactNode)
         | undefined;
+    index: number;
 }

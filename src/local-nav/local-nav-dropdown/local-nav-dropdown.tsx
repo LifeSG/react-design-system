@@ -2,6 +2,7 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { LocalNavDropdownItemComponentProps } from "../internal-types";
 import { LocalNavDropdownProps, LocalNavItemProps } from "../types";
+import { SimpleIdGenerator } from "../../util";
 import {
     Backdrop,
     NavItem,
@@ -34,13 +35,16 @@ const Component = (
     const detectStickyRef = useRef<HTMLSpanElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const navWrapperRef = useRef<HTMLElement>(null);
+    const listItemRefs = useRef<(HTMLLIElement | null)[]>([]);
     const [isStickied, setIsStickied] = useState<boolean>(false);
     const [isDropdownExpanded, setIsDropdownExpanded] =
         useState<boolean>(false);
     const [viewportHeight, setViewportHeight] = useState(0);
     const [dropdowntHeight, setDropdownHeight] = useState(0);
     const [dynamicMargin, setDynamicMargin] = useState(0);
+    const [focusedIndex, setFocusedIndex] = useState(0);
     const navTestId = testId || "local-nav-dropdown";
+    const dropdownListId = SimpleIdGenerator.generate();
 
     useImperativeHandle(ref, () => navWrapperRef.current!);
 
@@ -127,6 +131,16 @@ const Component = (
         };
     }, []);
 
+    useEffect(() => {
+        listItemRefs.current = Array(items.length).fill(null);
+    }, [items.length]);
+
+    useEffect(() => {
+        if (isDropdownExpanded) {
+            listItemRefs.current[focusedIndex]?.focus();
+        }
+    }, [isDropdownExpanded, focusedIndex]);
+
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
@@ -172,19 +186,27 @@ const Component = (
         }
     };
 
-    const focusFirstMenuItem = () => {
-        const firstMenuItem = navWrapperRef.current?.querySelector(
-            '[role="menuitem"]'
-        ) as HTMLElement;
-        firstMenuItem?.focus();
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+
+    const handleToggleDropdown = () => {
+        setIsDropdownExpanded((prev) => !prev);
     };
 
-    const focusLastMenuItem = () => {
-        const menuItems = navWrapperRef.current?.querySelectorAll(
-            '[role="menuitem"]'
-        ) as NodeListOf<HTMLElement>;
-        const lastMenuItem = menuItems[menuItems.length - 1];
-        lastMenuItem?.focus();
+    const handleDismissBackdrop = () => {
+        setIsDropdownExpanded(false);
+    };
+
+    const handleNavItemClick = (
+        e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+        item: LocalNavItemProps,
+        index: number
+    ) => {
+        if (onNavItemSelect) {
+            onNavItemSelect(e, item, index);
+        }
+        setIsDropdownExpanded(false);
     };
 
     const handleNavItemKeyDown = (
@@ -209,17 +231,17 @@ const Component = (
             if (!isDropdownExpanded) {
                 setIsDropdownExpanded(true);
             }
-            setTimeout(focusFirstMenuItem, 0);
+            setFocusedIndex(0);
         } else if (key === "ArrowUp") {
             e.preventDefault();
             if (!isDropdownExpanded) {
                 setIsDropdownExpanded(true);
             }
-            setTimeout(focusLastMenuItem, 0);
+            setFocusedIndex(items.length - 1);
         } else if (key === "Enter" || key === " ") {
             e.preventDefault();
             setIsDropdownExpanded(true);
-            setTimeout(focusFirstMenuItem, 0);
+            setFocusedIndex(0);
         } else if (key === "Tab") {
             setIsDropdownExpanded(false);
         } else if (key === "Escape") {
@@ -230,53 +252,21 @@ const Component = (
     const handleNavItemListKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
         const { key } = e;
 
-        const menuItems = Array.from(
-            e.currentTarget.querySelectorAll('[role="menuitem"]')
-        ) as HTMLElement[];
-
-        const currentIndex = menuItems.indexOf(
-            document.activeElement as HTMLElement
-        );
-
         if (key === "ArrowDown") {
             e.preventDefault();
-            const nextIndex =
-                currentIndex < menuItems.length - 1 ? currentIndex + 1 : 0;
-            menuItems[nextIndex]?.focus();
+            const nextIndex = (focusedIndex + 1) % items.length;
+            setFocusedIndex(nextIndex);
         } else if (key === "ArrowUp") {
             e.preventDefault();
             const prevIndex =
-                currentIndex > 0 ? currentIndex - 1 : menuItems.length - 1;
-            menuItems[prevIndex]?.focus();
+                focusedIndex > 0 ? focusedIndex - 1 : items.length - 1;
+            setFocusedIndex(prevIndex);
         } else if (key === "Tab") {
             setIsDropdownExpanded(false);
         } else if (key === "Escape") {
             setIsDropdownExpanded(false);
             dropdownRef.current?.focus();
         }
-    };
-
-    // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
-
-    const handleToggleDropdown = () => {
-        setIsDropdownExpanded((prev) => !prev);
-    };
-
-    const handleDismissBackdrop = () => {
-        setIsDropdownExpanded(false);
-    };
-
-    const handleNavItemClick = (
-        e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-        item: LocalNavItemProps,
-        index: number
-    ) => {
-        if (onNavItemSelect) {
-            onNavItemSelect(e, item, index);
-        }
-        setIsDropdownExpanded(false);
     };
 
     // =============================================================================
@@ -288,12 +278,23 @@ const Component = (
         isSelected,
         item,
         renderItem,
+        index,
     }: LocalNavDropdownItemComponentProps) => {
         const { id, title } = item;
 
         if (renderItem) {
             return (
-                <li id={id} onClick={handleClick} role="none">
+                <li
+                    id={id}
+                    role="menuitem"
+                    onClick={handleClick}
+                    onKeyDown={(e) => handleNavItemKeyDown(e, handleClick)}
+                    aria-current={isSelected ? true : undefined}
+                    tabIndex={-1}
+                    ref={(el) => {
+                        listItemRefs.current[index] = el;
+                    }}
+                >
                     {renderItem(item, {
                         selected: isSelected,
                         stickied: isStickied,
@@ -311,6 +312,9 @@ const Component = (
                 onKeyDown={(e) => handleNavItemKeyDown(e, handleClick)}
                 aria-current={isSelected ? true : undefined}
                 tabIndex={-1}
+                ref={(el) => {
+                    listItemRefs.current[index] = el as HTMLLIElement;
+                }}
             >
                 {isSelected && <StyledTickIcon />}
                 <NavItemLabel $isSelected={isSelected}>{title}</NavItemLabel>
@@ -339,6 +343,7 @@ const Component = (
                     $isDropdownExpanded={isDropdownExpanded}
                     aria-haspopup="true"
                     aria-expanded={isDropdownExpanded}
+                    aria-controls={dropdownListId}
                     tabIndex={0}
                 >
                     <Typography.BodyBL weight="semibold">
@@ -348,6 +353,7 @@ const Component = (
                 </NavSelect>
                 {isDropdownExpanded && (
                     <NavItemList
+                        id={dropdownListId}
                         role="menu"
                         onKeyDown={handleNavItemListKeyDown}
                         data-testid={`${navTestId}-dropdown-list`}
@@ -362,6 +368,7 @@ const Component = (
                                 isSelected: i === selectedItemIndex,
                                 item,
                                 renderItem,
+                                index: i,
                             })
                         )}
                     </NavItemList>
