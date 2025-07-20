@@ -1,16 +1,11 @@
-import styled, { css } from "styled-components";
-import { animated } from "react-spring";
-import { Border, Colour, MediaQuery, Radius } from "../theme";
+import styled from "styled-components";
+import { Border, Colour, MediaQuery } from "../theme";
 
 //=============================================================================
 // STYLE INTERFACE
 //=============================================================================
 interface StyleProps {
     $fixed?: boolean;
-}
-
-interface DrawerStyleProps {
-    $showDrawer: boolean;
 }
 
 //=============================================================================
@@ -49,30 +44,4 @@ export const MobileContainer = styled(Container)`
     ${MediaQuery.MaxWidth.sm} {
         display: none; // NOTE: Since mobile view not supported yet
     }
-`;
-
-export const DesktopDrawer = styled(animated.ul)<DrawerStyleProps>`
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-    left: 8.5rem;
-    top: 0;
-    width: 15rem;
-    z-index: 10;
-    padding: 1rem 0.5rem;
-    background-color: ${Colour["bg-primary-subtlest"]};
-    border-top-right-radius: ${Radius["md"]};
-    border-bottom-right-radius: ${Radius["md"]};
-    border: ${Border["width-010"]} ${Border["solid"]} ${Colour.border};
-
-    ${(props) =>
-        props.$showDrawer
-            ? css`
-                  box-shadow: 0 0 4px
-                      rgb(from ${Colour.Primitive["neutral-20"]} r g b / 25%);
-              `
-            : css`
-                  border: 0;
-                  padding: 0;
-              `};
 `;

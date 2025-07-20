@@ -7,6 +7,7 @@ export interface SidenavContextItem {
 
 interface SidenavContextProps {
     internalId: string;
+    menuRef: React.RefObject<HTMLDivElement>;
     currentItem: SidenavContextItem | undefined;
     previouslySelectedItemId: string | undefined;
     selectedItem: SidenavContextItem | undefined;
@@ -17,6 +18,7 @@ interface SidenavContextProps {
 
 export const SidenavContext = createContext<SidenavContextProps>({
     internalId: "sidenav",
+    menuRef: { current: null },
     selectedItem: undefined,
     currentItem: undefined,
     previouslySelectedItemId: undefined,

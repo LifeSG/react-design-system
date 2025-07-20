@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
-import { Colour, Font, Motion, Radius } from "../theme";
+import { Border, Colour, Font, Motion, Radius } from "../theme";
 import { Typography } from "../typography";
 
 //=============================================================================
@@ -9,6 +9,11 @@ import { Typography } from "../typography";
 //=============================================================================
 interface StyleProps {
     $highlight: boolean;
+}
+
+interface DrawerStyleProps {
+    $showDrawer: boolean;
+    $showShadow: boolean;
 }
 
 //=============================================================================
@@ -73,5 +78,25 @@ export const DefaultButton = styled(BasicButton)<StyleProps>`
                 ${Font["body-xs-semibold"]}
                 color: ${Colour["text-selected"]};
             }
+        `}
+`;
+
+export const DesktopDrawer = styled.ul<DrawerStyleProps>`
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    width: 15rem;
+    height: 100%;
+    padding: 1rem 0.5rem;
+    background-color: ${Colour["bg-primary-subtlest"]};
+    border-top-right-radius: ${Radius["md"]};
+    border-bottom-right-radius: ${Radius["md"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour.border};
+    ${(props) =>
+        props.$showShadow &&
+        css`
+            box-shadow: 0 0 4px
+                rgb(from ${Colour.Primitive["neutral-20"]} r g b / 25%);
         `}
 `;
