@@ -11,7 +11,7 @@ export const CCubeColourSet: PrimitiveColourSet = {
     "brand-80": "#FFB3D9",
     "brand-90": "#FFD4E9",
     "brand-95": "#FFE8F3",
-    "brand-100": "#FFD6EB",
+    "brand-100": "#FFF8FC",
     "primary-10": "#1F1221",
     "primary-20": "#371F3B",
     "primary-30": "#4E2C53",
