@@ -11,6 +11,7 @@ import { SidenavProps } from "./types";
 const SidenavBase = ({
     fixed = true,
     children,
+    "aria-label": ariaLabel = "Sidebar",
     ...otherProps
 }: SidenavProps) => {
     // =============================================================================
@@ -47,7 +48,9 @@ const SidenavBase = ({
             }}
         >
             <Wrapper $fixed={fixed} ref={wrapperRef} {...otherProps}>
-                <DesktopContainer ref={menuRef}>{children}</DesktopContainer>
+                <DesktopContainer ref={menuRef} aria-label={ariaLabel}>
+                    {children}
+                </DesktopContainer>
                 {/** NOTE: Since mobile view not supported yet, children will not be rendered */}
                 <MobileContainer></MobileContainer>
             </Wrapper>
