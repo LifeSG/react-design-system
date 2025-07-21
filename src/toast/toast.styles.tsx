@@ -1,4 +1,4 @@
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
@@ -61,7 +61,9 @@ const getValidationColorAttributes = (props: StyleProps) => {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled(animated.div)<StyleProps>`
+export const Wrapper: React.FC<{ $type?: string; $fixed?: boolean }> = styled(
+    animated.div
+)<StyleProps>`
     display: flex;
     flex-direction: row;
     position: ${(props) => (props.$fixed ? "fixed" : "relative")};

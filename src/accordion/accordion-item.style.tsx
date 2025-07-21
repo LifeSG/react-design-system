@@ -1,5 +1,5 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Border, Colour, Motion } from "../theme";
@@ -43,15 +43,11 @@ const TITLE_STYLE = (isCollapsed?: boolean) => css`
 `;
 
 export const Title = styled(Typography.HeadingSM)<StyleProps>`
-    ${(props) => {
-        return TITLE_STYLE(props.$isCollapsed);
-    }}
+    ${(props) => TITLE_STYLE(props.$isCollapsed)}
 `;
 
 export const TitleH4 = styled(Typography.HeadingXS)<StyleProps>`
-    ${(props) => {
-        return TITLE_STYLE(props.$isCollapsed);
-    }}
+    ${(props) => TITLE_STYLE(props.$isCollapsed)}
 `;
 
 export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
@@ -69,9 +65,9 @@ export const ChevronIcon = styled(ChevronUpIcon)`
     color: ${Colour["icon-primary"]};
 `;
 
-export const Expandable = styled(animated.div)<StyleProps>`
+export const Expandable = animated(styled.div<StyleProps>`
     overflow: hidden;
-`;
+`);
 
 export const DescriptionContainer = styled.div`
     display: inline-block;

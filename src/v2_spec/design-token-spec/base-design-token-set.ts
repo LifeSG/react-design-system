@@ -4,29 +4,47 @@ import { V2_DesignTokenSet } from "../../v2_design-token/types";
 
 export const BaseDesignTokenSet: V2_DesignTokenSet = {
     InputBoxShadow: css`
-        inset 0 0 4px 0px ${V2_Color.Shadow.Accent}
+        inset: 0 0 4px 0px ${V2_Color.Shadow.Accent};
     `,
     InputErrorBoxShadow: css`
-        inset 0 0 4px 0px ${V2_Color.Shadow.Red}
+        inset: 0 0 4px 0px ${V2_Color.Shadow.Red};
     `,
     ElevationBoxShadow: css`
-      0px 2px 8px ${V2_Color.Shadow.Elevation}
+        inset: 0px 2px 8px ${V2_Color.Shadow.Elevation};
     `,
     Table: {
-        Header: "#F5F5F5",
+        Header: css`
+            color: #f5f5f5;
+        `,
         Cell: {
-            Primary: "#FBFBFB",
-            Secondary: "#FFFFFF",
-            Selected: "#F9F6FF",
-            Hover: "#E8E1F5",
+            Primary: css`
+                color: #fbfbfb;
+            `,
+            Secondary: css`
+                color: #ffffff;
+            `,
+            Selected: css`
+                color: #f9f6ff;
+            `,
+            Hover: css`
+                color: #e8e1f5;
+            `,
         },
     },
     Button: {
         Danger: {
-            BackgroundColor: "#CB2213",
-            Border: "#CB2213",
-            Hover: "#8F0E0E",
-            Primary: "#CB2213",
+            BackgroundColor: css`
+                color: #cb2213;
+            `,
+            Border: css`
+                color: #cb2213;
+            `,
+            Hover: css`
+                color: #8f0e0e;
+            `,
+            Primary: css`
+                color: #cb2213;
+            `,
         },
     },
 };

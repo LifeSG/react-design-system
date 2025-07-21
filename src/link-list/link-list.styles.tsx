@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { MinusIcon } from "@lifesg/react-icons/minus";
 import { PlusIcon } from "@lifesg/react-icons/plus";
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { Border, Colour } from "../theme";
 import { Typography } from "../typography";
@@ -76,9 +76,11 @@ export const Description = styled(Typography.BodyMD)`
     margin-top: 0.25rem;
 `;
 
-export const Expandable = styled(animated.div)`
+const StyledExpandable = styled.div`
     overflow: hidden;
 `;
+
+export const AnimatedExpandable = animated(StyledExpandable);
 
 export const ExpandableChild = styled.div`
     border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};

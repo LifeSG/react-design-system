@@ -1,10 +1,10 @@
+import { useSpring } from "@react-spring/web";
 import React, { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "react-spring";
 import {
+    AnimatedExpandable,
     Container,
     Description,
-    Expandable,
     ExpandableChild,
     Item,
     ItemContent,
@@ -175,14 +175,14 @@ export const LinkList = <T,>({
         <Container {...otherProps}>
             {renderShownItems()}
             {itemsMinimised.length > 0 && (
-                <Expandable
+                <AnimatedExpandable
                     style={expandableStyles}
                     data-testid="minimised-content"
                 >
                     <ExpandableChild ref={childRef}>
                         {renderMinimisedItems()}
                     </ExpandableChild>
-                </Expandable>
+                </AnimatedExpandable>
             )}
             {itemsMinimised.length > 0 && renderToggle()}
         </Container>

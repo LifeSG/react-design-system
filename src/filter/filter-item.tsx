@@ -1,7 +1,7 @@
+import { useSpring } from "@react-spring/web";
 import isNil from "lodash/isNil";
 import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "react-spring";
 import { PopoverAddon } from "../form/form-label-addon";
 import { FilterContext } from "./filter-context";
 import {

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useSpring } from "react-spring";
+import { useSpring } from "@react-spring/web";
 import { useResizeDetector } from "react-resize-detector";
 import {
     ChevronIcon,

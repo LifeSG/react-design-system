@@ -1,5 +1,5 @@
 import { ChevronUpIcon } from "@lifesg/react-icons";
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { Colour, Font, Motion, Radius, Spacing } from "../theme";
@@ -56,10 +56,12 @@ export const Wrapper = styled.div`
     column-gap: ${Spacing["spacing-4"]};
 `;
 
-export const Expandable = styled(animated.div)`
+const StyledExpandable = styled.div`
     grid-column: 2 / -1;
     overflow: hidden;
 `;
+
+export const AnimatedExpandable = animated(StyledExpandable);
 
 export const ColumnWeekCell = styled.div`
     display: flex;

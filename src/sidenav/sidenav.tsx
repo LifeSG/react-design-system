@@ -11,7 +11,7 @@ import { SidenavGroup } from "./sidenav-group";
 import { SidenavContext, SidenavContextItem } from "./sidenav-context";
 import { SidenavDrawerItem } from "./sidenav-drawer-item";
 import { SidenavDrawerSubitem } from "./sidenav-drawer-subitem";
-import { useSpring } from "react-spring";
+import { useSpring } from "@react-spring/web";
 import { useEventListener } from "../util/use-event-listener";
 
 const SidenavBase = ({

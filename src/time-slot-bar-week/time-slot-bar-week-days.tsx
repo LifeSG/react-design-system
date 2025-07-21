@@ -1,16 +1,23 @@
+import { useSpring } from "@react-spring/web";
 import dayjs, { Dayjs } from "dayjs";
+import isEmpty from "lodash/isEmpty";
+import maxBy from "lodash/maxBy";
+import minBy from "lodash/minBy";
 import React, { useMemo, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
 import { Colour } from "../theme";
 import { TimeSlot } from "../time-slot-bar/types";
+import { DateHelper } from "../util";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
+    AnimatedExpandable,
     CellWeekText,
+    ChevronIcon,
     CollapseExpandAllButton,
     CollapseExpandAllWrapper,
     ColumnWeekCell,
-    Expandable,
     HeaderCellWeek,
     HeaderCellWeekColumn,
     TimeColumn,
@@ -20,14 +27,7 @@ import {
     TimeSlotWrapper,
     Wrapper,
 } from "./time-slot-bar-week-days.style";
-import { DateHelper } from "../util";
 import { TimeSlotCellsVariant } from "./types";
-import { ChevronIcon } from "./time-slot-bar-week-days.style";
-import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "react-spring";
-import isEmpty from "lodash/isEmpty";
-import minBy from "lodash/minBy";
-import maxBy from "lodash/maxBy";
 
 export type DayVariant = "default" | "other-month" | "today";
 interface TimeSlotWeekDaysProps
@@ -417,7 +417,7 @@ export const TimeSlotBarWeekDays = ({
 
     const renderTimeSlotBarCells = () => {
         return (
-            <Expandable style={expandableStyles}>
+            <AnimatedExpandable style={expandableStyles}>
                 <ColumnWeekCell
                     ref={cellsRef}
                     key={`week-cell-${calendarDate.format(dateFormat)}`}
@@ -481,7 +481,7 @@ export const TimeSlotBarWeekDays = ({
                         );
                     })}
                 </ColumnWeekCell>
-            </Expandable>
+            </AnimatedExpandable>
         );
     };
 

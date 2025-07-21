@@ -1,7 +1,7 @@
+import { useSpring } from "@react-spring/web";
 import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useMediaQuery } from "react-responsive";
-import { useSpring } from "react-spring";
 import { useTheme } from "styled-components";
 import { Breakpoint } from "../theme";
 import {

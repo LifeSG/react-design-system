@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import { Border, Colour, MediaQuery, Radius } from "../theme";
 
 //=============================================================================
@@ -51,7 +51,7 @@ export const MobileContainer = styled(Container)`
     }
 `;
 
-export const DesktopDrawer = styled(animated.ul)<DrawerStyleProps>`
+export const DesktopDrawer = animated(styled.ul<DrawerStyleProps>`
     display: flex;
     flex-direction: column;
     overflow: auto;
@@ -75,4 +75,4 @@ export const DesktopDrawer = styled(animated.ul)<DrawerStyleProps>`
                   border: 0;
                   padding: 0;
               `};
-`;
+`);

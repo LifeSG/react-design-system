@@ -7,7 +7,7 @@ import {
 } from "@lifesg/react-icons";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { easings, useSpring } from "react-spring";
+import { easings, useSpring } from "@react-spring/web";
 import {
     ActionButton,
     ContentWrapper,

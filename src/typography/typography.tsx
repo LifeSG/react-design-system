@@ -11,9 +11,12 @@ export namespace Typography {
         textStyle: TypographySizeType,
         displayName: string
     ) => {
-        const Header = styled(tag).attrs<TypographyProps>(({ inline }) => ({
-            as: inline ? "span" : undefined,
-        }))<TypographyProps>`
+        // Use a more specific type to avoid infinite type instantiation
+        const Header = styled(tag as React.ElementType).attrs<TypographyProps>(
+            ({ inline }) => ({
+                as: inline ? "span" : undefined,
+            })
+        )<TypographyProps>`
             ${(props) => createTypographyStyles(textStyle, props)}
         `;
         Header.displayName = `Typography.${displayName}`;
