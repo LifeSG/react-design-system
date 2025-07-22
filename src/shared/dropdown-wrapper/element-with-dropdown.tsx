@@ -16,17 +16,26 @@ import {
     useInteractions,
     useTransitionStyles,
 } from "@floating-ui/react";
-import { RefObject, useContext, useRef } from "react";
+import {
+    CSSProperties,
+    RefObject,
+    createContext,
+    useContext,
+    useRef,
+} from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
 import { useFloatingChild } from "../../overlay/use-floating-context";
 import { Breakpoint } from "../../theme";
-import { inertValue } from "../accessibility";
-import { DropdownContainer } from "./element-with-dropdown.styles";
 import { DropdownAlignmentType } from "./types";
 
 export interface DropdownRenderProps {
     elementWidth: number;
+    styles: CSSProperties;
+    setFloatingRef: (node: HTMLElement | null) => void;
+    getFloatingProps: (
+        userProps?: React.HTMLProps<HTMLElement>
+    ) => Record<string, unknown>;
 }
 
 interface ElementWithDropdownProps {
@@ -65,6 +74,49 @@ const getFloatingPlacement = (alignment: DropdownAlignmentType): Placement => {
 
 const DEFAULT_Z_INDEX = 50;
 
+export const DropdownRenderContext = createContext<DropdownRenderProps>({
+    elementWidth: 0,
+    styles: {},
+    setFloatingRef: () => {
+        // noop
+    },
+    getFloatingProps: () => ({}),
+});
+
+export const useDropdownRender = () => {
+    return useContext(DropdownRenderContext);
+};
+
+/**
+ * A wrapper to handle the common pattern of a field with a card-based dropdown
+ * using Floating UI
+ *
+ * Usage:
+ * - Specify `renderElement` for the main field
+ * - Specify `renderDropdown` for the dropdown
+ * - Use `isOpen` to control the visibility of the dropdown
+ * - Handle changes in visibility with `onOpen`, `onClose` and `onDismiss`
+ * - If your dropdown can resize, set the css like so: `max-height:
+ *   var(--available-height);`
+ * - If your dropdown has a preferred max-height, set the css like so:
+ *   `max-height: min(100px, var(--available-height, infinity * 1px))`
+ *
+ * Pass the floating props to the dropdown:
+ * ```
+ * <DropdownContainer>
+ *   ref={setFloatingRef}
+ *   style={styles}
+ *   {...getFloatingProps()}
+ * </DropdownContainer>
+ * ```
+ *
+ * If you need event listeners, pass them to `getFloatingProps()`:
+ * ```
+ * getFloatingProps({
+ *   onClick: handleOnClick
+ * })
+ * ```
+ */
 export const ElementWithDropdown = ({
     enabled,
     isOpen,
@@ -86,7 +138,6 @@ export const ElementWithDropdown = ({
     const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const elementRef = useRef<HTMLDivElement | null>(null);
-    const dropdownRef = useRef<HTMLDivElement>(null);
     const { width: referenceWidth = 0 } = useResizeDetector({
         targetRef: elementRef,
         handleHeight: false,
@@ -126,16 +177,23 @@ export const ElementWithDropdown = ({
             }),
             size({
                 // shrink to fit available vertical space
-                apply({ availableHeight }) {
-                    if (!dropdownRef.current) {
+                apply({ availableHeight, elements }) {
+                    if (
+                        !fitAvailableHeight ||
+                        availableHeight >= elements.floating.scrollHeight
+                    ) {
+                        // reset this so that dropdown can expand as needed
+                        elements.floating.style.setProperty(
+                            "--available-height",
+                            ""
+                        );
                         return;
                     }
-                    Object.assign(dropdownRef.current.style, {
-                        maxHeight: fitAvailableHeight
-                            ? `${availableHeight}px`
-                            : undefined,
-                        overflowY: fitAvailableHeight ? "hidden" : undefined,
-                    });
+
+                    elements.floating.style.setProperty(
+                        "--available-height",
+                        `${Math.max(0, availableHeight)}px`
+                    );
                 },
             }),
             center,
@@ -160,6 +218,17 @@ export const ElementWithDropdown = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+    const dropdownRenderProps = {
+        elementWidth: referenceWidth,
+        styles: {
+            ...styles,
+            ...floatingStyles,
+            zIndex: customZIndex ?? parentZIndex ?? DEFAULT_Z_INDEX,
+        },
+        setFloatingRef: refs.setFloating,
+        getFloatingProps,
+    };
+
     return (
         <>
             <div
@@ -176,32 +245,14 @@ export const ElementWithDropdown = ({
                     <FloatingFocusManager
                         context={context}
                         modal={false}
-                        initialFocus={dropdownRef}
+                        initialFocus={-1}
                         returnFocus={false} // leads to focus trap. parent to handle the final focus state
                     >
-                        <div
-                            ref={refs.setFloating}
-                            style={{
-                                ...floatingStyles,
-                                zIndex:
-                                    customZIndex ??
-                                    parentZIndex ??
-                                    DEFAULT_Z_INDEX,
-                            }}
-                            {...getFloatingProps()}
+                        <DropdownRenderContext.Provider
+                            value={dropdownRenderProps}
                         >
-                            <DropdownContainer
-                                ref={dropdownRef}
-                                style={{ ...styles }}
-                                inert={inertValue(
-                                    (styles.opacity as number) < 1
-                                )}
-                            >
-                                {renderDropdown({
-                                    elementWidth: referenceWidth,
-                                })}
-                            </DropdownContainer>
-                        </div>
+                            {renderDropdown(dropdownRenderProps)}
+                        </DropdownRenderContext.Provider>
                     </FloatingFocusManager>
                 </FloatingPortal>
             )}

@@ -9,10 +9,7 @@ import {
     NestedDropdownListLocalItem,
     buildKeyPathToSet,
 } from "../shared/dropdown-list-v2";
-import {
-    DropdownRenderProps,
-    ElementWithDropdown,
-} from "../shared/dropdown-wrapper";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     LabelContainer,
     PlaceholderLabel,
@@ -296,7 +293,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
         );
     };
 
-    const renderDropdown = ({ elementWidth }: DropdownRenderProps) => {
+    const renderDropdown = () => {
         return (
             <NestedDropdownList
                 listboxId={internalId}
@@ -316,7 +313,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
                 onSearch={onSearch}
                 variant={variant}
                 mode={mode}
-                width={elementWidth}
+                matchElementWidth
             />
         );
     };
