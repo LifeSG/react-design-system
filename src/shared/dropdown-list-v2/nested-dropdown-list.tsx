@@ -2,7 +2,13 @@ import { CaretRightIcon } from "@lifesg/react-icons/caret-right";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 import { Spinner } from "../../button/button.style";
-import { useEvent, useEventListener, useIsMounted } from "../../util";
+import {
+    mergeRefs,
+    useEvent,
+    useEventListener,
+    useIsMounted,
+} from "../../util";
+import { useDropdownRender } from "../dropdown-wrapper";
 import { DropdownLabel } from "./dropdown-label";
 import {
     CheckboxSelectedIndicator,
@@ -52,7 +58,7 @@ export const NestedDropdownList = <T,>({
     itemMaxLines = 2,
     variant = "default",
     listboxId,
-    width,
+    matchElementWidth = false,
     mode = "default",
     selectableCategory: _selectableCategory,
     onSelectItem,
@@ -68,6 +74,8 @@ export const NestedDropdownList = <T,>({
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
+    const { elementWidth, setFloatingRef, getFloatingProps, styles } =
+        useDropdownRender();
     const selectableCategory = multiSelect || _selectableCategory;
     const [searchValue, setSearchValue] = useState<string>("");
     const searchTerm = searchValue.toLowerCase().trim();
@@ -636,8 +644,10 @@ export const NestedDropdownList = <T,>({
     return (
         <Container
             data-testid="dropdown-container"
-            ref={nodeRef}
-            $width={width}
+            ref={mergeRefs(nodeRef, setFloatingRef)}
+            style={styles}
+            {...getFloatingProps()}
+            $width={matchElementWidth ? elementWidth : undefined}
             $variant={variant}
         >
             {renderList()}
