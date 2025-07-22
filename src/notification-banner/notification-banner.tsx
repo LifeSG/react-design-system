@@ -6,6 +6,8 @@ import {
     Container,
     Content,
     ContentContainer,
+    ContentText,
+    IconContainer,
     ContentLink as NBLink,
     StyledIcon,
     StyledIconButton,
@@ -27,6 +29,7 @@ export const NBComponent = ({
     maxCollapsedHeight,
     onClick,
     actionButton,
+    icon,
     ...otherProps
 }: NotificationBannerWithForwardedRefProps) => {
     // =============================================================================
@@ -108,7 +111,8 @@ export const NBComponent = ({
                     : undefined
             }
         >
-            <div ref={contentRef}>{children}</div>
+            {icon && <IconContainer aria-label="Icon" role="img">{icon}</IconContainer>}
+            <ContentText ref={contentRef}>{children}</ContentText>
         </Content>
     );
 
@@ -122,6 +126,11 @@ export const NBComponent = ({
             $sticky={sticky}
             $clickable={!!onClick}
             onClick={onClick}
+            role="marquee"
+            aria-live="polite"
+            aria-atomic="true"
+            aria-label="Notification banner"
+            aria-describedby={dismissible ? formatId("dismiss-button", id) : undefined}
             {...otherProps}
         >
             <Container id={formatId("container", id)}>

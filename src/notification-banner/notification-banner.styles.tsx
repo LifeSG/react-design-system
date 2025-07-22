@@ -1,8 +1,8 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
+import { Layout } from "../layout";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Colour, Font, Motion, Radius } from "../theme";
-import { Layout } from "../layout";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -57,16 +57,14 @@ export const Container = styled(Layout.Content)`
 
 export const ContentContainer = styled.div`
     flex: 1;
-
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
     padding: 1.5rem 0;
 `;
 
 export const Content = styled.div<ContentStyleProps>`
-    display: inline-block;
-    width: 100%;
+    display: flex;
+    flex: 1;
+    align-items: flex-start;
 
     ${Font["body-baseline-regular"]}
     color: ${Colour["text-inverse"]};
@@ -98,6 +96,12 @@ export const Content = styled.div<ContentStyleProps>`
     }}
 `;
 
+export const ContentText = styled.div`
+    flex: 1;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+`;
+
 export const ContentLink = styled(Typography.LinkBL)`
     position: relative;
 
@@ -111,8 +115,8 @@ export const StyledIconButton = styled(ClickableIcon)`
 `;
 
 export const StyledIcon = styled(CrossIcon)`
-    height: 1.875rem;
-    width: 1.875rem;
+    height: 1.5rem !important;
+    width: 1.5rem !important;
     color: ${Colour["icon-inverse"]};
 `;
 
@@ -139,4 +143,16 @@ export const AccessibleBannerButton = styled.button`
     position: absolute;
     white-space: nowrap;
     width: 1px;
+`;
+
+export const IconContainer = styled.div`
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-right: 1.5rem;
+
+    svg {
+        height: 100%;
+        width: 100%;
+        color: ${Colour["hyperlink-inverse"]};
+    }
 `;
