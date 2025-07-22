@@ -13,6 +13,8 @@ export interface SidenavProps extends SidenavBaseProps {
      * </Sidenav.Group>
      */
     children: React.ReactNode;
+    /** the accessible label */
+    "aria-label"?: string | undefined;
 }
 
 export interface SidenavGroupProps extends SidenavBaseProps {
@@ -24,6 +26,8 @@ export interface SidenavGroupProps extends SidenavBaseProps {
      * </Sidenav.Item>
      */
     children: React.ReactNode;
+    /** the accessible label */
+    "aria-label"?: string | undefined;
 }
 
 export interface SidenavItemProps extends SidenavBaseProps {
