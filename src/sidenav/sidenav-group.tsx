@@ -12,7 +12,7 @@ export const SidenavGroup = ({
     return (
         <Container {...otherProps}>
             {children}
-            {separator && <Divider data-testid="divider" aria-hidden />}
+            {separator && <Divider data-testid="divider" />}
         </Container>
     );
 };
