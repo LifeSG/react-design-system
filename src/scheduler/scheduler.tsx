@@ -1,13 +1,12 @@
-import React, { useCallback, useState } from "react";
-import styled, { css } from "styled-components";
+import React, { useCallback, useState, useEffect } from "react";
+import styled, { css, useTheme } from "styled-components";
 import { useMediaQuery } from "react-responsive";
-import { useTheme } from "styled-components";
-import { Breakpoint } from "../theme";
 import { SchedulerProps } from "./types";
-import { TimeSlotHeader } from "./timeslot-header";
+import { TimeSlotHeader } from "./timeslot-header/timeslot-header";
 import { SchedulerBody } from "./scheduler-body";
-import { SchedulerWeekView } from "./scheduler-week-view";
-import { TimeSlotDayView } from "./scheduler-day-view";
+import { TimeSlotWeekView } from "./timeslot-week-view/timeslot-week-view";
+import { TimeSlotDayView } from "./timeslot-day-view/timeslot-day-view";
+import { Breakpoint } from "../theme";
 
 export const Scheduler = ({
     id,
@@ -33,11 +32,46 @@ export const Scheduler = ({
     // =============================================================================
     const [currentView, setCurrentView] = useState<"day" | "week">(view);
     const theme = useTheme();
-    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const mobileBreakpoint = Breakpoint["md-max"]({ theme });
+
+    const isMobile = useMediaQuery({
+        maxWidth: mobileBreakpoint,
+    });
+
+    const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
+    const isTablet = useMediaQuery({
+        maxWidth: tabletBreakpoint,
+    });
 
     // Force day view on mobile
-    const effectiveView = isMobile ? "day" : currentView;
+    const effectiveView = isMobile || isTablet ? "day" : currentView;
+
+    // New: Track which service is visible on mobile
+    const [visibleServiceIdx, setVisibleServiceIdx] = useState(0);
+
+    // Only show one service on mobile/tablet
+    const visibleRowData =
+        isMobile || isTablet
+            ? rowData && rowData.length > 0
+                ? [rowData[visibleServiceIdx]]
+                : []
+            : rowData;
+
+    // Handlers for arrows
+    const handleNextService = useCallback(() => {
+        if (!rowData) return;
+        setVisibleServiceIdx((idx) =>
+            idx < rowData.length - 1 ? idx + 1 : idx
+        );
+    }, [rowData]);
+    const handlePrevService = useCallback(() => {
+        setVisibleServiceIdx((idx) => (idx > 0 ? idx - 1 : idx));
+    }, []);
+
+    // Reset index if rowData changes
+    useEffect(() => {
+        setVisibleServiceIdx(0);
+    }, [rowData]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -68,8 +102,8 @@ export const Scheduler = ({
                 data-id="time-slot-header"
                 date={date}
                 view={effectiveView}
-                showTodayButton={!isMobile}
-                showViewSelector={!isMobile}
+                showTodayButton={!isMobile && !isTablet}
+                showViewSelector={!isMobile && !isTablet}
                 minDate={minDate}
                 maxDate={maxDate}
                 onPreviousDayClick={onPreviousDayClick}
@@ -83,14 +117,26 @@ export const Scheduler = ({
                 {effectiveView === "day" ? (
                     <TimeSlotDayView
                         date={date}
-                        rowData={rowData}
+                        rowData={visibleRowData}
                         loading={loading}
                         minTime={minTime}
                         maxTime={maxTime}
                         onSlotClick={onSlotClick}
+                        isMobile={isMobile}
+                        onNextService={handleNextService}
+                        onPrevService={handlePrevService}
+                        showPrevArrow={
+                            isMobile || (isTablet && visibleServiceIdx > 0)
+                        }
+                        showNextArrow={
+                            isMobile ||
+                            (isTablet &&
+                                rowData &&
+                                visibleServiceIdx < rowData.length - 1)
+                        }
                     />
                 ) : (
-                    <SchedulerWeekView
+                    <TimeSlotWeekView
                         date={date}
                         rowData={rowData}
                         loading={loading}

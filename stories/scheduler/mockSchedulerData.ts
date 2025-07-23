@@ -8,6 +8,7 @@ export const mockSchedulerData: SchedulerRowData[] = [
         rowCells: [
             {
                 id: "1-1",
+                date: "2025-07-22",
                 startTime: "09:00",
                 endTime: "10:30",
                 status: "booked",
@@ -16,6 +17,7 @@ export const mockSchedulerData: SchedulerRowData[] = [
             },
             {
                 id: "1-2",
+                date: "2025-07-22",
                 startTime: "13:30",
                 endTime: "14:00",
                 status: "available",
@@ -24,6 +26,7 @@ export const mockSchedulerData: SchedulerRowData[] = [
             },
             {
                 id: "1-3",
+                date: "2025-07-22",
                 startTime: "15:00",
                 endTime: "15:30",
                 status: "pending",
@@ -32,6 +35,7 @@ export const mockSchedulerData: SchedulerRowData[] = [
             },
             {
                 id: "1-4",
+                date: "2025-07-22",
                 startTime: "16:30",
                 endTime: "17:00",
                 status: "blocked",
@@ -45,6 +49,7 @@ export const mockSchedulerData: SchedulerRowData[] = [
         rowCells: [
             {
                 id: "2-1",
+                date: "2025-07-22",
                 startTime: "09:00",
                 endTime: "09:30",
                 status: "available",
@@ -53,25 +58,12 @@ export const mockSchedulerData: SchedulerRowData[] = [
             },
             {
                 id: "2-2",
+                date: "2025-07-22",
                 startTime: "09:30",
                 endTime: "10:00",
                 status: "booked",
                 capacity: 2,
                 booked: 2,
-            },
-            {
-                id: "2-3",
-                startTime: "10:00",
-                endTime: "10:30",
-                status: "pending",
-                capacity: 5,
-                booked: 5,
-            },
-            {
-                id: "2-4",
-                startTime: "10:30",
-                endTime: "11:00",
-                status: "blocked",
             },
         ],
     },
@@ -82,12 +74,14 @@ export const mockSchedulerData: SchedulerRowData[] = [
         rowCells: [
             {
                 id: "3-1",
+                date: "2025-07-22",
                 startTime: "09:00",
                 endTime: "09:30",
                 status: "blocked",
             },
             {
                 id: "3-2",
+                date: "2025-07-22",
                 startTime: "09:30",
                 endTime: "10:00",
                 status: "available",
@@ -96,6 +90,7 @@ export const mockSchedulerData: SchedulerRowData[] = [
             },
             {
                 id: "3-3",
+                date: "2025-07-22",
                 startTime: "10:00",
                 endTime: "10:30",
                 status: "booked",
@@ -104,6 +99,7 @@ export const mockSchedulerData: SchedulerRowData[] = [
             },
             {
                 id: "3-4",
+                date: "2025-07-22",
                 startTime: "10:30",
                 endTime: "11:00",
                 status: "available",
@@ -122,7 +118,17 @@ export const mockSchedulerData: SchedulerRowData[] = [
         id: "5",
         name: "Service E",
         subtitle: "Available slots for Service E",
-        rowCells: [],
+        rowCells: [
+            {
+                id: "5-1",
+                date: "2025-07-22",
+                startTime: "9:00",
+                endTime: "10:00",
+                status: "available",
+                capacity: 5,
+                booked: 0,
+            },
+        ],
     },
     {
         id: "6",

@@ -11,7 +11,6 @@ import {
 
 interface TimeSlotHeaderProps {
     date: string;
-    className?: string;
     view: "day" | "week";
     showTodayButton?: boolean;
     showViewSelector?: boolean;
@@ -36,7 +35,6 @@ export const TimeSlotHeader = ({
     onCalendarDateSelect,
     onViewChange,
     onTodayClick,
-    ...otherprops
 }: TimeSlotHeaderProps) => {
     const viewOptions = [
         { label: "Day", value: "day" },
@@ -48,7 +46,7 @@ export const TimeSlotHeader = ({
     );
 
     return (
-        <TimeSlotHeaderWrapper {...otherprops}>
+        <TimeSlotHeaderWrapper>
             <LeftSection>
                 {showTodayButton && (
                     <Button.Default

@@ -65,6 +65,7 @@ export interface SchedulerRowCellData {
     endTime: string;
     status: SchedulerCellType;
     capacity?: number;
+    date: string;
     booked?: number;
     customPopover?: SchedulerPopoverProps | undefined;
     onClick?:
