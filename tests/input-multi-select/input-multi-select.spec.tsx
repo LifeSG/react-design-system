@@ -1,12 +1,7 @@
-import {
-    act,
-    render,
-    screen,
-    waitFor,
-    waitForElementToBeRemoved,
-} from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { InputMultiSelect } from "../../src/input-multi-select";
+import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
 
 const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";
