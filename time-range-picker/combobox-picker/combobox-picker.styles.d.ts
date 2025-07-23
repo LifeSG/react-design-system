@@ -1,0 +1,1 @@
+export declare const TimeFieldContainer: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, import("../../shared/input-wrapper/input-wrapper").InputWrapperStyleProps, never>;
