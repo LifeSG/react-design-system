@@ -1,8 +1,5 @@
-import styled from "styled-components";
-import { Border, Colour } from "../theme";
-import { Typography } from "../typography";
 import { TimeHelper } from "../util/time-helper";
-import { CELL_HEIGHT } from "./const";
+import { TimeColumn, TimeLabel } from "./time-indicator.styles";
 
 interface SchedulerTimeIndicatorProps {
     minTime: string;
@@ -37,25 +34,3 @@ export const TimeIndicator = ({
         </TimeColumn>
     );
 };
-
-// =============================================================================
-// STYLING
-// =============================================================================
-
-export const TimeColumn = styled.div`
-    display: flex;
-    flex-direction: column;
-    font-weight: 700;
-    color: ${Colour["text-subtler"]};
-    background: ${Colour["bg"]};
-    border-left: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
-`;
-
-export const TimeLabel = styled(Typography.BodySM)`
-    height: ${CELL_HEIGHT * 2}px; /* 2 slots */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    padding-right: 8px;
-`;

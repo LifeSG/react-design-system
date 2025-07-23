@@ -8,9 +8,6 @@ export const TimeSlotHeaderWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     padding-bottom: ${Spacing["spacing-16"]};
-    position: sticky;
-    top: 0;
-    z-index: 10;
     color: ${Colour["text-primary"]};
 `;
 
@@ -26,9 +23,7 @@ export const RightSection = styled.div`
     gap: ${Spacing["spacing-16"]};
 `;
 
-export const StyledDateNavigator = styled(DateNavigator)`
-    width: 400px;
-`;
+export const StyledDateNavigator = styled(DateNavigator)``;
 
 export const StyledText = styled(Typography.BodyMD)`
     color: ${Colour["text-subtler"]};

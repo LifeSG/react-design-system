@@ -17,7 +17,13 @@ interface TimeSlotStyleAttributes {
 export interface TimeSlotDayViewProps {
     date: string;
     rowData: SchedulerRowData[];
+    loading: boolean;
     minTime: string;
+    isMobile: boolean;
+    onNextService: () => void;
+    onPrevService: () => void;
+    showPrevArrow: boolean;
+    showNextArrow: boolean;
     maxTime: string;
     onSlotClick?: ((data: any, e: React.MouseEvent) => void) | undefined;
     styleAttributes?: TimeSlotStyleAttributes;

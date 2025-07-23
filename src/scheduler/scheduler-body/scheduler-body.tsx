@@ -10,11 +10,7 @@ export const SchedulerBody = ({
 }: SchedulerBodyProps) => {
     return <Wrapper {...otherprops}>{children}</Wrapper>;
 };
-
 // =============================================================================
 // STYLING
 // =============================================================================
-const Wrapper = styled.div`
-    overflow-x: auto;
-    overflow-y: auto;
-`;
+const Wrapper = styled.div``;
