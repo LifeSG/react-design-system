@@ -127,7 +127,6 @@ const Component = (
                     readOnly={readOnly || disabled}
                     $showClear={showClear}
                     $styleType={styleType}
-                    tabIndex={0}
                     {...otherProps}
                 />
                 {showClear && (

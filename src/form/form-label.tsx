@@ -1,8 +1,14 @@
 import { PopoverAddon } from "./form-label-addon";
-import { ErrorMessage, Label, Subtitle } from "./form-label.style";
+import {
+    ErrorMessage,
+    Label,
+    LabelContainer,
+    Subtitle,
+} from "./form-label.style";
 import { FormLabelProps } from "./types";
 
 export const FormLabel = ({
+    id: labelId,
     children,
     addon,
     subtitle,
@@ -22,11 +28,14 @@ export const FormLabel = ({
     };
 
     return (
-        <Label {...otherProps}>
-            {children}
-            {addon && addon.type && renderAddon()}
+        <LabelContainer>
+            <Label {...otherProps}>
+                {children}
+                {addon && addon.type && renderAddon()}
+            </Label>
             {typeof subtitle === "string" ? (
                 <Subtitle
+                    id={labelId ? `${labelId}-subtitle` : "subtitle"}
                     data-testid={testId ? `${testId}-subtitle` : "subtitle"}
                     {...otherProps}
                 >
@@ -35,7 +44,7 @@ export const FormLabel = ({
             ) : (
                 subtitle
             )}
-        </Label>
+        </LabelContainer>
     );
 };
 

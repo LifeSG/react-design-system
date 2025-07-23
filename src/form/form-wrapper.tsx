@@ -51,6 +51,14 @@ export const FormWrapper = ({
         return !!errorMessage;
     };
 
+    const hasSubtitleLabel = (): boolean => {
+        return typeof label === "object" && !!label?.subtitle;
+    };
+
+    const getSubtitleId = (): string => {
+        return `${id}-label-subtitle`;
+    };
+
     function getLayoutType(): FormElementLayoutType {
         if (!layoutType && (mobileCols || tabletCols || desktopCols)) {
             return "v2-grid";
@@ -141,6 +149,8 @@ export const FormWrapper = ({
             "aria-invalid": isInvalidState(),
             "aria-describedby": isInvalidState()
                 ? getErrorTestMessageId()
+                : hasSubtitleLabel()
+                ? getSubtitleId()
                 : undefined,
         };
         return Children.map(children, (child) =>
