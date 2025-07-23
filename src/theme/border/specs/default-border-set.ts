@@ -5,6 +5,7 @@ export const DefaultBorderSet: BorderSet = {
     "width-010": 1,
     "width-020": 2,
     "width-040": 4,
+    "width-080": 8,
 
     solid: "solid",
 };

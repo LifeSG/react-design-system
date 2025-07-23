@@ -96,6 +96,18 @@ export const COMMON_POPOVER_ATTRIBUTES: ApiTableSectionProps["attributes"] = [
         ),
         propTypes: ["() => void"],
     },
+    {
+        name: "enableFlip",
+        description: (
+            <>
+                Enables the Popover&rsquo;s flip behavior (vertically) when
+                there is not enough space in the window&rsquo;s viewport for the
+                specified position.
+            </>
+        ),
+        propTypes: ["boolean"],
+        defaultValue: "true",
+    },
 ];
 
 const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [

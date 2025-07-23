@@ -12,7 +12,7 @@ const BorderSpec: ThemeCollectionSpec<BorderCollectionMap, BorderScheme> = {
 };
 
 export const getBorderWidth = (
-    key: "width-005" | "width-010" | "width-020" | "width-040"
+    key: "width-005" | "width-010" | "width-020" | "width-040" | "width-080"
 ) => {
     return (props: StyledComponentProps) => {
         const theme = props.theme;
@@ -56,5 +56,6 @@ export const BorderValues = {
     "width-010": getBorderWidth("width-010"),
     "width-020": getBorderWidth("width-020"),
     "width-040": getBorderWidth("width-040"),
+    "width-080": getBorderWidth("width-080"),
     solid: getBorder("solid"),
 };

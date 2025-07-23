@@ -32,6 +32,7 @@ export const PopoverTrigger = ({
     delay,
     onPopoverAppear,
     onPopoverDismiss,
+    enableFlip = true,
     ...otherProps
 }: PopoverV2TriggerProps) => {
     // =========================================================================
@@ -50,7 +51,7 @@ export const PopoverTrigger = ({
         whileElementsMounted: autoUpdate,
         middleware: [
             offset(customOffset ?? 16),
-            flip(),
+            enableFlip && flip(),
             shift({
                 limiter: limitShift(),
             }),

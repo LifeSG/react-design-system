@@ -1,0 +1,35 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import * as MenuStories from "./menu.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={MenuStories} />
+
+# Menu
+
+## Overview
+
+A component which appears when hovering or clicking on a target element and displays a menu, consisting of menu sections containing links or items.  
+It is commonly used together with components such as **Avatar** and **Navbar** with dropdown menus.
+
+This module contains:
+
+-   **Menu** - component that handles the triggering of the menu
+-   **Menu.Section** - groups menu items and optionally shows a section label
+-   **Menu.Item** - a menu item with optional label and subLabel
+-   **Menu.Link** - a menu item that renders as a hyperlink
+
+```tsx
+import { Menu } from "@lifesg/react-design-system/menu";
+```
+
+<Canvas of={MenuStories.Default} />
+
+## Scrollable Menu Panel
+
+Enables scroll when menu panel extends past window&rsquo;s view port. Must be used with <code>{`position="bottom"`}</code> and <code>{`enableFlip={false}`}</code>.
+
+<Canvas of={MenuStories.Scrollable} />
+
+## Component API
+
+<PropsTable />
