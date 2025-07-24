@@ -26,13 +26,15 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
         ...otherProps
     } = props;
 
-    const [inputId] = useState(
-        () => id ?? `form-field-${SimpleIdGenerator.generate()}`
+    const [internalId] = useState(
+        () => `form-field-${SimpleIdGenerator.generate()}`
     );
+
+    const inputId = id ?? internalId;
 
     return (
         <FormWrapper
-            id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
@@ -51,7 +53,7 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
         >
             <Input
                 id={`${inputId}-base`}
-                data-testid={testId || inputId}
+                data-testid={testId ? `${testId}-base` : undefined}
                 ref={ref}
                 error={!!errorMessage}
                 {...otherProps}

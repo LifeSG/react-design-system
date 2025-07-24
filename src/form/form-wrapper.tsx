@@ -56,7 +56,18 @@ export const FormWrapper = ({
     };
 
     const getSubtitleId = (): string => {
-        return `${id}-label-subtitle`;
+        return `${id}-subtitle`;
+    };
+
+    const getAriaDescribedBy = (): string | undefined => {
+        return (
+            [
+                isInvalidState() ? getErrorTestMessageId() : undefined,
+                hasSubtitleLabel() ? getSubtitleId() : undefined,
+            ]
+                .filter(Boolean)
+                .join(" ") || undefined
+        );
     };
 
     function getLayoutType(): FormElementLayoutType {
@@ -147,11 +158,7 @@ export const FormWrapper = ({
     const renderChildren = (): JSX.Element | JSX.Element[] => {
         const ariaState = {
             "aria-invalid": isInvalidState(),
-            "aria-describedby": isInvalidState()
-                ? getErrorTestMessageId()
-                : hasSubtitleLabel()
-                ? getSubtitleId()
-                : undefined,
+            "aria-describedby": getAriaDescribedBy(),
         };
         return Children.map(children, (child) =>
             cloneElement(child, ariaState)
