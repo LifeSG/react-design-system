@@ -24,6 +24,7 @@ export const EagerLinkList = <T,>({
     maxShown,
     style,
     onItemClick,
+    customLabel,
 }: Props<T>) => {
     // =============================================================================
     // CONST, STATE, REFS
@@ -104,7 +105,9 @@ export const EagerLinkList = <T,>({
                 weight="semibold"
                 data-testid="toggle-button-label"
             >
-                {showMinimised ? "View less" : "View more"}
+                {showMinimised
+                    ? customLabel?.viewLess || "View less"
+                    : customLabel?.viewMore || "View more"}
             </ToggleButtonLabel>
             {showMinimised ? <ViewLessIcon /> : <ViewMoreIcon />}
         </ToggleButton>

@@ -138,3 +138,29 @@ export const LazyList: StoryObj<Component> = {
         );
     },
 };
+
+export const CustomLabel: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <LinkList
+                items={[
+                    {
+                        title: "LinkList with a default sized title",
+                        href: "https://www.life.gov.sg",
+                        target: "_blank",
+                    },
+                    {
+                        title: "Second item",
+                        description: "This is the description",
+                        href: "https://www.life.gov.sg",
+                        target: "_blank",
+                    },
+                ]}
+                customLabel={{
+                    viewMore: "Custom view more label",
+                    viewLess: "Custom view less label",
+                }}
+            />
+        );
+    },
+};

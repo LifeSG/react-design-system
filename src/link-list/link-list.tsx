@@ -11,6 +11,7 @@ export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
             style = "default",
             onItemClick,
             maxShown,
+            customLabel,
             ...otherProps
         } = props;
 
@@ -21,6 +22,7 @@ export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
                     maxShown={maxShown}
                     style={style}
                     onItemClick={onItemClick}
+                    customLabel={customLabel}
                 />
             </Container>
         );
@@ -34,6 +36,7 @@ export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
                 onItemClick,
                 loadMore,
                 onLoadMore,
+                customLabel,
                 ...otherProps
             } = props;
 
@@ -45,6 +48,7 @@ export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
                         onItemClick={onItemClick}
                         loadMore={loadMore}
                         onLoadMore={onLoadMore}
+                        customLabel={customLabel}
                     />
                 </Container>
             );
