@@ -38,6 +38,8 @@ export interface PopoverV2TriggerProps {
     delay?:
         | { open?: number | undefined; close?: number | undefined }
         | undefined;
+    enableFlip?: boolean | undefined;
+    enableContentScroll?: boolean | undefined;
     onPopoverAppear?: (() => void) | undefined;
     onPopoverDismiss?: (() => void) | undefined;
 }

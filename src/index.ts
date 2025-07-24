@@ -1,8 +1,8 @@
 // Alphabetical order
 export * from "./accordion";
 export * from "./alert";
-export * from "./avatar";
 export * from "./animations";
+export * from "./avatar";
 export * from "./badge";
 export * from "./box-container";
 export * from "./breadcrumb";
@@ -46,6 +46,7 @@ export * from "./markup";
 export * from "./masked-input";
 export * from "./masonry";
 export * from "./masthead";
+export * from "./menu";
 export * from "./modal";
 export * from "./navbar";
 export * from "./notification-banner";
