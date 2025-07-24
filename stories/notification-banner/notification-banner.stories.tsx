@@ -1,3 +1,4 @@
+import { SpeakerFillIcon } from "@lifesg/react-icons";
 import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 import { GearFillIcon } from "@lifesg/react-icons/gear-fill";
 import type { Meta, StoryObj } from "@storybook/react";
@@ -54,6 +55,19 @@ export const NonSticky: StoryObj<Component> = {
     },
 };
 
+export const WithIcon: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <div>
+                <NotificationBanner icon={<SpeakerFillIcon />}>
+                    This is a notification banner with icon that can be
+                    dismissed by default.
+                </NotificationBanner>
+            </div>
+        );
+    },
+};
+
 export const NonDismissible: StoryObj<Component> = {
     render: (_args) => {
         return (
@@ -107,6 +121,7 @@ export const CustomContent: StoryObj<Component> = {
                         padding: "1rem",
                         alignItems: "center",
                         gap: "1rem",
+                        width: "100%",
                     }}
                 >
                     <GearFillIcon />

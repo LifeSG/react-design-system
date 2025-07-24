@@ -1,3 +1,4 @@
+import { CrossIcon } from "@lifesg/react-icons";
 import React, { NamedExoticComponent, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import {
@@ -6,8 +7,10 @@ import {
     Container,
     Content,
     ContentContainer,
+    ContentText,
+    ContentWrapper,
+    IconContainer,
     ContentLink as NBLink,
-    StyledIcon,
     StyledIconButton,
     Wrapper,
 } from "./notification-banner.styles";
@@ -27,6 +30,7 @@ export const NBComponent = ({
     maxCollapsedHeight,
     onClick,
     actionButton,
+    icon,
     ...otherProps
 }: NotificationBannerWithForwardedRefProps) => {
     // =============================================================================
@@ -72,14 +76,16 @@ export const NBComponent = ({
 
     const renderDismissButton = () => (
         <StyledIconButton
+            tabIndex={0}
             onClick={handleDismiss}
             id={formatId("dismiss-button", id)}
             data-testid={formatId("dismiss-button", testId)}
+            focusOutline="browser"
             focusHighlight={false}
             type="button"
-            aria-label="Dismiss notification"
+            aria-label="close"
         >
-            <StyledIcon aria-hidden />
+            <CrossIcon aria-hidden />
         </StyledIconButton>
     );
 
@@ -91,6 +97,7 @@ export const NBComponent = ({
                 id={formatId("action-button", id)}
                 data-testid={formatId("action-button", testId)}
                 type="button"
+                aria-label=""
                 {...actionButton}
                 onClick={handleActionButtonOnClick}
             >
@@ -101,14 +108,22 @@ export const NBComponent = ({
 
     const renderContent = () => (
         <Content
+            ref={contentRef}
             data-testid={formatId("text-content", testId)}
-            $maxCollapsedHeight={
-                maxCollapsedHeight && contentHeight > maxCollapsedHeight
-                    ? maxCollapsedHeight
-                    : undefined
-            }
         >
-            <div ref={contentRef}>{children}</div>
+            {icon && <IconContainer aria-hidden>{icon}</IconContainer>}
+            <ContentWrapper>
+                <ContentText
+                    $maxCollapsedHeight={
+                        maxCollapsedHeight && contentHeight > maxCollapsedHeight
+                            ? maxCollapsedHeight
+                            : undefined
+                    }
+                >
+                    {children}
+                </ContentText>
+                {renderActionButton()}
+            </ContentWrapper>
         </Content>
     );
 
@@ -122,13 +137,14 @@ export const NBComponent = ({
             $sticky={sticky}
             $clickable={!!onClick}
             onClick={onClick}
+            role="landmark"
+            aria-describedby={
+                dismissible ? formatId("dismiss-button", id) : undefined
+            }
             {...otherProps}
         >
             <Container id={formatId("container", id)}>
-                <ContentContainer>
-                    {renderContent()}
-                    {renderActionButton()}
-                </ContentContainer>
+                <ContentContainer>{renderContent()}</ContentContainer>
                 {dismissible && renderDismissButton()}
             </Container>
             {onClick && renderAccessibleBannerButton()}
