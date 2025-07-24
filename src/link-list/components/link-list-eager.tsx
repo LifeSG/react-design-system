@@ -130,7 +130,7 @@ export const EagerLinkList = <T,>({
                     style={expandableStyles}
                     data-testid="minimised-content"
                 >
-                    <ExpandableChild ref={childRef}>
+                    <ExpandableChild ref={childRef} $border>
                         {renderMinimisedItems()}
                     </ExpandableChild>
                 </Expandable>

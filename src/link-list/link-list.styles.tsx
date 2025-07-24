@@ -6,6 +6,10 @@ import styled, { css } from "styled-components";
 import { Border, Colour } from "../theme";
 import { Typography } from "../typography";
 
+type ExpandableChildProps = {
+    $border?: boolean;
+};
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -72,8 +76,12 @@ export const Expandable = styled(animated.div)`
     overflow: hidden;
 `;
 
-export const ExpandableChild = styled.div`
-    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+export const ExpandableChild = styled.div<ExpandableChildProps>`
+    ${(props) =>
+        props.$border &&
+        css`
+            border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+        `}
 `;
 
 export const ToggleButtonLabel = styled(Typography.BodyMD).attrs({
