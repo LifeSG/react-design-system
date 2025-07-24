@@ -7,14 +7,6 @@ import { Border, Colour } from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface ToggleStyleProps {
-    $showMinimised: boolean;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
 const iconStyle = css`
@@ -65,7 +57,7 @@ export const Item = styled.a`
     }
 `;
 
-export const ItemContent = styled.div`
+export const ItemContentContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -98,7 +90,7 @@ export const ViewLessIcon = styled(MinusIcon)`
     ${iconStyle}
 `;
 
-export const ToggleButton = styled.button<ToggleStyleProps>`
+export const ToggleButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
