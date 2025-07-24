@@ -27,6 +27,7 @@ const FilterBase = ({
     toggleFilterButtonLabel = "Filters",
     toggleFilterButtonStyle = "light",
     headerTitle = "Filters",
+    doneButtonLabel = "Done",
     clearButtonDisabled = false,
     onClear,
     onDismiss,
@@ -138,7 +139,7 @@ const FilterBase = ({
                                     onClick={handleDoneClick}
                                     type="button"
                                 >
-                                    Done
+                                    {doneButtonLabel}
                                 </FilterDoneButton>
                             </FilterFooter>
                         </MobileContainer>
