@@ -3,6 +3,9 @@ import { useState } from "react";
 import { Button } from "src/button";
 import { Modal } from "src/modal";
 import { PopoverTrigger, PopoverV2 } from "src/popover-v2";
+import { Avatar } from "../../src/avatar";
+import { Menu } from "../../src/menu";
+import { GridDecorator } from "../storybook-common";
 
 type Component = typeof PopoverV2;
 
@@ -154,4 +157,82 @@ export const UsageInOverlay: StoryObj<Component> = {
             </>
         );
     },
+};
+
+const getMenuContent = () => (
+    <Menu.Content>
+        <Menu.Section showDivider={false}>
+            <Menu.Item label="Name" subLabel="email@email.sg" />
+        </Menu.Section>
+
+        <Menu.Section label="Category 1">
+            <Menu.Item>Menu item</Menu.Item>
+            <Menu.Link href="https://www.google.com">Menu link</Menu.Link>
+            <Menu.Item>Menu item</Menu.Item>
+            <Menu.Link href="https://www.google.com">Menu link</Menu.Link>
+            <Menu.Item>Menu item</Menu.Item>
+        </Menu.Section>
+
+        <Menu.Section>
+            <Menu.Item>Menu item</Menu.Item>
+            <Menu.Item>Menu item</Menu.Item>
+            <Menu.Link href="https://www.google.com">Menu link</Menu.Link>
+            <Menu.Link href="https://www.google.com">Menu link</Menu.Link>
+        </Menu.Section>
+
+        <Menu.Section label="Category 2">
+            <Menu.Link href="https://www.google.com">Menu link</Menu.Link>
+            <Menu.Item>Menu item</Menu.Item>
+            <Menu.Link href="https://www.google.com">Menu link</Menu.Link>
+        </Menu.Section>
+    </Menu.Content>
+);
+
+export const ScrollAndFlip: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <PopoverTrigger
+                    popoverContent={getMenuContent}
+                    position="bottom-start"
+                >
+                    <Avatar>Name</Avatar>
+                </PopoverTrigger>
+                <PopoverTrigger
+                    enableContentScroll={true}
+                    popoverContent={getMenuContent}
+                    position="bottom-start"
+                >
+                    <Avatar>Name</Avatar>
+                </PopoverTrigger>
+                <PopoverTrigger
+                    enableContentScroll={true}
+                    enableFlip={false}
+                    popoverContent={getMenuContent}
+                    position="bottom-start"
+                >
+                    <Avatar>Name</Avatar>
+                </PopoverTrigger>
+                <PopoverTrigger
+                    enableFlip={false}
+                    popoverContent={getMenuContent}
+                    position="bottom-start"
+                >
+                    <Avatar>Name</Avatar>
+                </PopoverTrigger>
+            </>
+        );
+    },
+
+    decorators: [
+        GridDecorator({
+            columns: 4,
+            columnHeaders: [
+                "Scroll disabled, Flip enabled (Default)",
+                "Scroll and Flip enabled",
+                "Scroll enabled, Flip disabled",
+                "Scroll and Flip disabled",
+            ],
+        }),
+    ],
 };

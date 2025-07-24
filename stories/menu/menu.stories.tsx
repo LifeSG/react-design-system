@@ -13,7 +13,7 @@ export default meta;
 
 const getMenuContent = () => {
     return (
-        <>
+        <Menu.Content>
             <Menu.Section showDivider={false}>
                 <Menu.Item label="Name" subLabel="email@email.sg" />
             </Menu.Section>
@@ -38,7 +38,7 @@ const getMenuContent = () => {
                 <Menu.Item>Menu item</Menu.Item>
                 <Menu.Link href="https://www.google.com">Menu link</Menu.Link>
             </Menu.Section>
-        </>
+        </Menu.Content>
     );
 };
 
@@ -54,18 +54,8 @@ export const Default: StoryObj<Component> = {
     },
 };
 
-export const Scrollable: StoryObj<Component> = {
+export const ContentOnly: StoryObj<Component> = {
     render: (_args) => {
-        return (
-            <>
-                <Menu
-                    scrollable={true}
-                    enableFlip={false}
-                    menuContent={getMenuContent()}
-                >
-                    <Avatar>Name</Avatar>
-                </Menu>
-            </>
-        );
+        return getMenuContent();
     },
 };

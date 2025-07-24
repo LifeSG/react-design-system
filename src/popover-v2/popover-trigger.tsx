@@ -6,6 +6,7 @@ import {
     limitShift,
     offset,
     shift,
+    size,
     useClick,
     useDismiss,
     useFloating,
@@ -33,6 +34,7 @@ export const PopoverTrigger = ({
     onPopoverAppear,
     onPopoverDismiss,
     enableFlip = true,
+    enableContentScroll = false,
     ...otherProps
 }: PopoverV2TriggerProps) => {
     // =========================================================================
@@ -55,6 +57,15 @@ export const PopoverTrigger = ({
             shift({
                 limiter: limitShift(),
             }),
+            enableContentScroll &&
+                size({
+                    apply({ availableHeight, elements }) {
+                        Object.assign(elements.floating.style, {
+                            maxHeight: `${availableHeight}px`,
+                            overflowY: "auto",
+                        });
+                    },
+                }),
         ],
         onOpenChange: (isOpen) => {
             setVisible(isOpen);

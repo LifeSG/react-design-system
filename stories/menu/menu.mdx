@@ -13,7 +13,8 @@ It is commonly used together with components such as **Avatar** and **Navbar** w
 
 This module contains:
 
--   **Menu** - component that handles the triggering of the menu
+-   **Menu** - a utility component that handles the triggering of the menu, extending [PopoverTrigger](/docs/overlays-popoverv2--docs)
+-   **Menu.Content** - a presentational component of the menu
 -   **Menu.Section** - groups menu items and optionally shows a section label
 -   **Menu.Item** - a menu item with optional label and subLabel
 -   **Menu.Link** - a menu item that renders as a hyperlink
@@ -24,11 +25,9 @@ import { Menu } from "@lifesg/react-design-system/menu";
 
 <Canvas of={MenuStories.Default} />
 
-## Scrollable Menu Panel
+## Menu content
 
-Enables scroll when menu panel extends past window&rsquo;s view port. Must be used with <code>{`position="bottom"`}</code> and <code>{`enableFlip={false}`}</code>.
-
-<Canvas of={MenuStories.Scrollable} />
+<Canvas of={MenuStories.ContentOnly} />
 
 ## Component API
 

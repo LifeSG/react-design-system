@@ -108,6 +108,17 @@ export const COMMON_POPOVER_ATTRIBUTES: ApiTableSectionProps["attributes"] = [
         propTypes: ["boolean"],
         defaultValue: "true",
     },
+    {
+        name: "enableContentScroll",
+        description: (
+            <>
+                Enables vertical scroll when there is not enough space in the
+                window&rsquo;s viewport from the position of the popoverTrigger.
+            </>
+        ),
+        propTypes: ["boolean"],
+        defaultValue: "false",
+    },
 ];
 
 const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [

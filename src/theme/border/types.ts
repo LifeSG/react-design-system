@@ -5,7 +5,6 @@ export interface BorderSet {
     "width-010": number;
     "width-020": number;
     "width-040": number;
-    "width-080": number;
     solid: string;
 }
 

@@ -1,15 +1,20 @@
 import { AnchorHTMLAttributes, HTMLAttributes, ReactElement } from "react";
 import { PopoverV2TriggerProps } from "../popover-v2";
+import { MenuContent } from "./menu-content";
 import { MenuItem } from "./menu-item";
 import { MenuLink } from "./menu-link";
 import { MenuSection } from "./menu-section";
 
 export interface MenuProps
     extends Omit<PopoverV2TriggerProps, "popoverContent"> {
-    scrollable?: boolean | undefined;
-    menuContent:
+    menuContent: ReactElement<typeof MenuContent>;
+}
+
+export interface MenuContentProps extends HTMLAttributes<HTMLDivElement> {
+    children:
         | ReactElement<typeof MenuSection>
         | ReactElement<typeof MenuSection>[];
+    "data-testid"?: string | undefined;
 }
 
 type MenuSectionItem =

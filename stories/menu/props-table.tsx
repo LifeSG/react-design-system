@@ -6,27 +6,9 @@ const MENU_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
-                name: "scrollable",
-                description: (
-                    <>
-                        Enables scroll if menu content exceeds the available
-                        viewport height. Must be used with{" "}
-                        <code>{`position="bottom"`}</code> and{" "}
-                        <code>{`enableFlip={false}`}</code>
-                    </>
-                ),
-                propTypes: ["boolean"],
-                defaultValue: "false",
-            },
-            {
                 name: "menuContent",
-                description: (
-                    <>
-                        The menu sections to render inside the menu. Must be one
-                        or more <code>{`<Menu.Section />`}</code> components.
-                    </>
-                ),
-                propTypes: ["Menu.Section", "Menu.Section[]"],
+                description: "The menu content inside this menu",
+                propTypes: ["Menu.Content"],
                 mandatory: true,
             },
             {
@@ -47,7 +29,7 @@ const MENU_DATA: ApiTableSectionProps[] = [
                         >
                             PopoverV2TriggerProps
                         </a>
-                        , except <code>popoverContent</code>.
+                        , except <code>popoverContent</code>
                     </>
                 ),
             },
@@ -74,6 +56,45 @@ const MENU_DATA: ApiTableSectionProps[] = [
                     `"right-end"`,
                 ],
                 defaultValue: `"bottom-start"`,
+            },
+        ],
+    },
+];
+
+const MENU_CONTENT_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "children",
+                description: (
+                    <>
+                        The menu sections inside this content. Must be one or
+                        more <code>{`<Menu.Section />`}</code>
+                    </>
+                ),
+                propTypes: ["Menu.Section", "Menu.Section[]"],
+                mandatory: true,
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+                defaultValue: `"menu-content"`,
+            },
+            {
+                name: "-",
+                description: (
+                    <>
+                        This component also inherits props from&nbsp;
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            HTMLAttributes&lt;HTMLDivElement&gt;
+                        </a>
+                    </>
+                ),
             },
         ],
     },
@@ -160,7 +181,7 @@ const MENU_SECTION_DATA: ApiTableSectionProps[] = [
                     <>
                         The menu items or menu links inside this section. Must
                         be one or more <code>{`<Menu.Item />`}</code> or{" "}
-                        <code>{`<Menu.Link />`}</code> components.
+                        <code>{`<Menu.Link />`}</code> components
                     </>
                 ),
                 propTypes: [
@@ -204,6 +225,10 @@ const PROPS_TABLE_DATA: TabAttribute[] = [
     {
         title: "Menu",
         component: <ApiTable sections={MENU_DATA} />,
+    },
+    {
+        title: "Menu.Content",
+        component: <ApiTable sections={MENU_CONTENT_DATA} />,
     },
     {
         title: "Menu.Section",
