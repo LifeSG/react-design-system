@@ -5,9 +5,11 @@ import { Colour, Font, Spacing } from "../theme";
 // =============================================================================
 // STYLING
 // =============================================================================
+export const LabelContainer = styled.div`
+    margin-bottom: ${Spacing["spacing-8"]};
+`;
 export const Label = styled.label`
     color: ${Colour["text-subtle"]};
-    margin-bottom: ${Spacing["spacing-8"]};
     display: inline-block;
 
     ${Font["form-label"]}
