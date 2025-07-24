@@ -4,16 +4,53 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
+                name: "loadMode",
+                description: "The loading mode for the data",
+                propTypes: ["eager", "lazy"],
+                defaultValue: "eager",
+            },
+            {
+                name: "maxShown",
+                description: (
+                    <>
+                        Only applicable to <code>loadMode: eager</code>
+                        <br />
+                        The maximum number of items to be shown, while the rest
+                        are minimized
+                    </>
+                ),
+                propTypes: ["number"],
+            },
+            {
+                name: "loadMore",
+                description: (
+                    <>
+                        Required if <code>loadMode: lazy</code>
+                        <br />
+                        To control if the `View more` button is displayed. Set
+                        to `true` if there are more items to be lazy loaded
+                    </>
+                ),
+                propTypes: ["boolean"],
+            },
+            {
+                name: "onLoadMore",
+                description: (
+                    <>
+                        Required if <code>loadMode: lazy</code>
+                        <br />
+                        Callback for when the `View more` button is clicked.
+                        This callback should update the list passed into the
+                        `items` prop
+                    </>
+                ),
+                propTypes: ["() => void | Promise<void>"],
+            },
+            {
                 name: "items",
                 mandatory: true,
                 description: "The items to be displayed",
                 propTypes: ["LinkListItemProps<T>[]"],
-            },
-            {
-                name: "maxShown",
-                description:
-                    "The maximum number of items to be shown, while the rest are minimized",
-                propTypes: ["number"],
             },
             {
                 name: "style",
