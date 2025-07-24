@@ -450,7 +450,7 @@ interface ErrorDisplayDataAttrs {
 
 export const generateErrorDisplayData = (
     ImgPathsObject: Record<string, ErrorDisplayHelper.ImagePathAttributes>,
-    theme: ThemeSpec
+    theme?: ThemeSpec
 ) =>
     new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
         [
@@ -653,7 +653,7 @@ export const generateErrorDisplayData = (
 export const getErrorDisplayData = (
     type: ErrorDisplayType,
     resourceScheme: ResourceScheme,
-    theme: ThemeSpec
+    theme?: ThemeSpec
 ) => {
     switch (resourceScheme) {
         case "bookingsg":

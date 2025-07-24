@@ -1,11 +1,12 @@
 import React, {
     forwardRef,
+    useContext,
     useEffect,
     useImperativeHandle,
     useRef,
     useState,
 } from "react";
-import { useTheme } from "styled-components";
+import { ThemeContext } from "styled-components";
 import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
@@ -66,7 +67,7 @@ const Component = <T,>(
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
     const isStretch = layout === "stretch";
     const elementRef = useRef<HTMLDivElement>(null);
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     const defaultResource = getDefaultResourceLogo(theme?.resourceScheme);
     const tabletWidth = Breakpoint["lg-max"]({ theme });
 

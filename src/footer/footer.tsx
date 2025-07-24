@@ -1,5 +1,4 @@
-import React from "react";
-import { useTheme } from "styled-components";
+import React, { useContext } from "react";
 import { Typography } from "../typography";
 import { DownloadApp } from "./footer-download-app";
 import { FooterHelper, InternalDisclaimerLinks } from "./footer-helper";
@@ -17,6 +16,7 @@ import {
     TopSection,
 } from "./footer.style";
 import { FooterLinkProps, FooterProps } from "./types";
+import { ThemeContext } from "styled-components";
 
 export const Footer = <T,>({
     children,
@@ -34,7 +34,7 @@ export const Footer = <T,>({
     // CONST, STATE, REFS
     // =============================================================================
     const isStretch = layout === "stretch";
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================

@@ -1,7 +1,7 @@
 import { CrossIcon, FilterIcon } from "@lifesg/react-icons";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useTheme } from "styled-components";
+import { ThemeContext } from "styled-components";
 import { Overlay } from "../overlay/overlay";
 import { Breakpoint } from "../theme";
 import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
@@ -40,7 +40,7 @@ const FilterBase = ({
     const [visible, setVisible] = useState(false);
     const mobileNodeRef = useRef<HTMLDivElement>(null);
     const desktopNodeRef = useRef<HTMLDivElement>(null);
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
 

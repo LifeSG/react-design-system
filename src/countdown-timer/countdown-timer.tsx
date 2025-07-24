@@ -1,8 +1,8 @@
 import throttle from "lodash/throttle";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
-import { useTheme } from "styled-components";
+import { ThemeContext } from "styled-components";
 import { inertValue } from "../shared/accessibility";
 import { Breakpoint } from "../theme";
 import { TimeHelper } from "../util/time-helper";
@@ -54,7 +54,7 @@ export const CountdownTimer = ({
     const warn =
         typeof notifyTimer === "number" && remainingSeconds <= notifyTimer;
 
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
 
