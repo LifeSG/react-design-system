@@ -1,8 +1,72 @@
 import styled from "styled-components";
-import { Colour, Radius } from "../../theme";
+import { Border, Colour, Radius } from "../../theme";
 import { Typography } from "../../typography";
-import { CELL_HEIGHT, SLOT_INTERVAL } from "../const";
+import {
+    CELL_HEIGHT,
+    HEADER_HEIGHT,
+    SLOT_INTERVAL,
+    TIME_INDICATOR_WIDTH,
+} from "../const";
 // Styled components for slot block, placeholder, button, and row container
+
+export const TimeSlotContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+`;
+
+export const LoadingContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+    height: 100%;
+    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    border-radius: ${Radius["md"]};
+    background: ${Colour["bg"]};
+`;
+
+export const HeaderContainer = styled.div`
+    display: grid;
+    grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(7, 1fr); /* Time column + 7 days */
+    max-height: ${HEADER_HEIGHT}px;
+    border-top-right-radius: ${Radius["md"]};
+    border-top-left-radius: ${Radius["md"]};
+    position: sticky;
+    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    border-bottom: none;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    /* Hide the vertical scrollbar visually but keep its space */
+    &::-webkit-scrollbar {
+        width: 15px;
+        background: ${Colour["bg-strong"]};
+    }
+    &::-webkit-scrollbar-thumb {
+        background: ${Colour["bg-strong"]};
+    }
+    &::-webkit-scrollbar-track {
+        background: ${Colour["bg-strong"]};
+    }
+`;
+
+export const ServiceContainer = styled.div`
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns for 7 days */
+    background: ${Colour["bg-strong"]};
+    flex: 1;
+`;
+
+export const BodyContainer = styled.div`
+    display: grid;
+    grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(7, 1fr); /* Time column + 7 days */
+    overflow-x: auto;
+    overflow-y: auto;
+    flex: 1;
+    height: 100%;
+    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+`;
 export const SlotBlock = styled.div<{ left: number; height: number }>`
     background: #b2f2bb;
     border-radius: 4px;
@@ -49,12 +113,6 @@ export const SlotRowContainer = styled.div`
     position: relative;
 `;
 
-export const TimeSlotContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-`;
-
 export const ServiceHeader = styled.div`
     display: flex;
     flex-direction: column;
@@ -77,8 +135,21 @@ export const Description = styled(Typography.BodyMD)`
 
 export const SlotColumn = styled.div`
     display: flex;
+    position: relative;
     flex-direction: column;
     flex: 1;
+    border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+
+    &:last-child {
+        border-right: none;
+    }
+`;
+
+export const SlotGrid = styled.div`
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns for 7 days */
+    flex: 1;
+    position: relative;
 `;
 
 export const SlotContent = styled(Typography.BodyXS)<{

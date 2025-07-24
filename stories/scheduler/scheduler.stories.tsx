@@ -50,7 +50,7 @@ export default meta;
 
 const StyledScheduler = styled(Scheduler)`
     [data-id="timeslot-container"] {
-        width: 1200px;
+        width: 1000px;
         height: 600px;
     }
 `;
