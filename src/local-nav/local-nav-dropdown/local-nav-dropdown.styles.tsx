@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
-import { Colour, Font, Motion, Radius } from "../../theme";
+import { Colour, Font, Motion, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -44,7 +44,7 @@ export const NavSelectIcon = styled(ChevronDownIcon)<NavIconStyleProps>`
 export const NavSelect = styled.div<NavLabelStyleProps>`
     cursor: pointer;
     background: ${Colour["bg"]};
-    padding: 12px 16px;
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
     overflow: hidden;
     box-shadow: 0 0 1px 1px ${Colour["border"]};
     border-radius: ${Radius["sm"]};
@@ -58,6 +58,13 @@ export const NavSelect = styled.div<NavLabelStyleProps>`
     justify-content: space-between;
     align-items: center;
     transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
+    transition-property: background, border-radius, box-shadow, transform;
+
+    &:focus-visible {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 2px;
+        border-radius: ${Radius["sm"]};
+    }
 `;
 
 // -----------------------------------------------------------------------------
@@ -66,7 +73,9 @@ export const NavSelect = styled.div<NavLabelStyleProps>`
 
 export const NavItem = styled.li<NavItemStyleProps>`
     padding: ${(props) =>
-        props.$isSelected ? "12px 8px 12px 0" : "12px 8px 12px 32px"};
+        props.$isSelected
+            ? `${Spacing["spacing-12"]} ${Spacing["spacing-8"]} ${Spacing["spacing-12"]} 0`
+            : `${Spacing["spacing-12"]} ${Spacing["spacing-8"]} ${Spacing["spacing-12"]} ${Spacing["spacing-32"]}`};
     background: ${(props) =>
         props.$isSelected ? Colour["bg-primary-subtlest"] : Colour["bg"]};
     /* Ensures that the tick mark is positioned relative to the selected item */
@@ -74,13 +83,19 @@ export const NavItem = styled.li<NavItemStyleProps>`
     display: flex;
     /* Vertically align text and tick */
     align-items: center;
+
+    &:focus-visible {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 0px;
+        border-radius: ${Radius["sm"]};
+    }
 `;
 
 export const NavItemList = styled.ul<NavItemListStyleProps>`
     transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
     transform-origin: top;
     list-style-type: none;
-    padding: 0 8px;
+    padding: 0 ${Spacing["spacing-8"]};
     margin: 0;
     background: ${Colour["bg"]};
     cursor: pointer;
@@ -101,7 +116,7 @@ export const NavItemLabel = styled.div<NavItemStyleProps>`
 
 export const StyledTickIcon = styled(TickIcon)`
     color: ${Colour["icon-selected"]};
-    margin: 0 8px;
+    margin: 0 ${Spacing["spacing-8"]};
 `;
 
 // -----------------------------------------------------------------------------
@@ -130,7 +145,7 @@ export const NavWrapper = styled.nav<DropdownNavStyleProps>`
         css`
             ${NavSelect} {
                 ${$sideMargin && `margin: 0 -${$sideMargin}px;`}
-                padding: 12px 16px;
+                padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
                 border-radius: ${Radius["none"]};
             }
 
