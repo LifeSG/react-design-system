@@ -4,12 +4,16 @@ import { TimeSlotDayViewProps } from "./types";
 import { TimeHelper } from "../../util/time-helper";
 import {
     TimeSlotContainer,
+    LoadingContainer,
     HeaderContainer,
     BlankCell,
-    ServiceHeader,
+    ServiceColumn,
     ServiceContainer,
+    StyleDiv,
     Title,
     Description,
+    ArrowLeft,
+    ArrowRight,
     BodyContainer,
     SlotGrid,
     SlotColumn,
@@ -22,6 +26,7 @@ import {
 import { TimeIndicator } from "../time-indicator";
 import { SchedulerRowCellData } from "../types";
 import { CELL_HEIGHT, SLOT_INTERVAL } from "../const";
+import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
 
 /**
  * Calculates the vertical offset (in pixels) for the current time indicator (timeline)
@@ -60,6 +65,14 @@ export const TimeSlotDayView = ({
     const headerRef = useRef<HTMLDivElement>(null);
     const bodyRef = useRef<HTMLDivElement>(null);
 
+    /**
+     * useEffect hook that updates the timeline offset based on the current minimum and maximum time.
+     *  Sets up an interval to update the offset every 15 minutes (900,000 ms) to keep the timeline in sync with real time.
+     *  Cleans up the interval on component unmount or when `minTime` or `maxTime` change.
+     * @remarks
+     * This ensures that the timeline indicator remains accurate as time progresses or when the time range changes.
+     * @dependency minTime, maxTime
+     */
     useEffect(() => {
         function updateOffset() {
             setTimelineOffset(getTimelineOffset(minTime, maxTime));
@@ -68,34 +81,37 @@ export const TimeSlotDayView = ({
         const interval = setInterval(updateOffset, 15 * 60 * 1000); // every 15 mins
         return () => clearInterval(interval);
     }, [minTime, maxTime]);
+
     // Synchronize horizontal scrolling between header and body
     const handleBodyScroll = (e: React.UIEvent<HTMLDivElement>) => {
         if (headerRef.current && bodyRef.current) {
             headerRef.current.scrollLeft = bodyRef.current.scrollLeft;
         }
     };
-
     const handleHeaderScroll = (e: React.UIEvent<HTMLDivElement>) => {
         if (headerRef.current && bodyRef.current) {
             bodyRef.current.scrollLeft = headerRef.current.scrollLeft;
         }
     };
+
     const renderHeader = () => {
         return (
-            <ServiceContainer>
+            <ServiceContainer columnCount={rowData.length}>
                 {rowData.map((service, idx) => (
-                    <ServiceHeader key={idx}>
+                    <ServiceColumn key={idx}>
                         {isMobile && showPrevArrow && (
-                            <button onClick={onPrevService}>{"<"}</button>
+                            <ArrowLeft onClick={onPrevService} />
                         )}
-                        <Title>{service.name}</Title>
-                        <Description>
-                            <span>{service.rowCells.length}</span> available
-                        </Description>
+                        <StyleDiv>
+                            <Title>{service.name}</Title>
+                            <Description>
+                                <span>{service.rowCells.length}</span> available
+                            </Description>
+                        </StyleDiv>
                         {isMobile && showNextArrow && (
-                            <button onClick={onNextService}>{">"}</button>
+                            <ArrowRight onClick={onNextService} />
                         )}
-                    </ServiceHeader>
+                    </ServiceColumn>
                 ))}
             </ServiceContainer>
         );
@@ -133,7 +149,7 @@ export const TimeSlotDayView = ({
             maxTime
         );
         return (
-            <SlotGrid style={{ position: "relative" }}>
+            <SlotGrid columnCount={rowData.length}>
                 {timelineOffset !== null && (
                     <Timeline style={{ top: timelineOffset }} />
                 )}
@@ -157,22 +173,38 @@ export const TimeSlotDayView = ({
 
     return (
         <TimeSlotContainer>
-            {/* Service Name Header Row */}
-            <HeaderContainer ref={headerRef} onScroll={handleHeaderScroll}>
-                <BlankCell />
-                {renderHeader()}
-            </HeaderContainer>
+            {loading ? (
+                <LoadingContainer>
+                    <ThemedLoadingSpinner />
+                </LoadingContainer>
+            ) : (
+                <>
+                    {/* Service Name Header Row */}
+                    <HeaderContainer
+                        ref={headerRef}
+                        onScroll={handleHeaderScroll}
+                        columnCount={rowData.length}
+                    >
+                        <BlankCell />
+                        {renderHeader()}
+                    </HeaderContainer>
 
-            <BodyContainer ref={bodyRef} onScroll={handleBodyScroll}>
-                {/* Time labels */}
-                <TimeIndicator
-                    minTime={minTime}
-                    maxTime={maxTime}
-                    format="24hr"
-                />
-                {/* Time slot grid */}
-                {renderTimeSlotGrid()}
-            </BodyContainer>
+                    <BodyContainer
+                        ref={bodyRef}
+                        onScroll={handleBodyScroll}
+                        columnCount={rowData.length}
+                    >
+                        {/* Time labels */}
+                        <TimeIndicator
+                            minTime={minTime}
+                            maxTime={maxTime}
+                            format="24hr"
+                        />
+                        {/* Time slot grid */}
+                        {renderTimeSlotGrid()}
+                    </BodyContainer>
+                </>
+            )}
         </TimeSlotContainer>
     );
 };

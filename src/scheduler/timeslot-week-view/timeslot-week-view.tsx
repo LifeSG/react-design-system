@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import dayjs from "dayjs";
 import { TimeSlotWeekViewProps } from "./types";
 import { TimeHelper } from "../../util/time-helper";
+import { TimeIndicator } from "../time-indicator";
 import {
-    HeaderContainer,
     BlankCell,
-    ServiceContainer,
-    BodyContainer,
-    SlotGrid,
     SlotCell,
     Timeline,
 } from "../timeslot-day-view/timeslot-day-view.styles";
-import { TimeIndicator } from "../time-indicator";
 import {
+    HeaderContainer,
     TimeSlotContainer,
+    ServiceContainer,
+    BodyContainer,
+    SlotGrid,
+    LoadingContainer,
     SlotBlock,
     SlotPlaceholder,
     SlotRowContainer,
@@ -23,9 +24,8 @@ import {
     Description,
     MoreButton,
 } from "./timeslot-week-view.styles";
-
-const CELL_HEIGHT = 48; // Should match your style constant
-const SLOT_INTERVAL = 30; // minutes per slot
+import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
+import { CELL_HEIGHT, SLOT_INTERVAL } from "../const";
 
 function getTimelineOffset(minTime: string, maxTime: string) {
     const now = dayjs();
@@ -163,11 +163,14 @@ function renderMoreButton({
 export const TimeSlotWeekView = ({
     date,
     rowData,
+    loading,
     minTime,
     maxTime,
     onSlotClick,
 }: TimeSlotWeekViewProps) => {
     const [timelineOffset, setTimelineOffset] = useState<number | null>(null);
+    const headerRef = useRef<HTMLDivElement>(null);
+    const bodyRef = useRef<HTMLDivElement>(null);
     const today = dayjs().format("YYYY-MM-DD");
 
     useEffect(() => {
@@ -178,6 +181,19 @@ export const TimeSlotWeekView = ({
         const interval = setInterval(updateOffset, 15 * 60 * 1000); // every 15 mins
         return () => clearInterval(interval);
     }, [minTime, maxTime]);
+
+    // Synchronize horizontal scrolling between header and body
+    const handleBodyScroll = (e: React.UIEvent<HTMLDivElement>) => {
+        if (headerRef.current && bodyRef.current) {
+            headerRef.current.scrollLeft = bodyRef.current.scrollLeft;
+        }
+    };
+
+    const handleHeaderScroll = (e: React.UIEvent<HTMLDivElement>) => {
+        if (headerRef.current && bodyRef.current) {
+            bodyRef.current.scrollLeft = headerRef.current.scrollLeft;
+        }
+    };
 
     const weekDays = React.useMemo(() => {
         const startOfWeek = dayjs(date).startOf("week");
@@ -244,57 +260,73 @@ export const TimeSlotWeekView = ({
 
     return (
         <TimeSlotContainer>
-            {/* Header Row: Day names and dates */}
-            <HeaderContainer>
-                <BlankCell />
-                <ServiceContainer>
-                    {weekDays.map((day) => (
-                        <ServiceHeader key={day.format("YYYY-MM-DD")}>
-                            <Title>{day.format("D")}</Title>
-                            <Description>{day.format("ddd")}</Description>
-                        </ServiceHeader>
-                    ))}
-                </ServiceContainer>
-            </HeaderContainer>
-            <BodyContainer>
-                <TimeIndicator
-                    minTime={minTime}
-                    maxTime={maxTime}
-                    format="24hr"
-                />
-                <SlotGrid style={{ position: "relative" }}>
-                    {weekDays.map((day) => {
-                        // Create a cache for this column
-                        const activeSlotsCache: Array<any[]> = [];
-                        return (
-                            <SlotColumn
-                                key={day.format("YYYY-MM-DD")}
-                                style={{ position: "relative" }}
-                            >
-                                {timelineOffset !== null &&
-                                    day.format("YYYY-MM-DD") === today && (
-                                        <Timeline
-                                            style={{ top: timelineOffset }}
-                                        />
-                                    )}
-                                {timeSlots.map((time, slotIdx) => (
-                                    <WeekViewSlotCell
-                                        key={time}
-                                        time={time}
-                                        slotIdx={slotIdx}
-                                        day={day}
-                                        rowData={rowData}
-                                        CELL_HEIGHT={CELL_HEIGHT}
-                                        SLOT_INTERVAL={SLOT_INTERVAL}
-                                        onSlotClick={onSlotClick}
-                                        activeSlotsCache={activeSlotsCache}
-                                    />
-                                ))}
-                            </SlotColumn>
-                        );
-                    })}
-                </SlotGrid>
-            </BodyContainer>
+            {loading ? (
+                <LoadingContainer>
+                    <ThemedLoadingSpinner />
+                </LoadingContainer>
+            ) : (
+                <>
+                    {/* Header Row: Day names and dates */}
+                    <HeaderContainer
+                        ref={headerRef}
+                        onScroll={handleHeaderScroll}
+                    >
+                        <BlankCell />
+                        <ServiceContainer>
+                            {weekDays.map((day) => (
+                                <ServiceHeader key={day.format("YYYY-MM-DD")}>
+                                    <Title>{day.format("D")}</Title>
+                                    <Description>
+                                        {day.format("ddd")}
+                                    </Description>
+                                </ServiceHeader>
+                            ))}
+                        </ServiceContainer>
+                    </HeaderContainer>
+
+                    <BodyContainer ref={bodyRef} onScroll={handleBodyScroll}>
+                        <TimeIndicator
+                            minTime={minTime}
+                            maxTime={maxTime}
+                            format="24hr"
+                        />
+                        <SlotGrid>
+                            {weekDays.map((day) => {
+                                // Create a cache for this column
+                                const activeSlotsCache: Array<any[]> = [];
+                                return (
+                                    <SlotColumn key={day.format("YYYY-MM-DD")}>
+                                        {timelineOffset !== null &&
+                                            day.format("YYYY-MM-DD") ===
+                                                today && (
+                                                <Timeline
+                                                    style={{
+                                                        top: timelineOffset,
+                                                    }}
+                                                />
+                                            )}
+                                        {timeSlots.map((time, slotIdx) => (
+                                            <WeekViewSlotCell
+                                                key={time}
+                                                time={time}
+                                                slotIdx={slotIdx}
+                                                day={day}
+                                                rowData={rowData}
+                                                CELL_HEIGHT={CELL_HEIGHT}
+                                                SLOT_INTERVAL={SLOT_INTERVAL}
+                                                onSlotClick={onSlotClick}
+                                                activeSlotsCache={
+                                                    activeSlotsCache
+                                                }
+                                            />
+                                        ))}
+                                    </SlotColumn>
+                                );
+                            })}
+                        </SlotGrid>
+                    </BodyContainer>
+                </>
+            )}
         </TimeSlotContainer>
     );
 };

@@ -1,6 +1,6 @@
 import { SchedulerRowData } from "../types";
 
-export interface SchedulerWeekViewProps {
+export interface TimeSlotWeekViewProps {
     date: string;
     rowData: SchedulerRowData[];
     loading: boolean;

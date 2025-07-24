@@ -3,7 +3,7 @@ import { SchedulerRowData } from "src/scheduler";
 export const mockSchedulerData: SchedulerRowData[] = [
     {
         id: "1",
-        name: "Service A",
+        name: "CPF Video Consultation at ServiceSG One Punggol",
         subtitle: "Available slots for Service A",
         rowCells: [
             {
@@ -44,7 +44,7 @@ export const mockSchedulerData: SchedulerRowData[] = [
     },
     {
         id: "2",
-        name: "Service B",
+        name: "CPF Video Consultation at ServiceSG Our Tampines Hub",
         subtitle: "Available slots for Service B",
         rowCells: [
             {
