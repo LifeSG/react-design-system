@@ -1,10 +1,9 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Border, Colour, Radius } from "../../theme";
 import { Typography } from "../../typography";
 import {
     CELL_HEIGHT,
     HEADER_HEIGHT,
-    SLOT_INTERVAL,
     TIME_INDICATOR_WIDTH,
 } from "../const";
 // Styled components for slot block, placeholder, button, and row container
@@ -30,79 +29,90 @@ export const HeaderContainer = styled.div`
     display: grid;
     grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(7, 1fr); /* Time column + 7 days */
     max-height: ${HEADER_HEIGHT}px;
-    border-top-right-radius: ${Radius["md"]};
-    border-top-left-radius: ${Radius["md"]};
-    position: sticky;
-    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
-    border-bottom: none;
-    overflow-x: hidden;
-    overflow-y: scroll;
+`;
 
-    /* Hide the vertical scrollbar visually but keep its space */
-    &::-webkit-scrollbar {
-        width: 15px;
-        background: ${Colour["bg-strong"]};
-    }
-    &::-webkit-scrollbar-thumb {
-        background: ${Colour["bg-strong"]};
-    }
-    &::-webkit-scrollbar-track {
-        background: ${Colour["bg-strong"]};
-    }
+export const BlankCell = styled.div`
+    min-width: ${TIME_INDICATOR_WIDTH}px;
+    position: sticky;
+    left: 0;
+    z-index: 2;
 `;
 
 export const ServiceContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(7, 1fr); /* 7 columns for 7 days */
-    background: ${Colour["bg-strong"]};
-    flex: 1;
+    grid-column-start: 2;
+    grid-column-end: 9;
+`;
+
+export const ServiceHeader = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    color: ${Colour["text-primary"]};
+`;
+export const Title = styled(Typography.BodyMD)`
+    font-weight: 600;
+`;
+
+export const Description = styled(Typography.BodyMD)`
+    font-weight: 600;
 `;
 
 export const BodyContainer = styled.div`
     display: grid;
     grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(7, 1fr); /* Time column + 7 days */
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: auto;
     flex: 1;
     height: 100%;
     border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
 `;
-export const SlotBlock = styled.div<{ left: number; height: number }>`
-    background: #b2f2bb;
-    border-radius: 4px;
-    padding: 2px 6px;
-    font-size: 12px;
+export const SlotGrid = styled.div`
+    grid-column-start: 2;
+    grid-column-end: 9;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 columns for 7 days */
+    min-width: max-content;
+`;
+
+export const SlotColumn = styled.div`
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    &:last-child {
+        border-right: none;
+    }
+`;
+
+export const MoreButton = styled.button<{
+    $left?: number;
+    $slotWidth?: number;
+    $slotGap?: number;
+}>`
+    background: ${Colour["bg"]};
+    border: 1px solid ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    padding: 2px 4px;
+    font-size: 10px;
     cursor: pointer;
     position: absolute;
     z-index: 2;
+    top: 0;
+    height: ${CELL_HEIGHT - 1}px;
+    width: ${({ $slotWidth = 30 }) => $slotWidth}px;
+    left: ${({ $left = 0 }) => $left}px;
     display: flex;
     align-items: center;
     justify-content: center;
-    left: ${({ left }) => left}px;
-    top: 0;
-    height: ${({ height }) => height}px;
-    width: 20px;
-`;
+    color: ${Colour["text-primary"]};
 
-export const SlotPlaceholder = styled.div`
-    width: 20px;
-    height: 100%;
-    margin-right: 4px;
-    visibility: hidden;
-`;
-
-export const MoreButton = styled.button<{ left: number }>`
-    background: #ddd;
-    border: none;
-    border-radius: 4px;
-    padding: 2px 6px;
-    font-size: 12px;
-    cursor: pointer;
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    height: 100%;
-    left: ${({ left }) => left}px;
+    &:hover {
+        background: ${Colour["bg-strong"]};
+    }
 `;
 
 export const SlotRowContainer = styled.div`
@@ -113,70 +123,44 @@ export const SlotRowContainer = styled.div`
     position: relative;
 `;
 
-export const ServiceHeader = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    color: ${Colour["text-primary"]};
-    font-weight: 600;
-    line-height: 24px;
-    flex: 1;
-`;
-
-export const Title = styled(Typography.BodyMD)`
-    font-weight: 600;
-`;
-
-export const Description = styled(Typography.BodyMD)`
-    font-weight: 600;
-`;
-
-export const SlotColumn = styled.div`
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    flex: 1;
-    border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
-
-    &:last-child {
-        border-right: none;
-    }
-`;
-
-export const SlotGrid = styled.div`
-    display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 columns for 7 days */
-    flex: 1;
-    position: relative;
-`;
-
 export const SlotContent = styled(Typography.BodyXS)<{
     status?: string;
     duration?: number;
+    $column?: number;
+    $slotWidth?: number;
+    $slotGap?: number;
+    $durationSlots?: number;
 }>`
-    width: calc(100% - 28px);
-    padding: 8px;
+    width: ${({ $slotWidth = 30 }) => $slotWidth}px;
+    padding: 2px;
     position: absolute;
     font-weight: 500;
     border-radius: ${Radius["sm"]};
     z-index: 1;
-    height: ${CELL_HEIGHT - 1}px;
+    left: ${({ $column = 0, $slotWidth = 30, $slotGap = 2 }) =>
+        $column * ($slotWidth + $slotGap)}px;
+    height: ${({ $durationSlots = 1 }) => $durationSlots * CELL_HEIGHT - 1}px;
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 
     background: ${({ status }) => {
         switch (status) {
             case "pending":
-                return `repeating-linear-gradient(
-                    135deg,
-                   ${Colour["bg-warning"]},
-                    ${Colour["bg-warning"]} 5px,
-                    ${Colour["bg-warning-hover"]} 5px,
-                    ${Colour["bg-warning-hover"]} 10px
-                )`;
+                return css`
+                    repeating-linear-gradient(
+                        135deg,
+                        ${Colour["bg-warning"]},
+                        ${Colour["bg-warning"]} 5px,
+                        ${Colour["bg-warning-hover"]} 5px,
+                        ${Colour["bg-warning-hover"]} 10px
+                    )
+                `;
             case "blocked":
                 return Colour["bg-inverse-subtle"];
             case "available":

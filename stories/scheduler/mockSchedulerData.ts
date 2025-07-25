@@ -3,53 +3,59 @@ import { SchedulerRowData } from "src/scheduler";
 export const mockSchedulerData: SchedulerRowData[] = [
     {
         id: "1",
-        name: "CPF Video Consultation at ServiceSG One Punggol",
+        name: "Service A",
         subtitle: "Available slots for Service A",
         rowCells: [
+            // Monday - 2025-07-21
             {
                 id: "1-1",
-                date: "2025-07-22",
+                date: "2025-07-21",
                 startTime: "09:00",
-                endTime: "10:30",
+                endTime: "09:30",
                 status: "booked",
                 capacity: 5,
                 booked: 2,
             },
             {
                 id: "1-2",
-                date: "2025-07-22",
+                date: "2025-07-21",
                 startTime: "13:30",
                 endTime: "14:00",
                 status: "available",
                 capacity: 5,
                 booked: 0,
             },
+            // Tuesday - 2025-07-22
             {
                 id: "1-3",
                 date: "2025-07-22",
+                startTime: "09:00",
+                endTime: "09:30",
+                status: "available",
+                capacity: 5,
+                booked: 0,
+            },
+            // Wednesday - 2025-07-23
+            {
+                id: "1-4",
+                date: "2025-07-23",
                 startTime: "15:00",
                 endTime: "15:30",
                 status: "pending",
                 capacity: 2,
                 booked: 2,
             },
-            {
-                id: "1-4",
-                date: "2025-07-22",
-                startTime: "16:30",
-                endTime: "17:00",
-                status: "blocked",
-            },
         ],
     },
     {
         id: "2",
-        name: "CPF Video Consultation at ServiceSG Our Tampines Hub",
+        name: "Service B",
         subtitle: "Available slots for Service B",
         rowCells: [
+            // Monday - 2025-07-21
             {
                 id: "2-1",
-                date: "2025-07-22",
+                date: "2025-07-21",
                 startTime: "09:00",
                 endTime: "09:30",
                 status: "available",
@@ -58,12 +64,30 @@ export const mockSchedulerData: SchedulerRowData[] = [
             },
             {
                 id: "2-2",
-                date: "2025-07-22",
+                date: "2025-07-21",
                 startTime: "09:30",
-                endTime: "10:00",
-                status: "booked",
+                endTime: "10:30",
+                status: "blocked",
                 capacity: 2,
                 booked: 2,
+            },
+            // Tuesday - 2025-07-22
+            {
+                id: "2-3",
+                date: "2025-07-22",
+                startTime: "09:00",
+                endTime: "09:30",
+                status: "blocked",
+            },
+            // Thursday - 2025-07-24
+            {
+                id: "2-4",
+                date: "2025-07-24",
+                startTime: "10:00",
+                endTime: "11:00",
+                status: "available",
+                capacity: 3,
+                booked: 0,
             },
         ],
     },
@@ -72,16 +96,17 @@ export const mockSchedulerData: SchedulerRowData[] = [
         name: "Service C",
         subtitle: "Available slots for Service C",
         rowCells: [
+            // Monday - 2025-07-21 (multiple overlapping slots)
             {
                 id: "3-1",
-                date: "2025-07-22",
+                date: "2025-07-21",
                 startTime: "09:00",
                 endTime: "09:30",
                 status: "blocked",
             },
             {
                 id: "3-2",
-                date: "2025-07-22",
+                date: "2025-07-21",
                 startTime: "09:30",
                 endTime: "10:00",
                 status: "available",
@@ -90,21 +115,22 @@ export const mockSchedulerData: SchedulerRowData[] = [
             },
             {
                 id: "3-3",
-                date: "2025-07-22",
+                date: "2025-07-21",
                 startTime: "10:00",
                 endTime: "10:30",
                 status: "booked",
                 capacity: 2,
                 booked: 2,
             },
+            // Wednesday - 2025-07-23
             {
                 id: "3-4",
-                date: "2025-07-22",
-                startTime: "10:30",
-                endTime: "11:00",
+                date: "2025-07-23",
+                startTime: "14:00",
+                endTime: "15:00",
                 status: "available",
-                capacity: 5,
-                booked: 0,
+                capacity: 4,
+                booked: 1,
             },
         ],
     },
@@ -112,17 +138,30 @@ export const mockSchedulerData: SchedulerRowData[] = [
         id: "4",
         name: "Service D",
         subtitle: "Available slots for Service D",
-        rowCells: [],
+        rowCells: [
+            // Tuesday - 2025-07-22 (multiple overlapping slots to test +button)
+            {
+                id: "4-1",
+                date: "2025-07-22",
+                startTime: "09:00",
+                endTime: "09:30",
+                status: "available",
+                capacity: 5,
+                booked: 0,
+            },
+        ],
     },
     {
         id: "5",
         name: "Service E",
         subtitle: "Available slots for Service E",
         rowCells: [
+            // Tuesday - 2025-07-22 (to test overlapping with Service D)
+            // This slot spans from 9:00-10:00, should only appear in 9:00-9:30 slot
             {
                 id: "5-1",
                 date: "2025-07-22",
-                startTime: "9:00",
+                startTime: "09:00",
                 endTime: "10:00",
                 status: "available",
                 capacity: 5,
@@ -134,6 +173,70 @@ export const mockSchedulerData: SchedulerRowData[] = [
         id: "6",
         name: "Service F",
         subtitle: "Available slots for Service F",
-        rowCells: [],
+        rowCells: [
+            // Tuesday - 2025-07-22 (to test more than 3 overlapping slots)
+            {
+                id: "6-1",
+                date: "2025-07-22",
+                startTime: "09:00",
+                endTime: "09:30",
+                status: "booked",
+                capacity: 2,
+                booked: 2,
+            },
+        ],
+    },
+    {
+        id: "7",
+        name: "Service G",
+        subtitle: "Available slots for Service G",
+        rowCells: [
+            // Tuesday - 2025-07-22 (5th service to test + button)
+            {
+                id: "7-1",
+                date: "2025-07-22",
+                startTime: "09:15",
+                endTime: "09:45",
+                status: "pending",
+                capacity: 3,
+                booked: 1,
+            },
+        ],
+    },
+    {
+        id: "8",
+        name: "Service H",
+        subtitle: "Available slots for Service H",
+        rowCells: [
+            // Tuesday - 2025-07-22 (6th service to test + button more)
+            {
+                id: "8-1",
+                date: "2025-07-22",
+                startTime: "09:00",
+                endTime: "09:30",
+                status: "available",
+                capacity: 2,
+                booked: 0,
+            },
+            // Add a slot that starts in 9:30-10:00 time slot
+            {
+                id: "8-2",
+                date: "2025-07-22",
+                startTime: "09:30",
+                endTime: "10:00",
+                status: "blocked",
+                capacity: 3,
+                booked: 2,
+            },
+            {
+                id: "8-3",
+                date: "2025-07-21",
+                startTime: "09:00",
+                endTime: "09:30",
+                status: "available",
+                capacity: 2,
+                booked: 0,
+            },
+        ],
     },
 ];

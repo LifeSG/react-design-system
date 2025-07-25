@@ -151,7 +151,7 @@ export const TimeSlotDayView = ({
         return (
             <SlotGrid columnCount={rowData.length}>
                 {timelineOffset !== null && (
-                    <Timeline style={{ top: timelineOffset }} />
+                    <Timeline $top={timelineOffset} />
                 )}
                 {rowData.map((service) => (
                     <SlotColumn key={service.id}>
