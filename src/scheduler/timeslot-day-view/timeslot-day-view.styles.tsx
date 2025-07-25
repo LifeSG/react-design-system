@@ -44,7 +44,7 @@ export const LoadingContainer = styled.div`
 `;
 
 export const HeaderContainer = styled.div<{ columnCount: number }>`
-    display: flex;
+    display: grid;
     grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(
             ${({ columnCount }) => columnCount},
             1fr
@@ -82,7 +82,6 @@ export const ServiceContainer = styled.div<{ columnCount: number }>`
     display: grid;
     grid-template-columns: repeat(${({ columnCount }) => columnCount}, 1fr);
     background: ${Colour["bg-strong"]};
-    flex: 1;
 `;
 
 export const ServiceColumn = styled.div`
@@ -162,8 +161,8 @@ export const SlotCell = styled.div<{
     flex-direction: column;
     align-items: flex-start;
     position: relative;
-    border-bottom: ${Border["width-010"]} ${Colour["border"]}
-        ${({ startTime }) => (startTime?.endsWith(":00") ? "dashed" : "solid")};
+    border-bottom: ${Border["width-010"]} ${Colour["border"]} ${({ startTime }) =>
+        startTime?.endsWith(":00") ? "dashed" : "solid"};
     cursor: pointer;
 `;
 
@@ -218,10 +217,11 @@ export const SlotTime = styled.span``;
 
 export const SlotAvailability = styled.span``;
 
-export const Timeline = styled.div`
+export const Timeline = styled.div<{ $top: number }>`
     position: absolute;
     width: 100%;
     height: 2px;
     background: ${Colour["icon-primary"]};
+    top: ${({ $top }) => $top}px;
     z-index: 2;
 `;
