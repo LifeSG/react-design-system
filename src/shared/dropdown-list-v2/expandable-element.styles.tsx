@@ -37,6 +37,11 @@ export const Selector = styled(BasicButton)<StyleProps>`
     &:disabled {
         cursor: not-allowed;
     }
+
+    &:focus-visible {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: -2px;
+    }
 `;
 
 export const IconContainer = styled.div<StyleProps>`
