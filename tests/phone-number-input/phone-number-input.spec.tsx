@@ -1,21 +1,30 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { PhoneNumberInput } from "src/phone-number-input";
 
+const INPUT_TESTID = "input";
+const SELECTOR_TESTID = "selector";
+
 // =============================================================================
 // UNIT TESTS
 // =============================================================================
 describe("PhoneNumberInput", () => {
     beforeEach(() => {
         jest.clearAllMocks();
+
+        global.ResizeObserver = jest.fn().mockImplementation(() => ({
+            observe: jest.fn(),
+            unobserve: jest.fn(),
+            disconnect: jest.fn(),
+        }));
     });
 
     it("should render default component", () => {
         render(<PhoneNumberInput />);
 
-        expect(screen.queryByTestId("addon-selector")).toHaveTextContent(
+        expect(screen.queryByTestId(SELECTOR_TESTID)).toHaveTextContent(
             "Select"
         );
-        expect(screen.queryByTestId("input")).toHaveValue("");
+        expect(screen.queryByTestId(INPUT_TESTID)).toHaveValue("");
     });
 
     it("should render component with formatted value", () => {
@@ -25,10 +34,10 @@ describe("PhoneNumberInput", () => {
             />
         );
 
-        expect(screen.queryByTestId("addon-selector")).toHaveTextContent(
-            "+994"
+        expect(screen.queryByTestId(SELECTOR_TESTID)).toHaveTextContent("+994");
+        expect(screen.queryByTestId(INPUT_TESTID)).toHaveValue(
+            "(12) 345 67 89"
         );
-        expect(screen.queryByTestId("input")).toHaveValue("(12) 345 67 89");
     });
 
     describe("change handling", () => {
@@ -47,7 +56,7 @@ describe("PhoneNumberInput", () => {
             });
 
             expect(input).toHaveValue("(23) 1");
-            expect(inputSpy).toBeCalledWith(3, 3);
+            expect(inputSpy).toHaveBeenCalledWith(3, 3);
         });
 
         it("should remove non-numeric characters and preserve caret position", async () => {
@@ -65,7 +74,7 @@ describe("PhoneNumberInput", () => {
             });
 
             expect(input).toHaveValue("(12");
-            expect(inputSpy).toBeCalledWith(2, 2);
+            expect(inputSpy).toHaveBeenCalledWith(2, 2);
         });
     });
 });
