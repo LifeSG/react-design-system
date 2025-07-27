@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Colour, Font, Motion, Spacing } from "../../theme";
 import { BasicButton } from "../input-wrapper/input-wrapper";
 import { DropdownVariantType } from "./types";
@@ -20,14 +20,19 @@ export const Selector = styled(BasicButton)<StyleProps>`
     align-items: center;
     gap: ${Spacing["spacing-8"]};
     width: 100%;
-    height: calc(3rem - 2px); // exclude top and bottom borders
     padding: ${(props) =>
         props.$readOnly ? `0 ${Spacing["spacing-16"]}` : Spacing["spacing-16"]};
 
     ${(props) =>
         props.$variant === "small"
-            ? Font["body-md-regular"]
-            : Font["body-baseline-regular"]}
+            ? css`
+                  ${Font["body-md-regular"]}
+                  height: calc(2.5rem - 2px); // exclude top and bottom borders
+              `
+            : css`
+                  ${Font["body-baseline-regular"]}
+                  height: calc(3rem - 2px);
+              `}
 
     &:disabled {
         cursor: not-allowed;
