@@ -160,7 +160,7 @@ const listAddonOptions: ListAddonProps<Option, string> = {
 };
 
 export const ListAddon: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
                 <Form.InputGroup
@@ -279,7 +279,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     lgCols={[1, 5]}
                 />
                 <Form.InputGroup
-                    label="A shorter form input"
+                    label="A shorter form input (list addon)"
                     placeholder="Enter an amount"
                     addon={{
                         type: "list",
@@ -299,7 +299,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     xxsCols={[1, 9]}
                 />
                 <Form.InputGroup
-                    label="A longer form input"
+                    label="A longer form input (list addon)"
                     placeholder="Enter an amount"
                     addon={{
                         type: "list",
