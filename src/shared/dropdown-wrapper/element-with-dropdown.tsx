@@ -60,6 +60,8 @@ interface ElementWithDropdownProps {
      * the popover may not be visible. Specify the parent element here instead
      */
     rootNode?: RefObject<HTMLElement> | undefined;
+    /** If set, the `elementWidth` refers to this instead of the reference element */
+    positionRef?: RefObject<HTMLElement> | undefined;
 }
 
 const getFloatingPlacement = (alignment: DropdownAlignmentType): Placement => {
@@ -131,6 +133,7 @@ export const ElementWithDropdown = ({
     alignment = "left",
     fitAvailableHeight,
     rootNode,
+    positionRef,
 }: ElementWithDropdownProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -139,7 +142,7 @@ export const ElementWithDropdown = ({
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const elementRef = useRef<HTMLDivElement | null>(null);
     const { width: referenceWidth = 0 } = useResizeDetector({
-        targetRef: elementRef,
+        targetRef: positionRef ?? elementRef,
         handleHeight: false,
     });
     const center: Middleware = {
