@@ -10,7 +10,7 @@ interface ExpandableElementProps {
     listboxId: string;
     popupRole: AriaAttributes["aria-haspopup"];
     readOnly: boolean | undefined;
-    variant: DropdownVariantType;
+    variant?: DropdownVariantType | undefined;
 }
 
 export const Component = (
