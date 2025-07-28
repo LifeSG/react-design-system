@@ -27,22 +27,6 @@ export const Default: StoryObj<Component> = {
                     placeholder="Enter here..."
                 />
                 <Form.Input
-                    label={{
-                        children: "This is a input field with subtitle",
-                        subtitle: "This is a subtitle",
-                    }}
-                    placeholder="Enter here..."
-                />
-                <Form.Input
-                    label={{
-                        children: "This is a input field with addon",
-                        addon: {
-                            type: "popover",
-                            content: "This is an addon",
-                        },
-                    }}
-                />
-                <Form.Input
                     label="This is the error state"
                     errorMessage="Input is required"
                     placeholder="Enter here..."
