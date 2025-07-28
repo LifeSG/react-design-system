@@ -96,17 +96,17 @@ export const useDropdownRender = () => {
  * - Specify `renderDropdown` for the dropdown
  * - Use `isOpen` to control the visibility of the dropdown
  * - Handle changes in visibility with `onOpen`, `onClose` and `onDismiss`
- * - If your dropdown can resize, set the css like so: `max-height:
- *   var(--available-height);`
+ * - If your dropdown can resize, set the css like so: `max-height: var(--available-height);`
  * - If your dropdown has a preferred max-height, set the css like so:
  *   `max-height: min(100px, var(--available-height, infinity * 1px))`
  *
  * Pass the floating props to the dropdown:
  * ```
- * <DropdownContainer>
+ * <DropdownContainer
  *   ref={setFloatingRef}
  *   style={styles}
  *   {...getFloatingProps()}
+ * >
  * </DropdownContainer>
  * ```
  *
