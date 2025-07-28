@@ -8,12 +8,13 @@ import {
 import { FormLabelProps } from "./types";
 
 export const FormLabel = ({
-    id: labelId,
+    id,
     children,
     addon,
     subtitle,
     "data-testid": testId,
     className,
+    style,
     ...otherProps
 }: FormLabelProps): JSX.Element => {
     // -------------------------------------------------------------------------
@@ -29,14 +30,18 @@ export const FormLabel = ({
     };
 
     return (
-        <LabelContainer className={className}>
-            <Label {...otherProps}>
+        <LabelContainer
+            className={className}
+            style={style}
+            data-testid={testId}
+        >
+            <Label id={id} {...otherProps}>
                 {children}
                 {addon && addon.type && renderAddon()}
             </Label>
             {typeof subtitle === "string" ? (
                 <Subtitle
-                    id={labelId ? `${labelId}-subtitle` : undefined}
+                    id={id ? `${id}-subtitle` : undefined}
                     data-testid={testId ? `${testId}-subtitle` : "subtitle"}
                 >
                     {subtitle}
