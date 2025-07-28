@@ -38,7 +38,6 @@ export const FormLabel = ({
                 <Subtitle
                     id={labelId ? `${labelId}-subtitle` : undefined}
                     data-testid={testId ? `${testId}-subtitle` : "subtitle"}
-                    {...otherProps}
                 >
                     {subtitle}
                 </Subtitle>

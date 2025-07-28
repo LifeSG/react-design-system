@@ -56,7 +56,7 @@ export const FormWrapper = ({
     };
 
     const getSubtitleId = (): string => {
-        return `${id}-subtitle`;
+        return `${id}-label-subtitle`;
     };
 
     const getAriaDescribedBy = (): string | undefined => {

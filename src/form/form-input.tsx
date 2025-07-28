@@ -34,6 +34,7 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
 
     return (
         <FormWrapper
+            id={inputId}
             data-testid={testId}
             label={label}
             errorMessage={errorMessage}
