@@ -50,9 +50,7 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
 `;
 
-export const Container = styled(Layout.Content)`
-    display: flex;
-`;
+export const Container = styled(Layout.Content)``;
 
 export const ContentContainer = styled.div`
     flex: 1;
@@ -118,8 +116,8 @@ export const StyledIconButton = styled(ClickableIcon)`
     padding-left: ${Spacing["spacing-16"]};
     height: max-content;
     svg {
-        height: ${Spacing["spacing-24"]};
-        width: ${Spacing["spacing-24"]};
+        height: 1.5rem;
+        width: 1.5rem;
         color: ${Colour["icon-inverse"]};
     }
 `;
@@ -150,9 +148,10 @@ export const AccessibleBannerButton = styled.button`
 `;
 
 export const IconContainer = styled.div`
-    height: ${Spacing["spacing-24"]};
-    width: ${Spacing["spacing-24"]};
-    margin-right: ${Spacing["spacing-24"]};
+    height: 1.5rem;
+    width: 1.5rem;
+    margin: ${Spacing["spacing-24"]} ${Spacing["spacing-24"]} 0 0;
+    flex-shrink: 0;
 
     svg {
         height: 100%;

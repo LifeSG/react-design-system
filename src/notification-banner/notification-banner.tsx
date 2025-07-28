@@ -97,7 +97,6 @@ export const NBComponent = ({
                 id={formatId("action-button", id)}
                 data-testid={formatId("action-button", testId)}
                 type="button"
-                aria-label=""
                 {...actionButton}
                 onClick={handleActionButtonOnClick}
             >
@@ -107,11 +106,7 @@ export const NBComponent = ({
     };
 
     const renderContent = () => (
-        <Content
-            ref={contentRef}
-            data-testid={formatId("text-content", testId)}
-        >
-            {icon && <IconContainer aria-hidden>{icon}</IconContainer>}
+        <Content data-testid={formatId("text-content", testId)}>
             <ContentWrapper>
                 <ContentText
                     $maxCollapsedHeight={
@@ -120,7 +115,7 @@ export const NBComponent = ({
                             : undefined
                     }
                 >
-                    {children}
+                    <div ref={contentRef}>{children}</div>
                 </ContentText>
                 {renderActionButton()}
             </ContentWrapper>
@@ -137,13 +132,11 @@ export const NBComponent = ({
             $sticky={sticky}
             $clickable={!!onClick}
             onClick={onClick}
-            role="landmark"
-            aria-describedby={
-                dismissible ? formatId("dismiss-button", id) : undefined
-            }
+            role="region"
             {...otherProps}
         >
             <Container id={formatId("container", id)}>
+                {icon && <IconContainer aria-hidden>{icon}</IconContainer>}
                 <ContentContainer>{renderContent()}</ContentContainer>
                 {dismissible && renderDismissButton()}
             </Container>
