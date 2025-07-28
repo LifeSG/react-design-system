@@ -96,7 +96,7 @@ export const LazyLinkList = <T,>({
             <Expandable style={expandableStyles} data-testid="content">
                 <ExpandableChild ref={childRef}>
                     <LinkListItems
-                        type="shown"
+                        data-testid="link-list-items"
                         items={items}
                         handleItemClick={handleListItemClick}
                         style={style}

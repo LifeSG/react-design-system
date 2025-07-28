@@ -6,7 +6,11 @@ import styled, { css } from "styled-components";
 import { Border, Colour, Font, Spacing } from "../theme";
 import { Typography } from "../typography";
 
-interface ExpandableChildProps {
+// =============================================================================
+// STYLE INTERFACE, transient props are denoted with $
+// See more https://styled-components.com/docs/api#transient-props
+// =============================================================================
+interface ExpandableChildStyleProps {
     $border?: boolean;
 }
 
@@ -76,7 +80,7 @@ export const Expandable = styled(animated.div)`
     overflow: hidden;
 `;
 
-export const ExpandableChild = styled.div<ExpandableChildProps>`
+export const ExpandableChild = styled.div<ExpandableChildStyleProps>`
     ${(props) =>
         props.$border &&
         css`

@@ -1,4 +1,4 @@
-import { BaseProps, LinkListItemProps } from "../internal-types";
+import { LinkListItemProps, LinkListStyle } from "../internal-types";
 import {
     Description,
     ItemContainer,
@@ -9,16 +9,16 @@ import {
 } from "../link-list.styles";
 
 type LinkListItemsProps<T> = {
-    type: "shown" | "minimised";
+    "data-testid"?: string | undefined;
     items: LinkListItemProps<T>[];
     handleItemClick: (
         event: React.MouseEvent<HTMLAnchorElement>,
         item: LinkListItemProps<T>
     ) => void;
-    style: BaseProps<T>["style"];
+    style?: LinkListStyle | undefined;
 };
 export const LinkListItems = <T,>({
-    type,
+    "data-testid": testId,
     items,
     handleItemClick,
     style,
@@ -38,8 +38,8 @@ export const LinkListItems = <T,>({
 
                 return (
                     <ItemContainer
-                        key={`list-item-${type}-${index}`}
-                        data-testid={`list-item-${type}-${index}`}
+                        key={`${testId}-${index}`}
+                        data-testid={`${testId}-${index}`}
                         onClick={(event) => handleItemClick(event, item)}
                         {...otherProps}
                     >

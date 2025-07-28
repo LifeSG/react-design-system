@@ -92,7 +92,7 @@ export const EagerLinkList = <T,>({
     return (
         <>
             <LinkListItems
-                type="shown"
+                data-testid="link-list-items-shown"
                 items={maxShown ? items.slice(0, maxShown) : items}
                 handleItemClick={handleListItemClick}
                 style={style}
@@ -104,7 +104,7 @@ export const EagerLinkList = <T,>({
                 >
                     <ExpandableChild ref={childRef} $border>
                         <LinkListItems
-                            type="minimised"
+                            data-testid="link-list-items-minimised"
                             style={style}
                             items={itemsMinimised}
                             handleItemClick={handleListItemClick}
