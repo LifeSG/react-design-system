@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
+import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
 import {
     BaseProps,
     LinkListItemProps,
@@ -9,6 +10,7 @@ import {
 import {
     Expandable,
     ExpandableChild,
+    LoadingContainer,
     ToggleButton,
     ToggleButtonLabel,
     ViewMoreIcon,
@@ -28,7 +30,7 @@ export const LazyLinkList = <T,>({
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const [, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
@@ -99,11 +101,15 @@ export const LazyLinkList = <T,>({
                         handleItemClick={handleListItemClick}
                         style={style}
                     />
-                    {/* TODO: handle loading state */}
-                    {/* {isLoading && <></>} */}
                 </ExpandableChild>
             </Expandable>
-            {loadMore && renderViewMore()}
+            {isLoading && (
+                <LoadingContainer>
+                    <ComponentLoadingSpinner />
+                    Loading...
+                </LoadingContainer>
+            )}
+            {!isLoading && loadMore && renderViewMore()}
         </>
     );
 };

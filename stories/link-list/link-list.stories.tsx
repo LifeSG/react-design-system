@@ -116,22 +116,28 @@ export const LazyList: StoryObj<Component> = {
                 loadMode="lazy"
                 loadMore={items.length !== 10}
                 onLoadMore={() => {
-                    setItems((prev) => [
-                        ...prev,
-                        {
-                            title: "more things",
-                            description: "this was added by handleLoadMore",
-                            href: "https://www.life.gov.sg",
-                            target: "_blank",
-                        },
-                        {
-                            title: "even more things",
-                            description:
-                                "example will start repeating. list stops at 10",
-                            href: "https://www.life.gov.sg",
-                            target: "_blank",
-                        },
-                    ]);
+                    return new Promise((resolve) => {
+                        setTimeout(() => {
+                            setItems((prev) => [
+                                ...prev,
+                                {
+                                    title: "more things",
+                                    description:
+                                        "this was added by handleLoadMore",
+                                    href: "https://www.life.gov.sg",
+                                    target: "_blank",
+                                },
+                                {
+                                    title: "even more things",
+                                    description:
+                                        "example will start repeating. list stops at 10",
+                                    href: "https://www.life.gov.sg",
+                                    target: "_blank",
+                                },
+                            ]);
+                            resolve();
+                        }, 1000);
+                    });
                 }}
                 items={items}
             />

@@ -3,12 +3,12 @@ import { MinusIcon } from "@lifesg/react-icons/minus";
 import { PlusIcon } from "@lifesg/react-icons/plus";
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
-import { Border, Colour } from "../theme";
+import { Border, Colour, Font, Spacing } from "../theme";
 import { Typography } from "../typography";
 
-type ExpandableChildProps = {
+interface ExpandableChildProps {
     $border?: boolean;
-};
+}
 
 // =============================================================================
 // STYLING
@@ -116,4 +116,17 @@ export const ToggleButton = styled.button`
             color: ${Colour["text-hover"]};
         }
     }
+`;
+
+export const LoadingContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: ${Spacing["spacing-16"]} 0;
+    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+
+    color: ${Colour["text-disabled"]};
+    ${Font["body-md-semibold"]};
 `;
