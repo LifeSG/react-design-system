@@ -114,6 +114,7 @@ export const ToggleButton = styled.button`
         ${ViewMoreIcon},
         ${ViewLessIcon} {
             color: ${Colour["text-hover"]};
+            text-decoration: underline;
         }
     }
 `;
