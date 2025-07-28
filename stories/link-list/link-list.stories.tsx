@@ -95,50 +95,50 @@ export const MinimizedList: StoryObj<Component> = {
     },
 };
 
-export const LazyList: StoryObj<Component> = {
+export const LazyLoadedList: StoryObj<Component> = {
     render: (_args) => {
+        const [loadMore, setLoadMore] = useState(true);
         const [items, setItems] = useState([
             {
-                title: "LinkList with a default sized title",
+                title: "Initial item",
+                description: "This item is already loaded",
                 href: "https://www.life.gov.sg",
                 target: "_blank",
             },
             {
-                title: "Second item",
-                description: "This is the description",
+                title: "Initial item",
                 href: "https://www.life.gov.sg",
                 target: "_blank",
             },
         ]);
 
+        const handleLoadMore = async () => {
+            await new Promise((r) => setTimeout(r, 1000));
+
+            if (items.length >= 6) {
+                setLoadMore(false);
+            }
+            setItems((prev) => [
+                ...prev,
+                {
+                    title: "Loaded item",
+                    description: "This an example of a lazy loaded item",
+                    href: "https://www.life.gov.sg",
+                    target: "_blank",
+                },
+                {
+                    title: "Loaded item",
+                    href: "https://www.life.gov.sg",
+                    target: "_blank",
+                },
+            ]);
+        };
+
         return (
             <LinkList
                 loadMode="lazy"
-                loadMore={items.length !== 10}
-                onLoadMore={() => {
-                    return new Promise((resolve) => {
-                        setTimeout(() => {
-                            setItems((prev) => [
-                                ...prev,
-                                {
-                                    title: "more things",
-                                    description:
-                                        "this was added by handleLoadMore",
-                                    href: "https://www.life.gov.sg",
-                                    target: "_blank",
-                                },
-                                {
-                                    title: "even more things",
-                                    description:
-                                        "example will start repeating. list stops at 10",
-                                    href: "https://www.life.gov.sg",
-                                    target: "_blank",
-                                },
-                            ]);
-                            resolve();
-                        }, 1000);
-                    });
-                }}
+                loadMore={loadMore}
+                onLoadMore={handleLoadMore}
                 items={items}
             />
         );
@@ -149,9 +149,10 @@ export const CustomLabel: StoryObj<Component> = {
     render: (_args) => {
         return (
             <LinkList
+                maxShown={2}
                 items={[
                     {
-                        title: "LinkList with a default sized title",
+                        title: "First item",
                         href: "https://www.life.gov.sg",
                         target: "_blank",
                     },
@@ -160,6 +161,21 @@ export const CustomLabel: StoryObj<Component> = {
                         description: "This is the description",
                         href: "https://www.life.gov.sg",
                         target: "_blank",
+                    },
+                    {
+                        title: "Third item",
+                        description: "Lorem ipsum dolar sit amet",
+                        href: "https://www.google.com",
+                        rel: "noreferrer",
+                        target: "_blank",
+                    },
+                    {
+                        title: "Fourth item",
+                        description:
+                            "Ut enim ad minima veniam, quis nostrum exercitationem",
+                        href: "https://www.google.com",
+                        target: "_blank",
+                        rel: "noreferrer",
                     },
                 ]}
                 customLabel={{

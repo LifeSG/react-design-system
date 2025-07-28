@@ -11,6 +11,7 @@ export interface LinkListItemProps<T>
 
 export type BaseProps<T> = {
     items: LinkListItemProps<T>[];
+    /** Specifies the text size style of the items. Values: "default" | "small" */
     style?: LinkListStyle | undefined;
     className?: string | undefined;
     "data-testid"?: string | undefined;
@@ -31,6 +32,7 @@ export type BaseProps<T> = {
 
 export type LinkListEagerProps = {
     loadMode?: "eager" | undefined;
+    /** Specifies the number of items to be shown. The others will be minimized */
     maxShown?: number | undefined;
 };
 export type LinkListLazyProps = {

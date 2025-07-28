@@ -27,9 +27,12 @@ this property will allow you to show only the specified number of items while mi
 
 ## Lazy loaded list
 
-You can lazy load the items to be shown in the list using the `loadMode` property.
+You can enable lazy loading by setting the `loadMode` to `lazy`.
 
-<Canvas of={LinkListStories.LazyList} />
+> In this example, two items are added each time and stops after loading is
+> triggered 3 times
+
+<Canvas of={LinkListStories.LazyLoadedList} />
 
 ## Custom labels
 

@@ -6,14 +6,14 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "loadMode",
                 description: "The loading mode for the data",
-                propTypes: ["eager", "lazy"],
-                defaultValue: "eager",
+                propTypes: [`"eager"`, `"lazy"`],
+                defaultValue: `"eager"`,
             },
             {
                 name: "maxShown",
                 description: (
                     <>
-                        Only applicable to <code>loadMode: eager</code>
+                        Only applicable when load mode is <code>eager</code>
                         <br />
                         The maximum number of items to be shown, while the rest
                         are minimized
@@ -25,10 +25,11 @@ const DATA: ApiTableSectionProps[] = [
                 name: "loadMore",
                 description: (
                     <>
-                        Required if <code>loadMode: lazy</code>
+                        Required if load mode is <code>lazy</code>
                         <br />
-                        To control if the `View more` button is displayed. Set
-                        to `true` if there are more items to be lazy loaded
+                        To control if the “View more” button is displayed. Set
+                        to <code>true</code> if there are more items to be lazy
+                        loaded
                     </>
                 ),
                 propTypes: ["boolean"],
@@ -37,11 +38,10 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onLoadMore",
                 description: (
                     <>
-                        Required if <code>loadMode: lazy</code>
+                        Required if load mode is <code>lazy</code>
                         <br />
-                        Callback for when the `View more` button is clicked.
-                        This callback should update the list passed into the
-                        `items` prop
+                        Callback for when the “View more” button is clicked.
+                        This callback should update the <code>items</code> list
                     </>
                 ),
                 propTypes: ["() => void | Promise<void>"],
