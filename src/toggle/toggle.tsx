@@ -210,10 +210,13 @@ export const Toggle = ({
     };
 
     const renderToggleWithRemoveButton = () => {
-        const ariaDescriptions = [
-            typeof subLabel === "string" ? `${generatedId}-sublabel` : null,
-            ariaDescribedBy,
-        ].filter(Boolean);
+        const ariaDescriptions =
+            [
+                typeof subLabel === "string" ? `${generatedId}-sublabel` : null,
+                ariaDescribedBy,
+            ]
+                .filter(Boolean)
+                .join(" ") || undefined;
 
         return (
             <HeaderContainer
@@ -234,11 +237,7 @@ export const Toggle = ({
                         disabled={disabled}
                         onChange={handleOnChange}
                         checked={selected}
-                        aria-describedby={
-                            ariaDescriptions.length > 0
-                                ? ariaDescriptions.join(" ")
-                                : undefined
-                        }
+                        aria-describedby={ariaDescriptions}
                         {...otherProps}
                     />
                     {indicator && renderIndicator()}
