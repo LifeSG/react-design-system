@@ -67,15 +67,25 @@ If you still encounter z-index issues, try setting a custom `zIndex` or
 
 <Canvas of={PopoverStories.UsageInOverlay} />
 
-## Scroll and Flip
+## Resize and Flip
 
-Use `enableContentScroll` to enable scrolling of the `popoverContent` should
-there be not enough space in the window&rsquo;s viewport from the position of
-the popoverTrigger.
+Use `enableResize` to enable resize of the `popoverContent` to fit the remaining
+vertical space of the window and become scrollable.
+
+When using customized popover content as a function receiving PopoverResizeProps,
+you are responsible for applying the maxHeight and overflow values to your
+popover content&rsquo;s styling to ensure correct sizing and scroll behavior.
 
 Use `enableFlip` to disable flipping of the `popoverContent`.
 
-<Canvas of={PopoverStories.ScrollAndFlip} />
+<Canvas of={PopoverStories.ResizeAndFlip} />
+
+### Overflow
+
+Use `overflow` with `enableResize` to control the popover content&rsquo;s
+overflow behavior.
+
+<Canvas of={PopoverStories.Overflow} />
 
 ## Component API
 

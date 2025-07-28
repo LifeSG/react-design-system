@@ -1,9 +1,10 @@
-import { PopoverTrigger } from "../popover-v2";
+import { cloneElement } from "react";
+import { PopoverResizeProps, PopoverTrigger } from "../popover-v2";
 import { MenuContent } from "./menu-content";
 import { MenuItem } from "./menu-item";
 import { MenuLink } from "./menu-link";
 import { MenuSection } from "./menu-section";
-import { MenuProps } from "./types";
+import { MenuContentProps, MenuProps } from "./types";
 
 export const MenuTrigger = ({
     children,
@@ -18,7 +19,12 @@ export const MenuTrigger = ({
     return (
         <PopoverTrigger
             position={position}
-            popoverContent={() => menuContent}
+            popoverContent={(resizeProps?: PopoverResizeProps) =>
+                cloneElement<MenuContentProps>(menuContent, {
+                    overflow: resizeProps?.overflow,
+                    maxHeight: resizeProps?.maxHeight,
+                })
+            }
             data-testid={testId}
             {...otherProps}
         >

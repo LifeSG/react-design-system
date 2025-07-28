@@ -6,7 +6,7 @@ import { Typography } from "../typography";
 // =============================================================================
 // MENU LINK STYLES
 // =============================================================================
-export const MenuLinkDiv = styled.div`
+export const MenuLinkDiv = styled.li`
     display: flex;
     flex-direction: column;
 `;
@@ -29,5 +29,10 @@ export const Link = styled(Typography.LinkMD)`
     :focus {
         background-color: ${Colour["bg-hover"]};
         color: ${Colour["text"]};
+    }
+
+    &:focus-visible {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 0;
     }
 `;

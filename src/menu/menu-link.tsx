@@ -1,4 +1,4 @@
-import { Link } from "./menu-link.styles";
+import { Link, MenuLinkDiv } from "./menu-link.styles";
 import { MenuLinkProps } from "./types";
 
 export const MenuLink = ({
@@ -10,9 +10,11 @@ export const MenuLink = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <Link data-testid={testId} {...otherProps}>
-            {children}
-        </Link>
+        <MenuLinkDiv>
+            <Link data-testid={testId} {...otherProps}>
+                {children}
+            </Link>
+        </MenuLinkDiv>
     );
 };
 

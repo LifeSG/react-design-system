@@ -15,6 +15,7 @@ export const MenuSection = ({
         <Section
             $showDivider={showDivider}
             data-testid={testId}
+            role="group"
             {...otherProps}
         >
             {label && <Label weight="semibold">{label}</Label>}

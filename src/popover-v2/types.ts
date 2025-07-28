@@ -1,6 +1,6 @@
 import { RefObject } from "react";
 
-export interface PopoverV2Props {
+export interface PopoverV2Props extends PopoverResizeProps {
     children: string | JSX.Element;
     visible?: boolean | undefined;
     id?: string | undefined;
@@ -9,17 +9,27 @@ export interface PopoverV2Props {
     onMobileClose?: (() => void) | undefined;
 }
 
+export interface PopoverResizeProps {
+    overflow?: overflow | undefined;
+    maxHeight?: number | undefined;
+}
+
 export type PopoverV2TriggerType = "click" | "hover";
 
 type Position = "top" | "right" | "bottom" | "left";
 type Alignment = "start" | "end";
 type AlignedPosition = `${Position}-${Alignment}`;
 
+export type overflow = "visible" | "hidden" | "clip" | "scroll" | "auto";
+
 export type PopoverV2Position = Position | AlignedPosition;
 
 export interface PopoverV2TriggerProps {
     children: React.ReactNode;
-    popoverContent: string | JSX.Element | (() => React.ReactNode);
+    popoverContent:
+        | string
+        | JSX.Element
+        | ((resizeProps?: PopoverResizeProps | undefined) => React.ReactNode);
     trigger?: PopoverV2TriggerType | undefined;
     position?: PopoverV2Position | undefined;
     id?: string | undefined;
@@ -39,7 +49,9 @@ export interface PopoverV2TriggerProps {
         | { open?: number | undefined; close?: number | undefined }
         | undefined;
     enableFlip?: boolean | undefined;
-    enableContentScroll?: boolean | undefined;
+    /* if the popover will resize to fit the remaining vertical space and contents become scrollable */
+    enableResize?: boolean | undefined;
+    overflow?: overflow | undefined;
     onPopoverAppear?: (() => void) | undefined;
     onPopoverDismiss?: (() => void) | undefined;
 }

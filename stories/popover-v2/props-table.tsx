@@ -7,10 +7,17 @@ export const COMMON_POPOVER_ATTRIBUTES: ApiTableSectionProps["attributes"] = [
         name: "popoverContent",
         description: (
             <>
-                The content of the <code>Popover</code>
+                The content of the <code>Popover</code>. Can be a{" "}
+                <code>string</code>, <code>JSX.Element</code>, or a function.
+                The function is called with <code>PopoverResizeProps</code> only
+                if <code>enableResize</code> is <code>true</code>
             </>
         ),
-        propTypes: ["string", "JSX.Element", "() => React.ReactNode"],
+        propTypes: [
+            "string",
+            "JSX.Element",
+            "(resizeProps?: PopoverResizeProps | undefined) => React.ReactNode",
+        ],
         mandatory: true,
     },
     {
@@ -109,11 +116,22 @@ export const COMMON_POPOVER_ATTRIBUTES: ApiTableSectionProps["attributes"] = [
         defaultValue: "true",
     },
     {
-        name: "enableContentScroll",
+        name: "overflow",
         description: (
             <>
-                Enables vertical scroll when there is not enough space in the
-                window&rsquo;s viewport from the position of the popoverTrigger.
+                Controls how overflow content behaves inside the popover
+                container. Used with <code>enableResize</code>
+            </>
+        ),
+        propTypes: ["visible", "hidden", "clip", "scroll", "auto"],
+        defaultValue: "auto",
+    },
+    {
+        name: "enableResize",
+        description: (
+            <>
+                Enables popover resize to fit the remaining vertical space of
+                the window and contents become scrollable.
             </>
         ),
         propTypes: ["boolean"],
@@ -171,6 +189,29 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
             ...COMMON_POPOVER_ATTRIBUTES,
         ],
     },
+    {
+        name: "PopoverResizeProps",
+        attributes: [
+            {
+                name: "maxHeight",
+                mandatory: false,
+                description:
+                    "Maximum height (in pixels) allowed for the popover content.",
+                propTypes: ["number"],
+            },
+            {
+                name: "overflow",
+                mandatory: false,
+                description: (
+                    <>
+                        Controls how overflow content is handled inside the
+                        popover.
+                    </>
+                ),
+                propTypes: ['"auto"', '"scroll"', '"hidden"', '"visible"'],
+            },
+        ],
+    },
 ];
 
 const POPOVER_DATA: ApiTableSectionProps[] = [
@@ -220,6 +261,27 @@ const POPOVER_DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["() => void"],
+            },
+            {
+                name: "overflow",
+                description: (
+                    <>
+                        Controls how overflow content behaves inside the popover
+                        container (Desktop only).
+                    </>
+                ),
+                propTypes: ["visible", "hidden", "clip", "scroll", "auto"],
+            },
+            {
+                name: "maxHeight",
+                description: (
+                    <>
+                        Sets the maximum height of the popover container in
+                        pixels. If content exceeds this height, overflow
+                        behavior applies (Desktop only).
+                    </>
+                ),
+                propTypes: ["number"],
             },
         ],
     },

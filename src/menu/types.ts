@@ -1,16 +1,22 @@
-import { AnchorHTMLAttributes, HTMLAttributes, ReactElement } from "react";
-import { PopoverV2TriggerProps } from "../popover-v2";
-import { MenuContent } from "./menu-content";
+import {
+    AnchorHTMLAttributes,
+    FunctionComponentElement,
+    HTMLAttributes,
+    ReactElement,
+} from "react";
+import { PopoverResizeProps, PopoverV2TriggerProps } from "../popover-v2";
 import { MenuItem } from "./menu-item";
 import { MenuLink } from "./menu-link";
 import { MenuSection } from "./menu-section";
 
 export interface MenuProps
     extends Omit<PopoverV2TriggerProps, "popoverContent"> {
-    menuContent: ReactElement<typeof MenuContent>;
+    menuContent: FunctionComponentElement<MenuContentProps>;
 }
 
-export interface MenuContentProps extends HTMLAttributes<HTMLDivElement> {
+export interface MenuContentProps
+    extends HTMLAttributes<HTMLDivElement>,
+        PopoverResizeProps {
     children:
         | ReactElement<typeof MenuSection>
         | ReactElement<typeof MenuSection>[];
@@ -28,7 +34,7 @@ export interface MenuSectionProps extends HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;
 }
 
-export interface MenuItemProps extends HTMLAttributes<HTMLDivElement> {
+export interface MenuItemProps extends HTMLAttributes<HTMLLIElement> {
     label?: string | undefined;
     subLabel?: string | undefined;
     "data-testid"?: string | undefined;

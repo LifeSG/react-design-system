@@ -96,6 +96,22 @@ const MENU_CONTENT_DATA: ApiTableSectionProps[] = [
                     </>
                 ),
             },
+            {
+                name: "overflow",
+                description: "Controls how content overflows",
+                propTypes: ["visible", "hidden", "clip", "scroll", "auto"],
+            },
+            {
+                name: "maxHeight",
+                description: (
+                    <>
+                        Sets the maximum height (in pixels) for the content
+                        container. If content exceeds this height, overflow
+                        behavior applies
+                    </>
+                ),
+                propTypes: ["number"],
+            },
         ],
     },
 ];
@@ -153,11 +169,11 @@ const MENU_ITEM_DATA: ApiTableSectionProps[] = [
                     <>
                         This component also inherits props from&nbsp;
                         <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLLIElement"
                             target="_blank"
                             rel="noreferrer"
                         >
-                            HTMLAttributes&lt;HTMLDivElement&gt;
+                            HTMLAttributes&lt;HTMLLIElement&gt;
                         </a>
                     </>
                 ),
