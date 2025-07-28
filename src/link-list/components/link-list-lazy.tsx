@@ -13,7 +13,7 @@ import {
     ToggleButtonLabel,
     ViewMoreIcon,
 } from "../link-list.styles";
-import { ShownItems } from "./common";
+import { LinkListItems } from "./common";
 
 type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
     Omit<LinkListLazyProps, "loadMode">;
@@ -93,7 +93,8 @@ export const LazyLinkList = <T,>({
         <>
             <Expandable style={expandableStyles} data-testid="content">
                 <ExpandableChild ref={childRef}>
-                    <ShownItems
+                    <LinkListItems
+                        type="shown"
                         items={items}
                         handleItemClick={handleListItemClick}
                         style={style}

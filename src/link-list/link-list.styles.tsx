@@ -41,7 +41,7 @@ export const ItemIcon = styled(ChevronRightIcon)`
     ${iconStyle}
 `;
 
-export const Item = styled.a`
+export const ItemContainer = styled.a`
     padding: 1rem 0;
     display: flex;
     justify-content: space-between;

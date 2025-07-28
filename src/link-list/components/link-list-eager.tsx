@@ -9,13 +9,12 @@ import {
 import {
     Expandable,
     ExpandableChild,
-    Item,
     ToggleButton,
     ToggleButtonLabel,
     ViewLessIcon,
     ViewMoreIcon,
 } from "../link-list.styles";
-import { ItemContent, ShownItems } from "./common";
+import { LinkListItems } from "./common";
 
 type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
     Omit<LinkListEagerProps, "loadMode">;
@@ -67,34 +66,6 @@ export const EagerLinkList = <T,>({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderMinimisedItems = () => {
-        return itemsMinimised.map((item, index) => {
-            const {
-                title,
-                description,
-                onClick: _onClick, // deconstruct since we are handling it
-                secondaryDescription,
-                ...otherProps
-            } = item;
-            return (
-                <Item
-                    key={`list-item-minimised-${index}`}
-                    data-testid={`list-item-minimised-${index}`}
-                    onClick={(event) => handleListItemClick(event, item)}
-                    {...otherProps}
-                >
-                    <ItemContent
-                        index={index}
-                        title={title}
-                        description={description}
-                        secondaryDescription={secondaryDescription}
-                        style={style}
-                    />
-                </Item>
-            );
-        });
-    };
-
     const renderToggle = () => (
         <ToggleButton
             type="button"
@@ -120,7 +91,8 @@ export const EagerLinkList = <T,>({
 
     return (
         <>
-            <ShownItems
+            <LinkListItems
+                type="shown"
                 items={maxShown ? items.slice(0, maxShown) : items}
                 handleItemClick={handleListItemClick}
                 style={style}
@@ -131,7 +103,12 @@ export const EagerLinkList = <T,>({
                     data-testid="minimised-content"
                 >
                     <ExpandableChild ref={childRef} $border>
-                        {renderMinimisedItems()}
+                        <LinkListItems
+                            type="minimised"
+                            style={style}
+                            items={itemsMinimised}
+                            handleItemClick={handleListItemClick}
+                        />
                     </ExpandableChild>
                 </Expandable>
             )}
