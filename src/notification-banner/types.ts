@@ -6,6 +6,7 @@ export interface NotificationBannerProps
     dismissible?: boolean | undefined;
     visible?: boolean | undefined;
     sticky?: boolean | undefined;
+    icon?: JSX.Element | undefined;
     onDismiss?: (() => void) | undefined;
     "data-testid"?: string | undefined;
     /** Specifies the maximum height of content, after which it is collapsed */

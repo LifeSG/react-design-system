@@ -35,6 +35,20 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "icon",
+                description: (
+                    <>
+                        Specifies the icon to be displayed in the banner.
+                        Available icons can be found in the{" "}
+                        <StorybookLink path="/docs/core-icon--docs">
+                            Icon component API
+                        </StorybookLink>
+                        . If not specified, no icon will be displayed.
+                    </>
+                ),
+                propTypes: ["JSX.Element"],
+            },
+            {
                 name: "sticky",
                 description: (
                     <>
