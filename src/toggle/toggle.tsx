@@ -41,6 +41,8 @@ export const Toggle = ({
     "data-testid": testId,
     onChange,
     useContentWidth,
+    "aria-describedby": ariaDescribedBy,
+    ...otherProps
 }: ToggleProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -160,7 +162,16 @@ export const Toggle = ({
             component = subLabel;
         }
 
-        return <SubLabel data-id="toggle-sublabel">{component}</SubLabel>;
+        // Hide sublabel from screen readers as the main input already has aria-describedby that points to the sublabel
+        return (
+            <SubLabel
+                data-id="toggle-sublabel"
+                id={`${generatedId}-sublabel`}
+                aria-hidden
+            >
+                {component}
+            </SubLabel>
+        );
     };
 
     const renderCompositeChildren = () => {
@@ -199,6 +210,11 @@ export const Toggle = ({
     };
 
     const renderToggleWithRemoveButton = () => {
+        const ariaDescriptions = [
+            typeof subLabel === "string" ? `${generatedId}-sublabel` : null,
+            ariaDescribedBy,
+        ].filter(Boolean);
+
         return (
             <HeaderContainer
                 id={`${generatedId}-header-container`}
@@ -218,6 +234,12 @@ export const Toggle = ({
                         disabled={disabled}
                         onChange={handleOnChange}
                         checked={selected}
+                        aria-describedby={
+                            ariaDescriptions.length > 0
+                                ? ariaDescriptions.join(" ")
+                                : undefined
+                        }
+                        {...otherProps}
                     />
                     {indicator && renderIndicator()}
                     <TextContainer $selected={selected} $disabled={disabled}>
