@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { Border, Breakpoint, Colour, Radius } from "../theme";
-import { overflow } from "../popover-v2/types";
+import { PopoverOverflowType } from "../popover-v2/types";
 
 // =============================================================================
 // STYLES INTERFACE
 // =============================================================================
 interface MenuPanelStylesProps {
-    $overflow?: overflow | undefined;
+    $overflow?: PopoverOverflowType | undefined;
     $maxHeight?: number | undefined;
 }
 
@@ -37,5 +37,20 @@ export const MenuPanel = styled.div<MenuPanelStylesProps>`
 
     &:focus {
         outline: none;
+    }
+
+    &::-webkit-scrollbar {
+        width: 14px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: ${Colour["bg-inverse-subtlest"]};
+        border: 5px solid transparent;
+        border-radius: ${Radius["full"]};
+        background-clip: padding-box;
     }
 `;

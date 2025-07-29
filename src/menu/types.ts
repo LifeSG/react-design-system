@@ -4,7 +4,7 @@ import {
     HTMLAttributes,
     ReactElement,
 } from "react";
-import { PopoverResizeProps, PopoverV2TriggerProps } from "../popover-v2";
+import { PopoverRenderProps, PopoverV2TriggerProps } from "../popover-v2";
 import { MenuItem } from "./menu-item";
 import { MenuLink } from "./menu-link";
 import { MenuSection } from "./menu-section";
@@ -16,7 +16,7 @@ export interface MenuProps
 
 export interface MenuContentProps
     extends HTMLAttributes<HTMLDivElement>,
-        PopoverResizeProps {
+        PopoverRenderProps {
     children:
         | ReactElement<typeof MenuSection>
         | ReactElement<typeof MenuSection>[];

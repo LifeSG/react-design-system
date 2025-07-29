@@ -8,15 +8,17 @@ export const COMMON_POPOVER_ATTRIBUTES: ApiTableSectionProps["attributes"] = [
         description: (
             <>
                 The content of the <code>Popover</code>. Can be a{" "}
-                <code>string</code>, <code>JSX.Element</code>, or a function.
-                The function is called with <code>PopoverResizeProps</code> only
-                if <code>enableResize</code> is <code>true</code>
+                <code>string</code>, a <code>JSX.Element</code>, or a function
+                that receives <code>PopoverRenderProps</code>. When using the
+                function form, the returned content can be dynamically styled or
+                sized using the <code>PopoverRenderProps</code> (e.g.,{" "}
+                <code>maxHeight</code>, <code>overflow</code>).
             </>
         ),
         propTypes: [
             "string",
             "JSX.Element",
-            "(resizeProps?: PopoverResizeProps | undefined) => React.ReactNode",
+            "(renderProps: PopoverRenderProps) => React.ReactNode",
         ],
         mandatory: true,
     },
@@ -190,7 +192,7 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "PopoverResizeProps",
+        name: "PopoverRenderProps",
         attributes: [
             {
                 name: "maxHeight",
@@ -208,7 +210,13 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
                         popover.
                     </>
                 ),
-                propTypes: ['"auto"', '"scroll"', '"hidden"', '"visible"'],
+                propTypes: [
+                    '"auto"',
+                    '"scroll"',
+                    '"clip"',
+                    '"hidden"',
+                    '"visible"',
+                ],
             },
         ],
     },

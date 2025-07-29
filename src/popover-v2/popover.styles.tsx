@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { Card } from "../card";
 import { ModalBox } from "../modal/modal-box";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Colour, MediaQuery } from "../theme";
-import { overflow } from "./types";
+import { Colour, MediaQuery, Radius } from "../theme";
+import { PopoverOverflowType } from "./types";
 // =============================================================================
 // STYLES INTERFACE
 // =============================================================================
 interface PopoverCardStyleProps {
-    $overflow?: overflow | undefined;
+    $overflow?: PopoverOverflowType | undefined;
     $maxHeight?: number | undefined;
 }
 
@@ -40,6 +40,21 @@ export const PopoverCard = styled(Card)<PopoverCardStyleProps>`
         `
         overflow-y: ${$overflow};
     `}
+
+    &::-webkit-scrollbar {
+        width: 14px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: ${Colour["bg-inverse-subtlest"]};
+        border: 5px solid transparent;
+        border-radius: ${Radius["full"]};
+        background-clip: padding-box;
+    }
 `;
 
 export const MobileModalBox = styled(ModalBox)`

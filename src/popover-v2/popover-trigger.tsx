@@ -117,9 +117,7 @@ export const PopoverTrigger = ({
     const renderPopover = () => {
         if (typeof popoverContent === "function") {
             return popoverContent(
-                enableResize
-                    ? { maxHeight: availableHeight, overflow }
-                    : undefined
+                enableResize ? { maxHeight: availableHeight, overflow } : {}
             );
         }
 

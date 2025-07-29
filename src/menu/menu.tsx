@@ -1,5 +1,5 @@
 import { cloneElement } from "react";
-import { PopoverResizeProps, PopoverTrigger } from "../popover-v2";
+import { PopoverRenderProps, PopoverTrigger } from "../popover-v2";
 import { MenuContent } from "./menu-content";
 import { MenuItem } from "./menu-item";
 import { MenuLink } from "./menu-link";
@@ -19,10 +19,10 @@ export const MenuTrigger = ({
     return (
         <PopoverTrigger
             position={position}
-            popoverContent={(resizeProps?: PopoverResizeProps) =>
+            popoverContent={(renderProps: PopoverRenderProps) =>
                 cloneElement<MenuContentProps>(menuContent, {
-                    overflow: resizeProps?.overflow,
-                    maxHeight: resizeProps?.maxHeight,
+                    overflow: renderProps.overflow,
+                    maxHeight: renderProps.maxHeight,
                 })
             }
             data-testid={testId}

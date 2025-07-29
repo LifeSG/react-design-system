@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Modal } from "src/modal";
-import { PopoverResizeProps, PopoverTrigger, PopoverV2 } from "src/popover-v2";
+import { PopoverRenderProps, PopoverTrigger, PopoverV2 } from "src/popover-v2";
 import { Avatar } from "../../src/avatar";
 import { Menu } from "../../src/menu";
 import { GridDecorator } from "../storybook-common";
@@ -159,11 +159,11 @@ export const UsageInOverlay: StoryObj<Component> = {
     },
 };
 
-const getCustomContent = (resizeProps?: PopoverResizeProps) => (
+const getCustomContent = (resizeProps: PopoverRenderProps) => (
     <Menu.Content
         style={{
-            maxHeight: resizeProps?.maxHeight,
-            overflowY: resizeProps?.overflow,
+            maxHeight: resizeProps.maxHeight,
+            overflowY: resizeProps.overflow,
         }}
     >
         <Menu.Section showDivider={false}>
