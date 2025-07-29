@@ -2,7 +2,12 @@
 import React from "react";
 import { LocalNavMenuItemComponentProps } from "../internal-types";
 import { LocalNavMenuProps } from "../types";
-import { Nav, NavItem, TextLabel } from "./local-nav-menu.styles";
+import {
+    Nav,
+    NavItem,
+    NavItemContent,
+    TextLabel,
+} from "./local-nav-menu.styles";
 
 /**
  * A sidebar navigation element. The currently visible section will be highlighted.
@@ -28,6 +33,23 @@ const Component = (
     const localNavMenuId = dataTestId || "local-nav-menu";
 
     // =============================================================================
+    // EVENT HANDLERS
+    // ============================================================================
+    const handleNavItemKeyDown = (
+        e: React.KeyboardEvent<HTMLElement>,
+        handleClick: (
+            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>
+        ) => void
+    ) => {
+        const { key } = e;
+
+        if (key === "Enter" || key === " ") {
+            e.preventDefault();
+            handleClick(e);
+        }
+    };
+
+    // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
 
@@ -36,6 +58,7 @@ const Component = (
         isSelected,
         item,
         renderItem,
+        index,
     }: LocalNavMenuItemComponentProps) => {
         const { id, title } = item;
 
@@ -51,8 +74,16 @@ const Component = (
         };
 
         return (
-            <NavItem id={id} $isSelected={isSelected} onClick={handleClick}>
-                {renderTitle()}
+            <NavItem id={id} key={index} $isSelected={isSelected}>
+                <NavItemContent
+                    role="link"
+                    onClick={handleClick}
+                    onKeyDown={(e) => handleNavItemKeyDown(e, handleClick)}
+                    tabIndex={0}
+                    aria-current={isSelected ? true : undefined}
+                >
+                    {renderTitle()}
+                </NavItemContent>
             </NavItem>
         );
     };
@@ -70,6 +101,7 @@ const Component = (
                     isSelected,
                     item,
                     renderItem,
+                    index: i,
                 });
             })}
         </Nav>

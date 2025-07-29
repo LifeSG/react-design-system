@@ -8,7 +8,7 @@ interface BaseLocalNavProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
     onNavItemSelect: (
-        e: React.MouseEvent,
+        e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
         item: LocalNavItemProps,
         index: number
     ) => void;
