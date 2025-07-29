@@ -7,6 +7,7 @@ type Component = typeof Footer;
 const meta: Meta<Component> = {
     title: "Navigation/Footer",
     component: Footer,
+    parameters: { layout: "fullscreen" },
 };
 
 export default meta;
@@ -190,6 +191,7 @@ export const StretchedLayout: StoryObj<Component> = {
     render: (_args) => {
         return (
             <Footer
+                // style={{ width: "1200px" }}
                 layout={"stretch"}
                 lastUpdated={new Date()}
                 showDownloadAddon
