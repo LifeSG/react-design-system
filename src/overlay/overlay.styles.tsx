@@ -11,6 +11,7 @@ interface StyleProps {
     $disableTransition?: boolean | undefined;
     $zIndex?: number | undefined;
     $stacked?: boolean | undefined;
+    $enableScroll?: boolean | undefined;
 }
 
 // =============================================================================
@@ -80,7 +81,12 @@ export const Wrapper = styled.div<StyleProps>`
                 transition: none;
             `;
         }
+        if (props.$enableScroll) {
+            customStyles += css`
+                overflow: auto;
+            `;
+        }
 
         return customStyles;
-    }}
+    }};
 `;

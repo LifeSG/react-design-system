@@ -21,6 +21,7 @@ const OverlayComponent = ({
     enableOverlayClick = false,
     zIndex: customZIndex,
     id,
+    enableScroll,
 }: OverlayProps): JSX.Element | null => {
     // =============================================================================
     // CONST, STATE, REF
@@ -189,12 +190,13 @@ const OverlayComponent = ({
     const renderWrapper = () => (
         <FloatingNode id={nodeId}>
             <Wrapper
-                data-testid={"overlay-wrapper"}
+                data-testid="overlay-wrapper"
                 $show={show}
                 $stacked={isStacked}
                 $backgroundBlur={backgroundBlur}
                 $disableTransition={disableTransition}
                 onClick={handleWrapperClick}
+                $enableScroll={enableScroll}
             >
                 {childWithRef}
             </Wrapper>

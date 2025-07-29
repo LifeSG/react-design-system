@@ -47,6 +47,7 @@ export * from "./masked-input";
 export * from "./masonry";
 export * from "./masthead";
 export * from "./modal";
+export * from "./modal-v2";
 export * from "./navbar";
 export * from "./notification-banner";
 export * from "./otp-input";
