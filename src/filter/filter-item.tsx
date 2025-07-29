@@ -146,6 +146,7 @@ export const FilterItem = ({
                 data-expanded={expanded}
                 style={itemAnimationStyles}
                 inert={inertValue(!expanded)}
+                aria-expanded={expanded}
             >
                 <div ref={itemResizeDetector.ref}>
                     <FilterItemBody {...otherProps}>

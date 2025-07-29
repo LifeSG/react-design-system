@@ -157,6 +157,7 @@ export const FilterItemCheckbox = <T,>({
                 <StyledCheckbox
                     displaySize="small"
                     checked={checked}
+                    aria-checked={checked}
                     onChange={handleItemClick(option)}
                 />
                 {optionLabel}
@@ -174,6 +175,7 @@ export const FilterItemCheckbox = <T,>({
                 key={optionValue}
                 type="checkbox"
                 checked={checked}
+                aria-checked={checked}
                 $visible={
                     !minimised ||
                     (!!minimisedHeight && index <= lastVisibleElementIndex)
