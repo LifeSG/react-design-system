@@ -44,7 +44,7 @@ const Component = (
     const [dynamicMargin, setDynamicMargin] = useState(0);
     const [focusedIndex, setFocusedIndex] = useState(0);
     const navTestId = testId || "local-nav-dropdown";
-    const dropdownListId = SimpleIdGenerator.generate();
+    const [dropdownListId] = useState(() => SimpleIdGenerator.generate());
 
     useImperativeHandle(ref, () => navWrapperRef.current!);
 
@@ -130,10 +130,6 @@ const Component = (
             window.removeEventListener("resize", adjustPadding);
         };
     }, []);
-
-    useEffect(() => {
-        listItemRefs.current = Array(items.length).fill(null);
-    }, [items.length]);
 
     useEffect(() => {
         if (isDropdownExpanded) {

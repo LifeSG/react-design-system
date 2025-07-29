@@ -74,8 +74,14 @@ export const NavSelect = styled.div<NavLabelStyleProps>`
 export const NavItem = styled.li<NavItemStyleProps>`
     padding: ${(props) =>
         props.$isSelected
-            ? `${Spacing["spacing-12"]} ${Spacing["spacing-8"]} ${Spacing["spacing-12"]} 0`
-            : `${Spacing["spacing-12"]} ${Spacing["spacing-8"]} ${Spacing["spacing-12"]} ${Spacing["spacing-32"]}`};
+            ? css`
+                  ${Spacing["spacing-12"]} ${Spacing["spacing-8"]} 
+                  ${Spacing["spacing-12"]} 0
+              `
+            : css`
+                  ${Spacing["spacing-12"]} ${Spacing["spacing-8"]}
+                  ${Spacing["spacing-12"]} ${Spacing["spacing-32"]}
+              `};
     background: ${(props) =>
         props.$isSelected ? Colour["bg-primary-subtlest"] : Colour["bg"]};
     /* Ensures that the tick mark is positioned relative to the selected item */
