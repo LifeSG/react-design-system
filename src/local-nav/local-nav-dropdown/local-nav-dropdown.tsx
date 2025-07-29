@@ -282,6 +282,7 @@ const Component = (
             return (
                 <li
                     id={id}
+                    key={index}
                     role="menuitem"
                     onClick={handleClick}
                     onKeyDown={(e) => handleNavItemKeyDown(e, handleClick)}
@@ -302,6 +303,7 @@ const Component = (
         return (
             <NavItem
                 id={id}
+                key={index}
                 role="menuitem"
                 $isSelected={isSelected && isStickied}
                 onClick={handleClick}

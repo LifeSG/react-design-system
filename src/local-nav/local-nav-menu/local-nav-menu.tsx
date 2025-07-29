@@ -58,6 +58,7 @@ const Component = (
         isSelected,
         item,
         renderItem,
+        index,
     }: LocalNavMenuItemComponentProps) => {
         const { id, title } = item;
 
@@ -73,7 +74,7 @@ const Component = (
         };
 
         return (
-            <NavItem id={id} $isSelected={isSelected}>
+            <NavItem id={id} key={index} $isSelected={isSelected}>
                 <NavItemContent
                     role="link"
                     onClick={handleClick}
@@ -100,6 +101,7 @@ const Component = (
                     isSelected,
                     item,
                     renderItem,
+                    index: i,
                 });
             })}
         </Nav>

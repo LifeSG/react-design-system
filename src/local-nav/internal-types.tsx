@@ -10,6 +10,7 @@ interface LocalNavItemBaseComponentProps {
     ) => void;
     isSelected: boolean;
     item: LocalNavItemProps;
+    index: number;
 }
 
 export interface LocalNavMenuItemComponentProps
