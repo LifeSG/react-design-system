@@ -3,8 +3,11 @@ import { useState } from "react";
 import { Button } from "src/button";
 import { Modal } from "src/modal";
 import { PopoverTrigger, PopoverV2 } from "src/popover-v2";
+import { GridDecorator } from "../storybook-common";
+import { CustomPopover, POPOVER_CONTENT } from "./doc-elements";
 
 type Component = typeof PopoverV2;
+type TriggerComponent = typeof PopoverTrigger;
 
 const meta: Meta<Component> = {
     title: "Overlays/PopoverV2",
@@ -154,4 +157,94 @@ export const UsageInOverlay: StoryObj<Component> = {
             </>
         );
     },
+};
+
+export const ResizeAndFlip: StoryObj<TriggerComponent> = {
+    args: {
+        popoverContent: POPOVER_CONTENT,
+        zIndex: 10,
+    },
+    render: (args) => {
+        return (
+            <>
+                <PopoverTrigger {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger enableResize={true} {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger
+                    enableResize={true}
+                    enableFlip={false}
+                    {...args}
+                >
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger enableFlip={false} {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+            </>
+        );
+    },
+    decorators: [
+        GridDecorator({
+            columns: 4,
+            columnHeaders: [
+                "Resize disabled, Flip enabled (Default)",
+                "Resize and Flip enabled",
+                "Resize enabled, Flip disabled",
+                "Resize and Flip disabled",
+            ],
+        }),
+    ],
+};
+
+export const ResizeAndFlipWithCustomContent: StoryObj<Component> = {
+    render: () => {
+        return (
+            <PopoverTrigger
+                enableResize
+                popoverContent={({ maxHeight, overflow }) => (
+                    <CustomPopover style={{ maxHeight, overflow }} />
+                )}
+            >
+                <Button.Default>Click me</Button.Default>
+            </PopoverTrigger>
+        );
+    },
+};
+
+export const Overflow: StoryObj<TriggerComponent> = {
+    args: {
+        enableResize: true,
+        popoverContent: POPOVER_CONTENT,
+        zIndex: 10,
+    },
+    render: (args) => {
+        return (
+            <>
+                <PopoverTrigger overflow="visible" {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger overflow="hidden" {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger overflow="clip" {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger overflow="scroll" {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger overflow="auto" {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+            </>
+        );
+    },
+    decorators: [
+        GridDecorator({
+            columns: 5,
+            columnHeaders: ["Visible", "Hidden", "Clip", "Scroll", "Auto"],
+        }),
+    ],
 };
