@@ -100,7 +100,6 @@ export const AddonSection = styled.div`
     ${MediaQuery.MaxWidth.lg} {
         grid-column: 1 / span 12;
         margin-left: ${Spacing["spacing-0"]};
-        margin-top: ${Spacing["spacing-32"]};
         max-width: 100%;
     }
 `;
