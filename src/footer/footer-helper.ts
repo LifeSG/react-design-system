@@ -36,16 +36,35 @@ export namespace FooterHelper {
         }
     };
 
-    export const getFooterLogo = (resourceScheme?: ResourceScheme) => {
+    export const getFooterLogoAttribute = (
+        resourceScheme?: ResourceScheme
+    ): React.ImgHTMLAttributes<HTMLImageElement> => {
         switch (resourceScheme) {
             case "bookingsg":
-                return "https://home.booking.gov.sg/images/bookingsg/footer.svg";
+                return {
+                    src: "https://home.booking.gov.sg/images/bookingsg/footer.svg",
+                    alt: "BookingSG",
+                    style: { minWidth: "4rem" },
+                };
             case "mylegacy":
-                return "https://mylegacy.life.gov.sg/images/site-logo.png";
+                return {
+                    src: "https://mylegacy.life.gov.sg/images/site-logo.png",
+                    alt: "MyLegacy",
+                    style: { minWidth: "10rem", maxHeight: "2rem" },
+                };
             case "ccube":
-                return "https://assets.life.gov.sg/ccube/logo-ccube.svg";
+                return {
+                    src: "https://assets.life.gov.sg/ccube/logo-ccube.svg",
+                    alt: "Ccube",
+                    style: { minWidth: "10rem" },
+                };
+
             default:
-                return "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg";
+                return {
+                    src: "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg",
+                    alt: "LifeSG",
+                    style: { minWidth: "4rem" },
+                };
         }
     };
 
