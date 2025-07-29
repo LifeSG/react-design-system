@@ -19,12 +19,13 @@ export const ResourceAddon = (): JSX.Element => {
                                 data-testid="footer-govtech-logo"
                                 src="https://mylegacy.life.gov.sg/images/agencies/govtech-logo.png"
                                 alt="GovTech Singapore"
+                                style={{ height: "4.5rem" }}
                             />
                             <Img
                                 data-testid="footer-psd-logo"
                                 src="https://mylegacy.life.gov.sg/images/agencies/psd-logo.png"
                                 alt="Public Service Division"
-                                style={{ maxHeight: "3.5rem" }}
+                                style={{ height: "3.5rem" }}
                             />
                         </Items>
                     </>

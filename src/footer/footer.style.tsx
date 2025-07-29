@@ -38,7 +38,7 @@ export const TopSection = styled(Layout.Content)`
 export const LogoSection = styled.div`
     grid-column: auto;
     width: fit-content;
-    margin-right: 32px;
+    margin-right: ${Spacing["spacing-32"]};
 
     img {
         max-height: 4rem;
@@ -48,7 +48,7 @@ export const LogoSection = styled.div`
 
     ${MediaQuery.MaxWidth.lg} {
         grid-column: 1 / span 12;
-        margin-right: 0;
+        margin-right: ${Spacing["spacing-0"]};
         margin-bottom: ${Spacing["spacing-32"]};
     }
 
@@ -63,7 +63,7 @@ export const LinkSection = styled.ul`
 
     &:nth-of-type(1) {
         margin-left: ${Spacing["spacing-32"]};
-        margin-right: ${Spacing["spacing-32"]}; // existing desktop gap
+        margin-right: ${Spacing["spacing-32"]};
     }
 
     li {
@@ -82,7 +82,7 @@ export const LinkSection = styled.ul`
 
         &:nth-of-type(1) {
             margin-left: ${Spacing["spacing-0"]};
-            margin-right: 0;
+            margin-right: ${Spacing["spacing-0"]};
             margin-bottom: ${Spacing["spacing-32"]};
         }
 

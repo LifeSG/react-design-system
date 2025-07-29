@@ -137,7 +137,7 @@ export const Footer = <T,>({
         if (component) {
             return (
                 <>
-                    <TopSection stretch={isStretch}>{component}</TopSection>{" "}
+                    <TopSection stretch={isStretch}>{component}</TopSection>
                     <FullWidthDivider />
                 </>
             );
