@@ -16,6 +16,7 @@ import {
     StyledFooterLink,
     TopSection,
 } from "./footer.style";
+import { ResourceAddon } from "./footer-resource-addon";
 import { FooterLinkProps, FooterProps } from "./types";
 
 export const Footer = <T,>({
@@ -24,6 +25,7 @@ export const Footer = <T,>({
     lastUpdated,
     disclaimerLinks,
     showDownloadAddon,
+    showResourceAddon,
     logoSrc,
     copyrightInfo,
     onFooterLinkClick,
@@ -96,18 +98,15 @@ export const Footer = <T,>({
         }
 
         if (links || showDownloadAddon) {
+            const { src, ...otherLogoAttributes } =
+                FooterHelper.getFooterLogoAttribute(theme?.resourceScheme);
             component = (
                 <>
                     <LogoSection data-testid="logo-section">
                         <img
-                            src={
-                                logoSrc ||
-                                FooterHelper.getFooterLogo(
-                                    theme?.resourceScheme
-                                )
-                            }
-                            alt="LifeSG"
+                            src={logoSrc || src}
                             data-testid="logo"
+                            {...otherLogoAttributes}
                         />
                     </LogoSection>
                     {links?.[0] && (
@@ -125,6 +124,12 @@ export const Footer = <T,>({
                             <DownloadApp />
                         </AddonSection>
                     )}
+                    {/* when showDownloadAddon and showResourceAddon are enabled, showDownloadAddon should take priority to being rendered */}
+                    {!showDownloadAddon && showResourceAddon && (
+                        <AddonSection>
+                            <ResourceAddon />
+                        </AddonSection>
+                    )}
                 </>
             );
         }
@@ -132,9 +137,7 @@ export const Footer = <T,>({
         if (component) {
             return (
                 <>
-                    <TopSection type="grid" stretch={isStretch}>
-                        {component}
-                    </TopSection>
+                    <TopSection stretch={isStretch}>{component}</TopSection>{" "}
                     <FullWidthDivider />
                 </>
             );
