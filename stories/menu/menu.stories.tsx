@@ -44,51 +44,42 @@ const menuContent = (
 export const Default: StoryObj<Component> = {
     render: (_args) => {
         return (
-            <>
-                <Menu menuContent={menuContent}>
-                    <Avatar>Name</Avatar>
-                </Menu>
-            </>
+            <Menu menuContent={menuContent}>
+                <Avatar>Name</Avatar>
+            </Menu>
         );
     },
 };
 
-export const ContentOnly: StoryObj<Component> = {
+export const MenuContent: StoryObj<Component> = {
     render: (_args) => {
         return menuContent;
     },
 };
 
 export const ResizeAndFlip: StoryObj<Component> = {
-    render: (_args) => {
+    args: {
+        menuContent: menuContent,
+        zIndex: 10,
+    },
+    render: (args) => {
         return (
             <>
-                <Menu zIndex={10} menuContent={menuContent}>
+                <Menu {...args}>
                     <Avatar>Name</Avatar>
                 </Menu>
-                <Menu enableResize={true} zIndex={10} menuContent={menuContent}>
+                <Menu enableResize={true} {...args}>
                     <Avatar>Name</Avatar>
                 </Menu>
-                <Menu
-                    enableResize={true}
-                    enableFlip={false}
-                    zIndex={10}
-                    menuContent={menuContent}
-                >
+                <Menu enableResize={true} enableFlip={false} {...args}>
                     <Avatar>Name</Avatar>
                 </Menu>
-                <Menu
-                    enableResize={false}
-                    enableFlip={false}
-                    zIndex={10}
-                    menuContent={menuContent}
-                >
+                <Menu enableResize={false} enableFlip={false} {...args}>
                     <Avatar>Name</Avatar>
                 </Menu>
             </>
         );
     },
-
     decorators: [
         GridDecorator({
             columns: 4,

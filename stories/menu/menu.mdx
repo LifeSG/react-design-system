@@ -8,16 +8,18 @@ import { PropsTable } from "./props-table";
 
 ## Overview
 
-A component which appears when hovering or clicking on a target element and displays a menu, consisting of menu sections containing links or items.  
-It is commonly used together with components such as **Avatar** and **Navbar** with dropdown menus.
+A component which appears when hovering or clicking on a target element and
+displays a menu. It is commonly used in combination with
+[Avatar](/docs/navigation-avatar--docs) and
+[Navbar](/docs/navigation-navbar--docs).
 
 This module contains:
 
 -   **Menu** - a utility component that handles the triggering of the menu, extending [PopoverTrigger](/docs/overlays-popoverv2--docs)
--   **Menu.Content** - a presentational component of the menu
+-   **Menu.Content** - the main wrapper containing the menu items
 -   **Menu.Section** - groups menu items and optionally shows a section label
--   **Menu.Item** - a menu item with optional label and subLabel
--   **Menu.Link** - a menu item that renders as a hyperlink
+-   **Menu.Item** - a menu item with optional label and sublabel
+-   **Menu.Link** - a menu item that contains a hyperlink
 
 ```tsx
 import { Menu } from "@lifesg/react-design-system/menu";
@@ -27,12 +29,12 @@ import { Menu } from "@lifesg/react-design-system/menu";
 
 ## Menu content
 
-<Canvas of={MenuStories.ContentOnly} />
+<Canvas of={MenuStories.MenuContent} />
 
 ## Resize and flip
 
 As the menu extends [PopoverTrigger](/docs/overlays-popoverv2--docs), resize and
-flip can be configured
+flip behaviour can be configured
 
 <Canvas of={MenuStories.ResizeAndFlip} />
 

@@ -72,13 +72,16 @@ If you still encounter z-index issues, try setting a custom `zIndex` or
 Use `enableResize` to enable resize of the `popoverContent` to fit the remaining
 vertical space of the window and become scrollable.
 
-When using customized popover content as a function receiving `PopoverRenderProps`,
-you are responsible for applying the maxHeight and overflow values to your
-popover content&rsquo;s styling to ensure correct sizing and scroll behavior.
-
 Use `enableFlip` to disable flipping of the `popoverContent`.
 
 <Canvas of={PopoverStories.ResizeAndFlip} />
+
+With `enableResize`, when `popoverContent` is a render function, additional
+props are provided. You are responsible for applying the `maxHeight` and
+`overflow` values to your custom component to ensure correct sizing and scroll
+behavior.
+
+<Canvas of={PopoverStories.ResizeAndFlipWithCustomContent} />
 
 ### Overflow
 
