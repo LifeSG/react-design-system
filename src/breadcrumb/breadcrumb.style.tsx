@@ -78,7 +78,7 @@ export const Fade = styled.div<FadeProps>`
 			`;
         } else {
             positionStyle = `
-				right: -2%;
+				right: 8px;
 				background-image: linear-gradient(
 					to left,
 					${props.$backgroundColor || fadeColor},
