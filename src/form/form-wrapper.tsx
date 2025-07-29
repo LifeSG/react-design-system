@@ -51,6 +51,25 @@ export const FormWrapper = ({
         return !!errorMessage;
     };
 
+    const hasSubtitleLabel = (): boolean => {
+        return typeof label === "object" && !!label?.subtitle;
+    };
+
+    const getSubtitleId = (): string => {
+        return `${id}-label-subtitle`;
+    };
+
+    const getAriaDescribedBy = (): string | undefined => {
+        return (
+            [
+                isInvalidState() ? getErrorTestMessageId() : undefined,
+                hasSubtitleLabel() ? getSubtitleId() : undefined,
+            ]
+                .filter(Boolean)
+                .join(" ") || undefined
+        );
+    };
+
     function getLayoutType(): FormElementLayoutType {
         if (!layoutType && (mobileCols || tabletCols || desktopCols)) {
             return "v2-grid";
@@ -139,9 +158,7 @@ export const FormWrapper = ({
     const renderChildren = (): JSX.Element | JSX.Element[] => {
         const ariaState = {
             "aria-invalid": isInvalidState(),
-            "aria-describedby": isInvalidState()
-                ? getErrorTestMessageId()
-                : undefined,
+            "aria-describedby": getAriaDescribedBy(),
         };
         return Children.map(children, (child) =>
             cloneElement(child, ariaState)
