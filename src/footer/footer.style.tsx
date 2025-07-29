@@ -58,7 +58,7 @@ export const LogoSection = styled.div`
 `;
 
 export const LinkSection = styled.ul`
-    max-width: 16vw;
+    max-width: 16%;
     list-style-type: none;
 
     &:nth-of-type(1) {
@@ -94,8 +94,7 @@ export const LinkSection = styled.ul`
 `;
 
 export const AddonSection = styled.div`
-    grid-column: 13 / span 6;
-    max-width: 33vw;
+    max-width: 33%;
     margin-left: auto;
 
     ${MediaQuery.MaxWidth.lg} {
