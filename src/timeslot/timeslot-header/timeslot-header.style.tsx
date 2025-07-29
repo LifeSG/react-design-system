@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { DateNavigator } from "../../date-navigator";
 import { Colour, Spacing } from "../../theme";
 import { Typography } from "../../typography";
+import { Button } from "../../button";
 
 export const TimeSlotHeaderWrapper = styled.div`
     display: flex;
@@ -11,10 +12,17 @@ export const TimeSlotHeaderWrapper = styled.div`
     color: ${Colour["text-primary"]};
 `;
 
-export const LeftSection = styled.div`
+export const LeftSection = styled.div<{ $isMobile?: boolean }>`
     display: flex;
     align-items: center;
     gap: ${Spacing["spacing-16"]};
+    ${({ $isMobile }) => ($isMobile ? "width: 100%;" : "width: auto;")}
+
+    ${({ $isMobile }) =>
+        $isMobile &&
+        `> div {
+            width: 100%;
+        }`}
 `;
 
 export const RightSection = styled.div`
@@ -23,8 +31,12 @@ export const RightSection = styled.div`
     gap: ${Spacing["spacing-16"]};
 `;
 
-export const StyledDateNavigator = styled(DateNavigator)``;
+export const StyledDateNavigator = styled(DateNavigator)<{}>``;
 
 export const StyledText = styled(Typography.BodyMD)`
     color: ${Colour["text-subtler"]};
+`;
+
+export const StyledButton = styled(Button.Default)`
+    min-width: 80px;
 `;

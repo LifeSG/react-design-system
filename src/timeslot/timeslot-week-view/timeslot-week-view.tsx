@@ -1,53 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef } from "react";
 import dayjs from "dayjs";
-import { TimeSlotWeekViewProps } from "./types";
+import {
+    ActiveSlot,
+    ActiveSlotsMap,
+    SlotWithService,
+    TimeSlotWeekViewProps,
+} from "./types";
 import { TimeHelper } from "../../util/time-helper";
-import { TimeIndicator } from "../time-indicator";
-import { SchedulerRowCellData, SchedulerRowData } from "../types";
+import { TimeIndicator } from "../time-indicator/time-indicator";
+import { TimeSlotRowData } from "../types";
+import { useTimelineOffset, useInitialScroll } from "../shared";
 import {
     SlotCell,
     Timeline,
 } from "../timeslot-day-view/timeslot-day-view.styles";
 import {
-    HeaderContainer,
-    TimeSlotContainer,
-    ServiceContainer,
     BlankCell,
     BodyContainer,
-    SlotGrid,
-    LoadingContainer,
-    SlotRowContainer,
-    SlotColumn,
-    ServiceHeader,
-    Title,
     Description,
+    HeaderContainer,
+    LoadingContainer,
     MoreButton,
+    ServiceContainer,
+    ServiceHeader,
+    SlotColumn,
     SlotContent,
+    SlotGrid,
+    SlotRowContainer,
+    TimeSlotContainer,
+    Title,
 } from "./timeslot-week-view.styles";
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
-import { CELL_HEIGHT, SLOT_INTERVAL } from "../const";
-
-// Constants for slot positioning
-const SLOT_WIDTH = 30;
-const SLOT_GAP = 2;
-const MAX_VISIBLE_SLOTS = 3;
-
-function getTimelineOffset(minTime: string, maxTime: string) {
-    const now = dayjs();
-    const min = dayjs(now.format("YYYY-MM-DD") + " " + minTime);
-    const max = dayjs(now.format("YYYY-MM-DD") + " " + maxTime);
-    if (now.isBefore(min) || now.isAfter(max)) return null;
-    const minutesSinceMin = now.diff(min, "minute");
-    const totalMinutes = max.diff(min, "minute");
-    const totalHeight = (totalMinutes / SLOT_INTERVAL) * CELL_HEIGHT;
-    const offset = (minutesSinceMin / totalMinutes) * totalHeight;
-    return offset;
-}
-
-// Types for better code organization
-type SlotWithService = SchedulerRowCellData & { serviceName: string };
-type ActiveSlot = { slot: SlotWithService; column: number };
-type ActiveSlotsMap = Map<string, ActiveSlot>;
+import {
+    MAX_VISIBLE_SLOTS,
+    SLOT_GAP,
+    SLOT_INTERVAL,
+    SLOT_WIDTH,
+} from "../const";
 
 // Helper function to convert time string to minutes since midnight
 function timeToMinutes(time: string): number {
@@ -57,7 +46,7 @@ function timeToMinutes(time: string): number {
 
 // Helper function to get all slots for a specific day
 function getSlotsForDay(
-    rowData: SchedulerRowData[],
+    rowData: TimeSlotRowData[],
     targetDate: string
 ): SlotWithService[] {
     const allSlots: SlotWithService[] = [];
@@ -145,19 +134,12 @@ export const TimeSlotWeekView = ({
     loading,
     minTime,
     maxTime,
+    initialScrollTime,
     onSlotClick,
 }: TimeSlotWeekViewProps) => {
-    const [timelineOffset, setTimelineOffset] = useState<number | null>(null);
+    const timelineOffset = useTimelineOffset(minTime, maxTime);
+    const bodyRef = useInitialScroll(loading, minTime, initialScrollTime);
     const today = dayjs().format("YYYY-MM-DD");
-
-    useEffect(() => {
-        function updateOffset() {
-            setTimelineOffset(getTimelineOffset(minTime, maxTime));
-        }
-        updateOffset();
-        const interval = setInterval(updateOffset, 15 * 60 * 1000); // every 15 mins
-        return () => clearInterval(interval);
-    }, [minTime, maxTime]);
 
     const weekDays = React.useMemo(() => {
         const startOfWeek = dayjs(date).startOf("week");
@@ -286,7 +268,7 @@ export const TimeSlotWeekView = ({
             ) : (
                 <>
                     {renderHeader()}
-                    <BodyContainer>
+                    <BodyContainer ref={bodyRef}>
                         <TimeIndicator
                             minTime={minTime}
                             maxTime={maxTime}

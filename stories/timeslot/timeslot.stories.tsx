@@ -1,18 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import dayjs from "dayjs";
 import { useState } from "react";
-import {
-    Scheduler,
-    SchedulerRowData,
-    SchedulerRowCellData,
-} from "src/scheduler";
+import { TimeSlot, TimeSlotRowCellData, TimeSlotRowData } from "src/timeslot";
 import styled from "styled-components";
-type Component = typeof Scheduler;
-import { mockSchedulerData } from "./mockSchedulerData";
+type Component = typeof TimeSlot;
+import { mockTimeSlotData } from "./mockTimeSlotData";
 
 const meta: Meta<Component> = {
-    title: "Selection and input/Scheduler",
-    component: Scheduler,
+    title: "Selection and input/TimeSlot",
+    component: TimeSlot,
     parameters: {
         docs: {
             description: {
@@ -25,7 +21,7 @@ const meta: Meta<Component> = {
         view: {
             control: { type: "select" },
             options: ["day", "week"],
-            description: "The view mode for the scheduler",
+            description: "The view mode for the timeslot",
         },
         date: {
             control: { type: "date" },
@@ -33,7 +29,7 @@ const meta: Meta<Component> = {
         },
         loading: {
             control: { type: "boolean" },
-            description: "Whether the scheduler is in loading state",
+            description: "Whether the timeslot is in loading state",
         },
         minTime: {
             control: { type: "text" },
@@ -43,20 +39,23 @@ const meta: Meta<Component> = {
             control: { type: "text" },
             description: "Maximum time to display (HH:mm format)",
         },
+        initialScrollTime: {
+            control: { type: "text" },
+            description:
+                "Initial scroll position time (HH:mm format), defaults to minTime if not provided",
+        },
     },
 };
 
 export default meta;
 
-const StyledScheduler = styled(Scheduler)`
-    [data-id="timeslot-container"] {
-        width: 1000px;
-        height: 600px;
-    }
+const StyledTimeSlot = styled(TimeSlot)`
+    width: 900px;
+    height: 600px;
 `;
 export const Default: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<SchedulerRowData[]>(mockSchedulerData);
+        const [results] = useState<TimeSlotRowData[]>(mockTimeSlotData);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(false);
 
@@ -79,7 +78,7 @@ export const Default: StoryObj<Component> = {
         };
 
         const onSlotClick = (
-            data: SchedulerRowCellData,
+            data: TimeSlotRowCellData,
             _e: React.MouseEvent
         ) => {
             console.log("Slot clicked:", data);
@@ -91,11 +90,13 @@ export const Default: StoryObj<Component> = {
         };
 
         return (
-            <StyledScheduler
+            <StyledTimeSlot
                 date={date}
+                data-id="timeslot"
                 view="day"
-                minTime="08:00"
-                maxTime="18:30"
+                minTime="00:00"
+                maxTime="23:59"
+                initialScrollTime="08:00"
                 rowData={results}
                 loading={loading}
                 onNextDayClick={onNextDayClick}
@@ -110,7 +111,7 @@ export const Default: StoryObj<Component> = {
 
 export const WeekView: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<SchedulerRowData[]>(mockSchedulerData);
+        const [results] = useState<TimeSlotRowData[]>(mockTimeSlotData);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(false);
 
@@ -133,7 +134,7 @@ export const WeekView: StoryObj<Component> = {
         };
 
         const onSlotClick = (
-            data: SchedulerRowCellData,
+            data: TimeSlotRowCellData,
             _e: React.MouseEvent
         ) => {
             console.log("Slot clicked:", data);
@@ -141,11 +142,13 @@ export const WeekView: StoryObj<Component> = {
         };
 
         return (
-            <StyledScheduler
+            <StyledTimeSlot
                 date={date}
+                data-id="timeslot"
                 view="week"
-                minTime="08:00"
-                maxTime="18:30"
+                minTime="00:00"
+                maxTime="23:59"
+                initialScrollTime="08:00"
                 rowData={results}
                 loading={loading}
                 onNextDayClick={onNextDayClick}
@@ -159,7 +162,7 @@ export const WeekView: StoryObj<Component> = {
 
 export const Loading: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<SchedulerRowData[]>([]);
+        const [results] = useState<TimeSlotRowData[]>(mockTimeSlotData);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(true);
 
@@ -182,7 +185,7 @@ export const Loading: StoryObj<Component> = {
         };
 
         return (
-            <StyledScheduler
+            <StyledTimeSlot
                 date={date}
                 view="day"
                 minTime="08:00"
@@ -199,7 +202,7 @@ export const Loading: StoryObj<Component> = {
 
 export const Empty: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<SchedulerRowData[]>([]);
+        const [results] = useState<TimeSlotRowData[]>([]);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(false);
 
@@ -222,7 +225,7 @@ export const Empty: StoryObj<Component> = {
         };
 
         return (
-            <StyledScheduler
+            <StyledTimeSlot
                 date={date}
                 view="day"
                 minTime="08:00"
@@ -233,53 +236,6 @@ export const Empty: StoryObj<Component> = {
                 onNextDayClick={onNextDayClick}
                 onPreviousDayClick={onPreviousDayClick}
                 onTodayClick={onTodayClick}
-            />
-        );
-    },
-};
-
-export const WithDateRange: StoryObj<Component> = {
-    render: () => {
-        const [results] = useState<SchedulerRowData[]>(mockSchedulerData);
-        const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
-        const [loading, _setLoading] = useState(false);
-
-        const onPreviousDayClick = async (currentDate: string) => {
-            const newDate = dayjs(currentDate)
-                .add(-1, "day")
-                .format("YYYY-MM-DD");
-            setDate(newDate);
-        };
-
-        const onNextDayClick = async (currentDate: string) => {
-            const newDate = dayjs(currentDate)
-                .add(1, "day")
-                .format("YYYY-MM-DD");
-            setDate(newDate);
-        };
-
-        const onTodayClick = () => {
-            setDate(dayjs().format("YYYY-MM-DD"));
-        };
-
-        const onCalendarDateSelect = (selectedDate: string) => {
-            setDate(selectedDate);
-        };
-
-        return (
-            <StyledScheduler
-                date={date}
-                view="day"
-                minTime="08:00"
-                maxTime="18:30"
-                minDate={dayjs().subtract(7, "days").format("YYYY-MM-DD")}
-                maxDate={dayjs().add(7, "days").format("YYYY-MM-DD")}
-                rowData={results}
-                loading={loading}
-                onNextDayClick={onNextDayClick}
-                onPreviousDayClick={onPreviousDayClick}
-                onTodayClick={onTodayClick}
-                onCalendarDateSelect={onCalendarDateSelect}
             />
         );
     },

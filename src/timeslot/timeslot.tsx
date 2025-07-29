@@ -1,14 +1,20 @@
-import React, { useCallback, useState, useEffect } from "react";
-import styled, { css, useTheme } from "styled-components";
+import React, { useCallback, useEffect, useState } from "react";
+import { useTheme } from "styled-components";
 import { useMediaQuery } from "react-responsive";
-import { SchedulerProps } from "./types";
+import { TimeSlotProps } from "./types";
 import { TimeSlotHeader } from "./timeslot-header/timeslot-header";
-import { SchedulerBody } from "./scheduler-body";
+import { TimeslotBody } from "./timeslot-body";
 import { TimeSlotWeekView } from "./timeslot-week-view/timeslot-week-view";
 import { TimeSlotDayView } from "./timeslot-day-view/timeslot-day-view";
 import { Breakpoint } from "../theme";
+import { isEmpty } from "lodash";
+import {
+    Container,
+    EmptyTableContainer,
+    NoResultsFound,
+} from "./timeslot.styles";
 
-export const Scheduler = ({
+export const TimeSlot = ({
     id,
     className,
     view = "day",
@@ -17,47 +23,46 @@ export const Scheduler = ({
     loading = false,
     minTime = "00:00",
     maxTime = "23:59",
+    initialScrollTime = minTime,
     minDate,
     maxDate,
+    emptyContentMessage,
     onPreviousDayClick,
     onNextDayClick,
     onCalendarDateSelect,
-    onViewChange,
     onTodayClick,
     onSlotClick,
     ...otherProps
-}: SchedulerProps) => {
+}: TimeSlotProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const [currentView, setCurrentView] = useState<"day" | "week">(view);
     const theme = useTheme();
     const mobileBreakpoint = Breakpoint["md-max"]({ theme });
-
     const isMobile = useMediaQuery({
         maxWidth: mobileBreakpoint,
     });
-
     const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
     const isTablet = useMediaQuery({
         maxWidth: tabletBreakpoint,
     });
-
-    // Force day view on mobile
     const effectiveView = isMobile || isTablet ? "day" : currentView;
-
-    // New: Track which service is visible on mobile
     const [visibleServiceIdx, setVisibleServiceIdx] = useState(0);
+    const isEmptyContent = rowData.length === 0 || isEmpty(rowData);
+    const filteredRowData = rowData.map((service) => ({
+        ...service,
+        rowCells: service.rowCells.filter((cell) => cell.date === date),
+    }));
 
-    // Only show one service on mobile/tablet
+    // Only show one service on mobile/tablet, after filtering by date
     const visibleRowData =
         isMobile || isTablet
-            ? rowData && rowData.length > 0
-                ? [rowData[visibleServiceIdx]]
+            ? filteredRowData && filteredRowData.length > 0
+                ? [filteredRowData[visibleServiceIdx]]
                 : []
-            : rowData;
+            : filteredRowData;
 
-    // Handlers for arrows
     const handleNextService = useCallback(() => {
         if (!rowData) return;
         setVisibleServiceIdx((idx) =>
@@ -68,7 +73,6 @@ export const Scheduler = ({
         setVisibleServiceIdx((idx) => (idx > 0 ? idx - 1 : idx));
     }, []);
 
-    // Reset index if rowData changes
     useEffect(() => {
         setVisibleServiceIdx(0);
     }, [rowData]);
@@ -76,13 +80,9 @@ export const Scheduler = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleViewChange = useCallback(
-        (newView: "day" | "week") => {
-            setCurrentView(newView);
-            onViewChange?.(newView);
-        },
-        [onViewChange]
-    );
+    const handleViewChange = (newView: "day" | "week") => {
+        setCurrentView(newView);
+    };
 
     const handleTodayClick = useCallback(() => {
         onTodayClick?.();
@@ -91,6 +91,33 @@ export const Scheduler = ({
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
+
+    if (isEmptyContent) {
+        return (
+            <Container {...otherProps} data-testid={id} $loading={loading}>
+                <TimeSlotHeader
+                    data-id="time-slot-header"
+                    date={date}
+                    view={effectiveView}
+                    showTodayButton={!isMobile && !isTablet}
+                    showViewSelector={!isMobile && !isTablet}
+                    minDate={minDate}
+                    maxDate={maxDate}
+                    onPreviousDayClick={onPreviousDayClick}
+                    onNextDayClick={onNextDayClick}
+                    onCalendarDateSelect={onCalendarDateSelect}
+                    onViewChange={handleViewChange}
+                    onTodayClick={handleTodayClick}
+                />
+                <EmptyTableContainer className="empty-container">
+                    <NoResultsFound
+                        type="no-item-found"
+                        description={emptyContentMessage}
+                    />
+                </EmptyTableContainer>
+            </Container>
+        );
+    }
     return (
         <Container
             id={id}
@@ -99,11 +126,11 @@ export const Scheduler = ({
             {...otherProps}
         >
             <TimeSlotHeader
-                data-id="time-slot-header"
+                data-id="timeslot-header"
                 date={date}
                 view={effectiveView}
-                showTodayButton={!isMobile && !isTablet}
-                showViewSelector={!isMobile && !isTablet}
+                $isMobile={isMobile}
+                $isTablet={isTablet}
                 minDate={minDate}
                 maxDate={maxDate}
                 onPreviousDayClick={onPreviousDayClick}
@@ -113,7 +140,7 @@ export const Scheduler = ({
                 onTodayClick={handleTodayClick}
             />
 
-            <SchedulerBody data-id="timeslot-container">
+            <TimeslotBody data-id="timeslot-container">
                 {effectiveView === "day" ? (
                     <TimeSlotDayView
                         date={date}
@@ -121,18 +148,18 @@ export const Scheduler = ({
                         loading={loading}
                         minTime={minTime}
                         maxTime={maxTime}
+                        initialScrollTime={initialScrollTime}
                         onSlotClick={onSlotClick}
                         isMobile={isMobile || isTablet}
                         onNextService={handleNextService}
                         onPrevService={handlePrevService}
                         showPrevArrow={
-                            isMobile || (isTablet && visibleServiceIdx > 0)
+                            (isMobile || isTablet) && visibleServiceIdx > 0
                         }
                         showNextArrow={
-                            isMobile ||
-                            (isTablet &&
-                                rowData &&
-                                visibleServiceIdx < rowData.length - 1)
+                            (isMobile || isTablet) &&
+                            rowData &&
+                            visibleServiceIdx < rowData.length - 1
                         }
                     />
                 ) : (
@@ -142,31 +169,11 @@ export const Scheduler = ({
                         loading={loading}
                         minTime={minTime}
                         maxTime={maxTime}
+                        initialScrollTime={initialScrollTime}
                         onSlotClick={onSlotClick}
                     />
                 )}
-            </SchedulerBody>
+            </TimeslotBody>
         </Container>
     );
 };
-
-// =============================================================================
-// STYLING
-// =============================================================================
-const Container = styled.div<TimeSlotProps>`
-    width: 100%;
-    ${(props) => {
-        if (props.$loading) {
-            return css`
-                :hover {
-                    cursor: not-allowed;
-                    padding-bottom: 0;
-                }
-            `;
-        }
-    }}
-`;
-
-interface TimeSlotProps {
-    $loading: boolean | undefined;
-}

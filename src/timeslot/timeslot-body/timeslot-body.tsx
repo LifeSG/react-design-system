@@ -1,16 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 
-interface SchedulerBodyProps extends React.HTMLAttributes<HTMLDivElement> {
+interface TimeslotBodyProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
 }
-export const SchedulerBody = ({
+export const TimeslotBody = ({
     children,
     ...otherprops
-}: SchedulerBodyProps) => {
+}: TimeslotBodyProps) => {
     return <Wrapper {...otherprops}>{children}</Wrapper>;
 };
 // =============================================================================
 // STYLING
 // =============================================================================
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+    height: 100%;
+`;

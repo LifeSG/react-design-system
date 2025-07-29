@@ -1,11 +1,7 @@
 import styled, { css } from "styled-components";
 import { Border, Colour, Radius } from "../../theme";
 import { Typography } from "../../typography";
-import {
-    CELL_HEIGHT,
-    HEADER_HEIGHT,
-    TIME_INDICATOR_WIDTH,
-} from "../const";
+import { CELL_HEIGHT, HEADER_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 // Styled components for slot block, placeholder, button, and row container
 
 export const TimeSlotContainer = styled.div`
@@ -134,6 +130,7 @@ export const SlotContent = styled(Typography.BodyXS)<{
     width: ${({ $slotWidth = 30 }) => $slotWidth}px;
     padding: 2px;
     position: absolute;
+    margin-top: 0;
     font-weight: 500;
     border-radius: ${Radius["sm"]};
     z-index: 1;
