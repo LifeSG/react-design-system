@@ -1,0 +1,72 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import * as ModalV2Stories from "./modal-v2.stories";
+import { PropsTable } from "./props-table";
+import { StyleTokensTable } from "./style-tokens-table";
+
+<Meta of={ModalV2Stories} />
+
+# Modal
+
+## Overview
+
+A window or pop up that displays over other page contents and provides information or actions
+that a user can perform.
+
+```tsx
+import { ModalV2 } from "@lifesg/react-design-system/modal-v2";
+```
+
+There are 2 components that can be used:
+
+-   `Modal` represents the base modal overlay. This is a **mandatory component** to be used.
+-   `Modal.Box` represents the dialog box that comes with a rounded border and a close button.
+
+<Canvas of={ModalV2Stories.Default} />
+
+## Custom content
+
+<Canvas of={ModalV2Stories.CustomContent} />
+
+## Stacked modals
+
+In some cases, you would require a stacked modal layout. Here is how you can construct it.
+
+<Canvas of={ModalV2Stories.StackedModals} />
+
+## Scrollable modals
+
+If the content of your modal is longer than the screen size, use scrollable modals.
+
+<Canvas of={ModalV2Stories.ScrollableModals} />
+
+## Modal.Box
+
+This component holds the dialog box.
+
+You're recommended to apply this spacing around your content to avoid overlap with the close button:
+
+| Viewport       | Vertical | Horizontal |
+| -------------- | -------- | ---------- |
+| Desktop/tablet | 4rem     | 4rem       |
+| Mobile         | 4rem     | 1.25rem    |
+
+> **Note**: This component does not come with a scrollable container and it is the
+> onus on the child element to possess the scroll behaviour
+
+```tsx
+<Modal.Box onClose={closeModal}>
+    <ScrollableContent>
+        <span>I am a Modal</span>
+    </ScrollableContent>
+</Modal.Box>
+```
+
+## Component API
+
+Both components also inherit the [HTMLDivElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement).
+
+<PropsTable />
+
+## Component style tokens
+
+<StyleTokensTable />
