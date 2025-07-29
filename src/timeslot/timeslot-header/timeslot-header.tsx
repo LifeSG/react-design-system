@@ -1,21 +1,23 @@
-import { Button } from "../../button";
 import { InputSelect } from "../../input-select";
-import { Typography } from "../../typography";
 import {
-    TimeSlotHeaderWrapper,
     LeftSection,
     RightSection,
+    StyledButton,
     StyledDateNavigator,
     StyledText,
+    TimeSlotHeaderWrapper,
 } from "./timeslot-header.style";
 
 interface TimeSlotHeaderProps {
+    id?: string;
     date: string;
     view: "day" | "week";
     showTodayButton?: boolean;
     showViewSelector?: boolean;
     minDate?: string;
     maxDate?: string;
+    $isMobile?: boolean;
+    $isTablet?: boolean;
     onPreviousDayClick: (currentDate: string) => void;
     onNextDayClick: (currentDate: string) => void;
     onCalendarDateSelect?: (currentDate: string) => void;
@@ -26,36 +28,34 @@ interface TimeSlotHeaderProps {
 export const TimeSlotHeader = ({
     date,
     view = "day",
-    showTodayButton = true,
-    showViewSelector = true,
     minDate,
     maxDate,
+    $isMobile = false,
+    $isTablet = false,
     onPreviousDayClick,
     onNextDayClick,
     onCalendarDateSelect,
     onViewChange,
     onTodayClick,
+    ...otherprops
 }: TimeSlotHeaderProps) => {
     const viewOptions = [
         { label: "Day", value: "day" },
         { label: "Week", value: "week" },
     ];
-
     const selectedViewOption = viewOptions.find(
         (option) => option.value === view
     );
+    const showTodayButton = !$isMobile && !$isTablet;
+    const showViewSelector = !$isMobile && !$isTablet;
 
     return (
-        <TimeSlotHeaderWrapper>
-            <LeftSection>
+        <TimeSlotHeaderWrapper {...otherprops}>
+            <LeftSection $isMobile={$isMobile}>
                 {showTodayButton && (
-                    <Button.Default
-                        styleType="light"
-                        onClick={onTodayClick}
-                        style={{ minWidth: "80px" }}
-                    >
+                    <StyledButton styleType="light" onClick={onTodayClick}>
                         Today
-                    </Button.Default>
+                    </StyledButton>
                 )}
                 <StyledDateNavigator
                     selectedDate={date}

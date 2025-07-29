@@ -4,8 +4,8 @@ import { Typography } from "../../typography";
 import {
     CELL_HEIGHT,
     HEADER_HEIGHT,
-    TIME_INDICATOR_WIDTH,
     MIN_COLUMN_WIDTH,
+    TIME_INDICATOR_WIDTH,
 } from "../const";
 import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
 
@@ -14,8 +14,12 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
 // -----------------------------------------------------------------------------
 const iconStyle = css`
     color: ${Colour.icon};
-    height: 1rem;
-    width: 1rem;
+    height: 2rem;
+    width: 2rem;
+    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    background: ${Colour["bg"]};
+    padding: 8px;
+    border-radius: ${Radius["sm"]};
 `;
 
 export const ArrowLeft = styled(ChevronLeftIcon)`
@@ -60,14 +64,16 @@ export const HeaderContainer = styled.div<{ columnCount: number }>`
 
     /* Hide the vertical scrollbar visually but keep its space */
     &::-webkit-scrollbar {
-        width: 15px; /* Match typical scrollbar width */
+        width: 17px; /* Match typical scrollbar width */
         background: ${Colour["bg-strong"]};
+        border-top-right-radius: ${Radius["md"]};
     }
     &::-webkit-scrollbar-thumb {
         background: ${Colour["bg-strong"]};
     }
     &::-webkit-scrollbar-track {
         background: ${Colour["bg-strong"]};
+        border-top-right-radius: ${Radius["md"]};
     }
 `;
 
@@ -86,33 +92,44 @@ export const ServiceContainer = styled.div<{ columnCount: number }>`
 
 export const ServiceColumn = styled.div`
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     min-width: ${MIN_COLUMN_WIDTH}px;
-    padding: 16px;
+    padding: 16px 0;
     border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
     &:last-child {
         border-right: none;
     }
 `;
 
-export const StyleDiv = styled.div`
+export const StyledContainer = styled.div`
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
     width: 100%;
+`;
+
+export const StyleDiv = styled.div`
+    max-width: 80%;
+    padding-left: ${Spacing["spacing-16"]};
 `;
 
 export const Title = styled(Typography.BodyMD)`
     color: ${Colour["text-primary"]};
     font-weight: 600;
+    margin-top: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    line-height: 1.2;
 `;
 
 export const Description = styled(Typography.BodySM)`
-    margin-top: 4px;
-    background-color: ${Colour["bg-available"]};
-    border-radius: 23px;
+    margin-top: 8px;
+    background-color: ${Colour["bg-success-hover"]};
+    border-radius: ${Radius["full"]};
     width: fit-content;
     padding: 2px ${Spacing["spacing-8"]};
     color: ${Colour["text-success"]};
@@ -133,6 +150,32 @@ export const BodyContainer = styled.div<{ columnCount: number }>`
     flex: 1;
     height: 100%;
     border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    border-bottom-right-radius: ${Radius["md"]};
+    border-bottom-left-radius: ${Radius["md"]};
+
+    /* Custom scrollbar styling for desktop only - maintains native mobile behavior */
+    @media (hover: hover) and (pointer: fine) {
+        &::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        &::-webkit-scrollbar-track {
+            background: ${Colour["bg"]};
+            border-bottom-right-radius: ${Radius["md"]};
+        }
+        &::-webkit-scrollbar-thumb {
+            background: ${Colour["border"]};
+            border-radius: ${Radius["md"]};
+            border: ${Border["width-020"]} ${Border.solid} ${Colour["bg"]};
+        }
+        &::-webkit-scrollbar-thumb:hover {
+            background: ${Colour["bg-inverse-subtlest"]};
+        }
+        &::-webkit-scrollbar-corner {
+            background: ${Colour["bg"]};
+            border-bottom-right-radius: ${Radius["md"]};
+        }
+    }
 `;
 
 export const SlotGrid = styled.div<{ columnCount: number }>`
@@ -161,8 +204,8 @@ export const SlotCell = styled.div<{
     flex-direction: column;
     align-items: flex-start;
     position: relative;
-    border-bottom: ${Border["width-010"]} ${Colour["border"]} ${({ startTime }) =>
-        startTime?.endsWith(":00") ? "dashed" : "solid"};
+    border-bottom: ${Border["width-010"]} ${Colour["border"]}
+        ${({ startTime }) => (startTime?.endsWith(":00") ? "dashed" : "solid")};
     cursor: pointer;
 `;
 
@@ -170,11 +213,13 @@ export const SlotContent = styled(Typography.BodyXS)<{
     status?: string;
     duration?: number;
 }>`
+    margin-top: 0;
     width: calc(100% - 28px);
     padding: 8px;
     position: absolute;
     font-weight: 500;
     border-radius: ${Radius["sm"]};
+    box-sizing: border-box;
     z-index: 1;
     height: ${({ duration }) =>
         duration
@@ -197,7 +242,7 @@ export const SlotContent = styled(Typography.BodyXS)<{
             case "blocked":
                 return Colour["bg-inverse-subtle"];
             case "available":
-                return Colour["bg-available"];
+                return Colour["bg-success-hover"];
             case "booked":
                 return Colour["bg-primary-subtler"];
             default:
@@ -206,7 +251,7 @@ export const SlotContent = styled(Typography.BodyXS)<{
     }};
 
     color: ${({ status }) =>
-        status === "blocked" ? Colour["text-inverse"] : "inherit"};
+        status === "blocked" ? Colour["text-inverse"] : Colour["text-subtle"]};
 
     border-left: 4px solid
         ${({ status }) =>
@@ -215,7 +260,9 @@ export const SlotContent = styled(Typography.BodyXS)<{
 
 export const SlotTime = styled.span``;
 
-export const SlotAvailability = styled.span``;
+export const SlotAvailability = styled.span`
+    font-weight: 600;
+`;
 
 export const Timeline = styled.div<{ $top: number }>`
     position: absolute;

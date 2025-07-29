@@ -1,10 +1,9 @@
-import { SchedulerRowData } from "src/scheduler";
+import { TimeSlotRowData } from "src/timeslot";
 
-export const mockSchedulerData: SchedulerRowData[] = [
+export const mockTimeSlotData: TimeSlotRowData[] = [
     {
         id: "1",
-        name: "Service A",
-        subtitle: "Available slots for Service A",
+        name: "Judge Ahmad Bin Yusof",
         rowCells: [
             // Monday - 2025-07-21
             {
@@ -50,7 +49,6 @@ export const mockSchedulerData: SchedulerRowData[] = [
     {
         id: "2",
         name: "Service B",
-        subtitle: "Available slots for Service B",
         rowCells: [
             // Monday - 2025-07-21
             {
@@ -79,6 +77,15 @@ export const mockSchedulerData: SchedulerRowData[] = [
                 endTime: "09:30",
                 status: "blocked",
             },
+            {
+                id: "2-5",
+                date: "2025-07-22",
+                startTime: "09:30",
+                endTime: "10:45",
+                status: "pending",
+                capacity: 5,
+                booked: 5,
+            },
             // Thursday - 2025-07-24
             {
                 id: "2-4",
@@ -93,8 +100,7 @@ export const mockSchedulerData: SchedulerRowData[] = [
     },
     {
         id: "3",
-        name: "Service C",
-        subtitle: "Available slots for Service C",
+        name: "Title with a very long service name limited to 2 lines  with a very long service name limited to 2 lines ",
         rowCells: [
             // Monday - 2025-07-21 (multiple overlapping slots)
             {
@@ -137,7 +143,6 @@ export const mockSchedulerData: SchedulerRowData[] = [
     {
         id: "4",
         name: "Service D",
-        subtitle: "Available slots for Service D",
         rowCells: [
             // Tuesday - 2025-07-22 (multiple overlapping slots to test +button)
             {
@@ -154,7 +159,6 @@ export const mockSchedulerData: SchedulerRowData[] = [
     {
         id: "5",
         name: "Service E",
-        subtitle: "Available slots for Service E",
         rowCells: [
             // Tuesday - 2025-07-22 (to test overlapping with Service D)
             // This slot spans from 9:00-10:00, should only appear in 9:00-9:30 slot
@@ -172,7 +176,6 @@ export const mockSchedulerData: SchedulerRowData[] = [
     {
         id: "6",
         name: "Service F",
-        subtitle: "Available slots for Service F",
         rowCells: [
             // Tuesday - 2025-07-22 (to test more than 3 overlapping slots)
             {
@@ -189,7 +192,6 @@ export const mockSchedulerData: SchedulerRowData[] = [
     {
         id: "7",
         name: "Service G",
-        subtitle: "Available slots for Service G",
         rowCells: [
             // Tuesday - 2025-07-22 (5th service to test + button)
             {
@@ -206,7 +208,6 @@ export const mockSchedulerData: SchedulerRowData[] = [
     {
         id: "8",
         name: "Service H",
-        subtitle: "Available slots for Service H",
         rowCells: [
             // Tuesday - 2025-07-22 (6th service to test + button more)
             {

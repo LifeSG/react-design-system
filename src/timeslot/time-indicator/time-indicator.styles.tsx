@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Border, Colour } from "../theme";
-import { Typography } from "../typography";
-import { CELL_HEIGHT, TIME_INDICATOR_WIDTH } from "./const";
+import { Border, Colour } from "../../theme";
+import { Typography } from "../../typography";
+import { CELL_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
 export const TimeColumn = styled.div`
     display: flex;

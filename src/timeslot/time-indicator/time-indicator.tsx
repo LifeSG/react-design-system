@@ -1,7 +1,7 @@
-import { TimeHelper } from "../util/time-helper";
+import { TimeHelper } from "../../util/time-helper";
 import { TimeColumn, TimeLabel } from "./time-indicator.styles";
 
-interface SchedulerTimeIndicatorProps {
+interface TimeSlotTimeIndicatorProps {
     minTime: string;
     maxTime: string;
     format: "12hr" | "24hr";
@@ -17,7 +17,7 @@ export const TimeIndicator = ({
     minTime,
     maxTime,
     format = "24hr",
-}: SchedulerTimeIndicatorProps) => {
+}: TimeSlotTimeIndicatorProps) => {
     const timeSlots = TimeHelper.generateTimings(30, format, minTime, maxTime);
     const hourLabels = timeSlots.filter((t) => t.includes(":00"));
     return (
