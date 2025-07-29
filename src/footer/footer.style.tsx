@@ -29,11 +29,16 @@ export const TopSection = styled(Layout.Content)`
 
     ${MediaQuery.MaxWidth.lg} {
         padding: ${Spacing["spacing-32"]} 0;
+        [data-id="container"] {
+            display: grid;
+        }
     }
 `;
 
 export const LogoSection = styled.div`
-    grid-column: 1 / span 2;
+    grid-column: auto;
+    width: fit-content;
+    margin-right: 32px;
 
     img {
         max-height: 4rem;
@@ -43,23 +48,22 @@ export const LogoSection = styled.div`
 
     ${MediaQuery.MaxWidth.lg} {
         grid-column: 1 / span 12;
+        margin-right: 0;
         margin-bottom: ${Spacing["spacing-32"]};
     }
 
     ${MediaQuery.MaxWidth.md} {
-        grid-column: 1 / span 8;
         margin-bottom: ${Spacing["spacing-32"]};
     }
 `;
 
 export const LinkSection = styled.ul`
-    // first col
-    grid-column: 3 / span 4;
+    max-width: 16vw;
     list-style-type: none;
 
-    :nth-of-type(2) {
-        // 2nd col
-        grid-column: 7 / span 4;
+    &:nth-of-type(1) {
+        margin-left: ${Spacing["spacing-32"]};
+        margin-right: ${Spacing["spacing-32"]}; // existing desktop gap
     }
 
     li {
@@ -73,36 +77,32 @@ export const LinkSection = styled.ul`
     }
 
     ${MediaQuery.MaxWidth.lg} {
-        // first col
+        max-width: 100%;
         grid-column: 1 / span 6;
 
-        :nth-of-type(2) {
+        &:nth-of-type(1) {
+            margin-left: ${Spacing["spacing-0"]};
+            margin-right: 0;
+            margin-bottom: ${Spacing["spacing-32"]};
+        }
+
+        &:nth-of-type(2) {
             // 2nd col
             grid-column: 7 / span 6;
-        }
-    }
-
-    ${MediaQuery.MaxWidth.md} {
-        // first col
-        grid-column: 1 / span 4;
-
-        :nth-of-type(2) {
-            // 2nd col
-            grid-column: 5 / span 4;
         }
     }
 `;
 
 export const AddonSection = styled.div`
     grid-column: 13 / span 6;
+    max-width: 33vw;
+    margin-left: auto;
 
     ${MediaQuery.MaxWidth.lg} {
         grid-column: 1 / span 12;
+        margin-left: ${Spacing["spacing-0"]};
         margin-top: ${Spacing["spacing-32"]};
-    }
-
-    ${MediaQuery.MaxWidth.md} {
-        grid-column: 1 / span 8;
+        max-width: 100%;
     }
 `;
 
