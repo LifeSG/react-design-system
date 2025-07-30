@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
+import { Colour } from "src/theme";
 import { Toggle } from "src/toggle";
 import { Typography } from "src/typography";
 import styled from "styled-components";
-import { Colour } from "src/theme";
 
 type Component = typeof Toggle;
 
@@ -17,9 +18,14 @@ const ErrorText = styled(Typography.BodyMD)`
 `;
 
 export const GroupExample: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
+        const [selection, setSelection] = useState<string | undefined>(
+            undefined
+        );
+
         return (
             <fieldset
+                role="radiogroup"
                 style={{
                     border: "none",
                     display: "flex",
@@ -31,11 +37,23 @@ export const GroupExample: StoryObj<Component> = {
                     What toppings would you like?
                 </legend>
 
-                <Toggle indicator type="radio" name="toppings">
+                <Toggle
+                    indicator
+                    type="radio"
+                    name="toppings"
+                    checked={selection === "lettuce"}
+                    onChange={() => setSelection("lettuce")}
+                >
                     Lettuce
                 </Toggle>
 
-                <Toggle indicator type="radio" name="toppings">
+                <Toggle
+                    indicator
+                    type="radio"
+                    name="toppings"
+                    checked={selection === "tomato"}
+                    onChange={() => setSelection("tomato")}
+                >
                     Tomato
                 </Toggle>
             </fieldset>
@@ -44,7 +62,7 @@ export const GroupExample: StoryObj<Component> = {
 };
 
 export const ErrorExample: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <fieldset
                 style={{
@@ -68,9 +86,7 @@ export const ErrorExample: StoryObj<Component> = {
                 >
                     Yes
                 </Toggle>
-                <ErrorText id="error-text" aria-live="assertive">
-                    Please select yes.
-                </ErrorText>
+                <ErrorText id="error-text">Please select yes.</ErrorText>
             </fieldset>
         );
     },
