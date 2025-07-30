@@ -228,29 +228,37 @@ export const Toggle = ({
                 $styleType={styleType}
             >
                 <IndicatorLabelContainer $addPadding={removable}>
-                    <Input
-                        ref={inputRef}
-                        name={name}
-                        id={`${generatedId}-input`}
-                        type={type === "checkbox" ? "checkbox" : "radio"}
-                        data-testid="toggle-input"
-                        disabled={disabled}
-                        onChange={handleOnChange}
-                        checked={selected}
-                        aria-describedby={ariaDescriptions}
-                        {...otherProps}
-                    />
-                    {indicator && renderIndicator()}
-                    <TextContainer $selected={selected} $disabled={disabled}>
-                        <Label
-                            htmlFor={`${generatedId}-input`}
-                            data-testid={`${generatedId}-toggle-label`}
-                            $maxLines={childrenMaxLines}
+                    <label
+                        htmlFor={`${generatedId}-input`}
+                        style={{ display: "flex" }}
+                    >
+                        <Input
+                            ref={inputRef}
+                            name={name}
+                            id={`${generatedId}-input`}
+                            type={type === "checkbox" ? "checkbox" : "radio"}
+                            data-testid="toggle-input"
+                            disabled={disabled}
+                            onChange={handleOnChange}
+                            checked={selected}
+                            aria-describedby={ariaDescriptions}
+                            {...otherProps}
+                        />
+                        {indicator && renderIndicator()}
+                        <TextContainer
+                            $selected={selected}
+                            $disabled={disabled}
                         >
-                            {children}
-                        </Label>
-                        {subLabel && renderSubLabel()}
-                    </TextContainer>
+                            <Label
+                                htmlFor={`${generatedId}-input`}
+                                data-testid={`${generatedId}-toggle-label`}
+                                $maxLines={childrenMaxLines}
+                            >
+                                {children}
+                            </Label>
+                            {subLabel && renderSubLabel()}
+                        </TextContainer>
+                    </label>
                 </IndicatorLabelContainer>
 
                 {removable && (
