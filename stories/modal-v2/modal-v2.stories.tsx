@@ -156,8 +156,6 @@ export const ScrollableModals: StoryObj<Component> = {
                         <div
                             style={{
                                 padding: "4rem 2rem",
-                                height: "10rem",
-                                overflow: "auto",
                             }}
                         >
                             <Typography.BodyBL>I am a Modal</Typography.BodyBL>
