@@ -42,7 +42,12 @@ export const ToggleIcon = ({
     }
 
     return (
-        <Wrapper className={className} $active={active} $disabled={disabled}>
+        <Wrapper
+            className={className}
+            $active={active}
+            $disabled={disabled}
+            aria-hidden
+        >
             {component}
         </Wrapper>
     );

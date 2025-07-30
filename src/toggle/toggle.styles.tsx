@@ -55,6 +55,11 @@ export const Container = styled.div<ContainerStyleProps>`
     height: fit-content;
     background: ${Colour.bg};
 
+    &:has(input:focus-visible) {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 0;
+    }
+
     ${(props) => {
         if (!props.$indicator) {
             return css`
