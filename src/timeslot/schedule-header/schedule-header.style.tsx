@@ -1,10 +1,10 @@
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { DateNavigator } from "../../date-navigator";
 import { Colour, Spacing } from "../../theme";
 import { Typography } from "../../typography";
 import { Button } from "../../button";
 
-export const TimeSlotHeaderWrapper = styled.div`
+export const ScheduleHeaderWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -39,4 +39,10 @@ export const StyledText = styled(Typography.BodyMD)`
 
 export const StyledButton = styled(Button.Default)`
     min-width: 80px;
+`;
+
+export const DropdownGlobalStyles = createGlobalStyle`
+    [data-testid="dropdown-container"] {
+        min-width: 16rem;
+    }
 `;

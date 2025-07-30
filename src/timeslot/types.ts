@@ -37,6 +37,7 @@ export interface TimeSlotProps {
     onNextDayClick: (currentDate: string) => void;
     onCalendarDateSelect?: (currentDate: string) => void;
     onTodayClick?: () => void;
+    onEmptySlotClick?: () => void;
     onSlotClick?: (data: TimeSlotRowCellData, e: React.MouseEvent) => void;
 }
 
