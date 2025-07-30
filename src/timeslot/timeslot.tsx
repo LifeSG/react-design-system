@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useTheme } from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import { TimeSlotProps } from "./types";
-import { TimeSlotHeader } from "./timeslot-header/timeslot-header";
+import { ScheduleHeader } from "./schedule-header/schedule-header";
 import { TimeslotBody } from "./timeslot-body";
 import { TimeSlotWeekView } from "./timeslot-week-view/timeslot-week-view";
 import { TimeSlotDayView } from "./timeslot-day-view/timeslot-day-view";
@@ -32,6 +32,7 @@ export const TimeSlot = ({
     onCalendarDateSelect,
     onTodayClick,
     onSlotClick,
+    onEmptySlotClick,
     ...otherProps
 }: TimeSlotProps) => {
     // =============================================================================
@@ -95,7 +96,7 @@ export const TimeSlot = ({
     if (isEmptyContent) {
         return (
             <Container {...otherProps} data-testid={id} $loading={loading}>
-                <TimeSlotHeader
+                <ScheduleHeader
                     data-id="time-slot-header"
                     date={date}
                     view={effectiveView}
@@ -125,8 +126,8 @@ export const TimeSlot = ({
             $loading={loading}
             {...otherProps}
         >
-            <TimeSlotHeader
-                data-id="timeslot-header"
+            <ScheduleHeader
+                data-id="schedule-header"
                 date={date}
                 view={effectiveView}
                 $isMobile={isMobile}

@@ -270,5 +270,18 @@ export const Timeline = styled.div<{ $top: number }>`
     height: 2px;
     background: ${Colour["icon-primary"]};
     top: ${({ $top }) => $top}px;
-    z-index: 2;
+    z-index: 4;
+    /* Add a small circle at the start of the timeline */
+    &::before {
+        content: "";
+        position: absolute;
+        left: -6px;
+        top: -6px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: ${Colour["icon-primary"]};
+        box-sizing: border-box;
+        z-index: 1;
+    }
 `;
