@@ -1,6 +1,6 @@
 import {
+    AppButtonsWrapper,
     AppStoreLink,
-    Items,
     Label,
     Wrapper,
 } from "./footer-download-app.style";
@@ -13,7 +13,7 @@ const PLAY_STORE_ICON =
 export const DownloadApp = () => (
     <Wrapper data-testid="download-app-section">
         <Label weight="semibold">Download the app</Label>
-        <Items>
+        <AppButtonsWrapper>
             <AppStoreLink
                 href="https://apps.apple.com/sg/app/moments-of-life/id1383218758"
                 target="_blank"
@@ -30,6 +30,6 @@ export const DownloadApp = () => (
             >
                 <img src={PLAY_STORE_ICON} alt="google-play-store" />
             </AppStoreLink>
-        </Items>
+        </AppButtonsWrapper>
     </Wrapper>
 );
