@@ -26,19 +26,28 @@ export const FullWidthDivider = styled(Divider)`
 
 export const TopSection = styled(Layout.Content)`
     padding: ${Spacing["spacing-64"]} 0;
+    display: flex;
+    align-items: flex-start;
+
+    [data-id="container"] {
+        display: flex;
+        width: 100%;
+    }
 
     ${MediaQuery.MaxWidth.lg} {
         padding: ${Spacing["spacing-32"]} 0;
+
         [data-id="container"] {
-            display: grid;
+            flex-direction: column;
+            gap: ${Spacing["spacing-32"]};
         }
     }
 `;
 
 export const LogoSection = styled.div`
-    grid-column: auto;
+    display: flex;
     width: fit-content;
-    margin-right: ${Spacing["spacing-32"]};
+    margin-right: ${Spacing["spacing-64"]};
 
     img {
         max-height: 4rem;
@@ -47,24 +56,26 @@ export const LogoSection = styled.div`
     }
 
     ${MediaQuery.MaxWidth.lg} {
-        grid-column: 1 / span 12;
-        margin-right: ${Spacing["spacing-0"]};
-        margin-bottom: ${Spacing["spacing-32"]};
+        width: 100%;
+        margin-right: 0;
     }
+`;
 
-    ${MediaQuery.MaxWidth.md} {
-        margin-bottom: ${Spacing["spacing-32"]};
+export const LinkSectionWrapper = styled.div`
+    display: flex;
+    gap: ${Spacing["spacing-32"]};
+    flex: 1 1 auto;
+    max-width: calc(32% + ${Spacing["spacing-32"]});
+
+    ${MediaQuery.MaxWidth.lg} {
+        gap: ${Spacing["spacing-16"]};
+        max-width: 100%;
     }
 `;
 
 export const LinkSection = styled.ul`
-    max-width: 16%;
+    flex: 1 1 auto;
     list-style-type: none;
-
-    &:nth-of-type(1) {
-        margin-left: ${Spacing["spacing-32"]};
-        margin-right: ${Spacing["spacing-32"]};
-    }
 
     li {
         :not(:last-child) {
@@ -77,30 +88,21 @@ export const LinkSection = styled.ul`
     }
 
     ${MediaQuery.MaxWidth.lg} {
-        max-width: 100%;
-        grid-column: 1 / span 6;
-
-        &:nth-of-type(1) {
-            margin-left: ${Spacing["spacing-0"]};
-            margin-right: ${Spacing["spacing-0"]};
-            margin-bottom: ${Spacing["spacing-32"]};
-        }
-
-        &:nth-of-type(2) {
-            // 2nd col
-            grid-column: 7 / span 6;
-        }
+        flex: 1 1 50%;
+        width: 50%;
     }
 `;
 
 export const AddonSection = styled.div`
     max-width: 33%;
+    flex: 1 1 33%;
     margin-left: auto;
 
     ${MediaQuery.MaxWidth.lg} {
-        grid-column: 1 / span 12;
-        margin-left: ${Spacing["spacing-0"]};
         max-width: 100%;
+        flex: 1 1 100%;
+        margin-left: 0;
+        width: 100%;
     }
 `;
 
@@ -141,6 +143,7 @@ export const BottomSectionContent = styled.div`
 
 export const CopyrightSection = styled(BottomSectionContent)`
     grid-column: 7 / span 6;
+    justify-content: flex-end;
     justify-content: flex-end;
 
     ${MediaQuery.MaxWidth.lg} {

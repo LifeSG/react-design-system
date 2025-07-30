@@ -12,6 +12,7 @@ import {
     DisclaimerTextLink,
     FullWidthDivider,
     LinkSection,
+    LinkSectionWrapper,
     LogoSection,
     StyledFooterLink,
     TopSection,
@@ -109,16 +110,24 @@ export const Footer = <T,>({
                             {...otherLogoAttributes}
                         />
                     </LogoSection>
-                    {links?.[0] && (
-                        <LinkSection key="link-col-1" data-testid="link-col-1">
-                            {renderFooterLinks(links[0])}
-                        </LinkSection>
-                    )}
-                    {links?.[1] && (
-                        <LinkSection key="link-col-2" data-testid="link-col-2">
-                            {renderFooterLinks(links[1])}
-                        </LinkSection>
-                    )}
+                    <LinkSectionWrapper>
+                        {links?.[0] && (
+                            <LinkSection
+                                key="link-col-1"
+                                data-testid="link-col-1"
+                            >
+                                {renderFooterLinks(links[0])}
+                            </LinkSection>
+                        )}
+                        {links?.[1] && (
+                            <LinkSection
+                                key="link-col-2"
+                                data-testid="link-col-2"
+                            >
+                                {renderFooterLinks(links[1])}
+                            </LinkSection>
+                        )}
+                    </LinkSectionWrapper>
                     {showDownloadAddon && (
                         <AddonSection>
                             <DownloadApp />
