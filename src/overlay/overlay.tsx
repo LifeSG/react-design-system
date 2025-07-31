@@ -21,7 +21,6 @@ const OverlayComponent = ({
     enableOverlayClick = false,
     zIndex: customZIndex,
     id,
-    enableScroll,
 }: OverlayProps): JSX.Element | null => {
     // =============================================================================
     // CONST, STATE, REF
@@ -196,7 +195,6 @@ const OverlayComponent = ({
                 $backgroundBlur={backgroundBlur}
                 $disableTransition={disableTransition}
                 onClick={handleWrapperClick}
-                $enableScroll={enableScroll}
             >
                 {childWithRef}
             </Wrapper>

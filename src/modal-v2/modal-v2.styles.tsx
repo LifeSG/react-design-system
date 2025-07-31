@@ -7,7 +7,7 @@ interface Props {
     $animationFrom?: ModalAnimationDirection;
     $verticalHeight?: number;
     $offsetTop?: number;
-    $fixedHeight?: boolean;
+    $enableScroll?: boolean;
 }
 
 const visibilityStyle = (
@@ -32,43 +32,45 @@ const visibilityStyle = (
 
 export const Container = styled.div<Props>`
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     width: 100%;
+    height: 100%;
 
     ${(props) =>
-        props.$fixedHeight
+        props.$enableScroll
             ? css`
-                  min-height: 100%;
-                  padding-top: 4rem;
-                  padding-bottom: 4rem;
+                  overflow: auto;
               `
             : css`
-                  height: 100%;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  overflow: hidden;
               `}
 
-    overflow: hidden;
     ${(props) => visibilityStyle(props.$show, props.$animationFrom || "bottom")}
 
     ${MediaQuery.MaxWidth.sm} {
         ${(props) => {
-            if (!props.$fixedHeight) {
-                return css`
-                    height: calc(
-                        ${props.$verticalHeight
-                                ? `${props.$verticalHeight}px`
-                                : "1vh"} * 100
-                    );
-                `;
-            }
+            return css`
+                height: calc(
+                    ${props.$verticalHeight
+                            ? `${props.$verticalHeight}px`
+                            : "1vh"} * 100
+                );
+            `;
         }}
 
         top: ${(props) => props.$offsetTop || 0}px;
     }
 `;
 
-export const InnerContainer = styled.div`
+export const ScrollContainer = styled.div`
+    margin: 4rem 0;
+    display: flex;
+    justify-content: center;
+`;
+
+export const ModalContainer = styled.div`
     ${MediaQuery.MaxWidth.md} {
         width: 90%;
     }

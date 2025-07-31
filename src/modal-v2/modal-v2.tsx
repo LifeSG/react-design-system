@@ -1,14 +1,12 @@
 import {
     FloatingFocusManager,
-    FloatingPortal,
     useDismiss,
     useFloating,
     useInteractions,
-    useRole,
 } from "@floating-ui/react";
 import { useEffect, useState } from "react";
 import { Overlay } from "../overlay/overlay";
-import { Container, InnerContainer } from "./modal-v2.styles";
+import { Container, ModalContainer, ScrollContainer } from "./modal-v2.styles";
 import { ModalV2Props } from "./types";
 
 export const ModalV2 = ({
@@ -39,12 +37,8 @@ export const ModalV2 = ({
             }
         },
     });
-    const role = useRole(context);
     const dismiss = useDismiss(context);
-    const { getReferenceProps, getFloatingProps } = useInteractions([
-        role,
-        dismiss,
-    ]);
+    const { getFloatingProps } = useInteractions([dismiss]);
 
     // =============================================================================
     // EFFECTS
@@ -101,46 +95,45 @@ export const ModalV2 = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    return (
-        <>
-            <div ref={refs.setReference} {...getReferenceProps()} />
-            {show && (
-                <FloatingPortal>
-                    <Overlay
-                        data-testid={`${id}-overlay`}
-                        show
-                        enableOverlayClick={enableOverlayClick}
-                        onOverlayClick={onOverlayClick}
-                        id={id}
-                        rootId={rootComponentId}
-                        zIndex={zIndex}
-                        enableScroll={enableScroll}
-                    >
-                        <Container
-                            $show
-                            $animationFrom={animationFrom}
-                            data-testid={id}
-                            $verticalHeight={verticalHeight}
-                            $offsetTop={offsetTop}
-                            $fixedHeight={enableScroll}
-                            {...otherProps}
-                        >
-                            <FloatingFocusManager
-                                context={context}
-                                initialFocus={refs.floating}
-                            >
-                                <InnerContainer
-                                    ref={refs.setFloating}
-                                    {...getFloatingProps()}
-                                    aria-modal
-                                >
-                                    {children}
-                                </InnerContainer>
-                            </FloatingFocusManager>
-                        </Container>
-                    </Overlay>
-                </FloatingPortal>
-            )}
-        </>
+    const renderInnerModal = () => (
+        <FloatingFocusManager context={context} initialFocus={refs.floating}>
+            <ModalContainer
+                ref={refs.setFloating}
+                {...getFloatingProps()}
+                aria-modal
+            >
+                {children}
+            </ModalContainer>
+        </FloatingFocusManager>
+    );
+
+    return show ? (
+        <Overlay
+            data-testid={`${id}-overlay`}
+            show
+            enableOverlayClick={enableOverlayClick}
+            onOverlayClick={onOverlayClick}
+            id={id}
+            rootId={rootComponentId}
+            zIndex={zIndex}
+        >
+            <Container
+                $show
+                $animationFrom={animationFrom}
+                data-testid={id}
+                $verticalHeight={verticalHeight}
+                $offsetTop={offsetTop}
+                $enableScroll={enableScroll}
+                {...otherProps}
+            >
+                {enableScroll ? (
+                    <ScrollContainer>{renderInnerModal()}</ScrollContainer>
+                ) : (
+                    renderInnerModal()
+                )}
+            </Container>
+        </Overlay>
+    ) : (
+        <></>
     );
 };
