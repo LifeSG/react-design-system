@@ -231,6 +231,7 @@ export const Toggle = ({
                     <Label
                         htmlFor={`${generatedId}-input`}
                         style={{ display: "flex" }}
+                        data-testid={`${generatedId}-toggle-label-with-indicator`}
                     >
                         <Input
                             ref={inputRef}
