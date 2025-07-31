@@ -56,6 +56,13 @@ const FilterBase = ({
         }
     }, [isMobile]);
 
+    useEffect(() => {
+        if (visible && isMobile) {
+            mobileNodeRef.current?.focus();
+        }
+    }),
+        [visible, isMobile];
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
@@ -129,31 +136,33 @@ const FilterBase = ({
                 >
                     {toggleFilterButtonLabel}
                 </FilterButton>
-                {visible && (
-                    <FloatingFocusManager context={context} modal={false}>
-                        <Overlay show={visible} disableTransition>
-                            <MobileOverlayContainer
-                                data-id="filter-mobile"
-                                data-testid="filter-mobile"
-                            >
-                                <MobileContainer ref={mobileNodeRef}>
-                                    {renderHeader("mobile")}
-                                    <FilterBody>
-                                        {renderChildren("mobile")}
-                                    </FilterBody>
-                                    <FilterFooter>
-                                        <FilterDoneButton
-                                            onClick={handleDoneClick}
-                                            type="button"
-                                        >
-                                            {doneButtonLabel}
-                                        </FilterDoneButton>
-                                    </FilterFooter>
-                                </MobileContainer>
-                            </MobileOverlayContainer>
-                        </Overlay>
+                <Overlay show={visible} disableTransition>
+                    <FloatingFocusManager
+                        context={context}
+                        modal={true}
+                        initialFocus={-1}
+                    >
+                        <MobileOverlayContainer
+                            data-id="filter-mobile"
+                            data-testid="filter-mobile"
+                        >
+                            <MobileContainer ref={mobileNodeRef} tabIndex={0}>
+                                {renderHeader("mobile")}
+                                <FilterBody>
+                                    {renderChildren("mobile")}
+                                </FilterBody>
+                                <FilterFooter>
+                                    <FilterDoneButton
+                                        onClick={handleDoneClick}
+                                        type="button"
+                                    >
+                                        {doneButtonLabel}
+                                    </FilterDoneButton>
+                                </FilterFooter>
+                            </MobileContainer>
+                        </MobileOverlayContainer>
                     </FloatingFocusManager>
-                )}
+                </Overlay>
             </>
         );
     };
