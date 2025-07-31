@@ -228,7 +228,7 @@ export const Toggle = ({
                 $styleType={styleType}
             >
                 <IndicatorLabelContainer $addPadding={removable}>
-                    <label
+                    <Label
                         htmlFor={`${generatedId}-input`}
                         style={{ display: "flex" }}
                     >
@@ -250,7 +250,7 @@ export const Toggle = ({
                             $disabled={disabled}
                         >
                             <Label
-                                htmlFor={`${generatedId}-input`}
+                                as="span"
                                 data-testid={`${generatedId}-toggle-label`}
                                 $maxLines={childrenMaxLines}
                             >
@@ -258,7 +258,7 @@ export const Toggle = ({
                             </Label>
                             {subLabel && renderSubLabel()}
                         </TextContainer>
-                    </label>
+                    </Label>
                 </IndicatorLabelContainer>
 
                 {removable && (
