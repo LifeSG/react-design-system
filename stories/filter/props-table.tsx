@@ -42,6 +42,12 @@ const FILTER_DATA: ApiTableSectionProps[] = [
                 defaultValue: `"Filters"`,
             },
             {
+                name: "doneButtonLabel",
+                description: "The display label of the done button (in mobile)",
+                propTypes: ["string"],
+                defaultValue: `"Done"`,
+            },
+            {
                 name: "toggleFilterButtonStyle",
                 description:
                     "The style type of the filter toggle button (in mobile)",

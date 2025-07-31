@@ -130,6 +130,13 @@ export const NavbarItems = <T,>({
                                 $selected={selected} /* for mobile */
                                 {...otherItemAttrs}
                                 onClick={handleLinkClick(item, index)}
+                                aria-current={selected ? "page" : undefined}
+                                aria-haspopup={item.subMenu ? true : undefined}
+                                aria-expanded={
+                                    mobile && item.subMenu
+                                        ? expanded
+                                        : undefined
+                                }
                                 {...options}
                             >
                                 <LinkLabel>{children}</LinkLabel>

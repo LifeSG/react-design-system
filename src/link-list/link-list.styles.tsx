@@ -3,15 +3,15 @@ import { MinusIcon } from "@lifesg/react-icons/minus";
 import { PlusIcon } from "@lifesg/react-icons/plus";
 import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
-import { Border, Colour } from "../theme";
+import { Border, Colour, Font, Spacing } from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface ToggleStyleProps {
-    $showMinimised: boolean;
+interface ExpandableChildStyleProps {
+    $border?: boolean;
 }
 
 // =============================================================================
@@ -45,7 +45,7 @@ export const ItemIcon = styled(ChevronRightIcon)`
     ${iconStyle}
 `;
 
-export const Item = styled.a`
+export const ItemContainer = styled.a`
     padding: 1rem 0;
     display: flex;
     justify-content: space-between;
@@ -65,7 +65,7 @@ export const Item = styled.a`
     }
 `;
 
-export const ItemContent = styled.div`
+export const ItemContentContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -80,8 +80,12 @@ export const Expandable = animated(styled.div`
     overflow: hidden;
 `);
 
-export const ExpandableChild = styled.div`
-    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+export const ExpandableChild = styled.div<ExpandableChildStyleProps>`
+    ${(props) =>
+        props.$border &&
+        css`
+            border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+        `}
 `;
 
 export const ToggleButtonLabel = styled(Typography.BodyMD).attrs({
@@ -98,7 +102,7 @@ export const ViewLessIcon = styled(MinusIcon)`
     ${iconStyle}
 `;
 
-export const ToggleButton = styled.button<ToggleStyleProps>`
+export const ToggleButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -114,6 +118,20 @@ export const ToggleButton = styled.button<ToggleStyleProps>`
         ${ViewMoreIcon},
         ${ViewLessIcon} {
             color: ${Colour["text-hover"]};
+            text-decoration: underline;
         }
     }
+`;
+
+export const LoadingContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: ${Spacing["spacing-16"]} 0;
+    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+
+    color: ${Colour["text-disabled"]};
+    ${Font["body-md-semibold"]};
 `;

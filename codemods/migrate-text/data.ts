@@ -14,7 +14,7 @@ export const textComponentMap = {
     BodySmall: "BodyMD",
     XSmall: "BodyXS",
     "Hyperlink.Default": "LinkBL",
-    "Hyperlink.Small": "LinkSM",
+    "Hyperlink.Small": "LinkMD",
 };
 
 export const textStyleFontMap = {

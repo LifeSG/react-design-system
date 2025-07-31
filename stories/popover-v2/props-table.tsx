@@ -7,10 +7,19 @@ export const COMMON_POPOVER_ATTRIBUTES: ApiTableSectionProps["attributes"] = [
         name: "popoverContent",
         description: (
             <>
-                The content of the <code>Popover</code>
+                The content of the <code>Popover</code>. Can be a{" "}
+                <code>string</code>, a <code>JSX.Element</code>, or a function
+                that receives <code>PopoverRenderProps</code>. When using the
+                function form, the returned content can be dynamically styled or
+                sized using the <code>PopoverRenderProps</code> (e.g.,{" "}
+                <code>maxHeight</code>, <code>overflow</code>).
             </>
         ),
-        propTypes: ["string", "JSX.Element", "() => React.ReactNode"],
+        propTypes: [
+            "string",
+            "JSX.Element",
+            "(renderProps: PopoverRenderProps) => React.ReactNode",
+        ],
         mandatory: true,
     },
     {
@@ -96,6 +105,40 @@ export const COMMON_POPOVER_ATTRIBUTES: ApiTableSectionProps["attributes"] = [
         ),
         propTypes: ["() => void"],
     },
+    {
+        name: "enableFlip",
+        description: (
+            <>
+                Enables the Popover&rsquo;s flip behavior (vertically) when
+                there is not enough space in the window&rsquo;s viewport for the
+                specified position.
+            </>
+        ),
+        propTypes: ["boolean"],
+        defaultValue: "true",
+    },
+    {
+        name: "overflow",
+        description: (
+            <>
+                Controls how overflow content behaves inside the popover
+                container. Used with <code>enableResize</code>
+            </>
+        ),
+        propTypes: ["visible", "hidden", "clip", "scroll", "auto"],
+        defaultValue: "auto",
+    },
+    {
+        name: "enableResize",
+        description: (
+            <>
+                Enables popover resize to fit the remaining vertical space of
+                the window and contents become scrollable.
+            </>
+        ),
+        propTypes: ["boolean"],
+        defaultValue: "false",
+    },
 ];
 
 const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
@@ -148,6 +191,35 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
             ...COMMON_POPOVER_ATTRIBUTES,
         ],
     },
+    {
+        name: "PopoverRenderProps",
+        attributes: [
+            {
+                name: "maxHeight",
+                mandatory: false,
+                description:
+                    "Maximum height (in pixels) allowed for the popover content.",
+                propTypes: ["number"],
+            },
+            {
+                name: "overflow",
+                mandatory: false,
+                description: (
+                    <>
+                        Controls how overflow content is handled inside the
+                        popover.
+                    </>
+                ),
+                propTypes: [
+                    '"auto"',
+                    '"scroll"',
+                    '"clip"',
+                    '"hidden"',
+                    '"visible"',
+                ],
+            },
+        ],
+    },
 ];
 
 const POPOVER_DATA: ApiTableSectionProps[] = [
@@ -197,6 +269,27 @@ const POPOVER_DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["() => void"],
+            },
+            {
+                name: "overflow",
+                description: (
+                    <>
+                        Controls how overflow content behaves inside the popover
+                        container (Desktop only).
+                    </>
+                ),
+                propTypes: ["visible", "hidden", "clip", "scroll", "auto"],
+            },
+            {
+                name: "maxHeight",
+                description: (
+                    <>
+                        Sets the maximum height of the popover container in
+                        pixels. If content exceeds this height, overflow
+                        behavior applies (Desktop only).
+                    </>
+                ),
+                propTypes: ["number"],
             },
         ],
     },

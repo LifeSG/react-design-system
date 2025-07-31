@@ -11,6 +11,7 @@ export interface FilterProps {
     toggleFilterButtonStyle?: ButtonStyleType | undefined;
     className?: string | undefined;
     id?: string | undefined;
+    doneButtonLabel?: string | undefined;
     "data-testid"?: string | undefined;
     /** Called when dismiss button is pressed (mobile mode only) */
     onDismiss?: (() => void) | undefined;

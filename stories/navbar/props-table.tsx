@@ -115,6 +115,20 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["stretch | default"],
                 defaultValue: "default",
             },
+            {
+                name: "headerLabel",
+                description:
+                    "Specifies the accessible label for the main navigation header",
+                propTypes: ["string"],
+                defaultValue: "Main navigation menu",
+            },
+            {
+                name: "drawerLabel",
+                description:
+                    "Specifies the accessible label for the mobile navigation drawer",
+                propTypes: ["string"],
+                defaultValue: "Mobile navigation menu",
+            },
         ],
     },
     {

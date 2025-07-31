@@ -46,6 +46,14 @@ const SIDENAV_DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
                 defaultValue: "true",
             },
+            {
+                name: "aria-label",
+                description: (
+                    <>The accessible label for the {code("Sidenav")}</>
+                ),
+                propTypes: ["string"],
+                defaultValue: `"Sidebar"`,
+            },
         ],
     },
 ];
@@ -64,6 +72,16 @@ const SIDENAV_GROUP_DATA: ApiTableSectionProps[] = [
                 name: "separator",
                 description: "Specifies if bottom divider will be rendered",
                 propTypes: ["boolean"],
+            },
+            {
+                name: "aria-label",
+                description: (
+                    <>
+                        The accessible label to describe the category of the{" "}
+                        {code("Sidenav.Item")} elements
+                    </>
+                ),
+                propTypes: ["string"],
             },
         ],
     },

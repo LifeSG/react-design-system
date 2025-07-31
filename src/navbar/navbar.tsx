@@ -56,6 +56,8 @@ const Component = <T,>(
         onBrandClick,
         masthead = true,
         layout = "default",
+        headerLabel = "Main navigation menu",
+        drawerLabel,
         ...otherProps
     }: NavbarProps<T>,
     ref: React.Ref<NavbarDrawerHandle>
@@ -65,6 +67,7 @@ const Component = <T,>(
     // =============================================================================
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
+    const mobileMenuRef = useRef<HTMLButtonElement>(null);
     const isStretch = layout === "stretch";
     const elementRef = useRef<HTMLDivElement>(null);
     const theme = useContext(ThemeContext);
@@ -148,7 +151,6 @@ const Component = <T,>(
         type: BrandType
     ) => {
         if (onBrandClick) {
-            event.preventDefault();
             onBrandClick(type);
         }
 
@@ -217,7 +219,7 @@ const Component = <T,>(
     const renderDrawer = () => (
         <Overlay
             show={showOverlay}
-            enableOverlayClick={true}
+            enableOverlayClick
             onOverlayClick={handleDrawerClose}
         >
             <Drawer
@@ -227,6 +229,8 @@ const Component = <T,>(
                 onBrandClick={handleBrandClick}
                 actionButtons={actionButtons}
                 hideNavBranding={hideNavBranding}
+                mobileMenuRef={mobileMenuRef}
+                drawerLabel={drawerLabel}
             >
                 <NavbarItems
                     items={items.mobile || items.desktop}
@@ -277,7 +281,9 @@ const Component = <T,>(
         ) {
             return (
                 <MobileMenuButton
-                    aria-label="Open nav menu"
+                    ref={mobileMenuRef}
+                    aria-label={showDrawer ? "Close nav menu" : "Open nav menu"}
+                    aria-expanded={showDrawer}
                     data-testid="button__mobile-menu"
                     onClick={handleMobileMenuButtonClick}
                     focusHighlight={false}
@@ -293,7 +299,7 @@ const Component = <T,>(
     const renderNavbar = () => {
         return (
             <Layout.Content stretch={isStretch}>
-                <Nav $compress={compress}>
+                <Nav $compress={compress} aria-label={headerLabel}>
                     {!hideNavBranding && renderBrand()}
                     {!hideNavElements && (
                         <NavElementsContainer

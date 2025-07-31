@@ -1,0 +1,34 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import * as BadgeStories from "./badge.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={BadgeStories} />
+
+# Badge
+
+## Overview
+
+A visual indicator for notifications or status.
+
+```tsx
+import { Badge } from "@lifesg/react-design-system/badge";
+```
+
+<Canvas of={BadgeStories.Default} />
+
+## Count display
+
+When `count` is 1000 or greater, the display is truncated.
+
+<Canvas of={BadgeStories.Count} />
+
+## Anchored usage
+
+The badge can be used standalone, or anchored to other content. Use
+`badgeOffset` to adjust the position from the top right corner.
+
+<Canvas of={BadgeStories.Anchored} />
+
+## Component API
+
+<PropsTable />

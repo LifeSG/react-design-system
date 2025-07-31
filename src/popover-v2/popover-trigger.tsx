@@ -6,6 +6,7 @@ import {
     limitShift,
     offset,
     shift,
+    size,
     useClick,
     useDismiss,
     useFloating,
@@ -32,6 +33,9 @@ export const PopoverTrigger = ({
     delay,
     onPopoverAppear,
     onPopoverDismiss,
+    enableFlip = true,
+    enableResize = false,
+    overflow = "auto",
     ...otherProps
 }: PopoverV2TriggerProps) => {
     // =========================================================================
@@ -43,6 +47,7 @@ export const PopoverTrigger = ({
     const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const [availableHeight, setAvailableHeight] = useState(0);
 
     const { refs, floatingStyles, context } = useFloating({
         open: visible,
@@ -50,10 +55,16 @@ export const PopoverTrigger = ({
         whileElementsMounted: autoUpdate,
         middleware: [
             offset(customOffset ?? 16),
-            flip(),
+            enableFlip && flip(),
             shift({
                 limiter: limitShift(),
             }),
+            enableResize &&
+                size({
+                    apply({ availableHeight }) {
+                        setAvailableHeight(availableHeight);
+                    },
+                }),
         ],
         onOpenChange: (isOpen) => {
             setVisible(isOpen);
@@ -105,11 +116,18 @@ export const PopoverTrigger = ({
     // =========================================================================
     const renderPopover = () => {
         if (typeof popoverContent === "function") {
-            return popoverContent();
+            return popoverContent(
+                enableResize ? { maxHeight: availableHeight, overflow } : {}
+            );
         }
 
         return (
-            <PopoverV2 visible onMobileClose={handlePopoverMobileClose}>
+            <PopoverV2
+                visible
+                onMobileClose={handlePopoverMobileClose}
+                maxHeight={enableResize ? availableHeight : undefined}
+                overflow={enableResize ? overflow : undefined}
+            >
                 {popoverContent}
             </PopoverV2>
         );

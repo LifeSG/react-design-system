@@ -2,7 +2,15 @@ import styled from "styled-components";
 import { Card } from "../card";
 import { ModalBox } from "../modal/modal-box";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Colour, MediaQuery } from "../theme";
+import { Colour, MediaQuery, Radius } from "../theme";
+import { PopoverOverflowType } from "./types";
+// =============================================================================
+// STYLES INTERFACE
+// =============================================================================
+interface PopoverCardStyleProps {
+    $overflow?: PopoverOverflowType | undefined;
+    $maxHeight?: number | undefined;
+}
 
 // =============================================================================
 // STYLING
@@ -13,12 +21,39 @@ export const PopoverContainer = styled.div`
     pointer-events: auto;
 `;
 
-export const PopoverCard = styled(Card)`
+export const PopoverCard = styled(Card)<PopoverCardStyleProps>`
     color: ${Colour.text};
     ${applyHtmlContentStyle({ textSize: "body-md" })}
 
     ${MediaQuery.MaxWidth.sm} {
         display: none;
+    }
+
+    ${({ $maxHeight }) =>
+        $maxHeight !== undefined &&
+        `
+        max-height: ${$maxHeight}px;
+    `}
+
+    ${({ $overflow }) =>
+        $overflow &&
+        `
+        overflow-y: ${$overflow};
+    `}
+
+    &::-webkit-scrollbar {
+        width: 14px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: ${Colour["bg-inverse-subtlest"]};
+        border: 5px solid transparent;
+        border-radius: ${Radius["full"]};
+        background-clip: padding-box;
     }
 `;
 

@@ -204,7 +204,9 @@ export const FilterItemCheckbox = <T,>({
 
     return (
         <StyledFilterItem
-            minimisable={options.length > 5}
+            minimisable={
+                mode === "default" ? options.length > 5 : !!minimisedHeight
+            }
             minimisedHeight={minimisedHeight}
             {...filterItemProps}
         >

@@ -114,7 +114,7 @@ export const Breadcrumb = ({
 
             if (index === links.length - 1 || !link.href) {
                 element = (
-                    <CurrentLabel weight="semibold">
+                    <CurrentLabel weight="semibold" as="span">
                         {link.children}
                     </CurrentLabel>
                 );
@@ -123,9 +123,15 @@ export const Breadcrumb = ({
             }
 
             return (
-                <Item key={index} $styleProps={itemStyle}>
+                <Item
+                    key={index}
+                    $styleProps={itemStyle}
+                    {...(index === links.length - 1 && {
+                        "aria-current": "page",
+                    })}
+                >
                     {element}
-                    {index < links.length - 1 && <Caret />}
+                    {index < links.length - 1 && <Caret aria-hidden />}
                 </Item>
             );
         });
@@ -169,7 +175,7 @@ export const Breadcrumb = ({
 
     return (
         <Wrapper ref={wrapperRef} id={id || "breadcrumb"} {...otherProps}>
-            <nav>
+            <nav aria-label="Breadcrumb">
                 <Content ref={contentRef}>{renderLinks()}</Content>
             </nav>
             {showFade && renderFade()}

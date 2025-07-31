@@ -36,7 +36,7 @@ const COMMON_ATTRIBUTES: ApiTableAttributeRowProps[] = [
         name: "onNavItemSelect",
         description: "Called when the nav item is selected",
         propTypes: [
-            "(e: React.MouseEvent, item: LocalNavItemProps, index: number) => void",
+            "(e: React.MouseEvent | React.KeyboardEvent, item: LocalNavItemProps, index: number) => void",
         ],
     },
     {

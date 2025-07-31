@@ -172,3 +172,28 @@ export const NoExpandCollapseAll: StoryObj<Component> = {
         );
     },
 };
+
+export const Accessibility: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Accordion title="Heading" headingLevel={3}>
+                <Accordion.Item title="Title as string">
+                    <Typography.BodyBL>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </Typography.BodyBL>
+                </Accordion.Item>
+                <Accordion.Item
+                    title={
+                        <Typography.HeadingXS inline weight="semibold">
+                            Title as JSX element
+                        </Typography.HeadingXS>
+                    }
+                >
+                    <Typography.BodyBL>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </Typography.BodyBL>
+                </Accordion.Item>
+            </Accordion>
+        );
+    },
+};

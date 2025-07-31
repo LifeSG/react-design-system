@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { DateInput } from "../date-input";
 import { FormWrapper } from "./form-wrapper";
 import { FormDateInputProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 
 export const FormDateInput = ({
     label,
     errorMessage,
-    id = "form-date-input",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
@@ -21,9 +23,14 @@ export const FormDateInput = ({
     xxlCols,
     ...otherProps
 }: FormDateInputProps): JSX.Element => {
+    const [internalId] = useState(
+        () => `form-date-input-${SimpleIdGenerator.generate()}`
+    );
+    const inputId = id ?? internalId;
+
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
@@ -41,9 +48,9 @@ export const FormDateInput = ({
             xxlCols={xxlCols}
         >
             <DateInput
-                id={`${id}-base`}
+                id={`${inputId}-base`}
                 data-testid={testId || id}
-                aria-labelledby={`${id}-label`}
+                aria-labelledby={`${inputId}-label`}
                 error={!!errorMessage}
                 {...otherProps}
             />

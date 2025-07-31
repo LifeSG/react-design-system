@@ -16,6 +16,8 @@ export const PopoverV2 = ({
     children,
     visible,
     onMobileClose,
+    maxHeight,
+    overflow,
     ...otherProps
 }: PopoverV2Props): JSX.Element => {
     // =============================================================================
@@ -49,7 +51,9 @@ export const PopoverV2 = ({
         <>
             {visible && (
                 <PopoverContainer data-testid={testId} {...otherProps}>
-                    <PopoverCard>{renderContent()}</PopoverCard>
+                    <PopoverCard $maxHeight={maxHeight} $overflow={overflow}>
+                        {renderContent()}
+                    </PopoverCard>
                 </PopoverContainer>
             )}
             {isMobile && (

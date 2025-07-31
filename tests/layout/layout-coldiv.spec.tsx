@@ -60,7 +60,7 @@ describe("ColDiv Component", () => {
             "grid-column",
             "auto/span 4",
             {
-                media: `screen and (max-width:  420px)`,
+                media: `screen and (max-width:  480px)`,
             }
         );
     });
@@ -92,7 +92,7 @@ describe("ColDiv Component", () => {
             "grid-column",
             "2/span 4",
             {
-                media: `screen and (max-width:  1023px)`,
+                media: `screen and (max-width:  1024px)`,
             }
         );
     });

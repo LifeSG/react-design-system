@@ -12,7 +12,7 @@ const meta: Meta<Component> = {
 export default meta;
 
 export const AdditionalInputs: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [selected, setSelected] = useState(false);
         const [error, setError] = useState(false);
         const [value, setValue] = useState("");

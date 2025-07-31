@@ -81,7 +81,7 @@ export const RBSColourSet: PrimitiveColourSet = {
     "info-10": "#021824",
     "info-20": "#032B3F",
     "info-30": "#053D59",
-    "info-40": "#065478",
+    "info-40": "#06547B",
     "info-50": "#176E9B",
     "info-60": "#5296BE",
     "info-70": "#82B5DA",

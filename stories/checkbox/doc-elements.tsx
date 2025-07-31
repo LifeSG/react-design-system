@@ -17,3 +17,9 @@ export const Label = styled.label`
     color: ${Colour.text};
     cursor: pointer;
 `;
+
+export const SelectAll = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+`;

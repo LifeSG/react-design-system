@@ -5,9 +5,12 @@ import {
 } from "./types";
 
 interface LocalNavItemBaseComponentProps {
-    handleClick: React.MouseEventHandler<HTMLLIElement>;
+    handleClick: (
+        e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>
+    ) => void;
     isSelected: boolean;
     item: LocalNavItemProps;
+    index: number;
 }
 
 export interface LocalNavMenuItemComponentProps
@@ -28,4 +31,5 @@ export interface LocalNavDropdownItemComponentProps
               renderProps: LocalNavDropdownItemRenderProps
           ) => React.ReactNode)
         | undefined;
+    index: number;
 }
