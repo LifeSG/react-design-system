@@ -37,10 +37,10 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
                 vertical-align: middle;
             }
 
-            :hover,
-            :active,
-            :visited,
-            :focus {
+            &:hover,
+            &:active,
+            &:visited,
+            &:focus {
                 color: ${Colour["hyperlink-hover"]};
 
                 svg {

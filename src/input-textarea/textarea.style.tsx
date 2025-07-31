@@ -31,15 +31,15 @@ export const Element = styled.textarea<StyleProps>`
     ${Font["body-baseline-regular"]}
     color: ${Colour["text"]};
 
-    :focus,
-    :active {
+    &:focus,
+    &:active {
         outline-offset: -1px;
         outline: ${Border["width-020"]} ${Border["solid"]}
             ${Colour["border-focus"]};
     }
 
-    ::placeholder,
-    ::-webkit-input-placeholder {
+    &::placeholder,
+    &::-webkit-input-placeholder {
         color: ${Colour["text-subtler"]};
     }
 
@@ -49,8 +49,8 @@ export const Element = styled.textarea<StyleProps>`
                 border-color: transparent;
                 background: transparent !important;
 
-                :focus,
-                :active {
+                &:focus,
+                &:active {
                     outline-color: ${Colour["border-focus"]};
                 }
             `;
@@ -59,8 +59,8 @@ export const Element = styled.textarea<StyleProps>`
                 background: ${Colour["bg-disabled"]};
                 cursor: not-allowed;
 
-                :focus,
-                :active {
+                &:focus,
+                &:active {
                     outline-color: ${Colour["border-disabled"]};
                 }
             `;
@@ -68,8 +68,8 @@ export const Element = styled.textarea<StyleProps>`
             return css`
                 border-color: ${Colour["border-error"]};
 
-                :focus,
-                :active {
+                &:focus,
+                &:active {
                     outline-color: ${Colour["border-error-focus"]};
                 }
             `;

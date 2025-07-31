@@ -23,7 +23,7 @@ export const Item = styled.li`
     width: 100%;
     border: none;
 
-    :not(:last-child) {
+    &:not(:last-child) {
         margin-bottom: ${Spacing["spacing-16"]};
     }
 `;
@@ -44,7 +44,7 @@ export const Box = styled.div`
         padding: ${Spacing["spacing-16"]};
     }
 
-    :hover {
+    &:hover {
         background: ${Colour["bg-hover"]};
     }
 `;
@@ -173,7 +173,7 @@ export const ActionContainer = styled.div`
 export const IconButton = styled(DSIconButton)`
     min-width: unset;
 
-    :not(:last-child) {
+    &:not(:last-child) {
         margin-right: ${Spacing["spacing-16"]};
     }
 `;

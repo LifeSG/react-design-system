@@ -25,7 +25,7 @@ export namespace ErrorDisplayHelper {
      */
     export const imgAttributeHelper = (
         pathAttributes: ImagePathAttributes,
-        theme: ThemeSpec
+        theme?: ThemeSpec
     ): React.ImgHTMLAttributes<HTMLImageElement> => {
         const { base, md, lg, width, height } = pathAttributes;
         const mobile = Breakpoint["sm-max"]({ theme });

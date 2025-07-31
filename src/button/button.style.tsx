@@ -91,26 +91,21 @@ export const Main = styled.button<MainStyleProps>`
                 `;
             default:
                 return css`
-                    background-color: ${
-                        props.$buttonIsDanger
-                            ? Colour["bg-error-strong"]
-                            : ThemeButton["button-default-colour-bg"]
-                    };};
+                    background-color: ${props.$buttonIsDanger
+                        ? Colour["bg-error-strong"]
+                        : ThemeButton["button-default-colour-bg"]};
 
                     ${MediaQuery.MaxWidth.sm} {
                         width: 100%;
                     }
 
-                    color: ${ThemeButton["button-default-colour-text"]}};
+                    color: ${ThemeButton["button-default-colour-text"]};
 
                     &:hover,
                     &:active {
-                        background-color: ${
-                            props.$buttonIsDanger
-                                ? Colour["bg-error-strong-hover"]
-                                : ThemeButton["button-default-colour-bg-hover"]
-                        }
-                        };
+                        background-color: ${props.$buttonIsDanger
+                            ? Colour["bg-error-strong-hover"]
+                            : ThemeButton["button-default-colour-bg-hover"]};
                     }
                 `;
         }

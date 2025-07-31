@@ -1,5 +1,6 @@
-import React from "react";
-import { useTheme } from "styled-components";
+import React, { useContext } from "react";
+import { ThemeContext } from "styled-components";
+import { LifeSGTheme } from "../theme";
 import { getErrorDisplayData } from "./error-display-data";
 import {
     ActionButton,
@@ -14,7 +15,6 @@ import {
     InactivityAdditionalAttributes,
     MaintenanceAdditionalAttributes,
 } from "./types";
-import { LifeSGTheme } from "../theme";
 
 export const ErrorDisplay = ({
     type,
@@ -30,7 +30,7 @@ export const ErrorDisplay = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     const defaultAssets = getErrorDisplayData(
         type,
         illustrationScheme || (theme || LifeSGTheme).resourceScheme,

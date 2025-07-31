@@ -1,5 +1,5 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import {
     Border,
@@ -99,9 +99,9 @@ export const ChevronIcon = styled(ChevronUpIcon)`
     color: ${Colour["icon-primary"]};
 `;
 
-export const Expandable = styled(animated.div)`
+export const Expandable = animated(styled.div`
     overflow: hidden;
-`;
+`);
 
 export const ContentContainer = styled.div`
     display: inline-block;

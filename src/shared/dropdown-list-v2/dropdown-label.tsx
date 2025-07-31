@@ -1,6 +1,6 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useTheme } from "styled-components";
+import { ThemeContext } from "styled-components";
 import { Font } from "../../theme";
 import { StringHelper } from "../../util/string-helper";
 import { DropdownVariantType, LabelDisplayType } from "../dropdown-list/types";
@@ -38,7 +38,8 @@ export const DropdownLabel = ({
     truncationType = "middle",
     variant = "default",
 }: DropdownLabelProps): JSX.Element => {
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
+
     const fontSize =
         variant === "small"
             ? Font.Spec["body-size-md"]({ theme })

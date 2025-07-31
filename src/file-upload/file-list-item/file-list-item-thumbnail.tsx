@@ -73,7 +73,7 @@ export const ReplaceButton = styled.button`
     ${Font["body-md-semibold"]}
     color: ${Colour["text-primary"]};
 
-    :hover {
+    &:hover {
         color: ${Colour["text-hover"]};
     }
 `;

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
 import {
@@ -11,7 +11,7 @@ import {
     Wrapper,
 } from "./breadcrumb.style";
 import { BreadcrumbProps, FadeColorSet } from "./types";
-import { useTheme } from "styled-components";
+import { ThemeContext } from "styled-components";
 import { Breakpoint } from "../theme";
 
 export const Breadcrumb = ({
@@ -40,7 +40,7 @@ export const Breadcrumb = ({
     // EVENT HANDLERS
     // =============================================================================
 
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
 
     const onResize = useEvent(() => {

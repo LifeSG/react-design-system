@@ -1,5 +1,5 @@
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { Checkbox } from "../../checkbox";
 import { Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
@@ -47,10 +47,10 @@ interface ResultStateProps {
 // MAIN STYLES
 // -----------------------------------------------------------------------------
 
-export const Container = styled(animated.div)`
+export const Container = animated(styled.div`
     overflow: hidden;
     box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.2);
-`;
+`);
 
 export const List = styled.ul<ListContainerProps>`
     border-bottom-left-radius: ${Radius["sm"]};
@@ -83,18 +83,18 @@ export const List = styled.ul<ListContainerProps>`
 `;
 
 export const ListItem = styled.li<ListItemProps>`
-    :hover,
-    :focus,
-    :active {
+    &:hover,
+    &:focus,
+    &:active {
         background: ${Colour["bg-hover"]};
     }
     ${(props) => {
         if (props.$checked) {
             return css`
                 background: ${Colour["bg-selected"]};
-                :hover,
-                :focus,
-                :active {
+                &:hover,
+                &:focus,
+                &:active {
                     background: ${Colour["bg-selected-hover"]};
                 }
             `;
@@ -123,10 +123,10 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
     width: 100%;
     cursor: pointer;
 
-    :hover,
-    :visited,
-    :focus,
-    :active {
+    &:hover,
+    &:visited,
+    &:focus,
+    &:active {
         outline-color: ${Colour["border-focus"]};
     }
 

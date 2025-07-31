@@ -44,9 +44,7 @@ export const Line = styled.hr<StyleProps>`
     ${(props) => {
         switch (props.$lineStyle) {
             case "dashed":
-                return css`
-                    ${dashedLineStyle}
-                `;
+                return dashedLineStyle();
             case "solid":
                 return css`
                     height: ${props.$thickness}px;

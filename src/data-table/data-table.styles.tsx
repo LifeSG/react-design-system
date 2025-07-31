@@ -137,7 +137,7 @@ export const TextButton = styled(BasicButton)`
     padding: 0.75rem;
     margin: -0.75rem 0;
 
-    :hover {
+    &:hover {
         color: ${Colour["text-hover"]};
     }
 `;

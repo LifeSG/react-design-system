@@ -16,9 +16,9 @@ import {
     useInteractions,
     useTransitionStyles,
 } from "@floating-ui/react";
-import { RefObject, useRef } from "react";
+import { RefObject, useContext, useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useTheme } from "styled-components";
+import { ThemeContext } from "styled-components";
 import { useFloatingChild } from "../../overlay/use-floating-context";
 import { Breakpoint } from "../../theme";
 import { inertValue } from "../accessibility";
@@ -83,7 +83,7 @@ export const ElementWithDropdown = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const elementRef = useRef<HTMLDivElement | null>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);

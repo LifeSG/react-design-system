@@ -1,5 +1,5 @@
-import { Suspense, lazy } from "react";
-import styled, { useTheme } from "styled-components";
+import { Suspense, lazy, useContext } from "react";
+import styled, { ThemeContext } from "styled-components";
 import { Colour } from "../../theme";
 import { CustomisableAnimationProps } from "../types";
 
@@ -12,7 +12,7 @@ export const LoadingDotsSpinner = ({
     color,
     ...otherProps
 }: CustomisableAnimationProps) => {
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     const animationColor = color || Colour["icon-primary"]({ theme });
     return (
         <Container {...otherProps}>

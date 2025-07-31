@@ -15,6 +15,10 @@ const StyledComponentTest = styled.div`
         background-color: purple;
     }
 `;
+
+// Note: There is an extra space due to an issue of jest-styled-component
+// See https://github.com/styled-components/jest-styled-components/issues/430
+
 describe("MediaQuery Helper Function Test", () => {
     const xsMin = "321px";
     const xsMax = "375px";
@@ -31,7 +35,8 @@ describe("MediaQuery Helper Function Test", () => {
             "background-color",
             "yellow",
             {
-                media: `screen and (min-width: ${xsMin})`,
+                // Extra space here
+                media: `screen and (min-width:  ${xsMin})`,
             }
         );
 
@@ -39,7 +44,8 @@ describe("MediaQuery Helper Function Test", () => {
             "background-color",
             "purple",
             {
-                media: `screen and (max-width: ${xsMax})`,
+                // Extra space here
+                media: `screen and (max-width:  ${xsMax})`,
             }
         );
     });

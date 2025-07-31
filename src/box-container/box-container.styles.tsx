@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import {
     Border,
@@ -39,9 +39,9 @@ export const Container = styled.div`
     margin-bottom: ${Spacing["spacing-32"]};
 `;
 
-export const Expandable = styled(animated.div)`
+export const Expandable = animated(styled.div`
     overflow: hidden;
-`;
+`);
 
 export const NonExpandable = styled.div`
     height: max-content;

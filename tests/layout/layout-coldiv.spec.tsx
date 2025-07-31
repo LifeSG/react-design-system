@@ -13,7 +13,7 @@ describe("ColDiv Component", () => {
 
         expect(container.firstChild).toHaveStyleRule(
             "grid-column",
-            "auto / span 1"
+            "auto/span 1"
         );
     });
 
@@ -26,9 +26,9 @@ describe("ColDiv Component", () => {
 
         expect(container.firstChild).toHaveStyleRule(
             "grid-column",
-            "auto / span 2",
+            "auto/span 2",
             {
-                media: `screen and (max-width: 320px)`,
+                media: `screen and (max-width:  320px)`,
             }
         );
     });
@@ -42,9 +42,9 @@ describe("ColDiv Component", () => {
 
         expect(container.firstChild).toHaveStyleRule(
             "grid-column",
-            "auto / span 3",
+            "auto/span 3",
             {
-                media: `screen and (max-width: 375px)`,
+                media: `screen and (max-width:  375px)`,
             }
         );
     });
@@ -58,9 +58,9 @@ describe("ColDiv Component", () => {
 
         expect(container.firstChild).toHaveStyleRule(
             "grid-column",
-            "auto / span 4",
+            "auto/span 4",
             {
-                media: `screen and (max-width: 480px)`,
+                media: `screen and (max-width:  480px)`,
             }
         );
     });
@@ -74,9 +74,9 @@ describe("ColDiv Component", () => {
 
         expect(container.firstChild).toHaveStyleRule(
             "grid-column",
-            "1 / span 2",
+            "1/span 2",
             {
-                media: `screen and (max-width: 320px)`,
+                media: `screen and (max-width:  320px)`,
             }
         );
     });
@@ -90,9 +90,9 @@ describe("ColDiv Component", () => {
 
         expect(container.firstChild).toHaveStyleRule(
             "grid-column",
-            "2 / span 4",
+            "2/span 4",
             {
-                media: `screen and (max-width: 1024px)`,
+                media: `screen and (max-width:  1024px)`,
             }
         );
     });

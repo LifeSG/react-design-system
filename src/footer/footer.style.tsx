@@ -57,13 +57,13 @@ export const LinkSection = styled.ul`
     grid-column: 3 / span 4;
     list-style-type: none;
 
-    :nth-of-type(2) {
+    &:nth-of-type(2) {
         // 2nd col
         grid-column: 7 / span 4;
     }
 
     li {
-        :not(:last-child) {
+        &:not(:last-child) {
             margin-bottom: ${Spacing["spacing-8"]};
         }
 
@@ -76,7 +76,7 @@ export const LinkSection = styled.ul`
         // first col
         grid-column: 1 / span 6;
 
-        :nth-of-type(2) {
+        &:nth-of-type(2) {
             // 2nd col
             grid-column: 7 / span 6;
         }
@@ -86,7 +86,7 @@ export const LinkSection = styled.ul`
         // first col
         grid-column: 1 / span 4;
 
-        :nth-of-type(2) {
+        &:nth-of-type(2) {
             // 2nd col
             grid-column: 5 / span 4;
         }

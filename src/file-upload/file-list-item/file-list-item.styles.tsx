@@ -51,7 +51,7 @@ export const Item = styled.li<ItemStyleProps>`
     width: 100%;
     border: none;
 
-    :not(:last-child) {
+    &:not(:last-child) {
         margin-bottom: ${Spacing["spacing-16"]};
     }
 
@@ -70,7 +70,7 @@ export const Item = styled.li<ItemStyleProps>`
             `;
         } else if (props.$sortable) {
             return css`
-                :hover {
+                &:hover {
                     cursor: grab;
                 }
                 // Following recommendation by the library for touch events
@@ -273,7 +273,7 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
 export const IconButton = styled(DSIconButton)`
     min-width: unset;
 
-    :not(:last-child) {
+    &:not(:last-child) {
         margin-right: ${Spacing["spacing-16"]};
     }
 `;
