@@ -76,11 +76,9 @@ export const Description = styled(Typography.BodyMD)`
     margin-top: 0.25rem;
 `;
 
-const StyledExpandable = styled.div`
+export const Expandable = animated(styled.div`
     overflow: hidden;
-`;
-
-export const AnimatedExpandable = animated(StyledExpandable);
+`);
 
 export const ExpandableChild = styled.div`
     border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};

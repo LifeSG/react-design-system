@@ -55,9 +55,9 @@ export namespace Typography {
                 color: ${Colour.hyperlink};
                 text-decoration: none;
 
-                :hover,
-                :active,
-                :focus {
+                &:hover,
+                &:active,
+                &:focus {
                     color: ${Colour["text-hover"]};
                 }
             `}

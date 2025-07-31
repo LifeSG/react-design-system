@@ -12,12 +12,12 @@ import { TimeSlot } from "../time-slot-bar/types";
 import { DateHelper } from "../util";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
-    AnimatedExpandable,
     CellWeekText,
     ChevronIcon,
     CollapseExpandAllButton,
     CollapseExpandAllWrapper,
     ColumnWeekCell,
+    Expandable,
     HeaderCellWeek,
     HeaderCellWeekColumn,
     TimeColumn,
@@ -417,7 +417,7 @@ export const TimeSlotBarWeekDays = ({
 
     const renderTimeSlotBarCells = () => {
         return (
-            <AnimatedExpandable style={expandableStyles}>
+            <Expandable style={expandableStyles}>
                 <ColumnWeekCell
                     ref={cellsRef}
                     key={`week-cell-${calendarDate.format(dateFormat)}`}
@@ -481,7 +481,7 @@ export const TimeSlotBarWeekDays = ({
                         );
                     })}
                 </ColumnWeekCell>
-            </AnimatedExpandable>
+            </Expandable>
         );
     };
 

@@ -123,14 +123,14 @@ export const BasicInput = styled.input<InputStyleProps>`
         }
     }
 
-    ::placeholder,
-    ::-webkit-input-placeholder {
+    &::placeholder,
+    &::-webkit-input-placeholder {
         color: ${Colour["text-subtler"]};
     }
 
     // Chrome, Safari, Edge, Opera
-    ::-webkit-outer-spin-button,
-    ::-webkit-inner-spin-button {
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }

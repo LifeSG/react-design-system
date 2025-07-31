@@ -38,7 +38,7 @@ const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
             {...otherProps}
         >
             {loading && <Spinner />}
-            <span>{children}</span>
+            {children}
         </Main>
     );
 };
@@ -74,7 +74,7 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
             {...otherProps}
         >
             {loading && <Spinner />}
-            <span>{children}</span>
+            {children}
         </Main>
     );
 };
@@ -110,7 +110,7 @@ const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
             {...otherProps}
         >
             {loading && <Spinner />}
-            <span>{children}</span>
+            {children}
         </Main>
     );
 };

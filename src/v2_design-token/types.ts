@@ -1,7 +1,7 @@
 import { css } from "styled-components";
 
 /** @deprecated */
-export type CssValue = ReturnType<typeof css>;
+export type CssValue = ReturnType<typeof css> | string | number;
 
 /** @deprecated */
 export interface V2_DesignTokenSet {

@@ -56,12 +56,10 @@ export const Wrapper = styled.div`
     column-gap: ${Spacing["spacing-4"]};
 `;
 
-const StyledExpandable = styled.div`
+export const Expandable = animated(styled.div`
     grid-column: 2 / -1;
     overflow: hidden;
-`;
-
-export const AnimatedExpandable = animated(StyledExpandable);
+`);
 
 export const ColumnWeekCell = styled.div`
     display: flex;
