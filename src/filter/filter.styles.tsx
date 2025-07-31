@@ -2,8 +2,7 @@ import styled from "styled-components";
 import { Button } from "../button";
 import { ButtonWithIcon } from "../button-with-icon";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
-import { Typography } from "../typography";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // CONTAINER STYLES
@@ -53,7 +52,8 @@ export const FilterHeader = styled.div`
     }
 `;
 
-export const FilterTitle = styled(Typography.HeadingXS).attrs({ as: "p" })`
+export const FilterTitle = styled.h2`
+    ${Font["heading-xs-semibold"]}
     flex: 1;
     margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
         ${Spacing["spacing-20"]};
