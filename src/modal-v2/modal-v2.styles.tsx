@@ -10,26 +10,6 @@ interface Props {
     $enableScroll?: boolean;
 }
 
-const visibilityStyle = (
-    show: boolean,
-    animationFrom: ModalAnimationDirection
-) => {
-    if (show) {
-        return `
-			${animationFrom}: 0;
-			opacity: 1;
-			transition: all 300ms cubic-bezier(0.21, 0.79, 0.53, 1);
-			transition-delay: 200ms;
-		`;
-    }
-
-    return `
-		${animationFrom}: -3%;
-		opacity: 0;
-		transition: all 300ms cubic-bezier(0.4, 0.34, 0.38, 1);
-	`;
-};
-
 export const Container = styled.div<Props>`
     position: relative;
     width: 100%;
@@ -47,8 +27,6 @@ export const Container = styled.div<Props>`
                   overflow: hidden;
               `}
 
-    ${(props) => visibilityStyle(props.$show, props.$animationFrom || "bottom")}
-
     ${MediaQuery.MaxWidth.sm} {
         ${(props) => {
             return css`
@@ -62,6 +40,26 @@ export const Container = styled.div<Props>`
 
         top: ${(props) => props.$offsetTop || 0}px;
     }
+
+    ${(props) => css`
+        &[data-status="initial"] {
+            opacity: 0;
+            ${props.$animationFrom}: -3%;
+        }
+
+        &[data-status="open"] {
+            opacity: 1;
+            ${props.$animationFrom}: 0;
+            transition: all 300ms cubic-bezier(0.21, 0.79, 0.53, 1);
+            transition-delay: 200ms;
+        }
+
+        &[data-status="close"] {
+            opacity: 0;
+            ${props.$animationFrom}: -3%;
+            transition: all 300ms cubic-bezier(0.4, 0.34, 0.38, 1);
+        }
+    `}
 `;
 
 export const ScrollContainer = styled.div`
