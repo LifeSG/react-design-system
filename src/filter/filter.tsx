@@ -109,7 +109,7 @@ const FilterBase = ({
                         <CrossIcon />
                     </FilterHeaderButton>
                 )}
-                <FilterTitle weight="semibold">{headerTitle}</FilterTitle>
+                <FilterTitle>{headerTitle}</FilterTitle>
                 <FilterClearButton
                     styleType="link"
                     type="button"
