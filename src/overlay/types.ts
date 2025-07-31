@@ -12,7 +12,6 @@ export interface OverlayProps {
     zIndex?: number | undefined;
     onOverlayClick?: (() => void) | undefined;
     id?: string | undefined;
-    enableScroll?: boolean | undefined;
 }
 
 /**
