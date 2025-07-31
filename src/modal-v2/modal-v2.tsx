@@ -3,6 +3,7 @@ import {
     useDismiss,
     useFloating,
     useInteractions,
+    useTransitionStatus,
 } from "@floating-ui/react";
 import { useEffect, useState } from "react";
 import { Overlay } from "../overlay/overlay";
@@ -37,6 +38,10 @@ export const ModalV2 = ({
             }
         },
     });
+    const { isMounted, status } = useTransitionStatus(context, {
+        duration: 300,
+    });
+
     const dismiss = useDismiss(context);
     const { getFloatingProps } = useInteractions([dismiss]);
 
@@ -107,10 +112,10 @@ export const ModalV2 = ({
         </FloatingFocusManager>
     );
 
-    return show ? (
+    return (
         <Overlay
             data-testid={`${id}-overlay`}
-            show
+            show={show}
             enableOverlayClick={enableOverlayClick}
             onOverlayClick={onOverlayClick}
             id={id}
@@ -118,22 +123,22 @@ export const ModalV2 = ({
             zIndex={zIndex}
         >
             <Container
-                $show
+                $show={show}
                 $animationFrom={animationFrom}
                 data-testid={id}
                 $verticalHeight={verticalHeight}
                 $offsetTop={offsetTop}
                 $enableScroll={enableScroll}
                 {...otherProps}
+                data-status={status}
             >
-                {enableScroll ? (
-                    <ScrollContainer>{renderInnerModal()}</ScrollContainer>
-                ) : (
-                    renderInnerModal()
-                )}
+                {isMounted &&
+                    (enableScroll ? (
+                        <ScrollContainer>{renderInnerModal()}</ScrollContainer>
+                    ) : (
+                        renderInnerModal()
+                    ))}
             </Container>
         </Overlay>
-    ) : (
-        <></>
     );
 };
