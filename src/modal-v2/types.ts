@@ -1,11 +1,17 @@
-import React from "react";
-
 export type ModalAnimationDirection = "top" | "bottom" | "left" | "right";
 
-export interface ModalBoxV2Props extends React.HTMLAttributes<HTMLDivElement> {
+export interface ModalCardProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
-    showCloseButton?: boolean | undefined;
-    onClose?: (() => void) | undefined;
+    customStyle?: React.CSSProperties | undefined;
+}
+
+export interface ModalCloseButtonProps {
+    customStyle?: React.CSSProperties | undefined;
+}
+
+export interface ModalContentProps {
+    children: React.ReactNode;
+    customStyle?: React.CSSProperties | undefined;
 }
 
 export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
