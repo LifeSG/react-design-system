@@ -7,6 +7,7 @@ import {
 } from "@floating-ui/react";
 import { useEffect, useState } from "react";
 import { Overlay } from "../overlay/overlay";
+import { ModalContext } from "./modal-context";
 import { Container, ModalContainer, ScrollContainer } from "./modal-v2.styles";
 import { ModalV2Props } from "./types";
 
@@ -42,7 +43,10 @@ export const ModalV2 = ({
         duration: 300,
     });
 
-    const dismiss = useDismiss(context);
+    const dismiss = useDismiss(context, {
+        /* handled by overlayclick */
+        outsidePress: false,
+    });
     const { getFloatingProps } = useInteractions([dismiss]);
 
     // =============================================================================
@@ -132,12 +136,16 @@ export const ModalV2 = ({
                 {...otherProps}
                 data-status={status}
             >
-                {isMounted &&
-                    (enableScroll ? (
-                        <ScrollContainer>{renderInnerModal()}</ScrollContainer>
-                    ) : (
-                        renderInnerModal()
-                    ))}
+                <ModalContext.Provider value={{ onClose }} key={id}>
+                    {isMounted &&
+                        (enableScroll ? (
+                            <ScrollContainer>
+                                {renderInnerModal()}
+                            </ScrollContainer>
+                        ) : (
+                            renderInnerModal()
+                        ))}
+                </ModalContext.Provider>
             </Container>
         </Overlay>
     );
