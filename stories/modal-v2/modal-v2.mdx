@@ -1,0 +1,66 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import * as ModalV2Stories from "./modal-v2.stories";
+import { PropsTable } from "./props-table";
+import { StyleTokensTable } from "./style-tokens-table";
+
+<Meta of={ModalV2Stories} />
+
+# ModalV2
+
+## Overview
+
+A window or pop up that displays over other page contents and provides information or actions
+that a user can perform.
+
+```tsx
+import { ModalV2 } from "@lifesg/react-design-system/modal-v2";
+```
+
+There are 4 components that can be used.
+
+Correct usage of these components will ensure the modal will have
+the correct padding and accessibility behaviours.
+
+-   `ModalV2` represents the base modal overlay. This is a **mandatory component** to be used.
+-   `ModalV2.Card` represents the dialog box that comes with a rounded border.
+    -   It must be rendered as a child of `ModalV2`
+    -   Will only render children that are `ModalV2.Content` or `ModalV2.CloseButton`
+    -   Stylable with `customStyle` prop
+-   `ModalV2.Content` represents the content to be displayed within ModalV2.Card.
+    -   It must be rendered as a child of ModalV2.Card
+    -   Stylable with `customStyle` prop
+-   `ModalV2.CloseButton` represents the close button to close the modal.
+    -   Optional, but if used, it must be rendered as a child of ModalV2.Card
+    -   Stylable with `customStyle` prop
+
+<Canvas of={ModalV2Stories.Default} />
+
+## Without close button
+
+<Canvas of={ModalV2Stories.WithoutCloseButton} />
+
+## Custom content
+
+<Canvas of={ModalV2Stories.CustomContent} />
+
+## Stacked modals
+
+In some cases, you would require a stacked modal layout. Here is how you can construct it.
+
+<Canvas of={ModalV2Stories.StackedModals} />
+
+## Scrollable modals
+
+If the content of your modal is longer than the screen size, use scrollable modals.
+
+<Canvas of={ModalV2Stories.ScrollableModals} />
+
+## Component API
+
+Both components also inherit the [HTMLDivElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement).
+
+<PropsTable />
+
+## Component style tokens
+
+<StyleTokensTable />
