@@ -68,6 +68,7 @@ export const BoxContainer = ({
                 <Expandable
                     style={expandableStyles}
                     data-testid="expandable-container"
+                    id={"expandable-container"}
                 >
                     <ChildContainer ref={childRef}>{children}</ChildContainer>
                 </Expandable>
@@ -92,6 +93,7 @@ export const BoxContainer = ({
                             subComponentTestIds?.displayStateIcon ||
                             `${displayState}-icon`
                         }
+                        aria-label={displayState}
                     >
                         <AlertIcon />
                     </LabelIcon>
@@ -107,7 +109,12 @@ export const BoxContainer = ({
                 <Handle
                     onClick={onHandleClick}
                     type="button"
-                    aria-label={showExpanded ? "Collapse" : "Expand"}
+                    aria-label={
+                        showExpanded
+                            ? `${title} expanded`
+                            : `${title} collapsed`
+                    }
+                    aria-controls="expandable-container"
                     data-testid={subComponentTestIds?.handle || "handle"}
                 >
                     <HandleIconContainer $expanded={showExpanded}>
@@ -124,10 +131,12 @@ export const BoxContainer = ({
                 data-testid="header"
                 onClick={interactiveHeader ? onHandleClick : undefined}
                 $interactive={interactiveHeader}
+                role="group"
             >
-                <LabelWrapper>
+                <LabelWrapper role="status" tabIndex={0}>
                     <LabelText
                         data-testid={subComponentTestIds?.title || "title"}
+                        id="header-title"
                     >
                         {title}
                     </LabelText>
