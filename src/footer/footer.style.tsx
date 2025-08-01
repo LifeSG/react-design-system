@@ -12,7 +12,7 @@ export const BaseFooter = styled.footer`
     background: ${Colour["bg-strong"]};
 `;
 
-export const StyledFooterLink = styled(Typography.LinkSM)`
+export const StyledFooterLink = styled(Typography.LinkMD)`
     color: ${Colour.text};
 `;
 
@@ -26,13 +26,6 @@ export const FullWidthDivider = styled(Divider)`
 
 export const TopSection = styled(Layout.Content)`
     padding: ${Spacing["spacing-64"]} 0;
-    display: flex;
-    align-items: flex-start;
-
-    [data-id="container"] {
-        display: flex;
-        width: 100%;
-    }
 
     ${MediaQuery.MaxWidth.lg} {
         padding: ${Spacing["spacing-32"]} 0;
@@ -68,13 +61,12 @@ export const LinkSectionWrapper = styled.div`
     max-width: calc(32% + ${Spacing["spacing-32"]});
 
     ${MediaQuery.MaxWidth.lg} {
-        gap: ${Spacing["spacing-16"]};
         max-width: 100%;
     }
 `;
 
 export const LinkSection = styled.ul`
-    flex: 1 1 auto;
+    flex: 1 1 50%;
     list-style-type: none;
 
     li {
@@ -86,23 +78,15 @@ export const LinkSection = styled.ul`
             display: inline-block;
         }
     }
-
-    ${MediaQuery.MaxWidth.lg} {
-        flex: 1 1 50%;
-        width: 50%;
-    }
 `;
 
 export const AddonSection = styled.div`
-    max-width: 33%;
-    flex: 1 1 33%;
+    flex: 0 1 33%;
     margin-left: auto;
 
     ${MediaQuery.MaxWidth.lg} {
-        max-width: 100%;
         flex: 1 1 100%;
         margin-left: 0;
-        width: 100%;
     }
 `;
 
@@ -143,7 +127,6 @@ export const BottomSectionContent = styled.div`
 
 export const CopyrightSection = styled(BottomSectionContent)`
     grid-column: 7 / span 6;
-    justify-content: flex-end;
     justify-content: flex-end;
 
     ${MediaQuery.MaxWidth.lg} {

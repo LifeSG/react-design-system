@@ -10,13 +10,13 @@ export const ResourceAddon = (): JSX.Element => {
             case "mylegacy":
                 return (
                     <>
-                        <Typography.BodySM
+                        <Typography.BodyMD
                             weight="regular"
                             data-testid="resource-addon-title"
                         >
                             My Legacy is a LifeSG initiative, brought to you by
                             the following government agencies:
-                        </Typography.BodySM>
+                        </Typography.BodyMD>
                         <Items>
                             <Img
                                 data-testid="footer-govtech-logo"
