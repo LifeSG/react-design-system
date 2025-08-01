@@ -101,20 +101,36 @@ export const ModalTable = () => (
     </Table>
 );
 
-export const ModalBoxTable = () => (
+export const ModalCardTable = () => (
     <Table>
         <tr>
-            <NameCol>showCloseButton</NameCol>
-            <DescriptionCol propTypes={["boolean"]}>
-                This toggles the visibility of the close button
+            <NameCol>customStyle</NameCol>
+            <DescriptionCol propTypes={["React.CSSProperties"]}>
+                Custom styles for the modal dialog box
             </DescriptionCol>
-            <DefaultCol>{["true"]}</DefaultCol>
+            <DefaultCol />
         </tr>
+    </Table>
+);
+
+export const ModalContentTable = () => (
+    <Table>
         <tr>
-            <NameCol>onClose</NameCol>
-            <DescriptionCol propTypes={["() => void"]}>
-                Callback when the close button is clicked. Will be triggered if
-                the close button is visible
+            <NameCol>customStyle</NameCol>
+            <DescriptionCol propTypes={["React.CSSProperties"]}>
+                Custom styles for the modal content container
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
+    </Table>
+);
+
+export const ModalCloseButtonTable = () => (
+    <Table>
+        <tr>
+            <NameCol>customStyle</NameCol>
+            <DescriptionCol propTypes={["React.CSSProperties"]}>
+                Custom styles for the modal close Button
             </DescriptionCol>
             <DefaultCol />
         </tr>
@@ -123,12 +139,20 @@ export const ModalBoxTable = () => (
 
 const PROPS_TABLE_DATA: TabAttribute[] = [
     {
-        title: "Modal",
+        title: "ModalV2",
         component: <ModalTable />,
     },
     {
-        title: "Modal.Box",
-        component: <ModalBoxTable />,
+        title: "ModalV2.Card",
+        component: <ModalCardTable />,
+    },
+    {
+        title: "ModalV2.Content",
+        component: <ModalContentTable />,
+    },
+    {
+        title: "ModalV2.CloseButton",
+        component: <ModalCloseButtonTable />,
     },
 ];
 
