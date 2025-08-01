@@ -6,11 +6,11 @@ import { Spacing } from "../theme";
 // =============================================================================
 // STYLING
 // =============================================================================
-interface TimeSlotProps {
+interface ScheduleProps {
     $loading: boolean | undefined;
 }
 
-export const Container = styled.div<TimeSlotProps>`
+export const Container = styled.div<ScheduleProps>`
     width: 100%;
     ${(props) => {
         if (props.$loading) {

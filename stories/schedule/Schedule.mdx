@@ -1,21 +1,21 @@
 import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import * as TimeSlotStories from "./timeslot.stories";
+import * as ScheduleStories from "./schedule.stories";
 import { PropsTable } from "./props-table";
 
-<Meta of={TimeSlotStories} />
+<Meta of={ScheduleStories} />
 
-# TimeSlot
+# Schedule
 
 A comprehensive calendar component that supports day and week views with time slots for appointment scheduling and resource management.
 
 ## Usage
 
 ```jsx
-import { TimeSlot } from "src/timeslot";
+import { Schedule } from "src/schedule";
 
-<TimeSlot
+<Schedule
     date="2025-07-22"
-    data-id="timeslot"
+    data-id="schedule"
     view="day"
     minTime="00:00"
     maxTime="23:59"
@@ -27,6 +27,7 @@ import { TimeSlot } from "src/timeslot";
     onTodayClick={onTodayClick}
     onSlotClick={onSlotClick}
     onCalendarDateSelect={onCalendarDateSelect}
+    emptySlotPopover={emptySlotPopover}
 />;
 ```
 
@@ -34,33 +35,33 @@ import { TimeSlot } from "src/timeslot";
 
 ### Default Day View
 
-<Canvas of={TimeSlotStories.Default} />
+<Canvas of={ScheduleStories.Default} />
 
 ### Week View
 
-<Canvas of={TimeSlotStories.WeekView} />
+<Canvas of={ScheduleStories.WeekView} />
 
 ### Loading State
 
-<Canvas of={TimeSlotStories.Loading} />
+<Canvas of={ScheduleStories.Loading} />
 
 ### Empty State
 
-<Canvas of={TimeSlotStories.Empty} />
+<Canvas of={ScheduleStories.Empty} />
 
 ## Data Structure
 
-The TimeSlot component expects data in the following format. For detailed prop descriptions, see the [Component API](#component-api) section below.
+The Schedule component expects data in the following format. For detailed prop descriptions, see the [Component API](#component-api) section below.
 
 ```typescript
-interface TimeSlotRowData {
+interface ScheduleRowData {
     id?: string;
     name: string; // Service/resource name
-    rowCells: TimeSlotRowCellData[];
-    onRowNameClick?: (rowData: TimeSlotRowData, e: React.MouseEvent) => void;
+    rowCells: ScheduleRowCellData[];
+    onRowNameClick?: (rowData: ScheduleRowData, e: React.MouseEvent) => void;
 }
 
-interface TimeSlotRowCellData {
+interface ScheduleRowCellData {
     id?: string;
     date: string; // YYYY-MM-DD format
     startTime: string; // HH:mm format
@@ -68,8 +69,8 @@ interface TimeSlotRowCellData {
     status: "available" | "booked" | "blocked" | "pending";
     booked?: number; // Number of bookings
     capacity?: number; // Total capacity
-    customPopover?: TimeSlotPopoverProps;
-    onClick?: (data: TimeSlotRowCellData, e: React.MouseEvent) => void;
+    customPopover?: SchedulePopoverProps;
+    onClick?: (data: ScheduleRowCellData, e: React.MouseEvent) => void;
 }
 ```
 

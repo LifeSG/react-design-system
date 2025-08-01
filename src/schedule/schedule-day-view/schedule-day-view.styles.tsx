@@ -24,13 +24,18 @@ const iconStyle = css`
 
 export const ArrowLeft = styled(ChevronLeftIcon)`
     ${iconStyle}
+    margin-left: 10px;
 `;
 
 export const ArrowRight = styled(ChevronRightIcon)`
     ${iconStyle}
 `;
 
-export const TimeSlotContainer = styled.div`
+export const ArrowContainer = styled.div`
+    width: 10%;
+`;
+
+export const ScheduleContainer = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -47,12 +52,22 @@ export const LoadingContainer = styled.div`
     background: ${Colour["bg"]};
 `;
 
-export const HeaderContainer = styled.div<{ columnCount: number }>`
-    display: grid;
-    grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(
-            ${({ columnCount }) => columnCount},
-            1fr
-        );
+export const HeaderContainer = styled.div<{
+    columnCount: number;
+    $isMobile: boolean;
+}>`
+    ${({ $isMobile, columnCount }) =>
+        $isMobile
+            ? css`
+                  display: block;
+              `
+            : css`
+                  display: grid;
+                  grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(
+                          ${columnCount},
+                          1fr
+                      );
+              `}
     max-height: ${HEADER_HEIGHT}px;
     border-top-right-radius: ${Radius["md"]};
     border-top-left-radius: ${Radius["md"]};
@@ -64,7 +79,7 @@ export const HeaderContainer = styled.div<{ columnCount: number }>`
 
     /* Hide the vertical scrollbar visually but keep its space */
     &::-webkit-scrollbar {
-        width: 17px; /* Match typical scrollbar width */
+        width: 10px;
         background: ${Colour["bg-strong"]};
         border-top-right-radius: ${Radius["md"]};
     }
@@ -87,30 +102,27 @@ export const BlankCell = styled.div`
 export const ServiceContainer = styled.div<{ columnCount: number }>`
     display: grid;
     grid-template-columns: repeat(${({ columnCount }) => columnCount}, 1fr);
-    background: ${Colour["bg-strong"]};
+    grid-column-start: 2;
+    grid-column-end: ${({ columnCount }) => columnCount + 2};
 `;
 
 export const ServiceColumn = styled.div`
     display: flex;
     justify-content: space-between;
+    gap: 10px;
     align-items: center;
     min-width: ${MIN_COLUMN_WIDTH}px;
+    flex: 1;
     padding: 16px 0;
+    background: ${Colour["bg-strong"]};
     border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
     &:last-child {
         border-right: none;
     }
 `;
 
-export const StyledContainer = styled.div`
-    display: flex;
-    align-items: center;
-    width: 100%;
-`;
-
 export const StyleDiv = styled.div`
-    max-width: 80%;
-    padding-left: ${Spacing["spacing-16"]};
+    width: 80%;
 `;
 
 export const Title = styled(Typography.BodyMD)`
@@ -145,6 +157,8 @@ export const BodyContainer = styled.div<{ columnCount: number }>`
             ${({ columnCount }) => columnCount},
             1fr
         );
+    position: relative;
+    width: 100%;
     overflow-x: auto;
     overflow-y: auto;
     flex: 1;
@@ -183,6 +197,8 @@ export const SlotGrid = styled.div<{ columnCount: number }>`
     grid-template-columns: repeat(${({ columnCount }) => columnCount}, 1fr);
     min-width: max-content;
     position: relative;
+    grid-column-start: 2;
+    grid-column-end: ${({ columnCount }) => columnCount + 2};
 `;
 
 export const SlotColumn = styled.div`
@@ -200,9 +216,6 @@ export const SlotCell = styled.div<{
     startTime?: string;
 }>`
     min-height: ${CELL_HEIGHT}px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     position: relative;
     border-bottom: ${Border["width-010"]} ${Colour["border"]}
         ${({ startTime }) => (startTime?.endsWith(":00") ? "dashed" : "solid")};
@@ -214,7 +227,7 @@ export const SlotContent = styled(Typography.BodyXS)<{
     duration?: number;
 }>`
     margin-top: 0;
-    width: calc(100% - 28px);
+    width: calc(100% - 27px);
     padding: 8px;
     position: absolute;
     font-weight: 500;
@@ -253,7 +266,7 @@ export const SlotContent = styled(Typography.BodyXS)<{
     color: ${({ status }) =>
         status === "blocked" ? Colour["text-inverse"] : Colour["text-subtle"]};
 
-    border-left: 4px solid
+    border-left: ${Border["width-040"]} solid
         ${({ status }) =>
             status === "available" ? Colour["icon-success"] : "none"};
 `;
@@ -270,12 +283,12 @@ export const Timeline = styled.div<{ $top: number }>`
     height: 2px;
     background: ${Colour["icon-primary"]};
     top: ${({ $top }) => $top}px;
-    z-index: 4;
+    z-index: 2;
     /* Add a small circle at the start of the timeline */
     &::before {
         content: "";
         position: absolute;
-        left: -6px;
+        left: 0px;
         top: -6px;
         width: 12px;
         height: 12px;

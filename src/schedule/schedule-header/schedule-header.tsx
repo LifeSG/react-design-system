@@ -67,6 +67,7 @@ export const ScheduleHeader = ({
                         onLeftArrowClick={onPreviousDayClick}
                         onRightArrowClick={onNextDayClick}
                         onCalendarDateSelect={onCalendarDateSelect}
+                        $isMobile={$isMobile}
                     />
                 </LeftSection>
 

@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
-import { TimeSlot, TimeSlotProps, TimeSlotRowData } from "../../src/timeslot";
+import { TimeSlot, TimeSlotProps, TimeSlotRowData } from "../../src/schedule";
 
 // Mock react-responsive
 jest.mock("react-responsive", () => ({

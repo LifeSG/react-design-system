@@ -65,6 +65,8 @@ const Component = ({
             );
         }
     };
+    console.log(22, containerRef);
+    
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -73,6 +75,7 @@ const Component = ({
         <WithOptionalPopover
             containerRef={containerRef}
             customPopover={customPopover}
+            data-id="222222"
         >
             <BlockContainer
                 key={`block-container-key`}

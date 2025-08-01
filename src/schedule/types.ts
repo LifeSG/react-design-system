@@ -1,29 +1,29 @@
 import { PopoverV2TriggerType } from "../popover-v2";
 
-export type TimeSlotCellType = "booked" | "available" | "blocked" | "pending";
+export type ScheduleCellType = "booked" | "available" | "blocked" | "pending";
 
-export interface TimeSlotRowData {
+export interface ScheduleRowData {
     id?: string;
     name: string;
-    rowCells: TimeSlotRowCellData[];
-    onRowNameClick?: (rowData: TimeSlotRowData, e: React.MouseEvent) => void;
+    rowCells: ScheduleRowCellData[];
+    onRowNameClick?: (rowData: ScheduleRowData, e: React.MouseEvent) => void;
 }
 
-export interface TimeSlotPopoverProps {
+export interface SchedulePopoverProps {
     trigger: PopoverV2TriggerType;
     content: string | JSX.Element | (() => React.ReactNode);
     delay?: { open?: number; close?: number };
     offset?: number;
 }
 
-export interface TimeSlotProps {
+export interface ScheduleProps {
     id?: string;
     className?: string;
     "data-testid"?: string;
     view?: "day" | "week";
     date: string;
     emptyContentMessage?: string;
-    rowData: TimeSlotRowData[];
+    rowData: ScheduleRowData[];
     loading?: boolean;
     // HH:mm format
     minTime?: string;
@@ -38,19 +38,19 @@ export interface TimeSlotProps {
     onCalendarDateSelect?: (currentDate: string) => void;
     onTodayClick?: () => void;
     onEmptySlotClick?: () => void;
-    onSlotClick?: (data: TimeSlotRowCellData, e: React.MouseEvent) => void;
+    emptySlotPopover?: SchedulePopoverProps;
 }
 
-export interface TimeSlotRowCellData {
+export interface ScheduleRowCellData {
     id?: string;
     // HH:mm format
     startTime: string;
     // HH:mm format
     endTime: string;
-    status: TimeSlotCellType;
+    status: ScheduleCellType;
     capacity?: number;
     date: string;
     booked?: number;
-    customPopover?: TimeSlotPopoverProps;
-    onClick?: (data: TimeSlotRowCellData, e: React.MouseEvent) => void;
+    customPopover?: SchedulePopoverProps;
+    onClick?: (data: ScheduleRowCellData, e: React.MouseEvent) => void;
 }

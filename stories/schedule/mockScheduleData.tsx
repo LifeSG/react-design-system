@@ -1,6 +1,6 @@
-import { TimeSlotRowData } from "src/timeslot";
+import { ScheduleRowData } from "src/schedule";
 
-export const mockTimeSlotData: TimeSlotRowData[] = [
+export const mockScheduleData: ScheduleRowData[] = [
     {
         id: "1",
         name: "Judge Ahmad Bin Yusof",
@@ -80,8 +80,8 @@ export const mockTimeSlotData: TimeSlotRowData[] = [
             {
                 id: "2-5",
                 date: "2025-07-22",
-                startTime: "09:30",
-                endTime: "10:45",
+                startTime: "15:30",
+                endTime: "16:45",
                 status: "pending",
                 capacity: 5,
                 booked: 5,
@@ -237,6 +237,62 @@ export const mockTimeSlotData: TimeSlotRowData[] = [
                 status: "available",
                 capacity: 2,
                 booked: 0,
+            },
+        ],
+    },
+    {
+        id: "9",
+        name: "Service with Popovers",
+        // Empty slot popover - shows when clicking on empty time slots
+        rowCells: [
+            {
+                id: "slot-1",
+                startTime: "09:00",
+                endTime: "09:30",
+                status: "available",
+                capacity: 5,
+                booked: 2,
+                date: "2025-07-31",
+                // Slot content popover - shows when clicking on the slot content
+                customPopover: {
+                    trigger: "click",
+                    content: (
+                        <div>
+                            <h4>Booking Details</h4>
+                            <p>Time: 9:00 AM - 9:30 AM</p>
+                            <p>Available: 3 spots remaining</p>
+                            <p>Price: $50</p>
+                        </div>
+                    ),
+                    delay: { open: 150, close: 200 },
+                },
+            },
+            {
+                id: "slot-2",
+                startTime: "10:00",
+                endTime: "10:30",
+                status: "booked",
+                capacity: 3,
+                booked: 3,
+                date: "2025-07-31",
+                customPopover: {
+                    trigger: "hover",
+                    content: "This slot is fully booked. No spots available.",
+                    delay: { open: 300, close: 100 },
+                },
+            },
+            {
+                id: "slot-3",
+                startTime: "14:00",
+                endTime: "15:00",
+                status: "blocked",
+                capacity: 0,
+                booked: 0,
+                date: "2025-07-31",
+                customPopover: {
+                    trigger: "click",
+                    content: "Service unavailable during this time period.",
+                },
             },
         ],
     },

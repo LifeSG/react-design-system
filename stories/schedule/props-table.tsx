@@ -13,7 +13,7 @@ const DATE_FORMAT = (
 
 const DATA: ApiTableSectionProps[] = [
     {
-        name: "TimeSlotProps",
+        name: "ScheduleProps",
         attributes: [
             {
                 name: "id",
@@ -32,7 +32,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "view",
-                description: "The view mode for the timeslot component",
+                description: "The view mode for the schedule component",
                 defaultValue: "day",
                 propTypes: [`"day"`, `"week"`],
             },
@@ -57,7 +57,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "rowData",
                 mandatory: true,
                 description: "The data used to render each unique rows",
-                propTypes: ["TimeSlotRowData[]"],
+                propTypes: ["ScheduleRowData[]"],
             },
             {
                 name: "loading",
@@ -70,7 +70,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "minTime",
                 description: (
                     <>
-                        The start time of this timeslot in {TIME_FORMAT} format.
+                        The start time of this schedule in {TIME_FORMAT} format.
                     </>
                 ),
                 defaultValue: "00:00",
@@ -79,7 +79,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "maxTime",
                 description: (
-                    <>The end time of this timeslot in {TIME_FORMAT} format.</>
+                    <>The end time of this schedule in {TIME_FORMAT} format.</>
                 ),
                 defaultValue: "23:59",
                 propTypes: ["string"],
@@ -165,13 +165,13 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: [
-                    "(data: TimeSlotRowCellData, e: React.MouseEvent) => void",
+                    "(data: ScheduleRowCellData, e: React.MouseEvent) => void",
                 ],
             },
         ],
     },
     {
-        name: "TimeSlotRowData",
+        name: "ScheduleRowData",
         attributes: [
             {
                 name: "id",
@@ -179,7 +179,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The identifier for this row. This can be useful if you
                         intend to utilise the <code>onRowNameClick</code>{" "}
-                        callback, as the <code>TimeSlotRowData</code> will get
+                        callback, as the <code>ScheduleRowData</code> will get
                         passed to the callback.
                     </>
                 ),
@@ -201,20 +201,20 @@ const DATA: ApiTableSectionProps[] = [
                         service or resource.
                     </>
                 ),
-                propTypes: ["TimeSlotRowCellData[]"],
+                propTypes: ["ScheduleRowCellData[]"],
             },
             {
                 name: "onRowNameClick",
                 description:
                     "The callback function to trigger when the row header name has been clicked.",
                 propTypes: [
-                    "(rowData: TimeSlotRowData, e: React.MouseEvent) => void",
+                    "(rowData: ScheduleRowData, e: React.MouseEvent) => void",
                 ],
             },
         ],
     },
     {
-        name: "TimeSlotRowCellData",
+        name: "ScheduleRowCellData",
         attributes: [
             {
                 name: "id",
@@ -222,7 +222,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The identifier for this cell. This can be useful if you
                         intend to utilise the <code>onClick</code> callback, as
-                        the <code>TimeSlotRowCellData</code> will get passed to
+                        the <code>ScheduleRowCellData</code> will get passed to
                         the callback.
                     </>
                 ),
@@ -288,20 +288,20 @@ const DATA: ApiTableSectionProps[] = [
                         <code>trigger=click</code> for this cell.
                     </>
                 ),
-                propTypes: ["TimeSlotPopoverProps"],
+                propTypes: ["SchedulePopoverProps"],
             },
             {
                 name: "onClick",
                 description:
                     "The callback function to trigger when a cell has been clicked.",
                 propTypes: [
-                    "(data: TimeSlotRowCellData, e: React.MouseEvent) => void",
+                    "(data: ScheduleRowCellData, e: React.MouseEvent) => void",
                 ],
             },
         ],
     },
     {
-        name: "TimeSlotPopoverProps",
+        name: "SchedulePopoverProps",
         attributes: [
             {
                 name: "trigger",

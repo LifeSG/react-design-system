@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-interface TimeslotBodyProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ScheduleBodyProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
 }
-export const TimeslotBody = ({
+export const ScheduleBody = ({
     children,
     ...otherprops
-}: TimeslotBodyProps) => {
+}: ScheduleBodyProps) => {
     return <Wrapper {...otherprops}>{children}</Wrapper>;
 };
 // =============================================================================
