@@ -246,7 +246,7 @@ export const timetableDefaultData: TimeTableRowData[] = [
                 subtitle: "Lorem ipsum dolor sit amet",
                 status: "filled",
                 customPopover: {
-                    trigger: "hover",
+                    trigger: "click",
                     content: "Additional info in popover",
                 },
                 onClick: (data: TimeTableRowCellData) => {
@@ -257,7 +257,7 @@ export const timetableDefaultData: TimeTableRowData[] = [
             },
         ],
         outOfRangeCellPopover: {
-            trigger: "hover",
+            trigger: "click",
             content: "Outside operating hours",
         },
         onRowNameClick: (rowData: TimeTableRowData) => {

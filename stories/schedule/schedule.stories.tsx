@@ -1,14 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import dayjs from "dayjs";
 import { useState } from "react";
-import { TimeSlot, TimeSlotRowCellData, TimeSlotRowData } from "src/timeslot";
+import { Schedule, SchedulePopoverProps, ScheduleRowData } from "src/schedule";
 import styled from "styled-components";
-type Component = typeof TimeSlot;
-import { mockTimeSlotData } from "./mockTimeSlotData";
+type Component = typeof Schedule;
+import { mockScheduleData } from "./mockScheduleData";
+import { ClockIcon } from "@lifesg/react-icons";
+import { Colour } from "src/theme";
 
 const meta: Meta<Component> = {
-    title: "Selection and input/TimeSlot",
-    component: TimeSlot,
+    title: "Selection and input/Schedule",
+    component: Schedule,
     parameters: {
         docs: {
             description: {
@@ -21,7 +23,7 @@ const meta: Meta<Component> = {
         view: {
             control: { type: "select" },
             options: ["day", "week"],
-            description: "The view mode for the timeslot",
+            description: "The view mode for the schedule",
         },
         date: {
             control: { type: "date" },
@@ -29,7 +31,7 @@ const meta: Meta<Component> = {
         },
         loading: {
             control: { type: "boolean" },
-            description: "Whether the timeslot is in loading state",
+            description: "Whether the schedule is in loading state",
         },
         minTime: {
             control: { type: "text" },
@@ -49,13 +51,22 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-const StyledTimeSlot = styled(TimeSlot)`
-    width: 900px;
+const StyledSchedule = styled(Schedule)`
+    width: 1100px;
     height: 600px;
 `;
+
+const PopoverContent = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    color: ${Colour["bg-primary"]};
+`;
+
 export const Default: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<TimeSlotRowData[]>(mockTimeSlotData);
+        const [results] = useState<ScheduleRowData[]>(mockScheduleData);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(false);
 
@@ -77,22 +88,24 @@ export const Default: StoryObj<Component> = {
             setDate(dayjs().format("YYYY-MM-DD"));
         };
 
-        const onSlotClick = (
-            data: TimeSlotRowCellData,
-            _e: React.MouseEvent
-        ) => {
-            console.log("Slot clicked:", data);
-            alert(`Clicked on slot ${data.startTime}-${data.endTime}`);
-        };
-
         const onCalendarDateSelect = (date: string) => {
             setDate(date);
         };
+        const emptySlotPopover: SchedulePopoverProps = {
+            trigger: "click",
+            content: (
+                <PopoverContent>
+                    <ClockIcon />
+                    <span>Empty Time Slot</span>
+                </PopoverContent>
+            ),
+            offset: 0,
+        };
 
         return (
-            <StyledTimeSlot
+            <StyledSchedule
                 date={date}
-                data-id="timeslot"
+                data-id="schedule"
                 view="day"
                 minTime="00:00"
                 maxTime="23:59"
@@ -102,8 +115,8 @@ export const Default: StoryObj<Component> = {
                 onNextDayClick={onNextDayClick}
                 onPreviousDayClick={onPreviousDayClick}
                 onTodayClick={onTodayClick}
-                onSlotClick={onSlotClick}
                 onCalendarDateSelect={onCalendarDateSelect}
+                emptySlotPopover={emptySlotPopover}
             />
         );
     },
@@ -111,7 +124,7 @@ export const Default: StoryObj<Component> = {
 
 export const WeekView: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<TimeSlotRowData[]>(mockTimeSlotData);
+        const [results] = useState<ScheduleRowData[]>(mockScheduleData);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(false);
 
@@ -133,18 +146,10 @@ export const WeekView: StoryObj<Component> = {
             setDate(dayjs().format("YYYY-MM-DD"));
         };
 
-        const onSlotClick = (
-            data: TimeSlotRowCellData,
-            _e: React.MouseEvent
-        ) => {
-            console.log("Slot clicked:", data);
-            alert(`Clicked on slot ${data.startTime}-${data.endTime}`);
-        };
-
         return (
-            <StyledTimeSlot
+            <StyledSchedule
                 date={date}
-                data-id="timeslot"
+                data-id="schedule"
                 view="week"
                 minTime="00:00"
                 maxTime="23:59"
@@ -154,7 +159,6 @@ export const WeekView: StoryObj<Component> = {
                 onNextDayClick={onNextDayClick}
                 onPreviousDayClick={onPreviousDayClick}
                 onTodayClick={onTodayClick}
-                onSlotClick={onSlotClick}
             />
         );
     },
@@ -162,7 +166,7 @@ export const WeekView: StoryObj<Component> = {
 
 export const Loading: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<TimeSlotRowData[]>(mockTimeSlotData);
+        const [results] = useState<ScheduleRowData[]>(mockScheduleData);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(true);
 
@@ -185,7 +189,7 @@ export const Loading: StoryObj<Component> = {
         };
 
         return (
-            <StyledTimeSlot
+            <StyledSchedule
                 date={date}
                 view="day"
                 minTime="08:00"
@@ -202,7 +206,7 @@ export const Loading: StoryObj<Component> = {
 
 export const Empty: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<TimeSlotRowData[]>([]);
+        const [results] = useState<ScheduleRowData[]>([]);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(false);
 
@@ -225,7 +229,7 @@ export const Empty: StoryObj<Component> = {
         };
 
         return (
-            <StyledTimeSlot
+            <StyledSchedule
                 date={date}
                 view="day"
                 minTime="08:00"

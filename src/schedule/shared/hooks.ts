@@ -52,12 +52,9 @@ export function useInitialScroll(
             );
 
             if (scrollPosition !== null) {
-                // Use setTimeout to ensure the component is fully rendered before scrolling
-                setTimeout(() => {
-                    if (bodyRef.current) {
-                        bodyRef.current.scrollTop = scrollPosition;
-                    }
-                }, 100);
+                if (bodyRef.current) {
+                    bodyRef.current.scrollTop = scrollPosition;
+                }
             }
         }
     }, [minTime, loading, initialScrollTime]);

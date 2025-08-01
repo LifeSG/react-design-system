@@ -31,7 +31,11 @@ export const RightSection = styled.div`
     gap: ${Spacing["spacing-16"]};
 `;
 
-export const StyledDateNavigator = styled(DateNavigator)<{}>``;
+export const StyledDateNavigator = styled(DateNavigator)<{
+    $isMobile?: boolean;
+}>`
+    ${({ $isMobile }) => ($isMobile ? `width: 100%;` : `width: 400px;`)}
+`;
 
 export const StyledText = styled(Typography.BodyMD)`
     color: ${Colour["text-subtler"]};

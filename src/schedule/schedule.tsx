@@ -1,20 +1,20 @@
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTheme } from "styled-components";
 import { useMediaQuery } from "react-responsive";
-import { TimeSlotProps } from "./types";
+import { ScheduleProps } from "./types";
 import { ScheduleHeader } from "./schedule-header/schedule-header";
-import { TimeslotBody } from "./timeslot-body";
-import { TimeSlotWeekView } from "./timeslot-week-view/timeslot-week-view";
-import { TimeSlotDayView } from "./timeslot-day-view/timeslot-day-view";
+import { ScheduleBody } from "./schedule-body";
+import { ScheduleWeekView } from "./schedule-week-view/schedule-week-view";
+import { ScheduleDayView } from "./schedule-day-view/schedule-day-view";
 import { Breakpoint } from "../theme";
 import { isEmpty } from "lodash";
 import {
     Container,
     EmptyTableContainer,
     NoResultsFound,
-} from "./timeslot.styles";
+} from "./schedule.styles";
 
-export const TimeSlot = ({
+export const Schedule = ({
     id,
     className,
     view = "day",
@@ -27,14 +27,14 @@ export const TimeSlot = ({
     minDate,
     maxDate,
     emptyContentMessage,
+    emptySlotPopover,
     onPreviousDayClick,
     onNextDayClick,
     onCalendarDateSelect,
     onTodayClick,
-    onSlotClick,
     onEmptySlotClick,
     ...otherProps
-}: TimeSlotProps) => {
+}: ScheduleProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -49,6 +49,7 @@ export const TimeSlot = ({
         maxWidth: tabletBreakpoint,
     });
     const effectiveView = isMobile || isTablet ? "day" : currentView;
+    const contentContainerRef = useRef<HTMLDivElement>(null);
     const [visibleServiceIdx, setVisibleServiceIdx] = useState(0);
     const isEmptyContent = rowData.length === 0 || isEmpty(rowData);
     const filteredRowData = rowData.map((service) => ({
@@ -56,7 +57,6 @@ export const TimeSlot = ({
         rowCells: service.rowCells.filter((cell) => cell.date === date),
     }));
 
-    // Only show one service on mobile/tablet, after filtering by date
     const visibleRowData =
         isMobile || isTablet
             ? filteredRowData && filteredRowData.length > 0
@@ -97,7 +97,7 @@ export const TimeSlot = ({
         return (
             <Container {...otherProps} data-testid={id} $loading={loading}>
                 <ScheduleHeader
-                    data-id="time-slot-header"
+                    data-id="schedule-header"
                     date={date}
                     view={effectiveView}
                     showTodayButton={!isMobile && !isTablet}
@@ -141,19 +141,20 @@ export const TimeSlot = ({
                 onTodayClick={handleTodayClick}
             />
 
-            <TimeslotBody data-id="timeslot-container">
+            <ScheduleBody data-id="schedule-container">
                 {effectiveView === "day" ? (
-                    <TimeSlotDayView
+                    <ScheduleDayView
                         date={date}
                         rowData={visibleRowData}
                         loading={loading}
                         minTime={minTime}
                         maxTime={maxTime}
                         initialScrollTime={initialScrollTime}
-                        onSlotClick={onSlotClick}
+                        emptySlotPopover={emptySlotPopover}
                         isMobile={isMobile || isTablet}
                         onNextService={handleNextService}
                         onPrevService={handlePrevService}
+                        containerRef={contentContainerRef}
                         showPrevArrow={
                             (isMobile || isTablet) && visibleServiceIdx > 0
                         }
@@ -164,17 +165,17 @@ export const TimeSlot = ({
                         }
                     />
                 ) : (
-                    <TimeSlotWeekView
+                    <ScheduleWeekView
                         date={date}
                         rowData={rowData}
                         loading={loading}
                         minTime={minTime}
                         maxTime={maxTime}
                         initialScrollTime={initialScrollTime}
-                        onSlotClick={onSlotClick}
+                        emptySlotPopover={emptySlotPopover}
                     />
                 )}
-            </TimeslotBody>
+            </ScheduleBody>
         </Container>
     );
 };

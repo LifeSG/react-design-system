@@ -1,19 +1,20 @@
-import React, { useRef } from "react";
+import React from "react";
 import dayjs from "dayjs";
 import {
     ActiveSlot,
     ActiveSlotsMap,
+    ScheduleWeekViewProps,
     SlotWithService,
-    TimeSlotWeekViewProps,
 } from "./types";
 import { TimeHelper } from "../../util/time-helper";
 import { TimeIndicator } from "../time-indicator/time-indicator";
-import { TimeSlotRowData } from "../types";
+import { ScheduleRowData } from "../types";
 import { useTimelineOffset, useInitialScroll } from "../shared";
 import {
+    ScheduleContainer,
     SlotCell,
     Timeline,
-} from "../timeslot-day-view/timeslot-day-view.styles";
+} from "../schedule-day-view/schedule-day-view.styles";
 import {
     BlankCell,
     BodyContainer,
@@ -27,9 +28,8 @@ import {
     SlotContent,
     SlotGrid,
     SlotRowContainer,
-    TimeSlotContainer,
     Title,
-} from "./timeslot-week-view.styles";
+} from "./schedule-week-view.styles";
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
 import {
     MAX_VISIBLE_SLOTS,
@@ -38,7 +38,9 @@ import {
     SLOT_WIDTH,
 } from "../const";
 
-// Helper function to convert time string to minutes since midnight
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
 function timeToMinutes(time: string): number {
     const [hours, minutes] = time.split(":").map(Number);
     return hours * 60 + minutes;
@@ -46,7 +48,7 @@ function timeToMinutes(time: string): number {
 
 // Helper function to get all slots for a specific day
 function getSlotsForDay(
-    rowData: TimeSlotRowData[],
+    rowData: ScheduleRowData[],
     targetDate: string
 ): SlotWithService[] {
     const allSlots: SlotWithService[] = [];
@@ -128,7 +130,7 @@ function getSlotsForTimeSlot(
     return { visibleSlots, newActiveSlots };
 }
 
-export const TimeSlotWeekView = ({
+export const ScheduleWeekView = ({
     date,
     rowData,
     loading,
@@ -136,7 +138,8 @@ export const TimeSlotWeekView = ({
     maxTime,
     initialScrollTime,
     onSlotClick,
-}: TimeSlotWeekViewProps) => {
+    emptySlotPopover,
+}: ScheduleWeekViewProps) => {
     const timelineOffset = useTimelineOffset(minTime, maxTime);
     const bodyRef = useInitialScroll(loading, minTime, initialScrollTime);
     const today = dayjs().format("YYYY-MM-DD");
@@ -260,7 +263,7 @@ export const TimeSlotWeekView = ({
     );
 
     return (
-        <TimeSlotContainer>
+        <ScheduleContainer>
             {loading ? (
                 <LoadingContainer>
                     <ThemedLoadingSpinner />
@@ -278,6 +281,6 @@ export const TimeSlotWeekView = ({
                     </BodyContainer>
                 </>
             )}
-        </TimeSlotContainer>
+        </ScheduleContainer>
     );
 };
