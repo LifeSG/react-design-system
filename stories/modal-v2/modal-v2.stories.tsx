@@ -28,17 +28,44 @@ export const Default: StoryObj<Component> = {
                     onOverlayClick={closeModal}
                     onClose={closeModal}
                 >
-                    <ModalV2.Box onClose={closeModal}>
-                        <div
-                            style={{
-                                padding: "4rem 2rem",
-                                height: "10rem",
-                                overflow: "auto",
-                            }}
-                        >
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                        </div>
-                    </ModalV2.Box>
+                    <ModalV2.Card>
+                        <ModalV2.CloseButton />
+                        <ModalV2.Content>
+                            <Typography.BodyBL>
+                                I am a Modal with very long text in a para graph
+                                to fill up the width
+                            </Typography.BodyBL>
+                        </ModalV2.Content>
+                    </ModalV2.Card>
+                </ModalV2>
+            </div>
+        );
+    },
+};
+
+export const WithoutCloseButton: StoryObj<Component> = {
+    render: () => {
+        const [show, setShow] = useState(false);
+        const openModal = () => setShow(true);
+        const closeModal = () => setShow(false);
+        return (
+            <div>
+                <Button.Default onClick={openModal}>
+                    Click to open
+                </Button.Default>
+                <ModalV2
+                    show={show}
+                    onOverlayClick={closeModal}
+                    onClose={closeModal}
+                >
+                    <ModalV2.Card>
+                        <ModalV2.Content>
+                            <Typography.BodyBL>
+                                I am a Modal with very long text in a para graph
+                                to fill up the width
+                            </Typography.BodyBL>
+                        </ModalV2.Content>
+                    </ModalV2.Card>
                 </ModalV2>
             </div>
         );
@@ -50,6 +77,7 @@ export const CustomContent: StoryObj<Component> = {
         const [show, setShow] = useState(false);
         const openModal = () => setShow(true);
         const closeModal = () => setShow(false);
+
         return (
             <>
                 <Button.Default onClick={openModal}>
@@ -61,15 +89,23 @@ export const CustomContent: StoryObj<Component> = {
                     enableOverlayClick={true}
                     onClose={closeModal}
                 >
-                    <div
-                        style={{
-                            width: "50%",
-                            padding: "2rem",
-                            background: "yellow",
+                    <ModalV2.Card
+                        customStyle={{
+                            backgroundColor: "yellow",
+                            borderRadius: 0,
                         }}
                     >
-                        This is a custom component
-                    </div>
+                        <ModalV2.CloseButton
+                            customStyle={{
+                                marginRight: "auto",
+                                marginLeft: -8,
+                                marginTop: -8,
+                            }}
+                        />
+                        <ModalV2.Content>
+                            This is a custom component
+                        </ModalV2.Content>
+                    </ModalV2.Card>
                 </ModalV2>
             </>
         );
@@ -80,56 +116,66 @@ export const StackedModals: StoryObj<Component> = {
     render: () => {
         const [showFirst, setShowFirst] = useState(false);
         const [showStacked, setShowStacked] = useState(false);
-        const handleFirst = (show: boolean) => () => {
+        const handleFirst = (show: boolean) => {
             setShowFirst(show);
         };
-        const handleStacked = (show: boolean) => () => {
+        const handleStacked = (show: boolean) => {
             setShowStacked(show);
         };
         return (
             <div>
-                <Button.Default onClick={handleFirst(true)}>
+                <Button.Default
+                    onClick={() => {
+                        handleFirst(true);
+                    }}
+                >
                     Click to open
                 </Button.Default>
                 <ModalV2
                     show={showFirst}
-                    onOverlayClick={handleFirst(false)}
-                    onClose={handleFirst(false)}
+                    onOverlayClick={() => {
+                        handleFirst(false);
+                    }}
+                    onClose={() => {
+                        handleFirst(false);
+                    }}
                 >
-                    <ModalV2.Box onClose={handleFirst(false)}>
-                        <div
-                            style={{
-                                padding: "4rem 2rem",
-                            }}
-                        >
+                    <ModalV2.Card>
+                        <ModalV2.CloseButton />
+                        <ModalV2.Content>
                             <Typography.BodyBL>
                                 I am the first Modal
                             </Typography.BodyBL>
                             <br />
                             <br />
-                            <Button.Default onClick={handleStacked(true)}>
+                            <Button.Default
+                                onClick={() => {
+                                    handleStacked(true);
+                                }}
+                            >
                                 Click to open the stacked modal
                             </Button.Default>
-                        </div>
-                    </ModalV2.Box>
+                        </ModalV2.Content>
+                    </ModalV2.Card>
                 </ModalV2>
                 <ModalV2
                     id="stacked-modal"
                     show={showStacked}
-                    onOverlayClick={handleStacked(false)}
-                    onClose={handleStacked(false)}
+                    onOverlayClick={() => {
+                        handleStacked(false);
+                    }}
+                    onClose={() => {
+                        handleStacked(false);
+                    }}
                 >
-                    <ModalV2.Box onClose={handleStacked(false)}>
-                        <div
-                            style={{
-                                padding: "4rem 2rem",
-                            }}
-                        >
+                    <ModalV2.Card>
+                        <ModalV2.CloseButton />
+                        <ModalV2.Content>
                             <Typography.BodyBL>
                                 I am the stacked Modal
                             </Typography.BodyBL>
-                        </div>
-                    </ModalV2.Box>
+                        </ModalV2.Content>
+                    </ModalV2.Card>
                 </ModalV2>
             </div>
         );
@@ -152,12 +198,12 @@ export const ScrollableModals: StoryObj<Component> = {
                     onClose={closeModal}
                     enableScroll
                 >
-                    <ModalV2.Box onClose={closeModal}>
-                        <div
-                            style={{
-                                padding: "4rem 2rem",
-                            }}
-                        >
+                    <ModalV2.Card>
+                        <ModalV2.CloseButton />
+                        <ModalV2.Content>
+                            <Typography.HeadingXL>
+                                this is the topic
+                            </Typography.HeadingXL>
                             <Typography.BodyBL>I am a Modal</Typography.BodyBL>
                             <Typography.BodyBL>I am a Modal</Typography.BodyBL>
                             <Typography.BodyBL>I am a Modal</Typography.BodyBL>
@@ -192,6 +238,9 @@ export const ScrollableModals: StoryObj<Component> = {
                             <Typography.BodyBL>I am a Modal</Typography.BodyBL>
                             <Typography.BodyBL>I am a Modal</Typography.BodyBL>
                             <Typography.BodyBL>I am a Modal</Typography.BodyBL>
+                            <Button.Default onClick={closeModal}>
+                                Some button
+                            </Button.Default>
                             <Typography.BodyBL>I am a Modal</Typography.BodyBL>
                             <Typography.BodyBL>I am a Modal</Typography.BodyBL>
                             <Typography.BodyBL>I am a Modal</Typography.BodyBL>
@@ -222,9 +271,8 @@ export const ScrollableModals: StoryObj<Component> = {
                             <Typography.BodyBL>I am a Modal</Typography.BodyBL>
                             <Typography.BodyBL>I am a Modal</Typography.BodyBL>
                             <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                        </div>
-                    </ModalV2.Box>
+                        </ModalV2.Content>
+                    </ModalV2.Card>
                 </ModalV2>
             </div>
         );
