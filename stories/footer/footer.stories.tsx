@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Footer } from "src/footer";
 import { Layout } from "src/layout";
+import { MyLegacyTheme } from "src/theme";
+import { ThemeProvider } from "styled-components";
 
 type Component = typeof Footer;
 
@@ -65,14 +67,17 @@ export const MinimalVersion: StoryObj<Component> = {
 };
 
 export const WithResourceAddOn: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Footer
                 lastUpdated={new Date()}
                 showResourceAddon
                 links={[
                     [
-                        { children: "Home", href: "https://www.life.gov.sg" },
+                        {
+                            children: "Home",
+                            href: "https://www.life.gov.sg",
+                        },
                         {
                             children: "How it works",
                             href: "https://www.life.gov.sg/#how-it-works",
@@ -108,6 +113,13 @@ export const WithResourceAddOn: StoryObj<Component> = {
             />
         );
     },
+    decorators: [
+        (Story) => (
+            <ThemeProvider theme={MyLegacyTheme}>
+                <Story />
+            </ThemeProvider>
+        ),
+    ],
 };
 
 export const WithCustomContent: StoryObj<Component> = {
