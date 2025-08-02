@@ -157,7 +157,7 @@ export const Footer = <T,>({
     return (
         <BaseFooter {...otherProps}>
             {renderTopSection()}
-            <BottomSection type="grid" stretch={isStretch}>
+            <BottomSection stretch={isStretch}>
                 <BottomSectionContent key="disclaimer">
                     {renderDisclaimerLinks()}
                 </BottomSectionContent>

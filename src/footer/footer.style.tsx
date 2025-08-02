@@ -97,46 +97,38 @@ export const AddonSection = styled.div`
 export const BottomSection = styled(Layout.Content)`
     padding: ${Spacing["spacing-20"]} 0;
 
+    [data-id="container"] {
+        column-gap: ${Spacing["spacing-32"]};
+    }
+
     ${MediaQuery.MaxWidth.lg} {
         border-top: none;
-        flex-direction: column;
         padding: ${Spacing["spacing-16"]} 0;
+
+        [data-id="container"] {
+            flex-direction: column;
+        }
     }
 `;
 
 export const BottomSectionContent = styled.div`
-    grid-column: 1 / span 6;
+    flex: 1 1 50%;
     display: flex;
 
-    &:not(:last-child) {
-        margin-right: ${Spacing["spacing-16"]};
-    }
-
     ${MediaQuery.MaxWidth.lg} {
-        grid-column: 1 / span 12;
         flex-direction: column;
         &:not(:last-child) {
             margin-right: 0;
         }
     }
-
-    ${MediaQuery.MaxWidth.md} {
-        grid-column: 1 / span 8;
-    }
 `;
 
 export const CopyrightSection = styled(BottomSectionContent)`
-    grid-column: 7 / span 6;
     justify-content: flex-end;
 
     ${MediaQuery.MaxWidth.lg} {
         margin-top: ${Spacing["spacing-16"]};
         justify-content: flex-start;
-        grid-column: 1 / span 12;
-    }
-
-    ${MediaQuery.MaxWidth.md} {
-        grid-column: 1 / span 8;
     }
 `;
 
