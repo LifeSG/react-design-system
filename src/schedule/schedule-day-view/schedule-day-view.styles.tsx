@@ -277,5 +277,5 @@ export const Timeline = styled.div<{ $top: number }>`
 
 export const EmptySlot = styled.div`
     width: 100%;
-    height: ${CELL_HEIGHT}px;
+    height: ${CELL_HEIGHT - 1}px;
 `;

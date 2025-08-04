@@ -24,6 +24,7 @@ export const DateNavigator = ({
     loading,
     showDateAsShortForm,
     showCurrentDateAsToday,
+    view = "day",
     onLeftArrowClick,
     onRightArrowClick,
     onCalendarDateSelect,
@@ -34,14 +35,6 @@ export const DateNavigator = ({
     // CONST, STATE, REF
     // =============================================================================
     const date = DateHelper.toDayjs(selectedDate);
-    const dateText = DateHelper.toDayjs(selectedDate)
-        .format(showDateAsShortForm ? "D MMM YYYY" : "D MMMM YYYY")
-        .toString();
-    const isToday = DateHelper.isSame(selectedDate, dayjs());
-    const dayText =
-        isToday && showCurrentDateAsToday
-            ? "Today"
-            : date.format(showDateAsShortForm ? "ddd" : "dddd");
     const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
 
     // =============================================================================
@@ -82,6 +75,38 @@ export const DateNavigator = ({
         onRightArrowClick(selectedDate);
     };
 
+    // Helper function to get week range
+    const getWeekRange = (selectedDate: string) => {
+        const currentDate = DateHelper.toDayjs(selectedDate);
+        const startOfWeek = currentDate.startOf("week");
+        const endOfWeek = currentDate.endOf("week");
+
+        return {
+            start: startOfWeek.format("YYYY-MM-DD"),
+            end: endOfWeek.format("YYYY-MM-DD"),
+            startDisplay: startOfWeek.format("D MMM"),
+            endDisplay: endOfWeek.format("D MMM"),
+            year: endOfWeek.format("YYYY"),
+        };
+    };
+
+    // Calculate display text based on view
+    const getDisplayText = () => {
+        if (view === "week") {
+            const weekRange = getWeekRange(selectedDate);
+            return `${weekRange.startDisplay} - ${weekRange.endDisplay}, ${weekRange.year}`;
+        }
+        const dateText = DateHelper.toDayjs(selectedDate)
+            .format(showDateAsShortForm ? "D MMM YYYY" : "D MMMM YYYY")
+            .toString();
+        const isToday = DateHelper.isSame(selectedDate, dayjs());
+        const dayText =
+            isToday && showCurrentDateAsToday
+                ? "Today"
+                : date.format(showDateAsShortForm ? "ddd" : "dddd");
+        return `${dateText}, ${dayText}`;
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -100,13 +125,24 @@ export const DateNavigator = ({
     };
 
     const renderDateNavElement = () => {
+        const ariaLabel =
+            view === "week"
+                ? {
+                      left: "Previous week",
+                      right: "Next week",
+                  }
+                : {
+                      left: "Previous day",
+                      right: "Next day",
+                  };
+
         return (
             <Container {...otherProps}>
                 {
                     <HeaderArrowButton
                         data-testid="date-navigator-left-arrow-btn"
                         disabled={loading || isLeftArrowDisabled()}
-                        aria-label="Previous day"
+                        aria-label={ariaLabel.left}
                         onClick={navigatePrevious}
                         styleType="light"
                         sizeType="small"
@@ -125,13 +161,13 @@ export const DateNavigator = ({
                     styleType="link"
                     disabled={!onCalendarDateSelect || loading}
                 >
-                    {`${dateText}, ${dayText}`}
+                    {getDisplayText()}
                 </StyledDateTextButton>
                 {
                     <HeaderArrowButton
                         data-testid="date-navigator-right-arrow-btn"
                         disabled={loading || isRightArrowDisabled()}
-                        aria-label="Next day"
+                        aria-label={ariaLabel.right}
                         onClick={navigateNext}
                         styleType="light"
                         sizeType="small"
