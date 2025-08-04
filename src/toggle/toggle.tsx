@@ -14,6 +14,7 @@ import {
     HeaderContainer,
     IndicatorLabelContainer,
     Input,
+    InputContainer,
     Label,
     RemoveButton,
     StyledToggleIcon,
@@ -228,29 +229,44 @@ export const Toggle = ({
                 $styleType={styleType}
             >
                 <IndicatorLabelContainer $addPadding={removable}>
-                    <Input
-                        ref={inputRef}
-                        name={name}
-                        id={`${generatedId}-input`}
-                        type={type === "checkbox" ? "checkbox" : "radio"}
-                        data-testid="toggle-input"
-                        disabled={disabled}
-                        onChange={handleOnChange}
-                        checked={selected}
-                        aria-describedby={ariaDescriptions}
-                        {...otherProps}
-                    />
-                    {indicator && renderIndicator()}
-                    <TextContainer $selected={selected} $disabled={disabled}>
-                        <Label
-                            htmlFor={`${generatedId}-input`}
-                            data-testid={`${generatedId}-toggle-label`}
-                            $maxLines={childrenMaxLines}
+                    <InputContainer
+                        id={`${generatedId}-input-container`}
+                        onClick={() => {
+                            inputRef?.current?.click();
+                        }}
+                    >
+                        <Input
+                            ref={inputRef}
+                            name={name}
+                            id={`${generatedId}-input`}
+                            type={type === "checkbox" ? "checkbox" : "radio"}
+                            data-testid="toggle-input"
+                            disabled={disabled}
+                            onChange={handleOnChange}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
+                            checked={selected}
+                            aria-describedby={ariaDescriptions}
+                            aria-labelledby={`${generatedId}-toggle-label`}
+                            {...otherProps}
+                        />
+                        {indicator && renderIndicator()}
+                        <TextContainer
+                            $selected={selected}
+                            $disabled={disabled}
                         >
-                            {children}
-                        </Label>
-                        {subLabel && renderSubLabel()}
-                    </TextContainer>
+                            <Label
+                                htmlFor={`${generatedId}-input`}
+                                data-testid={`${generatedId}-toggle-label`}
+                                id={`${generatedId}-toggle-label`}
+                                $maxLines={childrenMaxLines}
+                            >
+                                {children}
+                            </Label>
+                            {subLabel && renderSubLabel()}
+                        </TextContainer>
+                    </InputContainer>
                 </IndicatorLabelContainer>
 
                 {removable && (
