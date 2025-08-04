@@ -43,10 +43,8 @@ export interface ScheduleProps {
 
 export interface ScheduleRowCellData {
     id?: string;
-    // HH:mm format
-    startTime: string;
-    // HH:mm format
-    endTime: string;
+    startTime: string; // HH:mm format
+    endTime: string; // HH:mm format
     status: ScheduleCellType;
     capacity?: number;
     date: string;

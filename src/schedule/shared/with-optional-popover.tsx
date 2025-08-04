@@ -34,5 +34,5 @@ export const WithOptionalPopover = ({
         popoverContent: customPopover.content,
     };
 
-    return <StyledPopoverTrigger zIndex={10} {...popoverTriggerProps} />;
+    return <StyledPopoverTrigger zIndex={2} {...popoverTriggerProps} />;
 };

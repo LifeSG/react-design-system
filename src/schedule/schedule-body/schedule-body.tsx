@@ -4,12 +4,16 @@ import styled from "styled-components";
 interface ScheduleBodyProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
 }
-export const ScheduleBody = ({
-    children,
-    ...otherprops
-}: ScheduleBodyProps) => {
-    return <Wrapper {...otherprops}>{children}</Wrapper>;
-};
+
+export const ScheduleBody = React.forwardRef<HTMLDivElement, ScheduleBodyProps>(
+    ({ children, ...otherprops }, ref) => {
+        return (
+            <Wrapper ref={ref} {...otherprops}>
+                {children}
+            </Wrapper>
+        );
+    }
+);
 // =============================================================================
 // STYLING
 // =============================================================================

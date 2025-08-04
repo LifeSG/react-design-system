@@ -38,6 +38,7 @@ export const Schedule = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const testId = otherProps["data-testid"] || "schedule";
     const [currentView, setCurrentView] = useState<"day" | "week">(view);
     const theme = useTheme();
     const mobileBreakpoint = Breakpoint["md-max"]({ theme });
@@ -64,16 +65,6 @@ export const Schedule = ({
                 : []
             : filteredRowData;
 
-    const handleNextService = useCallback(() => {
-        if (!rowData) return;
-        setVisibleServiceIdx((idx) =>
-            idx < rowData.length - 1 ? idx + 1 : idx
-        );
-    }, [rowData]);
-    const handlePrevService = useCallback(() => {
-        setVisibleServiceIdx((idx) => (idx > 0 ? idx - 1 : idx));
-    }, []);
-
     useEffect(() => {
         setVisibleServiceIdx(0);
     }, [rowData]);
@@ -89,6 +80,15 @@ export const Schedule = ({
         onTodayClick?.();
     }, [onTodayClick]);
 
+    const handleNextService = useCallback(() => {
+        if (!rowData) return;
+        setVisibleServiceIdx((idx) =>
+            idx < rowData.length - 1 ? idx + 1 : idx
+        );
+    }, [rowData]);
+    const handlePrevService = useCallback(() => {
+        setVisibleServiceIdx((idx) => (idx > 0 ? idx - 1 : idx));
+    }, []);
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
@@ -124,6 +124,7 @@ export const Schedule = ({
             id={id}
             className={className}
             $loading={loading}
+            data-testId={testId}
             {...otherProps}
         >
             <ScheduleHeader
@@ -141,7 +142,10 @@ export const Schedule = ({
                 onTodayClick={handleTodayClick}
             />
 
-            <ScheduleBody data-id="schedule-container">
+            <ScheduleBody
+                ref={contentContainerRef}
+                data-id="schedule-container"
+            >
                 {effectiveView === "day" ? (
                     <ScheduleDayView
                         date={date}

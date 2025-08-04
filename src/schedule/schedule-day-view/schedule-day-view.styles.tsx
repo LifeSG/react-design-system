@@ -7,32 +7,16 @@ import {
     MIN_COLUMN_WIDTH,
     TIME_INDICATOR_WIDTH,
 } from "../const";
-import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
+import { IconButton } from "../../icon-button";
 
 // -----------------------------------------------------------------------------
-// ICONS
+// MOBILE ARROW BUTTONS
 // -----------------------------------------------------------------------------
-const iconStyle = css`
-    color: ${Colour.icon};
-    height: 2rem;
-    width: 2rem;
-    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
-    background: ${Colour["bg"]};
-    padding: 8px;
-    border-radius: ${Radius["sm"]};
+export const ArrowButton = styled(IconButton)`
+    color: ${Colour["icon"]};
 `;
-
-export const ArrowLeft = styled(ChevronLeftIcon)`
-    ${iconStyle}
-    margin-left: 10px;
-`;
-
-export const ArrowRight = styled(ChevronRightIcon)`
-    ${iconStyle}
-`;
-
 export const ArrowContainer = styled.div`
-    width: 10%;
+    width: 2rem;
 `;
 
 export const ScheduleContainer = styled.div`
@@ -56,18 +40,7 @@ export const HeaderContainer = styled.div<{
     columnCount: number;
     $isMobile: boolean;
 }>`
-    ${({ $isMobile, columnCount }) =>
-        $isMobile
-            ? css`
-                  display: block;
-              `
-            : css`
-                  display: grid;
-                  grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(
-                          ${columnCount},
-                          1fr
-                      );
-              `}
+    z-index: 3;
     max-height: ${HEADER_HEIGHT}px;
     border-top-right-radius: ${Radius["md"]};
     border-top-left-radius: ${Radius["md"]};
@@ -90,6 +63,19 @@ export const HeaderContainer = styled.div<{
         background: ${Colour["bg-strong"]};
         border-top-right-radius: ${Radius["md"]};
     }
+    ${({ $isMobile, columnCount }) =>
+        $isMobile
+            ? css`
+                  display: block;
+                  overflow: hidden;
+              `
+            : css`
+                  display: grid;
+                  grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(
+                          ${columnCount},
+                          1fr
+                      );
+              `}
 `;
 
 export const BlankCell = styled.div`
@@ -97,7 +83,6 @@ export const BlankCell = styled.div`
     background: ${Colour["bg-strong"]};
     position: sticky;
     left: 0;
-    z-index: 2;
 `;
 export const ServiceContainer = styled.div<{ columnCount: number }>`
     display: grid;
@@ -109,11 +94,9 @@ export const ServiceContainer = styled.div<{ columnCount: number }>`
 export const ServiceColumn = styled.div`
     display: flex;
     justify-content: space-between;
-    gap: 10px;
     align-items: center;
     min-width: ${MIN_COLUMN_WIDTH}px;
-    flex: 1;
-    padding: 16px 0;
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-8"]};
     background: ${Colour["bg-strong"]};
     border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
     &:last-child {
@@ -122,7 +105,8 @@ export const ServiceColumn = styled.div`
 `;
 
 export const StyleDiv = styled.div`
-    width: 80%;
+    width: 75%;
+    padding-left: ${Spacing["spacing-16"]};
 `;
 
 export const Title = styled(Typography.BodyMD)`
@@ -135,15 +119,14 @@ export const Title = styled(Typography.BodyMD)`
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
-    line-height: 1.2;
 `;
 
 export const Description = styled(Typography.BodySM)`
-    margin-top: 8px;
+    margin-top: ${Spacing["spacing-8"]};
     background-color: ${Colour["bg-success-hover"]};
     border-radius: ${Radius["full"]};
     width: fit-content;
-    padding: 2px ${Spacing["spacing-8"]};
+    padding: ${Spacing["spacing-4"]} ${Spacing["spacing-8"]};
     color: ${Colour["text-success"]};
     font-weight: 400;
     span {
@@ -217,19 +200,25 @@ export const SlotCell = styled.div<{
 }>`
     min-height: ${CELL_HEIGHT}px;
     position: relative;
-    border-bottom: ${Border["width-010"]} ${Colour["border"]}
-        ${({ startTime }) => (startTime?.endsWith(":00") ? "dashed" : "solid")};
+    border-bottom: ${Border["width-010"]} solid ${Colour["border"]};
+    ${({ startTime }) =>
+        startTime?.endsWith(":00") &&
+        css`
+            border-bottom-style: dashed;
+        `}
     cursor: pointer;
 `;
 
 export const SlotContent = styled(Typography.BodyXS)<{
     status?: string;
     duration?: number;
+    $offsetTop?: number;
 }>`
     margin-top: 0;
     width: calc(100% - 27px);
-    padding: 8px;
+    padding: ${Spacing["spacing-8"]};
     position: absolute;
+    top: ${({ $offsetTop }) => $offsetTop || 0}px;
     font-weight: 500;
     border-radius: ${Radius["sm"]};
     box-sizing: border-box;
@@ -284,17 +273,9 @@ export const Timeline = styled.div<{ $top: number }>`
     background: ${Colour["icon-primary"]};
     top: ${({ $top }) => $top}px;
     z-index: 2;
-    /* Add a small circle at the start of the timeline */
-    &::before {
-        content: "";
-        position: absolute;
-        left: 0px;
-        top: -6px;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: ${Colour["icon-primary"]};
-        box-sizing: border-box;
-        z-index: 1;
-    }
+`;
+
+export const EmptySlot = styled.div`
+    width: 100%;
+    height: ${CELL_HEIGHT}px;
 `;
