@@ -71,7 +71,7 @@ export const ExpandCollapseButton = styled.button<ExpandCollapseButtonProps>`
             cursor: pointer;
         `}
 
-    :focus-visible {
+    &:focus-visible {
         outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: 0;
     }

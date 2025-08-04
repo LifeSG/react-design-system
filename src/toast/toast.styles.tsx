@@ -61,9 +61,7 @@ const getValidationColorAttributes = (props: StyleProps) => {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper: React.FC<{ $type?: string; $fixed?: boolean }> = styled(
-    animated.div
-)<StyleProps>`
+export const Wrapper = animated(styled.div<StyleProps>`
     display: flex;
     flex-direction: row;
     position: ${(props) => (props.$fixed ? "fixed" : "relative")};
@@ -87,7 +85,7 @@ export const Wrapper: React.FC<{ $type?: string; $fixed?: boolean }> = styled(
             color: ${getValidationColorAttributes(props).Text};
         `;
     }};
-`;
+`);
 
 export const ContentWrapper = styled.div`
     display: flex;

@@ -1,5 +1,4 @@
 import { CssValue, V2_DesignTokenSet } from "../v2_design-token/types";
-import { css } from "styled-components";
 
 import { BaseDesignTokenSet } from "../v2_spec/design-token-spec/base-design-token-set";
 import { RBSDesignTokenSet } from "../v2_spec/design-token-spec/rbs-design-token-set";
@@ -41,9 +40,6 @@ export const getThemeDesignToken = (attributePath: string) => {
             ? getValue(DesignTokenSet, attributePath, theme.options.designToken)
             : getValue(DesignTokenSet, attributePath);
 
-        // Wrap the string|number value with css function to convert it to RuleSet<object>
-        return css`
-            ${value}
-        `;
+        return value;
     };
 };
