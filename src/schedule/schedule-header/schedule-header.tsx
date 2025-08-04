@@ -1,4 +1,5 @@
 import { InputSelect } from "../../input-select";
+import { DateHelper } from "../../util";
 import {
     DropdownGlobalStyles,
     LeftSection,
@@ -50,6 +51,27 @@ export const ScheduleHeader = ({
     const showTodayButton = !$isMobile && !$isTablet;
     const showViewSelector = !$isMobile && !$isTablet;
 
+    // Handle navigation based on view type
+    const handleLeftArrowClick = (currentDate: string) => {
+        if (view === "week") {
+            const currentDateObj = DateHelper.toDayjs(currentDate);
+            const previousWeek = currentDateObj.subtract(1, "week");
+            onPreviousDayClick(previousWeek.format("YYYY-MM-DD"));
+        } else {
+            onPreviousDayClick(currentDate);
+        }
+    };
+
+    const handleRightArrowClick = (currentDate: string) => {
+        if (view === "week") {
+            const currentDateObj = DateHelper.toDayjs(currentDate);
+            const nextWeek = currentDateObj.add(1, "week");
+            onNextDayClick(nextWeek.format("YYYY-MM-DD"));
+        } else {
+            onNextDayClick(currentDate);
+        }
+    };
+
     return (
         <>
             <DropdownGlobalStyles />
@@ -64,8 +86,9 @@ export const ScheduleHeader = ({
                         selectedDate={date}
                         minDate={minDate}
                         maxDate={maxDate}
-                        onLeftArrowClick={onPreviousDayClick}
-                        onRightArrowClick={onNextDayClick}
+                        view={view}
+                        onLeftArrowClick={handleLeftArrowClick}
+                        onRightArrowClick={handleRightArrowClick}
                         onCalendarDateSelect={onCalendarDateSelect}
                         $isMobile={$isMobile}
                     />

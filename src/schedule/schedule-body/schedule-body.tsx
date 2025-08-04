@@ -19,4 +19,6 @@ export const ScheduleBody = React.forwardRef<HTMLDivElement, ScheduleBodyProps>(
 // =============================================================================
 const Wrapper = styled.div`
     height: 100%;
+    position: relative;
+    overflow: hidden;
 `;
