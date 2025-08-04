@@ -17,31 +17,25 @@ export const Label = styled(Typography.BodyMD)`
     margin-bottom: ${Spacing["spacing-16"]};
 `;
 
-export const Items = styled.div`
+export const AppButtonsWrapper = styled.div`
     display: flex;
-    align-items: flex-start;
+    flex-wrap: wrap;
+    row-gap: ${Spacing["spacing-16"]};
+    column-gap: ${Spacing["spacing-16"]};
 `;
 
 export const AppStoreLink = styled.a`
-    &:not(:last-child) {
-        margin-right: ${Spacing["spacing-32"]};
-    }
-
     img {
         width: auto;
-        height: 3rem;
+        height: 3.75rem;
         object-fit: contain;
+        display: block;
     }
 
-    ${MediaQuery.MaxWidth.sm} {
-        &:not(:last-child) {
-            margin-right: ${Spacing["spacing-16"]};
-        }
-
+    ${MediaQuery.MaxWidth.lg} {
         img {
+            height: 3rem;
             width: 100%;
-            height: auto;
-            object-fit: contain;
         }
     }
 `;

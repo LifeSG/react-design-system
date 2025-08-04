@@ -11,10 +11,12 @@ import {
     DisclaimerTextLink,
     FullWidthDivider,
     LinkSection,
+    LinkSectionWrapper,
     LogoSection,
     StyledFooterLink,
     TopSection,
 } from "./footer.style";
+import { ResourceAddon } from "./footer-resource-addon";
 import { FooterLinkProps, FooterProps } from "./types";
 import { ThemeContext } from "styled-components";
 
@@ -24,6 +26,7 @@ export const Footer = <T,>({
     lastUpdated,
     disclaimerLinks,
     showDownloadAddon,
+    showResourceAddon,
     logoSrc,
     copyrightInfo,
     onFooterLinkClick,
@@ -96,33 +99,44 @@ export const Footer = <T,>({
         }
 
         if (links || showDownloadAddon) {
+            const { src, ...otherLogoAttributes } =
+                FooterHelper.getFooterLogoAttribute(theme?.resourceScheme);
             component = (
                 <>
                     <LogoSection data-testid="logo-section">
                         <img
-                            src={
-                                logoSrc ||
-                                FooterHelper.getFooterLogo(
-                                    theme?.resourceScheme
-                                )
-                            }
-                            alt="LifeSG"
+                            src={logoSrc || src}
                             data-testid="logo"
+                            {...otherLogoAttributes}
                         />
                     </LogoSection>
-                    {links?.[0] && (
-                        <LinkSection key="link-col-1" data-testid="link-col-1">
-                            {renderFooterLinks(links[0])}
-                        </LinkSection>
-                    )}
-                    {links?.[1] && (
-                        <LinkSection key="link-col-2" data-testid="link-col-2">
-                            {renderFooterLinks(links[1])}
-                        </LinkSection>
-                    )}
+                    <LinkSectionWrapper>
+                        {links?.[0] && (
+                            <LinkSection
+                                key="link-col-1"
+                                data-testid="link-col-1"
+                            >
+                                {renderFooterLinks(links[0])}
+                            </LinkSection>
+                        )}
+                        {links?.[1] && (
+                            <LinkSection
+                                key="link-col-2"
+                                data-testid="link-col-2"
+                            >
+                                {renderFooterLinks(links[1])}
+                            </LinkSection>
+                        )}
+                    </LinkSectionWrapper>
                     {showDownloadAddon && (
                         <AddonSection>
                             <DownloadApp />
+                        </AddonSection>
+                    )}
+                    {/* when showDownloadAddon and showResourceAddon are enabled, showDownloadAddon should take priority to being rendered */}
+                    {!showDownloadAddon && showResourceAddon && (
+                        <AddonSection>
+                            <ResourceAddon />
                         </AddonSection>
                     )}
                 </>
@@ -132,9 +146,7 @@ export const Footer = <T,>({
         if (component) {
             return (
                 <>
-                    <TopSection type="grid" stretch={isStretch}>
-                        {component}
-                    </TopSection>
+                    <TopSection stretch={isStretch}>{component}</TopSection>
                     <FullWidthDivider />
                 </>
             );
@@ -145,7 +157,7 @@ export const Footer = <T,>({
     return (
         <BaseFooter {...otherProps}>
             {renderTopSection()}
-            <BottomSection type="grid" stretch={isStretch}>
+            <BottomSection stretch={isStretch}>
                 <BottomSectionContent key="disclaimer">
                     {renderDisclaimerLinks()}
                 </BottomSectionContent>

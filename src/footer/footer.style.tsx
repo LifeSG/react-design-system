@@ -12,7 +12,7 @@ export const BaseFooter = styled.footer`
     background: ${Colour["bg-strong"]};
 `;
 
-export const StyledFooterLink = styled(Typography.LinkSM)`
+export const StyledFooterLink = styled(Typography.LinkMD)`
     color: ${Colour.text};
 `;
 
@@ -29,11 +29,18 @@ export const TopSection = styled(Layout.Content)`
 
     ${MediaQuery.MaxWidth.lg} {
         padding: ${Spacing["spacing-32"]} 0;
+
+        [data-id="container"] {
+            flex-direction: column;
+            gap: ${Spacing["spacing-32"]};
+        }
     }
 `;
 
 export const LogoSection = styled.div`
-    grid-column: 1 / span 2;
+    display: flex;
+    width: fit-content;
+    margin-right: ${Spacing["spacing-64"]};
 
     img {
         max-height: 4rem;
@@ -42,19 +49,24 @@ export const LogoSection = styled.div`
     }
 
     ${MediaQuery.MaxWidth.lg} {
-        grid-column: 1 / span 12;
-        margin-bottom: ${Spacing["spacing-32"]};
+        width: 100%;
+        margin-right: 0;
     }
+`;
 
-    ${MediaQuery.MaxWidth.md} {
-        grid-column: 1 / span 8;
-        margin-bottom: ${Spacing["spacing-32"]};
+export const LinkSectionWrapper = styled.div`
+    display: flex;
+    gap: ${Spacing["spacing-32"]};
+    flex: 1 1 auto;
+    max-width: calc(32% + ${Spacing["spacing-32"]});
+
+    ${MediaQuery.MaxWidth.lg} {
+        max-width: 100%;
     }
 `;
 
 export const LinkSection = styled.ul`
-    // first col
-    grid-column: 3 / span 4;
+    flex: 1 1 50%;
     list-style-type: none;
 
     &:nth-of-type(2) {
@@ -94,15 +106,12 @@ export const LinkSection = styled.ul`
 `;
 
 export const AddonSection = styled.div`
-    grid-column: 13 / span 6;
+    flex: 0 1 33%;
+    margin-left: auto;
 
     ${MediaQuery.MaxWidth.lg} {
-        grid-column: 1 / span 12;
-        margin-top: ${Spacing["spacing-32"]};
-    }
-
-    ${MediaQuery.MaxWidth.md} {
-        grid-column: 1 / span 8;
+        flex: 1 1 100%;
+        margin-left: 0;
     }
 `;
 
@@ -113,46 +122,38 @@ export const AddonSection = styled.div`
 export const BottomSection = styled(Layout.Content)`
     padding: ${Spacing["spacing-20"]} 0;
 
+    [data-id="container"] {
+        column-gap: ${Spacing["spacing-32"]};
+    }
+
     ${MediaQuery.MaxWidth.lg} {
         border-top: none;
-        flex-direction: column;
         padding: ${Spacing["spacing-16"]} 0;
+
+        [data-id="container"] {
+            flex-direction: column;
+        }
     }
 `;
 
 export const BottomSectionContent = styled.div`
-    grid-column: 1 / span 6;
+    flex: 1 1 50%;
     display: flex;
 
-    &:not(:last-child) {
-        margin-right: ${Spacing["spacing-16"]};
-    }
-
     ${MediaQuery.MaxWidth.lg} {
-        grid-column: 1 / span 12;
         flex-direction: column;
         &:not(:last-child) {
             margin-right: 0;
         }
     }
-
-    ${MediaQuery.MaxWidth.md} {
-        grid-column: 1 / span 8;
-    }
 `;
 
 export const CopyrightSection = styled(BottomSectionContent)`
-    grid-column: 7 / span 6;
     justify-content: flex-end;
 
     ${MediaQuery.MaxWidth.lg} {
         margin-top: ${Spacing["spacing-16"]};
         justify-content: flex-start;
-        grid-column: 1 / span 12;
-    }
-
-    ${MediaQuery.MaxWidth.md} {
-        grid-column: 1 / span 8;
     }
 `;
 
