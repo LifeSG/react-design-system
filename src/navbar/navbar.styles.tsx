@@ -40,8 +40,8 @@ export const Wrapper = styled.div<StyleProps>`
                       ${Colour["border"]};
               `
             : css`
-                  box-shadow: 0 2px 8px
-                      rgba(from ${Colour.Primitive["neutral-50"]} r g b / 24%);
+                  box-shadow: 0 0 4px
+                      rgba(from ${Colour.Primitive["neutral-20"]} r g b / 25%);
               `;
     }}
 `;
