@@ -73,9 +73,34 @@ export const mockScheduleData: ScheduleRowData[] = [
             {
                 id: "2-3",
                 date: "2025-07-22",
-                startTime: "09:00",
+                startTime: "09:15",
                 endTime: "09:30",
                 status: "blocked",
+                customPopover: {
+                    trigger: "click",
+                    content: (
+                        <div>
+                            <h4>Booking Details</h4>
+                            <p>Time: 9:15 AM - 9:30 AM</p>
+                            <p>Blocked</p>
+                        </div>
+                    ),
+                    delay: { open: 150, close: 200 },
+                },
+            },
+            // Tuesday - 2025-07-22
+            {
+                id: "2-6",
+                date: "2025-07-22",
+                startTime: "09:00",
+                endTime: "09:15",
+                status: "pending",
+                booked: 4,
+                capacity: 4,
+                customPopover: {
+                    trigger: "click",
+                    content: "Service pending during this time period.",
+                },
             },
             {
                 id: "2-5",
@@ -261,7 +286,6 @@ export const mockScheduleData: ScheduleRowData[] = [
                             <h4>Booking Details</h4>
                             <p>Time: 9:00 AM - 9:30 AM</p>
                             <p>Available: 3 spots remaining</p>
-                            <p>Price: $50</p>
                         </div>
                     ),
                     delay: { open: 150, close: 200 },

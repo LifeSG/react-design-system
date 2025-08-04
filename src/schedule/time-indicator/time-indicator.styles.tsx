@@ -1,18 +1,22 @@
 import styled from "styled-components";
-import { Border, Colour } from "../../theme";
+import { Border, Colour, Spacing } from "../../theme";
 import { Typography } from "../../typography";
 import { CELL_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
+
+export const TimeColumnWrapper = styled.div`
+    position: sticky;
+    left: 0;
+    z-index: 3;
+`;
 
 export const TimeColumn = styled.div`
     display: flex;
     flex-direction: column;
     min-width: ${TIME_INDICATOR_WIDTH}px;
     min-height: fit-content;
-    position: sticky;
-    left: 0;
     background: ${Colour["bg"]};
-    z-index: 3;
     border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    position: relative;
 `;
 
 export const TimeLabel = styled(Typography.BodySM)`
@@ -22,6 +26,18 @@ export const TimeLabel = styled(Typography.BodySM)`
     align-items: flex-end;
     color: ${Colour["text-subtler"]};
     justify-content: center;
-    padding-right: 8px;
+    padding-right: ${Spacing["spacing-8"]};
     font-weight: 700;
+`;
+
+export const TimelineCircle = styled.div<{ $top: number }>`
+    position: absolute;
+    right: -6px;
+    top: ${({ $top }) => $top - 6}px; 
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: ${Colour["icon-primary"]};
+    z-index: 4; 
+    box-sizing: border-box;
 `;

@@ -1,8 +1,5 @@
 import { SchedulePopoverProps, ScheduleRowData } from "../types";
-import { ThemeStyleProps } from "../../theme/types";
 import { RefObject } from "react";
-
-export type SlotStyle = "default" | "stripes";
 
 export interface ScheduleDayViewProps {
     date: string;

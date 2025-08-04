@@ -188,7 +188,6 @@ export const RowBar = ({
                         intervalWidth={intervalWidth}
                         rowBarColor={rowBarColor}
                         containerRef={containerRef}
-                        data-testid="3434"
                     />
                 );
             })}

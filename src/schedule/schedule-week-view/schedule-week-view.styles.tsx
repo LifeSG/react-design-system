@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 import { Border, Colour, Radius } from "../../theme";
 import { Typography } from "../../typography";
 import { CELL_HEIGHT, HEADER_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
-// Styled components for slot block, placeholder, button, and row container
 
 export const TimeSlotContainer = styled.div`
     display: flex;
@@ -23,7 +22,7 @@ export const LoadingContainer = styled.div`
 
 export const HeaderContainer = styled.div`
     display: grid;
-    grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(7, 1fr); /* Time column + 7 days */
+    grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(7, 1fr);
     max-height: ${HEADER_HEIGHT}px;
 `;
 
@@ -36,7 +35,7 @@ export const BlankCell = styled.div`
 
 export const ServiceContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 columns for 7 days */
+    grid-template-columns: repeat(7, 1fr);
     grid-column-start: 2;
     grid-column-end: 9;
 `;
@@ -59,7 +58,7 @@ export const Description = styled(Typography.BodyMD)`
 
 export const BodyContainer = styled.div`
     display: grid;
-    grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(7, 1fr); /* Time column + 7 days */
+    grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(7, 1fr); 
     overflow-x: hidden;
     overflow-y: auto;
     flex: 1;
@@ -70,7 +69,7 @@ export const SlotGrid = styled.div`
     grid-column-start: 2;
     grid-column-end: 9;
     display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 columns for 7 days */
+    grid-template-columns: repeat(7, 1fr); 
     min-width: max-content;
 `;
 
