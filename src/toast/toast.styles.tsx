@@ -136,12 +136,18 @@ export const Title = styled(Typography.HeadingXS)<StyleProps>`
     }}
 `;
 
-export const Description = styled.div<StyleProps>`
+export const DescriptionMD = styled(Typography.BodyMD)<StyleProps>`
     ${(props) => {
         return css`
-            p {
-                color: ${getValidationColorAttributes(props).Text};
-            }
+            color: ${getValidationColorAttributes(props).Text};
+        `;
+    }}
+`;
+
+export const DescriptionBL = styled(Typography.BodyBL)<StyleProps>`
+    ${(props) => {
+        return css`
+            color: ${getValidationColorAttributes(props).Text};
         `;
     }}
 `;
