@@ -1,0 +1,14 @@
+import { ToastType } from "./types";
+interface StyleProps {
+    $type: ToastType;
+    $fixed?: boolean | undefined;
+}
+export declare const Wrapper: import("styled-components").StyledComponent<import("react-spring").AnimatedComponent<"div">, import("styled-components").DefaultTheme, StyleProps, never>;
+export declare const ContentWrapper: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
+export declare const TextIconWrapper: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, StyleProps, never>;
+export declare const TextContainer: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, {}, never>;
+export declare const Title: import("styled-components").StyledComponent<keyof JSX.IntrinsicElements, import("styled-components").DefaultTheme, import("..").TypographyProps & StyleProps, never>;
+export declare const Description: import("styled-components").StyledComponent<"div", import("styled-components").DefaultTheme, StyleProps, never>;
+export declare const ActionButton: import("styled-components").StyledComponent<(props: import("../button").ButtonProps & import("react").RefAttributes<HTMLButtonElement>) => import("react").ReactElement | null, import("styled-components").DefaultTheme, {}, never>;
+export declare const DismissButton: import("styled-components").StyledComponent<(props: import("../shared/clickable-icon").ClickableIconProps & import("react").RefAttributes<HTMLButtonElement>) => import("react").ReactElement | null, import("styled-components").DefaultTheme, StyleProps, never>;
+export {};
