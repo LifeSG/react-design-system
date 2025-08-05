@@ -1,19 +1,17 @@
-import React from "react";
+import React, { useMemo, useRef } from "react";
 import dayjs from "dayjs";
-import {
-    ActiveSlot,
-    ActiveSlotsMap,
-    ScheduleWeekViewProps,
-    SlotWithService,
-} from "./types";
+import { ScheduleWeekViewProps } from "./types";
 import { TimeHelper } from "../../util/time-helper";
 import { TimeIndicator } from "../time-indicator/time-indicator";
-import { ScheduleRowData } from "../types";
+import { ScheduleRowData, ScheduleRowCellData } from "../types";
 import { useTimelineOffset, useInitialScroll } from "../shared";
+import { WithOptionalPopover } from "../shared/with-optional-popover";
+import { CELL_HEIGHT } from "../const";
 import {
     ScheduleContainer,
     SlotCell,
     Timeline,
+    EmptySlot,
 } from "../schedule-day-view/schedule-day-view.styles";
 import {
     BlankCell,
@@ -21,114 +19,149 @@ import {
     Description,
     HeaderContainer,
     LoadingContainer,
-    MoreButton,
     ServiceContainer,
     ServiceHeader,
     SlotColumn,
-    SlotContent,
     SlotGrid,
-    SlotRowContainer,
     Title,
+    SlotColumnOverlay,
+    SlotContentWrapper,
+    WeekSlotContent,
+    SlotServiceName,
+    SlotTime,
+    HiddenColumnsButton,
 } from "./schedule-week-view.styles";
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
-import {
-    MAX_VISIBLE_SLOTS,
-    SLOT_GAP,
-    SLOT_INTERVAL,
-    SLOT_WIDTH,
-} from "../const";
+
+const MAX_VISIBLE_SLOTS = 3;
+
+// Extended slot type with service information
+interface SlotWithService extends ScheduleRowCellData {
+    serviceName: string;
+}
+
+// Slot with positioning information
+interface PositionedSlot {
+    slot: SlotWithService;
+    column: number;
+    offsetTop: number;
+    height: number;
+}
 
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
-function timeToMinutes(time: string): number {
-    const [hours, minutes] = time.split(":").map(Number);
-    return hours * 60 + minutes;
-}
 
-// Helper function to get all slots for a specific day
-function getSlotsForDay(
-    rowData: ScheduleRowData[],
-    targetDate: string
-): SlotWithService[] {
-    const allSlots: SlotWithService[] = [];
+// Calculate the number of 30-minute cells this slot spans across
+const calculateSlotSpan = (startTime: string, endTime: string): number => {
+    const startMinutes = TimeHelper.timeToMinutes(startTime);
+    const endMinutes = TimeHelper.timeToMinutes(endTime);
+    const durationMinutes = endMinutes - startMinutes;
+    return Math.ceil(durationMinutes / 30);
+};
 
-    rowData.forEach((row) => {
-        if (row.rowCells) {
-            row.rowCells.forEach((cell) => {
-                if (cell.date === targetDate) {
-                    allSlots.push({
-                        ...cell,
-                        serviceName: row.name,
-                    });
-                }
+// Calculate positioned slots with column assignments
+const calculateSlotPositions = (
+    slots: SlotWithService[],
+    timeSlotStart: string,
+    minTime: string
+): PositionedSlot[] => {
+    const minTimeMinutes = TimeHelper.timeToMinutes(minTime);
+    const columns: { endTime: number; slots: PositionedSlot[] }[] = [];
+
+    const positionedSlots: PositionedSlot[] = [];
+
+    // Sort slots by start time, then by duration (shorter first for better packing)
+    const sortedSlots = [...slots].sort((a, b) => {
+        const aStart = TimeHelper.timeToMinutes(a.startTime);
+        const bStart = TimeHelper.timeToMinutes(b.startTime);
+        if (aStart !== bStart) return aStart - bStart;
+
+        const aDuration = TimeHelper.timeToMinutes(a.endTime) - aStart;
+        const bDuration = TimeHelper.timeToMinutes(b.endTime) - bStart;
+        return aDuration - bDuration;
+    });
+
+    sortedSlots.forEach((slot) => {
+        const slotStartMinutes = TimeHelper.timeToMinutes(slot.startTime);
+        const slotEndMinutes = TimeHelper.timeToMinutes(slot.endTime);
+
+        // Calculate offset from the very start of the schedule (minTime), not just this time cell
+        const offsetTop =
+            ((slotStartMinutes - minTimeMinutes) / 30) * CELL_HEIGHT;
+
+        // Calculate full duration height
+        const duration = slotEndMinutes - slotStartMinutes;
+        const height = Math.max((duration / 30) * CELL_HEIGHT - 1, 20); // Minimum height for visibility
+
+        // Find a column where this slot can fit (no time overlap with existing slots)
+        let assignedColumn = -1;
+
+        for (let i = 0; i < columns.length; i++) {
+            // Check if this slot can fit in column i
+            const canFit = columns[i].slots.every((existingSlot) => {
+                const existingStart = TimeHelper.timeToMinutes(
+                    existingSlot.slot.startTime
+                );
+                const existingEnd = TimeHelper.timeToMinutes(
+                    existingSlot.slot.endTime
+                );
+
+                // No overlap if this slot ends before existing starts, or starts after existing ends
+                return (
+                    slotEndMinutes <= existingStart ||
+                    slotStartMinutes >= existingEnd
+                );
             });
+
+            if (canFit) {
+                assignedColumn = i;
+                break;
+            }
         }
-    });
 
-    return allSlots;
-}
-
-// Helper function to get slots that should be visible in a specific time slot
-function getSlotsForTimeSlot(
-    allSlots: SlotWithService[],
-    currentTime: string,
-    nextTime: string,
-    activeSlots: ActiveSlotsMap
-): {
-    visibleSlots: ActiveSlot[];
-    newActiveSlots: ActiveSlotsMap;
-} {
-    const currentMinutes = timeToMinutes(currentTime);
-    const nextMinutes = timeToMinutes(nextTime);
-
-    // Copy active slots to new map
-    const newActiveSlots = new Map(activeSlots);
-
-    // Remove slots that have ended
-    for (const [slotId, { slot }] of newActiveSlots) {
-        if (timeToMinutes(slot.endTime) <= currentMinutes) {
-            newActiveSlots.delete(slotId);
+        // If no existing column works, create a new one
+        if (assignedColumn === -1) {
+            assignedColumn = columns.length;
+            columns.push({ endTime: slotEndMinutes, slots: [] });
         }
-    }
 
-    // Add new slots that start in this time period
-    const newSlots = allSlots.filter((slot) => {
-        const slotStart = timeToMinutes(slot.startTime);
-        const slotKey = slot.id || `${slot.startTime}-${slot.endTime}`;
-        return (
-            slotStart >= currentMinutes &&
-            slotStart < nextMinutes &&
-            !newActiveSlots.has(slotKey)
-        );
-    });
-
-    // Find available column for slot positioning
-    newSlots.forEach((slot) => {
-        const usedColumns = Array.from(newActiveSlots.values()).map(
-            (s) => s.column
-        );
-        let column = 0;
-        while (usedColumns.includes(column)) {
-            column++;
-        }
-        newActiveSlots.set(slot.id || `${slot.startTime}-${slot.endTime}`, {
+        const positionedSlot: PositionedSlot = {
             slot,
-            column,
+            column: assignedColumn,
+            offsetTop,
+            height,
+        };
+
+        columns[assignedColumn].slots.push(positionedSlot);
+        positionedSlots.push(positionedSlot);
+    });
+
+    return positionedSlots;
+};
+
+// Check if a time slot is covered by any existing booking for a specific day
+const isTimeSlotCovered = (
+    rowData: ScheduleRowData[],
+    targetDate: string,
+    timeSlot: string
+): boolean => {
+    const timeSlotMinutes = TimeHelper.timeToMinutes(timeSlot);
+
+    return rowData.some((row) => {
+        return row.rowCells?.some((cell) => {
+            if (cell.date !== targetDate) return false;
+
+            const cellStartMinutes = TimeHelper.timeToMinutes(cell.startTime);
+            const cellEndMinutes = TimeHelper.timeToMinutes(cell.endTime);
+
+            return (
+                timeSlotMinutes >= cellStartMinutes &&
+                timeSlotMinutes < cellEndMinutes
+            );
         });
     });
-
-    // Return only the NEW slots that started in this time period for display
-    // (not the continuing slots from previous time periods)
-    const visibleSlots = newSlots
-        .map((slot) => {
-            const slotKey = slot.id || `${slot.startTime}-${slot.endTime}`;
-            return newActiveSlots.get(slotKey)!;
-        })
-        .sort((a, b) => a.column - b.column);
-
-    return { visibleSlots, newActiveSlots };
-}
+};
 
 export const ScheduleWeekView = ({
     date,
@@ -137,23 +170,43 @@ export const ScheduleWeekView = ({
     minTime,
     maxTime,
     initialScrollTime,
-    onSlotClick,
     emptySlotPopover,
+    containerRef,
 }: ScheduleWeekViewProps) => {
     const timelineOffset = useTimelineOffset(minTime, maxTime);
     const bodyRef = useInitialScroll(loading, minTime, initialScrollTime);
+    const headerRef = useRef<HTMLDivElement>(null);
     const today = dayjs().format("YYYY-MM-DD");
 
-    const weekDays = React.useMemo(() => {
+    const weekDays = useMemo(() => {
         const startOfWeek = dayjs(date).startOf("week");
         return Array.from({ length: 7 }, (_, i) => startOfWeek.add(i, "day"));
     }, [date]);
 
     const timeSlots = TimeHelper.generateTimings(30, "24hr", minTime, maxTime);
 
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    // Synchronize horizontal scrolling between header and body
+    const handleBodyScroll = (_e: React.UIEvent<HTMLDivElement>) => {
+        if (headerRef.current && bodyRef.current) {
+            headerRef.current.scrollLeft = bodyRef.current.scrollLeft;
+        }
+    };
+    const handleHeaderScroll = (_e: React.UIEvent<HTMLDivElement>) => {
+        if (headerRef.current && bodyRef.current) {
+            bodyRef.current.scrollLeft = headerRef.current.scrollLeft;
+        }
+    };
+
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
+
     // Render header with day names and dates
     const renderHeader = () => (
-        <HeaderContainer>
+        <HeaderContainer ref={headerRef} onScroll={handleHeaderScroll}>
             <BlankCell />
             <ServiceContainer>
                 {weekDays.map((day) => (
@@ -166,96 +219,155 @@ export const ScheduleWeekView = ({
         </HeaderContainer>
     );
 
-    // Render slot content for a specific time slot
-    const renderSlotContent = (
-        visibleSlots: ActiveSlot[],
-        onSlotClick?: (data: any, e: React.MouseEvent) => void
-    ) => (
-        <>
-            {visibleSlots
-                .slice(0, MAX_VISIBLE_SLOTS)
-                .map(({ slot, column }) => {
-                    const startMinutes = timeToMinutes(slot.startTime);
-                    const endMinutes = timeToMinutes(slot.endTime);
-                    const durationMinutes = endMinutes - startMinutes;
-                    const durationSlots = durationMinutes / SLOT_INTERVAL;
+    // Render individual slot content
+    const renderSlotContent = (positionedSlot: PositionedSlot) => {
+        const { slot, offsetTop, height } = positionedSlot;
+        const duration = TimeHelper.calculateDuration(
+            slot.startTime,
+            slot.endTime
+        );
 
-                    return (
-                        <SlotContent
-                            key={slot.id}
-                            status={slot.status}
-                            duration={durationMinutes}
-                            $column={column}
-                            $slotWidth={SLOT_WIDTH}
-                            $slotGap={SLOT_GAP}
-                            $durationSlots={durationSlots}
-                            onClick={(e) => onSlotClick?.(slot, e)}
-                            title={`${slot.serviceName}\n${slot.startTime} - ${slot.endTime}`}
-                        >
-                            {slot.serviceName.charAt(0).toUpperCase()}
-                        </SlotContent>
-                    );
-                })}
-            {visibleSlots.length > MAX_VISIBLE_SLOTS && (
-                <MoreButton
-                    $left={MAX_VISIBLE_SLOTS * (SLOT_WIDTH + SLOT_GAP)}
-                    $slotWidth={SLOT_WIDTH}
-                    $slotGap={SLOT_GAP}
-                    onClick={() => {
-                        const remainingSlots =
-                            visibleSlots.slice(MAX_VISIBLE_SLOTS);
-                        console.log("Show more slots:", remainingSlots);
-                    }}
-                    title={`+${
-                        visibleSlots.length - MAX_VISIBLE_SLOTS
-                    } more services`}
-                >
-                    +{visibleSlots.length - MAX_VISIBLE_SLOTS}
-                </MoreButton>
-            )}
-        </>
-    );
+        return (
+            <WeekSlotContent
+                key={slot.id}
+                status={slot.status}
+                duration={duration}
+                $offsetTop={offsetTop}
+                $height={height}
+                onClick={(e) => slot.onClick && slot.onClick(slot, e)}
+                title={`${slot.serviceName}\n${slot.startTime} - ${slot.endTime}`}
+            >
+                <SlotServiceName>
+                    {slot.serviceName.charAt(0).toUpperCase()}
+                </SlotServiceName>
+                <SlotTime>
+                    {TimeHelper.parseInput(slot.startTime, "12hr")}
+                </SlotTime>
+            </WeekSlotContent>
+        );
+    };
 
     // Render the main slot grid
     const renderSlotGrid = () => (
         <SlotGrid>
+            {timelineOffset !== null && <Timeline $top={timelineOffset} />}
             {weekDays.map((day) => {
-                // Get all slots for this day
-                const daySlots = getSlotsForDay(
-                    rowData,
-                    day.format("YYYY-MM-DD")
+                // Get all slots for this day (not just per time cell)
+                const daySlots: SlotWithService[] = [];
+                rowData.forEach((row) => {
+                    if (row.rowCells) {
+                        row.rowCells.forEach((cell) => {
+                            if (cell.date === day.format("YYYY-MM-DD")) {
+                                daySlots.push({
+                                    ...cell,
+                                    serviceName: row.name,
+                                });
+                            }
+                        });
+                    }
+                });
+
+                // Calculate positioning for all slots in this day
+                const positionedSlots =
+                    daySlots.length > 0
+                        ? calculateSlotPositions(daySlots, minTime, minTime)
+                        : [];
+
+                // Group slots by column
+                const columnMap = new Map<number, PositionedSlot[]>();
+                positionedSlots.forEach((ps) => {
+                    if (!columnMap.has(ps.column)) {
+                        columnMap.set(ps.column, []);
+                    }
+                    columnMap.get(ps.column)!.push(ps);
+                });
+
+                const columns = Array.from(columnMap.entries()).sort(
+                    ([a], [b]) => a - b
                 );
-                // Track active slots across time slots for this column
-                let activeSlots: ActiveSlotsMap = new Map();
+                const visibleColumns = columns.slice(0, MAX_VISIBLE_SLOTS);
 
                 return (
                     <SlotColumn key={day.format("YYYY-MM-DD")}>
-                        {timelineOffset !== null &&
-                            day.format("YYYY-MM-DD") === today && (
-                                <Timeline $top={timelineOffset} />
-                            )}
-                        {timeSlots.map((time, slotIdx) => {
-                            const nextTime = timeSlots[slotIdx + 1] || maxTime;
-                            const { visibleSlots, newActiveSlots } =
-                                getSlotsForTimeSlot(
-                                    daySlots,
-                                    time,
-                                    nextTime,
-                                    activeSlots
-                                );
-                            activeSlots = newActiveSlots;
+                        {/* Render empty time cells for structure */}
+                        {timeSlots.map((time) => (
+                            <SlotCell key={time} startTime={time}>
+                                {/* Only show empty slot popover for cells with no slots */}
+                                {!isTimeSlotCovered(
+                                    rowData,
+                                    day.format("YYYY-MM-DD"),
+                                    time
+                                ) &&
+                                    emptySlotPopover && (
+                                        <WithOptionalPopover
+                                            containerRef={
+                                                containerRef as React.RefObject<HTMLDivElement>
+                                            }
+                                            customPopover={emptySlotPopover}
+                                        >
+                                            <EmptySlot />
+                                        </WithOptionalPopover>
+                                    )}
+                            </SlotCell>
+                        ))}
 
-                            return (
-                                <SlotCell key={time} startTime={time}>
-                                    <SlotRowContainer>
-                                        {renderSlotContent(
-                                            visibleSlots,
-                                            onSlotClick
-                                        )}
-                                    </SlotRowContainer>
-                                </SlotCell>
-                            );
-                        })}
+                        {/* Render slot columns positioned absolutely over the time grid */}
+                        {visibleColumns.map(([columnIndex, columnSlots]) => (
+                            <SlotColumnOverlay
+                                key={`column-${columnIndex}`}
+                                $columnIndex={columnIndex}
+                                $totalVisibleColumns={visibleColumns.length}
+                            >
+                                {columnSlots.map(
+                                    (positionedSlot, slotIndex) => {
+                                        const popoverConfig =
+                                            positionedSlot.slot.customPopover;
+                                        return (
+                                            <WithOptionalPopover
+                                                key={`${positionedSlot.slot.id}-${slotIndex}`}
+                                                containerRef={
+                                                    containerRef as React.RefObject<HTMLDivElement>
+                                                }
+                                                customPopover={popoverConfig}
+                                            >
+                                                <SlotContentWrapper>
+                                                    {renderSlotContent(
+                                                        positionedSlot
+                                                    )}
+                                                </SlotContentWrapper>
+                                            </WithOptionalPopover>
+                                        );
+                                    }
+                                )}
+                            </SlotColumnOverlay>
+                        ))}
+
+                        {/* Show +N button if there are hidden columns */}
+                        {columns.length > MAX_VISIBLE_SLOTS && (
+                            <HiddenColumnsButton
+                                $visibleColumnsCount={visibleColumns.length}
+                                onClick={() => {
+                                    const hiddenSlots = columns
+                                        .slice(MAX_VISIBLE_SLOTS)
+                                        .flatMap(([, slots]) =>
+                                            slots.map((ps) => ps.slot)
+                                        );
+                                    console.log(
+                                        "Show more slots:",
+                                        hiddenSlots
+                                    );
+                                }}
+                                title={`+${
+                                    columns.length - MAX_VISIBLE_SLOTS
+                                } more column${
+                                    columns.length - MAX_VISIBLE_SLOTS > 1
+                                        ? "s"
+                                        : ""
+                                }`}
+                            >
+                                +{columns.length - MAX_VISIBLE_SLOTS}
+                            </HiddenColumnsButton>
+                        )}
                     </SlotColumn>
                 );
             })}
@@ -271,11 +383,12 @@ export const ScheduleWeekView = ({
             ) : (
                 <>
                     {renderHeader()}
-                    <BodyContainer ref={bodyRef}>
+                    <BodyContainer ref={bodyRef} onScroll={handleBodyScroll}>
                         <TimeIndicator
                             minTime={minTime}
                             maxTime={maxTime}
                             format="24hr"
+                            timelineOffset={timelineOffset}
                         />
                         {renderSlotGrid()}
                     </BodyContainer>

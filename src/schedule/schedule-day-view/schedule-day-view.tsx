@@ -28,7 +28,7 @@ import {
     EmptySlot,
 } from "./schedule-day-view.styles";
 import { TimeIndicator } from "../time-indicator/time-indicator";
-import { ScheduleRowCellData } from "../types";
+import { ScheduleRowCellData, ScheduleRowData } from "../types";
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
 
 export const ScheduleDayView = ({
@@ -62,7 +62,20 @@ export const ScheduleDayView = ({
     // Synchronize horizontal scrolling between header and body
     const handleBodyScroll = (_e: React.UIEvent<HTMLDivElement>) => {
         if (headerRef.current && bodyRef.current) {
-            headerRef.current.scrollLeft = bodyRef.current.scrollLeft;
+            // Set a fixed buffer (17px) to prevent over-scrolling and misalignment
+            const SCROLL_BUFFER = 17;
+            const maxScrollLeft =
+                bodyRef.current.scrollWidth -
+                bodyRef.current.clientWidth -
+                SCROLL_BUFFER;
+            const currentScrollLeft = bodyRef.current.scrollLeft;
+
+            if (currentScrollLeft > maxScrollLeft) {
+                bodyRef.current.scrollLeft = maxScrollLeft;
+                headerRef.current.scrollLeft = maxScrollLeft;
+            } else {
+                headerRef.current.scrollLeft = currentScrollLeft;
+            }
         }
     };
     const handleHeaderScroll = (_e: React.UIEvent<HTMLDivElement>) => {
@@ -87,7 +100,7 @@ export const ScheduleDayView = ({
 
     // Find all slots that should be displayed in a given time cell
     const findSlotsForTimeCell = (
-        service: any,
+        service: ScheduleRowData,
         timeSlot: string
     ): ScheduleRowCellData[] => {
         return (
@@ -108,7 +121,10 @@ export const ScheduleDayView = ({
     };
 
     // Check if a time slot is covered by any existing booking
-    const isTimeSlotCovered = (service: any, timeSlot: string): boolean => {
+    const isTimeSlotCovered = (
+        service: ScheduleRowData,
+        timeSlot: string
+    ): boolean => {
         const timeSlotMinutes = TimeHelper.timeToMinutes(timeSlot);
 
         return (
@@ -127,7 +143,7 @@ export const ScheduleDayView = ({
     };
 
     const getPopoverConfig = (
-        service: any,
+        service: ScheduleRowData,
         slot: ScheduleRowCellData | undefined,
         time: string
     ) => {
@@ -145,12 +161,12 @@ export const ScheduleDayView = ({
 
     const renderHeader = () => {
         return (
-            <ServiceContainer columnCount={rowData.length}>
+            <ServiceContainer $columnCount={rowData.length}>
                 {rowData.map((service, idx) => (
                     <ServiceColumn key={idx}>
                         {isMobile && (
                             <ArrowContainer>
-                                {showPrevArrow && (
+                                {showPrevArrow && onPrevService && (
                                     <ArrowButton
                                         styleType="light"
                                         sizeType="small"
@@ -175,7 +191,7 @@ export const ScheduleDayView = ({
                                 available
                             </Description>
                         </StyleDiv>
-                        {isMobile && showNextArrow && (
+                        {isMobile && showNextArrow && onNextService && (
                             <ArrowButton
                                 styleType="light"
                                 sizeType="small"
@@ -201,14 +217,14 @@ export const ScheduleDayView = ({
         const offsetTop = calculateSlotOffset(slot.startTime, timeSlotStart);
         return (
             <SlotContent
-                status={slot.status}
-                duration={duration}
+                $status={slot.status}
+                $duration={duration}
                 $offsetTop={offsetTop}
                 onClick={(e) => slot.onClick && slot.onClick(slot, e)}
             >
                 <SlotTime>
-                    {TimeHelper.parseInput(slot.startTime, "12hr")} -{" "}
-                    {TimeHelper.parseInput(slot.endTime, "12hr")}
+                    {TimeHelper.parseInput(slot.startTime, "12hr")}
+                    {"\u2013"} {TimeHelper.parseInput(slot.endTime, "12hr")}
                 </SlotTime>
                 <SlotAvailability>
                     {slot.status === "blocked"
@@ -219,13 +235,17 @@ export const ScheduleDayView = ({
         );
     };
 
-    const renderSlotCell = (service: any, time: string) => {
+    const renderSlotCell = (service: ScheduleRowData, time: string) => {
         const slots = findSlotsForTimeCell(service, time);
         if (slots.length > 0) {
             return (
-                <SlotCell key={time} startTime={time}>
+                <SlotCell key={time} $startTime={time}>
                     {slots.map((slot, index) => {
-                        const popoverConfig = getPopoverConfig(service, slot, time);
+                        const popoverConfig = getPopoverConfig(
+                            service,
+                            slot,
+                            time
+                        );
                         return (
                             <WithOptionalPopover
                                 key={`${slot.id}-${index}`}
@@ -240,10 +260,14 @@ export const ScheduleDayView = ({
             );
         } else {
             return (
-                <SlotCell key={time} startTime={time}>
+                <SlotCell key={time} $startTime={time}>
                     <WithOptionalPopover
                         containerRef={containerRef}
-                        customPopover={getPopoverConfig(service, undefined, time)}
+                        customPopover={getPopoverConfig(
+                            service,
+                            undefined,
+                            time
+                        )}
                     >
                         <EmptySlot />
                     </WithOptionalPopover>
@@ -254,7 +278,7 @@ export const ScheduleDayView = ({
 
     const renderTimeSlotGrid = () => {
         return (
-            <SlotGrid columnCount={rowData.length}>
+            <SlotGrid $columnCount={rowData.length}>
                 {timelineOffset !== null && <Timeline $top={timelineOffset} />}
                 {rowData.map((service) => (
                     <SlotColumn key={service.id} data-testid="schedule-column">
@@ -277,18 +301,13 @@ export const ScheduleDayView = ({
                     <HeaderContainer
                         ref={headerRef}
                         onScroll={handleHeaderScroll}
-                        columnCount={rowData.length}
                         $isMobile={isMobile}
                     >
                         <BlankCell />
                         {renderHeader()}
                     </HeaderContainer>
 
-                    <BodyContainer
-                        ref={bodyRef}
-                        onScroll={handleBodyScroll}
-                        columnCount={rowData.length}
-                    >
+                    <BodyContainer ref={bodyRef} onScroll={handleBodyScroll}>
                         {/* Time labels */}
                         <TimeIndicator
                             minTime={minTime}

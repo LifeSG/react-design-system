@@ -42,7 +42,7 @@ export const StyledText = styled(Typography.BodyMD)`
 `;
 
 export const StyledButton = styled(Button.Default)`
-    min-width: 80px;
+    min-width: 5rem;
 `;
 
 export const DropdownGlobalStyles = createGlobalStyle`

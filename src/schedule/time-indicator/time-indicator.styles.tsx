@@ -33,11 +33,11 @@ export const TimeLabel = styled(Typography.BodySM)`
 export const TimelineCircle = styled.div<{ $top: number }>`
     position: absolute;
     right: -6px;
-    top: ${({ $top }) => $top - 6}px; 
+    top: ${({ $top }) => $top - 6}px;
     width: 12px;
     height: 12px;
     border-radius: 50%;
     background: ${Colour["icon-primary"]};
-    z-index: 4; 
+    z-index: 4;
     box-sizing: border-box;
 `;

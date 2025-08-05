@@ -2,6 +2,8 @@ import { PopoverV2TriggerType } from "../popover-v2";
 
 export type ScheduleCellType = "booked" | "available" | "blocked" | "pending";
 
+export type ScheduleView = "day" | "week";
+
 export interface ScheduleRowData {
     id?: string;
     name: string;
@@ -20,7 +22,7 @@ export interface ScheduleProps {
     id?: string;
     className?: string;
     "data-testid"?: string;
-    view?: "day" | "week";
+    view?: ScheduleView;
     date: string;
     emptyContentMessage?: string;
     rowData: ScheduleRowData[];

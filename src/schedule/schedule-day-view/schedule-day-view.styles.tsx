@@ -29,7 +29,7 @@ export const LoadingContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 400px;
+    min-height: 25rem;
     height: 100%;
     border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
     border-radius: ${Radius["md"]};
@@ -37,7 +37,6 @@ export const LoadingContainer = styled.div`
 `;
 
 export const HeaderContainer = styled.div<{
-    columnCount: number;
     $isMobile: boolean;
 }>`
     z-index: 3;
@@ -46,24 +45,10 @@ export const HeaderContainer = styled.div<{
     border-top-left-radius: ${Radius["md"]};
     position: sticky;
     border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
-    border-bottom: none;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: hidden;
 
-    /* Hide the vertical scrollbar visually but keep its space */
-    &::-webkit-scrollbar {
-        width: 10px;
-        background: ${Colour["bg-strong"]};
-        border-top-right-radius: ${Radius["md"]};
-    }
-    &::-webkit-scrollbar-thumb {
-        background: ${Colour["bg-strong"]};
-    }
-    &::-webkit-scrollbar-track {
-        background: ${Colour["bg-strong"]};
-        border-top-right-radius: ${Radius["md"]};
-    }
-    ${({ $isMobile, columnCount }) =>
+    ${({ $isMobile }) =>
         $isMobile
             ? css`
                   display: block;
@@ -71,10 +56,7 @@ export const HeaderContainer = styled.div<{
               `
             : css`
                   display: grid;
-                  grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(
-                          ${columnCount},
-                          1fr
-                      );
+                  grid-template-columns: ${TIME_INDICATOR_WIDTH}px 1fr;
               `}
 `;
 
@@ -84,11 +66,9 @@ export const BlankCell = styled.div`
     position: sticky;
     left: 0;
 `;
-export const ServiceContainer = styled.div<{ columnCount: number }>`
+export const ServiceContainer = styled.div<{ $columnCount: number }>`
     display: grid;
-    grid-template-columns: repeat(${({ columnCount }) => columnCount}, 1fr);
-    grid-column-start: 2;
-    grid-column-end: ${({ columnCount }) => columnCount + 2};
+    grid-template-columns: repeat(${({ $columnCount }) => $columnCount}, 1fr);
 `;
 
 export const ServiceColumn = styled.div`
@@ -105,7 +85,7 @@ export const ServiceColumn = styled.div`
 `;
 
 export const StyleDiv = styled.div`
-    width: 75%;
+    width: 15rem;
     padding-left: ${Spacing["spacing-16"]};
 `;
 
@@ -134,54 +114,25 @@ export const Description = styled(Typography.BodySM)`
     }
 `;
 
-export const BodyContainer = styled.div<{ columnCount: number }>`
+export const BodyContainer = styled.div`
     display: grid;
-    grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(
-            ${({ columnCount }) => columnCount},
-            1fr
-        );
-    position: relative;
+    grid-template-columns: ${TIME_INDICATOR_WIDTH}px 1fr;
     width: 100%;
     overflow-x: auto;
     overflow-y: auto;
     flex: 1;
     height: 100%;
     border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    border-top: none;
     border-bottom-right-radius: ${Radius["md"]};
     border-bottom-left-radius: ${Radius["md"]};
-
-    /* Custom scrollbar styling for desktop only - maintains native mobile behavior */
-    @media (hover: hover) and (pointer: fine) {
-        &::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-        }
-        &::-webkit-scrollbar-track {
-            background: ${Colour["bg"]};
-            border-bottom-right-radius: ${Radius["md"]};
-        }
-        &::-webkit-scrollbar-thumb {
-            background: ${Colour["border"]};
-            border-radius: ${Radius["md"]};
-            border: ${Border["width-020"]} ${Border.solid} ${Colour["bg"]};
-        }
-        &::-webkit-scrollbar-thumb:hover {
-            background: ${Colour["bg-inverse-subtlest"]};
-        }
-        &::-webkit-scrollbar-corner {
-            background: ${Colour["bg"]};
-            border-bottom-right-radius: ${Radius["md"]};
-        }
-    }
 `;
 
-export const SlotGrid = styled.div<{ columnCount: number }>`
+export const SlotGrid = styled.div<{ $columnCount: number }>`
     display: grid;
-    grid-template-columns: repeat(${({ columnCount }) => columnCount}, 1fr);
+    grid-template-columns: repeat(${({ $columnCount }) => $columnCount}, 1fr);
     min-width: max-content;
     position: relative;
-    grid-column-start: 2;
-    grid-column-end: ${({ columnCount }) => columnCount + 2};
 `;
 
 export const SlotColumn = styled.div`
@@ -196,13 +147,13 @@ export const SlotColumn = styled.div`
 `;
 
 export const SlotCell = styled.div<{
-    startTime?: string;
+    $startTime?: string;
 }>`
     min-height: ${CELL_HEIGHT}px;
     position: relative;
     border-bottom: ${Border["width-010"]} solid ${Colour["border"]};
-    ${({ startTime }) =>
-        startTime?.endsWith(":00") &&
+    ${({ $startTime }) =>
+        $startTime?.endsWith(":00") &&
         css`
             border-bottom-style: dashed;
         `}
@@ -210,8 +161,8 @@ export const SlotCell = styled.div<{
 `;
 
 export const SlotContent = styled(Typography.BodyXS)<{
-    status?: string;
-    duration?: number;
+    $status?: string;
+    $duration?: number;
     $offsetTop?: number;
 }>`
     margin-top: 0;
@@ -223,14 +174,14 @@ export const SlotContent = styled(Typography.BodyXS)<{
     border-radius: ${Radius["sm"]};
     box-sizing: border-box;
     z-index: 1;
-    height: ${({ duration }) =>
-        duration
-            ? `${(duration / 30) * CELL_HEIGHT - 1}px`
+    height: ${({ $duration }) =>
+        $duration
+            ? `${($duration / 30) * CELL_HEIGHT - 1}px`
             : `${CELL_HEIGHT - 1}px`};
     display: flex;
     justify-content: space-between;
-    background: ${({ status }) => {
-        switch (status) {
+    background: ${({ $status }) => {
+        switch ($status) {
             case "pending":
                 return css`
                     repeating-linear-gradient(
@@ -252,12 +203,12 @@ export const SlotContent = styled(Typography.BodyXS)<{
         }
     }};
 
-    color: ${({ status }) =>
-        status === "blocked" ? Colour["text-inverse"] : Colour["text-subtle"]};
+    color: ${({ $status }) =>
+        $status === "blocked" ? Colour["text-inverse"] : Colour["text-subtle"]};
 
     border-left: ${Border["width-040"]} solid
-        ${({ status }) =>
-            status === "available" ? Colour["icon-success"] : "none"};
+        ${({ $status }) =>
+            $status === "available" ? Colour["icon-success"] : "none"};
 `;
 
 export const SlotTime = styled.span``;
