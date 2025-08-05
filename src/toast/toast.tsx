@@ -124,7 +124,7 @@ export const Toast = ({
     // =============================================================================
     const renderIcon = () => {
         const Icon = TOAST_ICON_MAP[type];
-        return Icon && <Icon aria-hidden={true} />;
+        return Icon && <Icon aria-hidden />;
     };
 
     const renderTitle = () => {
@@ -143,17 +143,9 @@ export const Toast = ({
         if (React.isValidElement(label)) {
             return label;
         } else if (title) {
-            return (
-                <DescriptionMD $type={type} role="presentation">
-                    {label}
-                </DescriptionMD>
-            );
+            return <DescriptionMD $type={type}>{label}</DescriptionMD>;
         } else {
-            return (
-                <DescriptionBL $type={type} role="presentation">
-                    {label}
-                </DescriptionBL>
-            );
+            return <DescriptionBL $type={type}>{label}</DescriptionBL>;
         }
     };
 
@@ -191,7 +183,7 @@ export const Toast = ({
                 onClick={handleDismiss}
                 aria-label="Close notification"
             >
-                <CrossIcon aria-hidden={true} />
+                <CrossIcon aria-hidden />
             </DismissButton>
         </Wrapper>
     );
