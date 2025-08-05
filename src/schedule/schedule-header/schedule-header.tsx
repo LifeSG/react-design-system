@@ -9,11 +9,11 @@ import {
     StyledText,
     ScheduleHeaderWrapper,
 } from "./schedule-header.style";
-
+import { ScheduleView } from "../types";
 interface ScheduleHeaderProps {
     id?: string;
     date: string;
-    view: "day" | "week";
+    view: ScheduleView;
     showTodayButton?: boolean;
     showViewSelector?: boolean;
     minDate?: string;
@@ -23,7 +23,7 @@ interface ScheduleHeaderProps {
     onPreviousDayClick: (currentDate: string) => void;
     onNextDayClick: (currentDate: string) => void;
     onCalendarDateSelect?: (currentDate: string) => void;
-    onViewChange?: (view: "day" | "week") => void;
+    onViewChange?: (view: ScheduleView) => void;
     onTodayClick?: () => void;
 }
 
@@ -41,7 +41,7 @@ export const ScheduleHeader = ({
     onTodayClick,
     ...otherprops
 }: ScheduleHeaderProps) => {
-    const viewOptions = [
+    const viewOptions: Array<{ label: string; value: ScheduleView }> = [
         { label: "Day", value: "day" },
         { label: "Week", value: "week" },
     ];
@@ -101,7 +101,7 @@ export const ScheduleHeader = ({
                             options={viewOptions}
                             selectedOption={selectedViewOption}
                             onSelectOption={(option) =>
-                                onViewChange?.(option.value as "day" | "week")
+                                onViewChange?.(option.value)
                             }
                             listExtractor={(option) => option.label}
                             displayValueExtractor={(option) => option.label}

@@ -13,6 +13,7 @@ export interface ScheduleWeekViewProps {
     initialScrollTime?: string;
     onSlotClick?: (data: ScheduleRowCellData, e: React.MouseEvent) => void;
     emptySlotPopover?: SchedulePopoverProps;
+    containerRef?: React.RefObject<HTMLElement>;
 }
 
 export type SlotWithService = ScheduleRowCellData & { serviceName: string };

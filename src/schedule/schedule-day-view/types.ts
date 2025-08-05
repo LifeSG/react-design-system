@@ -10,8 +10,8 @@ export interface ScheduleDayViewProps {
     initialScrollTime?: string;
     isMobile: boolean;
     containerRef: RefObject<HTMLDivElement>;
-    onNextService: () => void;
-    onPrevService: () => void;
+    onNextService?: () => void;
+    onPrevService?: () => void;
     showPrevArrow: boolean;
     showNextArrow: boolean;
     emptySlotPopover?: SchedulePopoverProps;
