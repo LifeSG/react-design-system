@@ -99,4 +99,17 @@ export namespace FooterHelper {
             },
         };
     };
+
+    export const getLogoAltText = (resourceScheme?: ResourceScheme) => {
+        switch (resourceScheme) {
+            case "bookingsg":
+                return "BookingSG logo";
+            case "mylegacy":
+                return "MyLegacy logo";
+            case "ccube":
+                return "Citizen Collective Common logo";
+            default:
+                return "LifeSG logo";
+        }
+    };
 }
