@@ -51,6 +51,7 @@ export const FilterItem = ({
         ? minimisedHeight ??
           Math.min((contentResizeDetector.height ?? 0) * 0.5, 216)
         : contentResizeDetector.height;
+    const contentId = "expandable-container";
 
     // =============================================================================
     // EFFECTS
@@ -113,7 +114,10 @@ export const FilterItem = ({
     };
 
     return (
-        <FilterItemWrapper $collapsible={collapsible} aria-label={title}>
+        <FilterItemWrapper
+            $collapsible={collapsible}
+            aria-labelledby={"filter-item-title"}
+        >
             <Divider
                 $showDivider={showDivider}
                 $showMobileDivider={showMobileDivider}
@@ -121,7 +125,7 @@ export const FilterItem = ({
             {(title || collapsible) && (
                 <FilterItemHeader>
                     {title && (
-                        <FilterItemTitle>
+                        <FilterItemTitle id="filter-item-title">
                             {title} {addon && renderAddon()}
                         </FilterItemTitle>
                     )}
@@ -135,6 +139,9 @@ export const FilterItem = ({
                                     ? `Collapse ${title}`
                                     : `Expand ${title}`
                             }
+                            aria-expanded={expanded}
+                            aria-disabled={!collapsible}
+                            aria-controls={contentId}
                         >
                             <ChevronIcon $expanded={expanded} />
                         </FilterItemExpandButton>
@@ -142,11 +149,11 @@ export const FilterItem = ({
                 </FilterItemHeader>
             )}
             <ExpandableItem
-                data-testid="expandable-container"
+                id={contentId}
+                data-testid={contentId}
                 data-expanded={expanded}
                 style={itemAnimationStyles}
                 inert={inertValue(!expanded)}
-                aria-expanded={expanded}
             >
                 <div ref={itemResizeDetector.ref}>
                     <FilterItemBody {...otherProps}>

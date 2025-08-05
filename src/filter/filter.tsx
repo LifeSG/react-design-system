@@ -45,7 +45,7 @@ const FilterBase = ({
     const theme = useTheme();
     const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
-    const { context } = useFloating();
+    const { context, refs } = useFloating();
 
     // =============================================================================
     // EFFECTS
@@ -137,14 +137,11 @@ const FilterBase = ({
                     {toggleFilterButtonLabel}
                 </FilterButton>
                 <Overlay show={visible} disableTransition>
-                    <FloatingFocusManager
-                        context={context}
-                        modal={true}
-                        initialFocus={-1}
-                    >
+                    <FloatingFocusManager context={context} initialFocus={-1}>
                         <MobileOverlayContainer
                             data-id="filter-mobile"
                             data-testid="filter-mobile"
+                            ref={refs.setFloating}
                         >
                             <MobileContainer ref={mobileNodeRef} tabIndex={0}>
                                 {renderHeader("mobile")}
