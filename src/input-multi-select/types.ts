@@ -24,6 +24,8 @@ export interface InputMultiSelectProps<T, V>
     alignment?: DropdownAlignmentType | undefined;
     dropdownZIndex?: number | undefined;
     maxSelectable?: number | undefined;
+    selectAllButtonLabel?: string | undefined;
+    clearAllButtonLabel?: string | undefined;
     /** @deprecated this has no effect as the dropdown will automatically resize */
     listStyleWidth?: string | undefined;
     /**

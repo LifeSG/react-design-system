@@ -40,6 +40,7 @@ export interface DropdownSearchProps<T> {
     enableSearch?: boolean | undefined;
     /** If specified, the default no results display will not be rendered */
     hideNoResultsDisplay?: boolean | undefined;
+    noResultsLabel?: string | undefined;
     noResultsDescription?: React.ReactNode | undefined;
     searchPlaceholder?: string | undefined;
     /** Custom function to perform search when a user keys in a value in the search input */
@@ -50,6 +51,8 @@ export interface DropdownSearchProps<T> {
 export interface DropdownConfigProps {
     multiSelect?: boolean | undefined;
     maxSelectable?: number | undefined;
+    selectAllButtonLabel?: string | undefined;
+    clearAllButtonLabel?: string | undefined;
     width?: number | undefined;
     /**
      * Used when items are loaded from an api call.

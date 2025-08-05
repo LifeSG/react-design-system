@@ -167,6 +167,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "noResultsLabel",
+                description:
+                    "Specifies to replace the default no results display",
+                propTypes: ["string"],
+            },
+            {
                 name: "noResultsDescription",
                 description:
                     "Additional description rendered after the default no results display",

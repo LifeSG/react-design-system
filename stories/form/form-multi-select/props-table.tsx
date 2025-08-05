@@ -137,6 +137,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "noResultsLabel",
+                description:
+                    "Specifies to replace the default no results display",
+                propTypes: ["string"],
+            },
+            {
                 name: "noResultsDescription",
                 description:
                     "Additional description rendered after the default no results display",
@@ -167,6 +173,18 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "Specifies the maximum number of options that can be selected",
                 propTypes: ["number"],
+            },
+            {
+                name: "selectAllButtonLabel",
+                description:
+                    "Specifies to replace the default Select all button label",
+                propTypes: ["string"],
+            },
+            {
+                name: "clearAllButtonLabel",
+                description:
+                    "Specifies to replace the default Clear all button label",
+                propTypes: ["string"],
             },
             {
                 name: "dropdownRootNode",

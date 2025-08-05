@@ -61,6 +61,7 @@ export const NestedDropdownList = <T,>({
     /* DropdownSearchProps */
     enableSearch,
     hideNoResultsDisplay,
+    noResultsLabel = "No results found.",
     noResultsDescription,
     searchPlaceholder = "Search",
     onSearch,
@@ -443,7 +444,7 @@ export const NestedDropdownList = <T,>({
                 <>
                     <ResultStateContainer data-testid="list-no-results">
                         <LabelIcon data-testid="no-result-icon" />
-                        No results found.
+                        {noResultsLabel}
                     </ResultStateContainer>
                     {noResultsDescription && (
                         <NoResultDescContainer data-testid="no-result-desc">

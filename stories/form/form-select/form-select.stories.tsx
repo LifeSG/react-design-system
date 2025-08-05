@@ -147,6 +147,15 @@ export const WithSearch: StoryObj<Component> = {
                     enableSearch
                 />
                 <Form.Select
+                    label="Custom label when no results are found"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    enableSearch
+                    noResultsLabel="Custom no result found."
+                />
+                <Form.Select
                     label="Custom description when no results are found"
                     options={OPTIONS_DATA}
                     valueExtractor={(item) => item.value}

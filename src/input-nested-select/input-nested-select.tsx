@@ -52,6 +52,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     searchPlaceholder,
     selectableCategory,
     hideNoResultsDisplay,
+    noResultsLabel,
     noResultsDescription,
     readOnly,
     onBlur,
@@ -264,6 +265,7 @@ export const InputNestedSelect = <V1, V2, V3>({
                 enableSearch={enableSearch}
                 searchPlaceholder={searchPlaceholder}
                 hideNoResultsDisplay={hideNoResultsDisplay}
+                noResultsLabel={noResultsLabel}
                 noResultsDescription={noResultsDescription}
                 onSelectItem={handleListItemClick}
                 onRetry={onRetry}

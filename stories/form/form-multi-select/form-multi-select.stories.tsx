@@ -64,6 +64,14 @@ export const Default: StoryObj<Component> = {
                         { value: "C", label: "Option C" },
                     ]}
                 />
+                <Form.MultiSelect
+                    label="This has custom select all & clear all label"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    selectAllButtonLabel="Custom select all"
+                    clearAllButtonLabel="Custom clear all"
+                />
             </>
         );
     },
@@ -80,6 +88,14 @@ export const WithSearch: StoryObj<Component> = {
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
                     enableSearch
+                />
+                <Form.MultiSelect
+                    label="Custom label when no results are found"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    enableSearch
+                    noResultsLabel="Custom no result found."
                 />
                 <Form.MultiSelect
                     label="Custom description when no results are found"

@@ -97,6 +97,12 @@ export const WithSearch: StoryObj<Component> = {
                     enableSearch
                 />
                 <Form.NestedMultiSelect
+                    label="Custom label when no results are found"
+                    options={searchOptions}
+                    enableSearch
+                    noResultsLabel="Custom no result found."
+                />
+                <Form.NestedMultiSelect
                     label="Custom description when no results are found"
                     options={searchOptions}
                     enableSearch

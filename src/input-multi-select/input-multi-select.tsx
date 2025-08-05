@@ -41,7 +41,10 @@ export const InputMultiSelect = <T, V>({
     optionTruncationType = "end",
     renderListItem,
     hideNoResultsDisplay,
+    noResultsLabel,
     noResultsDescription,
+    selectAllButtonLabel,
+    clearAllButtonLabel,
     renderCustomCallToAction,
     onBlur,
     variant = "default",
@@ -253,7 +256,10 @@ export const InputMultiSelect = <T, V>({
                 itemTruncationType={optionTruncationType}
                 renderListItem={renderListItem}
                 hideNoResultsDisplay={hideNoResultsDisplay}
+                noResultsLabel={noResultsLabel}
                 noResultsDescription={noResultsDescription}
+                selectAllButtonLabel={selectAllButtonLabel}
+                clearAllButtonLabel={clearAllButtonLabel}
                 renderCustomCallToAction={renderCustomCallToAction}
                 variant={variant}
                 width={elementWidth}
