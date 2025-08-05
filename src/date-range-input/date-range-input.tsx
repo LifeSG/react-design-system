@@ -206,7 +206,7 @@ export const DateRangeInput = ({
     useEffect(() => {
         if (currentFocus === "start") {
             setInitialCalendarDate(selectedStart);
-        } else if (currentFocus === "end") {
+        } else if (currentFocus === "end" && selectedEnd) {
             setInitialCalendarDate(selectedEnd);
         }
     }, [currentFocus]);
