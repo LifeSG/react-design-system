@@ -72,7 +72,6 @@ export const Header = styled.div<HeaderStyleProps>`
 `;
 
 export const LabelText = styled.h2`
-    // change to H2
     ${Font["heading-sm-semibold"]}
     color: ${Colour["text"]};
     word-wrap: break-word;
