@@ -2,7 +2,7 @@ import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour } from "../theme";
+import { Border, Colour, Shadow } from "../theme";
 import { ThemeStyleProps } from "../theme/types";
 import { Typography } from "../typography";
 import { Direction, SlotStyle, TimeSlotBarVariant } from "./types";
@@ -76,8 +76,7 @@ export const ArrowButton = styled(ClickableIcon)<ArrowStyleProps>`
     position: absolute;
     bottom: ${({ $variant }) => ($variant === "default" ? "0.25rem" : "0rem")};
     background-color: ${Colour.bg};
-    box-shadow: 0px 2px 8px
-        rgb(from ${Colour.Primitive["neutral-50"]} r g b / 50%);
+    box-shadow: ${Shadow["md-strong"]};
     border-radius: 100%;
     padding: 0.5rem;
     width: 2rem;

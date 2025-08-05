@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
-import { Border, Colour, Font, Motion, Radius } from "../theme";
+import { Border, Colour, Font, Motion, Radius, Shadow } from "../theme";
 import { Typography } from "../typography";
 
 //=============================================================================
@@ -96,7 +96,6 @@ export const DesktopDrawer = styled.ul<DrawerStyleProps>`
     ${(props) =>
         props.$showShadow &&
         css`
-            box-shadow: 0 0 4px
-                rgb(from ${Colour.Primitive["neutral-20"]} r g b / 25%);
+            box-shadow: ${Shadow["xs-subtle"]};
         `}
 `;
