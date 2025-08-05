@@ -52,7 +52,7 @@ const DefaultComponent = (
             ) : (
                 React.cloneElement(icon, { "aria-hidden": true })
             )}
-            {children}
+            <span>{children}</span>
         </MainButtonWithIcon>
     );
 };
@@ -95,7 +95,7 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
             ) : (
                 React.cloneElement(icon, { "aria-hidden": true })
             )}
-            {children}
+            <span>{children}</span>
         </MainButtonWithIcon>
     );
 };

@@ -92,7 +92,7 @@ const Label = styled.td<NameColStyleProps>`
 
 const Mandatory = styled.td<NameColStyleProps>`
     font-weight: bold;
-    :after {
+    &:after {
         content: " *";
         color: #9e130f;
     }

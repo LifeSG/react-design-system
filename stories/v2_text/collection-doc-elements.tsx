@@ -22,7 +22,7 @@ const FontDisplayContainer = styled.div`
     margin: 1rem 0 4rem;
 
     h2 {
-        :not(:last-child) {
+        &:not(:last-child) {
             margin-right: 1rem;
         }
     }
@@ -132,17 +132,17 @@ const FontSizeList = styled.ul`
 const FontSizeItem = styled.li`
     display: flex;
     width: 50%;
-    :not(:last-child) {
+    &:not(:last-child) {
         margin-bottom: 1rem;
     }
 
-    :nth-child(odd) {
+    &:nth-child(odd) {
         padding-right: 0.5rem;
     }
 
     ${V2_MediaQuery.MaxWidth.tablet} {
         width: 100%;
-        :not(:last-child) {
+        &:not(:last-child) {
             margin-bottom: 2rem;
         }
     }
