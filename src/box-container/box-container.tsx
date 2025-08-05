@@ -44,8 +44,6 @@ export const BoxContainer = ({
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const interactiveHeader = clickableHeader && collapsible;
-    const contentId = "content-container";
-    const headerId = "header-title";
 
     // =============================================================================
     // EVENT HANDLERS
@@ -69,10 +67,8 @@ export const BoxContainer = ({
             return (
                 <Expandable
                     style={expandableStyles}
-                    data-testid={contentId}
-                    id={contentId}
-                    aria-labelledby={headerId}
-                    role="region"
+                    data-testid="expandable-container"
+                    id={"expandable-container"}
                 >
                     <ChildContainer ref={childRef}>{children}</ChildContainer>
                 </Expandable>
@@ -80,12 +76,7 @@ export const BoxContainer = ({
         }
 
         return (
-            <NonExpandable
-                data-testid="non-expandable-container"
-                id={contentId}
-                aria-labelledby={headerId}
-                role="region"
-            >
+            <NonExpandable data-testid="non-expandable-container">
                 <ChildContainer>{children}</ChildContainer>
             </NonExpandable>
         );
@@ -123,9 +114,7 @@ export const BoxContainer = ({
                             ? `${title} expanded`
                             : `${title} collapsed`
                     }
-                    aria-controls={contentId}
-                    aria-disabled={!collapsible} // remains focusable
-                    aria-expanded={expanded}
+                    aria-controls="expandable-container"
                     data-testid={subComponentTestIds?.handle || "handle"}
                 >
                     <HandleIconContainer $expanded={showExpanded}>
@@ -137,22 +126,17 @@ export const BoxContainer = ({
     };
 
     return (
-        <Container
-            {...otherProps}
-            role={displayState !== "default" ? "status" : undefined}
-            aria-live={displayState !== "default" ? "polite" : undefined}
-            aria-labelledby={headerId}
-        >
+        <Container {...otherProps}>
             <Header
                 data-testid="header"
                 onClick={interactiveHeader ? onHandleClick : undefined}
                 $interactive={interactiveHeader}
                 role="group"
             >
-                <LabelWrapper>
+                <LabelWrapper role="status" tabIndex={0}>
                     <LabelText
                         data-testid={subComponentTestIds?.title || "title"}
-                        id={headerId}
+                        id="header-title"
                     >
                         {title}
                     </LabelText>
