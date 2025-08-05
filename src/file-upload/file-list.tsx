@@ -13,7 +13,14 @@ import {
     sortableKeyboardCoordinates,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useContext, useEffect, useRef, useState } from "react";
+import React, {
+    forwardRef,
+    useContext,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { FileUploadContext } from "./context";
 import { MouseSensor } from "./custom-sensors";
@@ -22,6 +29,7 @@ import { FileListItem } from "./file-list-item";
 import { EditableItemsContainer, ListWrapper } from "./file-list.styles";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
+import { VisuallyHidden } from "../shared/accessibility";
 
 // =============================================================================
 // INTERFACES
@@ -45,26 +53,40 @@ interface Props {
     onSort?: ((reorderedFileItems: FileItemProps[]) => void) | undefined;
 }
 
+export interface FileListRef {
+    focus: () => void;
+}
+
 // =============================================================================
 // COMPONENT
 // =============================================================================
 
-export const FileList = ({
-    fileItems,
-    editableFileItems,
-    fileDescriptionMaxLength,
-    sortable,
-    disabled,
-    readOnly,
-    onItemUpdate,
-    onItemDelete,
-    onSort,
-}: Props) => {
+function Component(
+    {
+        fileItems = [],
+        editableFileItems,
+        fileDescriptionMaxLength,
+        sortable,
+        disabled,
+        readOnly,
+        onItemUpdate,
+        onItemDelete,
+        onSort,
+    }: Props,
+    ref: React.Ref<FileListRef>
+) {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
+    const visuallyHiddenRef = useRef<HTMLDivElement>(null);
     const [renderModes, setRenderModes] = useState<FileItemRenderModes>({});
     const { setActiveId } = useContext(FileUploadContext);
+
+    useImperativeHandle(ref, () => ({
+        focus: () => {
+            wrapperRef.current?.focus();
+        },
+    }));
     const { width: wrapperWidth = 0, ref: wrapperRef } = useResizeDetector();
 
     // Keep track of edited description without re-rendering
@@ -261,6 +283,47 @@ export const FileList = ({
         );
     };
 
+    /**
+     * If there are no files, return "No files uploaded".
+     * If readOnly is true, return "Read-only file list".
+     * If there are files, return a summary of the file statuses.
+     * For example, "File list. 2 completed files, 1 file in progress, 1 file with error".
+     *
+     * @returns aria label
+     */
+    const getWrapperAriaLabel = () => {
+        if (fileItems.length === 0) {
+            return "No files uploaded";
+        }
+        const completedCount = fileItems.filter(
+            (item) =>
+                !item?.errorMessage &&
+                (item.progress === 1 || item.progress === undefined)
+        ).length;
+        const inProgressCount = fileItems.filter(
+            (item) => typeof item.progress === "number" && item.progress < 1
+        ).length;
+        const errorCount = fileItems.filter((item) => item.errorMessage).length;
+        if (completedCount === 0 && inProgressCount === 0 && errorCount === 0) {
+            return `File list`;
+        }
+        const completedText =
+            completedCount > 0 ? `${completedCount} completed files` : "";
+        const inProgressText =
+            inProgressCount > 0 ? `${inProgressCount} file in progress` : "";
+        const errorText =
+            errorCount > 0
+                ? `${errorCount} ${
+                      errorCount > 1 ? "files" : "file"
+                  } with error`
+                : "";
+        const parts = [completedText, inProgressText, errorText].filter(
+            Boolean
+        );
+        const prefix = readOnly ? "Read-only file list" : "File list";
+        return `${prefix}. ${parts.join(", ")}`;
+    };
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -321,14 +384,60 @@ export const FileList = ({
         });
     };
 
-    if (!fileItems || fileItems.length === 0) return null;
+    /**
+     * Renders the progress status of each file upload.
+     * In progress: 25% complete for uploading filename.pdf
+     * Complete: filename.pdf upload is complete
+     * Error: Error uploading filename.pdf: error message
+     *
+     * @returns A visually hidden element announcing the progress status.
+     */
+    const renderProgressStatus = () => {
+        // Message: Uploading filename.pdf, 25% complete
+        const progressStatus = fileItems.map((item) => {
+            if (item.errorMessage) {
+                return `Error uploading ${item.name}: ${item.errorMessage}`;
+            }
+            if (item.progress === undefined) {
+                return "";
+            }
+            if (item.progress >= 1) {
+                return `${item.name} upload is complete`;
+            }
+            const progressPercentage = Math.round((item.progress || 0) * 100);
+
+            return `${progressPercentage}% complete for uploading ${item.name}`;
+        });
+
+        return (
+            <VisuallyHidden
+                ref={visuallyHiddenRef}
+                tabIndex={-1}
+                aria-live="polite"
+            >
+                {progressStatus.filter(Boolean).join(", ")}
+            </VisuallyHidden>
+        );
+    };
+
+    const renderItemsWithWrapper = () => {
+        return (
+            <>
+                {renderProgressStatus()}
+                <ListWrapper
+                    tabIndex={0}
+                    $readOnly={readOnly}
+                    ref={wrapperRef}
+                    aria-label={getWrapperAriaLabel()}
+                >
+                    {renderItems()}
+                </ListWrapper>
+            </>
+        );
+    };
 
     if (disabled || readOnly || !shouldEnableSort()) {
-        return (
-            <ListWrapper $readOnly={readOnly} ref={wrapperRef}>
-                {renderItems()}
-            </ListWrapper>
-        );
+        return renderItemsWithWrapper();
     } else {
         return (
             <DndContext
@@ -340,11 +449,11 @@ export const FileList = ({
                     items={fileItems}
                     strategy={verticalListSortingStrategy}
                 >
-                    <ListWrapper $readOnly={readOnly} ref={wrapperRef}>
-                        {renderItems()}
-                    </ListWrapper>
+                    {renderItemsWithWrapper()}
                 </SortableContext>
             </DndContext>
         );
     }
-};
+}
+
+export const FileList = forwardRef<FileListRef, Props>(Component);

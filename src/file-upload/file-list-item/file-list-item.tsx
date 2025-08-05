@@ -225,7 +225,7 @@ const Component = ({
                 <ErrorIconButton
                     onClick={handleDelete}
                     data-testid={`${id}-error-delete-button`}
-                    aria-label={`delete-${name}`}
+                    aria-label={`delete ${name}, error: ${errorMessage}`}
                 >
                     <CrossIcon aria-hidden />
                 </ErrorIconButton>
