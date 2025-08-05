@@ -23,7 +23,7 @@ import { ToastProps } from "./types";
 import React from "react";
 import { Breakpoint } from "../theme";
 import { useTheme } from "styled-components";
-import { inertValue } from "../shared/accessibility";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
 
 const DEFAULT_AUTO_DISMISS_TIME = 4000;
 
@@ -156,10 +156,10 @@ export const Toast = ({
             $type={type}
             $fixed={fixed}
             role="alert"
-            aria-label={type}
             inert={inertValue(!isVisible)}
             {...otherProps}
         >
+            <VisuallyHidden>{type}</VisuallyHidden>
             <ContentWrapper>
                 <TextIconWrapper $type={type}>
                     {renderIcon()}
@@ -178,11 +178,10 @@ export const Toast = ({
                     </ActionButton>
                 )}
             </ContentWrapper>
-            <DismissButton
-                $type={type}
-                onClick={handleDismiss}
-                aria-label="Close notification"
-            >
+            <DismissButton $type={type} onClick={handleDismiss}>
+                <VisuallyHidden role="presentation">
+                    Close notification
+                </VisuallyHidden>
                 <CrossIcon aria-hidden />
             </DismissButton>
         </Wrapper>
