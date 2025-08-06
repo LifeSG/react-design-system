@@ -11,6 +11,7 @@ interface TimeSlotTimeIndicatorProps {
     maxTime: string;
     format: "12hr" | "24hr";
     timelineOffset?: number | null;
+    isWeekView?: boolean;
 }
 function formatHourLabel(time: string) {
     const [h] = time.split(":").map(Number);
@@ -24,13 +25,17 @@ export const TimeIndicator = ({
     maxTime,
     format = "24hr",
     timelineOffset = null,
+    isWeekView = false,
 }: TimeSlotTimeIndicatorProps) => {
     const timeSlots = TimeHelper.generateTimings(30, format, minTime, maxTime);
     const hourLabels = timeSlots.filter((t) => t.includes(":00"));
     return (
         <TimeColumnWrapper>
             {timelineOffset !== null && (
-                <TimelineCircle $top={timelineOffset} />
+                <TimelineCircle
+                    $top={timelineOffset}
+                    $isWeekView={isWeekView}
+                />
             )}
             <TimeColumn>
                 {hourLabels.map((time) => {

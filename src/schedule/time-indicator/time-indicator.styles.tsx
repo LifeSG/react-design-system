@@ -30,7 +30,10 @@ export const TimeLabel = styled(Typography.BodySM)`
     font-weight: 700;
 `;
 
-export const TimelineCircle = styled.div<{ $top: number }>`
+export const TimelineCircle = styled.div<{
+    $top: number;
+    $isWeekView: boolean;
+}>`
     position: absolute;
     right: -6px;
     top: ${({ $top }) => $top - 6}px;
@@ -40,4 +43,5 @@ export const TimelineCircle = styled.div<{ $top: number }>`
     background: ${Colour["icon-primary"]};
     z-index: 4;
     box-sizing: border-box;
+    display: ${({ $isWeekView }) => ($isWeekView ? "none" : "block")};
 `;

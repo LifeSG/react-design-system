@@ -1,21 +1,24 @@
 import {
-    ScheduleRowData,
-    ScheduleRowCellData,
+    ScheduleEntityProps,
+    ScheduleSlotProps,
     SchedulePopoverProps,
 } from "../types";
 
 export interface ScheduleWeekViewProps {
     date: string;
-    rowData: ScheduleRowData[];
+    serviceData: ScheduleEntityProps[];
     loading: boolean;
     minTime: string;
     maxTime: string;
-    initialScrollTime?: string;
-    onSlotClick?: (data: ScheduleRowCellData, e: React.MouseEvent) => void;
-    emptySlotPopover?: SchedulePopoverProps;
-    containerRef?: React.RefObject<HTMLElement>;
+    initialScrollTime?: string | undefined;
+    onSlotClick?: (
+        data: ScheduleSlotProps,
+        e: React.MouseEvent
+    ) => void | undefined;
+    emptySlotPopover?: SchedulePopoverProps | undefined;
+    containerRef?: React.RefObject<HTMLElement> | undefined;
 }
 
-export type SlotWithService = ScheduleRowCellData & { serviceName: string };
+export type SlotWithService = ScheduleSlotProps & { serviceName: string };
 export type ActiveSlot = { slot: SlotWithService; column: number };
 export type ActiveSlotsMap = Map<string, ActiveSlot>;

@@ -201,7 +201,6 @@ export const TimeSlotBar = ({
                     key={"default-timeslot"}
                     data-testid={getDataTestId("default-timeslot")}
                     $width={slotWidth}
-                    $type="vertical"
                     $variant={variant}
                     $left={0}
                     $styleType={styleType}
