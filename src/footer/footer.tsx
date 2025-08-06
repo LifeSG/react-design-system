@@ -106,9 +106,7 @@ export const Footer = <T,>({
                     <LogoSection data-testid="logo-section">
                         <img
                             src={logoSrc || src}
-                            alt={FooterHelper.getLogoAltText(
-                                theme?.resourceScheme
-                            )}
+                            alt={otherLogoAttributes.alt}
                             data-testid="logo"
                             {...otherLogoAttributes}
                         />
