@@ -1,12 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import dayjs from "dayjs";
 import { useState } from "react";
-import { Schedule, SchedulePopoverProps, ScheduleRowData } from "src/schedule";
+import {
+    Schedule,
+    SchedulePopoverProps,
+    ScheduleEntityProps,
+} from "src/schedule";
 import styled from "styled-components";
 type Component = typeof Schedule;
 import { mockScheduleData } from "./mockScheduleData";
 import { ClockIcon } from "@lifesg/react-icons";
 import { Colour } from "src/theme";
+import { log } from "console";
 
 const meta: Meta<Component> = {
     title: "Selection and input/Schedule",
@@ -52,8 +57,8 @@ const meta: Meta<Component> = {
 export default meta;
 
 const StyledSchedule = styled(Schedule)`
-    width: 1100px;
-    height: 600px;
+    width: 1400px;
+    height: 700px;
 `;
 
 const PopoverContent = styled.div`
@@ -66,7 +71,65 @@ const PopoverContent = styled.div`
 
 export const Default: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<ScheduleRowData[]>(mockScheduleData);
+        const [results] = useState<ScheduleEntityProps[]>(mockScheduleData);
+        const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
+        const [loading, _setLoading] = useState(false);
+        const onPreviousDayClick = async (currentDate: string) => {
+            const newDate = dayjs(currentDate)
+                .add(-1, "day")
+                .format("YYYY-MM-DD");
+            setDate(newDate);
+        };
+
+        const onNextDayClick = async (currentDate: string) => {
+            const newDate = dayjs(currentDate)
+                .add(1, "day")
+                .format("YYYY-MM-DD");
+            setDate(newDate);
+        };
+
+        const onTodayClick = () => {
+            setDate(dayjs().format("YYYY-MM-DD"));
+        };
+
+        const onCalendarDateSelect = (date: string) => {
+            setDate(date);
+        };
+
+        const emptySlotPopover: SchedulePopoverProps = {
+            trigger: "click",
+            content: (
+                <PopoverContent>
+                    <ClockIcon />
+                    <span>Empty Time Slot</span>
+                </PopoverContent>
+            ),
+            offset: 0,
+        };
+
+        return (
+            <StyledSchedule
+                date={date}
+                data-id="schedule"
+                view="day"
+                minTime="00:00"
+                maxTime="23:59"
+                initialScrollTime="08:00"
+                serviceData={results}
+                loading={loading}
+                onNextDayClick={onNextDayClick}
+                onPreviousDayClick={onPreviousDayClick}
+                onTodayClick={onTodayClick}
+                onCalendarDateSelect={onCalendarDateSelect}
+                emptySlotPopover={emptySlotPopover}
+            />
+        );
+    },
+};
+
+export const WeekView: StoryObj<Component> = {
+    render: () => {
+        const [results] = useState<ScheduleEntityProps[]>(mockScheduleData);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(false);
 
@@ -91,60 +154,6 @@ export const Default: StoryObj<Component> = {
         const onCalendarDateSelect = (date: string) => {
             setDate(date);
         };
-        const emptySlotPopover: SchedulePopoverProps = {
-            trigger: "click",
-            content: (
-                <PopoverContent>
-                    <ClockIcon />
-                    <span>Empty Time Slot</span>
-                </PopoverContent>
-            ),
-            offset: 0,
-        };
-
-        return (
-            <StyledSchedule
-                date={date}
-                data-id="schedule"
-                view="day"
-                minTime="00:00"
-                maxTime="23:59"
-                initialScrollTime="08:00"
-                rowData={results}
-                loading={loading}
-                onNextDayClick={onNextDayClick}
-                onPreviousDayClick={onPreviousDayClick}
-                onTodayClick={onTodayClick}
-                onCalendarDateSelect={onCalendarDateSelect}
-                emptySlotPopover={emptySlotPopover}
-            />
-        );
-    },
-};
-
-export const WeekView: StoryObj<Component> = {
-    render: () => {
-        const [results] = useState<ScheduleRowData[]>(mockScheduleData);
-        const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
-        const [loading, _setLoading] = useState(false);
-
-        const onPreviousDayClick = async (currentDate: string) => {
-            const newDate = dayjs(currentDate)
-                .add(-1, "day")
-                .format("YYYY-MM-DD");
-            setDate(newDate);
-        };
-
-        const onNextDayClick = async (currentDate: string) => {
-            const newDate = dayjs(currentDate)
-                .add(1, "day")
-                .format("YYYY-MM-DD");
-            setDate(newDate);
-        };
-
-        const onTodayClick = () => {
-            setDate(dayjs().format("YYYY-MM-DD"));
-        };
 
         return (
             <StyledSchedule
@@ -154,11 +163,12 @@ export const WeekView: StoryObj<Component> = {
                 minTime="00:00"
                 maxTime="23:59"
                 initialScrollTime="08:00"
-                rowData={results}
+                serviceData={results}
                 loading={loading}
                 onNextDayClick={onNextDayClick}
                 onPreviousDayClick={onPreviousDayClick}
                 onTodayClick={onTodayClick}
+                onCalendarDateSelect={onCalendarDateSelect}
             />
         );
     },
@@ -166,7 +176,7 @@ export const WeekView: StoryObj<Component> = {
 
 export const Loading: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<ScheduleRowData[]>(mockScheduleData);
+        const [results] = useState<ScheduleEntityProps[]>(mockScheduleData);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(true);
 
@@ -188,17 +198,22 @@ export const Loading: StoryObj<Component> = {
             setDate(dayjs().format("YYYY-MM-DD"));
         };
 
+        const onCalendarDateSelect = (date: string) => {
+            setDate(date);
+        };
+
         return (
             <StyledSchedule
                 date={date}
                 view="day"
                 minTime="08:00"
                 maxTime="18:30"
-                rowData={results}
+                serviceData={results}
                 loading={loading}
                 onNextDayClick={onNextDayClick}
                 onPreviousDayClick={onPreviousDayClick}
                 onTodayClick={onTodayClick}
+                onCalendarDateSelect={onCalendarDateSelect}
             />
         );
     },
@@ -206,7 +221,7 @@ export const Loading: StoryObj<Component> = {
 
 export const Empty: StoryObj<Component> = {
     render: () => {
-        const [results] = useState<ScheduleRowData[]>([]);
+        const [results] = useState<ScheduleEntityProps[]>([]);
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
         const [loading, _setLoading] = useState(false);
 
@@ -228,18 +243,23 @@ export const Empty: StoryObj<Component> = {
             setDate(dayjs().format("YYYY-MM-DD"));
         };
 
+        const onCalendarDateSelect = (date: string) => {
+            setDate(date);
+        };
+
         return (
             <StyledSchedule
                 date={date}
                 view="day"
                 minTime="08:00"
                 maxTime="18:30"
-                rowData={results}
+                serviceData={results}
                 loading={loading}
                 emptyContentMessage="No appointments scheduled for this day"
                 onNextDayClick={onNextDayClick}
                 onPreviousDayClick={onPreviousDayClick}
                 onTodayClick={onTodayClick}
+                onCalendarDateSelect={onCalendarDateSelect}
             />
         );
     },

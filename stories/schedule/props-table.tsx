@@ -165,7 +165,7 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: [
-                    "(data: ScheduleRowCellData, e: React.MouseEvent) => void",
+                    "(data: ScheduleSlotProps, e: React.MouseEvent) => void",
                 ],
             },
         ],
@@ -201,7 +201,7 @@ const DATA: ApiTableSectionProps[] = [
                         service or resource.
                     </>
                 ),
-                propTypes: ["ScheduleRowCellData[]"],
+                propTypes: ["ScheduleSlotProps[]"],
             },
             {
                 name: "onRowNameClick",
@@ -214,7 +214,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "ScheduleRowCellData",
+        name: "ScheduleSlotProps",
         attributes: [
             {
                 name: "id",
@@ -222,7 +222,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         The identifier for this cell. This can be useful if you
                         intend to utilise the <code>onClick</code> callback, as
-                        the <code>ScheduleRowCellData</code> will get passed to
+                        the <code>ScheduleSlotProps</code> will get passed to
                         the callback.
                     </>
                 ),
@@ -295,7 +295,7 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "The callback function to trigger when a cell has been clicked.",
                 propTypes: [
-                    "(data: ScheduleRowCellData, e: React.MouseEvent) => void",
+                    "(data: ScheduleSlotProps, e: React.MouseEvent) => void",
                 ],
             },
         ],

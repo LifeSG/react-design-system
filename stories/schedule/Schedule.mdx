@@ -57,11 +57,10 @@ The Schedule component expects data in the following format. For detailed prop d
 interface ScheduleRowData {
     id?: string;
     name: string; // Service/resource name
-    rowCells: ScheduleRowCellData[];
-    onRowNameClick?: (rowData: ScheduleRowData, e: React.MouseEvent) => void;
+    rowCells: ScheduleSlotProps[];
 }
 
-interface ScheduleRowCellData {
+interface ScheduleSlotProps {
     id?: string;
     date: string; // YYYY-MM-DD format
     startTime: string; // HH:mm format
@@ -70,11 +69,11 @@ interface ScheduleRowCellData {
     booked?: number; // Number of bookings
     capacity?: number; // Total capacity
     customPopover?: SchedulePopoverProps;
-    onClick?: (data: ScheduleRowCellData, e: React.MouseEvent) => void;
+    onClick?: (data: ScheduleSlotProps, e: React.MouseEvent) => void;
 }
 ```
 
-On mobile devices (screen width < 768px):
+On mobile and tablet devices:
 
 -   Only day view is available
 -   Today button is hidden

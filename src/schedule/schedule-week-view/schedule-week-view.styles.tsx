@@ -206,11 +206,21 @@ export const SlotColumnOverlay = styled.div<{
     width: ${({ $totalVisibleColumns }) =>
         100 / Math.max($totalVisibleColumns, 1)}%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 0 1px;
     pointer-events: none;
+    overflow: visible;
+    z-index: 1;
+    box-sizing: border-box;
 `;
 
 export const SlotContentWrapper = styled.div`
+    position: relative;
     pointer-events: auto;
+    width: 100%;
+    height: 100%;
 `;
 
 export const WeekSlotContent = styled(Typography.BodyXS)<{
@@ -219,9 +229,9 @@ export const WeekSlotContent = styled(Typography.BodyXS)<{
     $offsetTop?: number;
     $height?: number;
 }>`
-    width: 100%;
-    left: 0;
+    width: calc(100% - 2px);
     height: ${({ $height }) => $height || 20}px;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
@@ -229,12 +239,13 @@ export const WeekSlotContent = styled(Typography.BodyXS)<{
     font-size: 0.5625rem;
     position: absolute;
     top: ${({ $offsetTop }) => $offsetTop || 0}px;
+    left: 1px;
+    right: 1px;
     z-index: 10;
     margin-top: 0;
     font-weight: 500;
     border-radius: ${Radius["sm"]};
-
-    display: flex;
+    box-sizing: border-box;
 
     background: ${({ status }) => {
         switch (status) {
@@ -272,6 +283,12 @@ export const SlotServiceName = styled.span`
     font-weight: 600;
     font-size: 0.5625rem;
     line-height: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
 `;
 
 export const SlotTime = styled.span`
@@ -283,12 +300,8 @@ export const SlotTime = styled.span`
 export const HiddenColumnsButton = styled.div<{
     $visibleColumnsCount: number;
 }>`
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: ${({ $visibleColumnsCount }) =>
-        100 / Math.max($visibleColumnsCount + 1, 1)}%;
-    height: ${CELL_HEIGHT}px;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -299,6 +312,7 @@ export const HiddenColumnsButton = styled.div<{
     font-size: 0.5625rem;
     color: ${Colour["text-primary"]};
     z-index: 20;
+    min-height: ${CELL_HEIGHT}px;
 
     &:hover {
         background: ${Colour["bg-strong"]};

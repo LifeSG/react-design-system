@@ -19,7 +19,7 @@ export const Schedule = ({
     className,
     view = "day",
     date,
-    rowData,
+    serviceData,
     loading = false,
     minTime = "00:00",
     maxTime = "23:59",
@@ -52,22 +52,22 @@ export const Schedule = ({
     const effectiveView = isMobile || isTablet ? "day" : currentView;
     const contentContainerRef = useRef<HTMLDivElement>(null);
     const [visibleServiceIdx, setVisibleServiceIdx] = useState(0);
-    const isEmptyContent = rowData.length === 0 || isEmpty(rowData);
-    const filteredRowData = rowData.map((service) => ({
+    const isEmptyContent = serviceData.length === 0 || isEmpty(serviceData);
+    const filteredServiceData = serviceData.map((service) => ({
         ...service,
-        rowCells: service.rowCells.filter((cell) => cell.date === date),
+        slots: service.slots.filter((slot) => slot.date === date),
     }));
 
-    const visibleRowData =
+    const visibleServiceData =
         isMobile || isTablet
-            ? filteredRowData && filteredRowData.length > 0
-                ? [filteredRowData[visibleServiceIdx]]
+            ? filteredServiceData && filteredServiceData.length > 0
+                ? [filteredServiceData[visibleServiceIdx]]
                 : []
-            : filteredRowData;
+            : filteredServiceData;
 
     useEffect(() => {
         setVisibleServiceIdx(0);
-    }, [rowData]);
+    }, [filteredServiceData]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -81,11 +81,11 @@ export const Schedule = ({
     }, [onTodayClick]);
 
     const handleNextService = useCallback(() => {
-        if (!rowData) return;
+        if (!serviceData) return;
         setVisibleServiceIdx((idx) =>
-            idx < rowData.length - 1 ? idx + 1 : idx
+            idx < serviceData.length - 1 ? idx + 1 : idx
         );
-    }, [rowData]);
+    }, [serviceData]);
     const handlePrevService = useCallback(() => {
         setVisibleServiceIdx((idx) => (idx > 0 ? idx - 1 : idx));
     }, []);
@@ -149,7 +149,7 @@ export const Schedule = ({
                 {effectiveView === "day" ? (
                     <ScheduleDayView
                         date={date}
-                        rowData={visibleRowData}
+                        serviceData={visibleServiceData}
                         loading={loading}
                         minTime={minTime}
                         maxTime={maxTime}
@@ -164,14 +164,15 @@ export const Schedule = ({
                         }
                         showNextArrow={
                             (isMobile || isTablet) &&
-                            rowData &&
-                            visibleServiceIdx < rowData.length - 1
+                            visibleServiceData &&
+                            visibleServiceIdx < visibleServiceData.length - 1
                         }
+                        onEmptySlotClick={onEmptySlotClick}
                     />
                 ) : (
                     <ScheduleWeekView
                         date={date}
-                        rowData={rowData}
+                        serviceData={serviceData}
                         loading={loading}
                         minTime={minTime}
                         maxTime={maxTime}

@@ -1,6 +1,7 @@
 import { useMemo, useRef } from "react";
 import { ScheduleDayViewProps } from "./types";
 import { TimeHelper } from "../../util/time-helper";
+import { DateHelper } from "../../util/date-helper";
 import { useTimelineOffset, useInitialScroll } from "../shared";
 import { WithOptionalPopover } from "../shared/with-optional-popover";
 import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
@@ -28,14 +29,15 @@ import {
     EmptySlot,
 } from "./schedule-day-view.styles";
 import { TimeIndicator } from "../time-indicator/time-indicator";
-import { ScheduleRowCellData, ScheduleRowData } from "../types";
+import { ScheduleSlotProps, ScheduleEntityProps } from "../types";
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
 
 export const ScheduleDayView = ({
-    rowData,
+    serviceData,
     isMobile,
     onNextService,
     onPrevService,
+    onEmptySlotClick,
     showPrevArrow,
     showNextArrow,
     minTime,
@@ -59,6 +61,18 @@ export const ScheduleDayView = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
+    // Handle empty slot click with slot details
+    const handleEmptySlotClick = (time: string, serviceName: string) => {
+        if (onEmptySlotClick) {
+            const endTimeString = DateHelper.addMinutesToTime(time, 30);
+            onEmptySlotClick({
+                startTime: time,
+                endTime: endTimeString,
+                name: serviceName,
+            });
+        }
+    };
+
     // Synchronize horizontal scrolling between header and body
     const handleBodyScroll = (_e: React.UIEvent<HTMLDivElement>) => {
         if (headerRef.current && bodyRef.current) {
@@ -69,7 +83,6 @@ export const ScheduleDayView = ({
                 bodyRef.current.clientWidth -
                 SCROLL_BUFFER;
             const currentScrollLeft = bodyRef.current.scrollLeft;
-
             if (currentScrollLeft > maxScrollLeft) {
                 bodyRef.current.scrollLeft = maxScrollLeft;
                 headerRef.current.scrollLeft = maxScrollLeft;
@@ -100,11 +113,11 @@ export const ScheduleDayView = ({
 
     // Find all slots that should be displayed in a given time cell
     const findSlotsForTimeCell = (
-        service: ScheduleRowData,
+        service: ScheduleEntityProps,
         timeSlot: string
-    ): ScheduleRowCellData[] => {
+    ): ScheduleSlotProps[] => {
         return (
-            service.rowCells?.filter((cell: ScheduleRowCellData) => {
+            service.slots?.filter((cell: ScheduleSlotProps) => {
                 const cellStartMinutes = TimeHelper.timeToMinutes(
                     cell.startTime
                 );
@@ -122,13 +135,13 @@ export const ScheduleDayView = ({
 
     // Check if a time slot is covered by any existing booking
     const isTimeSlotCovered = (
-        service: ScheduleRowData,
+        service: ScheduleEntityProps,
         timeSlot: string
     ): boolean => {
         const timeSlotMinutes = TimeHelper.timeToMinutes(timeSlot);
 
         return (
-            service.rowCells?.some((cell: ScheduleRowCellData) => {
+            service.slots?.some((cell: ScheduleSlotProps) => {
                 const cellStartMinutes = TimeHelper.timeToMinutes(
                     cell.startTime
                 );
@@ -143,8 +156,8 @@ export const ScheduleDayView = ({
     };
 
     const getPopoverConfig = (
-        service: ScheduleRowData,
-        slot: ScheduleRowCellData | undefined,
+        service: ScheduleEntityProps,
+        slot: ScheduleSlotProps | undefined,
         time: string
     ) => {
         if (slot?.customPopover) {
@@ -161,8 +174,8 @@ export const ScheduleDayView = ({
 
     const renderHeader = () => {
         return (
-            <ServiceContainer $columnCount={rowData.length}>
-                {rowData.map((service, idx) => (
+            <ServiceContainer $columnCount={serviceData.length}>
+                {serviceData.map((service, idx) => (
                     <ServiceColumn key={idx}>
                         {isMobile && (
                             <ArrowContainer>
@@ -182,8 +195,8 @@ export const ScheduleDayView = ({
                             <Description>
                                 <span>
                                     {
-                                        service.rowCells.filter(
-                                            (cell: ScheduleRowCellData) =>
+                                        service.slots.filter(
+                                            (cell: ScheduleSlotProps) =>
                                                 cell.status === "available"
                                         ).length
                                     }
@@ -207,7 +220,7 @@ export const ScheduleDayView = ({
     };
 
     const renderSlotContent = (
-        slot: ScheduleRowCellData,
+        slot: ScheduleSlotProps,
         timeSlotStart: string
     ) => {
         const duration = TimeHelper.calculateDuration(
@@ -235,17 +248,13 @@ export const ScheduleDayView = ({
         );
     };
 
-    const renderSlotCell = (service: ScheduleRowData, time: string) => {
+    const renderSlotCell = (service: ScheduleEntityProps, time: string) => {
         const slots = findSlotsForTimeCell(service, time);
         if (slots.length > 0) {
             return (
                 <SlotCell key={time} $startTime={time}>
                     {slots.map((slot, index) => {
-                        const popoverConfig = getPopoverConfig(
-                            service,
-                            slot,
-                            time
-                        );
+                        const popoverConfig = getPopoverConfig(service, slot, time);
                         return (
                             <WithOptionalPopover
                                 key={`${slot.id}-${index}`}
@@ -260,14 +269,14 @@ export const ScheduleDayView = ({
             );
         } else {
             return (
-                <SlotCell key={time} $startTime={time}>
+                <SlotCell
+                    key={time}
+                    $startTime={time}
+                    onClick={() => handleEmptySlotClick(time, service.name)}
+                >
                     <WithOptionalPopover
                         containerRef={containerRef}
-                        customPopover={getPopoverConfig(
-                            service,
-                            undefined,
-                            time
-                        )}
+                        customPopover={getPopoverConfig(service, undefined, time)}
                     >
                         <EmptySlot />
                     </WithOptionalPopover>
@@ -278,9 +287,9 @@ export const ScheduleDayView = ({
 
     const renderTimeSlotGrid = () => {
         return (
-            <SlotGrid $columnCount={rowData.length}>
+            <SlotGrid $columnCount={serviceData.length}>
                 {timelineOffset !== null && <Timeline $top={timelineOffset} />}
-                {rowData.map((service) => (
+                {serviceData.map((service) => (
                     <SlotColumn key={service.id} data-testid="schedule-column">
                         {timeSlots.map((time) => renderSlotCell(service, time))}
                     </SlotColumn>

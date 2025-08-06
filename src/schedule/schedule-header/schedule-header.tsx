@@ -11,15 +11,15 @@ import {
 } from "./schedule-header.style";
 import { ScheduleView } from "../types";
 interface ScheduleHeaderProps {
-    id?: string;
+    id?: string | undefined;
     date: string;
     view: ScheduleView;
-    showTodayButton?: boolean;
-    showViewSelector?: boolean;
-    minDate?: string;
-    maxDate?: string;
-    $isMobile?: boolean;
-    $isTablet?: boolean;
+    showTodayButton?: boolean | undefined;
+    showViewSelector?: boolean | undefined;
+    minDate?: string | undefined;
+    maxDate?: string | undefined;
+    $isMobile?: boolean | undefined;
+    $isTablet?: boolean | undefined;
     onPreviousDayClick: (currentDate: string) => void;
     onNextDayClick: (currentDate: string) => void;
     onCalendarDateSelect?: (currentDate: string) => void;
