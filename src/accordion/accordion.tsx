@@ -19,21 +19,23 @@ const AccordionBase = ({
     "data-testid": testId,
     className,
     headingLevel = 2,
+    expandCollapseClickCallback,
 }: AccordionProps): JSX.Element => {
     const [expandAll, setExpandAll] = useState<boolean>(
         initialDisplay === "expand-all"
     );
 
-    const handleExpandCollapseClick = (event: React.MouseEvent) => {
+    const handleExpandCollapseClick = (event: React.MouseEvent, callback?: () => void) => {
         event.preventDefault();
         setExpandAll((prevExpandValue) => !prevExpandValue);
+        callback?.();
     };
 
     const renderCollapseExpandAll = () => {
         return (
             <ExpandCollapseLink
                 data-testid="accordion-expand-collapse-button"
-                onClick={handleExpandCollapseClick}
+                onClick={(event) => handleExpandCollapseClick(event, expandCollapseClickCallback)}
                 styleType="link"
                 type="button"
             >
