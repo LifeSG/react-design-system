@@ -60,8 +60,7 @@ const FilterBase = ({
         if (visible && isMobile) {
             mobileNodeRef.current?.focus();
         }
-    }),
-        [visible, isMobile];
+    }, [visible, isMobile]);
 
     // =========================================================================
     // EVENT HANDLERS

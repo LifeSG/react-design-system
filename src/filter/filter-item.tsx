@@ -1,5 +1,5 @@
 import isNil from "lodash/isNil";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
 import { PopoverAddon } from "../form/form-label-addon";
@@ -17,7 +17,8 @@ import {
     MinimisableContent,
 } from "./filter-item.styles";
 import { FilterItemProps } from "./types";
-import { inertValue } from "../shared/accessibility";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 
 export const FilterItem = ({
     collapsible: desktopCollapsible = true,
@@ -51,7 +52,8 @@ export const FilterItem = ({
         ? minimisedHeight ??
           Math.min((contentResizeDetector.height ?? 0) * 0.5, 216)
         : contentResizeDetector.height;
-    const contentId = "expandable-container";
+    const internalId = useRef(SimpleIdGenerator.generate());
+    const contentId = `${internalId.current}-content`;
 
     // =============================================================================
     // EFFECTS
@@ -134,15 +136,16 @@ export const FilterItem = ({
                             focusHighlight={false}
                             focusOutline="browser"
                             onClick={handleExpandCollapse}
-                            aria-label={
-                                expanded
-                                    ? `Collapse ${title}`
-                                    : `Expand ${title}`
-                            }
+                            aria-label={expanded ? "Collapse" : "Expand"}
                             aria-expanded={expanded}
                             aria-disabled={!collapsible}
                             aria-controls={contentId}
                         >
+                            {title && (
+                                <VisuallyHidden as="span">
+                                    {title}
+                                </VisuallyHidden>
+                            )}
                             <ChevronIcon $expanded={expanded} />
                         </FilterItemExpandButton>
                     )}
@@ -150,7 +153,7 @@ export const FilterItem = ({
             )}
             <ExpandableItem
                 id={contentId}
-                data-testid={contentId}
+                data-testid={"expandable-container"}
                 data-expanded={expanded}
                 style={itemAnimationStyles}
                 inert={inertValue(!expanded)}
