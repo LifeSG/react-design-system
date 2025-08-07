@@ -14,6 +14,7 @@ import {
     HeaderContainer,
     IndicatorLabelContainer,
     Input,
+    InputContainer,
     Label,
     RemoveButton,
     StyledToggleIcon,
@@ -111,6 +112,7 @@ export const Toggle = ({
             setExpanded(!expanded);
         }
     };
+
     const handleOnRemove = () => {
         if (!disabled) {
             if (onRemove) {
@@ -118,6 +120,14 @@ export const Toggle = ({
                 return;
             }
         }
+    };
+
+    const handleContainerClick = () => {
+        inputRef?.current?.click();
+    };
+
+    const handleInputClick = (e: React.MouseEvent<HTMLInputElement>) => {
+        e.stopPropagation();
     };
 
     // =============================================================================
@@ -228,29 +238,39 @@ export const Toggle = ({
                 $styleType={styleType}
             >
                 <IndicatorLabelContainer $addPadding={removable}>
-                    <Input
-                        ref={inputRef}
-                        name={name}
-                        id={`${generatedId}-input`}
-                        type={type === "checkbox" ? "checkbox" : "radio"}
-                        data-testid="toggle-input"
-                        disabled={disabled}
-                        onChange={handleOnChange}
-                        checked={selected}
-                        aria-describedby={ariaDescriptions}
-                        {...otherProps}
-                    />
-                    {indicator && renderIndicator()}
-                    <TextContainer $selected={selected} $disabled={disabled}>
-                        <Label
-                            htmlFor={`${generatedId}-input`}
-                            data-testid={`${generatedId}-toggle-label`}
-                            $maxLines={childrenMaxLines}
+                    <InputContainer
+                        id={`${generatedId}-input-container`}
+                        onClick={handleContainerClick}
+                    >
+                        <Input
+                            ref={inputRef}
+                            name={name}
+                            id={`${generatedId}-input`}
+                            type={type === "checkbox" ? "checkbox" : "radio"}
+                            data-testid="toggle-input"
+                            disabled={disabled}
+                            onChange={handleOnChange}
+                            onClick={handleInputClick}
+                            checked={selected}
+                            aria-describedby={ariaDescriptions}
+                            {...otherProps}
+                        />
+                        {indicator && renderIndicator()}
+                        <TextContainer
+                            $selected={selected}
+                            $disabled={disabled}
                         >
-                            {children}
-                        </Label>
-                        {subLabel && renderSubLabel()}
-                    </TextContainer>
+                            <Label
+                                htmlFor={`${generatedId}-input`}
+                                data-testid={`toggle-label`}
+                                id={`${generatedId}-label`}
+                                $maxLines={childrenMaxLines}
+                            >
+                                {children}
+                            </Label>
+                            {subLabel && renderSubLabel()}
+                        </TextContainer>
+                    </InputContainer>
                 </IndicatorLabelContainer>
 
                 {removable && (
