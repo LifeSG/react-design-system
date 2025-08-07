@@ -66,17 +66,20 @@ export const DropdownList = <T, V>({
     /* DropdownSearchProps */
     enableSearch,
     hideNoResultsDisplay,
-    noResultsLabel = "No results found.",
-    noResultsDescription,
-    selectAllButtonLabel = "Select all",
-    clearAllButtonLabel = "Clear all",
-    searchPlaceholder = "Search",
+    customLabels,
     searchFunction,
     onSearch,
 }: DropdownListProps<T, V>): JSX.Element => {
     // =========================================================================
     // CONST, REF, STATE
     // =========================================================================
+    const {
+        noResultsLabel = "No results found.",
+        noResultsDescription,
+        searchPlaceholder = "Search",
+        selectAllButtonLabel = "Select all",
+        clearAllButtonLabel = "Clear all",
+    } = customLabels || {};
     const { focusedIndex, setFocusedIndex } = useContext(
         DropdownListStateContext
     );
@@ -463,7 +466,7 @@ export const DropdownList = <T, V>({
                     </ResultStateContainer>
                     {noResultsDescription && (
                         <NoResultDescContainer data-testid="no-result-desc">
-                            {noResultsDescription}
+                            {noResultsDescription()}
                         </NoResultDescContainer>
                     )}
                 </>

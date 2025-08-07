@@ -93,11 +93,6 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
-                name: "searchPlaceholder",
-                description: "The placeholder for the search field",
-                propTypes: ["string"],
-            },
-            {
                 name: "searchFunction",
                 description:
                     "The custom function to perform a search when the user enters a value in the search input",
@@ -137,16 +132,10 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
-                name: "noResultsLabel",
+                name: "customLabels",
                 description:
-                    "Specifies to replace the default no results display",
-                propTypes: ["string"],
-            },
-            {
-                name: "noResultsDescription",
-                description:
-                    "Additional description rendered after the default no results display",
-                propTypes: ["React.ReactNode"],
+                    "Specifies custom labels to replace default labels",
+                propTypes: ["DropdownCustomLabelProps"],
             },
             {
                 name: "variant",
@@ -175,18 +164,6 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["number"],
             },
             {
-                name: "selectAllButtonLabel",
-                description:
-                    "Specifies to replace the default Select all button label",
-                propTypes: ["string"],
-            },
-            {
-                name: "clearAllButtonLabel",
-                description:
-                    "Specifies to replace the default Clear all button label",
-                propTypes: ["string"],
-            },
-            {
                 name: "dropdownRootNode",
                 description: (
                     <>
@@ -210,6 +187,40 @@ const DATA: ApiTableSectionProps[] = [
                         document<code>body</code>
                     </>
                 ),
+            },
+        ],
+    },
+    {
+        name: "DropdownCustomLabelProps",
+        attributes: [
+            {
+                name: "searchPlaceholder",
+                description: "The placeholder for the search field",
+                propTypes: ["string"],
+            },
+            {
+                name: "noResultsLabel",
+                description:
+                    "Specifies to replace the default no results display",
+                propTypes: ["string"],
+            },
+            {
+                name: "noResultsDescription",
+                description:
+                    "Additional description rendered after the default no results display",
+                propTypes: ["() => React.ReactNode"],
+            },
+            {
+                name: "selectAllButtonLabel",
+                description:
+                    "Specifies to replace the default Select all button label",
+                propTypes: ["string"],
+            },
+            {
+                name: "clearAllButtonLabel",
+                description:
+                    "Specifies to replace the default Clear all button label",
+                propTypes: ["string"],
             },
         ],
     },

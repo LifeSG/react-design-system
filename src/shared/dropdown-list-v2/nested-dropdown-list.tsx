@@ -61,14 +61,19 @@ export const NestedDropdownList = <T,>({
     /* DropdownSearchProps */
     enableSearch,
     hideNoResultsDisplay,
-    noResultsLabel = "No results found.",
-    noResultsDescription,
-    searchPlaceholder = "Search",
+    customLabels,
     onSearch,
 }: NestedDropdownListProps<T>) => {
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
+    const {
+        noResultsLabel = "No results found.",
+        noResultsDescription,
+        searchPlaceholder = "Search",
+        selectAllButtonLabel = "Select all",
+        clearAllButtonLabel = "Clear all",
+    } = customLabels || {};
     const selectableCategory = multiSelect || _selectableCategory;
     const [searchValue, setSearchValue] = useState<string>("");
     const searchTerm = searchValue.toLowerCase().trim();
@@ -425,8 +430,8 @@ export const NestedDropdownList = <T,>({
                         $variant={variant}
                     >
                         {selectedKeyPaths.size === 0
-                            ? "Select all"
-                            : "Clear all"}
+                            ? selectAllButtonLabel
+                            : clearAllButtonLabel}
                     </SelectAllButton>
                 </SelectAllContainer>
             );
@@ -448,7 +453,7 @@ export const NestedDropdownList = <T,>({
                     </ResultStateContainer>
                     {noResultsDescription && (
                         <NoResultDescContainer data-testid="no-result-desc">
-                            {noResultsDescription}
+                            {noResultsDescription()}
                         </NoResultDescContainer>
                     )}
                 </>

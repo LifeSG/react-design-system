@@ -153,7 +153,9 @@ export const WithSearch: StoryObj<Component> = {
                     listExtractor={(item) => item.label}
                     displayValueExtractor={(item) => item.label}
                     enableSearch
-                    noResultsLabel="Custom no result found."
+                    customLabels={{
+                        noResultsLabel: "Custom no result found.",
+                    }}
                 />
                 <Form.Select
                     label="Custom description when no results are found"
@@ -162,14 +164,16 @@ export const WithSearch: StoryObj<Component> = {
                     listExtractor={(item) => item.label}
                     displayValueExtractor={(item) => item.label}
                     enableSearch
-                    noResultsDescription={
-                        <>
-                            Display additional information here when no results
-                            are found. There is default styling for commonly
-                            used markup such as <strong>bold text</strong> or{" "}
-                            <a>links</a>.
-                        </>
-                    }
+                    customLabels={{
+                        noResultsDescription: () => (
+                            <>
+                                Display additional information here when no
+                                results are found. There is default styling for
+                                commonly used markup such as{" "}
+                                <strong>bold text</strong> or <a>links</a>.
+                            </>
+                        ),
+                    }}
                 />
             </>
         );

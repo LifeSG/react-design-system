@@ -15,6 +15,14 @@ export interface ListItemDisplayProps {
     secondaryLabel?: string | undefined;
 }
 
+export interface DropdownCustomLabelProps {
+    searchPlaceholder?: string | undefined;
+    noResultsLabel?: string | undefined;
+    noResultsDescription?: () => React.ReactNode | undefined;
+    selectAllButtonLabel?: string | undefined;
+    clearAllButtonLabel?: string | undefined;
+}
+
 export interface DropdownDisplayProps<T, V> {
     /** Function to derive value from an item */
     valueExtractor?: ((item: T) => V) | undefined;
@@ -40,9 +48,6 @@ export interface DropdownSearchProps<T> {
     enableSearch?: boolean | undefined;
     /** If specified, the default no results display will not be rendered */
     hideNoResultsDisplay?: boolean | undefined;
-    noResultsLabel?: string | undefined;
-    noResultsDescription?: React.ReactNode | undefined;
-    searchPlaceholder?: string | undefined;
     /** Custom function to perform search when a user keys in a value in the search input */
     searchFunction?: ((searchValue: string) => T[]) | undefined;
     onSearch?: (() => void) | undefined;
@@ -51,8 +56,7 @@ export interface DropdownSearchProps<T> {
 export interface DropdownConfigProps {
     multiSelect?: boolean | undefined;
     maxSelectable?: number | undefined;
-    selectAllButtonLabel?: string | undefined;
-    clearAllButtonLabel?: string | undefined;
+    customLabels?: DropdownCustomLabelProps | undefined;
     width?: number | undefined;
     /**
      * Used when items are loaded from an api call.

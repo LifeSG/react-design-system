@@ -3,7 +3,10 @@ import {
     InputNestedSelectSharedProps,
     L1OptionProps,
 } from "../input-nested-select";
-import { DropdownSearchProps } from "../shared/dropdown-list-v2/types";
+import {
+    DropdownCustomLabelProps,
+    DropdownSearchProps,
+} from "../shared/dropdown-list-v2/types";
 
 // =============================================================================
 // INPUT SELECT PROPS
@@ -23,6 +26,7 @@ export interface InputNestedMultiSelectProps<V1, V2, V3>
     /** @deprecated this has no effect as the dropdown will automatically resize */
     listStyleWidth?: string | undefined;
     onBlur?: (() => void) | undefined;
+    customLabels?: DropdownCustomLabelProps | undefined;
 }
 
 /** To be exposed for Form component inheritance */

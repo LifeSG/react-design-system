@@ -35,10 +35,8 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     mode,
     valueToStringFunction,
     enableSearch,
-    searchPlaceholder,
     hideNoResultsDisplay,
-    noResultsLabel,
-    noResultsDescription,
+    customLabels,
     readOnly,
     onSearch,
     onSelectOptions,
@@ -305,10 +303,8 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
                 itemsLoadState={optionsLoadState}
                 itemTruncationType={optionTruncationType}
                 enableSearch={enableSearch}
-                searchPlaceholder={searchPlaceholder}
                 hideNoResultsDisplay={hideNoResultsDisplay}
-                noResultsLabel={noResultsLabel}
-                noResultsDescription={noResultsDescription}
+                customLabels={customLabels}
                 onSelectItem={handleListItemClick}
                 onSelectAll={handleSelectAll}
                 onRetry={onRetry}

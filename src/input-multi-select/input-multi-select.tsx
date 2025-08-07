@@ -30,7 +30,6 @@ export const InputMultiSelect = <T, V>({
     id,
     enableSearch = false,
     searchFunction,
-    searchPlaceholder,
     valueExtractor,
     listExtractor,
     onSelectOptions,
@@ -41,10 +40,7 @@ export const InputMultiSelect = <T, V>({
     optionTruncationType = "end",
     renderListItem,
     hideNoResultsDisplay,
-    noResultsLabel,
-    noResultsDescription,
-    selectAllButtonLabel,
-    clearAllButtonLabel,
+    customLabels,
     renderCustomCallToAction,
     onBlur,
     variant = "default",
@@ -246,7 +242,6 @@ export const InputMultiSelect = <T, V>({
                 listExtractor={listExtractor}
                 enableSearch={enableSearch}
                 searchFunction={searchFunction}
-                searchPlaceholder={searchPlaceholder}
                 multiSelect
                 maxSelectable={maxSelectable}
                 selectedItems={selected}
@@ -256,10 +251,7 @@ export const InputMultiSelect = <T, V>({
                 itemTruncationType={optionTruncationType}
                 renderListItem={renderListItem}
                 hideNoResultsDisplay={hideNoResultsDisplay}
-                noResultsLabel={noResultsLabel}
-                noResultsDescription={noResultsDescription}
-                selectAllButtonLabel={selectAllButtonLabel}
-                clearAllButtonLabel={clearAllButtonLabel}
+                customLabels={customLabels}
                 renderCustomCallToAction={renderCustomCallToAction}
                 variant={variant}
                 width={elementWidth}
