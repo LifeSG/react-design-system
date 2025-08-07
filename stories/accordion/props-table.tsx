@@ -63,6 +63,11 @@ const ACCORDION_DATA: ApiTableSectionProps[] = [
                 propTypes: ["number"],
                 defaultValue: "2",
             },
+            {
+                name: "onExpandCollapseChange",
+                description: `The callback invoked with the latest expanded state when the "Show all"/"Hide all" button is toggled`,
+                propTypes: ["(expanded: boolean) => void"],
+            },
         ],
     },
 ];

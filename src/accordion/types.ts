@@ -8,6 +8,7 @@ export interface AccordionProps {
     "data-testid"?: string | undefined;
     className?: string | undefined;
     headingLevel?: number | undefined;
+    onExpandCollapseChange?: ((expanded: boolean) => void) | undefined,
 }
 
 export type AccordionItemType = "default" | "small";
