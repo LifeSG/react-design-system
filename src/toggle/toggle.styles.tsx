@@ -152,6 +152,9 @@ export const Input = styled.input`
     background: transparent;
     border: none;
 `;
+export const InputContainer = styled.div`
+    display: flex;
+`;
 
 export const TextContainer = styled.div`
     display: flex;
