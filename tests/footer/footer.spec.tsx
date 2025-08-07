@@ -169,13 +169,10 @@ describe("Footer", () => {
     });
 
     describe("logoSrc", () => {
-        it("should render a logo by default", () => {
+        it("should not render a logo by default", () => {
             render(<Footer links={CUSTOM_LINKS} />);
 
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                LIFESG_LOGO_SRC
-            );
+            expect(screen.queryByRole("img")).not.toBeInTheDocument();
         });
 
         it("should be able to render a custom logo", () => {
@@ -228,8 +225,6 @@ describe("Footer", () => {
 // =============================================================================
 // CONSTANTS
 // =============================================================================
-const LIFESG_LOGO_SRC =
-    "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg";
 const CUSTOM_LINKS: FooterLinkProps[][] = [
     [
         {
