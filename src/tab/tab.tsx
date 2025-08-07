@@ -22,6 +22,7 @@ const TabBase = ({
     onTabClick,
     "data-testid": testId,
     fullWidthIndicatorLine,
+    fadeColor,
     ...otherProps
 }: TabProps) => {
     // =========================================================================
@@ -79,6 +80,7 @@ const TabBase = ({
                     onTabClick={onTabClick}
                     data-testid={`${testId}-tabs`}
                     fullWidthIndicatorLine={fullWidthIndicatorLine}
+                    fadeColor={fadeColor}
                 />
                 {renderChildren()}
             </TabContext.Provider>

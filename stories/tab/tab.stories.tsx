@@ -110,3 +110,45 @@ export const CustomTabWidth: StoryObj<Component> = {
         );
     },
 };
+
+export const SameFadeColor: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Tab fadeColor={["#3C91EC"]}>
+                <Tab.Item title="Section A">
+                    <ContentA />
+                </Tab.Item>
+                <Tab.Item title="Section B">
+                    <ContentB />
+                </Tab.Item>
+                <Tab.Item title="Section C">
+                    <ContentC />
+                </Tab.Item>
+                <Tab.Item title="Section D">
+                    <ContentD />
+                </Tab.Item>
+            </Tab>
+        );
+    },
+};
+
+export const DifferentFadeColor: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Tab fadeColor={{ left: ["#FABAB7"], right: ["#B4ECCB"] }}>
+                <Tab.Item title="Section A">
+                    <ContentA />
+                </Tab.Item>
+                <Tab.Item title="Section B">
+                    <ContentB />
+                </Tab.Item>
+                <Tab.Item title="Section C">
+                    <ContentC />
+                </Tab.Item>
+                <Tab.Item title="Section D">
+                    <ContentD />
+                </Tab.Item>
+            </Tab>
+        );
+    },
+};

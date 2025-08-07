@@ -55,6 +55,12 @@ const TAB_DATA: ApiTableSectionProps[] = [
                     "Extends the bottom border to the full width of the container",
                 propTypes: ["boolean"],
             },
+            {
+                name: "fadeColor",
+                description: "The color of the fade effect",
+                propTypes: ["string[]", "{ left?: string[], right?: string[]}"],
+                defaultValue: "transparent",
+            },
         ],
     },
 ];
