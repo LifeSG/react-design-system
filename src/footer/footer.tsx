@@ -106,7 +106,6 @@ export const Footer = <T,>({
                     <LogoSection data-testid="logo-section">
                         <img
                             src={logoSrc || src}
-                            alt={otherLogoAttributes.alt}
                             data-testid="logo"
                             {...otherLogoAttributes}
                         />

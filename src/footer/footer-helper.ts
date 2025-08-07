@@ -44,26 +44,26 @@ export namespace FooterHelper {
                 return {
                     src: "https://home.booking.gov.sg/images/bookingsg/footer.svg",
                     alt: "BookingSG",
-                    style: { minWidth: "4rem" },
+                    style: { width: "4rem" },
                 };
             case "mylegacy":
                 return {
                     src: "https://mylegacy.life.gov.sg/images/site-logo.png",
                     alt: "MyLegacy",
-                    style: { minWidth: "10rem", maxHeight: "2rem" },
+                    style: { width: "10rem", maxHeight: "2rem" },
                 };
             case "ccube":
                 return {
-                    src: "https://assets.life.gov.sg/ccube/logo-ccusdsdbe.svg",
+                    src: "https://assets.life.gov.sg/ccube/logo-ccube.svg",
                     alt: "Citizen Collective Common",
-                    style: { minWidth: "10rem" },
+                    style: { width: "10rem" },
                 };
 
             default:
                 return {
                     src: "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg",
                     alt: "LifeSG",
-                    style: { minWidth: "4rem" },
+                    style: { width: "4rem" },
                 };
         }
     };
