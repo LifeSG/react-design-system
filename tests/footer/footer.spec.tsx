@@ -71,10 +71,12 @@ describe("Footer", () => {
             render(<Footer />);
 
             expect(
-                screen.queryByRole("link", { name: "apple-app-store" })
+                screen.queryByRole("link", {
+                    name: "Download on the App Store",
+                })
             ).not.toBeInTheDocument();
             expect(
-                screen.queryByRole("link", { name: "google-play-store" })
+                screen.queryByRole("link", { name: "Get it on Google Play" })
             ).not.toBeInTheDocument();
         });
 
@@ -82,10 +84,10 @@ describe("Footer", () => {
             render(<Footer showDownloadAddon />);
 
             expect(
-                screen.getByRole("link", { name: "apple-app-store" })
+                screen.getByRole("link", { name: "Download on the App Store" })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("link", { name: "google-play-store" })
+                screen.getByRole("link", { name: "Get it on Google Play" })
             ).toBeInTheDocument();
         });
     });
