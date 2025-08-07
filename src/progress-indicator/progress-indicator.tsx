@@ -11,6 +11,7 @@ import {
 import { ProgressIndicatorProps } from "./types";
 import kebabCase from "lodash/kebabCase";
 import { useMediaQuery } from "react-responsive";
+import { VisuallyHidden } from "../shared/accessibility";
 
 export const ProgressIndicator = <T,>({
     steps,
@@ -47,19 +48,19 @@ export const ProgressIndicator = <T,>({
         return item?.toString() ?? "";
     };
 
-    const getAriaLabel = (stepIndex: number, currentIndex: number) => {
+    const getStepAriaLabel = (stepIndex: number, currentIndex: number) => {
         if (stepIndex < currentIndex) {
             return "Completed step";
         } else if (stepIndex === currentIndex) {
             return "Current step";
         } else {
-            return "Uncompleted step";
+            return "Upcoming step";
         }
     };
 
     const getId = (stepIndex: number, currentIndex: number) => {
         return kebabCase(
-            `${getAriaLabel(stepIndex, currentIndex)} ${stepIndex}`
+            `${getStepAriaLabel(stepIndex, currentIndex)} ${stepIndex}`
         );
     };
 
@@ -98,6 +99,9 @@ export const ProgressIndicator = <T,>({
                         aria-current={current}
                     >
                         {getDisplayValue(step)}
+                        <VisuallyHidden>
+                            {getStepAriaLabel(stepIndex, currentIndex)}
+                        </VisuallyHidden>
                     </IndicatorTitleDesktop>
                 </Indicator>
             );
