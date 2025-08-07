@@ -112,6 +112,7 @@ export const Toggle = ({
             setExpanded(!expanded);
         }
     };
+
     const handleOnRemove = () => {
         if (!disabled) {
             if (onRemove) {
@@ -119,6 +120,14 @@ export const Toggle = ({
                 return;
             }
         }
+    };
+
+    const handleContainerClick = () => {
+        inputRef?.current?.click();
+    };
+
+    const handleInputClick = (e: React.MouseEvent<HTMLInputElement>) => {
+        e.stopPropagation();
     };
 
     // =============================================================================
@@ -231,9 +240,7 @@ export const Toggle = ({
                 <IndicatorLabelContainer $addPadding={removable}>
                     <InputContainer
                         id={`${generatedId}-input-container`}
-                        onClick={() => {
-                            inputRef?.current?.click();
-                        }}
+                        onClick={handleContainerClick}
                     >
                         <Input
                             ref={inputRef}
@@ -243,12 +250,9 @@ export const Toggle = ({
                             data-testid="toggle-input"
                             disabled={disabled}
                             onChange={handleOnChange}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                            }}
+                            onClick={handleInputClick}
                             checked={selected}
                             aria-describedby={ariaDescriptions}
-                            aria-labelledby={`${generatedId}-toggle-label`}
                             {...otherProps}
                         />
                         {indicator && renderIndicator()}
@@ -258,8 +262,8 @@ export const Toggle = ({
                         >
                             <Label
                                 htmlFor={`${generatedId}-input`}
-                                data-testid={`${generatedId}-toggle-label`}
-                                id={`${generatedId}-toggle-label`}
+                                data-testid={`toggle-label`}
+                                id={`${generatedId}-label`}
                                 $maxLines={childrenMaxLines}
                             >
                                 {children}
