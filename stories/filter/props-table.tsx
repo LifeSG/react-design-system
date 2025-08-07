@@ -22,30 +22,17 @@ const FILTER_DATA: ApiTableSectionProps[] = [
                 ],
             },
             {
+                name: "customLabels",
+                description:
+                    "Specifies custom labels. See the section below for more details",
+                propTypes: ["object"],
+            },
+            {
                 name: "clearButtonDisabled",
                 description:
                     "Specifies if the feature to expand/collapse all child items is enabled",
                 propTypes: ["boolean"],
                 defaultValue: "false",
-            },
-            {
-                name: "headerTitle",
-                description: "The title of the filter header",
-                propTypes: ["string"],
-                defaultValue: `"Filters"`,
-            },
-            {
-                name: "toggleFilterButtonLabel",
-                description:
-                    "The display label of the filter toggle button (in mobile)",
-                propTypes: ["string"],
-                defaultValue: `"Filters"`,
-            },
-            {
-                name: "doneButtonLabel",
-                description: "The display label of the done button (in mobile)",
-                propTypes: ["string"],
-                defaultValue: `"Done"`,
             },
             {
                 name: "toggleFilterButtonStyle",
@@ -83,6 +70,27 @@ const FILTER_DATA: ApiTableSectionProps[] = [
             {
                 name: "data-testid",
                 description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+        ],
+    },
+    {
+        name: "customLabels",
+        attributes: [
+            {
+                name: "headerTitle",
+                description: "The title of the filter header",
+                propTypes: ["string"],
+            },
+            {
+                name: "toggleFilterButtonLabel",
+                description:
+                    "The display label of the filter toggle button (in mobile)",
+                propTypes: ["string"],
+            },
+            {
+                name: "doneButtonLabel",
+                description: "The display label of the done button (in mobile)",
                 propTypes: ["string"],
             },
         ],

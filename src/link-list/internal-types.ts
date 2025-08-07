@@ -22,11 +22,11 @@ export type BaseProps<T> = {
               event: React.MouseEvent<HTMLAnchorElement>
           ) => void)
         | undefined;
-    customLabel?:
-        | Partial<{
-              viewMore: string;
-              viewLess: string;
-          }>
+    customLabels?:
+        | {
+              viewMore?: string | undefined;
+              viewLess?: string | undefined;
+          }
         | undefined;
 };
 

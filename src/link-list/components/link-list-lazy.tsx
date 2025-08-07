@@ -25,7 +25,7 @@ export const LazyLinkList = <T,>({
     onItemClick,
     loadMore,
     onLoadMore,
-    customLabel,
+    customLabels,
 }: Props<T>) => {
     // =============================================================================
     // CONST, STATE, REFS
@@ -80,7 +80,7 @@ export const LazyLinkList = <T,>({
                 weight="semibold"
                 data-testid="toggle-button-label"
             >
-                {customLabel?.viewMore || "View more"}
+                {customLabels?.viewMore || "View more"}
             </ToggleButtonLabel>
             <ViewMoreIcon />
         </ToggleButton>
