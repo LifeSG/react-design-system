@@ -29,6 +29,14 @@ const MYLEGACY_RESOURCES_LOGO: NavbarResourcesProps = {
     },
 };
 
+const SUPPORTGOWHERE_RESOURCE_LOGO: NavbarResourcesProps = {
+    primary: {
+        brandName: "SupportGoWhere",
+        logoSrc:
+            "https://assets.life.gov.sg/react-design-system/img/logo/sgw-logo.png",
+    },
+};
+
 export const getDefaultResourceLogo = (resourceScheme?: ResourceScheme) => {
     switch (resourceScheme) {
         case "bookingsg":
@@ -37,6 +45,8 @@ export const getDefaultResourceLogo = (resourceScheme?: ResourceScheme) => {
             return MYLEGACY_RESOURCES_LOGO;
         case "ccube":
             return CCUBE_RESOURCES_LOGO;
+        case "supportgowhere":
+            return SUPPORTGOWHERE_RESOURCE_LOGO;
         default:
             return DEFAULT_RESOURCES_LOGO;
     }

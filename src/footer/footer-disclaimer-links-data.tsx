@@ -58,12 +58,33 @@ const MyLegacyDisclaimerLinks: InternalDisclaimerLinks = {
     },
 };
 
+const SupportGoWhereDisclaimerLinks: InternalDisclaimerLinks = {
+    privacy: {
+        href: "https://supportgowhere.life.gov.sg/privacy-statement.pdf",
+        target: "_blank",
+        rel: "noopener",
+    },
+    termsOfUse: {
+        href: "https://supportgowhere.life.gov.sg/terms-of-use.pdf",
+        target: "_blank",
+        rel: "noopener",
+    },
+    reportVulnerability: {
+        href: "https://www.tech.gov.sg/report_vulnerability",
+        target: "_blank",
+        rel: "noopener",
+        external: true,
+    },
+};
+
 export const getDefaultDisclaimerLinks = (resourceScheme?: ResourceScheme) => {
     switch (resourceScheme) {
         case "bookingsg":
             return BookingSgDisclaimerLinks;
         case "mylegacy":
             return MyLegacyDisclaimerLinks;
+        case "supportgowhere":
+            return SupportGoWhereDisclaimerLinks;
         default:
             return BaseDisclaimerLinks;
     }
