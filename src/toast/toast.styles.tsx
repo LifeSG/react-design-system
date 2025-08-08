@@ -126,7 +126,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
 `;
 
-export const Title = styled(Typography.HeadingXL)<StyleProps>`
+export const Title = styled.h2<StyleProps>`
     display: flex;
     ${Font["body-baseline-semibold"]}
 

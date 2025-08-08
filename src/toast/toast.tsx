@@ -132,7 +132,7 @@ export const Toast = ({
             return title;
         } else {
             return (
-                <Title $type={type} weight="semibold" role="presentation">
+                <Title $type={type} role="presentation">
                     {title}
                 </Title>
             );
