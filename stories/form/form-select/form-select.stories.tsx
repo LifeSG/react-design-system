@@ -135,7 +135,7 @@ export const WithCustomListItemDisplay: StoryObj<Component> = {
 };
 
 export const WithSearch: StoryObj<Component> = {
-    render: (_args) => {
+    render: () => {
         return (
             <>
                 <Form.Select

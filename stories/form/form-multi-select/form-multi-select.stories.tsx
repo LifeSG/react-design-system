@@ -81,7 +81,7 @@ export const Default: StoryObj<Component> = {
 };
 
 export const WithSearch: StoryObj<Component> = {
-    render: (_args) => {
+    render: () => {
         return (
             <>
                 <Form.MultiSelect

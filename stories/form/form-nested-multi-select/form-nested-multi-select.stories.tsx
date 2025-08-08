@@ -96,7 +96,7 @@ export const SpecifyingMode: StoryObj<Component> = {
 };
 
 export const WithSearch: StoryObj<Component> = {
-    render: (_args) => {
+    render: () => {
         return (
             <>
                 <Form.NestedMultiSelect
