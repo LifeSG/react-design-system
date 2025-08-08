@@ -189,7 +189,7 @@ const OverlayComponent = ({
     const renderWrapper = () => (
         <FloatingNode id={nodeId}>
             <Wrapper
-                data-testid={"overlay-wrapper"}
+                data-testid="overlay-wrapper"
                 $show={show}
                 $stacked={isStacked}
                 $backgroundBlur={backgroundBlur}
