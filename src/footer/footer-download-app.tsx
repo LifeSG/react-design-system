@@ -20,7 +20,7 @@ export const DownloadApp = () => (
                 rel="noopener noreferrer"
                 id="footer-download-app-apple"
             >
-                <img src={APP_STORE_ICON} alt="apple-app-store" />
+                <img src={APP_STORE_ICON} alt="Download on the App Store" />
             </AppStoreLink>
             <AppStoreLink
                 href="https://play.google.com/store/apps/details?id=sg.gov.app.mol&hl=en_SG"
@@ -28,7 +28,7 @@ export const DownloadApp = () => (
                 rel="noopener noreferrer"
                 id="footer-download-app-android"
             >
-                <img src={PLAY_STORE_ICON} alt="google-play-store" />
+                <img src={PLAY_STORE_ICON} alt="Get it on Google Play" />
             </AppStoreLink>
         </AppButtonsWrapper>
     </Wrapper>

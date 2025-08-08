@@ -4,6 +4,11 @@ const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
+                name: "customLabels",
+                description: `Specifies custom labels. See the "Custom labels" section below for more details`,
+                propTypes: ["object"],
+            },
+            {
                 name: "loadMode",
                 description: "The loading mode for the data",
                 propTypes: [`"eager"`, `"lazy"`],
@@ -144,6 +149,23 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: [
                     "(event: React.MouseEvent<HTMLAnchorElement>) => void",
                 ],
+            },
+        ],
+    },
+    {
+        name: "Custom labels",
+        attributes: [
+            {
+                name: "viewMore",
+                description: "The label of the view more button",
+                propTypes: ["string"],
+                defaultValue: `"View more"`,
+            },
+            {
+                name: "viewLess",
+                description: "The label of the view less button",
+                propTypes: ["string"],
+                defaultValue: `"View less"`,
             },
         ],
     },

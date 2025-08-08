@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AccordionContext } from "./accordion-context";
 import { AccordionItem } from "./accordion-item";
 import {
@@ -19,10 +19,22 @@ const AccordionBase = ({
     "data-testid": testId,
     className,
     headingLevel = 2,
+    onExpandCollapseChange,
 }: AccordionProps): JSX.Element => {
     const [expandAll, setExpandAll] = useState<boolean>(
         initialDisplay === "expand-all"
     );
+    const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
+
+    useEffect(() => {
+        setHasFirstLoad(true);
+    }, []);
+
+    useEffect(() => {
+        if (hasFirstLoad) {
+            onExpandCollapseChange?.(expandAll);
+        }
+    }, [expandAll, hasFirstLoad]);
 
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();

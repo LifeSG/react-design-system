@@ -17,7 +17,7 @@ import { TabProps } from "./types";
 interface Props
     extends Pick<
         TabProps,
-        "fullWidthIndicatorLine" | "onTabClick" | "data-testid"
+        "fullWidthIndicatorLine" | "onTabClick" | "data-testid" | "fadeColor"
     > {
     controlledMode?: boolean | undefined;
 }
@@ -27,6 +27,7 @@ export const TabLinkChain = ({
     "data-testid": testId,
     onTabClick,
     fullWidthIndicatorLine,
+    fadeColor,
 }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
@@ -87,7 +88,11 @@ export const TabLinkChain = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <CustomFadeWrapper onResize={handleResize} data-testid={testId}>
+        <CustomFadeWrapper
+            onResize={handleResize}
+            data-testid={testId}
+            fadeColor={fadeColor}
+        >
             <Chain
                 role="tablist"
                 $fullWidthIndicatorLine={fullWidthIndicatorLine}

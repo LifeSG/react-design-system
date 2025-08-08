@@ -5,13 +5,32 @@ export type Mode = "default" | "mobile";
 
 export interface FilterProps {
     children: React.ReactNode | ((mode: Mode) => React.ReactNode);
-    clearButtonDisabled?: boolean | undefined;
+    customLabels?:
+        | {
+              headerTitle?: string | undefined;
+              toggleFilterButtonLabel?: string | undefined;
+              doneButtonLabel?: string | undefined;
+          }
+        | undefined;
+    /**
+     * @deprecated
+     * use customLabels instead
+     */
     headerTitle?: string | undefined;
+    /**
+     * @deprecated
+     * use customLabels instead
+     */
     toggleFilterButtonLabel?: string | undefined;
+    /**
+     * @deprecated
+     * use customLabels instead
+     */
+    doneButtonLabel?: string | undefined;
+    clearButtonDisabled?: boolean | undefined;
     toggleFilterButtonStyle?: ButtonStyleType | undefined;
     className?: string | undefined;
     id?: string | undefined;
-    doneButtonLabel?: string | undefined;
     "data-testid"?: string | undefined;
     /** Called when dismiss button is pressed (mobile mode only) */
     onDismiss?: (() => void) | undefined;

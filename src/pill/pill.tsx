@@ -11,7 +11,7 @@ export const Pill = ({
 }: PillProps): JSX.Element => {
     return (
         <Wrapper $type={type} $color={colorType} {...otherProps}>
-            {icon}
+            {icon && React.cloneElement(icon, { "aria-hidden": true })}
             <Label>{children}</Label>
         </Wrapper>
     );

@@ -18,13 +18,13 @@ describe("LinkList", () => {
         }));
     });
 
-    describe("customLabel", () => {
+    describe("customLabels", () => {
         it("should render with custom labels", () => {
             render(
                 <LinkList
                     items={MOCK_ITEMS}
                     maxShown={2}
-                    customLabel={{
+                    customLabels={{
                         viewMore: "Show more",
                         viewLess: "Show less",
                     }}

@@ -1,3 +1,5 @@
+import { FadeColorSet } from "../shared/fade-wrapper";
+
 export interface TabProps {
     children: JSX.Element | JSX.Element[];
     /** Specify the initial tab index that is to be displayed */
@@ -12,6 +14,7 @@ export interface TabProps {
     "data-testid"?: string | undefined;
     onTabClick?: ((title: string, index: number) => void) | undefined;
     fullWidthIndicatorLine?: boolean | undefined;
+    fadeColor?: string[] | FadeColorSet | undefined;
 }
 
 export interface TabItemProps {

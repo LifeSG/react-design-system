@@ -206,7 +206,7 @@ export const DateRangeInput = ({
     useEffect(() => {
         if (currentFocus === "start") {
             setInitialCalendarDate(selectedStart);
-        } else if (currentFocus === "end") {
+        } else if (currentFocus === "end" && selectedEnd) {
             setInitialCalendarDate(selectedEnd);
         }
     }, [currentFocus]);
@@ -258,7 +258,7 @@ export const DateRangeInput = ({
         }
 
         actions.changeStart(val);
-        calendarRef.current?.setCalendarDate(val);
+        if (val) calendarRef.current?.setCalendarDate(val);
         isUnselectable.current = false;
 
         if (!val) {
@@ -321,7 +321,7 @@ export const DateRangeInput = ({
         }
 
         actions.changeEnd(val);
-        calendarRef.current?.setCalendarDate(val);
+        if (val) calendarRef.current?.setCalendarDate(val);
 
         if (!val) {
             // if both start and end were cleared, confirm the selection
