@@ -2,7 +2,7 @@ import styled, { css, keyframes } from "styled-components";
 import { LoadingDotsSpinner } from "../animations";
 import { ErrorDisplay } from "../error-display";
 import { PopoverTrigger } from "../popover-v2";
-import { Border, Colour, Spacing } from "../theme";
+import { Border, Colour, Shadow, Spacing } from "../theme";
 import { Typography } from "../typography";
 import {
     MIN_HOURLY_INTERVAL_WIDTH,
@@ -92,8 +92,7 @@ export const RowColumnHeader = styled.div<RowColumnHeaderProps>`
     ${(props) => {
         if (props.$isScrolledX || props.$isScrolledY) {
             return css`
-                box-shadow: 2px 2px 8px
-                    rgb(from ${Colour.Primitive["neutral-20"]} r g b / 25%);
+                box-shadow: ${Shadow["md-subtle"]};
                 clip-path: inset(
                     0 ${props.$isScrolledX ? "-0.12px" : "0"}
                         ${props.$isScrolledY ? "-0.12px" : "0"} 0
@@ -137,8 +136,7 @@ export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: 2px 2px 8px
-                    rgb(from ${Colour.Primitive["neutral-20"]} r g b / 25%);
+                box-shadow: ${Shadow["md-subtle"]};
             `;
         }
     }};
@@ -172,17 +170,19 @@ export const RowHeader = styled.div<RowHeaderProps>`
     text-align: right;
     padding: 0 ${Spacing["spacing-16"]} 0 ${Spacing["spacing-32"]};
     border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-right: ${Border["width-005"]} ${Border["solid"]}
+        ${Colour["border-primary"]};
     border-left: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     transition: all 0.5s ease-in-out;
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: 2px 2px 8px
-                    rgb(from ${Colour.Primitive["neutral-20"]} r g b / 25%);
+                box-shadow: ${Shadow["md-subtle"]};
+                clip-path: inset(0 -6px 0 0);
             `;
         } else {
             return css`
-                box-shadow: inset -0.5px 0px ${Colour["border-primary"]};
+                box-shadow: none;
             `;
         }
     }};

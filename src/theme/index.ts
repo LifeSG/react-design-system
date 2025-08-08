@@ -8,6 +8,7 @@ import { FontSpecValues } from "./font-spec/theme-helper";
 import { FontValues } from "./font/theme-helper";
 import { MotionValues } from "./motion/theme-helper";
 import { RadiusValues } from "./radius/theme-helper";
+import { ShadowValues } from "./shadow/theme-helper";
 import { SpacingValues } from "./spacing/theme-helper";
 import { ThemeSpec } from "./types";
 import { createThemeWithColourMode } from "./use-theme-mode";
@@ -41,6 +42,8 @@ export const Spacing = SpacingValues;
 
 export const Radius = RadiusValues;
 
+export const Shadow = ShadowValues;
+
 export const Breakpoint = BreakpointValues;
 
 export const MediaQuery = MediaQueryValues;
@@ -57,6 +60,7 @@ const LifeSGThemeBase: ThemeSpec = {
     borderScheme: "default",
     spacingScheme: "default",
     radiusScheme: "default",
+    shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "lifesg",
     _v2: {
@@ -74,6 +78,7 @@ const BookingSGThemeBase: ThemeSpec = {
     borderScheme: "default",
     spacingScheme: "default",
     radiusScheme: "default",
+    shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "bookingsg",
     _v2: {
@@ -91,6 +96,7 @@ const CCubeThemeBase: ThemeSpec = {
     borderScheme: "default",
     spacingScheme: "default",
     radiusScheme: "default",
+    shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "ccube",
     _v2: {
@@ -108,6 +114,7 @@ const MyLegacyThemeBase: ThemeSpec = {
     borderScheme: "default",
     spacingScheme: "default",
     radiusScheme: "default",
+    shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "mylegacy",
     _v2: {
@@ -125,6 +132,7 @@ const RBSThemeBase: ThemeSpec = {
     borderScheme: "default",
     spacingScheme: "default",
     radiusScheme: "default",
+    shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "rbs",
     _v2: {
@@ -142,6 +150,7 @@ const OneServiceThemeBase: ThemeSpec = {
     borderScheme: "default",
     spacingScheme: "default",
     radiusScheme: "default",
+    shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "oneservice",
 };
@@ -153,6 +162,7 @@ const PAThemeBase: ThemeSpec = {
     borderScheme: "default",
     spacingScheme: "default",
     radiusScheme: "default",
+    shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "pa",
     componentScheme: "pa",
@@ -165,6 +175,7 @@ const A11yPlaygroundThemeBase: ThemeSpec = {
     borderScheme: "default",
     spacingScheme: "default",
     radiusScheme: "default",
+    shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "a11yplayground",
     componentScheme: "a11yplayground",
@@ -176,6 +187,7 @@ export const SupportGoWhereThemeBase: ThemeSpec = {
     borderScheme: "default",
     spacingScheme: "default",
     radiusScheme: "default",
+    shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "supportgowhere",
     componentScheme: "default",

@@ -1,6 +1,14 @@
 import { ClockIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
+import {
+    Border,
+    Colour,
+    Font,
+    MediaQuery,
+    Radius,
+    Shadow,
+    Spacing,
+} from "../theme";
 
 // =============================================================================
 // STYLE TYPES
@@ -62,9 +70,9 @@ export const FixedCountdown = styled(BaseCountdown)`
             /* style object will be converted to px */
             ${{ top: $top, left: $left, right: $right }}
 
-            box-shadow: 0px 0px 4px 1px rgb(from ${$warn
-                ? Colour["border-error"]
-                : Colour["border-primary-subtle"]} r g b / 50%);
+            box-shadow: ${$warn
+                ? Shadow["xs-error-strong"]
+                : Shadow["xs-focus-strong"]};
 
             ${MediaQuery.MaxWidth.sm} {
                 left: 0;

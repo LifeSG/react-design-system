@@ -1,6 +1,14 @@
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, MediaQuery, Motion, Radius, Spacing } from "../theme";
+import {
+    Border,
+    Colour,
+    MediaQuery,
+    Motion,
+    Radius,
+    Shadow,
+    Spacing,
+} from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -40,8 +48,7 @@ export const Container = styled.div<StyleProps>`
     height: 100%;
 
     background-color: ${Colour.bg};
-    box-shadow: 0px 2px 12px
-        rgb(from ${Colour.Primitive["neutral-50"]} r g b / 25%);
+    box-shadow: ${Shadow["lg-subtle"]};
 
     visibility: ${(props) => (props.$show ? "visible" : "hidden")};
     ${(props) => VISIBILITY_STYLE(props.$show)}

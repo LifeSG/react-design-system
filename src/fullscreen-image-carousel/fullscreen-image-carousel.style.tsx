@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ImagePlaceholder } from "../shared/image-placeholder";
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
+import { Border, Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
 import { Typography } from "../typography";
 import { StatefulImage } from "./stateful-image";
 
@@ -26,6 +26,7 @@ const IconButton = styled(ClickableIcon)`
     color: ${Colour["icon-primary"]};
     height: 2.5rem;
     width: 2.5rem;
+    box-shadow: ${Shadow["md-strong"]};
 
     svg {
         height: 1.5rem;

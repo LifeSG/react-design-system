@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
-import { Border, Colour, Font, Motion, Radius } from "../theme";
+import { Border, Colour, Font, Motion, Radius, Shadow } from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -150,7 +150,7 @@ export const ActionBar = styled.div<ActionBarProps>`
         css`
             transform: translateX(-0.5%) translateY(-2rem);
             border-radius: ${Radius["sm"]};
-            box-shadow: 0 0 4px 0 rgba(40, 40, 40, 0.25);
+            box-shadow: ${Shadow["xs-subtle"]};
             width: 101%;
             border: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
         `}

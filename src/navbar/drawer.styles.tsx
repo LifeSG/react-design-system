@@ -1,7 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, MediaQuery, Motion, Spacing } from "../theme";
+import { Colour, MediaQuery, Motion, Shadow, Spacing } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -49,7 +49,7 @@ export const Container = styled.nav<StyleProps>`
     display: block;
     padding: 0 0 ${Spacing["spacing-16"]};
     background-color: ${Colour.bg};
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: ${Shadow["xs-subtle"]};
     visibility: ${(props) => (props.$show ? "visible" : "hidden")};
     outline: none;
 

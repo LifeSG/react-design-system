@@ -5,7 +5,7 @@ import { StarHalfIcon } from "@lifesg/react-icons/star-half";
 import styled, { css, keyframes } from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, Font, MediaQuery, Radius } from "../theme";
+import { Border, Colour, Font, MediaQuery, Radius, Shadow } from "../theme";
 import { Typography } from "../typography/typography";
 
 const slideDown = keyframes`
@@ -43,8 +43,7 @@ export const SmartAppBannerContainer = styled.div<{
                       ${Colour["border"]};
               `
             : css`
-                  box-shadow: 0 2px 8px
-                      rgba(from ${Colour.Primitive["neutral-50"]} r g b / 24%);
+                  box-shadow: ${Shadow["md-subtle"]};
               `;
     }}
     border-radius: ${Radius["md"]};

@@ -9,6 +9,7 @@ import { FontSpecSetOptions } from "./font-spec/types";
 import { FontSetOptions } from "./font/types";
 import { MotionSetOptions } from "./motion/types";
 import { RadiusSetOptions } from "./radius/types";
+import { ShadowSetOptions } from "./shadow/types";
 import { SpacingSetOptions } from "./spacing/types";
 
 export type {
@@ -29,6 +30,8 @@ export type { MotionSet, MotionSetOptions } from "./motion/types";
 export type { BorderSet, BorderSetOptions } from "./border/types";
 
 export type { RadiusSet, RadiusSetOptions } from "./radius/types";
+
+export type { ShadowSet, ShadowSetOptions } from "./shadow/types";
 
 export type { SpacingSet, SpacingSetOptions } from "./spacing/types";
 
@@ -54,6 +57,7 @@ export type MotionScheme = "default";
 export type BorderScheme = "default";
 export type SpacingScheme = "default";
 export type RadiusScheme = "default";
+export type ShadowScheme = "default";
 export type BreakpointScheme = "default";
 export type ComponentScheme = "default" | "pa" | "a11yplayground";
 export type ResourceScheme =
@@ -80,6 +84,7 @@ export interface ThemeSpecOptions {
     spacing?: SpacingSetOptions | undefined;
     border?: BorderSetOptions | undefined;
     radius?: RadiusSetOptions | undefined;
+    shadow?: ShadowSetOptions | undefined;
     resourceScheme?: ResourceScheme | undefined;
     breakpoint?: BreakpointSetOptions | undefined;
 }
@@ -92,6 +97,7 @@ export interface ThemeSpec {
     borderScheme: BorderScheme;
     spacingScheme: SpacingScheme;
     radiusScheme: RadiusScheme;
+    shadowScheme: ShadowScheme;
     breakpointScheme: BreakpointScheme;
     resourceScheme: ResourceScheme;
     componentScheme?: ComponentScheme | undefined;

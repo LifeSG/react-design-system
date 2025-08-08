@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, MediaQuery, Radius, Spacing } from "../theme";
+import { Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -20,7 +20,7 @@ export const Box = styled.div`
     width: 40rem;
     max-height: 70%;
     background: ${Colour.bg};
-    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.45);
+    box-shadow: ${Shadow["lg-strong"]};
     border-radius: ${Radius["lg"]};
     overflow: hidden;
 

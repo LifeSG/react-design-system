@@ -7,6 +7,7 @@ export const MOCK_THEME: ThemeSpec = {
     borderScheme: "default",
     spacingScheme: "default",
     radiusScheme: "default",
+    shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "lifesg",
     componentScheme: "default",
