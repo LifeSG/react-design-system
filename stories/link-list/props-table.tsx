@@ -5,8 +5,7 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "customLabels",
-                description:
-                    "Specifies custom labels. See the section below for more details",
+                description: `Specifies custom labels. See the "Custom labels" section below for more details`,
                 propTypes: ["object"],
             },
             {
@@ -154,17 +153,19 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "customLabels",
+        name: "Custom labels",
         attributes: [
             {
                 name: "viewMore",
                 description: "The label of the view more button",
                 propTypes: ["string"],
+                defaultValue: `"View more"`,
             },
             {
                 name: "viewLess",
                 description: "The label of the view less button",
                 propTypes: ["string"],
+                defaultValue: `"View less"`,
             },
         ],
     },

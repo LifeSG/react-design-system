@@ -23,8 +23,7 @@ const FILTER_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "customLabels",
-                description:
-                    "Specifies custom labels. See the section below for more details",
+                description: `Specifies custom labels. See the "Custom labels" section below for more details`,
                 propTypes: ["object"],
             },
             {
@@ -75,23 +74,26 @@ const FILTER_DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "customLabels",
+        name: "Custom labels",
         attributes: [
             {
                 name: "headerTitle",
                 description: "The title of the filter header",
                 propTypes: ["string"],
+                defaultValue: `"Filters"`,
             },
             {
                 name: "toggleFilterButtonLabel",
                 description:
                     "The display label of the filter toggle button (in mobile)",
                 propTypes: ["string"],
+                defaultValue: `"Filters"`,
             },
             {
                 name: "doneButtonLabel",
                 description: "The display label of the done button (in mobile)",
                 propTypes: ["string"],
+                defaultValue: `"Done"`,
             },
         ],
     },
