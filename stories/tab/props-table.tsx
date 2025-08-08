@@ -57,9 +57,24 @@ const TAB_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "fadeColor",
-                description: "The color of the fade effect",
-                propTypes: ["string[]", "{ left?: string[], right?: string[]}"],
-                defaultValue: "transparent",
+                description:
+                    "The color of the fade effect when the tab is too long",
+                propTypes: ["string[]", "FadeColorSet"],
+            },
+        ],
+    },
+    {
+        name: "FadeColorSet",
+        attributes: [
+            {
+                name: "left",
+                description: "The color of the left fade",
+                propTypes: ["string[]"],
+            },
+            {
+                name: "right",
+                description: "The color of the right fade",
+                propTypes: ["string[]"],
             },
         ],
     },

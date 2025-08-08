@@ -111,20 +111,22 @@ export const CustomTabWidth: StoryObj<Component> = {
     },
 };
 
+const LONG_TAB_TITLE = "Lorem ipsum dolor sit amet consectetur adipiscing elit";
+
 export const SameFadeColor: StoryObj<Component> = {
     render: (_args) => {
         return (
             <Tab fadeColor={["#3C91EC"]}>
-                <Tab.Item title="Section A">
+                <Tab.Item title={LONG_TAB_TITLE}>
                     <ContentA />
                 </Tab.Item>
-                <Tab.Item title="Section B">
+                <Tab.Item title={LONG_TAB_TITLE}>
                     <ContentB />
                 </Tab.Item>
-                <Tab.Item title="Section C">
+                <Tab.Item title={LONG_TAB_TITLE}>
                     <ContentC />
                 </Tab.Item>
-                <Tab.Item title="Section D">
+                <Tab.Item title={LONG_TAB_TITLE}>
                     <ContentD />
                 </Tab.Item>
             </Tab>
@@ -136,16 +138,16 @@ export const DifferentFadeColor: StoryObj<Component> = {
     render: (_args) => {
         return (
             <Tab fadeColor={{ left: ["#FABAB7"], right: ["#B4ECCB"] }}>
-                <Tab.Item title="Section A">
+                <Tab.Item title={LONG_TAB_TITLE}>
                     <ContentA />
                 </Tab.Item>
-                <Tab.Item title="Section B">
+                <Tab.Item title={LONG_TAB_TITLE}>
                     <ContentB />
                 </Tab.Item>
-                <Tab.Item title="Section C">
+                <Tab.Item title={LONG_TAB_TITLE}>
                     <ContentC />
                 </Tab.Item>
-                <Tab.Item title="Section D">
+                <Tab.Item title={LONG_TAB_TITLE}>
                     <ContentD />
                 </Tab.Item>
             </Tab>

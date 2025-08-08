@@ -52,18 +52,19 @@ To specify the width of a tab item, set the `width` prop.
 
 <Canvas of={TabStories.CustomTabWidth} />
 
-## Fade color
+## Fade colour
 
-The Tab component displays a gradient fade effect on both sides of the tab link container
-when horizontal scrolling is enabled (usually on mobile devices). You can customize the fade color to match your design
-by using the `fadeColor` prop.
+A fade effect appears when the horizontal scrolling is enabled on tablet or
+smaller viewports. You can customize the fade colour to match your design by
+using the `fadeColor` prop.
 
--   `string[]` : Both left and right ends use the same fade color.
+You can specify the same fade colour for both left and right ends:
 
 <Canvas of={TabStories.SameFadeColor} />
 
--   `FadeColorSet` : An object with `left` and `right` keys of type `string[]`. Left and right ends use the according fade color.
-    <Canvas of={TabStories.DifferentFadeColor} />
+You can also specify different fade colours for each side:
+
+<Canvas of={TabStories.DifferentFadeColor} />
 
 ## Component API
 
