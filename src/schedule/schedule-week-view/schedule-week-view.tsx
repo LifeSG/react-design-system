@@ -1,17 +1,27 @@
 import React, { useMemo, useRef } from "react";
 import dayjs from "dayjs";
-import { ScheduleWeekViewProps } from "./types";
+import {
+    ScheduleWeekViewProps,
+    SlotWithService,
+    SlotLayoutMap,
+    PositionedSlot,
+} from "./types";
 import { TimeHelper } from "../../util/time-helper";
 import { TimeIndicator } from "../time-indicator/time-indicator";
-import { ScheduleEntityProps, ScheduleSlotProps } from "../types";
-import { useTimelineOffset, useInitialScroll } from "../shared";
+import { ScheduleEntityProps } from "../types";
+import {
+    useTimelineOffset,
+    useInitialScroll,
+    minutesToTime,
+    calculateSlotOffset,
+    findSlotsStartingInTimeRange,
+    findSlotsInTimeRange,
+} from "../shared";
 import { WithOptionalPopover } from "../shared/with-optional-popover";
-import { CELL_HEIGHT } from "../const";
 import {
     ScheduleContainer,
     SlotCell,
     Timeline,
-    EmptySlot,
 } from "../schedule-day-view/schedule-day-view.styles";
 import {
     BlankCell,
@@ -25,41 +35,16 @@ import {
     SlotGrid,
     Title,
     SlotColumnOverlay,
-    SlotContentWrapper,
-    WeekSlotContent,
+    SlotContent,
     SlotServiceName,
-    SlotTime,
+    SlotAvailability,
     HiddenColumnsButton,
 } from "./schedule-week-view.styles";
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
-
-const MAX_VISIBLE_SLOTS = 3;
-
-// Extended slot type with service information
-interface SlotWithService extends ScheduleSlotProps {
-    serviceName: string;
-}
-
-// Slot with positioning information
-interface PositionedSlot {
-    slot: SlotWithService;
-    column: number;
-    offsetTop: number;
-    height: number;
-}
-
+const CELL_WIDTH = 190;
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
-
-// Convert minutes to time string (HH:MM format)
-const minutesToTime = (minutes: number): string => {
-    const hours = Math.floor(minutes / 60);
-    const mins = minutes % 60;
-    return `${hours.toString().padStart(2, "0")}:${mins
-        .toString()
-        .padStart(2, "0")}`;
-};
 
 // Get all slots that START in a specific time cell
 const getSlotsStartingInTimeCell = (
@@ -69,28 +54,21 @@ const getSlotsStartingInTimeCell = (
     cellEndTime: string
 ): SlotWithService[] => {
     const allSlots: SlotWithService[] = [];
-    const cellStartMinutes = TimeHelper.timeToMinutes(cellStartTime);
-    const cellEndMinutes = TimeHelper.timeToMinutes(cellEndTime);
 
     serviceData.forEach((service) => {
         if (service.slots) {
-            service.slots.forEach((slot) => {
-                if (slot.date === targetDate) {
-                    const slotStartMinutes = TimeHelper.timeToMinutes(
-                        slot.startTime
-                    );
+            const slotsInRange = findSlotsStartingInTimeRange(
+                service.slots,
+                cellStartTime,
+                cellEndTime,
+                targetDate
+            );
 
-                    // Only include slot if it STARTS in this time cell
-                    if (
-                        slotStartMinutes >= cellStartMinutes &&
-                        slotStartMinutes < cellEndMinutes
-                    ) {
-                        allSlots.push({
-                            ...slot,
-                            serviceName: service.name,
-                        });
-                    }
-                }
+            slotsInRange.forEach((slot) => {
+                allSlots.push({
+                    ...slot,
+                    serviceName: service.name,
+                });
             });
         }
     });
@@ -99,38 +77,29 @@ const getSlotsStartingInTimeCell = (
 };
 
 // Get all slots that OVERLAP with a specific time cell (for layout calculation)
-const getSlotsOverlappingTimeCell = (
+//tìm tât cả slot chồng lên.
+const getSlotsInTimeCell = (
     serviceData: ScheduleEntityProps[],
     targetDate: string,
     cellStartTime: string,
     cellEndTime: string
 ): SlotWithService[] => {
     const allSlots: SlotWithService[] = [];
-    const cellStartMinutes = TimeHelper.timeToMinutes(cellStartTime);
-    const cellEndMinutes = TimeHelper.timeToMinutes(cellEndTime);
 
     serviceData.forEach((service) => {
         if (service.slots) {
-            service.slots.forEach((slot) => {
-                if (slot.date === targetDate) {
-                    const slotStartMinutes = TimeHelper.timeToMinutes(
-                        slot.startTime
-                    );
-                    const slotEndMinutes = TimeHelper.timeToMinutes(
-                        slot.endTime
-                    );
+            const overlappingSlots = findSlotsInTimeRange(
+                service.slots,
+                cellStartTime,
+                cellEndTime,
+                targetDate
+            );
 
-                    // Include slot if it overlaps with this time cell
-                    if (
-                        slotStartMinutes < cellEndMinutes &&
-                        slotEndMinutes > cellStartMinutes
-                    ) {
-                        allSlots.push({
-                            ...slot,
-                            serviceName: service.name,
-                        });
-                    }
-                }
+            overlappingSlots.forEach((slot) => {
+                allSlots.push({
+                    ...slot,
+                    serviceName: service.name,
+                });
             });
         }
     });
@@ -138,69 +107,94 @@ const getSlotsOverlappingTimeCell = (
     return allSlots;
 };
 
-// Group slots by service and calculate positioning within each service column
-const calculateSlotPositionsInCell = (
-    slots: SlotWithService[],
-    cellStartTime: string,
-    cellEndTime: string,
-    minTime: string
-): {
-    serviceColumns: Map<string, PositionedSlot[]>;
-    hasOverflow: boolean;
-    totalServices: number;
-} => {
-    const cellStartMinutes = TimeHelper.timeToMinutes(cellStartTime);
-    const minTimeMinutes = TimeHelper.timeToMinutes(minTime);
-
-    // Group slots by service name (slots are already filtered to only those starting in this cell)
-    const serviceGroups = new Map<string, SlotWithService[]>();
-
-    slots.forEach((slot) => {
-        if (!serviceGroups.has(slot.serviceName)) {
-            serviceGroups.set(slot.serviceName, []);
-        }
-        serviceGroups.get(slot.serviceName)!.push(slot);
-    });
-
-    // Convert each service group to positioned slots
-    const serviceColumns = new Map<string, PositionedSlot[]>();
-
-    serviceGroups.forEach((serviceSlots, serviceName) => {
-        // Sort slots within this service by start time
-        const sortedSlots = serviceSlots.sort((a, b) => {
-            return (
-                TimeHelper.timeToMinutes(a.startTime) -
-                TimeHelper.timeToMinutes(b.startTime)
+// Calculate and update slot widths across all cells
+const calculateSlotWidths = (
+    serviceData: ScheduleEntityProps[],
+    weekDays: dayjs.Dayjs[],
+    timeSlots: string[]
+): SlotLayoutMap => {
+    const slotLayoutMap: SlotLayoutMap = {};
+    weekDays.forEach((day) => {
+        const dayDate = day.format("YYYY-MM-DD");
+        timeSlots.forEach((time) => {
+            const timeMinutes = TimeHelper.timeToMinutes(time);
+            const nextTime = minutesToTime(timeMinutes + 30);
+            const slotsInCell = getSlotsInTimeCell(
+                serviceData,
+                dayDate,
+                time,
+                nextTime
             );
+
+            slotsInCell.forEach((slot) => {
+                const slotKey = slot.id;
+                if (!slotLayoutMap[slotKey]) {
+                    slotLayoutMap[slotKey] = {
+                        date: dayDate,
+                        serviceName: slot.serviceName,
+                        startTime: slot.startTime,
+                        endTime: slot.endTime,
+                        visible: true, // Initialize as visible, will be updated
+                        width: 100, // Initialize with full width, will be updated
+                    };
+                }
+            });
+
+            const uniqueServices = Array.from(
+                new Set(slotsInCell.map((slot) => slot.serviceName))
+            );
+            //Display at most 3 services, mark other slots as hidden
+            const FirstThreeServices = uniqueServices.slice(0, 3);
+            slotsInCell.forEach((slot) => {
+                const slotKey = slot.id;
+                const isVisible = FirstThreeServices.includes(slot.serviceName);
+                if (!isVisible) {
+                    slotLayoutMap[slotKey].visible = false; //mark as hidden
+                }
+            });
+
+            // Calculate width based on visible services only
+            const visibleSlots = slotsInCell.filter((slot) => {
+                const slotKey = slot.id;
+                return slotLayoutMap[slotKey].visible;
+            });
+
+            const visibleServices = new Set(
+                visibleSlots.map((slot) => slot.serviceName)
+            );
+            const totalVisibleServices = visibleServices.size;
+            const hasHiddenServices = slotsInCell.length > visibleSlots.length;
+            const totalColumns = hasHiddenServices ? 4 : totalVisibleServices;
+            const widthPercentage = totalColumns > 0 ? 100 / totalColumns : 100;
+
+            // Update width for each slot in this cell (take minimum across all cells)
+            slotsInCell.forEach((slot) => {
+                const slotKey = slot.id;
+                slotLayoutMap[slotKey].width = Math.min(
+                    slotLayoutMap[slotKey].width,
+                    widthPercentage
+                );
+            });
         });
-
-        const positionedSlots: PositionedSlot[] = sortedSlots.map((slot) => {
-            const slotStartMinutes = TimeHelper.timeToMinutes(slot.startTime);
-            const slotEndMinutes = TimeHelper.timeToMinutes(slot.endTime);
-
-            // Calculate position relative to the current time cell (since slot starts in this cell)
-            const offsetTop =
-                ((slotStartMinutes - cellStartMinutes) / 30) * CELL_HEIGHT;
-
-            // Calculate full height based on actual slot duration
-            const duration = slotEndMinutes - slotStartMinutes;
-            const height = Math.max((duration / 30) * CELL_HEIGHT - 1, 20);
-
-            return {
-                slot,
-                column: 0, // Will be set later when we determine display order
-                offsetTop,
-                height,
-            };
-        });
-
-        serviceColumns.set(serviceName, positionedSlots);
     });
 
-    const totalServices = serviceGroups.size;
-    const hasOverflow = totalServices > 3;
+    return slotLayoutMap;
+};
 
-    return { serviceColumns, hasOverflow, totalServices };
+// Get minimum width for all slots overlapping a specific cell
+const getMinimumWidthForCell = (
+    slotsInCell: SlotWithService[],
+    slotLayoutMap: SlotLayoutMap
+): number => {
+    let minWidth = Number.MAX_SAFE_INTEGER; // Start with maximum width
+
+    slotsInCell.forEach((slot) => {
+        const slotKey = slot.id;
+        const slotLayout = slotLayoutMap[slotKey];
+        minWidth = Math.min(minWidth, slotLayout.width);
+    });
+
+    return minWidth;
 };
 
 export const ScheduleWeekView = ({
@@ -210,14 +204,10 @@ export const ScheduleWeekView = ({
     minTime,
     maxTime,
     initialScrollTime,
-    emptySlotPopover,
     containerRef,
 }: ScheduleWeekViewProps) => {
     const timelineOffset = useTimelineOffset(minTime, maxTime);
     const bodyRef = useInitialScroll(loading, minTime, initialScrollTime);
-    const headerRef = useRef<HTMLDivElement>(null);
-    const today = dayjs().format("YYYY-MM-DD");
-
     const weekDays = useMemo(() => {
         const startOfWeek = dayjs(date).startOf("week");
         return Array.from({ length: 7 }, (_, i) => startOfWeek.add(i, "day"));
@@ -225,20 +215,15 @@ export const ScheduleWeekView = ({
 
     const timeSlots = TimeHelper.generateTimings(30, "24hr", minTime, maxTime);
 
+    // Calculate slot widths across all cells
+    const slotLayoutMap = useMemo(() => {
+        const result = calculateSlotWidths(serviceData, weekDays, timeSlots);
+        return result;
+    }, [serviceData, weekDays, timeSlots]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    // Synchronize horizontal scrolling between header and body
-    const handleBodyScroll = (_e: React.UIEvent<HTMLDivElement>) => {
-        if (headerRef.current && bodyRef.current) {
-            headerRef.current.scrollLeft = bodyRef.current.scrollLeft;
-        }
-    };
-    const handleHeaderScroll = (_e: React.UIEvent<HTMLDivElement>) => {
-        if (headerRef.current && bodyRef.current) {
-            bodyRef.current.scrollLeft = headerRef.current.scrollLeft;
-        }
-    };
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -246,7 +231,7 @@ export const ScheduleWeekView = ({
 
     // Render header with day names and dates
     const renderHeader = () => (
-        <HeaderContainer ref={headerRef} onScroll={handleHeaderScroll}>
+        <HeaderContainer>
             <BlankCell />
             <ServiceContainer>
                 {weekDays.map((day) => (
@@ -259,28 +244,199 @@ export const ScheduleWeekView = ({
         </HeaderContainer>
     );
 
-    // Custom styling for slot content
-    const renderSlotContent = (positionedSlot: PositionedSlot) => {
-        const { slot, offsetTop, height } = positionedSlot;
+    const renderSlotContent = (
+        positionedSlot: PositionedSlot,
+        minimumWidth: number
+    ) => {
+        const { slot, offsetTop } = positionedSlot;
         const duration = TimeHelper.calculateDuration(
             slot.startTime,
             slot.endTime
         );
 
         return (
-            <WeekSlotContent
-                status={slot.status}
-                duration={duration}
+            <SlotContent
+                $status={slot.status}
+                $duration={duration}
                 $offsetTop={offsetTop}
-                $height={height}
                 onClick={(e) => slot.onClick && slot.onClick(slot, e)}
-                title={`${slot.serviceName}\n${slot.startTime} - ${slot.endTime}`}
+                $width={(CELL_WIDTH * minimumWidth) / 100}
             >
                 <SlotServiceName>{slot.serviceName}</SlotServiceName>
-                <SlotTime>
-                    {TimeHelper.parseInput(slot.startTime, "12hr")}
-                </SlotTime>
-            </WeekSlotContent>
+                {duration >= 30 && (
+                    <SlotAvailability>
+                        {slot.status === "blocked"
+                            ? "Unavailable"
+                            : `${slot.booked} / ${slot.capacity}`}
+                    </SlotAvailability>
+                )}
+            </SlotContent>
+        );
+    };
+
+    // Render slot with popover
+    const renderSlotWithPopover = (
+        slot: SlotWithService,
+        slotIndex: number,
+        serviceIndex: number,
+        time: string,
+        minimumWidth: number
+    ) => {
+        const offsetTop = calculateSlotOffset(slot.startTime, time);
+        const positionedSlot: PositionedSlot = {
+            slot,
+            column: serviceIndex,
+            offsetTop,
+        };
+
+        return (
+            <WithOptionalPopover
+                key={`${slot.id || slotIndex}-${slotIndex}`}
+                containerRef={containerRef}
+                customPopover={slot.customPopover}
+            >
+                {renderSlotContent(positionedSlot, minimumWidth)}
+            </WithOptionalPopover>
+        );
+    };
+
+    // Render overflow button
+    const renderOverflowButton = (
+        cellServiceLayout: any,
+        actualWidthPercentage: number
+    ) => (
+        <SlotColumnOverlay
+            key="overflow-button"
+            $columnIndex={3}
+            $totalVisibleColumns={cellServiceLayout.totalColumns}
+            $actualWidthPercentage={actualWidthPercentage}
+            $leftPosition={3 * actualWidthPercentage}
+        >
+            <HiddenColumnsButton
+                onClick={() => {
+                    const hiddenServices = cellServiceLayout.hiddenServices;
+                    console.log(
+                        "Hidden services in this cell:",
+                        hiddenServices
+                    );
+                    alert(`Hidden services: ${hiddenServices.join(", ")}`);
+                }}
+                title={`+${
+                    cellServiceLayout.hiddenServices.length
+                } more services: ${cellServiceLayout.hiddenServices.join(
+                    ", "
+                )}`}
+            >
+                +{cellServiceLayout.hiddenServices.length}
+            </HiddenColumnsButton>
+        </SlotColumnOverlay>
+    );
+
+    // Render single time cell
+    const renderTimeCell = (dayDate: string, time: string) => {
+        const timeMinutes = TimeHelper.timeToMinutes(time);
+        const nextTime = minutesToTime(timeMinutes + 30);
+
+        const slotsStartingInCell = getSlotsStartingInTimeCell(
+            serviceData,
+            dayDate,
+            time,
+            nextTime
+        );
+        const overlappingSlots = getSlotsInTimeCell(
+            serviceData,
+            dayDate,
+            time,
+            nextTime
+        );
+        const minimumWidthForCell = getMinimumWidthForCell(
+            overlappingSlots,
+            slotLayoutMap
+        );
+
+        // Filter slots based on visibility from slotLayoutMap
+        const visibleOverlappingSlots = overlappingSlots.filter((slot) => {
+            const slotKey = slot.id;
+            const slotLayout = slotLayoutMap[slotKey];
+            return slotLayout?.visible || false;
+        });
+
+        const hiddenOverlappingSlots = overlappingSlots.filter((slot) => {
+            const slotKey = slot.id;
+            const slotLayout = slotLayoutMap[slotKey];
+            return !slotLayout?.visible;
+        });
+
+        // Get visible and hidden services
+        const visibleServices = Array.from(
+            new Set(visibleOverlappingSlots.map((slot) => slot.serviceName))
+        );
+        const hiddenServices = Array.from(
+            new Set(hiddenOverlappingSlots.map((slot) => slot.serviceName))
+        );
+
+        const cellServiceLayout = {
+            allServices: [...visibleServices, ...hiddenServices],
+            visibleServices: visibleServices,
+            hiddenServices: hiddenServices,
+            totalServices: visibleServices.length + hiddenServices.length,
+            hasOverflow: hiddenServices.length > 0,
+            totalColumns:
+                hiddenServices.length > 0 ? 4 : visibleServices.length, // Always 4 columns when there are hidden services
+        };
+
+        // Calculate actual width percentage for positioning
+        const actualWidthPercentage = minimumWidthForCell;
+
+        return (
+            <SlotCell key={time} $startTime={time} data-testid="slotcell">
+                {cellServiceLayout.visibleServices.map(
+                    (serviceName, serviceIndex) => {
+                        const serviceSlots = slotsStartingInCell.filter(
+                            (slot) => {
+                                const slotKey = slot.id;
+                                const slotLayout = slotLayoutMap[slotKey];
+                                return (
+                                    slot.serviceName === serviceName &&
+                                    slotLayout?.visible
+                                );
+                            }
+                        );
+
+                        // Calculate left position based on actual slot width
+                        const leftPosition =
+                            serviceIndex * actualWidthPercentage;
+
+                        return (
+                            <SlotColumnOverlay
+                                key={`service-${serviceName}-${serviceIndex}`}
+                                $columnIndex={serviceIndex}
+                                $totalVisibleColumns={
+                                    cellServiceLayout.totalColumns
+                                }
+                                $actualWidthPercentage={actualWidthPercentage}
+                                $leftPosition={leftPosition}
+                                data-testid={`service-${serviceName}-${serviceIndex}`}
+                            >
+                                {serviceSlots.map((slot, slotIndex) =>
+                                    renderSlotWithPopover(
+                                        slot,
+                                        slotIndex,
+                                        serviceIndex,
+                                        time,
+                                        minimumWidthForCell
+                                    )
+                                )}
+                            </SlotColumnOverlay>
+                        );
+                    }
+                )}
+                {cellServiceLayout.hasOverflow &&
+                    renderOverflowButton(
+                        cellServiceLayout,
+                        actualWidthPercentage
+                    )}
+            </SlotCell>
         );
     };
 
@@ -290,151 +446,27 @@ export const ScheduleWeekView = ({
             {timelineOffset !== null && <Timeline $top={timelineOffset} />}
             {weekDays.map((day) => {
                 const dayDate = day.format("YYYY-MM-DD");
-
                 return (
                     <SlotColumn key={dayDate}>
-                        {/* Render time cells */}
-                        {timeSlots.map((time) => {
-                            // Get all slots in this specific time cell (current 30-min slot)
-                            const timeMinutes = TimeHelper.timeToMinutes(time);
-                            const nextTime = minutesToTime(timeMinutes + 30);
-
-                            // Get slots that start in this cell (these will be rendered)
-                            const slotsStartingInCell =
-                                getSlotsStartingInTimeCell(
-                                    serviceData,
-                                    dayDate,
-                                    time,
-                                    nextTime
-                                );
-
-                            // Get all services that overlap with this specific time cell for layout calculation
-                            const overlappingSlots =
-                                getSlotsOverlappingTimeCell(
-                                    serviceData,
-                                    dayDate,
-                                    time,
-                                    nextTime
-                                );
-
-                            // Count unique services in this specific cell
-                            const servicesInCell = new Set(
-                                overlappingSlots.map((slot) => slot.serviceName)
-                            );
-
-                            // Calculate layout based on services actually present in THIS cell
-                            const cellServiceLayout = {
-                                allServices: Array.from(servicesInCell),
-                                visibleServices: Array.from(
-                                    servicesInCell
-                                ).slice(0, 3),
-                                totalServices: servicesInCell.size,
-                                hasOverflow: servicesInCell.size > 3,
-                                totalColumns:
-                                    Math.min(servicesInCell.size, 3) +
-                                    (servicesInCell.size > 3 ? 1 : 0),
-                            };
-
-                            // Calculate the layout for slots starting in this cell
-                            const { serviceColumns: renderingServiceColumns } =
-                                calculateSlotPositionsInCell(
-                                    slotsStartingInCell,
-                                    time,
-                                    nextTime,
-                                    minTime
-                                );
-
-                            return (
-                                <SlotCell key={time} $startTime={time}>
-                                    {/* Render service columns using cell-specific layout */}
-                                    {cellServiceLayout.visibleServices.map(
-                                        (serviceName, serviceIndex) => {
-                                            // Get slots to render for this service (only those starting in this cell)
-                                            const serviceSlots =
-                                                renderingServiceColumns.get(
-                                                    serviceName
-                                                ) || [];
-
-                                            return (
-                                                <SlotColumnOverlay
-                                                    key={`service-${serviceName}-${serviceIndex}`}
-                                                    $columnIndex={serviceIndex}
-                                                    $totalVisibleColumns={
-                                                        cellServiceLayout.totalColumns
-                                                    }
-                                                >
-                                                    {serviceSlots.map(
-                                                        (
-                                                            positionedSlot,
-                                                            slotIndex
-                                                        ) => {
-                                                            const popoverConfig =
-                                                                positionedSlot
-                                                                    .slot
-                                                                    .customPopover;
-                                                            return (
-                                                                <WithOptionalPopover
-                                                                    key={`${positionedSlot.slot.id}-${slotIndex}`}
-                                                                    containerRef={
-                                                                        containerRef as React.RefObject<HTMLDivElement>
-                                                                    }
-                                                                    customPopover={
-                                                                        popoverConfig
-                                                                    }
-                                                                >
-                                                                    <SlotContentWrapper>
-                                                                        {renderSlotContent(
-                                                                            positionedSlot
-                                                                        )}
-                                                                    </SlotContentWrapper>
-                                                                </WithOptionalPopover>
-                                                            );
-                                                        }
-                                                    )}
-                                                </SlotColumnOverlay>
-                                            );
-                                        }
-                                    )}
-
-                                    {/* Show +N button only if this specific cell has overflow */}
-                                    {cellServiceLayout.hasOverflow && (
-                                        <SlotColumnOverlay
-                                            key="overflow-button"
-                                            $columnIndex={3}
-                                            $totalVisibleColumns={
-                                                cellServiceLayout.totalColumns
-                                            }
-                                        >
-                                            <HiddenColumnsButton
-                                                $visibleColumnsCount={3}
-                                                onClick={() => {
-                                                    const hiddenServices =
-                                                        cellServiceLayout.allServices.slice(
-                                                            3
-                                                        );
-                                                    console.log(
-                                                        "Show more services:",
-                                                        hiddenServices
-                                                    );
-                                                }}
-                                                title={`+${
-                                                    cellServiceLayout.totalServices -
-                                                    3
-                                                } more services`}
-                                            >
-                                                +
-                                                {cellServiceLayout.totalServices -
-                                                    3}
-                                            </HiddenColumnsButton>
-                                        </SlotColumnOverlay>
-                                    )}
-                                </SlotCell>
-                            );
-                        })}
+                        {timeSlots.map((time) => renderTimeCell(dayDate, time))}
                     </SlotColumn>
                 );
             })}
         </SlotGrid>
+    );
+
+    // Render body container with time indicator and slot grid
+    const renderBodyContainer = () => (
+        <BodyContainer ref={bodyRef}>
+            <TimeIndicator
+                minTime={minTime}
+                maxTime={maxTime}
+                format="24hr"
+                timelineOffset={timelineOffset}
+                isWeekView={true}
+            />
+            {renderSlotGrid()}
+        </BodyContainer>
     );
 
     return (
@@ -446,16 +478,7 @@ export const ScheduleWeekView = ({
             ) : (
                 <>
                     {renderHeader()}
-                    <BodyContainer ref={bodyRef} onScroll={handleBodyScroll}>
-                        <TimeIndicator
-                            minTime={minTime}
-                            maxTime={maxTime}
-                            format="24hr"
-                            timelineOffset={timelineOffset}
-                            isWeekView={true}
-                        />
-                        {renderSlotGrid()}
-                    </BodyContainer>
+                    {renderBodyContainer()}
                 </>
             )}
         </ScheduleContainer>

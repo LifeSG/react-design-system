@@ -5,7 +5,7 @@ export type ScheduleCellType = "booked" | "available" | "blocked" | "pending";
 export type ScheduleView = "day" | "week";
 
 export interface ScheduleEntityProps {
-    id?: string;
+    id: string;
     name: string;
     slots: ScheduleSlotProps[];
 }
@@ -43,7 +43,7 @@ export interface ScheduleProps {
 }
 
 export interface ScheduleSlotProps {
-    id?: string | undefined;
+    id: string;
     startTime: string; // HH:mm format
     endTime: string; // HH:mm format
     status: ScheduleCellType;

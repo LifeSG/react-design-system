@@ -3,17 +3,11 @@ import { Border, Colour, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
 import { CELL_HEIGHT, HEADER_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
-export const TimeSlotContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-`;
-
 export const LoadingContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 400px;
+    min-height: 25rem;
     height: 100%;
     border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
     border-radius: ${Radius["md"]};
@@ -83,128 +77,26 @@ export const SlotColumn = styled.div`
     }
 `;
 
-export const MoreButton = styled.button<{
-    $left?: number;
-    $slotWidth?: number;
-    $slotGap?: number;
-}>`
-    background: ${Colour["bg"]};
-    border: ${Border["width-010"]} solid ${Colour["border"]};
-    border-radius: ${Radius["sm"]};
-    padding: 2px 4px;
-    font-size: 0.625rem;
-    cursor: pointer;
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    height: ${CELL_HEIGHT - 1}px;
-    width: ${({ $slotWidth = 30 }) => $slotWidth}px;
-    left: ${({ $left = 0 }) => $left}px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: ${Colour["text-primary"]};
-
-    &:hover {
-        background: ${Colour["bg-strong"]};
-    }
-`;
-
-export const SlotRowContainer = styled.div`
-    display: flex;
-    flex-direction: row;
-    gap: 2px;
-    height: 100%;
-    position: relative;
-`;
-
-export const SlotContent = styled(Typography.BodyXS)<{
-    status?: string;
-    duration?: number;
-    $column?: number;
-    $slotWidth?: number;
-    $slotGap?: number;
-    $durationSlots?: number;
-}>`
-    width: ${({ $slotWidth = 30 }) => $slotWidth}px;
-    padding: 2px;
-    position: absolute;
-    margin-top: 0;
-    font-weight: 500;
-    border-radius: ${Radius["sm"]};
-    z-index: 1;
-    left: ${({ $column = 0, $slotWidth = 30, $slotGap = 2 }) =>
-        $column * ($slotWidth + $slotGap)}px;
-    height: ${({ $durationSlots = 1 }) => $durationSlots * CELL_HEIGHT - 1}px;
-    font-size: 0.625rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background: ${({ status }) => {
-        switch (status) {
-            case "pending":
-                return css`
-                    repeating-linear-gradient(
-                        135deg,
-                        ${Colour["bg-warning"]},
-                        ${Colour["bg-warning"]} 5px,
-                        ${Colour["bg-warning-hover"]} 5px,
-                        ${Colour["bg-warning-hover"]} 10px
-                    )
-                `;
-            case "blocked":
-                return Colour["bg-inverse-subtle"];
-            case "available":
-                return Colour["bg-available"];
-            case "booked":
-                return Colour["bg-primary-subtler"];
-            default:
-                return Colour["bg"];
-        }
-    }};
-
-    color: ${({ status }) =>
-        status === "blocked" ? Colour["text-inverse"] : "inherit"};
-
-    border-left: ${({ status }) =>
-        status === "available"
-            ? `4px solid ${Colour["icon-success"]}`
-            : "none"};
-`;
-
-// New styled components for the updated week view layout
-export const SlotCellContainer = styled.div`
-    position: relative;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 1px;
-    overflow: visible;
-`;
-
-export const ColumnContainer = styled.div`
-    flex: 1;
-    position: relative;
-    min-width: 0;
-    overflow: visible;
-    height: 100%;
-`;
-
 export const SlotColumnOverlay = styled.div<{
     $columnIndex: number;
     $totalVisibleColumns: number;
+    $actualWidthPercentage?: number;
+    $leftPosition?: number;
 }>`
     position: absolute;
     top: 0;
-    left: ${({ $columnIndex, $totalVisibleColumns }) =>
-        ($columnIndex / Math.max($totalVisibleColumns, 1)) * 100}%;
-    width: ${({ $totalVisibleColumns }) =>
-        100 / Math.max($totalVisibleColumns, 1)}%;
+    left: ${({ $leftPosition, $columnIndex, $totalVisibleColumns }) => {
+        if ($leftPosition !== undefined) {
+            return `${$leftPosition}%`;
+        }
+        return `${($columnIndex / Math.max($totalVisibleColumns, 1)) * 100}%`;
+    }};
+    width: ${({ $actualWidthPercentage, $totalVisibleColumns }) => {
+        if ($actualWidthPercentage !== undefined) {
+            return `${$actualWidthPercentage}%`;
+        }
+        return `${100 / Math.max($totalVisibleColumns, 1)}%`;
+    }};
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -216,21 +108,17 @@ export const SlotColumnOverlay = styled.div<{
     box-sizing: border-box;
 `;
 
-export const SlotContentWrapper = styled.div`
-    position: relative;
-    pointer-events: auto;
-    width: 100%;
-    height: 100%;
-`;
-
-export const WeekSlotContent = styled(Typography.BodyXS)<{
-    status?: string;
-    duration?: number;
-    $offsetTop?: number;
-    $height?: number;
+export const SlotContent = styled(Typography.BodyXS)<{
+    $status: string;
+    $duration: number;
+    $offsetTop: number;
+    $width: number;
 }>`
-    width: calc(100% - 2px);
-    height: ${({ $height }) => $height || 20}px;
+    width: ${({ $width }) => $width}px;
+    height: ${({ $duration }) =>
+        $duration
+            ? `${($duration / 30) * CELL_HEIGHT - 1}px`
+            : `${CELL_HEIGHT - 1}px`};
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -247,8 +135,8 @@ export const WeekSlotContent = styled(Typography.BodyXS)<{
     border-radius: ${Radius["sm"]};
     box-sizing: border-box;
 
-    background: ${({ status }) => {
-        switch (status) {
+    background: ${({ $status }) => {
+        switch ($status) {
             case "pending":
                 return css`
                     repeating-linear-gradient(
@@ -270,18 +158,18 @@ export const WeekSlotContent = styled(Typography.BodyXS)<{
         }
     }};
 
-    color: ${({ status }) =>
-        status === "blocked" ? Colour["text-inverse"] : "inherit"};
+    color: ${({ $status }) =>
+        $status === "blocked" ? Colour["text-inverse"] : "inherit"};
 
-    border-left: ${({ status }) =>
-        status === "available"
+    border-left: ${({ $status }) =>
+        $status === "available"
             ? `4px solid ${Colour["icon-success"]}`
             : "none"};
 `;
 
 export const SlotServiceName = styled.span`
     font-weight: 600;
-    font-size: 0.5625rem;
+    font-size: 0.7625rem;
     line-height: 1;
     display: -webkit-box;
     -webkit-line-clamp: 1;
@@ -291,14 +179,12 @@ export const SlotServiceName = styled.span`
     word-wrap: break-word;
 `;
 
-export const SlotTime = styled.span`
-    font-size: 0.4375rem;
-    opacity: 0.8;
-    line-height: 1;
+export const SlotAvailability = styled.span`
+    font-weight: 600;
 `;
 
 export const HiddenColumnsButton = styled.div<{
-    $visibleColumnsCount: number;
+    // $visibleColumnsCount: number;
 }>`
     width: 100%;
     height: 100%;

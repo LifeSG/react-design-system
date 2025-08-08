@@ -2,10 +2,16 @@ import { useMemo, useRef } from "react";
 import { ScheduleDayViewProps } from "./types";
 import { TimeHelper } from "../../util/time-helper";
 import { DateHelper } from "../../util/date-helper";
-import { useTimelineOffset, useInitialScroll } from "../shared";
+import {
+    useTimelineOffset,
+    useInitialScroll,
+    calculateSlotOffset,
+    findSlotsStartingInTimeRange,
+    isTimeCellCovered,
+    minutesToTime,
+} from "../shared";
 import { WithOptionalPopover } from "../shared/with-optional-popover";
 import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
-import { CELL_HEIGHT } from "../const";
 import {
     ArrowButton,
     BlankCell,
@@ -100,59 +106,33 @@ export const ScheduleDayView = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    // Calculate offset position within a 30-minute time cell
-    const calculateSlotOffset = (
-        slotStartTime: string,
-        timeSlotStart: string
-    ): number => {
-        const slotStartMinutes = TimeHelper.timeToMinutes(slotStartTime);
-        const timeSlotStartMinutes = TimeHelper.timeToMinutes(timeSlotStart);
-        const offsetMinutes = slotStartMinutes - timeSlotStartMinutes;
-        return (offsetMinutes / 30) * CELL_HEIGHT;
-    };
-
     // Find all slots that should be displayed in a given time cell
     const findSlotsForTimeCell = (
         service: ScheduleEntityProps,
         timeSlot: string
     ): ScheduleSlotProps[] => {
-        return (
-            service.slots?.filter((cell: ScheduleSlotProps) => {
-                const cellStartMinutes = TimeHelper.timeToMinutes(
-                    cell.startTime
-                );
-                const timeSlotMinutes = TimeHelper.timeToMinutes(timeSlot);
-                const timeSlotEndMinutes = timeSlotMinutes + 30;
+        if (!service.slots) return [];
+        const timeSlotMinutes = TimeHelper.timeToMinutes(timeSlot);
+        const nextTime = minutesToTime(timeSlotMinutes + 30);
 
-                // Cell should be displayed if it starts within this 30-minute window
-                return (
-                    cellStartMinutes >= timeSlotMinutes &&
-                    cellStartMinutes < timeSlotEndMinutes
-                );
-            }) || []
+        const a = findSlotsStartingInTimeRange(
+            service.slots,
+            timeSlot,
+            nextTime
         );
+
+        console.log(111, nextTime, a);
+        return a;
     };
 
     // Check if a time slot is covered by any existing booking
-    const isTimeSlotCovered = (
+    const isServiceTimeSlotCovered = (
         service: ScheduleEntityProps,
         timeSlot: string
     ): boolean => {
-        const timeSlotMinutes = TimeHelper.timeToMinutes(timeSlot);
-
-        return (
-            service.slots?.some((cell: ScheduleSlotProps) => {
-                const cellStartMinutes = TimeHelper.timeToMinutes(
-                    cell.startTime
-                );
-                const cellEndMinutes = TimeHelper.timeToMinutes(cell.endTime);
-
-                return (
-                    timeSlotMinutes >= cellStartMinutes &&
-                    timeSlotMinutes < cellEndMinutes
-                );
-            }) || false
-        );
+        return service.slots
+            ? isTimeCellCovered(service.slots, timeSlot)
+            : false;
     };
 
     const getPopoverConfig = (
@@ -163,7 +143,9 @@ export const ScheduleDayView = ({
         if (slot?.customPopover) {
             return slot.customPopover;
         }
-        return !slot && !isTimeSlotCovered(service, time) && emptySlotPopover
+        return !slot &&
+            !isServiceTimeSlotCovered(service, time) &&
+            emptySlotPopover
             ? emptySlotPopover
             : undefined;
     };
@@ -254,7 +236,11 @@ export const ScheduleDayView = ({
             return (
                 <SlotCell key={time} $startTime={time}>
                     {slots.map((slot, index) => {
-                        const popoverConfig = getPopoverConfig(service, slot, time);
+                        const popoverConfig = getPopoverConfig(
+                            service,
+                            slot,
+                            time
+                        );
                         return (
                             <WithOptionalPopover
                                 key={`${slot.id}-${index}`}
@@ -276,7 +262,11 @@ export const ScheduleDayView = ({
                 >
                     <WithOptionalPopover
                         containerRef={containerRef}
-                        customPopover={getPopoverConfig(service, undefined, time)}
+                        customPopover={getPopoverConfig(
+                            service,
+                            undefined,
+                            time
+                        )}
                     >
                         <EmptySlot />
                     </WithOptionalPopover>

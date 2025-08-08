@@ -2,14 +2,14 @@ import { ScheduleEntityProps } from "src/schedule";
 
 const getRelativeDate = (daysFromToday: number): string => {
     const date = new Date();
-    date.setDate(date.getDate() + daysFromToday);
+    date.setDate(date.getDate() + daysFromToday - 4);
     return date.toISOString().split("T")[0]; // Returns YYYY-MM-DD format
 };
 
 export const mockScheduleData: ScheduleEntityProps[] = [
     {
         id: "1",
-        name: "Judge Ahmad Bin Yusof",
+        name: "A",
         slots: [
             {
                 id: "1-1",
@@ -51,7 +51,7 @@ export const mockScheduleData: ScheduleEntityProps[] = [
     },
     {
         id: "2",
-        name: "Service B",
+        name: "B",
         slots: [
             {
                 id: "2-1",
@@ -124,7 +124,7 @@ export const mockScheduleData: ScheduleEntityProps[] = [
     },
     {
         id: "3",
-        name: "Title with a very long service name limited to 2 lines  with a very long service name limited to 2 lines ",
+        name: "C",
         slots: [
             {
                 id: "3-1",
@@ -164,7 +164,7 @@ export const mockScheduleData: ScheduleEntityProps[] = [
     },
     {
         id: "4",
-        name: "Service D",
+        name: "D",
         slots: [
             {
                 id: "4-1",
@@ -179,7 +179,7 @@ export const mockScheduleData: ScheduleEntityProps[] = [
     },
     {
         id: "5",
-        name: "Service E",
+        name: "E",
         slots: [
             {
                 id: "5-1",
@@ -194,7 +194,7 @@ export const mockScheduleData: ScheduleEntityProps[] = [
     },
     {
         id: "6",
-        name: "Service F",
+        name: "F",
         slots: [
             {
                 id: "6-1",
@@ -209,7 +209,7 @@ export const mockScheduleData: ScheduleEntityProps[] = [
     },
     {
         id: "7",
-        name: "Service G",
+        name: "G",
         slots: [
             {
                 id: "7-1",
@@ -224,7 +224,7 @@ export const mockScheduleData: ScheduleEntityProps[] = [
     },
     {
         id: "8",
-        name: "Service H",
+        name: "H",
         slots: [
             {
                 id: "8-1",
@@ -257,7 +257,7 @@ export const mockScheduleData: ScheduleEntityProps[] = [
     },
     {
         id: "9",
-        name: "Service I",
+        name: "I",
         slots: [
             // Day after tomorrow (1 slot)
             {
@@ -273,7 +273,7 @@ export const mockScheduleData: ScheduleEntityProps[] = [
     },
     {
         id: "10",
-        name: "Service J",
+        name: "J",
         slots: [
             {
                 id: "10-1",
@@ -306,7 +306,7 @@ export const mockScheduleData: ScheduleEntityProps[] = [
     },
     {
         id: "11",
-        name: "Service with Popovers",
+        name: "K",
         slots: [
             {
                 id: "slot-1",
