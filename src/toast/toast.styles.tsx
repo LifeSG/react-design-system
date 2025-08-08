@@ -2,7 +2,7 @@ import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, MediaQuery, Radius } from "../theme";
+import { Colour, Font, MediaQuery, Radius } from "../theme";
 import { SemanticColourSet } from "../theme/types";
 import { Typography } from "../typography/typography";
 import { ToastType } from "./types";
@@ -126,8 +126,9 @@ export const TextContainer = styled.div`
     flex-direction: column;
 `;
 
-export const Title = styled(Typography.HeadingXS)<StyleProps>`
+export const Title = styled.h2<StyleProps>`
     display: flex;
+    ${Font["body-baseline-semibold"]}
 
     ${(props) => {
         return css`
@@ -136,12 +137,18 @@ export const Title = styled(Typography.HeadingXS)<StyleProps>`
     }}
 `;
 
-export const Description = styled.div<StyleProps>`
+export const DescriptionMD = styled(Typography.BodyMD)<StyleProps>`
     ${(props) => {
         return css`
-            p {
-                color: ${getValidationColorAttributes(props).Text};
-            }
+            color: ${getValidationColorAttributes(props).Text};
+        `;
+    }}
+`;
+
+export const DescriptionBL = styled(Typography.BodyBL)<StyleProps>`
+    ${(props) => {
+        return css`
+            color: ${getValidationColorAttributes(props).Text};
         `;
     }}
 `;
