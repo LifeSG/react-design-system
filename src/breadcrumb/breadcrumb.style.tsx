@@ -45,7 +45,7 @@ export const Content = styled.ul`
     overflow-y: hidden;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE 10+ */
-    ::-webkit-scrollbar {
+    &::-webkit-scrollbar {
         display: none; /* Chrome/Safari/Webkit */
     }
 

@@ -1,5 +1,5 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
@@ -20,7 +20,7 @@ interface IconStyleProp {
 //=============================================================================
 // STYLING
 //=============================================================================
-export const Container = styled(animated.li)``;
+export const Container = animated(styled.li``);
 
 export const LinkButton = styled(BasicButton)<LinkButtonStyleProp>`
     display: flex;
@@ -38,24 +38,24 @@ export const LinkButton = styled(BasicButton)<LinkButtonStyleProp>`
     ${(props) =>
         props.$noChildren
             ? css`
-                  :hover,
-                  :focus {
+                  &:hover,
+                  &:focus {
                       background: ${Colour["bg-hover"]};
                       color: ${Colour["text-hover"]};
                   }
               `
             : css`
-                  :hover,
-                  :focus {
+                  &:hover,
+                  &:focus {
                       background: ${Colour["bg-hover-strong"]};
                   }
               `}
 `;
 
-export const DrawerSubitemContainer = styled(animated.div)`
+export const DrawerSubitemContainer = animated(styled.div`
     margin: 0.125rem 0 0.125rem 0.5rem;
     overflow: hidden;
-`;
+`);
 
 export const ChevronIcon = styled(ChevronUpIcon)<IconStyleProp>`
     flex-shrink: 0;
@@ -69,4 +69,4 @@ export const TextElement = styled.span`
     text-align: left;
 `;
 
-export const DrawerContent = styled(animated.ul)``;
+export const DrawerContent = animated(styled.ul``);

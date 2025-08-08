@@ -7,7 +7,7 @@ import React, {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "react-spring";
+import { useSpring } from "@react-spring/web";
 import { inertValue } from "../shared/accessibility";
 import { SimpleIdGenerator } from "../util";
 import { AccordionContext } from "./accordion-context";

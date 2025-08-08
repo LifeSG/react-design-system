@@ -43,11 +43,11 @@ export const Table = ({ children }: TableProps) => {
 
 const StyledTable = styled(DocTable)`
     td {
-        :first-child {
+        &:first-child {
             width: 20%;
         }
 
-        :last-child {
+        &:last-child {
             width: 25%;
         }
     }
@@ -112,7 +112,7 @@ const Description = styled.div`
     color: #333333;
 
     code {
-        :not(:last-child) {
+        &:not(:last-child) {
             margin-right: 0.25rem;
         }
     }

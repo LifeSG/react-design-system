@@ -9,7 +9,7 @@ export const OptionContainer = styled.div`
     align-items: center;
     gap: 0.5rem;
 
-    :not(:last-of-type) {
+    &:not(:last-of-type) {
         margin-bottom: 0.5rem;
     }
 `;

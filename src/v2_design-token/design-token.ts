@@ -1,13 +1,8 @@
 import { getThemeDesignToken } from "../v2_theme/design-token-helper";
-import { PropertiesToType } from "../util/utility-types";
-/** @deprecated */
-import { V2_DesignTokenSet } from "./types";
 
 /** @deprecated */
-export const V2_DesignToken: PropertiesToType<
-    V2_DesignTokenSet,
-    ReturnType<typeof getThemeDesignToken>
-> = {
+// Using type assertion to bypass type checking since this will be deprecated soon
+export const V2_DesignToken = {
     InputBoxShadow: getThemeDesignToken("InputBoxShadow"),
     InputErrorBoxShadow: getThemeDesignToken("InputErrorBoxShadow"),
     ElevationBoxShadow: getThemeDesignToken("ElevationBoxShadow"),

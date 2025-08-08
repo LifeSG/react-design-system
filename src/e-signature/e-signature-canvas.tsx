@@ -3,11 +3,12 @@ import {
     Ref,
     forwardRef,
     useCallback,
+    useContext,
     useEffect,
     useImperativeHandle,
     useRef,
 } from "react";
-import { useTheme } from "styled-components";
+import { ThemeContext } from "styled-components";
 import { Colour } from "../theme";
 import {
     SignatureCanvas,
@@ -36,7 +37,7 @@ const Component = (
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const fabricCanvas = useRef<FabricCanvas>();
     const pencilBrush = useRef<PencilBrush>();
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
 
     // =============================================================================
     // HOOKS

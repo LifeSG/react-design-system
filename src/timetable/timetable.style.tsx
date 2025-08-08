@@ -72,7 +72,7 @@ export const TimeTableContainer = styled.div<TimeTableContainerProps>`
     ${(props) => {
         if (props.$loading) {
             return css`
-                :hover {
+                &:hover {
                     cursor: not-allowed;
                     padding-bottom: 0;
                 }
@@ -197,7 +197,7 @@ export const ClickableRowHeaderTitle = styled(
     width: 100%;
     white-space: nowrap;
     color: ${Colour["text-primary"]};
-    :hover {
+    &:hover {
         cursor: ${(props) => (props.$isClickable ? "pointer" : "default")};
     }
 `;
@@ -271,7 +271,7 @@ export const LoadingBar = styled.div`
 
 export const StyledPopoverTrigger = styled(PopoverTrigger)`
     max-width: 24rem !important;
-    :hover {
+    &:hover {
         cursor: default;
     }
 `;

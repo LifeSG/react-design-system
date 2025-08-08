@@ -3,7 +3,7 @@ import { ThemeCollectionSpec } from "./internal-types";
 import { ThemeSpec } from "./types";
 
 export interface StyledComponentProps {
-    theme: ThemeSpec;
+    theme?: ThemeSpec;
 }
 
 export const getValue = <C, T, K extends keyof C | keyof T>(

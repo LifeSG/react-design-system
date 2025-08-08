@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "react-spring";
+import { useSpring } from "@react-spring/web";
 import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
 import {
     BaseProps,

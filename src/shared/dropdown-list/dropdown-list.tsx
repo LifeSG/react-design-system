@@ -1,7 +1,7 @@
 import find from "lodash/find";
 import isEqual from "lodash/isEqual";
 import React, { useEffect, useRef, useState } from "react";
-import { useSpring } from "react-spring";
+import { useSpring } from "@react-spring/web";
 import { StringHelper } from "../../util/string-helper";
 import {
     Container,

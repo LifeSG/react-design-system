@@ -64,7 +64,7 @@ export const Main = styled.button<StyleProps>`
                         ${Colour["border-primary"]};
                     color: ${Colour["text-primary"]};
 
-                    :hover {
+                    &:hover {
                         background-color: ${Colour["bg-hover-neutral"]};
                     }
                 `;
@@ -76,7 +76,7 @@ export const Main = styled.button<StyleProps>`
                         ${Colour.border};
                     color: ${Colour["text-primary"]};
 
-                    :hover {
+                    &:hover {
                         background-color: ${Colour["bg-hover-neutral"]};
                     }
                 `;
@@ -87,7 +87,7 @@ export const Main = styled.button<StyleProps>`
                     border: none;
                     color: ${Colour["text-inverse"]};
 
-                    :hover {
+                    &:hover {
                         background-color: ${Colour["bg-primary-hover"]};
                     }
                 `;

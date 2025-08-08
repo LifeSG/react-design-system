@@ -1,5 +1,5 @@
 import { ChevronUpIcon } from "@lifesg/react-icons";
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { Colour, Font, Motion, Radius, Spacing } from "../theme";
@@ -56,10 +56,10 @@ export const Wrapper = styled.div`
     column-gap: ${Spacing["spacing-4"]};
 `;
 
-export const Expandable = styled(animated.div)`
+export const Expandable = animated(styled.div`
     grid-column: 2 / -1;
     overflow: hidden;
-`;
+`);
 
 export const ColumnWeekCell = styled.div`
     display: flex;
@@ -82,7 +82,7 @@ export const TimeColumn = styled.div<TimeColumnStyleProps>`
 
 export const TimeColumnWrapper = styled.div`
     min-height: 3.75rem;
-    :last-child {
+    &:last-child {
         min-height: 0;
     }
 `;
@@ -92,7 +92,7 @@ export const TimeColumnText = styled.div`
     color: ${Colour["text-subtler"]};
     text-align: center;
     line-height: 12px; // align with cell on the same row
-    :first-line {
+    &:first-line {
         font-size: ${Font.Spec["body-size-sm"]};
     }
 `;

@@ -5,9 +5,8 @@ import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useTheme } from "styled-components";
 import { InputSelect } from "../input-select";
 import { Breakpoint } from "../theme";
 import {
@@ -26,6 +25,7 @@ import {
     PaginationWrapper,
 } from "./pagination.styles";
 import { PageSizeItemProps, PaginationProps } from "./types";
+import { ThemeContext } from "styled-components";
 
 const Component = (
     {
@@ -47,7 +47,7 @@ const Component = (
     // CONST, STATE, REF
     // =============================================================================
 
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
 
     const isMobile = useMediaQuery({

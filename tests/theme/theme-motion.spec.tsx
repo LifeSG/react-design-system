@@ -12,7 +12,7 @@ const StyledMotionTest = styled.div`
 describe("StyledMotionTest", () => {
     it("should apply correct motion styles based on the theme", () => {
         const duration = "500ms";
-        const easing = "cubic-bezier(0.45,0.05,0.55,0.95)";
+        const easing = "cubic-bezier(0.45, 0.05, 0.55, 0.95)";
 
         const { container } = render(
             <ThemeProvider theme={MOCK_THEME}>

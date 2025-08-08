@@ -26,11 +26,11 @@ export const Table = ({ children }: TableProps) => {
 
 const StyledTable = styled(DocTable)`
     td {
-        :first-child {
+        &:first-child {
             width: 20%;
         }
 
-        :last-child {
+        &:last-child {
             width: 20%;
         }
     }
@@ -92,7 +92,7 @@ const Label = styled.td<NameColStyleProps>`
 
 const Mandatory = styled.td<NameColStyleProps>`
     font-weight: bold;
-    :after {
+    &:after {
         content: " *";
         color: #9e130f;
     }
@@ -146,7 +146,7 @@ const PropsContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     code {
-        :not(:last-child) {
+        &:not(:last-child) {
             margin-right: 0.25rem;
         }
     }

@@ -72,7 +72,7 @@ const Bar = styled.div<StyleProps>`
             border: ${Border["width-010"]} ${Border["solid"]} ${colorToUse};
             border-radius: ${Radius["sm"]};
 
-            :after {
+            &:after {
                 content: "";
                 position: absolute;
                 top: 0;

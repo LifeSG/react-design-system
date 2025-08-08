@@ -277,9 +277,9 @@ const HyperlinkBase = styled.a<V2_TextLinkStyleProps>`
             color: ${V2_Color.Primary};
             text-decoration: none;
 
-            :hover,
-            :active,
-            :focus {
+            &:hover,
+            &:active,
+            &:focus {
                 color: ${V2_Color.Secondary};
 
                 svg {

@@ -1,6 +1,6 @@
 import { useContext, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useTheme } from "styled-components";
+import { ThemeContext } from "styled-components";
 import { ResizeCallbackParams } from "../shared/fade-wrapper";
 import { Breakpoint } from "../theme";
 import { TabContext } from "./tab-context";
@@ -35,7 +35,7 @@ export const TabLinkChain = ({
     const { setCurrentActiveIndex, currentActiveIndex, tabLinks } =
         useContext(TabContext);
 
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["md-max"]({ theme });
 
     const isMobile = useMediaQuery({

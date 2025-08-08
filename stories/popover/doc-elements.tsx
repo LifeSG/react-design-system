@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import { V2_Color } from "../../src/v2_color";
 import { V2_MediaQuery } from "../../src/v2_media";
@@ -23,12 +22,12 @@ export const Container = styled.div`
 
 export const Item = styled.div`
     position: relative;
-    :not(:last-of-type) {
+    &:not(:last-of-type) {
         margin-right: 2.5rem;
     }
 
     ${V2_MediaQuery.MaxWidth.mobileL} {
-        :not(:last-of-type) {
+        &:not(:last-of-type) {
             margin-right: 0;
             margin-bottom: 2.5rem;
         }

@@ -66,7 +66,7 @@ export const Main = styled.button<{
         }
     }}
 
-    :disabled {
+    &:disabled {
         &:hover {
             border: ${Border["width-010"]} ${Border.solid} transparent;
         }

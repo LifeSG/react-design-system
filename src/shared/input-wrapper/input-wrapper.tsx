@@ -46,7 +46,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
     border-radius: ${Radius["sm"]};
     background: ${Colour["bg"]};
 
-    :focus-within {
+    &:focus-within {
         ${defaultFocusCss}
     }
     ${(props) => props.$focused && defaultFocusCss}
@@ -58,7 +58,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
                 padding: 0;
                 background: transparent !important;
 
-                :focus-within {
+                &:focus-within {
                     ${readOnlyFocusCss}
                 }
                 ${props.$focused && readOnlyFocusCss}
@@ -68,7 +68,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
                 background: ${Colour["bg-disabled"]};
                 cursor: not-allowed;
 
-                :focus-within {
+                &:focus-within {
                     ${disabledFocusCss}
                 }
                 ${props.$focused && disabledFocusCss}
@@ -77,7 +77,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
             return css`
                 border-color: ${Colour["border-error"]};
 
-                :focus-within {
+                &:focus-within {
                     ${errorFocusCss}
                 }
                 ${props.$focused && errorFocusCss}
@@ -115,22 +115,22 @@ export const BasicInput = styled.input<InputStyleProps>`
     padding: 0;
     margin: 0;
 
-    :disabled {
+    &:disabled {
         color: ${Colour["text-subtler"]};
 
-        :hover {
+        &:hover {
             cursor: not-allowed;
         }
     }
 
-    ::placeholder,
-    ::-webkit-input-placeholder {
+    &::placeholder,
+    &::-webkit-input-placeholder {
         color: ${Colour["text-subtler"]};
     }
 
     // Chrome, Safari, Edge, Opera
-    ::-webkit-outer-spin-button,
-    ::-webkit-inner-spin-button {
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }
@@ -150,12 +150,12 @@ export const BasicButton = styled.button<InputStyleProps>`
     border: none;
     outline: none;
 
-    :focus,
-    :active {
+    &:focus,
+    &:active {
         outline: none;
     }
 
-    :focus-visible {
+    &:focus-visible {
         outline: ${Border["width-010"]} ${Border["solid"]}
             ${Colour["border-focus"]};
         border-radius: ${Radius["sm"]};

@@ -71,7 +71,7 @@ interface LabelContainerStyleProps {
 // =============================================================================
 export const DisplayContainer = styled.table`
     tr {
-        :not(:last-child) {
+        &:not(:last-child) {
             border-bottom: 1px solid ${V2_Color.Neutral[5]};
         }
     }
@@ -80,7 +80,7 @@ export const DisplayContainer = styled.table`
         padding: 1rem 0;
         vertical-align: middle;
 
-        :first-child {
+        &:first-child {
             vertical-align: top;
         }
     }
@@ -134,7 +134,7 @@ export const LinkDiv = styled.div`
     display: flex;
     flex-direction: column;
     a {
-        :not(:last-child) {
+        &:not(:last-child) {
             margin-bottom: 1rem;
         }
     }

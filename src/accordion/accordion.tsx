@@ -36,7 +36,6 @@ const AccordionBase = ({
         }
     }, [expandAll, hasFirstLoad]);
 
-
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();
         setExpandAll((prevExpandValue) => !prevExpandValue);

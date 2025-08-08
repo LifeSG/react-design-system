@@ -19,7 +19,7 @@ export const Item = styled.li`
     padding: ${Spacing["spacing-32"]} 0;
     background: transparent;
 
-    :not(:last-child) {
+    &:not(:last-child) {
         border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     }
 `;
@@ -85,13 +85,13 @@ export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
 
 export const ActionButton = styled(Button.Small)`
     width: 7.5rem;
-    :not(:last-of-type) {
+    &:not(:last-of-type) {
         margin-right: ${Spacing["spacing-16"]};
     }
 
     ${MediaQuery.MaxWidth.sm} {
         width: 100%;
-        :not(:last-of-type) {
+        &:not(:last-of-type) {
             margin-bottom: ${Spacing["spacing-16"]};
         }
     }

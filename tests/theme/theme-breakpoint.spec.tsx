@@ -1,5 +1,5 @@
-import { render } from "@testing-library/react";
 import "jest-styled-components";
+import { render } from "@testing-library/react";
 import styled, { ThemeProvider } from "styled-components";
 import { Breakpoint } from "../../src";
 import { MOCK_THEME } from "./mock-theme-data";
@@ -16,6 +16,9 @@ const StyledComponentTest = styled.div`
     }
 `;
 
+// Note: There is an extra space due to an issue of jest-styled-component
+// See https://github.com/styled-components/jest-styled-components/issues/430
+
 describe("Media Width Breakpoints Test", () => {
     it("should apply correct styles based on media width", () => {
         const { container } = render(
@@ -30,7 +33,8 @@ describe("Media Width Breakpoints Test", () => {
             "background-color",
             "blue",
             {
-                media: `(min-width: 321px)`,
+                // Extra space here
+                media: `(min-width:  321px)`,
             }
         );
 
@@ -38,7 +42,8 @@ describe("Media Width Breakpoints Test", () => {
             "background-color",
             "green",
             {
-                media: `(min-width: 375px)`,
+                // Extra space here
+                media: `(min-width:  375px)`,
             }
         );
     });

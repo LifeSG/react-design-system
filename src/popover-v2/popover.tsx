@@ -1,5 +1,6 @@
+import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useTheme } from "styled-components";
+import { ThemeContext } from "styled-components";
 import { Modal } from "../modal/modal";
 import { Breakpoint } from "../theme";
 import { Typography } from "../typography";
@@ -23,7 +24,7 @@ export const PopoverV2 = ({
     // CONST, STATE, REF
     // =============================================================================
     const testId = otherProps["data-testid"] || "popover";
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
 
