@@ -18,7 +18,7 @@ export interface ListItemDisplayProps {
 export interface DropdownCustomLabelProps {
     searchPlaceholder?: string | undefined;
     noResultsLabel?: string | undefined;
-    noResultsDescription?: () => React.ReactNode | undefined;
+    noResultsDescription?: React.ReactNode | undefined;
     selectAllButtonLabel?: string | undefined;
     clearAllButtonLabel?: string | undefined;
 }
@@ -48,6 +48,10 @@ export interface DropdownSearchProps<T> {
     enableSearch?: boolean | undefined;
     /** If specified, the default no results display will not be rendered */
     hideNoResultsDisplay?: boolean | undefined;
+    /** @deprecated use `noResultsDescription` inside `customLabels` */
+    noResultsDescription?: React.ReactNode | undefined;
+    /** @deprecated use `searchPlaceholder` inside `customLabels` */
+    searchPlaceholder?: string | undefined;
     /** Custom function to perform search when a user keys in a value in the search input */
     searchFunction?: ((searchValue: string) => T[]) | undefined;
     onSearch?: (() => void) | undefined;

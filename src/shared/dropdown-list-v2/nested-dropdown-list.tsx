@@ -61,7 +61,9 @@ export const NestedDropdownList = <T,>({
     /* DropdownSearchProps */
     enableSearch,
     hideNoResultsDisplay,
+    noResultsDescription: _noResultsDescription,
     customLabels,
+    searchPlaceholder: _searchPlaceholder,
     onSearch,
 }: NestedDropdownListProps<T>) => {
     // =========================================================================
@@ -69,11 +71,13 @@ export const NestedDropdownList = <T,>({
     // =========================================================================
     const {
         noResultsLabel = "No results found.",
-        noResultsDescription,
-        searchPlaceholder = "Search",
         selectAllButtonLabel = "Select all",
         clearAllButtonLabel = "Clear all",
     } = customLabels || {};
+    const searchPlaceholder =
+        _searchPlaceholder || customLabels?.searchPlaceholder || "Search";
+    const noResultsDescription =
+        _noResultsDescription || customLabels?.noResultsDescription;
     const selectableCategory = multiSelect || _selectableCategory;
     const [searchValue, setSearchValue] = useState<string>("");
     const searchTerm = searchValue.toLowerCase().trim();
@@ -453,7 +457,7 @@ export const NestedDropdownList = <T,>({
                     </ResultStateContainer>
                     {noResultsDescription && (
                         <NoResultDescContainer data-testid="no-result-desc">
-                            {noResultsDescription()}
+                            {noResultsDescription}
                         </NoResultDescContainer>
                     )}
                 </>

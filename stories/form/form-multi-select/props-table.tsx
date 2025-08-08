@@ -93,6 +93,11 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
+                name: "searchPlaceholder (deprecated)",
+                description: "The placeholder for the search field",
+                propTypes: ["string"],
+            },
+            {
                 name: "searchFunction",
                 description:
                     "The custom function to perform a search when the user enters a value in the search input",
@@ -130,6 +135,12 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "If specified, the default no results display will not be rendered",
                 propTypes: ["boolean"],
+            },
+            {
+                name: "noResultsDescription (deprecated)",
+                description:
+                    "Additional description rendered after the default no results display",
+                propTypes: ["React.ReactNode"],
             },
             {
                 name: "customLabels",

@@ -30,6 +30,7 @@ export const InputSelect = <T, V>({
     id,
     enableSearch = false,
     searchFunction,
+    searchPlaceholder,
     valueExtractor,
     valueToStringFunction,
     listExtractor,
@@ -43,6 +44,7 @@ export const InputSelect = <T, V>({
     renderCustomSelectedOption,
     renderListItem,
     hideNoResultsDisplay,
+    noResultsDescription,
     customLabels,
     renderCustomCallToAction,
     onBlur,
@@ -245,6 +247,7 @@ export const InputSelect = <T, V>({
                 valueExtractor={valueExtractor}
                 listExtractor={listExtractor}
                 enableSearch={enableSearch}
+                searchPlaceholder={searchPlaceholder}
                 searchFunction={searchFunction}
                 selectedItems={selected ? [selected] : []}
                 onRetry={onRetry}
@@ -252,6 +255,7 @@ export const InputSelect = <T, V>({
                 itemTruncationType={optionTruncationType}
                 renderListItem={renderListItem}
                 hideNoResultsDisplay={hideNoResultsDisplay}
+                noResultsDescription={noResultsDescription}
                 customLabels={customLabels}
                 renderCustomCallToAction={renderCustomCallToAction}
                 variant={variant}

@@ -165,7 +165,7 @@ export const WithSearch: StoryObj<Component> = {
                     displayValueExtractor={(item) => item.label}
                     enableSearch
                     customLabels={{
-                        noResultsDescription: () => (
+                        noResultsDescription: (
                             <>
                                 Display additional information here when no
                                 results are found. There is default styling for

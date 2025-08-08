@@ -89,6 +89,12 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
+                name: "noResultsDescription (deprecated)",
+                description:
+                    "Additional description rendered after the default no results display",
+                propTypes: ["React.ReactNode"],
+            },
+            {
                 name: "customLabels",
                 description:
                     "Specifies custom labels to replace default labels",
@@ -112,6 +118,11 @@ const DATA: ApiTableSectionProps[] = [
                     "When specified, it will allow a text base search for the items in the list",
                 propTypes: ["boolean"],
                 defaultValue: "false",
+            },
+            {
+                name: "searchPlaceholder (deprecated)",
+                description: "The placeholder for the search field",
+                propTypes: ["string"],
             },
             {
                 name: "variant",
