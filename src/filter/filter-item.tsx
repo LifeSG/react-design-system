@@ -1,5 +1,5 @@
 import isNil from "lodash/isNil";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "react-spring";
 import { PopoverAddon } from "../form/form-label-addon";
@@ -17,7 +17,8 @@ import {
     MinimisableContent,
 } from "./filter-item.styles";
 import { FilterItemProps } from "./types";
-import { inertValue } from "../shared/accessibility";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 
 export const FilterItem = ({
     collapsible: desktopCollapsible = true,
@@ -51,6 +52,8 @@ export const FilterItem = ({
         ? minimisedHeight ??
           Math.min((contentResizeDetector.height ?? 0) * 0.5, 216)
         : contentResizeDetector.height;
+    const internalId = useRef(SimpleIdGenerator.generate());
+    const contentId = `${internalId.current}-content`;
 
     // =============================================================================
     // EFFECTS
@@ -113,7 +116,10 @@ export const FilterItem = ({
     };
 
     return (
-        <FilterItemWrapper $collapsible={collapsible}>
+        <FilterItemWrapper
+            $collapsible={collapsible}
+            aria-labelledby={"filter-item-title"}
+        >
             <Divider
                 $showDivider={showDivider}
                 $showMobileDivider={showMobileDivider}
@@ -121,7 +127,7 @@ export const FilterItem = ({
             {(title || collapsible) && (
                 <FilterItemHeader>
                     {title && (
-                        <FilterItemTitle>
+                        <FilterItemTitle id="filter-item-title">
                             {title} {addon && renderAddon()}
                         </FilterItemTitle>
                     )}
@@ -131,14 +137,23 @@ export const FilterItem = ({
                             focusOutline="browser"
                             onClick={handleExpandCollapse}
                             aria-label={expanded ? "Collapse" : "Expand"}
+                            aria-expanded={expanded}
+                            aria-disabled={!collapsible}
+                            aria-controls={contentId}
                         >
+                            {title && (
+                                <VisuallyHidden as="span">
+                                    {title}
+                                </VisuallyHidden>
+                            )}
                             <ChevronIcon $expanded={expanded} />
                         </FilterItemExpandButton>
                     )}
                 </FilterItemHeader>
             )}
             <ExpandableItem
-                data-testid="expandable-container"
+                id={contentId}
+                data-testid={"expandable-container"}
                 data-expanded={expanded}
                 style={itemAnimationStyles}
                 inert={inertValue(!expanded)}
@@ -166,6 +181,11 @@ export const FilterItem = ({
                                 styleType="link"
                                 type="button"
                                 onClick={handleMinimise}
+                                aria-label={
+                                    contentMinimised
+                                        ? `view more in ${title}`
+                                        : `view less in ${title}`
+                                }
                             >
                                 View {contentMinimised ? "more" : "less"}
                             </FilterItemMinimiseButton>
