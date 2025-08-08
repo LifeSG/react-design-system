@@ -240,12 +240,22 @@ export const ComboboxPicker = ({
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLDivElement, Element>) => {
-        if (
-            nodeRef.current &&
-            !nodeRef.current.contains(event.relatedTarget) &&
+        const target = event.relatedTarget as HTMLElement;
+
+        const isFloatingElement =
+            target?.matches?.("[data-floating-ui-focusable]") ||
+            target?.matches?.("[data-floating-ui-focus-guard]");
+        const isInsideNode =
+            nodeRef.current && nodeRef.current.contains(target);
+
+        // Condition when the calendar is closed and focus moved outside the component
+        const shouldBlurWhenClosed =
             activeTimeSelector &&
-            !dropdownOpen // Necessary because dropdown floating ui is not a child
-        ) {
+            !dropdownOpen &&
+            !isInsideNode &&
+            !isFloatingElement;
+
+        if (shouldBlurWhenClosed) {
             handleTimeChange(startTimeVal, endTimeVal, { triggerOnBlur: true });
         }
     };
@@ -285,8 +295,6 @@ export const ComboboxPicker = ({
     };
 
     const renderDropdown = () => {
-        if (!dropdownOpen) return;
-
         if (activeTimeSelector === "start") {
             return (
                 <DropdownList

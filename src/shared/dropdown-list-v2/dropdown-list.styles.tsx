@@ -14,9 +14,9 @@ import {
     Spacing,
 } from "../../theme";
 import { ComponentLoadingSpinner } from "../component-loading-spinner";
-import { DropdownVariantType } from "../dropdown-list/types";
 import { applyHtmlContentStyle } from "../html-content/html-content";
 import { BasicButton } from "../input-wrapper/input-wrapper";
+import { DropdownVariantType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -40,14 +40,14 @@ interface ListItemStyleProps {
 // MAIN STYLES
 // -----------------------------------------------------------------------------
 export const Container = styled.div<ContainerStyleProps>`
-    overflow: hidden;
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
     background: ${Colour["bg"]};
 
     min-width: 23rem;
     ${(props) => props.$width && `width: ${props.$width}px;`}
-    max-height: 27rem;
+    max-height: min(27rem, var(--available-height, infinity * 1px));
+    overflow: hidden;
     overflow-y: auto;
 
     ${(props) =>

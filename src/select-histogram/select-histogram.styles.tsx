@@ -22,7 +22,6 @@ export const HistogramSliderDropdownContainer = styled.div`
     ${MediaQuery.MaxWidth.sm} {
         min-width: unset;
         width: calc(100vw - ${Breakpoint["sm-margin"]} * 2);
-        max-height: 15rem;
     }
 
     ${MediaQuery.MaxWidth.xs} {
