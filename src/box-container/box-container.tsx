@@ -44,6 +44,8 @@ export const BoxContainer = ({
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const interactiveHeader = clickableHeader && collapsible;
+    const contentId = "content-container";
+    const headerId = "header-title";
 
     // =============================================================================
     // EVENT HANDLERS
@@ -67,7 +69,10 @@ export const BoxContainer = ({
             return (
                 <Expandable
                     style={expandableStyles}
-                    data-testid="expandable-container"
+                    data-testid={contentId}
+                    id={contentId}
+                    aria-labelledby={headerId}
+                    role="region"
                 >
                     <ChildContainer ref={childRef}>{children}</ChildContainer>
                 </Expandable>
@@ -75,7 +80,12 @@ export const BoxContainer = ({
         }
 
         return (
-            <NonExpandable data-testid="non-expandable-container">
+            <NonExpandable
+                data-testid="non-expandable-container"
+                id={contentId}
+                aria-labelledby={headerId}
+                role="region"
+            >
                 <ChildContainer>{children}</ChildContainer>
             </NonExpandable>
         );
@@ -92,6 +102,7 @@ export const BoxContainer = ({
                             subComponentTestIds?.displayStateIcon ||
                             `${displayState}-icon`
                         }
+                        aria-label={displayState}
                     >
                         <AlertIcon />
                     </LabelIcon>
@@ -107,7 +118,14 @@ export const BoxContainer = ({
                 <Handle
                     onClick={onHandleClick}
                     type="button"
-                    aria-label={showExpanded ? "Collapse" : "Expand"}
+                    aria-label={
+                        showExpanded
+                            ? `${title} expanded`
+                            : `${title} collapsed`
+                    }
+                    aria-controls={contentId}
+                    aria-disabled={!collapsible} // remains focusable
+                    aria-expanded={expanded}
                     data-testid={subComponentTestIds?.handle || "handle"}
                 >
                     <HandleIconContainer $expanded={showExpanded}>
@@ -119,15 +137,22 @@ export const BoxContainer = ({
     };
 
     return (
-        <Container {...otherProps}>
+        <Container
+            {...otherProps}
+            role={displayState !== "default" ? "status" : undefined}
+            aria-live={displayState !== "default" ? "polite" : undefined}
+            aria-labelledby={headerId}
+        >
             <Header
                 data-testid="header"
                 onClick={interactiveHeader ? onHandleClick : undefined}
                 $interactive={interactiveHeader}
+                role="group"
             >
                 <LabelWrapper>
                     <LabelText
                         data-testid={subComponentTestIds?.title || "title"}
+                        id={headerId}
                     >
                         {title}
                     </LabelText>
