@@ -31,6 +31,7 @@ export const Footer = <T,>({
     copyrightInfo,
     onFooterLinkClick,
     layout = "default",
+    hideLogo,
     ...otherProps
 }: FooterProps<T>) => {
     // =============================================================================
@@ -103,13 +104,15 @@ export const Footer = <T,>({
                 FooterHelper.getFooterLogoAttribute(theme?.resourceScheme);
             component = (
                 <>
-                    <LogoSection data-testid="logo-section">
-                        <img
-                            src={logoSrc || src}
-                            data-testid="logo"
-                            {...otherLogoAttributes}
-                        />
-                    </LogoSection>
+                    {(logoSrc || src) && !hideLogo && (
+                        <LogoSection data-testid="logo-section">
+                            <img
+                                src={logoSrc || src}
+                                data-testid="logo"
+                                {...otherLogoAttributes}
+                            />
+                        </LogoSection>
+                    )}
                     <LinkSectionWrapper>
                         {links?.[0] && (
                             <LinkSection
