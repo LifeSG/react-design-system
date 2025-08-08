@@ -178,7 +178,7 @@ export const CustomLabel: StoryObj<Component> = {
                         rel: "noreferrer",
                     },
                 ]}
-                customLabel={{
+                customLabels={{
                     viewMore: "Custom view more label",
                     viewLess: "Custom view less label",
                 }}
