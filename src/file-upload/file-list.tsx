@@ -82,6 +82,19 @@ function Component(
     const [renderModes, setRenderModes] = useState<FileItemRenderModes>({});
     const { setActiveId } = useContext(FileUploadContext);
 
+    // Throttled progress announcement state (for aria-live)
+    const [progressAnnouncement, setProgressAnnouncement] = useState("");
+    const lastAnnouncedRef = useRef<
+        Record<
+            string,
+            {
+                progress: number;
+                timestamp: number;
+                status: "in-progress" | "complete" | "error";
+            }
+        >
+    >({});
+
     useImperativeHandle(ref, () => ({
         focus: () => {
             wrapperRef.current?.focus();
@@ -126,6 +139,85 @@ function Component(
     // =========================================================================
     useEffect(() => {
         setRenderModes(getItemsRenderMode(fileItems));
+    }, [fileItems]);
+
+    // Throttle logic for progress announcements (every 10% OR 1.5s) + always on completion/error
+    useEffect(() => {
+        if (!fileItems || fileItems.length === 0) {
+            setProgressAnnouncement("");
+            return;
+        }
+        const now = Date.now();
+        const PERCENT_STEP = 10; // Announce every 10%
+        const TIME_STEP_MS = 1500; // Or every 1.5s
+        const messages: string[] = [];
+
+        for (const item of fileItems) {
+            const fileStatus = lastAnnouncedRef.current[item.id];
+
+            if (item.errorMessage) {
+                if (fileStatus?.status !== "error") {
+                    messages.push(
+                        `Error uploading ${item.name}: ${item.errorMessage}`
+                    );
+                    lastAnnouncedRef.current[item.id] = {
+                        progress: item.progress ?? 1,
+                        timestamp: now,
+                        status: "error",
+                    };
+                }
+                continue;
+            }
+
+            if (item.progress === undefined) {
+                continue;
+            }
+
+            if (item.progress >= 1) {
+                if (fileStatus?.status !== "complete") {
+                    messages.push(`${item.name} upload is complete`);
+                    lastAnnouncedRef.current[item.id] = {
+                        progress: 1,
+                        timestamp: now,
+                        status: "complete",
+                    };
+                }
+                continue;
+            }
+
+            // In progress
+            if (typeof item.progress === "number" && item.progress < 1) {
+                const percentProgress = Math.round(item.progress * 100);
+
+                // Throttling of announcements to prevent screenreader from spamming aria-live announcements on progress updates
+                const shouldAnnounce = (() => {
+                    if (!fileStatus) return true;
+                    if (fileStatus.status !== "in-progress") return true;
+                    const prevPercentProgress = Math.round(
+                        fileStatus.progress * 100
+                    );
+                    if (percentProgress - prevPercentProgress >= PERCENT_STEP)
+                        return true;
+                    if (now - fileStatus.timestamp >= TIME_STEP_MS) return true;
+                    return false;
+                })();
+                if (shouldAnnounce) {
+                    messages.push(
+                        `${percentProgress}% complete for uploading ${item.name}`
+                    );
+                    lastAnnouncedRef.current[item.id] = {
+                        progress: item.progress,
+                        timestamp: now,
+                        status: "in-progress",
+                    };
+                }
+            }
+        }
+
+        if (messages.length > 0) {
+            // Update aria-live region once with aggregated message
+            setProgressAnnouncement(messages.join(", "));
+        }
     }, [fileItems]);
 
     // =========================================================================
@@ -392,33 +484,16 @@ function Component(
      *
      * @returns A visually hidden element announcing the progress status.
      */
-    const renderProgressStatus = () => {
-        // Message: Uploading filename.pdf, 25% complete
-        const progressStatus = fileItems.map((item) => {
-            if (item.errorMessage) {
-                return `Error uploading ${item.name}: ${item.errorMessage}`;
-            }
-            if (item.progress === undefined) {
-                return "";
-            }
-            if (item.progress >= 1) {
-                return `${item.name} upload is complete`;
-            }
-            const progressPercentage = Math.round((item.progress || 0) * 100);
-
-            return `${progressPercentage}% complete for uploading ${item.name}`;
-        });
-
-        return (
-            <VisuallyHidden
-                ref={visuallyHiddenRef}
-                tabIndex={-1}
-                aria-live="polite"
-            >
-                {progressStatus.filter(Boolean).join(", ")}
-            </VisuallyHidden>
-        );
-    };
+    const renderProgressStatus = () => (
+        <VisuallyHidden
+            ref={visuallyHiddenRef}
+            tabIndex={-1}
+            aria-live="polite"
+            aria-atomic="true"
+        >
+            {progressAnnouncement}
+        </VisuallyHidden>
+    );
 
     const renderItemsWithWrapper = () => {
         return (
