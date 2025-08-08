@@ -52,6 +52,21 @@ export const Default: StoryObj<Component> = {
                     options={options}
                     errorMessage="Selection is required"
                 />
+                <Form.NestedMultiSelect
+                    label="This has custom multi selected label"
+                    options={options}
+                    customLabels={{
+                        multiSelectedLabel: "Custom X selected",
+                    }}
+                />
+                <Form.NestedMultiSelect
+                    label="This has custom select all & clear all label"
+                    options={options}
+                    customLabels={{
+                        selectAllButtonLabel: "Custom select all",
+                        clearAllButtonLabel: "Custom clear all",
+                    }}
+                />
             </>
         );
     },
@@ -88,7 +103,7 @@ export const SpecifyingMode: StoryObj<Component> = {
 };
 
 export const WithSearch: StoryObj<Component> = {
-    render: (_args) => {
+    render: () => {
         return (
             <>
                 <Form.NestedMultiSelect
@@ -97,17 +112,27 @@ export const WithSearch: StoryObj<Component> = {
                     enableSearch
                 />
                 <Form.NestedMultiSelect
+                    label="Custom label when no results are found"
+                    options={searchOptions}
+                    enableSearch
+                    customLabels={{
+                        noResultsLabel: "Custom no result found.",
+                    }}
+                />
+                <Form.NestedMultiSelect
                     label="Custom description when no results are found"
                     options={searchOptions}
                     enableSearch
-                    noResultsDescription={
-                        <>
-                            Display additional information here when no results
-                            are found. There is default styling for commonly
-                            used markup such as <strong>bold text</strong> or{" "}
-                            <a>links</a>.
-                        </>
-                    }
+                    customLabels={{
+                        noResultsDescription: (
+                            <>
+                                Display additional information here when no
+                                results are found. There is default styling for
+                                commonly used markup such as{" "}
+                                <strong>bold text</strong> or <a>links</a>.
+                            </>
+                        ),
+                    }}
                 />
             </>
         );

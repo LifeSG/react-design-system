@@ -101,7 +101,7 @@ export const SelectableCategory: StoryObj<Component> = {
 };
 
 export const WithSearch: StoryObj<Component> = {
-    render: (_args) => {
+    render: () => {
         return (
             <>
                 <Form.NestedSelect
@@ -110,17 +110,27 @@ export const WithSearch: StoryObj<Component> = {
                     enableSearch
                 />
                 <Form.NestedSelect
+                    label="Custom label when no results are found"
+                    options={searchOptions}
+                    enableSearch
+                    customLabels={{
+                        noResultsLabel: "Custom no result found.",
+                    }}
+                />
+                <Form.NestedSelect
                     label="Custom description when no results are found"
                     options={searchOptions}
                     enableSearch
-                    noResultsDescription={
-                        <>
-                            Display additional information here when no results
-                            are found. There is default styling for commonly
-                            used markup such as <strong>bold text</strong> or{" "}
-                            <a>links</a>.
-                        </>
-                    }
+                    customLabels={{
+                        noResultsDescription: (
+                            <>
+                                Display additional information here when no
+                                results are found. There is default styling for
+                                commonly used markup such as{" "}
+                                <strong>bold text</strong> or <a>links</a>.
+                            </>
+                        ),
+                    }}
                 />
             </>
         );

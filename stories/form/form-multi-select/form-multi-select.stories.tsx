@@ -64,6 +64,26 @@ export const Default: StoryObj<Component> = {
                         { value: "C", label: "Option C" },
                     ]}
                 />
+                <Form.MultiSelect
+                    label="This has custom all selected & multi selected label"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    customLabels={{
+                        allSelectedLabel: "Custom all selected",
+                        multiSelectedLabel: "Custom X selected",
+                    }}
+                />
+                <Form.MultiSelect
+                    label="This has custom select all & clear all label"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    customLabels={{
+                        selectAllButtonLabel: "Custom select all",
+                        clearAllButtonLabel: "Custom clear all",
+                    }}
+                />
             </>
         );
     },
@@ -71,7 +91,7 @@ export const Default: StoryObj<Component> = {
 };
 
 export const WithSearch: StoryObj<Component> = {
-    render: (_args) => {
+    render: () => {
         return (
             <>
                 <Form.MultiSelect
@@ -82,19 +102,31 @@ export const WithSearch: StoryObj<Component> = {
                     enableSearch
                 />
                 <Form.MultiSelect
+                    label="Custom label when no results are found"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    enableSearch
+                    customLabels={{
+                        noResultsLabel: "Custom no result found.",
+                    }}
+                />
+                <Form.MultiSelect
                     label="Custom description when no results are found"
                     options={OPTIONS_DATA}
                     valueExtractor={(item) => item.value}
                     listExtractor={(item) => item.label}
                     enableSearch
-                    noResultsDescription={
-                        <>
-                            Display additional information here when no results
-                            are found. There is default styling for commonly
-                            used markup such as <strong>bold text</strong> or{" "}
-                            <a>links</a>.
-                        </>
-                    }
+                    customLabels={{
+                        noResultsDescription: (
+                            <>
+                                Display additional information here when no
+                                results are found. There is default styling for
+                                commonly used markup such as{" "}
+                                <strong>bold text</strong> or <a>links</a>.
+                            </>
+                        ),
+                    }}
                 />
             </>
         );

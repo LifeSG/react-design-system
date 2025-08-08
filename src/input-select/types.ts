@@ -1,5 +1,6 @@
 import { RefObject } from "react";
 import {
+    DropdownCustomLabelProps,
     DropdownDisplayProps,
     DropdownSearchProps,
     DropdownVariantType,
@@ -69,6 +70,7 @@ export interface InputSelectProps<T, V>
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
     /** @deprecated this has no effect as the dropdown will automatically resize */
     listStyleWidth?: string | undefined;
+    customLabels?: DropdownCustomLabelProps | undefined;
 }
 
 /** To be exposed for Form component inheritance */
