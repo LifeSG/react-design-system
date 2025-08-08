@@ -25,9 +25,9 @@ import { FilterProps, Mode } from "./types";
 
 const FilterBase = ({
     customLabels,
-    toggleFilterButtonLabel,
-    headerTitle,
-    doneButtonLabel,
+    toggleFilterButtonLabel: _toggleFilterButtonLabel,
+    headerTitle: _headerTitle,
+    doneButtonLabel: _doneButtonLabel,
     toggleFilterButtonStyle = "light",
     clearButtonDisabled = false,
     onClear,
@@ -39,13 +39,13 @@ const FilterBase = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const _toggleFilterButtonLabel =
+    const toggleFilterButtonLabel =
         customLabels?.toggleFilterButtonLabel ||
-        toggleFilterButtonLabel ||
+        _toggleFilterButtonLabel ||
         "Filters";
-    const _headerTitle = customLabels?.headerTitle || headerTitle || "Filters";
-    const _doneButtonLabel =
-        customLabels?.doneButtonLabel || doneButtonLabel || "Done";
+    const headerTitle = customLabels?.headerTitle || _headerTitle || "Filters";
+    const doneButtonLabel =
+        customLabels?.doneButtonLabel || _doneButtonLabel || "Done";
 
     const [visible, setVisible] = useState(false);
     const mobileNodeRef = useRef<HTMLDivElement>(null);
