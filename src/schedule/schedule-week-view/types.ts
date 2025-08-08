@@ -1,9 +1,8 @@
 import {
     ScheduleEntityProps,
     ScheduleSlotProps,
-    SchedulePopoverProps,
 } from "../types";
-
+import { RefObject } from "react";
 export interface ScheduleWeekViewProps {
     date: string;
     serviceData: ScheduleEntityProps[];
@@ -15,10 +14,30 @@ export interface ScheduleWeekViewProps {
         data: ScheduleSlotProps,
         e: React.MouseEvent
     ) => void | undefined;
-    emptySlotPopover?: SchedulePopoverProps | undefined;
-    containerRef?: React.RefObject<HTMLElement> | undefined;
+    containerRef:RefObject<HTMLDivElement>;
 }
 
-export type SlotWithService = ScheduleSlotProps & { serviceName: string };
-export type ActiveSlot = { slot: SlotWithService; column: number };
-export type ActiveSlotsMap = Map<string, ActiveSlot>;
+/**
+ * Extended slot type that includes service information
+ * Useful for week view where we need to track which service a slot belongs to
+ */
+export interface SlotWithService extends ScheduleSlotProps {
+    serviceName: string;
+}
+
+// Slot with positioning information
+export interface PositionedSlot {
+    slot: SlotWithService;
+    column: number;
+    offsetTop: number;
+}
+interface SlotLayoutInfo {
+    date: string;
+    serviceName: string;
+    startTime: string;
+    endTime: string;
+    visible: boolean; // Whether this slot is visible or hidden
+    width: number; // width percentage as number
+}
+// Global slot layout map - key is slotKey, value stores layout info
+export type SlotLayoutMap = Record<string, SlotLayoutInfo>;
