@@ -97,5 +97,6 @@ export const DesktopDrawer = styled.ul<DrawerStyleProps>`
         props.$showShadow &&
         css`
             box-shadow: ${Shadow["xs-subtle"]};
+            clip-path: inset(0 -6px 0 0);
         `}
 `;

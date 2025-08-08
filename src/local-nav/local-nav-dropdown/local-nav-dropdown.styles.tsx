@@ -46,7 +46,8 @@ export const NavSelect = styled.div<NavLabelStyleProps>`
     background: ${Colour["bg"]};
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
     overflow: hidden;
-    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    box-shadow: 0 0 ${Border["width-010"]} ${Border["width-010"]}
+        ${Colour["border"]};
     border-radius: ${Radius["sm"]};
     ${(props) =>
         props.$isDropdownExpanded &&
@@ -105,8 +106,8 @@ export const NavItemList = styled.ul<NavItemListStyleProps>`
     margin: 0;
     background: ${Colour["bg"]};
     cursor: pointer;
-    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    border-top: none;
+    box-shadow: 0 0 ${Border["width-010"]} ${Border["width-010"]}
+        ${Colour["border"]};
     border-bottom-right-radius: ${Radius["sm"]};
     border-bottom-left-radius: ${Radius["sm"]};
     /* Enables vertical scrolling */
@@ -159,8 +160,6 @@ export const NavWrapper = styled.nav<DropdownNavStyleProps>`
             ${NavItemList} {
                 ${$sideMargin && `margin-left: -${$sideMargin}px;`}
                 ${$sideMargin && `margin-right: -${$sideMargin}px;`}
-                border-left: none;
-                border-right: none;
                 border-radius-bottom-left: ${Radius.sm};
                 border-radius-bottom-right: ${Radius.sm};
             }

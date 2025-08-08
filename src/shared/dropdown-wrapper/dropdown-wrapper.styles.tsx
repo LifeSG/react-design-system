@@ -104,6 +104,8 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
 
     :focus-within {
         border-color: ${Colour["border-focus"]};
+        box-shadow: 0px 0px 4px 0px
+            rgb(from ${Colour["border-focus"]} r g b / 50%) inset; // TODO: confirm shadow
     }
 
     ${(props) => {
@@ -133,6 +135,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
 
                 :focus-within {
                     border-color: ${Colour["border"]};
+                    box-shadow: none;
                 }
             `;
         } else if (props.$readOnly) {
@@ -146,6 +149,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
 
                 :focus-within {
                     border: none;
+                    box-shadow: none;
                 }
             `;
         } else if (props.error) {
@@ -154,6 +158,8 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
 
                 :focus-within {
                     border-color: ${Colour["border-error"]};
+                    box-shadow: 0px 0px 4px 0px
+                        rgb(from ${Colour["border-error"]} r g b / 50%) inset; // TODO: confirm shadow
                 }
             `;
         }

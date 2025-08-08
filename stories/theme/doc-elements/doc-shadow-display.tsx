@@ -1,6 +1,6 @@
 import { getShadow } from "src/theme/shadow/theme-helper";
 import { ShadowSet, ThemeSpec } from "src/theme/types";
-import styled, { ThemeProvider, useTheme } from "styled-components";
+import styled, { CSSProp, ThemeProvider, useTheme } from "styled-components";
 
 interface ShadowDisplayProps {
     theme: ThemeSpec;
@@ -84,7 +84,7 @@ const ShadowCollection = ({ token }: ShadowCollectionProps) => {
 // STYLE INTERFACE
 // =============================================================================
 interface ShadowStyleProps {
-    $shadow: string;
+    $shadow: CSSProp;
 }
 
 interface TokenTypeProps {

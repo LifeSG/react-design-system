@@ -178,6 +178,7 @@ export const RowHeader = styled.div<RowHeaderProps>`
         if (props.$isScrolled) {
             return css`
                 box-shadow: ${Shadow["md-subtle"]};
+                clip-path: inset(0 -6px 0 0);
             `;
         } else {
             return css`

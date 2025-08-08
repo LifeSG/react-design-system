@@ -1,3 +1,4 @@
+import { CSSProp } from "styled-components";
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
 import { ShadowScheme } from "../types";
@@ -12,7 +13,7 @@ const ShadowSpec: ThemeCollectionSpec<ShadowCollectionsMap, ShadowScheme> = {
 };
 
 export const getShadow = (key: keyof ShadowSet) => {
-    return (props: StyledComponentProps): string => {
+    return (props: StyledComponentProps): CSSProp => {
         const theme = props.theme;
         const shadowSet: ShadowSet = getCollection(
             ShadowSpec,
@@ -28,7 +29,7 @@ export const getShadow = (key: keyof ShadowSet) => {
 };
 
 export const ShadowValues: {
-    [key in keyof ShadowSet]: (props: StyledComponentProps) => string;
+    [key in keyof ShadowSet]: (props: StyledComponentProps) => CSSProp;
 } = {
     "xs-subtle": getShadow("xs-subtle"),
     "xs-strong": getShadow("xs-strong"),

@@ -2,7 +2,7 @@ import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circl
 import { animated } from "react-spring";
 import styled, { css } from "styled-components";
 import { Checkbox } from "../../checkbox";
-import { Colour, Font, MediaQuery, Radius, Shadow, Spacing } from "../../theme";
+import { Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
 import { ComponentLoadingSpinner } from "../component-loading-spinner";
 import {
     DropdownVariantType,
@@ -49,7 +49,7 @@ interface ResultStateProps {
 
 export const Container = styled(animated.div)`
     overflow: hidden;
-    box-shadow: ${Shadow["xs-subtle"]};
+    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.2);
 `;
 
 export const List = styled.ul<ListContainerProps>`
