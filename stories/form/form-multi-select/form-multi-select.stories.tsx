@@ -65,6 +65,16 @@ export const Default: StoryObj<Component> = {
                     ]}
                 />
                 <Form.MultiSelect
+                    label="This has custom all selected & multi selected label"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    customLabels={{
+                        allSelectedLabel: "Custom all selected",
+                        multiSelectedLabel: "Custom X selected",
+                    }}
+                />
+                <Form.MultiSelect
                     label="This has custom select all & clear all label"
                     options={OPTIONS_DATA}
                     valueExtractor={(item) => item.value}

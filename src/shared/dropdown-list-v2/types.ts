@@ -21,6 +21,8 @@ export interface DropdownCustomLabelProps {
     noResultsDescription?: React.ReactNode | undefined;
     selectAllButtonLabel?: string | undefined;
     clearAllButtonLabel?: string | undefined;
+    allSelectedLabel?: string | undefined;
+    multiSelectedLabel?: string | undefined;
 }
 
 export interface DropdownDisplayProps<T, V> {

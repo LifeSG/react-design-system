@@ -233,6 +233,18 @@ const DATA: ApiTableSectionProps[] = [
                     "Specifies to replace the default Clear all button label",
                 propTypes: ["string"],
             },
+            {
+                name: "allSelectedLabel",
+                description:
+                    "Specifies to replace the default All selected label",
+                propTypes: ["string"],
+            },
+            {
+                name: "multiSelectedLabel",
+                description:
+                    "Specifies to replace the default X selected label",
+                propTypes: ["string"],
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,

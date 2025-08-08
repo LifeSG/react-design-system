@@ -53,6 +53,13 @@ export const Default: StoryObj<Component> = {
                     errorMessage="Selection is required"
                 />
                 <Form.NestedMultiSelect
+                    label="This has custom multi selected label"
+                    options={options}
+                    customLabels={{
+                        multiSelectedLabel: "Custom X selected",
+                    }}
+                />
+                <Form.NestedMultiSelect
                     label="This has custom select all & clear all label"
                     options={options}
                     customLabels={{
