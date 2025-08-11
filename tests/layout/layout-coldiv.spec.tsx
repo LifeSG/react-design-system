@@ -92,7 +92,7 @@ describe("ColDiv Component", () => {
             "grid-column",
             "2 / span 4",
             {
-                media: `screen and (max-width: 1024px)`,
+                media: `screen and (max-width: 1200px)`,
             }
         );
     });
