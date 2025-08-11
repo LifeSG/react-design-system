@@ -63,7 +63,7 @@ export interface FileListRef {
 
 function Component(
     {
-        fileItems = [],
+        fileItems: incomingFileItems,
         editableFileItems,
         fileDescriptionMaxLength,
         sortable,
@@ -78,6 +78,7 @@ function Component(
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
+    const fileItems = incomingFileItems ?? [];
     const visuallyHiddenRef = useRef<HTMLDivElement>(null);
     const [renderModes, setRenderModes] = useState<FileItemRenderModes>({});
     const { setActiveId } = useContext(FileUploadContext);
@@ -134,12 +135,35 @@ function Component(
         delete descriptionsValueRef.current[itemId];
     };
 
+    const shallowCompareRenderModes = (
+        prev: FileItemRenderModes,
+        next: FileItemRenderModes
+    ) => {
+        const prevKeys = Object.keys(prev);
+        const nextKeys = Object.keys(next);
+        if (prevKeys.length !== nextKeys.length) {
+            return false;
+        }
+        for (const k of nextKeys) {
+            if (prev[k] !== next[k]) {
+                return false;
+            }
+        }
+        return true;
+    };
+
     // =========================================================================
     // EFFECTS
     // =========================================================================
     useEffect(() => {
-        setRenderModes(getItemsRenderMode(fileItems));
-    }, [fileItems]);
+        const nextModes = getItemsRenderMode(fileItems);
+        const prevModes = renderModes;
+        // We perform shallowCompare to avoid infinite re-render loop
+        if (shallowCompareRenderModes(prevModes, nextModes)) {
+            return;
+        }
+        setRenderModes(nextModes);
+    }, [fileItems, editableFileItems, readOnly]);
 
     // Throttle logic for progress announcements (every 10% OR 1.5s) + always on completion/error
     useEffect(() => {

@@ -169,7 +169,6 @@ export const FileUpload = ({
                                 !!activeId || disabled || reachedMaxFiles()
                             }
                             onClick={handleUploadButtonClick}
-                            aria-label="Upload files button"
                         >
                             Upload files
                         </UploadButton>
