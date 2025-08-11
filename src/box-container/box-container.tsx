@@ -1,5 +1,5 @@
 import { useSpring } from "@react-spring/web";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
@@ -14,12 +14,13 @@ import {
     HandleIcon,
     HandleIconContainer,
     Header,
-    LabelIcon,
+    // LabelIcon,
     LabelText,
     LabelWrapper,
     NonExpandable,
 } from "./box-container.styles";
 import { BoxContainerProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 
 export const BoxContainer = ({
     children,
@@ -44,6 +45,9 @@ export const BoxContainer = ({
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const interactiveHeader = clickableHeader && collapsible;
+    const internalId = useRef(SimpleIdGenerator.generate());
+    const contentId = `${internalId.current}-content`;
+    const headerId = `${internalId.current}-header`;
 
     // =============================================================================
     // EVENT HANDLERS
@@ -69,7 +73,9 @@ export const BoxContainer = ({
                     style={expandableStyles}
                     data-testid="expandable-container"
                 >
-                    <ChildContainer ref={childRef}>{children}</ChildContainer>
+                    <ChildContainer ref={childRef} aria-hidden={!showExpanded}>
+                        {children}
+                    </ChildContainer>
                 </Expandable>
             );
         }
@@ -86,15 +92,14 @@ export const BoxContainer = ({
             case "error":
             case "warning":
                 return (
-                    <LabelIcon
+                    <AlertIcon
                         $displayState={displayState}
                         data-testid={
                             subComponentTestIds?.displayStateIcon ||
                             `${displayState}-icon`
                         }
-                    >
-                        <AlertIcon />
-                    </LabelIcon>
+                        aria-label={displayState}
+                    />
                 );
             default:
                 return null;
@@ -110,8 +115,8 @@ export const BoxContainer = ({
                     aria-label={showExpanded ? "Collapse" : "Expand"}
                     data-testid={subComponentTestIds?.handle || "handle"}
                 >
-                    <HandleIconContainer $expanded={showExpanded}>
-                        <HandleIcon aria-hidden />
+                    <HandleIconContainer $expanded={showExpanded} aria-hidden>
+                        <HandleIcon />
                     </HandleIconContainer>
                 </Handle>
             )
@@ -119,7 +124,11 @@ export const BoxContainer = ({
     };
 
     return (
-        <Container {...otherProps}>
+        <Container
+            {...otherProps}
+            role={displayState !== "default" ? "status" : undefined}
+            aria-labelledby={headerId}
+        >
             <Header
                 data-testid="header"
                 onClick={interactiveHeader ? onHandleClick : undefined}
