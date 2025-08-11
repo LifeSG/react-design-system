@@ -54,10 +54,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "rowData",
+                name: "serviceData",
                 mandatory: true,
-                description: "The data used to render each unique rows",
-                propTypes: ["ScheduleRowData[]"],
+                description:
+                    "The data used to render each service with their time slots",
+                propTypes: ["ScheduleEntityProps[]"],
             },
             {
                 name: "loading",
@@ -168,19 +169,40 @@ const DATA: ApiTableSectionProps[] = [
                     "(data: ScheduleSlotProps, e: React.MouseEvent) => void",
                 ],
             },
+            {
+                name: "blockedMessage",
+                description: (
+                    <>
+                        Custom message to display for blocked slots instead of
+                        the default "Unavailable" text. The message will be
+                        truncated with ellipsis if the slot width is too small.
+                    </>
+                ),
+                defaultValue: "Unavailable",
+                propTypes: ["string"],
+            },
+            {
+                name: "onClickHiddenSlots",
+                description: (
+                    <>
+                        The callback function to trigger when hidden slots
+                        button is clicked in week view. Provides the list of
+                        hidden service names for the clicked interval.
+                    </>
+                ),
+                propTypes: ["(hiddenServices: string[]) => void"],
+            },
         ],
     },
     {
-        name: "ScheduleRowData",
+        name: "ScheduleEntityProps",
         attributes: [
             {
                 name: "id",
                 description: (
                     <>
-                        The identifier for this row. This can be useful if you
-                        intend to utilise the <code>onRowNameClick</code>{" "}
-                        callback, as the <code>ScheduleRowData</code> will get
-                        passed to the callback.
+                        The identifier for this service entity. This can be
+                        useful for tracking and managing services.
                     </>
                 ),
                 propTypes: ["string"],
@@ -188,28 +210,20 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "name",
                 mandatory: true,
-                description: "The row header name to be rendered.",
+                description: "The name of the service or resource.",
                 propTypes: ["string"],
             },
             {
-                name: "rowCells",
+                name: "slots",
                 mandatory: true,
                 description: (
                     <>
-                        The array of row cells to be rendered in this row of
-                        data. Each cell represents a timeslot for the specific
-                        service or resource.
+                        The array of time slots for this service. Each slot
+                        represents a bookable time period with its availability
+                        status.
                     </>
                 ),
                 propTypes: ["ScheduleSlotProps[]"],
-            },
-            {
-                name: "onRowNameClick",
-                description:
-                    "The callback function to trigger when the row header name has been clicked.",
-                propTypes: [
-                    "(rowData: ScheduleRowData, e: React.MouseEvent) => void",
-                ],
             },
         ],
     },

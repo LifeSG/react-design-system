@@ -42,8 +42,24 @@ export const ServiceHeader = styled.div`
     padding: 24px;
     color: ${Colour["text-primary"]};
 `;
-export const Title = styled(Typography.BodyMD)`
+export const Title = styled(Typography.BodyMD)<{
+    $isToday?: boolean;
+}>`
     font-weight: 600;
+    ${({ $isToday }) =>
+        $isToday &&
+        css`
+            background: ${Colour["bg-hover"]};
+            color: ${Colour["text-primary"]};
+            border-radius: 50%;
+            border: ${Border["width-010"]} ${Border.solid}
+                ${Colour["bg-primary"]};
+            width: ${Spacing["spacing-40"]};
+            height: ${Spacing["spacing-40"]};
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        `}
 `;
 
 export const Description = styled(Typography.BodyMD)`
@@ -67,6 +83,28 @@ export const SlotGrid = styled.div`
     min-width: max-content;
 `;
 
+export const Timeline = styled.div<{ $top: number }>`
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: ${Colour["icon-primary"]};
+    top: ${({ $top }) => $top}px;
+    z-index: 2;
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: -6px;
+        top: -6px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: ${Colour["icon-primary"]};
+        box-sizing: border-box;
+        z-index: 1;
+    }
+`;
+
 export const SlotColumn = styled.div`
     display: flex;
     position: relative;
@@ -77,6 +115,20 @@ export const SlotColumn = styled.div`
     }
 `;
 
+export const SlotCell = styled.div<{
+    $startTime?: string;
+}>`
+    min-height: ${CELL_HEIGHT}px;
+    position: relative;
+    border-bottom: ${Border["width-010"]} solid ${Colour["border"]};
+    ${({ $startTime }) =>
+        $startTime?.endsWith(":00") &&
+        css`
+            border-bottom-style: dashed;
+        `}
+    cursor: pointer;
+`;
+
 export const SlotColumnOverlay = styled.div<{
     $columnIndex: number;
     $totalVisibleColumns: number;
@@ -85,23 +137,15 @@ export const SlotColumnOverlay = styled.div<{
 }>`
     position: absolute;
     top: 0;
-    left: ${({ $leftPosition, $columnIndex, $totalVisibleColumns }) => {
-        if ($leftPosition !== undefined) {
-            return `${$leftPosition}%`;
-        }
-        return `${($columnIndex / Math.max($totalVisibleColumns, 1)) * 100}%`;
+    left: ${({ $leftPosition }) => {
+        return `calc((100% - 14px) * ${$leftPosition} / 100)`;
     }};
-    width: ${({ $actualWidthPercentage, $totalVisibleColumns }) => {
-        if ($actualWidthPercentage !== undefined) {
-            return `${$actualWidthPercentage}%`;
-        }
-        return `${100 / Math.max($totalVisibleColumns, 1)}%`;
+    width: ${({ $actualWidthPercentage }) => {
+        return `calc((100% - 14px) * ${$actualWidthPercentage} / 100)`;
     }};
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1px;
-    padding: 0 1px;
     pointer-events: none;
     overflow: visible;
     z-index: 1;
@@ -112,9 +156,9 @@ export const SlotContent = styled(Typography.BodyXS)<{
     $status: string;
     $duration: number;
     $offsetTop: number;
-    $width: number;
 }>`
-    width: ${({ $width }) => $width}px;
+    /* Fill the overlay column width responsively with a small horizontal inset */
+    width: calc(100% - 1px);
     height: ${({ $duration }) =>
         $duration
             ? `${($duration / 30) * CELL_HEIGHT - 1}px`
@@ -124,12 +168,8 @@ export const SlotContent = styled(Typography.BodyXS)<{
     align-items: flex-start;
     justify-content: flex-start;
     padding: 2px 4px;
-    font-size: 0.5625rem;
     position: absolute;
     top: ${({ $offsetTop }) => $offsetTop || 0}px;
-    left: 1px;
-    right: 1px;
-    z-index: 10;
     margin-top: 0;
     font-weight: 500;
     border-radius: ${Radius["sm"]};
@@ -161,46 +201,43 @@ export const SlotContent = styled(Typography.BodyXS)<{
     color: ${({ $status }) =>
         $status === "blocked" ? Colour["text-inverse"] : "inherit"};
 
-    border-left: ${({ $status }) =>
-        $status === "available"
-            ? `4px solid ${Colour["icon-success"]}`
-            : "none"};
+    border-left: ${Border["width-040"]} solid
+        ${({ $status }) =>
+            $status === "available" ? Colour["icon-success"] : "none"};
 `;
 
 export const SlotServiceName = styled.span`
-    font-weight: 600;
-    font-size: 0.7625rem;
-    line-height: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+    display: block;
     overflow: hidden;
     text-overflow: ellipsis;
-    word-wrap: break-word;
+    white-space: nowrap;
+    width: 100%;
 `;
 
 export const SlotAvailability = styled.span`
-    font-weight: 600;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
 `;
 
 export const HiddenColumnsButton = styled.div<{
-    // $visibleColumnsCount: number;
+    $heightPercentage?: number;
+    $isMultiple?: boolean;
 }>`
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: ${Colour["bg"]};
-    border: ${Border["width-010"]} solid ${Colour["border"]};
-    border-radius: ${Radius["sm"]};
     cursor: pointer;
-    font-size: 0.5625rem;
     color: ${Colour["text-primary"]};
-    z-index: 20;
-    min-height: ${CELL_HEIGHT}px;
-
+    min-height: ${({ $heightPercentage }) =>
+        $heightPercentage ? `${$heightPercentage}%` : `${CELL_HEIGHT}px`};
+    height: ${({ $heightPercentage }) =>
+        $heightPercentage ? `${$heightPercentage}%` : "auto"};
+    pointer-events: auto;
     &:hover {
-        background: ${Colour["bg-strong"]};
+        border-radius: ${Radius["sm"]};
+        box-shadow: 0 2px 8px 0 ${Colour["border"]};
     }
 `;

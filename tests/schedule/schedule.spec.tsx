@@ -1,6 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
-import { Schedule, ScheduleProps, ScheduleRowData } from "../../src/schedule";
+import {
+    Schedule,
+    ScheduleProps,
+    ScheduleEntityProps,
+} from "../../src/schedule";
 
 jest.mock("react-responsive", () => ({
     useMediaQuery: jest.fn(() => false),
@@ -19,10 +23,12 @@ describe("Schedule", () => {
         date: date.format("YYYY-MM-DD"),
         minTime: "06:00",
         maxTime: "22:00",
-        rowData: [],
+        serviceData: [],
         emptyContentMessage: "No timeslots available",
         onPreviousDayClick: jest.fn(),
         onNextDayClick: jest.fn(),
+        onCalendarDateSelect: jest.fn(),
+        onTodayClick: jest.fn(),
     } satisfies Partial<ScheduleProps>;
 
     beforeEach(() => {
@@ -43,11 +49,13 @@ describe("Schedule", () => {
                 date={scheduleMockProps.date}
                 minTime={scheduleMockProps.minTime}
                 maxTime={scheduleMockProps.maxTime}
-                rowData={buildMockRowData(1)}
+                serviceData={buildMockRowData(1)}
                 loading={false}
                 emptyContentMessage={scheduleMockProps.emptyContentMessage}
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
             />
         );
 
@@ -64,11 +72,13 @@ describe("Schedule", () => {
                 date={scheduleMockProps.date}
                 minTime={scheduleMockProps.minTime}
                 maxTime={scheduleMockProps.maxTime}
-                rowData={[]}
+                serviceData={[]}
                 loading={false}
                 emptyContentMessage={scheduleMockProps.emptyContentMessage}
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
             />
         );
 
@@ -82,9 +92,11 @@ describe("Schedule", () => {
         render(
             <Schedule
                 date={scheduleMockProps.date}
-                rowData={buildMockRowData(1)}
+                serviceData={buildMockRowData(1)}
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
             />
         );
 
@@ -96,9 +108,11 @@ describe("Schedule", () => {
         render(
             <Schedule
                 date={scheduleMockProps.date}
-                rowData={buildMockRowData(1)}
+                serviceData={buildMockRowData(1)}
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
             />
         );
 
@@ -117,12 +131,13 @@ describe("Schedule", () => {
                 date={scheduleMockProps.date}
                 minTime={scheduleMockProps.minTime}
                 maxTime={scheduleMockProps.maxTime}
-                rowData={[]}
+                serviceData={[]}
                 loading={false}
                 emptyContentMessage={scheduleMockProps.emptyContentMessage}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
-                onCalendarDateSelect={onCalendarDateSelect}
             />
         );
 
@@ -138,9 +153,10 @@ describe("Schedule", () => {
         render(
             <Schedule
                 date={scheduleMockProps.date}
-                rowData={buildMockRowData(1)}
+                serviceData={buildMockRowData(1)}
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
                 onTodayClick={onTodayClick}
             />
         );
@@ -155,16 +171,18 @@ describe("Schedule", () => {
         const mockSlotClick = jest.fn();
 
         const mockRowData = buildMockRowData(1);
-        mockRowData[0].rowCells[1].onClick = mockSlotClick;
+        mockRowData[0].slots[1].onClick = mockSlotClick;
 
         render(
             <Schedule
                 date={scheduleMockProps.date}
                 minTime="08:00"
                 maxTime="10:00"
-                rowData={mockRowData}
+                serviceData={mockRowData}
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
             />
         );
 
@@ -191,9 +209,11 @@ describe("Schedule", () => {
         render(
             <Schedule
                 date={scheduleMockProps.date}
-                rowData={buildMockRowData(3)}
+                serviceData={buildMockRowData(3)}
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
             />
         );
 
@@ -212,9 +232,11 @@ describe("Schedule", () => {
         render(
             <Schedule
                 date={scheduleMockProps.date}
-                rowData={buildMockRowData(3)}
+                serviceData={buildMockRowData(3)}
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
             />
         );
 
@@ -231,9 +253,11 @@ describe("Schedule", () => {
                 minTime="06:00"
                 maxTime="22:00"
                 initialScrollTime="08:00"
-                rowData={buildMockRowData(1)}
+                serviceData={buildMockRowData(1)}
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
             />
         );
 
@@ -249,9 +273,11 @@ describe("Schedule", () => {
                 id={customId}
                 className={customClassName}
                 date={scheduleMockProps.date}
-                rowData={buildMockRowData(1)}
+                serviceData={buildMockRowData(1)}
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
             />
         );
 
@@ -264,11 +290,13 @@ describe("Schedule", () => {
         render(
             <Schedule
                 date={scheduleMockProps.date}
-                rowData={[]}
+                serviceData={[]}
                 loading={true}
                 emptyContentMessage="Loading..."
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
             />
         );
 
@@ -279,9 +307,11 @@ describe("Schedule", () => {
         render(
             <Schedule
                 date={scheduleMockProps.date}
-                rowData={buildMockRowData(1)}
+                serviceData={buildMockRowData(1)}
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
             />
         );
 
@@ -309,8 +339,8 @@ describe("Schedule", () => {
                 serviceData={buildMockRowData(1)}
                 onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                 onNextDayClick={scheduleMockProps.onNextDayClick}
-                onCalendarDateSelect={() => {}}
-                onTodayClick={() => {}}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
                 onEmptySlotClick={mockEmptySlotClick}
             />
         );
@@ -356,9 +386,13 @@ describe("Schedule", () => {
             render(
                 <Schedule
                     date={scheduleMockProps.date}
-                    rowData={buildMockRowDataForWeek()}
+                    serviceData={buildMockRowDataForWeek()}
                     onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                     onNextDayClick={scheduleMockProps.onNextDayClick}
+                    onCalendarDateSelect={
+                        scheduleMockProps.onCalendarDateSelect
+                    }
+                    onTodayClick={scheduleMockProps.onTodayClick}
                 />
             );
             const selector = screen.getByTestId("selector");
@@ -371,9 +405,13 @@ describe("Schedule", () => {
             render(
                 <Schedule
                     date="2024-09-11" // Wednesday
-                    rowData={buildMockRowDataForWeek()}
+                    serviceData={buildMockRowDataForWeek()}
                     onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                     onNextDayClick={scheduleMockProps.onNextDayClick}
+                    onCalendarDateSelect={
+                        scheduleMockProps.onCalendarDateSelect
+                    }
+                    onTodayClick={scheduleMockProps.onTodayClick}
                 />
             );
 
@@ -387,9 +425,13 @@ describe("Schedule", () => {
             render(
                 <Schedule
                     date="2024-09-11" // Wednesday Sept 11, 2024
-                    rowData={buildMockRowDataForWeek()}
+                    serviceData={buildMockRowDataForWeek()}
                     onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                     onNextDayClick={scheduleMockProps.onNextDayClick}
+                    onCalendarDateSelect={
+                        scheduleMockProps.onCalendarDateSelect
+                    }
+                    onTodayClick={scheduleMockProps.onTodayClick}
                 />
             );
 
@@ -404,9 +446,13 @@ describe("Schedule", () => {
                     date="2024-09-11"
                     minTime="08:00"
                     maxTime="12:00"
-                    rowData={buildMockRowDataForWeek()}
+                    serviceData={buildMockRowDataForWeek()}
                     onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                     onNextDayClick={scheduleMockProps.onNextDayClick}
+                    onCalendarDateSelect={
+                        scheduleMockProps.onCalendarDateSelect
+                    }
+                    onTodayClick={scheduleMockProps.onTodayClick}
                 />
             );
 
@@ -423,8 +469,8 @@ describe("Schedule", () => {
         it("should handle slot clicks in week view", () => {
             const mockSlotClick = jest.fn();
             const mockRowData = buildMockRowDataForWeek();
-            if (mockRowData[0].rowCells[0]) {
-                mockRowData[0].rowCells[0].onClick = mockSlotClick;
+            if (mockRowData[0].slots[0]) {
+                mockRowData[0].slots[0].onClick = mockSlotClick;
             }
 
             render(
@@ -432,9 +478,13 @@ describe("Schedule", () => {
                     date="2024-09-11"
                     minTime="08:00"
                     maxTime="12:00"
-                    rowData={mockRowData}
+                    serviceData={mockRowData}
                     onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                     onNextDayClick={scheduleMockProps.onNextDayClick}
+                    onCalendarDateSelect={
+                        scheduleMockProps.onCalendarDateSelect
+                    }
+                    onTodayClick={scheduleMockProps.onTodayClick}
                 />
             );
             const slotButtons = screen.getAllByRole("button");
@@ -456,9 +506,13 @@ describe("Schedule", () => {
                     date="2024-09-11"
                     minTime="08:00"
                     maxTime="12:00"
-                    rowData={buildMockRowDataForWeek()}
+                    serviceData={buildMockRowDataForWeek()}
                     onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                     onNextDayClick={scheduleMockProps.onNextDayClick}
+                    onCalendarDateSelect={
+                        scheduleMockProps.onCalendarDateSelect
+                    }
+                    onTodayClick={scheduleMockProps.onTodayClick}
                 />
             );
             expect(screen.getByText("Service 1")).toBeVisible();
@@ -468,10 +522,14 @@ describe("Schedule", () => {
             render(
                 <Schedule
                     date="2024-09-11"
-                    rowData={buildMockRowDataForWeek()}
+                    serviceData={buildMockRowDataForWeek()}
                     loading={true}
                     onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                     onNextDayClick={scheduleMockProps.onNextDayClick}
+                    onCalendarDateSelect={
+                        scheduleMockProps.onCalendarDateSelect
+                    }
+                    onTodayClick={scheduleMockProps.onTodayClick}
                 />
             );
 
@@ -487,9 +545,13 @@ describe("Schedule", () => {
                     date="2024-09-11"
                     minTime="08:00"
                     maxTime="14:00"
-                    rowData={buildMockRowDataForWeek()}
+                    serviceData={buildMockRowDataForWeek()}
                     onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                     onNextDayClick={scheduleMockProps.onNextDayClick}
+                    onCalendarDateSelect={
+                        scheduleMockProps.onCalendarDateSelect
+                    }
+                    onTodayClick={scheduleMockProps.onTodayClick}
                 />
             );
             expect(
@@ -504,9 +566,13 @@ describe("Schedule", () => {
                     minTime="06:00"
                     maxTime="22:00"
                     initialScrollTime="10:00"
-                    rowData={buildMockRowDataForWeek()}
+                    serviceData={buildMockRowDataForWeek()}
                     onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                     onNextDayClick={scheduleMockProps.onNextDayClick}
+                    onCalendarDateSelect={
+                        scheduleMockProps.onCalendarDateSelect
+                    }
+                    onTodayClick={scheduleMockProps.onTodayClick}
                 />
             );
             expect(
@@ -522,7 +588,7 @@ describe("Schedule", () => {
             multiServiceData.push({
                 id: "4",
                 name: "Another Service",
-                rowCells: [
+                slots: [
                     {
                         id: "4-available",
                         startTime: "09:30",
@@ -540,9 +606,13 @@ describe("Schedule", () => {
                     date="2024-09-11"
                     minTime="08:00"
                     maxTime="12:00"
-                    rowData={multiServiceData}
+                    serviceData={multiServiceData}
                     onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
                     onNextDayClick={scheduleMockProps.onNextDayClick}
+                    onCalendarDateSelect={
+                        scheduleMockProps.onCalendarDateSelect
+                    }
+                    onTodayClick={scheduleMockProps.onTodayClick}
                 />
             );
 
@@ -559,13 +629,13 @@ describe("Schedule", () => {
 // MOCKS
 // =============================================================================
 
-const buildMockRowData = (size: number): ScheduleRowData[] => {
+const buildMockRowData = (size: number): ScheduleEntityProps[] => {
     return Array(size)
         .fill(0)
         .map((_, i) => ({
             id: (i + 1).toString(),
             name: `Service ${i + 1}`,
-            rowCells: [
+            slots: [
                 {
                     id: `${i + 1}-booked`,
                     startTime: "08:00",
@@ -609,7 +679,7 @@ const buildMockRowData = (size: number): ScheduleRowData[] => {
         }));
 };
 
-const buildMockRowDataForWeek = (): ScheduleRowData[] => {
+const buildMockRowDataForWeek = (): ScheduleEntityProps[] => {
     const baseDate = dayjs("2024-09-11");
     const startOfWeek = baseDate.startOf("week");
 
@@ -618,7 +688,7 @@ const buildMockRowDataForWeek = (): ScheduleRowData[] => {
         .map((_, i) => ({
             id: (i + 1).toString(),
             name: `Service ${i + 1}`,
-            rowCells: [
+            slots: [
                 {
                     id: `${i + 1}-sun-available`,
                     startTime: "09:00",

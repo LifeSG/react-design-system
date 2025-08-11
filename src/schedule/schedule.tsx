@@ -33,6 +33,8 @@ export const Schedule = ({
     onCalendarDateSelect,
     onTodayClick,
     onEmptySlotClick,
+    blockedMessage,
+    onClickHiddenSlots,
     ...otherProps
 }: ScheduleProps) => {
     // =============================================================================
@@ -168,6 +170,7 @@ export const Schedule = ({
                             visibleServiceIdx < visibleServiceData.length - 1
                         }
                         onEmptySlotClick={onEmptySlotClick}
+                        blockedMessage={blockedMessage}
                     />
                 ) : (
                     <ScheduleWeekView
@@ -177,7 +180,9 @@ export const Schedule = ({
                         minTime={minTime}
                         maxTime={maxTime}
                         initialScrollTime={initialScrollTime}
-                        emptySlotPopover={emptySlotPopover}
+                        containerRef={contentContainerRef}
+                        blockedMessage={blockedMessage}
+                        onClickHiddenSlots={onClickHiddenSlots}
                     />
                 )}
             </ScheduleBody>

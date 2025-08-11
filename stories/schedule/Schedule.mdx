@@ -20,7 +20,7 @@ import { Schedule } from "src/schedule";
     minTime="00:00"
     maxTime="23:59"
     initialScrollTime="08:00"
-    rowData={data}
+    serviceData={data}
     loading={loading}
     onNextDayClick={onNextDayClick}
     onPreviousDayClick={onPreviousDayClick}
@@ -28,6 +28,10 @@ import { Schedule } from "src/schedule";
     onSlotClick={onSlotClick}
     onCalendarDateSelect={onCalendarDateSelect}
     emptySlotPopover={emptySlotPopover}
+    blockedMessage="Not Available"
+    onClickHiddenSlots={(hiddenServices) => {
+        console.log("Hidden services:", hiddenServices);
+    }}
 />;
 ```
 
@@ -54,10 +58,10 @@ import { Schedule } from "src/schedule";
 The Schedule component expects data in the following format. For detailed prop descriptions, see the [Component API](#component-api) section below.
 
 ```typescript
-interface ScheduleRowData {
+interface ScheduleEntityProps {
     id?: string;
-    name: string; // Service/resource name
-    rowCells: ScheduleSlotProps[];
+    name: string;
+    slots: ScheduleSlotProps[];
 }
 
 interface ScheduleSlotProps {
@@ -72,6 +76,20 @@ interface ScheduleSlotProps {
     onClick?: (data: ScheduleSlotProps, e: React.MouseEvent) => void;
 }
 ```
+
+## Week View Features
+
+The week view provides advanced functionality for managing multiple services and overlapping time slots:
+
+### Hidden Slots Management
+
+When there are more than 3 services visible in a time cell, the overflow services are automatically hidden and represented by "+N" buttons:
+
+-   **Single Button**: When all hidden services span the full 30-minute cell
+-   **Multiple Buttons**: When hidden services have different 15-minute intervals within the cell
+-   **Click Handler**: Use `onClickHiddenSlots` to handle clicks on "+N" buttons
+
+## Responsive Behavior
 
 On mobile and tablet devices:
 

@@ -52,6 +52,7 @@ export const ScheduleDayView = ({
     containerRef,
     loading,
     emptySlotPopover,
+    blockedMessage = "Unavailable",
 }: ScheduleDayViewProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -121,7 +122,6 @@ export const ScheduleDayView = ({
             nextTime
         );
 
-        console.log(111, nextTime, a);
         return a;
     };
 
@@ -158,7 +158,7 @@ export const ScheduleDayView = ({
         return (
             <ServiceContainer $columnCount={serviceData.length}>
                 {serviceData.map((service, idx) => (
-                    <ServiceColumn key={idx}>
+                    <ServiceColumn key={service.id}>
                         {isMobile && (
                             <ArrowContainer>
                                 {showPrevArrow && onPrevService && (
@@ -178,7 +178,7 @@ export const ScheduleDayView = ({
                                 <span>
                                     {
                                         service.slots.filter(
-                                            (cell: ScheduleSlotProps) =>
+                                            (cell) =>
                                                 cell.status === "available"
                                         ).length
                                     }
@@ -223,7 +223,7 @@ export const ScheduleDayView = ({
                 </SlotTime>
                 <SlotAvailability>
                     {slot.status === "blocked"
-                        ? "Unavailable"
+                        ? blockedMessage
                         : `${slot.booked} / ${slot.capacity}`}
                 </SlotAvailability>
             </SlotContent>

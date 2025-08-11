@@ -40,6 +40,8 @@ export interface ScheduleProps {
     onTodayClick: () => void;
     onEmptySlotClick?: (slot: ScheduleEmptySlotProps) => void | undefined;
     emptySlotPopover?: SchedulePopoverProps | undefined;
+    blockedMessage?: string | undefined;
+    onClickHiddenSlots?: (hiddenServices: string[]) => void | undefined;
 }
 
 export interface ScheduleSlotProps {
