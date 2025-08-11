@@ -11,7 +11,6 @@ type Component = typeof Schedule;
 import { mockScheduleData } from "./mockScheduleData";
 import { ClockIcon } from "@lifesg/react-icons";
 import { Colour } from "src/theme";
-import { log } from "console";
 
 const meta: Meta<Component> = {
     title: "Selection and input/Schedule",
@@ -57,8 +56,10 @@ const meta: Meta<Component> = {
 export default meta;
 
 const StyledSchedule = styled(Schedule)`
-    width: 1400px;
-    height: 700px;
+    [data-id="schedule-container"] {
+        width: 900px;
+        height: 500px;
+    }
 `;
 
 const PopoverContent = styled.div`
@@ -155,6 +156,10 @@ export const WeekView: StoryObj<Component> = {
             setDate(date);
         };
 
+        const onClickHiddenSlots = (hiddenServices: string[]) => {
+            alert(`Hidden services: ${hiddenServices.join(", ")}`);
+        };
+
         return (
             <StyledSchedule
                 date={date}
@@ -169,6 +174,7 @@ export const WeekView: StoryObj<Component> = {
                 onPreviousDayClick={onPreviousDayClick}
                 onTodayClick={onTodayClick}
                 onCalendarDateSelect={onCalendarDateSelect}
+                onClickHiddenSlots={onClickHiddenSlots}
             />
         );
     },

@@ -1,7 +1,4 @@
-import {
-    ScheduleEntityProps,
-    ScheduleSlotProps,
-} from "../types";
+import { ScheduleEntityProps, ScheduleSlotProps } from "../types";
 import { RefObject } from "react";
 export interface ScheduleWeekViewProps {
     date: string;
@@ -14,7 +11,9 @@ export interface ScheduleWeekViewProps {
         data: ScheduleSlotProps,
         e: React.MouseEvent
     ) => void | undefined;
-    containerRef:RefObject<HTMLDivElement>;
+    containerRef: RefObject<HTMLDivElement>;
+    blockedMessage?: string | undefined;
+    onClickHiddenSlots?: (hiddenServices: string[]) => void | undefined;
 }
 
 /**

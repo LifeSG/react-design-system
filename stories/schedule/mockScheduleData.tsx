@@ -2,14 +2,14 @@ import { ScheduleEntityProps } from "src/schedule";
 
 const getRelativeDate = (daysFromToday: number): string => {
     const date = new Date();
-    date.setDate(date.getDate() + daysFromToday - 4);
+    date.setDate(date.getDate() + daysFromToday);
     return date.toISOString().split("T")[0]; // Returns YYYY-MM-DD format
 };
 
 export const mockScheduleData: ScheduleEntityProps[] = [
     {
         id: "1",
-        name: "A",
+        name: "Judge Abigail Ng Si Hui",
         slots: [
             {
                 id: "1-1",
@@ -51,7 +51,7 @@ export const mockScheduleData: ScheduleEntityProps[] = [
     },
     {
         id: "2",
-        name: "B",
+        name: "A very long title that should be truncated, a very long title that should be truncated",
         slots: [
             {
                 id: "2-1",

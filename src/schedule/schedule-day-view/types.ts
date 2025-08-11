@@ -20,4 +20,5 @@ export interface ScheduleDayViewProps {
     showPrevArrow: boolean;
     showNextArrow: boolean;
     emptySlotPopover?: SchedulePopoverProps | undefined;
+    blockedMessage?: string | undefined;
 }
