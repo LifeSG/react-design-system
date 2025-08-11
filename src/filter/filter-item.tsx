@@ -54,6 +54,7 @@ export const FilterItem = ({
         : contentResizeDetector.height;
     const internalId = useRef(SimpleIdGenerator.generate());
     const contentId = `${internalId.current}-content`;
+    const titleId = `${internalId.current}-title`;
 
     // =============================================================================
     // EFFECTS
@@ -116,10 +117,7 @@ export const FilterItem = ({
     };
 
     return (
-        <FilterItemWrapper
-            $collapsible={collapsible}
-            aria-labelledby={"filter-item-title"}
-        >
+        <FilterItemWrapper $collapsible={collapsible} aria-labelledby={titleId}>
             <Divider
                 $showDivider={showDivider}
                 $showMobileDivider={showMobileDivider}
@@ -127,7 +125,7 @@ export const FilterItem = ({
             {(title || collapsible) && (
                 <FilterItemHeader>
                     {title && (
-                        <FilterItemTitle id="filter-item-title">
+                        <FilterItemTitle id={titleId}>
                             {title} {addon && renderAddon()}
                         </FilterItemTitle>
                     )}
@@ -136,7 +134,6 @@ export const FilterItem = ({
                             focusHighlight={false}
                             focusOutline="browser"
                             onClick={handleExpandCollapse}
-                            aria-label={expanded ? "Collapse" : "Expand"}
                             aria-expanded={expanded}
                             aria-disabled={!collapsible}
                             aria-controls={contentId}
@@ -146,7 +143,7 @@ export const FilterItem = ({
                                     {title}
                                 </VisuallyHidden>
                             )}
-                            <ChevronIcon $expanded={expanded} />
+                            <ChevronIcon $expanded={expanded} aria-hidden />
                         </FilterItemExpandButton>
                     )}
                 </FilterItemHeader>
@@ -181,13 +178,13 @@ export const FilterItem = ({
                                 styleType="link"
                                 type="button"
                                 onClick={handleMinimise}
-                                aria-label={
-                                    contentMinimised
-                                        ? `view more in ${title}`
-                                        : `view less in ${title}`
-                                }
                             >
-                                View {contentMinimised ? "more" : "less"}
+                                <VisuallyHidden as="span">{`view ${
+                                    contentMinimised ? "more" : "less"
+                                } in ${title}`}</VisuallyHidden>
+                                <span aria-hidden>
+                                    View {contentMinimised ? "more" : "less"}
+                                </span>
                             </FilterItemMinimiseButton>
                         )}
                     </FilterItemBody>
