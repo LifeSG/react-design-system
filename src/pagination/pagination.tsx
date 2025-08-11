@@ -26,6 +26,7 @@ import {
 } from "./pagination.styles";
 import { PageSizeItemProps, PaginationProps } from "./types";
 import { ThemeContext } from "styled-components";
+import { VisuallyHidden } from "../shared/accessibility";
 
 const Component = (
     {
@@ -335,8 +336,9 @@ const Component = (
             ref={ref}
             id={id || "pagination-wrapper"}
             data-testid={dataTestId || "pagination"}
-            aria-label="Pagination"
+            aria-labelledby="pagination"
         >
+            <VisuallyHidden id="pagination">pagination</VisuallyHidden>
             <PaginationList>
                 <PaginationMenu>
                     {showFirstAndLastNav && (
