@@ -85,9 +85,11 @@ export const LabelWrapper = styled.div`
     display: flex;
 `;
 
-export const LabelIcon = styled.span<LabelIconStyleProps>`
+export const AlertIcon = styled(ExclamationCircleFillIcon)<LabelIconStyleProps>`
+    min-height: ${Font.Spec["heading-size-sm"]};
+    min-width: ${Font.Spec["heading-size-sm"]};
     display: flex;
-    align-items: center;
+    align-self: center;
     margin-right: ${Spacing["spacing-40"]};
 
     ${MediaQuery.MaxWidth.sm} {
@@ -108,11 +110,6 @@ export const LabelIcon = styled.span<LabelIconStyleProps>`
                 break;
         }
     }}
-`;
-
-export const AlertIcon = styled(ExclamationCircleFillIcon)`
-    height: ${Font.Spec["heading-size-sm"]};
-    width: ${Font.Spec["heading-size-sm"]};
 `;
 
 export const CallToActionContainer = styled.div<StyleProps>`
