@@ -69,13 +69,38 @@ export const LinkSection = styled.ul`
     flex: 1 1 50%;
     list-style-type: none;
 
+    &:nth-of-type(2) {
+        // 2nd col
+        grid-column: 7 / span 4;
+    }
+
     li {
-        :not(:last-child) {
+        &:not(:last-child) {
             margin-bottom: ${Spacing["spacing-8"]};
         }
 
         a {
             display: inline-block;
+        }
+    }
+
+    ${MediaQuery.MaxWidth.lg} {
+        // first col
+        grid-column: 1 / span 6;
+
+        &:nth-of-type(2) {
+            // 2nd col
+            grid-column: 7 / span 6;
+        }
+    }
+
+    ${MediaQuery.MaxWidth.md} {
+        // first col
+        grid-column: 1 / span 4;
+
+        &:nth-of-type(2) {
+            // 2nd col
+            grid-column: 5 / span 4;
         }
     }
 `;

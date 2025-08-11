@@ -2,7 +2,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "react-spring";
+import { useSpring } from "@react-spring/web";
 import { StringHelper } from "../../util/string-helper";
 import { EPeriod, TimeFormat, TimeHelper } from "../../util/time-helper";
 import {

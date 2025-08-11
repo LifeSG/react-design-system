@@ -18,8 +18,8 @@ export const LinkButton = styled(BasicButton)`
     ${lineClampCss(2)}
     text-align: left;
 
-    :hover,
-    :focus {
+    &:hover,
+    &:focus {
         background-color: ${Colour["bg-hover"]};
         color: ${Colour["text-hover"]};
     }

@@ -36,8 +36,10 @@ export const getThemeDesignToken = (attributePath: string) => {
             theme?.[V2_ThemeContextKeys.designTokenScheme]
         );
 
-        return theme.options?.designToken
+        const value = theme.options?.designToken
             ? getValue(DesignTokenSet, attributePath, theme.options.designToken)
             : getValue(DesignTokenSet, attributePath);
+
+        return value;
     };
 };

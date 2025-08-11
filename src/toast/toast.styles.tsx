@@ -1,4 +1,4 @@
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
@@ -61,7 +61,7 @@ const getValidationColorAttributes = (props: StyleProps) => {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled(animated.div)<StyleProps>`
+export const Wrapper = animated(styled.div<StyleProps>`
     display: flex;
     flex-direction: row;
     position: ${(props) => (props.$fixed ? "fixed" : "relative")};
@@ -85,7 +85,7 @@ export const Wrapper = styled(animated.div)<StyleProps>`
             color: ${getValidationColorAttributes(props).Text};
         `;
     }};
-`;
+`);
 
 export const ContentWrapper = styled.div`
     display: flex;
@@ -178,7 +178,7 @@ export const DismissButton = styled(ClickableIcon)<StyleProps>`
                 height: 1.5rem;
                 color: ${getValidationColorAttributes(props).Text};
             }
-            :hover {
+            &:hover {
                 background: transparent;
             }
             ${MediaQuery.MaxWidth.sm} {

@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { MinusIcon } from "@lifesg/react-icons/minus";
 import { PlusIcon } from "@lifesg/react-icons/plus";
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { Border, Colour, Font, Spacing } from "../theme";
 import { Typography } from "../typography";
@@ -52,11 +52,11 @@ export const ItemContainer = styled.a`
     align-items: center;
     min-height: 4rem;
 
-    :not(:last-of-type) {
+    &:not(:last-of-type) {
         border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     }
 
-    :hover {
+    &:hover {
         ${ItemTitleDefault},
         ${ItemTitleSmall},
         ${ItemIcon} {
@@ -76,9 +76,9 @@ export const Description = styled(Typography.BodyMD)`
     margin-top: 0.25rem;
 `;
 
-export const Expandable = styled(animated.div)`
+export const Expandable = animated(styled.div`
     overflow: hidden;
-`;
+`);
 
 export const ExpandableChild = styled.div<ExpandableChildStyleProps>`
     ${(props) =>
@@ -113,7 +113,7 @@ export const ToggleButton = styled.button`
     cursor: pointer;
     border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 
-    :hover {
+    &:hover {
         ${ToggleButtonLabel},
         ${ViewMoreIcon},
         ${ViewLessIcon} {

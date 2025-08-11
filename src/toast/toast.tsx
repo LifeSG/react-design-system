@@ -5,9 +5,12 @@ import {
     ICircleFillIcon,
     TickCircleFillIcon,
 } from "@lifesg/react-icons";
-import { useEffect, useRef, useState } from "react";
+import { easings, useSpring } from "@react-spring/web";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { easings, useSpring } from "react-spring";
+import { ThemeContext } from "styled-components";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
+import { Breakpoint } from "../theme";
 import {
     ActionButton,
     ContentWrapper,
@@ -20,10 +23,6 @@ import {
     Wrapper,
 } from "./toast.styles";
 import { ToastProps } from "./types";
-import React from "react";
-import { Breakpoint } from "../theme";
-import { useTheme } from "styled-components";
-import { VisuallyHidden, inertValue } from "../shared/accessibility";
 
 const DEFAULT_AUTO_DISMISS_TIME = 4000;
 
@@ -51,7 +50,7 @@ export const Toast = ({
     const toastRef = useRef<HTMLDivElement>(null);
     const [isVisible, setVisible] = useState<boolean>(false);
 
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
 
     const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
     const isMobile = useMediaQuery({

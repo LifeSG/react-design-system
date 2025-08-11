@@ -1,6 +1,6 @@
 import { HTMLAttributes, useContext, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "react-spring";
+import { useSpring } from "@react-spring/web";
 import { SidenavContext } from "./sidenav-context";
 import {
     ChevronIcon,

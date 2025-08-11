@@ -55,7 +55,7 @@ export const LinkItem = styled.li<ItemStyleProps>`
     display: flex;
     margin-left: 1rem;
 
-    :first-child {
+    &:first-child {
         // negative margin to preserve touch target size for link
         margin-left: ${(props) => (props.$hiddenBranding ? "-0.5rem" : "0")};
     }
@@ -77,9 +77,9 @@ export const Link = styled(Typography.LinkMD)<StyleProps>`
     height: 100%;
     padding: 0 0.5rem;
 
-    :active,
-    :focus,
-    :hover {
+    &:active,
+    &:focus,
+    &:hover {
         color: ${(props) =>
             props.$selected
                 ? Colour["text-selected-hover"]
@@ -113,7 +113,7 @@ export const LinkIndicator = styled.div<StyleProps>`
     right: 0.5rem;
     background-color: ${Colour["border-selected"]};
 
-    :hover {
+    &:hover {
         ${(props) => props.$selected && Colour["border-selected-hover"]};
     }
 
@@ -143,7 +143,7 @@ export const ChevronIcon = styled(ChevronUpIcon)<StyleProps>`
     height: 1.25rem;
     width: 1.25rem;
     color: ${Colour.icon};
-    :hover {
+    &:hover {
         ${(props) =>
             props.$selected
                 ? Colour["icon-selected-hover"]

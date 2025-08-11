@@ -103,7 +103,7 @@ export interface ThemeSpec {
     _v2?: V2_ThemeSpec;
 }
 export interface ThemeStyleProps {
-    theme: ThemeSpec;
+    theme?: ThemeSpec;
 }
 
 export interface DSThemeProviderProps {

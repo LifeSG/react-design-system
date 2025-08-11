@@ -49,7 +49,7 @@ export const DocTable = styled.table`
         tr {
             border: none;
             border-bottom: 1px solid #dde1e2;
-            :nth-child(even) {
+            &:nth-child(even) {
                 background: #f9f9f9;
             }
         }

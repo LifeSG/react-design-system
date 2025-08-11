@@ -1,4 +1,8 @@
-import { useTheme } from "styled-components";
+import kebabCase from "lodash/kebabCase";
+import { useContext } from "react";
+import { useMediaQuery } from "react-responsive";
+import { ThemeContext } from "styled-components";
+import { VisuallyHidden } from "../shared/accessibility";
 import { Breakpoint } from "../theme";
 import {
     Content,
@@ -9,9 +13,6 @@ import {
     Wrapper,
 } from "./progress-indicator.style";
 import { ProgressIndicatorProps } from "./types";
-import kebabCase from "lodash/kebabCase";
-import { useMediaQuery } from "react-responsive";
-import { VisuallyHidden } from "../shared/accessibility";
 
 export const ProgressIndicator = <T,>({
     steps,
@@ -24,7 +25,7 @@ export const ProgressIndicator = <T,>({
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
     const isTablet = useMediaQuery({
         maxWidth: tabletBreakpoint,

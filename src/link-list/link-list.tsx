@@ -1,6 +1,6 @@
-import { Container } from "./link-list.styles";
 import { EagerLinkList } from "./components/link-list-eager";
 import { LazyLinkList } from "./components/link-list-lazy";
+import { Container } from "./link-list.styles";
 import { LinkListProps } from "./types";
 
 export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {

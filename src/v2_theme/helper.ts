@@ -12,7 +12,7 @@ export const getValue = <C, T>(
     collection: C,
     attributePath?: string,
     customCollection?: T
-): string | number => {
+): any => {
     return attributePath
         ? get(customCollection, attributePath) || get(collection, attributePath)
         : customCollection || collection;

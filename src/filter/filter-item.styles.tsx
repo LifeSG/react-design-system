@@ -1,5 +1,5 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import styled from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
@@ -98,18 +98,18 @@ export const FilterItemTitle = styled.p`
 // CONTENT STYLES
 // -----------------------------------------------------------------------------
 
-export const ExpandableItem = styled(animated.div)`
+export const ExpandableItem = animated(styled.div`
     overflow: hidden;
-`;
+`);
 
 export const FilterItemBody = styled.div`
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
 `;
 
-export const MinimisableContent = styled(animated.div)<MinimisableContentProps>`
+export const MinimisableContent = animated(styled.div<MinimisableContentProps>`
     ${(props) => props.$minimisable && "overflow: hidden;"}
     ${(props) => props.$height && `height: ${props.$height}px;`}
-`;
+`);
 
 export const FilterItemMinimiseButton = styled(Button.Small)`
     height: fit-content;

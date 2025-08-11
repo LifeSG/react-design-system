@@ -24,9 +24,9 @@ export const Link = styled(Typography.LinkMD)`
     ${lineClampCss(2)}
     white-space: pre-wrap;
 
-    :hover,
-    :active,
-    :focus {
+    &:hover,
+    &:active,
+    &:focus {
         background-color: ${Colour["bg-hover"]};
         color: ${Colour["text"]};
     }

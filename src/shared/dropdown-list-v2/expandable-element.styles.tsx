@@ -27,7 +27,7 @@ export const Selector = styled(BasicButton)<StyleProps>`
             ? Font["body-md-regular"]
             : Font["body-baseline-regular"]}
 
-    :disabled {
+    &:disabled {
         cursor: not-allowed;
     }
 `;
