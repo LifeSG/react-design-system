@@ -211,7 +211,7 @@ const Component = (
                         key={pageIndex}
                         onClick={() => handlePaginationItemClick(pageIndex)}
                         $selected={active}
-                        aria-label={"Page " + pageIndex}
+                        aria-label={`page ${pageIndex} of ${totalPages}`}
                         aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltips}
                         onFocus={closeAllTooltips}
@@ -253,7 +253,7 @@ const Component = (
                         key={pageIndex}
                         onClick={() => handlePaginationItemClick(pageIndex)}
                         $selected={active}
-                        aria-label={"Page " + pageIndex}
+                        aria-label={`page ${pageIndex} of ${totalPages}`}
                         aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltips}
                         onFocus={closeAllTooltips}
@@ -321,6 +321,7 @@ const Component = (
                     type="numeric"
                     id={(id || "pagination") + "-input"}
                     data-testid={(dataTestId || "pagination") + "-input"}
+                    aria-label={`Page ${activePage} of ${totalPages}`}
                 />
             </form>
             <LabelDivider>/</LabelDivider>
@@ -394,6 +395,7 @@ const Component = (
                         displayValueExtractor={(item) => item.label}
                         selectedOption={selectedOption}
                         onSelectOption={handleListItemClick}
+                        aria-label={`show ${selectedOption?.value} per page`}
                     />
                 </InputSelectWrapper>
             )}

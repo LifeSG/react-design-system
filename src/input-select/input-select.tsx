@@ -53,6 +53,7 @@ export const InputSelect = <T, V>({
     alignment,
     dropdownZIndex,
     dropdownRootNode,
+    "aria-label": ariaLabel,
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -230,6 +231,7 @@ export const InputSelect = <T, V>({
                     popupRole="listbox"
                     readOnly={readOnly}
                     variant={variant}
+                    aria-label={ariaLabel}
                 >
                     {renderSelectorContent()}
                 </ExpandableElement>
