@@ -64,7 +64,7 @@ export namespace FooterHelper {
                 return {
                     src: "https://assets.life.gov.sg/react-design-system/img/logo/sgw-logo.png",
                     alt: "SupportGoWhere",
-                    style: { minWidth: "10rem" },
+                    style: { width: "10rem" },
                 };
 
             default:
