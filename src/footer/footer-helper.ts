@@ -42,6 +42,13 @@ export namespace FooterHelper {
         resourceScheme?: ResourceScheme
     ): React.ImgHTMLAttributes<HTMLImageElement> => {
         switch (resourceScheme) {
+            case "lifesg":
+                return {
+                    src: "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg",
+                    alt: "LifeSG",
+                    style: { width: "4rem" },
+                };
+
             case "bookingsg":
                 return {
                     src: "https://home.booking.gov.sg/images/bookingsg/footer.svg",

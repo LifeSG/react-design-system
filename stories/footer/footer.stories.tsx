@@ -247,7 +247,7 @@ export const StretchedLayout: StoryObj<Component> = {
     },
 };
 
-export const LogoHidden: StoryObj<Component> = {
+export const HiddenLogo: StoryObj<Component> = {
     render: (_args) => {
         return (
             <Footer

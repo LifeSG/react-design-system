@@ -111,7 +111,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "hideLogo",
-                description: "Hides the logo section",
+                description:
+                    "If specified, the logo will not be displayed and the links will be aligned to the leftmost area",
                 propTypes: ["boolean"],
             },
         ],
