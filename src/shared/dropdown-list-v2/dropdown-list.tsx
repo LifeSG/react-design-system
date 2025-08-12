@@ -81,9 +81,9 @@ export const DropdownList = <T, V>({
         clearAllButtonLabel = "Clear all",
     } = customLabels || {};
     const searchPlaceholder =
-        _searchPlaceholder || customLabels?.searchPlaceholder || "Search";
+        customLabels?.searchPlaceholder || _searchPlaceholder || "Search";
     const noResultsDescription =
-        _noResultsDescription || customLabels?.noResultsDescription;
+        customLabels?.noResultsDescription || _noResultsDescription;
     const { focusedIndex, setFocusedIndex } = useContext(
         DropdownListStateContext
     );

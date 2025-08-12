@@ -75,9 +75,9 @@ export const NestedDropdownList = <T,>({
         clearAllButtonLabel = "Clear all",
     } = customLabels || {};
     const searchPlaceholder =
-        _searchPlaceholder || customLabels?.searchPlaceholder || "Search";
+        customLabels?.searchPlaceholder || _searchPlaceholder || "Search";
     const noResultsDescription =
-        _noResultsDescription || customLabels?.noResultsDescription;
+        customLabels?.noResultsDescription || _noResultsDescription;
     const selectableCategory = multiSelect || _selectableCategory;
     const [searchValue, setSearchValue] = useState<string>("");
     const searchTerm = searchValue.toLowerCase().trim();
