@@ -5,6 +5,8 @@ import {
     InternalDisclaimerLinks,
 } from "../../src/footer/footer-helper";
 import { KeyOf } from "../../src/util/utility-types";
+import { ThemeProvider } from "styled-components";
+import { MOCK_THEME } from "../theme/mock-theme-data";
 
 // =============================================================================
 // UNIT TESTS
@@ -169,13 +171,10 @@ describe("Footer", () => {
     });
 
     describe("logoSrc", () => {
-        it("should render a logo by default", () => {
+        it("should not render a logo if the theme does not provides one", () => {
             render(<Footer links={CUSTOM_LINKS} />);
 
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                LIFESG_LOGO_SRC
-            );
+            expect(screen.queryByRole("img")).not.toBeInTheDocument();
         });
 
         it("should be able to render a custom logo", () => {
@@ -183,6 +182,18 @@ describe("Footer", () => {
             render(<Footer links={CUSTOM_LINKS} logoSrc={customLogo} />);
 
             expect(screen.getByRole("img")).toHaveAttribute("src", customLogo);
+        });
+
+        it("should render a logo if the theme provides one and no logoSrc provided", () => {
+            const themeLogo =
+                "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg";
+
+            render(
+                <ThemeProvider theme={MOCK_THEME}>
+                    <Footer links={CUSTOM_LINKS} />
+                </ThemeProvider>
+            );
+            expect(screen.getByRole("img")).toHaveAttribute("src", themeLogo);
         });
     });
 
@@ -228,8 +239,6 @@ describe("Footer", () => {
 // =============================================================================
 // CONSTANTS
 // =============================================================================
-const LIFESG_LOGO_SRC =
-    "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg";
 const CUSTOM_LINKS: FooterLinkProps[][] = [
     [
         {

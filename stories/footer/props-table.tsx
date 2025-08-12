@@ -109,6 +109,12 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The test identifier for the component",
                 propTypes: ["string"],
             },
+            {
+                name: "hideLogo",
+                description:
+                    "If specified, the logo will not be displayed and the links will be aligned to the leftmost area",
+                propTypes: ["boolean"],
+            },
         ],
     },
     {

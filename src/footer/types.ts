@@ -37,6 +37,7 @@ export interface FooterProps<T = void> {
     id?: string | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
+    hideLogo?: boolean | undefined;
 }
 
 // TODO: Update component and migration

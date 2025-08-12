@@ -31,6 +31,8 @@ export namespace FooterHelper {
                 return "MyLegacy@LifeSG, Government of Singapore.";
             case "ccube":
                 return "Citizen Collective Common, Government of Singapore.";
+            case "supportgowhere":
+                return "Government of Singapore.";
             default:
                 return "LifeSG, Government of Singapore.";
         }
@@ -40,6 +42,13 @@ export namespace FooterHelper {
         resourceScheme?: ResourceScheme
     ): React.ImgHTMLAttributes<HTMLImageElement> => {
         switch (resourceScheme) {
+            case "lifesg":
+                return {
+                    src: "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg",
+                    alt: "LifeSG",
+                    style: { width: "4rem" },
+                };
+
             case "bookingsg":
                 return {
                     src: "https://home.booking.gov.sg/images/bookingsg/footer.svg",
@@ -58,13 +67,15 @@ export namespace FooterHelper {
                     alt: "Citizen Collective Common",
                     style: { width: "10rem" },
                 };
+            case "supportgowhere":
+                return {
+                    src: "https://assets.life.gov.sg/react-design-system/img/logo/sgw-logo.png",
+                    alt: "SupportGoWhere",
+                    style: { width: "10rem" },
+                };
 
             default:
-                return {
-                    src: "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg",
-                    alt: "LifeSG",
-                    style: { width: "4rem" },
-                };
+                return {};
         }
     };
 
