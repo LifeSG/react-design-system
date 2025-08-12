@@ -29,9 +29,7 @@ import { Schedule } from "src/schedule";
     onCalendarDateSelect={onCalendarDateSelect}
     emptySlotPopover={emptySlotPopover}
     blockedMessage="Not Available"
-    onClickHiddenSlots={(hiddenServices) => {
-        console.log("Hidden services:", hiddenServices);
-    }}
+    onClickHiddenSlots={onClickHiddenSlots}
 />;
 ```
 

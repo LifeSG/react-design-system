@@ -1,9 +1,11 @@
 import { TimeHelper } from "../../util/time-helper";
 import {
     TimeColumn,
-    TimeLabel,
-    TimelineCircle,
     TimeColumnWrapper,
+    TimeLabel,
+    HourDisplay,
+    PeriodIndicator,
+    TimelineCircle,
 } from "./time-indicator.styles";
 
 interface TimeSlotTimeIndicatorProps {
@@ -40,10 +42,15 @@ export const TimeIndicator = ({
             <TimeColumn>
                 {hourLabels.map((time) => {
                     const { hour, ampm } = formatHourLabel(time);
+                    const isFirstSlot = time === minTime;
                     return (
                         <TimeLabel key={time}>
-                            <span>{hour}</span>
-                            <span>{ampm}</span>
+                            {!isFirstSlot && (
+                                <>
+                                    <HourDisplay>{hour}</HourDisplay>
+                                    <PeriodIndicator>{ampm}</PeriodIndicator>
+                                </>
+                            )}
                         </TimeLabel>
                     );
                 })}
