@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTheme } from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import { ScheduleProps } from "./types";
@@ -55,10 +55,14 @@ export const Schedule = ({
     const contentContainerRef = useRef<HTMLDivElement>(null);
     const [visibleServiceIdx, setVisibleServiceIdx] = useState(0);
     const isEmptyContent = serviceData.length === 0 || isEmpty(serviceData);
-    const filteredServiceData = serviceData.map((service) => ({
-        ...service,
-        slots: service.slots.filter((slot) => slot.date === date),
-    }));
+    const filteredServiceData = useMemo(
+        () =>
+            serviceData.map((service) => ({
+                ...service,
+                slots: service.slots.filter((slot) => slot.date === date),
+            })),
+        [serviceData, date]
+    );
 
     const visibleServiceData =
         isMobile || isTablet
@@ -83,11 +87,11 @@ export const Schedule = ({
     }, [onTodayClick]);
 
     const handleNextService = useCallback(() => {
-        if (!serviceData) return;
+        if (!filteredServiceData) return;
         setVisibleServiceIdx((idx) =>
-            idx < serviceData.length - 1 ? idx + 1 : idx
+            idx < filteredServiceData.length - 1 ? idx + 1 : idx
         );
-    }, [serviceData]);
+    }, [filteredServiceData]);
     const handlePrevService = useCallback(() => {
         setVisibleServiceIdx((idx) => (idx > 0 ? idx - 1 : idx));
     }, []);
@@ -166,8 +170,7 @@ export const Schedule = ({
                         }
                         showNextArrow={
                             (isMobile || isTablet) &&
-                            visibleServiceData &&
-                            visibleServiceIdx < visibleServiceData.length - 1
+                            visibleServiceIdx < filteredServiceData.length - 1
                         }
                         onEmptySlotClick={onEmptySlotClick}
                         blockedMessage={blockedMessage}

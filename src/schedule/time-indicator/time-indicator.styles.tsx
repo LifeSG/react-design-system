@@ -16,7 +16,6 @@ export const TimeColumn = styled.div`
     min-height: fit-content;
     background: ${Colour["bg"]};
     border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
-    position: relative;
 `;
 
 export const TimeLabel = styled(Typography.BodySM)`
@@ -25,10 +24,15 @@ export const TimeLabel = styled(Typography.BodySM)`
     flex-direction: column;
     align-items: flex-end;
     color: ${Colour["text-subtler"]};
-    justify-content: center;
     padding-right: ${Spacing["spacing-8"]};
     font-weight: 700;
+    position: relative;
 `;
+export const HourDisplay = styled.span`
+    position: absolute;
+    top: -18px;
+`;
+export const PeriodIndicator = styled.span``;
 
 export const TimelineCircle = styled.div<{
     $top: number;

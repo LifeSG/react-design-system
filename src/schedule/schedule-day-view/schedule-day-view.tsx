@@ -236,11 +236,7 @@ export const ScheduleDayView = ({
             return (
                 <SlotCell key={time} $startTime={time}>
                     {slots.map((slot, index) => {
-                        const popoverConfig = getPopoverConfig(
-                            service,
-                            slot,
-                            time
-                        );
+                        const popoverConfig = getPopoverConfig(service, slot, time);
                         return (
                             <WithOptionalPopover
                                 key={`${slot.id}-${index}`}
@@ -262,11 +258,7 @@ export const ScheduleDayView = ({
                 >
                     <WithOptionalPopover
                         containerRef={containerRef}
-                        customPopover={getPopoverConfig(
-                            service,
-                            undefined,
-                            time
-                        )}
+                        customPopover={getPopoverConfig(service, undefined, time)}
                     >
                         <EmptySlot />
                     </WithOptionalPopover>
@@ -280,7 +272,7 @@ export const ScheduleDayView = ({
             <SlotGrid $columnCount={serviceData.length}>
                 {timelineOffset !== null && <Timeline $top={timelineOffset} />}
                 {serviceData.map((service) => (
-                    <SlotColumn key={service.id} data-testid="schedule-column">
+                    <SlotColumn key={service.id}>
                         {timeSlots.map((time) => renderSlotCell(service, time))}
                     </SlotColumn>
                 ))}

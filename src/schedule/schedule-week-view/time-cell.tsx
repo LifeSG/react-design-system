@@ -36,6 +36,9 @@ export const TimeCell: React.FC<TimeCellProps> = ({
     blockedMessage,
     onClickHiddenSlots,
 }) => {
+    // =============================================================================
+    // COMPUTED VALUES
+    // =============================================================================
     const timeMinutes = TimeHelper.timeToMinutes(time);
     const nextTime = minutesToTime(timeMinutes + 30);
 
@@ -58,6 +61,9 @@ export const TimeCell: React.FC<TimeCellProps> = ({
         slotLayoutMap
     );
 
+    // =============================================================================
+    // SLOT FILTERING
+    // =============================================================================
     // Filter slots based on visibility from slotLayoutMap
     const visibleOverlappingSlots = slotsInCell.filter((slot) => {
         const slotKey = slot.id;
@@ -71,6 +77,9 @@ export const TimeCell: React.FC<TimeCellProps> = ({
         return !slotLayout?.visible;
     });
 
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
     // Calculate 15-minute intervals within this 30-minute cell
     const calculateHiddenSlotsFor15MinIntervals = () => {
         const timeMinutes = TimeHelper.timeToMinutes(time);
@@ -165,6 +174,9 @@ export const TimeCell: React.FC<TimeCellProps> = ({
 
     const actualWidthPercentage = minimumWidthForCell;
 
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
     const renderSlotWithPopover = (
         slot: SlotWithService,
         slotIndex: number,
@@ -225,7 +237,7 @@ export const TimeCell: React.FC<TimeCellProps> = ({
     };
 
     return (
-        <SlotCell key={time} $startTime={time} data-testid="slotcell">
+        <SlotCell key={time} $startTime={time}>
             {cellServiceLayout.visibleServices.map(
                 (serviceName, serviceIndex) => {
                     const serviceSlots = slotsStartingInCell.filter((slot) => {
@@ -248,7 +260,6 @@ export const TimeCell: React.FC<TimeCellProps> = ({
                             }
                             $actualWidthPercentage={actualWidthPercentage}
                             $leftPosition={leftPosition}
-                            data-testid={`service-${serviceName}-${serviceIndex}`}
                         >
                             {serviceSlots.map((slot, slotIndex) =>
                                 renderSlotWithPopover(

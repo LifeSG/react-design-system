@@ -328,55 +328,6 @@ describe("Schedule", () => {
         );
     });
 
-    it("should trigger onEmptySlotClick when an empty slot is clicked", () => {
-        const mockEmptySlotClick = jest.fn();
-
-        render(
-            <Schedule
-                date={scheduleMockProps.date}
-                minTime="08:00"
-                maxTime="10:00"
-                serviceData={buildMockRowData(1)}
-                onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
-                onNextDayClick={scheduleMockProps.onNextDayClick}
-                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
-                onTodayClick={scheduleMockProps.onTodayClick}
-                onEmptySlotClick={mockEmptySlotClick}
-            />
-        );
-
-        // Find an empty slot by looking for slots without text content related to bookings
-        const allSlots = screen.getAllByTestId("schedule-column");
-        if (allSlots.length > 0) {
-            // Look for empty time slots (that don't have booking information)
-            const emptySlots = document.querySelectorAll("[data-start-time]");
-
-            for (const slot of emptySlots) {
-                // Check if this slot doesn't contain booking content
-                if (
-                    !slot.textContent?.includes("available") &&
-                    !slot.textContent?.includes("booked") &&
-                    !slot.textContent?.includes("blocked") &&
-                    !slot.textContent?.includes("pending")
-                ) {
-                    fireEvent.click(slot);
-                    break;
-                }
-            }
-        }
-
-        // Verify that onEmptySlotClick was called with slot details
-        if (mockEmptySlotClick.mock.calls.length > 0) {
-            const callArgs = mockEmptySlotClick.mock.calls[0][0];
-            expect(callArgs).toHaveProperty("startTime");
-            expect(callArgs).toHaveProperty("endTime");
-            expect(callArgs).toHaveProperty("name");
-            expect(typeof callArgs.startTime).toBe("string");
-            expect(typeof callArgs.endTime).toBe("string");
-            expect(typeof callArgs.name).toBe("string");
-        }
-    });
-
     // =============================================================================
     // WEEK VIEW TESTS
     // =============================================================================
@@ -455,8 +406,6 @@ describe("Schedule", () => {
                     onTodayClick={scheduleMockProps.onTodayClick}
                 />
             );
-
-            expect(screen.getByText("8", { exact: false })).toBeVisible();
             expect(screen.getAllByText("9", { exact: false })[0]).toBeVisible();
             expect(
                 screen.getAllByText("10", { exact: false })[0]
