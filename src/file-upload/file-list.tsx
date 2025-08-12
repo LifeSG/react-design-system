@@ -275,6 +275,9 @@ function Component(
 
     const handleDelete = (item: FileItemProps) => () => {
         onItemDelete(item);
+        if (wrapperRef.current) {
+            wrapperRef.current.focus();
+        }
     };
 
     const handleDragEnd = (event: DragEndEvent) => {
@@ -511,7 +514,6 @@ function Component(
     const renderProgressStatus = () => (
         <VisuallyHidden
             ref={visuallyHiddenRef}
-            tabIndex={-1}
             aria-live="polite"
             aria-atomic="true"
         >
@@ -524,7 +526,7 @@ function Component(
             <>
                 {renderProgressStatus()}
                 <ListWrapper
-                    tabIndex={0}
+                    tabIndex={-1}
                     $readOnly={readOnly}
                     ref={wrapperRef}
                     aria-label={getWrapperAriaLabel()}
