@@ -71,9 +71,12 @@ export const BoxContainer = ({
             return (
                 <Expandable
                     style={expandableStyles}
-                    data-testid="expandable-container"
+                    data-testid={"expandable-container"}
+                    id={contentId}
+                    aria-labelledby={headerId}
+                    role="region"
                 >
-                    <ChildContainer ref={childRef} aria-hidden={!showExpanded}>
+                    <ChildContainer ref={childRef} inert={!showExpanded}>
                         {children}
                     </ChildContainer>
                 </Expandable>
@@ -112,7 +115,10 @@ export const BoxContainer = ({
                 <Handle
                     onClick={onHandleClick}
                     type="button"
-                    aria-label={showExpanded ? "Collapse" : "Expand"}
+                    aria-labelledby={headerId}
+                    aria-controls={contentId}
+                    aria-disabled={!collapsible} // remains focusable
+                    aria-expanded={expanded}
                     data-testid={subComponentTestIds?.handle || "handle"}
                 >
                     <HandleIconContainer $expanded={showExpanded} aria-hidden>

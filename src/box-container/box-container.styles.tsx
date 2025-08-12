@@ -88,7 +88,6 @@ export const LabelWrapper = styled.div`
 export const AlertIcon = styled(ExclamationCircleFillIcon)<LabelIconStyleProps>`
     min-height: ${Font.Spec["heading-size-sm"]};
     min-width: ${Font.Spec["heading-size-sm"]};
-    display: flex;
     align-self: center;
     margin-right: ${Spacing["spacing-40"]};
 
