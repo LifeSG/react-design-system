@@ -5,7 +5,7 @@ import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import { InputSelect } from "../input-select";
 import { Breakpoint } from "../theme";
@@ -27,6 +27,7 @@ import {
 import { PageSizeItemProps, PaginationProps } from "./types";
 import { ThemeContext } from "styled-components";
 import { VisuallyHidden } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 
 const Component = (
     {
@@ -71,6 +72,9 @@ const Component = (
 
     const boundaryRange = 1;
     const siblingRange = 1;
+
+    const internalId = useRef(SimpleIdGenerator.generate());
+    const paginationId = `${internalId.current}-pagination`;
 
     const totalPages = Math.ceil(totalItems / pageSizeLocal);
     const isFirstPage = activePage === 1;
@@ -336,9 +340,11 @@ const Component = (
             ref={ref}
             id={id || "pagination-wrapper"}
             data-testid={dataTestId || "pagination"}
-            aria-labelledby="pagination"
+            aria-labelledby={paginationId}
         >
-            <VisuallyHidden id="pagination">pagination</VisuallyHidden>
+            <VisuallyHidden id={paginationId} aria-hidden>
+                pagination
+            </VisuallyHidden>
             <PaginationList>
                 <PaginationMenu>
                     {showFirstAndLastNav && (
@@ -407,7 +413,7 @@ const Component = (
 export const Pagination = React.forwardRef(Component);
 
 const DEFAULT_OPTIONS: PageSizeItemProps[] = [
-    { value: 10, label: "10 / page" },
-    { value: 20, label: "20 / page" },
-    { value: 30, label: "30 / page" },
+    { value: 10, label: "10 per page" },
+    { value: 20, label: "20 per page" },
+    { value: 30, label: "30 per page" },
 ];
