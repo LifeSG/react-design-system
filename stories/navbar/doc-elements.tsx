@@ -76,17 +76,17 @@ export const MobileCustomComponent = ({ onClick }: Props) => {
 
 export const NavbarAvatar = () => {
     const theme = useTheme();
-    const tablet = Breakpoint["xl-min"]({ theme });
-    const [isMobile, setIsMobile] = useState(window.innerWidth < tablet);
+    const desktop = Breakpoint["xl-min"]({ theme });
+    const [isTablet, setIsTablet] = useState(window.innerWidth < desktop);
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth < tablet);
+            setIsTablet(window.innerWidth < desktop);
         };
 
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, [tablet]);
+    }, [desktop]);
 
     return (
         <Menu
@@ -99,9 +99,9 @@ export const NavbarAvatar = () => {
             <Badge
                 count={8}
                 color="important"
-                variant={isMobile ? "dot-with-border" : "number-with-border"}
+                variant={isTablet ? "dot-with-border" : "number-with-border"}
             >
-                <Avatar sizeType={isMobile ? "small" : "default"}>Name</Avatar>
+                <Avatar sizeType={isTablet ? "small" : "default"}>Name</Avatar>
             </Badge>
         </Menu>
     );

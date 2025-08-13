@@ -458,40 +458,39 @@ export const HiddenBranding: StoryObj<Component> = {
 export const WithAvatar: StoryObj<Component> = {
     parameters: { docs: { source: { type: "code" } } },
     decorators: [FullWidthStoryDecorator({})],
-    render: (_args) => {
-        return (
-            <Navbar
-                items={{
-                    desktop: [
-                        {
-                            id: "home",
-                            children: "Home",
-                        },
-                    ],
-                }}
-                actionButtons={{
-                    desktop: [
-                        {
-                            type: "button",
-                            args: {
-                                styleType: "link",
-                                children: "FAQ",
-                            },
-                        },
-                        {
-                            type: "download",
-                        },
-                        {
-                            type: "component",
-                            args: {
-                                render: <NavbarAvatar />,
-                            },
-                            uncollapsible: true,
-                        },
-                    ],
-                }}
-                fixed={false}
-            />
-        );
+    args: {
+        items: {
+            desktop: [
+                {
+                    id: "home",
+                    children: "Home",
+                },
+            ],
+        },
+        actionButtons: {
+            desktop: [
+                {
+                    type: "button",
+                    args: {
+                        styleType: "link",
+                        children: "FAQ",
+                    },
+                },
+                {
+                    type: "download",
+                },
+                {
+                    type: "component",
+                    args: {
+                        render: <NavbarAvatar />,
+                    },
+                    uncollapsible: true,
+                },
+            ],
+        },
+        fixed: false,
+    },
+    render: (args) => {
+        return <Navbar {...args} />;
     },
 };
