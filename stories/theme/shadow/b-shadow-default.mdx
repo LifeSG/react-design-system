@@ -1,0 +1,18 @@
+import { Meta } from "@storybook/blocks";
+import { LifeSGTheme } from "src/theme";
+import { ShadowDisplay } from "../doc-elements";
+
+<Meta title="Foundations/Shadow/Default" />
+
+# Default shadow
+
+This is the shadow set used when the `shadowScheme` is `"default"`.
+
+```tsx
+const theme: ThemeSpec = {
+    shadowScheme: "default",
+    // ...other specifications
+};
+```
+
+<ShadowDisplay theme={LifeSGTheme} />

@@ -1,6 +1,14 @@
 import styled, { css } from "styled-components";
 import { lineClampCss } from "../shared/styles";
-import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
+import {
+    Border,
+    Colour,
+    Font,
+    MediaQuery,
+    Radius,
+    Shadow,
+    Spacing,
+} from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -35,8 +43,7 @@ export const Wrapper = styled.ul`
                       ${Colour["border"]};
               `
             : css`
-                  box-shadow: 0 2px 8px
-                      rgba(from ${Colour.Primitive["neutral-50"]} r g b / 24%);
+                  box-shadow: ${Shadow["md-subtle"]};
               `;
     }}
 `;

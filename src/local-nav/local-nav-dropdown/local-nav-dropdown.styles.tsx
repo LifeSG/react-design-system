@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
-import { Colour, Font, Motion, Radius, Spacing } from "../../theme";
+import { Border, Colour, Font, Motion, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -46,7 +46,8 @@ export const NavSelect = styled.div<NavLabelStyleProps>`
     background: ${Colour["bg"]};
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
     overflow: hidden;
-    box-shadow: 0 0 1px 1px ${Colour["border"]};
+    box-shadow: 0 0 ${Border["width-010"]} ${Border["width-010"]}
+        ${Colour["border"]};
     border-radius: ${Radius["sm"]};
     ${(props) =>
         props.$isDropdownExpanded &&
@@ -105,7 +106,8 @@ export const NavItemList = styled.ul<NavItemListStyleProps>`
     margin: 0;
     background: ${Colour["bg"]};
     cursor: pointer;
-    box-shadow: 0 0 1px 1px ${Colour["border"]};
+    box-shadow: 0 0 ${Border["width-010"]} ${Border["width-010"]}
+        ${Colour["border"]};
     border-bottom-right-radius: ${Radius["sm"]};
     border-bottom-left-radius: ${Radius["sm"]};
     /* Enables vertical scrolling */
@@ -158,7 +160,7 @@ export const NavWrapper = styled.nav<DropdownNavStyleProps>`
             ${NavItemList} {
                 ${$sideMargin && `margin-left: -${$sideMargin}px;`}
                 ${$sideMargin && `margin-right: -${$sideMargin}px;`}
-			    border-radius-bottom-left: ${Radius.sm};
+                border-radius-bottom-left: ${Radius.sm};
                 border-radius-bottom-right: ${Radius.sm};
             }
         `}

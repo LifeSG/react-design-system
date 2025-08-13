@@ -1,6 +1,13 @@
 import styled from "styled-components";
 import { PopoverOverflowType } from "../popover-v2/types";
-import { Border, Breakpoint, Colour, MediaQuery, Radius } from "../theme";
+import {
+    Border,
+    Breakpoint,
+    Colour,
+    MediaQuery,
+    Radius,
+    Shadow,
+} from "../theme";
 
 // =============================================================================
 // STYLES INTERFACE
@@ -17,8 +24,7 @@ export const MenuPanel = styled.div<MenuPanelStylesProps>`
     border-radius: ${Radius["md"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     background: ${Colour["bg"]};
-    box-shadow: 0 2px 8px 0
-        rgb(from ${Colour.Primitive["neutral-50"]} r g b / 16%);
+    box-shadow: ${Shadow["md-subtle"]};
     min-width: 15rem;
     max-width: 24rem;
 

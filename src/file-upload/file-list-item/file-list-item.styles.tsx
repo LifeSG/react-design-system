@@ -2,7 +2,14 @@ import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-han
 import styled, { css } from "styled-components";
 import { IconButton as DSIconButton } from "../../icon-button";
 import { ClickableIcon } from "../../shared/clickable-icon";
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../../theme";
+import {
+    Border,
+    Colour,
+    MediaQuery,
+    Radius,
+    Shadow,
+    Spacing,
+} from "../../theme";
 import { Typography } from "../../typography";
 
 // =============================================================================
@@ -121,8 +128,7 @@ export const Box = styled.div<BoxStyleProps>`
         if (props.$focused) {
             return css`
                 border-color: ${Colour["border-focus"]};
-                box-shadow: 0 0 4px 1px
-                    rgb(from ${Colour["border-focus"]} r g b / 50%);
+                box-shadow: ${Shadow["xs-focus-strong"]};
             `;
         } else if (props.$disabled) {
             return css`

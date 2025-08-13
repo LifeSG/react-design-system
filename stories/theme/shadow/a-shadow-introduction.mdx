@@ -1,0 +1,43 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Foundations/Shadow/Introduction" />
+
+# Shadow
+
+```tsx
+import { Shadow } from "@lifesg/react-design-system/theme";
+```
+
+The **shadow** tokens define the drop shadow of elements and imply elevation.
+
+## Collections
+
+[Default](/docs/foundations-shadow-default--docs)
+
+## Usage
+
+Apply the tokens when defining box shadows.
+
+```tsx
+import { Shadow } from "@lifesg/react-design-system/theme";
+import styled from "styled-components";
+
+const Container = styled.div`
+    box-shadow: ${Shadow["sm-subtle"]};
+`;
+```
+
+## Overriding
+
+```tsx
+import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+
+const customTheme: ThemeSpec = {
+    ...LifeSGTheme,
+    overrides: {
+        shadow: {
+            "sm-subtle": "0 0 4px 1px rgba(0, 0, 0, 0.5)", // specify a custom box shadow value
+        },
+    },
+};
+```
