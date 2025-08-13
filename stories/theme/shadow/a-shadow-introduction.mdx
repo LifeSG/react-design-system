@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/blocks";
-import { DocInfo, DocNote } from "stories/storybook-common";
 
 <Meta title="Foundations/Shadow/Introduction" />
 
@@ -9,7 +8,7 @@ import { DocInfo, DocNote } from "stories/storybook-common";
 import { Shadow } from "@lifesg/react-design-system/theme";
 ```
 
-The **shadow** tokens define the box shadow of elements.
+The **shadow** tokens define the drop shadow of elements and imply elevation.
 
 ## Collections
 
@@ -17,7 +16,7 @@ The **shadow** tokens define the box shadow of elements.
 
 ## Usage
 
-Apply the tokens when defining box shadow.
+Apply the tokens when defining box shadows.
 
 ```tsx
 import { Shadow } from "@lifesg/react-design-system/theme";
@@ -37,7 +36,7 @@ const customTheme: ThemeSpec = {
     ...LifeSGTheme,
     overrides: {
         shadow: {
-            sm-subtle: 0 0 4px 1px rgba(0, 0, 0, 0.5), // specify a custom box shadow value
+            "sm-subtle": "0 0 4px 1px rgba(0, 0, 0, 0.5)", // specify a custom box shadow value
         },
     },
 };

@@ -24,7 +24,12 @@ export const getShadow = (key: keyof ShadowSet) => {
             ? getValue(shadowSet, key, theme.overrides.shadow)
             : shadowSet[key];
 
-        return shadowValue(props);
+        // If function, resolve with props
+        if (typeof shadowValue === "function") {
+            return shadowValue(props);
+        }
+
+        return shadowValue;
     };
 };
 

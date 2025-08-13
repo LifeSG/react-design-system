@@ -2,7 +2,7 @@ import { CSSProp } from "styled-components";
 import { ShadowScheme } from "../types";
 import { StyledComponentProps } from "../helpers";
 
-type ShadowValue = (props: StyledComponentProps) => CSSProp;
+type ShadowValue = string | ((props: StyledComponentProps) => CSSProp);
 
 export type ShadowSet = {
     "xs-subtle": ShadowValue;
