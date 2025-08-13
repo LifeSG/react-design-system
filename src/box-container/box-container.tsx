@@ -1,5 +1,5 @@
 import { useSpring } from "@react-spring/web";
-import { useContext, useState, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
@@ -14,7 +14,6 @@ import {
     HandleIcon,
     HandleIconContainer,
     Header,
-    // LabelIcon,
     LabelText,
     LabelWrapper,
     NonExpandable,
