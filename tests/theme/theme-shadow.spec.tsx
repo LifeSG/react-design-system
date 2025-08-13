@@ -44,7 +44,7 @@ describe("Shadow Theming Test", () => {
 
         expect(container.firstChild).toHaveStyleRule(
             "box-shadow",
-            "0 8px 16px rgba(0,0,0,0.15)"
+            "0 8px 16px rgba(0, 0, 0, 0.15)"
         );
     });
 
@@ -75,12 +75,12 @@ describe("Shadow Theming Test", () => {
 
         expect(container.firstChild).toHaveStyleRule(
             "box-shadow",
-            "0 2px 4px rgba(0,0,0,0.1)"
+            "0 2px 4px rgba(0, 0, 0, 0.1)"
         );
 
         expect(container.firstChild).toHaveStyleRule(
             "filter",
-            "drop-shadow(0 12px 20px rgba(0,0,0,0.15))"
+            "drop-shadow(0 12px 20px rgba(0, 0, 0, 0.15))"
         );
     });
 
