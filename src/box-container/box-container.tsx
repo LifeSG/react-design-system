@@ -21,6 +21,7 @@ import {
 } from "./box-container.styles";
 import { BoxContainerProps } from "./types";
 import { SimpleIdGenerator } from "../util";
+import { VisuallyHidden } from "../shared/accessibility";
 
 export const BoxContainer = ({
     children,
@@ -118,7 +119,7 @@ export const BoxContainer = ({
                     aria-labelledby={headerId}
                     aria-controls={contentId}
                     aria-disabled={!collapsible} // remains focusable
-                    aria-expanded={expanded}
+                    aria-expanded={showExpanded}
                     data-testid={subComponentTestIds?.handle || "handle"}
                 >
                     <HandleIconContainer $expanded={showExpanded} aria-hidden>
@@ -130,21 +131,22 @@ export const BoxContainer = ({
     };
 
     return (
-        <Container
-            {...otherProps}
-            role={displayState !== "default" ? "status" : undefined}
-            aria-labelledby={headerId}
-        >
+        <Container {...otherProps} aria-labelledby={headerId}>
             <Header
                 data-testid="header"
                 onClick={interactiveHeader ? onHandleClick : undefined}
                 $interactive={interactiveHeader}
             >
-                <LabelWrapper>
+                <LabelWrapper
+                    role={displayState !== "default" ? "status" : undefined}
+                >
                     <LabelText
                         data-testid={subComponentTestIds?.title || "title"}
                     >
                         {title}
+                        {displayState !== "default" && (
+                            <VisuallyHidden>{`${displayState} state`}</VisuallyHidden>
+                        )}
                     </LabelText>
                     {renderDisplayIcon()}
                     {isMobile && renderHandleIcon()}
