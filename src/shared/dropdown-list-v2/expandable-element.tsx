@@ -11,7 +11,6 @@ interface ExpandableElementProps {
     popupRole: AriaAttributes["aria-haspopup"];
     readOnly: boolean | undefined;
     variant: DropdownVariantType;
-    "aria-label"?: string;
 }
 
 export const Component = (
@@ -23,7 +22,6 @@ export const Component = (
         popupRole,
         readOnly,
         variant,
-        "aria-label": ariaLabel,
     }: ExpandableElementProps,
     ref: Ref<HTMLButtonElement>
 ) => {
@@ -40,7 +38,6 @@ export const Component = (
             disabled={disabled}
             aria-controls={listboxId}
             $variant={variant}
-            aria-label={ariaLabel}
         >
             {children}
             {!readOnly && (
