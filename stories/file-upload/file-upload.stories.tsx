@@ -109,6 +109,7 @@ export const WithLoadingIndicator: StoryObj<Component> = {
                     name: file.name,
                     size: file.size,
                     type: file.type,
+                    progress: 0, 
                 };
             });
             setFileItems((prevItems) => {

@@ -13,7 +13,14 @@ import {
     sortableKeyboardCoordinates,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useContext, useEffect, useRef, useState } from "react";
+import React, {
+    forwardRef,
+    useContext,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { FileUploadContext } from "./context";
 import { MouseSensor } from "./custom-sensors";
@@ -22,6 +29,7 @@ import { FileListItem } from "./file-list-item";
 import { EditableItemsContainer, ListWrapper } from "./file-list.styles";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
+import { VisuallyHidden } from "../shared/accessibility";
 
 // =============================================================================
 // INTERFACES
@@ -45,26 +53,54 @@ interface Props {
     onSort?: ((reorderedFileItems: FileItemProps[]) => void) | undefined;
 }
 
+export interface FileListRef {
+    focus: () => void;
+}
+
 // =============================================================================
 // COMPONENT
 // =============================================================================
 
-export const FileList = ({
-    fileItems,
-    editableFileItems,
-    fileDescriptionMaxLength,
-    sortable,
-    disabled,
-    readOnly,
-    onItemUpdate,
-    onItemDelete,
-    onSort,
-}: Props) => {
+function Component(
+    {
+        fileItems: incomingFileItems,
+        editableFileItems,
+        fileDescriptionMaxLength,
+        sortable,
+        disabled,
+        readOnly,
+        onItemUpdate,
+        onItemDelete,
+        onSort,
+    }: Props,
+    ref: React.Ref<FileListRef>
+) {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
+    const fileItems = incomingFileItems ?? [];
+    const visuallyHiddenRef = useRef<HTMLDivElement>(null);
     const [renderModes, setRenderModes] = useState<FileItemRenderModes>({});
     const { setActiveId } = useContext(FileUploadContext);
+
+    // Throttled progress announcement state (for aria-live)
+    const [progressAnnouncement, setProgressAnnouncement] = useState("");
+    const lastAnnouncedRef = useRef<
+        Record<
+            string,
+            {
+                progress: number;
+                timestamp: number;
+                status: "in-progress" | "complete" | "error";
+            }
+        >
+    >({});
+
+    useImperativeHandle(ref, () => ({
+        focus: () => {
+            wrapperRef.current?.focus();
+        },
+    }));
     const { width: wrapperWidth = 0, ref: wrapperRef } = useResizeDetector();
 
     // Keep track of edited description without re-rendering
@@ -99,11 +135,113 @@ export const FileList = ({
         delete descriptionsValueRef.current[itemId];
     };
 
+    const shallowCompareRenderModes = (
+        prev: FileItemRenderModes,
+        next: FileItemRenderModes
+    ) => {
+        const prevKeys = Object.keys(prev);
+        const nextKeys = Object.keys(next);
+        if (prevKeys.length !== nextKeys.length) {
+            return false;
+        }
+        for (const k of nextKeys) {
+            if (prev[k] !== next[k]) {
+                return false;
+            }
+        }
+        return true;
+    };
+
     // =========================================================================
     // EFFECTS
     // =========================================================================
     useEffect(() => {
-        setRenderModes(getItemsRenderMode(fileItems));
+        const nextModes = getItemsRenderMode(fileItems);
+        const prevModes = renderModes;
+        // We perform shallowCompare to avoid infinite re-render loop
+        if (shallowCompareRenderModes(prevModes, nextModes)) {
+            return;
+        }
+        setRenderModes(nextModes);
+    }, [fileItems, editableFileItems, readOnly]);
+
+    // Throttle logic for progress announcements (every 10% OR 1.5s) + always on completion/error
+    useEffect(() => {
+        if (!fileItems || fileItems.length === 0) {
+            setProgressAnnouncement("");
+            return;
+        }
+        const now = Date.now();
+        const PERCENT_STEP = 10; // Announce every 10%
+        const TIME_STEP_MS = 1500; // Or every 1.5s
+        const messages: string[] = [];
+
+        for (const item of fileItems) {
+            const fileStatus = lastAnnouncedRef.current[item.id];
+
+            if (item.errorMessage) {
+                if (fileStatus?.status !== "error") {
+                    messages.push(
+                        `Error uploading ${item.name}: ${item.errorMessage}`
+                    );
+                    lastAnnouncedRef.current[item.id] = {
+                        progress: item.progress ?? 1,
+                        timestamp: now,
+                        status: "error",
+                    };
+                }
+                continue;
+            }
+
+            if (item.progress === undefined) {
+                continue;
+            }
+
+            if (item.progress >= 1) {
+                if (fileStatus?.status !== "complete") {
+                    messages.push(`${item.name} upload is complete`);
+                    lastAnnouncedRef.current[item.id] = {
+                        progress: 1,
+                        timestamp: now,
+                        status: "complete",
+                    };
+                }
+                continue;
+            }
+
+            // In progress
+            if (typeof item.progress === "number" && item.progress < 1) {
+                const percentProgress = Math.round(item.progress * 100);
+
+                // Throttling of announcements to prevent screenreader from spamming aria-live announcements on progress updates
+                const shouldAnnounce = (() => {
+                    if (!fileStatus) return true;
+                    if (fileStatus.status !== "in-progress") return true;
+                    const prevPercentProgress = Math.round(
+                        fileStatus.progress * 100
+                    );
+                    if (percentProgress - prevPercentProgress >= PERCENT_STEP)
+                        return true;
+                    if (now - fileStatus.timestamp >= TIME_STEP_MS) return true;
+                    return false;
+                })();
+                if (shouldAnnounce) {
+                    messages.push(
+                        `${percentProgress}% complete for uploading ${item.name}`
+                    );
+                    lastAnnouncedRef.current[item.id] = {
+                        progress: item.progress,
+                        timestamp: now,
+                        status: "in-progress",
+                    };
+                }
+            }
+        }
+
+        if (messages.length > 0) {
+            // Update aria-live region once with aggregated message
+            setProgressAnnouncement(messages.join(", "));
+        }
     }, [fileItems]);
 
     // =========================================================================
@@ -137,6 +275,9 @@ export const FileList = ({
 
     const handleDelete = (item: FileItemProps) => () => {
         onItemDelete(item);
+        if (wrapperRef.current) {
+            wrapperRef.current.focus();
+        }
     };
 
     const handleDragEnd = (event: DragEndEvent) => {
@@ -261,6 +402,47 @@ export const FileList = ({
         );
     };
 
+    /**
+     * If there are no files, return "No files uploaded".
+     * If readOnly is true, return "Read-only file list".
+     * If there are files, return a summary of the file statuses.
+     * For example, "File list. 2 completed files, 1 file in progress, 1 file with error".
+     *
+     * @returns aria label
+     */
+    const getWrapperAriaLabel = () => {
+        if (fileItems.length === 0) {
+            return "No files uploaded";
+        }
+        const completedCount = fileItems.filter(
+            (item) =>
+                !item?.errorMessage &&
+                (item.progress === 1 || item.progress === undefined)
+        ).length;
+        const inProgressCount = fileItems.filter(
+            (item) => typeof item.progress === "number" && item.progress < 1
+        ).length;
+        const errorCount = fileItems.filter((item) => item.errorMessage).length;
+        if (completedCount === 0 && inProgressCount === 0 && errorCount === 0) {
+            return `File list`;
+        }
+        const completedText =
+            completedCount > 0 ? `${completedCount} completed files` : "";
+        const inProgressText =
+            inProgressCount > 0 ? `${inProgressCount} file in progress` : "";
+        const errorText =
+            errorCount > 0
+                ? `${errorCount} ${
+                      errorCount > 1 ? "files" : "file"
+                  } with error`
+                : "";
+        const parts = [completedText, inProgressText, errorText].filter(
+            Boolean
+        );
+        const prefix = readOnly ? "Read-only file list" : "File list";
+        return `${prefix}. ${parts.join(", ")}`;
+    };
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -321,14 +503,42 @@ export const FileList = ({
         });
     };
 
-    if (!fileItems || fileItems.length === 0) return null;
+    /**
+     * Renders the progress status of each file upload.
+     * In progress: 25% complete for uploading filename.pdf
+     * Complete: filename.pdf upload is complete
+     * Error: Error uploading filename.pdf: error message
+     *
+     * @returns A visually hidden element announcing the progress status.
+     */
+    const renderProgressStatus = () => (
+        <VisuallyHidden
+            ref={visuallyHiddenRef}
+            aria-live="polite"
+            aria-atomic="true"
+        >
+            {progressAnnouncement}
+        </VisuallyHidden>
+    );
+
+    const renderItemsWithWrapper = () => {
+        return (
+            <>
+                {renderProgressStatus()}
+                <ListWrapper
+                    tabIndex={-1}
+                    $readOnly={readOnly}
+                    ref={wrapperRef}
+                    aria-label={getWrapperAriaLabel()}
+                >
+                    {renderItems()}
+                </ListWrapper>
+            </>
+        );
+    };
 
     if (disabled || readOnly || !shouldEnableSort()) {
-        return (
-            <ListWrapper $readOnly={readOnly} ref={wrapperRef}>
-                {renderItems()}
-            </ListWrapper>
-        );
+        return renderItemsWithWrapper();
     } else {
         return (
             <DndContext
@@ -340,11 +550,11 @@ export const FileList = ({
                     items={fileItems}
                     strategy={verticalListSortingStrategy}
                 >
-                    <ListWrapper $readOnly={readOnly} ref={wrapperRef}>
-                        {renderItems()}
-                    </ListWrapper>
+                    {renderItemsWithWrapper()}
                 </SortableContext>
             </DndContext>
         );
     }
-};
+}
+
+export const FileList = forwardRef<FileListRef, Props>(Component);
