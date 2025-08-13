@@ -102,40 +102,42 @@ export const SpecifyingMode: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+// NOTE: SB freezes with nested JSX, workaround is to declare outside of the CSF
+const _WithSearch = (
+    <>
+        <Form.NestedMultiSelect
+            label="This has searchable options"
+            options={searchOptions}
+            enableSearch
+        />
+        <Form.NestedMultiSelect
+            label="Custom label when no results are found"
+            options={searchOptions}
+            enableSearch
+            customLabels={{
+                noResultsLabel: "Custom no result found.",
+            }}
+        />
+        <Form.NestedMultiSelect
+            label="Custom description when no results are found"
+            options={searchOptions}
+            enableSearch
+            customLabels={{
+                noResultsDescription: (
+                    <>
+                        Display additional information here when no results are
+                        found. There is default styling for commonly used markup
+                        such as <strong>bold text</strong> or <a>links</a>.
+                    </>
+                ),
+            }}
+        />
+    </>
+);
+
 export const WithSearch: StoryObj<Component> = {
-    render: () => {
-        return (
-            <>
-                <Form.NestedMultiSelect
-                    label="This has searchable options"
-                    options={searchOptions}
-                    enableSearch
-                />
-                <Form.NestedMultiSelect
-                    label="Custom label when no results are found"
-                    options={searchOptions}
-                    enableSearch
-                    customLabels={{
-                        noResultsLabel: "Custom no result found.",
-                    }}
-                />
-                <Form.NestedMultiSelect
-                    label="Custom description when no results are found"
-                    options={searchOptions}
-                    enableSearch
-                    customLabels={{
-                        noResultsDescription: (
-                            <>
-                                Display additional information here when no
-                                results are found. There is default styling for
-                                commonly used markup such as{" "}
-                                <strong>bold text</strong> or <a>links</a>.
-                            </>
-                        ),
-                    }}
-                />
-            </>
-        );
+    render: (_args) => {
+        return _WithSearch;
     },
     decorators: [StoryDecorator({ maxWidth: true })],
 };

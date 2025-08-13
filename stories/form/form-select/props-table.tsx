@@ -174,7 +174,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "customLabels",
-                description: "Specifies custom label to replace default labels",
+                description:
+                    "Specifies custom labels to replace default labels",
                 propTypes: ["DropdownCustomLabelProps"],
             },
             {
