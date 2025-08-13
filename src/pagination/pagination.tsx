@@ -5,7 +5,7 @@ import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { InputSelect } from "../input-select";
 import { Breakpoint } from "../theme";
@@ -403,7 +403,6 @@ const Component = (
                         displayValueExtractor={(item) => item.label}
                         selectedOption={selectedOption}
                         onSelectOption={handleListItemClick}
-                        aria-label={`show ${selectedOption?.value} per page`}
                     />
                 </InputSelectWrapper>
             )}
