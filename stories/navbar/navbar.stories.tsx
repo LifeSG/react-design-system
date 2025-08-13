@@ -11,7 +11,11 @@ import {
     NavbarDrawerHandle,
 } from "src/navbar";
 import { FullWidthStoryDecorator } from "stories/storybook-common";
-import { DesktopCustomComponent, MobileCustomComponent } from "./doc-elements";
+import {
+    DesktopCustomComponent,
+    MobileCustomComponent,
+    NavbarAvatar,
+} from "./doc-elements";
 
 type Component = typeof Navbar;
 
@@ -448,5 +452,40 @@ export const HiddenBranding: StoryObj<Component> = {
                 hideNavBranding
             />
         );
+    },
+};
+
+const _WithAvatar = (
+    <Navbar
+        items={{ desktop: navItems }}
+        selectedId="home"
+        actionButtons={{
+            desktop: [
+                {
+                    type: "button",
+                    args: {
+                        styleType: "link",
+                        children: "FAQ",
+                    },
+                },
+                {
+                    type: "download",
+                },
+                {
+                    type: "component",
+                    args: {
+                        render: <NavbarAvatar />,
+                    },
+                    uncollapsible: true,
+                },
+            ],
+        }}
+        fixed={false}
+    />
+);
+
+export const WithAvatar: StoryObj<Component> = {
+    render: (_args) => {
+        return _WithAvatar;
     },
 };
