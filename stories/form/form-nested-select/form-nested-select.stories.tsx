@@ -100,30 +100,42 @@ export const SelectableCategory: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+// NOTE: SB freezes with nested JSX, workaround is to declare outside of the CSF
+const _WithSearch = (
+    <>
+        <Form.NestedSelect
+            label="This has searchable options"
+            options={searchOptions}
+            enableSearch
+        />
+        <Form.NestedSelect
+            label="Custom label when no results are found"
+            options={searchOptions}
+            enableSearch
+            customLabels={{
+                noResultsLabel: "Custom no result found.",
+            }}
+        />
+        <Form.NestedSelect
+            label="Custom description when no results are found"
+            options={searchOptions}
+            enableSearch
+            customLabels={{
+                noResultsDescription: (
+                    <>
+                        Display additional information here when no results are
+                        found. There is default styling for commonly used markup
+                        such as <strong>bold text</strong> or <a>links</a>.
+                    </>
+                ),
+            }}
+        />
+    </>
+);
+
 export const WithSearch: StoryObj<Component> = {
     render: (_args) => {
-        return (
-            <>
-                <Form.NestedSelect
-                    label="This has searchable options"
-                    options={searchOptions}
-                    enableSearch
-                />
-                <Form.NestedSelect
-                    label="Custom description when no results are found"
-                    options={searchOptions}
-                    enableSearch
-                    noResultsDescription={
-                        <>
-                            Display additional information here when no results
-                            are found. There is default styling for commonly
-                            used markup such as <strong>bold text</strong> or{" "}
-                            <a>links</a>.
-                        </>
-                    }
-                />
-            </>
-        );
+        return _WithSearch;
     },
     decorators: [StoryDecorator({ maxWidth: true })],
 };

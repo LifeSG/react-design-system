@@ -38,6 +38,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     searchPlaceholder,
     hideNoResultsDisplay,
     noResultsDescription,
+    customLabels,
     readOnly,
     onSearch,
     onSelectOptions,
@@ -55,6 +56,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     // =========================================================================
     // CONST, STATE
     // =========================================================================
+    const { multiSelectedLabel } = customLabels || {};
     const options = _options as NestedDropdownListItemProps<V1 | V2 | V3>[];
     const [selectedKeyPaths, setSelectedKeyPaths] = useState<Set<string>>(
         _selectedKeyPaths
@@ -158,7 +160,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     // =========================================================================
     const getDisplayValue = (): string => {
         if (selectedItems.length > 1) {
-            return `${selectedItems.length} selected`;
+            return multiSelectedLabel || `${selectedItems.length} selected`;
         }
 
         const { label, value } = selectedItems[0];
@@ -307,6 +309,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
                 searchPlaceholder={searchPlaceholder}
                 hideNoResultsDisplay={hideNoResultsDisplay}
                 noResultsDescription={noResultsDescription}
+                customLabels={customLabels}
                 onSelectItem={handleListItemClick}
                 onSelectAll={handleSelectAll}
                 onRetry={onRetry}

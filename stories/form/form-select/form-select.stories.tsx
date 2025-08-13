@@ -134,36 +134,51 @@ export const WithCustomListItemDisplay: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+// NOTE: SB freezes with nested JSX, workaround is to declare outside of the CSF
+const _WithSearch = (
+    <>
+        <Form.Select
+            label="This has searchable options"
+            options={OPTIONS_DATA}
+            valueExtractor={(item) => item.value}
+            listExtractor={(item) => item.label}
+            displayValueExtractor={(item) => item.label}
+            enableSearch
+        />
+        <Form.Select
+            label="Custom label when no results are found"
+            options={OPTIONS_DATA}
+            valueExtractor={(item) => item.value}
+            listExtractor={(item) => item.label}
+            displayValueExtractor={(item) => item.label}
+            enableSearch
+            customLabels={{
+                noResultsLabel: "Custom no result found.",
+            }}
+        />
+        <Form.Select
+            label="Custom description when no results are found"
+            options={OPTIONS_DATA}
+            valueExtractor={(item) => item.value}
+            listExtractor={(item) => item.label}
+            displayValueExtractor={(item) => item.label}
+            enableSearch
+            customLabels={{
+                noResultsDescription: (
+                    <>
+                        Display additional information here when no results are
+                        found. There is default styling for commonly used markup
+                        such as <strong>bold text</strong> or <a>links</a>.
+                    </>
+                ),
+            }}
+        />
+    </>
+);
+
 export const WithSearch: StoryObj<Component> = {
     render: (_args) => {
-        return (
-            <>
-                <Form.Select
-                    label="This has searchable options"
-                    options={OPTIONS_DATA}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
-                    displayValueExtractor={(item) => item.label}
-                    enableSearch
-                />
-                <Form.Select
-                    label="Custom description when no results are found"
-                    options={OPTIONS_DATA}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
-                    displayValueExtractor={(item) => item.label}
-                    enableSearch
-                    noResultsDescription={
-                        <>
-                            Display additional information here when no results
-                            are found. There is default styling for commonly
-                            used markup such as <strong>bold text</strong> or{" "}
-                            <a>links</a>.
-                        </>
-                    }
-                />
-            </>
-        );
+        return _WithSearch;
     },
     decorators: [StoryDecorator({ maxWidth: true })],
 };

@@ -61,13 +61,23 @@ export const NestedDropdownList = <T,>({
     /* DropdownSearchProps */
     enableSearch,
     hideNoResultsDisplay,
-    noResultsDescription,
-    searchPlaceholder = "Search",
+    noResultsDescription: _noResultsDescription,
+    customLabels,
+    searchPlaceholder: _searchPlaceholder,
     onSearch,
 }: NestedDropdownListProps<T>) => {
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
+    const {
+        noResultsLabel = "No results found.",
+        selectAllButtonLabel = "Select all",
+        clearAllButtonLabel = "Clear all",
+    } = customLabels || {};
+    const searchPlaceholder =
+        customLabels?.searchPlaceholder || _searchPlaceholder || "Search";
+    const noResultsDescription =
+        customLabels?.noResultsDescription || _noResultsDescription;
     const selectableCategory = multiSelect || _selectableCategory;
     const [searchValue, setSearchValue] = useState<string>("");
     const searchTerm = searchValue.toLowerCase().trim();
@@ -424,8 +434,8 @@ export const NestedDropdownList = <T,>({
                         $variant={variant}
                     >
                         {selectedKeyPaths.size === 0
-                            ? "Select all"
-                            : "Clear all"}
+                            ? selectAllButtonLabel
+                            : clearAllButtonLabel}
                     </SelectAllButton>
                 </SelectAllContainer>
             );
@@ -443,7 +453,7 @@ export const NestedDropdownList = <T,>({
                 <>
                     <ResultStateContainer data-testid="list-no-results">
                         <LabelIcon data-testid="no-result-icon" />
-                        No results found.
+                        {noResultsLabel}
                     </ResultStateContainer>
                     {noResultsDescription && (
                         <NoResultDescContainer data-testid="no-result-desc">

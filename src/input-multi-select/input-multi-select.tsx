@@ -42,6 +42,7 @@ export const InputMultiSelect = <T, V>({
     renderListItem,
     hideNoResultsDisplay,
     noResultsDescription,
+    customLabels,
     renderCustomCallToAction,
     onBlur,
     variant = "default",
@@ -54,6 +55,7 @@ export const InputMultiSelect = <T, V>({
     // =============================================================================
     // CONST, STATE
     // =============================================================================
+    const { allSelectedLabel, multiSelectedLabel } = customLabels || {};
     const [selected, setSelected] = useState<T[]>(selectedOptions || []);
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
@@ -156,10 +158,10 @@ export const InputMultiSelect = <T, V>({
     // =============================================================================
     const getDisplayValue = () => {
         if (options && selected.length === options.length) {
-            return "All selected";
+            return allSelectedLabel || "All selected";
         }
 
-        return `${selected.length} selected`;
+        return multiSelectedLabel || `${selected.length} selected`;
     };
 
     const triggerOptionDisplayCallback = (show: boolean) => {
@@ -254,6 +256,7 @@ export const InputMultiSelect = <T, V>({
                 renderListItem={renderListItem}
                 hideNoResultsDisplay={hideNoResultsDisplay}
                 noResultsDescription={noResultsDescription}
+                customLabels={customLabels}
                 renderCustomCallToAction={renderCustomCallToAction}
                 variant={variant}
                 width={elementWidth}

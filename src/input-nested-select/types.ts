@@ -4,6 +4,7 @@ import {
     InputSelectSharedProps,
 } from "../input-select";
 import {
+    DropdownCustomLabelProps,
     DropdownSearchProps,
     DropdownVariantType,
     ExpandMode,
@@ -56,6 +57,7 @@ export interface InputNestedSelectProps<V1, V2, V3>
     /** @deprecated this has no effect as the dropdown will automatically resize */
     listStyleWidth?: string | undefined;
     onBlur?: (() => void) | undefined;
+    customLabels?: DropdownCustomLabelProps | undefined;
 }
 
 /** To be exposed for Form component inheritance */

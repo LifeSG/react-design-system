@@ -93,10 +93,16 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
-                name: "noResultsDescription",
+                name: "noResultsDescription (deprecated)",
                 description:
                     "Additional description rendered after the default no results display",
                 propTypes: ["React.ReactNode"],
+            },
+            {
+                name: "customLabels",
+                description:
+                    "Specifies custom labels to replace default labels",
+                propTypes: ["DropdownCustomLabelProps"],
             },
             {
                 name: "listStyleWidth (deprecated)",
@@ -117,7 +123,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
-                name: "searchPlaceholder",
+                name: "searchPlaceholder (deprecated)",
                 description: "The placeholder for the search field",
                 propTypes: ["string"],
             },
@@ -196,6 +202,52 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onBlur",
                 description: "Called when a defocus on the field is made",
                 propTypes: ["() => void"],
+            },
+        ],
+    },
+    {
+        name: "DropdownCustomLabelProps",
+        attributes: [
+            {
+                name: "searchPlaceholder",
+                description: "The placeholder for the search field",
+                propTypes: ["string"],
+            },
+            {
+                name: "noResultsLabel",
+                description:
+                    "Specifies to replace the default no results display",
+                propTypes: ["string"],
+            },
+            {
+                name: "noResultsDescription",
+                description:
+                    "Additional description rendered after the default no results display",
+                propTypes: ["() => React.ReactNode"],
+            },
+            {
+                name: "selectAllButtonLabel",
+                description:
+                    "Specifies to replace the default Select all button label",
+                propTypes: ["string"],
+            },
+            {
+                name: "clearAllButtonLabel",
+                description:
+                    "Specifies to replace the default Clear all button label",
+                propTypes: ["string"],
+            },
+            {
+                name: "allSelectedLabel",
+                description:
+                    "Specifies to replace the default All selected label",
+                propTypes: ["string"],
+            },
+            {
+                name: "multiSelectedLabel",
+                description:
+                    "Specifies to replace the default X selected label",
+                propTypes: ["string"],
             },
         ],
     },

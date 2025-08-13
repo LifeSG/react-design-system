@@ -45,6 +45,7 @@ export const InputSelect = <T, V>({
     renderListItem,
     hideNoResultsDisplay,
     noResultsDescription,
+    customLabels,
     renderCustomCallToAction,
     onBlur,
     variant = "default",
@@ -255,6 +256,7 @@ export const InputSelect = <T, V>({
                 renderListItem={renderListItem}
                 hideNoResultsDisplay={hideNoResultsDisplay}
                 noResultsDescription={noResultsDescription}
+                customLabels={customLabels}
                 renderCustomCallToAction={renderCustomCallToAction}
                 variant={variant}
                 width={elementWidth}

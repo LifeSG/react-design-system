@@ -4,6 +4,7 @@ import {
     InputSelectSharedProps,
 } from "../input-select/types";
 import {
+    DropdownCustomLabelProps,
     DropdownDisplayProps,
     DropdownSearchProps,
     DropdownVariantType,
@@ -24,6 +25,7 @@ export interface InputMultiSelectProps<T, V>
     alignment?: DropdownAlignmentType | undefined;
     dropdownZIndex?: number | undefined;
     maxSelectable?: number | undefined;
+    customLabels?: DropdownCustomLabelProps | undefined;
     /** @deprecated this has no effect as the dropdown will automatically resize */
     listStyleWidth?: string | undefined;
     /**
