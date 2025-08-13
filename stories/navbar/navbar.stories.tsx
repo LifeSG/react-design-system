@@ -455,19 +455,11 @@ export const HiddenBranding: StoryObj<Component> = {
     },
 };
 
-export const WithAvatar: StoryObj<Component> = {
-    parameters: { docs: { source: { type: "code" } } },
-    decorators: [FullWidthStoryDecorator({})],
-    args: {
-        items: {
-            desktop: [
-                {
-                    id: "home",
-                    children: "Home",
-                },
-            ],
-        },
-        actionButtons: {
+const _WithAvatar = (
+    <Navbar
+        items={{ desktop: navItems }}
+        selectedId="home"
+        actionButtons={{
             desktop: [
                 {
                     type: "button",
@@ -487,10 +479,13 @@ export const WithAvatar: StoryObj<Component> = {
                     uncollapsible: true,
                 },
             ],
-        },
-        fixed: false,
-    },
-    render: (args) => {
-        return <Navbar {...args} />;
+        }}
+        fixed={false}
+    />
+);
+
+export const WithAvatar: StoryObj<Component> = {
+    render: (_args) => {
+        return _WithAvatar;
     },
 };
