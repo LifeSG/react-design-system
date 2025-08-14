@@ -11,7 +11,9 @@ interface ScheduleProps {
 }
 
 export const Container = styled.div<ScheduleProps>`
-    width: 100%;
+    min-width: 320px;
+    max-width: 90vw;
+    box-sizing: border-box;
     ${(props) => {
         if (props.$loading) {
             return css`
