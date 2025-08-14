@@ -73,26 +73,28 @@ export const Container = styled.div<StyleProps>`
 
 export const Header = styled.div`
     top: 0;
-
     display: flex;
     align-items: center;
     gap: ${Spacing["spacing-16"]};
     padding: ${Spacing["spacing-32"]} ${Spacing["spacing-16"]}
-        ${Spacing["spacing-16"]};
+        ${Spacing["spacing-16"]} ${Spacing["spacing-64"]};
     background-color: ${Colour.bg};
     border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 
     ${MediaQuery.MaxWidth.lg} {
         gap: ${Spacing["spacing-8"]};
         padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]}
-            ${Spacing["spacing-16"]};
+            ${Spacing["spacing-16"]} ${Spacing["spacing-64"]};
     }
 `;
 
 export const CloseButton = styled(ClickableIcon)`
     color: ${Colour.icon};
-    padding: 0;
+    padding: 2px;
+    position: absolute;
     order: -1; // show button on the left of the header
+    top: ${Spacing["spacing-32"]};
+    left: ${Spacing["spacing-16"]};
     &:active,
     &:focus {
         color: ${Colour["icon-hover"]};

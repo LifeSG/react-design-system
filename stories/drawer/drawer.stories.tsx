@@ -29,13 +29,17 @@ export const Default: StoryObj<Component> = {
                     onOverlayClick={closeDrawer}
                     heading="Header text"
                 >
-                    <Typography.BodyBL style={{ padding: "1rem" }}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
-                    </Typography.BodyBL>
+                    <div style={{ padding: "1rem" }}>
+                        <Typography.BodyBL style={{ marginBottom: "1rem" }}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                            nostrud exercitation ullamco laboris nisi ut aliquip
+                            ex ea commodo consequat.
+                        </Typography.BodyBL>
+
+                        <Button.Default>Some content</Button.Default>
+                    </div>
                 </Drawer>
             </>
         );
