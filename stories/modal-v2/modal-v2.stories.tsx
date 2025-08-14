@@ -90,13 +90,13 @@ export const CustomContent: StoryObj<Component> = {
                     onClose={closeModal}
                 >
                     <ModalV2.Card
-                        customStyle={{
+                        style={{
                             backgroundColor: "yellow",
                             borderRadius: 0,
                         }}
                     >
                         <ModalV2.CloseButton
-                            customStyle={{
+                            style={{
                                 marginRight: "auto",
                                 marginLeft: -8,
                                 marginTop: -8,
