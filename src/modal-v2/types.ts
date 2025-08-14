@@ -27,5 +27,4 @@ export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
     onOverlayClick?: (() => void) | undefined;
     /** Dismiss keyboard to keep modal in fullscreen */
     dismissKeyboardOnShow?: boolean | undefined;
-    enableScroll?: boolean | undefined;
 }

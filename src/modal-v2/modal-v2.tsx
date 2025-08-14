@@ -22,7 +22,6 @@ export const ModalV2 = ({
     zIndex,
     onOverlayClick,
     dismissKeyboardOnShow = true,
-    enableScroll,
     ...otherProps
 }: ModalV2Props): JSX.Element => {
     // =============================================================================
@@ -104,17 +103,6 @@ export const ModalV2 = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderInnerModal = () => (
-        <FloatingFocusManager context={context} initialFocus={refs.floating}>
-            <ModalContainer
-                ref={refs.setFloating}
-                {...getFloatingProps()}
-                aria-modal
-            >
-                {children}
-            </ModalContainer>
-        </FloatingFocusManager>
-    );
 
     return (
         <Overlay
@@ -132,19 +120,28 @@ export const ModalV2 = ({
                 data-testid={id}
                 $verticalHeight={verticalHeight}
                 $offsetTop={offsetTop}
-                $enableScroll={enableScroll}
+                $enableScroll
                 {...otherProps}
                 data-status={status}
             >
                 <ModalContext.Provider value={{ onClose }} key={id}>
-                    {isMounted &&
-                        (enableScroll ? (
-                            <ScrollContainer>
-                                {renderInnerModal()}
-                            </ScrollContainer>
-                        ) : (
-                            renderInnerModal()
-                        ))}
+                    {isMounted && (
+                        <ScrollContainer>
+                            <FloatingFocusManager
+                                context={context}
+                                initialFocus={refs.floating}
+                            >
+                                <ModalContainer
+                                    ref={refs.setFloating}
+                                    {...getFloatingProps()}
+                                    aria-modal
+                                    role="dialog"
+                                >
+                                    {children}
+                                </ModalContainer>
+                            </FloatingFocusManager>
+                        </ScrollContainer>
+                    )}
                 </ModalContext.Provider>
             </Container>
         </Overlay>
