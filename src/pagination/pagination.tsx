@@ -5,7 +5,7 @@ import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { InputSelect } from "../input-select";
 import { Breakpoint } from "../theme";
@@ -26,6 +26,8 @@ import {
 } from "./pagination.styles";
 import { PageSizeItemProps, PaginationProps } from "./types";
 import { ThemeContext } from "styled-components";
+import { VisuallyHidden } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 
 const Component = (
     {
@@ -70,6 +72,9 @@ const Component = (
 
     const boundaryRange = 1;
     const siblingRange = 1;
+
+    const internalId = useRef(SimpleIdGenerator.generate());
+    const paginationId = `${internalId.current}-pagination`;
 
     const totalPages = Math.ceil(totalItems / pageSizeLocal);
     const isFirstPage = activePage === 1;
@@ -211,7 +216,7 @@ const Component = (
                         key={pageIndex}
                         onClick={() => handlePaginationItemClick(pageIndex)}
                         $selected={active}
-                        aria-label={"Page " + pageIndex}
+                        aria-label={`page ${pageIndex} of ${totalPages}`}
                         aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltips}
                         onFocus={closeAllTooltips}
@@ -253,7 +258,7 @@ const Component = (
                         key={pageIndex}
                         onClick={() => handlePaginationItemClick(pageIndex)}
                         $selected={active}
-                        aria-label={"Page " + pageIndex}
+                        aria-label={`page ${pageIndex} of ${totalPages}`}
                         aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltips}
                         onFocus={closeAllTooltips}
@@ -321,6 +326,7 @@ const Component = (
                     type="numeric"
                     id={(id || "pagination") + "-input"}
                     data-testid={(dataTestId || "pagination") + "-input"}
+                    aria-label={`Page ${activePage} of ${totalPages}`}
                 />
             </form>
             <LabelDivider>/</LabelDivider>
@@ -334,8 +340,11 @@ const Component = (
             ref={ref}
             id={id || "pagination-wrapper"}
             data-testid={dataTestId || "pagination"}
-            aria-label="Pagination"
+            aria-labelledby={paginationId}
         >
+            <VisuallyHidden id={paginationId} aria-hidden>
+                pagination
+            </VisuallyHidden>
             <PaginationList>
                 <PaginationMenu>
                     {showFirstAndLastNav && (
@@ -403,7 +412,7 @@ const Component = (
 export const Pagination = React.forwardRef(Component);
 
 const DEFAULT_OPTIONS: PageSizeItemProps[] = [
-    { value: 10, label: "10 / page" },
-    { value: 20, label: "20 / page" },
-    { value: 30, label: "30 / page" },
+    { value: 10, label: "10 per page" },
+    { value: 20, label: "20 per page" },
+    { value: 30, label: "30 per page" },
 ];
