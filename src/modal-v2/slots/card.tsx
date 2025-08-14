@@ -7,7 +7,6 @@ import { ModalCard } from "./slot-styles";
 export const Card = ({
     id = "modal-card",
     children,
-    customStyle,
     ...otherProps
 }: ModalCardProps) => {
     // =============================================================================
@@ -31,7 +30,6 @@ export const Card = ({
 
     return (
         <ModalCard
-            style={customStyle}
             data-testid={id}
             {...otherProps}
             onClick={handleOnClick}
