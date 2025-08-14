@@ -56,10 +56,8 @@ const meta: Meta<Component> = {
 export default meta;
 
 const StyledSchedule = styled(Schedule)`
-    [data-id="schedule-container"] {
-        width: 900px;
-        height: 500px;
-    }
+    height: 500px;
+    width: 900px;
 `;
 
 const PopoverContent = styled.div`
