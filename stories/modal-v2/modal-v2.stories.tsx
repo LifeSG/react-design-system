@@ -196,7 +196,6 @@ export const ScrollableModals: StoryObj<Component> = {
                     show={show}
                     onOverlayClick={closeModal}
                     onClose={closeModal}
-                    enableScroll
                 >
                     <ModalV2.Card>
                         <ModalV2.CloseButton />

@@ -88,16 +88,6 @@ export const ModalTable = () => (
             </DescriptionCol>
             <DefaultCol>{["true"]}</DefaultCol>
         </tr>
-        <tr>
-            <NameCol>enableScroll</NameCol>
-            <DescriptionCol propTypes={["boolean"]}>
-                <>
-                    Allows scrolling on the modal. Enable this if the modal
-                    content is longer than the screen size.
-                </>
-            </DescriptionCol>
-            <DefaultCol>{["true"]}</DefaultCol>
-        </tr>
     </Table>
 );
 
