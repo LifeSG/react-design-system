@@ -125,12 +125,16 @@ export const FilterItem = ({
             {(title || collapsible) && (
                 <FilterItemHeader>
                     {title && (
-                        <FilterItemTitle id={titleId}>
+                        <FilterItemTitle
+                            id={titleId}
+                            data-testid="filter-item-title"
+                        >
                             {title} {addon && renderAddon()}
                         </FilterItemTitle>
                     )}
                     {collapsible && (
                         <FilterItemExpandButton
+                            data-testid={"expand-collapse-button"}
                             focusHighlight={false}
                             focusOutline="browser"
                             onClick={handleExpandCollapse}
