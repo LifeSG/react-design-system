@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius, Spacing } from "../../theme";
+import { Border, Colour, Font, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
 import {
     CELL_HEIGHT,
@@ -166,8 +166,9 @@ export const SlotContent = styled(Typography.BodyXS)<{
     $offsetTop?: number;
 }>`
     margin-top: 0;
+    overflow: hidden;
     width: calc(100% - 27px);
-    padding: ${Spacing["spacing-8"]};
+    padding: 2px ${Spacing["spacing-8"]};
     position: absolute;
     top: ${({ $offsetTop }) => $offsetTop || 0}px;
     font-weight: 500;
@@ -211,10 +212,12 @@ export const SlotContent = styled(Typography.BodyXS)<{
             $status === "available" ? Colour["icon-success"] : "none"};
 `;
 
-export const SlotTime = styled.span``;
+export const SlotTime = styled.span`
+    ${Font["body-xs-regular"]};
+`;
 
 export const SlotAvailability = styled.span`
-    font-weight: 600;
+    ${Font["body-xs-semibold"]};
 `;
 
 export const Timeline = styled.div<{ $top: number }>`

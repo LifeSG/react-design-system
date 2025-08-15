@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { MIN_COLUMN_WIDTH } from "./const";
 import { ErrorDisplay } from "../error-display";
-import { Spacing } from "../theme";
+import { Border, Colour, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
@@ -28,9 +28,12 @@ export const Container = styled.div<ScheduleProps>`
 
 export const EmptyTableContainer = styled.div`
     display: grid;
-    overflow: scroll;
+    overflow: auto;
     position: relative;
     grid-template-columns: ${MIN_COLUMN_WIDTH}px auto;
+    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    border-radius: ${Radius["md"]};
+    background: ${Colour["bg"]};
 `;
 
 export const NoResultsFound = styled(ErrorDisplay)`

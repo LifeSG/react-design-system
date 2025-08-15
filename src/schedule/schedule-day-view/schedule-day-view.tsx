@@ -3,22 +3,25 @@ import { ScheduleDayViewProps } from "./types";
 import { TimeHelper } from "../../util/time-helper";
 import { DateHelper } from "../../util/date-helper";
 import {
-    useTimelineOffset,
-    useInitialScroll,
     calculateSlotOffset,
     findSlotsStartingInTimeRange,
     isTimeCellCovered,
     minutesToTime,
+    useInitialScroll,
+    useTimelineOffset,
 } from "../shared";
 import { WithOptionalPopover } from "../shared/with-optional-popover";
 import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
 import {
     ArrowButton,
+    ArrowContainer,
     BlankCell,
     BodyContainer,
     Description,
+    EmptySlot,
     HeaderContainer,
     LoadingContainer,
+    ScheduleContainer,
     ServiceColumn,
     ServiceContainer,
     SlotAvailability,
@@ -28,14 +31,11 @@ import {
     SlotGrid,
     SlotTime,
     StyleDiv,
-    ScheduleContainer,
     Timeline,
     Title,
-    ArrowContainer,
-    EmptySlot,
 } from "./schedule-day-view.styles";
 import { TimeIndicator } from "../time-indicator/time-indicator";
-import { ScheduleSlotProps, ScheduleEntityProps } from "../types";
+import { ScheduleEntityProps, ScheduleSlotProps } from "../types";
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
 
 export const ScheduleDayView = ({
@@ -157,7 +157,7 @@ export const ScheduleDayView = ({
     const renderHeader = () => {
         return (
             <ServiceContainer $columnCount={serviceData.length}>
-                {serviceData.map((service, idx) => (
+                {serviceData.map((service) => (
                     <ServiceColumn key={service.id}>
                         {isMobile && (
                             <ArrowContainer>
@@ -217,15 +217,20 @@ export const ScheduleDayView = ({
                 $offsetTop={offsetTop}
                 onClick={(e) => slot.onClick && slot.onClick(slot, e)}
             >
-                <SlotTime>
-                    {TimeHelper.parseInput(slot.startTime, "12hr")}
-                    {"\u2013"} {TimeHelper.parseInput(slot.endTime, "12hr")}
-                </SlotTime>
-                <SlotAvailability>
-                    {slot.status === "blocked"
-                        ? blockedMessage
-                        : `${slot.booked} / ${slot.capacity}`}
-                </SlotAvailability>
+                {duration >= 15 && (
+                    <>
+                        <SlotTime>
+                            {TimeHelper.parseInput(slot.startTime, "12hr")}
+                            {"\u2013"}{" "}
+                            {TimeHelper.parseInput(slot.endTime, "12hr")}
+                        </SlotTime>
+                        <SlotAvailability>
+                            {slot.status === "blocked"
+                                ? blockedMessage
+                                : `${slot.booked} / ${slot.capacity}`}
+                        </SlotAvailability>
+                    </>
+                )}
             </SlotContent>
         );
     };
@@ -236,7 +241,11 @@ export const ScheduleDayView = ({
             return (
                 <SlotCell key={time} $startTime={time}>
                     {slots.map((slot, index) => {
-                        const popoverConfig = getPopoverConfig(service, slot, time);
+                        const popoverConfig = getPopoverConfig(
+                            service,
+                            slot,
+                            time
+                        );
                         return (
                             <WithOptionalPopover
                                 key={`${slot.id}-${index}`}
@@ -258,7 +267,11 @@ export const ScheduleDayView = ({
                 >
                     <WithOptionalPopover
                         containerRef={containerRef}
-                        customPopover={getPopoverConfig(service, undefined, time)}
+                        customPopover={getPopoverConfig(
+                            service,
+                            undefined,
+                            time
+                        )}
                     >
                         <EmptySlot />
                     </WithOptionalPopover>
