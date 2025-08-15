@@ -136,9 +136,7 @@ export const BoxContainer = ({
                 onClick={interactiveHeader ? onHandleClick : undefined}
                 $interactive={interactiveHeader}
             >
-                <LabelWrapper
-                    role={displayState !== "default" ? "status" : undefined}
-                >
+                <LabelWrapper role={"status"}>
                     <LabelText
                         data-testid={subComponentTestIds?.title || "title"}
                     >
