@@ -56,7 +56,11 @@ describe("Filter", () => {
                 <Filter.Item title={ITEM_TITLE}>{ITEM_CONTENT}</Filter.Item>
             );
 
-            expect(screen.getByText(ITEM_TITLE)).toBeInTheDocument();
+            expect(
+                within(screen.getByTestId("filter-item-title")).getByText(
+                    ITEM_TITLE
+                )
+            ).toBeInTheDocument();
             expect(screen.getByText(ITEM_CONTENT)).toBeInTheDocument();
         });
 
@@ -74,7 +78,9 @@ describe("Filter", () => {
             it("should be collapsed by default", () => {
                 render(<Filter.Item>{ITEM_CONTENT}</Filter.Item>);
 
-                expect(screen.getByLabelText("Expand")).toBeVisible();
+                expect(
+                    screen.getByTestId("expand-collapse-button")
+                ).toHaveAttribute("aria-expanded", "false");
             });
 
             it("should be expanded by default when initialExpanded is true", () => {
@@ -82,7 +88,9 @@ describe("Filter", () => {
                     <Filter.Item initialExpanded>{ITEM_CONTENT}</Filter.Item>
                 );
 
-                expect(screen.getByLabelText("Collapse")).toBeVisible();
+                expect(
+                    screen.getByTestId("expand-collapse-button")
+                ).toHaveAttribute("aria-expanded", "true");
             });
         });
 
@@ -100,11 +108,15 @@ describe("Filter", () => {
                 ).toHaveAttribute("data-expanded", "false");
 
                 act(() => {
-                    fireEvent.click(screen.getByLabelText("Expand"));
+                    fireEvent.click(
+                        screen.getByTestId("expand-collapse-button")
+                    );
                 });
 
-                expect(screen.getByLabelText("Expand")).toBeVisible();
-                expect(mockOnChange).toBeCalledWith(true);
+                expect(
+                    screen.getByTestId("expand-collapse-button")
+                ).toHaveAttribute("aria-expanded", "false");
+                expect(mockOnChange).toHaveBeenCalledWith(true);
             });
 
             it("should be expanded when expanded prop is true, and not update the local state when display is toggled", () => {
@@ -120,11 +132,15 @@ describe("Filter", () => {
                 ).toHaveAttribute("data-expanded", "true");
 
                 act(() => {
-                    fireEvent.click(screen.getByLabelText("Collapse"));
+                    fireEvent.click(
+                        screen.getByTestId("expand-collapse-button")
+                    );
                 });
 
-                expect(screen.getByLabelText("Collapse")).toBeVisible();
-                expect(mockOnChange).toBeCalledWith(false);
+                expect(
+                    screen.getByTestId("expand-collapse-button")
+                ).toHaveAttribute("aria-expanded", "true");
+                expect(mockOnChange).toHaveBeenCalledWith(false);
             });
 
             it("should be always expanded on mobile even when expanded prop is false", () => {
@@ -158,11 +174,15 @@ describe("Filter", () => {
                 );
 
                 act(() => {
-                    fireEvent.click(screen.getByLabelText("Expand"));
+                    fireEvent.click(
+                        screen.getByTestId("expand-collapse-button")
+                    );
                 });
 
-                expect(screen.getByLabelText("Collapse")).toBeVisible();
-                expect(mockOnChange).toBeCalledWith(true);
+                expect(
+                    screen.getByTestId("expand-collapse-button")
+                ).toHaveAttribute("aria-expanded", "true");
+                expect(mockOnChange).toHaveBeenCalledWith(true);
             });
 
             it("should collapse when display is toggled", () => {
@@ -174,11 +194,15 @@ describe("Filter", () => {
                 );
 
                 act(() => {
-                    fireEvent.click(screen.getByLabelText("Collapse"));
+                    fireEvent.click(
+                        screen.getByTestId("expand-collapse-button")
+                    );
                 });
 
-                expect(screen.getByLabelText("Expand")).toBeVisible();
-                expect(mockOnChange).toBeCalledWith(false);
+                expect(
+                    screen.getByTestId("expand-collapse-button")
+                ).toHaveAttribute("aria-expanded", "false");
+                expect(mockOnChange).toHaveBeenCalledWith(false);
             });
         });
     });

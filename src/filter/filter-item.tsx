@@ -1,6 +1,6 @@
 import { useSpring } from "@react-spring/web";
 import isNil from "lodash/isNil";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { PopoverAddon } from "../form/form-label-addon";
 import { FilterContext } from "./filter-context";
@@ -17,7 +17,8 @@ import {
     MinimisableContent,
 } from "./filter-item.styles";
 import { FilterItemProps } from "./types";
-import { inertValue } from "../shared/accessibility";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 
 export const FilterItem = ({
     collapsible: desktopCollapsible = true,
@@ -51,6 +52,9 @@ export const FilterItem = ({
         ? minimisedHeight ??
           Math.min((contentResizeDetector.height ?? 0) * 0.5, 216)
         : contentResizeDetector.height;
+    const internalId = useRef(SimpleIdGenerator.generate());
+    const contentId = `${internalId.current}-content`;
+    const titleId = `${internalId.current}-title`;
 
     // =============================================================================
     // EFFECTS
@@ -113,7 +117,7 @@ export const FilterItem = ({
     };
 
     return (
-        <FilterItemWrapper $collapsible={collapsible}>
+        <FilterItemWrapper $collapsible={collapsible} aria-labelledby={titleId}>
             <Divider
                 $showDivider={showDivider}
                 $showMobileDivider={showMobileDivider}
@@ -121,24 +125,36 @@ export const FilterItem = ({
             {(title || collapsible) && (
                 <FilterItemHeader>
                     {title && (
-                        <FilterItemTitle>
+                        <FilterItemTitle
+                            id={titleId}
+                            data-testid="filter-item-title"
+                        >
                             {title} {addon && renderAddon()}
                         </FilterItemTitle>
                     )}
                     {collapsible && (
                         <FilterItemExpandButton
+                            data-testid={"expand-collapse-button"}
                             focusHighlight={false}
                             focusOutline="browser"
                             onClick={handleExpandCollapse}
-                            aria-label={expanded ? "Collapse" : "Expand"}
+                            aria-expanded={expanded}
+                            aria-disabled={!collapsible}
+                            aria-controls={contentId}
                         >
-                            <ChevronIcon $expanded={expanded} />
+                            {title && (
+                                <VisuallyHidden as="span">
+                                    {title}
+                                </VisuallyHidden>
+                            )}
+                            <ChevronIcon $expanded={expanded} aria-hidden />
                         </FilterItemExpandButton>
                     )}
                 </FilterItemHeader>
             )}
             <ExpandableItem
-                data-testid="expandable-container"
+                id={contentId}
+                data-testid={"expandable-container"}
                 data-expanded={expanded}
                 style={itemAnimationStyles}
                 inert={inertValue(!expanded)}
@@ -167,7 +183,12 @@ export const FilterItem = ({
                                 type="button"
                                 onClick={handleMinimise}
                             >
-                                View {contentMinimised ? "more" : "less"}
+                                <VisuallyHidden as="span">{`view ${
+                                    contentMinimised ? "more" : "less"
+                                } in ${title}`}</VisuallyHidden>
+                                <span aria-hidden>
+                                    View {contentMinimised ? "more" : "less"}
+                                </span>
                             </FilterItemMinimiseButton>
                         )}
                     </FilterItemBody>

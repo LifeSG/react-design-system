@@ -22,6 +22,7 @@ import {
     MobileOverlayContainer,
 } from "./filter.styles";
 import { FilterProps, Mode } from "./types";
+import { FloatingFocusManager, useFloating } from "@floating-ui/react";
 
 const FilterBase = ({
     customLabels,
@@ -53,6 +54,7 @@ const FilterBase = ({
     const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const { context, refs } = useFloating();
 
     // =============================================================================
     // EFFECTS
@@ -62,6 +64,12 @@ const FilterBase = ({
             handleDismissFilter();
         }
     }, [isMobile]);
+
+    useEffect(() => {
+        if (visible && isMobile) {
+            mobileNodeRef.current?.focus();
+        }
+    }, [visible, isMobile]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -105,17 +113,18 @@ const FilterBase = ({
                         onClick={handleDismissFilter}
                         focusOutline="browser"
                         focusHighlight={false}
-                        aria-label="Dismiss"
+                        aria-label={`close ${headerTitle}`}
                     >
                         <CrossIcon />
                     </FilterHeaderButton>
                 )}
-                <FilterTitle weight="semibold">{headerTitle}</FilterTitle>
+                <FilterTitle>{headerTitle}</FilterTitle>
                 <FilterClearButton
                     styleType="link"
                     type="button"
                     onClick={handleClearClick}
                     disabled={clearButtonDisabled}
+                    aria-label={`clear ${headerTitle}`}
                 >
                     Clear
                 </FilterClearButton>
@@ -136,23 +145,28 @@ const FilterBase = ({
                     {toggleFilterButtonLabel}
                 </FilterButton>
                 <Overlay show={visible} disableTransition>
-                    <MobileOverlayContainer
-                        data-id="filter-mobile"
-                        data-testid="filter-mobile"
-                    >
-                        <MobileContainer ref={mobileNodeRef}>
-                            {renderHeader("mobile")}
-                            <FilterBody>{renderChildren("mobile")}</FilterBody>
-                            <FilterFooter>
-                                <FilterDoneButton
-                                    onClick={handleDoneClick}
-                                    type="button"
-                                >
-                                    {doneButtonLabel}
-                                </FilterDoneButton>
-                            </FilterFooter>
-                        </MobileContainer>
-                    </MobileOverlayContainer>
+                    <FloatingFocusManager context={context} initialFocus={-1}>
+                        <MobileOverlayContainer
+                            data-id="filter-mobile"
+                            data-testid="filter-mobile"
+                            ref={refs.setFloating}
+                        >
+                            <MobileContainer ref={mobileNodeRef} tabIndex={0}>
+                                {renderHeader("mobile")}
+                                <FilterBody>
+                                    {renderChildren("mobile")}
+                                </FilterBody>
+                                <FilterFooter>
+                                    <FilterDoneButton
+                                        onClick={handleDoneClick}
+                                        type="button"
+                                    >
+                                        {doneButtonLabel}
+                                    </FilterDoneButton>
+                                </FilterFooter>
+                            </MobileContainer>
+                        </MobileOverlayContainer>
+                    </FloatingFocusManager>
                 </Overlay>
             </>
         );
