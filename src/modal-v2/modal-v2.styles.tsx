@@ -7,7 +7,6 @@ interface Props {
     $animationFrom?: ModalAnimationDirection;
     $verticalHeight?: number;
     $offsetTop?: number;
-    $enableScroll?: boolean;
 }
 
 export const Container = styled.div<Props>`
@@ -15,17 +14,7 @@ export const Container = styled.div<Props>`
     width: 100%;
     height: 100%;
 
-    ${(props) =>
-        props.$enableScroll
-            ? css`
-                  overflow: auto;
-              `
-            : css`
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  overflow: hidden;
-              `}
+    overflow: auto;
 
     ${MediaQuery.MaxWidth.sm} {
         ${(props) => {
@@ -65,9 +54,12 @@ export const Container = styled.div<Props>`
 `;
 
 export const ScrollContainer = styled.div`
-    margin: 4rem 0;
+    padding: 4rem 0;
     display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    pointer-events: none;
 `;
 
 export const ModalContainer = styled.div`

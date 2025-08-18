@@ -86,7 +86,7 @@ export const CustomContent: StoryObj<Component> = {
                 <ModalV2
                     show={show}
                     onOverlayClick={closeModal}
-                    enableOverlayClick={true}
+                    enableOverlayClick
                     onClose={closeModal}
                 >
                     <ModalV2.Card

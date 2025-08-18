@@ -107,7 +107,7 @@ export const ModalV2 = ({
     return (
         <Overlay
             data-testid={`${id}-overlay`}
-            show={show}
+            show={isMounted}
             enableOverlayClick={enableOverlayClick}
             onOverlayClick={onOverlayClick}
             id={id}
@@ -115,12 +115,11 @@ export const ModalV2 = ({
             zIndex={zIndex}
         >
             <Container
-                $show={show}
+                $show={isMounted}
                 $animationFrom={animationFrom}
                 data-testid={id}
                 $verticalHeight={verticalHeight}
                 $offsetTop={offsetTop}
-                $enableScroll
                 {...otherProps}
                 data-status={status}
             >
