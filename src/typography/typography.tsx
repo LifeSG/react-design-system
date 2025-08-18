@@ -1,9 +1,12 @@
-import { ExternalIcon } from "@lifesg/react-icons/external";
-import styled, { css } from "styled-components";
-import { Colour } from "../theme";
+import React, { RefObject } from "react";
+import { IStyledComponent } from "styled-components";
 import { TypographySizeType } from "../theme/font/types";
-import { createTypographyStyles, getTextStyle } from "./helper";
 import { TypographyLinkProps, TypographyProps } from "./types";
+import {
+    HyperlinkBase,
+    StyledExternalIcon,
+    TypographyBase,
+} from "./typography.styles";
 
 export namespace Typography {
     const createHeading = (
@@ -11,16 +14,30 @@ export namespace Typography {
         textStyle: TypographySizeType,
         displayName: string
     ) => {
-        // Use a more specific type to avoid infinite type instantiation
-        const Header = styled(tag as React.ElementType).attrs<TypographyProps>(
-            ({ inline }) => ({
-                as: inline ? "span" : undefined,
-            })
-        )<TypographyProps>`
-            ${(props) => createTypographyStyles(textStyle, props)}
-        `;
+        const Header = (
+            { weight, inline, paragraph, maxLines, ...props }: TypographyProps,
+            ref: React.Ref<HTMLHeadingElement>
+        ) => {
+            return (
+                <TypographyBase
+                    ref={ref}
+                    as={inline ? "span" : tag}
+                    $textStyle={textStyle}
+                    $weight={weight}
+                    $inline={inline}
+                    $paragraph={paragraph}
+                    $maxLines={maxLines}
+                    {...props}
+                />
+            );
+        };
         Header.displayName = `Typography.${displayName}`;
-        return Header;
+        return React.forwardRef(Header) as IStyledComponent<
+            "web",
+            TypographyProps & {
+                ref?: RefObject<HTMLHeadingElement> | undefined;
+            }
+        >;
     };
 
     export const HeadingXXL = createHeading("h1", "heading-xxl", "HeadingXXL");
@@ -31,13 +48,30 @@ export namespace Typography {
     export const HeadingXS = createHeading("h6", "heading-xs", "HeadingXS");
 
     const createBody = (textStyle: TypographySizeType, displayName: string) => {
-        const Body = styled.p.attrs<TypographyProps>(({ inline }) => ({
-            as: inline ? "span" : undefined,
-        }))<TypographyProps>`
-            ${(props) => createTypographyStyles(textStyle, props)}
-        `;
+        const Body = (
+            { weight, inline, paragraph, maxLines, ...props }: TypographyProps,
+            ref: React.Ref<HTMLParagraphElement>
+        ) => {
+            return (
+                <TypographyBase
+                    ref={ref}
+                    as={inline ? "span" : "p"}
+                    $textStyle={textStyle}
+                    $weight={weight}
+                    $inline={inline}
+                    $paragraph={paragraph}
+                    $maxLines={maxLines}
+                    {...props}
+                />
+            );
+        };
         Body.displayName = `Typography.${displayName}`;
-        return Body;
+        return React.forwardRef(Body) as IStyledComponent<
+            "web",
+            TypographyProps & {
+                ref?: RefObject<HTMLParagraphElement> | undefined;
+            }
+        >;
     };
 
     export const BodyBL = createBody("body-baseline", "BodyBL");
@@ -49,32 +83,29 @@ export namespace Typography {
         textStyle: TypographySizeType,
         displayName: string
     ) => {
-        const HyperlinkBase = styled.a<TypographyLinkProps>`
-            ${(props) => css`
-                ${getTextStyle(textStyle, props.weight || "regular")}
-                color: ${Colour.hyperlink};
-                text-decoration: none;
-
-                &:hover,
-                &:active,
-                &:focus {
-                    color: ${Colour["text-hover"]};
-                }
-            `}
-        `;
-
-        const Component = ({
-            external = false,
-            children,
-            ...rest
-        }: TypographyLinkProps) => (
-            <HyperlinkBase {...rest}>
-                {children}
-                {external && <StyledExternalIcon />}
-            </HyperlinkBase>
-        );
-        Component.displayName = `Typography.${displayName}`;
-        return Component;
+        const Hyperlink = (
+            { weight, children, external, ...props }: TypographyLinkProps,
+            ref: React.Ref<HTMLAnchorElement>
+        ) => {
+            return (
+                <HyperlinkBase
+                    ref={ref}
+                    $textStyle={textStyle}
+                    $weight={weight}
+                    {...props}
+                >
+                    {children}
+                    {external && <StyledExternalIcon />}
+                </HyperlinkBase>
+            );
+        };
+        Hyperlink.displayName = `Typography.${displayName}`;
+        return React.forwardRef(Hyperlink) as IStyledComponent<
+            "web",
+            TypographyLinkProps & {
+                ref?: RefObject<HTMLAnchorElement> | undefined;
+            }
+        >;
     };
 
     export const LinkBL = createLinkComponent("body-baseline", "LinkBL");
@@ -82,10 +113,3 @@ export namespace Typography {
     export const LinkSM = createLinkComponent("body-sm", "LinkSM");
     export const LinkXS = createLinkComponent("body-xs", "LinkXS");
 }
-
-const StyledExternalIcon = styled(ExternalIcon)`
-    height: 1lh;
-    width: 1em;
-    margin-left: 0.4em;
-    vertical-align: middle;
-`;
