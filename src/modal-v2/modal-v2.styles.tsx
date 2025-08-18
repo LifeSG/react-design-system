@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../theme";
+import { MediaQuery, Motion } from "../theme";
 import { ModalAnimationDirection } from "./types";
 
 interface Props {
@@ -50,14 +50,16 @@ export const Container = styled.div<Props>`
         &[data-status="open"] {
             opacity: 1;
             ${props.$animationFrom}: 0;
-            transition: all 300ms cubic-bezier(0.21, 0.79, 0.53, 1);
-            transition-delay: 200ms;
+            transition: all ${Motion["duration-250"]}
+                ${Motion["ease-entrance"]}
+            transition-delay: ${Motion["duration-150"]};
         }
 
         &[data-status="close"] {
             opacity: 0;
             ${props.$animationFrom}: -3%;
-            transition: all 300ms cubic-bezier(0.4, 0.34, 0.38, 1);
+            transition: all ${Motion["duration-250"]}
+                ${Motion["ease-exit"]};
         }
     `}
 `;
