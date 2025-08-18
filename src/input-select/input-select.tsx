@@ -181,7 +181,7 @@ export const InputSelect = <T, V>({
         if (!selected) {
             return (
                 <PlaceholderLabel
-                    truncateType={optionTruncationType}
+                    $truncateType={optionTruncationType}
                     $variant={variant}
                 >
                     {placeholder}
@@ -192,7 +192,7 @@ export const InputSelect = <T, V>({
         } else {
             return (
                 <ValueLabel
-                    truncateType={optionTruncationType}
+                    $truncateType={optionTruncationType}
                     $variant={variant}
                 >
                     {truncateValue(getDisplayValue())}

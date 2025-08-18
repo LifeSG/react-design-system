@@ -15,7 +15,7 @@ export interface DropdownWrapperStyleProps {
 }
 
 export interface ValueLabelStyleProps {
-    truncateType?: TruncateType;
+    $truncateType?: TruncateType;
     $variant?: DropdownVariantType | undefined;
 }
 
@@ -202,7 +202,7 @@ export const ValueLabel = styled.div<ValueLabelStyleProps>`
             : Font["body-baseline-regular"]}
     text-align: left;
     ${(props) => {
-        switch (props.truncateType) {
+        switch (props.$truncateType) {
             case "middle":
                 break;
             case "end":

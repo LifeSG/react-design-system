@@ -141,7 +141,7 @@ export const SelectHistogram = ({
     const getDisplayValue = () => {
         return !values || values.length === 0 ? (
             <PlaceholderLabel
-                truncateType={optionTruncationType}
+                $truncateType={optionTruncationType}
                 $variant="default"
             >
                 {placeholder}

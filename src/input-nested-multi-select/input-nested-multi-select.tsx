@@ -247,13 +247,13 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     const renderLabel = () => {
         if (isEmpty(selectedItems)) {
             return (
-                <PlaceholderLabel truncateType={optionTruncationType}>
+                <PlaceholderLabel $truncateType={optionTruncationType}>
                     {placeholder}
                 </PlaceholderLabel>
             );
         } else {
             return (
-                <ValueLabel truncateType={optionTruncationType}>
+                <ValueLabel $truncateType={optionTruncationType}>
                     {truncateValue(getDisplayValue())}
                 </ValueLabel>
             );
