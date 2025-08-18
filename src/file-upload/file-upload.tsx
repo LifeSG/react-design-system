@@ -61,6 +61,7 @@ export const FileUpload = ({
     const handleItemDelete = (item: FileItemProps) => {
         if (onDelete) {
             onDelete(item);
+            fileListRef.current?.focus();
         }
     };
 

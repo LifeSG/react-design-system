@@ -53,6 +53,15 @@ interface Props {
     onSort?: ((reorderedFileItems: FileItemProps[]) => void) | undefined;
 }
 
+type AnnouncementProgress = Record<
+    string,
+    {
+        progress: number;
+        timestamp: number;
+        status: "in-progress" | "complete" | "error";
+    }
+>;
+
 export interface FileListRef {
     focus: () => void;
 }
@@ -63,7 +72,7 @@ export interface FileListRef {
 
 function Component(
     {
-        fileItems: incomingFileItems,
+        fileItems = [],
         editableFileItems,
         fileDescriptionMaxLength,
         sortable,
@@ -78,23 +87,12 @@ function Component(
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const fileItems = incomingFileItems ?? [];
-    const visuallyHiddenRef = useRef<HTMLDivElement>(null);
     const [renderModes, setRenderModes] = useState<FileItemRenderModes>({});
     const { setActiveId } = useContext(FileUploadContext);
 
-    // Throttled progress announcement state (for aria-live)
+    // Progress announcement state (for aria-live) - announces start and completion only
     const [progressAnnouncement, setProgressAnnouncement] = useState("");
-    const lastAnnouncedRef = useRef<
-        Record<
-            string,
-            {
-                progress: number;
-                timestamp: number;
-                status: "in-progress" | "complete" | "error";
-            }
-        >
-    >({});
+    const lastAnnouncedRef = useRef<AnnouncementProgress>({});
 
     useImperativeHandle(ref, () => ({
         focus: () => {
@@ -165,15 +163,13 @@ function Component(
         setRenderModes(nextModes);
     }, [fileItems, editableFileItems, readOnly]);
 
-    // Throttle logic for progress announcements (every 10% OR 1.5s) + always on completion/error
+    // Progress announcements only at start and completion
     useEffect(() => {
         if (!fileItems || fileItems.length === 0) {
             setProgressAnnouncement("");
             return;
         }
         const now = Date.now();
-        const PERCENT_STEP = 10; // Announce every 10%
-        const TIME_STEP_MS = 1500; // Or every 1.5s
         const messages: string[] = [];
 
         for (const item of fileItems) {
@@ -209,26 +205,14 @@ function Component(
                 continue;
             }
 
-            // In progress
+            // In progress - only announce start, not progress updates
             if (typeof item.progress === "number" && item.progress < 1) {
-                const percentProgress = Math.round(item.progress * 100);
+                // Only announce when starting upload (no previous status or status was not in-progress)
+                const shouldAnnounce =
+                    !fileStatus || fileStatus.status !== "in-progress";
 
-                // Throttling of announcements to prevent screenreader from spamming aria-live announcements on progress updates
-                const shouldAnnounce = (() => {
-                    if (!fileStatus) return true;
-                    if (fileStatus.status !== "in-progress") return true;
-                    const prevPercentProgress = Math.round(
-                        fileStatus.progress * 100
-                    );
-                    if (percentProgress - prevPercentProgress >= PERCENT_STEP)
-                        return true;
-                    if (now - fileStatus.timestamp >= TIME_STEP_MS) return true;
-                    return false;
-                })();
                 if (shouldAnnounce) {
-                    messages.push(
-                        `${percentProgress}% complete for uploading ${item.name}`
-                    );
+                    messages.push(`Starting upload of ${item.name}`);
                     lastAnnouncedRef.current[item.id] = {
                         progress: item.progress,
                         timestamp: now,
@@ -512,11 +496,7 @@ function Component(
      * @returns A visually hidden element announcing the progress status.
      */
     const renderProgressStatus = () => (
-        <VisuallyHidden
-            ref={visuallyHiddenRef}
-            aria-live="polite"
-            aria-atomic="true"
-        >
+        <VisuallyHidden aria-live="polite" aria-atomic="true">
             {progressAnnouncement}
         </VisuallyHidden>
     );
