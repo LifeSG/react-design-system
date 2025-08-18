@@ -20,7 +20,7 @@ import {
 } from "./box-container.styles";
 import { BoxContainerProps } from "./types";
 import { SimpleIdGenerator } from "../util";
-import { VisuallyHidden } from "../shared/accessibility";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
 
 export const BoxContainer = ({
     children,
@@ -74,9 +74,11 @@ export const BoxContainer = ({
                     data-testid={"expandable-container"}
                     id={contentId}
                     aria-labelledby={headerId}
-                    role="region"
                 >
-                    <ChildContainer ref={childRef} inert={!showExpanded}>
+                    <ChildContainer
+                        ref={childRef}
+                        inert={inertValue(!showExpanded)}
+                    >
                         {children}
                     </ChildContainer>
                 </Expandable>
@@ -130,19 +132,26 @@ export const BoxContainer = ({
     };
 
     return (
-        <Container {...otherProps} aria-labelledby={headerId}>
+        <Container
+            {...otherProps}
+            aria-labelledby={headerId}
+            role="region"
+            title={typeof title === "string" ? title : undefined}
+        >
             <Header
                 data-testid="header"
                 onClick={interactiveHeader ? onHandleClick : undefined}
                 $interactive={interactiveHeader}
             >
-                <LabelWrapper role={"status"}>
+                <LabelWrapper role={"status"} id={headerId}>
                     <LabelText
                         data-testid={subComponentTestIds?.title || "title"}
                     >
                         {title}
                         {displayState !== "default" && (
-                            <VisuallyHidden>{`${displayState} state`}</VisuallyHidden>
+                            <>
+                                <VisuallyHidden>{displayState}</VisuallyHidden>
+                            </>
                         )}
                     </LabelText>
                     {renderDisplayIcon()}
