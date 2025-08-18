@@ -78,7 +78,7 @@ export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
     transition: transform ${Motion["duration-350"]} ${Motion["ease-standard"]};
 `;
 
-export const FilterItemTitle = styled.p`
+export const FilterItemTitle = styled.h3`
     ${Font["heading-xs-semibold"]}
     color: ${Colour["text"]};
 
