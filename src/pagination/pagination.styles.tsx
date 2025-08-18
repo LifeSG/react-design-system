@@ -209,5 +209,5 @@ export const Hover = styled.div`
 
 export const InputSelectWrapper = styled.div`
     margin-left: ${Spacing["spacing-4"]};
-    width: 9.75rem;
+    width: 10rem;
 `;

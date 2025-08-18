@@ -23,14 +23,19 @@ describe("Pagination", () => {
     it("should render the component", async () => {
         render(<Pagination totalItems={30} activePage={1} />);
 
-        expect(screen.getByRole("button", { name: "Page 1" })).toBeVisible();
-        expect(screen.getByRole("button", { name: "Page 2" })).toBeVisible();
-        expect(screen.getByRole("button", { name: "Page 3" })).toBeVisible();
+        expect(
+            screen.getByRole("button", { name: "page 1 of 3" })
+        ).toBeVisible();
+        expect(
+            screen.getByRole("button", { name: "page 2 of 3" })
+        ).toBeVisible();
+        expect(
+            screen.getByRole("button", { name: "page 3 of 3" })
+        ).toBeVisible();
 
-        expect(screen.getByRole("button", { name: "Page 1" })).toHaveAttribute(
-            "aria-current",
-            "page"
-        );
+        expect(
+            screen.getByRole("button", { name: "page 1 of 3" })
+        ).toHaveAttribute("aria-current", "page");
     });
 
     it("should enable the previous and next buttons", async () => {
@@ -43,10 +48,9 @@ describe("Pagination", () => {
             screen.getByRole("button", { name: NEXT_PAGE_LABEL })
         ).toBeEnabled();
 
-        expect(screen.getByRole("button", { name: "Page 2" })).toHaveAttribute(
-            "aria-current",
-            "page"
-        );
+        expect(
+            screen.getByRole("button", { name: "page 2 of 3" })
+        ).toHaveAttribute("aria-current", "page");
         expect(
             screen.getByRole("button", { name: PREV_PAGE_LABEL })
         ).toBeEnabled();
@@ -128,20 +132,20 @@ describe("Pagination", () => {
             render(<Pagination totalItems={100} activePage={4} />);
 
             expect(
-                screen.getByRole("button", { name: "Page 1" })
+                screen.getByRole("button", { name: "page 1 of 10" })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("button", { name: "Page 5" })
+                screen.getByRole("button", { name: "page 5 of 10" })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("button", { name: "Page 10" })
+                screen.getByRole("button", { name: "page 10 of 10" })
             ).toBeInTheDocument();
 
             expect(
-                screen.queryByRole("button", { name: "Page 6" })
+                screen.queryByRole("button", { name: "page 6 of 10" })
             ).not.toBeInTheDocument();
             expect(
-                screen.queryByRole("button", { name: "Page 9" })
+                screen.queryByRole("button", { name: "page 9 of 10" })
             ).not.toBeInTheDocument();
 
             expect(
@@ -171,20 +175,20 @@ describe("Pagination", () => {
             render(<Pagination totalItems={100} activePage={7} />);
 
             expect(
-                screen.getByRole("button", { name: "Page 1" })
+                screen.getByRole("button", { name: "page 1 of 10" })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("button", { name: "Page 5" })
+                screen.getByRole("button", { name: "page 5 of 10" })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("button", { name: "Page 10" })
+                screen.getByRole("button", { name: "page 10 of 10" })
             ).toBeInTheDocument();
 
             expect(
-                screen.queryByRole("button", { name: "Page 2" })
+                screen.queryByRole("button", { name: "page 2 of 10" })
             ).not.toBeInTheDocument();
             expect(
-                screen.queryByRole("button", { name: "Page 4" })
+                screen.queryByRole("button", { name: "page 4 of 10" })
             ).not.toBeInTheDocument();
 
             expect(
@@ -215,21 +219,21 @@ describe("Pagination", () => {
 
             // visible sibling buttons
             expect(
-                screen.getByRole("button", { name: "Page 3" })
+                screen.getByRole("button", { name: "page 3 of 10" })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("button", { name: "Page 4" })
+                screen.getByRole("button", { name: "page 4 of 10" })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("button", { name: "Page 6" })
+                screen.getByRole("button", { name: "page 6 of 10" })
             ).toBeInTheDocument();
 
             // truncated
             expect(
-                screen.queryByRole("button", { name: "Page 2" })
+                screen.queryByRole("button", { name: "page 2 of 10" })
             ).not.toBeInTheDocument();
             expect(
-                screen.queryByRole("button", { name: "Page 7" })
+                screen.queryByRole("button", { name: "page 7 of 10" })
             ).not.toBeInTheDocument();
         });
     });
@@ -238,7 +242,9 @@ describe("Pagination", () => {
         it("should generate the correct number of pages", async () => {
             render(<Pagination totalItems={30} activePage={1} pageSize={5} />);
 
-            const buttons = screen.getAllByRole("button", { name: /Page / });
+            const buttons = screen.getAllByRole("button", {
+                name: /^page \d+ of \d+$/,
+            });
             expect(buttons).toHaveLength(6);
         });
     });
@@ -308,7 +314,7 @@ describe("Pagination", () => {
 
             expect(screen.getByTestId(SELECTOR_TESTID)).toBeInTheDocument();
             expect(screen.getByTestId(SELECTOR_TESTID)).toHaveTextContent(
-                "10 / page"
+                "10 per page"
             );
         });
 
@@ -326,9 +332,9 @@ describe("Pagination", () => {
             await user.click(screen.getByTestId(SELECTOR_TESTID));
 
             const dropdown = await screen.findByTestId(DROPDOWN_TESTID);
-            expect(within(dropdown).queryByText("10 / page")).toBeVisible();
-            expect(within(dropdown).queryByText("20 / page")).toBeVisible();
-            expect(within(dropdown).queryByText("30 / page")).toBeVisible();
+            expect(within(dropdown).queryByText("10 per page")).toBeVisible();
+            expect(within(dropdown).queryByText("20 per page")).toBeVisible();
+            expect(within(dropdown).queryByText("30 per page")).toBeVisible();
         });
 
         it("should show the custom options when selector is clicked", async () => {
@@ -373,7 +379,7 @@ describe("Pagination", () => {
                     expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
                 });
 
-                await user.click(screen.getByText("20 / page"));
+                await user.click(screen.getByText("20 per page"));
 
                 expect(mockOnPageSizeChange).toHaveBeenCalledWith(1, 20);
             });
@@ -397,7 +403,7 @@ describe("Pagination", () => {
                     expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
                 });
 
-                await user.click(screen.getByText("20 / page"));
+                await user.click(screen.getByText("20 per page"));
 
                 expect(mockOnPageSizeChange).toHaveBeenCalledWith(5, 20);
             });
