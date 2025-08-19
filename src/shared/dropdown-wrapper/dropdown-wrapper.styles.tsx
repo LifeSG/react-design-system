@@ -8,10 +8,10 @@ import { lineClampCss } from "../styles";
 // STYLE INTERFACE
 // =============================================================================
 export interface DropdownWrapperStyleProps {
-    disabled?: boolean;
+    $disabled?: boolean;
     $readOnly?: boolean;
-    error?: boolean;
-    expanded?: boolean;
+    $error?: boolean;
+    $expanded?: boolean;
 }
 
 export interface ValueLabelStyleProps {
@@ -109,7 +109,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
     }
 
     ${(props) => {
-        if (props.expanded) {
+        if (props.$expanded) {
             return css`
                 position: absolute;
                 top: 0;
@@ -125,7 +125,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
     }}
 
     ${(props) => {
-        if (props.disabled) {
+        if (props.$disabled) {
             return css`
                 background: ${Colour["bg-disabled"]};
 
@@ -152,7 +152,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
                     box-shadow: none;
                 }
             `;
-        } else if (props.error) {
+        } else if (props.$error) {
             return css`
                 border-color: ${Colour["border-error"]};
 
@@ -167,7 +167,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
 `;
 
 export const IconContainer = styled.div<DropdownWrapperStyleProps>`
-    transform: rotate(${(props) => (props.expanded ? 180 : 0)}deg);
+    transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
     transition: transform ${Motion["duration-250"]} ${Motion["ease-default"]};
     margin-left: ${Spacing["spacing-16"]};
 `;

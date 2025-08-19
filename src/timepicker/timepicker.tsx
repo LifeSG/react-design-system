@@ -97,7 +97,6 @@ export const Timepicker = ({
     const renderSelector = () => (
         <InputSelectorElement
             onFocus={handleInputFocus}
-            focused={showSelector}
             readOnly
             placeholder={placeholder || getPlaceholderValue()}
             value={TimeHelper.formatDisplayValue(value, format)}

@@ -87,11 +87,11 @@ export const Modal = ({
             zIndex={zIndex}
         >
             <Container
-                show={show}
-                animationFrom={animationFrom}
+                $show={show}
+                $animationFrom={animationFrom}
                 data-testid={id}
-                verticalHeight={verticalHeight}
-                offsetTop={offsetTop}
+                $verticalHeight={verticalHeight}
+                $offsetTop={offsetTop}
                 {...otherProps}
             >
                 {children}
