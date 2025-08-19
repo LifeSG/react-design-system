@@ -18,6 +18,7 @@ import {
     FilterHeader,
     FilterHeaderButton,
     FilterTitle,
+    FloatingWrapper,
     MobileContainer,
     MobileOverlayContainer,
 } from "./filter.styles";
@@ -145,28 +146,38 @@ const FilterBase = ({
                     {toggleFilterButtonLabel}
                 </FilterButton>
                 <Overlay show={visible} disableTransition>
-                    <FloatingFocusManager context={context} initialFocus={-1}>
-                        <MobileOverlayContainer
-                            data-id="filter-mobile"
-                            data-testid="filter-mobile"
-                            ref={refs.setFloating}
-                        >
-                            <MobileContainer ref={mobileNodeRef} tabIndex={0}>
-                                {renderHeader("mobile")}
-                                <FilterBody>
-                                    {renderChildren("mobile")}
-                                </FilterBody>
-                                <FilterFooter>
-                                    <FilterDoneButton
-                                        onClick={handleDoneClick}
-                                        type="button"
+                    {visible ? (
+                        <FloatingWrapper>
+                            <FloatingFocusManager
+                                context={context}
+                                initialFocus={-1}
+                            >
+                                <MobileOverlayContainer
+                                    data-id="filter-mobile"
+                                    data-testid="filter-mobile"
+                                    ref={refs.setFloating}
+                                >
+                                    <MobileContainer
+                                        ref={mobileNodeRef}
+                                        tabIndex={0}
                                     >
-                                        {doneButtonLabel}
-                                    </FilterDoneButton>
-                                </FilterFooter>
-                            </MobileContainer>
-                        </MobileOverlayContainer>
-                    </FloatingFocusManager>
+                                        {renderHeader("mobile")}
+                                        <FilterBody>
+                                            {renderChildren("mobile")}
+                                        </FilterBody>
+                                        <FilterFooter>
+                                            <FilterDoneButton
+                                                onClick={handleDoneClick}
+                                                type="button"
+                                            >
+                                                {doneButtonLabel}
+                                            </FilterDoneButton>
+                                        </FilterFooter>
+                                    </MobileContainer>
+                                </MobileOverlayContainer>
+                            </FloatingFocusManager>
+                        </FloatingWrapper>
+                    ) : undefined}
                 </Overlay>
             </>
         );
