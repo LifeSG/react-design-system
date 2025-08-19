@@ -36,6 +36,10 @@ export const FilterBody = styled.div`
     overflow-y: auto;
 `;
 
+export const FloatingWrapper = styled.div`
+    height: 100%;
+`;
+
 // =============================================================================
 // HEADER STYLES
 // =============================================================================
