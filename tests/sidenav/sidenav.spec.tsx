@@ -259,7 +259,9 @@ describe("Sidenav", () => {
 
         expect(screen.getByTestId("before")).toHaveFocus();
 
-        await user.keyboard("{Tab}");
+        await act(async () => {
+            await user.keyboard("{Tab}");
+        });
 
         expect(screen.getByRole("button", { name: ITEM_1 })).toHaveFocus();
         await waitFor(() => screen.getByTestId(SIDENAV_DRAWER_TEST_ID));
@@ -289,7 +291,9 @@ describe("Sidenav", () => {
             screen.queryByTestId(SIDENAV_DRAWER_TEST_ID)
         );
 
-        await user.keyboard("{Tab}");
+        await act(async () => {
+            await user.keyboard("{Tab}");
+        });
 
         expect(screen.getByTestId("after")).toHaveFocus();
 
