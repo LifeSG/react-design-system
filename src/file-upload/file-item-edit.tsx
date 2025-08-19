@@ -133,6 +133,7 @@ export const FileItemEdit = ({
                         onChange={handleChange}
                         onBlur={handleBlur}
                         rows={3}
+                        aria-label={`Photo description for ${name}`}
                         label={{
                             children: "Photo description",
                             subtitle:

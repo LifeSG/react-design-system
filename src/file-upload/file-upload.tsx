@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { FileUploadContext } from "./context";
 import { DropzoneElement, FileUploadDropzone } from "./dropzone";
-import { FileList } from "./file-list";
+import { FileList, FileListRef } from "./file-list";
 import {
     Description,
     DescriptionContainer,
@@ -45,6 +45,7 @@ export const FileUpload = ({
     // CONST, STATE, REFS
     // =========================================================================
     const dropzoneRef = useRef<DropzoneElement>(null);
+    const fileListRef = useRef<FileListRef>(null);
     const [activeId, setActiveId] = useState<string>();
 
     // =========================================================================
@@ -53,12 +54,14 @@ export const FileUpload = ({
     const handleChange = (files: File[]) => {
         if (!disabled && onChange) {
             onChange(files);
+            fileListRef.current?.focus();
         }
     };
 
     const handleItemDelete = (item: FileItemProps) => {
         if (onDelete) {
             onDelete(item);
+            fileListRef.current?.focus();
         }
     };
 
@@ -144,6 +147,7 @@ export const FileUpload = ({
                     <WarningAlert type="warning">{warning}</WarningAlert>
                 )}
                 <FileList
+                    ref={fileListRef}
                     fileItems={fileItems}
                     editableFileItems={editableFileItems}
                     fileDescriptionMaxLength={fileDescriptionMaxLength}
