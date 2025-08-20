@@ -47,10 +47,10 @@ export const DropdownWrapper = ({
         <Wrapper className={className} $variant={variant}>
             <ElementBoundary
                 ref={nodeRef}
-                error={error && !show}
-                disabled={disabled}
+                $error={error && !show}
+                $disabled={disabled}
                 $readOnly={readOnly}
-                expanded={show}
+                $expanded={show}
                 data-testid={testId}
             >
                 {children}

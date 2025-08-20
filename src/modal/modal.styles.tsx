@@ -3,10 +3,10 @@ import { ModalAnimationDirection } from "./types";
 import { MediaQuery } from "../theme";
 
 interface Props {
-    show: boolean;
-    animationFrom?: ModalAnimationDirection;
-    verticalHeight?: number;
-    offsetTop?: number;
+    $show: boolean;
+    $animationFrom?: ModalAnimationDirection;
+    $verticalHeight?: number;
+    $offsetTop?: number;
 }
 
 const visibilityStyle = (
@@ -37,16 +37,16 @@ export const Container = styled.div<Props>`
     height: 100%;
     width: 100%;
     overflow: hidden;
-    ${(props) => visibilityStyle(props.show, props.animationFrom || "bottom")}
+    ${(props) => visibilityStyle(props.$show, props.$animationFrom || "bottom")}
 
     ${MediaQuery.MaxWidth.sm} {
         height: calc(
             ${(props) =>
-                    props.verticalHeight
-                        ? `${props.verticalHeight}px`
+                    props.$verticalHeight
+                        ? `${props.$verticalHeight}px`
                         : "1vh"} * 100
         );
 
-        top: ${(props) => props.offsetTop || 0}px;
+        top: ${(props) => props.$offsetTop || 0}px;
     }
 `;

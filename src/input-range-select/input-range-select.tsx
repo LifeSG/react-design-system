@@ -213,7 +213,7 @@ export const InputRangeSelect = <T, V>({
             rangeType === "from" ? selectedFromValue : selectedToValue;
         if (!selected) {
             return (
-                <PlaceholderLabel truncateType={optionTruncationType}>
+                <PlaceholderLabel $truncateType={optionTruncationType}>
                     {truncateValue(rangeType, placeholders[rangeType] || "")}
                 </PlaceholderLabel>
             );
@@ -221,7 +221,7 @@ export const InputRangeSelect = <T, V>({
             return renderCustomSelectedOption(selected);
         } else {
             return (
-                <ValueLabel truncateType={optionTruncationType}>
+                <ValueLabel $truncateType={optionTruncationType}>
                     {truncateValue(rangeType, getDisplayValue(rangeType))}
                 </ValueLabel>
             );

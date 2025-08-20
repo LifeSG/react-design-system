@@ -15,7 +15,7 @@ import {
 // STYLE INTERFACE
 // =============================================================================
 interface ListContainerProps {
-    width?: string;
+    $width?: string;
 }
 
 interface ListItemProps {
@@ -57,7 +57,7 @@ export const List = styled.ul<ListContainerProps>`
     border-bottom-right-radius: ${Radius["sm"]};
     background: transparent;
     max-height: 20rem;
-    width: ${(props) => props.width || "100%"};
+    width: ${(props) => props.$width || "100%"};
     overflow-y: auto;
     padding: ${Spacing["spacing-8"]};
     list-style-type: none;

@@ -187,7 +187,9 @@ describe("InputNestedSelect", () => {
 
             expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
-            await user.click(document.body);
+            await act(async () => {
+                await user.click(document.body);
+            });
 
             expect(mockOnBlur).toHaveBeenCalledTimes(1);
         });
@@ -215,7 +217,9 @@ describe("InputNestedSelect", () => {
 
             expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
-            await user.click(document.body);
+            await act(async () => {
+                await user.click(document.body);
+            });
 
             await waitForElementToBeRemoved(() =>
                 screen.queryByTestId(DROPDOWN_TESTID)

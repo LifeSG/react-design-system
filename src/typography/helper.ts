@@ -2,7 +2,7 @@ import { css } from "styled-components";
 import { lineClampCss } from "../shared/styles";
 import { Colour, Font } from "../theme";
 import { FontSet, TypographySizeType } from "../theme/font/types";
-import { TypographyProps, TypographyWeight } from "./types";
+import { TypographyWeight } from "./types";
 
 export const getTextStyle = (
     type: TypographySizeType,
@@ -49,9 +49,12 @@ export const getDisplayStyle = (
 
 export const createTypographyStyles = (
     textStyle: TypographySizeType,
-    props: TypographyProps
+    weight: TypographyWeight | undefined,
+    inline: boolean | undefined,
+    paragraph: boolean | undefined,
+    maxLines: number | undefined
 ) => css`
-    ${getTextStyle(textStyle, props.weight || "regular", props.paragraph)}
-    ${getDisplayStyle(props.inline, props.paragraph, props.maxLines)}
+    ${getTextStyle(textStyle, weight || "regular", paragraph)}
+    ${getDisplayStyle(inline, paragraph, maxLines)}
     color: ${Colour.text};
 `;

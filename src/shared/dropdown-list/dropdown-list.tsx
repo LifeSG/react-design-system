@@ -524,7 +524,7 @@ export const DropdownList = <T, V>({
             <List
                 ref={listRef}
                 data-testid="dropdown-list"
-                width={listStyleWidth}
+                $width={listStyleWidth}
                 role="list"
                 {...otherProps}
             >

@@ -187,7 +187,7 @@ export const InputMultiSelect = <T, V>({
         if (!selected || selected.length === 0) {
             return (
                 <PlaceholderLabel
-                    truncateType={optionTruncationType}
+                    $truncateType={optionTruncationType}
                     $variant={variant}
                 >
                     {placeholder}
