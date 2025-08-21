@@ -422,23 +422,26 @@ export const DateRangeInput = ({
     };
 
     const handleBlur = (e: React.FocusEvent) => {
-        const target = e.relatedTarget as Node;
+        const target = e.relatedTarget as HTMLElement;
 
         const isInsideCalendar =
             calendarRef.current && calendarRef.current.contains(target);
         const isInsideNode =
             nodeRef.current && nodeRef.current.contains(target);
-        // focus guard exists in the tab order between the input and the calendar
-        const isFocusGuard = (e.relatedTarget as HTMLElement)?.matches?.(
-            "[data-floating-ui-focus-guard]"
-        );
+        const isFloatingElement =
+            target?.matches?.("[data-floating-ui-focusable]") ||
+            target?.matches?.("[data-floating-ui-focus-guard]");
 
         // Condition when the calendar is closed and focus moved outside the component
-        const shouldBlurWhenClosed = focused && !calendarOpen && !isInsideNode;
+        const shouldBlurWhenClosed =
+            focused && !calendarOpen && !isInsideNode && !isFloatingElement;
 
         // Condition when the calendar is open, and focus went outside both input and calendar
         const shouldBlurWhenOpenOutside =
-            calendarOpen && !isInsideNode && !isInsideCalendar && !isFocusGuard;
+            calendarOpen &&
+            !isInsideNode &&
+            !isInsideCalendar &&
+            !isFloatingElement;
 
         if (shouldBlurWhenClosed || shouldBlurWhenOpenOutside) {
             actions.blur();

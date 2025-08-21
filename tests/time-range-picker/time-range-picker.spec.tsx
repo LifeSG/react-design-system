@@ -2,6 +2,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FormTimeRangePicker } from "../../src/form/form-time-range-picker";
 import { TimeRangePicker } from "../../src/time-range-picker/time-range-picker";
+import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
 
 // =============================================================================
 // UNIT TESTS
@@ -254,12 +255,12 @@ describe("TimeRangePicker", () => {
                         "10:00am"
                     )
                 );
+                await waitForElementToBeRemoved(() =>
+                    screen.queryByTestId(DROPDOWN_TESTID)
+                );
 
                 expect(mockOnChange).toHaveBeenCalledTimes(2);
                 expect(mockOnBlur).toHaveBeenCalledTimes(1);
-                expect(
-                    screen.queryByTestId(DROPDOWN_TESTID)
-                ).not.toBeInTheDocument();
             });
 
             it("should handle Enter key", async () => {
@@ -358,9 +359,9 @@ describe("TimeRangePicker", () => {
 
                 // Dismiss dropdown
                 await act(async () => await user.keyboard("{Escape}"));
-                expect(
+                await waitForElementToBeRemoved(() =>
                     screen.queryByTestId(DROPDOWN_TESTID)
-                ).not.toBeInTheDocument();
+                );
                 expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
                 await act(async () => {
@@ -384,9 +385,9 @@ describe("TimeRangePicker", () => {
                 expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
                 await user.keyboard("{Escape}");
-                expect(
+                await waitForElementToBeRemoved(() =>
                     screen.queryByTestId(DROPDOWN_TESTID)
-                ).not.toBeInTheDocument();
+                );
 
                 expect(screen.getByLabelText(START_LABEL)).toHaveFocus();
                 expect(mockOnBlur).toHaveBeenCalledTimes(0);
@@ -416,11 +417,12 @@ describe("TimeRangePicker", () => {
                 await act(async () => {
                     await user.keyboard("{5}{Enter}");
                 });
+                await waitForElementToBeRemoved(() =>
+                    screen.queryByTestId(DROPDOWN_TESTID)
+                );
+
                 expect(mockOnBlur).toHaveBeenCalledTimes(1);
                 expect(mockOnFocus).toHaveBeenCalledTimes(1);
-                expect(
-                    screen.queryByTestId(DROPDOWN_TESTID)
-                ).not.toBeInTheDocument();
             });
 
             it("should call onFocus and onBlur when cycling through the tab sequence", async () => {
@@ -477,12 +479,13 @@ describe("TimeRangePicker", () => {
                 await act(async () => {
                     await user.keyboard("{Tab}");
                 });
+                await waitForElementToBeRemoved(() =>
+                    screen.queryByTestId(DROPDOWN_TESTID)
+                );
+
                 expect(screen.getByTestId("after")).toHaveFocus();
                 expect(mockOnBlur).toHaveBeenCalledTimes(1);
                 expect(mockOnFocus).toHaveBeenCalledTimes(1);
-                expect(
-                    screen.queryByTestId(DROPDOWN_TESTID)
-                ).not.toBeInTheDocument();
             }, 10000);
 
             it("should call onFocus and onBlur when cycling back through the tab sequence", async () => {

@@ -9,11 +9,13 @@ import React, {
 } from "react";
 import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
 import {
+    mergeRefs,
     useCompare,
     useEvent,
     useEventListener,
     useIsMounted,
 } from "../../util";
+import { useDropdownRender } from "../dropdown-wrapper";
 import { DropdownLabel } from "./dropdown-label";
 import { DropdownListStateContext } from "./dropdown-list-state";
 import {
@@ -52,7 +54,7 @@ export const DropdownList = <T, V>({
     labelDisplayType = "inline",
     variant = "default",
     listboxId,
-    width,
+    matchElementWidth = false,
     topScrollItem,
     onSelectItem,
     onSelectAll,
@@ -87,12 +89,14 @@ export const DropdownList = <T, V>({
     const { focusedIndex, setFocusedIndex } = useContext(
         DropdownListStateContext
     );
+    const { elementWidth, setFloatingRef, getFloatingProps, styles } =
+        useDropdownRender();
     const [searchValue, setSearchValue] = useState<string>("");
     const [displayListItems, setDisplayListItems] = useState(listItems ?? []);
     const itemsLoadStateChanged = useCompare(itemsLoadState);
     const mounted = useIsMounted();
 
-    const nodeRef = useRef<HTMLDivElement>(null);
+    const nodeRef = useRef<HTMLDivElement | null>(null);
     const listRef = useRef<HTMLDivElement>(null);
     const listItemRefs = useRef<(HTMLElement | null)[]>([]);
     const searchInputRef = useRef<HTMLInputElement>(null);
@@ -562,8 +566,10 @@ export const DropdownList = <T, V>({
     return (
         <Container
             data-testid="dropdown-container"
-            ref={nodeRef}
-            $width={width}
+            ref={mergeRefs(nodeRef, setFloatingRef)}
+            style={styles}
+            {...getFloatingProps()}
+            $width={matchElementWidth ? elementWidth : undefined}
             $variant={variant}
         >
             {renderList()}

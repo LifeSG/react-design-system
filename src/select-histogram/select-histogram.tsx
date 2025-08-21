@@ -4,7 +4,10 @@ import {
     DropdownListState,
     ExpandableElement,
 } from "../shared/dropdown-list-v2";
-import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import {
+    DropdownRenderProps,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
 import { LabelContainer } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { Typography } from "../typography";
@@ -191,8 +194,17 @@ export const SelectHistogram = ({
         );
     };
 
-    const renderDropdown = ({ elementWidth }: { elementWidth: number }) => (
-        <HistogramSliderDropdownContainer style={{ width: elementWidth }}>
+    const renderDropdown = ({
+        elementWidth,
+        styles,
+        setFloatingRef,
+        getFloatingProps,
+    }: DropdownRenderProps) => (
+        <HistogramSliderDropdownContainer
+            style={{ ...styles, width: elementWidth }}
+            ref={setFloatingRef}
+            {...getFloatingProps()}
+        >
             <HistogramSlider
                 interval={interval}
                 value={selection}

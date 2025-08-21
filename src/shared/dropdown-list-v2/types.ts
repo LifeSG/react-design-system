@@ -63,7 +63,6 @@ export interface DropdownConfigProps {
     multiSelect?: boolean | undefined;
     maxSelectable?: number | undefined;
     customLabels?: DropdownCustomLabelProps | undefined;
-    width?: number | undefined;
     /**
      * Used when items are loaded from an api call.
      * Values: "loading" | "fail" | "success"
@@ -93,6 +92,7 @@ export interface DropdownListProps<T, V>
     labelDisplayType?: LabelDisplayType | undefined;
     /** Specifies the item for which the dropdown’s scroll position will be automatically adjusted */
     topScrollItem?: T | undefined;
+    matchElementWidth?: boolean | undefined;
 
     onSelectItem?: ((item: T, extractedValue: V) => void) | undefined;
     onSelectAll?: (() => void) | undefined;
@@ -154,6 +154,7 @@ export interface NestedDropdownListProps<T>
     mode?: ExpandMode | undefined;
     /** If specified, the category label is selectable */
     selectableCategory?: boolean | undefined;
+    matchElementWidth?: boolean | undefined;
 
     onSelectItem?: ((item: NestedDropdownListLocalItem<T>) => void) | undefined;
     onSelectAll?:
