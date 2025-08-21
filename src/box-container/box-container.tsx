@@ -1,5 +1,5 @@
 import { useSpring } from "@react-spring/web";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
@@ -14,12 +14,13 @@ import {
     HandleIcon,
     HandleIconContainer,
     Header,
-    LabelIcon,
     LabelText,
     LabelWrapper,
     NonExpandable,
 } from "./box-container.styles";
 import { BoxContainerProps } from "./types";
+import { SimpleIdGenerator } from "../util";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
 
 export const BoxContainer = ({
     children,
@@ -44,6 +45,9 @@ export const BoxContainer = ({
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const interactiveHeader = clickableHeader && collapsible;
+    const internalId = useRef(SimpleIdGenerator.generate());
+    const contentId = `${internalId.current}-content`;
+    const headerId = `${internalId.current}-header`;
 
     // =============================================================================
     // EVENT HANDLERS
@@ -67,9 +71,16 @@ export const BoxContainer = ({
             return (
                 <Expandable
                     style={expandableStyles}
-                    data-testid="expandable-container"
+                    data-testid={"expandable-container"}
+                    id={contentId}
+                    aria-labelledby={headerId}
                 >
-                    <ChildContainer ref={childRef}>{children}</ChildContainer>
+                    <ChildContainer
+                        ref={childRef}
+                        inert={inertValue(!showExpanded)}
+                    >
+                        {children}
+                    </ChildContainer>
                 </Expandable>
             );
         }
@@ -86,15 +97,14 @@ export const BoxContainer = ({
             case "error":
             case "warning":
                 return (
-                    <LabelIcon
+                    <AlertIcon
                         $displayState={displayState}
                         data-testid={
                             subComponentTestIds?.displayStateIcon ||
                             `${displayState}-icon`
                         }
-                    >
-                        <AlertIcon />
-                    </LabelIcon>
+                        aria-label={displayState}
+                    />
                 );
             default:
                 return null;
@@ -107,11 +117,14 @@ export const BoxContainer = ({
                 <Handle
                     onClick={onHandleClick}
                     type="button"
-                    aria-label={showExpanded ? "Collapse" : "Expand"}
+                    aria-labelledby={headerId}
+                    aria-controls={contentId}
+                    aria-disabled={!collapsible} // remains focusable
+                    aria-expanded={showExpanded}
                     data-testid={subComponentTestIds?.handle || "handle"}
                 >
-                    <HandleIconContainer $expanded={showExpanded}>
-                        <HandleIcon aria-hidden />
+                    <HandleIconContainer $expanded={showExpanded} aria-hidden>
+                        <HandleIcon />
                     </HandleIconContainer>
                 </Handle>
             )
@@ -119,17 +132,27 @@ export const BoxContainer = ({
     };
 
     return (
-        <Container {...otherProps}>
+        <Container
+            {...otherProps}
+            aria-labelledby={headerId}
+            role="region"
+            title={typeof title === "string" ? title : undefined}
+        >
             <Header
                 data-testid="header"
                 onClick={interactiveHeader ? onHandleClick : undefined}
                 $interactive={interactiveHeader}
             >
-                <LabelWrapper>
+                <LabelWrapper role={"status"} id={headerId}>
                     <LabelText
                         data-testid={subComponentTestIds?.title || "title"}
                     >
                         {title}
+                        {displayState !== "default" && (
+                            <>
+                                <VisuallyHidden>{displayState}</VisuallyHidden>
+                            </>
+                        )}
                     </LabelText>
                     {renderDisplayIcon()}
                     {isMobile && renderHandleIcon()}
