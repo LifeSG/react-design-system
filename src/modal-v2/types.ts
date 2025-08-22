@@ -1,8 +1,21 @@
-import { ModalAnimationDirection } from "../modal-v2/types";
+export type ModalAnimationDirection = "top" | "bottom" | "left" | "right";
 
-export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ModalCardProps extends React.HTMLAttributes<HTMLDivElement> {
+    children: React.ReactNode;
+}
+
+export interface ModalCloseButtonProps
+    extends React.HTMLAttributes<HTMLDivElement> {}
+
+export interface ModalContentProps
+    extends React.HTMLAttributes<HTMLDivElement> {
+    children: React.ReactNode;
+}
+
+export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
     show: boolean;
     children: React.ReactNode;
+    onClose: () => void;
     /** Animation direction of appearance and dismissal. Values: "top" | "bottom" | "left" | "right" */
     animationFrom?: ModalAnimationDirection | undefined;
     enableOverlayClick?: boolean | undefined;
@@ -12,10 +25,4 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     onOverlayClick?: (() => void) | undefined;
     /** Dismiss keyboard to keep modal in fullscreen */
     dismissKeyboardOnShow?: boolean | undefined;
-}
-
-export interface ModalBoxProps extends React.HTMLAttributes<HTMLDivElement> {
-    children: React.ReactNode;
-    showCloseButton?: boolean | undefined;
-    onClose?: (() => void) | undefined;
 }
