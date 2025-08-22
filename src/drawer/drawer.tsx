@@ -1,5 +1,11 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import { useEffect, useRef, useState } from "react";
+import {
+    FloatingFocusManager,
+    useDismiss,
+    useFloating,
+    useInteractions,
+} from "@floating-ui/react";
 import { Overlay } from "../overlay";
 import { SimpleIdGenerator } from "../util";
 import {
@@ -25,6 +31,18 @@ export const Drawer = ({
     const [showOverlay, setShowOverlay] = useState(show);
     const [id] = useState(() => SimpleIdGenerator.generate());
     const initialFocusRef = useRef<HTMLHeadingElement>(null);
+    const { context, refs } = useFloating({
+        open: show,
+        onOpenChange: (open) => {
+            if (!open && onClose) {
+                onClose();
+            }
+        },
+    });
+
+    const dismiss = useDismiss(context, { escapeKey: true });
+
+    const { getFloatingProps } = useInteractions([dismiss]);
 
     // =============================================================================
     // EFFECTS
@@ -61,34 +79,45 @@ export const Drawer = ({
             enableOverlayClick
             onOverlayClick={onOverlayClick}
         >
-            <Container
-                $show={show}
-                data-testid="drawer"
-                onClick={handleClick}
-                role="dialog"
-                aria-labelledby={id}
-                onTransitionEnd={handleDialogVisibility}
-                {...otherProps}
+            <FloatingFocusManager
+                context={context}
+                initialFocus={initialFocusRef}
+                returnFocus={true}
+                modal={show}
             >
-                <Header>
-                    <Heading
-                        id={id}
-                        ref={initialFocusRef}
-                        tabIndex={-1}
-                        weight="bold"
-                    >
-                        {heading}
-                    </Heading>
-                    <CloseButton // second element for tab focus order
+                <Container
+                    ref={refs.setFloating}
+                    $show={show}
+                    data-testid="drawer"
+                    onClick={handleClick}
+                    aria-modal="true"
+                    role="dialog"
+                    aria-labelledby={id}
+                    onTransitionEnd={handleDialogVisibility}
+                    {...getFloatingProps()}
+                    {...otherProps}
+                >
+                    <Header>
+                        <Heading
+                            id={id}
+                            ref={initialFocusRef}
+                            tabIndex={-1}
+                            weight="bold"
+                            as="h2"
+                        >
+                            {heading}
+                        </Heading>
+                    </Header>
+                    <Content>{children}</Content>
+                    <CloseButton
                         aria-label="Close drawer"
                         onClick={onClose}
                         focusHighlight={false}
                     >
                         <CrossIcon aria-hidden />
                     </CloseButton>
-                </Header>
-                <Content>{children}</Content>
-            </Container>
+                </Container>
+            </FloatingFocusManager>
         </Overlay>
     );
 };
