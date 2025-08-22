@@ -21,7 +21,6 @@ const OverlayComponent = ({
     enableOverlayClick = false,
     zIndex: customZIndex,
     id,
-    childRef: childRefProp,
 }: OverlayProps): JSX.Element | null => {
     // =============================================================================
     // CONST, STATE, REF
@@ -35,8 +34,7 @@ const OverlayComponent = ({
 
     const childRef = useRef<HTMLDivElement>(null);
     const childWithRef =
-        children &&
-        React.cloneElement(children, { ref: childRefProp || childRef }); // use external childRef if provided
+        children && React.cloneElement(children, { ref: childRef });
 
     const overlayRootId = id
         ? `lifesg-ds-overlay-root-${id}`

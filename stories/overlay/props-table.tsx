@@ -94,15 +94,5 @@ export const PropsTable = () => (
             </DescriptionCol>
             <DefaultCol />
         </tr>
-        <tr>
-            <NameCol>childRef</NameCol>
-            <DescriptionCol propTypes={["React.Ref<HTMLElement>"]}>
-                <>
-                    Optional ref to be applied to the child element. This allows
-                    access the child's DOM element directly.
-                </>
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
     </Table>
 );

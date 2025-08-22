@@ -1,5 +1,11 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import { useEffect, useRef, useState } from "react";
+import {
+    FloatingFocusManager,
+    useDismiss,
+    useFloating,
+    useInteractions,
+} from "@floating-ui/react";
 import { Overlay } from "../overlay";
 import { SimpleIdGenerator } from "../util";
 import {
@@ -25,28 +31,28 @@ export const Drawer = ({
     const [showOverlay, setShowOverlay] = useState(show);
     const [id] = useState(() => SimpleIdGenerator.generate());
     const initialFocusRef = useRef<HTMLHeadingElement>(null);
-    const containerRef = useRef<HTMLDivElement>(null);
+    const { context, refs } = useFloating({
+        open: show,
+        onOpenChange: (open) => {
+            if (!open && onClose) {
+                onClose();
+            }
+        },
+    });
+
+    const dismiss = useDismiss(context, { escapeKey: true });
+
+    const { getFloatingProps } = useInteractions([dismiss]);
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (show) {
-            setShowOverlay(true);
-            const drawerElement = containerRef.current;
-            if (!drawerElement) return;
-            drawerElement.addEventListener("keydown", handleTabKeyPress);
-            drawerElement.addEventListener("keydown", handleEscapeKeyPress);
-
-            return () => {
-                drawerElement.removeEventListener("keydown", handleTabKeyPress);
-                drawerElement.removeEventListener(
-                    "keydown",
-                    handleEscapeKeyPress
-                );
-            };
-        } else {
+        if (!show) {
             const timer = setTimeout(() => setShowOverlay(false), 500);
             return () => clearTimeout(timer);
+        } else {
+            setShowOverlay(true);
         }
     }, [show]);
 
@@ -64,36 +70,6 @@ export const Drawer = ({
         event.stopPropagation();
     };
 
-    const handleTabKeyPress = (e: KeyboardEvent) => {
-        const drawerElement = containerRef.current;
-        if (!drawerElement) return; 
-        
-        //add focusable HTML elements
-        const focusableElements = drawerElement.querySelectorAll(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        );
-        const firstElement = focusableElements[0] as HTMLElement;
-        const lastElement = focusableElements[
-            focusableElements.length - 1
-        ] as HTMLElement;
-
-        if (e.key === "Tab") {
-            if (e.shiftKey && document.activeElement === firstElement) {
-                e.preventDefault();
-                lastElement.focus();
-            } else if (!e.shiftKey && document.activeElement === lastElement) {
-                e.preventDefault();
-                firstElement.focus();
-            }
-        }
-    };
-
-    const handleEscapeKeyPress = (e: KeyboardEvent) => {
-        if (e.key === "Escape" && onClose) {
-            onClose();
-        }
-    };
-
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -102,37 +78,46 @@ export const Drawer = ({
             show={showOverlay}
             enableOverlayClick
             onOverlayClick={onOverlayClick}
-            childRef={containerRef}
         >
-            <Container
-                $show={show}
-                data-testid="drawer"
-                onClick={handleClick}
-                aria-modal="true"
-                role="dialog"
-                aria-labelledby={id}
-                onTransitionEnd={handleDialogVisibility}
-                {...otherProps}
+            <FloatingFocusManager
+                context={context}
+                initialFocus={initialFocusRef}
+                returnFocus={true}
+                modal={show}
             >
-                <Header>
-                    <Heading
-                        id={id}
-                        ref={initialFocusRef}
-                        tabIndex={-1}
-                        weight="bold"
-                    >
-                        {heading}
-                    </Heading>
-                </Header>
-                <Content>{children}</Content>
-                <CloseButton // last element for tab focus order
-                    aria-label="Close drawer"
-                    onClick={onClose}
-                    focusHighlight={false}
+                <Container
+                    ref={refs.setFloating}
+                    $show={show}
+                    data-testid="drawer"
+                    onClick={handleClick}
+                    aria-modal="true"
+                    role="dialog"
+                    aria-labelledby={id}
+                    onTransitionEnd={handleDialogVisibility}
+                    {...getFloatingProps()}
+                    {...otherProps}
                 >
-                    <CrossIcon aria-hidden />
-                </CloseButton>
-            </Container>
+                    <Header>
+                        <Heading
+                            id={id}
+                            ref={initialFocusRef}
+                            tabIndex={-1}
+                            weight="bold"
+                            as="h2"
+                        >
+                            {heading}
+                        </Heading>
+                    </Header>
+                    <Content>{children}</Content>
+                    <CloseButton
+                        aria-label="Close drawer"
+                        onClick={onClose}
+                        focusHighlight={false}
+                    >
+                        <CrossIcon aria-hidden />
+                    </CloseButton>
+                </Container>
+            </FloatingFocusManager>
         </Overlay>
     );
 };

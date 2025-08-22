@@ -12,8 +12,6 @@ export interface OverlayProps {
     zIndex?: number | undefined;
     onOverlayClick?: (() => void) | undefined;
     id?: string | undefined;
-    /** Optional ref to be applied to the child element */
-    childRef?: React.Ref<HTMLElement> | undefined;
 }
 
 /**

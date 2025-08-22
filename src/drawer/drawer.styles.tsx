@@ -77,22 +77,21 @@ export const Header = styled.div`
     align-items: center;
     gap: ${Spacing["spacing-16"]};
     padding: ${Spacing["spacing-32"]} ${Spacing["spacing-16"]}
-        ${Spacing["spacing-16"]} ${Spacing["spacing-64"]};
+        ${Spacing["spacing-16"]} calc(2rem + ${Spacing["spacing-32"]});
     background-color: ${Colour.bg};
     border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 
     ${MediaQuery.MaxWidth.lg} {
         gap: ${Spacing["spacing-8"]};
         padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]}
-            ${Spacing["spacing-16"]} ${Spacing["spacing-64"]};
+            ${Spacing["spacing-16"]} calc(2rem + ${Spacing["spacing-24"]});
     }
 `;
 
 export const CloseButton = styled(ClickableIcon)`
     color: ${Colour.icon};
-    padding: 2px;
+    padding: 0;
     position: absolute;
-    order: -1; // show button on the left of the header
     top: ${Spacing["spacing-32"]};
     left: ${Spacing["spacing-16"]};
     &:active,
