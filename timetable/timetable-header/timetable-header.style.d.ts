@@ -1,0 +1,9 @@
+export declare const StyledRefreshButton: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components/dist/types").Substitute<import("../../icon-button").IconButtonProps & import("react").RefAttributes<HTMLButtonElement>, {
+    $loading: boolean;
+}>> & string & Omit<(props: import("../../icon-button").IconButtonProps & import("react").RefAttributes<HTMLButtonElement>) => import("react").ReactElement | null, keyof import("react").Component<any, {}, any>>;
+export declare const NavigationHeaderWrapper: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never>> & string;
+export declare const NavigationHeaderSubtitleWrapper: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never>> & string;
+export declare const StyledResultText: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("../../typography").TypographyProps & {
+    ref?: import("react").RefObject<HTMLParagraphElement> | undefined;
+}, never>> & string;
+export declare const StyledDateNavigator: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("../../date-navigator").DateNavigatorProps, never>> & string & Omit<({ selectedDate, minDate, maxDate, loading, showDateAsShortForm, showCurrentDateAsToday, onLeftArrowClick, onRightArrowClick, onCalendarDateSelect, dropdownRootNode, ...otherProps }: import("../../date-navigator").DateNavigatorProps) => import("react/jsx-runtime").JSX.Element, keyof import("react").Component<any, {}, any>>;
