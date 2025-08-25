@@ -110,6 +110,20 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Called when the timer value reaches zero",
                 propTypes: ["() => void"],
             },
+            {
+                name: "politeInterval",
+                description:
+                    "Specifies the interval (in seconds) for polite ARIA live region announcements (e.g. every 120s for polite reminders)",
+                propTypes: ["number"],
+                defaultValue: "120",
+            },
+            {
+                name: "assertiveTimer",
+                description:
+                    "Specifies the threshold (in seconds) for assertive ARIA live region announcements (e.g. 60s for 1-minute warning)",
+                propTypes: ["number"],
+                defaultValue: "60",
+            },
         ],
     },
 ];

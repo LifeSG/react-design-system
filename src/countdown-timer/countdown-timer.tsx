@@ -12,6 +12,7 @@ import {
     TimeLeft,
     Timer,
     TimerIcon,
+    HiddenSpan,
     Wrapper,
 } from "./countdown-timer.style";
 import { CountdownTimerProps } from "./types";
@@ -27,6 +28,8 @@ export const CountdownTimer = ({
     mobileOffset,
     show,
     fixed = true,
+    politeInterval = 120,
+    assertiveTimer = 60,
     "data-testid": testId,
     onFinish,
     onNotify,
@@ -43,6 +46,8 @@ export const CountdownTimer = ({
     const [clientRectRight, setClientRectRight] = useState<number>(0);
     const [clientRectX, setClientRectX] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [announcement, setAnnouncement] = useState<string>("");
+    const [initialAnnouncement, setInitialAnnouncement] = useState<string>("");
 
     const [remainingSeconds] = useTimer(timer, timestamp, isPlaying);
     const { ref: stickyRef, inView } = useInView({
@@ -96,6 +101,32 @@ export const CountdownTimer = ({
         }
     }, [wrapperRef.current]);
 
+    // Initial announcement effect
+    useEffect(() => {
+        if (isPlaying && remainingSeconds === timer) {
+            const initialMessage = `Starting countdown timer: ${getAccessibleTimeText(
+                remainingSeconds
+            )}`;
+            setInitialAnnouncement(initialMessage);
+        }
+    }, [isPlaying, remainingSeconds, timer]);
+
+    // Periodic announcements
+    useEffect(() => {
+        const timeElapsed = (timer || 0) - remainingSeconds;
+        if (timeElapsed == 0) return;
+        if (
+            timeElapsed % politeInterval === 0 &&
+            remainingSeconds > assertiveTimer
+        ) {
+            setAnnouncement(getAccessibleTimeText(remainingSeconds));
+        }
+
+        if (remainingSeconds === assertiveTimer) {
+            setAnnouncement(getAccessibleTimeText(remainingSeconds));
+        }
+    }, [remainingSeconds, timer]);
+
     useEffect(() => {
         // reset
         isNotified.current = false;
@@ -111,6 +142,13 @@ export const CountdownTimer = ({
 
         setClientRectX(clientRect.x);
         setClientRectRight(clientRect.right);
+    };
+
+    const handleOnFocus = () => {
+        const focusMessage = `Countdown timer. ${getAccessibleTimeText(
+            remainingSeconds
+        )}`;
+        setAnnouncement(focusMessage);
     };
 
     // =============================================================================
@@ -144,23 +182,55 @@ export const CountdownTimer = ({
         return offsetY;
     }
 
+    const getAccessibleTimeText = (seconds: number): string => {
+        const { minutes, seconds: secs } = TimeHelper.toMinutesSeconds(seconds);
+
+        const minuteText = minutes === 1 ? "minute" : "minutes";
+        const secondText = secs === 1 ? "second" : "seconds";
+
+        if (minutes > 0 && secs > 0) {
+            return `Time left: ${minutes} ${minuteText} and ${secs} ${secondText}`;
+        } else if (minutes > 0) {
+            return `Time left: ${minutes} ${minuteText}`;
+        } else {
+            return `Time left: ${secs} ${secondText}`;
+        }
+    };
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
+
+    const renderInitialAnnouncement = () => (
+        <HiddenSpan aria-live="polite" aria-atomic="true">
+            {initialAnnouncement}
+        </HiddenSpan>
+    );
+
+    const renderPeriodicAndWarningAnnouncement = () => (
+        <HiddenSpan
+            aria-live={
+                remainingSeconds <= assertiveTimer ? "assertive" : "polite"
+            }
+            aria-atomic="true"
+        >
+            {announcement}
+        </HiddenSpan>
+    );
 
     const renderTimer = () => {
         const { minutes, seconds } =
             TimeHelper.toMinutesSeconds(remainingSeconds);
         const m = minutes !== 1 ? "mins" : "min";
         const s = seconds !== 1 ? "secs" : "sec";
-
         return (
             <>
                 <TimerIcon $warn={warn} />
                 <TimeLeft>Time left:</TimeLeft>
-                <Timer>
+                <Timer aria-label={getAccessibleTimeText(remainingSeconds)}>
                     {minutes} {m} {String(seconds).padStart(2, "0")} {s}
                 </Timer>
+                {renderInitialAnnouncement()}
+                {renderPeriodicAndWarningAnnouncement()}
             </>
         );
     };
@@ -174,6 +244,10 @@ export const CountdownTimer = ({
                 inert={inertValue(!isVisible)}
                 $visible={isVisible}
                 $warn={warn}
+                tabIndex={0}
+                role="timer"
+                aria-label="Countdown timer"
+                onFocus={handleOnFocus}
             >
                 {renderTimer()}
             </Countdown>
@@ -198,6 +272,10 @@ export const CountdownTimer = ({
                 $top={offsetY}
                 $left={left}
                 $right={right}
+                tabIndex={0}
+                role="timer"
+                aria-label="Countdown timer"
+                onFocus={handleOnFocus}
             >
                 {renderTimer()}
             </FixedCountdown>
