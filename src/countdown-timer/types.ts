@@ -31,6 +31,10 @@ interface CountdownTimerBaseProps extends React.HTMLAttributes<HTMLDivElement> {
     onNotify?: (() => void) | undefined;
     /** Called when countdown reaches 0 */
     onFinish?: (() => void) | undefined;
+    /** Specifies the interval (in seconds) for the polite notification */
+    politeInterval?: number | undefined;
+    /** Specifies the threshold (in seconds) for the assertive notification */
+    assertiveTimer?: number | undefined;
 }
 
 interface TimerProps extends CountdownTimerBaseProps {

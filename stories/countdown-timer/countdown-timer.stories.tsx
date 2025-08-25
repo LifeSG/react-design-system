@@ -18,7 +18,7 @@ export const Default: StoryObj<Component> = {
         return (
             <CountdownTimer
                 show
-                timer={15}
+                timer={200}
                 notifyTimer={10}
                 fixed={false}
                 onNotify={() => console.log("Warning")}
