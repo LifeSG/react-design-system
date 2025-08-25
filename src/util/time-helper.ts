@@ -430,6 +430,13 @@ export namespace TimeHelper {
 
         return startHours * 60 + startMinutes;
     };
+
+    // Calculate duration between two time strings
+    export const calculateDuration = (startTime: string, endTime:string): number => {
+        const startMinutes = timeToMinutes(startTime);
+        const endMinutes = timeToMinutes(endTime);
+        return endMinutes - startMinutes;
+    };
 }
 
 // =============================================================================

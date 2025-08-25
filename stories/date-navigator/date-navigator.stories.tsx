@@ -163,3 +163,33 @@ export const WithMinAndMaxDate: StoryObj<Component> = {
     },
     decorators: [StoryDecorator({ maxWidth: true })],
 };
+
+export const WeekView: StoryObj<Component> = {
+    render: (_args) => {
+        const today = dayjs().toString();
+        const [selectedDate, setSelectedDate] = useState<string>(today);
+
+        const onLeftArrowClick = (currentDate: string) => {
+            setSelectedDate(dayjs(currentDate).subtract(1, "week").toString());
+        };
+
+        const onRightArrowClick = (currentDate: string) => {
+            setSelectedDate(dayjs(currentDate).add(1, "week").toString());
+        };
+
+        const onCalendarDateSelect = (currentDate: string) => {
+            setSelectedDate(currentDate);
+        };
+
+        return (
+            <DateNavigator
+                selectedDate={selectedDate}
+                view="week"
+                onLeftArrowClick={onLeftArrowClick}
+                onRightArrowClick={onRightArrowClick}
+                onCalendarDateSelect={onCalendarDateSelect}
+            />
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
