@@ -25,7 +25,7 @@ export interface ScheduleProps {
     date: string;
     emptyContentMessage?: string | undefined;
     serviceData: ScheduleEntityProps[];
-    loading?: boolean;
+    loading?: boolean | undefined;
     // HH:mm format
     minTime?: string | undefined;
     // HH:mm format
@@ -38,10 +38,10 @@ export interface ScheduleProps {
     onNextDayClick: (currentDate: string) => void;
     onCalendarDateSelect: (currentDate: string) => void;
     onTodayClick: () => void;
-    onEmptySlotClick?: (slot: ScheduleEmptySlotProps) => void | undefined;
+    onEmptySlotClick?: ((slot: ScheduleEmptySlotProps) => void) | undefined;
     emptySlotPopover?: SchedulePopoverProps | undefined;
     blockedMessage?: string | undefined;
-    onClickHiddenSlots?: (hiddenServices: string[]) => void | undefined;
+    onClickHiddenSlots?: ((hiddenServices: string[]) => void) | undefined;
 }
 
 export interface ScheduleSlotProps {
@@ -53,10 +53,7 @@ export interface ScheduleSlotProps {
     date: string | undefined;
     booked?: number | undefined;
     customPopover?: SchedulePopoverProps | undefined;
-    onClick?: (
-        data: ScheduleSlotProps,
-        e: React.MouseEvent
-    ) => void | undefined;
+    onClick?: ((data: ScheduleSlotProps, e: React.MouseEvent) => void) | undefined;
 }
 
 export interface ScheduleEmptySlotProps {

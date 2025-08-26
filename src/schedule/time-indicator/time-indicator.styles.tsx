@@ -1,8 +1,19 @@
 import styled from "styled-components";
-import { Border, Colour, Spacing } from "../../theme";
+import { Border, Colour, Spacing, Font } from "../../theme";
 import { Typography } from "../../typography";
 import { CELL_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+interface TimelineCircleStyleProps {
+    $top: number;
+    $isWeekView: boolean;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
 export const TimeColumnWrapper = styled.div`
     position: sticky;
     left: 0;
@@ -25,7 +36,7 @@ export const TimeLabel = styled(Typography.BodySM)`
     align-items: flex-end;
     color: ${Colour["text-subtler"]};
     padding-right: ${Spacing["spacing-8"]};
-    font-weight: 700;
+    font-weight: ${Font.Spec["weight-bold"]};
     position: relative;
 `;
 export const HourDisplay = styled.span`
@@ -34,18 +45,14 @@ export const HourDisplay = styled.span`
 `;
 export const PeriodIndicator = styled.span``;
 
-export const TimelineCircle = styled.div<{
-    $top: number;
-    $isWeekView: boolean;
-}>`
+export const TimelineCircle = styled.div<TimelineCircleStyleProps>`
     position: absolute;
     right: -6px;
-    top: ${({ $top }) => $top - 6}px;
+    top: ${(props) => props.$top - 6}px;
     width: 12px;
     height: 12px;
     border-radius: 50%;
     background: ${Colour["icon-primary"]};
     z-index: 4;
-    box-sizing: border-box;
-    display: ${({ $isWeekView }) => ($isWeekView ? "none" : "block")};
+    display: ${(props) => (props.$isWeekView ? "none" : "block")};
 `;

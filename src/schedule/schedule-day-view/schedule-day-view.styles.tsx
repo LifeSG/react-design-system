@@ -8,10 +8,40 @@ import {
     TIME_INDICATOR_WIDTH,
 } from "../const";
 import { IconButton } from "../../icon-button";
+import { lineClampCss } from "../../shared/styles";
 
-// -----------------------------------------------------------------------------
-// MOBILE ARROW BUTTONS
-// -----------------------------------------------------------------------------
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+interface HeaderContainerStyleProps {
+    $isMobile: boolean;
+}
+
+interface ServiceContainerStyleProps {
+    $columnCount: number;
+}
+
+interface SlotGridStyleProps {
+    $columnCount: number;
+}
+
+interface SlotCellStyleProps {
+    $dashed?: boolean;
+}
+
+interface SlotContentStyleProps {
+    $status?: string;
+    $duration?: number;
+    $offsetTop?: number;
+}
+
+interface TimelineStyleProps {
+    $top: number;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
 export const ArrowButton = styled(IconButton)`
     color: ${Colour["icon"]};
 `;
@@ -36,9 +66,7 @@ export const LoadingContainer = styled.div`
     background: ${Colour["bg"]};
 `;
 
-export const HeaderContainer = styled.div<{
-    $isMobile: boolean;
-}>`
+export const HeaderContainer = styled.div<HeaderContainerStyleProps>`
     z-index: 3;
     max-height: ${HEADER_HEIGHT}px;
     border-top-right-radius: ${Radius["md"]};
@@ -48,8 +76,8 @@ export const HeaderContainer = styled.div<{
     overflow-x: hidden;
     overflow-y: hidden;
 
-    ${({ $isMobile }) =>
-        $isMobile
+    ${(props) =>
+        props.$isMobile
             ? css`
                   display: block;
                   overflow: hidden;
@@ -66,9 +94,9 @@ export const BlankCell = styled.div`
     position: sticky;
     left: 0;
 `;
-export const ServiceContainer = styled.div<{ $columnCount: number }>`
+export const ServiceContainer = styled.div<ServiceContainerStyleProps>`
     display: grid;
-    grid-template-columns: repeat(${({ $columnCount }) => $columnCount}, 1fr);
+    grid-template-columns: repeat(${(props) => props.$columnCount}, 1fr);
 `;
 
 export const ServiceColumn = styled.div`
@@ -84,19 +112,16 @@ export const ServiceColumn = styled.div`
     }
 `;
 
-export const StyleDiv = styled.div`
+export const ServiceHeaderContainer = styled.div`
     width: 15rem;
     padding-left: ${Spacing["spacing-16"]};
 `;
 
 export const Title = styled(Typography.BodyMD)`
     color: ${Colour["text-primary"]};
-    font-weight: 600;
+    font-weight: ${Font.Spec["weight-semibold"]};
     margin-top: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    ${lineClampCss(2)}
     text-overflow: ellipsis;
     word-wrap: break-word;
 `;
@@ -108,9 +133,9 @@ export const Description = styled(Typography.BodySM)`
     width: fit-content;
     padding: ${Spacing["spacing-4"]} ${Spacing["spacing-8"]};
     color: ${Colour["text-success"]};
-    font-weight: 400;
+    font-weight: ${Font.Spec["weight-regular"]};
     span {
-        font-weight: 600;
+        font-weight: ${Font.Spec["weight-semibold"]};
     }
 `;
 
@@ -128,9 +153,9 @@ export const BodyContainer = styled.div`
     border-bottom-left-radius: ${Radius["md"]};
 `;
 
-export const SlotGrid = styled.div<{ $columnCount: number }>`
+export const SlotGrid = styled.div<SlotGridStyleProps>`
     display: grid;
-    grid-template-columns: repeat(${({ $columnCount }) => $columnCount}, 1fr);
+    grid-template-columns: repeat(${(props) => props.$columnCount}, 1fr);
     min-width: max-content;
     position: relative;
 `;
@@ -146,43 +171,36 @@ export const SlotColumn = styled.div`
     }
 `;
 
-export const SlotCell = styled.div<{
-    $startTime?: string;
-}>`
+export const SlotCell = styled.div<SlotCellStyleProps>`
     min-height: ${CELL_HEIGHT}px;
     position: relative;
     border-bottom: ${Border["width-010"]} solid ${Colour["border"]};
-    ${({ $startTime }) =>
-        $startTime?.endsWith(":00") &&
+    ${(props) =>
+        props.$dashed &&
         css`
             border-bottom-style: dashed;
         `}
     cursor: pointer;
 `;
 
-export const SlotContent = styled(Typography.BodyXS)<{
-    $status?: string;
-    $duration?: number;
-    $offsetTop?: number;
-}>`
+export const SlotContent = styled(Typography.BodyXS)<SlotContentStyleProps>`
     margin-top: 0;
     overflow: hidden;
     width: calc(100% - 27px);
     padding: 2px ${Spacing["spacing-8"]};
     position: absolute;
-    top: ${({ $offsetTop }) => $offsetTop || 0}px;
-    font-weight: 500;
+    top: ${(props) => props.$offsetTop || 0}px;
+    ${Font["body-xs-semibold"]};
     border-radius: ${Radius["sm"]};
-    box-sizing: border-box;
     z-index: 1;
-    height: ${({ $duration }) =>
-        $duration
-            ? `${($duration / 30) * CELL_HEIGHT - 1}px`
+    height: ${(props) =>
+        props.$duration
+            ? `${(props.$duration / 30) * CELL_HEIGHT - 1}px`
             : `${CELL_HEIGHT - 1}px`};
     display: flex;
     justify-content: space-between;
-    background: ${({ $status }) => {
-        switch ($status) {
+    background: ${(props) => {
+        switch (props.$status) {
             case "pending":
                 return css`
                     repeating-linear-gradient(
@@ -204,12 +222,14 @@ export const SlotContent = styled(Typography.BodyXS)<{
         }
     }};
 
-    color: ${({ $status }) =>
-        $status === "blocked" ? Colour["text-inverse"] : Colour["text-subtle"]};
+    color: ${(props) =>
+        props.$status === "blocked"
+            ? Colour["text-inverse"]
+            : Colour["text-subtle"]};
 
     border-left: ${Border["width-040"]} solid
-        ${({ $status }) =>
-            $status === "available" ? Colour["icon-success"] : "none"};
+        ${(props) =>
+            props.$status === "available" ? Colour["icon-success"] : "none"};
 `;
 
 export const SlotTime = styled.span`
@@ -220,12 +240,12 @@ export const SlotAvailability = styled.span`
     ${Font["body-xs-semibold"]};
 `;
 
-export const Timeline = styled.div<{ $top: number }>`
+export const Timeline = styled.div<TimelineStyleProps>`
     position: absolute;
     width: 100%;
     height: 2px;
     background: ${Colour["icon-primary"]};
-    top: ${({ $top }) => $top}px;
+    top: ${(props) => props.$top}px;
     z-index: 2;
 `;
 

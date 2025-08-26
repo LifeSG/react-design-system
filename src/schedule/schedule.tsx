@@ -1,15 +1,23 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useTheme } from "styled-components";
+import {
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
+import { ThemeContext } from "styled-components";
 import { useMediaQuery } from "react-responsive";
 import { ScheduleProps } from "./types";
 import { ScheduleHeader } from "./schedule-header/schedule-header";
-import { ScheduleBody } from "./schedule-body";
+
 import { ScheduleWeekView } from "./schedule-week-view/schedule-week-view";
 import { ScheduleDayView } from "./schedule-day-view/schedule-day-view";
 import { Breakpoint } from "../theme";
 import { isEmpty } from "lodash";
 import {
     Container,
+    ScheduleBodyContainer,
     EmptyTableContainer,
     NoResultsFound,
 } from "./schedule.styles";
@@ -35,23 +43,19 @@ export const Schedule = ({
     onEmptySlotClick,
     blockedMessage,
     onClickHiddenSlots,
+    "data-testid": testId = "schedule",
     ...otherProps
 }: ScheduleProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const testId = otherProps["data-testid"] || "schedule";
     const [currentView, setCurrentView] = useState<"day" | "week">(view);
-    const theme = useTheme();
-    const mobileBreakpoint = Breakpoint["md-max"]({ theme });
-    const isMobile = useMediaQuery({
-        maxWidth: mobileBreakpoint,
-    });
+    const theme = useContext(ThemeContext);
     const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
-    const isTablet = useMediaQuery({
+    const isSmallScreen = useMediaQuery({
         maxWidth: tabletBreakpoint,
     });
-    const effectiveView = isMobile || isTablet ? "day" : currentView;
+    const effectiveView = isSmallScreen ? "day" : currentView;
     const contentContainerRef = useRef<HTMLDivElement>(null);
     const [visibleServiceIdx, setVisibleServiceIdx] = useState(0);
     const isEmptyContent = serviceData.length === 0 || isEmpty(serviceData);
@@ -64,12 +68,11 @@ export const Schedule = ({
         [serviceData, date]
     );
 
-    const visibleServiceData =
-        isMobile || isTablet
-            ? filteredServiceData && filteredServiceData.length > 0
-                ? [filteredServiceData[visibleServiceIdx]]
-                : []
-            : filteredServiceData;
+    const visibleServiceData = isSmallScreen
+        ? filteredServiceData && filteredServiceData.length > 0
+            ? [filteredServiceData[visibleServiceIdx]]
+            : []
+        : filteredServiceData;
 
     useEffect(() => {
         setVisibleServiceIdx(0);
@@ -92,6 +95,7 @@ export const Schedule = ({
             idx < filteredServiceData.length - 1 ? idx + 1 : idx
         );
     }, [filteredServiceData]);
+
     const handlePrevService = useCallback(() => {
         setVisibleServiceIdx((idx) => (idx > 0 ? idx - 1 : idx));
     }, []);
@@ -101,13 +105,13 @@ export const Schedule = ({
 
     if (isEmptyContent) {
         return (
-            <Container {...otherProps} data-testid={id} $loading={loading}>
+            <Container {...otherProps} data-testid={testId} $loading={loading}>
                 <ScheduleHeader
                     data-id="schedule-header"
                     date={date}
                     view={effectiveView}
-                    showTodayButton={!isMobile && !isTablet}
-                    showViewSelector={!isMobile && !isTablet}
+                    showTodayButton={!isSmallScreen}
+                    showViewSelector={!isSmallScreen}
                     minDate={minDate}
                     maxDate={maxDate}
                     onPreviousDayClick={onPreviousDayClick}
@@ -137,8 +141,8 @@ export const Schedule = ({
                 data-id="schedule-header"
                 date={date}
                 view={effectiveView}
-                $isMobile={isMobile}
-                $isTablet={isTablet}
+                showTodayButton={!isSmallScreen}
+                showViewSelector={!isSmallScreen}
                 minDate={minDate}
                 maxDate={maxDate}
                 onPreviousDayClick={onPreviousDayClick}
@@ -148,7 +152,7 @@ export const Schedule = ({
                 onTodayClick={handleTodayClick}
             />
 
-            <ScheduleBody
+            <ScheduleBodyContainer
                 ref={contentContainerRef}
                 data-id="schedule-container"
             >
@@ -161,15 +165,13 @@ export const Schedule = ({
                         maxTime={maxTime}
                         initialScrollTime={initialScrollTime}
                         emptySlotPopover={emptySlotPopover}
-                        isMobile={isMobile || isTablet}
+                        isMobile={isSmallScreen}
                         onNextService={handleNextService}
                         onPrevService={handlePrevService}
                         containerRef={contentContainerRef}
-                        showPrevArrow={
-                            (isMobile || isTablet) && visibleServiceIdx > 0
-                        }
+                        showPrevArrow={isSmallScreen && visibleServiceIdx > 0}
                         showNextArrow={
-                            (isMobile || isTablet) &&
+                            isSmallScreen &&
                             visibleServiceIdx < filteredServiceData.length - 1
                         }
                         onEmptySlotClick={onEmptySlotClick}
@@ -188,7 +190,7 @@ export const Schedule = ({
                         onClickHiddenSlots={onClickHiddenSlots}
                     />
                 )}
-            </ScheduleBody>
+            </ScheduleBodyContainer>
         </Container>
     );
 };

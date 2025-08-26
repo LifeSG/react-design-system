@@ -7,8 +7,8 @@ import {
     SlotCell,
     SlotColumnOverlay,
     HiddenColumnsButton,
-} from "./schedule-week-view.styles";
-import { SlotContentComponent } from "./slot-content";
+} from "./time-cell.styles";
+import { SlotContent } from "./slot-content";
 import {
     getSlotsStartingInTimeCell,
     getSlotsInTimeCell,
@@ -107,7 +107,7 @@ export const TimeCell: React.FC<TimeCellProps> = ({
             }
         );
 
-        // Get hidden slots for second 15-minute interval 
+        // Get hidden slots for second 15-minute interval
         const hiddenSlotsSecondInterval = hiddenOverlappingSlots.filter(
             (slot) => {
                 const slotStartMinutes = TimeHelper.timeToMinutes(
@@ -195,7 +195,7 @@ export const TimeCell: React.FC<TimeCellProps> = ({
                 containerRef={containerRef}
                 customPopover={slot.customPopover}
             >
-                <SlotContentComponent
+                <SlotContent
                     positionedSlot={positionedSlot}
                     blockedMessage={blockedMessage}
                 />
@@ -237,7 +237,7 @@ export const TimeCell: React.FC<TimeCellProps> = ({
     };
 
     return (
-        <SlotCell key={time} $startTime={time}>
+        <SlotCell key={time} $dashed={time.endsWith(":00")}>
             {cellServiceLayout.visibleServices.map(
                 (serviceName, serviceIndex) => {
                     const serviceSlots = slotsStartingInCell.filter((slot) => {

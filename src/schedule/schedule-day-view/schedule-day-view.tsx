@@ -30,7 +30,7 @@ import {
     SlotContent,
     SlotGrid,
     SlotTime,
-    StyleDiv,
+    ServiceHeaderContainer,
     Timeline,
     Title,
 } from "./schedule-day-view.styles";
@@ -116,13 +116,13 @@ export const ScheduleDayView = ({
         const timeSlotMinutes = TimeHelper.timeToMinutes(timeSlot);
         const nextTime = minutesToTime(timeSlotMinutes + 30);
 
-        const a = findSlotsStartingInTimeRange(
+        const slots = findSlotsStartingInTimeRange(
             service.slots,
             timeSlot,
             nextTime
         );
 
-        return a;
+        return slots;
     };
 
     // Check if a time slot is covered by any existing booking
@@ -166,13 +166,14 @@ export const ScheduleDayView = ({
                                         styleType="light"
                                         sizeType="small"
                                         onClick={onPrevService}
+                                        aria-label="Previous service"
                                     >
-                                        <ChevronLeftIcon />
+                                        <ChevronLeftIcon aria-hidden />
                                     </ArrowButton>
                                 )}
                             </ArrowContainer>
                         )}
-                        <StyleDiv>
+                        <ServiceHeaderContainer>
                             <Title>{service.name}</Title>
                             <Description>
                                 <span>
@@ -185,14 +186,15 @@ export const ScheduleDayView = ({
                                 </span>{" "}
                                 available
                             </Description>
-                        </StyleDiv>
+                        </ServiceHeaderContainer>
                         {isMobile && showNextArrow && onNextService && (
                             <ArrowButton
                                 styleType="light"
                                 sizeType="small"
                                 onClick={onNextService}
+                                aria-label="Next service"
                             >
-                                <ChevronRightIcon />
+                                <ChevronRightIcon aria-hidden />
                             </ArrowButton>
                         )}
                     </ServiceColumn>
@@ -239,7 +241,7 @@ export const ScheduleDayView = ({
         const slots = findSlotsForTimeCell(service, time);
         if (slots.length > 0) {
             return (
-                <SlotCell key={time} $startTime={time}>
+                <SlotCell key={time} $dashed={time.endsWith(":00")}>
                     {slots.map((slot, index) => {
                         const popoverConfig = getPopoverConfig(
                             service,
@@ -262,7 +264,7 @@ export const ScheduleDayView = ({
             return (
                 <SlotCell
                     key={time}
-                    $startTime={time}
+                    $dashed={time.endsWith(":00")}
                     onClick={() => handleEmptySlotClick(time, service.name)}
                 >
                     <WithOptionalPopover

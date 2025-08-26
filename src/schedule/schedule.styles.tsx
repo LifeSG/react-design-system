@@ -26,6 +26,12 @@ export const Container = styled.div<ScheduleProps>`
     }}
 `;
 
+export const ScheduleBodyContainer = styled.div`
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+`;
+
 export const EmptyTableContainer = styled.div`
     display: grid;
     overflow: auto;

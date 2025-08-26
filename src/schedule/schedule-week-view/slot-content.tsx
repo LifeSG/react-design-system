@@ -2,17 +2,17 @@ import React from "react";
 import { TimeHelper } from "../../util/time-helper";
 import { PositionedSlot } from "./types";
 import {
-    SlotContent,
+    SlotContentContainer,
     SlotServiceName,
     SlotAvailability,
-} from "./schedule-week-view.styles";
+} from "./slot-content.styles";
 
-interface SlotContentComponentProps {
+interface SlotContentProps {
     positionedSlot: PositionedSlot;
     blockedMessage?: string;
 }
 
-export const SlotContentComponent: React.FC<SlotContentComponentProps> = ({
+export const SlotContent: React.FC<SlotContentProps> = ({
     positionedSlot,
     blockedMessage = "Unavailable",
 }) => {
@@ -20,7 +20,7 @@ export const SlotContentComponent: React.FC<SlotContentComponentProps> = ({
     const duration = TimeHelper.calculateDuration(slot.startTime, slot.endTime);
 
     return (
-        <SlotContent
+        <SlotContentContainer
             $status={slot.status}
             $duration={duration}
             $offsetTop={offsetTop}
@@ -34,6 +34,6 @@ export const SlotContentComponent: React.FC<SlotContentComponentProps> = ({
                         : `${slot.booked} / ${slot.capacity}`}
                 </SlotAvailability>
             )}
-        </SlotContent>
+        </SlotContentContainer>
     );
 };

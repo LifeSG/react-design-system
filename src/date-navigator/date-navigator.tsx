@@ -82,8 +82,6 @@ export const DateNavigator = ({
         const endOfWeek = currentDate.endOf("week");
 
         return {
-            start: startOfWeek.format("YYYY-MM-DD"),
-            end: endOfWeek.format("YYYY-MM-DD"),
             startDisplay: startOfWeek.format("D MMM"),
             endDisplay: endOfWeek.format("D MMM"),
             year: endOfWeek.format("YYYY"),

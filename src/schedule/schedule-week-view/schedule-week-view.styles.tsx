@@ -1,8 +1,22 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius, Spacing } from "../../theme";
+import { Border, Colour, Font, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
-import { CELL_HEIGHT, HEADER_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
+import { HEADER_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+interface TitleStyleProps {
+    $isToday?: boolean;
+}
+
+interface TimelineStyleProps {
+    $top: number;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
 export const LoadingContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -38,16 +52,14 @@ export const ServiceHeader = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     padding: 24px;
     color: ${Colour["text-primary"]};
 `;
-export const Title = styled(Typography.BodyMD)<{
-    $isToday?: boolean;
-}>`
-    font-weight: 600;
-    ${({ $isToday }) =>
-        $isToday &&
+export const Title = styled(Typography.BodyMD)<TitleStyleProps>`
+    font-weight: ${Font.Spec["weight-semibold"]};
+    ${(props) =>
+        props.$isToday &&
         css`
             background: ${Colour["bg-hover"]};
             color: ${Colour["text-primary"]};
@@ -63,7 +75,7 @@ export const Title = styled(Typography.BodyMD)<{
 `;
 
 export const Description = styled(Typography.BodyMD)`
-    font-weight: 600;
+    font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
 export const BodyContainer = styled.div`
@@ -83,12 +95,12 @@ export const SlotGrid = styled.div`
     min-width: max-content;
 `;
 
-export const Timeline = styled.div<{ $top: number }>`
+export const Timeline = styled.div<TimelineStyleProps>`
     position: absolute;
     width: 100%;
     height: 2px;
     background: ${Colour["icon-primary"]};
-    top: ${({ $top }) => $top}px;
+    top: ${(props) => props.$top}px;
     z-index: 2;
 
     &::before {
@@ -112,132 +124,5 @@ export const SlotColumn = styled.div`
     border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
     &:last-child {
         border-right: none;
-    }
-`;
-
-export const SlotCell = styled.div<{
-    $startTime?: string;
-}>`
-    min-height: ${CELL_HEIGHT}px;
-    position: relative;
-    border-bottom: ${Border["width-010"]} solid ${Colour["border"]};
-    ${({ $startTime }) =>
-        $startTime?.endsWith(":00") &&
-        css`
-            border-bottom-style: dashed;
-        `}
-    cursor: pointer;
-`;
-
-export const SlotColumnOverlay = styled.div<{
-    $columnIndex: number;
-    $totalVisibleColumns: number;
-    $actualWidthPercentage?: number;
-    $leftPosition?: number;
-}>`
-    position: absolute;
-    top: 0;
-    left: ${({ $leftPosition }) => {
-        return `calc((100% - 14px) * ${$leftPosition} / 100)`;
-    }};
-    width: ${({ $actualWidthPercentage }) => {
-        return `calc((100% - 14px) * ${$actualWidthPercentage} / 100)`;
-    }};
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    pointer-events: none;
-    overflow: visible;
-    z-index: 1;
-    box-sizing: border-box;
-`;
-
-export const SlotContent = styled(Typography.BodyXS)<{
-    $status: string;
-    $duration: number;
-    $offsetTop: number;
-}>`
-    /* Fill the overlay column width responsively with a small horizontal inset */
-    width: calc(100% - 1px);
-    height: ${({ $duration }) =>
-        $duration
-            ? `${($duration / 30) * CELL_HEIGHT - 1}px`
-            : `${CELL_HEIGHT - 1}px`};
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 2px 4px;
-    position: absolute;
-    top: ${({ $offsetTop }) => $offsetTop || 0}px;
-    margin-top: 0;
-    font-weight: 500;
-    border-radius: ${Radius["sm"]};
-    box-sizing: border-box;
-
-    background: ${({ $status }) => {
-        switch ($status) {
-            case "pending":
-                return css`
-                    repeating-linear-gradient(
-                        135deg,
-                        ${Colour["bg-warning"]},
-                        ${Colour["bg-warning"]} 5px,
-                        ${Colour["bg-warning-hover"]} 5px,
-                        ${Colour["bg-warning-hover"]} 10px
-                    )
-                `;
-            case "blocked":
-                return Colour["bg-inverse-subtle"];
-            case "available":
-                return Colour["bg-success-hover"];
-            case "booked":
-                return Colour["bg-primary-subtler"];
-            default:
-                return Colour["bg"];
-        }
-    }};
-
-    color: ${({ $status }) =>
-        $status === "blocked" ? Colour["text-inverse"] : "inherit"};
-
-    border-left: ${Border["width-040"]} solid
-        ${({ $status }) =>
-            $status === "available" ? Colour["icon-success"] : "none"};
-`;
-
-export const SlotServiceName = styled.span`
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
-`;
-
-export const SlotAvailability = styled.span`
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
-`;
-
-export const HiddenColumnsButton = styled.div<{
-    $heightPercentage?: number;
-    $isMultiple?: boolean;
-}>`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: ${Colour["text-primary"]};
-    min-height: ${({ $heightPercentage }) =>
-        $heightPercentage ? `${$heightPercentage}%` : `${CELL_HEIGHT}px`};
-    height: ${({ $heightPercentage }) =>
-        $heightPercentage ? `${$heightPercentage}%` : "auto"};
-    pointer-events: auto;
-    &:hover {
-        border-radius: ${Radius["sm"]};
-        box-shadow: 0 2px 8px 0 ${Colour["border"]};
     }
 `;
