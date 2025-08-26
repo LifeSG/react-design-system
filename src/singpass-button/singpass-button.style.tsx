@@ -27,7 +27,9 @@ export const Main = styled.button<MainStyleProps>`
 
                 &:hover,
                 &:active {
-                    background-color: #b0262d;
+                    @media (pointer: fine) {
+                        background-color: #b0262d;
+                    }
                 }
             `;
         }
@@ -38,7 +40,9 @@ export const Main = styled.button<MainStyleProps>`
 
             &:hover,
             &:active {
-                background-color: #f5f5f7;
+                @media (pointer: fine) {
+                    background-color: #f5f5f7;
+                }
             }
         `;
     }}

@@ -70,6 +70,8 @@ export const Input = styled.input<RadioButtonProps>`
     border: none;
 
     &:hover + ${StyledUnCheckedIcon}, &:hover + ${StyledCheckedIcon} {
-        color: ${(props) => !props.disabled && Colour["icon-hover"](props)};
+        @media (pointer: fine) {
+            color: ${(props) => !props.disabled && Colour["icon-hover"](props)};
+        }
     }
 `;
