@@ -10,8 +10,8 @@ export const DefaultBreakpointSet: BreakpointSet = {
     "md-min": 481,
     "md-max": 768,
     "lg-min": 769,
-    "lg-max": 1024,
-    "xl-min": 1025,
+    "lg-max": 1200,
+    "xl-min": 1201,
     "xl-max": 1440,
     "xxl-min": 1441,
 
