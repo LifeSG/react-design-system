@@ -5,6 +5,7 @@ import {
     useDismiss,
     useFloating,
     useInteractions,
+    useTransitionStatus,
 } from "@floating-ui/react";
 import { Overlay } from "../overlay";
 import { SimpleIdGenerator } from "../util";
@@ -44,6 +45,8 @@ export const Drawer = ({
 
     const { getFloatingProps } = useInteractions([dismiss]);
 
+    const { isMounted, status } = useTransitionStatus(context);
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -79,45 +82,49 @@ export const Drawer = ({
             enableOverlayClick
             onOverlayClick={onOverlayClick}
         >
-            <FloatingFocusManager
-                context={context}
-                initialFocus={initialFocusRef}
-                returnFocus={true}
-                modal={show}
-            >
-                <Container
-                    ref={refs.setFloating}
-                    $show={show}
-                    data-testid="drawer"
-                    onClick={handleClick}
-                    aria-modal="true"
-                    role="dialog"
-                    aria-labelledby={id}
-                    onTransitionEnd={handleDialogVisibility}
-                    {...getFloatingProps()}
-                    {...otherProps}
+            {isMounted ? (
+                <FloatingFocusManager
+                    context={context}
+                    initialFocus={initialFocusRef}
+                    returnFocus={true}
+                    modal={true}
+                    data-testid="floating-focus-manager"
                 >
-                    <Header>
-                        <Heading
-                            id={id}
-                            ref={initialFocusRef}
-                            tabIndex={-1}
-                            weight="bold"
-                            as="h2"
-                        >
-                            {heading}
-                        </Heading>
-                    </Header>
-                    <Content>{children}</Content>
-                    <CloseButton
-                        aria-label="Close drawer"
-                        onClick={onClose}
-                        focusHighlight={false}
+                    <Container
+                        ref={refs.setFloating}
+                        $show={show}
+                        data-status={status}
+                        data-testid="drawer"
+                        onClick={handleClick}
+                        aria-modal="true"
+                        role="dialog"
+                        aria-labelledby={id}
+                        onTransitionEnd={handleDialogVisibility}
+                        {...getFloatingProps()}
+                        {...otherProps}
                     >
-                        <CrossIcon aria-hidden />
-                    </CloseButton>
-                </Container>
-            </FloatingFocusManager>
+                        <Header>
+                            <Heading
+                                id={id}
+                                ref={initialFocusRef}
+                                tabIndex={-1}
+                                weight="bold"
+                                as="h2"
+                            >
+                                {heading}
+                            </Heading>
+                        </Header>
+                        <Content>{children}</Content>
+                        <CloseButton
+                            aria-label="Close drawer"
+                            onClick={onClose}
+                            focusHighlight={false}
+                        >
+                            <CrossIcon aria-hidden />
+                        </CloseButton>
+                    </Container>
+                </FloatingFocusManager>
+            ) : undefined}
         </Overlay>
     );
 };
