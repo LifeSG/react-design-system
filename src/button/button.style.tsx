@@ -47,7 +47,9 @@ export const Main = styled.button<MainStyleProps>`
 
                     &:hover,
                     &:active {
-                        background-color: ${Colour["bg-hover-neutral"]};
+                        @media (pointer: fine) {
+                            background-color: ${Colour["bg-hover-neutral"]};
+                        }
                     }
                 `;
             case "light":
@@ -61,7 +63,9 @@ export const Main = styled.button<MainStyleProps>`
 
                     &:hover,
                     &:active {
-                        background-color: ${Colour["bg-hover-neutral"]};
+                        @media (pointer: fine) {
+                            background-color: ${Colour["bg-hover-neutral"]};
+                        }
                     }
                 `;
 
@@ -74,7 +78,9 @@ export const Main = styled.button<MainStyleProps>`
                         : ThemeButton["button-link-colour-text"]};
                     &:hover,
                     &:active {
-                        background-color: ${Colour["bg-hover-neutral"]};
+                        @media (pointer: fine) {
+                            background-color: ${Colour["bg-hover-neutral"]};
+                        }
                     }
                 `;
             case "disabled":
@@ -103,9 +109,13 @@ export const Main = styled.button<MainStyleProps>`
 
                     &:hover,
                     &:active {
-                        background-color: ${props.$buttonIsDanger
-                            ? Colour["bg-error-strong-hover"]
-                            : ThemeButton["button-default-colour-bg-hover"]};
+                        @media (pointer: fine) {
+                            background-color: ${props.$buttonIsDanger
+                                ? Colour["bg-error-strong-hover"]
+                                : ThemeButton[
+                                      "button-default-colour-bg-hover"
+                                  ]};
+                        }
                     }
                 `;
         }

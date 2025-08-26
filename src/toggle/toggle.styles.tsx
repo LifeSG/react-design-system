@@ -91,7 +91,9 @@ export const Container = styled.div<ContainerStyleProps>`
                             border-color: ${Colour["border-error"]};
 
                             &:has(${HeaderContainer}:hover) {
-                                background: ${Colour["bg-hover-subtle"]};
+                                @media (pointer: fine) {
+                                    background: ${Colour["bg-hover-subtle"]};
+                                }
                             }
                         `;
                     }
@@ -116,14 +118,16 @@ export const Container = styled.div<ContainerStyleProps>`
                         background: ${Colour["bg-selected"]};
 
                         &:has(${HeaderContainer}:hover) {
-                            background: ${Colour["bg-selected-hover"]};
+                            @media (pointer: fine) {
+                                background: ${Colour["bg-selected-hover"]};
 
-                            & ${TextContainer} {
-                                color: ${Colour["text-selected-hover"]};
-                            }
+                                & ${TextContainer} {
+                                    color: ${Colour["text-selected-hover"]};
+                                }
 
-                            & ${StyledToggleIcon} {
-                                color: ${Colour["icon-selected-hover"]};
+                                & ${StyledToggleIcon} {
+                                    color: ${Colour["icon-selected-hover"]};
+                                }
                             }
                         }
                     `;
@@ -133,7 +137,9 @@ export const Container = styled.div<ContainerStyleProps>`
                     border: none;
 
                     &:has(${HeaderContainer}:hover) {
-                        background: ${Colour["bg-hover-subtle"]};
+                        @media (pointer: fine) {
+                            background: ${Colour["bg-hover-subtle"]};
+                        }
                     }
                 `;
             }
@@ -149,7 +155,9 @@ export const Container = styled.div<ContainerStyleProps>`
                             border-color: ${Colour["border-error"]};
 
                             &:has(${HeaderContainer}:hover) {
-                                background: ${Colour["bg-hover-subtle"]};
+                                @media (pointer: fine) {
+                                    background: ${Colour["bg-hover-subtle"]};
+                                }
                             }
                         `;
                     }
@@ -175,14 +183,16 @@ export const Container = styled.div<ContainerStyleProps>`
                         background: ${Colour["bg-selected"]};
 
                         &:has(${HeaderContainer}:hover) {
-                            background: ${Colour["bg-selected-hover"]};
+                            @media (pointer: fine) {
+                                background: ${Colour["bg-selected-hover"]};
 
-                            & ${TextContainer} {
-                                color: ${Colour["text-selected-hover"]};
-                            }
+                                & ${TextContainer} {
+                                    color: ${Colour["text-selected-hover"]};
+                                }
 
-                            & ${StyledToggleIcon} {
-                                color: ${Colour["icon-selected-hover"]};
+                                & ${StyledToggleIcon} {
+                                    color: ${Colour["icon-selected-hover"]};
+                                }
                             }
                         }
                     `;
@@ -192,7 +202,9 @@ export const Container = styled.div<ContainerStyleProps>`
                     border-color: ${Colour.border};
 
                     &:has(${HeaderContainer}:hover) {
-                        background: ${Colour["bg-hover-subtle"]};
+                        @media (pointer: fine) {
+                            background: ${Colour["bg-hover-subtle"]};
+                        }
                     }
                 `;
             }

@@ -95,6 +95,8 @@ export const Input = styled.input<CheckboxProps>`
         + ${StyledCheckedIcon},
         &:hover
         + ${StyledInteremediateIcon} {
-        color: ${(props) => !props.disabled && Colour["icon-hover"](props)};
+        @media (pointer: fine) {
+            color: ${(props) => !props.disabled && Colour["icon-hover"](props)};
+        }
     }
 `;
