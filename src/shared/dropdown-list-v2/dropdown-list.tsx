@@ -564,7 +564,6 @@ export const DropdownList = <T, V>({
         );
     };
 
-    console.log(222, width, matchElementWidth, elementWidth);
     return (
         <Container
             data-testid="dropdown-container"
@@ -572,6 +571,7 @@ export const DropdownList = <T, V>({
             style={styles}
             {...getFloatingProps()}
             $width={width || (matchElementWidth ? elementWidth : undefined)}
+            $hasCustomWidth={!!width}
             $variant={variant}
         >
             {renderList()}

@@ -24,6 +24,7 @@ import { DropdownVariantType } from "./types";
 interface ContainerStyleProps {
     $width?: number;
     $variant: DropdownVariantType;
+    $hasCustomWidth?: boolean;
 }
 
 interface ListItemStyleProps {
@@ -45,8 +46,10 @@ export const Container = styled.div<ContainerStyleProps>`
     background: ${Colour["bg"]};
 
     ${(props) => {
-        if (props.$width) {
+        if (props.$hasCustomWidth && props.$width) {
             return `width: ${props.$width}px;`;
+        } else if (props.$width) {
+            return `width: ${props.$width}px; min-width: 23rem;`;
         } else {
             return "min-width: 23rem;";
         }

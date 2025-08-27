@@ -661,6 +661,7 @@ export const NestedDropdownList = <T,>({
             {...getFloatingProps()}
             $width={width || (matchElementWidth ? elementWidth : undefined)}
             $variant={variant}
+            $hasCustomWidth={!!width}
         >
             {renderList()}
         </Container>
