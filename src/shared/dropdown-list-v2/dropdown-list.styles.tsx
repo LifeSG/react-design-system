@@ -23,8 +23,8 @@ import { DropdownVariantType } from "./types";
 // =============================================================================
 interface ContainerStyleProps {
     $width?: number;
+    $customWidth?: string;
     $variant: DropdownVariantType;
-    $hasCustomWidth?: boolean;
 }
 
 interface ListItemStyleProps {
@@ -46,8 +46,8 @@ export const Container = styled.div<ContainerStyleProps>`
     background: ${Colour["bg"]};
 
     ${(props) => {
-        if (props.$hasCustomWidth && props.$width) {
-            return `width: ${props.$width}px;`;
+        if (props.$customWidth) {
+            return `width: ${props.$customWidth};`;
         } else if (props.$width) {
             return `width: ${props.$width}px; min-width: 23rem;`;
         } else {
@@ -57,7 +57,6 @@ export const Container = styled.div<ContainerStyleProps>`
     max-height: min(27rem, var(--available-height, infinity * 1px));
     overflow: hidden;
     overflow-y: auto;
-
     ${(props) =>
         props.$variant === "small"
             ? Font["body-md-regular"]
@@ -92,7 +91,6 @@ export const Container = styled.div<ContainerStyleProps>`
         background-clip: padding-box;
     }
 `;
-
 export const List = styled.div`
     background: transparent;
     padding: ${Spacing["spacing-8"]};

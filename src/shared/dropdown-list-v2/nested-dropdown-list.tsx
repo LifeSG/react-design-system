@@ -659,9 +659,9 @@ export const NestedDropdownList = <T,>({
             ref={mergeRefs(nodeRef, setFloatingRef)}
             style={styles}
             {...getFloatingProps()}
-            $width={width || (matchElementWidth ? elementWidth : undefined)}
+            $width={matchElementWidth ? elementWidth : undefined}
             $variant={variant}
-            $hasCustomWidth={!!width}
+            $customWidth={width}
         >
             {renderList()}
         </Container>

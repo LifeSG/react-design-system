@@ -72,7 +72,7 @@ export interface InputSelectProps<T, V>
      * Custom width for the dropdown in pixels. When specified, the dropdown will use this
      * width instead of matching the input element width.
      */
-    listStyleWidth?: number | undefined;
+    dropdownWidth?: string | undefined;
     customLabels?: DropdownCustomLabelProps | undefined;
 }
 

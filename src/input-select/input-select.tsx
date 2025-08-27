@@ -50,7 +50,7 @@ export const InputSelect = <T, V>({
     alignment,
     dropdownZIndex,
     dropdownRootNode,
-    listStyleWidth
+    dropdownWidth
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -257,7 +257,7 @@ export const InputSelect = <T, V>({
                 customLabels={customLabels}
                 renderCustomCallToAction={renderCustomCallToAction}
                 variant={variant}
-                width={listStyleWidth}
+                width={dropdownWidth}
                 matchElementWidth
             />
         );

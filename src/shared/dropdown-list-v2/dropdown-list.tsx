@@ -570,8 +570,8 @@ export const DropdownList = <T, V>({
             ref={mergeRefs(nodeRef, setFloatingRef)}
             style={styles}
             {...getFloatingProps()}
-            $width={width || (matchElementWidth ? elementWidth : undefined)}
-            $hasCustomWidth={!!width}
+            $width={matchElementWidth ? elementWidth : undefined}
+            $customWidth={width}
             $variant={variant}
         >
             {renderList()}

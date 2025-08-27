@@ -93,8 +93,8 @@ export interface DropdownListProps<T, V>
     /** Specifies the item for which the dropdown’s scroll position will be automatically adjusted */
     topScrollItem?: T | undefined;
     matchElementWidth?: boolean | undefined;
-    /** Custom width for the dropdown in pixels. When specified, takes precedence over matchElementWidth */
-    width?: number | undefined;
+    /** Custom width for the dropdown. When specified, takes precedence over matchElementWidth */
+    width?: string | undefined;
 
     onSelectItem?: ((item: T, extractedValue: V) => void) | undefined;
     onSelectAll?: (() => void) | undefined;
@@ -157,8 +157,8 @@ export interface NestedDropdownListProps<T>
     /** If specified, the category label is selectable */
     selectableCategory?: boolean | undefined;
     matchElementWidth?: boolean | undefined;
-    /** Custom width for the dropdown in pixels. When specified, takes precedence over matchElementWidth */
-    width?: number | undefined;
+    /** Custom width for the dropdown. When specified, takes precedence over matchElementWidth */
+    width?: string | undefined;
 
     onSelectItem?: ((item: NestedDropdownListLocalItem<T>) => void) | undefined;
     onSelectAll?:

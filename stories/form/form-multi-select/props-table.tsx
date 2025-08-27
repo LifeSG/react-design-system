@@ -74,11 +74,15 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `"end"`,
             },
             {
-                name: "listStyleWidth",
-                description: <>Custom width for the list in pixels. When specified,
-                        the list will use this exact width instead of
-                        matching the input element width.</>,
-                propTypes: ["number"],
+                name: "dropdownWidth",
+                description: (
+                    <>
+                        Custom width for the dropdown. When specified, the
+                        dropdown will use this exact width instead of matching
+                        the input element width.
+                    </>
+                ),
+                propTypes: ["string"],
             },
             {
                 name: "enableSearch",
