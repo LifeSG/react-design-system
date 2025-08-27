@@ -3,8 +3,9 @@ import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circl
 import { ExclamationTriangleFillIcon } from "@lifesg/react-icons/exclamation-triangle-fill";
 import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { inertValue } from "../shared/accessibility";
 import {
     ActionLinkText,
     AlertIconWrapper,
@@ -26,6 +27,7 @@ export const Alert = ({
     showIcon = false,
     customIcon,
     maxCollapsedHeight,
+    role,
     ...otherProps
 }: AlertProps): JSX.Element => {
     // =============================================================================
@@ -37,21 +39,30 @@ export const Alert = ({
         useResizeDetector<HTMLDivElement>();
 
     // =============================================================================
-    // EFFECTS
-    // =============================================================================
-
-    useEffect(() => {
-        setCollapsedState();
-    }, [maxCollapsedHeight, contentHeight]);
-
-    // =============================================================================
     // HELPERS
     // =============================================================================
 
-    const setCollapsedState = () => {
+    const getAlertLabel = () => {
+        switch (type) {
+            case "success":
+                return "Success";
+            case "warning":
+                return "Warning";
+            case "error":
+                return "Error";
+            case "info":
+                return "Information";
+            case "description":
+                return "Description";
+            default:
+                return "Alert";
+        }
+    };
+
+    const setCollapsedState = useCallback(() => {
         setShowHiddenContent(!maxCollapsedHeight);
         setRenderShowMore(isContentOutsideCollapsibleZone());
-    };
+    }, [maxCollapsedHeight, contentHeight]);
 
     const isContentOutsideCollapsibleZone = () => {
         if (contentHeight && maxCollapsedHeight) {
@@ -59,6 +70,18 @@ export const Alert = ({
         }
         return false;
     };
+
+    const isInert = () => {
+        return !!maxCollapsedHeight && !showHiddenContent;
+    };
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+
+    useEffect(() => {
+        setCollapsedState();
+    }, [maxCollapsedHeight, contentHeight, setCollapsedState]);
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -69,6 +92,7 @@ export const Alert = ({
             $sizeType={sizeType}
             $type={type}
             type="button"
+            aria-expanded={showHiddenContent}
             onClick={() => setShowHiddenContent(!showHiddenContent)}
         >
             Show {showHiddenContent ? "less" : "more"}
@@ -91,6 +115,7 @@ export const Alert = ({
                 data-testid="action-link"
                 $type={type}
                 $sizeType={sizeType}
+                inert={inertValue(isInert())}
                 {...actionLink}
             >
                 {actionLink.children}
@@ -103,15 +128,15 @@ export const Alert = ({
         if (type && customIcon) return customIcon;
         switch (type) {
             case "success":
-                return <TickCircleFillIcon />;
+                return <TickCircleFillIcon aria-hidden />;
             case "warning":
-                return <ExclamationTriangleFillIcon />;
+                return <ExclamationTriangleFillIcon aria-hidden />;
             case "error":
-                return <ExclamationCircleFillIcon />;
+                return <ExclamationCircleFillIcon aria-hidden />;
             case "info":
-                return <ICircleFillIcon />;
+                return <ICircleFillIcon aria-hidden />;
             case "description":
-                return <ICircleFillIcon />;
+                return <ICircleFillIcon aria-hidden />;
             default:
                 return null;
         }
@@ -126,6 +151,7 @@ export const Alert = ({
             }
             $showMore={showHiddenContent}
             $hasActionLink={!!actionLink}
+            inert={inertValue(isInert())}
         >
             <div ref={contentRef}>{children}</div>
             {renderLink()}
@@ -137,7 +163,9 @@ export const Alert = ({
             className={className}
             $type={type}
             $sizeType={sizeType}
+            aria-label={`${getAlertLabel()}`}
             data-testid={otherProps["data-testid"]}
+            role={role}
         >
             {showIcon && (
                 <AlertIconWrapper $sizeType={sizeType} $type={type}>
@@ -145,8 +173,13 @@ export const Alert = ({
                 </AlertIconWrapper>
             )}
             <ContentContainer>
-                {renderContent()}
+                {/* 
+                    CSS-BASED TAB ORDER IMPLEMENTATION:
+                    - DOM order: button → link → content (natural tab order)
+                    - Visual order: content → button (via CSS order property)
+                */}
                 {renderShowMore && renderShowMoreButton()}
+                {renderContent()}
             </ContentContainer>
         </Wrapper>
     );
