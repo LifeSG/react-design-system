@@ -82,6 +82,14 @@ const DATA: ApiTableSectionProps[] = [
                     "The callback when the carousel overlay is dimissed via the close button or Esc key",
                 propTypes: ["() => void"],
             },
+            {
+                name: "insets",
+                description:
+                    "To offset the close, magnifier, and arrow buttons",
+                propTypes: [
+                    "{ top?: number, bottom?: number, right?: number, right?: number }",
+                ],
+            },
         ],
     },
     {

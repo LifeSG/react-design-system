@@ -8,12 +8,18 @@ import { StatefulImage } from "./stateful-image";
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
-interface ArrowButtonStyleProps {
+interface ArrowButtonStyleProps extends InsetStyleProps {
     $position: "left" | "right";
 }
 
 interface ThumbnailItemStyleProps {
     $active?: boolean;
+}
+
+interface InsetStyleProps {
+    $insetTop?: number;
+    $insetRight?: number;
+    $insetLeft?: number;
 }
 
 // =============================================================================
@@ -34,31 +40,68 @@ const IconButton = styled(ClickableIcon)`
     }
 `;
 
-export const CloseButton = styled(IconButton)`
+export const CloseButton = styled(IconButton)<InsetStyleProps>`
     position: absolute;
-    top: ${Spacing["spacing-48"]};
-    right: ${Spacing["spacing-48"]};
+    top: ${(props) =>
+        props.$insetTop
+            ? css`calc(${Spacing["spacing-48"]} + ${props.$insetTop}px)`
+            : css`
+                  ${Spacing["spacing-48"]}
+              `};
+    right: ${(props) =>
+        props.$insetRight
+            ? css`calc(${Spacing["spacing-48"]} + ${props.$insetRight}px)`
+            : css`
+                  ${Spacing["spacing-48"]}
+              `};
     z-index: 5;
 
     ${MediaQuery.MaxWidth.sm} {
-        top: ${Spacing["spacing-20"]};
-        right: ${Spacing["spacing-20"]};
+        top: ${(props) =>
+            props.$insetTop
+                ? css`calc(${Spacing["spacing-20"]} + ${props.$insetTop}px)`
+                : css`
+                      ${Spacing["spacing-20"]}
+                  `};
+        right: ${(props) =>
+            props.$insetRight
+                ? css`calc(${Spacing["spacing-20"]} + ${props.$insetRight}px)`
+                : css`
+                      ${Spacing["spacing-20"]}
+                  `};
     }
 `;
 
-export const MagnifierButton = styled(IconButton)`
+export const MagnifierButton = styled(IconButton)<InsetStyleProps>`
     position: absolute;
-    top: ${Spacing["spacing-48"]};
-    right: calc(
-        2.5rem + ${Spacing["spacing-48"]} + ${Spacing["spacing-16"]}
-    ); // close button + space from screen + gap between buttons
+    top: ${(props) =>
+        props.$insetTop
+            ? css`calc(${Spacing["spacing-48"]} + ${props.$insetTop}px)`
+            : css`
+                  ${Spacing["spacing-48"]}
+              `};
+    right: ${
+        (props) =>
+            props.$insetRight
+                ? css`calc(2.5rem + ${Spacing["spacing-48"]} + ${Spacing["spacing-16"]} ${props.$insetRight}px)`
+                : css`calc(2.5rem + ${Spacing["spacing-48"]} + ${Spacing["spacing-16"]})` // close button + space from screen + gap between buttons
+    };
+
     z-index: 5;
 
     ${MediaQuery.MaxWidth.sm} {
-        top: ${Spacing["spacing-20"]};
-        right: calc(
-            2.5rem + ${Spacing["spacing-20"]} + ${Spacing["spacing-16"]}
-        );
+        top: ${(props) =>
+            props.$insetTop
+                ? css`calc(${Spacing["spacing-20"]} + ${props.$insetTop}px)`
+                : css`
+                      ${Spacing["spacing-20"]}
+                  `};
+        right: ${
+            (props) =>
+                props.$insetRight
+                    ? css`calc(2.5rem + ${Spacing["spacing-20"]} + ${Spacing["spacing-16"]} ${props.$insetRight}px)`
+                    : css`calc(2.5rem + ${Spacing["spacing-20"]} + ${Spacing["spacing-16"]})` // close button + space from screen + gap between buttons
+        };
     }
 `;
 
@@ -71,18 +114,34 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
     ${(props) =>
         props.$position === "left" &&
         css`
-            left: ${Spacing["spacing-48"]};
+            left: ${props.$insetLeft
+                ? css`calc(${Spacing["spacing-48"]} + ${props.$insetLeft}px)`
+                : css`
+                      ${Spacing["spacing-48"]}
+                  `};
             ${MediaQuery.MaxWidth.sm} {
-                left: ${Spacing["spacing-20"]};
+                left: ${props.$insetLeft
+                    ? css`calc(${Spacing["spacing-20"]} + ${props.$insetLeft}px)`
+                    : css`
+                          ${Spacing["spacing-20"]}
+                      `};
             }
         `}
 
     ${(props) =>
         props.$position === "right" &&
         css`
-            right: ${Spacing["spacing-48"]};
+            right: ${props.$insetRight
+                ? css`calc(${Spacing["spacing-48"]} + ${props.$insetRight}px)`
+                : css`
+                      ${Spacing["spacing-48"]}
+                  `};
             ${MediaQuery.MaxWidth.sm} {
-                right: ${Spacing["spacing-20"]};
+                right: ${props.$insetRight
+                    ? css`calc(${Spacing["spacing-20"]} + ${props.$insetRight}px)`
+                    : css`
+                          ${Spacing["spacing-20"]}
+                      `};
             }
         `}
 `;
