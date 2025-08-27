@@ -49,6 +49,49 @@ desired value in px. This also works with custom content.
 
 <Canvas of={AlertStories.WithMaxCollapsedHeight} />
 
+## Accessibility
+
+By default, the Alert component does not include `role="alert"` to avoid disruptive announcements. You can specify roles explicitly when needed:
+
+```tsx
+// For immediate announcement (use sparingly)
+<Alert type="error" role="alert">
+    Critical error message
+</Alert>
+
+// For status updates
+<Alert type="info" role="status">
+    Information update
+</Alert>
+```
+
+For dynamic alerts that need to be announced to screen readers (e.g. an alert that appears after the rest of the elements on the page), use an external live region pattern:
+
+```tsx
+// Create a visually hidden live region that announces content changes
+<div
+    id="live-region"
+    aria-live="polite"
+    aria-atomic="true"
+    style={{
+        position: "absolute",
+        left: "-10000px",
+        width: "1px",
+        height: "1px",
+        overflow: "hidden",
+    }}
+>
+    {alertMessage}
+</div>
+
+// Display alerts without automatic announcement
+<Alert type="success" showIcon>
+    Your data has been saved!
+</Alert>
+```
+
+<Canvas of={AlertStories.Accessibility} />
+
 ## Component API
 
 <PropsTable />

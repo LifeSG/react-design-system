@@ -1,5 +1,6 @@
 import { CalendarEventIcon } from "@lifesg/react-icons/calendar-event";
 import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 import { Alert } from "src/alert";
 import { StackDecorator, StoryDecorator } from "stories/storybook-common";
 
@@ -266,6 +267,57 @@ export const WithMaxCollapsedHeight: StoryObj<Component> = {
                         Custom content
                     </div>
                 </Alert>
+            </>
+        );
+    },
+};
+
+export const Accessibility: StoryObj<Component> = {
+    render: () => {
+        const [alertMessage, setAlertMessage] = useState("");
+        const [messageId, setMessageId] = useState(0);
+
+        const announceMessage = (message: string) => {
+            setMessageId((prev) => prev + 1);
+            setAlertMessage(message);
+        };
+
+        return (
+            <>
+                <div
+                    id="live-region"
+                    aria-live="polite"
+                    aria-atomic="true"
+                    style={{
+                        position: "absolute",
+                        left: "-10000px",
+                        width: "1px",
+                        height: "1px",
+                        overflow: "hidden",
+                    }}
+                >
+                    {alertMessage && (
+                        <span key={messageId}>{alertMessage}</span>
+                    )}
+                </div>
+
+                <Alert type="error" showIcon role="alert">
+                    This alert uses role=&quot;alert&quot; for immediate
+                    announcement.
+                </Alert>
+
+                <Alert type="info" showIcon role="status">
+                    This alert uses role=&quot;status&quot; for less urgent
+                    updates.
+                </Alert>
+
+                <button
+                    onClick={() =>
+                        announceMessage("Success: Your data has been saved!")
+                    }
+                >
+                    Trigger Live Region Announcement
+                </button>
             </>
         );
     },
