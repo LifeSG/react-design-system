@@ -68,8 +68,11 @@ export interface InputSelectProps<T, V>
      * the dropdown may not be visible. Specify the parent element here instead
      */
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
-    /** @deprecated this has no effect as the dropdown will automatically resize */
-    listStyleWidth?: string | undefined;
+    /**
+     * Custom width for the dropdown in pixels. When specified, the dropdown will use this
+     * width instead of matching the input element width.
+     */
+    dropdownWidth?: string | undefined;
     customLabels?: DropdownCustomLabelProps | undefined;
 }
 
