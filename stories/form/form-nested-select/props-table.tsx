@@ -105,16 +105,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["DropdownCustomLabelProps"],
             },
             {
-                name: "listStyleWidth (deprecated)",
-                description: (
-                    <>
-                        Style option: The width of the option display.
-                        <br />
-                        <b>Note:</b> This attribute has no effect and will be
-                        removed in a future version
-                    </>
-                ),
-                propTypes: ["string"],
+                name: "listStyleWidth",
+                description: <>Custom width for the list in pixels. When specified,
+                        the list will use this exact width instead of
+                        matching the input element width.</>,
+                propTypes: ["number"],
             },
             {
                 name: "enableSearch",

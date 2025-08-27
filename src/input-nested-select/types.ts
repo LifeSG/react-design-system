@@ -54,8 +54,8 @@ export interface InputNestedSelectProps<V1, V2, V3>
     onSelectOption?:
         | ((keyPath: string[], value: V1 | V2 | V3) => void)
         | undefined;
-    /** @deprecated this has no effect as the dropdown will automatically resize */
-    listStyleWidth?: string | undefined;
+    /** Custom width for the list in pixels. */
+    listStyleWidth?: number | undefined;
     onBlur?: (() => void) | undefined;
     customLabels?: DropdownCustomLabelProps | undefined;
 }

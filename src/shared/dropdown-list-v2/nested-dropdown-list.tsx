@@ -59,6 +59,7 @@ export const NestedDropdownList = <T,>({
     variant = "default",
     listboxId,
     matchElementWidth = false,
+    width,
     mode = "default",
     selectableCategory: _selectableCategory,
     onSelectItem,
@@ -658,7 +659,7 @@ export const NestedDropdownList = <T,>({
             ref={mergeRefs(nodeRef, setFloatingRef)}
             style={styles}
             {...getFloatingProps()}
-            $width={matchElementWidth ? elementWidth : undefined}
+            $width={width || (matchElementWidth ? elementWidth : undefined)}
             $variant={variant}
         >
             {renderList()}

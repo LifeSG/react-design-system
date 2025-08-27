@@ -26,8 +26,7 @@ export interface InputMultiSelectProps<T, V>
     dropdownZIndex?: number | undefined;
     maxSelectable?: number | undefined;
     customLabels?: DropdownCustomLabelProps | undefined;
-    /** @deprecated this has no effect as the dropdown will automatically resize */
-    listStyleWidth?: string | undefined;
+    listStyleWidth?: number | undefined;
     /**
      * The root element that contains the dropdown element. Defaults to the document body.
      *

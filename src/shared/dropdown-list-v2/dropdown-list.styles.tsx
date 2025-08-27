@@ -44,8 +44,13 @@ export const Container = styled.div<ContainerStyleProps>`
     border-radius: ${Radius["sm"]};
     background: ${Colour["bg"]};
 
-    min-width: 23rem;
-    ${(props) => props.$width && `width: ${props.$width}px;`}
+    ${(props) => {
+        if (props.$width) {
+            return `width: ${props.$width}px;`;
+        } else {
+            return "min-width: 23rem;";
+        }
+    }}
     max-height: min(27rem, var(--available-height, infinity * 1px));
     overflow: hidden;
     overflow-y: auto;

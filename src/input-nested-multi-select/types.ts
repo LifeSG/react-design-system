@@ -23,8 +23,8 @@ export interface InputNestedMultiSelectProps<V1, V2, V3>
     onSelectOptions?:
         | ((keyPaths: string[][], values: Array<V1 | V2 | V3>) => void)
         | undefined;
-    /** @deprecated this has no effect as the dropdown will automatically resize */
-    listStyleWidth?: string | undefined;
+    /** Custom width for the dropdown in pixels. */
+    listStyleWidth?: number | undefined;
     onBlur?: (() => void) | undefined;
     customLabels?: DropdownCustomLabelProps | undefined;
 }

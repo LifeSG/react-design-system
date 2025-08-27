@@ -48,6 +48,7 @@ export const InputMultiSelect = <T, V>({
     dropdownZIndex,
     maxSelectable,
     dropdownRootNode,
+    listStyleWidth
 }: InputMultiSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -256,6 +257,7 @@ export const InputMultiSelect = <T, V>({
                 customLabels={customLabels}
                 renderCustomCallToAction={renderCustomCallToAction}
                 variant={variant}
+                width={listStyleWidth}
                 matchElementWidth
             />
         );

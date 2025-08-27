@@ -55,6 +55,7 @@ export const DropdownList = <T, V>({
     variant = "default",
     listboxId,
     matchElementWidth = false,
+    width,
     topScrollItem,
     onSelectItem,
     onSelectAll,
@@ -563,13 +564,14 @@ export const DropdownList = <T, V>({
         );
     };
 
+    console.log(222, width, matchElementWidth, elementWidth);
     return (
         <Container
             data-testid="dropdown-container"
             ref={mergeRefs(nodeRef, setFloatingRef)}
             style={styles}
             {...getFloatingProps()}
-            $width={matchElementWidth ? elementWidth : undefined}
+            $width={width || (matchElementWidth ? elementWidth : undefined)}
             $variant={variant}
         >
             {renderList()}

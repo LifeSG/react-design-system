@@ -63,6 +63,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     variant = "default",
     alignment,
     dropdownZIndex,
+    listStyleWidth,
     dropdownRootNode,
 }: InputNestedSelectProps<V1, V2, V3>): JSX.Element => {
     // =========================================================================
@@ -269,6 +270,7 @@ export const InputNestedSelect = <V1, V2, V3>({
                 onSearch={onSearch}
                 variant={variant}
                 mode={mode}
+                width={listStyleWidth}
                 matchElementWidth
             />
         );
