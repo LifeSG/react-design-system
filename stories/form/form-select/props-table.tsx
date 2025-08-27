@@ -92,9 +92,13 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "dropdownWidth",
-               description: <>Custom width for the dropdown in pixels. When specified,
+                description: (
+                    <>
+                        Custom width for the dropdown in pixels. When specified,
                         the dropdown will use this exact width instead of
-                        matching the input element width.</>,
+                        matching the input element width.
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
@@ -225,17 +229,6 @@ const DATA: ApiTableSectionProps[] = [
                         document <code>body</code>
                     </>
                 ),
-            },
-            {
-                name: "dropdownWidth",
-                description: (
-                    <>
-                        Custom width for the dropdown in pixels. When specified,
-                        the dropdown will use this exact width instead of
-                        matching the input element width.
-                    </>
-                ),
-                propTypes: ["number"],
             },
         ],
     },
