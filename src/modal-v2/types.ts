@@ -1,14 +1,18 @@
 export type ModalAnimationDirection = "top" | "bottom" | "left" | "right";
 
 export interface ModalCardProps extends React.HTMLAttributes<HTMLDivElement> {
+    "data-testid"?: string | undefined;
     children: React.ReactNode;
 }
 
 export interface ModalCloseButtonProps
-    extends React.HTMLAttributes<HTMLDivElement> {}
+    extends React.HTMLAttributes<HTMLDivElement> {
+    "data-testid"?: string | undefined;
+}
 
 export interface ModalContentProps
     extends React.HTMLAttributes<HTMLDivElement> {
+    "data-testid"?: string | undefined;
     children: React.ReactNode;
 }
 
@@ -25,4 +29,5 @@ export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
     onOverlayClick?: (() => void) | undefined;
     /** Dismiss keyboard to keep modal in fullscreen */
     dismissKeyboardOnShow?: boolean | undefined;
+    "data-testid"?: string | undefined;
 }

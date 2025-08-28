@@ -12,7 +12,7 @@ import { Container, ModalContainer, ScrollContainer } from "./modal-v2.styles";
 import { ModalV2Props } from "./types";
 
 export const ModalV2 = ({
-    id = "modal",
+    id,
     show,
     onClose,
     animationFrom = "bottom",
@@ -22,6 +22,7 @@ export const ModalV2 = ({
     zIndex,
     onOverlayClick,
     dismissKeyboardOnShow = true,
+    "data-testid": testId = "modal",
     ...otherProps
 }: ModalV2Props): JSX.Element => {
     // =============================================================================
@@ -106,7 +107,7 @@ export const ModalV2 = ({
 
     return (
         <Overlay
-            data-testid={`${id}-overlay`}
+            data-testid={`${testId}-overlay`}
             show={isMounted}
             enableOverlayClick={enableOverlayClick}
             onOverlayClick={onOverlayClick}
@@ -117,19 +118,19 @@ export const ModalV2 = ({
             <Container
                 $show={isMounted}
                 $animationFrom={animationFrom}
-                data-testid={id}
+                data-testid={testId}
                 $verticalHeight={verticalHeight}
                 $offsetTop={offsetTop}
                 {...otherProps}
                 data-status={status}
             >
-                <ModalContext.Provider value={{ onClose }} key={id}>
+                <ModalContext.Provider value={{ onClose }}>
                     {isMounted && (
-                        <ScrollContainer>
-                            <FloatingFocusManager
-                                context={context}
-                                initialFocus={refs.floating}
-                            >
+                        <FloatingFocusManager
+                            context={context}
+                            initialFocus={refs.floating}
+                        >
+                            <ScrollContainer>
                                 <ModalContainer
                                     ref={refs.setFloating}
                                     {...getFloatingProps()}
@@ -138,8 +139,8 @@ export const ModalV2 = ({
                                 >
                                     {children}
                                 </ModalContainer>
-                            </FloatingFocusManager>
-                        </ScrollContainer>
+                            </ScrollContainer>
+                        </FloatingFocusManager>
                     )}
                 </ModalContext.Provider>
             </Container>

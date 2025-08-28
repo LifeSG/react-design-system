@@ -4,11 +4,14 @@ import { ModalContext } from "../modal-context";
 import { ModalCloseButtonProps } from "../types";
 import { ClickableContainer, StyledClickableIcon } from "./slot-styles";
 
-export const CloseButton = ({ ...otherProps }: ModalCloseButtonProps) => {
+export const CloseButton = ({
+    "data-testid": testId = "close-button",
+    ...otherProps
+}: ModalCloseButtonProps) => {
     const { onClose } = useContext(ModalContext);
 
     return (
-        <ClickableContainer {...otherProps}>
+        <ClickableContainer data-testid={testId} {...otherProps}>
             <StyledClickableIcon
                 onClick={onClose}
                 data-testid="close-button"

@@ -5,7 +5,8 @@ import { Content } from "./content";
 import { ModalCard } from "./slot-styles";
 
 export const Card = ({
-    id = "modal-card",
+    id,
+    "data-testid": testId = "modal-card",
     children,
     ...otherProps
 }: ModalCardProps) => {
@@ -30,7 +31,8 @@ export const Card = ({
 
     return (
         <ModalCard
-            data-testid={id}
+            id={id}
+            data-testid={testId}
             {...otherProps}
             onClick={handleOnClick}
             $hasCloseButton={hasCloseButton}
