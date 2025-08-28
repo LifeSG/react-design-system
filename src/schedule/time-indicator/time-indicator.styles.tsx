@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Border, Colour, Spacing, Font } from "../../theme";
+import { Border, Colour, Spacing, Font, Radius } from "../../theme";
 import { Typography } from "../../typography";
 import { CELL_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
@@ -16,7 +16,6 @@ interface TimelineCircleStyleProps {
 // =============================================================================
 export const TimeColumnWrapper = styled.div`
     position: sticky;
-    left: 0;
     z-index: 3;
 `;
 
@@ -24,7 +23,6 @@ export const TimeColumn = styled.div`
     display: flex;
     flex-direction: column;
     min-width: ${TIME_INDICATOR_WIDTH}px;
-    min-height: fit-content;
     background: ${Colour["bg"]};
     border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
 `;
@@ -49,9 +47,9 @@ export const TimelineCircle = styled.div<TimelineCircleStyleProps>`
     position: absolute;
     right: -6px;
     top: ${(props) => props.$top - 6}px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
+    width: ${Spacing["spacing-12"]};
+    height: ${Spacing["spacing-12"]};
+    border-radius: ${Radius["full"]};
     background: ${Colour["icon-primary"]};
     z-index: 4;
     display: ${(props) => (props.$isWeekView ? "none" : "block")};

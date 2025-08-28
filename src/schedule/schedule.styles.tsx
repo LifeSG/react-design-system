@@ -17,9 +17,8 @@ export const Container = styled.div<ScheduleProps>`
     ${(props) => {
         if (props.$loading) {
             return css`
-                :hover {
+                &:hover {
                     cursor: not-allowed;
-                    padding-bottom: 0;
                 }
             `;
         }

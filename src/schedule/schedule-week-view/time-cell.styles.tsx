@@ -10,8 +10,6 @@ interface SlotCellStyleProps {
 }
 
 interface SlotColumnOverlayStyleProps {
-    $columnIndex: number;
-    $totalVisibleColumns: number;
     $actualWidthPercentage?: number;
     $leftPosition?: number;
 }
@@ -47,7 +45,6 @@ export const SlotColumnOverlay = styled.div<SlotColumnOverlayStyleProps>`
     height: 100%;
     display: flex;
     flex-direction: column;
-    pointer-events: none;
     overflow: visible;
     z-index: 1;
 `;

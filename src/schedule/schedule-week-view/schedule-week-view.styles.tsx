@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Border, Colour, Font, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
 import { HEADER_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
@@ -33,7 +33,6 @@ export const HeaderContainer = styled.div`
 export const BlankCell = styled.div`
     min-width: ${TIME_INDICATOR_WIDTH}px;
     position: sticky;
-    left: 0;
     z-index: 2;
 `;
 
@@ -49,7 +48,7 @@ export const ServiceHeader = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    padding: 24px;
+    padding: ${Spacing["spacing-24"]};
     color: ${Colour["text-primary"]};
 `;
 
@@ -87,11 +86,10 @@ export const Timeline = styled.div<TimelineStyleProps>`
         position: absolute;
         left: -6px;
         top: -6px;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
+        width: ${Spacing["spacing-12"]};
+        height: ${Spacing["spacing-12"]};
+        border-radius: ${Radius["full"]};
         background: ${Colour["icon-primary"]};
-        box-sizing: border-box;
         z-index: 1;
     }
 `;

@@ -30,8 +30,6 @@ export const SlotContentContainer = styled(
     padding: ${Spacing["spacing-4"]};
     position: absolute;
     top: ${(props) => props.$offsetTop || 0}px;
-    margin-top: 0;
-
     border-radius: ${Radius["sm"]};
 
     background: ${(props) => {
@@ -66,7 +64,6 @@ export const SlotContentContainer = styled(
 `;
 
 export const SlotServiceName = styled.span`
-    display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -75,7 +72,6 @@ export const SlotServiceName = styled.span`
 `;
 
 export const SlotAvailability = styled.span`
-    display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

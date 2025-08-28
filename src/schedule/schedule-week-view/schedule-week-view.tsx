@@ -63,22 +63,10 @@ export const ScheduleWeekView = ({
     const today = dayjs();
 
     // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
-    const handleDayHover = (value: dayjs.Dayjs) => {
-        setHoverDay(value);
-    };
-
-    const handleDayMouseout = () => {
-        setHoverDay(undefined);
-    };
-
-    // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
     const generateStyleProps = (day: dayjs.Dayjs): CellStyleProps => {
         const isToday = day.isSame(today, "day");
-        const isHover = hoverDay && day.isSame(hoverDay, "day");
 
         const dayCellStyleProps: CellStyleProps = {
             labelType: isToday ? "current" : "available",
@@ -88,10 +76,6 @@ export const ScheduleWeekView = ({
         if (isToday) {
             dayCellStyleProps.circleLeft = "selected-outline";
             dayCellStyleProps.circleRight = "selected-outline";
-        }
-        if (isHover && !isToday) {
-            dayCellStyleProps.circleLeft = "hover-subtle";
-            dayCellStyleProps.circleRight = "hover-subtle";
         }
 
         return dayCellStyleProps;
@@ -110,13 +94,11 @@ export const ScheduleWeekView = ({
                         return (
                             <ServiceHeader key={day.format("YYYY-MM-DD")}>
                                 <DayCell
-                                    data-testid="aaaaa"
-                                    key={`day-${index}`}
                                     date={day}
                                     calendarDate={dayjs(date)}
                                     onSelect={() => {}}
-                                    onHover={handleDayHover}
-                                    onHoverEnd={handleDayMouseout}
+                                    onHover={() => {}}
+                                    onHoverEnd={() => {}}
                                     {...dayCellStyleProps}
                                 />
                                 <Description>{day.format("ddd")}</Description>

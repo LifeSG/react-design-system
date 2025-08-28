@@ -205,12 +205,10 @@ export const TimeCell: React.FC<TimeCellProps> = ({
         return (
             <SlotColumnOverlay
                 key="hidden-slots-column"
-                $columnIndex={3}
-                $totalVisibleColumns={cellServiceLayout.totalColumns}
                 $actualWidthPercentage={actualWidthPercentage}
                 $leftPosition={3 * actualWidthPercentage}
             >
-                {hiddenIntervals.map((intervalData, index) => (
+                {hiddenIntervals.map((intervalData) => (
                     <HiddenColumns
                         key={`hidden-btn-${intervalData.interval.start}-${intervalData.interval.end}`}
                         $heightPercentage={100 / hiddenIntervals.length}
@@ -244,10 +242,6 @@ export const TimeCell: React.FC<TimeCellProps> = ({
                     return (
                         <SlotColumnOverlay
                             key={serviceName}
-                            $columnIndex={serviceIndex}
-                            $totalVisibleColumns={
-                                cellServiceLayout.totalColumns
-                            }
                             $actualWidthPercentage={actualWidthPercentage}
                             $leftPosition={leftPosition}
                         >
