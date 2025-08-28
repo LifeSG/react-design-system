@@ -5,8 +5,9 @@ import {
     useInteractions,
     useTransitionStatus,
 } from "@floating-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Overlay } from "../overlay/overlay";
+import { useWindowResizeObserver } from "../shared/hooks";
 import { ModalContext } from "./modal-context";
 import { Container, ModalContainer, ScrollContainer } from "./modal-v2.styles";
 import { ModalV2Props } from "./types";
@@ -28,8 +29,7 @@ export const ModalV2 = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [verticalHeight, setVerticalHeight] = useState<number>();
-    const [offsetTop, setOffsetTop] = useState<number>();
+    const { verticalHeight, offsetTop } = useWindowResizeObserver();
 
     const { refs, context } = useFloating({
         open: show,
@@ -53,32 +53,6 @@ export const ModalV2 = ({
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        // set initial vh
-
-        // use VisualViewport API if available, it gives more accurate dimensions when iOS software keyboard is active
-        if (window.visualViewport) {
-            handleViewportResize();
-            window.visualViewport.addEventListener(
-                "resize",
-                handleViewportResize
-            );
-            return () => {
-                window.visualViewport?.removeEventListener(
-                    "resize",
-                    handleViewportResize
-                );
-            };
-        } else {
-            // fallback to Window API
-            handleWindowResize();
-            window.addEventListener("resize", handleWindowResize);
-            return () => {
-                window.removeEventListener("resize", handleWindowResize);
-            };
-        }
-    }, []);
-
-    useEffect(() => {
         if (show && dismissKeyboardOnShow) {
             // dismiss software keyboard to put modal in fullscreen
             (document.activeElement as HTMLElement)?.blur?.();
@@ -86,25 +60,8 @@ export const ModalV2 = ({
     }, [dismissKeyboardOnShow, show]);
 
     // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
-    const handleWindowResize = () => {
-        const newVerticalHeight = window.innerHeight * 0.01;
-        setVerticalHeight(newVerticalHeight);
-    };
-
-    const handleViewportResize = () => {
-        if (window.visualViewport) {
-            const newVerticalHeight = window.visualViewport.height * 0.01;
-            setVerticalHeight(newVerticalHeight);
-            setOffsetTop(window.visualViewport.offsetTop);
-        }
-    };
-
-    // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-
     return (
         <Overlay
             data-testid={`${testId}-overlay`}
