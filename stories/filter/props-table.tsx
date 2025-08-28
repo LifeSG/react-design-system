@@ -90,8 +90,15 @@ const FILTER_DATA: ApiTableSectionProps[] = [
                 defaultValue: `"Filters"`,
             },
             {
+                name: "clearButtonLabel",
+                description: "The display label of the `Clear` button",
+                propTypes: ["string"],
+                defaultValue: `"Clear"`,
+            },
+            {
                 name: "doneButtonLabel",
-                description: "The display label of the done button (in mobile)",
+                description:
+                    "The display label of the `Done` button (in mobile)",
                 propTypes: ["string"],
                 defaultValue: `"Done"`,
             },
