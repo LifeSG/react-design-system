@@ -10,6 +10,7 @@ export interface FilterProps {
               headerTitle?: string | undefined;
               toggleFilterButtonLabel?: string | undefined;
               doneButtonLabel?: string | undefined;
+              clearButtonLabel?: string | undefined;
           }
         | undefined;
     /**
