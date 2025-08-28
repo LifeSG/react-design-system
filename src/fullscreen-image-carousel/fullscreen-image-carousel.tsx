@@ -62,7 +62,6 @@ export const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-
     const [currentSlide, setCurrentSlide] = useState(
         initialActiveItemIndex ?? 0
     );

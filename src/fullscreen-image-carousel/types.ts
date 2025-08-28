@@ -1,11 +1,5 @@
 import { ModalProps } from "../modal";
-
-type Insets = {
-    top?: number | undefined;
-    right?: number | undefined;
-    bottom?: number | undefined;
-    left?: number | undefined;
-};
+import { Insets } from "../shared/types";
 
 export interface FullscreenImageCarouselRef {
     currentItemIndex: number;
