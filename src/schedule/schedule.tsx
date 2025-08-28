@@ -110,8 +110,6 @@ export const Schedule = ({
                     data-id="schedule-header"
                     date={date}
                     view={effectiveView}
-                    showTodayButton={!isSmallScreen}
-                    showViewSelector={!isSmallScreen}
                     minDate={minDate}
                     maxDate={maxDate}
                     onPreviousDayClick={onPreviousDayClick}
@@ -134,15 +132,13 @@ export const Schedule = ({
             id={id}
             className={className}
             $loading={loading}
-            data-testId={testId}
+            data-testid={testId}
             {...otherProps}
         >
             <ScheduleHeader
                 data-id="schedule-header"
                 date={date}
                 view={effectiveView}
-                showTodayButton={!isSmallScreen}
-                showViewSelector={!isSmallScreen}
                 minDate={minDate}
                 maxDate={maxDate}
                 onPreviousDayClick={onPreviousDayClick}

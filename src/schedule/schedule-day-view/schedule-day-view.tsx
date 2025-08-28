@@ -143,11 +143,17 @@ export const ScheduleDayView = ({
         if (slot?.customPopover) {
             return slot.customPopover;
         }
-        return !slot &&
-            !isServiceTimeSlotCovered(service, time) &&
-            emptySlotPopover
-            ? emptySlotPopover
-            : undefined;
+        if (!isServiceTimeSlotCovered(service, time) && emptySlotPopover) {
+            const endTimeString = DateHelper.addMinutesToTime(time, 30);
+            const emptySlotData = {
+                startTime: time,
+                endTime: endTimeString,
+                name: service.name,
+            };
+            return emptySlotPopover(emptySlotData);
+        }
+
+        return undefined;
     };
 
     // =============================================================================

@@ -16,9 +16,8 @@ interface SlotColumnOverlayStyleProps {
     $leftPosition?: number;
 }
 
-interface HiddenColumnsButtonStyleProps {
+interface HiddenColumnsStyleProps {
     $heightPercentage?: number;
-    $isMultiple?: boolean;
 }
 
 // =============================================================================
@@ -53,7 +52,7 @@ export const SlotColumnOverlay = styled.div<SlotColumnOverlayStyleProps>`
     z-index: 1;
 `;
 
-export const HiddenColumnsButton = styled.div<HiddenColumnsButtonStyleProps>`
+export const HiddenColumns = styled.div<HiddenColumnsStyleProps>`
     display: flex;
     align-items: center;
     justify-content: center;

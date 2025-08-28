@@ -1,8 +1,4 @@
-import { useContext } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
 import { DateHelper } from "../../util";
-import { Breakpoint } from "../../theme";
 import {
     LeftSection,
     RightSection,
@@ -21,8 +17,6 @@ export interface ScheduleHeaderProps {
     view: ScheduleView;
     minDate?: string | undefined;
     maxDate?: string | undefined;
-    showTodayButton?: boolean | undefined;
-    showViewSelector?: boolean | undefined;
     onPreviousDayClick: (currentDate: string) => void;
     onNextDayClick: (currentDate: string) => void;
     onCalendarDateSelect?: (currentDate: string) => void;
@@ -35,8 +29,6 @@ export const ScheduleHeader = ({
     view = "day",
     minDate,
     maxDate,
-    showTodayButton = true,
-    showViewSelector = true,
     onPreviousDayClick,
     onNextDayClick,
     onCalendarDateSelect,
@@ -51,12 +43,6 @@ export const ScheduleHeader = ({
     const selectedViewOption = viewOptions.find(
         (option) => option.value === view
     );
-
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = Breakpoint["md-max"]({ theme });
-    const isMobile = useMediaQuery({
-        maxWidth: mobileBreakpoint,
-    });
 
     // Handle navigation based on view type
     const handleLeftArrowClick = (currentDate: string) => {
@@ -81,12 +67,10 @@ export const ScheduleHeader = ({
 
     return (
         <ScheduleHeaderWrapper {...otherProps}>
-            <LeftSection $isMobile={isMobile}>
-                {showTodayButton && (
-                    <StyledButton styleType="light" onClick={onTodayClick}>
-                        Today
-                    </StyledButton>
-                )}
+            <LeftSection>
+                <StyledButton styleType="light" onClick={onTodayClick}>
+                    Today
+                </StyledButton>
                 <StyledDateNavigator
                     selectedDate={date}
                     minDate={minDate}
@@ -95,25 +79,20 @@ export const ScheduleHeader = ({
                     onLeftArrowClick={handleLeftArrowClick}
                     onRightArrowClick={handleRightArrowClick}
                     onCalendarDateSelect={onCalendarDateSelect}
-                    $isMobile={isMobile}
                 />
             </LeftSection>
 
-            {showViewSelector && (
-                <RightSection>
-                    <StyledText>View by:</StyledText>
-                    <InputSelect
-                        options={viewOptions}
-                        selectedOption={selectedViewOption}
-                        onSelectOption={(option) =>
-                            onViewChange?.(option.value)
-                        }
-                        listExtractor={(option) => option.label}
-                        displayValueExtractor={(option) => option.label}
-                        dropdownWidth={DROPDOWN_WIDTH}
-                    />
-                </RightSection>
-            )}
+            <RightSection>
+                <StyledText>View by:</StyledText>
+                <InputSelect
+                    options={viewOptions}
+                    selectedOption={selectedViewOption}
+                    onSelectOption={(option) => onViewChange?.(option.value)}
+                    listExtractor={(option) => option.label}
+                    displayValueExtractor={(option) => option.label}
+                    listStyleWidth={DROPDOWN_WIDTH}
+                />
+            </RightSection>
         </ScheduleHeaderWrapper>
     );
 };

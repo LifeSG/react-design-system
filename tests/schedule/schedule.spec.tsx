@@ -202,29 +202,6 @@ describe("Schedule", () => {
         }
     });
 
-    it("should show mobile layout with service navigation on mobile", () => {
-        const { useMediaQuery } = require("react-responsive");
-        useMediaQuery.mockReturnValue(true);
-
-        render(
-            <Schedule
-                date={scheduleMockProps.date}
-                serviceData={buildMockRowData(3)}
-                onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
-                onNextDayClick={scheduleMockProps.onNextDayClick}
-                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
-                onTodayClick={scheduleMockProps.onTodayClick}
-            />
-        );
-
-        expect(screen.queryByText("View by:")).not.toBeInTheDocument();
-
-        expect(screen.getByText("Service 1")).toBeVisible();
-        expect(screen.queryByText("Service 2")).not.toBeInTheDocument();
-
-        expect(screen.getByText("available")).toBeVisible();
-    });
-
     it("should navigate between services on mobile", () => {
         const { useMediaQuery } = require("react-responsive");
         useMediaQuery.mockReturnValue(true);

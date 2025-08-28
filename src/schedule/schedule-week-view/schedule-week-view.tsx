@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import dayjs from "dayjs";
 import { ScheduleWeekViewProps } from "./types";
 import { TimeIndicator } from "../time-indicator/time-indicator";
@@ -6,6 +6,10 @@ import { TimeHelper } from "../../util/time-helper";
 import { useTimelineOffset, useInitialScroll } from "../shared";
 import { calculateSlotWidths } from "./week-view-utils";
 import { ScheduleContainer } from "../schedule-day-view/schedule-day-view.styles";
+import {
+    DayCell,
+    CellStyleProps,
+} from "../../shared/internal-calendar/day-cell";
 import {
     BlankCell,
     BodyContainer,
@@ -17,7 +21,6 @@ import {
     SlotColumn,
     Timeline,
     SlotGrid,
-    Title,
 } from "./schedule-week-view.styles";
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
 import { TimeCell } from "./time-cell";
@@ -42,6 +45,7 @@ export const ScheduleWeekView = ({
     // =============================================================================
     const timelineOffset = useTimelineOffset(minTime, maxTime);
     const bodyRef = useInitialScroll(loading, minTime, initialScrollTime);
+    const [hoverDay, setHoverDay] = useState<dayjs.Dayjs>();
 
     const weekDays = useMemo(() => {
         const startOfWeek = dayjs(date).startOf("week");
@@ -59,6 +63,41 @@ export const ScheduleWeekView = ({
     const today = dayjs();
 
     // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleDayHover = (value: dayjs.Dayjs) => {
+        setHoverDay(value);
+    };
+
+    const handleDayMouseout = () => {
+        setHoverDay(undefined);
+    };
+
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
+    const generateStyleProps = (day: dayjs.Dayjs): CellStyleProps => {
+        const isToday = day.isSame(today, "day");
+        const isHover = hoverDay && day.isSame(hoverDay, "day");
+
+        const dayCellStyleProps: CellStyleProps = {
+            labelType: isToday ? "current" : "available",
+            interactive: null,
+        };
+
+        if (isToday) {
+            dayCellStyleProps.circleLeft = "selected-outline";
+            dayCellStyleProps.circleRight = "selected-outline";
+        }
+        if (isHover && !isToday) {
+            dayCellStyleProps.circleLeft = "hover-subtle";
+            dayCellStyleProps.circleRight = "hover-subtle";
+        }
+
+        return dayCellStyleProps;
+    };
+
+    // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
     const renderHeader = () => {
@@ -66,13 +105,20 @@ export const ScheduleWeekView = ({
             <HeaderContainer>
                 <BlankCell />
                 <ServiceContainer>
-                    {weekDays.map((day) => {
-                        const isToday = day.isSame(today, "day");
+                    {weekDays.map((day, index) => {
+                        const dayCellStyleProps = generateStyleProps(day);
                         return (
                             <ServiceHeader key={day.format("YYYY-MM-DD")}>
-                                <Title $isToday={isToday}>
-                                    {day.format("D")}
-                                </Title>
+                                <DayCell
+                                    data-testid="aaaaa"
+                                    key={`day-${index}`}
+                                    date={day}
+                                    calendarDate={dayjs(date)}
+                                    onSelect={() => {}}
+                                    onHover={handleDayHover}
+                                    onHoverEnd={handleDayMouseout}
+                                    {...dayCellStyleProps}
+                                />
                                 <Description>{day.format("ddd")}</Description>
                             </ServiceHeader>
                         );

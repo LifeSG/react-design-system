@@ -39,7 +39,9 @@ export interface ScheduleProps {
     onCalendarDateSelect: (currentDate: string) => void;
     onTodayClick: () => void;
     onEmptySlotClick?: ((slot: ScheduleEmptySlotProps) => void) | undefined;
-    emptySlotPopover?: SchedulePopoverProps | undefined;
+    emptySlotPopover?:
+        | ((slot: ScheduleEmptySlotProps) => SchedulePopoverProps)
+        | undefined;
     blockedMessage?: string | undefined;
     onClickHiddenSlots?: ((hiddenServices: string[]) => void) | undefined;
 }
@@ -53,7 +55,9 @@ export interface ScheduleSlotProps {
     date: string | undefined;
     booked?: number | undefined;
     customPopover?: SchedulePopoverProps | undefined;
-    onClick?: ((data: ScheduleSlotProps, e: React.MouseEvent) => void) | undefined;
+    onClick?:
+        | ((data: ScheduleSlotProps, e: React.MouseEvent) => void)
+        | undefined;
 }
 
 export interface ScheduleEmptySlotProps {

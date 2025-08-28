@@ -3,17 +3,7 @@ import { DateNavigator } from "../../date-navigator";
 import { Colour, Spacing } from "../../theme";
 import { Typography } from "../../typography";
 import { Button } from "../../button";
-
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface LeftSectionStyleProps {
-    $isMobile?: boolean;
-}
-
-interface StyledDateNavigatorStyleProps {
-    $isMobile?: boolean;
-}
+import { MediaQuery } from "../../theme";
 
 // =============================================================================
 // STYLING
@@ -27,29 +17,31 @@ export const ScheduleHeaderWrapper = styled.div`
     gap: ${Spacing["spacing-16"]};
 `;
 
-export const LeftSection = styled.div<LeftSectionStyleProps>`
+export const LeftSection = styled.div`
     display: flex;
     align-items: center;
     gap: ${Spacing["spacing-16"]};
-    ${(props) => (props.$isMobile ? "width: 100%;" : "width: auto;")}
 
-    ${(props) =>
-        props.$isMobile &&
-        `> div {
-            width: 100%;
-        }`}
+    ${MediaQuery.MaxWidth.md} {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
 `;
 
 export const RightSection = styled.div`
     display: flex;
     align-items: center;
     gap: ${Spacing["spacing-16"]};
+
+    ${MediaQuery.MaxWidth.lg} {
+        display: none;
+    }
 `;
 
-export const StyledDateNavigator = styled(
-    DateNavigator
-)<StyledDateNavigatorStyleProps>`
-    ${(props) => (props.$isMobile ? `width: 100%;` : `width: 400px;`)}
+export const StyledDateNavigator = styled(DateNavigator)`
+    width: 100%;
+    max-width: 400px;
 `;
 
 export const StyledText = styled(Typography.BodyMD)`
@@ -58,6 +50,10 @@ export const StyledText = styled(Typography.BodyMD)`
 
 export const StyledButton = styled(Button.Default)`
     min-width: 5rem;
+
+    ${MediaQuery.MaxWidth.lg} {
+        display: none;
+    }
 `;
 
 // =============================================================================

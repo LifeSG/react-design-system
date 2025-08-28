@@ -19,6 +19,8 @@ export interface ScheduleDayViewProps {
     onEmptySlotClick?: (slot: ScheduleEmptySlotProps) => void | undefined;
     showPrevArrow: boolean;
     showNextArrow: boolean;
-    emptySlotPopover?: SchedulePopoverProps | undefined;
+    emptySlotPopover?:
+        | ((slot: ScheduleEmptySlotProps) => SchedulePopoverProps)
+        | undefined;
     blockedMessage?: string | undefined;
 }

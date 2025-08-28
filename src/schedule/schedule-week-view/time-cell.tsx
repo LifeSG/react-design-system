@@ -3,11 +3,7 @@ import { ScheduleEntityProps } from "../types";
 import { SlotLayoutMap, SlotWithService } from "./types";
 import { calculateSlotOffset, minutesToTime } from "../shared";
 import { WithOptionalPopover } from "../shared/with-optional-popover";
-import {
-    SlotCell,
-    SlotColumnOverlay,
-    HiddenColumnsButton,
-} from "./time-cell.styles";
+import { SlotCell, SlotColumnOverlay, HiddenColumns } from "./time-cell.styles";
 import { SlotContent } from "./slot-content";
 import {
     getSlotsStartingInTimeCell,
@@ -215,22 +211,16 @@ export const TimeCell: React.FC<TimeCellProps> = ({
                 $leftPosition={3 * actualWidthPercentage}
             >
                 {hiddenIntervals.map((intervalData, index) => (
-                    <HiddenColumnsButton
+                    <HiddenColumns
                         key={`hidden-btn-${intervalData.interval.start}-${intervalData.interval.end}`}
                         $heightPercentage={100 / hiddenIntervals.length}
-                        $isMultiple={hiddenIntervals.length > 1}
                         onClick={() => {
                             onClickHiddenSlots &&
                                 onClickHiddenSlots(intervalData.hiddenServices);
                         }}
-                        title={`Hidden services ${
-                            intervalData.interval.start
-                        }-${
-                            intervalData.interval.end
-                        }: ${intervalData.hiddenServices.join(", ")}`}
                     >
                         +{intervalData.hiddenServices.length}
-                    </HiddenColumnsButton>
+                    </HiddenColumns>
                 ))}
             </SlotColumnOverlay>
         );

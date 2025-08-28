@@ -6,10 +6,6 @@ import { HEADER_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
-interface TitleStyleProps {
-    $isToday?: boolean;
-}
-
 interface TimelineStyleProps {
     $top: number;
 }
@@ -55,23 +51,6 @@ export const ServiceHeader = styled.div`
     justify-content: flex-end;
     padding: 24px;
     color: ${Colour["text-primary"]};
-`;
-export const Title = styled(Typography.BodyMD)<TitleStyleProps>`
-    font-weight: ${Font.Spec["weight-semibold"]};
-    ${(props) =>
-        props.$isToday &&
-        css`
-            background: ${Colour["bg-hover"]};
-            color: ${Colour["text-primary"]};
-            border-radius: 50%;
-            border: ${Border["width-010"]} ${Border.solid}
-                ${Colour["bg-primary"]};
-            width: ${Spacing["spacing-40"]};
-            height: ${Spacing["spacing-40"]};
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        `}
 `;
 
 export const Description = styled(Typography.BodyMD)`

@@ -5,6 +5,7 @@ import {
     Schedule,
     SchedulePopoverProps,
     ScheduleEntityProps,
+    ScheduleEmptySlotProps,
 } from "src/schedule";
 import styled from "styled-components";
 type Component = typeof Schedule;
@@ -95,7 +96,9 @@ export const Default: StoryObj<Component> = {
             setDate(date);
         };
 
-        const emptySlotPopover: SchedulePopoverProps = {
+        const emptySlotPopover = (
+            slot: ScheduleEmptySlotProps
+        ): SchedulePopoverProps => ({
             trigger: "click",
             content: (
                 <PopoverContent>
@@ -104,7 +107,7 @@ export const Default: StoryObj<Component> = {
                 </PopoverContent>
             ),
             offset: 0,
-        };
+        });
 
         return (
             <StyledSchedule
