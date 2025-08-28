@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { ClickableIcon as _ClickableIcon } from "../../shared/clickable-icon";
-import { Colour, MediaQuery, Radius, Spacing } from "../../theme";
+import { Breakpoint, Colour, MediaQuery, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // Card
@@ -10,6 +10,7 @@ interface ModalCardProps {
 }
 export const ModalCard = styled.div<ModalCardProps>`
     width: 40rem;
+    margin: 0 auto;
     background: ${Colour.bg};
     box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.45);
     border-radius: ${Radius["lg"]};
@@ -18,7 +19,7 @@ export const ModalCard = styled.div<ModalCardProps>`
     flex-direction: column-reverse;
 
     ${MediaQuery.MaxWidth.md} {
-        width: 100%;
+        width: calc(100% - ${Breakpoint["md-margin"]}px);
     }
 
     padding: ${(props) =>

@@ -64,7 +64,5 @@ export const ScrollContainer = styled.div`
 
 export const ModalContainer = styled.div`
     pointer-events: auto;
-    ${MediaQuery.MaxWidth.md} {
-        width: 90%;
-    }
+    width: 100%;
 `;

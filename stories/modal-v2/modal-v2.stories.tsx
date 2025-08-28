@@ -89,10 +89,11 @@ export const CustomContent: StoryObj<Component> = {
                     enableOverlayClick
                     onClose={closeModal}
                 >
-                    <ModalV2.Card
+                    <div
                         style={{
                             backgroundColor: "yellow",
                             borderRadius: 0,
+                            width: "100vw",
                         }}
                     >
                         <ModalV2.CloseButton
@@ -105,7 +106,7 @@ export const CustomContent: StoryObj<Component> = {
                         <ModalV2.Content>
                             This is a custom component
                         </ModalV2.Content>
-                    </ModalV2.Card>
+                    </div>
                 </ModalV2>
             </>
         );
