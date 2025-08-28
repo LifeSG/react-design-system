@@ -1,4 +1,5 @@
 import { ModalProps } from "../modal";
+import { Insets } from "../shared/types";
 
 export interface FullscreenImageCarouselRef {
     currentItemIndex: number;
@@ -20,6 +21,7 @@ export interface FullscreenImageCarouselProps
     hideCounter?: boolean | undefined;
     hideMagnifier?: boolean | undefined;
     onClose?: (() => void) | undefined;
+    insets?: Insets | undefined;
 }
 
 export interface FullscreenCarouselItemProps {

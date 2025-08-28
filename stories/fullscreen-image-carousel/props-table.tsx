@@ -57,23 +57,25 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "hideThumbnail",
-                description: "Specifies if the bottom thumbnail is visible",
+                description: "Specifies if the bottom thumbnail row is visible",
                 propTypes: ["boolean"],
             },
             {
                 name: "hideNavigation",
                 description:
-                    "Specifies if the left righit navigation are visible",
+                    "Specifies if the left and right navigation buttons are visible",
                 propTypes: ["boolean"],
             },
             {
                 name: "hideCounter",
-                description: "Specifies if the image counter pill is visible",
+                description:
+                    "Specifies if the pagination counter pill is visible",
                 propTypes: ["boolean"],
             },
             {
                 name: "hideMagnifier",
-                description: "Specifies if the image magnifier icon is visible",
+                description:
+                    "Specifies if the magnifier button controlling zoom behaviour is visible",
                 propTypes: ["boolean"],
             },
             {
@@ -81,6 +83,20 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "The callback when the carousel overlay is dimissed via the close button or Esc key",
                 propTypes: ["() => void"],
+            },
+            {
+                name: "insets",
+                description: (
+                    <>
+                        The distance from the edge of the viewport, defining the
+                        safe area not covered by status bars, notches, or other
+                        navigation elements. The close, magnifier, and arrow
+                        buttons will be offset accordingly.
+                    </>
+                ),
+                propTypes: [
+                    "{ top?: number, bottom?: number, right?: number, right?: number }",
+                ],
             },
         ],
     },

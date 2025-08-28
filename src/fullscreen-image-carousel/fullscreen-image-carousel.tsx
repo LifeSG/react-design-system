@@ -54,6 +54,7 @@ export const Component = (
         hideCounter = false,
         hideMagnifier = false,
         onClose,
+        insets,
         ...otherProps
     }: FullscreenImageCarouselProps,
     ref: React.Ref<FullscreenImageCarouselRef>
@@ -61,7 +62,6 @@ export const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-
     const [currentSlide, setCurrentSlide] = useState(
         initialActiveItemIndex ?? 0
     );
@@ -283,6 +283,8 @@ export const Component = (
                 aria-label="Close image carousel"
                 onClick={onClose}
                 focusHighlight={false}
+                $insetTop={insets?.top}
+                $insetRight={insets?.right}
             >
                 <CrossIcon aria-hidden />
             </CloseButton>
@@ -291,6 +293,8 @@ export const Component = (
                     aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
                     onClick={handleMagnifier}
                     focusHighlight={false}
+                    $insetTop={insets?.top}
+                    $insetRight={insets?.right}
                 >
                     {zoom === 1 ? (
                         <MagnifierPlusIcon aria-hidden />
@@ -308,6 +312,8 @@ export const Component = (
                                 data-testid="prev-btn"
                                 $position="left"
                                 onClick={goToPrevSlide}
+                                $insetLeft={insets?.left}
+                                $insetRight={insets?.right}
                             >
                                 <ChevronLeftIcon aria-hidden />
                             </ArrowButton>
@@ -316,6 +322,8 @@ export const Component = (
                                 data-testid="forward-btn"
                                 $position="right"
                                 onClick={goToNextSlide}
+                                $insetLeft={insets?.left}
+                                $insetRight={insets?.right}
                             >
                                 <ChevronRightIcon aria-hidden />
                             </ArrowButton>
