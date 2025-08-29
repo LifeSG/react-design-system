@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius, Shadow } from "../../theme";
+import { Border, Colour, Font, Radius, Shadow } from "../../theme";
 import { CELL_HEIGHT } from "../const";
 
 // =============================================================================
@@ -49,19 +49,21 @@ export const SlotColumnOverlay = styled.div<SlotColumnOverlayStyleProps>`
     z-index: 1;
 `;
 
-export const HiddenColumns = styled.div<HiddenColumnsStyleProps>`
+export const HiddenColumns = styled.button<HiddenColumnsStyleProps>`
+    background-color: unset;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     color: ${Colour["text-primary"]};
+    ${Font["body-xs-semibold"]};
     min-height: ${(props) =>
         props.$heightPercentage
             ? `${props.$heightPercentage}%`
             : `${CELL_HEIGHT}px`};
     height: ${(props) =>
         props.$heightPercentage ? `${props.$heightPercentage}%` : "auto"};
-    pointer-events: auto;
     &:hover {
         border-radius: ${Radius["sm"]};
         box-shadow: ${Shadow["sm-subtle"]};
