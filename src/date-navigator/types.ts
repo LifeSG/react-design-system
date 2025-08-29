@@ -13,6 +13,8 @@ export interface DateNavigatorProps {
     loading?: boolean | undefined;
     showDateAsShortForm?: boolean | undefined;
     showCurrentDateAsToday?: boolean | undefined;
+    /** View type for navigation - 'day' for single day, 'week' for week range */
+    view?: "day" | "week" | undefined;
     onLeftArrowClick: (currentDate: string) => void;
     onRightArrowClick: (currentDate: string) => void;
     onCalendarDateSelect?: ((currentDate: string) => void) | undefined;
