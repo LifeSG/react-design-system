@@ -1,10 +1,9 @@
 import { TimeHelper } from "../../util/time-helper";
 import {
+    HourDisplay,
     TimeColumn,
     TimeColumnWrapper,
     TimeLabel,
-    HourDisplay,
-    PeriodIndicator,
     TimelineCircle,
 } from "./time-indicator.styles";
 
@@ -48,7 +47,7 @@ export const TimeIndicator = ({
                             {!isFirstSlot && (
                                 <>
                                     <HourDisplay>{hour}</HourDisplay>
-                                    <PeriodIndicator>{ampm}</PeriodIndicator>
+                                    <span>{ampm}</span>
                                 </>
                             )}
                         </TimeLabel>

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Border, Colour, Spacing, Font, Radius } from "../../theme";
+import { Border, Colour, Font, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
 import { CELL_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
@@ -41,7 +41,6 @@ export const HourDisplay = styled.span`
     position: absolute;
     top: -18px;
 `;
-export const PeriodIndicator = styled.span``;
 
 export const TimelineCircle = styled.div<TimelineCircleStyleProps>`
     position: absolute;

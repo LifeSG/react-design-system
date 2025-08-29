@@ -1,14 +1,14 @@
-import React, { useMemo, useState } from "react";
+import { useMemo } from "react";
 import dayjs from "dayjs";
 import { ScheduleWeekViewProps } from "./types";
 import { TimeIndicator } from "../time-indicator/time-indicator";
 import { TimeHelper } from "../../util/time-helper";
-import { useTimelineOffset, useInitialScroll } from "../shared";
+import { useInitialScroll, useTimelineOffset } from "../shared";
 import { calculateSlotWidths } from "./week-view-utils";
 import { ScheduleContainer } from "../schedule-day-view/schedule-day-view.styles";
 import {
-    DayCell,
     CellStyleProps,
+    DayCell,
 } from "../../shared/internal-calendar/day-cell";
 import {
     BlankCell,
@@ -19,8 +19,8 @@ import {
     ServiceContainer,
     ServiceHeader,
     SlotColumn,
-    Timeline,
     SlotGrid,
+    Timeline,
 } from "./schedule-week-view.styles";
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
 import { TimeCell } from "./time-cell";
@@ -45,7 +45,6 @@ export const ScheduleWeekView = ({
     // =============================================================================
     const timelineOffset = useTimelineOffset(minTime, maxTime);
     const bodyRef = useInitialScroll(loading, minTime, initialScrollTime);
-    const [hoverDay, setHoverDay] = useState<dayjs.Dayjs>();
 
     const weekDays = useMemo(() => {
         const startOfWeek = dayjs(date).startOf("week");
@@ -89,16 +88,13 @@ export const ScheduleWeekView = ({
             <HeaderContainer>
                 <BlankCell />
                 <ServiceContainer>
-                    {weekDays.map((day, index) => {
+                    {weekDays.map((day) => {
                         const dayCellStyleProps = generateStyleProps(day);
                         return (
                             <ServiceHeader key={day.format("YYYY-MM-DD")}>
                                 <DayCell
                                     date={day}
                                     calendarDate={dayjs(date)}
-                                    onSelect={() => {}}
-                                    onHover={() => {}}
-                                    onHoverEnd={() => {}}
                                     {...dayCellStyleProps}
                                 />
                                 <Description>{day.format("ddd")}</Description>

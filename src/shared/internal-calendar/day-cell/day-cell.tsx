@@ -57,19 +57,19 @@ export const DayCell = ({
     // EVENT HANDLERS
     // =========================================================================
     const handleClick = () => {
-        onSelect(date);
+        onSelect?.(date);
     };
 
     const handleHover = () => {
-        onHover(date);
+        onHover?.(date);
     };
 
     const handleFocus = () => {
-        onFocus && onFocus(date);
+        onFocus?.(date);
     };
 
     const handleMouseout = () => {
-        onHoverEnd && onHoverEnd(date);
+        onHoverEnd?.(date);
     };
 
     // =========================================================================
