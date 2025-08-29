@@ -48,6 +48,7 @@ const FilterBase = ({
     const headerTitle = customLabels?.headerTitle || _headerTitle || "Filters";
     const doneButtonLabel =
         customLabels?.doneButtonLabel || _doneButtonLabel || "Done";
+    const clearButtonLabel = customLabels?.clearButtonLabel || "Clear";
 
     const [visible, setVisible] = useState(false);
     const mobileNodeRef = useRef<HTMLDivElement>(null);
@@ -127,7 +128,7 @@ const FilterBase = ({
                     disabled={clearButtonDisabled}
                     aria-label={`clear ${headerTitle}`}
                 >
-                    Clear
+                    {clearButtonLabel}
                 </FilterClearButton>
             </FilterHeader>
         );
