@@ -9,6 +9,7 @@ import { DropdownVariantType } from "./types";
 interface StyleProps {
     $expanded?: boolean;
     $variant?: DropdownVariantType;
+    $readOnly?: boolean;
 }
 
 // =============================================================================
@@ -26,6 +27,8 @@ export const Selector = styled(BasicButton)<StyleProps>`
         props.$variant === "small"
             ? Font["body-md-regular"]
             : Font["body-baseline-regular"]}
+
+    ${(props) => props.$readOnly && `padding-left: 0 !important;`}
 
     &:disabled {
         cursor: not-allowed;

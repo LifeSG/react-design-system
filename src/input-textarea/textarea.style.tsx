@@ -25,7 +25,9 @@ export const Element = styled.textarea<StyleProps>`
     overflow: hidden;
 
     display: block;
-    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]}
+        ${Spacing["spacing-12"]}
+        ${(props) => (props.readOnly ? "0" : Spacing["spacing-16"])};
     width: 100%;
 
     ${Font["body-baseline-regular"]}
