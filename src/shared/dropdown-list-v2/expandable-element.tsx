@@ -38,6 +38,7 @@ export const Component = (
             disabled={disabled}
             aria-controls={listboxId}
             $variant={variant}
+            $readOnly={readOnly}
         >
             {children}
             {!readOnly && (
