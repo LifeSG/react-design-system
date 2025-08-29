@@ -114,7 +114,7 @@ export const CountdownTimer = ({
     // Periodic announcements
     useEffect(() => {
         const timeElapsed = (timer || 0) - remainingSeconds;
-        if (timeElapsed == 0) return;
+        if (timeElapsed === 0) return;
         if (
             timeElapsed % politeInterval === 0 &&
             remainingSeconds > assertiveTimer
