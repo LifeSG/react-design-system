@@ -152,6 +152,7 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
     display: flex;
     flex-direction: column;
     flex: 1;
+    order: 1;
     ${(props) => {
         if (props.$showMore && props.$hasActionLink)
             return css`
@@ -189,6 +190,7 @@ export const ShowMoreButton = styled.button<StyleProps>`
     align-self: flex-start;
     gap: ${Spacing["spacing-4"]};
     margin-top: ${Spacing["spacing-8"]};
+    order: 2;
 
     cursor: pointer;
     user-select: none;
