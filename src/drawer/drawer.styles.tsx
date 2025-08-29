@@ -3,6 +3,7 @@ import { ClickableIcon } from "../shared/clickable-icon";
 import {
     Border,
     Colour,
+    Font,
     MediaQuery,
     Motion,
     Radius,
@@ -22,19 +23,26 @@ interface StyleProps {
 // =============================================================================
 // STYLING HELPERS
 // =============================================================================
-const VISIBILITY_STYLE = (show: boolean | undefined) => {
-    if (show) {
-        return css`
-            right: 0;
-            transition: all ${Motion["duration-800"]} ${Motion["ease-exit"]};
-        `;
+// FloatingUI transition styles
+const FLOATING_TRANSITION_STYLES = css`
+    transition-property: right, visibility;
+
+    &[data-status="open"],
+    &[data-status="close"] {
+        transition-duration: ${Motion["duration-800"]};
     }
 
-    return css`
+    &[data-status="initial"],
+    &[data-status="close"] {
         right: -100%;
-        transition: all ${Motion["duration-800"]} ${Motion["ease-default"]};
-    `;
-};
+        visibility: hidden;
+    }
+
+    &[data-status="open"] {
+        right: 0;
+        visibility: visible;
+    }
+`;
 
 // =============================================================================
 // STYLING
@@ -50,8 +58,7 @@ export const Container = styled.div<StyleProps>`
     background-color: ${Colour.bg};
     box-shadow: ${Shadow["lg-subtle"]};
 
-    visibility: ${(props) => (props.$show ? "visible" : "hidden")};
-    ${(props) => VISIBILITY_STYLE(props.$show)}
+    ${FLOATING_TRANSITION_STYLES}
 
     width: 40%;
     border-top-left-radius: ${Radius["md"]};
@@ -73,34 +80,37 @@ export const Container = styled.div<StyleProps>`
 
 export const Header = styled.div`
     top: 0;
-
     display: flex;
     align-items: center;
     gap: ${Spacing["spacing-16"]};
     padding: ${Spacing["spacing-32"]} ${Spacing["spacing-16"]}
-        ${Spacing["spacing-16"]};
+        ${Spacing["spacing-16"]}
+        calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-32"]});
     background-color: ${Colour.bg};
     border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 
     ${MediaQuery.MaxWidth.lg} {
         gap: ${Spacing["spacing-8"]};
         padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]}
-            ${Spacing["spacing-16"]};
+            ${Spacing["spacing-16"]}
+            calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-24"]});
     }
 `;
 
 export const CloseButton = styled(ClickableIcon)`
     color: ${Colour.icon};
     padding: 0;
-    order: -1; // show button on the left of the header
+    position: absolute;
+    top: ${Spacing["spacing-32"]};
+    left: ${Spacing["spacing-16"]};
     &:active,
     &:focus {
         color: ${Colour["icon-hover"]};
     }
 
     svg {
-        height: 2rem;
-        width: 2rem;
+        height: ${Font.Spec["heading-lh-md"]};
+        width: ${Font.Spec["heading-lh-md"]};
     }
 `;
 
