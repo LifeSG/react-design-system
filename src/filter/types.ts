@@ -41,6 +41,7 @@ export interface FilterProps {
     onClear?: (() => void) | undefined;
     /** @deprecated Forces mobile mode. Not for public use, will be removed in future versions */
     _dangerouslyForceMobile?: boolean | undefined;
+    onModalOpen?: (() => void) | undefined;
 }
 
 export interface FilterItemProps {
