@@ -90,7 +90,7 @@ export const ScheduleHeader = ({
                     onSelectOption={(option) => onViewChange?.(option.value)}
                     listExtractor={(option) => option.label}
                     displayValueExtractor={(option) => option.label}
-                    listStyleWidth={DROPDOWN_WIDTH}
+                    dropdownWidth={DROPDOWN_WIDTH}
                 />
             </RightSection>
         </ScheduleHeaderWrapper>
