@@ -35,6 +35,7 @@ const FilterBase = ({
     onClear,
     onDismiss,
     onDone,
+    onModalOpen,
     children,
     _dangerouslyForceMobile,
     ...otherProps
@@ -81,6 +82,7 @@ const FilterBase = ({
     // =========================================================================
     const handleShowFilter = () => {
         setVisible(true);
+        onModalOpen?.();
     };
 
     const handleDismissFilter = () => {

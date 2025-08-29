@@ -71,6 +71,11 @@ const FILTER_DATA: ApiTableSectionProps[] = [
                 description: "The test identifier for the component",
                 propTypes: ["string"],
             },
+            {
+                name: "onModalOpen",
+                description: "Called when filter modal is opened (mobile only)",
+                propTypes: ["() => void"],
+            },
         ],
     },
     {
