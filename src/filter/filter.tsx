@@ -1,3 +1,4 @@
+import { FloatingFocusManager, useFloating } from "@floating-ui/react";
 import { CrossIcon, FilterIcon } from "@lifesg/react-icons";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -23,7 +24,6 @@ import {
     MobileOverlayContainer,
 } from "./filter.styles";
 import { FilterProps, Mode } from "./types";
-import { FloatingFocusManager, useFloating } from "@floating-ui/react";
 
 const FilterBase = ({
     customLabels,
@@ -36,6 +36,7 @@ const FilterBase = ({
     onDismiss,
     onDone,
     children,
+    _dangerouslyForceMobile,
     ...otherProps
 }: FilterProps) => {
     // =============================================================================
@@ -54,7 +55,9 @@ const FilterBase = ({
     const desktopNodeRef = useRef<HTMLDivElement>(null);
     const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const isMobileBreakpoint = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const isMobile = _dangerouslyForceMobile || isMobileBreakpoint;
+
     const { context, refs } = useFloating();
 
     // =============================================================================

@@ -38,6 +38,7 @@ export interface FilterProps {
     onDone?: (() => void) | undefined;
     /** Called when clear button is pressed */
     onClear?: (() => void) | undefined;
+    _dangerouslyForceMobile?: boolean | undefined;
 }
 
 export interface FilterItemProps {
