@@ -82,5 +82,5 @@ export const Wrapper = styled.div<StyleProps>`
         }
 
         return customStyles;
-    }}
+    }};
 `;
