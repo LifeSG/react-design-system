@@ -1,5 +1,5 @@
 import { act, render, screen, waitFor, within } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import userEvent, { UserEvent } from "@testing-library/user-event";
 import { DateRangeInput } from "src/date-range-input";
 import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
 
@@ -11,21 +11,29 @@ const CALENDAR_TESTID = "calendar-dropdown";
 // UNIT TESTS
 // =============================================================================
 describe("DateRangeInput", () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date("2024-02-01T12:00:00"));
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.useFakeTimers({
-            doNotFake: ["setInterval", "setTimeout", "requestAnimationFrame"],
-        }).setSystemTime(new Date("2024-02-01T12:00:00"));
+
+        // https://github.com/floating-ui/floating-ui/issues/2488
+        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
+            cb(0);
+            return 0;
+        };
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
             unobserve: jest.fn(),
             disconnect: jest.fn(),
         }));
-    });
-
-    afterEach(() => {
-        jest.useRealTimers();
     });
 
     it("should render the field with calendar not shown by default", async () => {
