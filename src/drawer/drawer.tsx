@@ -26,12 +26,16 @@ export const Drawer = ({
     onOverlayClick,
     ...otherProps
 }: DrawerProps) => {
-    // =============================================================================
+    // =========================================================================
     // CONST, STATE, REFS
-    // =============================================================================
+    // =========================================================================
     const [showOverlay, setShowOverlay] = useState(show);
     const [id] = useState(() => SimpleIdGenerator.generate());
     const initialFocusRef = useRef<HTMLHeadingElement>(null);
+
+    // =========================================================================
+    // FLOATING UI CONFIG
+    // =========================================================================
     const { context, refs } = useFloating({
         open: show,
         onOpenChange: (open) => {
@@ -41,27 +45,32 @@ export const Drawer = ({
         },
     });
 
-    const dismiss = useDismiss(context, { escapeKey: true });
+    const dismiss = useDismiss(context, {
+        escapeKey: true,
+        outsidePress: false, // defer to Overlay click
+    });
 
     const { getFloatingProps } = useInteractions([dismiss]);
 
-    const { isMounted, status } = useTransitionStatus(context);
+    const { isMounted, status } = useTransitionStatus(context, {
+        duration: 800,
+    });
 
-    // =============================================================================
+    // =========================================================================
     // EFFECTS
-    // =============================================================================
+    // =========================================================================
     useEffect(() => {
         if (!show) {
-            const timer = setTimeout(() => setShowOverlay(false), 500);
+            const timer = setTimeout(() => setShowOverlay(false), 800);
             return () => clearTimeout(timer);
         } else {
             setShowOverlay(true);
         }
     }, [show]);
 
-    // =============================================================================
+    // =========================================================================
     // EVENT HANDLERS
-    // =============================================================================
+    // =========================================================================
     const handleDialogVisibility = (e: React.TransitionEvent) => {
         if (e.propertyName === "visibility" && show) {
             // focus the first element so that the screenreader enters the dialog
@@ -73,9 +82,9 @@ export const Drawer = ({
         event.stopPropagation();
     };
 
-    // =============================================================================
+    // =========================================================================
     // RENDER FUNCTIONS
-    // =============================================================================
+    // =========================================================================
     return (
         <Overlay
             show={showOverlay}
@@ -85,10 +94,8 @@ export const Drawer = ({
             {isMounted ? (
                 <FloatingFocusManager
                     context={context}
-                    initialFocus={initialFocusRef}
+                    initialFocus={-1}
                     returnFocus={true}
-                    modal={true}
-                    data-testid="floating-focus-manager"
                 >
                     <Container
                         ref={refs.setFloating}
@@ -96,7 +103,7 @@ export const Drawer = ({
                         data-status={status}
                         data-testid="drawer"
                         onClick={handleClick}
-                        aria-modal="true"
+                        aria-modal
                         role="dialog"
                         aria-labelledby={id}
                         onTransitionEnd={handleDialogVisibility}

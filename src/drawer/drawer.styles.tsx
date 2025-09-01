@@ -27,20 +27,23 @@ interface StyleProps {
 const FLOATING_TRANSITION_STYLES = css`
     transition-property: right, visibility;
 
-    &[data-status="open"],
-    &[data-status="close"] {
-        transition-duration: ${Motion["duration-800"]};
-    }
-
-    &[data-status="initial"],
-    &[data-status="close"] {
+    &[data-status="initial"] {
         right: -100%;
         visibility: hidden;
     }
 
     &[data-status="open"] {
+        transition-duration: ${Motion["duration-800"]};
+        transition-timing-function: ${Motion["ease-entrance"]};
         right: 0;
         visibility: visible;
+    }
+
+    &[data-status="close"] {
+        transition-duration: ${Motion["duration-800"]};
+        transition-timing-function: ${Motion["ease-exit"]};
+        right: -100%;
+        visibility: hidden;
     }
 `;
 
