@@ -17,17 +17,17 @@ export interface ModalContentProps
 }
 
 export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
+    "data-testid"?: string | undefined;
     show: boolean;
     children: React.ReactNode;
-    onClose: () => void;
     /** Animation direction of appearance and dismissal. Values: "top" | "bottom" | "left" | "right" */
     animationFrom?: ModalAnimationDirection | undefined;
     enableOverlayClick?: boolean | undefined;
     /** The identifier of the element to inject the Modal into */
     rootComponentId?: string | undefined;
     zIndex?: number | undefined;
+    onClose?: (() => void) | undefined;
     onOverlayClick?: (() => void) | undefined;
     /** Dismiss keyboard to keep modal in fullscreen */
     dismissKeyboardOnShow?: boolean | undefined;
-    "data-testid"?: string | undefined;
 }

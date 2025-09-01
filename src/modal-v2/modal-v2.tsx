@@ -26,32 +26,35 @@ export const ModalV2 = ({
     "data-testid": testId = "modal",
     ...otherProps
 }: ModalV2Props): JSX.Element => {
-    // =============================================================================
+    // =========================================================================
     // CONST, STATE, REF
-    // =============================================================================
+    // =========================================================================
     const { verticalHeight, offsetTop } = useWindowResizeObserver();
 
+    // =========================================================================
+    // FLOATING UI CONFIG
+    // =========================================================================
     const { refs, context } = useFloating({
         open: show,
         onOpenChange: (isOpen) => {
             if (!isOpen) {
-                onClose();
+                onClose?.();
             }
         },
     });
     const { isMounted, status } = useTransitionStatus(context, {
         duration: 300,
     });
-
     const dismiss = useDismiss(context, {
         /* handled by overlayclick */
         outsidePress: false,
+        enabled: !!onClose,
     });
     const { getFloatingProps } = useInteractions([dismiss]);
 
-    // =============================================================================
+    // =========================================================================
     // EFFECTS
-    // =============================================================================
+    // =========================================================================
     useEffect(() => {
         if (show && dismissKeyboardOnShow) {
             // dismiss software keyboard to put modal in fullscreen
@@ -59,9 +62,9 @@ export const ModalV2 = ({
         }
     }, [dismissKeyboardOnShow, show]);
 
-    // =============================================================================
+    // =========================================================================
     // RENDER FUNCTIONS
-    // =============================================================================
+    // =========================================================================
     return (
         <Overlay
             data-testid={`${testId}-overlay`}

@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 interface IModalContext {
-    onClose: () => void;
+    onClose?: (() => void) | undefined;
 }
 
 export const ModalContext = createContext<IModalContext>({
