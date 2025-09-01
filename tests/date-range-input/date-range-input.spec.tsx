@@ -1,5 +1,5 @@
 import { act, render, screen, waitFor, within } from "@testing-library/react";
-import userEvent, { UserEvent } from "@testing-library/user-event";
+import userEvent from "@testing-library/user-event";
 import { DateRangeInput } from "src/date-range-input";
 import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
 
@@ -23,7 +23,7 @@ describe("DateRangeInput", () => {
     beforeEach(() => {
         jest.resetAllMocks();
 
-        // https://github.com/floating-ui/floating-ui/issues/2488
+        // Make requestAnimationFrame synchronous to avoid async focus issues in tests (see https://github.com/floating-ui/floating-ui/issues/2488)
         global.requestAnimationFrame = (cb: FrameRequestCallback) => {
             cb(0);
             return 0;
