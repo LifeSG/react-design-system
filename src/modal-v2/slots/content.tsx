@@ -11,3 +11,5 @@ export const Content = ({
         </div>
     );
 };
+
+Content.displayName = "ModalV2.Content";

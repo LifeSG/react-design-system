@@ -42,3 +42,5 @@ export const Card = ({
         </ModalCard>
     );
 };
+
+Card.displayName = "ModalV2.Card";

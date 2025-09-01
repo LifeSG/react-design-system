@@ -9,29 +9,26 @@ import { StyleTokensTable } from "./style-tokens-table";
 
 ## Overview
 
-A window or pop up that displays over other page contents and provides information or actions
-that a user can perform.
+A window or pop up that displays over other page content and provides
+information or actions that a user can perform.
 
 ```tsx
 import { ModalV2 } from "@lifesg/react-design-system/modal-v2";
 ```
 
-There are 4 components that can be used.
+This module contains several components, intended to be used together.
 
-Correct usage of these components will ensure the modal will have
-the correct padding and accessibility behaviours.
+Correct usage of these components ensures the modal will have the correct
+appearance and accessible behaviour.
 
--   `ModalV2` represents the base modal overlay. This is a **mandatory component** to be used.
--   `ModalV2.Card` represents the dialog box that comes with a rounded border.
+-   `ModalV2` represents the base modal overlay. This is **mandatory**.
+-   `ModalV2.Card` represents the default dialog box.
     -   It must be rendered as a child of `ModalV2`
-    -   Will only render children that are `ModalV2.Content` or `ModalV2.CloseButton`
-    -   Stylable with `customStyle` prop
--   `ModalV2.Content` represents the content to be displayed within ModalV2.Card.
-    -   It must be rendered as a child of ModalV2.Card
-    -   Stylable with `customStyle` prop
--   `ModalV2.CloseButton` represents the close button to close the modal.
-    -   Optional, but if used, it must be rendered as a child of ModalV2.Card
-    -   Stylable with `customStyle` prop
+    -   It will only render children that are `ModalV2.Content` or `ModalV2.CloseButton`
+-   `ModalV2.Content` represents the content to be displayed within `ModalV2.Card`.
+    -   It must be rendered as a child of `ModalV2.Card`
+-   `ModalV2.CloseButton` represents the section containing the close button.
+    -   Optional, but if used, it must be rendered as a child of `ModalV2.Card`
 
 <Canvas of={ModalV2Stories.Default} />
 
@@ -45,19 +42,22 @@ the correct padding and accessibility behaviours.
 
 ## Stacked modals
 
-In some cases, you would require a stacked modal layout. Here is how you can construct it.
+In some cases, you would require a stacked modal layout. Here is how you can
+construct it.
 
 <Canvas of={ModalV2Stories.StackedModals} />
 
-## Scrollable modals
+## Scroll handling
 
-If the content of your modal is longer than the screen size, use scrollable modals.
+If the content of your modal is taller than the screen, the modal will become
+scrollable.
 
-<Canvas of={ModalV2Stories.ScrollableModals} />
+<Canvas of={ModalV2Stories.ScrollHandling} />
 
 ## Component API
 
-Both components also inherit the [HTMLDivElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement).
+All components also inherit the
+[HTMLDivElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement).
 
 <PropsTable />
 
