@@ -18,8 +18,9 @@ export const Default: StoryObj<Component> = {
         const [show, setShow] = useState(false);
         const openModal = () => setShow(true);
         const closeModal = () => setShow(false);
+
         return (
-            <div>
+            <>
                 <Button.Default onClick={openModal}>
                     Click to open
                 </Button.Default>
@@ -32,13 +33,19 @@ export const Default: StoryObj<Component> = {
                         <ModalV2.CloseButton />
                         <ModalV2.Content>
                             <Typography.BodyBL>
-                                I am a Modal with very long text in a para graph
-                                to fill up the width
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Totam debitis explicabo rerum
+                                velit quod recusandae, cum odio inventore
+                                repellendus non quas quis praesentium suscipit,
+                                soluta incidunt officiis omnis, quae error!
                             </Typography.BodyBL>
+                            <Button.Default style={{ marginTop: 16 }}>
+                                CTA
+                            </Button.Default>
                         </ModalV2.Content>
                     </ModalV2.Card>
                 </ModalV2>
-            </div>
+            </>
         );
     },
 };
@@ -48,26 +55,32 @@ export const WithoutCloseButton: StoryObj<Component> = {
         const [show, setShow] = useState(false);
         const openModal = () => setShow(true);
         const closeModal = () => setShow(false);
+
         return (
-            <div>
+            <>
                 <Button.Default onClick={openModal}>
                     Click to open
                 </Button.Default>
-                <ModalV2
-                    show={show}
-                    onOverlayClick={closeModal}
-                    onClose={closeModal}
-                >
+                <ModalV2 show={show}>
                     <ModalV2.Card>
                         <ModalV2.Content>
                             <Typography.BodyBL>
-                                I am a Modal with very long text in a para graph
-                                to fill up the width
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Totam debitis explicabo rerum
+                                velit quod recusandae, cum odio inventore
+                                repellendus non quas quis praesentium suscipit,
+                                soluta incidunt officiis omnis, quae error!
                             </Typography.BodyBL>
+                            <Button.Default
+                                style={{ marginTop: 16 }}
+                                onClick={closeModal}
+                            >
+                                Dismiss
+                            </Button.Default>
                         </ModalV2.Content>
                     </ModalV2.Card>
                 </ModalV2>
-            </div>
+            </>
         );
     },
 };
@@ -86,26 +99,17 @@ export const CustomContent: StoryObj<Component> = {
                 <ModalV2
                     show={show}
                     onOverlayClick={closeModal}
-                    enableOverlayClick
                     onClose={closeModal}
                 >
                     <div
                         style={{
-                            backgroundColor: "yellow",
-                            borderRadius: 0,
-                            width: "100vw",
+                            width: "50%",
+                            padding: "2rem",
+                            background: "yellow",
+                            margin: "auto",
                         }}
                     >
-                        <ModalV2.CloseButton
-                            style={{
-                                marginRight: "auto",
-                                marginLeft: -8,
-                                marginTop: -8,
-                            }}
-                        />
-                        <ModalV2.Content>
-                            This is a custom component
-                        </ModalV2.Content>
+                        This is a custom component
                     </div>
                 </ModalV2>
             </>
@@ -183,15 +187,15 @@ export const StackedModals: StoryObj<Component> = {
     },
 };
 
-export const ScrollableModals: StoryObj<Component> = {
-    render: () => {
+export const ScrollHandling: StoryObj<Component> = {
+    render: (_args) => {
         const [show, setShow] = useState(false);
         const openModal = () => setShow(true);
         const closeModal = () => setShow(false);
         return (
-            <div>
+            <>
                 <Button.Default onClick={openModal}>
-                    Click to open scrollable modal
+                    Click to open
                 </Button.Default>
                 <ModalV2
                     show={show}
@@ -201,80 +205,17 @@ export const ScrollableModals: StoryObj<Component> = {
                     <ModalV2.Card>
                         <ModalV2.CloseButton />
                         <ModalV2.Content>
-                            <Typography.HeadingXL>
-                                this is the topic
-                            </Typography.HeadingXL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Button.Default onClick={closeModal}>
-                                Some button
-                            </Button.Default>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
-                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
+                            <Typography.BodyBL>
+                                This is the start of content.
+                            </Typography.BodyBL>
+                            <div style={{ height: "100vh" }} />
+                            <Typography.BodyBL>
+                                This is the end of content.
+                            </Typography.BodyBL>
                         </ModalV2.Content>
                     </ModalV2.Card>
                 </ModalV2>
-            </div>
+            </>
         );
     },
 };

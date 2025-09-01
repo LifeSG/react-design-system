@@ -24,3 +24,5 @@ export const CloseButton = ({
         </ClickableContainer>
     );
 };
+
+CloseButton.displayName = "ModalV2.CloseButton";

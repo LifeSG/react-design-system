@@ -1,148 +1,155 @@
 import {
-    DefaultCol,
-    DescriptionCol,
-    NameCol,
-    Table,
-} from "../storybook-common/api-table";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
+    ApiTable,
+    ApiTableSectionProps,
+    TabAttribute,
+    Tabs,
+} from "stories/storybook-common";
 
-export const ModalTable = () => (
-    <Table>
-        <tr>
-            <NameCol mandatory>show</NameCol>
-            <DescriptionCol propTypes={["boolean"]}>
-                <>
-                    Toggles the visibility of the <code>Modal</code>
-                </>
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol mandatory>onClose</NameCol>
-            <DescriptionCol propTypes={["() => void"]}>
-                <>
-                    Callback to close the modal. Called when using the `esc` key
-                    while the modal is open.
-                </>
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>rootComponentId</NameCol>
-            <DescriptionCol propTypes={["string"]}>
-                <>
-                    The identifier of the element to inject the{" "}
-                    <code>Modal</code> into. Not specifying the root element
-                    will make <code>{`<body>`}</code> the root element.
-                </>
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>animationFrom</NameCol>
-            <DescriptionCol
-                propTypes={[`"top"`, `"bottom"`, `"left"`, `"right"`]}
-            >
-                <>
-                    The animation direction of which the <code>Modal</code> will
-                    appear
-                </>
-            </DescriptionCol>
-            <DefaultCol>{[`"bottom"`]}</DefaultCol>
-        </tr>
-        <tr>
-            <NameCol>enableOverlayClick</NameCol>
-            <DescriptionCol propTypes={["boolean"]}>
-                <>
-                    Toggles whether <code>Modal</code> can be dismissed by
-                    clicking on the overlay
-                </>
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>zIndex</NameCol>
-            <DescriptionCol propTypes={["number"]}>
-                <>
-                    Allows a custom <code>z-index</code> to be specified (useful
-                    for modal stacking)
-                </>
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>onOverlayClick</NameCol>
-            <DescriptionCol propTypes={["() => void"]}>
-                <>
-                    The callback when the overlay is being clicked on. Will be
-                    triggered if <code>enableOverlayClick</code>
-                    is specified to <code>true</code>
-                </>
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>dismissKeyboardOnShow</NameCol>
-            <DescriptionCol propTypes={["boolean"]}>
-                <>Dismisses keyboard when modal is shown</>
-            </DescriptionCol>
-            <DefaultCol>{["true"]}</DefaultCol>
-        </tr>
-    </Table>
-);
+const MODAL_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "show",
+                mandatory: true,
+                description: (
+                    <>
+                        Toggles the visibility of the <code>Modal</code>
+                    </>
+                ),
+                propTypes: ["boolean"],
+            },
+            {
+                name: "rootComponentId",
+                description: (
+                    <>
+                        The identifier of the element to inject the{" "}
+                        <code>Modal</code> into. Not specifying the root element
+                        will make <code>{`<body>`}</code> the root element.
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
+                name: "animationFrom",
+                description: (
+                    <>
+                        The animation direction of which the <code>Modal</code>{" "}
+                        will appear
+                    </>
+                ),
+                propTypes: [`"top"`, `"bottom"`, `"left"`, `"right"`],
+                defaultValue: `"bottom"`,
+            },
+            {
+                name: "enableOverlayClick",
+                description: (
+                    <>
+                        Toggles whether <code>Modal</code> can be dismissed by
+                        clicking on the overlay
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
+            {
+                name: "zIndex",
+                description: (
+                    <>
+                        Allows a custom <code>z-index</code> to be specified
+                        (useful for modal stacking)
+                    </>
+                ),
+                propTypes: ["number"],
+            },
+            {
+                name: "onClose",
+                description: (
+                    <>
+                        Callback when the modal is closed. Can be triggered by
+                        the close button or pressing the Escape key while the
+                        modal is open.
+                    </>
+                ),
+                propTypes: ["() => void"],
+            },
+            {
+                name: "onOverlayClick",
+                description: (
+                    <>
+                        Callback when the overlay outside of the modal is
+                        clicked. Triggered if <code>enableOverlayClick</code>
+                        is <code>true</code>
+                    </>
+                ),
+                propTypes: ["() => void"],
+            },
+            {
+                name: "dismissKeyboardOnShow",
+                description: <>Dismisses keyboard when modal is shown</>,
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
+        ],
+    },
+];
 
-export const ModalCardTable = () => (
-    <Table>
-        <tr>
-            <NameCol>customStyle</NameCol>
-            <DescriptionCol propTypes={["React.CSSProperties"]}>
-                Custom styles for the modal dialog box
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-    </Table>
-);
+const MODAL_CARD_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+        ],
+    },
+];
 
-export const ModalContentTable = () => (
-    <Table>
-        <tr>
-            <NameCol>customStyle</NameCol>
-            <DescriptionCol propTypes={["React.CSSProperties"]}>
-                Custom styles for the modal content container
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-    </Table>
-);
+const MODAL_CONTENT_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+        ],
+    },
+];
 
-export const ModalCloseButtonTable = () => (
-    <Table>
-        <tr>
-            <NameCol>customStyle</NameCol>
-            <DescriptionCol propTypes={["React.CSSProperties"]}>
-                Custom styles for the modal close Button
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-    </Table>
-);
+const MODAL_CLOSE_BUTTON_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+        ],
+    },
+];
 
 const PROPS_TABLE_DATA: TabAttribute[] = [
     {
         title: "ModalV2",
-        component: <ModalTable />,
+        component: <ApiTable sections={MODAL_DATA} />,
     },
     {
         title: "ModalV2.Card",
-        component: <ModalCardTable />,
+        component: <ApiTable sections={MODAL_CARD_DATA} />,
     },
     {
         title: "ModalV2.Content",
-        component: <ModalContentTable />,
+        component: <ApiTable sections={MODAL_CONTENT_DATA} />,
     },
     {
         title: "ModalV2.CloseButton",
-        component: <ModalCloseButtonTable />,
+        component: <ApiTable sections={MODAL_CLOSE_BUTTON_DATA} />,
     },
 ];
 
