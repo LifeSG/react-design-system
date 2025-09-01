@@ -1,5 +1,12 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import { useEffect, useRef, useState } from "react";
+import {
+    FloatingFocusManager,
+    useDismiss,
+    useFloating,
+    useInteractions,
+    useTransitionStatus,
+} from "@floating-ui/react";
 import { Overlay } from "../overlay";
 import { SimpleIdGenerator } from "../util";
 import {
@@ -19,28 +26,51 @@ export const Drawer = ({
     onOverlayClick,
     ...otherProps
 }: DrawerProps) => {
-    // =============================================================================
+    // =========================================================================
     // CONST, STATE, REFS
-    // =============================================================================
+    // =========================================================================
     const [showOverlay, setShowOverlay] = useState(show);
     const [id] = useState(() => SimpleIdGenerator.generate());
     const initialFocusRef = useRef<HTMLHeadingElement>(null);
 
-    // =============================================================================
+    // =========================================================================
+    // FLOATING UI CONFIG
+    // =========================================================================
+    const { context, refs } = useFloating({
+        open: show,
+        onOpenChange: (open) => {
+            if (!open && onClose) {
+                onClose();
+            }
+        },
+    });
+
+    const dismiss = useDismiss(context, {
+        escapeKey: true,
+        outsidePress: false, // defer to Overlay click
+    });
+
+    const { getFloatingProps } = useInteractions([dismiss]);
+
+    const { isMounted, status } = useTransitionStatus(context, {
+        duration: 800,
+    });
+
+    // =========================================================================
     // EFFECTS
-    // =============================================================================
+    // =========================================================================
     useEffect(() => {
         if (!show) {
-            const timer = setTimeout(() => setShowOverlay(false), 500);
+            const timer = setTimeout(() => setShowOverlay(false), 800);
             return () => clearTimeout(timer);
         } else {
             setShowOverlay(true);
         }
     }, [show]);
 
-    // =============================================================================
+    // =========================================================================
     // EVENT HANDLERS
-    // =============================================================================
+    // =========================================================================
     const handleDialogVisibility = (e: React.TransitionEvent) => {
         if (e.propertyName === "visibility" && show) {
             // focus the first element so that the screenreader enters the dialog
@@ -52,43 +82,56 @@ export const Drawer = ({
         event.stopPropagation();
     };
 
-    // =============================================================================
+    // =========================================================================
     // RENDER FUNCTIONS
-    // =============================================================================
+    // =========================================================================
     return (
         <Overlay
             show={showOverlay}
             enableOverlayClick
             onOverlayClick={onOverlayClick}
         >
-            <Container
-                $show={show}
-                data-testid="drawer"
-                onClick={handleClick}
-                role="dialog"
-                aria-labelledby={id}
-                onTransitionEnd={handleDialogVisibility}
-                {...otherProps}
-            >
-                <Header>
-                    <Heading
-                        id={id}
-                        ref={initialFocusRef}
-                        tabIndex={-1}
-                        weight="bold"
+            {isMounted ? (
+                <FloatingFocusManager
+                    context={context}
+                    initialFocus={-1}
+                    returnFocus={true}
+                >
+                    <Container
+                        ref={refs.setFloating}
+                        $show={show}
+                        data-status={status}
+                        data-testid="drawer"
+                        onClick={handleClick}
+                        aria-modal
+                        role="dialog"
+                        aria-labelledby={id}
+                        onTransitionEnd={handleDialogVisibility}
+                        {...getFloatingProps()}
+                        {...otherProps}
                     >
-                        {heading}
-                    </Heading>
-                    <CloseButton // second element for tab focus order
-                        aria-label="Close drawer"
-                        onClick={onClose}
-                        focusHighlight={false}
-                    >
-                        <CrossIcon aria-hidden />
-                    </CloseButton>
-                </Header>
-                <Content>{children}</Content>
-            </Container>
+                        <Header>
+                            <Heading
+                                id={id}
+                                ref={initialFocusRef}
+                                tabIndex={-1}
+                                weight="bold"
+                                as="h2"
+                            >
+                                {heading}
+                            </Heading>
+                        </Header>
+                        <Content>{children}</Content>
+                        <CloseButton
+                            aria-label="Close drawer"
+                            onClick={onClose}
+                            focusHighlight={false}
+                        >
+                            <CrossIcon aria-hidden />
+                        </CloseButton>
+                    </Container>
+                </FloatingFocusManager>
+            ) : undefined}
         </Overlay>
     );
 };
