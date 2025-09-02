@@ -5,6 +5,7 @@ import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
 import { useCallback, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { SimpleIdGenerator } from "../util";
 import { inertValue } from "../shared/accessibility";
 import {
     ActionLinkText,
@@ -37,6 +38,7 @@ export const Alert = ({
     const [renderShowMore, setRenderShowMore] = useState<boolean>(false);
     const { height: contentHeight, ref: contentRef } =
         useResizeDetector<HTMLDivElement>();
+    const [contentId] = useState(() => SimpleIdGenerator.generate());
 
     // =============================================================================
     // HELPERS
@@ -93,6 +95,7 @@ export const Alert = ({
             $type={type}
             type="button"
             aria-expanded={showHiddenContent}
+            aria-controls={contentId}
             onClick={() => setShowHiddenContent(!showHiddenContent)}
         >
             Show {showHiddenContent ? "less" : "more"}
@@ -115,7 +118,6 @@ export const Alert = ({
                 data-testid="action-link"
                 $type={type}
                 $sizeType={sizeType}
-                inert={inertValue(isInert())}
                 {...actionLink}
             >
                 {actionLink.children}
@@ -144,6 +146,7 @@ export const Alert = ({
 
     const renderContent = () => (
         <TextWrapperContainer
+            id={contentId}
             $maxCollapsedHeight={
                 isContentOutsideCollapsibleZone()
                     ? maxCollapsedHeight
