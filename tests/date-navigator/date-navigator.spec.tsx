@@ -6,19 +6,27 @@ describe("DateNavigator", () => {
     const onRightArrowClick = jest.fn();
     const onLeftArrowClick = jest.fn();
 
+    beforeAll(() => {
+        jest.useFakeTimers().setSystemTime(new Date(today));
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.useFakeTimers().setSystemTime(new Date(today));
+
+        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
+            cb(0);
+            return 0;
+        };
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
             unobserve: jest.fn(),
             disconnect: jest.fn(),
         }));
-    });
-
-    afterEach(() => {
-        jest.useRealTimers();
     });
 
     it("should render current date", () => {

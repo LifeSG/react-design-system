@@ -15,6 +15,15 @@ const TOOLTIP_CONTENT = "Tooltip";
 // UNIT TESTS
 // =============================================================================
 describe("PopoverInline", () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+
+        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
+            cb(0);
+            return 0;
+        };
+    });
+
     it("should render the popover text and icon", () => {
         render(
             <PopoverInline

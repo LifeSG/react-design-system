@@ -35,7 +35,12 @@ const OPTIONS: L1OptionProps<string, string, string>[] = [
 
 describe("InputNestedSelect", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        jest.resetAllMocks();
+
+        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
+            cb(0);
+            return 0;
+        };
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
