@@ -112,6 +112,6 @@ export default [
         plugins,
         external: ["react", "react-dom", "styled-components"],
     },
-    ...folderBuildConfigs,
-    ...codemodBuildConfigs,
+    // ...folderBuildConfigs,
+    // ...codemodBuildConfigs,
 ];
