@@ -1,10 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import { Navbar } from "src/navbar";
+import { ThemeProvider } from "styled-components";
+import { BaseTheme } from "../../src";
 
 describe("Navbar", () => {
+    const renderWithTheme = (node: React.ReactNode) => {
+        return render(<ThemeProvider theme={BaseTheme}>{node}</ThemeProvider>);
+    };
+
     describe("Basic functions", () => {
         it("should render the items (desktop and mobile) if specified", () => {
-            const rendered = render(
+            const rendered = renderWithTheme(
                 <Navbar
                     items={{
                         desktop: MOCK_ITEMS(),
@@ -22,7 +28,7 @@ describe("Navbar", () => {
         });
 
         it("should render the mobile items even if mobile items are not specified", () => {
-            const rendered = render(
+            const rendered = renderWithTheme(
                 <Navbar items={{ desktop: MOCK_ITEMS() }} />
             );
 
@@ -35,7 +41,7 @@ describe("Navbar", () => {
         });
 
         it("should render the indicator on the correct item when clicked", () => {
-            const rendered = render(
+            const rendered = renderWithTheme(
                 <Navbar
                     items={{
                         desktop: MOCK_ITEMS(),
@@ -49,7 +55,7 @@ describe("Navbar", () => {
         });
 
         it("should render the primary brand", () => {
-            const rendered = render(
+            const rendered = renderWithTheme(
                 <Navbar items={{ desktop: MOCK_ITEMS() }} />
             );
 
@@ -58,7 +64,7 @@ describe("Navbar", () => {
         });
 
         it("should render the secondary brand if specified", () => {
-            const rendered = render(
+            const rendered = renderWithTheme(
                 <Navbar
                     items={{
                         desktop: MOCK_ITEMS(),
@@ -78,7 +84,7 @@ describe("Navbar", () => {
         });
 
         it("should not render the links and mobile menu button if hideNavElements is set to true", () => {
-            const rendered = render(
+            const rendered = renderWithTheme(
                 <Navbar items={{ desktop: MOCK_ITEMS() }} hideNavElements />
             );
 
@@ -103,7 +109,7 @@ describe("Navbar", () => {
                     desktopButtons,
                     mobileButtons,
                 }) => {
-                    render(
+                    renderWithTheme(
                         <Navbar
                             items={{
                                 desktop: desktopItems,
@@ -136,7 +142,7 @@ describe("Navbar", () => {
                     desktopButtons,
                     mobileButtons,
                 }) => {
-                    render(
+                    renderWithTheme(
                         <Navbar
                             items={{
                                 desktop: desktopItems,

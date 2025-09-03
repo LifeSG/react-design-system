@@ -1,6 +1,11 @@
-import { CSSObject, css } from "styled-components";
+import { CSSKeyframes, CSSObject, css } from "styled-components";
 
-export type CssValue = CSSObject | string | number | ReturnType<typeof css>;
+export type CssValue =
+    | CSSObject
+    | string
+    | number
+    | CSSKeyframes
+    | ReturnType<typeof css>;
 
 export interface DesignTokenSet {
     InputBoxShadow: CssValue;
