@@ -79,7 +79,9 @@ function Component(
 
     useEffect(() => {
         setHasFirstLoad(true);
-        onChildStateChange(internalId, expandAll);
+        if (collapsible) {
+            onChildStateChange(internalId, expandAll);
+        }
     }, []);
 
     useEffect(() => {
