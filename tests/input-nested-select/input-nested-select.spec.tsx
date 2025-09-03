@@ -6,7 +6,8 @@ import {
     waitForElementToBeRemoved,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { InputNestedSelect, L1OptionProps } from "../../src";
+import { BaseTheme, InputNestedSelect, L1OptionProps } from "../../src";
+import { ThemeProvider } from "styled-components";
 
 const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";
@@ -44,8 +45,12 @@ describe("InputNestedSelect", () => {
         }));
     });
 
+    const renderWithTheme = (node: React.ReactNode) => {
+        return render(<ThemeProvider theme={BaseTheme}>{node}</ThemeProvider>);
+    };
+
     it("should render the component", async () => {
-        render(
+        renderWithTheme(
             <InputNestedSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
@@ -56,7 +61,7 @@ describe("InputNestedSelect", () => {
     it("should open dropdown list when selector is clicked", async () => {
         const user = userEvent.setup();
 
-        render(
+        renderWithTheme(
             <InputNestedSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
@@ -74,7 +79,7 @@ describe("InputNestedSelect", () => {
     it("should toggle dropdown list when selector is clicked", async () => {
         const user = userEvent.setup();
 
-        render(
+        renderWithTheme(
             <InputNestedSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
@@ -97,7 +102,7 @@ describe("InputNestedSelect", () => {
         const user = userEvent.setup();
         const mockOnSelectOption = jest.fn();
 
-        render(
+        renderWithTheme(
             <InputNestedSelect
                 data-testid={FIELD_TESTID}
                 options={OPTIONS}
@@ -129,7 +134,7 @@ describe("InputNestedSelect", () => {
         const user = userEvent.setup();
         const mockOnSelectOption = jest.fn();
 
-        render(
+        renderWithTheme(
             <InputNestedSelect
                 data-testid={FIELD_TESTID}
                 options={OPTIONS}
@@ -160,7 +165,7 @@ describe("InputNestedSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderWithTheme(
                 <InputNestedSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -196,7 +201,7 @@ describe("InputNestedSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderWithTheme(
                 <InputNestedSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -228,7 +233,7 @@ describe("InputNestedSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderWithTheme(
                 <InputNestedSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -271,7 +276,7 @@ describe("InputNestedSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderWithTheme(
                 <>
                     <button data-testid="before" />
                     <InputNestedSelect
@@ -327,7 +332,7 @@ describe("InputNestedSelect", () => {
         it("should support default search for string options", async () => {
             const user = userEvent.setup();
 
-            render(
+            renderWithTheme(
                 <InputNestedSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
