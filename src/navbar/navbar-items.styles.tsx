@@ -55,7 +55,7 @@ export const LinkItem = styled.li<ItemStyleProps>`
     display: flex;
     margin-left: 1rem;
 
-    :first-child {
+    &:first-child {
         // negative margin to preserve touch target size for link
         margin-left: ${(props) => (props.$hiddenBranding ? "-0.5rem" : "0")};
     }
@@ -77,8 +77,8 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
     height: 100%;
     padding: 0 0.5rem;
 
-    :active,
-    :focus {
+    &:active,
+    &:focus {
         color: ${Color.Neutral[1]};
     }
 
@@ -88,7 +88,7 @@ export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
         padding: 0.5rem 1rem;
         text-align: left;
         align-items: flex-start;
-        :hover {
+        &:hover {
             color: ${Color.Neutral[1]};
         }
     }
@@ -140,7 +140,7 @@ export const ChevronIcon = styled(ChevronUpIcon)`
     height: 1.25rem;
     width: 1.25rem;
     color: ${Color.Neutral[3]};
-    :hover {
+    &:hover {
         color: ${Color.Neutral[1]};
     }
 `;

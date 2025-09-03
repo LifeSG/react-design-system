@@ -140,7 +140,7 @@ export const TimelineItemTitle = styled(Text.H4)`
 export const TimelineItem = styled.div`
     display: flex;
 
-    :last-of-type ${LineIndicator} {
+    &:last-of-type ${LineIndicator} {
         margin-bottom: 0;
     }
 `;

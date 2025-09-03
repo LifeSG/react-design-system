@@ -73,7 +73,7 @@ export const ReplaceButton = styled.button`
     cursor: pointer;
     ${TextStyleHelper.getTextStyle("BodySmall", "semibold")};
     color: ${Color.Primary};
-    :hover {
+    &:hover {
         color: ${Color.PrimaryDark};
     }
 `;

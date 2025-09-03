@@ -79,7 +79,7 @@ export const Container = styled.div<ContainerStyleProps>`
                     return css`
                         border-color: ${Color.Validation.Red.Icon};
 
-                        :hover {
+                        &:hover {
                             box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
                         }
                     `;
@@ -87,7 +87,7 @@ export const Container = styled.div<ContainerStyleProps>`
                     return css`
                         border-color: transparent;
 
-                        :hover {
+                        &:hover {
                             background: ${Color.Accent.Light[6]};
                         }
                     `;
@@ -111,7 +111,7 @@ export const Container = styled.div<ContainerStyleProps>`
                     return css`
                         border-color: ${Color.Validation.Red.Border};
 
-                        :hover {
+                        &:hover {
                             box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
                         }
                     `;
@@ -119,7 +119,7 @@ export const Container = styled.div<ContainerStyleProps>`
                     return css`
                         border-color: ${Color.Primary};
 
-                        :hover {
+                        &:hover {
                             box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
                         }
                     `;
@@ -128,7 +128,7 @@ export const Container = styled.div<ContainerStyleProps>`
                         background: ${Color.Neutral[8]};
                         border-color: ${Color.Neutral[5]};
 
-                        :hover {
+                        &:hover {
                             box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
                             border-color: ${Color.Accent.Light[1]};
                         }
@@ -248,7 +248,7 @@ export const HeaderContainer = styled.div<ContainerStyleProps>`
                     `;
                 } else if (!props.$disabled) {
                     return css`
-                        :hover {
+                        &:hover {
                             background: ${Color.Accent.Light[6]};
                         }
                     `;

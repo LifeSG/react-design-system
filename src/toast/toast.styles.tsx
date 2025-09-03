@@ -147,7 +147,7 @@ export const DismissButton = styled(ClickableIcon)<StyleProps>`
                 height: 1.5rem;
                 color: ${getValidationColorAttributes(props).Text};
             }
-            :hover {
+            &:hover {
                 background: transparent;
             }
             ${MediaQuery.MaxWidth.mobileL} {

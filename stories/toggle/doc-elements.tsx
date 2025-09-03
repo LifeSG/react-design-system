@@ -76,7 +76,7 @@ export const SimpleContainer = styled.ul`
     list-style: none;
 
     li {
-        :not(:last-child) {
+        &:not(:last-child) {
             margin-right: 1.5rem;
         }
     }

@@ -58,14 +58,14 @@ export const Knob = styled.div<ThumbStyleProps>`
         if (!props.$readOnly) {
             return css`
                 cursor: grab;
-                :active {
+                &:active {
                     cursor: grabbing;
                 }
             `;
         }
     }}
 
-    :after {
+    &:after {
         content: "";
         display: block;
         height: 0.875rem;
@@ -88,7 +88,7 @@ export const SliderThumb = styled.div`
     position: relative;
     outline: none;
 
-    :focus-visible ${Knob}:after {
+    &:focus-visible ${Knob}:after {
         border: 1px solid ${Color.Primary};
     }
 `;

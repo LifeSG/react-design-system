@@ -102,9 +102,9 @@ export const ClickableErrorWrapper = styled.button`
     background: transparent;
     cursor: pointer;
 
-    :hover,
-    :active,
-    :focus {
+    &:hover,
+    &:active,
+    &:focus {
         ${TryAgainLabel} {
             color: ${Color.Secondary};
         }

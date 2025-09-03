@@ -38,10 +38,10 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
                 vertical-align: baseline;
             }
 
-            :hover,
-            :active,
-            :visited,
-            :focus {
+            &:hover,
+            &:active,
+            &:visited,
+            &:focus {
                 color: ${Color.Secondary};
 
                 svg {

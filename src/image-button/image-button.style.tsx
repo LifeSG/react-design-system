@@ -43,7 +43,7 @@ export const Main = styled.button<{
                 background: ${Color.Neutral[8]};
                 border: 1px solid ${Color.Validation.Red.Border};
 
-                :hover {
+                &:hover {
                     box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
                 }
             `;
@@ -52,7 +52,7 @@ export const Main = styled.button<{
                 background: ${Color.Accent.Light[5]};
                 border: 1px solid ${Color.Primary};
 
-                :hover {
+                &:hover {
                     box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
                 }
             `;
@@ -66,7 +66,7 @@ export const Main = styled.button<{
         }
     }}
 
-    :disabled {
+    &:disabled {
         &:hover {
             border: 1px solid transparent;
         }

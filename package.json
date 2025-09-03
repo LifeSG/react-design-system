@@ -126,7 +126,7 @@
         "rollup-plugin-typescript2": "^0.36.0",
         "storybook": "^8.6.12",
         "style-loader": "^2.0.0",
-        "styled-components": "^5.3.5",
+        "styled-components": "^6.1.19",
         "typescript": "^4.8.2"
     },
     "peerDependencies": {
@@ -135,7 +135,7 @@
         "@lifesg/react-icons": "^1.5.0",
         "react": "^17.0.2 || ^18.0.0",
         "react-dom": "^17.0.2 || ^18.0.0",
-        "styled-components": "^5.3.5"
+        "styled-components": "^6.1.19"
     },
     "lint-staged": {
         "*.{tsx,ts}": [

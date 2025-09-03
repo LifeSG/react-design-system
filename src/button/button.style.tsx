@@ -73,9 +73,9 @@ export const Main = styled.button<MainStyleProps>`
                     color: ${props.$buttonIsDanger
                         ? DesignToken.Button.Danger.Primary
                         : Color.Primary};
-                    :hover,
-                    :active,
-                    :focus {
+                    &:hover,
+                    &:active,
+                    &:focus {
                         color: ${props.$buttonIsDanger
                             ? DesignToken.Button.Danger.Hover
                             : Color.Secondary};

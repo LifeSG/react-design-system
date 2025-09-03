@@ -68,7 +68,7 @@ const Bar = styled.div<StyleProps>`
             border: 1px solid ${colorToUse};
             border-radius: 4px;
 
-            :after {
+            &:after {
                 content: "";
                 position: absolute;
                 top: 0;

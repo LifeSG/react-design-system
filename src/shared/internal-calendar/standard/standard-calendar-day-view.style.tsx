@@ -190,7 +190,7 @@ export const InteractiveCircle = styled(BaseInteractiveCircle)`
         if ($interactive) {
             return css`
                 cursor: pointer;
-                :hover {
+                &:hover {
                     box-shadow: 0px 0px 4px 1px ${Color.Shadow.Accent};
                     border: 1px solid ${Color.Accent.Light[1]};
                     background-color: ${Color.Neutral[8]};
@@ -211,7 +211,7 @@ export const InteractiveCircle = styled(BaseInteractiveCircle)`
                 border: 1px solid ${Color.Accent.Light[1]};
                 background: ${Color.Accent.Light[4]};
 
-                :hover {
+                &:hover {
                     background: ${Color.Accent.Light[4]};
                 }
             `;

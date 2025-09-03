@@ -20,7 +20,7 @@ export const Item = styled.li`
     padding: 2rem 0;
     background: transparent;
 
-    :not(:last-child) {
+    &:not(:last-child) {
         border-bottom: 1px solid ${Color.Neutral[5]};
     }
 `;
@@ -84,13 +84,13 @@ export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
 
 export const ActionButton = styled(Button.Small)`
     width: 7.5rem;
-    :not(:last-of-type) {
+    &:not(:last-of-type) {
         margin-right: 1rem;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
         width: 100%;
-        :not(:last-of-type) {
+        &:not(:last-of-type) {
             margin-bottom: 1rem;
         }
     }
