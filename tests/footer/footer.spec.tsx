@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { DisclaimerLinks, Footer, FooterLinkProps } from "../../src";
+import { BaseTheme, DisclaimerLinks, Footer, FooterLinkProps } from "../../src";
 import { FooterHelper } from "../../src/footer/footer-helper";
+import { ThemeProvider } from "styled-components";
 
 // =============================================================================
 // UNIT TESTS
@@ -16,8 +17,12 @@ describe("Footer", () => {
         jest.useRealTimers();
     });
 
+    const renderWithTheme = (node: React.ReactNode) => {
+        return render(<ThemeProvider theme={BaseTheme}>{node}</ThemeProvider>);
+    };
+
     it("should be able to render the component", () => {
-        render(<Footer />);
+        renderWithTheme(<Footer />);
 
         const defaultDisclaimerLinks =
             FooterHelper.getDisclaimerLinks(undefined);
@@ -32,7 +37,7 @@ describe("Footer", () => {
     describe("children", () => {
         it("should be able to render custom JSX.Element", () => {
             const customText = "custom text";
-            render(
+            renderWithTheme(
                 <Footer>
                     <div>{customText}</div>
                 </Footer>
@@ -45,7 +50,7 @@ describe("Footer", () => {
             const customTextOne = "custom text one";
             const customTextTwo = "custom text two";
 
-            render(
+            renderWithTheme(
                 <Footer>
                     <div>{customTextOne}</div>
                     <div>{customTextTwo}</div>
@@ -59,7 +64,7 @@ describe("Footer", () => {
 
     describe("showDownloadAddon", () => {
         it("should not render add ons by default", () => {
-            render(<Footer />);
+            renderWithTheme(<Footer />);
 
             expect(
                 screen.queryByRole("link", { name: "apple-app-store" })
@@ -70,7 +75,7 @@ describe("Footer", () => {
         });
 
         it("should render add ons if enabled", () => {
-            render(<Footer showDownloadAddon />);
+            renderWithTheme(<Footer showDownloadAddon />);
 
             expect(
                 screen.getByRole("link", { name: "apple-app-store" })
@@ -101,7 +106,7 @@ describe("Footer", () => {
                 },
             };
 
-            render(<Footer disclaimerLinks={disclaimerLinks} />);
+            renderWithTheme(<Footer disclaimerLinks={disclaimerLinks} />);
 
             const defaultDisclaimerLinks =
                 FooterHelper.getDisclaimerLinks(undefined);
@@ -125,7 +130,7 @@ describe("Footer", () => {
                 },
             };
 
-            render(<Footer disclaimerLinks={disclaimerLinks} />);
+            renderWithTheme(<Footer disclaimerLinks={disclaimerLinks} />);
 
             const defaultPrivacyText = screen.getByText("Privacy Statement");
             const overridenPrivacyText = screen.queryByText("Test");
@@ -136,7 +141,7 @@ describe("Footer", () => {
 
     describe("copyrightInfo", () => {
         it("should render the copyright information by default", () => {
-            render(<Footer />);
+            renderWithTheme(<Footer />);
 
             expect(
                 screen.getByText(
@@ -147,14 +152,14 @@ describe("Footer", () => {
 
         it("should allow custom copyright information", () => {
             const copyrightInfo = "custom copyright info";
-            render(<Footer copyrightInfo={copyrightInfo} />);
+            renderWithTheme(<Footer copyrightInfo={copyrightInfo} />);
 
             expect(screen.getByText(copyrightInfo)).toBeInTheDocument();
         });
 
         it("should not render lastUpdated if custom copyright information is provided", () => {
             const copyrightInfo = "custom copyright info";
-            render(<Footer copyrightInfo={copyrightInfo} />);
+            renderWithTheme(<Footer copyrightInfo={copyrightInfo} />);
 
             const copyrightText = screen.getByTestId("copyright-text");
             expect(copyrightText.textContent).not.toContain("Last Updated");
@@ -163,7 +168,7 @@ describe("Footer", () => {
 
     describe("logoSrc", () => {
         it("should render a logo by default", () => {
-            render(<Footer links={CUSTOM_LINKS} />);
+            renderWithTheme(<Footer links={CUSTOM_LINKS} />);
 
             expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
@@ -173,7 +178,9 @@ describe("Footer", () => {
 
         it("should be able to render a custom logo", () => {
             const customLogo = "https://www.abc.com/test.png";
-            render(<Footer links={CUSTOM_LINKS} logoSrc={customLogo} />);
+            renderWithTheme(
+                <Footer links={CUSTOM_LINKS} logoSrc={customLogo} />
+            );
 
             expect(screen.getByRole("img")).toHaveAttribute("src", customLogo);
         });
@@ -182,7 +189,7 @@ describe("Footer", () => {
     describe("lastUpdated", () => {
         it("should be able to render custom last updated date", () => {
             const lastUpdated = new Date(2023, 0, 15);
-            render(<Footer lastUpdated={lastUpdated} />);
+            renderWithTheme(<Footer lastUpdated={lastUpdated} />);
 
             expect(
                 screen.getByText(
@@ -194,7 +201,7 @@ describe("Footer", () => {
 
     describe("footerLinks", () => {
         it("should be able to render custom links on the top section", () => {
-            render(<Footer links={CUSTOM_LINKS} />);
+            renderWithTheme(<Footer links={CUSTOM_LINKS} />);
 
             for (const link of CUSTOM_LINKS[0]) {
                 const anchor = getAnchorElement(link.children as string);
@@ -206,7 +213,9 @@ describe("Footer", () => {
 
         it("should be support onFooterLinkClick", () => {
             const spy = jest.fn();
-            render(<Footer links={CUSTOM_LINKS} onFooterLinkClick={spy} />);
+            renderWithTheme(
+                <Footer links={CUSTOM_LINKS} onFooterLinkClick={spy} />
+            );
 
             const anchor = getAnchorElement("Test one");
             act(() => {

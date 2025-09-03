@@ -30,7 +30,7 @@ export const Selector = styled(BasicButton)<StyleProps>`
             "regular"
         )}
 
-    :disabled {
+    &:disabled {
         cursor: not-allowed;
     }
 `;

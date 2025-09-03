@@ -60,9 +60,9 @@ export const DescriptionContainer = styled.div`
         ${TextStyleHelper.getTextStyle("Body", "semibold")}
         color: ${Color.Primary};
 
-        :hover,
-        :active,
-        :focus {
+        &:hover,
+        &:active,
+        &:focus {
             color: ${Color.Secondary};
         }
     }

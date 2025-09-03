@@ -32,15 +32,15 @@ export const Element = styled.textarea<StyleProps>`
     color: ${Color.Neutral[1]};
     background: ${Color.Neutral[8]};
 
-    :focus,
-    :active {
+    &:focus,
+    &:active {
         outline: none;
         border: 1px solid ${Color.Accent.Light[1]};
         box-shadow: ${DesignToken.InputBoxShadow};
     }
 
-    ::placeholder,
-    ::-webkit-input-placeholder {
+    &::placeholder,
+    &::-webkit-input-placeholder {
         color: ${Color.Neutral[3]};
     }
 
@@ -51,8 +51,8 @@ export const Element = styled.textarea<StyleProps>`
                 padding: 0.75rem 0;
                 background: transparent !important;
 
-                :focus,
-                :active {
+                &:focus,
+                &:active {
                     border: none;
                     box-shadow: none;
                 }
@@ -62,8 +62,8 @@ export const Element = styled.textarea<StyleProps>`
                 background: ${Color.Neutral[6](props)};
                 cursor: not-allowed;
 
-                :focus,
-                :active {
+                &:focus,
+                &:active {
                     outline: none;
                     border: 1px solid ${Color.Neutral[5](props)};
                     box-shadow: none;
@@ -73,8 +73,8 @@ export const Element = styled.textarea<StyleProps>`
             return css`
                 border: 1px solid ${Color.Validation.Red.Border(props)};
 
-                :focus,
-                :active {
+                &:focus,
+                &:active {
                     border: 1px solid ${Color.Validation.Red.Border(props)};
                     box-shadow: ${DesignToken.InputErrorBoxShadow};
                 }

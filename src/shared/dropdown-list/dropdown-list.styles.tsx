@@ -84,9 +84,9 @@ export const List = styled.ul<ListContainerProps>`
 `;
 
 export const ListItem = styled.li<ListItemProps>`
-    :hover,
-    :focus,
-    :active {
+    &:hover,
+    &:focus,
+    &:active {
         background: ${Color.Accent.Light[5]};
     }
     ${(props) => {
@@ -132,10 +132,10 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
     width: 100%;
     cursor: pointer;
 
-    :hover,
-    :visited,
-    :focus,
-    :active {
+    &:hover,
+    &:visited,
+    &:focus,
+    &:active {
         outline-color: ${Color.Accent.Light[3]};
     }
 

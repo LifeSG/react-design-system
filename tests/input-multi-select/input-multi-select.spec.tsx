@@ -7,6 +7,8 @@ import {
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { InputMultiSelect } from "../../src/input-multi-select";
+import { ThemeProvider } from "styled-components";
+import { BaseTheme } from "../../src";
 
 const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";
@@ -24,8 +26,12 @@ describe("InputMultiSelect", () => {
         }));
     });
 
+    const renderWithTheme = (node: React.ReactNode) => {
+        return render(<ThemeProvider theme={BaseTheme}>{node}</ThemeProvider>);
+    };
+
     it("should render the component", async () => {
-        render(
+        renderWithTheme(
             <InputMultiSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
@@ -36,7 +42,7 @@ describe("InputMultiSelect", () => {
     it("should open dropdown list when selector is clicked", async () => {
         const user = userEvent.setup();
 
-        render(
+        renderWithTheme(
             <InputMultiSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
@@ -54,7 +60,7 @@ describe("InputMultiSelect", () => {
     it("should toggle dropdown list when selector is clicked", async () => {
         const user = userEvent.setup();
 
-        render(
+        renderWithTheme(
             <InputMultiSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
@@ -77,7 +83,7 @@ describe("InputMultiSelect", () => {
         const user = userEvent.setup();
         const mockOnSelectOptions = jest.fn();
 
-        render(
+        renderWithTheme(
             <InputMultiSelect
                 data-testid={FIELD_TESTID}
                 options={OPTIONS}
@@ -102,7 +108,7 @@ describe("InputMultiSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderWithTheme(
                 <InputMultiSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -138,7 +144,7 @@ describe("InputMultiSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderWithTheme(
                 <InputMultiSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -170,7 +176,7 @@ describe("InputMultiSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderWithTheme(
                 <InputMultiSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -213,7 +219,7 @@ describe("InputMultiSelect", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderWithTheme(
                 <>
                     <button data-testid="before" />
                     <InputMultiSelect
@@ -269,7 +275,7 @@ describe("InputMultiSelect", () => {
         it("should support default search for string options", async () => {
             const user = userEvent.setup();
 
-            render(
+            renderWithTheme(
                 <InputMultiSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -299,7 +305,7 @@ describe("InputMultiSelect", () => {
         it("should support default search for title", async () => {
             const user = userEvent.setup();
 
-            render(
+            renderWithTheme(
                 <InputMultiSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -335,7 +341,7 @@ describe("InputMultiSelect", () => {
         it("should support default search for label", async () => {
             const user = userEvent.setup();
 
-            render(
+            renderWithTheme(
                 <InputMultiSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}
@@ -371,7 +377,7 @@ describe("InputMultiSelect", () => {
         it("should support custom search", async () => {
             const user = userEvent.setup();
 
-            render(
+            renderWithTheme(
                 <InputMultiSelect
                     data-testid={FIELD_TESTID}
                     options={OPTIONS}

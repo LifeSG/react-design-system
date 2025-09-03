@@ -63,12 +63,12 @@ export const baseSelectorCSS = css<SelectorStyleProps>`
     border: none;
     background: transparent;
 
-    :focus,
-    :active {
+    &:focus,
+    &:active {
         outline: none;
     }
 
-    :focus-visible {
+    &:focus-visible {
         outline: 2px solid ${Color.Accent.Light[3]};
     }
 `;
@@ -105,7 +105,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
     border-radius: ${BORDER_RADIUS};
     background: ${Color.Neutral[8]};
 
-    :focus-within {
+    &:focus-within {
         border: 1px solid ${Color.Accent.Light[1]};
         box-shadow: ${DesignToken.InputBoxShadow};
     }
@@ -135,7 +135,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
                     cursor: not-allowed;
                 }
 
-                :focus-within {
+                &:focus-within {
                     border: 1px solid ${Color.Neutral[5](props)};
                     box-shadow: none;
                 }
@@ -149,7 +149,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
                     padding: 0;
                 }
 
-                :focus-within {
+                &:focus-within {
                     border: none;
                     box-shadow: none;
                 }
@@ -158,7 +158,7 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
             return css`
                 border: 1px solid ${Color.Validation.Red.Border(props)};
 
-                :focus-within {
+                &:focus-within {
                     border: 1px solid ${Color.Validation.Red.Border(props)};
                     box-shadow: ${DesignToken.InputErrorBoxShadow};
                 }

@@ -11,7 +11,7 @@ export const Container = styled.div`
 
 export const OptionContainer = styled.div`
     display: flex;
-    :not(:last-of-type) {
+    &:not(:last-of-type) {
         margin-bottom: 1rem;
     }
 `;

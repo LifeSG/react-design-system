@@ -33,7 +33,7 @@ export const Container = styled.div<AddonStyleProps>`
     flex-direction: ${(props) =>
         props.$position === "right" ? "row-reverse" : "row"};
 
-    :focus-within {
+    &:focus-within {
         border: 1px solid ${Color.Accent.Light[1]};
         box-shadow: ${DesignToken.InputBoxShadow};
     }
@@ -45,7 +45,7 @@ export const Container = styled.div<AddonStyleProps>`
                 padding: 0;
                 background: transparent !important;
 
-                :focus-within {
+                &:focus-within {
                     border: none;
                     box-shadow: none;
                 }
@@ -53,11 +53,11 @@ export const Container = styled.div<AddonStyleProps>`
         } else if (props.disabled) {
             return css`
                 background: ${Color.Neutral[6](props)};
-                :hover {
+                &:hover {
                     cursor: not-allowed;
                 }
 
-                :focus-within {
+                &:focus-within {
                     border: 1px solid ${Color.Neutral[5](props)};
                     box-shadow: none;
                 }
@@ -66,7 +66,7 @@ export const Container = styled.div<AddonStyleProps>`
             return css`
                 border: 1px solid ${Color.Validation.Red.Border(props)};
 
-                :focus-within {
+                &:focus-within {
                     border: 1px solid ${Color.Validation.Red.Border(props)};
                     box-shadow: ${DesignToken.InputErrorBoxShadow};
                 }
@@ -82,7 +82,7 @@ export const MainInput = styled(Input)`
         border: none;
         padding: 0;
 
-        :focus-within {
+        &:focus-within {
             outline: none;
             border: none;
             box-shadow: none;
