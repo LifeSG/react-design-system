@@ -29,10 +29,10 @@ const commonLinkStyle = css`
         color: ${Color.Validation.Orange.Icon};
     }
 
-    :hover,
-    :active,
-    :visited,
-    :focus {
+    &:hover,
+    &:active,
+    &:visited,
+    &:focus {
         color: ${Color.Validation.Orange.Icon};
         svg {
             color: ${Color.Validation.Orange.Icon};

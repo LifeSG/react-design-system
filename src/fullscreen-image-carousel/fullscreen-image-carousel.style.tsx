@@ -233,7 +233,7 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
                   }
               `
             : css`
-                  :hover {
+                  &:hover {
                       border: 1px solid ${Color.Neutral[5]};
                   }
               `};

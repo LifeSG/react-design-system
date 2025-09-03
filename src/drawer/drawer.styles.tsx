@@ -87,8 +87,8 @@ export const CloseButton = styled(ClickableIcon)`
     padding: 0;
     order: -1; // show button on the left of the header
 
-    :active,
-    :focus {
+    &:active,
+    &:focus {
         color: ${Color.Primary};
     }
 

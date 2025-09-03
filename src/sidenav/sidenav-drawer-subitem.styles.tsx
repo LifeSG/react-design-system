@@ -26,8 +26,8 @@ export const LinkButton = styled(Button.Default)`
         text-align: initial;
     }
 
-    :hover,
-    :focus {
+    &:hover,
+    &:focus {
         background-color: ${Color.Accent.Light[5]};
         span {
             ${TextStyleHelper.getFontFamily("H5", "semibold")}

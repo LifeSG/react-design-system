@@ -58,8 +58,8 @@ export const NavigationItem = styled(ClickableIcon)`
         color: ${Color.Neutral[4]};
         cursor: not-allowed;
     }
-    :active,
-    :focus {
+    &:active,
+    &:focus {
         outline: none;
         box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
     }
@@ -82,8 +82,8 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
         color: ${Color.Neutral[4]};
         cursor: not-allowed;
     }
-    :active,
-    :focus {
+    &:active,
+    &:focus {
         outline: none;
         box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
     }
@@ -138,7 +138,7 @@ export const PageItem = styled(Button.Default)<StyleProps>`
             }
         }}
     }
-    :hover {
+    &:hover {
         box-shadow: none;
 
         background: ${(props) =>
@@ -163,8 +163,8 @@ export const PageItem = styled(Button.Default)<StyleProps>`
         }
     }
 
-    :active,
-    :focus {
+    &:active,
+    &:focus {
         background: ${(props) =>
             props.$selected ? Color.Primary : Color.Neutral[8]};
         outline: none;
@@ -202,14 +202,14 @@ export const EllipsisItem = styled(ClickableIcon)`
         width: 1.25rem;
     }
 
-    :hover {
+    &:hover {
         svg {
             color: ${Color.Neutral[3]};
         }
     }
 
-    :active,
-    :focus {
+    &:active,
+    &:focus {
         outline: none;
         box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
     }
@@ -258,7 +258,7 @@ export const InputView = styled(Input)`
     input {
         text-align: center;
 
-        ::placeholder {
+        &::placeholder {
             ${TextStyleHelper.getTextStyle("XSmall", 400)};
         }
     }

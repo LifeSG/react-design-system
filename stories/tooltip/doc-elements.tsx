@@ -22,12 +22,12 @@ export const Container = styled.div`
 
 export const Item = styled.div`
     position: relative;
-    :not(:last-of-type) {
+    &:not(:last-of-type) {
         margin-right: 2.5rem;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
-        :not(:last-of-type) {
+        &:not(:last-of-type) {
             margin-right: 0;
             margin-bottom: 2.5rem;
         }

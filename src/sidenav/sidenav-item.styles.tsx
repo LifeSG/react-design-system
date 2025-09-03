@@ -42,8 +42,8 @@ export const DefaultButton = styled(Button.Default)<StyleProps>`
         }
     }
 
-    :hover,
-    :focus {
+    &:hover,
+    &:focus {
         span {
             div {
                 background-color: ${Color.Accent.Light[5]};

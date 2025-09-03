@@ -15,10 +15,10 @@ export const HeaderArrowButton = styled(ClickableIcon)`
     border-radius: 0.25rem;
     border: 1px solid ${Color.Neutral[5]};
     background-color: ${Color.Neutral[8]};
-    :hover {
+    &:hover {
         background-color: ${Color.Neutral[7]};
     }
-    :disabled {
+    &:disabled {
         cursor: not-allowed;
         background-color: ${Color.Neutral[6]};
     }
@@ -45,7 +45,7 @@ export const StyledDateTextButton = styled(Button.Default)<StyledDateTextProps>`
     ${(props) => {
         if (props.$enableDateClick) {
             return css`
-                :hover {
+                &:hover {
                     cursor: pointer;
                     text-decoration: underline;
                     text-underline-position: under;
@@ -54,7 +54,7 @@ export const StyledDateTextButton = styled(Button.Default)<StyledDateTextProps>`
         }
         return css`
             background-color: ${Color.Neutral[7]};
-            :hover {
+            &:hover {
                 cursor: default;
             }
         `;

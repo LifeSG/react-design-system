@@ -97,8 +97,8 @@ export const CloseButton = styled(ClickableIcon)`
     bottom: 0.65rem;
     color: ${Color.Neutral[1]};
 
-    :active,
-    :focus {
+    &:active,
+    &:focus {
         color: ${Color.Primary};
     }
 `;

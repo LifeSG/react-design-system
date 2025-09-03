@@ -133,7 +133,7 @@ export const HeaderArrowButton = styled(ClickableIcon)`
     margin: auto 0;
     padding: 0.75rem;
 
-    :disabled {
+    &:disabled {
         cursor: not-allowed;
     }
 `;

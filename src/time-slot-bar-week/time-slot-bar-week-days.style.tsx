@@ -84,7 +84,7 @@ export const TimeColumn = styled.div<TimeColumnStyleProps>`
 
 export const TimeColumnWrapper = styled.div`
     min-height: 3.75rem;
-    :last-child {
+    &:last-child {
         min-height: 0;
     }
 `;
@@ -95,7 +95,7 @@ export const TimeColumnText = styled.div`
     font-size: 0.625rem !important;
     line-height: 0.75rem !important;
     text-align: center;
-    :first-line {
+    &:first-line {
         font-size: 0.875rem !important;
     }
 `;

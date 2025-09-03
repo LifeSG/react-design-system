@@ -63,7 +63,7 @@ export const GridUl = styled.ul<ContentStyleProps>`
         grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
-    :not(:last-child) {
+    &:not(:last-child) {
         margin-bottom: 2rem;
     }
 `;

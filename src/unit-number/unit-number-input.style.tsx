@@ -27,7 +27,7 @@ export const FloorInput = styled(Input)`
     padding: 0;
     width: 2.5rem;
 
-    :focus-within {
+    &:focus-within {
         outline: none;
         border: none;
         box-shadow: none;

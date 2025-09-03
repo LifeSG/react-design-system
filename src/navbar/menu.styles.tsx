@@ -61,11 +61,11 @@ export const Link = styled(Text.Hyperlink.Small)`
     -webkit-line-clamp: 2;
     white-space: pre-wrap;
 
-    :active,
-    :focus {
+    &:active,
+    &:focus {
         color: ${Color.Primary};
     }
-    :hover {
+    &:hover {
         color: ${Color.Accent.Light[1]};
     }
 
@@ -88,22 +88,22 @@ export const MenuItem = styled.li`
     align-items: flex-start;
     padding: 0.5rem 0;
 
-    :first-child {
+    &:first-child {
         padding-top: 1rem;
     }
 
-    :last-child {
+    &:last-child {
         padding-bottom: 1rem;
     }
 
     ${MediaQuery.MaxWidth.tablet} {
         padding: 0.625rem 0;
 
-        :first-child {
+        &:first-child {
             padding-top: 0.25rem;
         }
 
-        :last-child {
+        &:last-child {
             padding-bottom: 0.625rem;
         }
     }
