@@ -1,3 +1,4 @@
+import { useSpring } from "@react-spring/web";
 import React, {
     forwardRef,
     useContext,
@@ -7,7 +8,6 @@ import React, {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "@react-spring/web";
 import { inertValue } from "../shared/accessibility";
 import { SimpleIdGenerator } from "../util";
 import { AccordionContext } from "./accordion-context";
@@ -43,14 +43,14 @@ function Component(
     // CONST, STATE, REF
     // =========================================================================
     const elementRef = useRef<HTMLDivElement>(null);
-    const { expandAll, itemHeadingLevel } = useContext(AccordionContext);
+    const { expandAll, itemHeadingLevel, onChildStateChange } =
+        useContext(AccordionContext);
     const [expanded, setExpanded] = useState<boolean>(
         collapsible ? expandedControlled ?? expandAll : true
     );
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
     const [internalId] = useState(() => SimpleIdGenerator.generate());
     const contentId = `${internalId}-content`;
-
     const resizeDetector = useResizeDetector();
 
     useImperativeHandle(
@@ -79,6 +79,7 @@ function Component(
 
     useEffect(() => {
         setHasFirstLoad(true);
+        onChildStateChange(internalId, expandAll);
     }, []);
 
     useEffect(() => {
@@ -93,7 +94,9 @@ function Component(
 
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();
-        setExpanded((prevExpand) => !prevExpand);
+        const expandedState = !expanded;
+        setExpanded(expandedState);
+        onChildStateChange(internalId, expandedState);
     };
 
     // =========================================================================
