@@ -9,7 +9,7 @@ import { SimpleIdGenerator } from "../util";
 import { Root, Wrapper } from "./overlay.styles";
 import { OverlayProps } from "./types";
 import { useFloatingParent } from "./use-floating-context";
-// import { usePreventScroll } from "./use-prevent-scroll";
+import { usePreventScroll } from "./use-prevent-scroll";
 
 const OverlayComponent = ({
     show = false,
@@ -44,7 +44,7 @@ const OverlayComponent = ({
 
     useFloatingParent(zIndex);
 
-    // usePreventScroll({ isDisabled: !show });
+    usePreventScroll({ isDisabled: !show });
 
     // =============================================================================
     // EFFECTS
@@ -144,16 +144,15 @@ const OverlayComponent = ({
     /**
      * This sets the style of <body> to hide the scrollbar
      */
-    const applyBodyStyleClass = (action: "add" | "remove") => {
-        const isOverlayStyleClassApplied = document.body.classList.contains(
-            OVERLAY_OPEN_CLASSNAME
-        );
-
-        if (action === "add" && !isOverlayStyleClassApplied) {
-            document.body.classList.add(OVERLAY_OPEN_CLASSNAME);
-        } else if (action === "remove" && isOverlayStyleClassApplied) {
-            document.body.classList.remove(OVERLAY_OPEN_CLASSNAME);
-        }
+    const applyBodyStyleClass = (_action: "add" | "remove") => {
+        // const isOverlayStyleClassApplied = document.body.classList.contains(
+        //     OVERLAY_OPEN_CLASSNAME
+        // );
+        // if (action === "add" && !isOverlayStyleClassApplied) {
+        //     document.body.classList.add(OVERLAY_OPEN_CLASSNAME);
+        // } else if (action === "remove" && isOverlayStyleClassApplied) {
+        //     document.body.classList.remove(OVERLAY_OPEN_CLASSNAME);
+        // }
     };
 
     const getOverlayOrder = () => {
