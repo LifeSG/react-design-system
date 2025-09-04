@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
-import { inertValue } from "../shared/accessibility";
+import { inertValue, VisuallyHidden } from "../shared/accessibility";
 import { Breakpoint } from "../theme";
 import { TimeHelper } from "../util/time-helper";
 import {
@@ -12,7 +12,6 @@ import {
     TimeLeft,
     Timer,
     TimerIcon,
-    HiddenSpan,
     Wrapper,
 } from "./countdown-timer.style";
 import { CountdownTimerProps } from "./types";
@@ -23,13 +22,12 @@ export const CountdownTimer = ({
     align = "right",
     timer,
     timestamp,
-    notifyTimer,
+    notifyTimer = 60,
     offset,
     mobileOffset,
     show,
     fixed = true,
-    politeInterval = 120,
-    assertiveTimer = 60,
+    reminderInterval = 120,
     "data-testid": testId,
     onFinish,
     onNotify,
@@ -49,7 +47,11 @@ export const CountdownTimer = ({
     const [announcement, setAnnouncement] = useState<string>("");
     const [initialAnnouncement, setInitialAnnouncement] = useState<string>("");
 
-    const [remainingSeconds] = useTimer(timer, timestamp, isPlaying);
+    const [remainingSeconds, initialSeconds] = useTimer(
+        timer,
+        timestamp,
+        isPlaying
+    );
     const { ref: stickyRef, inView } = useInView({
         threshold: 1,
         rootMargin: `${offsetY * -1}px 0px 0px 0px`,
@@ -103,34 +105,36 @@ export const CountdownTimer = ({
 
     // Initial announcement effect
     useEffect(() => {
-        if (isPlaying && remainingSeconds === timer) {
+        console.log(22, remainingSeconds, initialSeconds);
+
+        if (isPlaying && remainingSeconds === initialSeconds) {
             const initialMessage = `Starting countdown timer: ${getAccessibleTimeText(
-                remainingSeconds
+                initialSeconds
             )}`;
             setInitialAnnouncement(initialMessage);
         }
-    }, [isPlaying, remainingSeconds, timer]);
+    }, [isPlaying, remainingSeconds, initialSeconds]);
 
     // Periodic announcements
     useEffect(() => {
-        const timeElapsed = (timer || 0) - remainingSeconds;
+        const timeElapsed = initialSeconds - remainingSeconds;
         if (timeElapsed === 0) return;
         if (
-            timeElapsed % politeInterval === 0 &&
-            remainingSeconds > assertiveTimer
+            timeElapsed % reminderInterval === 0 &&
+            remainingSeconds > notifyTimer
         ) {
             setAnnouncement(getAccessibleTimeText(remainingSeconds));
         }
 
-        if (remainingSeconds === assertiveTimer) {
+        if (remainingSeconds === notifyTimer) {
             setAnnouncement(getAccessibleTimeText(remainingSeconds));
         }
-    }, [remainingSeconds, timer]);
+    }, [remainingSeconds, initialSeconds, reminderInterval, notifyTimer]);
 
     useEffect(() => {
         // reset
         isNotified.current = false;
-    }, [timer, show]);
+    }, [initialSeconds, show]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -201,20 +205,18 @@ export const CountdownTimer = ({
     // =============================================================================
 
     const renderInitialAnnouncement = () => (
-        <HiddenSpan aria-live="polite" aria-atomic="true">
+        <VisuallyHidden aria-live="polite" aria-atomic="true">
             {initialAnnouncement}
-        </HiddenSpan>
+        </VisuallyHidden>
     );
 
     const renderPeriodicAndWarningAnnouncement = () => (
-        <HiddenSpan
-            aria-live={
-                remainingSeconds <= assertiveTimer ? "assertive" : "polite"
-            }
+        <VisuallyHidden
+            aria-live={remainingSeconds <= notifyTimer ? "assertive" : "polite"}
             aria-atomic="true"
         >
             {announcement}
-        </HiddenSpan>
+        </VisuallyHidden>
     );
 
     const renderTimer = () => {

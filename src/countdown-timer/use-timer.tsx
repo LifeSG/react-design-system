@@ -19,10 +19,16 @@ export const useTimer = (
     seconds: number | undefined,
     endTime: number | undefined, // Takes precedence over seconds
     isPlaying: boolean
-): [number] => {
+): [number, number] => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const [initialSeconds] = useState<number>(() => {
+        const timestamp = getTimestamp(seconds, endTime);
+        const msToEnd = timestamp - Date.now();
+        return getSeconds(msToEnd);
+    });
+
     const [remainingSeconds, setRemainingSeconds] = useState<number>(() => {
         const timestamp = getTimestamp(seconds, endTime);
         const msToEnd = timestamp - Date.now();
@@ -64,5 +70,5 @@ export const useTimer = (
         return updateCountdown();
     };
 
-    return [remainingSeconds] as const;
+    return [remainingSeconds, initialSeconds] as const;
 };

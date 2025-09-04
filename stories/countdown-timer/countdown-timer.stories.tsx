@@ -20,6 +20,7 @@ export const Default: StoryObj<Component> = {
                 show
                 timer={200}
                 notifyTimer={10}
+                reminderInterval={30}
                 fixed={false}
                 onNotify={() => console.log("Warning")}
                 onFinish={() => console.log("Complete")}
