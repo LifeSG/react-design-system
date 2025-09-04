@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Filter } from "src/filter";
+import styled from "styled-components";
 import { Button } from "../../src";
 import { Input } from "../../src/input";
 import { Modal } from "../../src/modal";
@@ -24,11 +25,21 @@ const ExampleModal = ({
 }) => (
     <Modal show={show} onOverlayClick={() => setShow(false)}>
         <Modal.Box style={{ height: "100%" }} onClose={() => setShow(false)}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Example modal
             <Input />
         </Modal.Box>
     </Modal>
 );
+
+const FullScreenModalBox = styled(Modal.Box)`
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+    background: grey;
+`;
 
 const ExampleFullscreenModal = ({
     show,
@@ -36,22 +47,16 @@ const ExampleFullscreenModal = ({
 }: {
     show: boolean;
     setShow: (show: boolean) => void;
-}) => (
-    <Modal show={show} onOverlayClick={() => setShow(false)}>
-        <Modal.Box
-            style={{
-                height: "100%",
-                width: "100%",
-                maxHeight: "unset",
-                maxWidth: "unset",
-            }}
-            onClose={() => setShow(false)}
-        >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            <Input />
-        </Modal.Box>
-    </Modal>
-);
+}) => {
+    return (
+        <Modal show={show} onOverlayClick={() => setShow(false)}>
+            <FullScreenModalBox onClose={() => setShow(false)}>
+                Full screen modal
+                <Input />
+            </FullScreenModalBox>
+        </Modal>
+    );
+};
 
 const ExampleFilter = () => {
     const [show, setShow] = useState(false);
