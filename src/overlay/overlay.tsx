@@ -9,6 +9,7 @@ import { SimpleIdGenerator } from "../util";
 import { Root, Wrapper } from "./overlay.styles";
 import { OverlayProps } from "./types";
 import { useFloatingParent } from "./use-floating-context";
+// import { usePreventScroll } from "./use-prevent-scroll";
 
 const OverlayComponent = ({
     show = false,
@@ -42,6 +43,8 @@ const OverlayComponent = ({
     const zIndex = customZIndex ?? (isStacked ? 99999 : 99998);
 
     useFloatingParent(zIndex);
+
+    // usePreventScroll({ isDisabled: !show });
 
     // =============================================================================
     // EFFECTS
