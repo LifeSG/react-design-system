@@ -23,7 +23,7 @@ export const useTimer = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [initialSeconds] = useState<number>(() => {
+    const [initialSeconds, setInitialSeconds] = useState<number>(() => {
         const timestamp = getTimestamp(seconds, endTime);
         const msToEnd = timestamp - Date.now();
         return getSeconds(msToEnd);
@@ -38,6 +38,15 @@ export const useTimer = (
     // =============================================================================
     // EFFECTS
     // =============================================================================
+    useEffect(() => {
+        const timestamp = getTimestamp(seconds, endTime);
+        const msToEnd = timestamp - Date.now();
+        const newInitialSeconds = getSeconds(msToEnd);
+
+        setInitialSeconds(newInitialSeconds);
+        setRemainingSeconds(newInitialSeconds);
+    }, [seconds, endTime]);
+
     useEffect(() => {
         if (!isPlaying) return;
 
