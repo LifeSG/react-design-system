@@ -1,3 +1,4 @@
+import { useSpring } from "@react-spring/web";
 import React, {
     forwardRef,
     useContext,
@@ -7,7 +8,6 @@ import React, {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "@react-spring/web";
 import { inertValue } from "../shared/accessibility";
 import { SimpleIdGenerator } from "../util";
 import { AccordionContext } from "./accordion-context";
@@ -30,7 +30,6 @@ function Component(
     {
         title,
         children,
-        expanded: expandedControlled,
         type = "default",
         collapsible = true,
         className,
@@ -43,14 +42,11 @@ function Component(
     // CONST, STATE, REF
     // =========================================================================
     const elementRef = useRef<HTMLDivElement>(null);
-    const { expandAll, itemHeadingLevel } = useContext(AccordionContext);
-    const [expanded, setExpanded] = useState<boolean>(
-        collapsible ? expandedControlled ?? expandAll : true
-    );
+    const { expandAll, itemHeadingLevel, onChildStateChange, childState } =
+        useContext(AccordionContext);
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
     const [internalId] = useState(() => SimpleIdGenerator.generate());
     const contentId = `${internalId}-content`;
-
     const resizeDetector = useResizeDetector();
 
     useImperativeHandle(
@@ -60,17 +56,17 @@ function Component(
                 elementRef.current!,
                 {
                     expand(): void {
-                        setExpanded(true);
+                        onChildStateChange(internalId, true);
                     },
                     collapse(): void {
-                        setExpanded(false);
+                        onChildStateChange(internalId, false);
                     },
                     isExpanded() {
-                        return expanded;
+                        return childState[internalId];
                     },
                 }
             ),
-        [expanded]
+        [childState[internalId]]
     );
 
     // =========================================================================
@@ -79,13 +75,10 @@ function Component(
 
     useEffect(() => {
         setHasFirstLoad(true);
-    }, []);
-
-    useEffect(() => {
-        if (hasFirstLoad) {
-            setExpanded(collapsible ? expandedControlled ?? expandAll : true);
+        if (collapsible) {
+            onChildStateChange(internalId, expandAll);
         }
-    }, [collapsible, expandAll, expandedControlled, hasFirstLoad]);
+    }, []);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -93,14 +86,16 @@ function Component(
 
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();
-        setExpanded((prevExpand) => !prevExpand);
+        onChildStateChange(internalId, !childState[internalId]);
     };
 
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     // React spring animation configuration
-    const resizeHeight = { height: expanded ? resizeDetector.height : 0 };
+    const resizeHeight = {
+        height: childState[internalId] ? resizeDetector.height : 0,
+    };
     const expandableStyles = useSpring(resizeHeight);
 
     const renderContent = () => {
@@ -109,7 +104,7 @@ function Component(
                 id={contentId}
                 style={hasFirstLoad ? expandableStyles : resizeHeight}
                 data-testid={`${testId}-expandable-container`}
-                inert={inertValue(!expanded)}
+                inert={inertValue(!childState[internalId])}
             >
                 <ContentContainer
                     ref={resizeDetector.ref}
@@ -130,7 +125,7 @@ function Component(
             <Title
                 data-testid={`${testId}-title`}
                 $type={type}
-                $isCollapsed={expanded}
+                $isCollapsed={childState[internalId]}
             >
                 {title}
             </Title>
@@ -145,17 +140,17 @@ function Component(
                     onClick={
                         collapsible ? handleExpandCollapseClick : undefined
                     }
-                    $expanded={expanded}
+                    $expanded={childState[internalId]}
                     $collapsible={collapsible}
                     aria-controls={contentId}
                     aria-disabled={!collapsible} // remains focusable
-                    aria-expanded={expanded}
+                    aria-expanded={childState[internalId]}
                 >
                     {renderTitleText()}
                     {collapsible && (
                         <IconContainer
                             data-testid={`${testId}-expand-collapse-icon`}
-                            $expanded={expanded}
+                            $expanded={childState[internalId]}
                         >
                             <ChevronIcon />
                         </IconContainer>
@@ -170,7 +165,7 @@ function Component(
             data-testid={testId}
             className={className}
             id={id}
-            $expanded={expanded}
+            $expanded={childState[internalId]}
             ref={elementRef}
         >
             {renderTitle()}
