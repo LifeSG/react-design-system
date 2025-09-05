@@ -129,6 +129,7 @@ const AccordionBase = ({
                         : headingLevel
                     : undefined,
                 onChildStateChange: handleChildStateChange,
+                childState,
             }}
         >
             <Content id={id} data-testid={testId} className={className}>
