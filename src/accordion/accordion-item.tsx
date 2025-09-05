@@ -3,6 +3,7 @@ import React, {
     forwardRef,
     useContext,
     useEffect,
+    useImperativeHandle,
     useRef,
     useState,
 } from "react";
@@ -19,7 +20,11 @@ import {
     IconContainer,
     Title,
 } from "./accordion-item.style";
-import { AccordionItemHandle, AccordionItemProps } from "./types";
+import {
+    AccordionItemApi,
+    AccordionItemHandle,
+    AccordionItemProps,
+} from "./types";
 
 function Component(
     {
@@ -43,6 +48,26 @@ function Component(
     const [internalId] = useState(() => SimpleIdGenerator.generate());
     const contentId = `${internalId}-content`;
     const resizeDetector = useResizeDetector();
+
+    useImperativeHandle(
+        ref,
+        () =>
+            Object.assign<HTMLDivElement, AccordionItemApi>(
+                elementRef.current!,
+                {
+                    expand(): void {
+                        onChildStateChange(internalId, true);
+                    },
+                    collapse(): void {
+                        onChildStateChange(internalId, false);
+                    },
+                    isExpanded() {
+                        return childState[internalId];
+                    },
+                }
+            ),
+        [childState[internalId]]
+    );
 
     // =========================================================================
     // EFFECTS
