@@ -8,6 +8,7 @@ import { Typography } from "../typography";
 // =============================================================================
 interface WrapperStyleProps {
     $background: boolean;
+    $fullWidth?: boolean;
 }
 
 interface ContentStyleProps {
@@ -30,6 +31,13 @@ export const Wrapper = styled(Layout.Content)<WrapperStyleProps>`
         $background ? Colour["bg-strong"] : "transparent"};
     padding-top: 2rem;
     padding-bottom: 2rem;
+    ${({ $fullWidth }) =>
+        $fullWidth &&
+        css`
+            > div {
+                padding: 0;
+            }
+        `}
 `;
 
 export const Title = styled(Typography.HeadingSM)<ContentStyleProps>`

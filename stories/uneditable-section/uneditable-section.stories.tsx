@@ -45,6 +45,19 @@ export const NoBackground: StoryObj<Component> = {
     },
 };
 
+export const FullWidth: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <UneditableSection
+                title="Your personal information"
+                description="Retrieved on 27 Jun 2023"
+                items={SAMPLE_ITEMS}
+                fullWidth
+            />
+        );
+    },
+};
+
 export const WithMaskedItems: StoryObj<Component> = {
     render: (_args) => {
         const ITEMS: UneditableSectionItemProps[] = [

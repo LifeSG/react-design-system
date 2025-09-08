@@ -57,6 +57,8 @@ export interface UneditableSectionProps {
     background?: boolean | undefined;
     /** Specifies if contents should take up the full width of the section */
     stretch?: boolean | undefined;
+    /** If specified true, removes horizontal padding of Layout.Content to allow content to use the full width */
+    fullWidth?: boolean | undefined;
     /** The callback function when the mask icon is clicked */
     onMask?: ((item: UneditableSectionItemProps) => void) | undefined;
     /** The callback function when the unmask icon is clicked */
