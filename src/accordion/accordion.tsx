@@ -80,6 +80,14 @@ const AccordionBase = ({
         setItemState((prev) => ({ ...prev, [id]: isExpanded }));
     };
 
+    const onItemDelete = (id: string) => {
+        setItemState((prev) => {
+            const newState = { ...prev };
+            delete newState[id];
+            return newState;
+        });
+    };
+
     const renderCollapseExpandAll = () => {
         return (
             <ExpandCollapseLink
@@ -127,6 +135,7 @@ const AccordionBase = ({
                         : headingLevel
                     : undefined,
                 onItemStateChange,
+                onItemDelete,
                 itemState,
             }}
         >
