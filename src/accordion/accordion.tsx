@@ -26,7 +26,6 @@ const AccordionBase = ({
     );
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
     const [itemState, setItemState] = useState<Record<string, boolean>>({});
-    const [isUserExpandAction, setIsUserExpandAction] = useState(false);
 
     useEffect(() => {
         setHasFirstLoad(true);
@@ -39,8 +38,7 @@ const AccordionBase = ({
     }, [expandAll, hasFirstLoad]);
 
     useEffect(() => {
-        if (hasFirstLoad && isUserExpandAction) {
-            setIsUserExpandAction(false);
+        if (hasFirstLoad) {
             const itemStates = Object.values(itemState);
             if (itemStates.length > 0) {
                 const allExpanded = itemStates.every((state) => state === true);
@@ -55,7 +53,7 @@ const AccordionBase = ({
                 }
             }
         }
-    }, [isUserExpandAction, hasFirstLoad]);
+    }, [itemState, expandAll, hasFirstLoad]);
 
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();
@@ -76,7 +74,6 @@ const AccordionBase = ({
     };
 
     const onItemStateChange = (id: string, isExpanded: boolean) => {
-        setIsUserExpandAction(true);
         setItemState((prev) => ({ ...prev, [id]: isExpanded }));
     };
 
