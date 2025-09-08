@@ -79,10 +79,13 @@ function Component(
 
     useEffect(() => {
         setHasFirstLoad(true);
+    }, []);
+
+    useEffect(() => {
         if (collapsible) {
             onItemStateChange(internalId, expandAll);
         }
-    }, []);
+    }, [collapsible, expandAll, hasFirstLoad]);
 
     // =========================================================================
     // EVENT HANDLERS
