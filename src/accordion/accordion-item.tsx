@@ -34,6 +34,7 @@ function Component(
         collapsible = true,
         className,
         id,
+        expanded: expandedControlled,
         "data-testid": testId = "accordion-item",
     }: AccordionItemProps,
     ref: React.Ref<AccordionItemHandle>
@@ -42,12 +43,15 @@ function Component(
     // CONST, STATE, REF
     // =========================================================================
     const elementRef = useRef<HTMLDivElement>(null);
-    const { expandAll, itemHeadingLevel, onChildStateChange, childState } =
+    const { expandAll, itemHeadingLevel, onItemStateChange, itemState } =
         useContext(AccordionContext);
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
     const [internalId] = useState(() => SimpleIdGenerator.generate());
     const contentId = `${internalId}-content`;
     const resizeDetector = useResizeDetector();
+    const expanded =
+        itemState[internalId] ??
+        (collapsible ? expandedControlled ?? expandAll : true); // the initial value
 
     useImperativeHandle(
         ref,
@@ -56,17 +60,17 @@ function Component(
                 elementRef.current!,
                 {
                     expand(): void {
-                        onChildStateChange(internalId, true);
+                        onItemStateChange(internalId, true);
                     },
                     collapse(): void {
-                        onChildStateChange(internalId, false);
+                        onItemStateChange(internalId, false);
                     },
                     isExpanded() {
-                        return childState[internalId];
+                        return expanded;
                     },
                 }
             ),
-        [childState[internalId]]
+        [expanded]
     );
 
     // =========================================================================
@@ -76,7 +80,7 @@ function Component(
     useEffect(() => {
         setHasFirstLoad(true);
         if (collapsible) {
-            onChildStateChange(internalId, expandAll);
+            onItemStateChange(internalId, expandAll);
         }
     }, []);
 
@@ -86,7 +90,7 @@ function Component(
 
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();
-        onChildStateChange(internalId, !childState[internalId]);
+        onItemStateChange(internalId, !expanded);
     };
 
     // =========================================================================
@@ -94,7 +98,7 @@ function Component(
     // =========================================================================
     // React spring animation configuration
     const resizeHeight = {
-        height: childState[internalId] ? resizeDetector.height : 0,
+        height: expanded ? resizeDetector.height : 0,
     };
     const expandableStyles = useSpring(resizeHeight);
 
@@ -104,7 +108,7 @@ function Component(
                 id={contentId}
                 style={hasFirstLoad ? expandableStyles : resizeHeight}
                 data-testid={`${testId}-expandable-container`}
-                inert={inertValue(!childState[internalId])}
+                inert={inertValue(!expanded)}
             >
                 <ContentContainer
                     ref={resizeDetector.ref}
@@ -125,7 +129,7 @@ function Component(
             <Title
                 data-testid={`${testId}-title`}
                 $type={type}
-                $isCollapsed={childState[internalId]}
+                $isCollapsed={expanded}
             >
                 {title}
             </Title>
@@ -140,17 +144,17 @@ function Component(
                     onClick={
                         collapsible ? handleExpandCollapseClick : undefined
                     }
-                    $expanded={childState[internalId]}
+                    $expanded={expanded}
                     $collapsible={collapsible}
                     aria-controls={contentId}
                     aria-disabled={!collapsible} // remains focusable
-                    aria-expanded={childState[internalId]}
+                    aria-expanded={expanded}
                 >
                     {renderTitleText()}
                     {collapsible && (
                         <IconContainer
                             data-testid={`${testId}-expand-collapse-icon`}
-                            $expanded={childState[internalId]}
+                            $expanded={expanded}
                         >
                             <ChevronIcon />
                         </IconContainer>
@@ -165,7 +169,7 @@ function Component(
             data-testid={testId}
             className={className}
             id={id}
-            $expanded={childState[internalId]}
+            $expanded={expanded}
             ref={elementRef}
         >
             {renderTitle()}

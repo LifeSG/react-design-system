@@ -25,7 +25,7 @@ const AccordionBase = ({
         initialDisplay === "expand-all"
     );
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
-    const [childState, setChildState] = useState<Record<string, boolean>>({});
+    const [itemState, setItemState] = useState<Record<string, boolean>>({});
     const [isUserExpandAction, setIsUserExpandAction] = useState(false);
 
     useEffect(() => {
@@ -41,12 +41,10 @@ const AccordionBase = ({
     useEffect(() => {
         if (hasFirstLoad && isUserExpandAction) {
             setIsUserExpandAction(false);
-            const childStates = Object.values(childState);
-            if (childStates.length > 0) {
-                const allExpanded = childStates.every(
-                    (state) => state === true
-                );
-                const allCollapsed = childStates.every(
+            const itemStates = Object.values(itemState);
+            if (itemStates.length > 0) {
+                const allExpanded = itemStates.every((state) => state === true);
+                const allCollapsed = itemStates.every(
                     (state) => state === false
                 );
 
@@ -64,22 +62,22 @@ const AccordionBase = ({
         setExpandAll((prevExpandValue) => {
             const expandValue = !prevExpandValue;
 
-            const updatedChildState = Object.keys(childState).reduce(
+            const updatedChildState = Object.keys(itemState).reduce(
                 (acc, key) => {
                     acc[key] = expandValue;
                     return acc;
                 },
-                {} as typeof childState
+                {} as typeof itemState
             );
 
-            setChildState(updatedChildState);
+            setItemState(updatedChildState);
             return expandValue;
         });
     };
 
-    const handleChildStateChange = (id: string, isExpanded: boolean) => {
+    const onItemStateChange = (id: string, isExpanded: boolean) => {
         setIsUserExpandAction(true);
-        setChildState((prev) => ({ ...prev, [id]: isExpanded }));
+        setItemState((prev) => ({ ...prev, [id]: isExpanded }));
     };
 
     const renderCollapseExpandAll = () => {
@@ -128,8 +126,8 @@ const AccordionBase = ({
                         ? headingLevel + 1
                         : headingLevel
                     : undefined,
-                onChildStateChange: handleChildStateChange,
-                childState,
+                onItemStateChange,
+                itemState,
             }}
         >
             <Content id={id} data-testid={testId} className={className}>
