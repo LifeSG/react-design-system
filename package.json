@@ -93,6 +93,7 @@
         "babel-plugin-styled-components": "^2.0.6",
         "css-loader": "^5.2.7",
         "dayjs": "^1.11.3",
+        "dedent": "^1.7.0",
         "dompurify": "^3.2.5",
         "eslint": "^8.11.0",
         "eslint-config-prettier": "^8.5.0",
