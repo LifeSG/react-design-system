@@ -110,6 +110,13 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Called when the timer value reaches zero",
                 propTypes: ["() => void"],
             },
+            {
+                name: "reminderInterval",
+                description:
+                    "Specifies the interval (in seconds) for polite screen reader reminders (e.g. every 120s for polite reminders)",
+                propTypes: ["number"],
+                defaultValue: "120",
+            },
         ],
     },
 ];
