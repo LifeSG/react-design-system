@@ -80,7 +80,7 @@ const AccordionBase = ({
         setItemState((prev) => ({ ...prev, [id]: isExpanded }));
     };
 
-    const onItemDelete = (id: string) => {
+    const onItemDeregister = (id: string) => {
         setItemState((prev) => {
             const newState = { ...prev };
             delete newState[id];
@@ -135,7 +135,7 @@ const AccordionBase = ({
                         : headingLevel
                     : undefined,
                 onItemStateChange,
-                onItemDelete,
+                onItemDeregister,
                 itemState,
             }}
         >
