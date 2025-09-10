@@ -49,6 +49,22 @@ desired value in px. This also works with custom content.
 
 <Canvas of={AlertStories.WithMaxCollapsedHeight} />
 
+## Accessibility
+
+By default, the Alert component does not include `role="alert"` to avoid disruptive announcements. You can specify roles explicitly when needed:
+
+```tsx
+// For immediate announcement (use sparingly)
+<Alert type="error" role="alert">
+    Critical error message
+</Alert>
+
+// For status updates
+<Alert type="info" role="status">
+    Information update
+</Alert>
+```
+
 ## Component API
 
 <PropsTable />
