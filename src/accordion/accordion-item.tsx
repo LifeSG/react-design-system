@@ -81,7 +81,6 @@ function Component(
     // =========================================================================
     // EFFECTS
     // =========================================================================
-
     useEffect(() => {
         setHasFirstLoad(true);
 
@@ -90,7 +89,10 @@ function Component(
 
     useEffect(() => {
         if (collapsible) {
-            onItemStateChange(internalId, expandAll);
+            onItemStateChange(
+                internalId,
+                collapsible ? expandedControlled ?? expandAll : true
+            );
         }
     }, [collapsible, expandAll, hasFirstLoad]);
 
