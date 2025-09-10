@@ -43,8 +43,13 @@ function Component(
     // CONST, STATE, REF
     // =========================================================================
     const elementRef = useRef<HTMLDivElement>(null);
-    const { expandAll, itemHeadingLevel, onItemStateChange, itemState } =
-        useContext(AccordionContext);
+    const {
+        expandAll,
+        itemHeadingLevel,
+        onItemStateChange,
+        itemState,
+        onItemDeregister,
+    } = useContext(AccordionContext);
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
     const [internalId] = useState(() => SimpleIdGenerator.generate());
     const contentId = `${internalId}-content`;
@@ -79,6 +84,8 @@ function Component(
 
     useEffect(() => {
         setHasFirstLoad(true);
+
+        return () => onItemDeregister?.(internalId);
     }, []);
 
     useEffect(() => {
