@@ -107,8 +107,7 @@ export const OtpInput = ({
                 numOfInput,
                 prefix
             );
-            if (fieldIsEmpty && autofillOtp) {
-                handleInputFullValue(autofillOtp);
+            if (fieldIsEmpty && handleInputFullValue(autofillOtp)) {
                 return;
             }
 
@@ -157,8 +156,12 @@ export const OtpInput = ({
         if (!event.clipboardData) return;
 
         const pastedValue = event.clipboardData.getData("text");
-
-        if (!handleInputFullValue(pastedValue)) {
+        const autofillOtp = strippedOtpFromAutofill(
+            pastedValue,
+            numOfInput,
+            prefix
+        );
+        if (!handleInputFullValue(autofillOtp)) {
             event.preventDefault();
         }
     };

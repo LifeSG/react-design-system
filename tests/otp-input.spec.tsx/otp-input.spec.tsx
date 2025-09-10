@@ -144,7 +144,7 @@ describe("OtpInput", () => {
         expect(screen.getByLabelText("1st digit")).toHaveFocus();
     });
 
-    describe("autofill", () => {
+    describe.each(["autofill", "paste"])("%s", (type) => {
         const OTP_VALUE = "123";
 
         const expectAutofill = (autofilled: boolean) => {
@@ -159,33 +159,43 @@ describe("OtpInput", () => {
             );
         };
 
-        it("should autofill", async () => {
+        const fireChangeOrPaste =
+            type === "autofill" ? fireEvent.change : fireEvent.paste;
+        const getEventValue = (value: string) =>
+            type === "autofill"
+                ? { target: { value } }
+                : { clipboardData: { getData: () => value } };
+
+        it(`should ${type}`, async () => {
             render(<OtpInput numOfInput={3} cooldownDuration={10} />);
 
-            fireEvent.change(screen.getByLabelText("1st digit"), {
-                target: { value: OTP_VALUE },
-            });
+            fireChangeOrPaste(
+                screen.getByLabelText("1st digit"),
+                getEventValue(OTP_VALUE)
+            );
 
             expectAutofill(true);
         });
 
-        it("should not autofill if autofill value is not the correct length", async () => {
+        it(`should not ${type} if autofill value is not the correct length`, async () => {
             render(<OtpInput numOfInput={3} cooldownDuration={10} />);
 
-            fireEvent.change(screen.getByLabelText("1st digit"), {
-                target: { value: "1234" },
-            });
+            fireChangeOrPaste(
+                screen.getByLabelText("1st digit"),
+                getEventValue("1234")
+            );
 
             expectAutofill(false);
 
-            fireEvent.change(screen.getByLabelText("1st digit"), {
-                target: { value: "12" },
-            });
+            fireChangeOrPaste(
+                screen.getByLabelText("1st digit"),
+                getEventValue("12")
+            );
 
             expectAutofill(false);
         });
 
-        it("should autofill with prefix", async () => {
+        it(`should ${type} with prefix`, async () => {
             const prefixValue = "ABC";
             const separator = "-" as const;
             render(
@@ -196,14 +206,15 @@ describe("OtpInput", () => {
                 />
             );
 
-            fireEvent.change(screen.getByLabelText("1st digit"), {
-                target: { value: `${prefixValue}${separator}${OTP_VALUE}` },
-            });
+            fireChangeOrPaste(
+                screen.getByLabelText("1st digit"),
+                getEventValue(`${prefixValue}${separator}${OTP_VALUE}`)
+            );
 
             expectAutofill(true);
         });
 
-        it("should not autofill if the prefix is incorrect", async () => {
+        it(`should not ${type} if the prefix is incorrect`, async () => {
             const prefixValue = "ABC";
             const separator = "-" as const;
             render(
@@ -214,14 +225,15 @@ describe("OtpInput", () => {
                 />
             );
 
-            fireEvent.change(screen.getByLabelText("1st digit"), {
-                target: { value: `AAA${separator}${OTP_VALUE}` },
-            });
+            fireChangeOrPaste(
+                screen.getByLabelText("1st digit"),
+                getEventValue(`AAA${separator}${OTP_VALUE}`)
+            );
 
             expectAutofill(false);
         });
 
-        it("should autofill even if the value does not include the prefix", async () => {
+        it(`should ${type} even if the value does not include the prefix`, async () => {
             const prefixValue = "ABC";
             const separator = "-" as const;
             render(
@@ -232,9 +244,10 @@ describe("OtpInput", () => {
                 />
             );
 
-            fireEvent.change(screen.getByLabelText("1st digit"), {
-                target: { value: OTP_VALUE },
-            });
+            fireChangeOrPaste(
+                screen.getByLabelText("1st digit"),
+                getEventValue(OTP_VALUE)
+            );
 
             expectAutofill(true);
         });
