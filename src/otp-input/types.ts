@@ -13,6 +13,14 @@ export interface OtpInputProps extends React.AriaAttributes {
     actionButtonProps?: ButtonProps | undefined;
     /** The number of characters for the Otp */
     numOfInput: number;
+    prefix?:
+        | {
+              /** Optional OTP prefix, usually consisting of a few alphabetic characters */
+              value: string;
+              /** separator between prefix and otp digits*/
+              separator: string;
+          }
+        | undefined;
     /** Called when one of the input is changed. Returns an array of all the input values */
     onChange?: ((value: string[]) => void) | undefined;
     /** Called when the cooldown begins */

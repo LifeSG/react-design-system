@@ -6,6 +6,7 @@ import {
     CTAButton,
     InputContainer,
     InputField,
+    Prefix,
     Wrapper,
 } from "./otp-input.styles";
 import { OtpInputProps } from "./types";
@@ -19,6 +20,7 @@ export const OtpInput = ({
     actionButtonProps,
     errorMessage,
     numOfInput,
+    prefix,
     onChange,
     onCooldownStart,
     onCooldownEnd,
@@ -33,6 +35,7 @@ export const OtpInput = ({
         styleType = "secondary",
         ...otherCtaProps
     } = actionButtonProps ?? {};
+
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
     const onChangeRef = useRef(onChange);
 
@@ -226,6 +229,9 @@ export const OtpInput = ({
                 role="group"
                 aria-label={`${numOfInput}-digit OTP input field`}
             >
+                {prefix && (
+                    <Prefix>{`${prefix.value} ${prefix.separator}`}</Prefix>
+                )}
                 {otpValues.map((data, index) => {
                     return (
                         <InputField

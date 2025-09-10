@@ -50,6 +50,12 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
             },
             {
+                name: "prefix",
+                description:
+                    "Optional prefix to be displayed. When autofilling, this prefix + separator will be stripped from the OTP to be pasted",
+                propTypes: ["{ value: string; separator: string; };"],
+            },
+            {
                 name: "value",
                 description: "The value of the input fields",
                 propTypes: ["string[]"],
