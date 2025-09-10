@@ -10,6 +10,7 @@ import {
     Wrapper,
 } from "./otp-input.styles";
 import { OtpInputProps } from "./types";
+import { strippedOtpFromAutofill, validateUserInput } from "./utils";
 
 export const OtpInput = ({
     id,
@@ -81,10 +82,38 @@ export const OtpInput = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
+    const handleInputFullValue = (incomingValue: string) => {
+        if (incomingValue && validateUserInput(incomingValue, numOfInput)) {
+            const incomingValueArr = incomingValue.split("");
+            setOtpValues(incomingValueArr);
+            if (onChangeRef.current) {
+                onChangeRef.current(incomingValueArr);
+            }
+
+            return true;
+        }
+
+        return false;
+    };
 
     const handleChange =
         (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-            const value = event.target.value.replace(/[^0-9]/g, "");
+            const eventValue = event.target.value;
+
+            /* handle autofill */
+            const fieldIsEmpty = otpValues.every((num) => num === "");
+            const autofillOtp = strippedOtpFromAutofill(
+                eventValue,
+                numOfInput,
+                prefix
+            );
+            if (fieldIsEmpty && autofillOtp) {
+                handleInputFullValue(autofillOtp);
+                return;
+            }
+
+            /* handle normal input */
+            const value = eventValue.replace(/[^0-9]/g, "");
             if (validateUserInput(value)) {
                 const newOtpValues = [...otpValues];
 
@@ -128,13 +157,8 @@ export const OtpInput = ({
         if (!event.clipboardData) return;
 
         const pastedValue = event.clipboardData.getData("text");
-        const pastedValueArr = pastedValue.split("");
-        if (pastedValue && validateUserInput(pastedValue, numOfInput)) {
-            setOtpValues(pastedValueArr);
-            if (onChangeRef.current) {
-                onChangeRef.current(pastedValueArr);
-            }
-        } else {
+
+        if (!handleInputFullValue(pastedValue)) {
             event.preventDefault();
         }
     };
@@ -155,9 +179,6 @@ export const OtpInput = ({
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
-    const validateUserInput = (value: string, length = 1) =>
-        !value ? false : RegExp(`^[0-9]{${length}}$`).test(value);
-
     const isWithinCooldown = (): boolean => {
         const currentTime = Date.now();
         const coolDownInMilliseconds = cooldownDuration * 1000;
