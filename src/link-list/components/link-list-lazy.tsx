@@ -77,6 +77,7 @@ export const LazyLinkList = <T,>({
             data-testid="toggle-button"
         >
             <ToggleButtonLabel
+                forwardedAs="span"
                 weight="semibold"
                 data-testid="toggle-button-label"
             >

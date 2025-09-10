@@ -114,7 +114,7 @@ export const Breadcrumb = ({
 
             if (index === links.length - 1 || !link.href) {
                 element = (
-                    <CurrentLabel weight="semibold" as="span">
+                    <CurrentLabel weight="semibold" forwardedAs="span">
                         {link.children}
                     </CurrentLabel>
                 );

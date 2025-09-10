@@ -44,6 +44,7 @@ export const Timeline = ({
         if (typeof title === "string") {
             return (
                 <TimelineItemTitle
+                    forwardedAs="div"
                     weight="semibold"
                     className="timeline-item-title"
                 >
@@ -125,7 +126,11 @@ export const Timeline = ({
             $startCol={startCol}
             $colSpan={colSpan}
         >
-            <TimelineTitle data-testid="timeline-title" weight="bold">
+            <TimelineTitle
+                forwardedAs="div"
+                data-testid="timeline-title"
+                weight="bold"
+            >
                 {title}
             </TimelineTitle>
             {renderItems()}

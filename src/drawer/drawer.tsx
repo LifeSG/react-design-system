@@ -116,7 +116,7 @@ export const Drawer = ({
                                 ref={initialFocusRef}
                                 tabIndex={-1}
                                 weight="bold"
-                                as="h2"
+                                forwardedAs="h2"
                             >
                                 {heading}
                             </Heading>
