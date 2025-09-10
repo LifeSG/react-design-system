@@ -17,8 +17,8 @@ export interface OtpInputProps extends React.AriaAttributes {
         | {
               /** Optional OTP prefix, usually consisting of a few alphabetic characters */
               value: string;
-              /** separator between prefix and otp digits*/
-              separator: string;
+              /** separator between prefix and otp digits. Only "-" supported for now */
+              separator: "-";
           }
         | undefined;
     /** Called when one of the input is changed. Returns an array of all the input values */

@@ -46,33 +46,30 @@ describe("strippedOtpFromAutofill", () => {
     describe("with prefix", () => {
         it("should return the autofill value without prefix", () => {
             const autofillValue = "abc-1234";
-            const prefix = { value: "abc", separator: "-" };
             const result = strippedOtpFromAutofill(
                 autofillValue,
                 EXPECTED_OTP_LENGTH,
-                prefix
+                { value: "abc", separator: "-" }
             );
             expect(result).toBe("1234");
         });
 
         it("should return an empty string when the prefix does not match", () => {
             const autofillValue = "abc-1234";
-            const prefix = { value: "def", separator: "-" };
             const result = strippedOtpFromAutofill(
                 autofillValue,
                 EXPECTED_OTP_LENGTH,
-                prefix
+                { value: "def", separator: "-" }
             );
             expect(result).toBe("");
         });
 
         it("should return an empty string when the separator does not match", () => {
             const autofillValue = "abc-1234";
-            const prefix = { value: "abc", separator: "+" };
             const result = strippedOtpFromAutofill(
                 autofillValue,
                 EXPECTED_OTP_LENGTH,
-                prefix
+                { value: "abc", separator: "+" as "-" }
             );
             expect(result).toBe("");
         });

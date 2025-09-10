@@ -251,7 +251,7 @@ export const OtpInput = ({
                 aria-label={`${numOfInput}-digit OTP input field`}
             >
                 {prefix && (
-                    <Prefix>{`${prefix.value} ${prefix.separator}`}</Prefix>
+                    <Prefix forwardedAs="span">{`${prefix.value} ${prefix.separator}`}</Prefix>
                 )}
                 {otpValues.map((data, index) => {
                     return (
