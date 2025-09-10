@@ -45,6 +45,7 @@ export const LinkListItems = <T,>({
                     >
                         <ItemContentContainer>
                             <ItemTitle
+                                forwardedAs="div"
                                 data-testid={`link-title-${index}`}
                                 weight="semibold"
                             >

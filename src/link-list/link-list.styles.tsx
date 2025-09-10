@@ -28,16 +28,12 @@ export const Container = styled.div`
     border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 `;
 
-export const ItemTitleDefault = styled(Typography.HeadingSM).attrs({
-    as: "div",
-})`
+export const ItemTitleDefault = styled(Typography.HeadingSM)`
     color: ${Colour["text-primary"]};
     margin-bottom: 0.5rem;
 `;
 
-export const ItemTitleSmall = styled(Typography.HeadingXS).attrs({
-    as: "div",
-})`
+export const ItemTitleSmall = styled(Typography.HeadingXS)`
     color: ${Colour["text-primary"]};
 `;
 
@@ -88,9 +84,7 @@ export const ExpandableChild = styled.div<ExpandableChildStyleProps>`
         `}
 `;
 
-export const ToggleButtonLabel = styled(Typography.BodyMD).attrs({
-    as: "span",
-})`
+export const ToggleButtonLabel = styled(Typography.BodyMD)`
     color: ${Colour["text-primary"]};
     margin-right: 1rem;
 `;

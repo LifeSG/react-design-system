@@ -73,6 +73,7 @@ export const EagerLinkList = <T,>({
             data-testid="toggle-button"
         >
             <ToggleButtonLabel
+                forwardedAs="span"
                 weight="semibold"
                 data-testid="toggle-button-label"
             >

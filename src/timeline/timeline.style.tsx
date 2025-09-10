@@ -125,9 +125,7 @@ export const TimelineWrapper = styled.div<TimelineWrapperStyleProps>`
     }
 `;
 
-export const TimelineTitle = styled(Typography.HeadingSM).attrs({
-    as: "div", // TODO: allow overriding of the a11y header level
-})`
+export const TimelineTitle = styled(Typography.HeadingSM)`
     margin-bottom: 1rem;
 
     ${MediaQuery.MaxWidth.lg} {
@@ -135,9 +133,7 @@ export const TimelineTitle = styled(Typography.HeadingSM).attrs({
     }
 `;
 
-export const TimelineItemTitle = styled(Typography.HeadingXS).attrs({
-    as: "div", // TODO: allow overriding of the a11y header level
-})`
+export const TimelineItemTitle = styled(Typography.HeadingXS)`
     margin-top: -0.125rem;
     margin-bottom: 0.5rem;
 `;
