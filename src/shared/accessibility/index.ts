@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { version } from "react";
+import { isReact19 } from "../../util";
 
 export const VisuallyHidden = styled.div`
     clip-path: inset(50%);
@@ -15,9 +15,7 @@ export const VisuallyHidden = styled.div`
  * 19+ provides official support as a boolean, while it is handled as string in older versions
  */
 export const inertValue = (value: boolean | undefined) => {
-    const pieces = version.split(".");
-    const major = parseInt(pieces[0], 10);
-    if (major >= 19) {
+    if (isReact19()) {
         return value;
     }
 
