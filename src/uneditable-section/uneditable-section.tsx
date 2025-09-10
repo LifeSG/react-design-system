@@ -1,3 +1,4 @@
+import { FullWidthContainer } from "./full-width-container";
 import { UneditableSectionItem } from "./section-item";
 import { UneditableSectionItemProps, UneditableSectionProps } from "./types";
 import {
@@ -51,11 +52,16 @@ export const UneditableSectionBase = ({
                         onMask={handleItemMask(item)}
                         onUnmask={handleItemUnmask(item)}
                         onTryAgain={handleTryAgain(item)}
+                        fullWidth={fullWidth}
                     />
                 );
             });
 
-            return <GridUl $stretch={stretch}>{renderedItems}</GridUl>;
+            return (
+                <GridUl $stretch={stretch} $fullWidth={fullWidth}>
+                    {renderedItems}
+                </GridUl>
+            );
         }
 
         return null;
@@ -91,14 +97,17 @@ export const UneditableSectionBase = ({
         );
     };
 
-    return (
-        <Wrapper
-            $background={background}
-            $fullWidth={fullWidth}
-            {...otherProps}
-            type="grid"
-        >
-            {renderChildren()}
-        </Wrapper>
-    );
+    if (fullWidth) {
+        return (
+            <FullWidthContainer background={background} {...otherProps}>
+                {renderChildren()}
+            </FullWidthContainer>
+        );
+    } else {
+        return (
+            <Wrapper $background={background} {...otherProps} type="grid">
+                {renderChildren()}
+            </Wrapper>
+        );
+    }
 };

@@ -8,13 +8,15 @@ import { Typography } from "../typography";
 // =============================================================================
 interface WrapperStyleProps {
     $background: boolean;
-    $fullWidth?: boolean;
 }
 
 interface ContentStyleProps {
     $stretch: boolean | undefined;
 }
 
+interface GridStyleProps extends ContentStyleProps {
+    $fullWidth?: boolean | undefined;
+}
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -31,13 +33,6 @@ export const Wrapper = styled(Layout.Content)<WrapperStyleProps>`
         $background ? Colour["bg-strong"] : "transparent"};
     padding-top: 2rem;
     padding-bottom: 2rem;
-    ${({ $fullWidth }) =>
-        $fullWidth &&
-        css`
-            > div {
-                padding: 0;
-            }
-        `}
 `;
 
 export const Title = styled(Typography.HeadingSM)<ContentStyleProps>`
@@ -54,12 +49,13 @@ export const CustomSection = styled.div<ContentStyleProps>`
     ${columnWidthStyle}
 `;
 
-export const GridUl = styled.ul<ContentStyleProps>`
+export const GridUl = styled.ul<GridStyleProps>`
     ${columnWidthStyle}
     column-gap: 2rem;
     row-gap: 2rem;
     display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-columns: ${({ $fullWidth }) =>
+        $fullWidth ? "repeat(2, minmax(0, 1fr))" : "repeat(8, minmax(0, 1fr))"};
 
     ${MediaQuery.MaxWidth.lg} {
         column-gap: 1.5rem;
