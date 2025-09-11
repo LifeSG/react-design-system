@@ -39,6 +39,22 @@ describe("OtpInput", () => {
         expect(screen.queryByLabelText("3rd digit")).toHaveValue("3");
     });
 
+    it("should render component with prefix", () => {
+        const prefixValue = "ABC";
+        const separator = "-" as const;
+        render(
+            <OtpInput
+                numOfInput={3}
+                cooldownDuration={10}
+                prefix={{ value: prefixValue, separator }}
+            />
+        );
+
+        expect(screen.queryByTestId("otp-prefix")).toHaveTextContent(
+            prefixValue + " " + separator
+        );
+    });
+
     it("should invoke onChange with the correct value", () => {
         const onChange = jest.fn();
         render(
@@ -126,5 +142,114 @@ describe("OtpInput", () => {
         await user.keyboard("{ArrowLeft}");
 
         expect(screen.getByLabelText("1st digit")).toHaveFocus();
+    });
+
+    describe.each(["autofill", "paste"])("%s", (type) => {
+        const OTP_VALUE = "123";
+
+        const expectAutofill = (autofilled: boolean) => {
+            expect(screen.queryByLabelText("1st digit")).toHaveValue(
+                autofilled ? "1" : ""
+            );
+            expect(screen.queryByLabelText("2nd digit")).toHaveValue(
+                autofilled ? "2" : ""
+            );
+            expect(screen.queryByLabelText("3rd digit")).toHaveValue(
+                autofilled ? "3" : ""
+            );
+        };
+
+        const fireChangeOrPaste =
+            type === "autofill" ? fireEvent.change : fireEvent.paste;
+        const getEventValue = (value: string) =>
+            type === "autofill"
+                ? { target: { value } }
+                : { clipboardData: { getData: () => value } };
+
+        it(`should ${type}`, async () => {
+            render(<OtpInput numOfInput={3} cooldownDuration={10} />);
+
+            fireChangeOrPaste(
+                screen.getByLabelText("1st digit"),
+                getEventValue(OTP_VALUE)
+            );
+
+            expectAutofill(true);
+        });
+
+        it(`should not ${type} if autofill value is not the correct length`, async () => {
+            render(<OtpInput numOfInput={3} cooldownDuration={10} />);
+
+            fireChangeOrPaste(
+                screen.getByLabelText("1st digit"),
+                getEventValue("1234")
+            );
+
+            expectAutofill(false);
+
+            fireChangeOrPaste(
+                screen.getByLabelText("1st digit"),
+                getEventValue("12")
+            );
+
+            expectAutofill(false);
+        });
+
+        it(`should ${type} with prefix`, async () => {
+            const prefixValue = "ABC";
+            const separator = "-" as const;
+            render(
+                <OtpInput
+                    numOfInput={3}
+                    cooldownDuration={10}
+                    prefix={{ value: prefixValue, separator }}
+                />
+            );
+
+            fireChangeOrPaste(
+                screen.getByLabelText("1st digit"),
+                getEventValue(`${prefixValue}${separator}${OTP_VALUE}`)
+            );
+
+            expectAutofill(true);
+        });
+
+        it(`should not ${type} if the prefix is incorrect`, async () => {
+            const prefixValue = "ABC";
+            const separator = "-" as const;
+            render(
+                <OtpInput
+                    numOfInput={3}
+                    cooldownDuration={10}
+                    prefix={{ value: prefixValue, separator }}
+                />
+            );
+
+            fireChangeOrPaste(
+                screen.getByLabelText("1st digit"),
+                getEventValue(`AAA${separator}${OTP_VALUE}`)
+            );
+
+            expectAutofill(false);
+        });
+
+        it(`should ${type} even if the value does not include the prefix`, async () => {
+            const prefixValue = "ABC";
+            const separator = "-" as const;
+            render(
+                <OtpInput
+                    numOfInput={3}
+                    cooldownDuration={10}
+                    prefix={{ value: prefixValue, separator }}
+                />
+            );
+
+            fireChangeOrPaste(
+                screen.getByLabelText("1st digit"),
+                getEventValue(OTP_VALUE)
+            );
+
+            expectAutofill(true);
+        });
     });
 });

@@ -6,9 +6,11 @@ import {
     CTAButton,
     InputContainer,
     InputField,
+    Prefix,
     Wrapper,
 } from "./otp-input.styles";
 import { OtpInputProps } from "./types";
+import { stripOtpFromAutofill, validateUserInput } from "./utils";
 
 export const OtpInput = ({
     id,
@@ -19,6 +21,7 @@ export const OtpInput = ({
     actionButtonProps,
     errorMessage,
     numOfInput,
+    prefix,
     onChange,
     onCooldownStart,
     onCooldownEnd,
@@ -33,6 +36,7 @@ export const OtpInput = ({
         styleType = "secondary",
         ...otherCtaProps
     } = actionButtonProps ?? {};
+
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
     const onChangeRef = useRef(onChange);
 
@@ -78,10 +82,37 @@ export const OtpInput = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
+    const handleInputFullValue = (incomingValue: string) => {
+        if (incomingValue && validateUserInput(incomingValue, numOfInput)) {
+            const incomingValueArr = incomingValue.split("");
+            setOtpValues(incomingValueArr);
+            if (onChangeRef.current) {
+                onChangeRef.current(incomingValueArr);
+            }
+
+            return true;
+        }
+
+        return false;
+    };
 
     const handleChange =
         (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-            const value = event.target.value.replace(/[^0-9]/g, "");
+            const eventValue = event.target.value;
+
+            /* handle autofill */
+            const fieldIsEmpty = otpValues.every((num) => num === "");
+            const autofillOtp = stripOtpFromAutofill(
+                eventValue,
+                numOfInput,
+                prefix
+            );
+            if (fieldIsEmpty && handleInputFullValue(autofillOtp)) {
+                return;
+            }
+
+            /* handle normal input */
+            const value = eventValue.replace(/[^0-9]/g, "");
             if (validateUserInput(value)) {
                 const newOtpValues = [...otpValues];
 
@@ -125,13 +156,12 @@ export const OtpInput = ({
         if (!event.clipboardData) return;
 
         const pastedValue = event.clipboardData.getData("text");
-        const pastedValueArr = pastedValue.split("");
-        if (pastedValue && validateUserInput(pastedValue, numOfInput)) {
-            setOtpValues(pastedValueArr);
-            if (onChangeRef.current) {
-                onChangeRef.current(pastedValueArr);
-            }
-        } else {
+        const autofillOtp = stripOtpFromAutofill(
+            pastedValue,
+            numOfInput,
+            prefix
+        );
+        if (!handleInputFullValue(autofillOtp)) {
             event.preventDefault();
         }
     };
@@ -152,9 +182,6 @@ export const OtpInput = ({
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
-    const validateUserInput = (value: string, length = 1) =>
-        !value ? false : RegExp(`^[0-9]{${length}}$`).test(value);
-
     const isWithinCooldown = (): boolean => {
         const currentTime = Date.now();
         const coolDownInMilliseconds = cooldownDuration * 1000;
@@ -226,6 +253,12 @@ export const OtpInput = ({
                 role="group"
                 aria-label={`${numOfInput}-digit OTP input field`}
             >
+                {prefix && (
+                    <Prefix forwardedAs="span" data-testid="otp-prefix">
+                        <VisuallyHidden>O T P prefix</VisuallyHidden>
+                        {`${prefix.value} ${prefix.separator}`}
+                    </Prefix>
+                )}
                 {otpValues.map((data, index) => {
                     return (
                         <InputField
