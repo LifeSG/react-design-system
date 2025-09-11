@@ -5,6 +5,17 @@ import { ClickableIcon } from "../shared/clickable-icon";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 
 // =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+type FilterHeaderProps = {
+    $insetTop?: number | undefined;
+};
+
+type FilterFooterProps = {
+    $insetBottom?: number | undefined;
+};
+
+// =============================================================================
 // CONTAINER STYLES
 // =============================================================================
 
@@ -44,11 +55,13 @@ export const FloatingWrapper = styled.div`
 // HEADER STYLES
 // =============================================================================
 
-export const FilterHeader = styled.div`
+export const FilterHeader = styled.div<FilterHeaderProps>`
     display: flex;
     align-items: center;
 
     background-color: ${Colour["bg"]};
+
+    ${(props) => props.$insetTop && `padding-top: ${props.$insetTop}px;`}
 
     ${MediaQuery.MaxWidth.lg} {
         border-bottom: ${Border["width-010"]} ${Border["solid"]}
@@ -102,10 +115,12 @@ export const FilterButton = styled(ButtonWithIcon.Default)`
     width: 100%;
 `;
 
-export const FilterFooter = styled.div`
+export const FilterFooter = styled.div<FilterFooterProps>`
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
     background-color: ${Colour["bg"]};
     border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    ${(props) =>
+        props.$insetBottom && `padding-bottom: ${props.$insetBottom}px;`}
 `;
 
 export const FilterDoneButton = styled(Button.Default)`
