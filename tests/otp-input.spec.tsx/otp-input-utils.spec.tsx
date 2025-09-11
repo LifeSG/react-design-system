@@ -1,16 +1,16 @@
 import {
-    strippedOtpFromAutofill,
+    stripOtpFromAutofill,
     validateUserInput,
 } from "../../src/otp-input/utils";
 
-describe("strippedOtpFromAutofill", () => {
+describe("stripOtpFromAutofill", () => {
     const EXPECTED_OTP_LENGTH = 4;
 
     describe("with no prefix", () => {
         const autofillValue = "1234";
 
         it("should return the autofill value when it matches the valid OTP length", () => {
-            const result = strippedOtpFromAutofill(
+            const result = stripOtpFromAutofill(
                 autofillValue,
                 EXPECTED_OTP_LENGTH
             );
@@ -18,7 +18,7 @@ describe("strippedOtpFromAutofill", () => {
         });
 
         it("should return the autofill value when it matches the valid OTP length even if a prefix is provided", () => {
-            const result = strippedOtpFromAutofill(
+            const result = stripOtpFromAutofill(
                 autofillValue,
                 EXPECTED_OTP_LENGTH,
                 { value: "SPF", separator: "-" }
@@ -28,14 +28,14 @@ describe("strippedOtpFromAutofill", () => {
 
         it("should return an empty string when the autofill value length does not match", () => {
             const autofillValue = "123";
-            const result = strippedOtpFromAutofill(
+            const result = stripOtpFromAutofill(
                 autofillValue,
                 EXPECTED_OTP_LENGTH
             );
             expect(result).toBe("");
 
             const autofillValue2 = "12345";
-            const result2 = strippedOtpFromAutofill(
+            const result2 = stripOtpFromAutofill(
                 autofillValue2,
                 EXPECTED_OTP_LENGTH
             );
@@ -46,7 +46,7 @@ describe("strippedOtpFromAutofill", () => {
     describe("with prefix", () => {
         it("should return the autofill value without prefix", () => {
             const autofillValue = "abc-1234";
-            const result = strippedOtpFromAutofill(
+            const result = stripOtpFromAutofill(
                 autofillValue,
                 EXPECTED_OTP_LENGTH,
                 { value: "abc", separator: "-" }
@@ -56,7 +56,7 @@ describe("strippedOtpFromAutofill", () => {
 
         it("should return an empty string when the prefix does not match", () => {
             const autofillValue = "abc-1234";
-            const result = strippedOtpFromAutofill(
+            const result = stripOtpFromAutofill(
                 autofillValue,
                 EXPECTED_OTP_LENGTH,
                 { value: "def", separator: "-" }
@@ -66,7 +66,7 @@ describe("strippedOtpFromAutofill", () => {
 
         it("should return an empty string when the separator does not match", () => {
             const autofillValue = "abc-1234";
-            const result = strippedOtpFromAutofill(
+            const result = stripOtpFromAutofill(
                 autofillValue,
                 EXPECTED_OTP_LENGTH,
                 { value: "abc", separator: "+" as "-" }

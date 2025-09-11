@@ -10,7 +10,7 @@ import {
     Wrapper,
 } from "./otp-input.styles";
 import { OtpInputProps } from "./types";
-import { strippedOtpFromAutofill, validateUserInput } from "./utils";
+import { stripOtpFromAutofill, validateUserInput } from "./utils";
 
 export const OtpInput = ({
     id,
@@ -102,7 +102,7 @@ export const OtpInput = ({
 
             /* handle autofill */
             const fieldIsEmpty = otpValues.every((num) => num === "");
-            const autofillOtp = strippedOtpFromAutofill(
+            const autofillOtp = stripOtpFromAutofill(
                 eventValue,
                 numOfInput,
                 prefix
@@ -156,7 +156,7 @@ export const OtpInput = ({
         if (!event.clipboardData) return;
 
         const pastedValue = event.clipboardData.getData("text");
-        const autofillOtp = strippedOtpFromAutofill(
+        const autofillOtp = stripOtpFromAutofill(
             pastedValue,
             numOfInput,
             prefix
@@ -254,11 +254,10 @@ export const OtpInput = ({
                 aria-label={`${numOfInput}-digit OTP input field`}
             >
                 {prefix && (
-                    <Prefix
-                        forwardedAs="span"
-                        aria-label="O T P prefix"
-                        data-testid="otp-prefix"
-                    >{`${prefix.value} ${prefix.separator}`}</Prefix>
+                    <Prefix forwardedAs="span" data-testid="otp-prefix">
+                        <VisuallyHidden>O T P prefix</VisuallyHidden>
+                        {`${prefix.value} ${prefix.separator}`}
+                    </Prefix>
                 )}
                 {otpValues.map((data, index) => {
                     return (

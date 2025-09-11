@@ -32,6 +32,19 @@ export const WithErrorMessage: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+export const WithPrefix: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <OtpInput
+                numOfInput={6}
+                cooldownDuration={60}
+                prefix={{ value: "WGS", separator: "-" }}
+            />
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
 export const WithCustomActionButton: StoryObj<Component> = {
     render: (_args) => {
         const numOfInput = 4;
@@ -83,19 +96,6 @@ export const WithCustomActionButtonSelfHandle: StoryObj<Component> = {
                         setIsInCooldown(true);
                     },
                 }}
-            />
-        );
-    },
-    decorators: [StoryDecorator({ maxWidth: true })],
-};
-
-export const WithPrefix: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <OtpInput
-                numOfInput={6}
-                cooldownDuration={60}
-                prefix={{ value: "WGS", separator: "-" }}
             />
         );
     },
