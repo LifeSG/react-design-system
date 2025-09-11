@@ -1,5 +1,6 @@
 import { ButtonStyleType } from "../button/types";
 import { FormLabelAddonProps } from "../form/types";
+import { Insets } from "../shared/types";
 
 export type Mode = "default" | "mobile";
 
@@ -42,6 +43,7 @@ export interface FilterProps {
     /** @deprecated Forces mobile mode. Not for public use, will be removed in future versions */
     _dangerouslyForceMobile?: boolean | undefined;
     onModalOpen?: (() => void) | undefined;
+    insets?: Insets | undefined;
 }
 
 export interface FilterItemProps {

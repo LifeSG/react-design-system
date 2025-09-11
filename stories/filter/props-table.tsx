@@ -76,6 +76,20 @@ const FILTER_DATA: ApiTableSectionProps[] = [
                 description: "Called when filter modal is opened (mobile only)",
                 propTypes: ["() => void"],
             },
+            {
+                name: "insets",
+                description: (
+                    <>
+                        The distance from the edge of the viewport, defining the
+                        safe area not covered by status bars, notches, or other
+                        navigation elements. The close, magnifier, and arrow
+                        buttons will be offset accordingly.
+                    </>
+                ),
+                propTypes: [
+                    "{ top?: number, bottom?: number, right?: number, right?: number }",
+                ],
+            },
         ],
     },
     {

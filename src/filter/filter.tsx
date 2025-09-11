@@ -38,6 +38,7 @@ const FilterBase = ({
     onModalOpen,
     children,
     _dangerouslyForceMobile,
+    insets,
     ...otherProps
 }: FilterProps) => {
     // =============================================================================
@@ -171,7 +172,9 @@ const FilterBase = ({
                                         <FilterBody>
                                             {renderChildren("mobile")}
                                         </FilterBody>
-                                        <FilterFooter>
+                                        <FilterFooter
+                                            $insetBottom={insets?.bottom}
+                                        >
                                             <FilterDoneButton
                                                 onClick={handleDoneClick}
                                                 type="button"

@@ -102,10 +102,15 @@ export const FilterButton = styled(ButtonWithIcon.Default)`
     width: 100%;
 `;
 
-export const FilterFooter = styled.div`
+type FilterFooterProps = {
+    $insetBottom?: number | undefined;
+};
+export const FilterFooter = styled.div<FilterFooterProps>`
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
     background-color: ${Colour["bg"]};
     border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    ${(props) =>
+        props.$insetBottom && `padding-bottom: ${props.$insetBottom}px;`}
 `;
 
 export const FilterDoneButton = styled(Button.Default)`
