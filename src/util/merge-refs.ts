@@ -1,4 +1,5 @@
 import { MutableRefObject, Ref } from "react";
+import { isReact19 } from "./version";
 
 export const mergeRefs = <T>(...refs: Ref<T>[]) => {
     return (value: T | null) => {
@@ -17,8 +18,10 @@ export const mergeRefs = <T>(...refs: Ref<T>[]) => {
             }
         }
 
-        return () => {
-            for (const cleanup of cleanups) cleanup();
-        };
+        if (isReact19()) {
+            return () => {
+                for (const cleanup of cleanups) cleanup();
+            };
+        }
     };
 };
