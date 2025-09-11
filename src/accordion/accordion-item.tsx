@@ -94,7 +94,7 @@ function Component(
                 collapsible ? expandedControlled ?? expandAll : true
             );
         }
-    }, [collapsible, expandAll, hasFirstLoad]);
+    }, [collapsible, expandAll, expandedControlled]);
 
     // =========================================================================
     // EVENT HANDLERS
