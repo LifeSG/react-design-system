@@ -65,6 +65,11 @@ const OverlayComponent = ({
 
             addOverlay();
 
+            if (isIOS() && getOverlayOrder().length === 1) {
+                saveScrollPosition();
+                applyScrollLockClass("add");
+            }
+
             const timerId = setTimeout(() => {
                 applyBodyStyleClass("add");
             }, 200); // Allow overlay animations to complete
@@ -72,6 +77,11 @@ const OverlayComponent = ({
             return () => clearTimeout(timerId);
         } else {
             removeOverlay();
+
+            if (isIOS() && getOverlayOrder().length < 1) {
+                applyScrollLockClass("remove");
+                scrollToLastScrollPosition();
+            }
 
             const timerId = setTimeout(() => {
                 if (getOverlayOrder().length < 1) {
@@ -94,6 +104,8 @@ const OverlayComponent = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const isIOS = () => /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
+
     const getRootElement = (): HTMLElement | null => {
         if (document && rootId) {
             return document.getElementById(rootId);
@@ -132,6 +144,12 @@ const OverlayComponent = ({
 				.${OVERLAY_OPEN_CLASSNAME}::-webkit-scrollbar {
 					display: none;
 				}
+
+				.${OVERLAY_SCROLL_LOCK_CLASSNAME} {
+					position: fixed;
+					top: var(${SCROLL_POSITION_VAR}, 0);
+					bottom: 0;
+				}
 			`;
 
             document.body.appendChild(overlayStyleSheet);
@@ -168,6 +186,49 @@ const OverlayComponent = ({
         document.body.dataset.lifesgDsOverlayOrder = order
             .filter((o) => o !== uid)
             .join(",");
+    };
+
+    /**
+     * This sets the style of <body> to further prevent scrolling on iOS
+     *
+     * ref: https://stackoverflow.com/a/57455820/3932279
+     * `overflow: hidden` and `overscroll-behavior` is ignored by iOS, this is
+     * an alternative solution
+     *
+     * as a side effect this causes the scroll position to reset, so additional
+     * logic to restore the scroll on close is required
+     */
+    const applyScrollLockClass = (action: "add" | "remove") => {
+        if (!isIOS()) {
+            return;
+        }
+
+        const isClassApplied = document.body.classList.contains(
+            OVERLAY_SCROLL_LOCK_CLASSNAME
+        );
+
+        if (action === "add" && !isClassApplied) {
+            document.body.classList.add(OVERLAY_SCROLL_LOCK_CLASSNAME);
+        } else if (action === "remove" && isClassApplied) {
+            document.body.classList.remove(OVERLAY_SCROLL_LOCK_CLASSNAME);
+        }
+    };
+
+    const saveScrollPosition = () => {
+        const bodyStyle = document.body.style;
+        const scrollY = bodyStyle.top ? bodyStyle.top : window.scrollY + "px";
+
+        document.body.style.setProperty(SCROLL_POSITION_VAR, scrollY);
+    };
+
+    const scrollToLastScrollPosition = () => {
+        const scrollY =
+            document.body.style.getPropertyValue(SCROLL_POSITION_VAR);
+        requestAnimationFrame(() => {
+            window.scrollTo({
+                top: parseFloat(scrollY),
+            });
+        });
     };
 
     // =============================================================================
@@ -232,3 +293,5 @@ export const Overlay = (props: OverlayProps) => {
 // =============================================================================
 const STYLESHEET_ID = "lifesg-ds-overlay-stylesheet";
 const OVERLAY_OPEN_CLASSNAME = "lifesg-ds-overlay-open";
+const OVERLAY_SCROLL_LOCK_CLASSNAME = "lifesg-ds-overlay-scroll-lock";
+const SCROLL_POSITION_VAR = "--lifesg-ds-overlay-scroll-y";
