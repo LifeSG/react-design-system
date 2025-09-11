@@ -82,8 +82,8 @@ const FILTER_DATA: ApiTableSectionProps[] = [
                     <>
                         The distance from the edge of the viewport, defining the
                         safe area not covered by status bars, notches, or other
-                        navigation elements. The close, magnifier, and arrow
-                        buttons will be offset accordingly.
+                        navigation elements. The header and footer in mobile
+                        mode will be offset accordingly.
                     </>
                 ),
                 propTypes: [

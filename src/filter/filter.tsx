@@ -115,7 +115,7 @@ const FilterBase = ({
 
     const renderHeader = (mode: Mode) => {
         return (
-            <FilterHeader>
+            <FilterHeader $insetTop={insets?.top}>
                 {mode === "mobile" && (
                     <FilterHeaderButton
                         onClick={handleDismissFilter}
