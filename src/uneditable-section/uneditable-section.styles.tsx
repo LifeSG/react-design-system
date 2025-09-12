@@ -14,6 +14,9 @@ interface ContentStyleProps {
     $stretch: boolean | undefined;
 }
 
+interface GridStyleProps extends ContentStyleProps {
+    $fullWidth?: boolean | undefined;
+}
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -32,6 +35,11 @@ export const Wrapper = styled(Layout.Content)<WrapperStyleProps>`
     padding-bottom: 2rem;
 `;
 
+export const FullWidthWrapper = styled.div<WrapperStyleProps>`
+    background: ${({ $background }) =>
+        $background ? Colour["bg-strong"] : "transparent"};
+`;
+
 export const Title = styled(Typography.HeadingSM)<ContentStyleProps>`
     margin-bottom: 1rem;
     ${columnWidthStyle}
@@ -46,12 +54,13 @@ export const CustomSection = styled.div<ContentStyleProps>`
     ${columnWidthStyle}
 `;
 
-export const GridUl = styled.ul<ContentStyleProps>`
+export const GridUl = styled.ul<GridStyleProps>`
     ${columnWidthStyle}
     column-gap: 2rem;
     row-gap: 2rem;
     display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-columns: ${({ $fullWidth }) =>
+        $fullWidth ? "repeat(2, minmax(0, 1fr))" : "repeat(8, minmax(0, 1fr))"};
 
     ${MediaQuery.MaxWidth.lg} {
         column-gap: 1.5rem;

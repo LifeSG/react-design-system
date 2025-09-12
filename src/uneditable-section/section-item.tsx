@@ -25,6 +25,7 @@ export interface UneditableSectionItemComponentProps
     onMask?: (() => void) | undefined;
     onUnmask?: (() => void) | undefined;
     onTryAgain?: (() => void) | undefined;
+    fullWidth?: boolean | undefined;
 }
 
 export const UneditableSectionItem = ({
@@ -43,6 +44,7 @@ export const UneditableSectionItem = ({
     onMask,
     onUnmask,
     onTryAgain,
+    fullWidth,
 }: UneditableSectionItemComponentProps) => {
     // =========================================================================
     // CONST, STATE, REF
@@ -166,7 +168,7 @@ export const UneditableSectionItem = ({
     };
 
     return (
-        <Container $widthStyle={displayWidth}>
+        <Container $widthStyle={displayWidth} $fullWidth={fullWidth}>
             <FormLabel>{label}</FormLabel>
             {renderContent()}
             {alert && <StyledAlert sizeType="small" {...alert} />}

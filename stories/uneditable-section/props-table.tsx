@@ -98,6 +98,13 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                     "Called when there is an error state with a Try again? indicator",
                 propTypes: ["(item: UneditableSectionItemProps) => void"],
             },
+            {
+                name: "fullWidth",
+                description:
+                    "If specified true, removes horizontal padding of Layout.Content to allow content to use the full width",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
         ],
     },
     {
