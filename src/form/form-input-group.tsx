@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { InputGroup } from "../input-group";
 import { FormWrapper } from "./form-wrapper";
 import { FormInputGroupProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 
 const Component = <T, V>(
     props: FormInputGroupProps<T, V>,
@@ -10,7 +11,7 @@ const Component = <T, V>(
     const {
         label,
         errorMessage,
-        id = "form-field-group",
+        id,
         "data-error-testid": errorTestId,
         "data-testid": testId,
         layoutType,
@@ -27,9 +28,15 @@ const Component = <T, V>(
         ...otherProps
     } = props;
 
+    const [internalId] = useState(
+        () => `form-field-${SimpleIdGenerator.generate()}`
+    );
+
+    const inputId = id ?? internalId;
+
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
             label={label}
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
@@ -48,8 +55,8 @@ const Component = <T, V>(
         >
             <InputGroup
                 ref={ref}
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 error={!!errorMessage}
                 {...otherProps}
             />
