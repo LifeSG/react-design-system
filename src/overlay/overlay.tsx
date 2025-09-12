@@ -145,11 +145,11 @@ const OverlayComponent = ({
 					display: none;
 				}
 
-                .${OVERLAY_SCROLL_LOCK_CLASSNAME} {
-                    position: fixed;
-                    top: var(${SCROLL_POSITION_VAR}, 0);
-                    bottom: 0;
-                }
+				.${OVERLAY_SCROLL_LOCK_CLASSNAME} {
+					position: fixed;
+					top: var(${SCROLL_POSITION_VAR}, 0);
+					bottom: 0;
+				}
 			`;
 
             document.body.appendChild(overlayStyleSheet);
