@@ -1,4 +1,0 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-npx tsc --noEmit true && npx pretty-quick --staged && npx lint-staged
