@@ -1,9 +1,9 @@
-import { FullWidthContainer } from "./full-width-container";
 import { UneditableSectionItem } from "./section-item";
 import { UneditableSectionItemProps, UneditableSectionProps } from "./types";
 import {
     CustomSection,
     Description,
+    FullWidthWrapper,
     GridUl,
     Title,
     Wrapper,
@@ -99,15 +99,14 @@ export const UneditableSectionBase = ({
 
     if (fullWidth) {
         return (
-            <FullWidthContainer background={background} {...otherProps}>
+            <FullWidthWrapper $background={background} {...otherProps}>
                 {renderChildren()}
-            </FullWidthContainer>
-        );
-    } else {
-        return (
-            <Wrapper $background={background} {...otherProps} type="grid">
-                {renderChildren()}
-            </Wrapper>
+            </FullWidthWrapper>
         );
     }
+    return (
+        <Wrapper $background={background} {...otherProps} type="grid">
+            {renderChildren()}
+        </Wrapper>
+    );
 };

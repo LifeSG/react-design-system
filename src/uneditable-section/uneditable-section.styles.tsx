@@ -35,6 +35,11 @@ export const Wrapper = styled(Layout.Content)<WrapperStyleProps>`
     padding-bottom: 2rem;
 `;
 
+export const FullWidthWrapper = styled.div<WrapperStyleProps>`
+    background: ${({ $background }) =>
+        $background ? Colour["bg-strong"] : "transparent"};
+`;
+
 export const Title = styled(Typography.HeadingSM)<ContentStyleProps>`
     margin-bottom: 1rem;
     ${columnWidthStyle}
