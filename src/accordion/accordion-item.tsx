@@ -88,13 +88,11 @@ function Component(
     }, []);
 
     useEffect(() => {
-        if (collapsible) {
-            onItemStateChange(
-                internalId,
-                collapsible ? expandedControlled ?? expandAll : true
-            );
-        }
-    }, [collapsible, expandAll, expandedControlled]);
+        onItemStateChange(
+            internalId,
+            collapsible ? expandedControlled ?? expandAll : true
+        );
+    }, [expandAll, expandedControlled, collapsible]);
 
     // =========================================================================
     // EVENT HANDLERS
