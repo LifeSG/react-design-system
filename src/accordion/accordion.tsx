@@ -25,6 +25,7 @@ const AccordionBase = ({
         initialDisplay === "expand-all"
     );
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
+    const [itemState, setItemState] = useState<Record<string, boolean>>({});
 
     useEffect(() => {
         setHasFirstLoad(true);
@@ -36,9 +37,52 @@ const AccordionBase = ({
         }
     }, [expandAll, hasFirstLoad]);
 
+    useEffect(() => {
+        if (hasFirstLoad) {
+            const itemStates = Object.values(itemState);
+            if (itemStates.length > 0) {
+                const allExpanded = itemStates.every((state) => state === true);
+                const allCollapsed = itemStates.every(
+                    (state) => state === false
+                );
+
+                if (allExpanded && !expandAll) {
+                    setExpandAll(true);
+                } else if (allCollapsed && expandAll) {
+                    setExpandAll(false);
+                }
+            }
+        }
+    }, [itemState, expandAll, hasFirstLoad]);
+
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();
-        setExpandAll((prevExpandValue) => !prevExpandValue);
+        setExpandAll((prevExpandValue) => {
+            const expandValue = !prevExpandValue;
+
+            const updatedChildState = Object.keys(itemState).reduce(
+                (acc, key) => {
+                    acc[key] = expandValue;
+                    return acc;
+                },
+                {} as typeof itemState
+            );
+
+            setItemState(updatedChildState);
+            return expandValue;
+        });
+    };
+
+    const onItemStateChange = (id: string, isExpanded: boolean) => {
+        setItemState((prev) => ({ ...prev, [id]: isExpanded }));
+    };
+
+    const onItemDeregister = (id: string) => {
+        setItemState((prev) => {
+            const newState = { ...prev };
+            delete newState[id];
+            return newState;
+        });
     };
 
     const renderCollapseExpandAll = () => {
@@ -87,6 +131,9 @@ const AccordionBase = ({
                         ? headingLevel + 1
                         : headingLevel
                     : undefined,
+                onItemStateChange,
+                onItemDeregister,
+                itemState,
             }}
         >
             <Content id={id} data-testid={testId} className={className}>
