@@ -100,10 +100,14 @@ const MAIN_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "fullWidth",
-                description:
-                    "If specified true, removes horizontal padding of Layout.Content to allow content to use the full width",
+                description: (
+                    <>
+                        If true, removes the default spacing and grid alignment
+                        from <code>Layout.Content</code>, allowing content to
+                        use the full width of the container
+                    </>
+                ),
                 propTypes: ["boolean"],
-                defaultValue: "false",
             },
         ],
     },

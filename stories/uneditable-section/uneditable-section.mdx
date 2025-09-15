@@ -76,10 +76,17 @@ to render the details at any position you intend.
 
 ## Stretch
 
-If rendering this inside of another container, the contents can take up the full
-width using the `stretch` prop.
+Using the `stretch` prop, the contents can take up the full width of the screen with a fixed padding, ignoring the masthead's alignment.
 
 <Canvas of={UneditableSectionStories.Stretch} />
+
+## Full width
+
+If rendering this inside of another container, use the `fullWidth` prop to
+ignore the default spacing and grid alignment of `Layout.Content`, allowing
+content to take up the full width of the container.
+
+<Canvas of={UneditableSectionStories.FullWidth} />
 
 ## Component API
 

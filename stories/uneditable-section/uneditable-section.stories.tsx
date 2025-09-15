@@ -45,19 +45,6 @@ export const NoBackground: StoryObj<Component> = {
     },
 };
 
-export const FullWidth: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <UneditableSection
-                title="Your personal information"
-                description="Retrieved on 27 Jun 2023"
-                items={SAMPLE_ITEMS}
-                fullWidth
-            />
-        );
-    },
-};
-
 export const WithMaskedItems: StoryObj<Component> = {
     render: (_args) => {
         const ITEMS: UneditableSectionItemProps[] = [
@@ -378,14 +365,29 @@ export const ComposingFromScratch: StoryObj<Component> = {
 export const Stretch: StoryObj<Component> = {
     render: (_args) => {
         return (
+            <UneditableSection
+                title="Your personal information"
+                description="Retrieved on 27 Jun 2023"
+                items={SAMPLE_ITEMS}
+                stretch
+            />
+        );
+    },
+};
+
+export const FullWidth: StoryObj<Component> = {
+    render: (_args) => {
+        return (
             <BoxContainer title="Review" collapsible={false}>
-                <UneditableSection
-                    title="Your personal information"
-                    description="Retrieved on 27 Jun 2023"
-                    items={SAMPLE_ITEMS}
-                    background={false}
-                    stretch
-                />
+                <div style={{ padding: 32 }}>
+                    <UneditableSection
+                        title="Your personal information"
+                        description="Retrieved on 27 Jun 2023"
+                        items={SAMPLE_ITEMS}
+                        background={false}
+                        fullWidth
+                    />
+                </div>
             </BoxContainer>
         );
     },
