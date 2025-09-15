@@ -1,3 +1,4 @@
+import { useSpring } from "@react-spring/web";
 import React, {
     forwardRef,
     useContext,
@@ -7,7 +8,6 @@ import React, {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "@react-spring/web";
 import { inertValue } from "../shared/accessibility";
 import { SimpleIdGenerator } from "../util";
 import { AccordionContext } from "./accordion-context";
@@ -30,11 +30,11 @@ function Component(
     {
         title,
         children,
-        expanded: expandedControlled,
         type = "default",
         collapsible = true,
         className,
         id,
+        expanded: expandedControlled,
         "data-testid": testId = "accordion-item",
     }: AccordionItemProps,
     ref: React.Ref<AccordionItemHandle>
@@ -43,15 +43,20 @@ function Component(
     // CONST, STATE, REF
     // =========================================================================
     const elementRef = useRef<HTMLDivElement>(null);
-    const { expandAll, itemHeadingLevel } = useContext(AccordionContext);
-    const [expanded, setExpanded] = useState<boolean>(
-        collapsible ? expandedControlled ?? expandAll : true
-    );
+    const {
+        expandAll,
+        itemHeadingLevel,
+        onItemStateChange,
+        itemState,
+        onItemDeregister,
+    } = useContext(AccordionContext);
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
     const [internalId] = useState(() => SimpleIdGenerator.generate());
     const contentId = `${internalId}-content`;
-
     const resizeDetector = useResizeDetector();
+    const expanded =
+        itemState[internalId] ??
+        (collapsible ? expandedControlled ?? expandAll : true); // the initial value
 
     useImperativeHandle(
         ref,
@@ -60,10 +65,10 @@ function Component(
                 elementRef.current!,
                 {
                     expand(): void {
-                        setExpanded(true);
+                        onItemStateChange(internalId, true);
                     },
                     collapse(): void {
-                        setExpanded(false);
+                        onItemStateChange(internalId, false);
                     },
                     isExpanded() {
                         return expanded;
@@ -76,16 +81,18 @@ function Component(
     // =========================================================================
     // EFFECTS
     // =========================================================================
-
     useEffect(() => {
         setHasFirstLoad(true);
+
+        return () => onItemDeregister?.(internalId);
     }, []);
 
     useEffect(() => {
-        if (hasFirstLoad) {
-            setExpanded(collapsible ? expandedControlled ?? expandAll : true);
-        }
-    }, [collapsible, expandAll, expandedControlled, hasFirstLoad]);
+        onItemStateChange(
+            internalId,
+            collapsible ? expandedControlled ?? expandAll : true
+        );
+    }, [expandAll, expandedControlled, collapsible]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -93,14 +100,16 @@ function Component(
 
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();
-        setExpanded((prevExpand) => !prevExpand);
+        onItemStateChange(internalId, !expanded);
     };
 
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     // React spring animation configuration
-    const resizeHeight = { height: expanded ? resizeDetector.height : 0 };
+    const resizeHeight = {
+        height: expanded ? resizeDetector.height : 0,
+    };
     const expandableStyles = useSpring(resizeHeight);
 
     const renderContent = () => {
