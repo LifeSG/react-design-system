@@ -10,6 +10,7 @@ import { UneditableSectionItemDisplayWidth } from "./types";
 // =============================================================================
 interface ContainerStyleProps {
     $widthStyle: UneditableSectionItemDisplayWidth;
+    $fullWidth?: boolean | undefined;
 }
 
 // =============================================================================
@@ -23,11 +24,11 @@ export const Container = styled.li<ContainerStyleProps>`
         switch (props.$widthStyle) {
             case "half":
                 return css`
-                    grid-column: auto / span 4;
+                    grid-column: auto / span ${props.$fullWidth ? 1 : 4};
                 `;
             case "full":
                 return css`
-                    grid-column: auto / span 8;
+                    grid-column: auto / span ${props.$fullWidth ? 2 : 8};
                 `;
         }
     }}

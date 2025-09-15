@@ -3,6 +3,7 @@ import { UneditableSectionItemProps, UneditableSectionProps } from "./types";
 import {
     CustomSection,
     Description,
+    FullWidthWrapper,
     GridUl,
     Title,
     Wrapper,
@@ -17,6 +18,7 @@ export const UneditableSectionBase = ({
     children,
     background = true,
     stretch,
+    fullWidth,
     onMask,
     onUnmask,
     onTryAgain,
@@ -50,11 +52,16 @@ export const UneditableSectionBase = ({
                         onMask={handleItemMask(item)}
                         onUnmask={handleItemUnmask(item)}
                         onTryAgain={handleTryAgain(item)}
+                        fullWidth={fullWidth}
                     />
                 );
             });
 
-            return <GridUl $stretch={stretch}>{renderedItems}</GridUl>;
+            return (
+                <GridUl $stretch={stretch} $fullWidth={fullWidth}>
+                    {renderedItems}
+                </GridUl>
+            );
         }
 
         return null;
@@ -90,6 +97,13 @@ export const UneditableSectionBase = ({
         );
     };
 
+    if (fullWidth) {
+        return (
+            <FullWidthWrapper $background={background} {...otherProps}>
+                {renderChildren()}
+            </FullWidthWrapper>
+        );
+    }
     return (
         <Wrapper $background={background} {...otherProps} type="grid">
             {renderChildren()}
