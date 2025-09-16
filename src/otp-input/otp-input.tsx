@@ -254,7 +254,11 @@ export const OtpInput = ({
                 aria-label={`${numOfInput}-digit OTP input field`}
             >
                 {prefix && (
-                    <Prefix forwardedAs="span" data-testid="otp-prefix">
+                    <Prefix
+                        forwardedAs="span"
+                        data-testid="otp-prefix"
+                        weight="semibold"
+                    >
                         <VisuallyHidden>O T P prefix</VisuallyHidden>
                         {`${prefix.value} ${prefix.separator}`}
                     </Prefix>

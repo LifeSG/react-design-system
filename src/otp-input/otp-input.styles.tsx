@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Button } from "../button";
 import { Input } from "../input";
-import { MediaQuery, Spacing } from "../theme";
+import { Spacing } from "../theme";
 import { Typography } from "../typography";
 
 export const Wrapper = styled.div`
@@ -18,14 +18,12 @@ export const InputContainer = styled.div`
 `;
 
 export const InputField = styled(Input)`
+    min-width: 20px;
     margin-bottom: 0rem !important;
 
     input {
+        padding: 0;
         text-align: center;
-
-        ${MediaQuery.MaxWidth.xs} {
-            padding: 0 ${Spacing["spacing-8"]};
-        }
     }
 `;
 
@@ -33,6 +31,6 @@ export const CTAButton = styled(Button.Small)`
     margin: ${Spacing["spacing-32"]} 0;
 `;
 
-export const Prefix = styled(Typography.HeadingSM)`
+export const Prefix = styled(Typography.BodyBL)`
     flex-shrink: 0;
 `;
