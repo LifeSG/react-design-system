@@ -1,7 +1,15 @@
 import styled, { css } from "styled-components";
 import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
-import { Border, Colour, Font, Motion, Radius, Shadow } from "../theme";
+import {
+    Border,
+    Colour,
+    Font,
+    Motion,
+    Radius,
+    Shadow,
+    Spacing,
+} from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -145,23 +153,28 @@ export const TextButton = styled(BasicButton)`
 export const ActionBar = styled.div<ActionBarProps>`
     overflow: hidden;
     display: flex;
-    ${(props) =>
-        props.$float &&
-        css`
-            transform: translateX(-0.5%) translateY(-2rem);
-            border-radius: ${Radius["sm"]};
-            box-shadow: ${Shadow["xs-subtle"]};
-            width: 101%;
-            border: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
-        `}
     align-items: center;
     height: 3.5rem;
-    padding: 1rem;
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-24"]};
     border-top: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
-    border-radius: ${Radius["none"]} ${Radius["none"]} ${Radius["sm"]}
-        ${Radius["sm"]};
     background-color: ${Colour["bg-selected"]};
     transition: all 300ms ease;
+    ${(props) => {
+        if (props.$float) {
+            return css`
+                transform: translateX(0.5rem) translateY(-2rem);
+                border-radius: ${Radius["sm"]};
+                box-shadow: ${Shadow["xs-subtle"]};
+                width: calc(100% - ${Spacing["spacing-16"]});
+                border: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
+            `;
+        } else {
+            return css`
+                border-radius: ${Radius["none"]} ${Radius["none"]}
+                    ${Radius["sm"]} ${Radius["sm"]};
+            `;
+        }
+    }}
 `;
 
 export const HeaderRow = styled.tr`
