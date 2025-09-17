@@ -63,19 +63,19 @@ export const List = styled.ul<ListContainerProps>`
     padding: 0.5rem;
     list-style-type: none;
 
-    ::-webkit-scrollbar {
-        width: 9px;
+    &::-webkit-scrollbar {
+        width: 14px;
     }
 
-    ::-webkit-scrollbar-track {
+    &::-webkit-scrollbar-track {
         background: transparent;
     }
 
-    ::-webkit-scrollbar-thumb {
+    &::-webkit-scrollbar-thumb {
         background: ${Color.Neutral[4]};
-        border-right: 5px solid ${Color.Neutral[8]};
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
+        border: 5px solid transparent;
+        border-radius: 4px;
+        background-clip: padding-box;
     }
 
     ${MediaQuery.MaxWidth.mobileL} {
