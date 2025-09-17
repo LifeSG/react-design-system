@@ -30,7 +30,7 @@ export const MobileModalBox = styled(ModalBox)`
 export const ContentWrapper = styled.div`
     overflow-y: scroll;
 
-    ::-webkit-scrollbar {
+    &::-webkit-scrollbar {
         display: none; /* Chrome/Safari/Webkit */
     }
 

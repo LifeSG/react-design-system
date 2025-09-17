@@ -48,15 +48,23 @@ export const Container = styled.div<ContainerStyleProps>`
         max-height: 15rem;
     }
 
-    ::-webkit-scrollbar {
+    ${MediaQuery.MaxWidth.mobileM} {
+        width: calc(100vw - 24px * 2);
+    }
+
+    ${MediaQuery.MaxWidth.mobileS} {
+        width: calc(100vw - 24px * 2);
+    }
+
+    &::-webkit-scrollbar {
         width: 14px;
     }
 
-    ::-webkit-scrollbar-track {
+    &::-webkit-scrollbar-track {
         background: transparent;
     }
 
-    ::-webkit-scrollbar-thumb {
+    &::-webkit-scrollbar-thumb {
         background: ${Color.Neutral[4]};
         border: 5px solid transparent;
         border-radius: 9999px;

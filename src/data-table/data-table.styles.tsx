@@ -58,7 +58,7 @@ export const TableWrapper = styled.div`
     border-radius: 0.5rem;
 
     // Hide scrollbar
-    ::-webkit-scrollbar {
+    &::-webkit-scrollbar {
         display: none;
     }
     * {
