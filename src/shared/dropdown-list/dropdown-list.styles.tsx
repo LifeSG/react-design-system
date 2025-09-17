@@ -62,15 +62,15 @@ export const List = styled.ul<ListContainerProps>`
     padding: ${Spacing["spacing-8"]};
     list-style-type: none;
 
-    ::-webkit-scrollbar {
+    &::-webkit-scrollbar {
         width: 14px;
     }
 
-    ::-webkit-scrollbar-track {
+    &::-webkit-scrollbar-track {
         background: transparent;
     }
 
-    ::-webkit-scrollbar-thumb {
+    &::-webkit-scrollbar-thumb {
         background: ${Colour["bg-inverse-subtlest"]};
         border: 5px solid transparent;
         border-radius: ${Radius["full"]};

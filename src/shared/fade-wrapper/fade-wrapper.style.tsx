@@ -85,7 +85,7 @@ export const Content = styled.div`
     white-space: nowrap;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE 10+ */
-    ::-webkit-scrollbar {
+    &::-webkit-scrollbar {
         display: none; /* Chrome/Safari/Webkit */
     }
 `;
