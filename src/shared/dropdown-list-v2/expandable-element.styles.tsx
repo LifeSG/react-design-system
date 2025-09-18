@@ -21,14 +21,13 @@ export const Selector = styled(BasicButton)<StyleProps>`
     gap: ${Spacing["spacing-8"]};
     width: 100%;
     height: calc(3rem - 2px); // exclude top and bottom borders
-    padding: ${Spacing["spacing-16"]};
+    padding: ${(props) =>
+        props.$readOnly ? `0 ${Spacing["spacing-16"]}` : Spacing["spacing-16"]};
 
     ${(props) =>
         props.$variant === "small"
             ? Font["body-md-regular"]
             : Font["body-baseline-regular"]}
-
-    ${(props) => props.$readOnly && `padding-left: 0 !important;`}
 
     &:disabled {
         cursor: not-allowed;

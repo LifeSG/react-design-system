@@ -10,6 +10,7 @@ import { InputStyleType } from "./types";
 export interface InputStyleProps {
     $showClear?: boolean | undefined;
     $styleType?: InputStyleType | undefined;
+    $visuallyReadOnly?: boolean | undefined;
 }
 
 // =============================================================================
@@ -22,10 +23,12 @@ export const InputElement = styled(BasicInput)<InputStyleProps>`
     ${(props) =>
         props.$styleType !== "no-border" &&
         css`
-            padding-left: ${props.readOnly && !props.disabled
-                ? 0
-                : Spacing["spacing-16"]};
-            padding-right: ${props.$showClear ? 0 : Spacing["spacing-16"]};
+            padding: ${Spacing["spacing-16"]}
+                ${props.$visuallyReadOnly
+                    ? 0
+                    : props.$showClear
+                    ? Spacing["spacing-16"]
+                    : Spacing["spacing-16"]};
         `}
 `;
 

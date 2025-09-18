@@ -124,10 +124,10 @@ const Component = (
                     value={updatedValue}
                     onChange={handleChange}
                     type={type}
-                    readOnly={readOnly}
-                    disabled={disabled}
+                    readOnly={readOnly || disabled}
                     $showClear={showClear}
                     $styleType={styleType}
+                    $visuallyReadOnly={readOnly}
                     {...otherProps}
                 />
                 {showClear && (
