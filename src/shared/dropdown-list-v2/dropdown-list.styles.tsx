@@ -76,15 +76,15 @@ export const Container = styled.div<ContainerStyleProps>`
         width: calc(100vw - ${Breakpoint["xxs-margin"]} * 2);
     }
 
-    ::-webkit-scrollbar {
+    &::-webkit-scrollbar {
         width: 14px;
     }
 
-    ::-webkit-scrollbar-track {
+    &::-webkit-scrollbar-track {
         background: transparent;
     }
 
-    ::-webkit-scrollbar-thumb {
+    &::-webkit-scrollbar-thumb {
         background: ${Colour["bg-inverse-subtlest"]};
         border: 5px solid transparent;
         border-radius: ${Radius["full"]};
