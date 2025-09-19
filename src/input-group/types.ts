@@ -1,10 +1,11 @@
+import { RefObject } from "react";
 import { InputProps } from "../input/types";
 import {
     DropdownDisplayProps,
     DropdownSearchProps,
     ItemsLoadStateType,
     TruncateType,
-} from "../shared/dropdown-list/types";
+} from "../shared/dropdown-list-v2";
 
 export type InputGroupAddonType = "label" | "list" | "custom";
 export type InputGroupAddonPosition = "left" | "right" | undefined;
@@ -39,6 +40,15 @@ export interface ListAddon<T, V>
     onRetry?: (() => void) | undefined;
     onHideOptions?: (() => void) | undefined;
     onShowOptions?: (() => void) | undefined;
+
+    dropdownZIndex?: number | undefined;
+    /**
+     * The root element that contains the dropdown element. Defaults to the document body.
+     *
+     * If the parent that contains the trigger element has a higher z-index than the dropdown,
+     * the dropdown may not be visible. Specify the parent element here instead
+     */
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
 }
 
 export interface AddonProps<T, V> {
