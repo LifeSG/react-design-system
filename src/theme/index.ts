@@ -180,6 +180,7 @@ const A11yPlaygroundThemeBase: ThemeSpec = {
     resourceScheme: "a11yplayground",
     componentScheme: "a11yplayground",
 };
+
 export const SupportGoWhereThemeBase: ThemeSpec = {
     colourScheme: "supportgowhere",
     fontScheme: "supportgowhere",
@@ -190,6 +191,19 @@ export const SupportGoWhereThemeBase: ThemeSpec = {
     shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "supportgowhere",
+    componentScheme: "default",
+};
+
+const IMDAThemeBase: ThemeSpec = {
+    colourScheme: "imda",
+    fontScheme: "imda",
+    motionScheme: "default",
+    borderScheme: "default",
+    spacingScheme: "default",
+    radiusScheme: "default",
+    shadowScheme: "default",
+    breakpointScheme: "default",
+    resourceScheme: "imda",
     componentScheme: "default",
 };
 
@@ -250,4 +264,10 @@ export const SupportGoWhereTheme = {
     ...SupportGoWhereThemeBase,
     light: createThemeWithColourMode(SupportGoWhereThemeBase, "light"),
     dark: createThemeWithColourMode(SupportGoWhereThemeBase, "dark"),
+};
+
+export const IMDATheme = {
+    ...IMDAThemeBase,
+    light: createThemeWithColourMode(IMDAThemeBase, "light"),
+    dark: createThemeWithColourMode(IMDAThemeBase, "dark"),
 };

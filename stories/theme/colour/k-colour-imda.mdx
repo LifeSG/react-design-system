@@ -1,0 +1,24 @@
+import { Meta } from "@storybook/blocks";
+import { IMDATheme } from "src/theme";
+import { PrimitiveColourDisplay, SemanticColourDisplay } from "../doc-elements";
+
+<Meta title="Foundations/Colours/IMDA" />
+
+# IMDA colours
+
+These are the palettes used when the `colourScheme` is `"imda"`.
+
+```tsx
+const theme: ThemeSpec = {
+    colourScheme: "imda",
+    // ...other specifications
+};
+```
+
+## Semantic colours
+
+<SemanticColourDisplay theme={IMDATheme} />
+
+## Primitive colours
+
+<PrimitiveColourDisplay theme={IMDATheme} />
