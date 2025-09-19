@@ -46,13 +46,15 @@ export type ColourScheme =
     | "oneservice"
     | "pa"
     | "a11yplayground"
-    | "supportgowhere";
+    | "supportgowhere"
+    | "imda";
 export type FontScheme =
     | "default"
     | "bookingsg"
     | "pa"
     | "a11yplayground"
-    | "supportgowhere";
+    | "supportgowhere"
+    | "imda";
 export type MotionScheme = "default";
 export type BorderScheme = "default";
 export type SpacingScheme = "default";
@@ -69,7 +71,8 @@ export type ResourceScheme =
     | "oneservice"
     | "pa"
     | "a11yplayground"
-    | "supportgowhere";
+    | "supportgowhere"
+    | "imda";
 
 export type ColourMode = "light" | "dark";
 

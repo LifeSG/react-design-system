@@ -26,6 +26,7 @@ export const ColourSpec: ThemeCollectionSpec<
         pa: PAColourSet,
         a11yplayground: A11yPlaygroundColourSet,
         supportgowhere: LifeSGColourSet,
+        imda: LifeSGColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -44,6 +45,7 @@ export const DarkColourSpec: ThemeCollectionSpec<
         pa: LifeSGDarkColourSet,
         a11yplayground: A11yPlaygroundDarkColourSet,
         supportgowhere: LifeSGDarkColourSet,
+        imda: LifeSGDarkColourSet,
     },
     defaultValue: "lifesg",
 };
