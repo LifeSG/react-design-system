@@ -48,6 +48,7 @@ export const Element = styled.textarea<StyleProps>`
             return css`
                 border-color: transparent;
                 background: transparent !important;
+                padding: ${Spacing["spacing-12"]} 0;
 
                 &:focus,
                 &:active {

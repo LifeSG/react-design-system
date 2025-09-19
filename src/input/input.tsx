@@ -127,6 +127,7 @@ const Component = (
                     readOnly={readOnly || disabled}
                     $showClear={showClear}
                     $styleType={styleType}
+                    $visuallyReadOnly={readOnly}
                     {...otherProps}
                 />
                 {showClear && (
