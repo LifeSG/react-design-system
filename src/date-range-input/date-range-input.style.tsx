@@ -27,7 +27,6 @@ export const Container = styled(InputWrapper)<StyleProps>`
                 padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
             `;
         }
-        return undefined;
     }}
 `;
 

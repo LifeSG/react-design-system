@@ -23,12 +23,12 @@ export const InputElement = styled(BasicInput)<InputStyleProps>`
     ${(props) =>
         props.$styleType !== "no-border" &&
         css`
-            padding: ${Spacing["spacing-16"]}
-                ${props.$visuallyReadOnly
-                    ? 0
-                    : props.$showClear
-                    ? Spacing["spacing-16"]
-                    : Spacing["spacing-16"]};
+            padding-left: ${props.$visuallyReadOnly
+                ? 0
+                : Spacing["spacing-16"]};
+            padding-right: ${props.$visuallyReadOnly || props.$showClear
+                ? 0
+                : Spacing["spacing-16"]};
         `}
 `;
 
