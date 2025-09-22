@@ -47,7 +47,7 @@ export const IMDAFontSpecSet: FontSpecSet = {
     "form-description-size": "0.875rem",
 
     "form-label-lh": "1.5rem",
-    "form-description-lh": "1.6rem",
+    "form-description-lh": "1.625rem",
 
     "form-label-ls": "0.014rem",
     "form-description-ls": "0.012rem",
