@@ -1,4 +1,5 @@
 import React from "react";
+import { isStyledComponent } from "styled-components";
 import { ModalCardProps } from "../types";
 import { CloseButton } from "./close-button";
 import { Content } from "./content";
@@ -17,16 +18,21 @@ export const Card = ({
         event.stopPropagation();
     };
 
+    const findByType = (child: React.ReactPortal, type: any) =>
+        isStyledComponent(child.type)
+            ? (child.type as unknown as { target: any }).target === type
+            : child.type === type;
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const CloseButtonSlot = React.Children.toArray(children).find(
-        (child) => (child as React.ReactPortal).type === CloseButton
+    const CloseButtonSlot = React.Children.toArray(children).find((child) =>
+        findByType(child as React.ReactPortal, CloseButton)
     );
     const hasCloseButton = !!CloseButtonSlot;
 
-    const ContentSlot = React.Children.toArray(children).find(
-        (child) => (child as React.ReactPortal).type === Content
+    const ContentSlot = React.Children.toArray(children).find((child) =>
+        findByType(child as React.ReactPortal, Content)
     );
 
     return (
