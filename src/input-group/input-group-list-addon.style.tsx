@@ -49,7 +49,7 @@ export const DisplayContainer = styled.div<StyleProps>`
                 case "right":
                     return css`
                         flex-direction: row-reverse;
-                        margin: 0 ${Spacing["spacing-16"]};
+                        margin: 0 0 0 ${Spacing["spacing-16"]};
                     `;
                 default:
                     return css`

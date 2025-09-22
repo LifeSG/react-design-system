@@ -9,6 +9,7 @@ import { DropdownVariantType } from "./types";
 interface StyleProps {
     $expanded?: boolean;
     $variant?: DropdownVariantType;
+    $readOnly?: boolean;
 }
 
 // =============================================================================
@@ -20,7 +21,8 @@ export const Selector = styled(BasicButton)<StyleProps>`
     gap: ${Spacing["spacing-8"]};
     width: 100%;
     height: calc(3rem - 2px); // exclude top and bottom borders
-    padding: ${Spacing["spacing-16"]};
+    padding: ${(props) =>
+        props.$readOnly ? `0 ${Spacing["spacing-16"]}` : Spacing["spacing-16"]};
 
     ${(props) =>
         props.$variant === "small"
