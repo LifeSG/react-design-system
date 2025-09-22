@@ -65,8 +65,6 @@ export const FieldInput = styled(Input)<StyleProps>`
     }}
 `;
 
-export const Selector = styled.div``;
-
 export const SelectorReadOnly = styled.div`
     padding: 10px 0; // TODO: confirm vertical spacing
     display: flex;

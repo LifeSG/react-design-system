@@ -17,7 +17,6 @@ import {
     FieldInput,
     FieldSelector,
     FieldWrapper,
-    Selector,
     SelectorReadOnly,
 } from "./input-group-list-addon.style";
 import { InputGroupProps, ListAddon } from "./types";
@@ -190,7 +189,7 @@ export const Component = <T, V>(
 
     const renderElement = () => {
         return (
-            <Selector
+            <div
                 ref={nodeRef}
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
@@ -206,7 +205,7 @@ export const Component = <T, V>(
                 >
                     {renderSelectorContent()}
                 </ExpandableElement>
-            </Selector>
+            </div>
         );
     };
 
