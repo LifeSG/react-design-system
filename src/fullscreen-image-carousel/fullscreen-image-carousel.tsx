@@ -249,7 +249,7 @@ export const Component = (
 
     const renderThumbnails = () => {
         return (
-            <ThumbnailContainer>
+            <ThumbnailContainer $insetBottom={insets?.bottom}>
                 <ThumbnailWrapper>
                     {items.map((item, index) => {
                         const src = item.thumbnailSrc ?? item.src;

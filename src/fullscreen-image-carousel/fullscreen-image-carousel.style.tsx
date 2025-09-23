@@ -196,15 +196,26 @@ export const Chip = styled(Typography.BodyXS)`
 // THUMBNAIL STYLING
 // -----------------------------------------------------------------------------
 
-export const ThumbnailContainer = styled.div`
+export const ThumbnailContainer = styled.div<InsetStyleProps>`
     flex-shrink: 0;
     display: flex;
     overflow: auto;
     background-color: ${Colour["bg-inverse"]};
-    padding: ${Spacing["spacing-24"]} ${Spacing["spacing-16"]};
-
-    ${MediaQuery.MaxWidth.sm} {
-        padding: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
+    padding: ${(props) =>
+            css`
+                ${Spacing["spacing-24"]} ${Spacing[
+                    "spacing-16"
+                ]} calc(${Spacing["spacing-24"]} + ${props.$insetBottom ||
+                0}px);
+            `}
+        ${MediaQuery.MaxWidth.sm} {
+        padding: ${(props) =>
+            css`
+                ${Spacing["spacing-16"]} ${Spacing[
+                    "spacing-20"
+                ]} calc(${Spacing["spacing-16"]} + ${props.$insetBottom ||
+                0}px);
+            `};
     }
 `;
 
