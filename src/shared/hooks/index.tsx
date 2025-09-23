@@ -1,1 +1,1 @@
-export * from "./useWindowResizeObserver";
+export * from "./useViewport";

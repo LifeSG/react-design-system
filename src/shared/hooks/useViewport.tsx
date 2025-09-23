@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 
-export const useWindowResizeObserver = () => {
+export const useViewport = () => {
     const [verticalHeight, setVerticalHeight] = useState<number>();
     const [offsetTop, setOffsetTop] = useState<number>();
 

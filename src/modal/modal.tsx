@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Overlay } from "../overlay/overlay";
-import { useWindowResizeObserver } from "../shared/hooks";
+import { useViewport } from "../shared/hooks";
 import { Container } from "./modal.styles";
 import { ModalProps } from "./types";
 
@@ -19,7 +19,7 @@ export const Modal = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const { verticalHeight, offsetTop } = useWindowResizeObserver();
+    const { verticalHeight, offsetTop } = useViewport();
 
     // =============================================================================
     // EFFECTS

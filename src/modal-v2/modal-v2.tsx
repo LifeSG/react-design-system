@@ -7,7 +7,7 @@ import {
 } from "@floating-ui/react";
 import { useEffect } from "react";
 import { Overlay } from "../overlay/overlay";
-import { useWindowResizeObserver } from "../shared/hooks";
+import { useViewport } from "../shared/hooks";
 import { ModalContext } from "./modal-context";
 import { Container, ModalContainer, ScrollContainer } from "./modal-v2.styles";
 import { ModalV2Props } from "./types";
@@ -29,7 +29,7 @@ export const ModalV2 = ({
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
-    const { verticalHeight, offsetTop } = useWindowResizeObserver();
+    const { verticalHeight, offsetTop } = useViewport();
 
     // =========================================================================
     // FLOATING UI CONFIG
