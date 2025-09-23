@@ -18,7 +18,10 @@ export const Card = ({
         event.stopPropagation();
     };
 
-    const findByType = (child: React.ReactPortal, type: any) =>
+    // =========================================================================
+    // HELPERS
+    // =========================================================================
+    const isComponentType = (child: React.ReactPortal, type: any) =>
         isStyledComponent(child.type)
             ? (child.type as unknown as { target: any }).target === type
             : child.type === type;
@@ -27,12 +30,12 @@ export const Card = ({
     // RENDER FUNCTIONS
     // =============================================================================
     const CloseButtonSlot = React.Children.toArray(children).find((child) =>
-        findByType(child as React.ReactPortal, CloseButton)
+        isComponentType(child as React.ReactPortal, CloseButton)
     );
     const hasCloseButton = !!CloseButtonSlot;
 
     const ContentSlot = React.Children.toArray(children).find((child) =>
-        findByType(child as React.ReactPortal, Content)
+        isComponentType(child as React.ReactPortal, Content)
     );
 
     return (

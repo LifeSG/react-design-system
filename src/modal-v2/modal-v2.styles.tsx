@@ -54,7 +54,6 @@ export const Container = styled.div<Props>`
 `;
 
 export const ScrollContainer = styled.div`
-    padding: 4rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
