@@ -163,6 +163,10 @@ export const SidenavItem = ({
         setCurrentItem({ itemId: id, content: children });
     };
 
+    const handleMouseLeave = () => {
+        !isOpen && setCurrentItem(undefined);
+    };
+
     const handleDismiss = () => {
         setCurrentItem((current) => {
             if (current?.itemId === id) {
@@ -195,6 +199,7 @@ export const SidenavItem = ({
                 {...otherProps}
                 $highlight={isSelected || isCurrent}
                 {...getReferenceProps()}
+                onMouseLeave={handleMouseLeave}
             >
                 <IconContainer aria-hidden>{icon}</IconContainer>
                 <TitleText inline>{title}</TitleText>
