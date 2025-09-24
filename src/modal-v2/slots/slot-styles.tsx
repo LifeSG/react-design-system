@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { ClickableIcon as _ClickableIcon } from "../../shared/clickable-icon";
+import { ClickableIcon as ClickableIcon } from "../../shared/clickable-icon";
 import {
     Breakpoint,
     Colour,
@@ -12,10 +12,7 @@ import {
 // =============================================================================
 // Card
 // =============================================================================
-interface ModalCardProps {
-    $hasCloseButton?: boolean;
-}
-export const ModalCard = styled.div<ModalCardProps>`
+export const ModalCard = styled.div`
     width: 40rem;
     margin: ${Spacing["spacing-64"]} auto;
     background: ${Colour.bg};
@@ -24,17 +21,6 @@ export const ModalCard = styled.div<ModalCardProps>`
 
     display: flex;
     flex-direction: column-reverse;
-
-    padding: ${(props) =>
-        props.$hasCloseButton
-            ? css`
-                  ${Spacing["spacing-32"]} ${Spacing["spacing-32"]} ${Spacing[
-                      "spacing-48"
-                  ]};
-              `
-            : css`
-                  ${Spacing["spacing-32"]};
-              `};
 
     max-width: calc(100% - ${Breakpoint["xxl-margin"]}px * 2);
 
@@ -64,26 +50,96 @@ export const ModalCard = styled.div<ModalCardProps>`
 `;
 
 // =============================================================================
-// Close Button
+// Header
 // =============================================================================
-export const ClickableContainer = styled.div`
-    margin-top: calc(${Spacing["spacing-16"]} * -1);
-    margin-right: calc(${Spacing["spacing-16"]} * -1);
+export const CloseButtonContainer = styled.div`
+    margin-right: ${Spacing["spacing-16"]};
     margin-left: auto;
-
-    ${MediaQuery.MaxWidth.sm} {
-        right: ${Spacing["spacing-20"]};
-    }
+    margin-top: ${Spacing["spacing-16"]};
+    margin-bottom: ${Spacing["spacing-16"]};
 `;
 
-export const StyledClickableIcon = styled(_ClickableIcon)`
+export const StyledClickableIcon = styled(ClickableIcon)`
     padding: 0;
     color: ${Colour.icon};
-
-    z-index: 2; // since it's column-reverse display, this would naturally get covered by ModalBox contents
 
     svg {
         height: 2rem;
         width: 2rem;
     }
+`;
+
+// =============================================================================
+// Content
+// =============================================================================
+export const ContentContainer = styled.div`
+    margin-right: ${Spacing["spacing-64"]};
+    margin-left: ${Spacing["spacing-64"]};
+
+    ${MediaQuery.MaxWidth.sm} {
+        margin-right: ${Spacing["spacing-20"]};
+        margin-left: ${Spacing["spacing-20"]};
+    }
+`;
+
+// =============================================================================
+// Footer
+// =============================================================================
+export const FooterContainer = styled.div`
+    margin-right: ${Spacing["spacing-64"]};
+    margin-left: ${Spacing["spacing-64"]};
+
+    ${MediaQuery.MaxWidth.sm} {
+        margin-right: ${Spacing["spacing-20"]};
+        margin-left: ${Spacing["spacing-20"]};
+    }
+
+    display: flex;
+    flex-direction: row-reverse; /* primary button on right */
+    column-gap: ${Spacing["spacing-32"]};
+    row-gap: ${Spacing["spacing-16"]};
+
+    & > button {
+        flex: 1;
+    }
+
+    ${MediaQuery.MaxWidth.md} {
+        flex-direction: column;
+    }
+`;
+
+// =============================================================================
+// Spacer
+// =============================================================================
+interface SlotSpacerStyleProps {
+    $hasCloseButton?: boolean;
+}
+
+export const SlotSpacer = styled.div<SlotSpacerStyleProps>`
+    :where(& > ${ContentContainer}:last-child) {
+        margin-bottom: 64px;
+    }
+
+    :where(& > ${FooterContainer}:not(:first-child)) {
+        margin-top: 32px;
+    }
+
+    :where(& > ${FooterContainer}:last-child) {
+        margin-bottom: 64px;
+    }
+
+    ${(props) =>
+        props.$hasCloseButton
+            ? css`
+                  :where(& > ${ContentContainer}:first-child),
+                  :where(& > ${FooterContainer}:first-child) {
+                      margin-top: 0;
+                  }
+              `
+            : css`
+                  :where(& > ${ContentContainer}:first-child),
+                  :where(& > ${FooterContainer}:first-child) {
+                      margin-top: 64px;
+                  }
+              `}
 `;

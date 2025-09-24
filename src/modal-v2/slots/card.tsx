@@ -3,7 +3,8 @@ import { isStyledComponent } from "styled-components";
 import { ModalCardProps } from "../types";
 import { CloseButton } from "./close-button";
 import { Content } from "./content";
-import { ModalCard } from "./slot-styles";
+import { Footer } from "./footer";
+import { ModalCard, SlotSpacer } from "./slot-styles";
 
 export const Card = ({
     id,
@@ -38,15 +39,21 @@ export const Card = ({
         isComponentType(child as React.ReactPortal, Content)
     );
 
+    const FooterSlot = React.Children.toArray(children).find((child) =>
+        isComponentType(child as React.ReactPortal, Footer)
+    );
+
     return (
         <ModalCard
             id={id}
             data-testid={testId}
             {...otherProps}
             onClick={handleOnClick}
-            $hasCloseButton={hasCloseButton}
         >
-            {ContentSlot}
+            <SlotSpacer $hasCloseButton={hasCloseButton}>
+                {ContentSlot}
+                {FooterSlot}
+            </SlotSpacer>
             {hasCloseButton && CloseButtonSlot}
         </ModalCard>
     );

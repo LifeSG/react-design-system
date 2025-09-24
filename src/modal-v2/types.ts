@@ -16,6 +16,12 @@ export interface ModalContentProps
     children: React.ReactNode;
 }
 
+export interface ModalFooterProps extends React.HTMLAttributes<HTMLDivElement> {
+    "data-testid"?: string | undefined;
+    primaryButton?: React.ReactNode | undefined;
+    secondaryButton?: React.ReactNode | undefined;
+}
+
 export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;
     show: boolean;
