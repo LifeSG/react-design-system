@@ -1,0 +1,66 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import * as ModalV2Stories from "./modal-v2.stories";
+import { PropsTable } from "./props-table";
+import { StyleTokensTable } from "./style-tokens-table";
+
+<Meta of={ModalV2Stories} />
+
+# ModalV2
+
+## Overview
+
+A window or pop up that displays over other page content and provides
+information or actions that a user can perform.
+
+```tsx
+import { ModalV2 } from "@lifesg/react-design-system/modal-v2";
+```
+
+This module contains several components, intended to be used together.
+
+Correct usage of these components ensures the modal will have the correct
+appearance and accessible behaviour.
+
+-   `ModalV2` represents the base modal overlay. This is **mandatory**.
+-   `ModalV2.Card` represents the default dialog box.
+    -   It must be rendered as a child of `ModalV2`
+    -   It will only render children that are `ModalV2.Content` or `ModalV2.CloseButton`
+-   `ModalV2.Content` represents the content to be displayed within `ModalV2.Card`.
+    -   It must be rendered as a child of `ModalV2.Card`
+-   `ModalV2.CloseButton` represents the section containing the close button.
+    -   Optional, but if used, it must be rendered as a child of `ModalV2.Card`
+
+<Canvas of={ModalV2Stories.Default} />
+
+## Without close button
+
+<Canvas of={ModalV2Stories.WithoutCloseButton} />
+
+## Custom content
+
+<Canvas of={ModalV2Stories.CustomContent} />
+
+## Stacked modals
+
+In some cases, you would require a stacked modal layout. Here is how you can
+construct it.
+
+<Canvas of={ModalV2Stories.StackedModals} />
+
+## Scroll handling
+
+If the content of your modal is taller than the screen, the modal will become
+scrollable.
+
+<Canvas of={ModalV2Stories.ScrollHandling} />
+
+## Component API
+
+All components also inherit the
+[HTMLDivElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement).
+
+<PropsTable />
+
+## Component style tokens
+
+<StyleTokensTable />
