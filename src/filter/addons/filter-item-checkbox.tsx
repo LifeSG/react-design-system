@@ -14,6 +14,7 @@ import {
 export const FilterItemCheckbox = <T,>({
     selectedOptions,
     options,
+    showAsCheckboxInMobile = false,
     onSelect,
     labelExtractor,
     valueExtractor,
@@ -75,7 +76,6 @@ export const FilterItemCheckbox = <T,>({
             ? lastVisibleElement.current.offsetTop +
               lastVisibleElement.current.clientHeight
             : undefined;
-
         setMinimisedHeight(elementBottom);
     };
 
@@ -123,15 +123,15 @@ export const FilterItemCheckbox = <T,>({
     }, [selectedOptions]);
 
     useEffect(() => {
-        if (mode === "default") {
-            setVisibleItemsWhenMinimised();
-        } else {
+        if (mode === "mobile" && !showAsCheckboxInMobile) {
             setVisibleMobileItemsWhenMinimised();
+        } else {
+            setVisibleItemsWhenMinimised();
         }
     }, [options]);
 
     useResizeDetector({
-        handleWidth: mode === "mobile",
+        handleWidth: mode === "mobile" && !showAsCheckboxInMobile,
         handleHeight: false,
         skipOnMount: true,
         refreshMode: "throttle",
@@ -212,7 +212,9 @@ export const FilterItemCheckbox = <T,>({
     return (
         <StyledFilterItem
             minimisable={
-                mode === "default" ? options.length > 5 : !!minimisedHeight
+                mode === "mobile" && !showAsCheckboxInMobile
+                    ? !!minimisedHeight
+                    : options.length > 5
             }
             minimisedHeight={minimisedHeight}
             {...filterItemProps}
@@ -226,9 +228,9 @@ export const FilterItemCheckbox = <T,>({
                         ref={parentRef}
                     >
                         {options.map((option, i) =>
-                            mode === "default"
-                                ? renderCheckbox(option, i, minimised)
-                                : renderToggle(option, i, minimised)
+                            mode === "mobile" && !showAsCheckboxInMobile
+                                ? renderToggle(option, i, minimised)
+                                : renderCheckbox(option, i, minimised)
                         )}
                     </Group>
                 </>

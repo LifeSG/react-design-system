@@ -21,7 +21,7 @@ export const FilterCheckbox: StoryObj<Component> = {
             saveFilters,
             dismissFilters,
             clearFilters,
-        } = useFilters({ cat1: [], cat2: [] }); // your custom filter state management here
+        } = useFilters({ cat1: [], cat2: [], cat3: [] }); // your custom filter state management here
         return (
             <Filter
                 clearButtonDisabled={clearButtonDisabled}
@@ -87,6 +87,46 @@ export const FilterCheckbox: StoryObj<Component> = {
                                 {
                                     value: "8",
                                     label: "Label 8",
+                                },
+                            ]}
+                        />
+                        <Filter.Checkbox
+                            title="With more than 5 items with checkbox display for mobile view"
+                            showAsCheckboxInMobile
+                            selectedOptions={draftFilters.cat3}
+                            onSelect={updateFilter(mode, "cat3")}
+                            options={[
+                                {
+                                    value: "1",
+                                    label: "Another Label 1",
+                                },
+                                {
+                                    value: "2",
+                                    label: "Another Label 2",
+                                },
+                                {
+                                    value: "3",
+                                    label: "Another Label 3",
+                                },
+                                {
+                                    value: "4",
+                                    label: "Label 4, which is much longer than other labels for some mysterious reason this time",
+                                },
+                                {
+                                    value: "5",
+                                    label: "Label 5, which is also quite long but not as long as Label 4",
+                                },
+                                {
+                                    value: "6",
+                                    label: "Another Label 6",
+                                },
+                                {
+                                    value: "7",
+                                    label: "Another Label 7",
+                                },
+                                {
+                                    value: "8",
+                                    label: "Another Label 8",
                                 },
                             ]}
                         />

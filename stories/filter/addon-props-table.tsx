@@ -35,6 +35,12 @@ const FILTER_CHECKBOX_DATA: ApiTableSectionProps[] = [
                 propTypes: ["T[]"],
             },
             {
+                name: "showAsCheckboxInMobile",
+                description: "Display as checkbox list in mobile view",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "onSelect",
                 description: "Called when selection changes",
                 propTypes: ["(options: T[]) => void"],
