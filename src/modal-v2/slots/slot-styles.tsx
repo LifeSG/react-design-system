@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { ClickableIcon as ClickableIcon } from "../../shared/clickable-icon";
+import { ClickableIcon } from "../../shared/clickable-icon";
 import {
     Breakpoint,
     Colour,
@@ -117,15 +117,15 @@ interface SlotSpacerStyleProps {
 
 export const SlotSpacer = styled.div<SlotSpacerStyleProps>`
     :where(& > ${ContentContainer}:last-child) {
-        margin-bottom: 64px;
+        margin-bottom: ${Spacing["spacing-64"]};
     }
 
     :where(& > ${FooterContainer}:not(:first-child)) {
-        margin-top: 32px;
+        margin-top: ${Spacing["spacing-32"]};
     }
 
     :where(& > ${FooterContainer}:last-child) {
-        margin-bottom: 64px;
+        margin-bottom: ${Spacing["spacing-64"]};
     }
 
     ${(props) =>
@@ -139,7 +139,7 @@ export const SlotSpacer = styled.div<SlotSpacerStyleProps>`
             : css`
                   :where(& > ${ContentContainer}:first-child),
                   :where(& > ${FooterContainer}:first-child) {
-                      margin-top: 64px;
+                      margin-top: ${Spacing["spacing-64"]};
                   }
               `}
 `;
