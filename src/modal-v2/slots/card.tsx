@@ -27,21 +27,20 @@ export const Card = ({
             ? (child.type as unknown as { target: any }).target === type
             : child.type === type;
 
+    const findComponentOfType = (type: any) => {
+        return React.Children.toArray(children).find((child) =>
+            isComponentType(child as React.ReactPortal, type)
+        );
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const CloseButtonSlot = React.Children.toArray(children).find((child) =>
-        isComponentType(child as React.ReactPortal, CloseButton)
-    );
+    const CloseButtonSlot = findComponentOfType(CloseButton);
+    const ContentSlot = findComponentOfType(Content);
+    const FooterSlot = findComponentOfType(Footer);
+
     const hasCloseButton = !!CloseButtonSlot;
-
-    const ContentSlot = React.Children.toArray(children).find((child) =>
-        isComponentType(child as React.ReactPortal, Content)
-    );
-
-    const FooterSlot = React.Children.toArray(children).find((child) =>
-        isComponentType(child as React.ReactPortal, Footer)
-    );
 
     return (
         <ModalCard
