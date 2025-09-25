@@ -32,6 +32,7 @@ const DATA: ApiTableSectionProps[] = [
                     `"yellow"`,
                     `"red"`,
                     `"blue"`,
+                    `"primary"`,
                 ],
                 defaultValue: `"black"`,
             },

@@ -57,6 +57,10 @@ export const Wrapper = styled.div<StyleProps>`
                     backgroundColor = Colour["bg-info-strong"];
                     hoverBackgroundColor = Colour["bg-info-strong-hover"];
                     break;
+                case "primary":
+                    backgroundColor = Colour["bg-primary"];
+                    hoverBackgroundColor = Colour["bg-primary-hover"];
+                    break;
                 default:
                     backgroundColor = Colour["bg-inverse"];
                     hoverBackgroundColor = Colour["bg-inverse-hover"];
@@ -93,6 +97,12 @@ export const Wrapper = styled.div<StyleProps>`
                     borderColor = Colour["border-info"];
                     color = Colour["text-info"];
                     hoverBackgroundColor = Colour["bg-info-hover"];
+                    break;
+                case "primary":
+                    backgroundColor = Colour["bg-primary-subtlest"];
+                    borderColor = Colour["border-primary"];
+                    color = Colour["text-primary"];
+                    hoverBackgroundColor = Colour["bg-hover"];
                     break;
                 default:
                     backgroundColor = Colour.bg;

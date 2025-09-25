@@ -7,7 +7,8 @@ export type TagColorType =
     | "green"
     | "yellow"
     | "red"
-    | "blue";
+    | "blue"
+    | "primary";
 
 export interface TagProps extends React.HTMLAttributes<HTMLElement> {
     type: TagType;
