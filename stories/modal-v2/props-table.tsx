@@ -134,6 +134,36 @@ const MODAL_CLOSE_BUTTON_DATA: ApiTableSectionProps[] = [
     },
 ];
 
+const MODAL_FOOTER_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "primaryButton",
+                description: (
+                    <>
+                        The primary call-to-action <code>{"<button>"}</code>
+                    </>
+                ),
+                propTypes: ["React.ReactNode"],
+            },
+            {
+                name: "secondaryButton",
+                description: (
+                    <>
+                        The secondary call-to-action <code>{"<button>"}</code>
+                    </>
+                ),
+                propTypes: ["React.ReactNode"],
+            },
+        ],
+    },
+];
+
 const PROPS_TABLE_DATA: TabAttribute[] = [
     {
         title: "ModalV2",
@@ -150,6 +180,10 @@ const PROPS_TABLE_DATA: TabAttribute[] = [
     {
         title: "ModalV2.CloseButton",
         component: <ApiTable sections={MODAL_CLOSE_BUTTON_DATA} />,
+    },
+    {
+        title: "ModalV2.Footer",
+        component: <ApiTable sections={MODAL_FOOTER_DATA} />,
     },
 ];
 

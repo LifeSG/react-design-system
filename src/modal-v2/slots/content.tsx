@@ -1,4 +1,5 @@
 import { ModalContentProps } from "../types";
+import { ContentContainer } from "./slot-styles";
 
 export const Content = ({
     "data-testid": testId = "modal-content",
@@ -6,9 +7,9 @@ export const Content = ({
     ...otherProps
 }: ModalContentProps) => {
     return (
-        <div data-testid={testId} {...otherProps}>
+        <ContentContainer data-testid={testId} {...otherProps}>
             {children}
-        </div>
+        </ContentContainer>
     );
 };
 

@@ -1,8 +1,12 @@
+import { TickIcon } from "@lifesg/react-icons/tick";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Button } from "src/button";
+import { ButtonWithIcon } from "src/button-with-icon";
 import { ModalV2 } from "src/modal-v2";
 import { Typography } from "src/typography";
+import styled from "styled-components";
+import { SlotPlayground } from "./doc-elements";
 
 type Component = typeof ModalV2;
 
@@ -18,7 +22,6 @@ export const Default: StoryObj<Component> = {
         const [show, setShow] = useState(false);
         const openModal = () => setShow(true);
         const closeModal = () => setShow(false);
-
         return (
             <>
                 <Button.Default onClick={openModal}>
@@ -39,10 +42,17 @@ export const Default: StoryObj<Component> = {
                                 repellendus non quas quis praesentium suscipit,
                                 soluta incidunt officiis omnis, quae error!
                             </Typography.BodyBL>
-                            <Button.Default style={{ marginTop: 16 }}>
-                                CTA
-                            </Button.Default>
                         </ModalV2.Content>
+                        <ModalV2.Footer
+                            primaryButton={
+                                <Button.Default>Log out</Button.Default>
+                            }
+                            secondaryButton={
+                                <Button.Default styleType="secondary">
+                                    Continue
+                                </Button.Default>
+                            }
+                        />
                     </ModalV2.Card>
                 </ModalV2>
             </>
@@ -50,7 +60,68 @@ export const Default: StoryObj<Component> = {
     },
 };
 
-export const WithoutCloseButton: StoryObj<Component> = {
+export const Slots: StoryObj<Component> = {
+    render: () => <SlotPlayground />,
+    parameters: {
+        docs: {
+            canvas: {
+                sourceState: "none",
+            },
+        },
+    },
+};
+
+export const Footer: StoryObj<Component> = {
+    render: () => {
+        const [show, setShow] = useState(false);
+        const openModal = () => setShow(true);
+        const closeModal = () => setShow(false);
+        return (
+            <>
+                <Button.Default onClick={openModal}>
+                    Click to open
+                </Button.Default>
+                <ModalV2
+                    show={show}
+                    onOverlayClick={closeModal}
+                    onClose={closeModal}
+                >
+                    <ModalV2.Card>
+                        <ModalV2.CloseButton />
+                        <ModalV2.Footer
+                            primaryButton={
+                                <ButtonWithIcon.Default
+                                    icon={<TickIcon />}
+                                    iconPosition="right"
+                                    styleType="light"
+                                >
+                                    Okay
+                                </ButtonWithIcon.Default>
+                            }
+                        />
+                    </ModalV2.Card>
+                </ModalV2>
+            </>
+        );
+    },
+};
+
+const StyledCloseButton = styled(ModalV2.CloseButton)`
+    margin: 0;
+    padding: 8px;
+`;
+
+const StyledContent = styled(ModalV2.Content)`
+    margin: 0;
+    padding: 16px 32px;
+`;
+
+const StyledFooter = styled(ModalV2.Footer)`
+    margin: 0;
+    padding: 16px;
+`;
+
+export const StyledSlots: StoryObj<Component> = {
     render: () => {
         const [show, setShow] = useState(false);
         const openModal = () => setShow(true);
@@ -61,23 +132,23 @@ export const WithoutCloseButton: StoryObj<Component> = {
                 <Button.Default onClick={openModal}>
                     Click to open
                 </Button.Default>
-                <ModalV2 show={show}>
+                <ModalV2
+                    show={show}
+                    onOverlayClick={closeModal}
+                    onClose={closeModal}
+                >
                     <ModalV2.Card>
-                        <ModalV2.Content>
-                            <Typography.BodyBL>
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Totam debitis explicabo rerum
-                                velit quod recusandae, cum odio inventore
-                                repellendus non quas quis praesentium suscipit,
-                                soluta incidunt officiis omnis, quae error!
-                            </Typography.BodyBL>
-                            <Button.Default
-                                style={{ marginTop: 16 }}
-                                onClick={closeModal}
-                            >
-                                Dismiss
-                            </Button.Default>
-                        </ModalV2.Content>
+                        <StyledCloseButton />
+                        <StyledContent>
+                            Content with custom spacing
+                        </StyledContent>
+                        <StyledFooter
+                            primaryButton={
+                                <Button.Default styleType="light">
+                                    Continue
+                                </Button.Default>
+                            }
+                        />
                     </ModalV2.Card>
                 </ModalV2>
             </>

@@ -2,16 +2,16 @@ import { CrossIcon } from "@lifesg/react-icons/cross";
 import { useContext } from "react";
 import { ModalContext } from "../modal-context";
 import { ModalCloseButtonProps } from "../types";
-import { ClickableContainer, StyledClickableIcon } from "./slot-styles";
+import { CloseButtonContainer, StyledClickableIcon } from "./slot-styles";
 
 export const CloseButton = ({
-    "data-testid": testId = "close-button",
+    "data-testid": testId = "modal-close-button",
     ...otherProps
 }: ModalCloseButtonProps) => {
     const { onClose } = useContext(ModalContext);
 
     return (
-        <ClickableContainer data-testid={testId} {...otherProps}>
+        <CloseButtonContainer data-testid={testId} {...otherProps}>
             <StyledClickableIcon
                 onClick={onClose}
                 data-testid="close-button"
@@ -21,7 +21,7 @@ export const CloseButton = ({
             >
                 <CrossIcon aria-hidden />
             </StyledClickableIcon>
-        </ClickableContainer>
+        </CloseButtonContainer>
     );
 };
 
