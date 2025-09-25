@@ -5,7 +5,7 @@ import { ModalCloseButtonProps } from "../types";
 import { CloseButtonContainer, StyledClickableIcon } from "./slot-styles";
 
 export const CloseButton = ({
-    "data-testid": testId = "close-button",
+    "data-testid": testId = "modal-close-button",
     ...otherProps
 }: ModalCloseButtonProps) => {
     const { onClose } = useContext(ModalContext);
