@@ -79,7 +79,29 @@ export interface FilterPageProps {
     onDone?: (() => void) | undefined;
 }
 
-export interface FilterItemCheckboxProps<T>
+/** Base option interface that supports nested options */
+export interface FilterOption {
+    value: any;
+    label: string;
+    /** Nested options - if present, this option becomes a parent */
+    options?: FilterOption[] | undefined;
+}
+
+/** Internal representation of a flattened option for rendering */
+export interface FlattenedFilterOption {
+    originalItem: FilterOption;
+    value: any;
+    label: string;
+    keyPath: string[];
+    level: number;
+    hasChildren: boolean;
+    parentKeyPath?: string[] | undefined;
+}
+
+/** Selection state for nested options */
+export type NestedSelectionState = "selected" | "unselected" | "partial";
+
+export interface FilterItemCheckboxProps<T extends FilterOption = FilterOption>
     extends Omit<FilterItemProps, "children"> {
     options: T[];
     selectedOptions?: T[] | undefined;
