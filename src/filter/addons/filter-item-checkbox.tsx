@@ -15,6 +15,7 @@ export const FilterItemCheckbox = <T,>({
     selectedOptions,
     options,
     showAsCheckboxInMobile = false,
+    minimisableOptions = true,
     onSelect,
     labelExtractor,
     valueExtractor,
@@ -31,6 +32,7 @@ export const FilterItemCheckbox = <T,>({
         useState<number>(options.length);
     const parentRef = useRef<HTMLDivElement>(null);
     const lastVisibleElement = useRef<HTMLLabelElement>(null);
+    const isMobileToggleMode = mode === "mobile" && !showAsCheckboxInMobile;
 
     // =============================================================================
     // EVENT HANDLERS
@@ -123,7 +125,7 @@ export const FilterItemCheckbox = <T,>({
     }, [selectedOptions]);
 
     useEffect(() => {
-        if (mode === "mobile" && !showAsCheckboxInMobile) {
+        if (isMobileToggleMode) {
             setVisibleMobileItemsWhenMinimised();
         } else {
             setVisibleItemsWhenMinimised();
@@ -131,12 +133,14 @@ export const FilterItemCheckbox = <T,>({
     }, [options]);
 
     useResizeDetector({
-        handleWidth: mode === "mobile" && !showAsCheckboxInMobile,
+        handleWidth: true,
         handleHeight: false,
         skipOnMount: true,
         refreshMode: "throttle",
         targetRef: parentRef,
-        onResize: setVisibleMobileItemsWhenMinimised,
+        onResize: isMobileToggleMode
+            ? setVisibleMobileItemsWhenMinimised
+            : setVisibleItemsWhenMinimised,
     });
 
     // =============================================================================
@@ -212,14 +216,16 @@ export const FilterItemCheckbox = <T,>({
     return (
         <StyledFilterItem
             minimisable={
-                mode === "mobile" && !showAsCheckboxInMobile
-                    ? !!minimisedHeight
-                    : options.length > 5
+                minimisableOptions
+                    ? isMobileToggleMode // if mobile toggle mode, only allow minimising if minimisedHeight is set
+                        ? !!minimisedHeight
+                        : options.length > 5
+                    : false // if minimisableOptions is false, never allow minimising
             }
             minimisedHeight={minimisedHeight}
             {...filterItemProps}
         >
-            {(mode, { minimised }) => (
+            {(_, { minimised }) => (
                 <>
                     {renderSelectClearAllButton()}
                     <Group
@@ -228,7 +234,7 @@ export const FilterItemCheckbox = <T,>({
                         ref={parentRef}
                     >
                         {options.map((option, i) =>
-                            mode === "mobile" && !showAsCheckboxInMobile
+                            isMobileToggleMode
                                 ? renderToggle(option, i, minimised)
                                 : renderCheckbox(option, i, minimised)
                         )}

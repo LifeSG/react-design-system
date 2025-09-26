@@ -92,4 +92,6 @@ export interface FilterItemCheckboxProps<T>
     useToggleContentWidth?: boolean | undefined;
     /** Display checkbox list for mobile view */
     showAsCheckboxInMobile?: boolean | undefined;
+    /** Whether to allow minimising (show "View more" button) */
+    minimisableOptions?: boolean | undefined;
 }
