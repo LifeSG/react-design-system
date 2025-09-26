@@ -7,7 +7,8 @@ export type PillColorType =
     | "green"
     | "yellow"
     | "red"
-    | "blue";
+    | "blue"
+    | "primary";
 
 export interface PillProps extends React.HTMLAttributes<HTMLDivElement> {
     type: PillType;

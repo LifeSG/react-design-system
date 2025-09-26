@@ -95,6 +95,9 @@ export const Variations: StoryObj<Component> = {
                 <Tag type="outline" colorType="blue">
                     Label
                 </Tag>
+                <Tag type="outline" colorType="primary">
+                    Label
+                </Tag>
                 <Tag type="solid" colorType="black">
                     Label
                 </Tag>
@@ -113,13 +116,24 @@ export const Variations: StoryObj<Component> = {
                 <Tag type="solid" colorType="blue">
                     Label
                 </Tag>
+                <Tag type="solid" colorType="primary">
+                    Label
+                </Tag>
             </>
         );
     },
     decorators: [
         GridDecorator({
-            columns: 6,
-            columnHeaders: ["Black", "Grey", "Green", "Yellow", "Red", "Blue"],
+            columns: 7,
+            columnHeaders: [
+                "Black",
+                "Grey",
+                "Green",
+                "Yellow",
+                "Red",
+                "Blue",
+                "Primary",
+            ],
             rowHeaders: ["Outline", "Solid"],
         }),
     ],
