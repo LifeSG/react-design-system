@@ -217,7 +217,7 @@ export const FilterItemCheckbox = <T,>({
         <StyledFilterItem
             minimisable={
                 minimisableOptions
-                    ? isMobileToggleMode // if mobile toggle mode, only allow minimising if minimisedHeight is set
+                    ? isMobileToggleMode // set minimisable base on mobile toggle mode
                         ? !!minimisedHeight
                         : options.length > 5
                     : false // if minimisableOptions is false, never allow minimising
