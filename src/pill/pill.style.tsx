@@ -48,6 +48,9 @@ export const Wrapper = styled.div<StyleProps>`
                 case "blue":
                     backgroundColor = Colour["bg-info-strong"];
                     break;
+                case "primary":
+                    backgroundColor = Colour["bg-primary"];
+                    break;
                 default:
                     backgroundColor = Colour["bg-inverse"];
                     break;
@@ -78,6 +81,11 @@ export const Wrapper = styled.div<StyleProps>`
                     backgroundColor = Colour["bg-info"];
                     borderColor = Colour["border-info"];
                     color = Colour["text-info"];
+                    break;
+                case "primary":
+                    backgroundColor = Colour["bg-primary-subtlest"];
+                    borderColor = Colour["border-primary"];
+                    color = Colour["text-primary"];
                     break;
                 default:
                     backgroundColor = Colour.bg;
