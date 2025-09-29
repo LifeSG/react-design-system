@@ -91,7 +91,7 @@ export const FilterCheckbox: StoryObj<Component> = {
                             ]}
                         />
                         <Filter.Checkbox
-                            title="With more than 5 items with checkbox display for mobile view"
+                            title="With checkbox display for mobile view"
                             showAsCheckboxInMobile
                             selectedOptions={draftFilters.cat3}
                             onSelect={updateFilter(mode, "cat3")}
@@ -131,8 +131,7 @@ export const FilterCheckbox: StoryObj<Component> = {
                             ]}
                         />
                         <Filter.Checkbox
-                            title="With more than 5 items but View more button is hidden"
-                            showAsCheckboxInMobile
+                            title="Without minimisable options"
                             minimisableOptions={false}
                             selectedOptions={draftFilters.cat4}
                             onSelect={updateFilter(mode, "cat4")}

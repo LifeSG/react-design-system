@@ -232,6 +232,7 @@ export const FilterItemCheckbox = <T,>({
                         role="group"
                         aria-label={filterItemProps.title}
                         ref={parentRef}
+                        $isMobileToggleMode={isMobileToggleMode}
                     >
                         {options.map((option, i) =>
                             isMobileToggleMode
