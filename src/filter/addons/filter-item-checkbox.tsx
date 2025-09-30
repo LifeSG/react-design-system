@@ -1,7 +1,13 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { FilterContext } from "../filter-context";
-import { FilterItemCheckboxProps } from "../types";
+import { FilterItemCheckboxProps, FilterOption } from "../types";
+import {
+    buildKeyPath,
+    flattenNestedOptions,
+    getAllDescendantKeyPaths,
+    hasNestedOptions,
+} from "./filter-item-checkbox-helpers";
 import {
     Group,
     Item,
@@ -11,7 +17,7 @@ import {
     StyledToggle,
 } from "./filter-item-checkbox.styles";
 
-export const FilterItemCheckbox = <T,>({
+export const FilterItemCheckbox = <T extends FilterOption = FilterOption>({
     selectedOptions,
     options,
     showAsCheckboxInMobile = false,
@@ -34,33 +40,165 @@ export const FilterItemCheckbox = <T,>({
     const lastVisibleElement = useRef<HTMLLabelElement>(null);
     const isMobileToggleMode = mode === "mobile" && !showAsCheckboxInMobile;
 
+    // Check if options have nested structure
+    const isNested = hasNestedOptions(options as T[]);
+    const flattenedOptions = isNested
+        ? flattenNestedOptions(options as T[])
+        : [];
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handleItemClick = (item: T) => () => {
-        const newSelection = [...selected];
-        const selectedIndex = selected.findIndex(
-            (s) => getValue(s) === getValue(item)
-        );
+        if (isNested) {
+            // Handle nested option click following IndeterminateState pattern
+            const flatOption = flattenedOptions.find(
+                (opt) => opt.originalItem === item
+            );
+            if (!flatOption) return;
 
-        if (selectedIndex >= 0) {
-            newSelection.splice(selectedIndex, 1);
+            if (flatOption.hasChildren) {
+                // Handle parent click - similar to "Select all" logic
+                const allChildren = getAllDescendantKeyPaths(
+                    flattenedOptions,
+                    flatOption.keyPath
+                )
+                    .map((keyPath) =>
+                        flattenedOptions.find(
+                            (opt) =>
+                                buildKeyPath(opt.keyPath) ===
+                                buildKeyPath(keyPath)
+                        )
+                    )
+                    .filter((opt) => opt && !opt.hasChildren)
+                    .map((opt) => opt!.originalItem as T);
+
+                const currentlySelectedChildren = allChildren.filter((child) =>
+                    selected.some((s) => getValue(s) === getValue(child))
+                );
+
+                let newSelection = [...selected];
+
+                if (currentlySelectedChildren.length === allChildren.length) {
+                    // All children selected, deselect all
+                    newSelection = newSelection.filter(
+                        (s) =>
+                            !allChildren.some(
+                                (child) => getValue(child) === getValue(s)
+                            )
+                    );
+                } else {
+                    // Some or no children selected, select all
+                    allChildren.forEach((child) => {
+                        if (
+                            !newSelection.some(
+                                (s) => getValue(s) === getValue(child)
+                            )
+                        ) {
+                            newSelection.push(child);
+                        }
+                    });
+                }
+
+                setSelected(newSelection);
+                onSelect?.(newSelection);
+            } else {
+                // Handle leaf item click - simple toggle
+                const newSelection = [...selected];
+                const selectedIndex = selected.findIndex(
+                    (s) => getValue(s) === getValue(item)
+                );
+
+                if (selectedIndex >= 0) {
+                    newSelection.splice(selectedIndex, 1);
+                } else {
+                    newSelection.push(item);
+                }
+                setSelected(newSelection);
+                onSelect?.(newSelection);
+            }
         } else {
-            newSelection.push(item);
+            // Handle flat option click (original logic)
+            const newSelection = [...selected];
+            const selectedIndex = selected.findIndex(
+                (s) => getValue(s) === getValue(item)
+            );
+
+            if (selectedIndex >= 0) {
+                newSelection.splice(selectedIndex, 1);
+            } else {
+                newSelection.push(item);
+            }
+            setSelected(newSelection);
+            onSelect?.(newSelection);
         }
-        setSelected(newSelection);
-        onSelect?.(newSelection);
     };
 
     const handleSelectClearAll = () => {
-        const newSelection = selected.length ? [] : options;
-        setSelected(newSelection);
-        onSelect?.(newSelection);
+        if (isNested) {
+            if (selected.length > 0) {
+                // Clear all
+                setSelected([]);
+                onSelect?.([]);
+            } else {
+                // Select all leaf nodes
+                const leafOptions = flattenedOptions.filter(
+                    (option) => !option.hasChildren
+                );
+                const allValues = leafOptions.map(
+                    (option) => option.originalItem
+                ) as T[];
+                setSelected(allValues);
+                onSelect?.(allValues);
+            }
+        } else {
+            const newSelection = selected.length ? [] : options;
+            setSelected(newSelection);
+            onSelect?.(newSelection);
+        }
     };
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const getCheckboxState = (flatOption: (typeof flattenedOptions)[0]) => {
+        if (!flatOption.hasChildren) {
+            // Leaf item - simple check
+            return {
+                checked: selected.some(
+                    (s) =>
+                        getValue(s) === getValue(flatOption.originalItem as T)
+                ),
+                indeterminate: false,
+            };
+        }
+
+        // Parent item - check children states (following IndeterminateState pattern)
+        const allChildren = getAllDescendantKeyPaths(
+            flattenedOptions,
+            flatOption.keyPath
+        )
+            .map((keyPath: string[]) =>
+                flattenedOptions.find(
+                    (opt) => buildKeyPath(opt.keyPath) === buildKeyPath(keyPath)
+                )
+            )
+            .filter((opt) => opt && !opt.hasChildren)
+            .map((opt) => opt!.originalItem as T);
+
+        const selectedChildren = allChildren.filter((child) =>
+            selected.some((s) => getValue(s) === getValue(child))
+        );
+
+        return {
+            checked:
+                selectedChildren.length === allChildren.length &&
+                allChildren.length > 0,
+            indeterminate:
+                selectedChildren.length > 0 &&
+                selectedChildren.length < allChildren.length,
+        };
+    };
     const getLabel = (item: T): React.ReactNode => {
         return labelExtractor
             ? labelExtractor(item)
@@ -146,33 +284,81 @@ export const FilterItemCheckbox = <T,>({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderCheckbox = (option: T, index: number, minimised: boolean) => {
-        const optionLabel = getLabel(option);
-        const optionValue = getValue(option);
-        const checked = !!selected.find((s) => getValue(s) === optionValue);
+    const renderCheckboxIcon = (
+        option: T,
+        flatOption?: (typeof flattenedOptions)[0]
+    ) => {
+        if (isNested && flatOption) {
+            const { checked, indeterminate } = getCheckboxState(flatOption);
 
-        return (
-            <Item
-                key={optionValue}
-                $visible={!minimised || index < 5}
-                $selected={checked}
-                ref={index === 4 ? lastVisibleElement : undefined}
-            >
+            return (
+                <StyledCheckbox
+                    displaySize="small"
+                    checked={checked}
+                    indeterminate={indeterminate}
+                    onChange={handleItemClick(option)}
+                />
+            );
+        } else {
+            const checked = !!selected.find(
+                (s) => getValue(s) === getValue(option)
+            );
+            return (
                 <StyledCheckbox
                     displaySize="small"
                     checked={checked}
                     onChange={handleItemClick(option)}
                 />
-                {optionLabel}
-            </Item>
-        );
+            );
+        }
+    };
+
+    const renderCheckbox = (option: T, index: number, minimised: boolean) => {
+        const optionLabel = getLabel(option);
+        const optionValue = getValue(option);
+
+        if (isNested) {
+            const flatOption = flattenedOptions.find(
+                (opt) => opt.originalItem === option
+            );
+            if (!flatOption) return null;
+
+            const { checked, indeterminate } = getCheckboxState(flatOption);
+            const isSelected = checked || indeterminate;
+
+            return (
+                <Item
+                    key={buildKeyPath(flatOption.keyPath)}
+                    $visible={!minimised || index < 5}
+                    $selected={isSelected}
+                    $level={flatOption.level}
+                    $hasChildren={flatOption.hasChildren}
+                    ref={index === 4 ? lastVisibleElement : undefined}
+                >
+                    {renderCheckboxIcon(option, flatOption)}
+                    {optionLabel}
+                </Item>
+            );
+        } else {
+            const checked = !!selected.find((s) => getValue(s) === optionValue);
+            return (
+                <Item
+                    key={optionValue}
+                    $visible={!minimised || index < 5}
+                    $selected={checked}
+                    ref={index === 4 ? lastVisibleElement : undefined}
+                >
+                    {renderCheckboxIcon(option)}
+                    {optionLabel}
+                </Item>
+            );
+        }
     };
 
     const renderToggle = (option: T, index: number, minimised: boolean) => {
         const optionLabel = getLabel(option);
         const optionValue = getValue(option);
         const checked = !!selected.find((s) => getValue(s) === optionValue);
-
         return (
             <StyledToggle
                 key={optionValue}
@@ -191,7 +377,10 @@ export const FilterItemCheckbox = <T,>({
     };
 
     const renderSelectClearAllButton = () => {
-        if (options.length < 3) {
+        const totalOptions = isNested
+            ? flattenedOptions.length
+            : options.length;
+        if (totalOptions < 3) {
             return null;
         }
 
@@ -213,13 +402,18 @@ export const FilterItemCheckbox = <T,>({
         );
     };
 
+    const renderOptions = isNested
+        ? flattenedOptions.map((opt) => opt.originalItem)
+        : options;
+    const totalOptions = renderOptions.length;
+
     return (
         <StyledFilterItem
             minimisable={
                 minimisableOptions
                     ? isMobileToggleMode // set minimisable base on mobile toggle mode
                         ? !!minimisedHeight
-                        : options.length > 5
+                        : totalOptions > 5
                     : false // if minimisableOptions is false, never allow minimising
             }
             minimisedHeight={minimisedHeight}
@@ -233,11 +427,12 @@ export const FilterItemCheckbox = <T,>({
                         aria-label={filterItemProps.title}
                         ref={parentRef}
                         $isMobileToggleMode={isMobileToggleMode}
+                        $isNested={isNested}
                     >
-                        {options.map((option, i) =>
-                            isMobileToggleMode
-                                ? renderToggle(option, i, minimised)
-                                : renderCheckbox(option, i, minimised)
+                        {renderOptions.map((option, i) =>
+                            mode === "default" || isNested
+                                ? renderCheckbox(option as T, i, minimised)
+                                : renderToggle(option as T, i, minimised)
                         )}
                     </Group>
                 </>
