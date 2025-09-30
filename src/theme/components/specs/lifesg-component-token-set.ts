@@ -1,8 +1,9 @@
+import { Colour } from "src/theme";
 import { ColourSemantic } from "../../colour-semantic/theme-helper";
 import { RadiusValues } from "../../radius/theme-helper";
 import { ComponentTokenSet } from "../types";
 
-export const PAComponentTokenSet: ComponentTokenSet = {
+export const LifeSGComponentTokenSet: ComponentTokenSet = {
     Button: {
         "button-radius": RadiusValues.full,
         "button-default-colour-bg": ColourSemantic["bg-primary"],
@@ -14,6 +15,6 @@ export const PAComponentTokenSet: ComponentTokenSet = {
         "button-link-colour-text": ColourSemantic["text-primary"],
     },
     Animation: {
-        "loading-dots-spinner-colour": ColourSemantic["icon-primary"],
+        "loading-dots-spinner-colour": Colour.Primitive["brand-50"],
     },
 };

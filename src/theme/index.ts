@@ -69,6 +69,7 @@ const LifeSGThemeBase: ThemeSpec = {
         designTokenScheme: "base",
         resourceScheme: "base",
     },
+    componentScheme: "lifesg",
 };
 
 const BookingSGThemeBase: ThemeSpec = {

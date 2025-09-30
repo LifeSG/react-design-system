@@ -13,4 +13,7 @@ export const DefaultComponentTokenSet: ComponentTokenSet = {
         "button-light-colour-text": ColourSemantic["text-primary"],
         "button-link-colour-text": ColourSemantic["text-primary"],
     },
+    Animation: {
+        "loading-dots-spinner-colour": ColourSemantic["icon-primary"],
+    },
 };
