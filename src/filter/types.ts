@@ -90,4 +90,8 @@ export interface FilterItemCheckboxProps<T>
     valueExtractor?: ((item: T) => string) | undefined;
     /** Changes min-width of toggle in mobile view to fit content */
     useToggleContentWidth?: boolean | undefined;
+    /** Display checkbox list for mobile view */
+    showAsCheckboxInMobile?: boolean | undefined;
+    /** Whether to allow minimising (show "View more" button) */
+    minimisableOptions?: boolean | undefined;
 }

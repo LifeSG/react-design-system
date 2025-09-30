@@ -14,6 +14,8 @@ import {
 export const FilterItemCheckbox = <T,>({
     selectedOptions,
     options,
+    showAsCheckboxInMobile = false,
+    minimisableOptions = true,
     onSelect,
     labelExtractor,
     valueExtractor,
@@ -30,6 +32,7 @@ export const FilterItemCheckbox = <T,>({
         useState<number>(options.length);
     const parentRef = useRef<HTMLDivElement>(null);
     const lastVisibleElement = useRef<HTMLLabelElement>(null);
+    const isMobileToggleMode = mode === "mobile" && !showAsCheckboxInMobile;
 
     // =============================================================================
     // EVENT HANDLERS
@@ -75,7 +78,6 @@ export const FilterItemCheckbox = <T,>({
             ? lastVisibleElement.current.offsetTop +
               lastVisibleElement.current.clientHeight
             : undefined;
-
         setMinimisedHeight(elementBottom);
     };
 
@@ -123,20 +125,22 @@ export const FilterItemCheckbox = <T,>({
     }, [selectedOptions]);
 
     useEffect(() => {
-        if (mode === "default") {
-            setVisibleItemsWhenMinimised();
-        } else {
+        if (isMobileToggleMode) {
             setVisibleMobileItemsWhenMinimised();
+        } else {
+            setVisibleItemsWhenMinimised();
         }
     }, [options]);
 
     useResizeDetector({
-        handleWidth: mode === "mobile",
+        handleWidth: true,
         handleHeight: false,
         skipOnMount: true,
         refreshMode: "throttle",
         targetRef: parentRef,
-        onResize: setVisibleMobileItemsWhenMinimised,
+        onResize: isMobileToggleMode
+            ? setVisibleMobileItemsWhenMinimised
+            : setVisibleItemsWhenMinimised,
     });
 
     // =============================================================================
@@ -212,23 +216,28 @@ export const FilterItemCheckbox = <T,>({
     return (
         <StyledFilterItem
             minimisable={
-                mode === "default" ? options.length > 5 : !!minimisedHeight
+                minimisableOptions
+                    ? isMobileToggleMode // set minimisable base on mobile toggle mode
+                        ? !!minimisedHeight
+                        : options.length > 5
+                    : false // if minimisableOptions is false, never allow minimising
             }
             minimisedHeight={minimisedHeight}
             {...filterItemProps}
         >
-            {(mode, { minimised }) => (
+            {(_, { minimised }) => (
                 <>
                     {renderSelectClearAllButton()}
                     <Group
                         role="group"
                         aria-label={filterItemProps.title}
                         ref={parentRef}
+                        $isMobileToggleMode={isMobileToggleMode}
                     >
                         {options.map((option, i) =>
-                            mode === "default"
-                                ? renderCheckbox(option, i, minimised)
-                                : renderToggle(option, i, minimised)
+                            isMobileToggleMode
+                                ? renderToggle(option, i, minimised)
+                                : renderCheckbox(option, i, minimised)
                         )}
                     </Group>
                 </>

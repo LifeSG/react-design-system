@@ -35,6 +35,18 @@ const FILTER_CHECKBOX_DATA: ApiTableSectionProps[] = [
                 propTypes: ["T[]"],
             },
             {
+                name: "minimisableOptions",
+                description: "Whether the options can be minimised",
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
+            {
+                name: "showAsCheckboxInMobile",
+                description: "Display as checkbox list in mobile view",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "onSelect",
                 description: "Called when selection changes",
                 propTypes: ["(options: T[]) => void"],

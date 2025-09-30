@@ -23,14 +23,15 @@ export const StyledFilterItem = styled(FilterItem)`
     }
 `;
 
-export const Group = styled.div`
+export const Group = styled.div<{ $isMobileToggleMode: boolean }>`
     display: flex;
     flex-direction: column;
 
     ${MediaQuery.MaxWidth.lg} {
         flex-direction: row;
         flex-wrap: wrap;
-        gap: ${Spacing["spacing-16"]};
+        gap: ${(props) =>
+            props.$isMobileToggleMode ? Spacing["spacing-16"] : 0};
     }
 `;
 
