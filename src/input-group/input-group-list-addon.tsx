@@ -1,5 +1,6 @@
 import { OpenChangeReason } from "@floating-ui/react";
 import React, { useEffect, useRef, useState } from "react";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 import {
     DropdownList,
     DropdownListState,
@@ -31,6 +32,9 @@ export const Component = <T, V>(
         className,
         onBlur,
         "data-testid": testId,
+        "aria-labelledby": ariaLabelledBy,
+        "aria-describedby": ariaDescribedBy,
+        "aria-invalid": ariaInvalid,
         ...otherProps
     }: InputGroupProps<T, V>,
     ref: React.Ref<HTMLInputElement>
@@ -71,6 +75,8 @@ export const Component = <T, V>(
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const listboxId = `${internalId}-listbox`;
+    const instructionId = `${internalId}-instruction`;
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const positionRef = useRef<HTMLDivElement>(null);
@@ -199,12 +205,18 @@ export const Component = <T, V>(
                     ref={selectorRef}
                     disabled={disabled}
                     expanded={showOptions}
-                    listboxId={internalId}
+                    listboxId={listboxId}
                     popupRole="listbox"
                     readOnly={readOnly}
+                    aria-labelledby={ariaLabelledBy}
+                    aria-describedby={concatIds(ariaDescribedBy, instructionId)}
+                    aria-invalid={ariaInvalid}
                 >
                     {renderSelectorContent()}
                 </ExpandableElement>
+                <VisuallyHidden id={instructionId}>
+                    Press space to open options
+                </VisuallyHidden>
             </div>
         );
     };
@@ -212,7 +224,7 @@ export const Component = <T, V>(
     const renderDropdown = () => {
         return (
             <DropdownList
-                listboxId={internalId}
+                listboxId={listboxId}
                 listItems={options}
                 onSelectItem={handleListItemClick}
                 onDismiss={handleListDismiss}
@@ -288,6 +300,9 @@ export const Component = <T, V>(
                     onChange={handleInputChange}
                     data-testid="input"
                     styleType="no-border"
+                    aria-labelledby={ariaLabelledBy}
+                    aria-describedby={ariaDescribedBy}
+                    aria-invalid={ariaInvalid}
                 />
             </FieldWrapper>
         </DropdownListState>
