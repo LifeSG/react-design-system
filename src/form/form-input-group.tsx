@@ -37,10 +37,11 @@ const Component = <T, V>(
     return (
         <FormWrapper
             id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
-            disabled={otherProps.disabled}
             data-error-testid={errorTestId}
+            disabled={otherProps.disabled}
             layoutType={layoutType}
             mobileCols={mobileCols}
             tabletCols={tabletCols}
@@ -57,6 +58,7 @@ const Component = <T, V>(
                 ref={ref}
                 id={`${inputId}-base`}
                 data-testid={testId ? `${testId}-base` : undefined}
+                aria-labelledby={`${inputId}-label`}
                 error={!!errorMessage}
                 {...otherProps}
             />
