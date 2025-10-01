@@ -11,7 +11,7 @@ import {
     TitleContainer,
     UploadButton,
     UploadButtonContainer,
-    UploadButtonLabel,
+    UploadButtonText,
     WarningAlert,
 } from "./file-upload.styles";
 import { FileItemProps, FileUploadProps } from "./types";
@@ -173,7 +173,9 @@ export const FileUpload = ({
                         >
                             Upload files
                         </UploadButton>
-                        <UploadButtonLabel>or drop them here</UploadButtonLabel>
+                        <UploadButtonText weight="semibold">
+                            or drop them here
+                        </UploadButtonText>
                     </UploadButtonContainer>
                 )}
             </FileUploadDropzone>
