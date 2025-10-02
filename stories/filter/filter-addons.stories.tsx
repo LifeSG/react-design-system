@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Filter } from "src/filter";
-import { FilterOption } from "src/filter/types";
+import { FilterItemCheckboxOptionProps } from "src/filter/types";
 import { StoryDecorator } from "stories/storybook-common";
 import { useFilters } from "./doc-elements/example-filter-items";
 
@@ -190,7 +190,7 @@ export const FilterCheckboxNested: StoryObj<Component> = {
             clearFilters,
         } = useFilters({ nestedWith6Level: [], nestedWithViewMore: [] });
 
-        const nestedWith6Level: FilterOption[] = [
+        const nestedWith6Level: FilterItemCheckboxOptionProps[] = [
             {
                 value: "food",
                 label: "Food & Dining",
@@ -235,7 +235,7 @@ export const FilterCheckboxNested: StoryObj<Component> = {
             },
         ];
 
-        const nestedWithViewMore: FilterOption[] = [
+        const nestedWithViewMore: FilterItemCheckboxOptionProps[] = [
             {
                 value: "food",
                 label: "Food & Dining",

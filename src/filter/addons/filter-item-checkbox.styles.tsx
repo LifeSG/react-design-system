@@ -55,7 +55,13 @@ export const Item = styled.label<{
     min-height: 1.5rem;
     padding: ${Spacing["spacing-8"]} ${Spacing["spacing-12"]};
     ${(props) =>
-        props.$level && `padding-left: calc(12px + ${props.$level * 32}px);`}
+        props.$level &&
+        css`
+            padding-left: calc(
+                ${Spacing["spacing-12"]} + ${props.$level} *
+                    ${Spacing["spacing-32"]}
+            );
+        `}
 
     cursor: pointer;
     ${Font["body-md-regular"]}
@@ -68,7 +74,13 @@ export const Item = styled.label<{
     ${MediaQuery.MaxWidth.lg} {
         padding: ${Spacing["spacing-8"]};
         ${(props) =>
-            props.$level && `padding-left: calc(8px + ${props.$level * 28}px);`}
+            props.$level &&
+            css`
+                padding-left: calc(
+                    ${Spacing["spacing-8"]} + ${props.$level} *
+                        ${Spacing["spacing-32"]}
+                );
+            `}
     }
 `;
 
