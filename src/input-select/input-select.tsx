@@ -1,9 +1,12 @@
 import { OpenChangeReason } from "@floating-ui/react";
+import findIndex from "lodash/findIndex";
+import isEqual from "lodash/isEqual";
 import React, { useEffect, useRef, useState } from "react";
 import {
     DropdownList,
     DropdownListState,
     ExpandableElement,
+    useDropdownListState,
 } from "../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
@@ -50,7 +53,7 @@ export const InputSelect = <T, V>({
     alignment,
     dropdownZIndex,
     dropdownRootNode,
-    dropdownWidth
+    dropdownWidth,
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -58,6 +61,10 @@ export const InputSelect = <T, V>({
     const [selected, setSelected] = useState<T | undefined>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
+    const { context, setSelectedIndex, onKeyDown } = useDropdownListState({
+        options,
+        onOpenChange: setShowOptions,
+    });
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
     const nodeRef = useRef<HTMLDivElement>(null);
@@ -69,6 +76,13 @@ export const InputSelect = <T, V>({
     // =============================================================================
     useEffect(() => {
         setSelected(selectedOption);
+        setSelectedIndex(
+            selectedOption
+                ? findIndex(options, (option) => {
+                      return isEqual(option, selectedOption);
+                  })
+                : -1
+        );
     }, [selectedOption]);
 
     // =============================================================================
@@ -228,6 +242,7 @@ export const InputSelect = <T, V>({
                     popupRole="listbox"
                     readOnly={readOnly}
                     variant={variant}
+                    onKeyDown={onKeyDown}
                 >
                     {renderSelectorContent()}
                 </ExpandableElement>
@@ -264,7 +279,7 @@ export const InputSelect = <T, V>({
     };
 
     return (
-        <DropdownListState>
+        <DropdownListState context={context}>
             <ElementWithDropdown
                 enabled={!readOnly && !disabled}
                 isOpen={showOptions}
