@@ -5,7 +5,7 @@ import { ComponentTokenSet } from "../types";
 
 export const LifeSGComponentTokenSet: ComponentTokenSet = {
     Button: {
-        "button-radius": RadiusValues.full,
+        "button-radius": RadiusValues.sm,
         "button-default-colour-bg": ColourSemantic["bg-primary"],
         "button-default-colour-bg-hover": ColourSemantic["bg-primary-hover"],
         "button-default-colour-text": ColourSemantic["text-inverse"],

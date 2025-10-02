@@ -6,7 +6,11 @@ const DATA: TokenTableSectionProps[] = [
         attributes: [
             {
                 name: "loading-dots-spinner-colour",
-                description: "The colour of the LoadingDotsSpinner",
+                description: (
+                    <>
+                        The colour of the <code>LoadingDotsSpinner</code>
+                    </>
+                ),
                 defaultValue: {
                     type: "colour-token",
                     token: ThemeAnimation["loading-dots-spinner-colour"],

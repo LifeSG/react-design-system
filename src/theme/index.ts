@@ -63,13 +63,13 @@ const LifeSGThemeBase: ThemeSpec = {
     shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "lifesg",
+    componentScheme: "lifesg",
     _v2: {
         colorScheme: "base",
         textStyleScheme: "base",
         designTokenScheme: "base",
         resourceScheme: "base",
     },
-    componentScheme: "lifesg",
 };
 
 const BookingSGThemeBase: ThemeSpec = {
