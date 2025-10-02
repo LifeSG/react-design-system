@@ -3,7 +3,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ErrorMessage } from "../../form/form-label.style";
 import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
 import { ClearIcon } from "../../input/input.style";
-import { DropdownListState } from "../../shared/dropdown-list-v2";
+import {
+    DropdownListState,
+    useDropdownListState,
+} from "../../shared/dropdown-list-v2";
 import { DropdownList } from "../../shared/dropdown-list-v2/dropdown-list";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
@@ -70,6 +73,16 @@ export const ComboboxPicker = ({
             ? startOptions.slice(startOptions.indexOf(flooredStartVal))
             : [];
     }, [startOptions, initialStartTimeVal]);
+
+    const { context: startDropdownContext } = useDropdownListState({
+        options: startOptions,
+        onOpenChange: setDropdownOpen,
+    });
+
+    const { context: endDropdownContext } = useDropdownListState({
+        options: startOptions,
+        onOpenChange: setDropdownOpen,
+    });
 
     // =========================================================================
     // EFFECTS
@@ -410,7 +423,13 @@ export const ComboboxPicker = ({
 
     return (
         <Wrapper id={id} {...otherProps}>
-            <DropdownListState>
+            <DropdownListState
+                context={
+                    activeTimeSelector === "start"
+                        ? startDropdownContext
+                        : endDropdownContext
+                }
+            >
                 <ElementWithDropdown
                     enabled={!readOnly && !disabled}
                     isOpen={dropdownOpen}
