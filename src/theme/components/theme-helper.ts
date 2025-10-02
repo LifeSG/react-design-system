@@ -2,14 +2,16 @@ import { StyledComponentProps, getCollection } from "../helpers";
 import { ThemeStyleProps } from "../types";
 import { A11yPlaygroundComponentTokenSet } from "./specs/a11yplayground-component-token-set";
 import { DefaultComponentTokenSet } from "./specs/default-component-token-set";
+import { LifeSGComponentTokenSet } from "./specs/lifesg-component-token-set";
 import { PAComponentTokenSet } from "./specs/pa-component-token-set";
-import { ButtonTokens, ComponentTokenSet } from "./types";
+import { AnimationTokens, ButtonTokens, ComponentTokenSet } from "./types";
 
 const ComponentTokenSpec = {
     collections: {
         default: DefaultComponentTokenSet,
         pa: PAComponentTokenSet,
         a11yplayground: A11yPlaygroundComponentTokenSet,
+        lifesg: LifeSGComponentTokenSet,
     },
     defaultValue: "default",
 };
@@ -84,5 +86,14 @@ export const ThemeButton: {
     "button-link-colour-text": getComponentTokenValue(
         "Button",
         "button-link-colour-text"
+    ),
+};
+
+export const ThemeAnimation: {
+    [key in keyof AnimationTokens]: (props: StyledComponentProps) => string;
+} = {
+    "loading-dots-spinner-colour": getComponentTokenValue(
+        "Animation",
+        "loading-dots-spinner-colour"
     ),
 };

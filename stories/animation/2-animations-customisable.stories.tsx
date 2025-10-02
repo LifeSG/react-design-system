@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { LoadingDotsSpinner } from "src/animations";
 import { Colour, LifeSGTheme } from "src/theme";
 import { AnimationDisplay, AnimationItem } from "./doc-elements";
+import { TokensTable } from "./tokens-table";
 
 const meta: Meta = {
     title: "Feedback indicators/Animations/Customisable Animations",
@@ -31,4 +32,9 @@ export const CustomLoadingDotsSpinner: StoryObj<typeof LoadingDotsSpinner> = {
             </AnimationDisplay>
         );
     },
+};
+
+export const TokenCustomisation: StoryObj = {
+    tags: ["!dev"],
+    render: () => <TokensTable />,
 };
