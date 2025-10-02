@@ -19,7 +19,6 @@ import {
     getAllDescendantKeyPaths,
     hasNestedOptions,
 } from "./filter-item-checkbox-helpers";
-import { FlattenedFilterOption } from "./types";
 import {
     Group,
     Item,
@@ -28,6 +27,7 @@ import {
     StyledFilterItem,
     StyledToggle,
 } from "./filter-item-checkbox.styles";
+import { FlattenedFilterOption } from "./types";
 
 export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
     selectedOptions,
@@ -73,8 +73,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
     );
 
     // Always use flattened options (non-nested options become level 0 flattened options)
-    const renderOptions = flattenedOptions;
-    const optionCount = renderOptions.length;
+    const optionCount = flattenedOptions.length;
 
     // =============================================================================
     // EVENT HANDLERS
@@ -424,7 +423,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                         $isMobileToggleMode={isMobileToggleMode}
                         $isNested={isNested}
                     >
-                        {renderOptions.map((option, i) =>
+                        {flattenedOptions.map((option, i) =>
                             isMobileToggleMode
                                 ? renderToggle(option, i, minimised)
                                 : renderCheckbox(option, i, minimised)

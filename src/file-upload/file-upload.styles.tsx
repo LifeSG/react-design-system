@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Alert } from "../alert";
 import { Button } from "../button";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Colour, Font, MediaQuery, Spacing } from "../theme";
+import { Colour, MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -54,8 +54,7 @@ export const UploadButton = styled(Button.Small)`
     }
 `;
 
-export const UploadButtonLabel = styled.label`
-    ${Font["body-md-semibold"]}
+export const UploadButtonText = styled(Typography.BodyMD)`
     color: ${Colour["text-subtler"]};
     margin-top: ${Spacing["spacing-8"]};
     width: 10rem;
