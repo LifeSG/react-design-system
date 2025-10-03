@@ -79,7 +79,13 @@ export interface FilterPageProps {
     onDone?: (() => void) | undefined;
 }
 
-export interface FilterItemCheckboxProps<T>
+export interface FilterItemCheckboxOptionProps {
+    value: any;
+    label: string;
+    options?: FilterItemCheckboxOptionProps[] | undefined;
+}
+
+export interface FilterItemCheckboxProps<T = FilterItemCheckboxOptionProps>
     extends Omit<FilterItemProps, "children"> {
     options: T[];
     selectedOptions?: T[] | undefined;
