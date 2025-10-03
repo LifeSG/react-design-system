@@ -129,7 +129,14 @@ export const UneditableSectionItem = ({
                 return (
                     <>
                         {getValue()}
-                        <IconContainer>
+                        <IconContainer
+                            aria-pressed={displayMaskState !== "masked"}
+                            title={
+                                displayMaskState === "masked"
+                                    ? `Display ${label}`
+                                    : `Hide ${label}`
+                            }
+                        >
                             {displayMaskState === "masked" ? (
                                 <EyeIcon data-testid="masked-icon" />
                             ) : (
