@@ -78,66 +78,50 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
     // EVENT HANDLERS
     // =============================================================================
     const handleItemClick = (item: T) => () => {
-        if (isNested) {
-            // Handle nested option click following IndeterminateState pattern
-            const flatOption = flattenedOptions.find(
-                (opt) => opt.originalItem === item
+        // Find the flattened option
+        const flatOption = flattenedOptions.find(
+            (opt) => opt.originalItem === item
+        );
+        if (!flatOption) return;
+
+        if (flatOption.hasChildren) {
+            // Handle parent click - select/deselect all children
+            const allChildren = getAllDescendantChildren<T>(
+                flattenedOptions,
+                flatOption.keyPath
             );
-            if (!flatOption) return;
 
-            if (flatOption.hasChildren) {
-                // Handle parent click - similar to "Select all" logic
-                const allChildren = getAllDescendantChildren<T>(
-                    flattenedOptions,
-                    flatOption.keyPath
+            const currentlySelectedChildren = allChildren.filter((child) =>
+                selected.some((s) => getValue(s) === getValue(child))
+            );
+
+            let newSelection = [...selected];
+
+            if (currentlySelectedChildren.length === allChildren.length) {
+                // All children selected, deselect all
+                newSelection = newSelection.filter(
+                    (s) =>
+                        !allChildren.some(
+                            (child) => getValue(child) === getValue(s)
+                        )
                 );
-
-                const currentlySelectedChildren = allChildren.filter((child) =>
-                    selected.some((s) => getValue(s) === getValue(child))
-                );
-
-                let newSelection = [...selected];
-
-                if (currentlySelectedChildren.length === allChildren.length) {
-                    // All children selected, deselect all
-                    newSelection = newSelection.filter(
-                        (s) =>
-                            !allChildren.some(
-                                (child) => getValue(child) === getValue(s)
-                            )
-                    );
-                } else {
-                    // Some or no children selected, select all
-                    allChildren.forEach((child) => {
-                        if (
-                            !newSelection.some(
-                                (s) => getValue(s) === getValue(child)
-                            )
-                        ) {
-                            newSelection.push(child);
-                        }
-                    });
-                }
-
-                setSelected(newSelection);
-                onSelect?.(newSelection);
             } else {
-                // Handle leaf item click - remove (if selected) or add (if not selected) to the selected options
-                const newSelection = [...selected];
-                const selectedIndex = selected.findIndex(
-                    (s) => getValue(s) === getValue(item)
-                );
-
-                if (selectedIndex >= 0) {
-                    newSelection.splice(selectedIndex, 1);
-                } else {
-                    newSelection.push(item);
-                }
-                setSelected(newSelection);
-                onSelect?.(newSelection);
+                // Some or no children selected, select all
+                allChildren.forEach((child) => {
+                    if (
+                        !newSelection.some(
+                            (s) => getValue(s) === getValue(child)
+                        )
+                    ) {
+                        newSelection.push(child);
+                    }
+                });
             }
+
+            setSelected(newSelection);
+            onSelect?.(newSelection);
         } else {
-            // Handle flat option click (original logic)
+            // Handle leaf item click - toggle selection
             const newSelection = [...selected];
             const selectedIndex = selected.findIndex(
                 (s) => getValue(s) === getValue(item)
@@ -315,7 +299,9 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                 displaySize="small"
                 checked={checked}
                 indeterminate={indeterminate}
-                onChange={handleItemClick(originalItem)}
+                onChange={!isNested ? handleItemClick(originalItem) : undefined}
+                tabIndex={isNested ? -1 : undefined}
+                aria-hidden={isNested ? "true" : undefined}
             />
         );
     };
@@ -329,17 +315,26 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         const optionLabel = getLabel(originalItem);
         const { checked, indeterminate } = getCheckboxState(option);
         const isSelected = checked || indeterminate;
+        const isVisible = !minimised || index < 5;
+
+        const hasTreeItemRole = isNested && isVisible;
 
         return (
             <Item
                 key={buildKeyPath(option.keyPath)}
-                role={isNested ? "treeitem" : undefined}
-                aria-checked={checked}
-                aria-selected={!!checked}
-                aria-level={isNested ? option.level + 1 : undefined}
-                aria-posinset={isNested ? option.indexInParent + 1 : undefined}
-                aria-setsize={isNested ? option.parentSetSize : undefined}
-                $visible={!minimised || index < 5}
+                as={isNested ? "div" : "label"}
+                role={hasTreeItemRole ? "treeitem" : undefined}
+                aria-checked={hasTreeItemRole ? checked : undefined}
+                aria-selected={hasTreeItemRole ? !!checked : undefined}
+                aria-level={hasTreeItemRole ? option.level + 1 : undefined}
+                aria-posinset={
+                    hasTreeItemRole ? option.indexInParent + 1 : undefined
+                }
+                aria-setsize={
+                    hasTreeItemRole ? option.parentSetSize : undefined
+                }
+                onClick={isNested ? handleItemClick(originalItem) : undefined}
+                $visible={isVisible}
                 $selected={isSelected}
                 $level={option.level}
                 $hasChildren={option.hasChildren}

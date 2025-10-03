@@ -286,10 +286,10 @@ describe("Filter", () => {
                     />
                 );
 
-                const fastFoodLabel = screen
+                const fastFoodItem = screen
                     .getByText("Fast Food")
-                    .closest("label");
-                fireEvent.click(fastFoodLabel!);
+                    .closest('[role="treeitem"]');
+                fireEvent.click(fastFoodItem!);
 
                 expect(mockOnSelect).toHaveBeenCalledWith([
                     expect.objectContaining({
@@ -309,10 +309,10 @@ describe("Filter", () => {
                     />
                 );
 
-                const foodDiningLabel = screen
+                const foodDiningItem = screen
                     .getByText("Food & Dining")
-                    .closest("label");
-                fireEvent.click(foodDiningLabel!);
+                    .closest('[role="treeitem"]');
+                fireEvent.click(foodDiningItem!);
 
                 expect(mockOnSelect).toHaveBeenCalledWith(
                     expect.arrayContaining([
@@ -339,22 +339,23 @@ describe("Filter", () => {
                     />
                 );
 
+                // For nested items, find checkboxes within treeitem divs
                 const parentCheckbox = screen
                     .getByText("Food & Dining")
-                    .closest("label")
+                    .closest('[role="treeitem"]')
                     ?.querySelector('input[type="checkbox"]');
                 expect(parentCheckbox).toHaveProperty("indeterminate", true);
                 expect(parentCheckbox).not.toBeChecked();
 
                 const fastFoodCheckbox = screen
                     .getByText("Fast Food")
-                    .closest("label")
+                    .closest('[role="treeitem"]')
                     ?.querySelector('input[type="checkbox"]');
                 expect(fastFoodCheckbox).toBeChecked();
 
                 const fineDiningCheckbox = screen
                     .getByText("Fine Dining")
-                    .closest("label")
+                    .closest('[role="treeitem"]')
                     ?.querySelector('input[type="checkbox"]');
                 expect(fineDiningCheckbox).not.toBeChecked();
             });
@@ -373,18 +374,18 @@ describe("Filter", () => {
 
                 const parentCheckbox = screen
                     .getByText("Food & Dining")
-                    .closest("label")
+                    .closest('[role="treeitem"]')
                     ?.querySelector('input[type="checkbox"]');
                 expect(parentCheckbox).toBeChecked();
                 expect(parentCheckbox).toHaveProperty("indeterminate", false);
 
                 const fastFoodCheckbox = screen
                     .getByText("Fast Food")
-                    .closest("label")
+                    .closest('[role="treeitem"]')
                     ?.querySelector('input[type="checkbox"]');
                 const fineDiningCheckbox = screen
                     .getByText("Fine Dining")
-                    .closest("label")
+                    .closest('[role="treeitem"]')
                     ?.querySelector('input[type="checkbox"]');
                 expect(fastFoodCheckbox).toBeChecked();
                 expect(fineDiningCheckbox).toBeChecked();
@@ -404,10 +405,10 @@ describe("Filter", () => {
                     />
                 );
 
-                const parentLabel = screen
+                const parentItem = screen
                     .getByText("Food & Dining")
-                    .closest("label");
-                fireEvent.click(parentLabel!);
+                    .closest('[role="treeitem"]');
+                fireEvent.click(parentItem!);
 
                 expect(mockOnSelect).toHaveBeenCalledWith([]);
             });
