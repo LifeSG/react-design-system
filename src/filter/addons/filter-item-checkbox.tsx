@@ -72,7 +72,6 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         [options, valueExtractor, labelExtractor]
     );
 
-    // Always use flattened options (non-nested options become level 0 flattened options)
     const optionCount = flattenedOptions.length;
 
     // =============================================================================
@@ -421,7 +420,6 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                         aria-multiselectable={true}
                         ref={parentRef}
                         $isMobileToggleMode={isMobileToggleMode}
-                        $isNested={isNested}
                     >
                         {flattenedOptions.map((option, i) =>
                             isMobileToggleMode

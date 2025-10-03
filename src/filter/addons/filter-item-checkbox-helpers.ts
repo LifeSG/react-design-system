@@ -24,14 +24,14 @@ export const flattenNestedOptions = <T = FilterItemCheckboxOptionProps>(
     const flattened: FlattenedFilterOption<T>[] = [];
 
     nestedOptions.forEach((option, index) => {
-        const value = valueExtractor
+        const value: string = valueExtractor
             ? valueExtractor(option)
             : (option as any).value;
-        const label = labelExtractor
+        const label: string = labelExtractor
             ? labelExtractor(option)
             : (option as any).label;
-        const options = (option as any).options;
-        const keyPath = [...parentKeyPath, String(value)];
+        const options: any[] = (option as any).options;
+        const keyPath = [...parentKeyPath, value];
         const hasChildren = !!(options && options.length > 0);
 
         flattened.push({
@@ -63,22 +63,26 @@ export const flattenNestedOptions = <T = FilterItemCheckboxOptionProps>(
 };
 
 /**
+ * Checks if a child key path is a descendant of a parent key path
+ */
+const isChild = (parentKeyPath: string[], childKeyPath: string[]): boolean => {
+    if (childKeyPath.length <= parentKeyPath.length) return false;
+
+    const parentKeyPathString = buildKeyPath(parentKeyPath);
+    const childKeyPathString = buildKeyPath(childKeyPath);
+
+    return childKeyPathString.startsWith(parentKeyPathString + ".");
+};
+
+/**
  * Gets all descendant key paths (children, grandchildren, etc.) for a given parent
  */
 export const getAllDescendantKeyPaths = <T = FilterItemCheckboxOptionProps>(
     flattenedOptions: FlattenedFilterOption<T>[],
     parentKeyPath: string[]
 ): string[][] => {
-    const parentKeyPathString = buildKeyPath(parentKeyPath);
-
     return flattenedOptions
-        .filter((option) => {
-            const optionKeyPathString = buildKeyPath(option.keyPath);
-            return (
-                option.keyPath.length > parentKeyPath.length &&
-                optionKeyPathString.startsWith(parentKeyPathString + ".")
-            );
-        })
+        .filter((option) => isChild(parentKeyPath, option.keyPath))
         .map((option) => option.keyPath);
 };
 
@@ -101,13 +105,9 @@ export const getAllDescendantChildren = <T = FilterItemCheckboxOptionProps>(
     // Single pass: iterate from parent+1 until we find an item that's not a descendant
     for (let i = parentIndex + 1; i < flattenedOptions.length; i++) {
         const option = flattenedOptions[i];
-        const optionKeyPathString = buildKeyPath(option.keyPath);
 
-        // Check if this item is a descendant by comparing key path prefixes
-        if (
-            option.keyPath.length > parentKeyPath.length &&
-            optionKeyPathString.startsWith(parentKeyPathString + ".")
-        ) {
+        // Check if this item is a descendant
+        if (isChild(parentKeyPath, option.keyPath)) {
             // Only include leaf nodes (non-parent items)
             if (!option.hasChildren) {
                 children.push(option.originalItem as T);
@@ -128,8 +128,8 @@ export const hasNestedOptions = <T = FilterItemCheckboxOptionProps>(
     options: T[],
     optionsExtractor?: (item: T) => T[]
 ): boolean => {
-    return options.some((option) => {
-        const nestedOptions = optionsExtractor
+    return options.some((option: T) => {
+        const nestedOptions: any[] = optionsExtractor
             ? optionsExtractor(option)
             : (option as any).options;
         return nestedOptions && nestedOptions.length > 0;

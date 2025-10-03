@@ -25,7 +25,6 @@ export const StyledFilterItem = styled(FilterItem)`
 
 export const Group = styled.div<{
     $isMobileToggleMode: boolean;
-    $isNested: boolean;
 }>`
     display: flex;
     flex-direction: column;
@@ -34,9 +33,7 @@ export const Group = styled.div<{
         flex-direction: row;
         flex-wrap: wrap;
         gap: ${(props) =>
-            props.$isMobileToggleMode && !props.$isNested
-                ? Spacing["spacing-16"]
-                : 0};
+            props.$isMobileToggleMode ? Spacing["spacing-16"] : 0};
     }
 `;
 

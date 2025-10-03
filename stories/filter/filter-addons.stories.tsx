@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Filter } from "src/filter";
-import { FilterItemCheckboxOptionProps } from "src/filter/types";
+import { Filter, FilterItemCheckboxOptionProps } from "src/filter";
 import { StoryDecorator } from "stories/storybook-common";
 import { useFilters } from "./doc-elements/example-filter-items";
 

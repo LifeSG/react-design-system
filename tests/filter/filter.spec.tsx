@@ -213,7 +213,7 @@ describe("Filter", () => {
         });
     });
 
-    describe("Filter.Checkbox (Nested)", () => {
+    describe("Filter.Checkbox", () => {
         describe("Rendering", () => {
             it("should render nested options with proper indentation", () => {
                 render(
