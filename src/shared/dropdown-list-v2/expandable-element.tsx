@@ -42,7 +42,8 @@ export const Component = (
             aria-haspopup={popupRole}
             aria-controls={expanded ? listboxId : undefined} // only apply when dropdown is mounted
             data-testid="selector"
-            disabled={disabled}
+            aria-disabled={disabled}
+            aria-readonly={readOnly}
             $variant={variant}
             $readOnly={readOnly}
             {...otherProps}

@@ -248,7 +248,17 @@ export const Component = <T, V>(
     const renderSelector = () => {
         if (readOnly) {
             return selected ? (
-                <SelectorReadOnly data-testid="selector-label">
+                <SelectorReadOnly
+                    data-testid="selector-label"
+                    tabIndex={0}
+                    role="combobox"
+                    aria-haspopup="listbox"
+                    aria-readonly
+                    aria-expanded={false}
+                    aria-labelledby={ariaLabelledBy}
+                    aria-describedby={ariaDescribedBy}
+                    aria-invalid={ariaInvalid}
+                >
                     <ValueLabel>{getDisplayValue()}</ValueLabel>
                 </SelectorReadOnly>
             ) : null;
