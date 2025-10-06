@@ -1,6 +1,7 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { InputGroup } from "../../src/input-group";
+import { Form } from "src/form";
+import { InputGroup } from "src/input-group";
 import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
 
 const FIELD_TESTID = "test";
@@ -9,6 +10,10 @@ const SELECTOR_TESTID = "selector";
 const SELECTOR_LABEL_TESTID = "selector-label";
 const DROPDOWN_TESTID = "dropdown-list";
 const OPTIONS = ["Option 1", "Option 2", "Option 3"];
+const LABEL = "Test label";
+const DESCRIPTION = "Test subtitle";
+const DROPDOWN_INSTRUCTION = "Press space to open options";
+const ERROR = "Error message";
 
 describe("InputGroup - List addon", () => {
     beforeEach(() => {
@@ -470,6 +475,89 @@ describe("InputGroup - List addon", () => {
             expect(
                 screen.queryByTestId(DROPDOWN_TESTID)
             ).not.toBeInTheDocument();
+        });
+    });
+
+    describe("accessible names", () => {
+        it("should apply the correct label", () => {
+            render(
+                <Form.InputGroup
+                    label={LABEL}
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            options: OPTIONS,
+                        },
+                    }}
+                />
+            );
+
+            expect(
+                screen.getByRole("combobox", {
+                    name: LABEL,
+                    description: DROPDOWN_INSTRUCTION,
+                })
+            ).toBeInTheDocument();
+            expect(
+                screen.getByRole("textbox", {
+                    name: LABEL,
+                })
+            ).toBeInTheDocument();
+        });
+
+        it("should apply the correct label and description", () => {
+            render(
+                <Form.InputGroup
+                    label={{ children: LABEL, subtitle: DESCRIPTION }}
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            options: OPTIONS,
+                        },
+                    }}
+                />
+            );
+
+            expect(
+                screen.getByRole("combobox", {
+                    name: LABEL,
+                    description: `${DESCRIPTION} ${DROPDOWN_INSTRUCTION}`,
+                })
+            ).toBeInTheDocument();
+            expect(
+                screen.getByRole("textbox", {
+                    name: LABEL,
+                    description: DESCRIPTION,
+                })
+            ).toBeInTheDocument();
+        });
+
+        it("should apply the error state and error description", () => {
+            render(
+                <Form.InputGroup
+                    label={{ children: LABEL, subtitle: DESCRIPTION }}
+                    errorMessage={ERROR}
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            options: OPTIONS,
+                        },
+                    }}
+                />
+            );
+
+            const combobox = screen.getByRole("combobox", {
+                name: LABEL,
+                description: `${ERROR} ${DESCRIPTION} ${DROPDOWN_INSTRUCTION}`,
+            });
+            const textbox = screen.getByRole("textbox", {
+                name: LABEL,
+                description: `${ERROR} ${DESCRIPTION}`,
+            });
+            expect(combobox).toBeInTheDocument();
+            expect(combobox).toBeInvalid();
+            expect(textbox).toBeInTheDocument();
+            expect(textbox).toBeInvalid();
         });
     });
 });
