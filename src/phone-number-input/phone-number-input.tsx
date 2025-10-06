@@ -132,6 +132,7 @@ export const PhoneNumberInput = ({
             return {
                 type: "list",
                 attributes: {
+                    "aria-label": "Country code",
                     placeholder: optionPlaceholder,
                     options,
                     selectedOption: selectedCountry,
@@ -166,6 +167,7 @@ export const PhoneNumberInput = ({
             addon={getAddonProps()}
             inputMode="numeric"
             autoComplete={autoComplete}
+            aria-label="Enter phone number"
             {...otherProps}
         />
     );

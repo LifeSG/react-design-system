@@ -6,7 +6,9 @@ const INPUT_TESTID = "input";
 const SELECTOR_TESTID = "selector";
 const LABEL = "Test label";
 const DESCRIPTION = "Test subtitle";
+const DROPDOWN_LABEL = `${LABEL} Country code`;
 const DROPDOWN_INSTRUCTION = "Press space to open options";
+const TEXTBOX_LABEL = `${LABEL} Enter phone number`;
 const ERROR = "Error message";
 
 // =============================================================================
@@ -95,13 +97,13 @@ describe("PhoneNumberInput", () => {
 
             expect(
                 screen.getByRole("combobox", {
-                    name: LABEL,
+                    name: DROPDOWN_LABEL,
                     description: DROPDOWN_INSTRUCTION,
                 })
             ).toBeInTheDocument();
             expect(
                 screen.getByRole("textbox", {
-                    name: LABEL,
+                    name: TEXTBOX_LABEL,
                 })
             ).toBeInTheDocument();
         });
@@ -115,13 +117,13 @@ describe("PhoneNumberInput", () => {
 
             expect(
                 screen.getByRole("combobox", {
-                    name: LABEL,
+                    name: DROPDOWN_LABEL,
                     description: `${DESCRIPTION} ${DROPDOWN_INSTRUCTION}`,
                 })
             ).toBeInTheDocument();
             expect(
                 screen.getByRole("textbox", {
-                    name: LABEL,
+                    name: TEXTBOX_LABEL,
                     description: DESCRIPTION,
                 })
             ).toBeInTheDocument();
@@ -136,11 +138,11 @@ describe("PhoneNumberInput", () => {
             );
 
             const combobox = screen.getByRole("combobox", {
-                name: LABEL,
+                name: DROPDOWN_LABEL,
                 description: `${ERROR} ${DESCRIPTION} ${DROPDOWN_INSTRUCTION}`,
             });
             const textbox = screen.getByRole("textbox", {
-                name: LABEL,
+                name: TEXTBOX_LABEL,
                 description: `${ERROR} ${DESCRIPTION}`,
             });
             expect(combobox).toBeInTheDocument();

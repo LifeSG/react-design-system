@@ -35,6 +35,7 @@ export const Component = <T, V>(
         "aria-labelledby": ariaLabelledBy,
         "aria-describedby": ariaDescribedBy,
         "aria-invalid": ariaInvalid,
+        "aria-label": textboxAriaLabel,
         ...otherProps
     }: InputGroupProps<T, V>,
     ref: React.Ref<HTMLInputElement>
@@ -64,6 +65,7 @@ export const Component = <T, V>(
         onShowOptions,
         dropdownZIndex,
         dropdownRootNode,
+        "aria-label": comboboxAriaLabel,
     } = addon!.attributes as ListAddon<T, V>;
 
     const { position } = addon!;
@@ -77,6 +79,8 @@ export const Component = <T, V>(
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
     const listboxId = `${internalId}-listbox`;
     const instructionId = `${internalId}-instruction`;
+    const comboboxLabelId = `${internalId}-combobox-label`;
+    const textboxLabelId = `${internalId}-textbox-label`;
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const positionRef = useRef<HTMLDivElement>(null);
@@ -208,7 +212,7 @@ export const Component = <T, V>(
                     listboxId={listboxId}
                     popupRole="listbox"
                     readOnly={readOnly}
-                    aria-labelledby={ariaLabelledBy}
+                    aria-labelledby={concatIds(ariaLabelledBy, comboboxLabelId)}
                     aria-describedby={concatIds(ariaDescribedBy, instructionId)}
                     aria-invalid={ariaInvalid}
                 >
@@ -296,10 +300,16 @@ export const Component = <T, V>(
                 className={className}
                 data-testid={testId}
             >
+                <VisuallyHidden aria-hidden id={comboboxLabelId}>
+                    {comboboxAriaLabel}
+                </VisuallyHidden>
                 <FieldSelector data-testid={selectorTestId}>
                     {renderSelector()}
                 </FieldSelector>
                 <Divider $readOnly={readOnly} $position={position} />
+                <VisuallyHidden aria-hidden id={textboxLabelId}>
+                    {textboxAriaLabel}
+                </VisuallyHidden>
                 <FieldInput
                     ref={ref}
                     {...otherProps}
@@ -310,7 +320,7 @@ export const Component = <T, V>(
                     onChange={handleInputChange}
                     data-testid="input"
                     styleType="no-border"
-                    aria-labelledby={ariaLabelledBy}
+                    aria-labelledby={concatIds(ariaLabelledBy, textboxLabelId)}
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
                 />
