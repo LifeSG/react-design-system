@@ -168,6 +168,11 @@ export const UneditableSectionItem = ({
                 aria-busy={maskLoadingState === "loading"}
                 aria-live="polite"
                 type="button"
+                title={StringHelper.getMaskedDescription(
+                    value,
+                    displayMaskState,
+                    maskRange
+                )}
             >
                 {renderMaskingState()}
             </Clickable>

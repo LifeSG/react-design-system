@@ -222,4 +222,17 @@ export namespace StringHelper {
         const suffix = suffixes.get(rule);
         return `${n}${suffix}`;
     };
+
+    export const getMaskedDescription = (
+        value: string,
+        displayMaskState: string,
+        maskRange?: number[] | undefined
+    ) => {
+        if (!value || displayMaskState !== "masked" || !maskRange) return "";
+
+        const start = value.substring(0, maskRange[0]);
+        const end = value.substring(maskRange[1] + 1);
+
+        return `Starting with ${start} and ending with ${end}`;
+    };
 }
