@@ -115,7 +115,7 @@ export const UneditableSectionItem = ({
                     <>
                         <ErrorIcon />
                         <ErrorLabel>Error</ErrorLabel>
-                        <TryAgainLabel>Try again?</TryAgainLabel>
+                        <TryAgainLabel title={label}>Try again?</TryAgainLabel>
                     </>
                 );
             case "loading":
