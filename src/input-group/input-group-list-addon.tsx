@@ -1,5 +1,6 @@
 import { OpenChangeReason } from "@floating-ui/react";
 import React, { useEffect, useRef, useState } from "react";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 import {
     DropdownList,
     DropdownListState,
@@ -31,6 +32,10 @@ export const Component = <T, V>(
         className,
         onBlur,
         "data-testid": testId,
+        "aria-labelledby": ariaLabelledBy,
+        "aria-describedby": ariaDescribedBy,
+        "aria-invalid": ariaInvalid,
+        "aria-label": textboxAriaLabel,
         ...otherProps
     }: InputGroupProps<T, V>,
     ref: React.Ref<HTMLInputElement>
@@ -60,6 +65,7 @@ export const Component = <T, V>(
         onShowOptions,
         dropdownZIndex,
         dropdownRootNode,
+        "aria-label": comboboxAriaLabel,
     } = addon!.attributes as ListAddon<T, V>;
 
     const { position } = addon!;
@@ -71,6 +77,10 @@ export const Component = <T, V>(
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const listboxId = `${internalId}-listbox`;
+    const instructionId = `${internalId}-instruction`;
+    const comboboxLabelId = `${internalId}-combobox-label`;
+    const textboxLabelId = `${internalId}-textbox-label`;
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const positionRef = useRef<HTMLDivElement>(null);
@@ -199,12 +209,18 @@ export const Component = <T, V>(
                     ref={selectorRef}
                     disabled={disabled}
                     expanded={showOptions}
-                    listboxId={internalId}
+                    listboxId={listboxId}
                     popupRole="listbox"
                     readOnly={readOnly}
+                    aria-labelledby={concatIds(ariaLabelledBy, comboboxLabelId)}
+                    aria-describedby={concatIds(ariaDescribedBy, instructionId)}
+                    aria-invalid={ariaInvalid}
                 >
                     {renderSelectorContent()}
                 </ExpandableElement>
+                <VisuallyHidden id={instructionId}>
+                    Press space to open options
+                </VisuallyHidden>
             </div>
         );
     };
@@ -212,7 +228,7 @@ export const Component = <T, V>(
     const renderDropdown = () => {
         return (
             <DropdownList
-                listboxId={internalId}
+                listboxId={listboxId}
                 listItems={options}
                 onSelectItem={handleListItemClick}
                 onDismiss={handleListDismiss}
@@ -236,7 +252,17 @@ export const Component = <T, V>(
     const renderSelector = () => {
         if (readOnly) {
             return selected ? (
-                <SelectorReadOnly data-testid="selector-label">
+                <SelectorReadOnly
+                    data-testid="selector-label"
+                    tabIndex={0}
+                    role="combobox"
+                    aria-haspopup="listbox"
+                    aria-readonly
+                    aria-expanded={false}
+                    aria-labelledby={ariaLabelledBy}
+                    aria-describedby={ariaDescribedBy}
+                    aria-invalid={ariaInvalid}
+                >
                     <ValueLabel>{getDisplayValue()}</ValueLabel>
                 </SelectorReadOnly>
             ) : null;
@@ -274,10 +300,16 @@ export const Component = <T, V>(
                 className={className}
                 data-testid={testId}
             >
+                <VisuallyHidden aria-hidden id={comboboxLabelId}>
+                    {comboboxAriaLabel}
+                </VisuallyHidden>
                 <FieldSelector data-testid={selectorTestId}>
                     {renderSelector()}
                 </FieldSelector>
                 <Divider $readOnly={readOnly} $position={position} />
+                <VisuallyHidden aria-hidden id={textboxLabelId}>
+                    {textboxAriaLabel}
+                </VisuallyHidden>
                 <FieldInput
                     ref={ref}
                     {...otherProps}
@@ -288,6 +320,9 @@ export const Component = <T, V>(
                     onChange={handleInputChange}
                     data-testid="input"
                     styleType="no-border"
+                    aria-labelledby={concatIds(ariaLabelledBy, textboxLabelId)}
+                    aria-describedby={ariaDescribedBy}
+                    aria-invalid={ariaInvalid}
                 />
             </FieldWrapper>
         </DropdownListState>

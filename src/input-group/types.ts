@@ -24,6 +24,7 @@ export interface ListAddon<T, V>
     placeholder?: string | undefined;
     displayValueExtractor?: ((item: T) => string) | undefined;
     "data-selector-testid"?: string | undefined;
+    "aria-label"?: string | undefined;
 
     // Dropdown props (unable to inherit directly)
     options?: T[] | undefined;

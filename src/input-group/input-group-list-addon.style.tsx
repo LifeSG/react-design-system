@@ -72,6 +72,7 @@ export const SelectorReadOnly = styled.div`
     padding: 0;
     background: transparent;
     margin-right: ${Spacing["spacing-12"]};
+    color: ${Colour["text"]};
 `;
 
 export const Divider = styled.div<DividerStyleProps>`

@@ -3,7 +3,11 @@ import { AriaAttributes, Ref, forwardRef } from "react";
 import { IconContainer, Selector } from "./expandable-element.styles";
 import { DropdownVariantType } from "./types";
 
-interface ExpandableElementProps {
+interface ExpandableElementProps
+    extends Pick<
+        AriaAttributes,
+        "aria-labelledby" | "aria-describedby" | "aria-invalid"
+    > {
     children: React.ReactNode;
     disabled: boolean | undefined;
     expanded: boolean | undefined;
@@ -22,6 +26,7 @@ export const Component = (
         popupRole,
         readOnly,
         variant,
+        ...otherProps
     }: ExpandableElementProps,
     ref: Ref<HTMLButtonElement>
 ) => {
@@ -32,13 +37,16 @@ export const Component = (
         <Selector
             ref={ref}
             type="button"
+            role="combobox"
             aria-expanded={expanded}
             aria-haspopup={popupRole}
+            aria-controls={expanded ? listboxId : undefined} // only apply when dropdown is mounted
             data-testid="selector"
-            disabled={disabled}
-            aria-controls={listboxId}
+            aria-disabled={disabled}
+            aria-readonly={readOnly}
             $variant={variant}
             $readOnly={readOnly}
+            {...otherProps}
         >
             {children}
             {!readOnly && (

@@ -1,8 +1,15 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { Form } from "src/form";
 import { PhoneNumberInput } from "src/phone-number-input";
 
 const INPUT_TESTID = "input";
 const SELECTOR_TESTID = "selector";
+const LABEL = "Test label";
+const DESCRIPTION = "Test subtitle";
+const DROPDOWN_LABEL = `${LABEL} Country code`;
+const DROPDOWN_INSTRUCTION = "Press space to open options";
+const TEXTBOX_LABEL = `${LABEL} Enter phone number`;
+const ERROR = "Error message";
 
 // =============================================================================
 // UNIT TESTS
@@ -81,6 +88,67 @@ describe("PhoneNumberInput", () => {
 
             expect(input).toHaveValue("(12");
             expect(inputSpy).toHaveBeenCalledWith(2, 2);
+        });
+    });
+
+    describe("accessible names", () => {
+        it("should apply the correct label", () => {
+            render(<Form.PhoneNumberInput label={LABEL} />);
+
+            expect(
+                screen.getByRole("combobox", {
+                    name: DROPDOWN_LABEL,
+                    description: DROPDOWN_INSTRUCTION,
+                })
+            ).toBeInTheDocument();
+            expect(
+                screen.getByRole("textbox", {
+                    name: TEXTBOX_LABEL,
+                })
+            ).toBeInTheDocument();
+        });
+
+        it("should apply the correct label and description", () => {
+            render(
+                <Form.PhoneNumberInput
+                    label={{ children: LABEL, subtitle: DESCRIPTION }}
+                />
+            );
+
+            expect(
+                screen.getByRole("combobox", {
+                    name: DROPDOWN_LABEL,
+                    description: `${DESCRIPTION} ${DROPDOWN_INSTRUCTION}`,
+                })
+            ).toBeInTheDocument();
+            expect(
+                screen.getByRole("textbox", {
+                    name: TEXTBOX_LABEL,
+                    description: DESCRIPTION,
+                })
+            ).toBeInTheDocument();
+        });
+
+        it("should apply the error state and error description", () => {
+            render(
+                <Form.PhoneNumberInput
+                    label={{ children: LABEL, subtitle: DESCRIPTION }}
+                    errorMessage={ERROR}
+                />
+            );
+
+            const combobox = screen.getByRole("combobox", {
+                name: DROPDOWN_LABEL,
+                description: `${ERROR} ${DESCRIPTION} ${DROPDOWN_INSTRUCTION}`,
+            });
+            const textbox = screen.getByRole("textbox", {
+                name: TEXTBOX_LABEL,
+                description: `${ERROR} ${DESCRIPTION}`,
+            });
+            expect(combobox).toBeInTheDocument();
+            expect(combobox).toBeInvalid();
+            expect(textbox).toBeInTheDocument();
+            expect(textbox).toBeInvalid();
         });
     });
 });

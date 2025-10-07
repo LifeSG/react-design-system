@@ -2,6 +2,7 @@ import { StyledComponentProps } from "../helpers";
 
 export type ComponentTokenSet = {
     Button: ButtonTokens;
+    Animation: AnimationTokens;
 };
 export type ComponentOverrideOptions = {
     [Component in keyof ComponentTokenSet]?:
@@ -30,6 +31,12 @@ export type ButtonTokens = {
         | string
         | ((props: StyledComponentProps) => string);
     "button-link-colour-text":
+        | string
+        | ((props: StyledComponentProps) => string);
+};
+
+export type AnimationTokens = {
+    "loading-dots-spinner-colour":
         | string
         | ((props: StyledComponentProps) => string);
 };

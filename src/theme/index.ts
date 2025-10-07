@@ -63,6 +63,7 @@ const LifeSGThemeBase: ThemeSpec = {
     shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "lifesg",
+    componentScheme: "lifesg",
     _v2: {
         colorScheme: "base",
         textStyleScheme: "base",
