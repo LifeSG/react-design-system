@@ -29,16 +29,22 @@ export const FormLabel = ({
         }
     };
 
+    if (!children && !subtitle) {
+        return <></>;
+    }
+
     return (
         <LabelContainer
             className={className}
             style={style}
             data-testid={testId}
         >
-            <Label id={id} {...otherProps}>
-                {children}
-                {addon && addon.type && renderAddon()}
-            </Label>
+            {children && (
+                <Label id={id} {...otherProps}>
+                    {children}
+                    {addon && addon.type && renderAddon()}
+                </Label>
+            )}
             {typeof subtitle === "string" ? (
                 <Subtitle
                     id={id ? `${id}-subtitle` : undefined}
