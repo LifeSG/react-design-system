@@ -317,27 +317,36 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         const isSelected = checked || indeterminate;
         const isVisible = !minimised || index < 5;
 
-        const hasTreeItemRole = isNested && isVisible;
+        // ARIA attributes for tree items
+        const treeItemAriaAttributes = isNested
+            ? {
+                  "aria-checked": checked,
+                  "aria-selected": !!checked,
+                  "aria-level": option.level + 1,
+                  "aria-posinset": option.indexInParent + 1,
+                  "aria-setsize": option.parentSetSize,
+              }
+            : {};
+
+        const handleKeyDown = (event: React.KeyboardEvent) => {
+            if (isNested && (event.key === " " || event.key === "Enter")) {
+                event.preventDefault();
+                handleItemClick(originalItem)();
+            }
+        };
 
         return (
             <Item
                 key={buildKeyPath(option.keyPath)}
                 as={isNested ? "div" : "label"}
-                role={hasTreeItemRole ? "treeitem" : undefined}
-                aria-checked={hasTreeItemRole ? checked : undefined}
-                aria-selected={hasTreeItemRole ? !!checked : undefined}
-                aria-level={hasTreeItemRole ? option.level + 1 : undefined}
-                aria-posinset={
-                    hasTreeItemRole ? option.indexInParent + 1 : undefined
-                }
-                aria-setsize={
-                    hasTreeItemRole ? option.parentSetSize : undefined
-                }
+                role={isNested ? "treeitem" : undefined}
+                {...treeItemAriaAttributes}
                 onClick={isNested ? handleItemClick(originalItem) : undefined}
+                onKeyDown={handleKeyDown}
+                tabIndex={isNested ? 0 : undefined}
                 $visible={isVisible}
                 $selected={isSelected}
                 $level={option.level}
-                $hasChildren={option.hasChildren}
                 ref={index === 4 ? lastVisibleElement : undefined}
             >
                 {renderCheckboxIcon(originalItem, option)}

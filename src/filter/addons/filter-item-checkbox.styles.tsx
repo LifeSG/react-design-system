@@ -41,7 +41,6 @@ export const Item = styled.label<{
     $visible: boolean;
     $selected: boolean;
     $level?: number;
-    $hasChildren?: boolean;
 }>`
     display: flex;
     align-items: flex-start;
