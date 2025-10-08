@@ -161,6 +161,20 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         }
     };
 
+    const handleListItemKeyDown =
+        (originalItem: T) => (event: React.KeyboardEvent) => {
+            if (isNested && (event.key === " " || event.key === "Enter")) {
+                event.preventDefault();
+                handleItemClick(originalItem)();
+            }
+        };
+
+    const handleCheckboxChange = (originalItem: T) => () => {
+        if (isNested) {
+            handleItemClick(originalItem)();
+        }
+    };
+
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
@@ -299,7 +313,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                 displaySize="small"
                 checked={checked}
                 indeterminate={indeterminate}
-                onChange={!isNested ? handleItemClick(originalItem) : undefined}
+                onChange={handleCheckboxChange(originalItem)}
                 tabIndex={isNested ? -1 : undefined}
                 aria-hidden={isNested ? "true" : undefined}
             />
@@ -320,20 +334,13 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         // ARIA attributes for tree items
         const treeItemAriaAttributes = isNested
             ? {
-                  "aria-checked": checked,
+                  "aria-checked": indeterminate ? ("mixed" as const) : checked,
                   "aria-selected": !!checked,
                   "aria-level": option.level + 1,
                   "aria-posinset": option.indexInParent + 1,
                   "aria-setsize": option.parentSetSize,
               }
             : {};
-
-        const handleKeyDown = (event: React.KeyboardEvent) => {
-            if (isNested && (event.key === " " || event.key === "Enter")) {
-                event.preventDefault();
-                handleItemClick(originalItem)();
-            }
-        };
 
         return (
             <Item
@@ -342,7 +349,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                 role={isNested ? "treeitem" : undefined}
                 {...treeItemAriaAttributes}
                 onClick={isNested ? handleItemClick(originalItem) : undefined}
-                onKeyDown={handleKeyDown}
+                onKeyDown={handleListItemKeyDown(originalItem)}
                 tabIndex={isNested ? 0 : undefined}
                 $visible={isVisible}
                 $selected={isSelected}

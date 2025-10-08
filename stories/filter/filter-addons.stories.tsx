@@ -299,7 +299,7 @@ export const FilterCheckboxNested: StoryObj<Component> = {
                         <Filter.Checkbox
                             title="Nested Options With 6 level"
                             selectedOptions={draftFilters.nestedWith6Level}
-                            onSelect={updateFilter(mode, "nestedWith4Level")}
+                            onSelect={updateFilter(mode, "nestedWith6Level")}
                             options={nestedWith6Level}
                             minimisable={false}
                         />
