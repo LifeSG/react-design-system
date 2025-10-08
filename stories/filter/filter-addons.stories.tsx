@@ -179,6 +179,7 @@ export const FilterCheckbox: StoryObj<Component> = {
 };
 
 export const FilterCheckboxNested: StoryObj<Component> = {
+    name: "Filter Checkbox (Nested Options)",
     render: () => {
         const {
             draftFilters,
@@ -187,40 +188,44 @@ export const FilterCheckboxNested: StoryObj<Component> = {
             saveFilters,
             dismissFilters,
             clearFilters,
-        } = useFilters({ nestedWith6Level: [], nestedWithViewMore: [] });
+        } = useFilters({ nestedMinimisable: [], nestedWith6Levels: [] });
 
-        const nestedWith6Level: FilterItemCheckboxOptionProps[] = [
+        const nestedOptions: FilterItemCheckboxOptionProps[] = [
             {
-                value: "food",
-                label: "Food & Dining",
+                value: "antartica",
+                label: "Antartica",
+            },
+            {
+                value: "americas",
+                label: "Americas",
                 options: [
                     {
-                        value: "fastfood",
-                        label: "Fast Food",
+                        value: "usa",
+                        label: "USA",
                         options: [
                             {
-                                value: "pizza",
-                                label: "Pizza",
+                                value: "california",
+                                label: "California",
                                 options: [
                                     {
-                                        value: "margherita",
-                                        label: "Margherita",
+                                        value: "los_angeles_county",
+                                        label: "Los Angeles County",
                                         options: [
                                             {
-                                                value: "pepperoni",
-                                                label: "Pepperoni",
+                                                value: "los_angeles",
+                                                label: "Los Angeles",
                                                 options: [
                                                     {
-                                                        value: "restaurants",
-                                                        label: "Restaurants",
+                                                        value: "beverly_crest",
+                                                        label: "Beverly Crest",
                                                     },
                                                     {
-                                                        value: "italian",
-                                                        label: "Italian",
+                                                        value: "hollywood",
+                                                        label: "Hollywood",
                                                     },
                                                     {
-                                                        value: "chinese",
-                                                        label: "Chinese",
+                                                        value: "westchester",
+                                                        label: "Westchester",
                                                     },
                                                 ],
                                             },
@@ -234,7 +239,7 @@ export const FilterCheckboxNested: StoryObj<Component> = {
             },
         ];
 
-        const nestedWithViewMore: FilterItemCheckboxOptionProps[] = [
+        const longNestedOptions: FilterItemCheckboxOptionProps[] = [
             {
                 value: "food",
                 label: "Food & Dining",
@@ -297,17 +302,17 @@ export const FilterCheckboxNested: StoryObj<Component> = {
                 {(mode) => (
                     <>
                         <Filter.Checkbox
-                            title="Nested Options With 6 level"
-                            selectedOptions={draftFilters.nestedWith6Level}
-                            onSelect={updateFilter(mode, "nestedWith6Level")}
-                            options={nestedWith6Level}
-                            minimisable={false}
+                            title="Nested options (minimisable)"
+                            selectedOptions={draftFilters.nestedMinimisable}
+                            onSelect={updateFilter(mode, "nestedMinimisable")}
+                            options={longNestedOptions}
                         />
                         <Filter.Checkbox
-                            title="Nested options with view more"
-                            selectedOptions={draftFilters.nestedWithViewMore}
-                            onSelect={updateFilter(mode, "nestedWithViewMore")}
-                            options={nestedWithViewMore}
+                            title="Nested options (6 levels)"
+                            selectedOptions={draftFilters.nestedWith6Levels}
+                            onSelect={updateFilter(mode, "nestedWith6Levels")}
+                            options={nestedOptions}
+                            minimisable={false}
                         />
                     </>
                 )}
