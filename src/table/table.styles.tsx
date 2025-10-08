@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Border, Colour, Radius } from "../theme";
+import { Border, Colour, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // STYLES CONSTANTS
@@ -12,8 +12,6 @@ const fontColor = Colour["text"];
 // =============================================================================
 export const TableWrapper = styled.div`
     overflow: auto;
-    display: flex;
-    flex-direction: column;
     border: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
     border-radius: ${Radius["md"]};
 
@@ -27,59 +25,54 @@ export const TableWrapper = styled.div`
     }
 `;
 
-export const TableContainer = styled.div`
-    flex: 1;
-`;
-
 export const TableComponent = styled.table`
-    th:last-child,
-    td:last-child {
-        padding-right: 1.5rem;
-    }
-    th:first-child,
-    td:first-child {
-        padding-left: 1.5rem;
-    }
     text-align: left;
     border-collapse: separate;
     border-spacing: 0;
     width: 100%;
 `;
 
-export const TableBody = styled.tbody<{ $showLastRowBottomBorder?: boolean }>`
+export const TableBody = styled.tbody`
     tr:last-child {
         td {
-            border-bottom: ${(props) =>
-                props.$showLastRowBottomBorder
-                    ? `${Border["width-010"]} ${Border["solid"]} ${borderColor}`
-                    : "none"};
+            border-bottom: none;
         }
     }
 `;
 
 export const HeaderCell = styled.th<{ $clickable?: boolean }>`
-    padding: 1.25rem 1rem;
+    padding: ${Spacing["spacing-20"]} ${Spacing["spacing-16"]};
     text-align: left;
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
     vertical-align: middle;
     color: ${fontColor};
+    background-color: ${Colour["bg-stronger"]};
+    height: 6rem;
     border-bottom: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
+
+    &:where(&:first-child) {
+        padding-left: ${Spacing["spacing-24"]};
+    }
+    &:where(&:last-child) {
+        padding-right: ${Spacing["spacing-24"]};
+    }
 `;
 
 export const BodyRow = styled.tr`
     background-color: ${Colour["bg"]};
-
     border-top: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
-
-    th {
-        background-color: ${Colour["bg-stronger"]};
-        height: 6rem;
-        border-bottom: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
-    }
 `;
 
 export const BodyCell = styled.td`
-    padding: 1.25rem 1rem;
+    padding: ${Spacing["spacing-20"]} ${Spacing["spacing-16"]};
     vertical-align: middle;
     color: ${fontColor};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
+
+    &:where(&:first-child) {
+        padding-left: ${Spacing["spacing-24"]};
+    }
+    &:where(&:last-child) {
+        padding-right: ${Spacing["spacing-24"]};
+    }
 `;

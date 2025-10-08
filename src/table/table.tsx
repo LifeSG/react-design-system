@@ -4,19 +4,18 @@ import {
     HeaderCell,
     TableBody,
     TableComponent,
-    TableContainer,
     TableWrapper,
 } from "./table.styles";
 
 export const Table = Object.assign(
     ({ children, ...props }: React.TableHTMLAttributes<HTMLTableElement>) => (
         <TableWrapper>
-            <TableContainer>
-                <TableComponent {...props}>{children}</TableComponent>
-            </TableContainer>
+            <TableComponent {...props}>{children}</TableComponent>
         </TableWrapper>
     ),
     {
+        Container: TableWrapper,
+        Table: TableComponent,
         Head: ({
             children,
             ...props
