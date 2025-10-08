@@ -153,11 +153,12 @@ const FilterBase = ({
                     {toggleFilterButtonLabel}
                 </FilterButton>
                 <Overlay show={visible} disableTransition>
-                    {visible ? (
-                        <FloatingWrapper>
+                    {
+                        <FloatingWrapper aria-hidden={!visible}>
                             <FloatingFocusManager
                                 context={context}
                                 initialFocus={-1}
+                                disabled={!visible}
                             >
                                 <MobileOverlayContainer
                                     data-id="filter-mobile"
@@ -186,7 +187,7 @@ const FilterBase = ({
                                 </MobileOverlayContainer>
                             </FloatingFocusManager>
                         </FloatingWrapper>
-                    ) : undefined}
+                    }
                 </Overlay>
             </>
         );
