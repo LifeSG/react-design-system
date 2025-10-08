@@ -23,7 +23,9 @@ export const StyledFilterItem = styled(FilterItem)`
     }
 `;
 
-export const Group = styled.div<{ $isMobileToggleMode: boolean }>`
+export const Group = styled.div<{
+    $isMobileToggleMode: boolean;
+}>`
     display: flex;
     flex-direction: column;
 
@@ -35,7 +37,11 @@ export const Group = styled.div<{ $isMobileToggleMode: boolean }>`
     }
 `;
 
-export const Item = styled.label<{ $visible: boolean; $selected: boolean }>`
+export const Item = styled.label<{
+    $visible: boolean;
+    $selected: boolean;
+    $level?: number;
+}>`
     display: flex;
     align-items: flex-start;
     ${(props) => !props.$visible && "display: none;"}
@@ -44,6 +50,14 @@ export const Item = styled.label<{ $visible: boolean; $selected: boolean }>`
     width: 100%;
     min-height: 1.5rem;
     padding: ${Spacing["spacing-8"]} ${Spacing["spacing-12"]};
+    ${(props) =>
+        props.$level &&
+        css`
+            padding-left: calc(
+                ${Spacing["spacing-12"]} + ${props.$level} *
+                    ${Spacing["spacing-32"]}
+            );
+        `}
 
     cursor: pointer;
     ${Font["body-md-regular"]}
@@ -53,9 +67,16 @@ export const Item = styled.label<{ $visible: boolean; $selected: boolean }>`
         css`
             color: ${Colour["text-selected"]};
         `}
-
     ${MediaQuery.MaxWidth.lg} {
         padding: ${Spacing["spacing-8"]};
+        ${(props) =>
+            props.$level &&
+            css`
+                padding-left: calc(
+                    ${Spacing["spacing-8"]} + ${props.$level} *
+                        ${Spacing["spacing-32"]}
+                );
+            `}
     }
 `;
 

@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { useMediaQuery } from "react-responsive";
 import { Filter } from "../../src";
 import { FilterContext } from "../../src/filter/filter-context";
+import { FilterItemCheckboxOptionProps } from "../../src/filter/types";
 
 jest.mock("react-responsive");
 
@@ -211,6 +212,269 @@ describe("Filter", () => {
             });
         });
     });
+
+    describe("Filter.Checkbox", () => {
+        describe("Rendering", () => {
+            it("should render nested options with proper indentation", () => {
+                render(
+                    <Filter.Checkbox
+                        title="Nested Options"
+                        options={NESTED_OPTIONS}
+                        data-testid="nested-checkbox"
+                    />
+                );
+
+                expect(screen.getByText("Food & Dining")).toBeInTheDocument();
+                expect(screen.getByText("Entertainment")).toBeInTheDocument();
+
+                expect(screen.getByText("Fast Food")).toBeInTheDocument();
+                expect(screen.getByText("Fine Dining")).toBeInTheDocument();
+                expect(screen.getByText("Movies")).toBeInTheDocument();
+            });
+
+            it("should apply tree ARIA roles for nested structure", () => {
+                render(
+                    <Filter.Checkbox
+                        title="Nested Options"
+                        options={NESTED_OPTIONS}
+                        data-testid="nested-checkbox"
+                    />
+                );
+
+                const group = screen.getByRole("tree");
+                expect(group).toHaveAttribute("aria-multiselectable", "true");
+                expect(group).toHaveAttribute("aria-label", "Nested Options");
+
+                const treeitems = screen.getAllByRole("treeitem");
+                expect(treeitems).toHaveLength(5);
+
+                const parentItem = treeitems[0];
+                expect(parentItem).toHaveAttribute("aria-level", "1");
+                expect(parentItem).toHaveAttribute("aria-posinset", "1");
+                expect(parentItem).toHaveAttribute("aria-setsize", "2");
+
+                const childItem = treeitems[1];
+                expect(childItem).toHaveAttribute("aria-level", "2");
+                expect(childItem).toHaveAttribute("aria-posinset", "1");
+                expect(childItem).toHaveAttribute("aria-setsize", "2");
+            });
+
+            it("should render flat options without tree roles", () => {
+                render(
+                    <Filter.Checkbox
+                        title="Flat Options"
+                        options={FLAT_OPTIONS}
+                        data-testid="flat-checkbox"
+                    />
+                );
+
+                const group = screen.getByRole("group");
+                expect(group).toHaveAttribute("aria-label", "Flat Options");
+
+                expect(screen.queryAllByRole("treeitem")).toHaveLength(0);
+            });
+        });
+
+        describe("Selection Behavior", () => {
+            it("should select individual leaf items", () => {
+                const mockOnSelect = jest.fn();
+                render(
+                    <Filter.Checkbox
+                        title="Nested Options"
+                        options={NESTED_OPTIONS}
+                        onSelect={mockOnSelect}
+                    />
+                );
+
+                const fastFoodItem = screen
+                    .getByText("Fast Food")
+                    .closest('[role="treeitem"]');
+                fireEvent.click(fastFoodItem!);
+
+                expect(mockOnSelect).toHaveBeenCalledWith([
+                    expect.objectContaining({
+                        value: "fast-food",
+                        label: "Fast Food",
+                    }),
+                ]);
+            });
+
+            it("should select all children when parent is clicked", () => {
+                const mockOnSelect = jest.fn();
+                render(
+                    <Filter.Checkbox
+                        title="Nested Options"
+                        options={NESTED_OPTIONS}
+                        onSelect={mockOnSelect}
+                    />
+                );
+
+                const foodDiningItem = screen
+                    .getByText("Food & Dining")
+                    .closest('[role="treeitem"]');
+                fireEvent.click(foodDiningItem!);
+
+                expect(mockOnSelect).toHaveBeenCalledWith(
+                    expect.arrayContaining([
+                        expect.objectContaining({
+                            value: "fast-food",
+                            label: "Fast Food",
+                        }),
+                        expect.objectContaining({
+                            value: "fine-dining",
+                            label: "Fine Dining",
+                        }),
+                    ])
+                );
+            });
+
+            it("should show indeterminate state when some children are selected", () => {
+                render(
+                    <Filter.Checkbox
+                        title="Nested Options"
+                        options={NESTED_OPTIONS}
+                        selectedOptions={[
+                            { value: "fast-food", label: "Fast Food" },
+                        ]}
+                    />
+                );
+
+                // For nested items, find checkboxes within treeitem divs
+                const parentCheckbox = screen
+                    .getByText("Food & Dining")
+                    .closest('[role="treeitem"]')
+                    ?.querySelector('input[type="checkbox"]');
+                expect(parentCheckbox).toHaveProperty("indeterminate", true);
+                expect(parentCheckbox).not.toBeChecked();
+
+                const fastFoodCheckbox = screen
+                    .getByText("Fast Food")
+                    .closest('[role="treeitem"]')
+                    ?.querySelector('input[type="checkbox"]');
+                expect(fastFoodCheckbox).toBeChecked();
+
+                const fineDiningCheckbox = screen
+                    .getByText("Fine Dining")
+                    .closest('[role="treeitem"]')
+                    ?.querySelector('input[type="checkbox"]');
+                expect(fineDiningCheckbox).not.toBeChecked();
+            });
+
+            it("should show parent as checked when all children are selected", () => {
+                render(
+                    <Filter.Checkbox
+                        title="Nested Options"
+                        options={NESTED_OPTIONS}
+                        selectedOptions={[
+                            { value: "fast-food", label: "Fast Food" },
+                            { value: "fine-dining", label: "Fine Dining" },
+                        ]}
+                    />
+                );
+
+                const parentCheckbox = screen
+                    .getByText("Food & Dining")
+                    .closest('[role="treeitem"]')
+                    ?.querySelector('input[type="checkbox"]');
+                expect(parentCheckbox).toBeChecked();
+                expect(parentCheckbox).toHaveProperty("indeterminate", false);
+
+                const fastFoodCheckbox = screen
+                    .getByText("Fast Food")
+                    .closest('[role="treeitem"]')
+                    ?.querySelector('input[type="checkbox"]');
+                const fineDiningCheckbox = screen
+                    .getByText("Fine Dining")
+                    .closest('[role="treeitem"]')
+                    ?.querySelector('input[type="checkbox"]');
+                expect(fastFoodCheckbox).toBeChecked();
+                expect(fineDiningCheckbox).toBeChecked();
+            });
+
+            it("should deselect all children when checked parent is clicked", () => {
+                const mockOnSelect = jest.fn();
+                render(
+                    <Filter.Checkbox
+                        title="Nested Options"
+                        options={NESTED_OPTIONS}
+                        selectedOptions={[
+                            { value: "fast-food", label: "Fast Food" },
+                            { value: "fine-dining", label: "Fine Dining" },
+                        ]}
+                        onSelect={mockOnSelect}
+                    />
+                );
+
+                const parentItem = screen
+                    .getByText("Food & Dining")
+                    .closest('[role="treeitem"]');
+                fireEvent.click(parentItem!);
+
+                expect(mockOnSelect).toHaveBeenCalledWith([]);
+            });
+        });
+
+        describe("Select All/Clear All", () => {
+            it("should show Select All button when there are 3+ options", () => {
+                render(
+                    <Filter.Checkbox
+                        title="Nested Options"
+                        options={NESTED_OPTIONS}
+                    />
+                );
+
+                expect(screen.getByText("Select all")).toBeInTheDocument();
+            });
+
+            it("should not show Select All button when there are less than 3 options", () => {
+                render(
+                    <Filter.Checkbox
+                        title="Few Options"
+                        options={FLAT_OPTIONS.slice(0, 2)}
+                    />
+                );
+
+                expect(
+                    screen.queryByText("Select all")
+                ).not.toBeInTheDocument();
+            });
+
+            it("should select all leaf options when Select All is clicked", () => {
+                const mockOnSelect = jest.fn();
+                render(
+                    <Filter.Checkbox
+                        title="Nested Options"
+                        options={NESTED_OPTIONS}
+                        onSelect={mockOnSelect}
+                    />
+                );
+
+                fireEvent.click(screen.getByText("Select all"));
+
+                expect(mockOnSelect).toHaveBeenCalledWith(
+                    expect.arrayContaining([
+                        expect.objectContaining({ value: "fast-food" }),
+                        expect.objectContaining({ value: "fine-dining" }),
+                        expect.objectContaining({ value: "movies" }),
+                    ])
+                );
+            });
+
+            it("should show Clear All when options are selected", () => {
+                render(
+                    <Filter.Checkbox
+                        title="Nested Options"
+                        options={NESTED_OPTIONS}
+                        selectedOptions={[
+                            { value: "fast-food", label: "Fast Food" },
+                        ]}
+                    />
+                );
+
+                expect(screen.getByText("Clear all")).toBeInTheDocument();
+            });
+        });
+    });
 });
 
 // =============================================================================
@@ -221,3 +485,43 @@ const MOBILE_TESTID = "filter-mobile";
 const MOBILE_SHOW_BUTTON_TESTID = "filter-show-button";
 const ITEM_TITLE = "test title";
 const ITEM_CONTENT = "test body";
+const NESTED_OPTIONS: FilterItemCheckboxOptionProps[] = [
+    {
+        value: "food",
+        label: "Food & Dining",
+        options: [
+            {
+                value: "fast-food",
+                label: "Fast Food",
+            },
+            {
+                value: "fine-dining",
+                label: "Fine Dining",
+            },
+        ],
+    },
+    {
+        value: "entertainment",
+        label: "Entertainment",
+        options: [
+            {
+                value: "movies",
+                label: "Movies",
+            },
+        ],
+    },
+];
+const FLAT_OPTIONS: FilterItemCheckboxOptionProps[] = [
+    {
+        value: "option1",
+        label: "Option 1",
+    },
+    {
+        value: "option2",
+        label: "Option 2",
+    },
+    {
+        value: "option3",
+        label: "Option 3",
+    },
+];

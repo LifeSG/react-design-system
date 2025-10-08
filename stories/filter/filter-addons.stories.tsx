@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Filter } from "src/filter";
+import { Filter, FilterItemCheckboxOptionProps } from "src/filter";
 import { StoryDecorator } from "stories/storybook-common";
 import { useFilters } from "./doc-elements/example-filter-items";
 
@@ -169,6 +169,150 @@ export const FilterCheckbox: StoryObj<Component> = {
                                     label: "Another Label 8",
                                 },
                             ]}
+                        />
+                    </>
+                )}
+            </Filter>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const FilterCheckboxNested: StoryObj<Component> = {
+    name: "Filter Checkbox (Nested Options)",
+    render: () => {
+        const {
+            draftFilters,
+            clearButtonDisabled,
+            updateFilter,
+            saveFilters,
+            dismissFilters,
+            clearFilters,
+        } = useFilters({ nestedMinimisable: [], nestedWith6Levels: [] });
+
+        const nestedOptions: FilterItemCheckboxOptionProps[] = [
+            {
+                value: "antartica",
+                label: "Antartica",
+            },
+            {
+                value: "americas",
+                label: "Americas",
+                options: [
+                    {
+                        value: "usa",
+                        label: "USA",
+                        options: [
+                            {
+                                value: "california",
+                                label: "California",
+                                options: [
+                                    {
+                                        value: "los_angeles_county",
+                                        label: "Los Angeles County",
+                                        options: [
+                                            {
+                                                value: "los_angeles",
+                                                label: "Los Angeles",
+                                                options: [
+                                                    {
+                                                        value: "beverly_crest",
+                                                        label: "Beverly Crest",
+                                                    },
+                                                    {
+                                                        value: "hollywood",
+                                                        label: "Hollywood",
+                                                    },
+                                                    {
+                                                        value: "westchester",
+                                                        label: "Westchester",
+                                                    },
+                                                ],
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            },
+        ];
+
+        const longNestedOptions: FilterItemCheckboxOptionProps[] = [
+            {
+                value: "food",
+                label: "Food & Dining",
+                options: [
+                    {
+                        value: "restaurants",
+                        label: "Restaurants",
+                        options: [
+                            { value: "italian", label: "Italian" },
+                            { value: "chinese", label: "Chinese" },
+                            { value: "japanese", label: "Japanese" },
+                        ],
+                    },
+                    {
+                        value: "fastfood",
+                        label: "Fast Food",
+                        options: [
+                            { value: "burgers", label: "Burgers" },
+                            { value: "pizza", label: "Pizza" },
+                        ],
+                    },
+                    { value: "cafes", label: "Cafes" },
+                ],
+            },
+            {
+                value: "shopping",
+                label: "Shopping",
+                options: [
+                    {
+                        value: "clothing",
+                        label: "Clothing",
+                        options: [
+                            { value: "mens", label: "Men's Wear" },
+                            { value: "womens", label: "Women's Wear" },
+                            { value: "kids", label: "Kids' Wear" },
+                        ],
+                    },
+                    { value: "electronics", label: "Electronics" },
+                    { value: "books", label: "Books" },
+                ],
+            },
+            {
+                value: "entertainment",
+                label: "Entertainment",
+                options: [
+                    { value: "movies", label: "Movies" },
+                    { value: "concerts", label: "Concerts" },
+                    { value: "sports", label: "Sports" },
+                ],
+            },
+        ];
+
+        return (
+            <Filter
+                clearButtonDisabled={clearButtonDisabled}
+                onClear={clearFilters}
+                onDismiss={dismissFilters}
+                onDone={saveFilters}
+            >
+                {(mode) => (
+                    <>
+                        <Filter.Checkbox
+                            title="Nested options (minimisable)"
+                            selectedOptions={draftFilters.nestedMinimisable}
+                            onSelect={updateFilter(mode, "nestedMinimisable")}
+                            options={longNestedOptions}
+                        />
+                        <Filter.Checkbox
+                            title="Nested options (6 levels)"
+                            selectedOptions={draftFilters.nestedWith6Levels}
+                            onSelect={updateFilter(mode, "nestedWith6Levels")}
+                            options={nestedOptions}
+                            minimisable={false}
                         />
                     </>
                 )}
