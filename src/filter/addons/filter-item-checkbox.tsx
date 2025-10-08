@@ -1,4 +1,5 @@
 import {
+    AriaAttributes,
     useCallback,
     useContext,
     useEffect,
@@ -170,7 +171,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         };
 
     const handleCheckboxChange = (originalItem: T) => () => {
-        if (isNested) {
+        if (!isNested) {
             handleItemClick(originalItem)();
         }
     };
@@ -332,9 +333,9 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         const isVisible = !minimised || index < 5;
 
         // ARIA attributes for tree items
-        const treeItemAriaAttributes = isNested
+        const treeItemAriaAttributes: AriaAttributes = isNested
             ? {
-                  "aria-checked": indeterminate ? ("mixed" as const) : checked,
+                  "aria-checked": indeterminate ? "mixed" : checked,
                   "aria-selected": !!checked,
                   "aria-level": option.level + 1,
                   "aria-posinset": option.indexInParent + 1,
