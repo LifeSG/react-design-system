@@ -33,11 +33,13 @@ export const RadioButton = ({
             <StyledCheckedIcon
                 data-testid="radio-checked"
                 $disabled={disabled}
+                aria-hidden="true"
             />
         ) : (
             <StyledUnCheckedIcon
                 data-testid="radio-unchecked"
                 $disabled={disabled}
+                aria-hidden="true"
             />
         );
     };
@@ -52,6 +54,7 @@ export const RadioButton = ({
         >
             <Input
                 type="radio"
+                id={otherProps.id}
                 data-testid="radio-input"
                 onChange={handleOnChange}
                 checked={checked}
@@ -59,6 +62,7 @@ export const RadioButton = ({
                 {...otherProps}
             />
             {renderIcon()}
+            {otherProps["aria-label"] || otherProps.children}
         </Container>
     );
 };

@@ -44,35 +44,50 @@ export const Default: StoryObj<Component> = {
 
 export const MultipleOptions: StoryObj<Component> = {
     render: () => {
-        const [value, setValue] = useState("");
+        const [value, setValue] = useState("email");
         const handleSelection = (
             event: React.ChangeEvent<HTMLInputElement>
         ) => {
             setValue(event.target.value);
         };
+
         return (
-            <>
+            <div role="radiogroup" aria-labelledby="group-label">
+                <legend style={{ marginBottom: "1rem" }} id="group-label">
+                    Preferred contact method
+                </legend>
                 <OptionContainer>
                     <RadioButton
-                        value="A"
-                        id="options-a"
-                        name="options"
-                        checked={value === "A"}
+                        value="email"
+                        id="contact-email"
+                        name="contact"
+                        checked={value === "email"}
                         onChange={handleSelection}
                     />
-                    <Label htmlFor="options-a">Option A</Label>
+                    <Label htmlFor="contact-email">Email</Label>
                 </OptionContainer>
                 <OptionContainer>
                     <RadioButton
-                        value="B"
-                        id="options-b"
-                        name="options"
-                        checked={value === "B"}
+                        value="phone"
+                        id="contact-phone"
+                        name="contact"
+                        checked={value === "phone"}
                         onChange={handleSelection}
                     />
-                    <Label htmlFor="options-b">Option B</Label>
+                    <Label htmlFor="contact-phone">Phone</Label>
                 </OptionContainer>
-            </>
+                <OptionContainer>
+                    <RadioButton
+                        value="mail"
+                        id="contact-mail"
+                        name="contact"
+                        disabled
+                        checked={value === "mail"}
+                        onChange={handleSelection}
+                    />
+                    <Label htmlFor="contact-mail">Mail (disabled)</Label>
+                </OptionContainer>
+            </div>
         );
     },
 };
