@@ -333,10 +333,8 @@ export const ComposingFromScratch: StoryObj<Component> = {
                         />
                         <UneditableSection.Item
                             label="NRIC or FIN"
-                            value="S1234534J"
+                            value="S••••534J"
                             displayWidth="half"
-                            maskRange={[1, 4]}
-                            maskState="masked"
                         />
                         <UneditableSection.Item
                             label="Residential Address"

@@ -47,12 +47,6 @@ export const IconContainer = styled.div`
     justify-content: center;
     color: ${Colour["icon-primary"]};
     margin-left: 0.5rem;
-    background-color: transparent;
-    border: none;
-
-    &:hover {
-        cursor: pointer;
-    }
 
     svg {
         width: ${Font.Spec["body-size-baseline"]};

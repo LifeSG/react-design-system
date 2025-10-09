@@ -226,13 +226,22 @@ export namespace StringHelper {
     export const getMaskedDescription = (
         value: string,
         displayMaskState: string,
-        maskRange?: number[] | undefined
-    ) => {
+        maskRange?: number[]
+    ): string => {
         if (!value || displayMaskState !== "masked" || !maskRange) return "";
 
-        const start = value.substring(0, maskRange[0]);
-        const end = value.substring(maskRange[1] + 1);
+        const [startIndex, endIndex] = maskRange;
+        const hasStart = startIndex > 0;
+        const hasEnd = endIndex < value.length - 1;
 
-        return `Starting with ${start} and ending with ${end}`;
+        const start = hasStart ? value.substring(0, startIndex) : "";
+        const end = hasEnd ? value.substring(endIndex + 1) : "";
+
+        if (hasStart && hasEnd)
+            return `Starting with ${start} and ending with ${end}`;
+        if (hasStart) return `Starting with ${start}`;
+        if (hasEnd) return `Ending with ${end}`;
+
+        return "";
     };
 }
