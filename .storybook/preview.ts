@@ -28,7 +28,7 @@ const preview: Preview = {
                 PA: PATheme,
                 A11yPlayground: A11yPlaygroundTheme,
                 SupportGoWhere: SupportGoWhereTheme,
-                IMDATheme: IMDATheme,
+                IMDA: IMDATheme,
             },
             Provider: ThemeProvider,
         }),
