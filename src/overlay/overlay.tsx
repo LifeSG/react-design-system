@@ -53,6 +53,8 @@ const OverlayComponent = ({
         return () => {
             removeOverlay();
             if (getOverlayOrder().length < 1) {
+                applyScrollLockClass("remove");
+                scrollToLastScrollPosition();
                 applyBodyStyleClass("remove");
             }
         };
@@ -236,7 +238,7 @@ const OverlayComponent = ({
     // =============================================================================
     const handleWrapperClick = (event: React.MouseEvent<HTMLDivElement>) => {
         const modal = childRef.current?.firstChild;
-        if (modal && (modal as any).contains(event.target)) {
+        if (modal && (modal as Node).contains(event.target as Node)) {
             return;
         } else if (onOverlayClick && enableOverlayClick) {
             event.preventDefault();
