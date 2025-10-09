@@ -24,6 +24,7 @@ import {
     MobileOverlayContainer,
 } from "./filter.styles";
 import { FilterProps, Mode } from "./types";
+import { inertValue } from "../shared/accessibility";
 
 const FilterBase = ({
     customLabels,
@@ -153,40 +154,37 @@ const FilterBase = ({
                     {toggleFilterButtonLabel}
                 </FilterButton>
                 <Overlay show={visible} disableTransition>
-                    {visible ? (
-                        <FloatingWrapper>
-                            <FloatingFocusManager
-                                context={context}
-                                initialFocus={-1}
+                    <FloatingWrapper inert={inertValue(!visible)}>
+                        <FloatingFocusManager
+                            context={context}
+                            initialFocus={-1}
+                            disabled={!visible}
+                        >
+                            <MobileOverlayContainer
+                                data-id="filter-mobile"
+                                data-testid="filter-mobile"
+                                ref={refs.setFloating}
                             >
-                                <MobileOverlayContainer
-                                    data-id="filter-mobile"
-                                    data-testid="filter-mobile"
-                                    ref={refs.setFloating}
+                                <MobileContainer
+                                    ref={mobileNodeRef}
+                                    tabIndex={0}
                                 >
-                                    <MobileContainer
-                                        ref={mobileNodeRef}
-                                        tabIndex={0}
-                                    >
-                                        {renderHeader("mobile")}
-                                        <FilterBody>
-                                            {renderChildren("mobile")}
-                                        </FilterBody>
-                                        <FilterFooter
-                                            $insetBottom={insets?.bottom}
+                                    {renderHeader("mobile")}
+                                    <FilterBody>
+                                        {renderChildren("mobile")}
+                                    </FilterBody>
+                                    <FilterFooter $insetBottom={insets?.bottom}>
+                                        <FilterDoneButton
+                                            onClick={handleDoneClick}
+                                            type="button"
                                         >
-                                            <FilterDoneButton
-                                                onClick={handleDoneClick}
-                                                type="button"
-                                            >
-                                                {doneButtonLabel}
-                                            </FilterDoneButton>
-                                        </FilterFooter>
-                                    </MobileContainer>
-                                </MobileOverlayContainer>
-                            </FloatingFocusManager>
-                        </FloatingWrapper>
-                    ) : undefined}
+                                            {doneButtonLabel}
+                                        </FilterDoneButton>
+                                    </FilterFooter>
+                                </MobileContainer>
+                            </MobileOverlayContainer>
+                        </FloatingFocusManager>
+                    </FloatingWrapper>
                 </Overlay>
             </>
         );
