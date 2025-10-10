@@ -176,7 +176,6 @@ export const UneditableSectionItem = ({
                     displayMaskState,
                     maskRange
                 )}
-                aria-pressed={displayMaskState !== "masked"}
             >
                 {renderMaskingState()}
             </Clickable>

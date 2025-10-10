@@ -225,7 +225,7 @@ export namespace StringHelper {
 
     export const getMaskedDescription = (
         value: string,
-        displayMaskState: string,
+        displayMaskState: "masked" | "unmasked",
         maskRange?: number[]
     ): string => {
         if (!value || displayMaskState !== "masked" || !maskRange) return "";
