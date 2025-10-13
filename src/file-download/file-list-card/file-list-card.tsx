@@ -10,6 +10,7 @@ import {
     Box,
     ContentSection,
     DesktopErrorMessage,
+    ErrorIcon,
     ExtendedNameSection,
     FileSizeSection,
     IconButton,
@@ -98,6 +99,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
             <ItemNameText ref={containerRef}>{displayText}</ItemNameText>
             {isError && (
                 <DesktopErrorMessage>
+                    <ErrorIcon aria-hidden />
                     {errorMessage ? errorMessage : "Something went wrong"}
                 </DesktopErrorMessage>
             )}
@@ -117,6 +119,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
                 <FileSizeSection>{fileSize ? fileSize : "-"}</FileSizeSection>
                 {isError && (
                     <MobileErrorMessage>
+                        <ErrorIcon aria-hidden />
                         {errorMessage ? errorMessage : "Something went wrong"}
                     </MobileErrorMessage>
                 )}
@@ -130,6 +133,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
             <FileSizeSection>{fileSize ? fileSize : "-"}</FileSizeSection>
             {isError && (
                 <MobileErrorMessage>
+                    <ErrorIcon aria-hidden />
                     {errorMessage ? errorMessage : "Something went wrong"}
                 </MobileErrorMessage>
             )}
@@ -174,7 +178,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
 
     return (
         <Item data-testid={id}>
-            <Box onClick={handleDownload}>
+            <Box onClick={handleDownload} $error={isError}>
                 {renderContents()}
                 {renderActions()}
             </Box>

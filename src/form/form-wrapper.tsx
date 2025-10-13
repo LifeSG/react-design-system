@@ -6,7 +6,11 @@
 
 import { Children, ComponentType, cloneElement } from "react";
 import { FormLabel } from "./form-label";
-import { ErrorMessage } from "./form-label.style";
+import {
+    ErrorIcon,
+    ErrorMessage,
+    ErrorMessageContainer,
+} from "./form-label.style";
 import {
     ColDivContainer,
     Container,
@@ -172,13 +176,16 @@ export const FormWrapper = ({
             {label && renderFormLabel()}
             {renderChildren()}
             {errorMessage && (
-                <ErrorMessage
-                    id={getErrorTestMessageId()}
-                    tabIndex={0}
-                    data-testid={getErrorTestMessageId()}
-                >
-                    {errorMessage}
-                </ErrorMessage>
+                <ErrorMessageContainer>
+                    <ErrorIcon aria-hidden />
+                    <ErrorMessage
+                        id={getErrorTestMessageId()}
+                        tabIndex={0}
+                        data-testid={getErrorTestMessageId()}
+                    >
+                        {errorMessage}
+                    </ErrorMessage>
+                </ErrorMessageContainer>
             )}
         </ContainerComponent>
     );

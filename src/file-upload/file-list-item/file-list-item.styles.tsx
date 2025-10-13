@@ -1,5 +1,6 @@
-import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
 import styled, { css } from "styled-components";
+import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { IconButton as DSIconButton } from "../../icon-button";
 import { ClickableIcon } from "../../shared/clickable-icon";
 import {
@@ -226,12 +227,23 @@ export const ItemDescriptionText = styled(ItemText)`
     margin-top: ${Spacing["spacing-4"]};
 `;
 
+export const ErrorIcon = styled(ExclamationCircleFillIcon)`
+    margin-top: 0.375rem;
+    height: 1em;
+    width: 1em;
+    flex-shrink: 0;
+    color: ${Colour["icon-error-strong"]};
+`;
+
 export const BaseErrorMessage = styled(Typography.BodySM)`
     color: ${Colour["text-error"]};
 `;
 
 export const DesktopErrorMessage = styled(BaseErrorMessage)`
     margin-top: ${Spacing["spacing-4"]};
+    display: flex;
+    gap: ${Spacing["spacing-4"]};
+
     ${MediaQuery.MaxWidth.sm} {
         display: none;
         visibility: hidden;
@@ -241,8 +253,10 @@ export const DesktopErrorMessage = styled(BaseErrorMessage)`
 export const MobileErrorMessage = styled(BaseErrorMessage)`
     display: none;
     visibility: hidden;
+
     ${MediaQuery.MaxWidth.sm} {
-        display: block;
+        display: flex;
+        gap: ${Spacing["spacing-4"]};
         visibility: visible;
         margin-top: ${Spacing["spacing-8"]};
     }
