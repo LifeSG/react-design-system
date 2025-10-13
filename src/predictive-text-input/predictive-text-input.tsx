@@ -1,11 +1,6 @@
-import { OpenChangeReason } from "@floating-ui/react";
 import debounce from "lodash/debounce";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-    DropdownList,
-    DropdownListState,
-    ExpandableElement,
-} from "../shared/dropdown-list-v2";
+import { DropdownList, DropdownListState } from "../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { Input } from "../input";
@@ -27,6 +22,10 @@ export const PredictiveTextInput = <T, V>({
     listExtractor,
     displayValueExtractor,
     onSelectOption,
+    alignment,
+    dropdownZIndex,
+    dropdownRootNode,
+    dropdownWidth,
 }: PredictiveTextInputProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -34,7 +33,7 @@ export const PredictiveTextInput = <T, V>({
     const [input, setInput] = useState<string>("");
     const [searchedInput, setSearchedInput] = useState<string>("");
     const [options, setOptions] = useState<T[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isError, setIsError] = useState<boolean>(false);
     const [isOptionSelected, setIsOptionSelected] = useState<boolean>(
         !!selectedOption
@@ -44,7 +43,6 @@ export const PredictiveTextInput = <T, V>({
     );
     const [isOpen, setIsOpen] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
-    const triggerRef = useRef<HTMLDivElement | null>(null);
 
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
@@ -56,27 +54,20 @@ export const PredictiveTextInput = <T, V>({
     // =============================================================================
     // DEBOUNCE FUNCTIONS
     // =============================================================================
-    const handleFetchOptions = useCallback(async (q: string) => {
+    const handleFetchOptions = useCallback(async (input: string) => {
         if (!fetchOptionsRef.current) return;
         setIsError(false);
         setIsLoading(true);
         try {
-            const fetched = await fetchOptionsRef.current(q);
-            setSearchedInput(q);
-            setOptions(fetched ?? []);
+            const fetchedOptions = await fetchOptionsRef.current(input);
+            setSearchedInput(input);
+            setOptions(fetchedOptions ?? []);
             setIsLoading(false);
         } catch (err) {
             setIsError(true);
             setIsLoading(false);
         }
     }, []);
-
-    const handleDropdownDismiss = (item?: T) => {
-        setSearchedInput(item ? getDisplayValue(item) : "");
-        setIsOptionSelected(!!item);
-        setOptions([]);
-        setIsLoading(true);
-    };
 
     const fetchOptionsDebounced = useCallback(
         debounce((input: string) => {
@@ -108,20 +99,18 @@ export const PredictiveTextInput = <T, V>({
             fetchOptionsDebounced(input);
         } else {
             fetchOptionsDebounced.cancel();
-            if (input === "" && prevOptionSelected) {
-                onSelectOption?.(undefined, undefined);
-                handleDropdownDismiss();
-                setPrevOptionSelected(undefined);
-            }
         }
-    }, [
-        input,
-        minimumCharacters,
-        searchedInput,
-        fetchOptionsDebounced,
-        prevOptionSelected,
-        onSelectOption,
-    ]);
+
+        if (input === "" && prevOptionSelected) {
+            onSelectOption?.(undefined, undefined);
+            handleDropdownDismiss();
+            setPrevOptionSelected(undefined);
+        }
+
+        if (selectedOption && input !== getDisplayValue(selectedOption)) {
+            setIsOptionSelected(false);
+        }
+    }, [input, selectedOption]);
 
     useEffect(() => {
         if (!isOptionSelected && input && input.length >= minimumCharacters) {
@@ -166,11 +155,9 @@ export const PredictiveTextInput = <T, V>({
         }
     };
 
-    const handleClose = (reason?: OpenChangeReason) => {
+    const handleClose = () => {
         setIsOpen(false);
         setIsFocused(false);
-
-        if (reason !== "click") triggerRef.current?.blur();
     };
 
     const handleNodeFocus = () => {
@@ -198,6 +185,7 @@ export const PredictiveTextInput = <T, V>({
 
     const handleOnClear = () => {
         setInput("");
+        setIsOpen(false);
         setOptions([]);
         setIsOptionSelected(false);
         onSelectOption?.(undefined, undefined);
@@ -212,9 +200,16 @@ export const PredictiveTextInput = <T, V>({
         }
     };
 
-    const handleTyping = (value: string) => {
-        setInput(value);
+    const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInput(e.target.value);
         setIsOptionSelected(false);
+    };
+
+    const handleDropdownDismiss = (item?: T) => {
+        setSearchedInput(item ? getDisplayValue(item) : "");
+        setIsOptionSelected(!!item);
+        setOptions([]);
+        setIsLoading(true);
     };
 
     // =============================================================================
@@ -245,7 +240,7 @@ export const PredictiveTextInput = <T, V>({
             <InputBox
                 className={className}
                 data-testid={testId}
-                ref={nodeRef as any}
+                ref={nodeRef}
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
@@ -254,37 +249,26 @@ export const PredictiveTextInput = <T, V>({
                 $readOnly={readOnly}
                 $error={error}
             >
-                <ExpandableElement
-                    ref={selectorRef as any}
-                    disabled={disabled}
-                    expanded={
-                        !!(
-                            input &&
-                            input.length >= minimumCharacters &&
-                            !isOptionSelected
-                        )
-                    }
-                    listboxId={internalId}
-                    popupRole="listbox"
+                <Input
+                    id={internalId}
+                    type="text"
+                    value={input}
+                    onChange={handleTyping}
+                    placeholder={placeholder}
                     readOnly={readOnly}
-                >
-                    <Input
-                        type="text"
-                        value={input}
-                        onChange={(e) => handleTyping(e.target.value)}
-                        placeholder={placeholder}
-                        readOnly={readOnly}
-                        disabled={disabled}
-                        allowClear
-                        onClear={handleOnClear}
-                        styleType="no-border"
-                        onBlur={
-                            input.length < minimumCharacters
-                                ? handleOnBlur
-                                : undefined
-                        }
-                    />
-                </ExpandableElement>
+                    disabled={disabled}
+                    allowClear
+                    onClear={handleOnClear}
+                    aria-expanded={isOpen}
+                    aria-controls={internalId}
+                    aria-autocomplete="list"
+                    aria-haspopup="listbox"
+                    onBlur={
+                        input.length < minimumCharacters
+                            ? handleOnBlur
+                            : undefined
+                    }
+                />
             </InputBox>
         );
     };
@@ -294,18 +278,18 @@ export const PredictiveTextInput = <T, V>({
             <DropdownList
                 listboxId={internalId}
                 listItems={options}
-                onSelectItem={(item: T, val: V) =>
-                    handleListItemClick(item, val)
-                }
-                onDismiss={() => handleListDismiss()}
+                onSelectItem={handleListItemClick}
+                onDismiss={handleListDismiss}
                 valueExtractor={valueExtractor}
                 listExtractor={listExtractor}
                 itemsLoadState={getItemsLoadState()}
                 itemTruncationType={"end"}
                 itemMaxLines={1}
                 labelDisplayType={"next-line"}
-                disableItemFocus={true}
+                disableItemFocus
                 onRetry={() => handleFetchOptions(input)}
+                width={dropdownWidth}
+                matchElementWidth
             />
         );
     };
@@ -322,7 +306,10 @@ export const PredictiveTextInput = <T, V>({
                 onDismiss={handleDismiss}
                 clickToToggle={false}
                 offset={8}
+                alignment={alignment}
                 fitAvailableHeight
+                customZIndex={dropdownZIndex}
+                rootNode={dropdownRootNode}
             />
         </DropdownListState>
     );
