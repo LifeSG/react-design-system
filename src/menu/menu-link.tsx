@@ -9,9 +9,14 @@ export const MenuLink = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+    const underlineStyle = "none";
     return (
         <MenuLinkDiv>
-            <Link data-testid={testId} {...otherProps}>
+            <Link
+                data-testid={testId}
+                underlineStyle={underlineStyle}
+                {...otherProps}
+            >
                 {children}
             </Link>
         </MenuLinkDiv>

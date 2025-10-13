@@ -72,7 +72,13 @@ export const Footer = <T,>({
 
         return (Object.keys(links) as (keyof InternalDisclaimerLinks)[]).map(
             (key) => {
-                return <DisclaimerTextLink key={key} {...links[key]} />;
+                return (
+                    <DisclaimerTextLink
+                        underlineStyle="none"
+                        key={key}
+                        {...links[key]}
+                    />
+                );
             }
         );
     };
@@ -80,10 +86,12 @@ export const Footer = <T,>({
     const renderFooterLinks = (links: FooterLinkProps<T>[]) => {
         return links.map((link, index) => {
             const { "data-options": _options, ...otherProps } = link;
+            const underlineStyle = "none";
 
             return (
                 <li key={index}>
                     <StyledFooterLink
+                        underlineStyle={underlineStyle}
                         {...otherProps}
                         onClick={(event) => handleLinkClick(event, link)}
                     />

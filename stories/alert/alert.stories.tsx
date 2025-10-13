@@ -72,6 +72,7 @@ export const WithBoldText: StoryObj<Component> = {
                         href="https://life.gov.sg"
                         target="_blank"
                         rel="noreferrer"
+                        style={{ textDecoration: "underline" }}
                     >
                         hyperlink
                     </a>
