@@ -22,6 +22,14 @@ const CCUBE_RESOURCES_LOGO: NavbarResourcesProps = {
     },
 };
 
+const IMDA_RESOURCE_LOGO: NavbarResourcesProps = {
+    primary: {
+        brandName: "IMDA",
+        logoSrc:
+            "https://assets.life.gov.sg/react-design-system/img/logo/imda-logo.svg",
+    },
+};
+
 const MYLEGACY_RESOURCES_LOGO: NavbarResourcesProps = {
     primary: {
         brandName: "MyLegacy",
@@ -47,6 +55,8 @@ export const getDefaultResourceLogo = (resourceScheme?: ResourceScheme) => {
             return CCUBE_RESOURCES_LOGO;
         case "supportgowhere":
             return SUPPORTGOWHERE_RESOURCE_LOGO;
+        case "imda":
+            return IMDA_RESOURCE_LOGO;
         default:
             return DEFAULT_RESOURCES_LOGO;
     }
