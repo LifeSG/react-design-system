@@ -15,6 +15,7 @@ interface StyledProps {
     $inline?: boolean | undefined;
     $paragraph?: boolean | undefined;
     $maxLines?: number | undefined;
+    $underlineStyle?: string | undefined;
 }
 
 // =============================================================================
@@ -35,7 +36,7 @@ export const HyperlinkBase = styled.a<StyledProps>`
     ${(props) => css`
         ${getTextStyle(props.$textStyle, props.$weight || "regular")}
         color: ${Colour.hyperlink};
-        text-decoration: none;
+        text-decoration: ${props.$underlineStyle ?? "underline"};
 
         &:hover,
         &:active,
