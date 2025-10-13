@@ -11,7 +11,7 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
     maxLines?: number | undefined;
 }
 
-export type UnderlineStyle = "none" | "underline";
+export type TypographyUnderlineStyle = "none" | "underline";
 
 export interface TypographyLinkProps
     extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -20,5 +20,5 @@ export interface TypographyLinkProps
     /** Displays indicator to signal that link leads to an external site */
     external?: boolean | undefined;
     /** Toggle text decoration for hyperlinks, underline by default */
-    underlineStyle?: UnderlineStyle;
+    underlineStyle?: TypographyUnderlineStyle | undefined;
 }

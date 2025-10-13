@@ -74,8 +74,8 @@ export const Footer = <T,>({
             (key) => {
                 return (
                     <DisclaimerTextLink
-                        underlineStyle="none"
                         key={key}
+                        underlineStyle="none"
                         {...links[key]}
                     />
                 );

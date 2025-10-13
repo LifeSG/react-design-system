@@ -89,7 +89,6 @@ export const TextStylingOptions: StoryObj<Component> = {
                         href="https://www.life.gov.sg"
                         target="_blank"
                         rel="noreferrer"
-                        style={{ textDecoration: "underline" }}
                     >
                         link
                     </a>
