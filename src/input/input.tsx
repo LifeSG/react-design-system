@@ -135,6 +135,7 @@ const Component = (
                         onClick={handleClear}
                         type="button"
                         $styleType={styleType}
+                        aria-label="Clear input"
                     >
                         <ClearIcon aria-hidden />
                     </ClearButton>

@@ -14,6 +14,7 @@ import { PredictiveTextInputProps } from "./types";
 import { ItemsLoadStateType } from "../shared/dropdown-list/types";
 
 export const PredictiveTextInput = <T, V>({
+    id,
     className,
     "data-testid": testId,
     selectedOption,
@@ -44,9 +45,13 @@ export const PredictiveTextInput = <T, V>({
     );
     const [isOpen, setIsOpen] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
+
     const triggerRef = useRef<HTMLDivElement | null>(null);
 
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const [resultAnnouncement, setResultAnnouncement] = useState<string | null>(
+        null
+    );
 
     const nodeRef = useRef<HTMLDivElement | null>(null);
     const selectorRef = useRef<HTMLButtonElement | null>(null);
@@ -138,6 +143,31 @@ export const PredictiveTextInput = <T, V>({
         setIsOptionSelected(!!selectedOption);
     }, [selectedOption]);
 
+    useEffect(() => {
+        const state = getItemsLoadState();
+        const count = options?.length ?? 0;
+
+        if (state === "loading") {
+            setResultAnnouncement("Loading suggested results");
+            return;
+        }
+
+        if (state === "fail") {
+            setResultAnnouncement("Suggestions failed to load. Try again.");
+            return;
+        }
+
+        if (count === 0) {
+            setResultAnnouncement(input ? "No result found." : null);
+        } else {
+            setResultAnnouncement(
+                `${count} result${
+                    count > 1 ? "s" : ""
+                } found. Press down arrow to scroll through the list.`
+            );
+        }
+    }, [options, input, isError, isLoading]);
+
     // =============================================================================
     // Cleanup: cancel debounce on unmount
     // =============================================================================
@@ -200,6 +230,8 @@ export const PredictiveTextInput = <T, V>({
         setInput("");
         setOptions([]);
         setIsOptionSelected(false);
+        setIsOpen(false);
+        setIsFocused(true);
         onSelectOption?.(undefined, undefined);
     };
 
@@ -257,6 +289,7 @@ export const PredictiveTextInput = <T, V>({
                 <ExpandableElement
                     ref={selectorRef as any}
                     disabled={disabled}
+                    aria-disabled={disabled}
                     expanded={
                         !!(
                             input &&
@@ -268,19 +301,37 @@ export const PredictiveTextInput = <T, V>({
                     popupRole="listbox"
                     readOnly={readOnly}
                 >
+                    <span
+                        id="predictive-input-instructions"
+                        style={{ display: "none" }}
+                    >
+                        Type in {minimumCharacters} or more characters for
+                        suggested results.
+                    </span>
                     <Input
+                        id={id}
                         type="text"
+                        aria-expanded={isOpen}
+                        aria-controls={internalId}
+                        aria-autocomplete="list"
                         value={input}
                         onChange={(e) => handleTyping(e.target.value)}
                         placeholder={placeholder}
                         readOnly={readOnly}
+                        aria-readonly={readOnly}
                         disabled={disabled}
+                        aria-disabled={disabled}
                         allowClear
                         onClear={handleOnClear}
                         styleType="no-border"
                         onBlur={
                             input.length < minimumCharacters
                                 ? handleOnBlur
+                                : undefined
+                        }
+                        aria-describedby={
+                            !readOnly && !disabled
+                                ? "predictive-input-instructions"
                                 : undefined
                         }
                     />
@@ -291,22 +342,40 @@ export const PredictiveTextInput = <T, V>({
 
     const renderDropdown = () => {
         return (
-            <DropdownList
-                listboxId={internalId}
-                listItems={options}
-                onSelectItem={(item: T, val: V) =>
-                    handleListItemClick(item, val)
-                }
-                onDismiss={() => handleListDismiss()}
-                valueExtractor={valueExtractor}
-                listExtractor={listExtractor}
-                itemsLoadState={getItemsLoadState()}
-                itemTruncationType={"end"}
-                itemMaxLines={1}
-                labelDisplayType={"next-line"}
-                disableItemFocus={true}
-                onRetry={() => handleFetchOptions(input)}
-            />
+            <>
+                {resultAnnouncement && (
+                    <div
+                        role="status"
+                        aria-live="polite"
+                        aria-atomic="true"
+                        style={{
+                            position: "absolute",
+                            width: 0,
+                            height: 0,
+                            overflow: "hidden",
+                        }}
+                    >
+                        {resultAnnouncement}
+                    </div>
+                )}
+                <DropdownList
+                    listboxId={internalId}
+                    listItems={options}
+                    onSelectItem={(item: T, val: V) =>
+                        handleListItemClick(item, val)
+                    }
+                    onDismiss={() => handleListDismiss()}
+                    valueExtractor={valueExtractor}
+                    listExtractor={listExtractor}
+                    itemsLoadState={getItemsLoadState()}
+                    itemTruncationType={"end"}
+                    itemMaxLines={1}
+                    labelDisplayType={"next-line"}
+                    disableItemFocus={true}
+                    onRetry={() => handleFetchOptions(input)}
+                    matchElementWidth
+                />
+            </>
         );
     };
 
