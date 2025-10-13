@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
-import { StringHelper, useNextInputState } from "../util";
+import { SimpleIdGenerator, StringHelper, useNextInputState } from "../util";
 import { UnitNumberInputProps } from "./types";
 import {
     FloorInput,
@@ -25,6 +26,11 @@ export const UnitNumberInput = ({
     readOnly,
     placeholder = "00-8888",
     autoComplete,
+    "data-testid": testId,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
+    "aria-label": textboxAriaLabel,
     ...otherProps
 }: UnitNumberInputProps) => {
     // =============================================================================
@@ -33,6 +39,11 @@ export const UnitNumberInput = ({
     const [floorValue, _setFloorValue] = useState<string>("");
     const [unitValue, _setUnitValue] = useState<string>("");
     const [currentFocus, _setCurrentFocus] = useState<FieldType>("none");
+    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const floorLabelId = `${internalId}-floor-label`;
+    const unitLabelId = `${internalId}-unit-label`;
+    const floorInstructionId = `${internalId}-floor-instruction`;
+    const unitInstructionId = `${internalId}-unit-instruction`;
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const floorInputRef = useRef<HTMLInputElement>(null);
@@ -285,6 +296,12 @@ export const UnitNumberInput = ({
                 pattern="[0-9A-Z]{2,3}"
                 data-testid="floor-input"
                 aria-label="floor-input"
+                aria-labelledby={concatIds(ariaLabelledBy, floorLabelId)}
+                aria-describedby={concatIds(
+                    ariaDescribedBy,
+                    floorInstructionId
+                )}
+                aria-invalid={ariaInvalid}
                 placeholder={
                     currentFocus === "floor" && !readOnly
                         ? ""
@@ -293,6 +310,11 @@ export const UnitNumberInput = ({
                 autoComplete={autoComplete}
                 styleType="no-border"
             />
+            <VisuallyHidden id={floorInstructionId}>
+                {readOnly || disabled
+                    ? " floor number - This field cannot be changed"
+                    : "To enter floor number, type"}
+            </VisuallyHidden>
             <UnitNumberDivider $inactive={floorValue.length === 0}>
                 -
             </UnitNumberDivider>
@@ -311,6 +333,9 @@ export const UnitNumberInput = ({
                 pattern="[0-9A-Z]{2,5}"
                 data-testid="unit-input"
                 aria-label="unit-input"
+                aria-labelledby={concatIds(ariaLabelledBy, unitLabelId)}
+                aria-describedby={concatIds(ariaDescribedBy, unitInstructionId)}
+                aria-invalid={ariaInvalid}
                 placeholder={
                     currentFocus === "unit" && !readOnly
                         ? ""
@@ -319,6 +344,11 @@ export const UnitNumberInput = ({
                 autoComplete={autoComplete}
                 styleType="no-border"
             />
+            <VisuallyHidden id={unitInstructionId}>
+                {readOnly
+                    ? " Unit number - This field cannot be changed."
+                    : "To enter unit number, type"}
+            </VisuallyHidden>
         </>
     );
 
@@ -326,7 +356,15 @@ export const UnitNumberInput = ({
         const displayValueArr = displayValue.split("-");
 
         return (
-            <ReadOnlyContainer>
+            <ReadOnlyContainer
+                data-testid="readonly-display"
+                tabIndex={0}
+                role="textbox"
+                aria-readonly
+                aria-labelledby={ariaLabelledBy}
+                aria-describedby={ariaDescribedBy}
+                aria-invalid={ariaInvalid}
+            >
                 <ReadOnlyLabel>{displayValueArr[0]}</ReadOnlyLabel>
                 <UnitNumberDivider>-</UnitNumberDivider>
                 <ReadOnlyLabel>{displayValueArr[1]}</ReadOnlyLabel>
