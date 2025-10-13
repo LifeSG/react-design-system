@@ -9,7 +9,7 @@ export interface FileItemDownloadProps {
     /** The remote path of the file */
     filePath: string;
     /** The custom error message or node to display when file download fails */
-    errorMessage?: string | React.ReactNode;
+    errorMessage?: string | React.ReactNode | undefined;
     /** The thumbnail of the file */
     thumbnailImageDataUrl?: string | undefined;
     /** Indicates if text should be truncated */

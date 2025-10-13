@@ -19,21 +19,20 @@ export const Label = styled.label`
 `;
 
 export const ErrorIcon = styled(ExclamationCircleFillIcon)`
-    margin-top: 0.344rem;
-    height: 1em;
+    height: 1lh;
     width: 1em;
     flex-shrink: 0;
     color: ${Colour["icon-error-strong"]};
 `;
 
 export const ErrorMessageContainer = styled.div`
+    ${Font["body-sm-semibold"]}
     display: flex;
     gap: ${Spacing["spacing-4"]};
     margin-top: ${Spacing["spacing-8"]};
 `;
 
 export const ErrorMessage = styled.p`
-    ${Font["body-sm-semibold"]}
     color: ${Colour["text-error"]};
     margin-bottom: 0;
     outline: none;

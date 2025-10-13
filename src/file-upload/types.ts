@@ -11,7 +11,7 @@ export interface FileItemProps {
     /** The upload progress display. Values from 0 to 1 */
     progress?: number | undefined;
     /** The error message display to indicate file upload error */
-    errorMessage?: string | React.ReactNode;
+    errorMessage?: string | React.ReactNode | undefined;
     /** The thumbnail of the file that will be rendered */
     thumbnailImageDataUrl?: string | undefined;
     /** Indicates if text should be truncated */

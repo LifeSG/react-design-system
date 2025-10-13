@@ -228,8 +228,7 @@ export const ItemDescriptionText = styled(ItemText)`
 `;
 
 export const ErrorIcon = styled(ExclamationCircleFillIcon)`
-    margin-top: 0.375rem;
-    height: 1em;
+    height: 1lh;
     width: 1em;
     flex-shrink: 0;
     color: ${Colour["icon-error-strong"]};
