@@ -86,12 +86,11 @@ export const Footer = <T,>({
     const renderFooterLinks = (links: FooterLinkProps<T>[]) => {
         return links.map((link, index) => {
             const { "data-options": _options, ...otherProps } = link;
-            const underlineStyle = "none";
 
             return (
                 <li key={index}>
                     <StyledFooterLink
-                        underlineStyle={underlineStyle}
+                        underlineStyle="none"
                         {...otherProps}
                         onClick={(event) => handleLinkClick(event, link)}
                     />

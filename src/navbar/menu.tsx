@@ -38,15 +38,13 @@ export const Menu = <T,>({
                 ? `link__mobile-${index + 1}`
                 : `link__${index + 1}`;
 
-            const underlineStyle = "none";
-
             return (
                 <MenuItem key={index}>
                     <Link
                         data-testid={testId}
                         {...otherItemAttrs}
                         onClick={handleLinkClick(item)}
-                        underlineStyle={underlineStyle}
+                        underlineStyle="none"
                         {...options}
                     >
                         {children}

@@ -133,7 +133,9 @@ export const ActionLinkText = styled(Typography.LinkSM)<StyleProps>`
     display: flex;
     align-items: center;
     align-self: flex-start;
-    text-decoration: ${(props) => props.underlineStyle ?? "none"} !important;
+    && {
+        text-decoration: ${(props) => props.underlineStyle ?? "none"};
+    }
 
     svg {
         height: 1rem;

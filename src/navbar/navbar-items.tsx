@@ -122,15 +122,13 @@ export const NavbarItems = <T,>({
                         selectedIndex === index &&
                         showSubMenu;
 
-                    const underlineStyle = "none";
-
                     return (
                         <LinkItem key={index} $hiddenBranding={hideNavBranding}>
                             <Link
                                 data-testid={testId}
                                 weight={textWeight}
                                 $selected={selected} /* for mobile */
-                                underlineStyle={underlineStyle}
+                                underlineStyle="none"
                                 {...otherItemAttrs}
                                 onClick={handleLinkClick(item, index)}
                                 aria-current={selected ? "page" : undefined}
