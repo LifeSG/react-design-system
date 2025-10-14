@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { IconButton as DSIconButton } from "../../icon-button";
 import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
@@ -8,6 +9,10 @@ import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
+
+interface BoxStyleProps {
+    $error?: boolean | undefined;
+}
 
 interface ContentSectionStyleProps {
     $hasThumbnail?: boolean | undefined;
@@ -28,7 +33,7 @@ export const Item = styled.li`
     }
 `;
 
-export const Box = styled.div`
+export const Box = styled.div<BoxStyleProps>`
     display: flex;
     align-items: center;
 
@@ -47,6 +52,19 @@ export const Box = styled.div`
     &:hover {
         background: ${Colour["bg-hover"]};
     }
+
+    ${(props) => {
+        if (props.$error) {
+            return css`
+                background: ${Colour["bg-error"]};
+                border-color: ${Colour["border-error"]};
+
+                &:hover {
+                    background: ${Colour["bg-error"]};
+                }
+            `;
+        }
+    }}
 `;
 
 export const ContentSection = styled.div<ContentSectionStyleProps>`
@@ -131,6 +149,13 @@ export const ItemDescriptionText = styled(ItemNameText)`
     margin-top: ${Spacing["spacing-4"]};
 `;
 
+export const ErrorIcon = styled(ExclamationCircleFillIcon)`
+    height: 1lh;
+    width: 1em;
+    flex-shrink: 0;
+    color: ${Colour["icon-error-strong"]};
+`;
+
 const BaseErrorMessage = styled.div`
     ${Font["body-sm-semibold"]}
     color: ${Colour["text-error"]};
@@ -138,6 +163,9 @@ const BaseErrorMessage = styled.div`
 
 export const DesktopErrorMessage = styled(BaseErrorMessage)`
     margin-top: ${Spacing["spacing-4"]};
+    display: flex;
+    gap: ${Spacing["spacing-4"]};
+
     ${MediaQuery.MaxWidth.lg} {
         display: none;
         visibility: hidden;
@@ -147,8 +175,10 @@ export const DesktopErrorMessage = styled(BaseErrorMessage)`
 export const MobileErrorMessage = styled(BaseErrorMessage)`
     display: none;
     visibility: hidden;
+
     ${MediaQuery.MaxWidth.lg} {
-        display: block;
+        display: flex;
+        gap: ${Spacing["spacing-4"]};
         visibility: visible;
         margin-top: ${Spacing["spacing-8"]};
     }

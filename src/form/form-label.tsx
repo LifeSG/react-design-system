@@ -1,6 +1,8 @@
 import { PopoverAddon } from "./form-label-addon";
 import {
+    ErrorIcon,
     ErrorMessage,
+    ErrorMessageContainer,
     Label,
     LabelContainer,
     Subtitle,
@@ -56,5 +58,10 @@ export const FormLabel = ({
 export const FormErrorMessage = (
     props: React.HTMLAttributes<HTMLElement>
 ): JSX.Element => {
-    return <ErrorMessage {...props} />;
+    return (
+        <ErrorMessageContainer>
+            <ErrorIcon aria-hidden />
+            <ErrorMessage {...props} />
+        </ErrorMessageContainer>
+    );
 };

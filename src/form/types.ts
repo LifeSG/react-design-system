@@ -51,7 +51,7 @@ export type FormElementLayoutType = "flex" | "grid" | "v2-grid";
 
 export interface BaseFormElementProps extends V2_ColProps, ColProps {
     label?: FormLabelProps | string | undefined;
-    errorMessage?: string | undefined;
+    errorMessage?: string | React.ReactNode | undefined;
     "data-error-testid"?: string | undefined;
     /** The layout type. Values: "flex" | "grid" */
     layoutType?: FormElementLayoutType | undefined;

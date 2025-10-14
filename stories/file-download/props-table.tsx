@@ -86,7 +86,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "errorMessage",
                 description:
                     "The custom error message to display when file download fails",
-                propTypes: ["string"],
+                propTypes: ["string", "React.ReactNode"],
             },
             {
                 name: "thumbnailImageDataUrl",

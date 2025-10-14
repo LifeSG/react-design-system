@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Colour, Font, Spacing } from "../theme";
 
@@ -17,10 +18,22 @@ export const Label = styled.label`
     font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
-export const ErrorMessage = styled.p`
+export const ErrorIcon = styled(ExclamationCircleFillIcon)`
+    height: 1lh;
+    width: 1em;
+    flex-shrink: 0;
+    color: ${Colour["icon-error-strong"]};
+`;
+
+export const ErrorMessageContainer = styled.div`
     ${Font["body-sm-semibold"]}
-    color: ${Colour["text-error"]};
+    display: flex;
+    gap: ${Spacing["spacing-4"]};
     margin-top: ${Spacing["spacing-8"]};
+`;
+
+export const ErrorMessage = styled.p`
+    color: ${Colour["text-error"]};
     margin-bottom: 0;
     outline: none;
 `;
