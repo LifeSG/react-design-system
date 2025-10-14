@@ -8,8 +8,10 @@ export const SAMPLE_ITEMS: UneditableSectionItemProps[] = [
     },
     {
         label: "NRIC or FIN",
-        value: "S••••534J",
+        value: "S1234534J",
         displayWidth: "half",
+        maskRange: [1, 4],
+        maskState: "masked",
     },
     {
         label: "Date of birth",

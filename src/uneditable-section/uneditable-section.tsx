@@ -75,7 +75,11 @@ export const UneditableSectionBase = ({
         return (
             <>
                 {title && (
-                    <Title weight="semibold" $stretch={stretch}>
+                    <Title
+                        forwardedAs="h2"
+                        weight="semibold"
+                        $stretch={stretch}
+                    >
                         {title}
                     </Title>
                 )}
