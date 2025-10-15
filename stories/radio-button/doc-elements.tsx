@@ -13,8 +13,16 @@ export const OptionContainer = styled.div`
         margin-bottom: 0.5rem;
     }
 `;
+OptionContainer.displayName = "div";
 
-export const Label = styled.label`
+export const OptionLabel = styled.label`
     ${Font["body-baseline-regular"]}
     cursor: pointer;
 `;
+OptionLabel.displayName = "label";
+
+export const RadioGroupLabel = styled.div`
+    ${Font["body-baseline-semibold"]}
+    margin-bottom: 1rem;
+`;
+RadioGroupLabel.displayName = "div";

@@ -33,11 +33,13 @@ export const RadioButton = ({
             <StyledCheckedIcon
                 data-testid="radio-checked"
                 $disabled={disabled}
+                aria-hidden
             />
         ) : (
             <StyledUnCheckedIcon
                 data-testid="radio-unchecked"
                 $disabled={disabled}
+                aria-hidden
             />
         );
     };
