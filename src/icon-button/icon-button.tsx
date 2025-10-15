@@ -10,10 +10,12 @@ const Component = (
         children,
         sizeType = "default",
         type = "button",
+        disabled = false,
         ...otherProps
     }: IconButtonProps,
     ref: ButtonRef
 ) => {
+    const ariaLabel = `${styleType} ${type}`;
     return (
         <Main
             data-testid={dataTestId || "iconButton"}
@@ -21,6 +23,9 @@ const Component = (
             type={type}
             $sizeType={sizeType}
             $styleType={styleType}
+            aria-label={ariaLabel}
+            aria-disabled={disabled}
+            disabled={disabled}
             {...otherProps}
         >
             {children}
