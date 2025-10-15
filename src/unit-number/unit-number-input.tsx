@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { concatIds, VisuallyHidden } from "../shared/accessibility";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { SimpleIdGenerator, StringHelper, useNextInputState } from "../util";
 import { UnitNumberInputProps } from "./types";
@@ -26,11 +26,9 @@ export const UnitNumberInput = ({
     readOnly,
     placeholder = "00-8888",
     autoComplete,
-    "data-testid": testId,
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     "aria-invalid": ariaInvalid,
-    "aria-label": textboxAriaLabel,
     ...otherProps
 }: UnitNumberInputProps) => {
     // =============================================================================
@@ -386,6 +384,10 @@ export const UnitNumberInput = ({
 
     const renderReadOnly = (displayValue: string) => {
         const displayValueArr = displayValue.split("-");
+        const liveMessageForReadOnly = [
+            formatPhraseWithPrefix("Dash", displayValueArr[0]),
+            formatPhraseWithPrefix("Hash", displayValueArr[1]),
+        ].join(" ");
 
         return (
             <ReadOnlyContainer
@@ -400,6 +402,7 @@ export const UnitNumberInput = ({
                 <ReadOnlyLabel>{displayValueArr[0]}</ReadOnlyLabel>
                 <UnitNumberDivider>-</UnitNumberDivider>
                 <ReadOnlyLabel>{displayValueArr[1]}</ReadOnlyLabel>
+                <VisuallyHidden>{liveMessageForReadOnly}</VisuallyHidden>
             </ReadOnlyContainer>
         );
     };
