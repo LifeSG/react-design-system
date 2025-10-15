@@ -11,6 +11,7 @@ const Component = (
         selected,
         error,
         type = "button",
+        disabled = false,
         ...otherProps
     }: ImageButtonProps,
     ref: ButtonRef
@@ -21,6 +22,11 @@ const Component = (
             $selected={selected}
             $error={error}
             type={type}
+            aria-label={
+                typeof children === "string" ? children : "Image button"
+            }
+            aria-disabled={disabled}
+            disabled={disabled}
             {...otherProps}
         >
             <ImageWithFallback src={imgSrc} />
