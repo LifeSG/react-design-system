@@ -39,11 +39,13 @@ export const UnitNumberInput = ({
     const [floorValue, _setFloorValue] = useState<string>("");
     const [unitValue, _setUnitValue] = useState<string>("");
     const [currentFocus, _setCurrentFocus] = useState<FieldType>("none");
+    const [liveMessage, setLiveMessage] = useState<string>("");
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
     const floorLabelId = `${internalId}-floor-label`;
     const unitLabelId = `${internalId}-unit-label`;
     const floorInstructionId = `${internalId}-floor-instruction`;
     const unitInstructionId = `${internalId}-unit-instruction`;
+    const liveMessageId = `${internalId}-live-message`;
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const floorInputRef = useRef<HTMLInputElement>(null);
@@ -106,6 +108,23 @@ export const UnitNumberInput = ({
     useEffect(() => {
         updateValues(value);
     }, [value]);
+
+    useEffect(() => {
+        let msg = "";
+        const floorMsg = formatPhraseWithPrefix("Hash", floorValue);
+        const unitMsg = formatPhraseWithPrefix("Dash", unitValue);
+        switch (currentFocus) {
+            case "floor":
+                msg = floorMsg;
+                break;
+            case "unit":
+                msg = floorValue ? [floorMsg, unitMsg].join(" ") : unitMsg;
+                break;
+            default:
+                msg = "";
+        }
+        setLiveMessage(msg);
+    }, [currentFocus, floorValue, unitValue]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -277,6 +296,10 @@ export const UnitNumberInput = ({
         return value.split("-");
     };
 
+    const formatPhraseWithPrefix = (prefix: "Hash" | "Dash", v: string) => {
+        return v ? `${prefix} ${Array.from(v).join(" ")}` : "";
+    };
+
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
@@ -299,7 +322,8 @@ export const UnitNumberInput = ({
                 aria-labelledby={concatIds(ariaLabelledBy, floorLabelId)}
                 aria-describedby={concatIds(
                     ariaDescribedBy,
-                    floorInstructionId
+                    floorInstructionId,
+                    liveMessageId
                 )}
                 aria-invalid={ariaInvalid}
                 placeholder={
@@ -312,8 +336,8 @@ export const UnitNumberInput = ({
             />
             <VisuallyHidden id={floorInstructionId}>
                 {readOnly || disabled
-                    ? " floor number - This field cannot be changed"
-                    : "To enter floor number, type"}
+                    ? "Floor number - This field cannot be changed"
+                    : "Enter floor number"}
             </VisuallyHidden>
             <UnitNumberDivider $inactive={floorValue.length === 0}>
                 -
@@ -334,7 +358,11 @@ export const UnitNumberInput = ({
                 data-testid="unit-input"
                 aria-label="unit-input"
                 aria-labelledby={concatIds(ariaLabelledBy, unitLabelId)}
-                aria-describedby={concatIds(ariaDescribedBy, unitInstructionId)}
+                aria-describedby={concatIds(
+                    ariaDescribedBy,
+                    unitInstructionId,
+                    liveMessageId
+                )}
                 aria-invalid={ariaInvalid}
                 placeholder={
                     currentFocus === "unit" && !readOnly
@@ -345,9 +373,13 @@ export const UnitNumberInput = ({
                 styleType="no-border"
             />
             <VisuallyHidden id={unitInstructionId}>
-                {readOnly
-                    ? " Unit number - This field cannot be changed."
-                    : "To enter unit number, type"}
+                {readOnly || disabled
+                    ? "Unit number - This field cannot be changed"
+                    : "Enter unit number"}
+            </VisuallyHidden>
+            {/** Live message for AT reader to read with the combination of prefix and current value for both floor input and unit input */}
+            <VisuallyHidden id={liveMessageId} aria-live="polite">
+                {liveMessage}
             </VisuallyHidden>
         </>
     );
