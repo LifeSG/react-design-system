@@ -66,14 +66,6 @@ export const Wrapper = styled.div<StyleProps>`
                 ${borderColor};
         `;
     }}
-
-    color: ${Colour.text};
-    ${(props) => {
-        if (props.$sizeType === "small") {
-            return applyHtmlContentStyle({ textSize: "body-sm" });
-        }
-        return applyHtmlContentStyle({ textSize: "body-md" });
-    }}
 `;
 
 export const AlertIconWrapper = styled.div<StyleProps>`
@@ -133,9 +125,6 @@ export const ActionLinkText = styled(Typography.LinkSM)<StyleProps>`
     display: flex;
     align-items: center;
     align-self: flex-start;
-    && {
-        text-decoration: ${(props) => props.underlineStyle ?? "none"};
-    }
 
     svg {
         height: 1rem;
@@ -172,6 +161,17 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
                 -webkit-mask-image: ${gradient};
                 mask-image: ${gradient};
 			`;
+    }}
+`;
+
+export const TextWrapper = styled.div<StyleProps>`
+    color: ${Colour.text};
+
+    ${(props) => {
+        if (props.$sizeType === "small") {
+            return applyHtmlContentStyle({ textSize: "body-sm" });
+        }
+        return applyHtmlContentStyle({ textSize: "body-md" });
     }}
 `;
 
