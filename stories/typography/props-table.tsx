@@ -82,6 +82,12 @@ const LINK_DATA: ApiTableSectionProps[] = [
                     "Indicates if the link is external to the domain. Adds an indicator at the end of the link",
                 propTypes: ["boolean"],
             },
+            {
+                name: "underlineStyle",
+                description: "The text decoration of the hyperlink component",
+                propTypes: [`"underline"`, `"none"`],
+                defaultValue: `"underline"`,
+            },
         ],
     },
 ];

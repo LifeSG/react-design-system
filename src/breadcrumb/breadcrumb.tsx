@@ -119,7 +119,13 @@ export const Breadcrumb = ({
                     </CurrentLabel>
                 );
             } else {
-                element = <PreviousLink {...link} weight="semibold" />;
+                element = (
+                    <PreviousLink
+                        {...link}
+                        weight="semibold"
+                        underlineStyle="none"
+                    />
+                );
             }
 
             return (
