@@ -169,7 +169,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     ${(props) => {
         if (props.$hasThumbnail) {
             return css`
-                ${MediaQuery.MaxWidth.sm} {
+                ${MediaQuery.MaxWidth.md} {
                     flex-direction: row;
                     align-items: center;
                 }
@@ -190,7 +190,7 @@ export const ExtendedNameSection = styled.div`
     flex: 1;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
@@ -203,7 +203,7 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     margin-left: ${Spacing["spacing-8"]};
     justify-content: flex-end;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         ${(props) => {
             if (props.$hideInMobile) {
                 return css`
@@ -268,7 +268,7 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
     justify-content: flex-end;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         width: fit-content;
 
         ${(props) => {
