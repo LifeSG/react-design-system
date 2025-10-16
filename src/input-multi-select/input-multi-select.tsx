@@ -74,10 +74,10 @@ export const InputMultiSelect = <T, V>({
     useEffect(() => {
         setSelected(selectedOptions || []);
         setSelectedIndex(
-            selectedOptions
-                ? findIndex(options, (option) => {
-                      return isEqual(option, selectedOptions[0]);
-                  })
+            selectedOptions?.[0]
+                ? findIndex(options, (option) =>
+                      isEqual(option, selectedOptions[0])
+                  )
                 : -1
         );
     }, [selectedOptions]);
@@ -88,9 +88,11 @@ export const InputMultiSelect = <T, V>({
     const handleSelectAllClick = () => {
         if ((selected && selected.length > 0) || maxSelectable) {
             setSelected([]);
+            setSelectedIndex(-1);
             performOnSelectOptions([]);
         } else {
             setSelected(options);
+            setSelectedIndex(0);
             performOnSelectOptions(options);
         }
     };
@@ -113,6 +115,7 @@ export const InputMultiSelect = <T, V>({
         }
 
         setSelected(selectedCopy);
+        setSelectedIndex(findIndex(options, (option) => isEqual(option, item)));
         performOnSelectOptions(selectedCopy);
     };
 

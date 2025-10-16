@@ -78,9 +78,9 @@ export const InputSelect = <T, V>({
         setSelected(selectedOption);
         setSelectedIndex(
             selectedOption
-                ? findIndex(options, (option) => {
-                      return isEqual(option, selectedOption);
-                  })
+                ? findIndex(options, (option) =>
+                      isEqual(option, selectedOption)
+                  )
                 : -1
         );
     }, [selectedOption]);
@@ -91,6 +91,7 @@ export const InputSelect = <T, V>({
     const handleListItemClick = (item: T, extractedValue: V) => {
         selectorRef.current?.focus();
         setSelected(item);
+        setSelectedIndex(findIndex(options, (option) => isEqual(option, item)));
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
