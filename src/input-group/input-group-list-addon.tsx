@@ -137,6 +137,7 @@ export const Component = <T, V>(
     const handleListItemClick = (item: T, extractedValue: V) => {
         selectorRef.current?.focus();
         setSelected(item);
+        setSelectedIndex(findIndex(options, (option) => isEqual(option, item)));
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
