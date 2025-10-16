@@ -29,7 +29,7 @@ export const Container = styled.div<StyleProps>`
                 })}
                 padding: ${Spacing["spacing-32"]};
 
-                ${MediaQuery.MaxWidth.sm} {
+                ${MediaQuery.MaxWidth.md} {
                     padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]};
                 }
             `;
