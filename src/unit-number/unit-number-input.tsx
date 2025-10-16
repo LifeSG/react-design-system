@@ -1,5 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import {
+    VisuallyHidden,
+    concatIds,
+    formatPhraseWithPrefix,
+} from "../shared/accessibility";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { SimpleIdGenerator, StringHelper, useNextInputState } from "../util";
 import { UnitNumberInputProps } from "./types";
@@ -37,7 +41,7 @@ export const UnitNumberInput = ({
     const [floorValue, _setFloorValue] = useState<string>("");
     const [unitValue, _setUnitValue] = useState<string>("");
     const [currentFocus, _setCurrentFocus] = useState<FieldType>("none");
-    const [liveMessage, setLiveMessage] = useState<string>("");
+    // const [liveMessage, setLiveMessage] = useState<string>("");
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
     const floorLabelId = `${internalId}-floor-label`;
     const unitLabelId = `${internalId}-unit-label`;
@@ -107,7 +111,11 @@ export const UnitNumberInput = ({
         updateValues(value);
     }, [value]);
 
-    useEffect(() => {
+    // =============================================================================
+    // MEMO VALUEs
+    // =============================================================================
+
+    const liveMessage = useMemo(() => {
         let msg = "";
         const floorMsg = formatPhraseWithPrefix("Hash", floorValue);
         const unitMsg = formatPhraseWithPrefix("Dash", unitValue);
@@ -121,7 +129,7 @@ export const UnitNumberInput = ({
             default:
                 msg = "";
         }
-        setLiveMessage(msg);
+        return msg;
     }, [currentFocus, floorValue, unitValue]);
 
     // =============================================================================
@@ -292,10 +300,6 @@ export const UnitNumberInput = ({
 
     const getPlaceholder = (value: string) => {
         return value.split("-");
-    };
-
-    const formatPhraseWithPrefix = (prefix: "Hash" | "Dash", v: string) => {
-        return v ? `${prefix} ${Array.from(v).join(" ")}` : "";
     };
 
     // =============================================================================

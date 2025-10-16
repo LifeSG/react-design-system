@@ -25,3 +25,7 @@ export const inertValue = (value: boolean | undefined) => {
 export const concatIds = (...selectors: (string | undefined)[]) => {
     return selectors.filter((selector) => !!selector).join(" ");
 };
+
+export const formatPhraseWithPrefix = (prefix: string, v: string) => {
+    return v ? `${prefix} ${Array.from(v).join(" ")}` : "";
+};
