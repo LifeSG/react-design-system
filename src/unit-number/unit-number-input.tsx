@@ -41,7 +41,6 @@ export const UnitNumberInput = ({
     const [floorValue, _setFloorValue] = useState<string>("");
     const [unitValue, _setUnitValue] = useState<string>("");
     const [currentFocus, _setCurrentFocus] = useState<FieldType>("none");
-    // const [liveMessage, setLiveMessage] = useState<string>("");
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
     const floorLabelId = `${internalId}-floor-label`;
     const unitLabelId = `${internalId}-unit-label`;
@@ -389,8 +388,8 @@ export const UnitNumberInput = ({
     const renderReadOnly = (displayValue: string) => {
         const displayValueArr = displayValue.split("-");
         const liveMessageForReadOnly = [
-            formatPhraseWithPrefix("Dash", displayValueArr[0]),
-            formatPhraseWithPrefix("Hash", displayValueArr[1]),
+            formatPhraseWithPrefix("Hash", displayValueArr[0]),
+            formatPhraseWithPrefix("Dash", displayValueArr[1]),
         ].join(" ");
 
         return (
