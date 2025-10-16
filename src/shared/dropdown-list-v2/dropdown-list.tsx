@@ -90,11 +90,12 @@ export const DropdownList = <T, V>({
     const { focusedIndex, setFocusedIndex } = useContext(
         DropdownListStateContext
     );
-    const { elementWidth, setFloatingRef, getFloatingProps, styles } =
+    const { elementWidth, setFloatingRef, getFloatingProps, styles, resized } =
         useDropdownRender();
     const [searchValue, setSearchValue] = useState<string>("");
     const [displayListItems, setDisplayListItems] = useState(listItems ?? []);
     const itemsLoadStateChanged = useCompare(itemsLoadState);
+    const resizedChanged = useCompare(resized);
     const mounted = useIsMounted();
 
     const nodeRef = useRef<HTMLDivElement | null>(null);
@@ -272,8 +273,10 @@ export const DropdownList = <T, V>({
     }, [listItemRefs, listItems, setFocusedIndex, topScrollItem]);
 
     useEffect(() => {
-        if (mounted) {
-            // only run on mount
+        if (disableItemFocus || !listItems) return;
+
+        if (!resized || !resizedChanged) {
+            // only run when dropdown has completed resizing
             return;
         }
 
@@ -299,8 +302,9 @@ export const DropdownList = <T, V>({
         disableItemFocus,
         focusedIndex,
         listItems,
-        mounted,
         setFocusedIndex,
+        resizedChanged,
+        resized,
     ]);
 
     useEffect(() => {
