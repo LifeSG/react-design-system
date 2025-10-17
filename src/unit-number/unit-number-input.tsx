@@ -1,9 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-    VisuallyHidden,
-    concatIds,
-    formatPhraseWithPrefix,
-} from "../shared/accessibility";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { SimpleIdGenerator, StringHelper, useNextInputState } from "../util";
 import { UnitNumberInputProps } from "./types";
@@ -44,8 +40,6 @@ export const UnitNumberInput = ({
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
     const floorLabelId = `${internalId}-floor-label`;
     const unitLabelId = `${internalId}-unit-label`;
-    const floorInstructionId = `${internalId}-floor-instruction`;
-    const unitInstructionId = `${internalId}-unit-instruction`;
     const liveMessageId = `${internalId}-live-message`;
 
     const nodeRef = useRef<HTMLDivElement>(null);
@@ -73,6 +67,23 @@ export const UnitNumberInput = ({
         ref: unitInputRef,
         formatter,
     });
+
+    const liveMessage = useMemo(() => {
+        let msg = "";
+        const floorMsg = formatPhraseWithPrefix("Hash", floorValue);
+        const unitMsg = formatPhraseWithPrefix("Dash", unitValue);
+        switch (currentFocus) {
+            case "floor":
+                msg = floorMsg;
+                break;
+            case "unit":
+                msg = floorValue ? [floorMsg, unitMsg].join(" ") : unitMsg;
+                break;
+            default:
+                msg = "";
+        }
+        return msg;
+    }, [currentFocus, floorValue, unitValue]);
 
     // =============================================================================
     // REF FUNCTIONS
@@ -109,27 +120,6 @@ export const UnitNumberInput = ({
     useEffect(() => {
         updateValues(value);
     }, [value]);
-
-    // =============================================================================
-    // MEMO VALUEs
-    // =============================================================================
-
-    const liveMessage = useMemo(() => {
-        let msg = "";
-        const floorMsg = formatPhraseWithPrefix("Hash", floorValue);
-        const unitMsg = formatPhraseWithPrefix("Dash", unitValue);
-        switch (currentFocus) {
-            case "floor":
-                msg = floorMsg;
-                break;
-            case "unit":
-                msg = floorValue ? [floorMsg, unitMsg].join(" ") : unitMsg;
-                break;
-            default:
-                msg = "";
-        }
-        return msg;
-    }, [currentFocus, floorValue, unitValue]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -301,6 +291,10 @@ export const UnitNumberInput = ({
         return value.split("-");
     };
 
+    function formatPhraseWithPrefix(prefix: string, v: string) {
+        return v ? `${prefix} ${Array.from(v).join(" ")}` : "";
+    }
+
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
@@ -319,26 +313,19 @@ export const UnitNumberInput = ({
                 type="text"
                 pattern="[0-9A-Z]{2,3}"
                 data-testid="floor-input"
-                aria-label="floor-input"
                 aria-labelledby={concatIds(ariaLabelledBy, floorLabelId)}
-                aria-describedby={concatIds(
-                    ariaDescribedBy,
-                    floorInstructionId,
-                    liveMessageId
-                )}
+                aria-describedby={concatIds(ariaDescribedBy, liveMessageId)}
                 aria-invalid={ariaInvalid}
                 placeholder={
-                    currentFocus === "floor" && !readOnly
+                    currentFocus === "floor" && !readOnly && !disabled
                         ? ""
                         : getPlaceholder(placeholder)[0]
                 }
                 autoComplete={autoComplete}
                 styleType="no-border"
             />
-            <VisuallyHidden id={floorInstructionId}>
-                {readOnly || disabled
-                    ? "Floor number - This field cannot be changed"
-                    : "Enter floor number"}
+            <VisuallyHidden aria-hidden id={floorLabelId}>
+                Enter floor number
             </VisuallyHidden>
             <UnitNumberDivider $inactive={floorValue.length === 0}>
                 -
@@ -357,27 +344,18 @@ export const UnitNumberInput = ({
                 type="text"
                 pattern="[0-9A-Z]{2,5}"
                 data-testid="unit-input"
-                aria-label="unit-input"
                 aria-labelledby={concatIds(ariaLabelledBy, unitLabelId)}
-                aria-describedby={concatIds(
-                    ariaDescribedBy,
-                    unitInstructionId,
-                    liveMessageId
-                )}
+                aria-describedby={concatIds(ariaDescribedBy, liveMessageId)}
                 aria-invalid={ariaInvalid}
                 placeholder={
-                    currentFocus === "unit" && !readOnly
+                    currentFocus === "unit" && !readOnly && !disabled
                         ? ""
                         : getPlaceholder(placeholder)[1]
                 }
                 autoComplete={autoComplete}
                 styleType="no-border"
             />
-            <VisuallyHidden id={unitInstructionId}>
-                {readOnly || disabled
-                    ? "Unit number - This field cannot be changed"
-                    : "Enter unit number"}
-            </VisuallyHidden>
+            <VisuallyHidden id={unitLabelId}>Enter unit number</VisuallyHidden>
             {/** Live message for AT reader to read with the combination of prefix and current value for both floor input and unit input */}
             <VisuallyHidden id={liveMessageId} aria-live="polite">
                 {liveMessage}
