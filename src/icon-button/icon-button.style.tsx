@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { SizeType, StyleType } from "./types";
 import { Border, Colour, Radius } from "../theme";
 interface StyleProps {
-    $styleType: StyleType;
+    $styleType: StyleType | "disabled";
     $sizeType: SizeType;
 }
 

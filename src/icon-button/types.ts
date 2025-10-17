@@ -6,6 +6,6 @@ export interface IconButtonProps
     focusableWhenDisabled?: boolean | undefined;
 }
 
-export type StyleType = "primary" | "secondary" | "light" | "disabled";
+export type StyleType = "primary" | "secondary" | "light";
 
 export type SizeType = "large" | "default" | "small";
