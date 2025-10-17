@@ -86,3 +86,15 @@ export const CustomComponents: StoryObj<Component> = {
         );
     },
 };
+
+export const FocusableWhenDisabled: StoryObj<Component> = {
+    render: (_args) => (
+        <IconButton
+            disabled
+            focusableWhenDisabled
+            onClick={() => alert("I shouldn't be here!")}
+        >
+            <LockIcon />
+        </IconButton>
+    ),
+};
