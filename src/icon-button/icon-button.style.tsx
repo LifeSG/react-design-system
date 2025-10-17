@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { SizeType, StyleType } from "./types";
 import { Border, Colour, Radius } from "../theme";
 interface StyleProps {
-    $styleType: StyleType;
+    $styleType: StyleType | "disabled";
     $sizeType: SizeType;
 }
 
@@ -80,7 +80,14 @@ export const Main = styled.button<StyleProps>`
                         background-color: ${Colour["bg-hover-neutral"]};
                     }
                 `;
-            case "primary":
+            case "disabled":
+                return css`
+                    background-color: ${Colour["bg-disabled"]};
+                    border: ${Border["width-010"]} ${Border["solid"]}
+                        ${Colour["border-disabled"]};
+                    color: ${Colour["text-disabled"]};
+                    cursor: not-allowed;
+                `;
             default:
                 return css`
                     background-color: ${Colour["bg-primary"]};
@@ -93,12 +100,4 @@ export const Main = styled.button<StyleProps>`
                 `;
         }
     }}
-
-    &:disabled {
-        background-color: ${Colour["bg-disabled"]};
-        border: ${Border["width-010"]} ${Border["solid"]}
-            ${Colour["border-disabled"]};
-        color: ${Colour["text-disabled"]};
-        cursor: not-allowed;
-    }
 `;
