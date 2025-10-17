@@ -11,21 +11,22 @@ const Component = (
         sizeType = "default",
         type = "button",
         disabled = false,
+        focusableWhenDisabled = false,
+        onClick,
         ...otherProps
     }: IconButtonProps,
     ref: ButtonRef
 ) => {
-    const ariaLabel = `${styleType} ${type}`;
     return (
         <Main
             data-testid={dataTestId || "iconButton"}
             ref={ref}
             type={type}
+            $styleType={disabled ? "disabled" : styleType}
             $sizeType={sizeType}
-            $styleType={styleType}
-            aria-label={ariaLabel}
             aria-disabled={disabled}
-            disabled={disabled}
+            disabled={disabled && !focusableWhenDisabled}
+            onClick={disabled ? undefined : onClick}
             {...otherProps}
         >
             {children}
