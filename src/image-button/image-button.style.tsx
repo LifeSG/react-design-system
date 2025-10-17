@@ -5,6 +5,7 @@ import { MediaQuery } from "../theme";
 export const Main = styled.button<{
     $selected?: boolean;
     $error?: boolean;
+    $disabled?: boolean;
 }>`
     display: flex;
     flex: 1;
@@ -65,18 +66,17 @@ export const Main = styled.button<{
             `;
         }
     }}
-
-    &:disabled {
-        &:hover {
-            border: ${Border["width-010"]} ${Border.solid} transparent;
-        }
-        box-shadow: none;
-        img {
-            filter: grayscale(100%);
-        }
-        color: ${Colour["text-disabled"]};
-
-        outline: none;
-        cursor: not-allowed;
-    }
+    ${(props) =>
+        props.$disabled &&
+        css`
+            &:hover {
+                border: ${Border["width-010"]} ${Border.solid} transparent;
+            }
+            box-shadow: none;
+            img {
+                filter: grayscale(100%);
+            }
+            color: ${Colour["text-disabled"]};
+            cursor: not-allowed;
+        `}
 `;

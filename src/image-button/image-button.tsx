@@ -12,6 +12,8 @@ const Component = (
         error,
         type = "button",
         disabled = false,
+        focusableWhenDisabled = false,
+        onClick,
         ...otherProps
     }: ImageButtonProps,
     ref: ButtonRef
@@ -19,14 +21,13 @@ const Component = (
     return (
         <Main
             ref={ref}
+            $disabled={disabled}
             $selected={selected}
             $error={error}
             type={type}
-            aria-label={
-                typeof children === "string" ? children : "Image button"
-            }
             aria-disabled={disabled}
-            disabled={disabled}
+            disabled={disabled && !focusableWhenDisabled}
+            onClick={disabled ? undefined : onClick}
             {...otherProps}
         >
             <ImageWithFallback src={imgSrc} />
