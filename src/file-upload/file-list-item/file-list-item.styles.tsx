@@ -121,7 +121,7 @@ export const Box = styled.div<BoxStyleProps>`
     align-items: center;
     width: 100%;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         padding: ${Spacing["spacing-16"]};
     }
 
@@ -146,7 +146,7 @@ export const Box = styled.div<BoxStyleProps>`
     ${(props) => {
         if (!props.$error && (props.$loading || props.$editable)) {
             return css`
-                ${MediaQuery.MaxWidth.sm} {
+                ${MediaQuery.MaxWidth.md} {
                     flex-direction: column;
                     align-items: flex-start;
                 }
@@ -160,7 +160,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     flex: 1;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
         width: 100%;
         align-items: flex-start;
@@ -169,7 +169,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     ${(props) => {
         if (props.$hasThumbnail) {
             return css`
-                ${MediaQuery.MaxWidth.sm} {
+                ${MediaQuery.MaxWidth.md} {
                     flex-direction: row;
                     align-items: center;
                 }
@@ -190,7 +190,7 @@ export const ExtendedNameSection = styled.div`
     flex: 1;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
@@ -203,7 +203,7 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     margin-left: ${Spacing["spacing-8"]};
     justify-content: flex-end;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         ${(props) => {
             if (props.$hideInMobile) {
                 return css`
@@ -243,7 +243,7 @@ export const DesktopErrorMessage = styled(BaseErrorMessage)`
     display: flex;
     gap: ${Spacing["spacing-4"]};
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         display: none;
         visibility: hidden;
     }
@@ -253,7 +253,7 @@ export const MobileErrorMessage = styled(BaseErrorMessage)`
     display: none;
     visibility: hidden;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         display: flex;
         gap: ${Spacing["spacing-4"]};
         visibility: visible;
@@ -268,7 +268,7 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
     justify-content: flex-end;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         width: fit-content;
 
         ${(props) => {

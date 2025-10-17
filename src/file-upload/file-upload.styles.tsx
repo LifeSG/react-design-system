@@ -41,7 +41,7 @@ export const UploadButtonContainer = styled.div`
     flex-direction: column;
     align-items: flex-end;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         align-items: flex-start;
     }
 `;
@@ -49,7 +49,7 @@ export const UploadButtonContainer = styled.div`
 export const UploadButton = styled(Button.Small)`
     width: 10rem;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         width: 100%;
     }
 `;
@@ -59,7 +59,7 @@ export const UploadButtonText = styled(Typography.BodyMD)`
     margin-top: ${Spacing["spacing-8"]};
     width: 10rem;
     text-align: center;
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         display: none;
         visibility: hidden;
     }
