@@ -64,3 +64,16 @@ export const FlexBehaviour: StoryObj<Component> = {
         imgSrc: "https://cdn-icons-png.flaticon.com/512/4401/4401459.png",
     },
 };
+
+export const FocusableWhenDisabled: StoryObj<Component> = {
+    render: (_args) => (
+        <ImageButton
+            disabled
+            focusableWhenDisabled
+            onClick={() => alert("I shouldn't be here!")}
+            imgSrc="https://cdn-icons-png.flaticon.com/512/4401/4401459.png"
+        >
+            Office Equipment
+        </ImageButton>
+    ),
+};
