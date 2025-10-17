@@ -355,7 +355,7 @@ export const UnitNumberInput = ({
                 autoComplete={autoComplete}
                 styleType="no-border"
             />
-            <VisuallyHidden id={unitLabelId}>Enter unit number</VisuallyHidden>
+            <VisuallyHidden aria-hidden id={unitLabelId}>Enter unit number</VisuallyHidden>
             {/** Live message for AT reader to read with the combination of prefix and current value for both floor input and unit input */}
             <VisuallyHidden id={liveMessageId} aria-live="polite">
                 {liveMessage}
