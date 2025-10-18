@@ -13,6 +13,7 @@ import {
     ChevronIcon,
     ContentContainer,
     ShowMoreButton,
+    TextWrapper,
     TextWrapperContainer,
     Wrapper,
 } from "./alert.style";
@@ -118,6 +119,7 @@ export const Alert = ({
                 data-testid="action-link"
                 $type={type}
                 $sizeType={sizeType}
+                underlineStyle="none"
                 {...actionLink}
             >
                 {actionLink.children}
@@ -156,7 +158,9 @@ export const Alert = ({
             $hasActionLink={!!actionLink}
             inert={inertValue(isInert())}
         >
-            <div ref={contentRef}>{children}</div>
+            <TextWrapper ref={contentRef} $type={type} $sizeType={sizeType}>
+                {children}
+            </TextWrapper>
             {renderLink()}
         </TextWrapperContainer>
     );

@@ -12,6 +12,7 @@ export const ErrorMessageContainer = styled.div`
     display: flex;
     flex: 1;
     margin-right: ${Spacing["spacing-12"]};
+    gap: ${Spacing["spacing-4"]};
 `;
 
 export const ErrorMessageLabel = styled(ErrorMessage)`

@@ -166,7 +166,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "errorMessage",
                 description:
                     "The error message display to indicate file upload error",
-                propTypes: ["string"],
+                propTypes: ["string", "React.ReactNode"],
             },
             {
                 name: "thumbnailImageDataUrl",

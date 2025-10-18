@@ -1,5 +1,6 @@
-import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
 import styled, { css } from "styled-components";
+import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { IconButton as DSIconButton } from "../../icon-button";
 import { ClickableIcon } from "../../shared/clickable-icon";
 import {
@@ -120,7 +121,7 @@ export const Box = styled.div<BoxStyleProps>`
     align-items: center;
     width: 100%;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         padding: ${Spacing["spacing-16"]};
     }
 
@@ -145,7 +146,7 @@ export const Box = styled.div<BoxStyleProps>`
     ${(props) => {
         if (!props.$error && (props.$loading || props.$editable)) {
             return css`
-                ${MediaQuery.MaxWidth.sm} {
+                ${MediaQuery.MaxWidth.md} {
                     flex-direction: column;
                     align-items: flex-start;
                 }
@@ -159,7 +160,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     flex: 1;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
         width: 100%;
         align-items: flex-start;
@@ -168,7 +169,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     ${(props) => {
         if (props.$hasThumbnail) {
             return css`
-                ${MediaQuery.MaxWidth.sm} {
+                ${MediaQuery.MaxWidth.md} {
                     flex-direction: row;
                     align-items: center;
                 }
@@ -189,7 +190,7 @@ export const ExtendedNameSection = styled.div`
     flex: 1;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
@@ -202,7 +203,7 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     margin-left: ${Spacing["spacing-8"]};
     justify-content: flex-end;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         ${(props) => {
             if (props.$hideInMobile) {
                 return css`
@@ -226,13 +227,23 @@ export const ItemDescriptionText = styled(ItemText)`
     margin-top: ${Spacing["spacing-4"]};
 `;
 
+export const ErrorIcon = styled(ExclamationCircleFillIcon)`
+    height: 1lh;
+    width: 1em;
+    flex-shrink: 0;
+    color: ${Colour["icon-error-strong"]};
+`;
+
 export const BaseErrorMessage = styled(Typography.BodySM)`
     color: ${Colour["text-error"]};
 `;
 
 export const DesktopErrorMessage = styled(BaseErrorMessage)`
     margin-top: ${Spacing["spacing-4"]};
-    ${MediaQuery.MaxWidth.sm} {
+    display: flex;
+    gap: ${Spacing["spacing-4"]};
+
+    ${MediaQuery.MaxWidth.md} {
         display: none;
         visibility: hidden;
     }
@@ -241,8 +252,10 @@ export const DesktopErrorMessage = styled(BaseErrorMessage)`
 export const MobileErrorMessage = styled(BaseErrorMessage)`
     display: none;
     visibility: hidden;
-    ${MediaQuery.MaxWidth.sm} {
-        display: block;
+
+    ${MediaQuery.MaxWidth.md} {
+        display: flex;
+        gap: ${Spacing["spacing-4"]};
         visibility: visible;
         margin-top: ${Spacing["spacing-8"]};
     }
@@ -255,7 +268,7 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
     justify-content: flex-end;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         width: fit-content;
 
         ${(props) => {
