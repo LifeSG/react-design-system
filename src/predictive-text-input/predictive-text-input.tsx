@@ -9,7 +9,6 @@ import { PredictiveTextInputProps } from "./types";
 import { ItemsLoadStateType } from "../shared/dropdown-list/types";
 
 export const PredictiveTextInput = <T, V>({
-    id,
     className,
     "data-testid": testId,
     selectedOption,
@@ -224,7 +223,6 @@ export const PredictiveTextInput = <T, V>({
 
     const handleOnClear = () => {
         setInput("");
-        setIsOpen(false);
         setOptions([]);
         setIsOptionSelected(false);
         setIsOpen(false);
@@ -251,17 +249,6 @@ export const PredictiveTextInput = <T, V>({
         setIsOptionSelected(!!item);
         setOptions([]);
         setIsLoading(true);
-    };
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Escape") {
-            e.stopPropagation();
-            e.preventDefault();
-            if (isOpen) {
-                setIsOpen(false);
-                setIsFocused(false);
-            }
-        }
     };
 
     // =============================================================================
@@ -318,14 +305,10 @@ export const PredictiveTextInput = <T, V>({
                     </span>
                 )}
                 <Input
-                    id={id}
+                    id={internalId}
                     type="text"
-                    aria-expanded={isOpen}
-                    aria-controls={isOpen ? internalId : undefined} // only apply when dropdown is mounted
-                    aria-autocomplete="list"
                     value={input}
                     onChange={handleTyping}
-                    onKeyDown={handleKeyDown}
                     placeholder={placeholder}
                     readOnly={readOnly}
                     aria-readonly={readOnly}
@@ -334,6 +317,10 @@ export const PredictiveTextInput = <T, V>({
                     aria-invalid={!!errorMessage}
                     allowClear
                     onClear={handleOnClear}
+                    aria-expanded={isOpen}
+                    aria-controls={internalId}
+                    aria-autocomplete="list"
+                    aria-haspopup="listbox"
                     onBlur={
                         input.length < minimumCharacters
                             ? handleOnBlur
@@ -373,9 +360,7 @@ export const PredictiveTextInput = <T, V>({
                 <DropdownList
                     listboxId={internalId}
                     listItems={options}
-                    onSelectItem={(item: T, val: V) =>
-                        handleListItemClick(item, val)
-                    }
+                    onSelectItem={handleListItemClick}
                     onDismiss={handleListDismiss}
                     valueExtractor={valueExtractor}
                     listExtractor={listExtractor}
