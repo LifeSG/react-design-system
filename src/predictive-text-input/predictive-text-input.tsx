@@ -226,7 +226,6 @@ export const PredictiveTextInput = <T, V>({
         setOptions([]);
         setIsOptionSelected(false);
         setIsOpen(false);
-        setIsFocused(true);
         onSelectOption?.(undefined, undefined);
     };
 
