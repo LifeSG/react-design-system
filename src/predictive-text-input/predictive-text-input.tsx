@@ -96,12 +96,13 @@ export const PredictiveTextInput = <T, V>({
          * 2. When user selected option from dropdown becomes input
          * 3. Initial selectedOption passed in as input
          */
-        if (
-            input &&
-            input.length >= minimumCharacters &&
-            input !== searchedInput
-        ) {
-            fetchOptionsDebounced(input);
+        if (input && input.length >= minimumCharacters) {
+            if (!isOptionSelected) {
+                setIsOpen(true);
+                fetchOptionsDebounced(input);
+            } else if (input !== searchedInput) {
+                fetchOptionsDebounced(input);
+            }
         } else {
             fetchOptionsDebounced.cancel();
         }
@@ -116,13 +117,6 @@ export const PredictiveTextInput = <T, V>({
             setIsOptionSelected(false);
         }
     }, [input, selectedOption]);
-
-    useEffect(() => {
-        if (!isOptionSelected && input && input.length >= minimumCharacters) {
-            setIsOpen(true);
-            fetchOptionsDebounced(input);
-        }
-    }, [input, minimumCharacters, fetchOptionsDebounced]);
 
     useEffect(() => {
         setInput(selectedOption ? getDisplayValue(selectedOption) : "");
@@ -180,6 +174,7 @@ export const PredictiveTextInput = <T, V>({
     const handleListItemClick = (item: T, extractedValue: V) => {
         selectorRef.current?.focus();
         setInput(getDisplayValue(item));
+        setSearchedInput(item ? getDisplayValue(item) : "");
         setIsOptionSelected(true);
         setPrevOptionSelected(item);
         setIsOpen(false);
@@ -188,12 +183,14 @@ export const PredictiveTextInput = <T, V>({
 
     const handleOpen = () => {
         if (!isOptionSelected && input.length >= minimumCharacters) {
-            setIsOpen(true);
             setIsFocused(true);
         }
     };
 
     const handleClose = () => {
+        if (!isOptionSelected) {
+            handleOnClear();
+        }
         setIsOpen(false);
         setIsFocused(false);
     };
@@ -209,6 +206,7 @@ export const PredictiveTextInput = <T, V>({
             !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
             setIsFocused(false);
+            handleOnClear();
         }
     };
 
@@ -218,6 +216,9 @@ export const PredictiveTextInput = <T, V>({
     };
 
     const handleDismiss = () => {
+        if (!isOptionSelected) {
+            handleOnClear();
+        }
         selectorRef.current?.focus();
     };
 
@@ -338,6 +339,7 @@ export const PredictiveTextInput = <T, V>({
                             ? handleOnBlur
                             : undefined
                     }
+                    styleType="no-border"
                     aria-describedby={
                         errorMessage
                             ? `${internalId}-error`
@@ -345,7 +347,6 @@ export const PredictiveTextInput = <T, V>({
                             ? "predictive-input-instructions"
                             : undefined
                     }
-                    styleType="no-border"
                 />
             </InputWrapper>
         );
