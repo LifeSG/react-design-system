@@ -1,137 +1,167 @@
-import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    TabAttribute,
+    Tabs,
+} from "stories/storybook-common";
 
-const DATA: ApiTableSectionProps[] = [
+const TABLE: ApiTableSectionProps[] = [
     {
         attributes: [
             {
-                name: "className",
-                description: "CSS class applied to the table element",
-                propTypes: ["string"],
-            },
-            {
-                name: "id",
-                description: "Unique identifier for the table element",
-                propTypes: ["string"],
-            },
-            {
-                name: "style",
-                description: "Custom styles applied to the table element",
-                propTypes: ["CSSProperties"],
-            },
-            {
-                name: "children",
-                description:
-                    "Composition of Table.Head and Table.Body with Table.Row, Table.Cell, Table.HeaderCell",
-                propTypes: ["React.ReactNode"],
-                mandatory: true,
-            },
-        ],
-    },
-    {
-        name: "Table.Head",
-        attributes: [
-            {
-                name: "children",
-                description:
-                    "Table rows (`<Table.Row>`) for the header section",
-                propTypes: ["React.ReactNode"],
-                mandatory: true,
-            },
-        ],
-    },
-    {
-        name: "Table.Body",
-        attributes: [
-            {
-                name: "children",
-                description: "Table rows (`<Table.Row>`) for the body section",
-                propTypes: ["React.ReactNode"],
-                mandatory: true,
-            },
-        ],
-    },
-    {
-        name: "Table.Row",
-        attributes: [
-            {
-                name: "children",
-                description:
-                    "Cells (`<Table.Cell>` or `<Table.HeaderCell>`) inside the row",
-                propTypes: ["React.ReactNode"],
-                mandatory: true,
-            },
-            {
-                name: "className",
-                description: "CSS class for the row",
-                propTypes: ["string"],
-            },
-            {
-                name: "style",
-                description: "Custom styles for the row",
-                propTypes: ["CSSProperties"],
-            },
-        ],
-    },
-    {
-        name: "Table.Cell",
-        attributes: [
-            {
-                name: "children",
-                description: "Content of the table cell",
-                propTypes: ["React.ReactNode"],
-            },
-            {
-                name: "colSpan",
-                description: "Number of columns the cell should span",
-                propTypes: ["number"],
-            },
-            {
-                name: "rowSpan",
-                description: "Number of rows the cell should span",
-                propTypes: ["number"],
-            },
-            {
-                name: "className",
-                description: "CSS class for the cell",
-                propTypes: ["string"],
-            },
-            {
-                name: "style",
-                description: "Custom styles for the cell",
-                propTypes: ["CSSProperties"],
-            },
-        ],
-    },
-    {
-        name: "Table.HeaderCell",
-        attributes: [
-            {
-                name: "children",
-                description: "Content of the header cell",
-                propTypes: ["React.ReactNode"],
-            },
-            {
-                name: "colSpan",
-                description: "Number of columns the header cell should span",
-                propTypes: ["number"],
-            },
-            {
-                name: "rowSpan",
-                description: "Number of rows the header cell should span",
-                propTypes: ["number"],
-            },
-            {
-                name: "className",
-                description: "CSS class for the header cell",
-                propTypes: ["string"],
-            },
-            {
-                name: "style",
-                description: "Custom styles for the header cell",
-                propTypes: ["CSSProperties"],
+                name: "",
+                description: (
+                    <>
+                        Inherits props from{" "}
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableElement"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            HTMLTableElement (<code>&lt;table&gt;</code>)
+                        </a>
+                    </>
+                ),
             },
         ],
     },
 ];
 
-export const PropsTable = () => <ApiTable sections={DATA} />;
+const TABLE_HEAD: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "",
+                description: (
+                    <>
+                        Inherits props from{" "}
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableSectionElement"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            HTMLTableSectionElement (<code>&lt;thead&gt;</code>)
+                        </a>
+                    </>
+                ),
+            },
+        ],
+    },
+];
+
+const TABLE_BODY: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "",
+                description: (
+                    <>
+                        Inherits props from{" "}
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableSectionElement"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            HTMLTableSectionElement (<code>&lt;tbody&gt;</code>)
+                        </a>
+                    </>
+                ),
+            },
+        ],
+    },
+];
+
+const TABLE_ROW: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "",
+                description: (
+                    <>
+                        Inherits props from{" "}
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableRowElement"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            HTMLTableRowElement (<code>&lt;tr&gt;</code>)
+                        </a>
+                    </>
+                ),
+            },
+        ],
+    },
+];
+
+const TABLE_CELL: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "",
+                description: (
+                    <>
+                        Inherits props from{" "}
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableCellElement"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            HTMLTableCellElement (<code>&lt;td&gt;</code>)
+                        </a>
+                    </>
+                ),
+            },
+        ],
+    },
+];
+
+const TABLE_HEADERCELL: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "",
+                description: (
+                    <>
+                        Inherits props from{" "}
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableCellElement"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            HTMLTableCellElement (<code>&lt;th&gt;</code>)
+                        </a>
+                    </>
+                ),
+            },
+        ],
+    },
+];
+
+const PROPS_TABLE_DATA: TabAttribute[] = [
+    {
+        title: "Table",
+        component: <ApiTable sections={TABLE} />,
+    },
+    {
+        title: "Table.Head",
+        component: <ApiTable sections={TABLE_HEAD} />,
+    },
+    {
+        title: "Table.Body",
+        component: <ApiTable sections={TABLE_BODY} />,
+    },
+    {
+        title: "Table.Row",
+        component: <ApiTable sections={TABLE_ROW} />,
+    },
+    {
+        title: "Table.Cell",
+        component: <ApiTable sections={TABLE_CELL} />,
+    },
+    {
+        title: "Table.HeaderCell",
+        component: <ApiTable sections={TABLE_HEADERCELL} />,
+    },
+];
+
+export const PropsTable = () => <Tabs tabs={PROPS_TABLE_DATA} />;

@@ -7,6 +7,46 @@ import {
     TableWrapper,
 } from "./table.styles";
 
+const Head = ({
+    children,
+    ...props
+}: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <thead {...props}>{children}</thead>
+);
+Head.displayName = "Table.Head";
+
+const Body = ({
+    children,
+    ...props
+}: React.HTMLAttributes<HTMLTableSectionElement>) => (
+    <TableBody {...props}>{children}</TableBody>
+);
+Body.displayName = "Table.Body";
+
+const Row = ({
+    children,
+    ...props
+}: React.HTMLAttributes<HTMLTableRowElement>) => (
+    <BodyRow {...props}>{children}</BodyRow>
+);
+Row.displayName = "Table.Row";
+
+const Cell = ({
+    children,
+    ...props
+}: React.TdHTMLAttributes<HTMLTableCellElement>) => (
+    <BodyCell {...props}>{children}</BodyCell>
+);
+Cell.displayName = "Table.Cell";
+
+const Header = ({
+    children,
+    ...props
+}: React.ThHTMLAttributes<HTMLTableCellElement>) => (
+    <HeaderCell {...props}>{children}</HeaderCell>
+);
+Header.displayName = "Table.HeaderCell";
+
 export const Table = Object.assign(
     ({ children, ...props }: React.TableHTMLAttributes<HTMLTableElement>) => (
         <TableWrapper>
@@ -16,35 +56,10 @@ export const Table = Object.assign(
     {
         Container: TableWrapper,
         Table: TableComponent,
-        Head: ({
-            children,
-            ...props
-        }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-            <thead {...props}>{children}</thead>
-        ),
-        Body: ({
-            children,
-            ...props
-        }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-            <TableBody {...props}>{children}</TableBody>
-        ),
-        Row: ({
-            children,
-            ...props
-        }: React.HTMLAttributes<HTMLTableRowElement>) => (
-            <BodyRow {...props}>{children}</BodyRow>
-        ),
-        Cell: ({
-            children,
-            ...props
-        }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
-            <BodyCell {...props}>{children}</BodyCell>
-        ),
-        HeaderCell: ({
-            children,
-            ...props
-        }: React.ThHTMLAttributes<HTMLTableCellElement>) => (
-            <HeaderCell {...props}>{children}</HeaderCell>
-        ),
+        Head,
+        Body,
+        Row,
+        Cell,
+        HeaderCell: Header,
     }
 );

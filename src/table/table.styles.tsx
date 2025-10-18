@@ -33,17 +33,17 @@ export const TableComponent = styled.table`
 `;
 
 export const TableBody = styled.tbody`
-    tr:last-child {
+    :where(tr:last-child) {
         td {
             border-bottom: none;
         }
     }
 `;
 
-export const HeaderCell = styled.th<{ $clickable?: boolean }>`
+export const HeaderCell = styled.th`
     padding: ${Spacing["spacing-20"]} ${Spacing["spacing-16"]};
     text-align: left;
-    cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
+    cursor: default;
     vertical-align: middle;
     color: ${fontColor};
     background-color: ${Colour["bg-stronger"]};
