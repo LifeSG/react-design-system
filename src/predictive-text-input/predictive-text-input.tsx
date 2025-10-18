@@ -18,6 +18,7 @@ export const PredictiveTextInput = <T, V>({
     readOnly = false,
     disabled = false,
     error,
+    errorMessage,
     valueExtractor,
     listExtractor,
     displayValueExtractor,
@@ -45,6 +46,9 @@ export const PredictiveTextInput = <T, V>({
     const [isFocused, setIsFocused] = useState(false);
 
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const [resultAnnouncement, setResultAnnouncement] = useState<string | null>(
+        null
+    );
 
     const nodeRef = useRef<HTMLDivElement | null>(null);
     const selectorRef = useRef<HTMLButtonElement | null>(null);
@@ -121,6 +125,39 @@ export const PredictiveTextInput = <T, V>({
         setIsOptionSelected(!!selectedOption);
     }, [selectedOption]);
 
+    useEffect(() => {
+        const state = getItemsLoadState();
+        const count = options?.length ?? 0;
+
+        if (state === "loading") {
+            setResultAnnouncement("Loading suggested results");
+            return;
+        }
+
+        if (state === "fail") {
+            setResultAnnouncement("Suggestions failed to load. Try again.");
+            return;
+        }
+
+        if (count === 0) {
+            setResultAnnouncement(input ? "No result found." : null);
+        } else {
+            setResultAnnouncement(
+                `${count} result${
+                    count > 1 ? "s" : ""
+                } found. Press down arrow to scroll through the list.`
+            );
+        }
+    }, [options, input, isError, isLoading]);
+
+    useEffect(() => {
+        if (isOpen) {
+            setResultAnnouncement("Listbox, expanded");
+        } else {
+            setResultAnnouncement("Listbox, collapsed");
+        }
+    }, [isOpen]);
+
     // =============================================================================
     // Cleanup: cancel debounce on unmount
     // =============================================================================
@@ -186,9 +223,9 @@ export const PredictiveTextInput = <T, V>({
 
     const handleOnClear = () => {
         setInput("");
-        setIsOpen(false);
         setOptions([]);
         setIsOptionSelected(false);
+        setIsOpen(false);
         onSelectOption?.(undefined, undefined);
     };
 
@@ -250,6 +287,22 @@ export const PredictiveTextInput = <T, V>({
                 $readOnly={readOnly}
                 $error={error}
             >
+                <span
+                    id="predictive-input-instructions"
+                    style={{ display: "none" }}
+                >
+                    Type in {minimumCharacters} or more characters for suggested
+                    results.
+                </span>
+                {errorMessage && (
+                    <span
+                        id={`${internalId}-error`}
+                        role="alert"
+                        style={{ display: "none" }}
+                    >
+                        {errorMessage}
+                    </span>
+                )}
                 <Input
                     id={internalId}
                     type="text"
@@ -257,7 +310,10 @@ export const PredictiveTextInput = <T, V>({
                     onChange={handleTyping}
                     placeholder={placeholder}
                     readOnly={readOnly}
+                    aria-readonly={readOnly}
                     disabled={disabled}
+                    aria-disabled={disabled}
+                    aria-invalid={!!errorMessage}
                     allowClear
                     onClear={handleOnClear}
                     aria-expanded={isOpen}
@@ -270,6 +326,13 @@ export const PredictiveTextInput = <T, V>({
                             : undefined
                     }
                     styleType="no-border"
+                    aria-describedby={
+                        errorMessage
+                            ? `${internalId}-error`
+                            : !readOnly && !disabled
+                            ? "predictive-input-instructions"
+                            : undefined
+                    }
                 />
             </InputWrapper>
         );
@@ -277,22 +340,39 @@ export const PredictiveTextInput = <T, V>({
 
     const renderDropdown = () => {
         return (
-            <DropdownList
-                listboxId={internalId}
-                listItems={options}
-                onSelectItem={handleListItemClick}
-                onDismiss={handleListDismiss}
-                valueExtractor={valueExtractor}
-                listExtractor={listExtractor}
-                itemsLoadState={getItemsLoadState()}
-                itemTruncationType={"end"}
-                itemMaxLines={1}
-                labelDisplayType={"next-line"}
-                disableItemFocus
-                onRetry={() => handleFetchOptions(input)}
-                width={dropdownWidth}
-                matchElementWidth
-            />
+            <>
+                {resultAnnouncement && (
+                    <div
+                        role="status"
+                        aria-live="polite"
+                        aria-atomic="true"
+                        style={{
+                            position: "absolute",
+                            width: 0,
+                            height: 0,
+                            overflow: "hidden",
+                        }}
+                    >
+                        {resultAnnouncement}
+                    </div>
+                )}
+                <DropdownList
+                    listboxId={internalId}
+                    listItems={options}
+                    onSelectItem={handleListItemClick}
+                    onDismiss={handleListDismiss}
+                    valueExtractor={valueExtractor}
+                    listExtractor={listExtractor}
+                    itemsLoadState={getItemsLoadState()}
+                    itemTruncationType={"end"}
+                    itemMaxLines={1}
+                    labelDisplayType={"next-line"}
+                    disableItemFocus
+                    onRetry={() => handleFetchOptions(input)}
+                    width={dropdownWidth}
+                    matchElementWidth
+                />
+            </>
         );
     };
 

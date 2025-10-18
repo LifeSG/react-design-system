@@ -12,6 +12,7 @@ export interface PredictiveTextInputProps<T, V> {
     readOnly?: boolean | undefined;
     disabled?: boolean | undefined;
     error?: boolean | undefined;
+    errorMessage?: string | React.ReactNode | undefined;
     selectedOption?: T | undefined;
     alignment?: DropdownAlignmentType | undefined;
     dropdownZIndex?: number | undefined;
