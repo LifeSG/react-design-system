@@ -94,7 +94,6 @@ export const DropdownList = <T, V>({
         useDropdownRender();
     const [searchValue, setSearchValue] = useState<string>("");
     const [displayListItems, setDisplayListItems] = useState(listItems ?? []);
-
     const itemsLoadStateChanged = useCompare(itemsLoadState);
     const mounted = useIsMounted();
 
@@ -103,7 +102,6 @@ export const DropdownList = <T, V>({
     const listItemRefs = useRef<(HTMLElement | null)[]>([]);
     const searchInputRef = useRef<HTMLInputElement>(null);
     const virtuosoRef = useRef<VirtuosoHandle>(null);
-    const tryAgainButtonRef = useRef<HTMLButtonElement>(null);
 
     const hasSelectedMax =
         !!maxSelectable &&
@@ -233,12 +231,7 @@ export const DropdownList = <T, V>({
     };
 
     const handleTryAgain = () => {
-        const currentButton = tryAgainButtonRef.current;
         onRetry?.();
-
-        setTimeout(() => {
-            currentButton?.focus();
-        }, 100);
     };
 
     // =========================================================================
@@ -395,17 +388,8 @@ export const DropdownList = <T, V>({
         if (!onRetry || itemsLoadState === "success") {
             const selected = checkListItemSelected(item);
             const active = index === focusedIndex;
-            const setsize = displayListItems?.length ?? 0;
-
-            const { title, secondaryLabel } = getOptionLabel(item);
-
-            const ariaLabel = `${title}, ${index + 1} of ${setsize}${
-                secondaryLabel ? `, ${secondaryLabel}` : ""
-            }`;
-
             return (
                 <ListItem
-                    id={`option-${index}`}
                     aria-selected={selected}
                     aria-multiselectable={multiSelect}
                     aria-disabled={!selected && hasSelectedMax}
@@ -417,9 +401,6 @@ export const DropdownList = <T, V>({
                         listItemRefs.current[index] = element;
                     }}
                     role="option"
-                    aria-posinset={index + 1}
-                    aria-setsize={setsize}
-                    aria-label={ariaLabel}
                     tabIndex={active ? 0 : -1}
                     $active={active}
                     $selected={selected}
@@ -450,9 +431,6 @@ export const DropdownList = <T, V>({
                     aria-label="Enter text to search"
                     onClear={handleOnClear}
                     variant={variant}
-                    aria-activedescendant={
-                        focusedIndex >= 0 ? `option-${focusedIndex}` : undefined
-                    }
                 />
             );
         }
@@ -518,25 +496,12 @@ export const DropdownList = <T, V>({
 
     const renderTryAgain = () => {
         if (onRetry && itemsLoadState === "fail") {
-            const handleKeyPress = (
-                e: React.KeyboardEvent<HTMLButtonElement>
-            ) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    handleTryAgain();
-                }
-            };
             return (
                 <ResultStateContainer data-testid="list-fail">
                     <LabelIcon data-testid="load-error-icon" />
-                    <span role="status" aria-live="polite" aria-atomic="true">
-                        Failed to load.
-                    </span>
-                    &nbsp;
+                    Failed to load.&nbsp;
                     <TryAgainButton
-                        ref={tryAgainButtonRef}
                         onClick={handleTryAgain}
-                        onKeyDown={handleKeyPress}
                         type="button"
                         $variant={variant}
                     >
