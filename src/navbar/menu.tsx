@@ -44,6 +44,7 @@ export const Menu = <T,>({
                         data-testid={testId}
                         {...otherItemAttrs}
                         onClick={handleLinkClick(item)}
+                        underlineStyle="none"
                         {...options}
                     >
                         {children}

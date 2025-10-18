@@ -11,7 +11,7 @@ export const MenuLink = ({
     // =============================================================================
     return (
         <MenuLinkDiv>
-            <Link data-testid={testId} {...otherProps}>
+            <Link data-testid={testId} underlineStyle="none" {...otherProps}>
                 {children}
             </Link>
         </MenuLinkDiv>

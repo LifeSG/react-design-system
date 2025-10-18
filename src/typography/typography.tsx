@@ -84,7 +84,13 @@ export namespace Typography {
         displayName: string
     ) => {
         const Hyperlink = (
-            { weight, children, external, ...props }: TypographyLinkProps,
+            {
+                weight,
+                children,
+                external,
+                underlineStyle = "underline",
+                ...props
+            }: TypographyLinkProps,
             ref: React.Ref<HTMLAnchorElement>
         ) => {
             return (
@@ -92,6 +98,7 @@ export namespace Typography {
                     ref={ref}
                     $textStyle={textStyle}
                     $weight={weight}
+                    $underlineStyle={underlineStyle}
                     {...props}
                 >
                     {children}

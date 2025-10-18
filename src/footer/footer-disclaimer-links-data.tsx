@@ -39,6 +39,25 @@ const BookingSgDisclaimerLinks: InternalDisclaimerLinks = {
     },
 };
 
+const IMDADisclaimerLinks: InternalDisclaimerLinks = {
+    privacy: {
+        href: "https://imda.gov.sg/privacy-statement",
+        target: "_blank",
+        rel: "noopener",
+    },
+    termsOfUse: {
+        href: "https://imda.gov.sg/terms-of-use",
+        target: "_blank",
+        rel: "noopener",
+    },
+    reportVulnerability: {
+        href: "https://www.tech.gov.sg/report_vulnerability",
+        target: "_blank",
+        rel: "noopener",
+        external: true,
+    },
+};
+
 const MyLegacyDisclaimerLinks: InternalDisclaimerLinks = {
     privacy: {
         href: "https://mylegacy.life.gov.sg/privacy-statement",
@@ -81,6 +100,8 @@ export const getDefaultDisclaimerLinks = (resourceScheme?: ResourceScheme) => {
     switch (resourceScheme) {
         case "bookingsg":
             return BookingSgDisclaimerLinks;
+        case "imda":
+            return IMDADisclaimerLinks;
         case "mylegacy":
             return MyLegacyDisclaimerLinks;
         case "supportgowhere":

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { RadioButton } from "src/radio-button";
 import { GridDecorator } from "stories/storybook-common";
-import { Label, OptionContainer } from "./doc-elements";
+import { OptionContainer, OptionLabel, RadioGroupLabel } from "./doc-elements";
 
 type Component = typeof RadioButton;
 
@@ -43,36 +43,53 @@ export const Default: StoryObj<Component> = {
 };
 
 export const MultipleOptions: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [value, setValue] = useState("");
         const handleSelection = (
             event: React.ChangeEvent<HTMLInputElement>
         ) => {
             setValue(event.target.value);
         };
+
         return (
-            <>
+            <div role="radiogroup" aria-labelledby="group-label">
+                <RadioGroupLabel id="group-label">
+                    Preferred contact method
+                </RadioGroupLabel>
                 <OptionContainer>
                     <RadioButton
-                        value="A"
-                        id="options-a"
-                        name="options"
-                        checked={value === "A"}
+                        id="contact-email"
+                        name="contact"
+                        value="email"
+                        checked={value === "email"}
                         onChange={handleSelection}
                     />
-                    <Label htmlFor="options-a">Option A</Label>
+                    <OptionLabel htmlFor="contact-email">Email</OptionLabel>
                 </OptionContainer>
                 <OptionContainer>
                     <RadioButton
-                        value="B"
-                        id="options-b"
-                        name="options"
-                        checked={value === "B"}
+                        id="contact-phone"
+                        name="contact"
+                        value="phone"
+                        checked={value === "phone"}
                         onChange={handleSelection}
                     />
-                    <Label htmlFor="options-b">Option B</Label>
+                    <OptionLabel htmlFor="contact-phone">Phone</OptionLabel>
                 </OptionContainer>
-            </>
+                <OptionContainer>
+                    <RadioButton
+                        id="contact-mail"
+                        name="contact"
+                        value="mail"
+                        checked={value === "mail"}
+                        onChange={handleSelection}
+                        disabled
+                    />
+                    <OptionLabel htmlFor="contact-mail">
+                        Mail (disabled)
+                    </OptionLabel>
+                </OptionContainer>
+            </div>
         );
     },
 };

@@ -128,6 +128,7 @@ export const NavbarItems = <T,>({
                                 data-testid={testId}
                                 weight={textWeight}
                                 $selected={selected} /* for mobile */
+                                underlineStyle="none"
                                 {...otherItemAttrs}
                                 onClick={handleLinkClick(item, index)}
                                 aria-current={selected ? "page" : undefined}

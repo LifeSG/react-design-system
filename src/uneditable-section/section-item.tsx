@@ -19,6 +19,7 @@ import {
     UneditableSectionItemMaskState,
     UneditableSectionItemProps,
 } from "./types";
+import { VisuallyHidden } from "../shared/accessibility";
 
 export interface UneditableSectionItemComponentProps
     extends UneditableSectionItemProps {
@@ -115,7 +116,10 @@ export const UneditableSectionItem = ({
                     <>
                         <ErrorIcon />
                         <ErrorLabel>Error</ErrorLabel>
-                        <TryAgainLabel>Try again?</TryAgainLabel>
+                        <TryAgainLabel>
+                            Try again?
+                            <VisuallyHidden>{label}</VisuallyHidden>
+                        </TryAgainLabel>
                     </>
                 );
             case "loading":
@@ -129,7 +133,13 @@ export const UneditableSectionItem = ({
                 return (
                     <>
                         {getValue()}
-                        <IconContainer>
+                        <IconContainer
+                            aria-label={
+                                displayMaskState === "masked"
+                                    ? `Display ${label}`
+                                    : `Hide ${label}`
+                            }
+                        >
                             {displayMaskState === "masked" ? (
                                 <EyeIcon data-testid="masked-icon" />
                             ) : (
@@ -161,6 +171,11 @@ export const UneditableSectionItem = ({
                 aria-busy={maskLoadingState === "loading"}
                 aria-live="polite"
                 type="button"
+                aria-label={StringHelper.getMaskedDescription(
+                    value,
+                    displayMaskState,
+                    maskRange
+                )}
             >
                 {renderMaskingState()}
             </Clickable>

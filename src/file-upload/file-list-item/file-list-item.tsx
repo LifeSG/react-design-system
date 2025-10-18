@@ -15,6 +15,7 @@ import {
     ContentSection,
     DesktopErrorMessage,
     DragHandleIcon,
+    ErrorIcon,
     ErrorIconButton,
     ExtendedNameSection,
     FileSizeSection,
@@ -156,6 +157,7 @@ const Component = ({
                 {renderNameDescription()}
                 {errorMessage && (
                     <DesktopErrorMessage weight="semibold">
+                        <ErrorIcon aria-hidden />
                         {errorMessage}
                     </DesktopErrorMessage>
                 )}
@@ -165,6 +167,7 @@ const Component = ({
             </FileSizeSection>
             {errorMessage && (
                 <MobileErrorMessage weight="semibold">
+                    <ErrorIcon aria-hidden />
                     {errorMessage}
                 </MobileErrorMessage>
             )}

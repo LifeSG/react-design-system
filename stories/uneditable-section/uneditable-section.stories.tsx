@@ -61,6 +61,20 @@ export const WithMaskedItems: StoryObj<Component> = {
                 displayWidth: "half",
             },
             {
+                label: "With mask range (start only)",
+                value: "S1234567D",
+                maskRange: [4, 9999],
+                maskState: "masked",
+                displayWidth: "half",
+            },
+            {
+                label: "With mask range (end only)",
+                value: "S1234567D",
+                maskRange: [0, 4],
+                maskState: "masked",
+                displayWidth: "half",
+            },
+            {
                 label: "With unmask range",
                 value: "S1234567D",
                 unmaskRange: [1, 4],

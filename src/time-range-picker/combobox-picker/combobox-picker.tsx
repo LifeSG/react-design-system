@@ -1,6 +1,10 @@
 import { OpenChangeReason } from "@floating-ui/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ErrorMessage } from "../../form/form-label.style";
+import {
+    ErrorIcon,
+    ErrorMessage,
+    ErrorMessageContainer,
+} from "../../form/form-label.style";
 import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
 import { ClearIcon } from "../../input/input.style";
 import { DropdownListState } from "../../shared/dropdown-list-v2";
@@ -399,13 +403,16 @@ export const ComboboxPicker = ({
         // Only display internal error message if user does not provide one
         !error &&
         validationError && (
-            <ErrorMessage
-                id={id ? `${id}-error-message` : "error-message"}
-                tabIndex={0}
-                data-testid={id ? `${id}-error-message` : "error-message"}
-            >
-                {validationError}
-            </ErrorMessage>
+            <ErrorMessageContainer>
+                <ErrorIcon aria-hidden />
+                <ErrorMessage
+                    id={id ? `${id}-error-message` : "error-message"}
+                    tabIndex={0}
+                    data-testid={id ? `${id}-error-message` : "error-message"}
+                >
+                    {validationError}
+                </ErrorMessage>
+            </ErrorMessageContainer>
         );
 
     return (

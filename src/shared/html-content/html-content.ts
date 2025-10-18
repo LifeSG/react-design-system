@@ -27,7 +27,7 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
             font-weight: ${Font.Spec["weight-semibold"]};
             ${textSize && Font[`${textSize}-semibold`]}
             color: ${Colour.hyperlink};
-            text-decoration: none;
+            text-decoration: underline;
 
             svg {
                 color: ${Colour["icon-primary"]};

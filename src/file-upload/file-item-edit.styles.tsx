@@ -43,7 +43,7 @@ export const NameSection = styled.div`
     justify-content: space-between;
     margin-bottom: ${Spacing["spacing-16"]};
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
         justify-content: flex-start;
     }
@@ -54,7 +54,7 @@ export const FileNameText = styled(Typography.BodyMD)`
     flex: 1;
     margin-right: ${Spacing["spacing-16"]};
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         margin-right: 0;
         margin-bottom: ${Spacing["spacing-8"]};
     }
@@ -64,7 +64,7 @@ export const FileSizeText = styled(Typography.BodyMD)``;
 
 export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
     display: flex;
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
     }
 
@@ -75,7 +75,7 @@ export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
                     96px + ${Spacing["spacing-32"]}
                 ); // thumbnail width + right margin
 
-                ${MediaQuery.MaxWidth.sm} {
+                ${MediaQuery.MaxWidth.md} {
                     margin-left: 0;
                 }
             `;
@@ -89,7 +89,7 @@ export const ActionButton = styled(Button.Small)`
         margin-right: ${Spacing["spacing-16"]};
     }
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         width: 100%;
         &:not(:last-of-type) {
             margin-bottom: ${Spacing["spacing-16"]};

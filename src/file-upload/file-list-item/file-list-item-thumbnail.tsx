@@ -56,7 +56,7 @@ export const Thumbnail = styled(ImageWithFallback)`
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     object-fit: cover;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.md} {
         width: 64px;
         height: 64px;
     }
