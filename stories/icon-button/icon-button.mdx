@@ -30,12 +30,32 @@ You can also pass in custom components to the `IconButton`. In this example, we 
 
 ## Accessibility
 
+### Accessible name
+
+Make sure that the button function is clearly communicated to screen reader
+users by providing an accessible name.
+
+A common approach is to set `aria-label` for an svg-based icon or `alt` on an
+image.
+
+```tsx
+<IconButton>
+    <svg aria-label="Delete item" />
+</IconButton>
+
+<IconButton>
+    <img alt="Delete item" src="..." />
+</IconButton>
+```
+
+### Focus
+
 By default, a disabled `<IconButton>` cannot receive focus or events. In certain
 modes across screen readers, it is excluded from the focus order, which can make
 detecting its presence more difficult.
 
-To keep the disabled IconButton focusable, specify `focusableWhenDisabled`. The
-`onClick` callback is not invoked when the user attempts to click on the IconButton.
+To keep the disabled button focusable, specify `focusableWhenDisabled`. The
+`onClick` callback is not invoked when the user attempts to click on the button.
 
 There are some caveats:
 
@@ -58,7 +78,7 @@ const Page = () => {
             }}
         >
             <IconButton disabled={disabled}>
-                <LockIcon />
+                <BoxIcon aria-label="Archive item" />
             </IconButton>
         </div>
     );
