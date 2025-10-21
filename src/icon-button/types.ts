@@ -3,6 +3,7 @@ export interface IconButtonProps
     "data-testid"?: string | undefined;
     styleType?: StyleType;
     sizeType?: SizeType;
+    focusableWhenDisabled?: boolean | undefined;
 }
 
 export type StyleType = "primary" | "secondary" | "light";
