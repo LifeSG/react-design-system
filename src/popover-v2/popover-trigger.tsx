@@ -85,7 +85,11 @@ export const PopoverTrigger = ({
         // allow trigger by Space/Enter, but disable mouse click in hover mode
         ignoreMouse: isTooltip,
     });
-    const dismiss = useDismiss(context);
+
+    const dismiss = useDismiss(context, {
+        enabled: !isMobile,
+    });
+
     const hover = useHover(context, {
         enabled: isTooltip,
         // short window to enter the floating element without it closing
@@ -159,7 +163,10 @@ export const PopoverTrigger = ({
             </TriggerContainer>
             {visible && (
                 <FloatingPortal root={rootNode}>
-                    <FloatingFocusManager modal={!isTooltip} context={context}>
+                    <FloatingFocusManager
+                        modal={!isTooltip && !isMobile}
+                        context={context}
+                    >
                         <div
                             ref={(node) => {
                                 popoverRef.current = node;
