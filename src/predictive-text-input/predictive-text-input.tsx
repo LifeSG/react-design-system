@@ -47,7 +47,6 @@ export const PredictiveTextInput = <T, V>({
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
     const nodeRef = useRef<HTMLDivElement | null>(null);
-    const selectorRef = useRef<HTMLButtonElement | null>(null);
 
     const fetchOptionsRef = useRef(fetchOptions);
 
@@ -134,7 +133,6 @@ export const PredictiveTextInput = <T, V>({
     // EVENT HANDLERS
     // =============================================================================
     const handleListItemClick = (item: T, extractedValue: V) => {
-        selectorRef.current?.focus();
         setInput(getDisplayValue(item));
         setSearchedInput(item ? getDisplayValue(item) : "");
         setIsOptionSelected(true);
@@ -181,7 +179,6 @@ export const PredictiveTextInput = <T, V>({
         if (!isOptionSelected) {
             handleOnClear();
         }
-        selectorRef.current?.focus();
     };
 
     const handleOnClear = () => {
