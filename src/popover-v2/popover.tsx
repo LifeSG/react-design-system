@@ -18,6 +18,8 @@ export const PopoverV2 = ({
     onMobileClose,
     maxHeight,
     overflow,
+    isTooltip,
+    ariaLabel,
     ...otherProps
 }: PopoverV2Props): JSX.Element => {
     // =============================================================================
@@ -27,6 +29,7 @@ export const PopoverV2 = ({
     const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const popoverRole = isTooltip ? "tooltip" : "dialog";
 
     // =============================================================================
     // EVENT HANDLERS
@@ -50,7 +53,13 @@ export const PopoverV2 = ({
     return (
         <>
             {visible && (
-                <PopoverContainer data-testid={testId} {...otherProps}>
+                <PopoverContainer
+                    data-testid={testId}
+                    {...otherProps}
+                    id="popoverContainer"
+                    role={popoverRole}
+                    aria-label={isTooltip ? undefined : ariaLabel}
+                >
                     <PopoverCard $maxHeight={maxHeight} $overflow={overflow}>
                         {renderContent()}
                     </PopoverCard>
@@ -60,6 +69,9 @@ export const PopoverV2 = ({
                 <Modal
                     show={visible ?? false}
                     onOverlayClick={handleMobileClose}
+                    id="popoverContainer"
+                    role={popoverRole}
+                    aria-label={isTooltip ? undefined : ariaLabel}
                 >
                     <MobileModalBox onClose={handleMobileClose}>
                         <ContentWrapper>{renderContent()}</ContentWrapper>

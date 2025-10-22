@@ -33,6 +33,7 @@ export const PopoverTrigger = ({
     delay,
     onPopoverAppear,
     onPopoverDismiss,
+    ariaLabel,
     enableFlip = true,
     enableResize = false,
     overflow = "auto",
@@ -78,13 +79,15 @@ export const PopoverTrigger = ({
     const parentZIndex = useFloatingChild();
 
     const trigger: PopoverV2TriggerType = isMobile ? "click" : _trigger;
+    const isTooltip = trigger === "hover";
+
     const click = useClick(context, {
         // allow trigger by Space/Enter, but disable mouse click in hover mode
-        ignoreMouse: trigger === "hover",
+        ignoreMouse: isTooltip,
     });
     const dismiss = useDismiss(context);
     const hover = useHover(context, {
-        enabled: trigger === "hover",
+        enabled: isTooltip,
         // short window to enter the floating element without it closing
         delay: {
             open: delay?.open ?? 0,
@@ -127,6 +130,8 @@ export const PopoverTrigger = ({
                 onMobileClose={handlePopoverMobileClose}
                 maxHeight={enableResize ? availableHeight : undefined}
                 overflow={enableResize ? overflow : undefined}
+                isTooltip={isTooltip}
+                ariaLabel={ariaLabel}
             >
                 {popoverContent}
             </PopoverV2>
@@ -147,13 +152,14 @@ export const PopoverTrigger = ({
                         event.preventDefault();
                     },
                 })}
+                aria-describedby={isTooltip ? "popoverContainer" : undefined}
                 {...otherProps}
             >
                 {children}
             </TriggerContainer>
             {visible && (
                 <FloatingPortal root={rootNode}>
-                    <FloatingFocusManager context={context}>
+                    <FloatingFocusManager modal={!isTooltip} context={context}>
                         <div
                             ref={(node) => {
                                 popoverRef.current = node;
