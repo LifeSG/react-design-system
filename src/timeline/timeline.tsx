@@ -24,6 +24,7 @@ export const Timeline = ({
     colSpan,
     "data-base-indicator-testid": baseIndicatorTestId,
     "data-testid": testId = "timeline",
+    headingLevel = 2,
 }: TimelineProps): JSX.Element => {
     // ===========================================================================
     // RENDER
@@ -40,11 +41,15 @@ export const Timeline = ({
         return <>{content}</>;
     };
 
-    const renderTitle = (title: string | JSX.Element): JSX.Element => {
+    const renderTitle = (
+        title: string | JSX.Element,
+        level: number
+    ): JSX.Element => {
         if (typeof title === "string") {
             return (
                 <TimelineItemTitle
                     forwardedAs="div"
+                    aria-level={level}
                     weight="semibold"
                     className="timeline-item-title"
                 >
@@ -77,11 +82,48 @@ export const Timeline = ({
     const renderIcon = (variant: Variant) => {
         switch (variant) {
             case "completed":
-                return <TickIcon />;
+                return <TickIcon aria-hidden />;
             case "error":
-                return <ExclamationCircleFillIcon />;
+                return <ExclamationCircleFillIcon aria-hidden />;
             default:
                 return null;
+        }
+    };
+
+    const getStatus = (variant: Variant) => {
+        switch (variant) {
+            case "current":
+                return "Current step";
+            case "completed":
+                return "Completed step";
+            case "upcoming-active":
+                return "Upcoming active step";
+            default:
+                return "";
+        }
+    };
+
+    const getPillContents = (pills: PillProps[]) => {
+        return pills
+            .map((pill) => {
+                return pill.children;
+            })
+            .join(", ");
+    };
+
+    const getContentText = (content: string | JSX.Element) => {
+        if (content instanceof String || typeof content === "string") {
+            return content;
+        } else {
+            let contentText = "";
+            for (const child of content.props.children) {
+                if (typeof child === "string") {
+                    contentText = contentText + child;
+                } else {
+                    contentText = contentText + child.props.children;
+                }
+            }
+            return contentText;
         }
     };
 
@@ -94,19 +136,40 @@ export const Timeline = ({
             const variant =
                 _variant || (index === 0 ? "current" : "upcoming-active");
 
+            let pillContent = "";
+            if (statuses) {
+                pillContent = getPillContents(statuses);
+            }
+
+            const contentText = getContentText(content);
+
+            const ariaLabel =
+                getStatus(variant) +
+                " " +
+                title +
+                " " +
+                pillContent +
+                " " +
+                contentText;
+
             return (
-                <TimelineItem key={`timeline-item-${index}`}>
+                <TimelineItem
+                    key={`timeline-item-${index}`}
+                    role="group"
+                    aria-label={ariaLabel}
+                >
                     <TimelineIndicators>
                         <CircleIndicator
                             data-testid={circleIndicatorTestId}
                             $variant={variant}
+                            aria-label={getStatus(variant)}
                         >
                             {renderIcon(variant)}
                         </CircleIndicator>
                         <LineIndicator $variant={variant} />
                     </TimelineIndicators>
                     <TimelineItemContent className="timeline-item-content">
-                        {renderTitle(title)}
+                        {renderTitle(title, headingLevel + 1)}
                         {statuses && (
                             <TimelinePills>
                                 {renderStatusPills(statuses)}
@@ -128,6 +191,7 @@ export const Timeline = ({
         >
             <TimelineTitle
                 forwardedAs="div"
+                aria-level={headingLevel}
                 data-testid="timeline-title"
                 weight="bold"
             >
