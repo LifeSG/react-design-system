@@ -25,12 +25,16 @@ export const TableWrapper = styled.div`
     }
 `;
 
+TableWrapper.displayName = "Table.Container";
+
 export const TableComponent = styled.table`
     text-align: left;
     border-collapse: separate;
     border-spacing: 0;
     width: 100%;
 `;
+
+TableComponent.displayName = "Table.Table";
 
 export const TableBody = styled.tbody`
     :where(tr:last-child) {

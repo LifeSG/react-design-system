@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Table } from "src/table";
 import { Pill } from "src/pill";
+import { Table } from "src/table";
 import { Typography } from "src/typography/typography";
 
 type Component = typeof Table;
@@ -41,7 +41,7 @@ export const Default: StoryObj<Component> = {
 
 export const FixedColumnWidths: StoryObj<Component> = {
     render: (_args) => (
-        <Table>
+        <Table style={{ tableLayout: "fixed" }}>
             <Table.Head>
                 <Table.Row>
                     <Table.HeaderCell style={{ width: "30%" }}>
@@ -58,12 +58,20 @@ export const FixedColumnWidths: StoryObj<Component> = {
             <Table.Body>
                 <Table.Row>
                     <Table.Cell>Chris</Table.Cell>
-                    <Table.Cell>chris@example.com</Table.Cell>
+                    <Table.Cell
+                        style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                    >
+                        chris@example.com
+                    </Table.Cell>
                     <Table.Cell>Active</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                     <Table.Cell>Sam</Table.Cell>
-                    <Table.Cell>sam@example.com</Table.Cell>
+                    <Table.Cell
+                        style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+                    >
+                        sam@example.com
+                    </Table.Cell>
                     <Table.Cell>Inactive</Table.Cell>
                 </Table.Row>
             </Table.Body>
@@ -72,30 +80,40 @@ export const FixedColumnWidths: StoryObj<Component> = {
 };
 
 export const RowAndColSpan: StoryObj<Component> = {
-    render: (_args) => (
-        <Table>
-            <Table.Head>
-                <Table.Row>
-                    <Table.HeaderCell>Group</Table.HeaderCell>
-                    <Table.HeaderCell>Email</Table.HeaderCell>
-                    <Table.HeaderCell>Status</Table.HeaderCell>
-                </Table.Row>
-            </Table.Head>
-            <Table.Body>
-                <Table.Row>
-                    <Table.Cell rowSpan={2} style={{ borderBottom: "none" }}>
-                        Group A
-                    </Table.Cell>
-                    <Table.Cell>alice@example.com</Table.Cell>
-                    <Table.Cell>Active</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                    <Table.Cell>bob@example.com</Table.Cell>
-                    <Table.Cell>Inactive</Table.Cell>
-                </Table.Row>
-            </Table.Body>
-        </Table>
-    ),
+    render: (_args) => {
+        return (
+            <Table>
+                <Table.Head>
+                    <Table.Row>
+                        <Table.HeaderCell>Group</Table.HeaderCell>
+                        <Table.HeaderCell>Item</Table.HeaderCell>
+                        <Table.HeaderCell>Status</Table.HeaderCell>
+                        <Table.HeaderCell>Quantity</Table.HeaderCell>
+                        <Table.HeaderCell>Price</Table.HeaderCell>
+                    </Table.Row>
+                </Table.Head>
+                <Table.Body>
+                    <Table.Row>
+                        <Table.Cell
+                            rowSpan={2}
+                            style={{ borderBottom: "none" }}
+                        >
+                            Group A
+                        </Table.Cell>
+                        <Table.Cell>Product A</Table.Cell>
+                        <Table.Cell>Active</Table.Cell>
+                        <Table.Cell>100</Table.Cell>
+                        <Table.Cell>$2</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Cell>Product B</Table.Cell>
+                        <Table.Cell>Inactive</Table.Cell>
+                        <Table.Cell colSpan={2}>Not applicable</Table.Cell>
+                    </Table.Row>
+                </Table.Body>
+            </Table>
+        );
+    },
 };
 
 export const ScrollableTable: StoryObj<Component> = {
