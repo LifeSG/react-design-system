@@ -1,16 +1,11 @@
 import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
-import { Modal } from "../modal/modal";
 import { Breakpoint } from "../theme";
 import { Typography } from "../typography";
-import {
-    ContentWrapper,
-    MobileModalBox,
-    PopoverCard,
-    PopoverContainer,
-} from "./popover.styles";
+import { PopoverCard, PopoverContainer } from "./popover.styles";
 import { PopoverV2Props } from "./types";
+import { ModalV2 } from "../modal-v2";
 
 export const PopoverV2 = ({
     children,
@@ -66,17 +61,19 @@ export const PopoverV2 = ({
                 </PopoverContainer>
             )}
             {isMobile && (
-                <Modal
+                <ModalV2
                     show={visible ?? false}
                     onOverlayClick={handleMobileClose}
+                    onClose={handleMobileClose}
                     id="popoverContainer"
                     role={popoverRole}
                     aria-label={isTooltip ? undefined : ariaLabel}
                 >
-                    <MobileModalBox onClose={handleMobileClose}>
-                        <ContentWrapper>{renderContent()}</ContentWrapper>
-                    </MobileModalBox>
-                </Modal>
+                    <ModalV2.Card>
+                        <ModalV2.Content>{renderContent()}</ModalV2.Content>
+                        <ModalV2.CloseButton />
+                    </ModalV2.Card>
+                </ModalV2>
             )}
         </>
     );

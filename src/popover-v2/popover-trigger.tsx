@@ -86,9 +86,7 @@ export const PopoverTrigger = ({
         ignoreMouse: isTooltip,
     });
 
-    const dismiss = useDismiss(context, {
-        enabled: !isMobile,
-    });
+    const dismiss = useDismiss(context);
 
     const hover = useHover(context, {
         enabled: isTooltip,
@@ -163,10 +161,7 @@ export const PopoverTrigger = ({
             </TriggerContainer>
             {visible && (
                 <FloatingPortal root={rootNode}>
-                    <FloatingFocusManager
-                        modal={!isTooltip && !isMobile}
-                        context={context}
-                    >
+                    <FloatingFocusManager modal={!isTooltip} context={context}>
                         <div
                             ref={(node) => {
                                 popoverRef.current = node;
