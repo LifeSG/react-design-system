@@ -30,11 +30,25 @@ By default, the button shrinks to fit in a flex parent.
 
 ## Accessibility
 
+### Selection state
+
+When `selected={true}`, the button appears in an active state. Set the
+`aria-pressed` attribute to communicate the current selection state to screen
+readers.
+
+```tsx
+<ImageButton selected={isSelected} aria-pressed={isSelected} imgSrc="...">
+    Meeting Room
+</ImageButton>
+```
+
+### Focus
+
 By default, a disabled `<ImageButton>` cannot receive focus or events. In certain
 modes across screen readers, it is excluded from the focus order, which can make
 detecting its presence more difficult.
 
-To keep the disabled ImageButton focusable, specify `focusableWhenDisabled`. The
+To keep the disabled button focusable, specify `focusableWhenDisabled`. The
 `onClick` callback is not invoked when the user attempts to click on the ImageButton.
 
 There are some caveats:
