@@ -5,4 +5,5 @@ export interface ImageButtonProps
     imgSrc: string;
     selected?: boolean | undefined;
     error?: boolean | undefined;
+    focusableWhenDisabled?: boolean | undefined;
 }
