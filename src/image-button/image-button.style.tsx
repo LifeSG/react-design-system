@@ -66,6 +66,7 @@ export const Main = styled.button<{
             `;
         }
     }}
+
     ${(props) =>
         props.$disabled &&
         css`
