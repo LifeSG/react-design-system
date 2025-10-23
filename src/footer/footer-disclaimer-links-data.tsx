@@ -41,12 +41,12 @@ const BookingSgDisclaimerLinks: InternalDisclaimerLinks = {
 
 const IMDADisclaimerLinks: InternalDisclaimerLinks = {
     privacy: {
-        href: "https://imda.gov.sg/privacy-statement",
+        href: "https://www.imda.gov.sg/privacy-statement",
         target: "_blank",
         rel: "noopener",
     },
     termsOfUse: {
-        href: "https://imda.gov.sg/terms-of-use",
+        href: "https://www.imda.gov.sg/terms-of-use",
         target: "_blank",
         rel: "noopener",
     },
