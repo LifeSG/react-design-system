@@ -16,6 +16,7 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     ${(props) => {
         if (props.$stretch) {
             return css`
+                --sgds-mainnav-max-width: calc(infinity * 1px);
                 --sgds-mainnav-padding-x: ${Breakpoint["xxl-margin"]}px;
                 --sgds-mainnav-mobile-padding-x: ${Breakpoint["xxl-margin"]}px;
             `;
