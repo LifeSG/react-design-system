@@ -1,3 +1,5 @@
+import { RefObject } from "react";
+import { DropdownAlignmentType } from "src/shared/dropdown-wrapper";
 import { ListItemDisplayProps } from "../shared/dropdown-list/types";
 
 export interface PredictiveTextInputProps<T, V> {
@@ -11,6 +13,20 @@ export interface PredictiveTextInputProps<T, V> {
     disabled?: boolean | undefined;
     error?: boolean | undefined;
     selectedOption?: T | undefined;
+    alignment?: DropdownAlignmentType | undefined;
+    dropdownZIndex?: number | undefined;
+    /**
+     * The root element that contains the dropdown element. Defaults to the document body.
+     *
+     * If the parent that contains the trigger element has a higher z-index than the dropdown,
+     * the dropdown may not be visible. Specify the parent element here instead
+     */
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
+    /**
+     * Custom width for the dropdown in pixels. When specified, the dropdown will use this
+     * width instead of matching the input element width.
+     */
+    dropdownWidth?: string | undefined;
     /** Async Function to populate options */
     fetchOptions: (input: string) => Promise<T[]>;
     /** Function to derive value from an item */
