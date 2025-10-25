@@ -125,7 +125,7 @@ export const TimelineWrapper = styled.div<TimelineWrapperStyleProps>`
     }
 `;
 
-export const TimelineTitle = styled(Typography.HeadingSM)`
+export const TimelineTitle = styled(Typography.HeadingXL)`
     margin-bottom: 1rem;
 
     ${MediaQuery.MaxWidth.lg} {
@@ -133,7 +133,7 @@ export const TimelineTitle = styled(Typography.HeadingSM)`
     }
 `;
 
-export const TimelineItemTitle = styled(Typography.HeadingXS)`
+export const TimelineItemTitle = styled(Typography.HeadingLG)`
     margin-top: -0.125rem;
     margin-bottom: 0.5rem;
 `;
