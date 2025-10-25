@@ -20,7 +20,7 @@ export const TabItem = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return currentActiveIndex === index ? (
-        <div role="tabpanel" {...otherProps}>
+        <div role="tabpanel" tabIndex={0} {...otherProps}>
             {children}
         </div>
     ) : null;

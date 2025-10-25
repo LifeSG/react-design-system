@@ -20,6 +20,7 @@ interface Props
         "fullWidthIndicatorLine" | "onTabClick" | "data-testid" | "fadeColor"
     > {
     controlledMode?: boolean | undefined;
+    tabCount?: number | undefined;
 }
 
 export const TabLinkChain = ({
@@ -28,6 +29,7 @@ export const TabLinkChain = ({
     onTabClick,
     fullWidthIndicatorLine,
     fadeColor,
+    tabCount,
 }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
@@ -95,6 +97,7 @@ export const TabLinkChain = ({
         >
             <Chain
                 role="tablist"
+                aria-label={`List of ${tabCount} tabs`}
                 $fullWidthIndicatorLine={fullWidthIndicatorLine}
             >
                 {tabLinks.map((linkChain, index) => {
