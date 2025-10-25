@@ -150,11 +150,9 @@ export const PredictiveTextInput = <T, V>({
     };
 
     const handleClose = () => {
-        if (!isOptionSelected) {
-            handleOnClear();
-        }
         setIsOpen(false);
         setIsFocused(false);
+        handleOnBlur();
     };
 
     const handleNodeFocus = () => {
@@ -168,7 +166,7 @@ export const PredictiveTextInput = <T, V>({
             !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
             setIsFocused(false);
-            handleOnClear();
+            handleOnBlur();
         }
     };
 
@@ -178,10 +176,9 @@ export const PredictiveTextInput = <T, V>({
     };
 
     const handleDismiss = () => {
-        if (!isOptionSelected) {
-            handleOnClear();
-        }
-        selectorRef.current?.focus();
+        setIsOpen(false);
+        setIsFocused(false);
+        handleOnBlur();
     };
 
     const handleOnClear = () => {
@@ -193,11 +190,18 @@ export const PredictiveTextInput = <T, V>({
     };
 
     const handleOnBlur = () => {
-        if (!isOptionSelected && !prevOptionSelected) {
-            handleOnClear();
-        } else {
-            setInput(getDisplayValue(prevOptionSelected));
-            onSelectOption?.(prevOptionSelected, getValue(prevOptionSelected));
+        if (!isOptionSelected) {
+            if (prevOptionSelected) {
+                const prevValue = getDisplayValue(prevOptionSelected);
+                setInput(prevValue);
+                onSelectOption?.(
+                    prevOptionSelected,
+                    getValue(prevOptionSelected)
+                );
+                setIsOpen(false);
+            } else {
+                handleOnClear();
+            }
         }
     };
 
