@@ -15,6 +15,7 @@ export const PopoverV2 = ({
     overflow,
     isTooltip,
     ariaLabel,
+    id,
     ...otherProps
 }: PopoverV2Props): JSX.Element => {
     // =============================================================================
@@ -51,7 +52,7 @@ export const PopoverV2 = ({
                 <PopoverContainer
                     data-testid={testId}
                     {...otherProps}
-                    id="popoverContainer"
+                    id={id}
                     role={popoverRole}
                     aria-label={isTooltip ? undefined : ariaLabel}
                 >
@@ -65,7 +66,7 @@ export const PopoverV2 = ({
                     show={visible ?? false}
                     onOverlayClick={handleMobileClose}
                     onClose={handleMobileClose}
-                    id="popoverContainer"
+                    id={id}
                     role={popoverRole}
                     aria-label={isTooltip ? undefined : ariaLabel}
                 >

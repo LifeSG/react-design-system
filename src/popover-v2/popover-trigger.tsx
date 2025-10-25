@@ -21,6 +21,7 @@ import { Breakpoint } from "../theme";
 import { PopoverV2 } from "./popover";
 import { TriggerContainer } from "./popover-trigger.styles";
 import { PopoverV2TriggerProps, PopoverV2TriggerType } from "./types";
+import { SimpleIdGenerator } from "../util";
 
 export const PopoverTrigger = ({
     children,
@@ -33,7 +34,7 @@ export const PopoverTrigger = ({
     delay,
     onPopoverAppear,
     onPopoverDismiss,
-    ariaLabel,
+    popoverAriaLabel,
     enableFlip = true,
     enableResize = false,
     overflow = "auto",
@@ -49,6 +50,8 @@ export const PopoverTrigger = ({
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const [availableHeight, setAvailableHeight] = useState(0);
+    const internalId = useRef(SimpleIdGenerator.generate());
+    const popoverContainerId = `${internalId.current}-popover`;
 
     const { refs, floatingStyles, context } = useFloating({
         open: visible,
@@ -133,7 +136,8 @@ export const PopoverTrigger = ({
                 maxHeight={enableResize ? availableHeight : undefined}
                 overflow={enableResize ? overflow : undefined}
                 isTooltip={isTooltip}
-                ariaLabel={ariaLabel}
+                ariaLabel={popoverAriaLabel}
+                id={popoverContainerId}
             >
                 {popoverContent}
             </PopoverV2>
@@ -154,7 +158,6 @@ export const PopoverTrigger = ({
                         event.preventDefault();
                     },
                 })}
-                aria-describedby={isTooltip ? "popoverContainer" : undefined}
                 {...otherProps}
             >
                 {children}

@@ -59,7 +59,7 @@ export interface PopoverV2TriggerProps {
     /* if the popover will resize to fit the remaining vertical space and contents become scrollable */
     enableResize?: boolean | undefined;
     overflow?: PopoverOverflowType | undefined;
-    ariaLabel?: string | undefined;
+    popoverAriaLabel?: string | undefined;
     onPopoverAppear?: (() => void) | undefined;
     onPopoverDismiss?: (() => void) | undefined;
 }
