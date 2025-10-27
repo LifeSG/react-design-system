@@ -13,7 +13,14 @@ import {
     useHover,
     useInteractions,
 } from "@floating-ui/react";
-import { useContext, useRef, useState } from "react";
+import {
+    ReactElement,
+    cloneElement,
+    isValidElement,
+    useContext,
+    useRef,
+    useState,
+} from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { useFloatingChild } from "../overlay/use-floating-context";
@@ -83,6 +90,12 @@ export const PopoverTrigger = ({
 
     const trigger: PopoverV2TriggerType = isMobile ? "click" : _trigger;
     const isTooltip = trigger === "hover";
+
+    const childrenWithAria = isValidElement(children)
+        ? cloneElement(children as ReactElement, {
+              "aria-describedby": isTooltip ? popoverContainerId : undefined,
+          })
+        : children;
 
     const click = useClick(context, {
         // allow trigger by Space/Enter, but disable mouse click in hover mode
@@ -160,7 +173,7 @@ export const PopoverTrigger = ({
                 })}
                 {...otherProps}
             >
-                {children}
+                {childrenWithAria}
             </TriggerContainer>
             {visible && (
                 <FloatingPortal root={rootNode}>
