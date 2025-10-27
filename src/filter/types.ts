@@ -1,49 +1,54 @@
+import { CSSProperties, HTMLAttributes, ReactNode } from "react";
 import { ButtonStyleType } from "../button/types";
 import { FormLabelAddonProps } from "../form/types";
 import { Insets } from "../shared/types";
 
 export type Mode = "default" | "mobile";
 
-export interface FilterProps {
-    children: React.ReactNode | ((mode: Mode) => React.ReactNode);
-    customLabels?:
-        | {
-              headerTitle?: string | undefined;
-              toggleFilterButtonLabel?: string | undefined;
-              doneButtonLabel?: string | undefined;
-              clearButtonLabel?: string | undefined;
-          }
-        | undefined;
-    /**
-     * @deprecated
-     * use customLabels instead
-     */
-    headerTitle?: string | undefined;
-    /**
-     * @deprecated
-     * use customLabels instead
-     */
-    toggleFilterButtonLabel?: string | undefined;
-    /**
-     * @deprecated
-     * use customLabels instead
-     */
-    doneButtonLabel?: string | undefined;
-    clearButtonDisabled?: boolean | undefined;
-    toggleFilterButtonStyle?: ButtonStyleType | undefined;
-    className?: string | undefined;
+export interface FilterBaseProps extends HTMLAttributes<HTMLDivElement> {
     id?: string | undefined;
     "data-testid"?: string | undefined;
+    className?: string | undefined;
+
+    customLabels?: {
+        toggleFilterButtonLabel?: string;
+        headerTitle?: string;
+        doneButtonLabel?: string;
+        clearButtonLabel?: string;
+    };
+
+    clearButtonDisabled?: boolean | undefined;
+
+    insets?: Insets | undefined;
+
+    /** Called when clear button is pressed */
+    onClear?: (() => void) | undefined;
+
+    children?: ReactNode | ((mode: "mobile" | "default") => ReactNode);
+}
+
+export interface FilterSidebarProps extends FilterBaseProps {
+    className?: string;
+    style?: CSSProperties;
+}
+
+export interface FilterModalProps extends FilterBaseProps {
     /** Called when dismiss button is pressed (mobile mode only) */
     onDismiss?: (() => void) | undefined;
     /** Called when done button is pressed (mobile mode only) */
     onDone?: (() => void) | undefined;
-    /** Called when clear button is pressed */
-    onClear?: (() => void) | undefined;
-    /** @deprecated Forces mobile mode. Not for public use, will be removed in future versions */
-    _dangerouslyForceMobile?: boolean | undefined;
-    onModalOpen?: (() => void) | undefined;
-    insets?: Insets | undefined;
+    onModalOpen?: () => void;
+    toggleFilterButtonStyle?: ButtonStyleType | undefined;
+
+    className?: string;
+    style?: CSSProperties;
+}
+
+export interface FilterProps extends FilterBaseProps {
+    /** Called when dismiss button is pressed (mobile mode only) */
+    onDismiss?: (() => void) | undefined;
+    /** Called when done button is pressed (mobile mode only) */
+    onDone?: (() => void) | undefined;
 }
 
 export interface FilterItemProps {

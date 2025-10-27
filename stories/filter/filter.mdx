@@ -14,7 +14,24 @@ Displays widgets under collapsible panels to filter data results.
 import { Filter } from "@lifesg/react-design-system/filter";
 ```
 
+By default:
+
+-   Desktop will renders `<FilterSidebar />`
+-   Mobile will renders `<FilterModal />`
+
 <Canvas of={FilterStories.Default} />
+
+## Filter.Sidebar
+
+`Filter.Sidebar` can be used to render a persistent filter panel in layouts that always stay on desktop.
+
+<Canvas of={FilterStories.SidebarOnly} />
+
+## Filter.Modal
+
+`Filter.Modal` can be used to display filters as a modal overlay, for example in mobile layouts.
+
+<Canvas of={FilterStories.ModalOnly} />
 
 ## Configuring filter item
 
