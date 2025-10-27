@@ -27,11 +27,22 @@ export const PredictiveTextInput = <T, V>({
     dropdownRootNode,
     dropdownWidth,
 }: PredictiveTextInputProps<T, V>): JSX.Element => {
+    const getDisplayValue = (item: T | undefined): string => {
+        if (!item) return "";
+        return displayValueExtractor
+            ? displayValueExtractor(item)
+            : item.toString();
+    };
+
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const [input, setInput] = useState<string>("");
-    const [searchedInput, setSearchedInput] = useState<string>("");
+    const [input, setInput] = useState<string>(() =>
+        selectedOption ? getDisplayValue(selectedOption) : ""
+    );
+    const [searchedInput, setSearchedInput] = useState<string>(() =>
+        selectedOption ? getDisplayValue(selectedOption) : ""
+    );
     const [options, setOptions] = useState<T[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isError, setIsError] = useState<boolean>(false);
@@ -179,6 +190,7 @@ export const PredictiveTextInput = <T, V>({
         setIsOpen(false);
         setIsFocused(false);
         handleOnBlur();
+        selectorRef.current?.focus();
     };
 
     const handleOnClear = () => {
@@ -194,10 +206,6 @@ export const PredictiveTextInput = <T, V>({
             if (prevOptionSelected) {
                 const prevValue = getDisplayValue(prevOptionSelected);
                 setInput(prevValue);
-                onSelectOption?.(
-                    prevOptionSelected,
-                    getValue(prevOptionSelected)
-                );
                 setIsOpen(false);
             } else {
                 handleOnClear();
@@ -220,18 +228,6 @@ export const PredictiveTextInput = <T, V>({
     // =============================================================================
     // HELPER FUNCTION
     // =============================================================================
-    const getDisplayValue = (item: T | undefined): string => {
-        if (!item) return "";
-        return displayValueExtractor
-            ? displayValueExtractor(item)
-            : item.toString();
-    };
-
-    const getValue = (item: T | undefined): V | undefined => {
-        if (!item) return undefined;
-        return valueExtractor ? valueExtractor(item) : (item as unknown as V);
-    };
-
     const getItemsLoadState = (): ItemsLoadStateType => {
         if (isError) return "fail";
         return isLoading ? "loading" : "success";
