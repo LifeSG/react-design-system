@@ -103,30 +103,6 @@ export const Timeline = ({
         }
     };
 
-    const getPillContents = (pills: PillProps[]) => {
-        return pills
-            .map((pill) => {
-                return pill.children;
-            })
-            .join(", ");
-    };
-
-    const getContentText = (content: string | JSX.Element) => {
-        if (content instanceof String || typeof content === "string") {
-            return content;
-        } else {
-            let contentText = "";
-            for (const child of content.props.children) {
-                if (typeof child === "string") {
-                    contentText = contentText + child;
-                } else {
-                    contentText = contentText + child.props.children;
-                }
-            }
-            return contentText;
-        }
-    };
-
     const renderItems = () =>
         items.map((item: TimelineItemProps, index) => {
             const { title, content, statuses, variant: _variant } = item;
@@ -136,28 +112,8 @@ export const Timeline = ({
             const variant =
                 _variant || (index === 0 ? "current" : "upcoming-active");
 
-            let pillContent = "";
-            if (statuses) {
-                pillContent = getPillContents(statuses);
-            }
-
-            const contentText = getContentText(content);
-
-            const ariaLabel =
-                getStatus(variant) +
-                " " +
-                title +
-                " " +
-                pillContent +
-                " " +
-                contentText;
-
             return (
-                <TimelineItem
-                    key={`timeline-item-${index}`}
-                    role="group"
-                    aria-label={ariaLabel}
-                >
+                <TimelineItem key={`timeline-item-${index}`} role="group">
                     <TimelineIndicators>
                         <CircleIndicator
                             data-testid={circleIndicatorTestId}
