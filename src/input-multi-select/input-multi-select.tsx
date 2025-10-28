@@ -61,6 +61,8 @@ export const InputMultiSelect = <T, V>({
     const [focused, setFocused] = useState<boolean>(false);
     const { context, onKeyDown, setSelectedIndex } = useDropdownListState({
         options,
+        disabled,
+        readOnly,
         onOpenChange: setShowOptions,
     });
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());

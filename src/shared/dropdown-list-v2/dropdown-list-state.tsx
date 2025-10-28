@@ -21,6 +21,8 @@ interface DropdownListStateProps {
 
 interface UseDropdownListStateOptions<T> {
     options: T[] | undefined;
+    disabled?: boolean | undefined;
+    readOnly?: boolean | undefined;
     onOpenChange?: ((isOpen: boolean) => void) | undefined;
 }
 
@@ -41,6 +43,8 @@ export const DropdownListStateContext =
 
 export const useDropdownListState = <T,>({
     options,
+    disabled,
+    readOnly,
     onOpenChange,
 }: UseDropdownListStateOptions<T>): DropdownListState => {
     const [focusedIndex, setFocusedIndex] = useState<number>(-1);
@@ -68,7 +72,7 @@ export const useDropdownListState = <T,>({
     };
 
     const onKeyDown = (event: React.KeyboardEvent) => {
-        if (!options?.length) {
+        if (disabled || readOnly || !options?.length) {
             return;
         }
 
