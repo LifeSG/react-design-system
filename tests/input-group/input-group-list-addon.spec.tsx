@@ -12,7 +12,7 @@ const DROPDOWN_TESTID = "dropdown-list";
 const OPTIONS = ["Option 1", "Option 2", "Option 3"];
 const LABEL = "Test label";
 const DESCRIPTION = "Test subtitle";
-const DROPDOWN_INSTRUCTION = "Press space to open options";
+const DROPDOWN_INSTRUCTION = "Press Space or Enter to open options";
 const ERROR = "Error message";
 
 describe("InputGroup - List addon", () => {
