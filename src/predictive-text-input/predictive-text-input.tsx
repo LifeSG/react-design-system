@@ -1,12 +1,10 @@
 import debounce from "lodash/debounce";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { DropdownList, DropdownListState } from "../shared/dropdown-list-v2";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { Input } from "../input";
-import { DropdownList } from "../shared/dropdown-list/dropdown-list";
-import { DropdownWrapper } from "../shared/dropdown-wrapper";
-import {
-    Divider,
-    SelectorDiv,
-} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import { SimpleIdGenerator } from "../util";
 import { PredictiveTextInputProps } from "./types";
 import { ItemsLoadStateType } from "../shared/dropdown-list/types";
 
@@ -24,7 +22,18 @@ export const PredictiveTextInput = <T, V>({
     listExtractor,
     displayValueExtractor,
     onSelectOption,
-}: PredictiveTextInputProps<T, V>) => {
+    alignment,
+    dropdownZIndex,
+    dropdownRootNode,
+    dropdownWidth,
+}: PredictiveTextInputProps<T, V>): JSX.Element => {
+    const getDisplayValue = (item: T | undefined): string => {
+        if (!item) return "";
+        return displayValueExtractor
+            ? displayValueExtractor(item)
+            : item.toString();
+    };
+
     // =============================================================================
     // CONST, STATE
     // =============================================================================
@@ -43,31 +52,39 @@ export const PredictiveTextInput = <T, V>({
     const [prevOptionSelected, setPrevOptionSelected] = useState<T | undefined>(
         selectedOption
     );
+    const [isOpen, setIsOpen] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
+
+    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+
+    const nodeRef = useRef<HTMLDivElement | null>(null);
+    const selectorRef = useRef<HTMLInputElement | null>(null);
+
     const fetchOptionsRef = useRef(fetchOptions);
 
     // =============================================================================
     // DEBOUNCE FUNCTIONS
     // =============================================================================
-
-    const handleFetchOptions = async (input: string) => {
+    const handleFetchOptions = useCallback(async (input: string) => {
+        if (!fetchOptionsRef.current) return;
         setIsError(false);
         setIsLoading(true);
         try {
             const fetchedOptions = await fetchOptionsRef.current(input);
             setSearchedInput(input);
-            setOptions(fetchedOptions);
+            setOptions(fetchedOptions ?? []);
             setIsLoading(false);
-        } catch {
+        } catch (err) {
             setIsError(true);
+            setIsLoading(false);
         }
-    };
+    }, []);
 
     const fetchOptionsDebounced = useCallback(
-        debounce((input) => handleFetchOptions(input), 500, {
-            leading: false,
-            trailing: true,
-        }),
-        []
+        debounce((input: string) => {
+            handleFetchOptions(input);
+        }, 500),
+        [handleFetchOptions]
     );
 
     // =============================================================================
@@ -85,20 +102,19 @@ export const PredictiveTextInput = <T, V>({
          * 2. When user selected option from dropdown becomes input
          * 3. Initial selectedOption passed in as input
          */
-        if (
-            input &&
-            input.length >= minimumCharacters &&
-            input !== searchedInput
-        ) {
-            fetchOptionsDebounced(input);
+        if (input && input.length >= minimumCharacters) {
+            if (!isOptionSelected) {
+                setIsOpen(true);
+                fetchOptionsDebounced(input);
+            } else if (input !== searchedInput) {
+                fetchOptionsDebounced(input);
+            }
         } else {
             fetchOptionsDebounced.cancel();
         }
 
         if (input === "" && prevOptionSelected) {
-            if (onSelectOption) {
-                onSelectOption(undefined, undefined);
-            }
+            onSelectOption?.(undefined, undefined);
             handleDropdownDismiss();
             setPrevOptionSelected(undefined);
         }
@@ -108,28 +124,98 @@ export const PredictiveTextInput = <T, V>({
         }
     }, [input, selectedOption]);
 
-    /**
-     * To sync input to selectedOption,
-     * hide dropdown and sync prevOption selected
-     */
     useEffect(() => {
         setInput(selectedOption ? getDisplayValue(selectedOption) : "");
-        handleDropdownDismiss(selectedOption);
+        setSearchedInput(selectedOption ? getDisplayValue(selectedOption) : "");
         setPrevOptionSelected(selectedOption);
+        setOptions([]);
+        setIsOptionSelected(!!selectedOption);
     }, [selectedOption]);
+
+    // =============================================================================
+    // Cleanup: cancel debounce on unmount
+    // =============================================================================
+    useEffect(() => {
+        return () => {
+            fetchOptionsDebounced.cancel();
+        };
+    }, [fetchOptionsDebounced]);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInput(e.target.value);
+    const handleListItemClick = (item: T, extractedValue: V) => {
+        selectorRef.current?.focus();
+        setInput(getDisplayValue(item));
+        setSearchedInput(item ? getDisplayValue(item) : "");
+        setIsOptionSelected(true);
+        setPrevOptionSelected(item);
+        setIsOpen(false);
+        onSelectOption?.(item, extractedValue);
     };
 
-    const handleSelectItem = (item: T, extractedValue: V) => {
-        if (onSelectOption) {
-            onSelectOption(item, extractedValue);
+    const handleOpen = () => {
+        if (!isOptionSelected && input.length >= minimumCharacters) {
+            setIsFocused(true);
         }
+    };
+
+    const handleClose = () => {
+        setIsOpen(false);
+        setIsFocused(false);
+        handleOnBlur();
+    };
+
+    const handleNodeFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleNodeBlur = (e: React.FocusEvent) => {
+        if (
+            !isOpen &&
+            nodeRef.current &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
+        ) {
+            setIsFocused(false);
+            handleOnBlur();
+        }
+    };
+
+    const handleListDismiss = () => {
+        setIsOpen(false);
+        setIsFocused(false);
+    };
+
+    const handleDismiss = () => {
+        setIsOpen(false);
+        setIsFocused(false);
+        handleOnBlur();
+        selectorRef.current?.focus();
+    };
+
+    const handleOnClear = () => {
+        setInput("");
+        setIsOpen(false);
+        setOptions([]);
+        setIsOptionSelected(false);
+        onSelectOption?.(undefined, undefined);
+    };
+
+    const handleOnBlur = () => {
+        if (!isOptionSelected) {
+            if (prevOptionSelected) {
+                const prevValue = getDisplayValue(prevOptionSelected);
+                setInput(prevValue);
+                setIsOpen(false);
+            } else {
+                handleOnClear();
+            }
+        }
+    };
+
+    const handleTyping = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInput(e.target.value);
+        setIsOptionSelected(false);
     };
 
     const handleDropdownDismiss = (item?: T) => {
@@ -139,118 +225,95 @@ export const PredictiveTextInput = <T, V>({
         setIsLoading(true);
     };
 
-    const handleOnClear = () => {
-        setInput("");
-        if (onSelectOption) {
-            onSelectOption(undefined, undefined);
-        }
-        handleDropdownDismiss();
-    };
-
-    const handleOnBlur = () => {
-        if (!isOptionSelected && !prevOptionSelected) {
-            handleOnClear();
-        } else {
-            handleDropdownDismiss(prevOptionSelected);
-            setInput(getDisplayValue(prevOptionSelected));
-            if (onSelectOption) {
-                onSelectOption(
-                    prevOptionSelected,
-                    getValue(prevOptionSelected)
-                );
-            }
-            setPrevOptionSelected(prevOptionSelected);
-        }
-    };
-
     // =============================================================================
     // HELPER FUNCTION
     // =============================================================================
-
-    const showDropdown = () => {
-        return (
-            !!input && input.length >= minimumCharacters && !isOptionSelected
-        );
-    };
-
-    const getDisplayValue = (item: T | undefined): string => {
-        if (!item) return "";
-
-        return displayValueExtractor
-            ? displayValueExtractor(item)
-            : item.toString();
-    };
-
-    const getValue = (item: T | undefined): V | undefined => {
-        if (!item) return undefined;
-
-        return valueExtractor ? valueExtractor(item) : (item as unknown as V);
-    };
-
     const getItemsLoadState = (): ItemsLoadStateType => {
         if (isError) return "fail";
-
         return isLoading ? "loading" : "success";
     };
 
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
-
-    const renderDropDown = () => {
+    const renderInputElement = () => {
         return (
-            <DropdownList
-                listItems={options}
-                onSelectItem={handleSelectItem}
-                valueExtractor={valueExtractor}
-                listExtractor={listExtractor}
-                itemsLoadState={getItemsLoadState()}
-                visible={showDropdown()}
-                disableItemFocus={true}
-                onRetry={() => handleFetchOptions(input)}
-                itemTruncationType={"end"}
-                itemMaxLines={1}
-                labelDisplayType={"next-line"}
-            />
+            <InputWrapper
+                className={className}
+                data-testid={testId}
+                ref={nodeRef}
+                tabIndex={-1}
+                onFocus={handleNodeFocus}
+                onBlur={handleNodeBlur}
+                $focused={isFocused}
+                $disabled={disabled}
+                $readOnly={readOnly}
+                $error={error}
+            >
+                <Input
+                    ref={selectorRef}
+                    id={internalId}
+                    type="text"
+                    value={input}
+                    onChange={handleTyping}
+                    placeholder={placeholder}
+                    readOnly={readOnly}
+                    disabled={disabled}
+                    allowClear
+                    onClear={handleOnClear}
+                    aria-expanded={isOpen}
+                    aria-controls={internalId}
+                    aria-autocomplete="list"
+                    aria-haspopup="listbox"
+                    onBlur={
+                        input.length < minimumCharacters
+                            ? handleOnBlur
+                            : undefined
+                    }
+                    styleType="no-border"
+                />
+            </InputWrapper>
         );
     };
 
-    const renderInputField = () => {
+    const renderDropdown = () => {
         return (
-            <Input
-                type="text"
-                value={input}
-                onChange={handleInputChange}
-                placeholder={placeholder}
-                readOnly={readOnly}
-                disabled={disabled}
-                allowClear={true}
-                onClear={handleOnClear}
-                styleType="no-border"
-                onBlur={
-                    input.length < minimumCharacters ? handleOnBlur : undefined
-                }
+            <DropdownList
+                listboxId={internalId}
+                listItems={options}
+                onSelectItem={handleListItemClick}
+                onDismiss={handleListDismiss}
+                valueExtractor={valueExtractor}
+                listExtractor={listExtractor}
+                itemsLoadState={getItemsLoadState()}
+                itemTruncationType={"end"}
+                itemMaxLines={1}
+                labelDisplayType={"next-line"}
+                disableItemFocus
+                onRetry={() => handleFetchOptions(input)}
+                width={dropdownWidth}
+                matchElementWidth
             />
         );
     };
 
     return (
-        <DropdownWrapper
-            className={className}
-            show={showDropdown()}
-            error={error && !showDropdown()}
-            disabled={disabled}
-            readOnly={readOnly}
-            testId={testId}
-            onBlur={handleOnBlur}
-        >
-            {!readOnly ? (
-                <SelectorDiv>{renderInputField()}</SelectorDiv>
-            ) : (
-                <>{renderInputField()}</>
-            )}
-            {!readOnly && showDropdown() && <Divider />}
-            {renderDropDown()}
-        </DropdownWrapper>
+        <DropdownListState>
+            <ElementWithDropdown
+                enabled={!readOnly && !disabled}
+                isOpen={isOpen}
+                renderElement={renderInputElement}
+                renderDropdown={renderDropdown}
+                onOpen={handleOpen}
+                onClose={handleClose}
+                onDismiss={handleDismiss}
+                clickToToggle={false}
+                offset={8}
+                alignment={alignment}
+                fitAvailableHeight
+                customZIndex={dropdownZIndex}
+                rootNode={dropdownRootNode}
+            />
+        </DropdownListState>
     );
 };
