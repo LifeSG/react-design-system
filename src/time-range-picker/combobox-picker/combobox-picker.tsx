@@ -80,11 +80,15 @@ export const ComboboxPicker = ({
 
     const { context: startDropdownContext } = useDropdownListState({
         options: startOptions,
+        disabled,
+        readOnly,
         onOpenChange: setDropdownOpen,
     });
 
     const { context: endDropdownContext } = useDropdownListState({
         options: startOptions,
+        disabled,
+        readOnly,
         onOpenChange: setDropdownOpen,
     });
 

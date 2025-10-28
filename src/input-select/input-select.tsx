@@ -66,6 +66,8 @@ export const InputSelect = <T, V>({
     const [focused, setFocused] = useState<boolean>(false);
     const { context, setSelectedIndex, onKeyDown } = useDropdownListState({
         options,
+        disabled,
+        readOnly,
         onOpenChange: setShowOptions,
     });
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());

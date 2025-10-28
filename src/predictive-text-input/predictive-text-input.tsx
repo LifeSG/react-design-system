@@ -63,6 +63,8 @@ export const PredictiveTextInput = <T, V>({
     const [isFocused, setIsFocused] = useState(false);
     const { context } = useDropdownListState({
         options,
+        disabled,
+        readOnly,
     });
 
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
