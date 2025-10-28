@@ -231,7 +231,7 @@ export const Component = <T, V>(
                     {renderSelectorContent()}
                 </ExpandableElement>
                 <VisuallyHidden id={instructionId}>
-                    Press space to open options
+                    Press Space or Enter to open options
                 </VisuallyHidden>
             </div>
         );
