@@ -9,7 +9,7 @@ export interface FilterBaseProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
-    style?: CSSProperties;
+    style?: CSSProperties | undefined;
     customLabels?: {
         headerTitle?: string | undefined;
         toggleFilterButtonLabel?: string | undefined;
