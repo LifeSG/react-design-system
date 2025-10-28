@@ -15,6 +15,7 @@ interface ExpandableElementProps
     popupRole: AriaAttributes["aria-haspopup"];
     readOnly: boolean | undefined;
     variant?: DropdownVariantType | undefined;
+    onKeyDown?: ((e: React.KeyboardEvent) => void) | undefined;
 }
 
 export const Component = (
