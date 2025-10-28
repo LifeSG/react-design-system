@@ -90,8 +90,14 @@ export const DropdownList = <T, V>({
     const { focusedIndex, setFocusedIndex } = useContext(
         DropdownListStateContext
     );
-    const { elementWidth, setFloatingRef, getFloatingProps, styles, resized } =
-        useDropdownRender();
+    const {
+        elementWidth,
+        setFloatingRef,
+        getFloatingProps,
+        styles,
+        resized,
+        open,
+    } = useDropdownRender();
     const [searchValue, setSearchValue] = useState<string>("");
     const [displayListItems, setDisplayListItems] = useState(listItems ?? []);
     const itemsLoadStateChanged = useCompare(itemsLoadState);
@@ -273,30 +279,37 @@ export const DropdownList = <T, V>({
     }, [listItemRefs, listItems, setFocusedIndex, topScrollItem]);
 
     useEffect(() => {
-        if (disableItemFocus || !listItems) return;
+        if (!open || disableItemFocus || !listItems) return;
 
         if (!resized || !resizedChanged) {
             // only run when dropdown has completed resizing
             return;
         }
 
+        let timeout: NodeJS.Timeout;
+
         // Focus search input if there is one
         if (searchInputRef.current) {
             setFocusedIndex(-1);
-            setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
+            timeout = setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
         } else if (focusedIndex >= 0) {
             // Else focus on the specified element
             virtuosoRef.current?.scrollToIndex({
                 index: focusedIndex,
                 align: "center",
             });
-            setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
+            timeout = setTimeout(
+                () => listItemRefs.current[focusedIndex]?.focus(),
+                200
+            );
         } else {
             // Else focus on the first list item
             virtuosoRef.current?.scrollToIndex({ index: 0 });
             setFocusedIndex(0);
-            setTimeout(() => listItemRefs.current[0]?.focus(), 200);
+            timeout = setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
+
+        return () => clearTimeout(timeout);
     }, [
         checkListItemSelected,
         disableItemFocus,
