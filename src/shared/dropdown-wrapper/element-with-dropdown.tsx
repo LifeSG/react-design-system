@@ -36,6 +36,7 @@ export interface DropdownRenderProps {
     styles: CSSProperties;
     /** if height has been calculated for the dropdown */
     resized: boolean;
+    open: boolean;
     setFloatingRef: (node: HTMLElement | null) => void;
     getFloatingProps: (
         userProps?: React.HTMLProps<HTMLElement>
@@ -84,6 +85,7 @@ export const DropdownRenderContext = createContext<DropdownRenderProps>({
     elementWidth: 0,
     styles: {},
     resized: false,
+    open: false,
     setFloatingRef: () => {
         // noop
     },
@@ -244,6 +246,7 @@ export const ElementWithDropdown = ({
             zIndex: customZIndex ?? parentZIndex ?? DEFAULT_Z_INDEX,
         },
         resized,
+        open: isOpen, // the actual open state, as dropdown may remain mounted while the close animation has not completed
         setFloatingRef: refs.setFloating,
         getFloatingProps,
     };
