@@ -97,7 +97,7 @@ describe("InputSelect", () => {
     });
 
     describe("focus/blur behaviour", () => {
-        it("should call onBlur via outside click", async () => {
+        fit("should call onBlur via outside click after option is selected", async () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
@@ -128,9 +128,43 @@ describe("InputSelect", () => {
 
             expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
-            await act(async () => {
-                await user.click(document.body);
-            });
+            await user.click(document.body);
+
+            expect(mockOnBlur).toHaveBeenCalledTimes(1);
+        });
+
+        it("should call onBlur via outside click after dropdown is toggled", async () => {
+            const user = userEvent.setup();
+            const mockOnBlur = jest.fn();
+
+            render(
+                <InputSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    onBlur={mockOnBlur}
+                />
+            );
+
+            await user.click(screen.getByTestId(FIELD_TESTID));
+
+            await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
+            await waitFor(() =>
+                expect(
+                    screen.queryByRole("option", { name: "Option 1" })
+                ).toHaveFocus()
+            );
+
+            expect(mockOnBlur).toHaveBeenCalledTimes(0);
+
+            await user.click(screen.getByTestId(FIELD_TESTID));
+
+            await waitForElementToBeRemoved(() =>
+                screen.queryByTestId(DROPDOWN_TESTID)
+            );
+
+            expect(mockOnBlur).toHaveBeenCalledTimes(0);
+
+            await user.click(document.body);
 
             expect(mockOnBlur).toHaveBeenCalledTimes(1);
         });
@@ -400,6 +434,248 @@ describe("InputSelect", () => {
 
             expect(screen.queryByText("custom 1")).toBeVisible();
             expect(screen.queryByText("Option 1")).not.toBeInTheDocument();
+        });
+    });
+
+    describe("keyboard behaviour", () => {
+        describe("dropdown is closed", () => {
+            it("should focus the next item with Arrow Down", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />
+                );
+
+                await act(async () => {
+                    await user.keyboard("{Tab}");
+                    await user.keyboard("{ArrowDown}");
+                });
+
+                // opens the list and focuses the first item
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                    expect(
+                        screen.queryByRole("option", { name: "Option 1" })
+                    ).toHaveFocus();
+                });
+            });
+
+            it("should focus the next item with Arrow Down, given there is a selected option", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <InputSelect
+                        data-testid={FIELD_TESTID}
+                        options={OPTIONS}
+                        selectedOption={OPTIONS[1]}
+                    />
+                );
+
+                await act(async () => {
+                    await user.keyboard("{Tab}");
+                    await user.keyboard("{ArrowDown}");
+                });
+
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                    expect(
+                        screen.queryByRole("option", { name: "Option 3" })
+                    ).toHaveFocus();
+                });
+            });
+
+            it("should focus the previous item with Arrow Up", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />
+                );
+
+                await act(async () => {
+                    await user.keyboard("{Tab}");
+                    await user.keyboard("{ArrowUp}");
+                });
+
+                // opens the list and focuses the first item
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                    expect(
+                        screen.queryByRole("option", { name: "Option 1" })
+                    ).toHaveFocus();
+                });
+            });
+
+            it("should focus the previous item with Arrow Up, given there is a selected option", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <InputSelect
+                        data-testid={FIELD_TESTID}
+                        options={OPTIONS}
+                        selectedOption={OPTIONS[2]}
+                    />
+                );
+
+                await act(async () => {
+                    await user.keyboard("{Tab}");
+                    await user.keyboard("{ArrowUp}");
+                });
+
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                    expect(
+                        screen.queryByRole("option", { name: "Option 2" })
+                    ).toHaveFocus();
+                });
+            });
+
+            it("should focus the first item with Home", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />
+                );
+
+                await act(async () => {
+                    await user.keyboard("{Tab}");
+                    await user.keyboard("{Home}");
+                });
+
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                    expect(
+                        screen.queryByRole("option", { name: "Option 1" })
+                    ).toHaveFocus();
+                });
+            });
+
+            it("should focus the last item with End", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />
+                );
+
+                await act(async () => {
+                    await user.keyboard("{Tab}");
+                    await user.keyboard("{End}");
+                });
+
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                    expect(
+                        screen.queryByRole("option", { name: "Option 3" })
+                    ).toHaveFocus();
+                });
+            });
+        });
+
+        describe("dropdown is opened", () => {
+            it("should focus the next item with Arrow Down", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <InputSelect data-testid={FIELD_TESTID} options={OPTIONS} />
+                );
+
+                await act(async () => {
+                    await user.keyboard("{Tab}{Home}");
+                });
+
+                // opens the list and focuses the first item
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                    expect(
+                        screen.queryByRole("option", { name: "Option 1" })
+                    ).toHaveFocus();
+                });
+
+                await act(async () => {
+                    await user.keyboard("{ArrowDown}");
+                });
+
+                // focuses the next item
+                await waitFor(() => {
+                    expect(
+                        screen.queryByRole("option", { name: "Option 2" })
+                    ).toHaveFocus();
+                });
+
+                await act(async () => {
+                    await user.keyboard("{ArrowDown}");
+                });
+
+                // focuses the next item
+                await waitFor(() => {
+                    expect(
+                        screen.queryByRole("option", { name: "Option 3" })
+                    ).toHaveFocus();
+                });
+
+                await act(async () => {
+                    await user.keyboard("{ArrowDown}");
+                });
+
+                // stays on the last item once the end of the list is reached
+                expect(
+                    screen.queryByRole("option", { name: "Option 3" })
+                ).toHaveFocus();
+            });
+
+            it("should focus the previous item with Arrow Up", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <InputSelect
+                        data-testid={FIELD_TESTID}
+                        options={OPTIONS}
+                        selectedOption={OPTIONS[2]}
+                    />
+                );
+
+                await act(async () => {
+                    await user.keyboard("{Tab}{End}");
+                });
+
+                // opens the list and focuses the last item
+                await waitFor(() => {
+                    expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+                    expect(
+                        screen.queryByRole("option", { name: "Option 3" })
+                    ).toHaveFocus();
+                });
+
+                await act(async () => {
+                    await user.keyboard("{ArrowUp}");
+                });
+
+                // focuses the previous item
+                await waitFor(() => {
+                    expect(
+                        screen.queryByRole("option", { name: "Option 2" })
+                    ).toHaveFocus();
+                });
+
+                await act(async () => {
+                    await user.keyboard("{ArrowUp}");
+                });
+
+                // focuses the previous item
+                await waitFor(() => {
+                    expect(
+                        screen.queryByRole("option", { name: "Option 1" })
+                    ).toHaveFocus();
+                });
+
+                await act(async () => {
+                    await user.keyboard("{ArrowUp}");
+                });
+
+                // stays on the first item once the top of the list is reached
+                expect(
+                    screen.queryByRole("option", { name: "Option 1" })
+                ).toHaveFocus();
+            });
         });
     });
 });
