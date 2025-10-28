@@ -1,35 +1,44 @@
-import { CSSProperties, HTMLAttributes, ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 import { ButtonStyleType } from "../button/types";
 import { FormLabelAddonProps } from "../form/types";
 import { Insets } from "../shared/types";
 
 export type Mode = "default" | "mobile";
 
-export interface FilterBaseProps extends HTMLAttributes<HTMLDivElement> {
+export interface FilterBaseProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
-
+    style?: CSSProperties;
     customLabels?: {
-        toggleFilterButtonLabel?: string;
-        headerTitle?: string;
-        doneButtonLabel?: string;
-        clearButtonLabel?: string;
+        headerTitle?: string | undefined;
+        toggleFilterButtonLabel?: string | undefined;
+        doneButtonLabel?: string | undefined;
+        clearButtonLabel?: string | undefined;
     };
-
     clearButtonDisabled?: boolean | undefined;
-
     insets?: Insets | undefined;
-
     /** Called when clear button is pressed */
     onClear?: (() => void) | undefined;
-
     children?: ReactNode | ((mode: "mobile" | "default") => ReactNode);
 }
 
 export interface FilterSidebarProps extends FilterBaseProps {
-    className?: string;
-    style?: CSSProperties;
+    /**
+     * @deprecated
+     * use customLabels instead
+     */
+    headerTitle?: string | undefined;
+    /**
+     * @deprecated
+     * use customLabels instead
+     */
+    toggleFilterButtonLabel?: string | undefined;
+    /**
+     * @deprecated
+     * use customLabels instead
+     */
+    doneButtonLabel?: string | undefined;
 }
 
 export interface FilterModalProps extends FilterBaseProps {
@@ -39,9 +48,6 @@ export interface FilterModalProps extends FilterBaseProps {
     onDone?: (() => void) | undefined;
     onModalOpen?: () => void;
     toggleFilterButtonStyle?: ButtonStyleType | undefined;
-
-    className?: string;
-    style?: CSSProperties;
 }
 
 export interface FilterProps extends FilterBaseProps {

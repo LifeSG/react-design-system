@@ -30,7 +30,6 @@ export const FilterModal = ({
     clearButtonDisabled = false,
     insets,
     children,
-    ...props
 }: FilterModalProps) => {
     const { handleClear, labels } = useFilterBase({
         onClear,
@@ -59,10 +58,7 @@ export const FilterModal = ({
     };
 
     return (
-        <FilterContext.Provider
-            {...props}
-            value={{ mode: "mobile", rootNode: nodeRef }}
-        >
+        <FilterContext.Provider value={{ mode: "mobile", rootNode: nodeRef }}>
             <FilterButton
                 data-testid="filter-show-button"
                 styleType={toggleFilterButtonStyle}
@@ -115,3 +111,5 @@ export const FilterModal = ({
         </FilterContext.Provider>
     );
 };
+
+FilterModal.displayName = "Filter.Modal";

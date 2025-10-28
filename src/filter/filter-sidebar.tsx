@@ -16,7 +16,6 @@ export const FilterSidebar = ({
     clearButtonDisabled = false,
     insets,
     children,
-    ...props
 }: FilterSidebarProps) => {
     const { handleClear, labels } = useFilterBase({
         onClear,
@@ -32,7 +31,6 @@ export const FilterSidebar = ({
                 data-id="filter-desktop"
                 data-testid="filter-desktop"
                 ref={nodeRef}
-                {...props}
             >
                 <FilterHeader $insetTop={insets?.top}>
                     <FilterTitle>{labels.title}</FilterTitle>
@@ -51,3 +49,5 @@ export const FilterSidebar = ({
         </FilterContext.Provider>
     );
 };
+
+FilterSidebar.displayName = "Filter.Sidebar";

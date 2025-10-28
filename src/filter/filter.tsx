@@ -6,22 +6,30 @@ import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
 import { FilterItem } from "./filter-item";
 import { FilterItemPage } from "./filter-item-page";
 import { FilterProps } from "./types";
-import { FilterModal } from "./filterModal";
-import { FilterSidebar } from "./filterSidebar";
+import { FilterModal } from "./filter-modal";
+import { FilterSidebar } from "./filter-sidebar";
 
 export const Filter = ({ children, ...props }: FilterProps) => {
     const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
 
-    return isMobile ? (
-        <FilterModal {...props}>
-            {typeof children === "function" ? children("mobile") : children}
-        </FilterModal>
-    ) : (
-        <FilterSidebar {...props}>
-            {typeof children === "function" ? children("default") : children}
-        </FilterSidebar>
+    return (
+        <div {...props}>
+            {isMobile ? (
+                <FilterModal>
+                    {typeof children === "function"
+                        ? children("mobile")
+                        : children}
+                </FilterModal>
+            ) : (
+                <FilterSidebar>
+                    {typeof children === "function"
+                        ? children("default")
+                        : children}
+                </FilterSidebar>
+            )}
+        </div>
     );
 };
 
