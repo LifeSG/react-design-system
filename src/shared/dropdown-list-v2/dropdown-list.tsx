@@ -156,6 +156,19 @@ export const DropdownList = <T, V>({
         });
     });
 
+    const focusListItem = (index: number) => {
+        // Cannot go further than first or last element
+        if (index < 0 || index >= displayListItems.length) {
+            return;
+        }
+        virtuosoRef.current?.scrollToIndex({
+            index,
+            align: "center",
+        });
+        setFocusedIndex(index);
+        setTimeout(() => listItemRefs.current[index]?.focus(), 200);
+    };
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
@@ -163,24 +176,24 @@ export const DropdownList = <T, V>({
         switch (event.code) {
             case "ArrowDown":
                 event.preventDefault();
-                // Cannot go further than last element
-                if (focusedIndex < displayListItems.length - 1) {
-                    const upcomingIndex = focusedIndex + 1;
-                    listItemRefs.current[upcomingIndex]?.focus();
-                    setFocusedIndex(upcomingIndex);
-                }
+                focusListItem(focusedIndex + 1);
                 break;
             case "ArrowUp":
                 event.preventDefault();
-                // Cannot go further than first element
                 if (focusedIndex > 0) {
-                    const upcomingIndex = focusedIndex - 1;
-                    listItemRefs.current[upcomingIndex]?.focus();
-                    setFocusedIndex(upcomingIndex);
+                    focusListItem(focusedIndex - 1);
                 } else if (focusedIndex === 0 && searchInputRef.current) {
                     searchInputRef.current.focus();
                     setFocusedIndex(-1);
                 }
+                break;
+            case "Home":
+                event.preventDefault();
+                focusListItem(0);
+                break;
+            case "End":
+                event.preventDefault();
+                focusListItem(displayListItems.length - 1);
                 break;
             case "Space":
             case "Enter":
@@ -264,28 +277,17 @@ export const DropdownList = <T, V>({
             return;
         }
 
-        if (disableItemFocus || !listItems) return;
-
-        const index = listItems.findIndex((item) =>
-            checkListItemSelected(item)
-        );
-
         // Focus search input if there is one
         if (searchInputRef.current) {
             setFocusedIndex(-1);
             setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
-        } else if (focusedIndex > 0) {
+        } else if (focusedIndex >= 0) {
             // Else focus on the specified element
             virtuosoRef.current?.scrollToIndex({
                 index: focusedIndex,
                 align: "center",
             });
             setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
-        } else if (index !== -1) {
-            // Else focus on the selected element
-            virtuosoRef.current?.scrollToIndex({ index, align: "center" });
-            setFocusedIndex(index);
-            setTimeout(() => listItemRefs.current[index]?.focus(), 200);
         } else {
             // Else focus on the first list item
             virtuosoRef.current?.scrollToIndex({ index: 0 });

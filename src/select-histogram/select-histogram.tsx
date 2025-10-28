@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { HistogramSlider } from "../histogram-slider";
-import {
-    DropdownListState,
-    ExpandableElement,
-} from "../shared/dropdown-list-v2";
+import { ExpandableElement } from "../shared/dropdown-list-v2";
 import {
     DropdownRenderProps,
     ElementWithDropdown,
@@ -225,22 +222,20 @@ export const SelectHistogram = ({
     );
 
     return (
-        <DropdownListState>
-            <ElementWithDropdown
-                enabled={!readOnly && !disabled}
-                isOpen={showOptions}
-                renderElement={renderElement}
-                renderDropdown={renderDropdown}
-                onOpen={handleOpen}
-                onClose={handleClose}
-                onDismiss={handleDismiss}
-                clickToToggle
-                offset={8}
-                alignment={alignment}
-                fitAvailableHeight
-                customZIndex={dropdownZIndex}
-                rootNode={dropdownRootNode}
-            />
-        </DropdownListState>
+        <ElementWithDropdown
+            enabled={!readOnly && !disabled}
+            isOpen={showOptions}
+            renderElement={renderElement}
+            renderDropdown={renderDropdown}
+            onOpen={handleOpen}
+            onClose={handleClose}
+            onDismiss={handleDismiss}
+            clickToToggle
+            offset={8}
+            alignment={alignment}
+            fitAvailableHeight
+            customZIndex={dropdownZIndex}
+            rootNode={dropdownRootNode}
+        />
     );
 };

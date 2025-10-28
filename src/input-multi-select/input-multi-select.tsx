@@ -1,10 +1,12 @@
 import { OpenChangeReason } from "@floating-ui/react";
 import findIndex from "lodash/findIndex";
+import isEqual from "lodash/isEqual";
 import React, { useEffect, useRef, useState } from "react";
 import {
     DropdownList,
     DropdownListState,
     ExpandableElement,
+    useDropdownListState,
 } from "../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
@@ -51,7 +53,7 @@ export const InputMultiSelect = <T, V>({
     dropdownZIndex,
     maxSelectable,
     dropdownRootNode,
-    dropdownWidth
+    dropdownWidth,
 }: InputMultiSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -60,6 +62,10 @@ export const InputMultiSelect = <T, V>({
     const [selected, setSelected] = useState<T[]>(selectedOptions || []);
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
+    const { context, onKeyDown, setSelectedIndex } = useDropdownListState({
+        options,
+        onOpenChange: setShowOptions,
+    });
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
     const nodeRef = useRef<HTMLDivElement>(null);
@@ -70,6 +76,13 @@ export const InputMultiSelect = <T, V>({
     // =============================================================================
     useEffect(() => {
         setSelected(selectedOptions || []);
+        setSelectedIndex(
+            selectedOptions
+                ? findIndex(options, (option) => {
+                      return isEqual(option, selectedOptions[0]);
+                  })
+                : -1
+        );
     }, [selectedOptions]);
 
     // =============================================================================
@@ -231,6 +244,7 @@ export const InputMultiSelect = <T, V>({
                     aria-labelledby={ariaLabelledBy}
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
+                    onKeyDown={onKeyDown}
                 >
                     {renderSelectorContent()}
                 </ExpandableElement>
@@ -270,7 +284,7 @@ export const InputMultiSelect = <T, V>({
     };
 
     return (
-        <DropdownListState>
+        <DropdownListState context={context}>
             <ElementWithDropdown
                 enabled={!readOnly && !disabled}
                 isOpen={showOptions}
