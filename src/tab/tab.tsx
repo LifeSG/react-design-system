@@ -81,7 +81,6 @@ const TabBase = ({
                     data-testid={`${testId}-tabs`}
                     fullWidthIndicatorLine={fullWidthIndicatorLine}
                     fadeColor={fadeColor}
-                    tabCount={tabLinks.length}
                 />
                 {renderChildren()}
             </TabContext.Provider>

@@ -20,7 +20,6 @@ interface Props
         "fullWidthIndicatorLine" | "onTabClick" | "data-testid" | "fadeColor"
     > {
     controlledMode?: boolean | undefined;
-    tabCount?: number | undefined;
 }
 
 export const TabLinkChain = ({
@@ -29,7 +28,6 @@ export const TabLinkChain = ({
     onTabClick,
     fullWidthIndicatorLine,
     fadeColor,
-    tabCount,
 }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
@@ -47,6 +45,7 @@ export const TabLinkChain = ({
     const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
 
     const activeLinkRef = useRef<HTMLLIElement>(null);
+    const chainLinkRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -75,6 +74,19 @@ export const TabLinkChain = ({
         }
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+        let nextIndex = index;
+        if (e.key === "ArrowRight") {
+            nextIndex = (index + 1) % tabLinks.length;
+            e.preventDefault();
+        } else if (e.key === "ArrowLeft") {
+            nextIndex = (index - 1 + tabLinks.length) % tabLinks.length;
+            e.preventDefault();
+        }
+
+        chainLinkRefs.current[nextIndex]?.focus();
+    };
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -97,7 +109,6 @@ export const TabLinkChain = ({
         >
             <Chain
                 role="tablist"
-                aria-label={`List of ${tabCount} tabs`}
                 $fullWidthIndicatorLine={fullWidthIndicatorLine}
             >
                 {tabLinks.map((linkChain, index) => {
@@ -117,6 +128,11 @@ export const TabLinkChain = ({
                                 aria-selected={isActive}
                                 onClick={handleChainLinkClick(index)}
                                 data-testid={`${testId}-link-${index}`}
+                                tabIndex={isActive ? 0 : -1}
+                                onKeyDown={(e) => handleKeyDown(e, index)}
+                                ref={(el) =>
+                                    (chainLinkRefs.current[index] = el)
+                                }
                             >
                                 <Label $active={isActive} weight="regular">
                                     {truncateText(linkChain.title)}
