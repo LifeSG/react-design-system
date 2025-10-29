@@ -5,25 +5,27 @@ import { Insets } from "../shared/types";
 
 export type Mode = "default" | "mobile";
 
+interface FilterSidebarCustomLabel {
+    headerTitle?: string | undefined;
+    clearButtonLabel?: string | undefined;
+}
+interface FilterModalCustomLabel {
+    headerTitle?: string | undefined;
+    toggleFilterButtonLabel?: string | undefined;
+    doneButtonLabel?: string | undefined;
+    clearButtonLabel?: string | undefined;
+}
+
 export interface FilterBaseProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
     style?: CSSProperties | undefined;
-    customLabels?: {
-        headerTitle?: string | undefined;
-        toggleFilterButtonLabel?: string | undefined;
-        doneButtonLabel?: string | undefined;
-        clearButtonLabel?: string | undefined;
-    };
     clearButtonDisabled?: boolean | undefined;
     insets?: Insets | undefined;
     /** Called when clear button is pressed */
     onClear?: (() => void) | undefined;
     children?: ReactNode | ((mode: "mobile" | "default") => ReactNode);
-}
-
-export interface FilterSidebarProps extends FilterBaseProps {
     /**
      * @deprecated
      * use customLabels instead
@@ -41,6 +43,10 @@ export interface FilterSidebarProps extends FilterBaseProps {
     doneButtonLabel?: string | undefined;
 }
 
+export interface FilterSidebarProps extends FilterBaseProps {
+    customLabels?: FilterSidebarCustomLabel | undefined;
+}
+
 export interface FilterModalProps extends FilterBaseProps {
     /** Called when dismiss button is pressed (mobile mode only) */
     onDismiss?: (() => void) | undefined;
@@ -48,6 +54,7 @@ export interface FilterModalProps extends FilterBaseProps {
     onDone?: (() => void) | undefined;
     onModalOpen?: () => void;
     toggleFilterButtonStyle?: ButtonStyleType | undefined;
+    customLabels?: FilterModalCustomLabel | undefined;
 }
 
 export interface FilterProps extends FilterBaseProps {
@@ -55,6 +62,10 @@ export interface FilterProps extends FilterBaseProps {
     onDismiss?: (() => void) | undefined;
     /** Called when done button is pressed (mobile mode only) */
     onDone?: (() => void) | undefined;
+    customLabels?:
+        | FilterModalCustomLabel
+        | FilterSidebarCustomLabel
+        | undefined;
 }
 
 export interface FilterItemProps {

@@ -9,21 +9,26 @@ import { FilterProps } from "./types";
 import { FilterModal } from "./filter-modal";
 import { FilterSidebar } from "./filter-sidebar";
 
-export const Filter = ({ children, ...props }: FilterProps) => {
+export const Filter = ({
+    children,
+    className,
+    style,
+    ...props
+}: FilterProps) => {
     const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
 
     return (
-        <div {...props}>
+        <div className={className} style={style}>
             {isMobile ? (
-                <FilterModal>
+                <FilterModal {...props}>
                     {typeof children === "function"
                         ? children("mobile")
                         : children}
                 </FilterModal>
             ) : (
-                <FilterSidebar>
+                <FilterSidebar {...props}>
                     {typeof children === "function"
                         ? children("default")
                         : children}

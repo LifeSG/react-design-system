@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { useFilterBase } from "./use-filter-base";
 import { FilterContext } from "./filter-context";
 import {
     DesktopContainer,
@@ -16,14 +15,14 @@ export const FilterSidebar = ({
     clearButtonDisabled = false,
     insets,
     children,
+    headerTitle: _headerTitle,
 }: FilterSidebarProps) => {
-    const { handleClear, labels } = useFilterBase({
-        onClear,
-        customLabels,
-        insets,
-    });
-
     const nodeRef = useRef<HTMLDivElement>(null);
+
+    const labels = {
+        title: customLabels?.headerTitle || _headerTitle || "Filters",
+        clear: customLabels?.clearButtonLabel || "Clear",
+    };
 
     return (
         <FilterContext.Provider value={{ mode: "default", rootNode: nodeRef }}>
@@ -37,7 +36,7 @@ export const FilterSidebar = ({
                     <FilterClearButton
                         styleType="link"
                         type="button"
-                        onClick={handleClear}
+                        onClick={() => onClear?.()}
                         disabled={clearButtonDisabled}
                         aria-label={`clear ${labels.title}`}
                     >

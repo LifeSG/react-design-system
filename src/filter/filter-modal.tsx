@@ -17,7 +17,6 @@ import {
     MobileContainer,
     MobileOverlayContainer,
 } from "./filter.styles";
-import { useFilterBase } from "./use-filter-base";
 import { FilterModalProps } from "./types";
 
 export const FilterModal = ({
@@ -30,13 +29,10 @@ export const FilterModal = ({
     clearButtonDisabled = false,
     insets,
     children,
+    toggleFilterButtonLabel: _toggleFilterButtonLabel,
+    headerTitle: _headerTitle,
+    doneButtonLabel: _doneButtonLabel,
 }: FilterModalProps) => {
-    const { handleClear, labels } = useFilterBase({
-        onClear,
-        customLabels,
-        insets,
-    });
-
     const { context, refs } = useFloating();
     const nodeRef = useRef<HTMLDivElement>(null);
 
@@ -55,6 +51,16 @@ export const FilterModal = ({
     const handleShowFilter = () => {
         handleShow();
         onModalOpen?.();
+    };
+
+    const labels = {
+        toggle:
+            customLabels?.toggleFilterButtonLabel ||
+            _toggleFilterButtonLabel ||
+            "Filters",
+        title: customLabels?.headerTitle || _headerTitle || "Filters",
+        done: customLabels?.doneButtonLabel || _doneButtonLabel || "Done",
+        clear: customLabels?.clearButtonLabel || "Clear",
     };
 
     return (
@@ -90,7 +96,7 @@ export const FilterModal = ({
                                     <FilterClearButton
                                         styleType="link"
                                         type="button"
-                                        onClick={handleClear}
+                                        onClick={() => onClear?.()}
                                         disabled={clearButtonDisabled}
                                         aria-label={`clear ${labels.title}`}
                                     >
