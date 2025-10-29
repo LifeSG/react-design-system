@@ -14,6 +14,7 @@ import {
     TimelineWrapper,
 } from "./timeline.style";
 import { TimelineItemProps, TimelineProps, Variant } from "./types";
+import { VisuallyHidden } from "src/shared/accessibility";
 
 export const Timeline = ({
     items,
@@ -24,6 +25,7 @@ export const Timeline = ({
     colSpan,
     "data-base-indicator-testid": baseIndicatorTestId,
     "data-testid": testId = "timeline",
+    headingLevel = 2,
 }: TimelineProps): JSX.Element => {
     // ===========================================================================
     // RENDER
@@ -40,11 +42,15 @@ export const Timeline = ({
         return <>{content}</>;
     };
 
-    const renderTitle = (title: string | JSX.Element): JSX.Element => {
+    const renderTitle = (
+        title: string | JSX.Element,
+        level: number
+    ): JSX.Element => {
         if (typeof title === "string") {
             return (
                 <TimelineItemTitle
-                    forwardedAs="div"
+                    forwardedAs="h3"
+                    aria-level={level}
                     weight="semibold"
                     className="timeline-item-title"
                 >
@@ -77,11 +83,30 @@ export const Timeline = ({
     const renderIcon = (variant: Variant) => {
         switch (variant) {
             case "completed":
-                return <TickIcon />;
+                return <TickIcon aria-hidden />;
             case "error":
-                return <ExclamationCircleFillIcon />;
+                return <ExclamationCircleFillIcon aria-hidden />;
             default:
                 return null;
+        }
+    };
+
+    const getStatus = (variant: Variant) => {
+        switch (variant) {
+            case "current":
+                return "Current step";
+            case "completed":
+                return "Completed step";
+            case "upcoming-active":
+                return "Upcoming active step";
+            case "upcoming-inactive":
+                return "Upcoming inactive step";
+            case "disabled":
+                return "Inactive step";
+            case "error":
+                return "Current step, action required";
+            default:
+                return "";
         }
     };
 
@@ -95,18 +120,21 @@ export const Timeline = ({
                 _variant || (index === 0 ? "current" : "upcoming-active");
 
             return (
-                <TimelineItem key={`timeline-item-${index}`}>
+                <TimelineItem key={`timeline-item-${index}`} role="listitem">
                     <TimelineIndicators>
                         <CircleIndicator
                             data-testid={circleIndicatorTestId}
                             $variant={variant}
                         >
+                            <VisuallyHidden as="span">
+                                {getStatus(variant)}
+                            </VisuallyHidden>
                             {renderIcon(variant)}
                         </CircleIndicator>
                         <LineIndicator $variant={variant} />
                     </TimelineIndicators>
                     <TimelineItemContent className="timeline-item-content">
-                        {renderTitle(title)}
+                        {renderTitle(title, headingLevel + 1)}
                         {statuses && (
                             <TimelinePills>
                                 {renderStatusPills(statuses)}
@@ -127,13 +155,14 @@ export const Timeline = ({
             $colSpan={colSpan}
         >
             <TimelineTitle
-                forwardedAs="div"
+                forwardedAs="h2"
+                aria-level={headingLevel}
                 data-testid="timeline-title"
                 weight="bold"
             >
                 {title}
             </TimelineTitle>
-            {renderItems()}
+            <div role="list">{renderItems()}</div>
         </TimelineWrapper>
     );
 };

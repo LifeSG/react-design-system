@@ -24,4 +24,5 @@ export interface TimelineProps {
     colSpan?: number | undefined;
     "data-testid"?: string | undefined;
     "data-base-indicator-testid"?: string | undefined;
+    headingLevel?: number | undefined;
 }
