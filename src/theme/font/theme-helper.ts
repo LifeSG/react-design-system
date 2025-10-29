@@ -8,6 +8,7 @@ import { PAFontSet } from "./specs/pa-font-set";
 import { A11yPlaygroundFontSet } from "./specs/a11yplayground-font-set";
 import { SupportGoWhereFontSet } from "./specs/supportgowhere-font-set";
 import { IMDAFontSet } from "./specs/imda-font-set";
+import { SPFFontSet } from "./specs/spf-font-set";
 import { FontCollectionMap, FontSet } from "./types";
 
 const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
@@ -18,6 +19,7 @@ const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
         a11yplayground: A11yPlaygroundFontSet,
         supportgowhere: SupportGoWhereFontSet,
         imda: IMDAFontSet,
+        spf: SPFFontSet,
     },
     defaultValue: "default",
 };
