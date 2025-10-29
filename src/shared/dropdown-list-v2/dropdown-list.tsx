@@ -165,15 +165,18 @@ export const DropdownList = <T, V>({
 
     const focusListItem = (index: number) => {
         // Cannot go further than first or last element
-        if (index < 0 || index >= displayListItems.length) {
-            return;
+        let clampedIndex = index;
+        if (index < 0) {
+            clampedIndex = 0;
+        } else if (index >= displayListItems.length) {
+            clampedIndex = displayListItems.length - 1;
         }
         virtuosoRef.current?.scrollToIndex({
-            index,
+            index: clampedIndex,
             align: "center",
         });
-        setFocusedIndex(index);
-        setTimeout(() => listItemRefs.current[index]?.focus(), 200);
+        setFocusedIndex(clampedIndex);
+        setTimeout(() => listItemRefs.current[clampedIndex]?.focus(), 200);
     };
 
     // =========================================================================
@@ -292,7 +295,7 @@ export const DropdownList = <T, V>({
         if (searchInputRef.current) {
             setFocusedIndex(-1);
             timeout = setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
-        } else if (focusedIndex >= 0) {
+        } else if (focusedIndex >= 0 && focusedIndex < listItems.length) {
             // Else focus on the specified element
             virtuosoRef.current?.scrollToIndex({
                 index: focusedIndex,
