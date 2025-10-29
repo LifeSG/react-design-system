@@ -125,11 +125,11 @@ export const Timeline = ({
                         <CircleIndicator
                             data-testid={circleIndicatorTestId}
                             $variant={variant}
-                            aria-label={getStatus(variant)}
                         >
                             <VisuallyHidden as="span">
-                                {renderIcon(variant)}
+                                {getStatus(variant)}
                             </VisuallyHidden>
+                            {renderIcon(variant)}
                         </CircleIndicator>
                         <LineIndicator $variant={variant} />
                     </TimelineIndicators>
