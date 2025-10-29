@@ -107,10 +107,14 @@ export const Item = styled.li<ItemStyleProps>`
 `;
 
 export const Caret = styled(ChevronRightIcon)`
-    margin: ${Spacing["spacing-8"]};
     height: 1em;
     width: 1em;
     color: ${Colour["icon-subtle"]};
+`;
+
+export const Slash = styled(Typography.BodyMD)`
+    display: inline-block;
+    color: ${Colour["text-subtlest"]};
 `;
 
 export const CurrentLabel = styled(Typography.BodyMD)`

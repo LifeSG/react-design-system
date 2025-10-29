@@ -8,6 +8,7 @@ import {
     Fade,
     Item,
     PreviousLink,
+    Slash,
     Wrapper,
 } from "./breadcrumb.style";
 import { BreadcrumbProps, FadeColorSet } from "./types";
@@ -20,6 +21,7 @@ export const Breadcrumb = ({
     fadePosition = "both",
     itemStyle,
     id,
+    separatorStyle = "chevron",
     ...otherProps
 }: BreadcrumbProps) => {
     // =========================================================================
@@ -137,7 +139,14 @@ export const Breadcrumb = ({
                     })}
                 >
                     {element}
-                    {index < links.length - 1 && <Caret aria-hidden />}
+                    {index < links.length - 1 &&
+                        (separatorStyle === "chevron" ? (
+                            <Caret aria-hidden />
+                        ) : (
+                            <Slash inline aria-hidden>
+                                /
+                            </Slash>
+                        ))}
                 </Item>
             );
         });

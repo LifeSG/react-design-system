@@ -53,6 +53,45 @@ export const Default: StoryObj<Component> = {
     },
 };
 
+export const Variations: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Breadcrumb
+                    links={[
+                        { children: "Home", href: "https://life.gov.sg" },
+                        {
+                            children: "Link 1",
+                            href: "https://life.gov.sg",
+                        },
+                        {
+                            children: "Link 2",
+                            href: "https://life.gov.sg",
+                        },
+                        { children: "Current page" },
+                    ]}
+                    separatorStyle="chevron"
+                />
+                <Breadcrumb
+                    links={[
+                        { children: "Home", href: "https://life.gov.sg" },
+                        {
+                            children: "Link 1",
+                            href: "https://life.gov.sg",
+                        },
+                        {
+                            children: "Link 2",
+                            href: "https://life.gov.sg",
+                        },
+                        { children: "Current page" },
+                    ]}
+                    separatorStyle="slash"
+                />
+            </>
+        );
+    },
+    decorators: [],
+};
 export const DifferentFadeColors: StoryObj<Component> = {
     render: (_args) => {
         return (
