@@ -14,6 +14,7 @@ import {
     TimelineWrapper,
 } from "./timeline.style";
 import { TimelineItemProps, TimelineProps, Variant } from "./types";
+import { VisuallyHidden } from "src/shared/accessibility";
 
 export const Timeline = ({
     items,
@@ -48,7 +49,7 @@ export const Timeline = ({
         if (typeof title === "string") {
             return (
                 <TimelineItemTitle
-                    forwardedAs="div"
+                    forwardedAs="h3"
                     aria-level={level}
                     weight="semibold"
                     className="timeline-item-title"
@@ -98,6 +99,12 @@ export const Timeline = ({
                 return "Completed step";
             case "upcoming-active":
                 return "Upcoming active step";
+            case "upcoming-inactive":
+                return "Upcoming inactive step";
+            case "disabled":
+                return "Inactive step";
+            case "error":
+                return "Current step, action required";
             default:
                 return "";
         }
@@ -113,14 +120,16 @@ export const Timeline = ({
                 _variant || (index === 0 ? "current" : "upcoming-active");
 
             return (
-                <TimelineItem key={`timeline-item-${index}`} role="group">
+                <TimelineItem key={`timeline-item-${index}`} role="listitem">
                     <TimelineIndicators>
                         <CircleIndicator
                             data-testid={circleIndicatorTestId}
                             $variant={variant}
                             aria-label={getStatus(variant)}
                         >
-                            {renderIcon(variant)}
+                            <VisuallyHidden as="span">
+                                {renderIcon(variant)}
+                            </VisuallyHidden>
                         </CircleIndicator>
                         <LineIndicator $variant={variant} />
                     </TimelineIndicators>
@@ -146,14 +155,14 @@ export const Timeline = ({
             $colSpan={colSpan}
         >
             <TimelineTitle
-                forwardedAs="div"
+                forwardedAs="h2"
                 aria-level={headingLevel}
                 data-testid="timeline-title"
                 weight="bold"
             >
                 {title}
             </TimelineTitle>
-            {renderItems()}
+            <div role="list">{renderItems()}</div>
         </TimelineWrapper>
     );
 };
