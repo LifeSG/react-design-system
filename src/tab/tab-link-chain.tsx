@@ -45,6 +45,7 @@ export const TabLinkChain = ({
     const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
 
     const activeLinkRef = useRef<HTMLLIElement>(null);
+    const chainLinkRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -71,6 +72,19 @@ export const TabLinkChain = ({
             content.scrollLeft =
                 activeLinkRef.current.getBoundingClientRect().left;
         }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+        let nextIndex = index;
+        if (e.key === "ArrowRight") {
+            nextIndex = (index + 1) % tabLinks.length;
+            e.preventDefault();
+        } else if (e.key === "ArrowLeft") {
+            nextIndex = (index - 1 + tabLinks.length) % tabLinks.length;
+            e.preventDefault();
+        }
+
+        chainLinkRefs.current[nextIndex]?.focus();
     };
 
     // =========================================================================
@@ -114,6 +128,11 @@ export const TabLinkChain = ({
                                 aria-selected={isActive}
                                 onClick={handleChainLinkClick(index)}
                                 data-testid={`${testId}-link-${index}`}
+                                tabIndex={isActive ? 0 : -1}
+                                onKeyDown={(e) => handleKeyDown(e, index)}
+                                ref={(el) =>
+                                    (chainLinkRefs.current[index] = el)
+                                }
                             >
                                 <Label $active={isActive} weight="regular">
                                     {truncateText(linkChain.title)}
