@@ -43,7 +43,9 @@ export const FormPredictiveTextInput = <T, V>({
             <PredictiveTextInput
                 id={`${id}-base`}
                 data-testid={testId || id}
+                aria-labelledby={`${id}-label`}
                 error={!!errorMessage}
+                errorMessage={errorMessage}
                 {...otherProps}
             />
         </FormWrapper>

@@ -35,6 +35,7 @@ export const Default: StoryObj<Component> = {
         return (
             <>
                 <Form.PredictiveTextInput
+                    id="default-predictive-text-input"
                     label="This is the predictive text input"
                     placeholder="Start typing..."
                     selectedOption={selectedOption}
@@ -47,6 +48,7 @@ export const Default: StoryObj<Component> = {
                     }
                 />
                 <Form.PredictiveTextInput
+                    id="error-predictive-text-input"
                     label="This is the error state"
                     placeholder="Start typing..."
                     selectedOption={selectedOption2}
@@ -60,6 +62,7 @@ export const Default: StoryObj<Component> = {
                     errorMessage="Input is required"
                 />
                 <Form.PredictiveTextInput
+                    id="disabled-predictive-text-input"
                     label="This is the disabled state"
                     placeholder="Start typing..."
                     fetchOptions={mockFetchOptions}
@@ -69,6 +72,7 @@ export const Default: StoryObj<Component> = {
                     disabled
                 />
                 <Form.PredictiveTextInput
+                    id="readonly-predictive-text-input"
                     label="This is the readonly state"
                     placeholder="Start typing..."
                     fetchOptions={mockFetchOptions}
@@ -91,6 +95,7 @@ export const WithSecondaryLabel: StoryObj<Component> = {
         return (
             <>
                 <Form.PredictiveTextInput
+                    id="secondary-predictive-text-input"
                     label="With secondary labels"
                     selectedOption={selectedOption}
                     placeholder="Start typing..."
@@ -118,6 +123,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
         return (
             <Layout.Content type="grid">
                 <Form.PredictiveTextInput
+                    id="short-predictive-text-input"
                     label="A shorter form input"
                     placeholder="Start typing..."
                     fetchOptions={mockFetchOptions}
@@ -128,6 +134,7 @@ export const RenderingInGridLayout: StoryObj<Component> = {
                     lgCols={[1, 5]}
                 />
                 <Form.PredictiveTextInput
+                    id="long-predictive-text-input"
                     label="A longer form input"
                     placeholder="Start typing..."
                     fetchOptions={mockFetchOptions}
@@ -146,6 +153,7 @@ export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: () => {
         return (
             <PredictiveTextInput
+                id="standalone-predictive-text-input"
                 placeholder="Start typing..."
                 fetchOptions={mockFetchOptions}
                 valueExtractor={(item) => item.value}
