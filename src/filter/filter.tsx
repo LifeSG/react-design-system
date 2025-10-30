@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { Breakpoint } from "../theme";
@@ -13,11 +13,18 @@ export const Filter = ({
     children,
     className,
     style,
+    onDismiss,
     ...props
 }: FilterProps) => {
     const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+
+    useEffect(() => {
+        if (!isMobile) {
+            onDismiss?.();
+        }
+    }, [isMobile]);
 
     return (
         <div className={className} style={style}>

@@ -143,7 +143,7 @@ const FILTER_SIDEBAR_DATA: ApiTableSectionProps[] = [
             {
                 name: "customLabels",
                 description: `Specifies custom labels. See the "Custom labels" section below for more details`,
-                propTypes: ["FilterSidebarCustomLabel"],
+                propTypes: ["FilterSidebarCustomLabelProps"],
             },
             {
                 name: "clearButtonDisabled",
@@ -224,7 +224,7 @@ const FILTER_MODAL_DATA: ApiTableSectionProps[] = [
             {
                 name: "customLabels",
                 description: `Specifies custom labels. See the "Custom labels" section below for more details`,
-                propTypes: ["FilterModalCustomLabel"],
+                propTypes: ["FilterModalCustomLabelProps"],
             },
             {
                 name: "clearButtonDisabled",

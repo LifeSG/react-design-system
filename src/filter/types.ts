@@ -5,11 +5,11 @@ import { Insets } from "../shared/types";
 
 export type Mode = "default" | "mobile";
 
-interface FilterSidebarCustomLabel {
+interface FilterSidebarCustomLabelProps {
     headerTitle?: string | undefined;
     clearButtonLabel?: string | undefined;
 }
-interface FilterModalCustomLabel {
+interface FilterModalCustomLabelProps {
     headerTitle?: string | undefined;
     toggleFilterButtonLabel?: string | undefined;
     doneButtonLabel?: string | undefined;
@@ -25,7 +25,7 @@ export interface FilterBaseProps {
     insets?: Insets | undefined;
     /** Called when clear button is pressed */
     onClear?: (() => void) | undefined;
-    children?: ReactNode | ((mode: "mobile" | "default") => ReactNode);
+    children?: ReactNode | ((mode: Mode) => ReactNode);
     /**
      * @deprecated
      * use customLabels instead
@@ -44,7 +44,7 @@ export interface FilterBaseProps {
 }
 
 export interface FilterSidebarProps extends FilterBaseProps {
-    customLabels?: FilterSidebarCustomLabel | undefined;
+    customLabels?: FilterSidebarCustomLabelProps | undefined;
 }
 
 export interface FilterModalProps extends FilterBaseProps {
@@ -54,7 +54,7 @@ export interface FilterModalProps extends FilterBaseProps {
     onDone?: (() => void) | undefined;
     onModalOpen?: () => void;
     toggleFilterButtonStyle?: ButtonStyleType | undefined;
-    customLabels?: FilterModalCustomLabel | undefined;
+    customLabels?: FilterModalCustomLabelProps | undefined;
 }
 
 export interface FilterProps extends FilterBaseProps {
@@ -63,8 +63,8 @@ export interface FilterProps extends FilterBaseProps {
     /** Called when done button is pressed (mobile mode only) */
     onDone?: (() => void) | undefined;
     customLabels?:
-        | FilterModalCustomLabel
-        | FilterSidebarCustomLabel
+        | FilterModalCustomLabelProps
+        | FilterSidebarCustomLabelProps
         | undefined;
 }
 

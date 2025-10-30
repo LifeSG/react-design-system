@@ -1,6 +1,6 @@
 import { FloatingFocusManager, useFloating } from "@floating-ui/react";
 import { CrossIcon, FilterIcon } from "@lifesg/react-icons";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Overlay } from "src/overlay";
 import { inertValue } from "src/shared/accessibility";
 import { FilterContext } from "./filter-context";
@@ -62,6 +62,12 @@ export const FilterModal = ({
         done: customLabels?.doneButtonLabel || _doneButtonLabel || "Done",
         clear: customLabels?.clearButtonLabel || "Clear",
     };
+
+    useEffect(() => {
+        if (visible) {
+            nodeRef.current?.focus();
+        }
+    }, [visible]);
 
     return (
         <FilterContext.Provider value={{ mode: "mobile", rootNode: nodeRef }}>
