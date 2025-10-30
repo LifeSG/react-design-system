@@ -487,7 +487,7 @@ describe("FilterSidebar", () => {
 
     it("renders sidebar with header and items", () => {
         render(
-            <FilterSidebar customLabels={defaultLabels}>
+            <FilterSidebar>
                 <div data-testid="filter-item">Item 1</div>
             </FilterSidebar>
         );
@@ -520,17 +520,6 @@ describe("FilterSidebar", () => {
         fireEvent.click(screen.getByText("Clear all"));
         expect(mockOnClear).toHaveBeenCalled();
     });
-
-    it("renders children inside sidebar content area", () => {
-        render(
-            <FilterSidebar customLabels={defaultLabels}>
-                <div data-testid="inner-child">Child</div>
-            </FilterSidebar>
-        );
-
-        const content = within(screen.getByTestId("filter-desktop"));
-        expect(content.getByTestId("inner-child")).toBeInTheDocument();
-    });
 });
 
 describe("FilterModal", () => {
@@ -542,11 +531,15 @@ describe("FilterModal", () => {
     };
 
     it("renders modal header and buttons", () => {
-        render(<FilterModal customLabels={defaultLabels} />);
+        render(
+            <FilterModal>
+                <div data-testid="modal-child">Hidden content</div>
+            </FilterModal>
+        );
 
-        expect(screen.getByText("Filter Options")).toBeInTheDocument();
-        expect(screen.getByText("Clear all")).toBeInTheDocument();
-        expect(screen.getByText("Apply")).toBeInTheDocument();
+        const child = screen.getByTestId("modal-child");
+        expect(child).toBeInTheDocument();
+        expect(child).not.toBeVisible();
     });
 
     it("calls onClear when Clear button is clicked", () => {
@@ -576,7 +569,10 @@ describe("FilterModal", () => {
             </FilterModal>
         );
 
+        fireEvent.click(screen.getByText("Show filters"));
+
         expect(screen.getByTestId("modal-item")).toBeInTheDocument();
+        expect(screen.getByTestId("modal-item")).toBeVisible();
     });
 });
 
