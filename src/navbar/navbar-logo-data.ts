@@ -37,6 +37,14 @@ const MYLEGACY_RESOURCES_LOGO: NavbarResourcesProps = {
     },
 };
 
+const SPF_RESOURCE_LOGO: NavbarResourcesProps = {
+    primary: {
+        brandName: "SPF",
+        logoSrc:
+            "https://assets.life.gov.sg/react-design-system/img/logo/spf-logo.png",
+    },
+};
+
 const SUPPORTGOWHERE_RESOURCE_LOGO: NavbarResourcesProps = {
     primary: {
         brandName: "SupportGoWhere",
@@ -53,6 +61,8 @@ export const getDefaultResourceLogo = (resourceScheme?: ResourceScheme) => {
             return MYLEGACY_RESOURCES_LOGO;
         case "ccube":
             return CCUBE_RESOURCES_LOGO;
+        case "spf":
+            return SPF_RESOURCE_LOGO;
         case "supportgowhere":
             return SUPPORTGOWHERE_RESOURCE_LOGO;
         case "imda":
