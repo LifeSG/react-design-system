@@ -7,7 +7,7 @@ const SELECTOR_TESTID = "selector";
 const LABEL = "Test label";
 const DESCRIPTION = "Test subtitle";
 const DROPDOWN_LABEL = `${LABEL} Country code`;
-const DROPDOWN_INSTRUCTION = "Press space to open options";
+const DROPDOWN_INSTRUCTION = "Press Space or Enter to open options";
 const TEXTBOX_LABEL = `${LABEL} Enter phone number`;
 const ERROR = "Error message";
 

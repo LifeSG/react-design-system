@@ -1,12 +1,16 @@
 import debounce from "lodash/debounce";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { DropdownList, DropdownListState } from "../shared/dropdown-list-v2";
+import { Input } from "../input";
+import {
+    DropdownList,
+    DropdownListState,
+    useDropdownListState,
+} from "../shared/dropdown-list-v2";
+import { ItemsLoadStateType } from "../shared/dropdown-list/types";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
-import { Input } from "../input";
 import { SimpleIdGenerator } from "../util";
 import { PredictiveTextInputProps } from "./types";
-import { ItemsLoadStateType } from "../shared/dropdown-list/types";
 
 export const PredictiveTextInput = <T, V>({
     className,
@@ -54,6 +58,11 @@ export const PredictiveTextInput = <T, V>({
     );
     const [isOpen, setIsOpen] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
+    const { context } = useDropdownListState({
+        options,
+        disabled,
+        readOnly,
+    });
 
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
@@ -298,7 +307,7 @@ export const PredictiveTextInput = <T, V>({
     };
 
     return (
-        <DropdownListState>
+        <DropdownListState context={context}>
             <ElementWithDropdown
                 enabled={!readOnly && !disabled}
                 isOpen={isOpen}
