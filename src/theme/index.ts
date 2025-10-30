@@ -208,6 +208,19 @@ const IMDAThemeBase: ThemeSpec = {
     componentScheme: "default",
 };
 
+const SPFThemeBase: ThemeSpec = {
+    colourScheme: "spf",
+    fontScheme: "spf",
+    motionScheme: "default",
+    borderScheme: "default",
+    spacingScheme: "default",
+    radiusScheme: "spf",
+    shadowScheme: "default",
+    breakpointScheme: "default",
+    resourceScheme: "spf",
+    componentScheme: "spf",
+};
+
 // =============================================================================
 // THEME COLLECTIONS
 // =============================================================================
@@ -271,4 +284,10 @@ export const IMDATheme = {
     ...IMDAThemeBase,
     light: createThemeWithColourMode(IMDAThemeBase, "light"),
     dark: createThemeWithColourMode(IMDAThemeBase, "dark"),
+};
+
+export const SPFTheme = {
+    ...SPFThemeBase,
+    light: createThemeWithColourMode(SPFThemeBase, "light"),
+    dark: createThemeWithColourMode(SPFThemeBase, "dark"),
 };

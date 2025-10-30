@@ -77,6 +77,25 @@ const MyLegacyDisclaimerLinks: InternalDisclaimerLinks = {
     },
 };
 
+const SPFDisclaimerLinks: InternalDisclaimerLinks = {
+    privacy: {
+        href: "https://www.police.gov.sg/Privacy-Statement",
+        target: "_blank",
+        rel: "noopener",
+    },
+    termsOfUse: {
+        href: "https://www.police.gov.sg/Terms-of-Use",
+        target: "_blank",
+        rel: "noopener",
+    },
+    reportVulnerability: {
+        href: "https://www.tech.gov.sg/report-vulnerability",
+        target: "_blank",
+        rel: "noopener",
+        external: true,
+    },
+};
+
 const SupportGoWhereDisclaimerLinks: InternalDisclaimerLinks = {
     privacy: {
         href: "https://supportgowhere.life.gov.sg/privacy-statement.pdf",
@@ -104,6 +123,8 @@ export const getDefaultDisclaimerLinks = (resourceScheme?: ResourceScheme) => {
             return IMDADisclaimerLinks;
         case "mylegacy":
             return MyLegacyDisclaimerLinks;
+        case "spf":
+            return SPFDisclaimerLinks;
         case "supportgowhere":
             return SupportGoWhereDisclaimerLinks;
         default:

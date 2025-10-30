@@ -2,11 +2,13 @@ import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
 import { RadiusScheme } from "../types";
 import { DefaultRadiusSet } from "./specs/default-radius-set";
+import { SPFRadiusSet } from "./specs/spf-radius-set";
 import { RadiusCollectionsMap, RadiusSet } from "./types";
 
 const RadiusSpec: ThemeCollectionSpec<RadiusCollectionsMap, RadiusScheme> = {
     collections: {
         default: DefaultRadiusSet,
+        spf: SPFRadiusSet,
     },
     defaultValue: "default",
 };

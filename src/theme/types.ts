@@ -47,21 +47,28 @@ export type ColourScheme =
     | "pa"
     | "a11yplayground"
     | "supportgowhere"
-    | "imda";
+    | "imda"
+    | "spf";
 export type FontScheme =
     | "default"
     | "bookingsg"
     | "pa"
     | "a11yplayground"
     | "supportgowhere"
-    | "imda";
+    | "imda"
+    | "spf";
 export type MotionScheme = "default";
 export type BorderScheme = "default";
 export type SpacingScheme = "default";
-export type RadiusScheme = "default";
+export type RadiusScheme = "default" | "spf";
 export type ShadowScheme = "default";
 export type BreakpointScheme = "default";
-export type ComponentScheme = "default" | "pa" | "a11yplayground" | "lifesg";
+export type ComponentScheme =
+    | "default"
+    | "pa"
+    | "a11yplayground"
+    | "lifesg"
+    | "spf";
 export type ResourceScheme =
     | "lifesg"
     | "bookingsg"
@@ -72,7 +79,8 @@ export type ResourceScheme =
     | "pa"
     | "a11yplayground"
     | "supportgowhere"
-    | "imda";
+    | "imda"
+    | "spf";
 
 export type ColourMode = "light" | "dark";
 

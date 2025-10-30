@@ -11,6 +11,7 @@ import {
     OneServiceTheme,
     PATheme,
     RBSTheme,
+    SPFTheme,
     SupportGoWhereTheme,
 } from "../src/theme";
 import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
@@ -29,6 +30,7 @@ const preview: Preview = {
                 A11yPlayground: A11yPlaygroundTheme,
                 SupportGoWhere: SupportGoWhereTheme,
                 IMDA: IMDATheme,
+                SPF: SPFTheme,
             },
             Provider: ThemeProvider,
         }),

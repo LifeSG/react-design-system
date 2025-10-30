@@ -54,6 +54,7 @@ export const PrimitiveColourDisplay = ({
                         "brand-70",
                         "brand-80",
                         "brand-90",
+                        "brand-95",
                         "brand-100",
                     ]}
                 />
@@ -69,6 +70,7 @@ export const PrimitiveColourDisplay = ({
                         "primary-70",
                         "primary-80",
                         "primary-90",
+                        "primary-95",
                         "primary-100",
                     ]}
                 />
@@ -84,6 +86,7 @@ export const PrimitiveColourDisplay = ({
                         "secondary-70",
                         "secondary-80",
                         "secondary-90",
+                        "secondary-95",
                         "secondary-100",
                     ]}
                 />
@@ -99,6 +102,7 @@ export const PrimitiveColourDisplay = ({
                         "neutral-70",
                         "neutral-80",
                         "neutral-90",
+                        "neutral-95",
                         "neutral-100",
                     ]}
                 />
@@ -114,6 +118,7 @@ export const PrimitiveColourDisplay = ({
                         "success-70",
                         "success-80",
                         "success-90",
+                        "success-95",
                         "success-100",
                     ]}
                 />
@@ -129,6 +134,7 @@ export const PrimitiveColourDisplay = ({
                         "warning-70",
                         "warning-80",
                         "warning-90",
+                        "warning-95",
                         "warning-100",
                     ]}
                 />
@@ -144,6 +150,7 @@ export const PrimitiveColourDisplay = ({
                         "error-70",
                         "error-80",
                         "error-90",
+                        "error-95",
                         "error-100",
                     ]}
                 />
@@ -159,6 +166,7 @@ export const PrimitiveColourDisplay = ({
                         "info-70",
                         "info-80",
                         "info-90",
+                        "info-95",
                         "info-100",
                     ]}
                 />
