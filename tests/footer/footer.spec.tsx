@@ -1,10 +1,11 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { DisclaimerLinks, Footer, FooterLinkProps } from "../../src";
+import { DisclaimerLinks, Footer, FooterLinkProps } from "src/footer";
 import {
     FooterHelper,
     InternalDisclaimerLinks,
-} from "../../src/footer/footer-helper";
-import { KeyOf } from "../../src/util/utility-types";
+} from "src/footer/footer-helper";
+import { ResourceScheme } from "src/theme";
+import { KeyOf } from "src/util/utility-types";
 import { ThemeProvider } from "styled-components";
 import { MOCK_THEME } from "../theme/mock-theme-data";
 
@@ -149,7 +150,7 @@ describe("Footer", () => {
 
             expect(
                 screen.getByText(
-                    "© 2023 LifeSG, Government of Singapore. Last Updated 1 January 2023"
+                    "© 2023 Government of Singapore. Last updated 1 January 2023"
                 )
             ).toBeInTheDocument();
         });
@@ -166,8 +167,31 @@ describe("Footer", () => {
             render(<Footer copyrightInfo={copyrightInfo} />);
 
             const copyrightText = screen.getByTestId("copyright-text");
-            expect(copyrightText.textContent).not.toContain("Last Updated");
+            expect(copyrightText.textContent).not.toContain("Last updated");
         });
+
+        it.each<[ResourceScheme, string]>([
+            ["lifesg", "© 2023 LifeSG, Government of Singapore"],
+            ["bookingsg", "© 2023 BookingSG, Government of Singapore"],
+            ["mylegacy", "© 2023 MyLegacy@LifeSG, Government of Singapore"],
+            [
+                "ccube",
+                "© 2023 Citizen Collective Common, Government of Singapore",
+            ],
+            ["imda", "© 2023 IMDA, Government of Singapore"],
+        ])(
+            "should render the copyright information for %s resourceScheme by default",
+            (resourceScheme, expected) => {
+                render(
+                    <ThemeProvider theme={{ ...MOCK_THEME, resourceScheme }}>
+                        <Footer />
+                    </ThemeProvider>
+                );
+
+                const copyrightText = screen.getByTestId("copyright-text");
+                expect(copyrightText.textContent).toContain(expected);
+            }
+        );
     });
 
     describe("logoSrc", () => {
@@ -204,7 +228,7 @@ describe("Footer", () => {
 
             expect(
                 screen.getByText(
-                    "© 2023 LifeSG, Government of Singapore. Last Updated 15 January 2023"
+                    "© 2023 Government of Singapore. Last updated 15 January 2023"
                 )
             ).toBeInTheDocument();
         });
