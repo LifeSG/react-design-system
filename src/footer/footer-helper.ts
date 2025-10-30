@@ -20,21 +20,23 @@ export namespace FooterHelper {
         const copyright = `${new Date().getFullYear()} ${copyrightText}`;
         const lastUpdatedDateString = dayjs(lastUpdated).format("D MMMM YYYY");
 
-        return `${copyright} Last Updated ${lastUpdatedDateString}`;
+        return `${copyright} Last updated ${lastUpdatedDateString}`;
     };
 
     const getCopyrightText = (resourceScheme: ResourceScheme | undefined) => {
         switch (resourceScheme) {
+            case "lifesg":
+                return "LifeSG, Government of Singapore.";
             case "bookingsg":
                 return "BookingSG, Government of Singapore.";
             case "mylegacy":
                 return "MyLegacy@LifeSG, Government of Singapore.";
             case "ccube":
                 return "Citizen Collective Common, Government of Singapore.";
-            case "supportgowhere":
-                return "Government of Singapore.";
+            case "imda":
+                return "IMDA, Government of Singapore.";
             default:
-                return "LifeSG, Government of Singapore.";
+                return "Government of Singapore.";
         }
     };
 
