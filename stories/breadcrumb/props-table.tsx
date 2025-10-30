@@ -51,6 +51,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["CSS-JS string"],
             },
             {
+                name: "separatorStyle",
+                description: <>Separator style between breadcrumb items</>,
+                propTypes: [`"chevron"`, `"slash"`],
+                defaultValue: `"chevron"`,
+            },
+            {
                 name: "id",
                 description: "The unique id of the component",
                 propTypes: ["string"],
