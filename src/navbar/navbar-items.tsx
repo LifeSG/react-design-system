@@ -20,6 +20,8 @@ interface Props<T> {
     /** toggle for mobile or desktop view */
     mobile?: boolean | undefined;
     hideNavBranding?: boolean | undefined;
+    /** hide the selected LinkIndicator */
+    hideLinkIndicator?: boolean | undefined;
     onItemClick: (
         event: React.MouseEvent<HTMLAnchorElement>,
         item: NavItemProps<T> | NavItemCommonProps<T>
@@ -31,6 +33,7 @@ export const NavbarItems = <T,>({
     selectedId,
     mobile = false,
     hideNavBranding,
+    hideLinkIndicator = false,
     onItemClick,
 }: Props<T>): JSX.Element => {
     // =============================================================================
@@ -141,7 +144,7 @@ export const NavbarItems = <T,>({
                                 {...options}
                             >
                                 <LinkLabel>{children}</LinkLabel>
-                                {selected && (
+                                {selected && !hideLinkIndicator && (
                                     <LinkIndicator
                                         data-testid={`${testId}-indicator`}
                                         $selected={selected}

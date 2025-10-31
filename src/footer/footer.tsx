@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Typography } from "../typography";
 import { DownloadApp } from "./footer-download-app";
 import { FooterHelper, InternalDisclaimerLinks } from "./footer-helper";
 import {
@@ -8,6 +7,7 @@ import {
     BottomSection,
     BottomSectionContent,
     CopyrightSection,
+    CopyrightText,
     DisclaimerTextLink,
     FullWidthDivider,
     LinkSection,
@@ -172,7 +172,7 @@ export const Footer = <T,>({
                     {renderDisclaimerLinks()}
                 </BottomSectionContent>
                 <CopyrightSection key="copyright">
-                    <Typography.BodyXS data-testid={"copyright-text"}>
+                    <CopyrightText data-testid={"copyright-text"}>
                         {copyrightInfo || (
                             <>
                                 &copy;{" "}
@@ -182,7 +182,7 @@ export const Footer = <T,>({
                                 )}
                             </>
                         )}
-                    </Typography.BodyXS>
+                    </CopyrightText>
                 </CopyrightSection>
             </BottomSection>
         </BaseFooter>

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography";
+import { ThemeFooter } from "../theme/components/theme-helper";
 
 export const Wrapper = styled.div`
     display: flex;
@@ -15,6 +16,7 @@ export const Wrapper = styled.div`
 
 export const Label = styled(Typography.BodyMD)`
     margin-bottom: ${Spacing["spacing-16"]};
+    color: ${ThemeFooter["footer-colour-text"]};
 `;
 
 export const AppButtonsWrapper = styled.div`

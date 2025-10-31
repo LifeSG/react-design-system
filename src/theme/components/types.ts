@@ -3,6 +3,8 @@ import { StyledComponentProps } from "../helpers";
 export type ComponentTokenSet = {
     Button: ButtonTokens;
     Animation: AnimationTokens;
+    Navbar: NavbarTokens;
+    Footer: FooterTokens;
 };
 export type ComponentOverrideOptions = {
     [Component in keyof ComponentTokenSet]?:
@@ -37,6 +39,57 @@ export type ButtonTokens = {
 
 export type AnimationTokens = {
     "loading-dots-spinner-colour":
+        | string
+        | ((props: StyledComponentProps) => string);
+};
+
+export type NavbarTokens = {
+    "navbar-full-height": number | ((props: StyledComponentProps) => string);
+    "navbar-full-logo-height":
+        | number
+        | ((props: StyledComponentProps) => string);
+    "navbar-compressed-height":
+        | number
+        | ((props: StyledComponentProps) => string);
+    "navbar-compressed-logo-height":
+        | number
+        | ((props: StyledComponentProps) => string);
+    "navbar-mobile-height": number | ((props: StyledComponentProps) => string);
+    "navbar-mobile-logo-height":
+        | number
+        | ((props: StyledComponentProps) => string);
+    "navbar-colour-bg": string | ((props: StyledComponentProps) => string);
+    "navbar-colour-icon": string | ((props: StyledComponentProps) => string);
+    "navbar-link-colour-text":
+        | string
+        | ((props: StyledComponentProps) => string);
+    "navbar-link-colour-text-hover":
+        | string
+        | ((props: StyledComponentProps) => string);
+    "navbar-link-colour-text-selected-hover":
+        | string
+        | ((props: StyledComponentProps) => string);
+};
+
+export type FooterTokens = {
+    "footer-colour-bg": string | ((props: StyledComponentProps) => string);
+    "footer-colour-text": string | ((props: StyledComponentProps) => string);
+    "footer-link-colour-text":
+        | string
+        | ((props: StyledComponentProps) => string);
+    "footer-link-colour-text-hover":
+        | string
+        | ((props: StyledComponentProps) => string);
+    "footer-disclaimer-link-colour-text":
+        | string
+        | ((props: StyledComponentProps) => string);
+    "footer-disclaimer-link-colour-text-hover":
+        | string
+        | ((props: StyledComponentProps) => string);
+    "footer-disclaimer-link-colour-icon":
+        | string
+        | ((props: StyledComponentProps) => string);
+    "footer-disclaimer-link-colour-icon-hover":
         | string
         | ((props: StyledComponentProps) => string);
 };
