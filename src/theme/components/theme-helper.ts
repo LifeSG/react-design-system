@@ -5,7 +5,13 @@ import { DefaultComponentTokenSet } from "./specs/default-component-token-set";
 import { LifeSGComponentTokenSet } from "./specs/lifesg-component-token-set";
 import { PAComponentTokenSet } from "./specs/pa-component-token-set";
 import { SPFComponentTokenSet } from "./specs/spf-component-token-set";
-import { AnimationTokens, ButtonTokens, ComponentTokenSet } from "./types";
+import {
+    AnimationTokens,
+    ButtonTokens,
+    ComponentTokenSet,
+    FooterTokens,
+    NavbarTokens,
+} from "./types";
 
 const ComponentTokenSpec = {
     collections: {
@@ -97,5 +103,85 @@ export const ThemeAnimation: {
     "loading-dots-spinner-colour": getComponentTokenValue(
         "Animation",
         "loading-dots-spinner-colour"
+    ),
+};
+
+export const ThemeNavbar: {
+    [key in keyof NavbarTokens]: (props: StyledComponentProps) => string;
+} = {
+    "navbar-full-height": getComponentTokenValue(
+        "Navbar",
+        "navbar-full-height"
+    ),
+    "navbar-full-logo-height": getComponentTokenValue(
+        "Navbar",
+        "navbar-full-logo-height"
+    ),
+    "navbar-compressed-height": getComponentTokenValue(
+        "Navbar",
+        "navbar-compressed-height"
+    ),
+    "navbar-compressed-logo-height": getComponentTokenValue(
+        "Navbar",
+        "navbar-compressed-logo-height"
+    ),
+    "navbar-mobile-height": getComponentTokenValue(
+        "Navbar",
+        "navbar-mobile-height"
+    ),
+    "navbar-mobile-logo-height": getComponentTokenValue(
+        "Navbar",
+        "navbar-mobile-logo-height"
+    ),
+    "navbar-colour-bg": getComponentTokenValue("Navbar", "navbar-colour-bg"),
+    "navbar-colour-icon": getComponentTokenValue(
+        "Navbar",
+        "navbar-colour-icon"
+    ),
+    "navbar-link-colour-text": getComponentTokenValue(
+        "Navbar",
+        "navbar-link-colour-text"
+    ),
+    "navbar-link-colour-text-hover": getComponentTokenValue(
+        "Navbar",
+        "navbar-link-colour-text-hover"
+    ),
+    "navbar-link-colour-text-selected-hover": getComponentTokenValue(
+        "Navbar",
+        "navbar-link-colour-text-selected-hover"
+    ),
+};
+
+export const ThemeFooter: {
+    [key in keyof FooterTokens]: (props: StyledComponentProps) => string;
+} = {
+    "footer-colour-bg": getComponentTokenValue("Footer", "footer-colour-bg"),
+    "footer-colour-text": getComponentTokenValue(
+        "Footer",
+        "footer-colour-text"
+    ),
+    "footer-link-colour-text": getComponentTokenValue(
+        "Footer",
+        "footer-link-colour-text"
+    ),
+    "footer-link-colour-text-hover": getComponentTokenValue(
+        "Footer",
+        "footer-link-colour-text-hover"
+    ),
+    "footer-disclaimer-link-colour-text": getComponentTokenValue(
+        "Footer",
+        "footer-disclaimer-link-colour-text"
+    ),
+    "footer-disclaimer-link-colour-text-hover": getComponentTokenValue(
+        "Footer",
+        "footer-disclaimer-link-colour-text-hover"
+    ),
+    "footer-disclaimer-link-colour-icon": getComponentTokenValue(
+        "Footer",
+        "footer-disclaimer-link-colour-icon"
+    ),
+    "footer-disclaimer-link-colour-icon-hover": getComponentTokenValue(
+        "Footer",
+        "footer-disclaimer-link-colour-icon-hover"
     ),
 };

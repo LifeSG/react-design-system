@@ -455,6 +455,19 @@ export const HiddenBranding: StoryObj<Component> = {
     },
 };
 
+export const HiddenLinkIndicator: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Navbar
+                items={{ desktop: navItems }}
+                selectedId="home"
+                fixed={false}
+                hideLinkIndicator
+            />
+        );
+    },
+};
+
 const _WithAvatar = (
     <Navbar
         items={{ desktop: navItems }}

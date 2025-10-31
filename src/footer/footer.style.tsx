@@ -1,19 +1,24 @@
 import styled from "styled-components";
-import { Colour, MediaQuery, Spacing } from "../theme";
+import { MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography";
 import { Layout } from "../layout";
 import { Divider } from "../divider";
+import { ThemeFooter } from "../theme/components/theme-helper";
 
 // =============================================================================
 // GENERIC
 // =============================================================================
 
 export const BaseFooter = styled.footer`
-    background: ${Colour["bg-strong"]};
+    background: ${ThemeFooter["footer-colour-bg"]};
 `;
 
 export const StyledFooterLink = styled(Typography.LinkMD)`
-    color: ${Colour.text};
+    color: ${ThemeFooter["footer-link-colour-text"]};
+
+    &:hover {
+        color: ${ThemeFooter["footer-link-colour-text-hover"]};
+    }
 `;
 
 // =============================================================================
@@ -157,20 +162,24 @@ export const CopyrightSection = styled(BottomSectionContent)`
     }
 `;
 
+export const CopyrightText = styled(Typography.BodyXS)`
+    color: ${ThemeFooter["footer-colour-text"]};
+`;
+
 export const DisclaimerTextLink = styled(Typography.LinkXS)`
-    color: ${Colour.text};
+    color: ${ThemeFooter["footer-disclaimer-link-colour-text"]};
     &:not(:last-child) {
         margin-right: ${Spacing["spacing-16"]};
     }
 
     svg {
-        color: ${Colour.icon};
+        color: ${ThemeFooter["footer-disclaimer-link-colour-icon"]};
     }
 
     &:hover {
-        color: ${Colour["text-subtler"]};
+        color: ${ThemeFooter["footer-disclaimer-link-colour-text-hover"]};
         svg {
-            color: ${Colour["icon-subtle"]};
+            color: ${ThemeFooter["footer-disclaimer-link-colour-icon-hover"]};
         }
     }
 

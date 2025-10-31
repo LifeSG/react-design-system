@@ -83,6 +83,8 @@ export interface NavbarSharedProps {
     actionButtons?: NavbarActionButtonsProps | undefined;
     /** Specifies if brand logos are visible */
     hideNavBranding?: boolean | undefined;
+    /** Hide the selected link indicator across the navbar */
+    hideLinkIndicator?: boolean | undefined;
 }
 
 export type DrawerDismissalMethod =

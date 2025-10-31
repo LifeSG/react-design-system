@@ -4,6 +4,7 @@ import { ClickableIcon } from "../shared/clickable-icon";
 import { MediaQuery } from "../theme";
 import { Colour } from "../theme";
 import { Typography } from "../typography/typography";
+import { ThemeNavbar } from "../theme/components/theme-helper";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -73,7 +74,7 @@ export const Link = styled(Typography.LinkMD)<StyleProps>`
     position: relative;
     align-items: center;
     text-align: center;
-    color: ${Colour.text};
+    color: ${ThemeNavbar["navbar-link-colour-text"]};
     height: 100%;
     padding: 0 0.5rem;
 
@@ -82,8 +83,8 @@ export const Link = styled(Typography.LinkMD)<StyleProps>`
     &:hover {
         color: ${(props) =>
             props.$selected
-                ? Colour["text-selected-hover"]
-                : Colour["text-hover"]};
+                ? ThemeNavbar["navbar-link-colour-text-selected-hover"]
+                : ThemeNavbar["navbar-link-colour-text-hover"]};
     }
 
     ${MediaQuery.MaxWidth.lg} {
