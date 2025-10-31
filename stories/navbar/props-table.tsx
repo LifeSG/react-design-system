@@ -87,6 +87,12 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
+                name: "hideLinkIndicator",
+                description: "Specifies if selected link indicator is hidden",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "onBrandClick",
                 description: "Called when the brand icon is clicked",
                 propTypes: ["(type: BrandType) => void"],
