@@ -3,6 +3,8 @@ import { useMediaQuery } from "react-responsive";
 import { Filter } from "../../src";
 import { FilterContext } from "../../src/filter/filter-context";
 import { FilterItemCheckboxOptionProps } from "../../src/filter/types";
+import { FilterModal } from "src/filter/filter-modal";
+import { FilterSidebar } from "src/filter/filter-sidebar";
 
 jest.mock("react-responsive");
 
@@ -474,6 +476,85 @@ describe("Filter", () => {
                 expect(screen.getByText("Clear all")).toBeInTheDocument();
             });
         });
+    });
+});
+
+describe("FilterSidebar", () => {
+    it("renders sidebar with header and items", () => {
+        render(
+            <FilterSidebar>
+                <div data-testid="filter-item">Item 1</div>
+            </FilterSidebar>
+        );
+
+        expect(screen.getByText("Filters")).toBeInTheDocument();
+        expect(screen.getByTestId("filter-item")).toBeInTheDocument();
+    });
+
+    it("renders custom labels correctly", () => {
+        render(
+            <FilterSidebar
+                customLabels={{
+                    headerTitle: "My Custom Header",
+                    clearButtonLabel: "Reset",
+                }}
+            />
+        );
+
+        expect(screen.getByText("My Custom Header")).toBeInTheDocument();
+        expect(screen.getByText("Reset")).toBeInTheDocument();
+    });
+
+    it("calls onClear when Clear All is clicked", () => {
+        const mockOnClear = jest.fn();
+
+        render(<FilterSidebar onClear={mockOnClear} />);
+
+        fireEvent.click(screen.getByText("Clear"));
+        expect(mockOnClear).toHaveBeenCalled();
+    });
+});
+
+describe("FilterModal", () => {
+    it("renders modal header and buttons", () => {
+        render(
+            <FilterModal>
+                <div data-testid="modal-child">Hidden content</div>
+            </FilterModal>
+        );
+
+        const child = screen.getByTestId("modal-child");
+        expect(child).toBeInTheDocument();
+        expect(child).not.toBeVisible();
+    });
+
+    it("calls onClear when Clear button is clicked", () => {
+        const mockOnClear = jest.fn();
+        render(<FilterModal onClear={mockOnClear} />);
+
+        fireEvent.click(screen.getByText("Clear"));
+        expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    it("calls onDone when Done button is clicked", () => {
+        const mockOnDone = jest.fn();
+        render(<FilterModal onDone={mockOnDone} />);
+
+        fireEvent.click(screen.getByText("Done"));
+        expect(mockOnDone).toHaveBeenCalled();
+    });
+
+    it("renders children correctly", () => {
+        render(
+            <FilterModal>
+                <div data-testid="modal-item">Item content</div>
+            </FilterModal>
+        );
+
+        fireEvent.click(screen.getByTestId("filter-show-button"));
+
+        expect(screen.getByTestId("modal-item")).toBeInTheDocument();
+        expect(screen.getByTestId("modal-item")).toBeVisible();
     });
 });
 
