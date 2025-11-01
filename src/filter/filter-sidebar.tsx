@@ -2,12 +2,12 @@ import { useRef } from "react";
 import { FilterContext } from "./filter-context";
 import {
     DesktopContainer,
-    FilterBody,
     FilterClearButton,
     FilterHeader,
     FilterTitle,
-} from "./filter.styles";
+} from "./filter-sidebar.styles";
 import { FilterSidebarProps } from "./types";
+import { FilterBody } from "./filter.styles";
 
 export const FilterSidebar = ({
     customLabels,

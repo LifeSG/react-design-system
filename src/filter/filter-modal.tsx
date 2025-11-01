@@ -5,19 +5,21 @@ import { Overlay } from "src/overlay";
 import { inertValue } from "src/shared/accessibility";
 import { FilterContext } from "./filter-context";
 import {
-    FilterBody,
     FilterButton,
     FilterClearButton,
-    FilterDoneButton,
-    FilterFooter,
     FilterHeader,
-    FilterHeaderButton,
     FilterTitle,
     FloatingWrapper,
     MobileContainer,
     MobileOverlayContainer,
-} from "./filter.styles";
+} from "./filter-modal.styles";
 import { FilterModalProps } from "./types";
+import {
+    FilterBody,
+    FilterDoneButton,
+    FilterFooter,
+    FilterHeaderButton,
+} from "./filter.styles";
 
 export const FilterModal = ({
     customLabels,

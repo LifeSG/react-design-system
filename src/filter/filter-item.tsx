@@ -117,17 +117,23 @@ export const FilterItem = ({
     };
 
     return (
-        <FilterItemWrapper $collapsible={collapsible} aria-labelledby={titleId}>
+        <FilterItemWrapper
+            isMobile={isMobile}
+            $collapsible={collapsible}
+            aria-labelledby={titleId}
+        >
             <Divider
+                isMobile={isMobile}
                 $showDivider={showDivider}
                 $showMobileDivider={showMobileDivider}
             />
             {(title || collapsible) && (
-                <FilterItemHeader>
+                <FilterItemHeader isMobile={isMobile}>
                     {title && (
                         <FilterItemTitle
                             id={titleId}
                             data-testid="filter-item-title"
+                            isMobile={isMobile}
                         >
                             {title} {addon && renderAddon()}
                         </FilterItemTitle>

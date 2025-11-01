@@ -1,9 +1,9 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { animated } from "@react-spring/web";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, Font, MediaQuery, Motion, Spacing } from "../theme";
+import { Colour, Font, Motion, Spacing } from "../theme";
 
 // =============================================================================
 // STYLES INTERFACE
@@ -11,16 +11,25 @@ import { Colour, Font, MediaQuery, Motion, Spacing } from "../theme";
 interface StyleProps {
     $collapsible?: boolean;
     $expanded?: boolean;
+    isMobile?: boolean;
 }
 
 interface DividerStyleProps {
     $showDivider: boolean;
     $showMobileDivider: boolean;
+    isMobile?: boolean;
 }
 
 interface MinimisableContentProps {
     $height?: number;
     $minimisable: boolean;
+}
+
+interface FilterItemHeaderStyleProps {
+    isMobile?: boolean;
+}
+interface FilterItemTitleStyleProps {
+    isMobile?: boolean;
 }
 
 // =============================================================================
@@ -29,36 +38,31 @@ interface MinimisableContentProps {
 
 export const FilterItemWrapper = styled.div<StyleProps>`
     background-color: ${(props) =>
-        props.$collapsible ? Colour["bg-strong"] : Colour["bg"]};
-    ${MediaQuery.MaxWidth.lg} {
-        background-color: ${Colour["bg-strong"]};
-    }
+        props.$collapsible || props.isMobile
+            ? Colour["bg-strong"]
+            : Colour["bg"]};
 `;
 
 export const Divider = styled.div<DividerStyleProps>`
-    display: ${(props) => (props.$showDivider ? "block" : "none")};
+    display: ${(props) =>
+        props.$showDivider || (props.isMobile && props.$showMobileDivider)
+            ? "block"
+            : "none"};
     height: 1px;
     background-color: ${Colour["border"]};
-
-    ${MediaQuery.MaxWidth.lg} {
-        display: ${(props) => (props.$showMobileDivider ? "block" : "none")};
-        margin: 0 ${Spacing["spacing-16"]};
-    }
+    margin: ${(props) => (props.isMobile ? `0 ${Spacing["spacing-16"]}` : 0)};
 `;
 
 // -----------------------------------------------------------------------------
 // HEADER STYLES
 // -----------------------------------------------------------------------------
 
-export const FilterItemHeader = styled.div`
+export const FilterItemHeader = styled.div<FilterItemHeaderStyleProps>`
     display: flex;
     align-items: center;
 
-    background-color: ${Colour["bg"]};
-
-    ${MediaQuery.MaxWidth.lg} {
-        background-color: transparent;
-    }
+    background-color: ${(props) =>
+        props.isMobile ? "transparent" : Colour["bg"]};
 `;
 
 export const FilterItemExpandButton = styled(ClickableIcon)`
@@ -78,20 +82,21 @@ export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
     transition: transform ${Motion["duration-350"]} ${Motion["ease-standard"]};
 `;
 
-export const FilterItemTitle = styled.h3`
-    ${Font["heading-xs-semibold"]}
-    color: ${Colour["text"]};
-
-    margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
-        ${Spacing["spacing-20"]};
-
-    ${MediaQuery.MaxWidth.lg} {
-        ${Font["body-md-semibold"]}
-        color: ${Colour["text-subtle"]};
-
-        margin: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]} 0
-            ${Spacing["spacing-20"]};
-    }
+export const FilterItemTitle = styled.h3<FilterItemTitleStyleProps>`
+    ${(props) =>
+        props.isMobile
+            ? css`
+                  ${Font["body-md-semibold"]};
+                  color: ${Colour["text-subtle"]};
+                  margin: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]} 0
+                      ${Spacing["spacing-20"]};
+              `
+            : css`
+                  ${Font["heading-xs-semibold"]};
+                  color: ${Colour["text"]};
+                  margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
+                      ${Spacing["spacing-20"]};
+              `}
 `;
 
 // -----------------------------------------------------------------------------
