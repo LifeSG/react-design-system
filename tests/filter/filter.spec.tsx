@@ -480,11 +480,6 @@ describe("Filter", () => {
 });
 
 describe("FilterSidebar", () => {
-    const defaultLabels = {
-        headerTitle: "Filters",
-        clearButtonLabel: "Clear all",
-    };
-
     it("renders sidebar with header and items", () => {
         render(
             <FilterSidebar>
@@ -513,23 +508,14 @@ describe("FilterSidebar", () => {
     it("calls onClear when Clear All is clicked", () => {
         const mockOnClear = jest.fn();
 
-        render(
-            <FilterSidebar customLabels={defaultLabels} onClear={mockOnClear} />
-        );
+        render(<FilterSidebar onClear={mockOnClear} />);
 
-        fireEvent.click(screen.getByText("Clear all"));
+        fireEvent.click(screen.getByText("Clear"));
         expect(mockOnClear).toHaveBeenCalled();
     });
 });
 
 describe("FilterModal", () => {
-    const defaultLabels = {
-        headerTitle: "Filter Options",
-        toggleFilterButtonLabel: "Show filters",
-        clearButtonLabel: "Clear all",
-        doneButtonLabel: "Apply",
-    };
-
     it("renders modal header and buttons", () => {
         render(
             <FilterModal>
@@ -544,32 +530,28 @@ describe("FilterModal", () => {
 
     it("calls onClear when Clear button is clicked", () => {
         const mockOnClear = jest.fn();
-        render(
-            <FilterModal customLabels={defaultLabels} onClear={mockOnClear} />
-        );
+        render(<FilterModal onClear={mockOnClear} />);
 
-        fireEvent.click(screen.getByText("Clear all"));
+        fireEvent.click(screen.getByText("Clear"));
         expect(mockOnClear).toHaveBeenCalled();
     });
 
     it("calls onDone when Done button is clicked", () => {
         const mockOnDone = jest.fn();
-        render(
-            <FilterModal customLabels={defaultLabels} onDone={mockOnDone} />
-        );
+        render(<FilterModal onDone={mockOnDone} />);
 
-        fireEvent.click(screen.getByText("Apply"));
+        fireEvent.click(screen.getByText("Done"));
         expect(mockOnDone).toHaveBeenCalled();
     });
 
     it("renders children correctly", () => {
         render(
-            <FilterModal customLabels={defaultLabels}>
+            <FilterModal>
                 <div data-testid="modal-item">Item content</div>
             </FilterModal>
         );
 
-        fireEvent.click(screen.getByText("Show filters"));
+        fireEvent.click(screen.getByTestId("filter-show-button"));
 
         expect(screen.getByTestId("modal-item")).toBeInTheDocument();
         expect(screen.getByTestId("modal-item")).toBeVisible();

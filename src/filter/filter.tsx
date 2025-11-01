@@ -29,7 +29,7 @@ export const Filter = ({
     return (
         <div className={className} style={style}>
             {isMobile ? (
-                <FilterModal {...props}>
+                <FilterModal onDismiss={onDismiss} {...props}>
                     {typeof children === "function"
                         ? children("mobile")
                         : children}
