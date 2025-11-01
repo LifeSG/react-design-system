@@ -1,4 +1,4 @@
-import { LockIcon } from "@lifesg/react-icons/lock";
+import { BoxIcon } from "@lifesg/react-icons/box";
 import type { Meta, StoryObj } from "@storybook/react";
 import { IconButton } from "src/icon-button";
 import { GridDecorator } from "stories/storybook-common";
@@ -16,7 +16,7 @@ export const Default: StoryObj<Component> = {
     render: (_args) => {
         return (
             <IconButton>
-                <LockIcon aria-label="Lock" />
+                <BoxIcon aria-label="Archive item" />
             </IconButton>
         );
     },
@@ -27,40 +27,40 @@ export const Variations: StoryObj<Component> = {
         return (
             <>
                 <IconButton sizeType="large" styleType="primary">
-                    <LockIcon />
+                    <BoxIcon />
                 </IconButton>
                 <IconButton sizeType="large" styleType="secondary">
-                    <LockIcon />
+                    <BoxIcon />
                 </IconButton>
                 <IconButton sizeType="large" styleType="light">
-                    <LockIcon />
+                    <BoxIcon />
                 </IconButton>
                 <IconButton sizeType="large" disabled>
-                    <LockIcon />
+                    <BoxIcon />
                 </IconButton>
                 <IconButton styleType="primary">
-                    <LockIcon />
+                    <BoxIcon />
                 </IconButton>
                 <IconButton styleType="secondary">
-                    <LockIcon />
+                    <BoxIcon />
                 </IconButton>
                 <IconButton styleType="light">
-                    <LockIcon />
+                    <BoxIcon />
                 </IconButton>
                 <IconButton disabled>
-                    <LockIcon />
+                    <BoxIcon />
                 </IconButton>
                 <IconButton sizeType="small" styleType="primary">
-                    <LockIcon />
+                    <BoxIcon />
                 </IconButton>
                 <IconButton sizeType="small" styleType="secondary">
-                    <LockIcon />
+                    <BoxIcon />
                 </IconButton>
                 <IconButton sizeType="small" styleType="light">
-                    <LockIcon />
+                    <BoxIcon />
                 </IconButton>
                 <IconButton sizeType="small" disabled>
-                    <LockIcon />
+                    <BoxIcon />
                 </IconButton>
             </>
         );
@@ -85,4 +85,16 @@ export const CustomComponents: StoryObj<Component> = {
             </IconButton>
         );
     },
+};
+
+export const FocusableWhenDisabled: StoryObj<Component> = {
+    render: (_args) => (
+        <IconButton
+            disabled
+            focusableWhenDisabled
+            onClick={() => alert("I shouldn't be here!")}
+        >
+            <BoxIcon aria-label="Archive item" />
+        </IconButton>
+    ),
 };

@@ -41,12 +41,12 @@ const BookingSgDisclaimerLinks: InternalDisclaimerLinks = {
 
 const IMDADisclaimerLinks: InternalDisclaimerLinks = {
     privacy: {
-        href: "https://imda.gov.sg/privacy-statement",
+        href: "https://www.imda.gov.sg/privacy-statement",
         target: "_blank",
         rel: "noopener",
     },
     termsOfUse: {
-        href: "https://imda.gov.sg/terms-of-use",
+        href: "https://www.imda.gov.sg/terms-of-use",
         target: "_blank",
         rel: "noopener",
     },
@@ -71,6 +71,25 @@ const MyLegacyDisclaimerLinks: InternalDisclaimerLinks = {
     },
     reportVulnerability: {
         href: "https://tech.gov.sg/report_vulnerability",
+        target: "_blank",
+        rel: "noopener",
+        external: true,
+    },
+};
+
+const SPFDisclaimerLinks: InternalDisclaimerLinks = {
+    privacy: {
+        href: "https://www.police.gov.sg/Privacy-Statement",
+        target: "_blank",
+        rel: "noopener",
+    },
+    termsOfUse: {
+        href: "https://www.police.gov.sg/Terms-of-Use",
+        target: "_blank",
+        rel: "noopener",
+    },
+    reportVulnerability: {
+        href: "https://www.tech.gov.sg/report-vulnerability",
         target: "_blank",
         rel: "noopener",
         external: true,
@@ -104,6 +123,8 @@ export const getDefaultDisclaimerLinks = (resourceScheme?: ResourceScheme) => {
             return IMDADisclaimerLinks;
         case "mylegacy":
             return MyLegacyDisclaimerLinks;
+        case "spf":
+            return SPFDisclaimerLinks;
         case "supportgowhere":
             return SupportGoWhereDisclaimerLinks;
         default:

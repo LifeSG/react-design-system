@@ -28,11 +28,22 @@ export const PredictiveTextInput = <T, V>({
     dropdownRootNode,
     dropdownWidth,
 }: PredictiveTextInputProps<T, V>): JSX.Element => {
+    const getDisplayValue = (item: T | undefined): string => {
+        if (!item) return "";
+        return displayValueExtractor
+            ? displayValueExtractor(item)
+            : item.toString();
+    };
+
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-    const [input, setInput] = useState<string>("");
-    const [searchedInput, setSearchedInput] = useState<string>("");
+    const [input, setInput] = useState<string>(() =>
+        selectedOption ? getDisplayValue(selectedOption) : ""
+    );
+    const [searchedInput, setSearchedInput] = useState<string>(() =>
+        selectedOption ? getDisplayValue(selectedOption) : ""
+    );
     const [options, setOptions] = useState<T[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isError, setIsError] = useState<boolean>(false);
@@ -51,7 +62,7 @@ export const PredictiveTextInput = <T, V>({
     );
 
     const nodeRef = useRef<HTMLDivElement | null>(null);
-    const selectorRef = useRef<HTMLButtonElement | null>(null);
+    const selectorRef = useRef<HTMLInputElement | null>(null);
 
     const fetchOptionsRef = useRef(fetchOptions);
 
@@ -187,11 +198,9 @@ export const PredictiveTextInput = <T, V>({
     };
 
     const handleClose = () => {
-        if (!isOptionSelected) {
-            handleOnClear();
-        }
         setIsOpen(false);
         setIsFocused(false);
+        handleOnBlur();
     };
 
     const handleNodeFocus = () => {
@@ -205,7 +214,7 @@ export const PredictiveTextInput = <T, V>({
             !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
             setIsFocused(false);
-            handleOnClear();
+            handleOnBlur();
         }
     };
 
@@ -215,9 +224,9 @@ export const PredictiveTextInput = <T, V>({
     };
 
     const handleDismiss = () => {
-        if (!isOptionSelected) {
-            handleOnClear();
-        }
+        setIsOpen(false);
+        setIsFocused(false);
+        handleOnBlur();
         selectorRef.current?.focus();
     };
 
@@ -230,11 +239,14 @@ export const PredictiveTextInput = <T, V>({
     };
 
     const handleOnBlur = () => {
-        if (!isOptionSelected && !prevOptionSelected) {
-            handleOnClear();
-        } else {
-            setInput(getDisplayValue(prevOptionSelected));
-            onSelectOption?.(prevOptionSelected, getValue(prevOptionSelected));
+        if (!isOptionSelected) {
+            if (prevOptionSelected) {
+                const prevValue = getDisplayValue(prevOptionSelected);
+                setInput(prevValue);
+                setIsOpen(false);
+            } else {
+                handleOnClear();
+            }
         }
     };
 
@@ -253,18 +265,6 @@ export const PredictiveTextInput = <T, V>({
     // =============================================================================
     // HELPER FUNCTION
     // =============================================================================
-    const getDisplayValue = (item: T | undefined): string => {
-        if (!item) return "";
-        return displayValueExtractor
-            ? displayValueExtractor(item)
-            : item.toString();
-    };
-
-    const getValue = (item: T | undefined): V | undefined => {
-        if (!item) return undefined;
-        return valueExtractor ? valueExtractor(item) : (item as unknown as V);
-    };
-
     const getItemsLoadState = (): ItemsLoadStateType => {
         if (isError) return "fail";
         return isLoading ? "loading" : "success";
@@ -304,6 +304,7 @@ export const PredictiveTextInput = <T, V>({
                     </span>
                 )}
                 <Input
+                    ref={selectorRef}
                     id={internalId}
                     type="text"
                     value={input}

@@ -75,6 +75,11 @@ export const DateInput = ({
         setFocused(false);
 
         performOnBlurHandler();
+
+        // clear hover value for mobile scrolling
+        if (hoveredDate) {
+            setHoveredDate(undefined);
+        }
     };
 
     const handleDismiss = () => {

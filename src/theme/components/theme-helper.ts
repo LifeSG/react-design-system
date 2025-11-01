@@ -4,6 +4,7 @@ import { A11yPlaygroundComponentTokenSet } from "./specs/a11yplayground-componen
 import { DefaultComponentTokenSet } from "./specs/default-component-token-set";
 import { LifeSGComponentTokenSet } from "./specs/lifesg-component-token-set";
 import { PAComponentTokenSet } from "./specs/pa-component-token-set";
+import { SPFComponentTokenSet } from "./specs/spf-component-token-set";
 import { AnimationTokens, ButtonTokens, ComponentTokenSet } from "./types";
 
 const ComponentTokenSpec = {
@@ -12,6 +13,7 @@ const ComponentTokenSpec = {
         pa: PAComponentTokenSet,
         a11yplayground: A11yPlaygroundComponentTokenSet,
         lifesg: LifeSGComponentTokenSet,
+        spf: SPFComponentTokenSet,
     },
     defaultValue: "default",
 };

@@ -11,6 +11,7 @@ import { RBSColourSet } from "./specs/rbs-colour-set";
 import { A11yPlaygroundColourSet } from "./specs/a11yplayground-colour-set";
 import { SupportGoWhereColourSet } from "./specs/supportgowhere-colour-set";
 import { IMDAColourSet } from "./specs/imda-colour-set";
+import { SPFColourSet } from "./specs/spf-colour-set";
 import { ColourCollectionsMap } from "./types";
 
 export const ColourSpec: ThemeCollectionSpec<
@@ -28,6 +29,7 @@ export const ColourSpec: ThemeCollectionSpec<
         a11yplayground: A11yPlaygroundColourSet,
         supportgowhere: SupportGoWhereColourSet,
         imda: IMDAColourSet,
+        spf: SPFColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -51,6 +53,7 @@ export const DarkColourSpec: ThemeCollectionSpec<
         a11yplayground: A11yPlaygroundColourSet,
         supportgowhere: SupportGoWhereColourSet,
         imda: IMDAColourSet,
+        spf: SPFColourSet,
     },
     defaultValue: "lifesg",
 };

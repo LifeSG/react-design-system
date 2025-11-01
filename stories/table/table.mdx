@@ -1,0 +1,37 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { PropsTable } from "./props-table";
+import * as TableStories from "./table.stories";
+
+<Meta of={TableStories} />
+
+# Table
+
+## Overview
+
+A low-level table component for displaying tabular data. This is a lightweight
+alternative to [DataTable](/docs/content-datatable--docs) when advanced styling,
+row/column spans, or fully custom rendering is required.
+
+```tsx
+import { Table } from "@lifesg/react-design-system/table";
+```
+
+<Canvas of={TableStories.Default} />
+
+## Fixed column widths
+
+This example illustrates how column widths can be fixed by setting the `width` style on headers.
+
+<Canvas of={TableStories.FixedColumnWidths} />
+
+## Row and column span
+
+<Canvas of={TableStories.RowAndColSpan} />
+
+## Scrollable table
+
+<Canvas of={TableStories.ScrollableTable} />
+
+## Component API
+
+<PropsTable />

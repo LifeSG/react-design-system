@@ -66,6 +66,7 @@ export * from "./sidenav";
 export * from "./singpass-button";
 export * from "./smart-app-banner";
 export * from "./tab";
+export * from "./table";
 export * from "./tag";
 export * from "./text-list";
 export * from "./theme";

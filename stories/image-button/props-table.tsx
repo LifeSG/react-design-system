@@ -33,6 +33,13 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Specifies to show error state or not",
                 propTypes: ["boolean"],
             },
+            {
+                name: "focusableWhenDisabled",
+                description:
+                    "Allows the button to remain focusable when disabled",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
         ],
     },
 ];
