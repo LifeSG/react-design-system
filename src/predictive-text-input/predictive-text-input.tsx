@@ -7,6 +7,7 @@ import { Input } from "../input";
 import { SimpleIdGenerator } from "../util";
 import { PredictiveTextInputProps } from "./types";
 import { ItemsLoadStateType } from "../shared/dropdown-list/types";
+import { VisuallyHidden } from "src/shared/accessibility";
 
 export const PredictiveTextInput = <T, V>({
     className,
@@ -311,9 +312,7 @@ export const PredictiveTextInput = <T, V>({
                     onChange={handleTyping}
                     placeholder={placeholder}
                     readOnly={readOnly}
-                    aria-readonly={readOnly}
                     disabled={disabled}
-                    aria-disabled={disabled}
                     aria-invalid={!!errorMessage}
                     allowClear
                     onClear={handleOnClear}
@@ -343,19 +342,7 @@ export const PredictiveTextInput = <T, V>({
         return (
             <>
                 {resultAnnouncement && (
-                    <div
-                        role="status"
-                        aria-live="polite"
-                        aria-atomic="true"
-                        style={{
-                            position: "absolute",
-                            width: 0,
-                            height: 0,
-                            overflow: "hidden",
-                        }}
-                    >
-                        {resultAnnouncement}
-                    </div>
+                    <VisuallyHidden>{resultAnnouncement}</VisuallyHidden>
                 )}
                 <DropdownList
                     listboxId={internalId}
