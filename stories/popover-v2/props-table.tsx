@@ -139,6 +139,12 @@ export const COMMON_POPOVER_ATTRIBUTES: ApiTableSectionProps["attributes"] = [
         propTypes: ["boolean"],
         defaultValue: "false",
     },
+    {
+        name: "popoverAriaLabel",
+        description: "The accessible label for the popover content",
+        propTypes: ["string"],
+        defaultValue: "More information",
+    },
 ];
 
 const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
@@ -290,6 +296,12 @@ const POPOVER_DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["number"],
+            },
+            {
+                name: "ariaLabel",
+                description: "The accessible label for the popover content",
+                propTypes: ["string"],
+                defaultValue: "More information",
             },
         ],
     },

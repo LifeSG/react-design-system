@@ -18,12 +18,12 @@ export const PopoverInline = ({
     return (
         <PopoverTrigger {...otherProps}>
             <StyledText
+                aria-label={ariaLabel ?? (hasContent ? undefined : "More info")}
                 role="button"
                 aria-haspopup="dialog"
                 tabIndex={0}
                 $defaultStyle={underlineStyle}
                 $hoverStyle={underlineHoverStyle}
-                aria-label={ariaLabel ?? (hasContent ? undefined : "More info")}
             >
                 {content}
                 {icon && (

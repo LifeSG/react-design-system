@@ -7,6 +7,7 @@ export interface PopoverV2Props extends PopoverRenderProps {
     className?: string | undefined;
     "data-testid"?: string | undefined;
     onMobileClose?: (() => void) | undefined;
+    ariaLabel?: string | undefined;
 }
 
 export interface PopoverRenderProps {
@@ -57,6 +58,7 @@ export interface PopoverV2TriggerProps {
     /* if the popover will resize to fit the remaining vertical space and contents become scrollable */
     enableResize?: boolean | undefined;
     overflow?: PopoverOverflowType | undefined;
+    popoverAriaLabel?: string | undefined;
     onPopoverAppear?: (() => void) | undefined;
     onPopoverDismiss?: (() => void) | undefined;
 }
