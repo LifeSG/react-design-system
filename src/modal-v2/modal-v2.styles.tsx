@@ -64,4 +64,5 @@ export const ScrollContainer = styled.div`
 export const ModalContainer = styled.div`
     pointer-events: auto;
     width: 100%;
+    outline: none;
 `;

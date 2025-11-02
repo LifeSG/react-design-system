@@ -19,6 +19,7 @@ export const PopoverContainer = styled.div`
     max-width: 30rem;
     padding: 0 1rem;
     pointer-events: auto;
+    outline: none;
 `;
 
 export const PopoverCard = styled(Card)<PopoverCardStyleProps>`

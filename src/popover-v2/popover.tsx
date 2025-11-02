@@ -48,6 +48,7 @@ export const PopoverV2 = ({
         <>
             {visible && (
                 <PopoverContainer
+                    tabIndex={0}
                     data-testid={testId}
                     {...otherProps}
                     id={id}
