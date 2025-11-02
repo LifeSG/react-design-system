@@ -19,7 +19,6 @@ export const PredictiveTextInput = <T, V>({
     readOnly = false,
     disabled = false,
     error,
-    errorMessage,
     valueExtractor,
     listExtractor,
     displayValueExtractor,
@@ -28,6 +27,7 @@ export const PredictiveTextInput = <T, V>({
     dropdownZIndex,
     dropdownRootNode,
     dropdownWidth,
+    ...otherProps
 }: PredictiveTextInputProps<T, V>): JSX.Element => {
     const getDisplayValue = (item: T | undefined): string => {
         if (!item) return "";
@@ -61,6 +61,7 @@ export const PredictiveTextInput = <T, V>({
     const [resultAnnouncement, setResultAnnouncement] = useState<string | null>(
         null
     );
+    const instructionId = `${internalId}-instruction`;
 
     const nodeRef = useRef<HTMLDivElement | null>(null);
     const selectorRef = useRef<HTMLInputElement | null>(null);
@@ -288,22 +289,10 @@ export const PredictiveTextInput = <T, V>({
                 $readOnly={readOnly}
                 $error={error}
             >
-                <span
-                    id="predictive-input-instructions"
-                    style={{ display: "none" }}
-                >
+                <VisuallyHidden id={instructionId}>
                     Type in {minimumCharacters} or more characters for suggested
                     results.
-                </span>
-                {errorMessage && (
-                    <span
-                        id={`${internalId}-error`}
-                        role="alert"
-                        style={{ display: "none" }}
-                    >
-                        {errorMessage}
-                    </span>
-                )}
+                </VisuallyHidden>
                 <Input
                     ref={selectorRef}
                     id={internalId}
@@ -313,7 +302,6 @@ export const PredictiveTextInput = <T, V>({
                     placeholder={placeholder}
                     readOnly={readOnly}
                     disabled={disabled}
-                    aria-invalid={!!errorMessage}
                     allowClear
                     onClear={handleOnClear}
                     aria-expanded={isOpen}
@@ -326,13 +314,8 @@ export const PredictiveTextInput = <T, V>({
                             : undefined
                     }
                     styleType="no-border"
-                    aria-describedby={
-                        errorMessage
-                            ? `${internalId}-error`
-                            : !readOnly && !disabled
-                            ? "predictive-input-instructions"
-                            : undefined
-                    }
+                    aria-describedby={instructionId}
+                    {...otherProps}
                 />
             </InputWrapper>
         );
