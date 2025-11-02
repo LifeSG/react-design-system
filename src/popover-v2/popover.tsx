@@ -52,7 +52,7 @@ export const PopoverV2 = ({
                     {...otherProps}
                     id={id}
                     role="dialog"
-                    aria-label={ariaLabel}
+                    aria-label={ariaLabel ?? "More information"}
                 >
                     <PopoverCard $maxHeight={maxHeight} $overflow={overflow}>
                         {renderContent()}
@@ -66,7 +66,7 @@ export const PopoverV2 = ({
                     onClose={handleMobileClose}
                     id={id}
                     role="dialog"
-                    aria-label={ariaLabel}
+                    aria-label={ariaLabel ?? "More information"}
                 >
                     <ModalV2.Card>
                         <ModalV2.Content>{renderContent()}</ModalV2.Content>
