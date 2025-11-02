@@ -7,7 +7,6 @@ export interface PopoverV2Props extends PopoverRenderProps {
     className?: string | undefined;
     "data-testid"?: string | undefined;
     onMobileClose?: (() => void) | undefined;
-    isTooltip?: boolean | undefined;
     ariaLabel?: string | undefined;
 }
 

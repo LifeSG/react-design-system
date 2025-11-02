@@ -13,22 +13,15 @@ import {
     useHover,
     useInteractions,
 } from "@floating-ui/react";
-import {
-    ReactElement,
-    cloneElement,
-    isValidElement,
-    useContext,
-    useRef,
-    useState,
-} from "react";
+import { useContext, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { useFloatingChild } from "../overlay/use-floating-context";
 import { Breakpoint } from "../theme";
+import { SimpleIdGenerator } from "../util";
 import { PopoverV2 } from "./popover";
 import { TriggerContainer } from "./popover-trigger.styles";
 import { PopoverV2TriggerProps, PopoverV2TriggerType } from "./types";
-import { SimpleIdGenerator } from "../util";
 
 export const PopoverTrigger = ({
     children,
@@ -91,12 +84,6 @@ export const PopoverTrigger = ({
     const trigger: PopoverV2TriggerType = isMobile ? "click" : _trigger;
     const isTooltip = trigger === "hover";
 
-    const childrenWithAria = isValidElement(children)
-        ? cloneElement(children as ReactElement, {
-              "aria-describedby": isTooltip ? popoverContainerId : undefined,
-          })
-        : children;
-
     const click = useClick(context, {
         // allow trigger by Space/Enter, but disable mouse click in hover mode
         ignoreMouse: isTooltip,
@@ -148,7 +135,6 @@ export const PopoverTrigger = ({
                 onMobileClose={handlePopoverMobileClose}
                 maxHeight={enableResize ? availableHeight : undefined}
                 overflow={enableResize ? overflow : undefined}
-                isTooltip={isTooltip}
                 ariaLabel={popoverAriaLabel}
                 id={popoverContainerId}
             >
@@ -173,11 +159,11 @@ export const PopoverTrigger = ({
                 })}
                 {...otherProps}
             >
-                {childrenWithAria}
+                {children}
             </TriggerContainer>
             {visible && (
                 <FloatingPortal root={rootNode}>
-                    <FloatingFocusManager modal={!isTooltip} context={context}>
+                    <FloatingFocusManager context={context}>
                         <div
                             ref={(node) => {
                                 popoverRef.current = node;
