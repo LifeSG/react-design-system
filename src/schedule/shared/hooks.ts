@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getTimelineOffset, calculateScrollPosition } from "./utils";
+import { calculateScrollPosition, getTimelineOffset } from "./utils";
 
 /**
  * Custom hook that manages the timeline offset for the current time indicator.

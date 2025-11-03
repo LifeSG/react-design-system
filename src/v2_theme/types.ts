@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { V2_ColorSet, V2_ColorSetOptions } from "../v2_color/types";
 
 import {

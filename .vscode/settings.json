@@ -1,10 +1,21 @@
 {
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "eslint.options": {
-        "extensions": [".md", ".mdx"]
+        "extensions": [".md", ".mdx"],
+        "overrideConfigFile": "eslint.config.mjs"
     },
-    "eslint.validate": ["markdown", "mdx"],
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "markdown",
+        "mdx",
+        "typescript",
+        "typescriptreact"
+    ],
     "auto-close-tag.activationOnLanguage": [
         "html",
         "javascriptreact",
