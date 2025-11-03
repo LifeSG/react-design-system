@@ -1,0 +1,14 @@
+/* Custom styling for code tags in Storybook documentation */
+code {
+    color: rgb(208, 2, 27) !important;
+}
+
+/* Style for code blocks (pre > code) */
+pre code {
+    color: rgb(208, 2, 27) !important;
+}
+
+/* Inline code in tables */
+table code {
+    color: rgb(208, 2, 27) !important;
+}

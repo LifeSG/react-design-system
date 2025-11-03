@@ -4,11 +4,11 @@ export type Mode = "default" | "mobile";
 
 export interface FilterProps {
     children: React.ReactNode | ((mode: Mode) => React.ReactNode);
+    id?: string | undefined;
     clearButtonDisabled?: boolean | undefined;
     headerTitle?: string | undefined;
     toggleFilterButtonLabel?: string | undefined;
     className?: string | undefined;
-    id?: string | undefined;
     "data-testid"?: string | undefined;
     /** Called when dismiss button is pressed (mobile mode only) */
     onDismiss?: (() => void) | undefined;
@@ -19,6 +19,7 @@ export interface FilterProps {
 }
 
 export interface FilterItemProps {
+    /** The content to render inside the filter item. Can be a React node or a render function receiving (mode, state) */
     children:
         | React.ReactNode
         | ((mode: Mode, state: { minimised: boolean }) => React.ReactNode);
@@ -44,6 +45,7 @@ export interface FilterItemProps {
 }
 
 export interface FilterPageProps {
+    /** The content to render inside the filter page */
     children: React.ReactNode;
     /** Called when dismiss button is pressed */
     onDismiss?: (() => void) | undefined;

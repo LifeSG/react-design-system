@@ -10,38 +10,99 @@ type Component = typeof DataTable;
 const meta: Meta<Component> = {
     title: "Modules/DataTable",
     component: DataTable,
+    tags: ["autodocs"],
+    parameters: {
+        controls: {
+            expanded: true,
+        },
+    },
+    argTypes: {
+        // Complex props disabled from controls
+        headers: {
+            control: false,
+            description: "Configuration for each header",
+        },
+        rows: { control: false, description: "Array of row data objects" },
+        sortIndicators: {
+            control: false,
+            description: "Sort direction map keyed by column fieldKey",
+        },
+        emptyView: { control: false },
+        renderCustomEmptyView: { control: false },
+        actionBarContent: { control: false },
+        onHeaderClick: { action: "headerClick" },
+        onSelect: { action: "rowSelect" },
+        onSelectAll: { action: "selectAll" },
+        onClearSelectionClick: { action: "clearSelection" },
+        // Boolean feature flags with explicit controls
+        enableMultiSelect: {
+            control: { type: "boolean" },
+            description: "Enable row selection checkboxes",
+        },
+        enableSelectAll: {
+            control: { type: "boolean" },
+            description:
+                "Enable select all checkbox in header (requires multi-select)",
+        },
+        enableActionBar: {
+            control: { type: "boolean" },
+            description: "Show action bar when one or more rows selected",
+        },
+        alternatingRows: {
+            control: { type: "boolean" },
+            description: "Alternate row background colors",
+        },
+        enableStickyHeader: {
+            control: { type: "boolean" },
+            description: "Keep header fixed to top while scrolling",
+        },
+        loadState: {
+            control: { type: "radio" },
+            options: ["success", "loading"],
+            description: "Loading state for the table",
+        },
+    },
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
-        return (
-            <DataTable
-                headers={[
-                    { fieldKey: "title", label: "Title" },
-                    { fieldKey: "status", label: "Status" },
-                    { fieldKey: "desc", label: "Description" },
-                    { fieldKey: "time", label: "Time" },
-                ]}
-                rows={[
-                    {
-                        id: "100",
-                        title: "Title 1",
-                        status: <Pill type="outline">Completed</Pill>,
-                        desc: "Test",
-                        time: "07/Aug/2023 9.30pm",
-                    },
-                    {
-                        id: "102",
-                        title: "Title 2",
-                        status: <Pill type="outline">Pending</Pill>,
-                        desc: "Cells containing longer data may be truncated so that only a maximum of 2 lines are visible",
-                        time: "07/Aug/2023 10.30pm",
-                    },
-                ]}
-            />
-        );
+    args: {
+        headers: [
+            { fieldKey: "title", label: "Title" },
+            { fieldKey: "status", label: "Status" },
+            { fieldKey: "desc", label: "Description" },
+            { fieldKey: "time", label: "Time" },
+        ],
+        rows: [
+            {
+                id: "100",
+                title: "Title 1",
+                status: <Pill type="outline">Completed</Pill>,
+                desc: "Test",
+                time: "07/Aug/2023 9.30pm",
+            },
+            {
+                id: "102",
+                title: "Title 2",
+                status: <Pill type="outline">Pending</Pill>,
+                desc: "Cells containing longer data may be truncated so that only a maximum of 2 lines are visible",
+                time: "07/Aug/2023 10.30pm",
+            },
+        ],
+        alternatingRows: false,
+        enableMultiSelect: false,
+        enableSelectAll: false,
+        enableActionBar: false,
+        enableStickyHeader: false,
+        loadState: "success",
+    },
+    parameters: {
+        controls: {
+            disable: false,
+            expanded: true,
+        },
+        actions: { disable: false },
     },
 };
 

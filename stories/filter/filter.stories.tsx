@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Filter } from "../../src/filter";
+import { FilterItem } from "../../src/filter/filter-item";
+import { FilterItemPage } from "../../src/filter/filter-item-page";
 import { Form } from "../../src/form";
 import { StoryContainer } from "../storybook-common";
 import {
@@ -16,6 +18,49 @@ type Component = typeof Filter;
 const meta: Meta<Component> = {
     title: "Modules/Filter",
     component: Filter,
+    argTypes: {
+        children: {
+            // completely custom since 'children' is always ignored
+            description:
+                "Content of the filter. Can be ReactNode or a render function receiving (mode).",
+            table: {
+                type: {
+                    summary:
+                        "React.ReactNode | ((mode: 'default' | 'mobile') => React.ReactNode)",
+                },
+            },
+            type: {
+                name: "string",
+                required: true,
+            },
+            control: false,
+        },
+        onDismiss: {
+            // custom making required and custom type
+            type: {
+                name: "string",
+                required: true,
+            },
+            table: {
+                type: {
+                    summary: "custom type, but inferred description",
+                },
+            },
+        },
+        onDone: {
+            // custom description and control with mapped options
+            description: "Alternative description",
+            control: {
+                type: "select",
+            },
+            options: ["do nothing", "show alert", "log console"],
+            mapping: {
+                "do nothing": () => {},
+                "show alert": () => alert("Done clicked"),
+                "log console": () => console.log("Done clicked"),
+            },
+        },
+    },
 };
 
 export default meta;

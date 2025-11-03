@@ -1,7 +1,14 @@
-import { Canvas, Meta } from "@storybook/blocks";
+import {
+    Canvas,
+    Meta,
+    Controls,
+    ArgsTable,
+    Description,
+} from "@storybook/blocks";
 import { Heading3, Secondary, Title } from "../storybook-common";
 import * as FilterStories from "./filter.stories";
-import { PropsTable } from "./props-table";
+import { PropsTable, FilterItemDocs, FilterPageDocs } from "./props-table";
+import { PropTableTabs } from "../storybook-common/prop-table-tabs";
 
 <Meta of={FilterStories} />
 
@@ -59,3 +66,20 @@ Some filters may need to rendered as a fullscreen page while editing. A display 
 <Canvas of={FilterStories.DisplayFilterInFullscreen} />
 
 <PropsTable />
+
+<PropTableTabs
+    tabs={[
+        {
+            label: "Filter",
+            content: <Controls of={FilterStories.Default} />,
+        },
+        {
+            label: "Filter.Item",
+            content: <ArgsTable of={FilterItemDocs} />,
+        },
+        {
+            label: "Filter.Page",
+            content: <ArgsTable of={FilterPageDocs} />,
+        },
+    ]}
+/>

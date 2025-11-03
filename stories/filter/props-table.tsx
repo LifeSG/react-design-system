@@ -2,6 +2,12 @@ import React from "react";
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
+import { createDocsComponent } from "../storybook-common/create-docs-component";
+import {
+    FilterItemProps,
+    FilterPageProps,
+    FilterProps,
+} from "../../src/filter/types";
 
 const FILTER_DATA: ApiTableSectionProps[] = [
     {
@@ -200,3 +206,7 @@ const PROPS_TABLE_DATA: TabAttribute[] = [
 ];
 
 export const PropsTable = () => <Tabs tabs={PROPS_TABLE_DATA} />;
+
+export const FilterDocs = createDocsComponent<FilterProps>();
+export const FilterItemDocs = createDocsComponent<FilterItemProps>();
+export const FilterPageDocs = createDocsComponent<FilterPageProps>();

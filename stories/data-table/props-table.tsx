@@ -1,6 +1,8 @@
 import React from "react";
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { createDocsComponent } from "../storybook-common/create-docs-component";
+import { HeaderItemProps } from "../../src/data-table/types";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -187,3 +189,5 @@ const DATA: ApiTableSectionProps[] = [
 ];
 
 export const PropsTable = () => <ApiTable sections={DATA} />;
+
+export const HeaderItemDocs = createDocsComponent<HeaderItemProps>();

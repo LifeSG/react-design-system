@@ -2,17 +2,23 @@ import { CSSProperties, ReactNode } from "react";
 import { ErrorDisplayAttributes } from "../error-display/types";
 
 export interface DataTableProps {
+    /** The unique identifier of the component */
     id?: string | undefined;
+    /** The test identifier of the component */
     "data-testid"?: string | undefined;
-    /** Configuration for each header */
+    /** The configuration for each header column */
     headers: HeaderProps[];
+    /** The list of data */
     rows?: RowProps[] | undefined;
+    /** The class selector of the component */
     className?: string | undefined;
+    /** The ids of selected items */
     selectedIds?: string[] | undefined;
+    /** The ids of disabled items */
     disabledIds?: string[] | undefined;
-    /** Enables a checkbox for each row */
+    /** Enables a checkbox in each row for multi-selection */
     enableMultiSelect?: boolean | undefined;
-    /** Enables a select all checkbox */
+    /** Enables a checkbox in the header to select all rows or clear the current selection */
     enableSelectAll?: boolean | undefined;
     /** Specifies if an action bar is visible when one or more rows are selected */
     enableActionBar?: boolean | undefined;
@@ -20,12 +26,17 @@ export interface DataTableProps {
     enableStickyHeader?: boolean | undefined;
     /** Custom content to be rendered within the action bar */
     actionBarContent?: ReactNode | undefined;
+    /** Specifies the table load state. Displays an animation when the table is loading. (default: "success") */
     loadState?: LoadStateType | undefined;
+    /** Called when a row is selected */
     onSelect?: ((rowId: string, isSelected: boolean) => void) | undefined;
+    /** Called when all rows are selected, with the current selection state */
     onSelectAll?: ((isAllSelected: boolean) => void) | undefined;
+    /** Called with the corresponding column field key when a header is clicked */
     onHeaderClick?: ((fieldKey: string) => void) | undefined;
+    /** Called when clear button in the action bar is clicked */
     onClearSelectionClick?: (() => void) | undefined;
-    /** Specifies the sort indicator display state for each column **/
+    /** The sort indicator display state for each column */
     sortIndicators?: SortIndicatorsProps | undefined;
     /** Specifies if every alternate row has a different background colour */
     alternatingRows?: boolean | undefined;
@@ -51,17 +62,21 @@ export interface SortIndicatorsProps {
  */
 export type HeaderProps = string | HeaderItemProps;
 
-interface HeaderItemProps {
+export interface HeaderItemProps {
+    /** The name of the corresponding key in the row item object */
     fieldKey: string;
-    // technically ReactNode also includes string, but this is more explicit
+    /** The display label for the column header (string or custom React node) */
     label: string | ReactNode;
+    /** Specifies if the column header is clickable. When true, `onHeaderClick` will be called when the cell is clicked */
     clickable?: boolean | undefined;
+    /** Specifies custom styles for the column header cell */
     style?: CSSProperties | undefined;
 }
 
 export interface RowProps {
+    /** Row id */
     id: string | number;
-    /** data with key matching fieldKey in `HeaderProps` */
+    /** Other properties on the row item object. Keys should match `fieldKey` in `HeaderProps`. Values can be primitive, ReactNode, or a render function receiving (row, renderProps). */
     [fieldKey: string]:
         | string
         | number

@@ -8,6 +8,7 @@ import {
     RBSTheme,
 } from "../src/theme";
 import { ThemeProvider } from "styled-components";
+import "./custom-code.css";
 
 const preview = {
     decorators: [
@@ -36,7 +37,9 @@ const preview = {
             },
         },
         actions: { disable: true },
-        controls: { disable: true },
+        controls: {
+            disable: false,
+        },
         layout: "centered",
         viewport: {
             viewports: INITIAL_VIEWPORTS,
