@@ -89,6 +89,7 @@
         "@types/react-slider": "^1.3.6",
         "@typescript-eslint/eslint-plugin": "^5.16.0",
         "@typescript-eslint/parser": "^5.16.0",
+        "@wog/ccube-lib-ai-config": "^2.0.0-alpha-2",
         "babel-loader": "^8.2.4",
         "babel-plugin-styled-components": "^2.0.6",
         "css-loader": "^5.2.7",
