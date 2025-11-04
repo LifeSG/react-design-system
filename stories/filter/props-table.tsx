@@ -24,7 +24,9 @@ const FILTER_DATA: ApiTableSectionProps[] = [
             {
                 name: "customLabels",
                 description: `Specifies custom labels. See the "Custom labels" section below for more details`,
-                propTypes: ["object"],
+                propTypes: [
+                    "FilterModalCustomLabelProps | FilterSidebarCustomLabelProps",
+                ],
             },
             {
                 name: "clearButtonDisabled",
@@ -142,7 +144,7 @@ const FILTER_SIDEBAR_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "customLabels",
-                description: `Specifies custom labels. See the "Custom labels" section below for more details`,
+                description: `Specifies custom labels`,
                 propTypes: ["FilterSidebarCustomLabelProps"],
             },
             {
@@ -189,7 +191,7 @@ const FILTER_SIDEBAR_DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "Custom labels",
+        name: "FilterSidebarCustomLabelProps",
         attributes: [
             {
                 name: "headerTitle",
@@ -223,7 +225,7 @@ const FILTER_MODAL_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "customLabels",
-                description: `Specifies custom labels. See the "Custom labels" section below for more details`,
+                description: `Specifies custom labels`,
                 propTypes: ["FilterModalCustomLabelProps"],
             },
             {
@@ -292,7 +294,7 @@ const FILTER_MODAL_DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "Custom labels",
+        name: "FilterModalCustomLabelProps",
         attributes: [
             {
                 name: "headerTitle",
