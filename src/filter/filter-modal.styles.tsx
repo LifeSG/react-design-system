@@ -46,16 +46,12 @@ export const FilterHeader = styled.div<FilterHeaderProps>`
 export const FilterTitle = styled.h2`
     ${Font["heading-xs-semibold"]}
     flex: 1;
-    margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
-        ${Spacing["spacing-20"]};
     text-align: center;
     margin: ${Spacing["spacing-24"]} 0;
 `;
 
 export const FilterClearButton = styled(Button.Small)`
     background-color: transparent;
-    padding-right: ${Spacing["spacing-20"]};
-    padding-left: ${Spacing["spacing-20"]};
     height: 100%;
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
 `;

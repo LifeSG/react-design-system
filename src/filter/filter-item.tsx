@@ -118,22 +118,22 @@ export const FilterItem = ({
 
     return (
         <FilterItemWrapper
-            isMobile={isMobile}
+            $isMobile={isMobile}
             $collapsible={collapsible}
             aria-labelledby={titleId}
         >
             <Divider
-                isMobile={isMobile}
+                $isMobile={isMobile}
                 $showDivider={showDivider}
                 $showMobileDivider={showMobileDivider}
             />
             {(title || collapsible) && (
-                <FilterItemHeader isMobile={isMobile}>
+                <FilterItemHeader $isMobile={isMobile}>
                     {title && (
                         <FilterItemTitle
                             id={titleId}
                             data-testid="filter-item-title"
-                            isMobile={isMobile}
+                            $isMobile={isMobile}
                         >
                             {title} {addon && renderAddon()}
                         </FilterItemTitle>

@@ -11,13 +11,13 @@ import { Colour, Font, Motion, Spacing } from "../theme";
 interface StyleProps {
     $collapsible?: boolean;
     $expanded?: boolean;
-    isMobile?: boolean;
+    $isMobile?: boolean;
 }
 
 interface DividerStyleProps {
     $showDivider: boolean;
     $showMobileDivider: boolean;
-    isMobile?: boolean;
+    $isMobile?: boolean;
 }
 
 interface MinimisableContentProps {
@@ -26,10 +26,10 @@ interface MinimisableContentProps {
 }
 
 interface FilterItemHeaderStyleProps {
-    isMobile?: boolean;
+    $isMobile?: boolean;
 }
 interface FilterItemTitleStyleProps {
-    isMobile?: boolean;
+    $isMobile?: boolean;
 }
 
 // =============================================================================
@@ -38,19 +38,27 @@ interface FilterItemTitleStyleProps {
 
 export const FilterItemWrapper = styled.div<StyleProps>`
     background-color: ${(props) =>
-        props.$collapsible || props.isMobile
-            ? Colour["bg-strong"]
-            : Colour["bg"]};
+        props.$collapsible ? Colour["bg-strong"] : Colour["bg"]};
+    ${(props) =>
+        props.$isMobile &&
+        css`
+            background-color: ${Colour["bg-strong"]};
+        `}
 `;
 
 export const Divider = styled.div<DividerStyleProps>`
     display: ${(props) =>
-        props.$showDivider || (props.isMobile && props.$showMobileDivider)
+        props.$showDivider || (props.$isMobile && props.$showMobileDivider)
             ? "block"
             : "none"};
     height: 1px;
     background-color: ${Colour["border"]};
-    margin: ${(props) => (props.isMobile ? `0 ${Spacing["spacing-16"]}` : 0)};
+
+    ${(props) =>
+        props.$isMobile &&
+        css`
+            margin: 0 ${Spacing["spacing-16"]};
+        `}
 `;
 
 // -----------------------------------------------------------------------------
@@ -61,8 +69,13 @@ export const FilterItemHeader = styled.div<FilterItemHeaderStyleProps>`
     display: flex;
     align-items: center;
 
-    background-color: ${(props) =>
-        props.isMobile ? "transparent" : Colour["bg"]};
+    background-color: ${Colour["bg"]};
+
+    ${(props) =>
+        props.$isMobile &&
+        css`
+            background-color: transparent;
+        `}
 `;
 
 export const FilterItemExpandButton = styled(ClickableIcon)`
@@ -83,20 +96,21 @@ export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
 `;
 
 export const FilterItemTitle = styled.h3<FilterItemTitleStyleProps>`
+    ${Font["heading-xs-semibold"]}
+    color: ${Colour["text"]};
+
+    margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
+        ${Spacing["spacing-20"]};
+
     ${(props) =>
-        props.isMobile
-            ? css`
-                  ${Font["body-md-semibold"]};
-                  color: ${Colour["text-subtle"]};
-                  margin: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]} 0
-                      ${Spacing["spacing-20"]};
-              `
-            : css`
-                  ${Font["heading-xs-semibold"]};
-                  color: ${Colour["text"]};
-                  margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
-                      ${Spacing["spacing-20"]};
-              `}
+        props.$isMobile &&
+        css`
+            ${Font["body-md-semibold"]}
+            color: ${Colour["text-subtle"]};
+
+            margin: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]} 0
+                ${Spacing["spacing-20"]};
+        `}
 `;
 
 // -----------------------------------------------------------------------------
