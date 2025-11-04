@@ -22,16 +22,21 @@ import {
     createContext,
     useContext,
     useRef,
+    useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
 import { useFloatingChild } from "../../overlay/use-floating-context";
 import { Breakpoint } from "../../theme";
+import { useDebouncedCallback } from "../../util/use-debounce";
 import { DropdownAlignmentType } from "./types";
 
 export interface DropdownRenderProps {
     elementWidth: number;
     styles: CSSProperties;
+    /** if height has been calculated for the dropdown */
+    resized: boolean;
+    open: boolean;
     setFloatingRef: (node: HTMLElement | null) => void;
     getFloatingProps: (
         userProps?: React.HTMLProps<HTMLElement>
@@ -79,6 +84,8 @@ const DEFAULT_Z_INDEX = 50;
 export const DropdownRenderContext = createContext<DropdownRenderProps>({
     elementWidth: 0,
     styles: {},
+    resized: false,
+    open: false,
     setFloatingRef: () => {
         // noop
     },
@@ -138,6 +145,8 @@ export const ElementWithDropdown = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const [resized, setResized] = useState<boolean>(false);
+    const setResizedDebounced = useDebouncedCallback(setResized, 100);
     const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const elementRef = useRef<HTMLDivElement | null>(null);
@@ -162,6 +171,10 @@ export const ElementWithDropdown = ({
     const { refs, floatingStyles, context } = useFloating({
         open: isOpen,
         onOpenChange: (open, _event, reason) => {
+            if (!open) {
+                setResized(false);
+            }
+
             if (reason === "escape-key") {
                 onDismiss?.();
             } else if (open && !isOpen) {
@@ -181,6 +194,10 @@ export const ElementWithDropdown = ({
             size({
                 // shrink to fit available vertical space
                 apply({ availableHeight, elements }) {
+                    if (!resized) {
+                        setResizedDebounced(true);
+                    }
+
                     if (
                         !fitAvailableHeight ||
                         availableHeight >= elements.floating.scrollHeight
@@ -221,13 +238,15 @@ export const ElementWithDropdown = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const dropdownRenderProps = {
+    const dropdownRenderProps: DropdownRenderProps = {
         elementWidth: referenceWidth,
         styles: {
             ...styles,
             ...floatingStyles,
             zIndex: customZIndex ?? parentZIndex ?? DEFAULT_Z_INDEX,
         },
+        resized,
+        open: isOpen, // the actual open state, as dropdown may remain mounted while the close animation has not completed
         setFloatingRef: refs.setFloating,
         getFloatingProps,
     };
