@@ -70,6 +70,84 @@ export const Default: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+export const SidebarOnly: StoryObj<Component> = {
+    render: (_args) => {
+        const { draftFilters, updateFilter, clearFilters } = useFilters({
+            search: "",
+            date: undefined,
+        });
+
+        return (
+            <Filter.Sidebar clearButtonDisabled={false} onClear={clearFilters}>
+                <Filter.Item title="Search">
+                    <SearchFilter
+                        mode="default"
+                        value={draftFilters.search}
+                        onChange={updateFilter("default", "search")}
+                    />
+                </Filter.Item>
+                <Filter.Item title="Date">
+                    <DateFilter
+                        mode="default"
+                        value={draftFilters.date}
+                        onChange={updateFilter("default", "date")}
+                    />
+                </Filter.Item>
+            </Filter.Sidebar>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+    parameters: {
+        docs: {
+            description: {
+                story: "Renders a persistent filter sidebar, typically used in desktop layouts.",
+            },
+        },
+    },
+};
+
+export const ModalOnly: StoryObj<Component> = {
+    render: (_args) => {
+        const { draftFilters, updateFilter, clearFilters, saveFilters } =
+            useFilters({
+                search: "",
+                date: undefined,
+            });
+
+        return (
+            <Filter.Modal
+                clearButtonDisabled={false}
+                onClear={clearFilters}
+                onDismiss={() => alert("Dismissed")}
+                onDone={saveFilters}
+            >
+                <Filter.Item title="Search">
+                    <SearchFilter
+                        mode="mobile"
+                        value={draftFilters.search}
+                        onChange={updateFilter("mobile", "search")}
+                    />
+                </Filter.Item>
+                <Filter.Item title="Date">
+                    <DateFilter
+                        mode="mobile"
+                        value={draftFilters.date}
+                        onChange={updateFilter("mobile", "date")}
+                    />
+                </Filter.Item>
+            </Filter.Modal>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+    parameters: {
+        docs: {
+            description: {
+                story: "Displays the filter interface as a modal, typically used in mobile layouts.",
+            },
+        },
+    },
+};
+
 export const ConfiguringFilterItem: StoryObj<Component> = {
     render: (_args) => {
         return (

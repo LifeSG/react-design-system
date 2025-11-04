@@ -24,7 +24,9 @@ const FILTER_DATA: ApiTableSectionProps[] = [
             {
                 name: "customLabels",
                 description: `Specifies custom labels. See the "Custom labels" section below for more details`,
-                propTypes: ["object"],
+                propTypes: [
+                    "FilterModalCustomLabelProps | FilterSidebarCustomLabelProps",
+                ],
             },
             {
                 name: "clearButtonDisabled",
@@ -94,6 +96,205 @@ const FILTER_DATA: ApiTableSectionProps[] = [
     },
     {
         name: "Custom labels",
+        attributes: [
+            {
+                name: "headerTitle",
+                description: "The title of the filter header",
+                propTypes: ["string"],
+                defaultValue: `"Filters"`,
+            },
+            {
+                name: "toggleFilterButtonLabel",
+                description:
+                    "The display label of the filter toggle button (in mobile)",
+                propTypes: ["string"],
+                defaultValue: `"Filters"`,
+            },
+            {
+                name: "clearButtonLabel",
+                description: "The display label of the `Clear` button",
+                propTypes: ["string"],
+                defaultValue: `"Clear"`,
+            },
+            {
+                name: "doneButtonLabel",
+                description:
+                    "The display label of the `Done` button (in mobile)",
+                propTypes: ["string"],
+                defaultValue: `"Done"`,
+            },
+        ],
+    },
+];
+
+const FILTER_SIDEBAR_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "children",
+                mandatory: true,
+                description: (
+                    <>
+                        The contents of the <code>Filter.Sidebar</code>,
+                        typically composed of <code>Filter.Item</code>{" "}
+                        components.
+                    </>
+                ),
+                propTypes: ["React.ReactNode"],
+            },
+            {
+                name: "customLabels",
+                description: `Specifies custom labels`,
+                propTypes: ["FilterSidebarCustomLabelProps"],
+            },
+            {
+                name: "clearButtonDisabled",
+                description:
+                    "Specifies if the feature to expand/collapse all child items is enabled",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "onClear",
+                description: "Called when clear button is pressed",
+                propTypes: ["() => void"],
+            },
+            {
+                name: "className",
+                description: "Class selector for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "id",
+                description: "The unique identifier for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "insets",
+                description: (
+                    <>
+                        The distance from the edge of the viewport, defining the
+                        safe area not covered by status bars, notches, or other
+                        navigation elements. The header and footer in mobile
+                        mode will be offset accordingly.
+                    </>
+                ),
+                propTypes: [
+                    "{ top?: number, bottom?: number, right?: number, right?: number }",
+                ],
+            },
+        ],
+    },
+    {
+        name: "FilterSidebarCustomLabelProps",
+        attributes: [
+            {
+                name: "headerTitle",
+                description: "The title of the filter header",
+                propTypes: ["string"],
+                defaultValue: `"Filters"`,
+            },
+            {
+                name: "clearButtonLabel",
+                description: "The display label of the `Clear` button",
+                propTypes: ["string"],
+                defaultValue: `"Clear"`,
+            },
+        ],
+    },
+];
+
+const FILTER_MODAL_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "children",
+                mandatory: true,
+                description: (
+                    <>
+                        The contents of the <code>Filter.Modal</code>, typically
+                        composed of <code>Filter.Item</code> components.
+                    </>
+                ),
+                propTypes: ["React.ReactNode"],
+            },
+            {
+                name: "customLabels",
+                description: `Specifies custom labels`,
+                propTypes: ["FilterModalCustomLabelProps"],
+            },
+            {
+                name: "clearButtonDisabled",
+                description:
+                    "Specifies if the feature to expand/collapse all child items is enabled",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "onDismiss",
+                description: "Called when dismiss button is pressed",
+                propTypes: ["() => void"],
+            },
+            {
+                name: "onDone",
+                description: "Called when done button is pressed",
+                propTypes: ["() => void"],
+            },
+            {
+                name: "onClear",
+                description: "Called when clear button is pressed",
+                propTypes: ["() => void"],
+            },
+            {
+                name: "onModalOpen",
+                description: "Called when filter modal is opened (mobile only)",
+                propTypes: ["() => void"],
+            },
+            {
+                name: "toggleFilterButtonStyle",
+                description:
+                    "The style type of the filter toggle button (in mobile)",
+                propTypes: [`"default"`, `"secondary"`, `"light"`, `"link"`],
+                defaultValue: `"light"`,
+            },
+            {
+                name: "className",
+                description: "Class selector for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "id",
+                description: "The unique identifier for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "insets",
+                description: (
+                    <>
+                        The distance from the edge of the viewport, defining the
+                        safe area not covered by status bars, notches, or other
+                        navigation elements. The header and footer in mobile
+                        mode will be offset accordingly.
+                    </>
+                ),
+                propTypes: [
+                    "{ top?: number, bottom?: number, right?: number, right?: number }",
+                ],
+            },
+        ],
+    },
+    {
+        name: "FilterModalCustomLabelProps",
         attributes: [
             {
                 name: "headerTitle",
@@ -239,6 +440,14 @@ const PROPS_TABLE_DATA: TabAttribute[] = [
     {
         title: "Filter",
         component: <ApiTable sections={FILTER_DATA} />,
+    },
+    {
+        title: "Filter.Sidebar",
+        component: <ApiTable sections={FILTER_SIDEBAR_DATA} />,
+    },
+    {
+        title: "Filter.Modal",
+        component: <ApiTable sections={FILTER_MODAL_DATA} />,
     },
     {
         title: "Filter.Item",
