@@ -47,16 +47,14 @@ export const FilterItemWrapper = styled.div<StyleProps>`
 `;
 
 export const Divider = styled.div<DividerStyleProps>`
-    display: ${(props) =>
-        props.$showDivider || (props.$isMobile && props.$showMobileDivider)
-            ? "block"
-            : "none"};
+    display: ${(props) => (props.$showDivider ? "block" : "none")};
     height: 1px;
     background-color: ${Colour["border"]};
 
     ${(props) =>
         props.$isMobile &&
         css`
+            display: ${props.$showMobileDivider ? "block" : "none"};
             margin: 0 ${Spacing["spacing-16"]};
         `}
 `;
