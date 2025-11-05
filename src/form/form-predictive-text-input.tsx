@@ -7,7 +7,7 @@ import { FormPredictiveTextInputProps } from "./types";
 export const FormPredictiveTextInput = <T, V>({
     label,
     errorMessage,
-    id = "form-predictive-text",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
@@ -54,7 +54,6 @@ export const FormPredictiveTextInput = <T, V>({
                 data-testid={testId ? `${testId}-base` : undefined}
                 aria-labelledby={`${inputId}-label`}
                 error={!!errorMessage}
-                errorMessage={errorMessage}
                 {...otherProps}
             />
         </FormWrapper>

@@ -2,7 +2,7 @@ import { RefObject } from "react";
 import { DropdownAlignmentType } from "src/shared/dropdown-wrapper";
 import { ListItemDisplayProps } from "../shared/dropdown-list/types";
 
-export interface PredictiveTextInputProps<T, V> {
+export interface PredictiveTextInputProps<T, V> extends React.AriaAttributes {
     id?: string | undefined;
     className?: string | undefined;
     "data-testid"?: string | undefined;
@@ -12,7 +12,6 @@ export interface PredictiveTextInputProps<T, V> {
     readOnly?: boolean | undefined;
     disabled?: boolean | undefined;
     error?: boolean | undefined;
-    errorMessage?: string | React.ReactNode | undefined;
     selectedOption?: T | undefined;
     alignment?: DropdownAlignmentType | undefined;
     dropdownZIndex?: number | undefined;

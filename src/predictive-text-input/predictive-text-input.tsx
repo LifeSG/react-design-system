@@ -7,7 +7,7 @@ import { Input } from "../input";
 import { SimpleIdGenerator } from "../util";
 import { PredictiveTextInputProps } from "./types";
 import { ItemsLoadStateType } from "../shared/dropdown-list/types";
-import { VisuallyHidden } from "src/shared/accessibility";
+import { VisuallyHidden, concatIds } from "src/shared/accessibility";
 
 export const PredictiveTextInput = <T, V>({
     className,
@@ -27,6 +27,7 @@ export const PredictiveTextInput = <T, V>({
     dropdownZIndex,
     dropdownRootNode,
     dropdownWidth,
+    "aria-describedby": ariaDescribedBy,
     ...otherProps
 }: PredictiveTextInputProps<T, V>): JSX.Element => {
     const getDisplayValue = (item: T | undefined): string => {
@@ -142,7 +143,7 @@ export const PredictiveTextInput = <T, V>({
         const state = getItemsLoadState();
         const count = options?.length ?? 0;
 
-        if (state === "loading") {
+        if (state === "loading" && input.length >= minimumCharacters) {
             setResultAnnouncement("Loading suggested results");
             return;
         }
@@ -152,24 +153,18 @@ export const PredictiveTextInput = <T, V>({
             return;
         }
 
-        if (count === 0) {
-            setResultAnnouncement(input ? "No result found." : null);
-        } else {
-            setResultAnnouncement(
-                `${count} result${
-                    count > 1 ? "s" : ""
-                } found. Press down arrow to scroll through the list.`
-            );
+        if (isOpen && !isLoading && !isError) {
+            if (count === 0) {
+                setResultAnnouncement(input ? "No results found." : null);
+            } else {
+                setResultAnnouncement(
+                    `${count} result${
+                        count > 1 ? "s" : ""
+                    } found. Press down arrow to scroll through the list.`
+                );
+            }
         }
     }, [options, input, isError, isLoading]);
-
-    useEffect(() => {
-        if (isOpen) {
-            setResultAnnouncement("Listbox, expanded");
-        } else {
-            setResultAnnouncement("Listbox, collapsed");
-        }
-    }, [isOpen]);
 
     // =============================================================================
     // Cleanup: cancel debounce on unmount
@@ -289,11 +284,17 @@ export const PredictiveTextInput = <T, V>({
                 $readOnly={readOnly}
                 $error={error}
             >
-                <VisuallyHidden id={instructionId}>
+                <VisuallyHidden id={instructionId} aria-hidden>
                     Type in {minimumCharacters} or more characters for suggested
                     results.
                 </VisuallyHidden>
+                {resultAnnouncement && (
+                    <VisuallyHidden as="span" aria-live="polite">
+                        {resultAnnouncement}
+                    </VisuallyHidden>
+                )}
                 <Input
+                    role="combobox"
                     ref={selectorRef}
                     id={internalId}
                     type="text"
@@ -314,7 +315,7 @@ export const PredictiveTextInput = <T, V>({
                             : undefined
                     }
                     styleType="no-border"
-                    aria-describedby={instructionId}
+                    aria-describedby={concatIds(ariaDescribedBy, instructionId)}
                     {...otherProps}
                 />
             </InputWrapper>
@@ -324,9 +325,6 @@ export const PredictiveTextInput = <T, V>({
     const renderDropdown = () => {
         return (
             <>
-                {resultAnnouncement && (
-                    <VisuallyHidden>{resultAnnouncement}</VisuallyHidden>
-                )}
                 <DropdownList
                     listboxId={internalId}
                     listItems={options}
