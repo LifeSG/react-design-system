@@ -177,7 +177,9 @@ describe("PredictiveTextInput", () => {
         jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
         await act(async () => {
-            await user.click(screen.getByRole("button", { name: "Clear" }));
+            await user.click(
+                screen.getByRole("button", { name: "Clear input" })
+            );
         });
 
         expect(screen.getByPlaceholderText("Enter here...")).toHaveValue("");
@@ -380,7 +382,9 @@ describe("PredictiveTextInput", () => {
                 await user.keyboard("{Tab}");
             });
 
-            expect(screen.getByRole("button", { name: "Clear" })).toHaveFocus();
+            expect(
+                screen.getByRole("button", { name: "Clear input" })
+            ).toHaveFocus();
 
             // NOTE: skipped as the list items in the dropdown is not focusable
             /*

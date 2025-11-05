@@ -7,6 +7,7 @@ import { Input } from "../input";
 import { SimpleIdGenerator } from "../util";
 import { PredictiveTextInputProps } from "./types";
 import { ItemsLoadStateType } from "../shared/dropdown-list/types";
+import { VisuallyHidden, concatIds } from "src/shared/accessibility";
 
 export const PredictiveTextInput = <T, V>({
     className,
@@ -26,6 +27,8 @@ export const PredictiveTextInput = <T, V>({
     dropdownZIndex,
     dropdownRootNode,
     dropdownWidth,
+    "aria-describedby": ariaDescribedBy,
+    ...otherProps
 }: PredictiveTextInputProps<T, V>): JSX.Element => {
     const getDisplayValue = (item: T | undefined): string => {
         if (!item) return "";
@@ -56,6 +59,10 @@ export const PredictiveTextInput = <T, V>({
     const [isFocused, setIsFocused] = useState(false);
 
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const [resultAnnouncement, setResultAnnouncement] = useState<string | null>(
+        null
+    );
+    const instructionId = `${internalId}-instruction`;
 
     const nodeRef = useRef<HTMLDivElement | null>(null);
     const selectorRef = useRef<HTMLInputElement | null>(null);
@@ -132,6 +139,33 @@ export const PredictiveTextInput = <T, V>({
         setIsOptionSelected(!!selectedOption);
     }, [selectedOption]);
 
+    useEffect(() => {
+        const state = getItemsLoadState();
+        const count = options?.length ?? 0;
+
+        if (state === "loading" && input.length >= minimumCharacters) {
+            setResultAnnouncement("Loading suggested results");
+            return;
+        }
+
+        if (state === "fail") {
+            setResultAnnouncement("Suggestions failed to load. Try again.");
+            return;
+        }
+
+        if (isOpen && !isLoading && !isError) {
+            if (count === 0) {
+                setResultAnnouncement(input ? "No results found." : null);
+            } else {
+                setResultAnnouncement(
+                    `${count} result${
+                        count > 1 ? "s" : ""
+                    } found. Press down arrow to scroll through the list.`
+                );
+            }
+        }
+    }, [options, input, isError, isLoading]);
+
     // =============================================================================
     // Cleanup: cancel debounce on unmount
     // =============================================================================
@@ -195,9 +229,9 @@ export const PredictiveTextInput = <T, V>({
 
     const handleOnClear = () => {
         setInput("");
-        setIsOpen(false);
         setOptions([]);
         setIsOptionSelected(false);
+        setIsOpen(false);
         onSelectOption?.(undefined, undefined);
     };
 
@@ -250,7 +284,17 @@ export const PredictiveTextInput = <T, V>({
                 $readOnly={readOnly}
                 $error={error}
             >
+                <VisuallyHidden id={instructionId} aria-hidden>
+                    Type in {minimumCharacters} or more characters for suggested
+                    results.
+                </VisuallyHidden>
+                {resultAnnouncement && (
+                    <VisuallyHidden as="span" aria-live="polite">
+                        {resultAnnouncement}
+                    </VisuallyHidden>
+                )}
                 <Input
+                    role="combobox"
                     ref={selectorRef}
                     id={internalId}
                     type="text"
@@ -271,6 +315,8 @@ export const PredictiveTextInput = <T, V>({
                             : undefined
                     }
                     styleType="no-border"
+                    aria-describedby={concatIds(ariaDescribedBy, instructionId)}
+                    {...otherProps}
                 />
             </InputWrapper>
         );
@@ -278,22 +324,24 @@ export const PredictiveTextInput = <T, V>({
 
     const renderDropdown = () => {
         return (
-            <DropdownList
-                listboxId={internalId}
-                listItems={options}
-                onSelectItem={handleListItemClick}
-                onDismiss={handleListDismiss}
-                valueExtractor={valueExtractor}
-                listExtractor={listExtractor}
-                itemsLoadState={getItemsLoadState()}
-                itemTruncationType={"end"}
-                itemMaxLines={1}
-                labelDisplayType={"next-line"}
-                disableItemFocus
-                onRetry={() => handleFetchOptions(input)}
-                width={dropdownWidth}
-                matchElementWidth
-            />
+            <>
+                <DropdownList
+                    listboxId={internalId}
+                    listItems={options}
+                    onSelectItem={handleListItemClick}
+                    onDismiss={handleListDismiss}
+                    valueExtractor={valueExtractor}
+                    listExtractor={listExtractor}
+                    itemsLoadState={getItemsLoadState()}
+                    itemTruncationType={"end"}
+                    itemMaxLines={1}
+                    labelDisplayType={"next-line"}
+                    disableItemFocus
+                    onRetry={() => handleFetchOptions(input)}
+                    width={dropdownWidth}
+                    matchElementWidth
+                />
+            </>
         );
     };
 
