@@ -1,41 +1,22 @@
 import { defineConfig } from "eslint/config";
-import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
-import react from "eslint-plugin-react";
+import reactPlugin from "eslint-plugin-react";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import globals from "globals";
 import tsParser from "@typescript-eslint/parser";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all,
-});
+import mdx from "eslint-plugin-mdx";
+import eslintConfigPrettier from "eslint-config-prettier/flat";
+import reactHooks from "eslint-plugin-react-hooks";
+import storybook from "eslint-plugin-storybook";
 
 export default defineConfig([
+    js.configs.recommended,
+    reactPlugin.configs.flat.recommended,
+    eslintConfigPrettier,
+    mdx.flat,
+    mdx.flatCodeBlocks,
+    storybook.configs["flat/recommended"],
     {
-        extends: fixupConfigRules(
-            compat.extends(
-                "eslint:recommended",
-                "plugin:@typescript-eslint/recommended",
-                "plugin:react/recommended",
-                "prettier",
-                "plugin:mdx/recommended",
-                "plugin:react-hooks/recommended",
-                "plugin:storybook/recommended"
-            )
-        ),
-
-        plugins: {
-            react: fixupPluginRules(react),
-            "@typescript-eslint": fixupPluginRules(typescriptEslint),
-        },
-
         languageOptions: {
             globals: {
                 ...globals.node,
@@ -58,8 +39,6 @@ export default defineConfig([
             react: {
                 version: "detect",
             },
-
-            "mdx/code-blocks": true,
         },
 
         rules: {
@@ -91,28 +70,25 @@ export default defineConfig([
                     ignoreDeclarationSort: true,
                 },
             ],
-
-            "@typescript-eslint/member-ordering": "off",
-
-            "@typescript-eslint/no-namespace": "off",
-            "@typescript-eslint/no-var-requires": "off",
-            "@typescript-eslint/no-empty-interface": "off",
-
-            "@typescript-eslint/naming-convention": [
-                "error",
-                {
-                    selector: ["interface", "class"],
-                    format: ["PascalCase"],
+        },
+    },
+    {
+        files: ["**/*.{js,jsx,mjs,cjs,ts,tsx}"],
+        plugins: {
+            reactPlugin,
+        },
+        languageOptions: {
+            parserOptions: {
+                ecmaFeatures: {
+                    modules: true,
+                    jsx: true,
                 },
-            ],
-
-            "@typescript-eslint/explicit-member-accessibility": [
-                "warn",
-                {
-                    accessibility: "explicit",
-                },
-            ],
-
+            },
+            globals: {
+                ...globals.browser,
+            },
+        },
+        rules: {
             "react/react-in-jsx-scope": "off",
 
             "react/no-unknown-property": [
@@ -121,14 +97,39 @@ export default defineConfig([
                     ignore: ["inert"],
                 },
             ],
-
-            "react-hooks/exhaustive-deps": [
-                "warn",
+        },
+    },
+    {
+        files: ["**/*.ts", "**/*.tsx"],
+        languageOptions: {
+            parser: tsParser,
+            parserOptions: {
+                project: "./tsconfig.json",
+            },
+        },
+        plugins: {
+            "@typescript-eslint": typescriptEslint,
+        },
+        rules: {
+            ...typescriptEslint.configs["eslint-recommended"].rules,
+            ...typescriptEslint.configs.recommended.rules,
+            "@typescript-eslint/member-ordering": "off",
+            "@typescript-eslint/no-namespace": "off",
+            "@typescript-eslint/no-var-requires": "off",
+            "@typescript-eslint/no-empty-interface": "off",
+            "@typescript-eslint/naming-convention": [
+                "error",
                 {
-                    additionalHooks: "useIsomorphicLayoutEffect",
+                    selector: ["interface", "class"],
+                    format: ["PascalCase"],
                 },
             ],
-
+            "@typescript-eslint/explicit-member-accessibility": [
+                "warn",
+                {
+                    accessibility: "explicit",
+                },
+            ],
             "@typescript-eslint/no-unused-vars": [
                 "error",
                 {
@@ -139,10 +140,25 @@ export default defineConfig([
         },
     },
     {
-        files: ["src/v2_*/**/*.{ts,tsx}"],
+        files: ["**/*.{js,jsx,ts,tsx}"],
+        plugins: { "react-hooks": reactHooks },
 
         rules: {
-            "@typescript-eslint/naming-convention": "off",
+            "react-hooks/exhaustive-deps": [
+                "warn",
+                {
+                    additionalHooks: "useIsomorphicLayoutEffect",
+                },
+            ],
+        },
+    },
+    {
+        files: ["**/*.mdx"],
+        plugins: {
+            mdx,
+        },
+        settings: {
+            "mdx/code-blocks": true,
         },
     },
 ]);
