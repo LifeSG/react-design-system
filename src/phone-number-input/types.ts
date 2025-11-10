@@ -24,6 +24,7 @@ export interface PhoneNumberInputProps extends React.AriaAttributes {
     allowClear?: boolean | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
+    noBorderWrapper?: boolean | undefined;
     /**
      * Specifies if the country code is a fixed value and the user
      * cannot select another option
