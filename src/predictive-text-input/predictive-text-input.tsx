@@ -75,6 +75,7 @@ export const PredictiveTextInput = <T, V>({
             setOptions(fetchedOptions ?? []);
             setIsLoading(false);
         } catch (err) {
+            console.log(err);
             setIsError(true);
             setIsLoading(false);
         }

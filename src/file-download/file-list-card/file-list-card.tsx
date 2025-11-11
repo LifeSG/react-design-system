@@ -53,9 +53,11 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     // =========================================================================
     useEffect(() => {
         if (!containerRef.current) return;
-        isMobile
-            ? setDisplayText(getTruncatedText(name))
-            : setDisplayText(name);
+        if (isMobile) {
+            setDisplayText(getTruncatedText(name));
+        } else {
+            setDisplayText(name);
+        }
     }, [name, isMobile]);
 
     // =========================================================================
@@ -71,6 +73,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
             setIsError(false);
             await onDownload(fileItem);
         } catch (error) {
+            console.error(error);
             setIsError(true);
         } finally {
             setIsLoading(false);

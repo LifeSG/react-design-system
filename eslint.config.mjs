@@ -11,7 +11,13 @@ import storybook from "eslint-plugin-storybook";
 
 export default defineConfig([
     {
-        ignores: ["**/node_modules/**", "**/dist/**", "**/.storybook/**"],
+        ignores: [
+            "**/node_modules/**",
+            "**/dist/**",
+            "**/.storybook/**",
+            "**/e2e/**",
+            "playwright.config.ts",
+        ],
     },
     js.configs.recommended,
     reactPlugin.configs.flat.recommended,
@@ -121,7 +127,13 @@ export default defineConfig([
             "@typescript-eslint/member-ordering": "off",
             "@typescript-eslint/no-namespace": "off",
             "@typescript-eslint/no-var-requires": "off",
-            "@typescript-eslint/no-empty-interface": "off",
+            "@typescript-eslint/no-explicit-any": "warn",
+            "@typescript-eslint/no-empty-object-type": [
+                "error",
+                {
+                    allowInterfaces: "always",
+                },
+            ],
             "@typescript-eslint/naming-convention": [
                 "error",
                 {
@@ -179,6 +191,12 @@ export default defineConfig([
         },
         rules: {
             semi: "off", // disable false "Missing semicolon" errors
+        },
+    },
+    {
+        files: ["src/v2_*/**/*.{ts,tsx}"],
+        rules: {
+            "@typescript-eslint/naming-convention": "off",
         },
     },
 ]);

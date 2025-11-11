@@ -164,7 +164,9 @@ export const SidenavItem = ({
     };
 
     const handleMouseLeave = () => {
-        !isOpen && setCurrentItem(undefined);
+        if (isOpen) {
+            setCurrentItem(undefined);
+        }
     };
 
     const handleDismiss = () => {

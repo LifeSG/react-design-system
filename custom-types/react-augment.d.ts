@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // https://stackoverflow.com/questions/58469229/react-with-typescript-generics-while-using-react-forwardref/58473012
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from "react";

@@ -4,13 +4,13 @@ interface DropdownListStateProps {
     children: React.ReactNode;
 }
 
-interface DropdownListStateContext {
+interface DropdownListStateContextProps {
     focusedIndex: number;
     setFocusedIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const DropdownListStateContext =
-    React.createContext<DropdownListStateContext>({
+    React.createContext<DropdownListStateContextProps>({
         focusedIndex: -1,
         setFocusedIndex: () => {
             // do nothing

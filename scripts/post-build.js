@@ -16,8 +16,7 @@ async function createPackageFile() {
         resolve(packagePath, "./package.json"),
         "utf8"
     );
-    const { scripts, devDependencies, ...packageOthers } =
-        JSON.parse(packageData);
+    const { ...packageOthers } = JSON.parse(packageData);
     const newPackageData = {
         ...packageOthers,
         private: false,

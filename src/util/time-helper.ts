@@ -148,6 +148,7 @@ export namespace TimeHelper {
 
             return timeValues;
         } catch (error) {
+            console.log(error);
             return timeValues;
         }
     };
@@ -253,6 +254,7 @@ export namespace TimeHelper {
 
             return formatted;
         } catch (error) {
+            console.log(error);
             return "";
         }
     };
@@ -432,7 +434,10 @@ export namespace TimeHelper {
     };
 
     // Calculate duration between two time strings
-    export const calculateDuration = (startTime: string, endTime:string): number => {
+    export const calculateDuration = (
+        startTime: string,
+        endTime: string
+    ): number => {
         const startMinutes = timeToMinutes(startTime);
         const endMinutes = timeToMinutes(endTime);
         return endMinutes - startMinutes;

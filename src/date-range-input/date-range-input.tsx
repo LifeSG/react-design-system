@@ -537,9 +537,11 @@ export const DateRangeInput = ({
                 if (isWeekSelection) break;
 
                 if (isValidRange(selectedStart, selectedEnd)) {
-                    variant === "range"
-                        ? endInputRef.current?.focusYearRef()
-                        : startInputRef.current?.focusYearRef();
+                    if (variant === "range") {
+                        endInputRef.current?.focusYearRef();
+                    } else {
+                        startInputRef.current?.focusYearRef();
+                    }
                 }
                 break;
         }

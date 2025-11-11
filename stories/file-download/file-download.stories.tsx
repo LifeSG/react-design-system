@@ -237,6 +237,7 @@ const handleDemoDownload = async (file: FileItemDownloadProps) => {
             // Close the stream
             await writable.close();
         } catch (error) {
+            console.log(error);
             return; // Fail silently
         }
     } else {
