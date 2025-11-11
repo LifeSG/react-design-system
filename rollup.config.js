@@ -10,6 +10,9 @@ import postcss from "rollup-plugin-postcss";
 import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 import { getFolders, injectCss } from "./scripts/build-util";
+import { globSync } from "glob";
+import path from "path";
+import { fileURLToPath } from "node:url";
 
 export const plugins = [
     peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
@@ -50,6 +53,7 @@ const subfolderPlugins = (folderName) => [
             main: "../cjs/index.js", // point to cjs format entry point
             module: "./index.js", // point to esm format entry point of indiv components
             types: "./index.d.ts", // point to esm format entry point of indiv components
+            sideEffects: ["./masthead/masthead.index.js"],
         },
     }),
 ];
@@ -90,7 +94,21 @@ const codemodBuildConfigs = [
 
 export default [
     {
-        input: "src/index.ts",
+        input: Object.fromEntries(
+            globSync("src/**/*.{tsx,ts}", { ignore: "src/**/types.ts" }).map(
+                (file) => [
+                    // This removes `src/` as well as the file extension from each
+                    // file, so e.g. src/nested/foo.js becomes nested/foo
+                    path.relative(
+                        "src",
+                        file.slice(0, file.length - path.extname(file).length)
+                    ),
+                    // This expands the relative paths to absolute paths, so e.g.
+                    // src/nested/foo becomes /project/src/nested/foo.js
+                    fileURLToPath(new URL(file, import.meta.url)),
+                ]
+            )
+        ),
         output: [
             {
                 dir: "dist",
@@ -112,6 +130,6 @@ export default [
         plugins,
         external: ["react", "react-dom", "styled-components"],
     },
-    ...folderBuildConfigs,
+    // ...folderBuildConfigs,
     ...codemodBuildConfigs,
 ];

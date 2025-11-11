@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 export const getFolders = (entry) => {
+    return ["button", "button-with-icon", "masthead", "pill", "theme"];
     const dirs = fs.readdirSync(entry);
 
     // folders without an index.ts
