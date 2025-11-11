@@ -147,8 +147,7 @@ export namespace TimeHelper {
             }
 
             return timeValues;
-        } catch (error) {
-            console.log(error);
+        } catch {
             return timeValues;
         }
     };
@@ -253,8 +252,7 @@ export namespace TimeHelper {
             }
 
             return formatted;
-        } catch (error) {
-            console.log(error);
+        } catch {
             return "";
         }
     };

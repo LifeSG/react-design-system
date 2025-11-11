@@ -72,8 +72,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         try {
             setIsError(false);
             await onDownload(fileItem);
-        } catch (error) {
-            console.error(error);
+        } catch {
             setIsError(true);
         } finally {
             setIsLoading(false);

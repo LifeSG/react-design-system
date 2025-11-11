@@ -61,8 +61,7 @@ export const LazyLinkList = <T,>({
         setIsLoading(true);
         try {
             await onLoadMore();
-        } catch (e) {
-            console.error(e);
+        } catch {
             // do nothing
         }
         setIsLoading(false);

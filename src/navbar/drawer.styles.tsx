@@ -55,8 +55,10 @@ export const Container = styled.nav<StyleProps>`
 
     ${(props) => VISIBILITY_STYLE(props.$show)}
     ${(props) => {
-        // eslint-disable-next-line no-constant-binary-expression
-        const viewHeight = `${props.$viewHeight}px` || "1vh";
+        let viewHeight = "1vh";
+        if (props.$viewHeight) {
+            viewHeight = `${props.$viewHeight}px`;
+        }
         return css`
             height: calc(${viewHeight} * 100);
         `;

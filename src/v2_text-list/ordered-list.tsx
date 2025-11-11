@@ -1,4 +1,3 @@
-import React from "react";
 import { V2_StyledOrderedList } from "./text-list.styles";
 import { V2_OrderedListProps } from "./types";
 

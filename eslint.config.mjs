@@ -21,6 +21,7 @@ export default defineConfig([
     },
     js.configs.recommended,
     reactPlugin.configs.flat.recommended,
+    reactPlugin.configs.flat["jsx-runtime"],
     eslintConfigPrettier,
     storybook.configs["flat/recommended"],
     {
@@ -57,15 +58,6 @@ export default defineConfig([
             "max-len": "off",
             semi: ["error", "always"],
 
-            "space-before-function-paren": [
-                "warn",
-                {
-                    anonymous: "always",
-                    named: "never",
-                    asyncArrow: "always",
-                },
-            ],
-
             "no-trailing-spaces": "off",
             "max-classes-per-file": "off",
             "no-multiple-empty-lines": "off",
@@ -96,8 +88,6 @@ export default defineConfig([
             },
         },
         rules: {
-            "react/react-in-jsx-scope": "off",
-
             "react/no-unknown-property": [
                 "error",
                 {
