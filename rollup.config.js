@@ -116,7 +116,6 @@ export default [
                 sourcemap: true,
                 exports: "named",
                 interop: "compat",
-                chunkFileNames: "chunks/[name].[hash].js",
             },
             {
                 dir: "dist/cjs",
@@ -124,12 +123,10 @@ export default [
                 sourcemap: true,
                 exports: "named",
                 interop: "compat",
-                chunkFileNames: "chunks/[name].[hash].js",
             },
         ],
         plugins,
         external: ["react", "react-dom", "styled-components"],
     },
-    // ...folderBuildConfigs,
     ...codemodBuildConfigs,
 ];
