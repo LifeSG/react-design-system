@@ -1,7 +1,7 @@
 import {
+    ScheduleEmptySlotProps,
     ScheduleEntityProps,
     SchedulePopoverProps,
-    ScheduleEmptySlotProps,
 } from "../types";
 import { RefObject } from "react";
 

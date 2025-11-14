@@ -61,7 +61,7 @@ export const DateNavigator = ({
     };
 
     const handleSelect = (value: string) => {
-        onCalendarDateSelect && onCalendarDateSelect(value);
+        onCalendarDateSelect?.(value);
         setIsCalendarOpen(!isCalendarOpen);
     };
 

@@ -2,7 +2,7 @@ import { getPrimitiveColour } from "src/theme/colour-primitive/theme-helper";
 import { PrimitiveColourSet, ThemeSpec } from "src/theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
 
-interface PrimitiveColourPalette {
+interface PrimitiveColourPaletteProps {
     tokens: (keyof PrimitiveColourSet)[];
     category: string;
 }
@@ -10,7 +10,7 @@ interface PrimitiveColourPalette {
 const PrimitiveColourPalette = ({
     tokens,
     category,
-}: PrimitiveColourPalette) => {
+}: PrimitiveColourPaletteProps) => {
     const theme = useTheme();
     return (
         <Palette>

@@ -1,4 +1,3 @@
-import React from "react";
 import styled, { css } from "styled-components";
 import { V2_Color } from "../../src/v2_color";
 import { V2_Layout } from "../../src/v2_layout";

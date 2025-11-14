@@ -43,13 +43,14 @@ export const StatefulImage = ({
         const img = new Image();
         img.src = src;
         img.onload = () => {
-            !!retrieveImageDimension &&
-                setDimension &&
+            if (!!retrieveImageDimension && setDimension) {
                 setDimension({
                     src,
                     width: img.width,
                     height: img.height,
                 });
+            }
+
             setLoading(false);
         };
         img.onerror = (e: Event | string) => {

@@ -229,7 +229,7 @@ describe("FeedbackRating", () => {
 // CONSTANTS
 // =============================================================================
 const DEFAULT_DESCRIPTION = "Rate your experience";
-// eslint-disable-next-line @typescript-eslint/no-empty-function
+
 const NO_OP = () => {};
 const RATING_BUTTON_ARIA_LABELS = [
     "1 star",
@@ -261,7 +261,7 @@ const FeedbackRatingWithState = (props?: Partial<FeedbackRatingProps>) => {
     const [rating, setRating] = useState<number>(props?.rating || 0);
 
     const handleOnChange = (value: number) => {
-        props?.onRatingChange && props?.onRatingChange(value);
+        props?.onRatingChange?.(value);
         setRating(value);
     };
 

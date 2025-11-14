@@ -1,4 +1,3 @@
-import React from "react";
 import { V2_StyledUnorderedList } from "./text-list.styles";
 import { V2_UnorderedListProps } from "./types";
 

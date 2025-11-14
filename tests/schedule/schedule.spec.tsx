@@ -2,9 +2,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
 import {
     Schedule,
-    ScheduleProps,
     ScheduleEntityProps,
+    ScheduleProps,
 } from "../../src/schedule";
+import { useMediaQuery } from "react-responsive";
 
 jest.mock("react-responsive", () => ({
     useMediaQuery: jest.fn(() => false),
@@ -35,8 +36,7 @@ describe("Schedule", () => {
         jest.clearAllMocks();
         jest.useFakeTimers().setSystemTime(new Date("2024-09-11"));
 
-        const { useMediaQuery } = require("react-responsive");
-        useMediaQuery.mockReturnValue(false);
+        (useMediaQuery as jest.Mock).mockReturnValue(false);
     });
 
     afterEach(() => {
@@ -124,8 +124,6 @@ describe("Schedule", () => {
     });
 
     it("should display calendar dropdown when onCalendarDateSelect prop is specified and the date navigator date text is clicked", () => {
-        const onCalendarDateSelect = jest.fn();
-
         render(
             <Schedule
                 date={scheduleMockProps.date}
@@ -203,8 +201,7 @@ describe("Schedule", () => {
     });
 
     it("should navigate between services on mobile", () => {
-        const { useMediaQuery } = require("react-responsive");
-        useMediaQuery.mockReturnValue(true);
+        (useMediaQuery as jest.Mock).mockReturnValue(true);
 
         render(
             <Schedule

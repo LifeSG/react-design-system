@@ -92,7 +92,7 @@ export const DialPicker = ({
             end: endTimeVal,
         };
 
-        onChange && onChange(timeValue);
+        onChange?.(timeValue);
     };
 
     const handleEndTime = (value: string) => {
@@ -104,12 +104,12 @@ export const DialPicker = ({
             end: value,
         };
 
-        onChange && onChange(timeValue);
+        onChange?.(timeValue);
 
         if (startTimeVal == "") {
             setShowStartTimeSelector(true);
         } else {
-            onBlur && onBlur();
+            onBlur?.();
         }
     };
 
@@ -118,14 +118,14 @@ export const DialPicker = ({
     // =============================================================================
     const runOnFocusHandler = () => {
         if (!showStartTimeSelector && !showEndTimeSelector) {
-            onFocus && onFocus();
+            onFocus?.();
         }
     };
 
     const runOnBlurHandler = () => {
         setShowStartTimeSelector(false);
         setShowEndTimeSelector(false);
-        onBlur && onBlur();
+        onBlur?.();
     };
 
     const runOutsideFocusHandler = (event: MouseEvent | KeyboardEvent) => {

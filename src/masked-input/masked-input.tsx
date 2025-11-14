@@ -65,12 +65,12 @@ const Component = (
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         toggleMasking(false);
-        onFocus && onFocus(event);
+        onFocus?.(event);
     };
 
     const handleBlur = (event?: React.FocusEvent<HTMLInputElement>) => {
         toggleMasking(true);
-        onBlur && onBlur(event!);
+        onBlur?.(event!);
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,11 +89,13 @@ const Component = (
 
         setUpdatedValue(value);
         event.target.value = value;
-        onChange && onChange(event);
+        onChange?.(event);
     };
 
     const handleTryAgain = () => {
-        readOnly && onTryAgain && onTryAgain();
+        if (readOnly) {
+            onTryAgain?.();
+        }
     };
 
     const handleToggleMask = () => {
@@ -106,9 +108,9 @@ const Component = (
     const toggleMasking = (mask: boolean) => {
         setIsMasked(mask);
         if (mask) {
-            onMask && onMask();
+            onMask?.();
         } else {
-            onUnmask && onUnmask();
+            onUnmask?.();
         }
     };
 

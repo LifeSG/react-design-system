@@ -174,8 +174,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Custom message to display for blocked slots instead of
-                        the default "Unavailable" text. The message will be
-                        truncated with ellipsis if the slot width is too small.
+                        the default &quot;Unavailable&quot; text. The message
+                        will be truncated with ellipsis if the slot width is too
+                        small.
                     </>
                 ),
                 defaultValue: "Unavailable",

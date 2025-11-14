@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { InputGroup } from "../input-group/input-group";
 import { AddonProps, LabelAddon, ListAddon } from "../input-group/types";
 import { useNextInputState } from "../util";

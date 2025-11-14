@@ -97,7 +97,7 @@ export const DayCell = ({
                     $interactive={interactive}
                     onClick={handleClick}
                     onKeyDown={(event) => {
-                        onKeyDown && onKeyDown(event);
+                        onKeyDown?.(event);
                     }}
                     onMouseEnter={handleHover}
                     onMouseLeave={handleMouseout}

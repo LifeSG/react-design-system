@@ -1,11 +1,11 @@
 import dayjs from "dayjs";
 import { TimeHelper } from "../../util/time-helper";
 import { ScheduleEntityProps } from "../types";
-import { SlotWithService, SlotLayoutMap } from "./types";
+import { SlotLayoutMap, SlotWithService } from "./types";
 import {
-    minutesToTime,
-    findSlotsStartingInTimeRange,
     findSlotsInTimeRange,
+    findSlotsStartingInTimeRange,
+    minutesToTime,
 } from "../shared";
 
 /**

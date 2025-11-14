@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import { DateNavigator } from "../../date-navigator";
 import { Colour, Spacing } from "../../theme";
 import { Typography } from "../../typography";

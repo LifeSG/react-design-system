@@ -3,9 +3,8 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import {
     Schedule,
-    SchedulePopoverProps,
     ScheduleEntityProps,
-    ScheduleEmptySlotProps,
+    SchedulePopoverProps,
 } from "src/schedule";
 import styled from "styled-components";
 type Component = typeof Schedule;
@@ -96,9 +95,7 @@ export const Default: StoryObj<Component> = {
             setDate(date);
         };
 
-        const emptySlotPopover = (
-            slot: ScheduleEmptySlotProps
-        ): SchedulePopoverProps => ({
+        const emptySlotPopover = (): SchedulePopoverProps => ({
             trigger: "click",
             content: (
                 <PopoverContent>

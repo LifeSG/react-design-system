@@ -3,13 +3,13 @@ import { ScheduleEntityProps } from "../types";
 import { SlotLayoutMap, SlotWithService } from "./types";
 import { calculateSlotOffset, minutesToTime } from "../shared";
 import { WithOptionalPopover } from "../shared/with-optional-popover";
-import { SlotCell, SlotColumnOverlay, HiddenColumns } from "./time-cell.styles";
+import { HiddenColumns, SlotCell, SlotColumnOverlay } from "./time-cell.styles";
 import { SlotContent } from "./slot-content";
 import {
-    getSlotsStartingInTimeCell,
-    getSlotsInTimeCell,
-    getMinimumWidthForCell,
     calculateCellServiceLayout,
+    getMinimumWidthForCell,
+    getSlotsInTimeCell,
+    getSlotsStartingInTimeCell,
 } from "./week-view-utils";
 import { TimeHelper } from "../../util/time-helper";
 
@@ -213,8 +213,7 @@ export const TimeCell: React.FC<TimeCellProps> = ({
                         key={`hidden-btn-${intervalData.interval.start}-${intervalData.interval.end}`}
                         $heightPercentage={100 / hiddenIntervals.length}
                         onClick={() => {
-                            onClickHiddenSlots &&
-                                onClickHiddenSlots(intervalData.hiddenServices);
+                            onClickHiddenSlots?.(intervalData.hiddenServices);
                         }}
                     >
                         +{intervalData.hiddenServices.length}

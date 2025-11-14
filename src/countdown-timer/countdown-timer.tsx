@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
-import { inertValue, VisuallyHidden } from "../shared/accessibility";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
 import { Breakpoint } from "../theme";
 import { TimeHelper } from "../util/time-helper";
 import {

@@ -8,6 +8,7 @@ import {
 } from "../../src";
 import { getErrorDisplayData } from "../../src/error-display/error-display-data";
 import { ThemeProvider } from "styled-components";
+import React from "react";
 
 // =============================================================================
 // UNIT TESTS
@@ -32,7 +33,7 @@ describe("ErrorDisplay", () => {
         const buttonLabel = "custom button";
         const actionButton = {
             children: buttonLabel,
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
+
             onClick: () => {},
         };
 
@@ -251,7 +252,7 @@ const ERROR_DESCRIPTION_TEST_ID = "error-display--description";
 const transformJSXElementToString = (element: JSX.Element): string => {
     let text = "";
 
-    element.props.children.forEach((child: any) => {
+    React.Children.forEach(element.props.children, (child) => {
         if (typeof child === "object") {
             text += child.props.children;
         } else {

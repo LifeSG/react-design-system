@@ -38,7 +38,7 @@ export const Timepicker = ({
     const handleInputFocus = () => {
         if (!disabled && !readOnly && !showSelector) {
             setShowSelector(true);
-            onFocus && onFocus();
+            onFocus?.();
         }
     };
 
@@ -63,7 +63,7 @@ export const Timepicker = ({
     };
 
     const handleChange = (value: string) => {
-        onChange && onChange(value);
+        onChange?.(value);
         runOnBlurHandler();
     };
 
@@ -72,12 +72,14 @@ export const Timepicker = ({
     // =============================================================================
     const runOnBlurHandler = () => {
         setShowSelector(false);
-        onBlur && onBlur();
+        onBlur?.();
     };
 
     const runOutsideFocusHandler = (event: MouseEvent | KeyboardEvent) => {
         if (nodeRef.current && !nodeRef.current.contains(event.target as any)) {
-            showSelector && runOnBlurHandler();
+            if (showSelector) {
+                runOnBlurHandler();
+            }
         }
     };
 

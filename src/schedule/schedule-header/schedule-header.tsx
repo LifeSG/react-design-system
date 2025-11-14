@@ -1,12 +1,12 @@
 import { DateHelper } from "../../util";
 import {
+    DROPDOWN_WIDTH,
     LeftSection,
     RightSection,
+    ScheduleHeaderWrapper,
     StyledButton,
     StyledDateNavigator,
     StyledText,
-    ScheduleHeaderWrapper,
-    DROPDOWN_WIDTH,
 } from "./schedule-header.style";
 import { ScheduleView } from "../types";
 import { InputSelect } from "../../input-select";

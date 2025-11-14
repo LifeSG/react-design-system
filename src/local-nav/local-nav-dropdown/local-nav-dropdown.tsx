@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { LocalNavDropdownItemComponentProps } from "../internal-types";
 import { LocalNavDropdownProps, LocalNavItemProps } from "../types";

@@ -50,7 +50,7 @@ export const TimeSlotBarWeek = ({
     const handleDateSelect = (value: Dayjs) => {
         const stringValue = value.format(DATE_FORMAT);
         setSelectedDate(stringValue);
-        onChange && onChange(stringValue);
+        onChange?.(stringValue);
     };
 
     const handleOnSlotClick = (date: string, slot: TimeSlot) => {

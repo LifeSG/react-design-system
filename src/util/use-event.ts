@@ -11,11 +11,9 @@ export function useEvent<T extends (...args: any[]) => any>(callback: T): T {
         ref.current = callback;
     }, [callback]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    return useCallback(
-        ((...args) => {
-            return ref.current?.(...args);
-        }) as T,
-        []
-    );
+    const callbackRef = useCallback((...args: Parameters<T>): ReturnType<T> => {
+        return ref.current?.(...args) as ReturnType<T>;
+    }, []);
+
+    return callbackRef as T;
 }
