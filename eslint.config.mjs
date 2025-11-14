@@ -4,7 +4,6 @@ import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import globals from "globals";
 import tsParser from "@typescript-eslint/parser";
 import js from "@eslint/js";
-import * as eslintMdx from "eslint-mdx";
 import eslintConfigPrettier from "eslint-config-prettier/flat";
 import reactHooks from "eslint-plugin-react-hooks";
 import storybook from "eslint-plugin-storybook";
@@ -165,22 +164,6 @@ export default defineConfig([
             globals: {
                 ...globals.jest,
             },
-        },
-    },
-    {
-        files: ["**/*.mdx"],
-        languageOptions: {
-            parser: eslintMdx,
-            globals: {
-                React: "readonly",
-                JSX: "readonly",
-            },
-        },
-        settings: {
-            "mdx/code-blocks": true,
-        },
-        rules: {
-            semi: "off", // disable false "Missing semicolon" errors
         },
     },
     {
