@@ -1,4 +1,3 @@
-import { StyledComponentProps } from "../helpers";
 import { BreakpointScheme } from "../types";
 
 export interface BreakpointSet {

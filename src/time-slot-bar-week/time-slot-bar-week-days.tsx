@@ -129,7 +129,7 @@ export const TimeSlotBarWeekDays = ({
     };
 
     const handleSlotClick = (date: string, slot: TimeSlot) => {
-        onSlotClick && onSlotClick(date, slot);
+        onSlotClick?.(date, slot);
     };
 
     const handleExpandCollapseClick = (event: React.MouseEvent) => {

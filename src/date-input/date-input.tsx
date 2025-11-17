@@ -194,7 +194,11 @@ export const DateInput = ({
         const isValid = dayjs(selectedDate, "YYYY-MM-DD", true).isValid();
 
         // Focus on year input if the selected date is valid to avoid restarting entire tab order
-        isValid ? inputRef.current?.focusYearRef() : nodeRef.current?.focus();
+        if (isValid) {
+            inputRef.current?.focusYearRef();
+        } else {
+            nodeRef.current?.focus();
+        }
         setCalendarOpen(false);
     };
 

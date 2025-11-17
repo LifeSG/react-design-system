@@ -97,9 +97,11 @@ export const InputRangeSelect = <T, V>({
         extractedValue: V,
         rangeType: RangeType
     ) => {
-        rangeType === "from"
-            ? setSelectedFromValue(item)
-            : setSelectedToValue(item);
+        if (rangeType === "from") {
+            setSelectedFromValue(item);
+        } else {
+            setSelectedToValue(item);
+        }
         triggerOptionDisplayCallback(false);
         if (selectorRef) {
             selectorRef.current?.focus();

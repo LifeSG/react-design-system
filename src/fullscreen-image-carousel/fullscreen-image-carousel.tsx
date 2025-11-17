@@ -134,7 +134,7 @@ export const Component = (
         } else if (e.key === "ArrowLeft") {
             goToPrevSlide();
         } else if (e.key === "Escape") {
-            onClose && onClose();
+            onClose?.();
         }
     }
 

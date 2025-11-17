@@ -236,7 +236,7 @@ const handleDemoDownload = async (file: FileItemDownloadProps) => {
             await writable.write(blob);
             // Close the stream
             await writable.close();
-        } catch (error) {
+        } catch {
             return; // Fail silently
         }
     } else {
