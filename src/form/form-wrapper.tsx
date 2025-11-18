@@ -20,7 +20,7 @@ import { FormElementLayoutType, FormWrapperProps } from "./types";
 
 export const FormWrapper = ({
     label,
-    errorMessage,
+    errorMessage: e,
     id,
     disabled,
     children,
@@ -42,6 +42,7 @@ export const FormWrapper = ({
     // =============================================================================
     const updatedLayoutType = getLayoutType();
     const labelId = id ? `${id}-label` : undefined;
+    const errorMessage = typeof e === "string" ? e.trim() : e;
 
     // =============================================================================
     // HELPER FUNCTIONS
