@@ -20,7 +20,7 @@ import { FormElementLayoutType, FormWrapperProps } from "./types";
 
 export const FormWrapper = ({
     label,
-    errorMessage,
+    errorMessage: eRaw,
     id,
     disabled,
     children,
@@ -42,6 +42,7 @@ export const FormWrapper = ({
     // =============================================================================
     const updatedLayoutType = getLayoutType();
     const labelId = id ? `${id}-label` : undefined;
+    const errorMessage = typeof eRaw === "string" ? eRaw.trim() : eRaw;
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -52,7 +53,7 @@ export const FormWrapper = ({
     };
 
     const isInvalidState = (): boolean => {
-        return !!errorMessage;
+        return !!eRaw;
     };
 
     const hasSubtitleLabel = (): boolean => {
@@ -66,7 +67,7 @@ export const FormWrapper = ({
     const getAriaDescribedBy = (): string | undefined => {
         return (
             [
-                isInvalidState() ? getErrorTestMessageId() : undefined,
+                !!errorMessage ? getErrorTestMessageId() : undefined,
                 hasSubtitleLabel() ? getSubtitleId() : undefined,
             ]
                 .filter(Boolean)
