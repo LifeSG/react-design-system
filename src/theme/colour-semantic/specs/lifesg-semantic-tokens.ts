@@ -12,6 +12,7 @@ export const LifeSGColourSet: SemanticColourSet = {
     "text-subtler": getPrimitiveColour("neutral-50"),
     "text-subtlest": getPrimitiveColour("neutral-60"),
     "text-primary": getPrimitiveColour("primary-50"),
+    "text-primary-strongest": getPrimitiveColour("primary-20"),
 
     "text-hover": getPrimitiveColour("primary-40"),
     "text-selected": getPrimitiveColour("primary-50"),
@@ -164,6 +165,7 @@ export const LifeSGDarkColourSet: SemanticColourSet = {
     "text-subtler": getPrimitiveColour("neutral-60"),
     "text-subtlest": getPrimitiveColour("neutral-50"),
     "text-primary": getPrimitiveColour("primary-60"),
+    "text-primary-strongest": getPrimitiveColour("primary-90"),
 
     "text-hover": getPrimitiveColour("primary-70"),
     "text-selected": getPrimitiveColour("primary-60"),
