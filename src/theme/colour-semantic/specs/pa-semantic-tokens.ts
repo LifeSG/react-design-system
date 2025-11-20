@@ -18,7 +18,7 @@ export const PAColourSet: SemanticColourSet = {
     "text-selected-hover": getPrimitiveColour("neutral-10"),
 
     "text-disabled": getPrimitiveColour("neutral-50"),
-    "text-disabled-subtle": getPrimitiveColour("neutral-60"),
+    "text-disabled-subtle": getPrimitiveColour("neutral-70"),
     "text-disabled-subtlest": getPrimitiveColour("neutral-80"),
     "text-selected-disabled": getPrimitiveColour("neutral-40"),
 
@@ -41,7 +41,7 @@ export const PAColourSet: SemanticColourSet = {
     "icon-selected-hover": getPrimitiveColour("brand-10"),
 
     "icon-disabled": getPrimitiveColour("neutral-50"),
-    "icon-disabled-subtle": getPrimitiveColour("neutral-60"),
+    "icon-disabled-subtle": getPrimitiveColour("neutral-70"),
     "icon-selected-disabled": getPrimitiveColour("neutral-40"),
 
     "icon-success": getPrimitiveColour("success-40"),
