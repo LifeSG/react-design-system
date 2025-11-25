@@ -17,12 +17,12 @@ export const SPFComponentTokenSet: ComponentTokenSet = {
         "loading-dots-spinner-colour": ColourSemantic["icon-primary"],
     },
     Navbar: {
-        "navbar-full-height": 96,
-        "navbar-full-logo-height": 48,
-        "navbar-compressed-height": 80,
-        "navbar-compressed-logo-height": 32,
-        "navbar-mobile-height": 64,
-        "navbar-mobile-logo-height": 32,
+        "navbar-full-height": "6rem",
+        "navbar-full-logo-height": "3rem",
+        "navbar-compressed-height": "5rem",
+        "navbar-compressed-logo-height": "2rem",
+        "navbar-mobile-height": "4rem",
+        "navbar-mobile-logo-height": "2rem",
         "navbar-colour-bg": ColourSemantic["bg"],
         "navbar-colour-icon": ColourSemantic["icon"],
         "navbar-link-colour-text": ColourSemantic["text-primary-strongest"],
@@ -38,8 +38,5 @@ export const SPFComponentTokenSet: ComponentTokenSet = {
         "footer-disclaimer-link-colour-text": ColourSemantic["text-inverse"],
         "footer-disclaimer-link-colour-text-hover":
             ColourSemantic["text-inverse"],
-        "footer-disclaimer-link-colour-icon": ColourSemantic["icon-inverse"],
-        "footer-disclaimer-link-colour-icon-hover":
-            ColourSemantic["icon-inverse"],
     },
 };

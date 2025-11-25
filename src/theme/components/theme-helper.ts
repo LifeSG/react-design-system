@@ -176,12 +176,4 @@ export const ThemeFooter: {
         "Footer",
         "footer-disclaimer-link-colour-text-hover"
     ),
-    "footer-disclaimer-link-colour-icon": getComponentTokenValue(
-        "Footer",
-        "footer-disclaimer-link-colour-icon"
-    ),
-    "footer-disclaimer-link-colour-icon-hover": getComponentTokenValue(
-        "Footer",
-        "footer-disclaimer-link-colour-icon-hover"
-    ),
 };

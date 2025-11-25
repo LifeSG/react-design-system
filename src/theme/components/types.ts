@@ -44,19 +44,29 @@ export type AnimationTokens = {
 };
 
 export type NavbarTokens = {
-    "navbar-full-height": number | ((props: StyledComponentProps) => string);
+    "navbar-full-height":
+        | number
+        | string
+        | ((props: StyledComponentProps) => string);
     "navbar-full-logo-height":
         | number
+        | string
         | ((props: StyledComponentProps) => string);
     "navbar-compressed-height":
         | number
+        | string
         | ((props: StyledComponentProps) => string);
     "navbar-compressed-logo-height":
         | number
+        | string
         | ((props: StyledComponentProps) => string);
-    "navbar-mobile-height": number | ((props: StyledComponentProps) => string);
+    "navbar-mobile-height":
+        | number
+        | string
+        | ((props: StyledComponentProps) => string);
     "navbar-mobile-logo-height":
         | number
+        | string
         | ((props: StyledComponentProps) => string);
     "navbar-colour-bg": string | ((props: StyledComponentProps) => string);
     "navbar-colour-icon": string | ((props: StyledComponentProps) => string);
@@ -84,12 +94,6 @@ export type FooterTokens = {
         | string
         | ((props: StyledComponentProps) => string);
     "footer-disclaimer-link-colour-text-hover":
-        | string
-        | ((props: StyledComponentProps) => string);
-    "footer-disclaimer-link-colour-icon":
-        | string
-        | ((props: StyledComponentProps) => string);
-    "footer-disclaimer-link-colour-icon-hover":
         | string
         | ((props: StyledComponentProps) => string);
 };

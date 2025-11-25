@@ -172,15 +172,8 @@ export const DisclaimerTextLink = styled(Typography.LinkXS)`
         margin-right: ${Spacing["spacing-16"]};
     }
 
-    svg {
-        color: ${ThemeFooter["footer-disclaimer-link-colour-icon"]};
-    }
-
     &:hover {
         color: ${ThemeFooter["footer-disclaimer-link-colour-text-hover"]};
-        svg {
-            color: ${ThemeFooter["footer-disclaimer-link-colour-icon-hover"]};
-        }
     }
 
     ${MediaQuery.MaxWidth.lg} {

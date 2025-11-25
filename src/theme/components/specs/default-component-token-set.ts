@@ -17,12 +17,12 @@ export const DefaultComponentTokenSet: ComponentTokenSet = {
         "loading-dots-spinner-colour": ColourSemantic["icon-primary"],
     },
     Navbar: {
-        "navbar-full-height": 96,
-        "navbar-full-logo-height": 32,
-        "navbar-compressed-height": 64,
-        "navbar-compressed-logo-height": 24,
-        "navbar-mobile-height": 56,
-        "navbar-mobile-logo-height": 24,
+        "navbar-full-height": "6rem",
+        "navbar-full-logo-height": "2rem",
+        "navbar-compressed-height": "4rem",
+        "navbar-compressed-logo-height": "1.5rem",
+        "navbar-mobile-height": "3.5rem",
+        "navbar-mobile-logo-height": "1.5rem",
         "navbar-colour-bg": ColourSemantic["bg"],
         "navbar-colour-icon": ColourSemantic["icon"],
         "navbar-link-colour-text": ColourSemantic["text"],
@@ -38,8 +38,5 @@ export const DefaultComponentTokenSet: ComponentTokenSet = {
         "footer-disclaimer-link-colour-text": ColourSemantic["text"],
         "footer-disclaimer-link-colour-text-hover":
             ColourSemantic["text-subtler"],
-        "footer-disclaimer-link-colour-icon": ColourSemantic["icon"],
-        "footer-disclaimer-link-colour-icon-hover":
-            ColourSemantic["icon-subtle"],
     },
 };
