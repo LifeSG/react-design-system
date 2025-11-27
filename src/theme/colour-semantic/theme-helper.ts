@@ -93,6 +93,7 @@ export const ColourSemantic: {
     "text-subtler": getSemanticColour("text-subtler"),
     "text-subtlest": getSemanticColour("text-subtlest"),
     "text-primary": getSemanticColour("text-primary"),
+    "text-primary-strongest": getSemanticColour("text-primary-strongest"),
 
     "text-hover": getSemanticColour("text-hover"),
     "text-selected": getSemanticColour("text-selected"),

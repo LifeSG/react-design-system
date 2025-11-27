@@ -12,6 +12,7 @@ export const PAColourSet: SemanticColourSet = {
     "text-subtler": getPrimitiveColour("neutral-50"),
     "text-subtlest": getPrimitiveColour("neutral-70"),
     "text-primary": getPrimitiveColour("neutral-10"),
+    "text-primary-strongest": getPrimitiveColour("neutral-10"),
 
     "text-hover": getPrimitiveColour("neutral-70"),
     "text-selected": getPrimitiveColour("neutral-20"),
