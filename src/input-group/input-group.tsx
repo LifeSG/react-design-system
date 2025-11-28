@@ -19,6 +19,7 @@ const Component = <T, V>(
             $readOnly={otherProps.readOnly}
             data-testid={otherProps["data-testid"]}
             className={className}
+            $noBorderWrapper={otherProps.noBorderWrapper}
         >
             <MainInput
                 ref={ref}

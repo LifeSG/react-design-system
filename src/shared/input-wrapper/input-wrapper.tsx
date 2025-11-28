@@ -54,7 +54,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
     &:focus-within {
         ${defaultFocusCss}
     }
-    ${(props) => props.$focused && defaultFocusCss}
+    ${(props) => props.$focused && !props.$noBorderWrapper && defaultFocusCss}
 
     ${(props) => {
         if (props.$readOnly) {
