@@ -1,0 +1,28 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { DocAlert } from "stories/storybook-common";
+import * as FormOtpVerificationStories from "./form-otp-verification.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={FormOtpVerificationStories} />
+
+# Form.OtpVerification
+
+## Overview
+
+The OTP verification component allows users to verify their identity through phone number or email OTP verification. It handles the complete flow from sending OTP to verification.
+
+## Phone Number OTP Verification
+
+The following example demonstrates the OTP verification process for a phone number.
+
+<Canvas of={FormOtpVerificationStories.PhoneNumberDefault} />
+
+## Email OTP Verification
+
+The following example demonstrates the OTP verification process for an email address.
+
+<Canvas of={FormOtpVerificationStories.EmailDefault} />
+
+## Component API
+
+<PropsTable />
