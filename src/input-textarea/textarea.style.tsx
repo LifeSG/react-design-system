@@ -22,7 +22,7 @@ export const Element = styled.textarea<StyleProps>`
     border-radius: ${Radius["sm"]};
     background: ${Colour["bg"]};
     outline: none;
-    overflow: hidden;
+    overflow: auto;
 
     display: block;
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
