@@ -11,7 +11,6 @@ import {
     ComponentTokenSet,
     FooterTokens,
     NavbarTokens,
-    ToggleTokens,
 } from "./types";
 
 const ComponentTokenSpec = {
@@ -176,14 +175,5 @@ export const ThemeFooter: {
     "footer-disclaimer-link-colour-text-hover": getComponentTokenValue(
         "Footer",
         "footer-disclaimer-link-colour-text-hover"
-    ),
-};
-
-export const ThemeToggle: {
-    [key in keyof ToggleTokens]: (props: StyledComponentProps) => string;
-} = {
-    "toggle-selected-colour-text": getComponentTokenValue(
-        "Toggle",
-        "toggle-selected-colour-text"
     ),
 };

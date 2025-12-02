@@ -1,4 +1,3 @@
-import { PrimitiveColour } from "../../colour-primitive/theme-helper";
 import { ColourSemantic } from "../../colour-semantic/theme-helper";
 import { RadiusValues } from "../../radius/theme-helper";
 import { ComponentTokenSet } from "../types";
@@ -39,8 +38,5 @@ export const PAComponentTokenSet: ComponentTokenSet = {
         "footer-disclaimer-link-colour-text": ColourSemantic["text"],
         "footer-disclaimer-link-colour-text-hover":
             ColourSemantic["text-subtler"],
-    },
-    Toggle: {
-        "toggle-selected-colour-text": PrimitiveColour["brand-20"],
     },
 };

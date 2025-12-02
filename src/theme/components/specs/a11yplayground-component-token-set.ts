@@ -39,7 +39,4 @@ export const A11yPlaygroundComponentTokenSet: ComponentTokenSet = {
         "footer-disclaimer-link-colour-text-hover":
             ColourSemantic["text-subtler"],
     },
-    Toggle: {
-        "toggle-selected-colour-text": ColourSemantic["text-selected"],
-    },
 };
