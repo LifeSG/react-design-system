@@ -37,4 +37,47 @@ export namespace TimeSlotBarHelper {
             (DateHelper.getTimeDiffInMinutes(start, end) / 15) * (cellWidth / 2)
         );
     };
+
+    /**
+     * Based on the time type, adjust the time to the nearest hour or 30 minuites marker.
+     * this helps to always show time slot marker properly.
+     * @param time - time to be adjusted
+     * @param type - "start" or "end" indicating which boundary to adjust
+     */
+    export const adjustTimeForMarker = (
+        time: string,
+        type: "start" | "end"
+    ): string => {
+        const parsedTime = dayjs(time, "HH:mm");
+        switch (type) {
+            case "start": {
+                // For xx:01 to xx:29, adjust to xx:00
+                if (parsedTime.minute() > 0 && parsedTime.minute() < 30) {
+                    return parsedTime.set("minute", 0).format("HH:mm");
+                }
+                // For xx:31 to xx:59, adjust to xx:30
+                if (parsedTime.minute() > 30 && parsedTime.minute() < 60) {
+                    return parsedTime.set("minute", 30).format("HH:mm");
+                }
+                break;
+            }
+            case "end": {
+                // For xx:01 to xx:29, adjust to xx:30
+                if (parsedTime.minute() > 0 && parsedTime.minute() < 30) {
+                    return parsedTime.set("minute", 30).format("HH:mm");
+                }
+                // For xx:31 to xx:59, adjust to next hour xx:00
+                if (parsedTime.minute() > 30 && parsedTime.minute() < 60) {
+                    return parsedTime
+                        .add(1, "hour")
+                        .set("minute", 0)
+                        .format("HH:mm");
+                }
+                break;
+            }
+            default:
+                return time;
+        }
+        return time;
+    };
 }

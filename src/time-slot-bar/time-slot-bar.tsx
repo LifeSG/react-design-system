@@ -41,6 +41,15 @@ export const TimeSlotBar = ({
     const [clientWidth, setClientWidth] = useState<number>(0);
     const cellWidth = getCellWidth(variant);
 
+    const adjustedStartTime = TimeSlotBarHelper.adjustTimeForMarker(
+        startTime,
+        "start"
+    );
+    const adjustedEndTime = TimeSlotBarHelper.adjustTimeForMarker(
+        endTime,
+        "end"
+    );
+
     const SCROLL_INCREMENT = cellWidth * 2.5; // In px. Each scroll increment corresponds to 75mins
 
     // =============================================================================
@@ -141,8 +150,8 @@ export const TimeSlotBar = ({
     // Render time markers
     const renderTimeMarkers = () => {
         const timeMarkers = [];
-        const startTimeFormatted = dayjs(startTime, "HH:mm");
-        const endTimeFormatted = dayjs(endTime, "HH:mm");
+        const startTimeFormatted = dayjs(adjustedStartTime, "HH:mm");
+        const endTimeFormatted = dayjs(adjustedEndTime, "HH:mm");
 
         const isStartHourEven = startTimeFormatted.hour() % 2 === 0;
 
@@ -238,7 +247,7 @@ export const TimeSlotBar = ({
                 cellWidth
             );
             const slotOffset = TimeSlotBarHelper.calculateWidth(
-                startTime,
+                adjustedStartTime,
                 slotStartTime,
                 cellWidth
             );
