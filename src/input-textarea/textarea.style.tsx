@@ -43,6 +43,21 @@ export const Element = styled.textarea<StyleProps>`
         color: ${Colour["text-subtler"]};
     }
 
+    &::-webkit-scrollbar {
+        width: 14px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: ${Colour["bg-inverse-subtlest"]};
+        border: 5px solid transparent;
+        border-radius: ${Radius["full"]};
+        background-clip: padding-box;
+    }
+
     ${(props) => {
         if (props.readOnly) {
             return css`
