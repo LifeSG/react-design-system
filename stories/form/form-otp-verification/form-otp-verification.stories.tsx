@@ -37,15 +37,10 @@ export const PhoneNumberDefault: StoryObj<Component> = {
                         throw new Error("Invalid phone number");
                     }
                 }}
-                onVerifyOtp={async (otp) => {
+                onVerifyOtp={async () => {
                     setOtpError(undefined);
                     // Simulate API call
                     await new Promise((resolve) => setTimeout(resolve, 1500));
-                    if (otp === "123456") {
-                    } else {
-                        setOtpError("Invalid OTP. Please try again.");
-                        throw new Error("Invalid OTP");
-                    }
                 }}
                 onResendOtp={async () => {
                     // Simulate resend API call
@@ -80,15 +75,10 @@ export const EmailDefault: StoryObj<Component> = {
                     // Simulate API call
                     await new Promise((resolve) => setTimeout(resolve, 1000));
                 }}
-                onVerifyOtp={async (otp) => {
+                onVerifyOtp={async () => {
                     setOtpError(undefined);
                     // Simulate API call
                     await new Promise((resolve) => setTimeout(resolve, 1500));
-                    if (otp === "123456") {
-                    } else {
-                        setOtpError("Invalid OTP. Please try again.");
-                        throw new Error("Invalid OTP");
-                    }
                 }}
                 onResendOtp={async () => {
                     // Simulate resend API call

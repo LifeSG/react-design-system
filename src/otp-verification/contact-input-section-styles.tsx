@@ -24,8 +24,11 @@ export const ContactInputSectionWrapper = styled.div`
     display: flex;
 `;
 
-export const ContactInputWrapper = styled.div`
+export const ContactInputWrapper = styled.div<{
+    isMaxWidth?: boolean;
+}>`
     position: relative;
+    width: ${(props) => (props.isMaxWidth ? "100%" : "auto")};
     .verified-icon {
         position: absolute;
         right: 15.67px;
@@ -142,7 +145,6 @@ export const PhoneContactInput = styled(
     &:focus-within {
         border-color: ${Colour["border-focus"]};
     }
-    max-width: 310px;
     position: relative;
 
     ${(props) => {

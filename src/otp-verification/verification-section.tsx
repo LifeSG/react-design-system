@@ -99,6 +99,7 @@ export const VerificationSection = ({
                                     value: "BZO-",
                                 },
                             }}
+                            type="number"
                             error={!!verifyOtpError}
                             aria-label="Enter OTP code"
                             aria-invalid={!!verifyOtpError}

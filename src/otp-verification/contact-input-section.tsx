@@ -78,6 +78,7 @@ export const ContactInputSection = ({
                     value={phoneNumberValue}
                     onChange={handlePhoneInputChange}
                     noBorderWrapper
+                    fixedCountry
                     $error={!!sendOtpError}
                     aria-labelledby={`${id}-label`}
                     aria-invalid={!!sendOtpError}
@@ -117,7 +118,7 @@ export const ContactInputSection = ({
                 {type === OtpVerifyType.EMAIL ? "Email" : "Mobile Number"}
             </ContactLabel>
             <ContactInputSectionWrapper>
-                <ContactInputWrapper>
+                <ContactInputWrapper isMaxWidth={type === OtpVerifyType.EMAIL}>
                     {renderContactInput()}
                     {isVerified && (
                         <TickCircleFillIcon
