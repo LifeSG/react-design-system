@@ -4,6 +4,7 @@ import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { ToggleIcon } from "../shared/toggle-icon/toggle-icon";
 import { TextList } from "../text-list";
 import { Colour, Font, MediaQuery, Radius } from "../theme";
+import { ThemeToggle } from "../theme/components/theme-helper";
 import { Typography } from "../typography";
 import { ToggleStyleType } from "./types";
 
@@ -252,7 +253,7 @@ export const TextContainer = styled.div<StyleProps>`
 
         if (props.$selected) {
             return css`
-                color: ${Colour["text-selected"]};
+                color: ${ThemeToggle["toggle-selected-colour-text"]};
             `;
         }
 
