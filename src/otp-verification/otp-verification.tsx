@@ -1,19 +1,25 @@
 import { useState } from "react";
 import { useCountdown } from "../util";
+import { SimpleIdGenerator } from "../util";
 import { ContactInputSection } from "./contact-input-section";
 import { OTPInputWrapper } from "./otp-verification-styles";
 import { InternalOtpState, OtpVerificationProps } from "./types";
 import { VerificationSection } from "./verification-section";
 
-// Main component
 export const OtpVerification = (props: OtpVerificationProps) => {
     const {
+        id,
+        "data-testid": dataTestId,
         onSendOtp,
         onVerifyOtp,
         verifyOtpCountdownTimer = 60,
         sendOtpError,
         verifyOtpError,
     } = props;
+
+    const [internalId] = useState(
+        () => id || `otp-verification-${SimpleIdGenerator.generate()}`
+    );
 
     const [otpCode, setOtpCode] = useState<string | undefined>("");
     const [isLoading, setIsLoading] = useState(false);
@@ -69,9 +75,20 @@ export const OtpVerification = (props: OtpVerificationProps) => {
     };
 
     return (
-        <OTPInputWrapper>
+        <OTPInputWrapper
+            id={internalId}
+            data-testid={dataTestId || internalId}
+            role="region"
+            aria-label="OTP verification"
+        >
             <ContactInputSection
                 {...props}
+                id={`${internalId}-contact`}
+                data-testid={
+                    dataTestId
+                        ? `${dataTestId}-contact`
+                        : `${internalId}-contact`
+                }
                 isLoading={isLoading}
                 internalState={internalState}
                 countdown={countdown}
@@ -83,6 +100,12 @@ export const OtpVerification = (props: OtpVerificationProps) => {
             {internalState === InternalOtpState.SENT && (
                 <VerificationSection
                     {...props}
+                    id={`${internalId}-verification`}
+                    data-testid={
+                        dataTestId
+                            ? `${dataTestId}-verification`
+                            : `${internalId}-verification`
+                    }
                     otpCode={otpCode}
                     setOtpCode={setOtpCode}
                     isVerifyLoading={isVerifyLoading}

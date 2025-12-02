@@ -1,6 +1,7 @@
 import { TickCircleFillIcon } from "@lifesg/react-icons";
 import { FormErrorMessage } from "../form/form-label";
 import { PhoneNumberInputValue } from "../phone-number-input";
+import { VisuallyHidden } from "../shared/accessibility";
 import {
     ContactButton,
     ContactButtonWrapper,
@@ -18,6 +19,8 @@ import {
 } from "./types";
 
 export const ContactInputSection = ({
+    id,
+    "data-testid": dataTestId,
     disabled,
     readOnly,
     type,
@@ -54,6 +57,8 @@ export const ContactInputSection = ({
         <>
             {type === OtpVerifyType.EMAIL ? (
                 <EmailContactInput
+                    id={`${id}-input`}
+                    data-testid={`${dataTestId}-input`}
                     placeholder={sendOtpPlaceholder || "Enter email"}
                     value={emailValue || ""}
                     onChange={handleContactInputChange}
@@ -61,14 +66,22 @@ export const ContactInputSection = ({
                     noBorderWrapper
                     $error={!!sendOtpError}
                     $verified={isVerified}
+                    aria-labelledby={`${id}-label`}
+                    aria-invalid={!!sendOtpError}
+                    aria-required={true}
                 />
             ) : (
                 <PhoneContactInput
+                    id={`${id}-input`}
+                    data-testid={`${dataTestId}-input`}
                     placeholder={sendOtpPlaceholder || "Enter mobile number"}
                     value={phoneNumberValue}
                     onChange={handlePhoneInputChange}
                     noBorderWrapper
                     $error={!!sendOtpError}
+                    aria-labelledby={`${id}-label`}
+                    aria-invalid={!!sendOtpError}
+                    aria-required={true}
                 />
             )}
         </>
@@ -91,15 +104,27 @@ export const ContactInputSection = ({
     };
 
     return (
-        <ContactSectionWrapper>
-            <ContactLabel>
+        <ContactSectionWrapper
+            id={id}
+            data-testid={dataTestId}
+            role="group"
+            aria-labelledby={`${id}-label`}
+        >
+            <ContactLabel
+                id={`${id}-label`}
+                data-testid={`${dataTestId}-label`}
+            >
                 {type === OtpVerifyType.EMAIL ? "Email" : "Mobile Number"}
             </ContactLabel>
             <ContactInputSectionWrapper>
                 <ContactInputWrapper>
                     {renderContactInput()}
                     {isVerified && (
-                        <TickCircleFillIcon className="verified-icon" />
+                        <TickCircleFillIcon
+                            className="verified-icon"
+                            aria-label="Verified"
+                            role="img"
+                        />
                     )}
                 </ContactInputWrapper>
                 <ContactButtonWrapper
@@ -107,6 +132,8 @@ export const ContactInputSection = ({
                     isCountdownRunning={countdown.isRunning}
                 >
                     <ContactButton
+                        id={`${id}-button`}
+                        data-testid={`${dataTestId}-button`}
                         onClick={onSendOtp}
                         disabled={
                             disabled ||
@@ -121,7 +148,24 @@ export const ContactInputSection = ({
                 </ContactButtonWrapper>
             </ContactInputSectionWrapper>
             {sendOtpError && (
-                <FormErrorMessage>{sendOtpError}</FormErrorMessage>
+                <FormErrorMessage
+                    id={`${id}-error`}
+                    data-testid={`${dataTestId}-error`}
+                    role="alert"
+                    aria-live="polite"
+                >
+                    {sendOtpError}
+                </FormErrorMessage>
+            )}
+            {countdown.isRunning && (
+                <VisuallyHidden
+                    id={`${id}-countdown`}
+                    data-testid={`${dataTestId}-countdown`}
+                    aria-live="polite"
+                    aria-atomic="true"
+                >
+                    Resend available in {countdown.formatTime()}
+                </VisuallyHidden>
             )}
         </ContactSectionWrapper>
     );

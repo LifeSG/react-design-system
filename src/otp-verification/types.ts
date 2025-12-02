@@ -15,6 +15,8 @@ export enum OtpVerifyType {
 
 // Base props for OTP verification component
 export interface BaseOtpVerificationProps {
+    id?: string | undefined;
+    "data-testid"?: string | undefined;
     disabled?: boolean;
     readOnly?: boolean;
 }
@@ -115,21 +117,33 @@ export interface FormOtpVerificationProps extends BaseFormElementProps {
     verifyOtpMessage?: string;
 }
 
-export interface ContactInputSectionProps
-    extends Omit<OtpVerificationProps, "onSendOtp"> {
+export interface ContactInputSectionProps {
+    id?: string | undefined;
+    "data-testid"?: string | undefined;
+    disabled?: boolean;
+    readOnly?: boolean;
+    type: OtpVerifyType;
+    sendOtpPlaceholder?: string;
+    sendOtpError?: string;
+    emailValue?: string;
+    onEmailChange?: (input: string) => void;
+    phoneNumberValue?: PhoneNumberInputValue;
+    onPhoneNumberChange?: (value: PhoneNumberInputValue) => void;
     isLoading: boolean;
     internalState: InternalOtpState;
     countdown: ReturnType<typeof useCountdown>;
     onSendOtp: () => void;
     onStateReset: () => void;
-    emailValue?: string;
-    onEmailChange?: (input: string) => void;
-    phoneNumberValue?: PhoneNumberInputValue;
-    onPhoneNumberChange?: (value: PhoneNumberInputValue) => void;
 }
 
-export interface VerificationSectionProps
-    extends Omit<OtpVerificationProps, "onVerifyOtp"> {
+export interface VerificationSectionProps {
+    id?: string | undefined;
+    "data-testid"?: string | undefined;
+    type: OtpVerifyType;
+    showVerifyOtpIcon?: boolean;
+    verifyOtpTitle?: string;
+    verifyOtpMessage?: string;
+    verifyOtpError?: string;
     otpCode: string | undefined;
     setOtpCode: (value: string) => void;
     isVerifyLoading: boolean;
