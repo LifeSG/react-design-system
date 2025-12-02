@@ -39,7 +39,4 @@ export const SPFComponentTokenSet: ComponentTokenSet = {
         "footer-disclaimer-link-colour-text-hover":
             ColourSemantic["text-inverse"],
     },
-    Toggle: {
-        "toggle-selected-colour-text": ColourSemantic["text-selected"],
-    },
 };

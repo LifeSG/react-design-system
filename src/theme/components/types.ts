@@ -5,7 +5,6 @@ export type ComponentTokenSet = {
     Animation: AnimationTokens;
     Navbar: NavbarTokens;
     Footer: FooterTokens;
-    Toggle: ToggleTokens;
 };
 export type ComponentOverrideOptions = {
     [Component in keyof ComponentTokenSet]?:
@@ -95,12 +94,6 @@ export type FooterTokens = {
         | string
         | ((props: StyledComponentProps) => string);
     "footer-disclaimer-link-colour-text-hover":
-        | string
-        | ((props: StyledComponentProps) => string);
-};
-
-export type ToggleTokens = {
-    "toggle-selected-colour-text":
         | string
         | ((props: StyledComponentProps) => string);
 };
