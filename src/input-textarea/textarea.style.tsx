@@ -22,7 +22,7 @@ export const Element = styled.textarea<StyleProps>`
     border-radius: ${Radius["sm"]};
     background: ${Colour["bg"]};
     outline: none;
-    overflow: hidden;
+    overflow: auto;
 
     display: block;
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
@@ -41,6 +41,21 @@ export const Element = styled.textarea<StyleProps>`
     &::placeholder,
     &::-webkit-input-placeholder {
         color: ${Colour["text-subtler"]};
+    }
+
+    &::-webkit-scrollbar {
+        width: 14px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: ${Colour["bg-inverse-subtlest"]};
+        border: 5px solid transparent;
+        border-radius: ${Radius["full"]};
+        background-clip: padding-box;
     }
 
     ${(props) => {
