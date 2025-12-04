@@ -96,7 +96,7 @@ describe("TimeSlotBarHelper", () => {
             it("should handle hour overflow correctly", () => {
                 expect(
                     TimeSlotBarHelper.adjustTimeForMarker("23:45", "end")
-                ).toBe("00:00");
+                ).toBe("24:00");
             });
         });
 

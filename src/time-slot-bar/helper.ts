@@ -68,10 +68,12 @@ export namespace TimeSlotBarHelper {
                 }
                 // For xx:31 to xx:59, adjust to next hour xx:00
                 if (parsedTime.minute() > 30 && parsedTime.minute() < 60) {
-                    return parsedTime
-                        .add(1, "hour")
-                        .set("minute", 0)
-                        .format("HH:mm");
+                    const nextHour = parsedTime.add(1, "hour");
+                    // If it's 23:xx and rounds up to 24:00
+                    if (nextHour.hour() === 0) {
+                        return "24:00";
+                    }
+                    return nextHour.set("minute", 0).format("HH:mm");
                 }
                 break;
             }

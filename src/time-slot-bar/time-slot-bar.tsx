@@ -168,6 +168,7 @@ export const TimeSlotBar = ({
 
             timeMarkers.push(
                 <TimeMarker
+                    data-testid={`${currentTime.format("HH:mm")}-marker`}
                     key={currentTime.format("HH:mm")}
                     $isLongMarker={displayLongTimeMarker}
                     $variant={variant}
