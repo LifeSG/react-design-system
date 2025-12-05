@@ -17,6 +17,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "noBorderWrapper",
+                description: "Indicates if the border wrapper will be removed",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "data-testid",
                 description: "The test identifier of the component",
                 propTypes: ["string"],

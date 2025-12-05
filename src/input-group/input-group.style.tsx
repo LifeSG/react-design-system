@@ -15,6 +15,7 @@ export interface AddonStyleProps {
     $error?: boolean;
     $readOnly?: boolean;
     $position?: InputGroupAddonPosition;
+    $noBorderWrapper?: boolean;
 }
 
 // =============================================================================
