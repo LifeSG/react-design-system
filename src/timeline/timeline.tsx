@@ -126,7 +126,7 @@ export const Timeline = ({
                             data-testid={circleIndicatorTestId}
                             $variant={variant}
                         >
-                            <VisuallyHidden as="span">
+                            <VisuallyHidden>
                                 {getStatus(variant)}
                             </VisuallyHidden>
                             {renderIcon(variant)}
