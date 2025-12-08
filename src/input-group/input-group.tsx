@@ -19,7 +19,7 @@ const Component = <T, V>(
             $readOnly={otherProps.readOnly}
             data-testid={otherProps["data-testid"]}
             className={className}
-            $noBorderWrapper={otherProps.noBorderWrapper}
+            $noBorder={otherProps.noBorder}
         >
             <MainInput
                 ref={ref}
@@ -44,7 +44,7 @@ const Component = <T, V>(
                             addon={addon}
                             error={error}
                             className={className}
-                            noBorderWrapper={otherProps.noBorderWrapper}
+                            noBorder={otherProps.noBorder}
                             {...otherProps}
                         />
                     );
@@ -63,7 +63,7 @@ const Component = <T, V>(
                             data-testid={otherProps["data-testid"]}
                             $position={position}
                             className={className}
-                            $noBorderWrapper={otherProps.noBorderWrapper}
+                            $noBorder={otherProps.noBorder}
                         >
                             <LabelAddonContainer
                                 data-testid="addon"
@@ -98,7 +98,7 @@ const Component = <T, V>(
                             data-testid={otherProps["data-testid"]}
                             $position={position}
                             className={className}
-                            $noBorderWrapper={otherProps.noBorderWrapper}
+                            $noBorder={otherProps.noBorder}
                         >
                             <LabelAddonContainer
                                 data-testid="addon"

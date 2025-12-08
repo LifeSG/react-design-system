@@ -101,14 +101,14 @@ export const NoBorder: StoryObj<Component> = {
                 <Form.PhoneNumberInput
                     label="This has no border"
                     placeholder="Enter phone number"
-                    noBorderWrapper
+                    noBorder
                 />
                 <Form.PhoneNumberInput
                     label="This has no border with fixed country code"
                     placeholder="Enter phone number"
                     value={{ number: "", countryCode: "+65" }}
                     fixedCountry
-                    noBorderWrapper
+                    noBorder
                 />
             </>
         );

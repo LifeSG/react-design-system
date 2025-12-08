@@ -26,7 +26,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["AddonProps<T, V>"],
             },
             {
-                name: "noBorderWrapper",
+                name: "noBorder",
                 description:
                     "Removes the border wrapper, apply only with addon",
                 propTypes: ["boolean"],

@@ -4,6 +4,21 @@ import { Form } from "src/form";
 import { OtpVerifyType } from "src/otp-verification/types";
 import { StoryDecorator } from "stories/storybook-common";
 
+/**
+ * Enhanced OTP Verification stories demonstrating the controlled components pattern.
+ *
+ * Key Features:
+ * - OTP code is managed via props (otpValue/onOtpChange) instead of internal state
+ * - Parent component controls the OTP input value
+ * - Demonstrates proper validation and error handling
+ * - Shows automatic OTP clearing on successful verification
+ *
+ * Test OTP codes:
+ * - Phone: "123456" (valid)
+ * - Email: "654321" (valid)
+ * - Any other code will show validation error
+ */
+
 type Component = typeof Form.OtpVerification;
 
 const meta: Meta<Component> = {
@@ -20,6 +35,7 @@ export const PhoneNumberDefault: StoryObj<Component> = {
             countryCode?: string;
             number?: string;
         }>({ countryCode: "+65", number: "" });
+        const [otpCode, setOtpCode] = useState<string>("");
         const [otpError, setOtpError] = useState<string | undefined>();
         const [sendError, setSendError] = useState<string | undefined>();
 
@@ -37,6 +53,8 @@ export const PhoneNumberDefault: StoryObj<Component> = {
                         throw new Error("Invalid phone number");
                     }
                 }}
+                otpValue={{ value: otpCode }}
+                onOtpChange={setOtpCode}
                 onVerifyOtp={async () => {
                     setOtpError(undefined);
                     // Simulate API call
@@ -51,7 +69,7 @@ export const PhoneNumberDefault: StoryObj<Component> = {
                 verifyOtpError={otpError}
                 verifyOtpTitle="Verify your mobile number"
                 verifyOtpMessage="An SMS with a 6-digit verification code was sent to you. It will be valid for 30 minutes."
-                showVerifyOtpIcon
+                showVerifyOtpThumbnail
             />
         );
     },
@@ -62,6 +80,7 @@ export const PhoneNumberDefault: StoryObj<Component> = {
 export const EmailDefault: StoryObj<Component> = {
     render: (_args) => {
         const [emailValue, setEmailValue] = useState<string>("");
+        const [otpCode, setOtpCode] = useState<string>("");
         const [otpError, setOtpError] = useState<string | undefined>();
         const [sendError, setSendError] = useState<string | undefined>();
 
@@ -75,6 +94,8 @@ export const EmailDefault: StoryObj<Component> = {
                     // Simulate API call
                     await new Promise((resolve) => setTimeout(resolve, 1000));
                 }}
+                otpValue={{ value: otpCode }}
+                onOtpChange={setOtpCode}
                 onVerifyOtp={async () => {
                     setOtpError(undefined);
                     // Simulate API call
@@ -89,7 +110,7 @@ export const EmailDefault: StoryObj<Component> = {
                 verifyOtpError={otpError}
                 verifyOtpTitle="Verify your email address"
                 verifyOtpMessage="An email with a 6-digit verification code was sent to you. It will be valid for 30 minutes."
-                showVerifyOtpIcon
+                showVerifyOtpThumbnail
             />
         );
     },
@@ -103,6 +124,7 @@ export const WithErrors: StoryObj<Component> = {
             countryCode?: string;
             number?: string;
         }>({ countryCode: "+65", number: "" });
+        const [otpCode, setOtpCode] = useState<string>("");
 
         return (
             <Form.OtpVerification
@@ -113,15 +135,18 @@ export const WithErrors: StoryObj<Component> = {
                     await new Promise((resolve) => setTimeout(resolve, 1000));
                     throw new Error("Failed to send OTP");
                 }}
+                otpValue={{ value: otpCode }}
+                onOtpChange={setOtpCode}
                 onVerifyOtp={async () => {
                     await new Promise((resolve) => setTimeout(resolve, 1000));
+                    // Always throw error to demonstrate error handling
                     throw new Error("Invalid OTP");
                 }}
                 sendOtpError="Unable to send OTP. Please check your phone number."
                 verifyOtpError="Invalid OTP code. Please try again."
                 verifyOtpTitle="Verify your mobile number"
                 verifyOtpMessage="An SMS with a 6-digit verification code was sent to you."
-                showVerifyOtpIcon
+                showVerifyOtpThumbnail
             />
         );
     },

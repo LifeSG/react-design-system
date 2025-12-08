@@ -11,12 +11,10 @@ import {
     ContactSectionWrapper,
     EmailContactInput,
     PhoneContactInput,
+    VerifiedIconWrapper,
 } from "./contact-input-section-styles";
-import {
-    ContactInputSectionProps,
-    InternalOtpState,
-    OtpVerifyType,
-} from "./types";
+import { ContactInputSectionProps } from "./internal-types";
+import { OtpVerifyType } from "./types";
 
 export const ContactInputSection = ({
     id,
@@ -30,13 +28,12 @@ export const ContactInputSection = ({
     phoneNumberValue,
     onPhoneNumberChange,
     isLoading,
-    internalState,
+    isVerified,
     countdown,
     onSendOtp,
     onStateReset,
     sendOtpError,
 }: ContactInputSectionProps) => {
-    const isVerified = internalState === InternalOtpState.VERIFIED;
     const handleContactInputChange = (
         e: React.ChangeEvent<HTMLInputElement>
     ) => {
@@ -57,30 +54,31 @@ export const ContactInputSection = ({
         <>
             {type === OtpVerifyType.EMAIL ? (
                 <EmailContactInput
-                    id={`${id}-input`}
-                    data-testid={`${dataTestId}-input`}
+                    id={id ? `${id}-input` : undefined}
+                    data-testid={dataTestId ? `${dataTestId}-input` : undefined}
                     placeholder={sendOtpPlaceholder || "Enter email"}
                     value={emailValue || ""}
                     onChange={handleContactInputChange}
                     type="email"
-                    noBorderWrapper
+                    noBorder
                     $error={!!sendOtpError}
                     $verified={isVerified}
-                    aria-labelledby={`${id}-label`}
+                    aria-labelledby={id ? `${id}-label` : undefined}
                     aria-invalid={!!sendOtpError}
                     aria-required={true}
                 />
             ) : (
                 <PhoneContactInput
-                    id={`${id}-input`}
-                    data-testid={`${dataTestId}-input`}
+                    id={id ? `${id}-input` : undefined}
+                    data-testid={dataTestId ? `${dataTestId}-input` : undefined}
                     placeholder={sendOtpPlaceholder || "Enter mobile number"}
                     value={phoneNumberValue}
                     onChange={handlePhoneInputChange}
-                    noBorderWrapper
+                    noBorder
                     fixedCountry
                     $error={!!sendOtpError}
-                    aria-labelledby={`${id}-label`}
+                    $verified={isVerified}
+                    aria-labelledby={id ? `${id}-label` : undefined}
                     aria-invalid={!!sendOtpError}
                     aria-required={true}
                 />
@@ -109,32 +107,36 @@ export const ContactInputSection = ({
             id={id}
             data-testid={dataTestId}
             role="group"
-            aria-labelledby={`${id}-label`}
+            aria-labelledby={id ? `${id}-label` : undefined}
         >
             <ContactLabel
-                id={`${id}-label`}
-                data-testid={`${dataTestId}-label`}
+                id={id ? `${id}-label` : undefined}
+                data-testid={dataTestId ? `${dataTestId}-label` : undefined}
             >
                 {type === OtpVerifyType.EMAIL ? "Email" : "Mobile Number"}
             </ContactLabel>
             <ContactInputSectionWrapper>
-                <ContactInputWrapper isMaxWidth={type === OtpVerifyType.EMAIL}>
+                <ContactInputWrapper $isMaxWidth={type === OtpVerifyType.EMAIL}>
                     {renderContactInput()}
                     {isVerified && (
-                        <TickCircleFillIcon
-                            className="verified-icon"
+                        <VerifiedIconWrapper
+                            className="verified-icon-wrapper"
                             aria-label="Verified"
                             role="img"
-                        />
+                        >
+                            <TickCircleFillIcon width={20} height={20} />
+                        </VerifiedIconWrapper>
                     )}
                 </ContactInputWrapper>
                 <ContactButtonWrapper
-                    internalState={internalState}
-                    isCountdownRunning={countdown.isRunning}
+                    $isVerified={isVerified}
+                    $isCountdownRunning={countdown.isRunning}
                 >
                     <ContactButton
-                        id={`${id}-button`}
-                        data-testid={`${dataTestId}-button`}
+                        id={id ? `${id}-button` : undefined}
+                        data-testid={
+                            dataTestId ? `${dataTestId}-button` : undefined
+                        }
                         onClick={onSendOtp}
                         disabled={
                             disabled ||
@@ -150,8 +152,8 @@ export const ContactInputSection = ({
             </ContactInputSectionWrapper>
             {sendOtpError && (
                 <FormErrorMessage
-                    id={`${id}-error`}
-                    data-testid={`${dataTestId}-error`}
+                    id={id ? `${id}-error` : undefined}
+                    data-testid={dataTestId ? `${dataTestId}-error` : undefined}
                     role="alert"
                     aria-live="polite"
                 >
@@ -160,8 +162,10 @@ export const ContactInputSection = ({
             )}
             {countdown.isRunning && (
                 <VisuallyHidden
-                    id={`${id}-countdown`}
-                    data-testid={`${dataTestId}-countdown`}
+                    id={id ? `${id}-countdown` : undefined}
+                    data-testid={
+                        dataTestId ? `${dataTestId}-countdown` : undefined
+                    }
                     aria-live="polite"
                     aria-atomic="true"
                 >

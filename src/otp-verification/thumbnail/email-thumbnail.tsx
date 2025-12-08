@@ -29,12 +29,11 @@ const StyledSvg = styled.svg`
         fill: ${Colour["icon-primary-subtlest"]};
     }
 `;
-
-export const EmailThumbnail: React.FC<EmailThumbnailProps> = ({
+export const EmailThumbnail = ({
     width = 120,
     height = 120,
     className,
-}) => {
+}: EmailThumbnailProps) => {
     return (
         <StyledSvg
             width={width}

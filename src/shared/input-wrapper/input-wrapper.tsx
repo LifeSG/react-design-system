@@ -11,7 +11,7 @@ export interface InputWrapperStyleProps {
     $readOnly?: boolean | undefined;
     $focused?: boolean | undefined;
     $position?: "left" | "right" | undefined;
-    $noBorderWrapper?: boolean | undefined;
+    $noBorder?: boolean | undefined;
 }
 
 export interface InputStyleProps {
@@ -54,7 +54,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
     &:focus-within {
         ${defaultFocusCss}
     }
-    ${(props) => props.$focused && !props.$noBorderWrapper && defaultFocusCss}
+    ${(props) => props.$focused && !props.$noBorder && defaultFocusCss}
 
     ${(props) => {
         if (props.$readOnly) {
@@ -78,7 +78,10 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
                 }
                 ${props.$focused && disabledFocusCss}
             `;
-        } else if (props.$error) {
+        }
+    }}
+    ${(props) => {
+        if (props.$error) {
             return css`
                 border-color: ${Colour["border-error"]};
 
@@ -87,7 +90,10 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
                 }
                 ${props.$focused && errorFocusCss}
             `;
-        } else if (props.$noBorderWrapper) {
+        }
+    }}
+    ${(props) => {
+        if (props.$noBorder) {
             return css`
                 border-color: transparent;
                 &:focus-within {

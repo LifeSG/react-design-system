@@ -15,7 +15,7 @@ export interface AddonStyleProps {
     $error?: boolean;
     $readOnly?: boolean;
     $position?: InputGroupAddonPosition;
-    $noBorderWrapper?: boolean;
+    $noBorder?: boolean;
 }
 
 // =============================================================================
@@ -25,7 +25,9 @@ export const AddonWrapper = styled(InputBox)<InputWrapperStyleProps>`
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 0 ${(props) => (props.$readOnly ? "0" : Spacing["spacing-16"])};
+    padding: 0
+        ${(props) =>
+            props.$readOnly || props.$noBorder ? "0" : Spacing["spacing-16"]};
     flex-direction: ${(props) =>
         props.$position === "right" ? "row-reverse" : "row"};
 `;
@@ -34,7 +36,9 @@ export const NoAddonWrapper = styled(InputBox)<AddonStyleProps>`
     display: flex;
     position: relative;
     width: 100%;
-    padding: 0 ${(props) => (props.$readOnly ? "0" : Spacing["spacing-16"])};
+    padding: 0
+        ${(props) =>
+            props.$readOnly || props.$noBorder ? "0" : Spacing["spacing-16"]};
     flex-direction: ${(props) =>
         props.$position === "right" ? "row-reverse" : "row"};
 `;

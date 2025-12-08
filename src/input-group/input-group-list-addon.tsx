@@ -31,7 +31,7 @@ export const Component = <T, V>(
         disabled,
         className,
         onBlur,
-        noBorderWrapper,
+        noBorder,
         "data-testid": testId,
         "aria-labelledby": ariaLabelledBy,
         "aria-describedby": ariaDescribedBy,
@@ -300,7 +300,7 @@ export const Component = <T, V>(
                 ref={positionRef}
                 className={className}
                 data-testid={testId}
-                $noBorderWrapper={noBorderWrapper}
+                $noBorder={noBorder}
             >
                 <VisuallyHidden aria-hidden id={comboboxLabelId}>
                     {comboboxAriaLabel}

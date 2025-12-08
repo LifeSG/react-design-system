@@ -17,7 +17,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "noBorderWrapper",
+                name: "noBorder",
                 description: "Indicates if the border wrapper will be removed",
                 propTypes: ["boolean"],
                 defaultValue: "false",

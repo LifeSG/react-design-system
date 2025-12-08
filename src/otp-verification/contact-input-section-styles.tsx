@@ -5,7 +5,15 @@ import { InputGroup } from "../input-group";
 import { Button } from "../button";
 import { PhoneNumberInput } from "../phone-number-input";
 import { InputWrapperStyleProps } from "../shared/input-wrapper";
-import { InternalOtpState } from "./types";
+
+interface ContactInputWrapperStyleProps {
+    $isMaxWidth?: boolean;
+}
+
+interface ContactButtonWrapperStyleProps {
+    $isVerified: boolean;
+    $isCountdownRunning?: boolean;
+}
 
 export const ContactSectionWrapper = styled.div`
     display: flex;
@@ -24,59 +32,50 @@ export const ContactInputSectionWrapper = styled.div`
     display: flex;
 `;
 
-export const ContactInputWrapper = styled.div<{
-    isMaxWidth?: boolean;
-}>`
-    position: relative;
-    width: ${(props) => (props.isMaxWidth ? "100%" : "auto")};
-    .verified-icon {
-        position: absolute;
-        right: 15.67px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 16.7px;
-        height: 16.7px;
-        color: ${Colour["icon-success"]};
+export const ContactInputWrapper = styled.div<ContactInputWrapperStyleProps>`
+    display: flex;
+    align-items: center;
+    width: ${(props) => (props.$isMaxWidth ? "100%" : "auto")};
+
+    &:focus-within .verified-icon-wrapper {
+        border-color: ${Colour["border-focus"]};
     }
 `;
 
-export const IconWrapper = styled.div`
-    width: 16.7px;
-    height: 16.7px;
+export const VerifiedIconWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    color: ${Colour["icon-success"]};
+    flex-shrink: 0;
+    height: 100%;
+    border: ${Border["width-020"]} ${Border["solid"]} ${Colour["border"]};
+    border-inline: none;
 `;
 
-export const ContactButtonWrapper = styled.div<{
-    internalState: InternalOtpState;
-    isCountdownRunning?: boolean;
-}>`
+export const ContactButtonWrapper = styled.div<ContactButtonWrapperStyleProps>`
     border-radius: 0 ${ThemeButton["button-radius"]}
         ${ThemeButton["button-radius"]} 0;
     transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
 
     ${(props) => {
-        switch (props.internalState) {
-            case InternalOtpState.VERIFIED:
-                return css`
-                    background-color: ${Colour["bg-disabled"]};
-                    cursor: not-allowed;
-                    &:hover {
-                        box-shadow: none;
-                    }
-                    color: ${Colour["text-disabled"]};
-                `;
-            default:
-                break;
-        }
-        if (props.isCountdownRunning) {
+        if (props.$isVerified) {
             return css`
-                border: ${Border["width-010"]} ${Border["solid"]}
-                    ${Colour["bg-disabled"]};
+                background-color: ${Colour["bg-disabled"]};
+                cursor: not-allowed;
+                &:hover {
+                    box-shadow: none;
+                }
+                color: ${Colour["text-disabled"]};
+            `;
+        }
+        if (props.$isCountdownRunning) {
+            return css`
                 background-color: ${Colour["bg-disabled"]};
             `;
         } else {
             return css`
-                border: ${Border["width-010"]} ${Border["solid"]}
-                    ${ThemeButton["button-default-colour-bg"]};
                 background-color: ${ThemeButton["button-default-colour-bg"]};
                 &:hover,
                 &:active {
@@ -94,23 +93,24 @@ export const ContactButtonWrapper = styled.div<{
 export const ContactButton = styled(Button.Default)`
     min-width: 120px;
 `;
-export const EmailContactInput = styled(InputGroup)<
+
+const contactInputStyles = css<
     InputWrapperStyleProps & { $verified?: boolean }
 >`
-    border: ${Border["width-020"]} ${Border["solid"]} ${Colour["border"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${ThemeButton["button-radius"]} 0 0
         ${ThemeButton["button-radius"]};
     border-right: none;
+    position: relative;
+    padding: 0 ${Spacing["spacing-16"]};
     &:focus-within {
         border-color: ${Colour["border-focus"]};
     }
-    width: 100%;
-    padding: 0 ${Spacing["spacing-16"]};
-    position: relative;
+
     ${(props) =>
         props.$verified &&
         css`
-            padding-right: ${Spacing["spacing-40"]};
+            padding-right: 0;
             input {
                 white-space: nowrap;
                 overflow: hidden;
@@ -135,31 +135,19 @@ export const EmailContactInput = styled(InputGroup)<
     }}
 `;
 
-export const PhoneContactInput = styled(
-    PhoneNumberInput
-)<InputWrapperStyleProps>`
-    border: ${Border["width-020"]} ${Border["solid"]} ${Colour["border"]};
-    border-radius: ${ThemeButton["button-radius"]} 0 0
-        ${ThemeButton["button-radius"]};
-    border-right: none;
+export const EmailContactInput = styled(InputGroup)<
+    InputWrapperStyleProps & { $verified?: boolean }
+>`
+    ${contactInputStyles}
+    width: 100%;
+`;
+
+export const PhoneContactInput = styled(PhoneNumberInput)<
+    InputWrapperStyleProps & { $verified?: boolean }
+>`
+    ${contactInputStyles}
     &:focus-within {
         border-color: ${Colour["border-focus"]};
+        outline: none;
     }
-    position: relative;
-
-    ${(props) => {
-        if (props.$error) {
-            return css`
-                border-color: ${Colour["border-error"]};
-
-                &:focus-within {
-                    outline-color: ${Colour["border-error-focus"]};
-                }
-                ${props.$focused &&
-                css`
-                    outline-color: ${Colour["border-error-focus"]};
-                `}
-            `;
-        }
-    }}
 `;

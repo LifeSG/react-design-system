@@ -5,8 +5,9 @@ import { FormErrorMessage } from "../form/form-label";
 import { InputGroup } from "../input-group";
 import { Breakpoint } from "../theme";
 import { Typography } from "../typography";
-import { EmailThumbnail, PhoneThumbnail } from "./thumbnails-img";
-import { OtpVerifyType, VerificationSectionProps } from "./types";
+import { VerificationSectionProps } from "./internal-types";
+import { EmailThumbnail, PhoneThumbnail } from "./thumbnail";
+import { OtpVerifyType } from "./types";
 import {
     InputSectionWrapper,
     ReSendMessage,
@@ -20,7 +21,7 @@ export const VerificationSection = ({
     id,
     "data-testid": dataTestId,
     type,
-    showVerifyOtpIcon = false,
+    showVerifyOtpThumbnail = false,
     verifyOtpTitle,
     verifyOtpMessage,
     otpCode,
@@ -37,7 +38,7 @@ export const VerificationSection = ({
     const thumbnailSize = isMobile ? 64 : 120;
 
     const renderThumbnail = () => {
-        if (!showVerifyOtpIcon) return null;
+        if (!showVerifyOtpThumbnail) return null;
         const iconLabel =
             type === OtpVerifyType.EMAIL
                 ? "Email verification"
@@ -64,23 +65,27 @@ export const VerificationSection = ({
             id={id}
             data-testid={dataTestId}
             role="group"
-            aria-labelledby={`${id}-title`}
-            aria-describedby={`${id}-message`}
+            aria-labelledby={id ? `${id}-title` : undefined}
+            aria-describedby={id ? `${id}-message` : undefined}
         >
             {renderThumbnail()}
             <SectionContainer>
                 <TitleWrapper>
                     <Typography.BodyMD
                         weight="semibold"
-                        id={`${id}-title`}
-                        data-testid={`${dataTestId}-title`}
+                        id={id ? `${id}-title` : undefined}
+                        data-testid={
+                            dataTestId ? `${dataTestId}-title` : undefined
+                        }
                     >
                         {verifyOtpTitle}
                     </Typography.BodyMD>
                     <Typography.BodyMD
                         weight="regular"
-                        id={`${id}-message`}
-                        data-testid={`${dataTestId}-message`}
+                        id={id ? `${id}-message` : undefined}
+                        data-testid={
+                            dataTestId ? `${dataTestId}-message` : undefined
+                        }
                     >
                         {verifyOtpMessage}
                     </Typography.BodyMD>
@@ -88,10 +93,12 @@ export const VerificationSection = ({
                 <InputSectionWrapper>
                     <VerifyInputWrapper>
                         <InputGroup
-                            id={`${id}-input`}
-                            data-testid={`${dataTestId}-input`}
+                            id={id ? `${id}-input` : undefined}
+                            data-testid={
+                                dataTestId ? `${dataTestId}-input` : undefined
+                            }
                             value={otpCode}
-                            onChange={(e) => setOtpCode(e.target.value)}
+                            onChange={(e) => setOtpCode?.(e.target.value)}
                             placeholder="Enter OTP"
                             addon={{
                                 type: "label",
@@ -106,8 +113,10 @@ export const VerificationSection = ({
                             aria-required={true}
                         />
                         <Button.Default
-                            id={`${id}-button`}
-                            data-testid={`${dataTestId}-button`}
+                            id={id ? `${id}-button` : undefined}
+                            data-testid={
+                                dataTestId ? `${dataTestId}-button` : undefined
+                            }
                             onClick={onVerifyOtp}
                             loading={isVerifyLoading}
                             styleType="light"
@@ -118,8 +127,10 @@ export const VerificationSection = ({
                     </VerifyInputWrapper>
                     {verifyOtpError && (
                         <FormErrorMessage
-                            id={`${id}-error`}
-                            data-testid={`${dataTestId}-error`}
+                            id={id ? `${id}-error` : undefined}
+                            data-testid={
+                                dataTestId ? `${dataTestId}-error` : undefined
+                            }
                             role="alert"
                             aria-live="polite"
                         >
@@ -130,8 +141,10 @@ export const VerificationSection = ({
                 {countdown.isRunning && (
                     <ReSendMessage
                         weight="semibold"
-                        id={`${id}-countdown`}
-                        data-testid={`${dataTestId}-countdown`}
+                        id={id ? `${id}-countdown` : undefined}
+                        data-testid={
+                            dataTestId ? `${dataTestId}-countdown` : undefined
+                        }
                         aria-live="polite"
                         aria-atomic="true"
                     >

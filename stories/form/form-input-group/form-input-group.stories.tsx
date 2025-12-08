@@ -50,7 +50,7 @@ export const LabelAddon: StoryObj<Component> = {
                             value: "kg",
                         },
                     }}
-                    noBorderWrapper
+                    noBorder
                 />
                 <Form.InputGroup
                     label="This is the disabled state"
@@ -122,7 +122,7 @@ export const CustomAddon: StoryObj<Component> = {
                             children: <MagnifierIcon />,
                         },
                     }}
-                    noBorderWrapper
+                    noBorder
                 />
                 <Form.InputGroup
                     label="This is the disabled state"
@@ -199,7 +199,7 @@ export const ListAddon: StoryObj<Component> = {
                         type: "list",
                         attributes: listAddonOptions,
                     }}
-                    noBorderWrapper
+                    noBorder
                 />
                 <Form.InputGroup
                     label="This is the list addon readonly state (pristine)"

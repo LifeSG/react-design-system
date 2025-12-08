@@ -26,11 +26,11 @@ const StyledSvg = styled.svg`
     }
 `;
 
-export const PhoneThumbnail: React.FC<PhoneThumbnailProps> = ({
+export const PhoneThumbnail = ({
     width = 120,
     height = 120,
     className,
-}) => {
+}: PhoneThumbnailProps) => {
     return (
         <StyledSvg
             width={width}
