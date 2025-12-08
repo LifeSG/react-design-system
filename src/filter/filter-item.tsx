@@ -148,11 +148,7 @@ export const FilterItem = ({
                             aria-disabled={!collapsible}
                             aria-controls={contentId}
                         >
-                            {title && (
-                                <VisuallyHidden as="span">
-                                    {title}
-                                </VisuallyHidden>
-                            )}
+                            {title && <VisuallyHidden>{title}</VisuallyHidden>}
                             <ChevronIcon $expanded={expanded} aria-hidden />
                         </FilterItemExpandButton>
                     )}
@@ -189,7 +185,7 @@ export const FilterItem = ({
                                 type="button"
                                 onClick={handleMinimise}
                             >
-                                <VisuallyHidden as="span">{`view ${
+                                <VisuallyHidden>{`view ${
                                     contentMinimised ? "more" : "less"
                                 } in ${title}`}</VisuallyHidden>
                                 <span aria-hidden>

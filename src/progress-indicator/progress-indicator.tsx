@@ -100,7 +100,7 @@ export const ProgressIndicator = <T,>({
                         aria-current={current}
                     >
                         {getDisplayValue(step)}
-                        <VisuallyHidden as="span">
+                        <VisuallyHidden>
                             {getStepAriaLabel(stepIndex, currentIndex)}
                         </VisuallyHidden>
                     </IndicatorTitleDesktop>
