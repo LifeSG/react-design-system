@@ -10,7 +10,7 @@ export const INDICATOR_BAR_MARGIN_RIGHT_TABLET = 0.5;
 // =============================================================================
 
 interface IndicatorProps {
-    highlighted: boolean;
+    $highlighted: boolean;
 }
 
 // =============================================================================
@@ -43,8 +43,8 @@ export const IndicatorBar = styled.div<IndicatorProps>`
     margin-bottom: ${Spacing["spacing-8"]};
     border-radius: ${Radius["full"]};
     ${(props) => {
-        const { highlighted } = props;
-        const color = highlighted
+        const { $highlighted } = props;
+        const color = $highlighted
             ? Colour["bg-primary-subtle"]
             : Colour["bg-disabled"];
         return `
@@ -56,8 +56,8 @@ export const IndicatorBar = styled.div<IndicatorProps>`
 export const IndicatorTitleDesktop = styled(Typography.BodyMD)<IndicatorProps>`
     overflow-wrap: anywhere;
     ${(props) => {
-        const { highlighted } = props;
-        const color = highlighted
+        const { $highlighted } = props;
+        const color = $highlighted
             ? Colour["text-primary"]
             : Colour["text-disabled"];
         return `color: ${color(props)};`;
