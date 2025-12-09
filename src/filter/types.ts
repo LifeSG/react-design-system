@@ -57,11 +57,9 @@ export interface FilterModalProps extends FilterBaseProps {
     customLabels?: FilterModalCustomLabelProps | undefined;
 }
 
-export interface FilterProps extends FilterBaseProps {
-    /** Called when dismiss button is pressed (mobile mode only) */
-    onDismiss?: (() => void) | undefined;
-    /** Called when done button is pressed (mobile mode only) */
-    onDone?: (() => void) | undefined;
+export interface FilterProps
+    extends Omit<FilterSidebarProps, "customLabels">,
+        Omit<FilterModalProps, "customLabels"> {
     customLabels?:
         | FilterModalCustomLabelProps
         | FilterSidebarCustomLabelProps
