@@ -65,6 +65,8 @@ export const DateInput = ({
         setCalendarOpen(false);
         setFocused(false);
         performOnBlurHandler();
+
+        setHoveredDate(undefined);
     };
 
     const handleDismiss = () => {
@@ -109,9 +111,7 @@ export const DateInput = ({
             }
 
             // clear hover value for mobile when onMouseLeave={handleMouseLeaveCell} is not triggered due to touch input
-            if (hoveredDate) {
-                setHoveredDate(undefined);
-            }
+            setHoveredDate(undefined);
         }
     };
 
