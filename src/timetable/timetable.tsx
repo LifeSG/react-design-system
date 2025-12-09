@@ -41,6 +41,7 @@ export const TimeTable = ({
     loading,
     minTime = "00:00",
     maxTime = "23:00",
+    initialScrollTime,
     minDate,
     maxDate,
     totalRecords,
@@ -120,6 +121,57 @@ export const TimeTable = ({
     useEffect(() => {
         setLoadMore(false);
     }, [rowData]);
+
+    useEffect(() => {
+        if (
+            initialScrollTime &&
+            tableContainerRef.current &&
+            intervalWidth > 0
+        ) {
+            try {
+                // Validate time format (HH:mm)
+                const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+                if (!timeRegex.test(initialScrollTime)) {
+                    console.warn(
+                        `Invalid initialScrollTime format: "${initialScrollTime}". Expected format: HH:mm. Scroll position will not be set.`
+                    );
+                    return;
+                }
+
+                const scrollTime = TimeHelper.roundToNearestInterval(
+                    initialScrollTime,
+                    ROW_INTERVAL
+                );
+                const [hours, minutes] = scrollTime.split(":").map(Number);
+
+                // Validate parsed values
+                if (isNaN(hours) || isNaN(minutes)) {
+                    console.warn(
+                        `Invalid initialScrollTime: "${initialScrollTime}". Scroll position will not be set.`
+                    );
+                    return;
+                }
+
+                const scrollMinutes = hours * 60 + minutes;
+
+                const [minHours, minMinutes] = timetableMinTime
+                    .split(":")
+                    .map(Number);
+                const minTotalMinutes = minHours * 60 + minMinutes;
+
+                const minutesFromStart = scrollMinutes - minTotalMinutes;
+                const intervalsFromStart = minutesFromStart / ROW_INTERVAL;
+                const scrollLeft = intervalsFromStart * intervalWidth;
+
+                tableContainerRef.current.scrollLeft = Math.max(0, scrollLeft);
+            } catch (error) {
+                console.warn(
+                    `Error processing initialScrollTime: "${initialScrollTime}". Scroll position will not be set.`,
+                    error
+                );
+            }
+        }
+    }, [initialScrollTime, intervalWidth, timetableMinTime, timetableMaxTime]);
 
     // =============================================================================
     // EVENT HANDLERS

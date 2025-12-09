@@ -44,6 +44,8 @@ export interface TimeTableProps {
     minTime?: string | undefined;
     // HH:mm format
     maxTime?: string | undefined;
+    // HH:mm format - Initial scroll position (e.g., "09:00" will scroll to 9am on mount)
+    initialScrollTime?: string | undefined;
     minDate?: string | undefined;
     maxDate?: string | undefined;
     totalRecords?: number | undefined;

@@ -323,3 +323,49 @@ export const EmptyContent: StoryObj<Component> = {
         );
     },
 };
+
+export const WithInitialScroll: StoryObj<Component> = {
+    render: () => {
+        const [results, setResults] =
+            useState<TimeTableRowData[]>(timetableDefaultData);
+        const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
+        const [loading, setLoading] = useState(false);
+
+        const onPreviousDayClick = async (currentDate: string) => {
+            const newDate = dayjs(currentDate)
+                .add(-1, "day")
+                .format("YYYY-MM-DD");
+            setDate(newDate);
+            setLoading(true);
+
+            const results = await fetchTimeTableData();
+            setResults(results);
+            setLoading(false);
+        };
+
+        const onNextDayClick = async (currentDate: string) => {
+            const newDate = dayjs(currentDate)
+                .add(1, "day")
+                .format("YYYY-MM-DD");
+            setDate(newDate);
+            setLoading(true);
+
+            const results = await fetchTimeTableData();
+            setResults(results);
+            setLoading(false);
+        };
+
+        return (
+            <StyledTimeTable
+                date={date}
+                minTime={"06:00"}
+                maxTime={"23:59"}
+                rowData={results}
+                loading={loading}
+                initialScrollTime="15:00"
+                onNextDayClick={onNextDayClick}
+                onPreviousDayClick={onPreviousDayClick}
+            />
+        );
+    },
+};

@@ -102,6 +102,16 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "initialScrollTime",
+                description: (
+                    <>
+                        The initial time for the table to offset to in{" "}
+                        {TIME_FORMAT}
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
                 name: "totalRecords",
                 description: (
                     <>
