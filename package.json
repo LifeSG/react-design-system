@@ -1,6 +1,6 @@
 {
     "name": "@lifesg/react-design-system",
-    "version": "2.13.5",
+    "version": "2.13.6",
     "description": "A component design system for LifeSG web apps",
     "main": "dist/cjs/index.js",
     "module": "dist/index.js",
