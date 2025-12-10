@@ -12,6 +12,8 @@ export const OtpVerification = (props: OtpVerificationProps) => {
     const {
         id,
         "data-testid": dataTestId,
+        className,
+        inputId,
         onSendOtp,
         onVerifyOtp,
         verifyOtpCountdownTimer = 60,
@@ -87,12 +89,13 @@ export const OtpVerification = (props: OtpVerificationProps) => {
         <OTPInputWrapper
             id={id}
             data-testid={dataTestId}
+            className={className}
             role="region"
             aria-label="OTP verification"
         >
             <ContactInputSection
                 {...props}
-                id={id ? `${id}-contact` : undefined}
+                inputId={inputId}
                 data-testid={dataTestId ? `${dataTestId}-contact` : undefined}
                 isLoading={isLoading}
                 isVerified={internalState === InternalOtpState.VERIFIED}
@@ -105,7 +108,6 @@ export const OtpVerification = (props: OtpVerificationProps) => {
             {internalState === InternalOtpState.SENT && (
                 <VerificationSection
                     {...props}
-                    id={id ? `${id}-verification` : undefined}
                     data-testid={
                         dataTestId ? `${dataTestId}-verification` : undefined
                     }

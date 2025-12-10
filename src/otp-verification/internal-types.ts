@@ -7,6 +7,7 @@ export interface ContactInputSectionProps {
     "data-testid"?: string | undefined;
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
+    inputId?: string | undefined;
     type: OtpVerifyType;
     sendOtpPlaceholder?: string | undefined;
     sendOtpError?: string | undefined;

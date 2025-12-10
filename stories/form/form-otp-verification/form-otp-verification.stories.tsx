@@ -41,6 +41,7 @@ export const PhoneNumberDefault: StoryObj<Component> = {
 
         return (
             <Form.OtpVerification
+                label="Mobile Number"
                 type={OtpVerifyType.PHONE_NUMBER}
                 phoneNumberValue={phoneValue}
                 onPhoneNumberChange={setPhoneValue}
@@ -86,6 +87,7 @@ export const EmailDefault: StoryObj<Component> = {
 
         return (
             <Form.OtpVerification
+                label="Email"
                 type={OtpVerifyType.EMAIL}
                 emailValue={emailValue}
                 onEmailChange={setEmailValue}
@@ -128,6 +130,7 @@ export const WithErrors: StoryObj<Component> = {
 
         return (
             <Form.OtpVerification
+                label="Mobile Number"
                 type={OtpVerifyType.PHONE_NUMBER}
                 phoneNumberValue={phoneValue}
                 onPhoneNumberChange={setPhoneValue}

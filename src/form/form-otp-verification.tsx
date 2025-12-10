@@ -47,7 +47,11 @@ export const FormOtpVerification = ({
             xlCols={xlCols}
             xxlCols={xxlCols}
         >
-            <OtpVerification {...otherProps} id={`${inputId}-base`} />
+            <OtpVerification
+                {...otherProps}
+                inputId={`${inputId}-base`}
+                id={`${inputId}-base-field`}
+            />
         </FormWrapper>
     );
 };

@@ -19,6 +19,7 @@ export interface BaseOtpVerificationProps {
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
     className?: string | undefined;
+    inputId?: string | undefined;
 }
 
 // Email input specific props

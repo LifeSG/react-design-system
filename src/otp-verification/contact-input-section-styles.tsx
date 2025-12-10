@@ -1,11 +1,14 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Motion, Spacing } from "../theme";
-import { ThemeButton } from "../theme/components/theme-helper";
-import { InputGroup } from "../input-group";
 import { Button } from "../button";
+import { InputGroup } from "../input-group";
 import { PhoneNumberInput } from "../phone-number-input";
 import { InputWrapperStyleProps } from "../shared/input-wrapper";
+import { Border, Colour, Motion, Spacing } from "../theme";
+import { ThemeButton } from "../theme/components/theme-helper";
 
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
 interface ContactInputWrapperStyleProps {
     $isMaxWidth?: boolean;
 }
@@ -15,17 +18,12 @@ interface ContactButtonWrapperStyleProps {
     $isCountdownRunning?: boolean;
 }
 
+// =============================================================================
+// STYLING
+// =============================================================================
 export const ContactSectionWrapper = styled.div`
     display: flex;
     flex-direction: column;
-`;
-
-export const ContactLabel = styled.label`
-    color: ${Colour["text-subtle"]};
-    display: inline-block;
-    ${Font["form-label"]}
-    font-weight: ${Font.Spec["weight-semibold"]};
-    margin-bottom: ${Spacing["spacing-8"]};
 `;
 
 export const ContactInputSectionWrapper = styled.div`
@@ -37,8 +35,22 @@ export const ContactInputWrapper = styled.div<ContactInputWrapperStyleProps>`
     align-items: center;
     width: ${(props) => (props.$isMaxWidth ? "100%" : "auto")};
 
-    &:focus-within .verified-icon-wrapper {
+    &:focus-within .contact-verified-icon {
         border-color: ${Colour["border-focus"]};
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            outline: ${Border["width-020"]} ${Border["solid"]}
+                ${Colour["border-focus"]};
+            outline-offset: -1px;
+            clip-path: inset(-2px -2px -2px 0px);
+            pointer-events: none;
+        }
     }
 `;
 
@@ -50,8 +62,14 @@ export const VerifiedIconWrapper = styled.div`
     color: ${Colour["icon-success"]};
     flex-shrink: 0;
     height: 100%;
-    border: ${Border["width-020"]} ${Border["solid"]} ${Colour["border"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-inline: none;
+    position: relative;
+
+    svg {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
 `;
 
 export const ContactButtonWrapper = styled.div<ContactButtonWrapperStyleProps>`
@@ -103,8 +121,25 @@ const contactInputStyles = css<
     border-right: none;
     position: relative;
     padding: 0 ${Spacing["spacing-16"]};
+
     &:focus-within {
         border-color: ${Colour["border-focus"]};
+
+        &:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-top-left-radius: ${ThemeButton["button-radius"]};
+            border-bottom-left-radius: ${ThemeButton["button-radius"]};
+            outline: ${Border["width-020"]} ${Border["solid"]}
+                ${Colour["border-focus"]};
+            outline-offset: -1px;
+            clip-path: inset(-2px 0px -2px -2px);
+            pointer-events: none;
+        }
     }
 
     ${(props) =>

@@ -145,8 +145,6 @@ export const VerificationSection = ({
                         data-testid={
                             dataTestId ? `${dataTestId}-countdown` : undefined
                         }
-                        aria-live="polite"
-                        aria-atomic="true"
                     >
                         Resend OTP in {countdown.formatTime()}
                     </ReSendMessage>

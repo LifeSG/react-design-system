@@ -7,7 +7,6 @@ import {
     ContactButtonWrapper,
     ContactInputSectionWrapper,
     ContactInputWrapper,
-    ContactLabel,
     ContactSectionWrapper,
     EmailContactInput,
     PhoneContactInput,
@@ -21,6 +20,7 @@ export const ContactInputSection = ({
     "data-testid": dataTestId,
     disabled,
     readOnly,
+    inputId,
     type,
     sendOtpPlaceholder,
     emailValue,
@@ -54,7 +54,7 @@ export const ContactInputSection = ({
         <>
             {type === OtpVerifyType.EMAIL ? (
                 <EmailContactInput
-                    id={id ? `${id}-input` : undefined}
+                    id={inputId}
                     data-testid={dataTestId ? `${dataTestId}-input` : undefined}
                     placeholder={sendOtpPlaceholder || "Enter email"}
                     value={emailValue || ""}
@@ -69,7 +69,7 @@ export const ContactInputSection = ({
                 />
             ) : (
                 <PhoneContactInput
-                    id={id ? `${id}-input` : undefined}
+                    id={inputId}
                     data-testid={dataTestId ? `${dataTestId}-input` : undefined}
                     placeholder={sendOtpPlaceholder || "Enter mobile number"}
                     value={phoneNumberValue}
@@ -109,22 +109,16 @@ export const ContactInputSection = ({
             role="group"
             aria-labelledby={id ? `${id}-label` : undefined}
         >
-            <ContactLabel
-                id={id ? `${id}-label` : undefined}
-                data-testid={dataTestId ? `${dataTestId}-label` : undefined}
-            >
-                {type === OtpVerifyType.EMAIL ? "Email" : "Mobile Number"}
-            </ContactLabel>
             <ContactInputSectionWrapper>
                 <ContactInputWrapper $isMaxWidth={type === OtpVerifyType.EMAIL}>
                     {renderContactInput()}
                     {isVerified && (
                         <VerifiedIconWrapper
-                            className="verified-icon-wrapper"
+                            className="contact-verified-icon"
                             aria-label="Verified"
                             role="img"
                         >
-                            <TickCircleFillIcon width={20} height={20} />
+                            <TickCircleFillIcon />
                         </VerifiedIconWrapper>
                     )}
                 </ContactInputWrapper>
