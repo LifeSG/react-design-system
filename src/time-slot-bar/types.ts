@@ -6,6 +6,11 @@ export type Direction = "right" | "left";
 
 export type TimeSlotBarVariant = "minified" | "default";
 
+export interface TimeSlotBarRef {
+    /** Resets the scroll position to the initialScrollTime if provided */
+    resetScroll: () => void;
+}
+
 interface TimeSlotBarStyleAttributes {
     /** The type of style of the time slot. Values: "default" | "stripes"  */
     styleType?: SlotStyle;

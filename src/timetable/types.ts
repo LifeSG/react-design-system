@@ -7,6 +7,11 @@ export type TimeTableCellType =
     | "disabled"
     | "pending";
 
+export interface TimeTableRef {
+    /** Resets the scroll position to the initialScrollTime if provided */
+    resetScroll: () => void;
+}
+
 export interface TimeTableRowData {
     id?: string | undefined;
     name: string;
