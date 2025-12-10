@@ -17,6 +17,24 @@ export interface TimeValues {
     period: EPeriod;
 }
 
+export interface CalculateScrollPositionProps {
+    /** The time to scroll to in HH:mm format */
+    scrollTime: string;
+    /** The minimum time of the scrollable range in HH:mm format */
+    minTime: string;
+    /** The maximum time of the scrollable range in HH:mm format */
+    maxTime: string;
+    /** The interval in minutes (e.g., 15, 30, 60) */
+    interval: number;
+    /** The width in pixels of each interval */
+    intervalWidth: number;
+    /** Optional configuration */
+    options?: {
+        /** Round the scroll time to the nearest interval */
+        roundToInterval?: boolean;
+    };
+}
+
 // unexportable
 interface TimeValuesPlain {
     hour: string;
@@ -439,6 +457,78 @@ export namespace TimeHelper {
         const startMinutes = timeToMinutes(startTime);
         const endMinutes = timeToMinutes(endTime);
         return endMinutes - startMinutes;
+    };
+
+    /**
+     * Validates and calculates scroll position for a given time
+     * @param props - The configuration object for calculating scroll position
+     * @returns the calculated scroll position in pixels, or null if invalid
+     */
+    export const calculateScrollPosition = (
+        props: CalculateScrollPositionProps
+    ): number | null => {
+        const {
+            scrollTime,
+            minTime,
+            maxTime,
+            interval,
+            intervalWidth,
+            options,
+        } = props;
+
+        try {
+            // Validate time format (HH:mm)
+            const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+            if (!timeRegex.test(scrollTime)) {
+                console.warn(
+                    `Invalid scrollTime format: "${scrollTime}". Expected format: HH:mm.`
+                );
+                return null;
+            }
+
+            // Round to nearest interval if specified
+            const timeToUse = options?.roundToInterval
+                ? roundToNearestInterval(scrollTime, interval)
+                : scrollTime;
+
+            const [hours, minutes] = timeToUse.split(":").map(Number);
+
+            // Validate parsed values
+            if (isNaN(hours) || isNaN(minutes)) {
+                console.warn(`Invalid scrollTime: "${scrollTime}".`);
+                return null;
+            }
+
+            const scrollMinutes = hours * 60 + minutes;
+
+            const [minHours, minMinutes] = minTime.split(":").map(Number);
+            const minTotalMinutes = minHours * 60 + minMinutes;
+
+            const [maxHours, maxMinutes] = maxTime.split(":").map(Number);
+            const maxTotalMinutes = maxHours * 60 + maxMinutes;
+
+            // Warn if time is outside the visible range
+            if (
+                scrollMinutes < minTotalMinutes ||
+                scrollMinutes > maxTotalMinutes
+            ) {
+                console.warn(
+                    `scrollTime "${scrollTime}" is outside the range (${minTime} - ${maxTime}).`
+                );
+            }
+
+            const minutesFromStart = scrollMinutes - minTotalMinutes;
+            const intervalsFromStart = minutesFromStart / interval;
+            const scrollPosition = intervalsFromStart * intervalWidth;
+
+            return scrollPosition;
+        } catch (error) {
+            console.warn(
+                `Error processing scrollTime: "${scrollTime}".`,
+                error
+            );
+            return null;
+        }
     };
 }
 

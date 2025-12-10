@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { TimeHelper } from "../util/time-helper";
 import { TimeSlotBarHelper } from "./helper";
 import {
     ArrowButton,
@@ -32,6 +33,7 @@ export const TimeSlotBar = ({
     onSlotClick,
     onClick,
     styleAttributes,
+    initialScrollTime,
 }: TimeSlotBarProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -60,6 +62,8 @@ export const TimeSlotBar = ({
         const container = barRef.current;
         if (container) {
             container.addEventListener("scroll", handleScroll);
+            // Initialize clientWidth on mount
+            setClientWidth(container.clientWidth);
         }
 
         return () => {
@@ -68,6 +72,28 @@ export const TimeSlotBar = ({
             }
         };
     }, []);
+
+    useEffect(() => {
+        if (initialScrollTime && barRef.current && cellWidth > 0) {
+            // Calculate intervals per cell (30 minutes = CELL_DURATION)
+            const interval = 15; // Time slot bar uses 15-minute intervals for calculation
+
+            const scrollPosition = TimeHelper.calculateScrollPosition({
+                scrollTime: initialScrollTime,
+                minTime: startTime,
+                maxTime: endTime,
+                interval,
+                intervalWidth: cellWidth / 2, // Each 15-min interval is half a cell width
+                options: {
+                    roundToInterval: false,
+                },
+            });
+
+            if (scrollPosition !== null) {
+                barRef.current.scrollLeft = scrollPosition;
+            }
+        }
+    }, [initialScrollTime, cellWidth, startTime, endTime]);
 
     // =============================================================================
     // EVENT HANDLERS

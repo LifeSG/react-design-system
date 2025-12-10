@@ -1,5 +1,11 @@
 import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 
+const TIME_FORMAT = (
+    <>
+        string-based <code>HH:mm</code> format
+    </>
+);
+
 const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
@@ -68,6 +74,16 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["TimeSlotBarStyleAttributes"],
+            },
+            {
+                name: "initialScrollTime",
+                description: (
+                    <>
+                        The initial time for the table to offset to in{" "}
+                        {TIME_FORMAT}
+                    </>
+                ),
+                propTypes: ["string"],
             },
             {
                 name: "onSlotClick",

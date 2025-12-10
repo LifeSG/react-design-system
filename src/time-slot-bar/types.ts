@@ -26,6 +26,8 @@ export interface TimeSlotBarProps {
     startTime: string;
     /** The end time of time slot bar. Format in HH:mm. Note: Minutes can be 00, 15, 30, 45 */
     endTime: string;
+    /** Initial scroll position in HH:mm format (e.g., "09:00" will scroll to 9am on mount) */
+    initialScrollTime?: string;
     slots: TimeSlot[];
     /** Callback function when user clicks on the time slot */
     onSlotClick: (timeSlot: TimeSlot) => void;
