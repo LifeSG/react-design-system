@@ -29,11 +29,9 @@ const baseStyle = css<ListStyleProps>`
     // Counter matters
     counter-reset: list;
 
-    li {
-        font-weight: ${Font.Spec["weight-regular"]};
-        ${(props) => props.$size && Font[`${props.$size}-regular`]}
-        color: ${Colour.text};
-    }
+    ${(props) => props.$size && Font[`${props.$size}-regular`]}
+    font-weight: ${Font.Spec["weight-regular"]};
+    color: ${Colour.text};
 
     // nested lists styling
     ol,
@@ -46,10 +44,10 @@ const baseStyle = css<ListStyleProps>`
 export const StyledOrderedList = styled.ol<OrderedListStyleProps>`
     ${baseStyle}
 
-    margin-left: 3rem;
+    margin-left: 3em;
 
     ${MediaQuery.MaxWidth.lg} {
-        margin-left: 2.5rem;
+        margin-left: 2.5em;
     }
 
     li {
@@ -66,7 +64,7 @@ export const StyledOrderedList = styled.ol<OrderedListStyleProps>`
                 content: counter(list, ${counterType}) "${counterSeparator}";
                 counter-increment: ${reversed ? "list -1" : "list"};
                 position: absolute;
-                left: -2rem;
+                left: -2em;
             }
         `;
     }}
@@ -93,6 +91,6 @@ export const StyledOrderedList = styled.ol<OrderedListStyleProps>`
 export const StyledUnorderedList = styled.ul<UnorderedListStyleProps>`
     ${baseStyle}
 
-    margin-left: 2.5rem;
+    margin-left: 2.5em;
     list-style-type: ${(props) => props.$bulletType || "disc"};
 `;
