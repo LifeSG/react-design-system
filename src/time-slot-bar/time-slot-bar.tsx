@@ -49,7 +49,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
         onClick,
         styleAttributes,
         initialScrollTime,
-        roundToInterval = true,
+        roundInitialScrollTime = true,
     } = props;
     const barRef = useRef<HTMLDivElement>(null);
     const [scrollPosition, setScrollPosition] = useState<number>(0);
@@ -180,7 +180,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 interval: CELL_DURATION,
                 intervalWidth: cellWidth,
                 options: {
-                    roundToInterval,
+                    roundToInterval: roundInitialScrollTime,
                 },
             });
 

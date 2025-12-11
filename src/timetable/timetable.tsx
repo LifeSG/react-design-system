@@ -62,7 +62,7 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
         onNextDayClick,
         onPreviousDayClick,
         onCalendarDateSelect,
-        roundToInterval = true,
+        roundInitialScrollTime = true,
         ...otherProps
     } = props;
     const testId = otherProps["data-testid"] || "timetable";
@@ -244,7 +244,7 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                 interval: ROW_INTERVAL,
                 intervalWidth,
                 options: {
-                    roundToInterval,
+                    roundToInterval: roundInitialScrollTime,
                 },
             });
 

@@ -79,8 +79,8 @@ export interface TimeTableProps {
     showCurrentDateAsToday?: boolean | undefined;
     /** Whether to display the date in short form */
     showDateAsShortForm?: boolean | undefined;
-    /** Rounds time to the nearest interval, e.g 6:30 will be clamped to 6:00 when interval = 60. Default is true */
-    roundToInterval?: boolean | undefined;
+    /** Rounds initial scroll time to the nearest interval, e.g 6:30 will be clamped to 6:00 when interval = 60. Default is true */
+    roundInitialScrollTime?: boolean | undefined;
     /** Callback function when the refresh button is clicked */
     onRefresh?: (() => void) | undefined;
     /** Callback function for pagination */

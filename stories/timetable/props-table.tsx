@@ -112,6 +112,20 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "roundInitialScrollTime",
+                description: (
+                    <>
+                        When true, rounds the <code>initialScrollTime</code> to
+                        the nearest 15-minute grid interval. For example, 09:23
+                        will snap to 09:15, and 09:38 will snap to 09:30. This
+                        ensures the initial scroll position aligns with the
+                        timetable's grid.
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
+            {
                 name: "totalRecords",
                 description: (
                     <>

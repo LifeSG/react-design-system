@@ -43,8 +43,8 @@ export interface TimeSlotBarProps {
     onClick?: () => void;
     /** The default styling attributes when no time slot is specified for the time period */
     styleAttributes?: TimeSlotBarStyleAttributes | undefined;
-    /** Rounds time to the nearest interval, e.g 6:30 will be clamped to 6:00 when interval = 60. Default is true */
-    roundToInterval?: boolean | undefined;
+    /** Rounds initial scroll time to the nearest interval, e.g 6:30 will be clamped to 6:00 when interval = 60. Default is true */
+    roundInitialScrollTime?: boolean | undefined;
 }
 
 export interface TimeSlot {

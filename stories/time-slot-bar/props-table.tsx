@@ -86,6 +86,20 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "roundInitialScrollTime",
+                description: (
+                    <>
+                        When true, rounds the <code>initialScrollTime</code> to
+                        the nearest 30-minute interval. For example, 09:23 will
+                        snap to 09:00, and 09:38 will snap to 09:30. This
+                        ensures the initial scroll position aligns with the time
+                        slot bar's cells.
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
+            {
                 name: "onSlotClick",
                 mandatory: true,
                 description: "Called when the user selects a time slot",
