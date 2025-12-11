@@ -491,7 +491,7 @@ export namespace TimeHelper {
                 ? roundToNearestInterval(scrollTime, interval)
                 : scrollTime;
 
-            const [hours, minutes] = timeToUse.split(":").map(Number);
+            const [hours, minutes] = parseTimeToNumbers(timeToUse);
 
             // Validate parsed values
             if (isNaN(hours) || isNaN(minutes)) {
@@ -501,10 +501,10 @@ export namespace TimeHelper {
 
             const scrollMinutes = hours * 60 + minutes;
 
-            const [minHours, minMinutes] = minTime.split(":").map(Number);
+            const [minHours, minMinutes] = parseTimeToNumbers(minTime);
             const minTotalMinutes = minHours * 60 + minMinutes;
 
-            const [maxHours, maxMinutes] = maxTime.split(":").map(Number);
+            const [maxHours, maxMinutes] = parseTimeToNumbers(maxTime);
             const maxTotalMinutes = maxHours * 60 + maxMinutes;
 
             // Warn if time is outside the visible range
@@ -535,6 +535,18 @@ export namespace TimeHelper {
 // =============================================================================
 // NON-EXPORTABLES
 // =============================================================================
+
+/**
+ * Parses a time string in HH:mm format to separate hour and minute values
+ * @param timeString - Time string in HH:mm format (e.g., "09:30", "14:45")
+ * @returns Array containing [hours, minutes] as numbers
+ * @example
+ * parseTimeToNumbers("09:30") // returns [9, 30]
+ * parseTimeToNumbers("14:45") // returns [14, 45]
+ */
+const parseTimeToNumbers = (timeString: string): number[] => {
+    return timeString.split(":").map(Number);
+};
 const isValidHour = (hourString: string, format: TimeFormat): boolean => {
     const numValue = parseInt(hourString);
     return format === "24hr"

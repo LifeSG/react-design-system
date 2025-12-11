@@ -47,6 +47,7 @@ export const TimeSlotBar = forwardRef<TimeSlotBarRef, TimeSlotBarProps>(
             onClick,
             styleAttributes,
             initialScrollTime,
+            roundToInterval = true,
         },
         ref
     ) => {
@@ -101,7 +102,7 @@ export const TimeSlotBar = forwardRef<TimeSlotBarRef, TimeSlotBarProps>(
                     interval,
                     intervalWidth: cellWidth / 2, // Each 15-min interval is half a cell width
                     options: {
-                        roundToInterval: false,
+                        roundToInterval,
                     },
                 });
 

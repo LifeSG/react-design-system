@@ -60,6 +60,7 @@ export const TimeTable = forwardRef<TimeTableRef, TimeTableProps>(
             onNextDayClick,
             onPreviousDayClick,
             onCalendarDateSelect,
+            roundToInterval = true,
             ...otherProps
         },
         ref
@@ -147,7 +148,7 @@ export const TimeTable = forwardRef<TimeTableRef, TimeTableProps>(
                     interval: ROW_INTERVAL,
                     intervalWidth,
                     options: {
-                        roundToInterval: true,
+                        roundToInterval,
                     },
                 });
 

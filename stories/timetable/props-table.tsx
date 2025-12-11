@@ -105,8 +105,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "initialScrollTime",
                 description: (
                     <>
-                        The initial time for the table to offset to in{" "}
-                        {TIME_FORMAT}
+                        The initial time in {TIME_FORMAT} that the timetable
+                        will be offset to (when horizontally scrollable)
                     </>
                 ),
                 propTypes: ["string"],

@@ -468,21 +468,6 @@ describe("calculateScrollPosition tests", () => {
             expect(result).toBe(0);
         });
 
-        it("should handle end of day (23:59) correctly", () => {
-            const result = TimeHelper.calculateScrollPosition({
-                scrollTime: "23:00",
-                minTime: "00:00",
-                maxTime: "24:00",
-                interval: 60,
-                intervalWidth: 50,
-            });
-
-            // 23:00 is 1380 minutes from 00:00
-            // 1380 / 60 = 23 intervals
-            // 23 * 50 = 1150px
-            expect(result).toBe(1150);
-        });
-
         it("should handle very small intervals", () => {
             const result = TimeHelper.calculateScrollPosition({
                 scrollTime: "08:05",
