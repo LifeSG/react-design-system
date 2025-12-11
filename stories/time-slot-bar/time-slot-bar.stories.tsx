@@ -187,3 +187,59 @@ export const DifferentIndicators: StoryObj<Component> = {
         );
     },
 };
+
+export const InitialScrollTime: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <div style={{ width: "400px" }}>
+                <TimeSlotBar
+                    startTime="00:00"
+                    endTime="24:00"
+                    initialScrollTime="08:00"
+                    onSlotClick={() => {
+                        /* empty arrow function */
+                    }}
+                    slots={[
+                        {
+                            id: "1",
+                            startTime: "09:00",
+                            endTime: "09:30",
+                            styleAttributes: {
+                                backgroundColor: Colour["bg-available"],
+                            },
+                        },
+                        {
+                            id: "2",
+                            startTime: "09:30",
+                            endTime: "10:00",
+                            styleAttributes: {
+                                backgroundColor: Colour["bg-available"],
+                            },
+                        },
+                        {
+                            id: "4",
+                            startTime: "13:00",
+                            endTime: "14:30",
+                            styleAttributes: {
+                                backgroundColor: Colour["bg-available"],
+                            },
+                        },
+                        {
+                            id: "5",
+                            startTime: "15:15",
+                            endTime: "16:45",
+                            styleAttributes: {
+                                backgroundColor: Colour["bg-available"],
+                            },
+                        },
+                    ]}
+                    styleAttributes={{
+                        styleType: "stripes",
+                        backgroundColor: Colour["bg-stronger"],
+                        backgroundColor2: Colour["bg-strongest"],
+                    }}
+                />
+            </div>
+        );
+    },
+};

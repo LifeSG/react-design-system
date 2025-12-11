@@ -1,5 +1,11 @@
 import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 
+const TIME_FORMAT = (
+    <>
+        string-based <code>HH:mm</code> format
+    </>
+);
+
 const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
@@ -68,6 +74,30 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["TimeSlotBarStyleAttributes"],
+            },
+            {
+                name: "initialScrollTime",
+                description: (
+                    <>
+                        The initial time in {TIME_FORMAT} that the time slot bar
+                        will be offset to (when horizontally scrollable)
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
+                name: "roundInitialScrollTime",
+                description: (
+                    <>
+                        When true, rounds the <code>initialScrollTime</code> to
+                        the nearest 30-minute interval. For example, 09:23 will
+                        snap to 09:00, and 09:38 will snap to 09:30. This
+                        ensures the initial scroll position aligns with the time
+                        slot bar's cells.
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: "true",
             },
             {
                 name: "onSlotClick",

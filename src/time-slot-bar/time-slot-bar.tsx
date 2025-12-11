@@ -1,7 +1,14 @@
 import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
-import { useEffect, useRef, useState } from "react";
+import {
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { TimeHelper } from "../util/time-helper";
 import { TimeSlotBarHelper } from "./helper";
 import {
     ArrowButton,
@@ -18,24 +25,32 @@ import {
     TimeSlotWrapper,
     getCellWidth,
 } from "./time-slot-bar.styles";
-import { Direction, TimeSlotBarProps, TimeSlotBarVariant } from "./types";
+import {
+    Direction,
+    TimeSlotBarProps,
+    TimeSlotBarRef,
+    TimeSlotBarVariant,
+} from "./types";
 
 const CELL_DURATION = 30; // In minutes
 
-export const TimeSlotBar = ({
-    "data-testid": testId,
-    className,
-    variant = "default",
-    startTime,
-    endTime,
-    slots,
-    onSlotClick,
-    onClick,
-    styleAttributes,
-}: TimeSlotBarProps) => {
+const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const {
+        "data-testid": testId,
+        className,
+        variant = "default",
+        startTime,
+        endTime,
+        slots,
+        onSlotClick,
+        onClick,
+        styleAttributes,
+        initialScrollTime,
+        roundInitialScrollTime = true,
+    } = props;
     const barRef = useRef<HTMLDivElement>(null);
     const [scrollPosition, setScrollPosition] = useState<number>(0);
     const [clientWidth, setClientWidth] = useState<number>(0);
@@ -52,6 +67,11 @@ export const TimeSlotBar = ({
 
     const SCROLL_INCREMENT = cellWidth * 2.5; // In px. Each scroll increment corresponds to 75mins
 
+    // Expose imperative handle
+    useImperativeHandle(ref, () => ({
+        resetScroll,
+    }));
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -60,6 +80,8 @@ export const TimeSlotBar = ({
         const container = barRef.current;
         if (container) {
             container.addEventListener("scroll", handleScroll);
+            // Initialize clientWidth on mount
+            setClientWidth(container.clientWidth);
         }
 
         return () => {
@@ -68,6 +90,11 @@ export const TimeSlotBar = ({
             }
         };
     }, []);
+
+    // Initial scroll on mount and when dependencies change
+    useEffect(() => {
+        resetScroll();
+    }, [initialScrollTime, cellWidth, startTime, endTime]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -141,6 +168,26 @@ export const TimeSlotBar = ({
                 : currentTime.hour() % 2 === 1);
 
         return isAlternateHour;
+    };
+
+    // Function to reset scroll to initialScrollTime
+    const resetScroll = () => {
+        if (initialScrollTime && barRef.current && cellWidth > 0) {
+            const scrollPosition = TimeHelper.calculateScrollPosition({
+                scrollTime: initialScrollTime,
+                minTime: startTime,
+                maxTime: endTime,
+                interval: CELL_DURATION,
+                intervalWidth: cellWidth,
+                options: {
+                    roundToInterval: roundInitialScrollTime,
+                },
+            });
+
+            if (scrollPosition !== null) {
+                barRef.current.scrollLeft = scrollPosition;
+            }
+        }
     };
 
     // =============================================================================
@@ -370,3 +417,7 @@ export const TimeSlotBar = ({
         </Container>
     );
 };
+
+export const TimeSlotBar = forwardRef<TimeSlotBarRef, TimeSlotBarProps>(
+    Component
+);
