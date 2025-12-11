@@ -69,6 +69,19 @@ export const Ordered: StoryObj = {
     decorators: [GridDecorator({ columns: 4 })],
 };
 
+export const TextSize: StoryObj = {
+    render: (_args) => {
+        return (
+            <TextList.Ol size="heading-lg">
+                <li>First</li>
+                <li>Second</li>
+                <li>Third</li>
+            </TextList.Ol>
+        );
+    },
+    decorators: [StoryDecorator()],
+};
+
 export const Nested: StoryObj = {
     render: (_args) => {
         return (
