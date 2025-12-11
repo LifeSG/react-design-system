@@ -34,397 +34,390 @@ import {
 
 const CELL_DURATION = 30; // In minutes
 
-export const TimeSlotBar = forwardRef<TimeSlotBarRef, TimeSlotBarProps>(
-    (
-        {
-            "data-testid": testId,
-            className,
-            variant = "default",
-            startTime,
-            endTime,
-            slots,
-            onSlotClick,
-            onClick,
-            styleAttributes,
-            initialScrollTime,
-            roundToInterval = true,
-        },
-        ref
-    ) => {
-        // =============================================================================
-        // CONST, STATE, REF
-        // =============================================================================
-        const barRef = useRef<HTMLDivElement>(null);
-        const [scrollPosition, setScrollPosition] = useState<number>(0);
-        const [clientWidth, setClientWidth] = useState<number>(0);
-        const cellWidth = getCellWidth(variant);
+const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
+    const {
+        "data-testid": testId,
+        className,
+        variant = "default",
+        startTime,
+        endTime,
+        slots,
+        onSlotClick,
+        onClick,
+        styleAttributes,
+        initialScrollTime,
+        roundToInterval = true,
+    } = props;
+    const barRef = useRef<HTMLDivElement>(null);
+    const [scrollPosition, setScrollPosition] = useState<number>(0);
+    const [clientWidth, setClientWidth] = useState<number>(0);
+    const cellWidth = getCellWidth(variant);
 
-        const adjustedStartTime = TimeSlotBarHelper.adjustTimeForMarker(
-            startTime,
-            "start"
-        );
-        const adjustedEndTime = TimeSlotBarHelper.adjustTimeForMarker(
-            endTime,
-            "end"
-        );
+    const adjustedStartTime = TimeSlotBarHelper.adjustTimeForMarker(
+        startTime,
+        "start"
+    );
+    const adjustedEndTime = TimeSlotBarHelper.adjustTimeForMarker(
+        endTime,
+        "end"
+    );
 
-        const SCROLL_INCREMENT = cellWidth * 2.5; // In px. Each scroll increment corresponds to 75mins
+    const SCROLL_INCREMENT = cellWidth * 2.5; // In px. Each scroll increment corresponds to 75mins
 
-        // =============================================================================
-        // EFFECTS
-        // =============================================================================
+    // Expose imperative handle
+    useImperativeHandle(ref, () => ({
+        resetScroll,
+    }));
 
-        useEffect(() => {
-            const container = barRef.current;
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+
+    useEffect(() => {
+        const container = barRef.current;
+        if (container) {
+            container.addEventListener("scroll", handleScroll);
+            // Initialize clientWidth on mount
+            setClientWidth(container.clientWidth);
+        }
+
+        return () => {
             if (container) {
-                container.addEventListener("scroll", handleScroll);
-                // Initialize clientWidth on mount
-                setClientWidth(container.clientWidth);
-            }
-
-            return () => {
-                if (container) {
-                    container.removeEventListener("scroll", handleScroll);
-                }
-            };
-        }, []);
-
-        // Function to reset scroll to initialScrollTime
-        const resetScroll = () => {
-            if (initialScrollTime && barRef.current && cellWidth > 0) {
-                // Calculate intervals per cell (30 minutes = CELL_DURATION)
-                const interval = 15; // Time slot bar uses 15-minute intervals for calculation
-
-                const scrollPosition = TimeHelper.calculateScrollPosition({
-                    scrollTime: initialScrollTime,
-                    minTime: startTime,
-                    maxTime: endTime,
-                    interval,
-                    intervalWidth: cellWidth / 2, // Each 15-min interval is half a cell width
-                    options: {
-                        roundToInterval,
-                    },
-                });
-
-                if (scrollPosition !== null) {
-                    barRef.current.scrollLeft = scrollPosition;
-                }
+                container.removeEventListener("scroll", handleScroll);
             }
         };
+    }, []);
 
-        // Expose imperative handle
-        useImperativeHandle(ref, () => ({
-            resetScroll,
-        }));
+    // Initial scroll on mount and when dependencies change
+    useEffect(() => {
+        resetScroll();
+    }, [initialScrollTime, cellWidth, startTime, endTime]);
 
-        // Initial scroll on mount and when dependencies change
-        useEffect(() => {
-            resetScroll();
-        }, [initialScrollTime, cellWidth, startTime, endTime]);
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
 
-        // =============================================================================
-        // EVENT HANDLERS
-        // =============================================================================
+    const handleScroll = () => {
+        if (barRef.current) {
+            setScrollPosition(barRef.current.scrollLeft);
+        }
+    };
 
-        const handleScroll = () => {
-            if (barRef.current) {
-                setScrollPosition(barRef.current.scrollLeft);
+    const handleArrowButtonClick = (direction: Direction) => {
+        if (barRef.current) {
+            barRef.current.scrollBy({
+                left:
+                    direction === "left" ? -SCROLL_INCREMENT : SCROLL_INCREMENT,
+                behavior: "smooth",
+            });
+        }
+    };
+
+    const handleResize = () => {
+        if (barRef.current) {
+            setClientWidth(barRef.current.clientWidth);
+        }
+    };
+
+    useResizeDetector({
+        onResize: handleResize,
+        targetRef: barRef,
+        refreshMode: "debounce",
+        refreshRate: 50,
+    });
+
+    // ===========================================================================
+    // HELPER FUNCTIONS
+    // ===========================================================================
+    /**
+     * NOTE: Special condition
+     * Show ellipsis only if the slotWidth is smaller or equal to
+     * 15min interval
+     */
+    const showFullEllipsis = (slotWidth: number) => {
+        return slotWidth <= cellWidth / 2;
+    };
+
+    const getDataTestId = (subStr: string) => {
+        if (!testId) return undefined;
+        return `${testId}-${subStr}`;
+    };
+
+    /**
+     * Function to determine if a long time marker should be displayed
+     * For minified variant the long time marker is displayed every alternate hour
+     */
+    const shouldDisplayLongTimeMarker = (
+        currentTime: Dayjs,
+        isStartHourEven: boolean, // To determine if the first hour is even or odd for minified
+        variant: TimeSlotBarVariant
+    ) => {
+        const isHour = currentTime.minute() === 0;
+
+        if (variant === "default") {
+            return isHour;
+        }
+
+        const isAlternateHour =
+            isHour &&
+            (isStartHourEven
+                ? currentTime.hour() % 2 === 0
+                : currentTime.hour() % 2 === 1);
+
+        return isAlternateHour;
+    };
+
+    // Function to reset scroll to initialScrollTime
+    const resetScroll = () => {
+        if (initialScrollTime && barRef.current && cellWidth > 0) {
+            const scrollPosition = TimeHelper.calculateScrollPosition({
+                scrollTime: initialScrollTime,
+                minTime: startTime,
+                maxTime: endTime,
+                interval: CELL_DURATION,
+                intervalWidth: cellWidth,
+                options: {
+                    roundToInterval,
+                },
+            });
+
+            if (scrollPosition !== null) {
+                barRef.current.scrollLeft = scrollPosition;
             }
-        };
+        }
+    };
 
-        const handleArrowButtonClick = (direction: Direction) => {
-            if (barRef.current) {
-                barRef.current.scrollBy({
-                    left:
-                        direction === "left"
-                            ? -SCROLL_INCREMENT
-                            : SCROLL_INCREMENT,
-                    behavior: "smooth",
-                });
-            }
-        };
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
 
-        const handleResize = () => {
-            if (barRef.current) {
-                setClientWidth(barRef.current.clientWidth);
-            }
-        };
+    // Render time markers
+    const renderTimeMarkers = () => {
+        const timeMarkers = [];
+        const startTimeFormatted = dayjs(adjustedStartTime, "HH:mm");
+        const endTimeFormatted = dayjs(adjustedEndTime, "HH:mm");
 
-        useResizeDetector({
-            onResize: handleResize,
-            targetRef: barRef,
-            refreshMode: "debounce",
-            refreshRate: 50,
-        });
+        const isStartHourEven = startTimeFormatted.hour() % 2 === 0;
 
-        // ===========================================================================
-        // HELPER FUNCTIONS
-        // ===========================================================================
-        /**
-         * NOTE: Special condition
-         * Show ellipsis only if the slotWidth is smaller or equal to
-         * 15min interval
-         */
-        const showFullEllipsis = (slotWidth: number) => {
-            return slotWidth <= cellWidth / 2;
-        };
+        for (
+            let currentTime = startTimeFormatted;
+            currentTime.isBefore(endTimeFormatted);
+            currentTime = currentTime.add(CELL_DURATION, "minute")
+        ) {
+            const displayLongTimeMarker = shouldDisplayLongTimeMarker(
+                currentTime,
+                isStartHourEven,
+                variant
+            );
 
-        const getDataTestId = (subStr: string) => {
-            if (!testId) return undefined;
-            return `${testId}-${subStr}`;
-        };
+            timeMarkers.push(
+                <TimeMarker
+                    data-testid={`${currentTime.format("HH:mm")}-marker`}
+                    key={currentTime.format("HH:mm")}
+                    $isLongMarker={displayLongTimeMarker}
+                    $variant={variant}
+                >
+                    {displayLongTimeMarker && (
+                        <TimeLabel weight="semibold">
+                            {TimeSlotBarHelper.formatHourlyDisplay(
+                                currentTime.format("HH:mm")
+                            )}
+                        </TimeLabel>
+                    )}
+                </TimeMarker>
+            );
+        }
+        return timeMarkers;
+    };
 
-        /**
-         * Function to determine if a long time marker should be displayed
-         * For minified variant the long time marker is displayed every alternate hour
-         */
-        const shouldDisplayLongTimeMarker = (
-            currentTime: Dayjs,
-            isStartHourEven: boolean, // To determine if the first hour is even or odd for minified
-            variant: TimeSlotBarVariant
-        ) => {
-            const isHour = currentTime.minute() === 0;
+    // Render default time slot (aka background)
+    const renderDefaultTimeSlots = () => {
+        if (!styleAttributes) return;
 
-            if (variant === "default") {
-                return isHour;
-            }
+        const {
+            backgroundColor,
+            backgroundColor2,
+            styleType = "default",
+        } = styleAttributes;
 
-            const isAlternateHour =
-                isHour &&
-                (isStartHourEven
-                    ? currentTime.hour() % 2 === 0
-                    : currentTime.hour() % 2 === 1);
+        const slotWidth = TimeSlotBarHelper.calculateWidth(
+            startTime,
+            endTime,
+            cellWidth
+        );
 
-            return isAlternateHour;
-        };
+        const isClickable = !!onClick && variant === "default";
 
-        // =============================================================================
-        // RENDER FUNCTIONS
-        // =============================================================================
+        return (
+            <>
+                <TimeSlotBorder $variant={variant} />
+                <TimeSlot
+                    key={"default-timeslot"}
+                    data-testid={getDataTestId("default-timeslot")}
+                    $width={slotWidth}
+                    $variant={variant}
+                    $left={0}
+                    $styleType={styleType}
+                    $bgColor={backgroundColor}
+                    $bgColor2={backgroundColor2}
+                    $clickable={isClickable}
+                    onClick={isClickable ? onClick : undefined}
+                />
+            </>
+        );
+    };
 
-        // Render time markers
-        const renderTimeMarkers = () => {
-            const timeMarkers = [];
-            const startTimeFormatted = dayjs(adjustedStartTime, "HH:mm");
-            const endTimeFormatted = dayjs(adjustedEndTime, "HH:mm");
-
-            const isStartHourEven = startTimeFormatted.hour() % 2 === 0;
-
-            for (
-                let currentTime = startTimeFormatted;
-                currentTime.isBefore(endTimeFormatted);
-                currentTime = currentTime.add(CELL_DURATION, "minute")
-            ) {
-                const displayLongTimeMarker = shouldDisplayLongTimeMarker(
-                    currentTime,
-                    isStartHourEven,
-                    variant
-                );
-
-                timeMarkers.push(
-                    <TimeMarker
-                        data-testid={`${currentTime.format("HH:mm")}-marker`}
-                        key={currentTime.format("HH:mm")}
-                        $isLongMarker={displayLongTimeMarker}
-                        $variant={variant}
-                    >
-                        {displayLongTimeMarker && (
-                            <TimeLabel weight="semibold">
-                                {TimeSlotBarHelper.formatHourlyDisplay(
-                                    currentTime.format("HH:mm")
-                                )}
-                            </TimeLabel>
-                        )}
-                    </TimeMarker>
-                );
-            }
-            return timeMarkers;
-        };
-
-        // Render default time slot (aka background)
-        const renderDefaultTimeSlots = () => {
-            if (!styleAttributes) return;
+    // Render time slots
+    const renderTimeSlots = () => {
+        return slots.map((slot) => {
+            const {
+                id,
+                startTime: slotStartTime,
+                endTime: slotEndTime,
+                label,
+                clickable = true,
+                styleAttributes,
+            } = slot;
 
             const {
+                color,
+                styleType = "default",
                 backgroundColor,
                 backgroundColor2,
-                styleType = "default",
             } = styleAttributes;
 
             const slotWidth = TimeSlotBarHelper.calculateWidth(
-                startTime,
-                endTime,
+                slotStartTime,
+                slotEndTime,
+                cellWidth
+            );
+            const slotOffset = TimeSlotBarHelper.calculateWidth(
+                adjustedStartTime,
+                slotStartTime,
                 cellWidth
             );
 
-            const isClickable = !!onClick && variant === "default";
+            const isClickable = clickable && variant === "default";
 
             return (
-                <>
-                    <TimeSlotBorder $variant={variant} />
-                    <TimeSlot
-                        key={"default-timeslot"}
-                        data-testid={getDataTestId("default-timeslot")}
-                        $width={slotWidth}
+                <div key={id}>
+                    <TimeSlotBorder
                         $variant={variant}
-                        $left={0}
+                        style={{
+                            left: `${slotOffset}px`,
+                        }}
+                    />
+                    <TimeSlot
+                        data-testid={getDataTestId(`${id}-timeslot`)}
+                        $width={slotWidth}
+                        $left={slotOffset}
                         $styleType={styleType}
+                        $variant={variant}
                         $bgColor={backgroundColor}
                         $bgColor2={backgroundColor2}
                         $clickable={isClickable}
-                        onClick={isClickable ? onClick : undefined}
-                    />
-                </>
-            );
-        };
-
-        // Render time slots
-        const renderTimeSlots = () => {
-            return slots.map((slot) => {
-                const {
-                    id,
-                    startTime: slotStartTime,
-                    endTime: slotEndTime,
-                    label,
-                    clickable = true,
-                    styleAttributes,
-                } = slot;
-
-                const {
-                    color,
-                    styleType = "default",
-                    backgroundColor,
-                    backgroundColor2,
-                } = styleAttributes;
-
-                const slotWidth = TimeSlotBarHelper.calculateWidth(
-                    slotStartTime,
-                    slotEndTime,
-                    cellWidth
-                );
-                const slotOffset = TimeSlotBarHelper.calculateWidth(
-                    adjustedStartTime,
-                    slotStartTime,
-                    cellWidth
-                );
-
-                const isClickable = clickable && variant === "default";
-
-                return (
-                    <div key={id}>
+                        onClick={() => isClickable && onSlotClick(slot)}
+                    >
+                        {label && variant === "default" && (
+                            <CellText
+                                $slotWidth={slotWidth}
+                                $color={color}
+                                weight={"semibold"}
+                            >
+                                {showFullEllipsis(slotWidth) ? "..." : label}
+                            </CellText>
+                        )}
+                    </TimeSlot>
+                    {endTime !== slotEndTime && (
                         <TimeSlotBorder
                             $variant={variant}
                             style={{
-                                left: `${slotOffset}px`,
+                                left: `${slotOffset + slotWidth}px`,
                             }}
                         />
-                        <TimeSlot
-                            data-testid={getDataTestId(`${id}-timeslot`)}
-                            $width={slotWidth}
-                            $left={slotOffset}
-                            $styleType={styleType}
-                            $variant={variant}
-                            $bgColor={backgroundColor}
-                            $bgColor2={backgroundColor2}
-                            $clickable={isClickable}
-                            onClick={() => isClickable && onSlotClick(slot)}
-                        >
-                            {label && variant === "default" && (
-                                <CellText
-                                    $slotWidth={slotWidth}
-                                    $color={color}
-                                    weight={"semibold"}
-                                >
-                                    {showFullEllipsis(slotWidth)
-                                        ? "..."
-                                        : label}
-                                </CellText>
-                            )}
-                        </TimeSlot>
-                        {endTime !== slotEndTime && (
-                            <TimeSlotBorder
-                                $variant={variant}
-                                style={{
-                                    left: `${slotOffset + slotWidth}px`,
-                                }}
-                            />
-                        )}
-                    </div>
-                );
-            });
-        };
-
-        const renderArrowButtonLeft = () => {
-            return (
-                <>
-                    {/* Show the left ArrowButton when the scroll position is greater than 0 */}
-                    {scrollPosition > 0 && (
-                        <ArrowButton
-                            data-testid={getDataTestId("arrow-left")}
-                            $direction={"left"}
-                            $variant={variant}
-                            focusHighlight={false}
-                            focusOutline="none"
-                            onClick={() => {
-                                handleArrowButtonClick("left");
-                            }}
-                        >
-                            <ArrowIconLeft />
-                        </ArrowButton>
                     )}
-                </>
+                </div>
             );
-        };
+        });
+    };
 
-        const renderArrowButtonRight = () => {
-            // Show the right ArrowButton when the scroll position is less than the maximum possible scroll value
-            if (
-                scrollPosition + clientWidth <
-                TimeSlotBarHelper.calculateWidth(startTime, endTime, cellWidth)
-            ) {
-                return (
+    const renderArrowButtonLeft = () => {
+        return (
+            <>
+                {/* Show the left ArrowButton when the scroll position is greater than 0 */}
+                {scrollPosition > 0 && (
                     <ArrowButton
-                        data-testid={getDataTestId("arrow-right")}
-                        $direction={"right"}
+                        data-testid={getDataTestId("arrow-left")}
+                        $direction={"left"}
                         $variant={variant}
                         focusHighlight={false}
                         focusOutline="none"
                         onClick={() => {
-                            handleArrowButtonClick("right");
+                            handleArrowButtonClick("left");
                         }}
                     >
-                        <ArrowIconRight />
+                        <ArrowIconLeft />
                     </ArrowButton>
-                );
-            }
-
-            return <></>;
-        };
-
-        return (
-            <Container className={className}>
-                <TimeSlotBarContainer
-                    data-testid={testId}
-                    ref={barRef}
-                    $variant={variant}
-                >
-                    <TimeMarkerWrapper
-                        data-testid={getDataTestId("time-marker-wrapper")}
-                        data-id="marker-wrapper"
-                    >
-                        {renderTimeMarkers()}
-                    </TimeMarkerWrapper>
-                    <TimeSlotWrapper
-                        data-testid={getDataTestId("time-slot-wrapper")}
-                        data-id="slot-wrapper"
-                    >
-                        {renderDefaultTimeSlots()}
-                        {renderTimeSlots()}
-                    </TimeSlotWrapper>
-                </TimeSlotBarContainer>
-                {renderArrowButtonLeft()}
-                {renderArrowButtonRight()}
-            </Container>
+                )}
+            </>
         );
-    }
+    };
+
+    const renderArrowButtonRight = () => {
+        // Show the right ArrowButton when the scroll position is less than the maximum possible scroll value
+        if (
+            scrollPosition + clientWidth <
+            TimeSlotBarHelper.calculateWidth(startTime, endTime, cellWidth)
+        ) {
+            return (
+                <ArrowButton
+                    data-testid={getDataTestId("arrow-right")}
+                    $direction={"right"}
+                    $variant={variant}
+                    focusHighlight={false}
+                    focusOutline="none"
+                    onClick={() => {
+                        handleArrowButtonClick("right");
+                    }}
+                >
+                    <ArrowIconRight />
+                </ArrowButton>
+            );
+        }
+
+        return <></>;
+    };
+
+    return (
+        <Container className={className}>
+            <TimeSlotBarContainer
+                data-testid={testId}
+                ref={barRef}
+                $variant={variant}
+            >
+                <TimeMarkerWrapper
+                    data-testid={getDataTestId("time-marker-wrapper")}
+                    data-id="marker-wrapper"
+                >
+                    {renderTimeMarkers()}
+                </TimeMarkerWrapper>
+                <TimeSlotWrapper
+                    data-testid={getDataTestId("time-slot-wrapper")}
+                    data-id="slot-wrapper"
+                >
+                    {renderDefaultTimeSlots()}
+                    {renderTimeSlots()}
+                </TimeSlotWrapper>
+            </TimeSlotBarContainer>
+            {renderArrowButtonLeft()}
+            {renderArrowButtonRight()}
+        </Container>
+    );
+};
+
+export const TimeSlotBar = forwardRef<TimeSlotBarRef, TimeSlotBarProps>(
+    Component
 );
