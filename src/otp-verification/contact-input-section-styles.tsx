@@ -181,8 +181,4 @@ export const PhoneContactInput = styled(PhoneNumberInput)<
     InputWrapperStyleProps & { $verified?: boolean }
 >`
     ${contactInputStyles}
-    &:focus-within {
-        border-color: ${Colour["border-focus"]};
-        outline: none;
-    }
 `;

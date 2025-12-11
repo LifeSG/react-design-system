@@ -103,12 +103,7 @@ export const ContactInputSection = ({
     };
 
     return (
-        <ContactSectionWrapper
-            id={id}
-            data-testid={dataTestId}
-            role="group"
-            aria-labelledby={id ? `${id}-label` : undefined}
-        >
+        <ContactSectionWrapper id={id} data-testid={dataTestId} role="group">
             <ContactInputSectionWrapper>
                 <ContactInputWrapper $isMaxWidth={type === OtpVerifyType.EMAIL}>
                     {renderContactInput()}
