@@ -18,7 +18,9 @@ import { TimeSlotBar } from "@lifesg/react-design-system/time-slot-bar";
 
 ## Minified Variant
 
-In cases where there is a requirement to display a large number of time slots in a smaller viewport, you can make use of the minified variant of the component. To do so, set `variant="minified"`.
+In cases where there is a requirement to display a large number of time slots in
+a smaller viewport, you can make use of the minified variant of the component.
+To do so, set `variant="minified"`.
 
 <Canvas of={TimeSlotBarStories.MinifiedVariant} />
 
@@ -28,11 +30,12 @@ Here is an example of how you can specify different indicators and colors.
 
 <Canvas of={TimeSlotBarStories.DifferentIndicators} />
 
-## Initial Scroll
+## Initial scroll position
 
-Here is an example of how you can specify the initial scroll time for the component.
+`initialScrollTime` can be specified to control the initial offset when the
+component is horizontally scrollable.
 
-<Canvas of={TimeSlotBarStories.WithInitialScroll} />
+<Canvas of={TimeSlotBarStories.InitialScrollTime} />
 
 ## Component API
 

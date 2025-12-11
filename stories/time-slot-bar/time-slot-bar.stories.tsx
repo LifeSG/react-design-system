@@ -188,7 +188,7 @@ export const DifferentIndicators: StoryObj<Component> = {
     },
 };
 
-export const WithInitialScroll: StoryObj<Component> = {
+export const InitialScrollTime: StoryObj<Component> = {
     render: (_args) => {
         return (
             <div style={{ width: "400px" }}>

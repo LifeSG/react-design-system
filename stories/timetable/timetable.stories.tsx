@@ -324,7 +324,7 @@ export const EmptyContent: StoryObj<Component> = {
     },
 };
 
-export const WithInitialScroll: StoryObj<Component> = {
+export const InitialScrollTime: StoryObj<Component> = {
     render: () => {
         const [results, setResults] =
             useState<TimeTableRowData[]>(timetableDefaultData);
