@@ -43,6 +43,16 @@ export const LabelAddon: StoryObj<Component> = {
                     }}
                 />
                 <Form.InputGroup
+                    label="With a label addon on and no border wrapper"
+                    placeholder="Enter an amount"
+                    addon={{
+                        attributes: {
+                            value: "kg",
+                        },
+                    }}
+                    noBorder
+                />
+                <Form.InputGroup
                     label="This is the disabled state"
                     placeholder="Enter an amount"
                     addon={{
@@ -102,6 +112,17 @@ export const CustomAddon: StoryObj<Component> = {
                         },
                         position: "right",
                     }}
+                />
+                <Form.InputGroup
+                    label="With a custom addon on and no border wrapper"
+                    placeholder="Enter an amount"
+                    addon={{
+                        type: "custom",
+                        attributes: {
+                            children: <MagnifierIcon />,
+                        },
+                    }}
+                    noBorder
                 />
                 <Form.InputGroup
                     label="This is the disabled state"
@@ -170,6 +191,15 @@ export const ListAddon: StoryObj<Component> = {
                         type: "list",
                         attributes: listAddonOptions,
                     }}
+                />
+                <Form.InputGroup
+                    label="With a list addon on and no border wrapper"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "list",
+                        attributes: listAddonOptions,
+                    }}
+                    noBorder
                 />
                 <Form.InputGroup
                     label="This is the list addon readonly state (pristine)"

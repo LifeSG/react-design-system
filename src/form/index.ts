@@ -10,6 +10,7 @@ import { FormMaskedInput } from "./form-masked-input";
 import { FormMultiSelect } from "./form-multi-select";
 import { FormNestedMultiSelect } from "./form-nested-multi-select";
 import { FormNestedSelect } from "./form-nested-select";
+import { FormOtpVerification } from "./form-otp-verification";
 import { FormPhoneNumberInput } from "./form-phone-number-input";
 import { FormPredictiveTextInput } from "./form-predictive-text-input";
 import { FormRangeSelect } from "./form-range-select";
@@ -46,4 +47,5 @@ export const Form = {
     UnitNumberInput: FormUnitNumberInput,
     PhoneNumberInput: FormPhoneNumberInput,
     PredictiveTextInput: FormPredictiveTextInput,
+    OtpVerification: FormOtpVerification,
 };
