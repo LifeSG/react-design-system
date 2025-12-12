@@ -67,7 +67,7 @@ export const FormWrapper = ({
     const getAriaDescribedBy = (): string | undefined => {
         return (
             [
-                !!errorMessage ? getErrorTestMessageId() : undefined,
+                errorMessage ? getErrorTestMessageId() : undefined,
                 hasSubtitleLabel() ? getSubtitleId() : undefined,
             ]
                 .filter(Boolean)

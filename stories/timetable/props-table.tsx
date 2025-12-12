@@ -119,7 +119,7 @@ const DATA: ApiTableSectionProps[] = [
                         the nearest 15-minute grid interval. For example, 09:23
                         will snap to 09:15, and 09:38 will snap to 09:30. This
                         ensures the initial scroll position aligns with the
-                        timetable's grid.
+                        timetable&apos;s grid.
                     </>
                 ),
                 propTypes: ["boolean"],
