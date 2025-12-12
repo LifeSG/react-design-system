@@ -2,14 +2,35 @@
 
 ## Code structure
 
-To enable ease of understanding and consistency, we recommend following the structure as such:
+To enable ease of understanding and consistency, we recommend following this
+basic folder structure as such:
 
-> Note: Add headers to the respective sections
+```
+src/
+└── component/
+    ├── index.ts
+    ├── component.tsx
+    ├── component.styles.tsx
+    ├── types.ts
+    └── internal-types.ts
+```
+
+-   `index.ts`: exports the root component and typings
+-   `component.tsx`: defines the root component
+-   `component.styles.tsx`: contains the Styled Components
+-   `types.ts`: declares typings relevant to consumers only
+-   `internal-types.ts`: put typings used internally here e.g. subcomponent
+    props that are not used directly by consumers
+
+> Note: In the component files, add headers to the respective sections
+
+### Component file format
 
 ```tsx
-// component-file.tsx
+// component.tsx
 
 // Import statements here
+
 /**
  * When importing other components, use the relative import path
  * to prevent circular dependency issues.
@@ -94,6 +115,32 @@ export const MyComponent = ({ a }: Props) => {
 };
 ```
 
+### Style file format
+
+```tsx
+// <component>.styles.tsx
+
+// Import statements here
+
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+
+/**
+ * Prefix transient props with $
+ * See more https://styled-components.com/docs/api#transient-props
+ */
+interface StyleProps {
+    $customProp: boolean;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
+
+export const StyledDiv = styled.div<StyleProps>``;
+```
+
 <br />
 
 ## Prop specification
@@ -110,8 +157,8 @@ interface MyInterface {
 }
 ```
 
--   Avoid usage of enums to ease developer use. Opt for string literals instead and
-    do them in kebab-case
+-   Avoid usage of enums to ease developer use. Opt for string literals instead
+    and do them in kebab-case
 
 ```tsx
 interface MyInterface {
@@ -119,28 +166,28 @@ interface MyInterface {
 }
 ```
 
--   Make sure you specify common props like `id`, `className`, `data-testid` if you
-    are not extending from a standard HTML element props
+-   Make sure you specify common props like `id`, `className`, `data-testid` if
+    you are not extending from a standard HTML element's props
 -   Breakdown complex props into their own types too
 -   Extend props whenever possible to avoid rewriting similar props
 
 ## Usage of useState
 
-We recommend that the use of state should be kept minimal unless it is meant
-for rendering purposes.
+We recommend that the use of state should be kept minimal unless it is meant for
+rendering purposes.
 
 ## Styling practices
 
-We should to refrain from using `className` as we are using Styled Components. We
-should create the corresponding styled component instead. For the styled component,
-give them sensible names as well.
+We should refrain from using `className` as we are using Styled Components. We
+should create the corresponding styled component instead. For the styled
+component, give them sensible names as well.
 
 Example:
 
 ```tsx
 // Wrong
 
-/** component.style.tsx */
+/** component.styles.tsx */
 const Wrapper = styled.div`
     .label {
         // styles here...
@@ -164,7 +211,7 @@ return (
 ```tsx
 // Correct
 
-/** component.style.tsx */
+/** component.styles.tsx */
 const Wrapper = styled.div`
     // styles here...
 `;
@@ -189,8 +236,8 @@ return (
 ## Implementation logics
 
 In cases when you are conditionally rendering based props with multiple variants
-or types, we recommend to use `switch-case` rather than `if-else` to ensure
-all variations are covered.
+or types, we recommend to use `switch-case` rather than `if-else` to ensure all
+variations are covered.
 
 Example:
 
@@ -229,3 +276,44 @@ switch (variants) {
     // do something
 }
 ```
+
+### Selectors
+
+-   `id`
+
+    -   Do not set hardcoded or default ids as they tend to impact accessibility
+    -   The user-specified id prop should take precedence
+    -   Set on the root component and avoid setting additional ids on children
+
+        ```tsx
+        // Wrong
+        <div id={id}>
+          <div id="child" />
+          <div id={`${id}-child`} />
+        </div>
+
+        // Correct
+        <div id={id}>
+          <div>
+        </div>
+        ```
+
+    -   If you must use one, use `SimpleIdGenerator.generate()` to create a
+        unique value to be used throughout the component
+
+        ```tsx
+        const [internalId] = useState(() => SimpleIdGenerator.generate());
+        const headerId = `${internalId}-header`;
+        const contentId = `${internalId}-content`;
+
+        return (
+            <div>
+                <div id={headerId} />
+                <div id={contentId} />
+            </div>
+        );
+        ```
+
+-   `data-testid`
+    -   Can have a default value
+    -   TBC on `` data-testid={`${testId}-container`} `` vs `"data-testid="container"`
