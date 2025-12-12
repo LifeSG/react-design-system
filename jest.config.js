@@ -2,7 +2,7 @@ process.env.TZ = "UTC";
 module.exports = {
     rootDir: ".",
     moduleFileExtensions: ["tsx", "ts", "js"],
-    coverageDirectory: "<rootDir>/tests/coverage",
+    coverageDirectory: "<rootDir>/test-coverage",
     testEnvironment: "jsdom",
     testMatch: ["<rootDir>/tests/**/*.spec.[jt]s?(x)"],
     moduleNameMapper: {

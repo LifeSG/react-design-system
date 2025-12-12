@@ -5,9 +5,6 @@ node_modules
 dist
 *.tgz
 
-# testing
-coverage
-
 # debugging
 .vscode/launch.json
 
@@ -21,6 +18,7 @@ storybook-static
 # test artifacts
 junit.xml
 /test-results/
+/test-coverage/
 /playwright-report/
 /blob-report/
 /playwright/.cache/

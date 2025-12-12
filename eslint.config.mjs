@@ -15,6 +15,8 @@ export default defineConfig([
             "**/dist/**",
             "**/.storybook/**",
             "**/e2e/**",
+            "test-results/**",
+            "test-coverage/**",
             "playwright.config.ts",
         ],
     },
