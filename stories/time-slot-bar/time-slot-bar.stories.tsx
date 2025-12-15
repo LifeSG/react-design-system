@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Colour } from "src/theme";
 import { TimeSlotBar } from "src/time-slot-bar";
+import { FullWidthStoryDecorator } from "stories/storybook-common";
 
 type Component = typeof TimeSlotBar;
 
@@ -62,6 +63,7 @@ export const Default: StoryObj<Component> = {
             />
         );
     },
+    decorators: [FullWidthStoryDecorator()],
 };
 
 export const MinifiedVariant: StoryObj<Component> = {
@@ -186,6 +188,7 @@ export const DifferentIndicators: StoryObj<Component> = {
             />
         );
     },
+    decorators: [FullWidthStoryDecorator()],
 };
 
 export const InitialScrollTime: StoryObj<Component> = {
