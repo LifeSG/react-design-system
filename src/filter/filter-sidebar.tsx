@@ -15,6 +15,7 @@ export const FilterSidebar = ({
     clearButtonDisabled = false,
     children,
     headerTitle: _headerTitle,
+    ...otherProps
 }: FilterSidebarProps) => {
     const nodeRef = useRef<HTMLDivElement>(null);
 
@@ -29,6 +30,7 @@ export const FilterSidebar = ({
                 data-id="filter-desktop"
                 data-testid="filter-desktop"
                 ref={nodeRef}
+                {...otherProps}
             >
                 <FilterHeader>
                     <FilterTitle>{labels.title}</FilterTitle>
