@@ -175,8 +175,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
         if (initialScrollTime && barRef.current && cellWidth > 0) {
             const scrollPosition = TimeHelper.calculateScrollPosition({
                 scrollTime: initialScrollTime,
-                minTime: startTime,
-                maxTime: endTime,
+                minTime: adjustedStartTime,
+                maxTime: adjustedEndTime,
                 interval: CELL_DURATION,
                 intervalWidth: cellWidth,
                 options: {
@@ -244,8 +244,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
         } = styleAttributes;
 
         const slotWidth = TimeSlotBarHelper.calculateWidth(
-            startTime,
-            endTime,
+            adjustedStartTime,
+            adjustedEndTime,
             cellWidth
         );
 
@@ -370,7 +370,11 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
         // Show the right ArrowButton when the scroll position is less than the maximum possible scroll value
         if (
             scrollPosition + clientWidth <
-            TimeSlotBarHelper.calculateWidth(startTime, endTime, cellWidth)
+            TimeSlotBarHelper.calculateWidth(
+                adjustedStartTime,
+                adjustedEndTime,
+                cellWidth
+            )
         ) {
             return (
                 <ArrowButton
