@@ -174,20 +174,6 @@ const FILTER_SIDEBAR_DATA: ApiTableSectionProps[] = [
                 description: "The test identifier for the component",
                 propTypes: ["string"],
             },
-            {
-                name: "insets",
-                description: (
-                    <>
-                        The distance from the edge of the viewport, defining the
-                        safe area not covered by status bars, notches, or other
-                        navigation elements. The header and footer in mobile
-                        mode will be offset accordingly.
-                    </>
-                ),
-                propTypes: [
-                    "{ top?: number, bottom?: number, right?: number, right?: number }",
-                ],
-            },
         ],
     },
     {

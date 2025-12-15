@@ -13,7 +13,6 @@ export const FilterSidebar = ({
     customLabels,
     onClear,
     clearButtonDisabled = false,
-    insets,
     children,
     headerTitle: _headerTitle,
 }: FilterSidebarProps) => {
@@ -31,7 +30,7 @@ export const FilterSidebar = ({
                 data-testid="filter-desktop"
                 ref={nodeRef}
             >
-                <FilterHeader $insetTop={insets?.top}>
+                <FilterHeader>
                     <FilterTitle>{labels.title}</FilterTitle>
                     <FilterClearButton
                         styleType="link"
