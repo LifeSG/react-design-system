@@ -22,7 +22,6 @@ export interface FilterBaseProps {
     className?: string | undefined;
     style?: CSSProperties | undefined;
     clearButtonDisabled?: boolean | undefined;
-    insets?: Insets | undefined;
     /** Called when clear button is pressed */
     onClear?: (() => void) | undefined;
     children?: ReactNode | ((mode: Mode) => ReactNode);
@@ -55,6 +54,7 @@ export interface FilterModalProps extends FilterBaseProps {
     onModalOpen?: () => void;
     toggleFilterButtonStyle?: ButtonStyleType | undefined;
     customLabels?: FilterModalCustomLabelProps | undefined;
+    insets?: Insets | undefined;
 }
 
 export interface FilterProps

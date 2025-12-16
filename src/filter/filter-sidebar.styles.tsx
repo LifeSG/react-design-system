@@ -3,13 +3,6 @@ import { Button } from "../button";
 import { Border, Colour, Font, Radius, Spacing } from "../theme";
 
 // =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-type FilterHeaderProps = {
-    $insetTop?: number | undefined;
-};
-
-// =============================================================================
 // CONTAINER STYLES
 // =============================================================================
 
@@ -25,13 +18,11 @@ export const DesktopContainer = styled.div`
 // HEADER STYLES
 // =============================================================================
 
-export const FilterHeader = styled.div<FilterHeaderProps>`
+export const FilterHeader = styled.div`
     display: flex;
     align-items: center;
 
     background-color: ${Colour["bg"]};
-
-    ${(props) => props.$insetTop && `padding-top: ${props.$insetTop}px;`}
 `;
 
 export const FilterTitle = styled.h2`
