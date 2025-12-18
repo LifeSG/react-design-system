@@ -80,18 +80,20 @@ export const Timeline = ({
         });
     };
 
-    const renderIcon = (variant: Variant) => {
+    const renderIcon = (variant: Variant, index: number) => {
         switch (variant) {
             case "completed":
                 return <TickIcon aria-hidden />;
             case "error":
                 return <ExclamationCircleFillIcon aria-hidden />;
+            case "numeric":
+                return <span aria-hidden>{index + 1}</span>;
             default:
                 return null;
         }
     };
 
-    const getStatus = (variant: Variant) => {
+    const getStatus = (variant: Variant, index: number) => {
         switch (variant) {
             case "current":
                 return "Current step";
@@ -105,6 +107,8 @@ export const Timeline = ({
                 return "Inactive step";
             case "error":
                 return "Current step, action required";
+            case "numeric":
+                return `Step number ${index + 1}`;
             default:
                 return "";
         }
@@ -127,9 +131,9 @@ export const Timeline = ({
                             $variant={variant}
                         >
                             <VisuallyHidden>
-                                {getStatus(variant)}
+                                {getStatus(variant, index)}
                             </VisuallyHidden>
-                            {renderIcon(variant)}
+                            {renderIcon(variant, index)}
                         </CircleIndicator>
                         <LineIndicator $variant={variant} />
                     </TimelineIndicators>

@@ -135,6 +135,15 @@ export const Variants: StoryObj<Component> = {
                     },
                     {
                         title: "Item 3",
+                        variant: "numeric",
+                        content: (
+                            <Typography.BodyMD>
+                                An example with a <code>numeric</code> variant
+                            </Typography.BodyMD>
+                        ),
+                    },
+                    {
+                        title: "Item 4",
                         variant: "upcoming-active",
                         content: (
                             <Typography.BodyMD>
@@ -144,7 +153,7 @@ export const Variants: StoryObj<Component> = {
                         ),
                     },
                     {
-                        title: "Item 4",
+                        title: "Item 5",
                         variant: "upcoming-inactive",
                         content: (
                             <Typography.BodyMD>
@@ -154,7 +163,7 @@ export const Variants: StoryObj<Component> = {
                         ),
                     },
                     {
-                        title: "Item 5",
+                        title: "Item 6",
                         variant: "error",
                         content: (
                             <Typography.BodyMD>
@@ -163,7 +172,7 @@ export const Variants: StoryObj<Component> = {
                         ),
                     },
                     {
-                        title: "Item 6",
+                        title: "Item 7",
                         variant: "disabled",
                         content: (
                             <Typography.BodyMD>
