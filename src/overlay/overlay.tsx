@@ -31,10 +31,9 @@ const OverlayComponent = ({
     const nodeId = useFloatingNodeId();
 
     const stacked = useRef<boolean>();
-
-    const childRef = useRef<HTMLDivElement>(null);
-    const childWithRef =
-        children && React.cloneElement(children, { ref: childRef });
+    // Track where mousedown started to prevent closing drawer during text selection drag
+    const mouseDownInsideModalRef = useRef(false);
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
     const overlayRootId = id
         ? `lifesg-ds-overlay-root-${id}`
@@ -93,6 +92,20 @@ const OverlayComponent = ({
 
             return () => clearTimeout(timerId);
         }
+    }, [show]);
+
+    // Track mousedown origin to distinguish clicks from text selection drags
+    useEffect(() => {
+        if (!show) return;
+
+        document.addEventListener("mousedown", handleDocumentMouseDown, true);
+        return () => {
+            document.removeEventListener(
+                "mousedown",
+                handleDocumentMouseDown,
+                true
+            );
+        };
     }, [show]);
 
     // =============================================================================
@@ -236,14 +249,40 @@ const OverlayComponent = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleWrapperClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        const modal = childRef.current?.firstChild;
-        if (modal && (modal as Node).contains(event.target as Node)) {
+    const handleDocumentMouseDown = (e: MouseEvent) => {
+        if (!wrapperRef.current) {
+            mouseDownInsideModalRef.current = false;
             return;
-        } else if (onOverlayClick && enableOverlayClick) {
+        }
+
+        const wrapper = wrapperRef.current;
+        const target = e.target as Node;
+        const clickedOnWrapper = wrapper === target;
+        const clickedInsideWrapper = wrapper.contains(target);
+
+        // Track if mousedown started inside modal content
+        mouseDownInsideModalRef.current =
+            clickedInsideWrapper && !clickedOnWrapper;
+    };
+
+    const handleWrapperClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        const wrapper = event.currentTarget;
+        const target = event.target as Node;
+        const clickedInsideModal =
+            wrapper !== target && wrapper.contains(target);
+
+        // Only close if both mousedown AND click happened outside modal
+        if (
+            !clickedInsideModal &&
+            !mouseDownInsideModalRef.current &&
+            onOverlayClick &&
+            enableOverlayClick
+        ) {
             event.preventDefault();
             onOverlayClick();
         }
+
+        mouseDownInsideModalRef.current = false;
     };
 
     // =============================================================================
@@ -252,6 +291,7 @@ const OverlayComponent = ({
     const renderWrapper = () => (
         <FloatingNode id={nodeId}>
             <Wrapper
+                ref={wrapperRef}
                 data-testid="overlay-wrapper"
                 $show={show}
                 $stacked={isStacked}
@@ -259,7 +299,7 @@ const OverlayComponent = ({
                 $disableTransition={disableTransition}
                 onClick={handleWrapperClick}
             >
-                {childWithRef}
+                {children}
             </Wrapper>
         </FloatingNode>
     );
