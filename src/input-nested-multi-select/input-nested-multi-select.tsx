@@ -28,6 +28,9 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     className,
     "data-testid": testId,
     id,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
     selectedKeyPaths: _selectedKeyPaths,
     mode,
     valueToStringFunction,
@@ -287,6 +290,9 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
                     popupRole="tree"
                     readOnly={readOnly}
                     variant={variant}
+                    aria-labelledby={ariaLabelledBy}
+                    aria-describedby={ariaDescribedBy}
+                    aria-invalid={ariaInvalid}
                 >
                     {renderSelectorContent()}
                 </ExpandableElement>

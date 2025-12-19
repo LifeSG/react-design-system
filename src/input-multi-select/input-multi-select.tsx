@@ -25,6 +25,9 @@ export const InputMultiSelect = <T, V>({
     className,
     "data-testid": testId,
     id,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
     enableSearch = false,
     searchFunction,
     searchPlaceholder,
@@ -225,6 +228,9 @@ export const InputMultiSelect = <T, V>({
                     popupRole="listbox"
                     readOnly={readOnly}
                     variant={variant}
+                    aria-labelledby={ariaLabelledBy}
+                    aria-describedby={ariaDescribedBy}
+                    aria-invalid={ariaInvalid}
                 >
                     {renderSelectorContent()}
                 </ExpandableElement>

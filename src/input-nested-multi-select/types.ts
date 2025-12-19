@@ -17,6 +17,9 @@ export interface InputNestedMultiSelectProps<V1, V2, V3>
         InputNestedSelectOptionsProps<V1, V2, V3>,
         InputNestedSelectSharedProps<V1, V2, V3>,
         DropdownSearchProps<L1OptionProps<V1, V2, V3>> {
+    "aria-labelledby"?: string | undefined;
+    "aria-describedby"?: string | undefined;
+    "aria-invalid"?: boolean | undefined;
     /** Specifies key paths to select particular option label */
     selectedKeyPaths?: string[][] | undefined;
     /** Called when a selection is made. Returns the key paths and values of selected items in the next selection state */
