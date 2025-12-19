@@ -163,6 +163,7 @@ export const FormWrapper = ({
         const ariaState = {
             "aria-invalid": isInvalidState(),
             "aria-describedby": getAriaDescribedBy(),
+            "aria-labelledby": label ? labelId : undefined,
         };
         return Children.map(children, (child) =>
             cloneElement(child, ariaState)
