@@ -109,6 +109,48 @@ export const Default: StoryObj<Component> = {
     },
 };
 
+export const Numeric: StoryObj<Component> = {
+    render: () => {
+        return (
+            <Timeline
+                title="Steps to complete"
+                items={[
+                    {
+                        title: "Step 1",
+                        variant: "numeric",
+                        content:
+                            "Submit your application form with all required documents.",
+                    },
+                    {
+                        title: "Step 2",
+                        variant: "numeric",
+                        content:
+                            "Wait for confirmation email within 3-5 business days.",
+                    },
+                    {
+                        title: "Step 3",
+                        variant: "numeric",
+                        content:
+                            "Schedule an appointment at your nearest service centre.",
+                    },
+                    {
+                        title: "Step 4",
+                        variant: "numeric",
+                        content:
+                            "Attend the appointment and bring your original documents.",
+                    },
+                    {
+                        title: "Step 5",
+                        variant: "numeric",
+                        content:
+                            "Collect your completed documents or receive them by mail.",
+                    },
+                ]}
+            />
+        );
+    },
+};
+
 export const Variants: StoryObj<Component> = {
     render: () => {
         return (
