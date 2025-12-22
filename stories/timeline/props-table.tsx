@@ -99,8 +99,9 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: [
                     `"completed"`,
                     `"current"`,
-                    `"upcoming-active`,
+                    `"upcoming-active"`,
                     `"upcoming-inactive"`,
+                    `"numeric"`,
                     `"error"`,
                     `"disabled"`,
                 ],
