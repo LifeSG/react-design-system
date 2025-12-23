@@ -7,7 +7,7 @@ import { SimpleIdGenerator } from "../util";
 export const FormNestedMultiSelect = <V1, V2, V3>({
     label,
     errorMessage,
-    id = "form-nested-multi-select",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
@@ -47,8 +47,8 @@ export const FormNestedMultiSelect = <V1, V2, V3>({
             xxlCols={xxlCols}
         >
             <InputNestedMultiSelect
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 error={!!errorMessage}
                 {...otherProps}
             />

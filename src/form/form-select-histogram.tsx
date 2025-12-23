@@ -7,7 +7,7 @@ import { SimpleIdGenerator } from "../util";
 export const FormSelectHistogram = ({
     label,
     errorMessage,
-    id = "form-select-histogram",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
@@ -50,8 +50,8 @@ export const FormSelectHistogram = ({
             <SelectHistogram
                 histogramSlider={histogramSlider}
                 error={!!errorMessage}
-                data-testid={testId || id}
-                id={`${id}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
+                id={`${inputId}-base`}
                 {...otherProps}
             />
         </FormWrapper>

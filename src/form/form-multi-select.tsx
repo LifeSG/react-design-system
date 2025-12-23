@@ -7,7 +7,7 @@ import { SimpleIdGenerator } from "../util";
 export const FormMultiSelect = <T, V>({
     label,
     errorMessage,
-    id = "form-multi-select",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     enableSearch = false,
@@ -49,8 +49,8 @@ export const FormMultiSelect = <T, V>({
             xxlCols={xxlCols}
         >
             <InputMultiSelect
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 error={!!errorMessage}
                 enableSearch={enableSearch}
                 variant={variant}
