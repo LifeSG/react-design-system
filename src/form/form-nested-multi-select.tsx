@@ -30,6 +30,7 @@ export const FormNestedMultiSelect = <V1, V2, V3>({
     return (
         <FormWrapper
             id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}

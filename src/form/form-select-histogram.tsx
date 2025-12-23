@@ -31,6 +31,7 @@ export const FormSelectHistogram = ({
     return (
         <FormWrapper
             id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}

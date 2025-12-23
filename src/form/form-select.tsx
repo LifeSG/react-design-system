@@ -32,6 +32,7 @@ export const FormSelect = <T, V>({
     return (
         <FormWrapper
             id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
