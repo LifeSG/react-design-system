@@ -28,6 +28,9 @@ export const SelectHistogram = ({
     error,
     histogramSlider,
     id,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
     onBlur,
     onChange,
     onChangeEnd,
@@ -187,6 +190,9 @@ export const SelectHistogram = ({
                     popupRole="dialog"
                     readOnly={readOnly}
                     variant="default"
+                    aria-labelledby={ariaLabelledBy}
+                    aria-describedby={ariaDescribedBy}
+                    aria-invalid={ariaInvalid}
                 >
                     {renderSelectorContent()}
                 </ExpandableElement>

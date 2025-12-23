@@ -1,11 +1,13 @@
+import { useState } from "storybook/internal/preview-api";
 import { InputNestedSelect } from "../input-nested-select";
 import { FormWrapper } from "./form-wrapper";
 import { FormNestedSelectProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 
 export const FormNestedSelect = <V1, V2, V3>({
     label,
     errorMessage,
-    id = "form-nested-select",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
@@ -21,9 +23,14 @@ export const FormNestedSelect = <V1, V2, V3>({
     xxlCols,
     ...otherProps
 }: FormNestedSelectProps<V1, V2, V3>): JSX.Element => {
+    const [internalId] = useState(
+        () => `form-field-${SimpleIdGenerator.generate()}`
+    );
+    const inputId = id ?? internalId;
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
@@ -41,8 +48,8 @@ export const FormNestedSelect = <V1, V2, V3>({
             xxlCols={xxlCols}
         >
             <InputNestedSelect
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 error={!!errorMessage}
                 {...otherProps}
             />

@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { SelectHistogram } from "../select-histogram/select-histogram";
 import { FormWrapper } from "./form-wrapper";
 import { FormSelectHistogramProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 
 export const FormSelectHistogram = ({
     label,
     errorMessage,
-    id = "form-select-histogram",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
@@ -22,9 +24,14 @@ export const FormSelectHistogram = ({
     histogramSlider,
     ...otherProps
 }: FormSelectHistogramProps): JSX.Element => {
+    const [internalId] = useState(
+        () => `form-field-${SimpleIdGenerator.generate()}`
+    );
+    const inputId = id ?? internalId;
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
@@ -44,8 +51,8 @@ export const FormSelectHistogram = ({
             <SelectHistogram
                 histogramSlider={histogramSlider}
                 error={!!errorMessage}
-                data-testid={testId || id}
-                id={`${id}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
+                id={`${inputId}-base`}
                 {...otherProps}
             />
         </FormWrapper>
