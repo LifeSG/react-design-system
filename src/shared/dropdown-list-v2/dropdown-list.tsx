@@ -393,6 +393,8 @@ export const DropdownList = <T, V>({
                     aria-selected={selected}
                     aria-multiselectable={multiSelect}
                     aria-disabled={!selected && hasSelectedMax}
+                    aria-posinset={index + 1}
+                    aria-setsize={displayListItems?.length}
                     data-testid="list-item"
                     key={getItemKey(item, index)}
                     onClick={() => handleListItemClick(item, index)}
