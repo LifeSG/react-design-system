@@ -21,6 +21,7 @@ const OverlayComponent = ({
     enableOverlayClick = false,
     zIndex: customZIndex,
     id,
+    containerRef,
 }: OverlayProps): JSX.Element | null => {
     // =============================================================================
     // CONST, STATE, REF
@@ -250,19 +251,19 @@ const OverlayComponent = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleDocumentMouseDown = (e: MouseEvent) => {
-        if (!wrapperRef.current) {
+        const container = containerRef?.current || wrapperRef.current;
+        if (!container) {
             mouseDownInsideModalRef.current = false;
             return;
         }
 
-        const wrapper = wrapperRef.current;
         const target = e.target as Node;
-        const clickedOnWrapper = wrapper === target;
-        const clickedInsideWrapper = wrapper.contains(target);
+        const clickedOnContainer = container === target;
+        const clickedInsideContainer = container.contains(target);
 
         // Track if mousedown started inside modal content
         mouseDownInsideModalRef.current =
-            clickedInsideWrapper && !clickedOnWrapper;
+            clickedInsideContainer && !clickedOnContainer;
     };
 
     const handleWrapperClick = (event: React.MouseEvent<HTMLDivElement>) => {
