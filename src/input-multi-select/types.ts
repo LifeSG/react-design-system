@@ -18,9 +18,6 @@ export interface InputMultiSelectProps<T, V>
         DropdownDisplayProps<T, V>,
         DropdownSearchProps<T> {
     readOnly?: boolean | undefined;
-    "aria-labelledby"?: string | undefined;
-    "aria-describedby"?: string | undefined;
-    "aria-invalid"?: boolean | undefined;
     selectedOptions?: T[] | undefined;
     onSelectOptions?: ((options: T[]) => void) | undefined;
     onBlur?: (() => void) | undefined;

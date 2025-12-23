@@ -49,9 +49,6 @@ export interface InputSelectProps<T, V>
         DropdownSearchProps<T> {
     // TODO: should be a common state once all variants implement this
     readOnly?: boolean | undefined;
-    "aria-labelledby"?: string | undefined;
-    "aria-describedby"?: string | undefined;
-    "aria-invalid"?: boolean | undefined;
     selectedOption?: T | undefined;
     onSelectOption?: ((option: T, extractedValue: V) => void) | undefined;
     /** Function to derive display value for selected option */

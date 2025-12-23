@@ -46,9 +46,6 @@ export interface InputNestedSelectProps<V1, V2, V3>
         InputNestedSelectOptionsProps<V1, V2, V3>,
         InputNestedSelectSharedProps<V1, V2, V3>,
         DropdownSearchProps<L1OptionProps<V1, V2, V3>> {
-    "aria-labelledby"?: string | undefined;
-    "aria-describedby"?: string | undefined;
-    "aria-invalid"?: boolean | undefined;
     /** Specifies key path of the selected option */
     selectedKeyPath?: string[] | undefined;
     /** If specified, the category label is selectable */

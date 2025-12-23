@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { SelectHistogram } from "../select-histogram/select-histogram";
 import { FormWrapper } from "./form-wrapper";
 import { FormSelectHistogramProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 
 export const FormSelectHistogram = ({
     label,
@@ -22,9 +24,13 @@ export const FormSelectHistogram = ({
     histogramSlider,
     ...otherProps
 }: FormSelectHistogramProps): JSX.Element => {
+    const [internalId] = useState(
+        () => `form-field-${SimpleIdGenerator.generate()}`
+    );
+    const inputId = id ?? internalId;
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}

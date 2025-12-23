@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import { AriaAttributes, RefObject } from "react";
 import { HistogramSliderProps } from "../histogram-slider";
 import { TruncateType } from "../shared/dropdown-list-v2/types";
 import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
@@ -8,7 +8,11 @@ export type SelectHistogramSliderProps = Pick<
     "bins" | "interval" | "renderEmptyView" | "ariaLabels"
 >;
 
-export interface SelectHistogramProps {
+export interface SelectHistogramProps
+    extends Pick<
+        AriaAttributes,
+        "aria-labelledby" | "aria-describedby" | "aria-invalid"
+    > {
     alignment?: DropdownAlignmentType | undefined;
     className?: string | undefined;
     "data-testid"?: string | undefined;
@@ -16,9 +20,6 @@ export interface SelectHistogramProps {
     dropdownZIndex?: number | undefined;
     error?: boolean | undefined;
     id?: string | undefined;
-    "aria-labelledby"?: string | undefined;
-    "aria-describedby"?: string | undefined;
-    "aria-invalid"?: boolean | undefined;
     histogramSlider: SelectHistogramSliderProps;
     /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
     optionTruncationType?: TruncateType | undefined;
