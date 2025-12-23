@@ -82,20 +82,11 @@ jobs:
 
             pipeline_res=$(curl -sSf --request GET --header "PRIVATE-TOKEN: $GITLAB_PAT" \
               --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipelines/$PIPELINE_ID/bridges")
-            if [[ $? -ne 0 ]]; then
-              echo "Failed to fetch downstream pipelines"
-              break
-            fi
-
             downstream_pipeline_id=$(echo "$pipeline_res" | jq -r '[ .[] | select( .name | contains("'"$DOWNSTREAM_PIPELINE_NAME"'")) ]' | jq -r '.[].downstream_pipeline.id')
             echo "($DOWNSTREAM_PIPELINE_NAME) Downstream pipeline id: $downstream_pipeline_id"
 
             job_status_res=$(curl -sSf --header "PRIVATE-TOKEN: $GITLAB_PAT" \
               --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipelines/$downstream_pipeline_id/jobs")
-            if [[ $? -ne 0 ]]; then
-              echo "Failed to fetch jobs for downstream pipeline"
-              break
-            fi
 
             job_status=$(echo "$job_status_res" | jq -r '[ .[] | select( .name | contains("'"$DOWNSTREAM_JOB_NAME"'")) ]' | jq -r '.[].status')
             echo "($DOWNSTREAM_JOB_NAME) Job status: $job_status"
