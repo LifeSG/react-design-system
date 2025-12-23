@@ -61,7 +61,7 @@ jobs:
 
       - name: Check GitLab Pipeline
         env:
-          GITLAB_PAT: xxx
+          GITLAB_PAT: ${{ secrets.GITLAB_PAT }}
           GITLAB_ENDPOINT: ${{ vars.GITLAB_ENDPOINT }}
           GITLAB_PROJECT_ID: ${{ vars.GITLAB_PROJECT_ID }}
           SLEEP_DURATION_MINUTES: 1
@@ -81,7 +81,7 @@ jobs:
             echo "Attempt: $num_attempts"
 
             set +e
-            
+
             pipeline_res=$(curl -sSf --request GET --header "PRIVATE-TOKEN: $GITLAB_PAT" \
               --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipelines/$PIPELINE_ID/bridges")
             if [[ $? -ne 0 ]]; then
