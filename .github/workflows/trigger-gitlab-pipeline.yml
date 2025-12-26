@@ -66,7 +66,7 @@ jobs:
           GITLAB_PROJECT_ID: ${{ vars.GITLAB_PROJECT_ID }}
           SLEEP_DURATION_MINUTES: 20
           CHECK_INTERVAL_MINUTES: 5
-          MAX_RETRY_ATTEMPTS: 6
+          MAX_RETRY_ATTEMPTS: 5
           DOWNSTREAM_PIPELINE_NAME: library
           DOWNSTREAM_JOB_NAME: build-dist-job
         run: |
@@ -80,29 +80,31 @@ jobs:
           do
             echo "Attempt: $num_attempts"
 
-            set +e
+            pipeline_result=$(curl -sS --request GET --header "PRIVATE-TOKEN: $GITLAB_PAT" \
+              --write-out "\n%{http_code}" --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipelines/$PIPELINE_ID/bridges")
+            pipeline_result_body=$(echo "$pipeline_result" | sed '$d')
+            pipeline_result_code=$(echo "$pipeline_result" | tail -n 1)
 
-            pipeline_res=$(curl -sSf --request GET --header "PRIVATE-TOKEN: $GITLAB_PAT" \
-              --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipelines/$PIPELINE_ID/bridges")
-            if [[ $? -ne 0 ]]; then
-              echo "Failed to fetch downstream pipelines"
+            if [[ pipeline_result_code -eq 401 ]]; then
+              echo "Please check if the GITLAB_PAT has sufficient permissions"
               break
             fi
 
-            downstream_pipeline_id=$(echo "$pipeline_res" | jq -r '[ .[] | select( .name | contains("'"$DOWNSTREAM_PIPELINE_NAME"'")) ]' | jq -r '.[].downstream_pipeline.id')
+            downstream_pipeline_id=$(echo "$pipeline_result_body" | jq -r '[ .[] | select( .name | contains("'"$DOWNSTREAM_PIPELINE_NAME"'")) ]' | jq -r '.[].downstream_pipeline.id')
             echo "($DOWNSTREAM_PIPELINE_NAME) Downstream pipeline id: $downstream_pipeline_id"
 
-            job_status_res=$(curl -sSf --header "PRIVATE-TOKEN: $GITLAB_PAT" \
-              --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipelines/$downstream_pipeline_id/jobs")
-            if [[ $? -ne 0 ]]; then
-              echo "Failed to fetch jobs for downstream pipeline"
+            job_status_result=$(curl -sS --header "PRIVATE-TOKEN: $GITLAB_PAT" \
+              --write-out "\n%{http_code}" --url "$GITLAB_ENDPOINT/$GITLAB_PROJECT_ID/pipelines/$downstream_pipeline_id/jobs")
+            job_status_result_body=$(echo "$job_status_result" | sed '$d')
+            job_status_result_code=$(echo "$job_status_result" | tail -n 1)
+
+            if [[ job_status_result_code -eq 401 ]]; then
+              echo "Please check if the GITLAB_PAT has sufficient permissions"
               break
             fi
 
-            job_status=$(echo "$job_status_res" | jq -r '[ .[] | select( .name | contains("'"$DOWNSTREAM_JOB_NAME"'")) ]' | jq -r '.[].status')
+            job_status=$(echo "$job_status_result_body" | jq -r '[ .[] | select( .name | contains("'"$DOWNSTREAM_JOB_NAME"'")) ]' | jq -r '.[].status')
             echo "($DOWNSTREAM_JOB_NAME) Job status: $job_status"
-
-            set -e
 
             num_attempts=$((num_attempts+1))
 
@@ -112,8 +114,6 @@ jobs:
           done
 
           [[ $num_attempts -gt $MAX_RETRY_ATTEMPTS ]] && echo "Number of retries exceeded, please head to the GitLab job to check what happened" && exit 1
-
-          [[ $job_status == "" ]] && echo "Couldn't get GitLab job status, please check if the GITLAB_PAT has sufficient permissions." && exit 1
 
           [[ $job_status == "canceled" ]] && echo "GitLab job was cancelled"
 
