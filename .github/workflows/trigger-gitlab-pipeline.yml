@@ -86,8 +86,8 @@ jobs:
             pipeline_result_code=$(echo "$pipeline_result" | tail -n 1)
 
             if [[ pipeline_result_code -eq 401 ]]; then
-              echo "Please check if the GITLAB_PAT has sufficient permissions"
-              break
+              echo "Please check if the GITLAB_PAT has sufficient permissions, or regenerate it if it has expired"
+              exit 1
             fi
 
             downstream_pipeline_id=$(echo "$pipeline_result_body" | jq -r '[ .[] | select( .name | contains("'"$DOWNSTREAM_PIPELINE_NAME"'")) ]' | jq -r '.[].downstream_pipeline.id')
@@ -99,8 +99,8 @@ jobs:
             job_status_result_code=$(echo "$job_status_result" | tail -n 1)
 
             if [[ job_status_result_code -eq 401 ]]; then
-              echo "Please check if the GITLAB_PAT has sufficient permissions"
-              break
+              echo "Please check if the GITLAB_PAT has sufficient permissions, or regenerate it if it has expired"
+              exit 1
             fi
 
             job_status=$(echo "$job_status_result_body" | jq -r '[ .[] | select( .name | contains("'"$DOWNSTREAM_JOB_NAME"'")) ]' | jq -r '.[].status')
