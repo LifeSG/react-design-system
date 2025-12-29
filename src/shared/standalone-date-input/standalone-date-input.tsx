@@ -303,7 +303,7 @@ export const Component = (
         if (!stringVal) {
             return [undefined, undefined, undefined];
         } else {
-            const day = dayjs(new Date(stringVal));
+            const day = dayjs(stringVal, "YYYY-MM-DD", true);
 
             if (!day.isValid()) {
                 return [undefined, undefined, undefined];
