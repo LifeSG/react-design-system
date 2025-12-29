@@ -1,0 +1,62 @@
+export type TimeFormat = "12hr" | "24hr";
+export declare enum EPeriod {
+    AM = "AM",
+    PM = "PM"
+}
+export interface TimeValues {
+    hour: string;
+    minute: string;
+    period: EPeriod;
+}
+export interface CalculateScrollPositionProps {
+    /** The time to scroll to in HH:mm format */
+    scrollTime: string;
+    /** The minimum time of the scrollable range in HH:mm format */
+    minTime: string;
+    /** The maximum time of the scrollable range in HH:mm format */
+    maxTime: string;
+    /** The interval in minutes (e.g., 15, 30, 60) */
+    interval: number;
+    /** The width in pixels of each interval */
+    intervalWidth: number;
+    /** Optional configuration */
+    options?: {
+        /** Round the scroll time to the nearest interval */
+        roundToInterval?: boolean;
+    };
+}
+export declare namespace TimeHelper {
+    /**
+     * Rounds time to the nearest interval, e.g 6:30 will be clamped to 6:00 when interval = 60
+     * @param time the input time in HH:mm format
+     * @param interval the interval in minutes (e.g., 15 for 15 minutes, 60 for 1 hour)
+     * @param toNextInterval to clamp to next interval instead, e.g. 6:30 will be clamped to 7:00 when interval = 60.
+     * If the time is already a valid interval, it will not be rounded
+     * @returns the rounded time in HH:mm format,
+     */
+    const roundToNearestInterval: (time: string, interval: number, toNextInterval?: boolean) => string;
+    const generateHourlyIntervals: (startTime: string, endTime: string, generatedFormat?: string) => string[];
+    const getTimeValues: (format: TimeFormat, value: string | undefined) => TimeValues;
+    const updateMinutes: (valueString: string, direction: "add" | "minus") => string;
+    const updateHours: (valueString: string, direction: "add" | "minus") => string;
+    const convertTo24HourFormat: (values: TimeValues) => string;
+    const convertHourTo12HourFormat: (hourValue: string) => string;
+    const formatDisplayValue: (value: string | undefined, format: TimeFormat) => string;
+    const toMinutesSeconds: (_seconds: number) => {
+        minutes: number;
+        seconds: number;
+    };
+    const to24Hour: (time: string) => string;
+    const generateTimings: (interval: number, // In minutes
+    format?: TimeFormat, startTime?: string | undefined, endTime?: string | undefined) => string[];
+    const parseInput: (input: string, format?: TimeFormat) => string | undefined;
+    const findClosestFlooredTime: (inputTime: string | undefined, timeArray: string[]) => string | undefined;
+    const timeToMinutes: (time: string) => number;
+    const calculateDuration: (startTime: string, endTime: string) => number;
+    /**
+     * Validates and calculates scroll position for a given time
+     * @param props - The configuration object for calculating scroll position
+     * @returns the calculated scroll position in pixels, or null if invalid
+     */
+    const calculateScrollPosition: (props: CalculateScrollPositionProps) => number | null;
+}
