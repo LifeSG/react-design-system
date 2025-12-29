@@ -11,6 +11,7 @@ export interface InputWrapperStyleProps {
     $readOnly?: boolean | undefined;
     $focused?: boolean | undefined;
     $position?: "left" | "right" | undefined;
+    $noBorder?: boolean | undefined;
 }
 
 export interface InputStyleProps {
@@ -37,6 +38,10 @@ const errorFocusCss = css`
     outline-color: ${Colour["border-error-focus"]};
 `;
 
+const noFocusCss = css`
+    outline: none;
+`;
+
 /**
  * basic wrapper for input fields that provides the border style but does not
  * prescibe any layout for content
@@ -49,7 +54,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
     &:focus-within {
         ${defaultFocusCss}
     }
-    ${(props) => props.$focused && defaultFocusCss}
+    ${(props) => props.$focused && !props.$noBorder && defaultFocusCss}
 
     ${(props) => {
         if (props.$readOnly) {
@@ -73,7 +78,10 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
                 }
                 ${props.$focused && disabledFocusCss}
             `;
-        } else if (props.$error) {
+        }
+    }}
+    ${(props) => {
+        if (props.$error) {
             return css`
                 border-color: ${Colour["border-error"]};
 
@@ -81,6 +89,16 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
                     ${errorFocusCss}
                 }
                 ${props.$focused && errorFocusCss}
+            `;
+        }
+    }}
+    ${(props) => {
+        if (props.$noBorder) {
+            return css`
+                border-color: transparent;
+                &:focus-within {
+                    ${noFocusCss}
+                }
             `;
         }
     }}
