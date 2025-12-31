@@ -329,8 +329,10 @@ export const Component = (
 
         // Pad year to 4 digits with leading zeros
         const paddedYear = year.padStart(4, "0");
+        const paddedMonth = month.padStart(2, "0");
+        const paddedDay = day.padStart(2, "0");
 
-        return `${paddedYear}-${month}-${day}`;
+        return `${paddedYear}-${paddedMonth}-${paddedDay}`;
     }
 
     // =============================================================================
