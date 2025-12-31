@@ -306,6 +306,32 @@ describe("InputGroup - List addon", () => {
             expect(mockOnBlur).toHaveBeenCalledTimes(1);
         });
 
+        it("should call onBlur from input", async () => {
+            const user = userEvent.setup();
+            const mockOnBlur = jest.fn();
+
+            render(
+                <InputGroup
+                    data-testid={FIELD_TESTID}
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            options: OPTIONS,
+                        },
+                    }}
+                    onBlur={mockOnBlur}
+                />
+            );
+
+            await user.click(screen.getByTestId(INPUT_TESTID));
+
+            expect(mockOnBlur).toHaveBeenCalledTimes(0);
+
+            await user.click(document.body);
+
+            expect(mockOnBlur).toHaveBeenCalledTimes(1);
+        });
+
         it("should call onFocus and onBlur when cycling through the tab sequence", async () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
