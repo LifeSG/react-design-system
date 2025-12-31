@@ -303,7 +303,8 @@ export const Component = (
         if (!stringVal) {
             return [undefined, undefined, undefined];
         } else {
-            const day = dayjs(stringVal, "YYYY-MM-DD", true);
+            const normalizedDate = normalizeDateString(stringVal);
+            const day = dayjs(normalizedDate, "YYYY-MM-DD", true);
 
             if (!day.isValid()) {
                 return [undefined, undefined, undefined];
@@ -315,6 +316,21 @@ export const Component = (
                 day.year().toString(),
             ];
         }
+    }
+
+    function normalizeDateString(dateString: string): string {
+        const match = dateString.match(/^(\d{1,4})-(\d{2})-(\d{2})$/);
+
+        if (!match) {
+            return dateString;
+        }
+
+        const [, year, month, day] = match;
+
+        // Pad year to 4 digits with leading zeros
+        const paddedYear = year.padStart(4, "0");
+
+        return `${paddedYear}-${month}-${day}`;
     }
 
     // =============================================================================
