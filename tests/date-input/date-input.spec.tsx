@@ -112,6 +112,42 @@ describe("DateInput", () => {
         expect(mockOnFocus).not.toHaveBeenCalled();
     });
 
+    it("should render the field prefilled for valid date (YYYY-MM-DD)", async () => {
+        render(<DateInput data-testid="e2e" value="2024-02-01" />);
+
+        expect(screen.queryByTestId(FIELD_TESTID)).toBeVisible();
+        expect(screen.getByLabelText("Date")).toHaveValue("01");
+        expect(screen.getByLabelText("Month")).toHaveValue("02");
+        expect(screen.getByLabelText("Year")).toHaveValue("2024");
+    });
+
+    it("should render the field prefilled for valid date (YYY-MM-DD)", async () => {
+        render(<DateInput data-testid="e2e" value="999-02-01" />);
+
+        expect(screen.queryByTestId(FIELD_TESTID)).toBeVisible();
+        expect(screen.getByLabelText("Date")).toHaveValue("01");
+        expect(screen.getByLabelText("Month")).toHaveValue("02");
+        expect(screen.getByLabelText("Year")).toHaveValue("999");
+    });
+
+    it("should render the field without prefill for invalid date (YY-MM-DD)", async () => {
+        render(<DateInput data-testid="e2e" value="99-02-01" />);
+
+        expect(screen.queryByTestId(FIELD_TESTID)).toBeVisible();
+        expect(screen.getByLabelText("Date")).toHaveValue("");
+        expect(screen.getByLabelText("Month")).toHaveValue("");
+        expect(screen.getByLabelText("Year")).toHaveValue("");
+    });
+
+    it("should render the field without prefill for invalid date (unknown format)", async () => {
+        render(<DateInput data-testid="e2e" value="2024" />);
+
+        expect(screen.queryByTestId(FIELD_TESTID)).toBeVisible();
+        expect(screen.getByLabelText("Date")).toHaveValue("");
+        expect(screen.getByLabelText("Month")).toHaveValue("");
+        expect(screen.getByLabelText("Year")).toHaveValue("");
+    });
+
     describe("focus/blur behaviour", () => {
         it("should call onFocus on click and onBlur via outside click", async () => {
             const user = userEvent.setup({

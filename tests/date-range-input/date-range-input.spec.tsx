@@ -139,6 +139,74 @@ describe("DateRangeInput", () => {
         expect(mockOnFocus).not.toHaveBeenCalled();
     });
 
+    it("should render the field prefilled for valid date (YYYY-MM-DD)", async () => {
+        render(
+            <DateRangeInput
+                data-testid="e2e"
+                value="2024-02-01"
+                valueEnd="2024-02-03"
+            />
+        );
+
+        expect(screen.queryByTestId(FIELD_TESTID)).toBeVisible();
+        expect(screen.getByLabelText("Start Date")).toHaveValue("01");
+        expect(screen.getByLabelText("Start Month")).toHaveValue("02");
+        expect(screen.getByLabelText("Start Year")).toHaveValue("2024");
+        expect(screen.getByLabelText("End Date")).toHaveValue("03");
+        expect(screen.getByLabelText("End Month")).toHaveValue("02");
+        expect(screen.getByLabelText("End Year")).toHaveValue("2024");
+    });
+
+    it("should render the field prefilled for valid date (YYY-MM-DD)", async () => {
+        render(
+            <DateRangeInput
+                data-testid="e2e"
+                value="999-02-01"
+                valueEnd="999-02-03"
+            />
+        );
+
+        expect(screen.queryByTestId(FIELD_TESTID)).toBeVisible();
+        expect(screen.getByLabelText("Start Date")).toHaveValue("01");
+        expect(screen.getByLabelText("Start Month")).toHaveValue("02");
+        expect(screen.getByLabelText("Start Year")).toHaveValue("999");
+        expect(screen.getByLabelText("End Date")).toHaveValue("03");
+        expect(screen.getByLabelText("End Month")).toHaveValue("02");
+        expect(screen.getByLabelText("End Year")).toHaveValue("999");
+    });
+
+    it("should render the field without prefill for invalid date (YY-MM-DD)", async () => {
+        render(
+            <DateRangeInput
+                data-testid="e2e"
+                value="99-02-01"
+                valueEnd="99-02-03"
+            />
+        );
+
+        expect(screen.queryByTestId(FIELD_TESTID)).toBeVisible();
+        expect(screen.getByLabelText("Start Date")).toHaveValue("");
+        expect(screen.getByLabelText("Start Month")).toHaveValue("");
+        expect(screen.getByLabelText("Start Year")).toHaveValue("");
+        expect(screen.getByLabelText("End Date")).toHaveValue("");
+        expect(screen.getByLabelText("End Month")).toHaveValue("");
+        expect(screen.getByLabelText("End Year")).toHaveValue("");
+    });
+
+    it("should render the field without prefill for invalid date (unknown format)", async () => {
+        render(
+            <DateRangeInput data-testid="e2e" value="2024" valueEnd="2025" />
+        );
+
+        expect(screen.queryByTestId(FIELD_TESTID)).toBeVisible();
+        expect(screen.getByLabelText("Start Date")).toHaveValue("");
+        expect(screen.getByLabelText("Start Month")).toHaveValue("");
+        expect(screen.getByLabelText("Start Year")).toHaveValue("");
+        expect(screen.getByLabelText("End Date")).toHaveValue("");
+        expect(screen.getByLabelText("End Month")).toHaveValue("");
+        expect(screen.getByLabelText("End Year")).toHaveValue("");
+    });
+
     describe("focus/blur behaviour", () => {
         it("should call onFocus on click and onBlur via outside click", async () => {
             const user = userEvent.setup({
