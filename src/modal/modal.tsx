@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
 import { Container } from "./modal.styles";
@@ -20,6 +20,7 @@ export const Modal = ({
     // CONST, STATE, REF
     // =============================================================================
     const { verticalHeight, offsetTop } = useViewport();
+    const containerRef = useRef<HTMLDivElement | null>(null);
 
     // =============================================================================
     // EFFECTS
@@ -42,9 +43,11 @@ export const Modal = ({
             onOverlayClick={onOverlayClick}
             id={id}
             rootId={rootComponentId}
+            containerRef={containerRef}
             zIndex={zIndex}
         >
             <Container
+                ref={containerRef}
                 $show={show}
                 $animationFrom={animationFrom}
                 data-testid={id}
