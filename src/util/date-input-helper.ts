@@ -32,11 +32,36 @@ export namespace DateInputHelper {
 
     export const sanitizeInput = (date: string | undefined): string => {
         if (date) {
-            const day = dayjs(date);
+            const normalized = normalizeDateString(date);
+
+            const day = dayjs(normalized, "YYYY-MM-DD", true);
+
             if (day.isValid()) {
-                return date;
+                return normalized;
             }
         }
         return "";
+    };
+
+    const normalizeDateString = (dateString: string): string => {
+        const match = dateString.match(/^(\d{1,4})-(\d{1,2})-(\d{1,2})$/);
+
+        if (!match) {
+            return "";
+        }
+
+        const [, year, month, day] = match;
+
+        // Reject if year would be < 100 after padding
+        if (year.length <= 2 || parseInt(year, 10) < 100) {
+            return "";
+        }
+
+        // Pad year to 4 digits with leading zeros
+        const paddedYear = year.padStart(4, "0");
+        const paddedMonth = month.padStart(2, "0");
+        const paddedDay = day.padStart(2, "0");
+
+        return `${paddedYear}-${paddedMonth}-${paddedDay}`;
     };
 }
