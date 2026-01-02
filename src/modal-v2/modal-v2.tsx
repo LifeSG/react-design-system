@@ -5,7 +5,7 @@ import {
     useInteractions,
     useTransitionStatus,
 } from "@floating-ui/react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
 import { ModalContext } from "./modal-context";
@@ -30,6 +30,7 @@ export const ModalV2 = ({
     // CONST, STATE, REF
     // =========================================================================
     const { verticalHeight, offsetTop } = useViewport();
+    const containerRef = useRef<HTMLElement | null>(null);
 
     // =========================================================================
     // FLOATING UI CONFIG
@@ -73,6 +74,7 @@ export const ModalV2 = ({
             onOverlayClick={onOverlayClick}
             id={id}
             rootId={rootComponentId}
+            containerRef={containerRef}
             zIndex={zIndex}
         >
             <Container
@@ -92,7 +94,10 @@ export const ModalV2 = ({
                         >
                             <ScrollContainer>
                                 <ModalContainer
-                                    ref={refs.setFloating}
+                                    ref={(node) => {
+                                        refs.setFloating(node);
+                                        containerRef.current = node || null;
+                                    }}
                                     {...getFloatingProps()}
                                     aria-modal
                                     role="dialog"
