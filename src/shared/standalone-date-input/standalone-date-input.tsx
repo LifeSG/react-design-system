@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
-import { StringHelper, useStateRef } from "../../util";
+import { DateInputHelper, StringHelper, useStateRef } from "../../util";
 import {
     DayInput,
     Divider,
@@ -307,12 +307,13 @@ export const Component = (
         if (!stringVal) {
             return [undefined, undefined, undefined];
         } else {
-            const normalizedDate = normalizeDateString(stringVal);
-            const day = dayjs(normalizedDate, "YYYY-MM-DD", true);
+            const sanitized = DateInputHelper.sanitizeInput(stringVal);
 
-            if (!day.isValid()) {
+            if (!sanitized) {
                 return [undefined, undefined, undefined];
             }
+
+            const day = dayjs(sanitized, "YYYY-MM-DD", true);
 
             return [
                 StringHelper.padValue(day.date().toString()),
@@ -320,23 +321,6 @@ export const Component = (
                 day.year().toString(),
             ];
         }
-    }
-
-    function normalizeDateString(dateString: string): string {
-        const match = dateString.match(/^(\d{1,4})-(\d{2})-(\d{2})$/);
-
-        if (!match) {
-            return dateString;
-        }
-
-        const [, year, month, day] = match;
-
-        // Pad year to 4 digits with leading zeros
-        const paddedYear = year.padStart(4, "0");
-        const paddedMonth = month.padStart(2, "0");
-        const paddedDay = day.padStart(2, "0");
-
-        return `${paddedYear}-${paddedMonth}-${paddedDay}`;
     }
 
     // =============================================================================

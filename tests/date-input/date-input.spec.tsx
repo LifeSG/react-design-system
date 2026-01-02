@@ -356,6 +356,103 @@ describe("DateInput", () => {
             expect(mockOnChange).toHaveBeenCalledWith("2023-01-01");
         });
 
+        it("should handle date selection by manual input (3-digit year input with leading zero)", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            const mockOnChange = jest.fn();
+
+            render(<DateInput data-testid="e2e" onChange={mockOnChange} />);
+
+            await user.click(screen.getByTestId(FIELD_TESTID));
+
+            await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
+
+            await user.type(screen.getByLabelText("Date"), "01");
+            await user.type(screen.getByLabelText("Month"), "01");
+            await user.type(screen.getByLabelText("Year"), "0923");
+
+            expect(
+                within(screen.getByTestId(CALENDAR_TESTID)).getByText("Jan")
+            ).toBeVisible();
+            expect(
+                within(screen.getByTestId(CALENDAR_TESTID)).getByText("0923")
+            ).toBeVisible();
+
+            expect(mockOnChange).not.toHaveBeenCalled();
+
+            await user.click(screen.getByText("Done"));
+
+            await waitForElementToBeRemoved(() =>
+                screen.queryByTestId(CALENDAR_TESTID)
+            );
+
+            expect(screen.getByLabelText("Date")).toHaveValue("01");
+            expect(screen.getByLabelText("Month")).toHaveValue("01");
+            expect(screen.getByLabelText("Year")).toHaveValue("923");
+            expect(mockOnChange).toHaveBeenCalledWith("0923-01-01");
+        });
+
+        it("should not handle date selection by manual input (2-digit year input with 2 leading zero)", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            const mockOnChange = jest.fn();
+
+            render(<DateInput data-testid="e2e" onChange={mockOnChange} />);
+
+            await user.click(screen.getByTestId(FIELD_TESTID));
+
+            await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
+
+            await user.type(screen.getByLabelText("Date"), "01");
+            await user.type(screen.getByLabelText("Month"), "01");
+            await user.type(screen.getByLabelText("Year"), "0099");
+
+            expect(mockOnChange).not.toHaveBeenCalled();
+
+            await user.click(screen.getByText("Done"));
+
+            await waitForElementToBeRemoved(() =>
+                screen.queryByTestId(CALENDAR_TESTID)
+            );
+
+            expect(screen.getByLabelText("Date")).toHaveValue("01");
+            expect(screen.getByLabelText("Month")).toHaveValue("01");
+            expect(screen.getByLabelText("Year")).toHaveValue("0099");
+            expect(mockOnChange).toHaveBeenCalledWith("");
+        });
+
+        it("should not handle date selection by manual input (invalid year)", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            const mockOnChange = jest.fn();
+
+            render(<DateInput data-testid="e2e" onChange={mockOnChange} />);
+
+            await user.click(screen.getByTestId(FIELD_TESTID));
+
+            await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
+
+            await user.type(screen.getByLabelText("Date"), "01");
+            await user.type(screen.getByLabelText("Month"), "01");
+            await user.type(screen.getByLabelText("Year"), "999");
+
+            expect(mockOnChange).not.toHaveBeenCalled();
+
+            await user.click(screen.getByText("Done"));
+
+            await waitForElementToBeRemoved(() =>
+                screen.queryByTestId(CALENDAR_TESTID)
+            );
+
+            expect(screen.getByLabelText("Date")).toHaveValue("01");
+            expect(screen.getByLabelText("Month")).toHaveValue("01");
+            expect(screen.getByLabelText("Year")).toHaveValue("999");
+            expect(mockOnChange).toHaveBeenCalledWith("");
+        });
+
         it("should reset to initial value if selection by click is not confirmed", async () => {
             const user = userEvent.setup({
                 advanceTimers: jest.advanceTimersByTime,
@@ -525,6 +622,94 @@ describe("DateInput", () => {
             expect(screen.getByLabelText("Month")).toHaveValue("01");
             expect(screen.getByLabelText("Year")).toHaveValue("2023");
             expect(mockOnChange).toHaveBeenCalledWith("2023-01-01");
+        });
+
+        it("should handle date selection by keyboard input (3-digit year input with leading zero)", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            const mockOnChange = jest.fn();
+
+            render(
+                <DateInput
+                    data-testid="e2e"
+                    withButton={false}
+                    onChange={mockOnChange}
+                />
+            );
+
+            await user.click(screen.getByTestId(FIELD_TESTID));
+
+            await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
+
+            await user.type(screen.getByLabelText("Date"), "01");
+            await user.type(screen.getByLabelText("Month"), "01");
+            await user.type(screen.getByLabelText("Year"), "0923");
+
+            await waitForElementToBeRemoved(() =>
+                screen.queryByTestId(CALENDAR_TESTID)
+            );
+
+            expect(screen.getByLabelText("Date")).toHaveValue("01");
+            expect(screen.getByLabelText("Month")).toHaveValue("01");
+            expect(screen.getByLabelText("Year")).toHaveValue("923");
+            expect(mockOnChange).toHaveBeenCalledWith("0923-01-01");
+        });
+
+        it("should not handle date selection by manual input (2-digit year input with 2 leading zero)", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            const mockOnChange = jest.fn();
+
+            render(
+                <DateInput
+                    data-testid="e2e"
+                    withButton={false}
+                    onChange={mockOnChange}
+                />
+            );
+
+            await user.click(screen.getByTestId(FIELD_TESTID));
+
+            await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
+
+            await user.type(screen.getByLabelText("Date"), "01");
+            await user.type(screen.getByLabelText("Month"), "01");
+            await user.type(screen.getByLabelText("Year"), "0023");
+
+            expect(screen.getByLabelText("Date")).toHaveValue("01");
+            expect(screen.getByLabelText("Month")).toHaveValue("01");
+            expect(screen.getByLabelText("Year")).toHaveValue("0023");
+            expect(mockOnChange).not.toHaveBeenCalled();
+        });
+
+        it("should not handle date selection by keyboard input (invalid year)", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            const mockOnChange = jest.fn();
+
+            render(
+                <DateInput
+                    data-testid="e2e"
+                    withButton={false}
+                    onChange={mockOnChange}
+                />
+            );
+
+            await user.click(screen.getByTestId(FIELD_TESTID));
+
+            await waitFor(() => screen.getByTestId(CALENDAR_TESTID));
+
+            await user.type(screen.getByLabelText("Date"), "01");
+            await user.type(screen.getByLabelText("Month"), "01");
+            await user.type(screen.getByLabelText("Year"), "923");
+
+            expect(screen.getByLabelText("Date")).toHaveValue("01");
+            expect(screen.getByLabelText("Month")).toHaveValue("01");
+            expect(screen.getByLabelText("Year")).toHaveValue("923");
+            expect(mockOnChange).not.toHaveBeenCalled();
         });
 
         it("should handle clearing of date", async () => {
