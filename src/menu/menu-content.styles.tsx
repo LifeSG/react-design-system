@@ -29,15 +29,16 @@ export const MenuPanel = styled.div<MenuPanelStylesProps>`
     max-width: 24rem;
 
     ${MediaQuery.MaxWidth.sm} {
-        width: calc(100vw - ${Breakpoint["sm-margin"]} * 2);
+        max-width: calc(100vw - ${Breakpoint["sm-margin"]}px * 2);
+        min-width: unset;
     }
 
     ${MediaQuery.MaxWidth.xs} {
-        width: calc(100vw - ${Breakpoint["xs-margin"]} * 2);
+        max-width: calc(100vw - ${Breakpoint["xs-margin"]}px * 2);
     }
 
     ${MediaQuery.MaxWidth.xxs} {
-        width: calc(100vw - ${Breakpoint["xxs-margin"]} * 2);
+        max-width: calc(100vw - ${Breakpoint["xxs-margin"]}px * 2);
     }
 
     ${({ $maxHeight }) =>

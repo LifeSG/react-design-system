@@ -64,16 +64,16 @@ export const Container = styled.div<ContainerStyleProps>`
 
     ${MediaQuery.MaxWidth.sm} {
         min-width: unset;
-        width: calc(100vw - ${Breakpoint["sm-margin"]} * 2);
+        max-width: calc(100vw - ${Breakpoint["sm-margin"]}px * 2);
         max-height: 15rem;
     }
 
     ${MediaQuery.MaxWidth.xs} {
-        width: calc(100vw - ${Breakpoint["xs-margin"]} * 2);
+        max-width: calc(100vw - ${Breakpoint["xs-margin"]}px * 2);
     }
 
     ${MediaQuery.MaxWidth.xxs} {
-        width: calc(100vw - ${Breakpoint["xxs-margin"]} * 2);
+        max-width: calc(100vw - ${Breakpoint["xxs-margin"]}px * 2);
     }
 
     &::-webkit-scrollbar {

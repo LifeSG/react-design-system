@@ -311,6 +311,7 @@ export const ComboboxPicker = ({
                         startOptions
                     )}
                     listboxId={internalId}
+                    matchElementWidth={true}
                 />
             );
         } else {
@@ -325,6 +326,7 @@ export const ComboboxPicker = ({
                         endOptions
                     )}
                     listboxId={internalId}
+                    matchElementWidth={true}
                 />
             );
         }
