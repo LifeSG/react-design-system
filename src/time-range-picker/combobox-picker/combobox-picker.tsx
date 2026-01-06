@@ -305,13 +305,13 @@ export const ComboboxPicker = ({
                     listItems={startOptions}
                     onSelectItem={handleStartTime}
                     selectedItems={[startTimeVal]}
-                    disableItemFocus={true}
                     topScrollItem={TimeHelper.findClosestFlooredTime(
                         parseInput(startTimeVal),
                         startOptions
                     )}
                     listboxId={internalId}
-                    matchElementWidth={true}
+                    disableItemFocus
+                    matchElementWidth
                 />
             );
         } else {
@@ -320,13 +320,13 @@ export const ComboboxPicker = ({
                     listItems={endOptions}
                     onSelectItem={handleEndTime}
                     selectedItems={[endTimeVal]}
-                    disableItemFocus={true}
                     topScrollItem={TimeHelper.findClosestFlooredTime(
                         parseInput(endTimeVal),
                         endOptions
                     )}
                     listboxId={internalId}
-                    matchElementWidth={true}
+                    disableItemFocus
+                    matchElementWidth
                 />
             );
         }

@@ -45,15 +45,32 @@ export const Container = styled.div<ContainerStyleProps>`
     border-radius: ${Radius["sm"]};
     background: ${Colour["bg"]};
 
+    --x-spacing: 0px;
+    --available-width: calc(100vw - var(--x-spacing) * 2);
+
+    ${MediaQuery.MaxWidth.sm} {
+        --x-spacing: ${Breakpoint["sm-margin"]}px;
+        max-height: 15rem;
+    }
+
+    ${MediaQuery.MaxWidth.xs} {
+        --x-spacing: ${Breakpoint["xs-margin"]}px;
+    }
+
+    ${MediaQuery.MaxWidth.xxs} {
+        --x-spacing: ${Breakpoint["xxs-margin"]}px;
+    }
+
+    max-width: var(--available-width);
+
     ${(props) => {
-        if (props.$customWidth) {
-            return `width: ${props.$customWidth};`;
-        } else if (props.$width) {
-            return `width: ${props.$width}px; min-width: 23rem;`;
-        } else {
-            return "min-width: 23rem;";
-        }
+        if (props.$customWidth) return `width: ${props.$customWidth};`;
+        if (props.$width)
+            return `width: ${props.$width}px; min-width: min(23rem, var(--available-width));`;
+
+        return "min-width: min(23rem, var(--available-width));";
     }}
+
     max-height: min(27rem, var(--available-height, infinity * 1px));
     overflow: hidden;
     overflow-y: auto;
@@ -61,20 +78,6 @@ export const Container = styled.div<ContainerStyleProps>`
         props.$variant === "small"
             ? Font["body-md-regular"]
             : Font["body-baseline-regular"]}
-
-    ${MediaQuery.MaxWidth.sm} {
-        min-width: unset;
-        max-width: calc(100vw - ${Breakpoint["sm-margin"]}px * 2);
-        max-height: 15rem;
-    }
-
-    ${MediaQuery.MaxWidth.xs} {
-        max-width: calc(100vw - ${Breakpoint["xs-margin"]}px * 2);
-    }
-
-    ${MediaQuery.MaxWidth.xxs} {
-        max-width: calc(100vw - ${Breakpoint["xxs-margin"]}px * 2);
-    }
 
     &::-webkit-scrollbar {
         width: 14px;

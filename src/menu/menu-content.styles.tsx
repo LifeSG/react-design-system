@@ -25,21 +25,24 @@ export const MenuPanel = styled.div<MenuPanelStylesProps>`
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     background: ${Colour["bg"]};
     box-shadow: ${Shadow["md-subtle"]};
-    min-width: 15rem;
-    max-width: 24rem;
+
+    --x-spacing: 0px;
+    --available-width: calc(100vw - var(--x-spacing) * 2);
 
     ${MediaQuery.MaxWidth.sm} {
-        max-width: calc(100vw - ${Breakpoint["sm-margin"]}px * 2);
-        min-width: unset;
+        --x-spacing: ${Breakpoint["sm-margin"]}px;
     }
 
     ${MediaQuery.MaxWidth.xs} {
-        max-width: calc(100vw - ${Breakpoint["xs-margin"]}px * 2);
+        --x-spacing: ${Breakpoint["xs-margin"]}px;
     }
 
     ${MediaQuery.MaxWidth.xxs} {
-        max-width: calc(100vw - ${Breakpoint["xxs-margin"]}px * 2);
+        --x-spacing: ${Breakpoint["xxs-margin"]}px;
     }
+
+    min-width: min(15rem, var(--available-width));
+    max-width: min(24rem, var(--available-width));
 
     ${({ $maxHeight }) =>
         $maxHeight !== undefined &&
