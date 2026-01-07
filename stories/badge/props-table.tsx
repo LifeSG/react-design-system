@@ -32,6 +32,7 @@ const DATA: ApiTableSectionProps[] = [
                     `"number-with-border"`,
                     `"dot"`,
                     `"dot-with-border"`,
+                    `"square-number"`,
                 ],
                 defaultValue: `"number"`,
             },
