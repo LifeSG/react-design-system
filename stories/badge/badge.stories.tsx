@@ -106,16 +106,18 @@ export const SquareNumber: StoryObj = {
             <Badge count={8} variant="square-number" />
             <Badge count={18} variant="square-number" />
             <Badge count={208} variant="square-number" />
+            <Badge count={1000} variant="square-number" />
             <Badge count={1004} variant="square-number" />
             <Badge count={8} variant="square-number" color="important" />
             <Badge count={18} variant="square-number" color="important" />
             <Badge count={208} variant="square-number" color="important" />
+            <Badge count={1000} variant="square-number" color="important" />
             <Badge count={1004} variant="square-number" color="important" />
         </>
     ),
     decorators: [
         GridDecorator({
-            columns: 4,
+            columns: 5,
             rowHeaders: ["Default", "Important"],
         }),
     ],
