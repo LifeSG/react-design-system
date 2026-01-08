@@ -13,10 +13,11 @@ export const solidBorderStyle =
         const { thickness, radius, colour } = options || {};
         // Resolve design tokens to their underlying value
         const resolvedThickness =
-            (typeof thickness === "function" ? thickness(props) : thickness) ??
-            BorderValues["width-010"](props);
+            (typeof thickness === "function"
+                ? thickness(props)
+                : thickness + "px") ?? BorderValues["width-010"](props);
         const resolvedRadius =
-            (typeof radius === "function" ? radius(props) : radius) ?? 0;
+            (typeof radius === "function" ? radius(props) : radius + "px") ?? 0;
         const resolvedColor =
             (typeof colour === "function" ? colour(props) : colour) ??
             ColourSemantic.border(props);
