@@ -6,11 +6,11 @@ import {
     useMemo,
     useState,
 } from "react";
-import { TabContext } from "./tab-context";
+import { TabContext, TabLinkProps } from "./tab-context";
 import { TabItem } from "./tab-item";
 import { TabLinkChain } from "./tab-link-chain";
 import { Wrapper } from "./tab.style";
-import { TabItemProps, TabLinkProps, TabProps } from "./types";
+import { TabItemProps, TabProps } from "./types";
 
 // =============================================================================
 // COMPONENT

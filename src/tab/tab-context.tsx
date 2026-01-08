@@ -1,5 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
-import { TabLinkProps } from "./types";
+import { TabItemProps } from "./types";
+
+export type TabLinkProps = Pick<TabItemProps, "title" | "width">;
 
 interface TabContextProps {
     currentActiveIndex: number;

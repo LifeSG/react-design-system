@@ -25,9 +25,3 @@ export interface TabItemProps {
     "data-testid"?: string | undefined;
     width?: string | undefined;
 }
-
-export interface TabLinkProps {
-    title: string;
-    counter?: number | undefined;
-    width?: string | undefined;
-}
