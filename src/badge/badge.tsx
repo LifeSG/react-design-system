@@ -1,5 +1,5 @@
 import { BadgeOverlay, BadgeWrapper, StyledBadge } from "./badge.style";
-import { BadgeProps } from "./types";
+import { BadgeProps, BadgeVariant } from "./types";
 
 export const Badge = ({
     children,
@@ -14,9 +14,12 @@ export const Badge = ({
     // CONST
     // =============================================================================
     const displayCount = getDisplayCount(count);
-
-    const shouldShowCount =
-        variant === "number" || variant === "number-with-border";
+    const variantsToShowCount: BadgeVariant[] = [
+        "number",
+        "number-with-border",
+        "square-number",
+    ];
+    const shouldShowCount = variantsToShowCount.includes(variant);
 
     // =============================================================================
     // HELPER FUNCTIONS

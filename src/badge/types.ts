@@ -2,7 +2,8 @@ export type BadgeVariant =
     | "number"
     | "number-with-border"
     | "dot"
-    | "dot-with-border";
+    | "dot-with-border"
+    | "square-number";
 
 export type BadgeColor = "default" | "important";
 

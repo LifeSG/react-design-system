@@ -50,7 +50,6 @@ const numberBadgeStyles = css`
     font-size: ${Font.Spec["body-size-xs"]};
     font-weight: ${Font.Spec["weight-bold"]};
     line-height: 1;
-    border-radius: ${Radius.full};
 `;
 
 const dotBadgeStyles = css`
@@ -69,15 +68,19 @@ export const StyledBadge = styled.div<StyledBadgeProps>`
     justify-content: center;
 
     width: fit-content;
-    ${({ $variant }) => {
+    ${({ $variant, $color }) => {
         switch ($variant) {
             case "number":
-                return numberBadgeStyles;
+                return css`
+                    ${numberBadgeStyles}
+                    border-radius: ${Radius.full};
+                `;
 
             case "number-with-border":
                 return css`
                     ${numberBadgeStyles}
-                    box-shadow: 0 0 0  ${Border["width-020"]} ${Colour["bg"]};
+                    border-radius: ${Radius.full};
+                    box-shadow: 0 0 0 ${Border["width-020"]} ${Colour["bg"]};
                 `;
 
             case "dot":
@@ -89,6 +92,18 @@ export const StyledBadge = styled.div<StyledBadgeProps>`
                 return css`
                     ${dotBadgeStyles}
                     box-shadow: 0 0 0  ${Border["width-020"]} ${Colour["bg"]};
+                `;
+
+            case "square-number":
+                return css`
+                    ${numberBadgeStyles}
+                    border-radius: ${Radius.sm};
+                    padding: 0.25rem 0.4375rem;
+                    ${$color === "default" &&
+                    css`
+                        background-color: ${Colour["bg-primary-subtler"]};
+                        color: ${Colour["text-primary"]};
+                    `}
                 `;
 
             default:
