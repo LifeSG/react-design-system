@@ -20,10 +20,14 @@ export interface TabProps {
 export interface TabItemProps {
     title: string;
     children: JSX.Element | JSX.Element[];
-    titleAddon?: JSX.Element | undefined;
-    titleAddonPosition?: "left" | "right" | undefined;
+    titleAddon?: TitleAddonProps | undefined;
     className?: string | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
     width?: string | undefined;
+}
+
+interface TitleAddonProps {
+    content: JSX.Element;
+    position?: "left" | "right" | undefined;
 }

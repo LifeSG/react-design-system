@@ -1,10 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { TabItemProps } from "./types";
 
-export type TabLinkProps = Pick<
-    TabItemProps,
-    "title" | "width" | "titleAddon" | "titleAddonPosition"
->;
+export type TabLinkProps = Pick<TabItemProps, "title" | "width" | "titleAddon">;
 
 interface TabContextProps {
     currentActiveIndex: number;

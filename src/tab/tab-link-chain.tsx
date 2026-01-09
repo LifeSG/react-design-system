@@ -115,68 +115,55 @@ export const TabLinkChain = ({
                 role="tablist"
                 $fullWidthIndicatorLine={fullWidthIndicatorLine}
             >
-                {tabLinks.map(
-                    (
-                        {
-                            title,
-                            width,
-                            titleAddon,
-                            titleAddonPosition = "right",
-                        },
-                        index
-                    ) => {
-                        const isActive = currentActiveIndex === index;
+                {tabLinks.map(({ title, width, titleAddon }, index) => {
+                    const isActive = currentActiveIndex === index;
 
-                        return (
-                            <ChainItem
-                                key={index}
-                                role="none"
-                                $active={isActive}
-                                ref={isActive ? activeLinkRef : null}
-                                $width={width}
+                    return (
+                        <ChainItem
+                            key={index}
+                            role="none"
+                            $active={isActive}
+                            ref={isActive ? activeLinkRef : null}
+                            $width={width}
+                        >
+                            <ChainLink
+                                role="tab"
+                                aria-selected={isActive}
+                                onClick={handleChainLinkClick(index)}
+                                data-testid={`${testId}-link-${index}`}
+                                $reversed={titleAddon?.position === "left"}
                             >
-                                <ChainLink
-                                    role="tab"
-                                    aria-selected={isActive}
-                                    onClick={handleChainLinkClick(index)}
-                                    data-testid={`${testId}-link-${index}`}
-                                    $reversed={titleAddonPosition === "left"}
-                                >
-                                    <LabelContainer>
-                                        <Label
-                                            $active={isActive}
-                                            onClick={handleChainLinkClick(
-                                                index
-                                            )}
-                                            aria-hidden="true"
-                                        >
-                                            <Typography.BodyBL weight="regular">
-                                                {truncateText(title)}
-                                            </Typography.BodyBL>
-                                        </Label>
-                                        <BoldLabel
-                                            type="button"
-                                            tabIndex={isActive ? 0 : -1}
-                                            onKeyDown={(e) =>
-                                                handleKeyDown(e, index)
-                                            }
-                                            ref={(el) =>
-                                                (chainLinkRefs.current[index] =
-                                                    el)
-                                            }
-                                            $active={isActive}
-                                        >
-                                            <Typography.BodyBL weight="semibold">
-                                                {truncateText(title)}
-                                            </Typography.BodyBL>
-                                        </BoldLabel>
-                                    </LabelContainer>
-                                    {titleAddon}
-                                </ChainLink>
-                            </ChainItem>
-                        );
-                    }
-                )}
+                                <LabelContainer>
+                                    <Label
+                                        $active={isActive}
+                                        onClick={handleChainLinkClick(index)}
+                                        aria-hidden="true"
+                                    >
+                                        <Typography.BodyBL weight="regular">
+                                            {truncateText(title)}
+                                        </Typography.BodyBL>
+                                    </Label>
+                                    <BoldLabel
+                                        type="button"
+                                        tabIndex={isActive ? 0 : -1}
+                                        onKeyDown={(e) =>
+                                            handleKeyDown(e, index)
+                                        }
+                                        ref={(el) =>
+                                            (chainLinkRefs.current[index] = el)
+                                        }
+                                        $active={isActive}
+                                    >
+                                        <Typography.BodyBL weight="semibold">
+                                            {truncateText(title)}
+                                        </Typography.BodyBL>
+                                    </BoldLabel>
+                                </LabelContainer>
+                                {titleAddon?.content}
+                            </ChainLink>
+                        </ChainItem>
+                    );
+                })}
             </Chain>
         </CustomFadeWrapper>
     );

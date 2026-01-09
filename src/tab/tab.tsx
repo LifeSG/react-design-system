@@ -42,7 +42,6 @@ const TabBase = ({
                 title: child.props.title,
                 width: child.props.width,
                 titleAddon: child.props.titleAddon,
-                titleAddonPosition: child.props.titleAddonPosition,
             };
         }) as TabLinkProps[];
     }, [children]);

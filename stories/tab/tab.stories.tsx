@@ -38,12 +38,15 @@ export const Default: StoryObj<Component> = {
 };
 
 export const WithCompanion: StoryObj<Component> = {
+    parameters: { docs: { source: { type: "code" } } }, // prevent Storybook from freezing
     render: (_args) => {
         return (
             <Tab>
                 <Tab.Item
                     title="Section A"
-                    titleAddon={<Badge count={8} variant="square-number" />}
+                    titleAddon={{
+                        content: <Badge count={8} variant="square-number" />,
+                    }}
                 >
                     <ContentA />
                 </Tab.Item>
@@ -55,8 +58,10 @@ export const WithCompanion: StoryObj<Component> = {
                 </Tab.Item>
                 <Tab.Item
                     title="Section D"
-                    titleAddon={<Badge count={10} variant="square-number" />}
-                    titleAddonPosition="left"
+                    titleAddon={{
+                        content: <Badge count={10} variant="square-number" />,
+                        position: "left",
+                    }}
                 >
                     <ContentD />
                 </Tab.Item>
