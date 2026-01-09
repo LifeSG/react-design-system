@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 import { FadeWrapper } from "../shared/fade-wrapper";
-import { Border, Colour, MediaQuery, Spacing } from "../theme";
-import { Typography } from "../typography/typography";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -71,20 +70,48 @@ export const ChainItem = styled.li<ChainItemStyleProps>`
     }
 `;
 
-export const ChainLink = styled.button`
-    position: relative;
+/* keep this separate to contain the ts-styled error */
+const padding = css`
     padding: ${Spacing["spacing-16"]} ${Spacing["spacing-16"]}
         ${Spacing["spacing-20"]};
-    border: none;
-    background: none;
-    cursor: pointer;
 `;
 
-export const Label = styled(Typography.BodyBL)<LabelStyleProps>`
+const flexRow = css`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+
+export const ChainLink = styled.div`
+    /* position: relative; */
+    ${flexRow}
+    gap: 0.5rem;
+    ${padding}
+    cursor: pointer;
+
+    &:has(button:focus-visible) {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: -2px;
+        border-radius: ${Radius.sm};
+    }
+`;
+
+export const LabelContainer = styled.div`
+    position: relative;
+`;
+
+const buttonBase = css`
+    ${flexRow}
+    border: none;
+    background: none;
+`;
+
+export const Label = styled.div<LabelStyleProps>`
+    ${buttonBase}
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, calc(-50% - 0.125rem)); // Based on testing
+    transform: translate(-50%, -50%); // Based on testing
     color: ${Colour["text-subtler"]};
     opacity: 1;
 
@@ -97,9 +124,12 @@ export const Label = styled(Typography.BodyBL)<LabelStyleProps>`
     }}
 `;
 
-export const BoldLabel = styled(Typography.BodyBL)<LabelStyleProps>`
+export const BoldLabel = styled.button<LabelStyleProps>`
+    ${buttonBase}
     color: ${Colour["text-primary"]};
     opacity: 0;
+    outline: none;
+
     ${(props) => {
         if (props.$active) {
             return css`
