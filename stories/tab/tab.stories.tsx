@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Tab } from "src/tab";
+import { Badge } from "../../src";
 import { ContentA, ContentB, ContentC, ContentD } from "./doc-elements";
 
 type Component = typeof Tab;
@@ -29,6 +30,34 @@ export const Default: StoryObj<Component> = {
                     <ContentC />
                 </Tab.Item>
                 <Tab.Item title="Section D">
+                    <ContentD />
+                </Tab.Item>
+            </Tab>
+        );
+    },
+};
+
+export const WithCompanion: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Tab>
+                <Tab.Item
+                    title="Section A"
+                    titleAddon={<Badge count={8} variant="square-number" />}
+                >
+                    <ContentA />
+                </Tab.Item>
+                <Tab.Item title="Section B">
+                    <ContentB />
+                </Tab.Item>
+                <Tab.Item title="Section C">
+                    <ContentC />
+                </Tab.Item>
+                <Tab.Item
+                    title="Section D"
+                    titleAddon={<Badge count={10} variant="square-number" />}
+                    titleAddonPosition="left"
+                >
                     <ContentD />
                 </Tab.Item>
             </Tab>

@@ -38,7 +38,12 @@ const TabBase = ({
         ) as ReactElement<TabItemProps>[];
 
         return validChildren.map((child) => {
-            return { title: child.props.title, width: child.props.width };
+            return {
+                title: child.props.title,
+                width: child.props.width,
+                titleAddon: child.props.titleAddon,
+                titleAddonPosition: child.props.titleAddonPosition,
+            };
         }) as TabLinkProps[];
     }, [children]);
 

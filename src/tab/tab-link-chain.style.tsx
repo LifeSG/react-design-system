@@ -18,6 +18,10 @@ interface ChainItemStyleProps {
     $width?: string;
 }
 
+interface ChainLinkStyleProps {
+    $reversed: boolean;
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -82,9 +86,10 @@ const flexRow = css`
     align-items: center;
 `;
 
-export const ChainLink = styled.div`
+export const ChainLink = styled.div<ChainLinkStyleProps>`
     /* position: relative; */
     ${flexRow}
+    flex-direction: ${(props) => (props.$reversed ? "row-reverse" : "row")};
     gap: 0.5rem;
     ${padding}
     cursor: pointer;
