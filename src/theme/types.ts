@@ -1,5 +1,4 @@
 import { ReactNode } from "react";
-import { V2_ThemeSpec } from "../v2_theme/types";
 import { BorderSetOptions } from "./border/types";
 import { BreakpointSetOptions } from "./breakpoint/types";
 import { PrimitiveColourSetOptions } from "./colour-primitive/types";
@@ -116,8 +115,6 @@ export interface ThemeSpec {
     overrides?: ThemeSpecOptions | undefined;
 
     maxColumns?: any;
-    /** @deprecated For backwards compatibility with V2 theme */
-    _v2?: V2_ThemeSpec;
 }
 export interface ThemeStyleProps {
     theme?: ThemeSpec;

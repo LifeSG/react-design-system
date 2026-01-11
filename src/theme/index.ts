@@ -64,12 +64,6 @@ const LifeSGThemeBase: ThemeSpec = {
     breakpointScheme: "default",
     resourceScheme: "lifesg",
     componentScheme: "lifesg",
-    _v2: {
-        colorScheme: "base",
-        textStyleScheme: "base",
-        designTokenScheme: "base",
-        resourceScheme: "base",
-    },
 };
 
 const BookingSGThemeBase: ThemeSpec = {
@@ -82,12 +76,6 @@ const BookingSGThemeBase: ThemeSpec = {
     shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "bookingsg",
-    _v2: {
-        colorScheme: "bookingsg",
-        textStyleScheme: "base",
-        designTokenScheme: "base",
-        resourceScheme: "bookingsg",
-    },
 };
 
 const CCubeThemeBase: ThemeSpec = {
@@ -100,12 +88,6 @@ const CCubeThemeBase: ThemeSpec = {
     shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "ccube",
-    _v2: {
-        colorScheme: "ccube",
-        textStyleScheme: "base",
-        designTokenScheme: "base",
-        resourceScheme: "ccube",
-    },
 };
 
 const MyLegacyThemeBase: ThemeSpec = {
@@ -118,12 +100,6 @@ const MyLegacyThemeBase: ThemeSpec = {
     shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "mylegacy",
-    _v2: {
-        colorScheme: "mylegacy",
-        textStyleScheme: "base",
-        designTokenScheme: "base",
-        resourceScheme: "mylegacy",
-    },
 };
 
 const RBSThemeBase: ThemeSpec = {
@@ -136,12 +112,6 @@ const RBSThemeBase: ThemeSpec = {
     shadowScheme: "default",
     breakpointScheme: "default",
     resourceScheme: "rbs",
-    _v2: {
-        colorScheme: "rbs",
-        textStyleScheme: "base",
-        designTokenScheme: "rbs",
-        resourceScheme: "rbs",
-    },
 };
 
 const OneServiceThemeBase: ThemeSpec = {
