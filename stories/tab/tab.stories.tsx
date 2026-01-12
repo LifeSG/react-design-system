@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
+import { Badge } from "src/badge";
 import { Tab } from "src/tab";
-import { Badge } from "../../src";
 import { ContentA, ContentB, ContentC, ContentD } from "./doc-elements";
 
 type Component = typeof Tab;

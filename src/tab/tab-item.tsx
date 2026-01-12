@@ -9,8 +9,7 @@ export interface TabItemComponentProps extends TabItemProps {
 export const TabItem = ({
     index,
     children,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    titleAddon, // destructure so it doesn't get passed into the dom
+    titleAddon: _titleAddon, // destructure so it doesn't get passed into the dom
     ...otherProps
 }: TabItemComponentProps) => {
     // =========================================================================

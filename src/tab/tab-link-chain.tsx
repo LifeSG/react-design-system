@@ -127,13 +127,12 @@ export const TabLinkChain = ({
                             $width={width}
                         >
                             <ChainLink
-                                role="tab"
-                                aria-selected={isActive}
+                                role="none"
                                 onClick={handleChainLinkClick(index)}
                                 data-testid={`${testId}-link-${index}`}
                                 $reversed={titleAddon?.position === "left"}
                             >
-                                <LabelContainer>
+                                <LabelContainer role="none">
                                     <Label
                                         $active={isActive}
                                         onClick={handleChainLinkClick(index)}
@@ -144,7 +143,9 @@ export const TabLinkChain = ({
                                         </Typography.BodyBL>
                                     </Label>
                                     <BoldLabel
+                                        role="tab"
                                         type="button"
+                                        aria-selected={isActive}
                                         tabIndex={isActive ? 0 : -1}
                                         onKeyDown={(e) =>
                                             handleKeyDown(e, index)
