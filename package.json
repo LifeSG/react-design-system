@@ -40,10 +40,12 @@
     "dependencies": {
         "@linaria/core": "^6.3.0",
         "@linaria/react": "^6.3.0",
+        "@linaria/webpack-loader": "^5.0.4",
         "@react-spring/web": "^10.0.1",
         "@wyw-in-js/babel-preset": "^1.0.2",
         "fabric": "^6.7.0",
         "immer": "^10.0.2",
+        "mini-css-extract-plugin": "^2.9.4",
         "react-slider": "^2.0.6",
         "react-virtuoso": "^4.12.5",
         "react-zoom-pan-pinch": "^3.3.0"
@@ -96,6 +98,7 @@
         "@typescript-eslint/eslint-plugin": "^8.46.2",
         "@typescript-eslint/parser": "^8.46.2",
         "@wyw-in-js/rollup": "^1.0.2",
+        "@wyw-in-js/webpack-loader": "^1.0.4",
         "babel-loader": "^8.2.4",
         "babel-plugin-styled-components": "^2.0.6",
         "css-loader": "^5.2.7",
