@@ -37,36 +37,35 @@ export const Default: StoryObj<Component> = {
     },
 };
 
-export const WithCompanion: StoryObj<Component> = {
-    parameters: { docs: { source: { type: "code" } } }, // prevent Storybook from freezing
+// declare story separately to prevent Storybook from freezing
+const _TitleAddon = (
+    <Tab>
+        <Tab.Item
+            title="Section A"
+            titleAddon={{
+                content: <Badge count={8} variant="square-number" />,
+            }}
+        >
+            <ContentA />
+        </Tab.Item>
+        <Tab.Item
+            title="Section B"
+            titleAddon={{
+                content: <Badge count={10} variant="square-number" />,
+                position: "left",
+            }}
+        >
+            <ContentB />
+        </Tab.Item>
+        <Tab.Item title="Section C">
+            <ContentC />
+        </Tab.Item>
+    </Tab>
+);
+
+export const TitleAddon: StoryObj<Component> = {
     render: (_args) => {
-        return (
-            <Tab>
-                <Tab.Item
-                    title="Section A"
-                    titleAddon={{
-                        content: <Badge count={8} variant="square-number" />,
-                    }}
-                >
-                    <ContentA />
-                </Tab.Item>
-                <Tab.Item title="Section B">
-                    <ContentB />
-                </Tab.Item>
-                <Tab.Item title="Section C">
-                    <ContentC />
-                </Tab.Item>
-                <Tab.Item
-                    title="Section D"
-                    titleAddon={{
-                        content: <Badge count={10} variant="square-number" />,
-                        position: "left",
-                    }}
-                >
-                    <ContentD />
-                </Tab.Item>
-            </Tab>
-        );
+        return _TitleAddon;
     },
 };
 

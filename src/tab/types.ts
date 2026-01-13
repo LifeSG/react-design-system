@@ -20,6 +20,7 @@ export interface TabProps {
 export interface TabItemProps {
     title: string;
     children: JSX.Element | JSX.Element[];
+    /** Custom addon content displayed next to the tab title */
     titleAddon?: TitleAddonProps | undefined;
     className?: string | undefined;
     id?: string | undefined;
@@ -27,7 +28,9 @@ export interface TabItemProps {
     width?: string | undefined;
 }
 
-interface TitleAddonProps {
+export interface TitleAddonProps {
+    /** addon content */
     content: JSX.Element;
+    /** position of the addon content, defaults to "right" */
     position?: "left" | "right" | undefined;
 }

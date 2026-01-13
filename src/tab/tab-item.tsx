@@ -26,3 +26,5 @@ export const TabItem = ({
         </div>
     ) : null;
 };
+
+TabItem.displayName = "Tab.Item";
