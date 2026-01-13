@@ -6,11 +6,11 @@ import {
     useMemo,
     useState,
 } from "react";
-import { TabContext } from "./tab-context";
+import { TabContext, TabLinkProps } from "./tab-context";
 import { TabItem } from "./tab-item";
 import { TabLinkChain } from "./tab-link-chain";
 import { Wrapper } from "./tab.style";
-import { TabItemProps, TabLinkProps, TabProps } from "./types";
+import { TabItemProps, TabProps } from "./types";
 
 // =============================================================================
 // COMPONENT
@@ -38,7 +38,11 @@ const TabBase = ({
         ) as ReactElement<TabItemProps>[];
 
         return validChildren.map((child) => {
-            return { title: child.props.title, width: child.props.width };
+            return {
+                title: child.props.title,
+                width: child.props.width,
+                titleAddon: child.props.titleAddon,
+            };
         }) as TabLinkProps[];
     }, [children]);
 
@@ -87,6 +91,8 @@ const TabBase = ({
         </Wrapper>
     );
 };
+
+TabBase.displayName = "Tab";
 
 // =============================================================================
 // EXPORTS
