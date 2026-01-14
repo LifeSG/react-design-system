@@ -132,7 +132,6 @@ export const VerificationSection = ({
                                 dataTestId ? `${dataTestId}-error` : undefined
                             }
                             role="alert"
-                            aria-live="polite"
                         >
                             {verifyOtpError}
                         </FormErrorMessage>

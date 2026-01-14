@@ -144,7 +144,6 @@ export const ContactInputSection = ({
                     id={id ? `${id}-error` : undefined}
                     data-testid={dataTestId ? `${dataTestId}-error` : undefined}
                     role="alert"
-                    aria-live="polite"
                 >
                     {sendOtpError}
                 </FormErrorMessage>
@@ -155,8 +154,6 @@ export const ContactInputSection = ({
                     data-testid={
                         dataTestId ? `${dataTestId}-countdown` : undefined
                     }
-                    aria-live="polite"
-                    aria-atomic="true"
                 >
                     Resend available in {countdown.formatTime()}
                 </VisuallyHidden>

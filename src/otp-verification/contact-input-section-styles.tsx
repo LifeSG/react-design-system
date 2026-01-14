@@ -36,21 +36,10 @@ export const ContactInputWrapper = styled.div<ContactInputWrapperStyleProps>`
     width: ${(props) => (props.$isMaxWidth ? "100%" : "auto")};
 
     &:focus-within .contact-verified-icon {
-        border-color: ${Colour["border-focus"]};
-
-        &:after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            outline: ${Border["width-020"]} ${Border["solid"]}
-                ${Colour["border-focus"]};
-            outline-offset: -1px;
-            clip-path: inset(-2px -2px -2px 0px);
-            pointer-events: none;
-        }
+        border: ${Border["width-020"]} ${Border["solid"]}
+            ${Colour["border-focus"]};
+        border-left: 0;
+        border-right: 0;
     }
 `;
 
@@ -58,7 +47,7 @@ export const VerifiedIconWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 42px;
+    padding: 0 ${Spacing["spacing-12"]};
     color: ${Colour["icon-success"]};
     flex-shrink: 0;
     height: 100%;
@@ -124,20 +113,19 @@ const contactInputStyles = css<
 
     &:focus-within {
         border-color: ${Colour["border-focus"]};
-
         &:after {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
+            right: -2.5px;
             bottom: 0;
             border-top-left-radius: ${ThemeButton["button-radius"]};
             border-bottom-left-radius: ${ThemeButton["button-radius"]};
             outline: ${Border["width-020"]} ${Border["solid"]}
                 ${Colour["border-focus"]};
             outline-offset: -1px;
-            clip-path: inset(-2px 0px -2px -2px);
+            clip-path: inset(-2px 2px -2px -2px);
             pointer-events: none;
         }
     }

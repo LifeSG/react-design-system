@@ -4,21 +4,6 @@ import { Form } from "src/form";
 import { OtpVerifyType } from "src/otp-verification/types";
 import { StoryDecorator } from "stories/storybook-common";
 
-/**
- * Enhanced OTP Verification stories demonstrating the controlled components pattern.
- *
- * Key Features:
- * - OTP code is managed via props (otpValue/onOtpChange) instead of internal state
- * - Parent component controls the OTP input value
- * - Demonstrates proper validation and error handling
- * - Shows automatic OTP clearing on successful verification
- *
- * Test OTP codes:
- * - Phone: "123456" (valid)
- * - Email: "654321" (valid)
- * - Any other code will show validation error
- */
-
 type Component = typeof Form.OtpVerification;
 
 const meta: Meta<Component> = {
