@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { TextList } from "src/text-list";
 import { GridDecorator, StoryDecorator } from "stories/storybook-common";
 import { CustomOrderedList } from "./doc-elements";

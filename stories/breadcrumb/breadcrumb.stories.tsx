@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Breadcrumb } from "src/breadcrumb";
 import { FullWidthStoryDecorator } from "stories/storybook-common";
 

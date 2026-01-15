@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Button } from "src/button";
 import { Container } from "./doc-elements";
 import { TokensTable } from "./tokens-table";

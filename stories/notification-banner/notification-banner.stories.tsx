@@ -1,7 +1,7 @@
 import { SpeakerFillIcon } from "@lifesg/react-icons";
 import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 import { GearFillIcon } from "@lifesg/react-icons/gear-fill";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import {
     NotificationBanner,

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import {

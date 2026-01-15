@@ -1,6 +1,6 @@
 import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Button } from "src/button";
 import { Timeline } from "src/timeline";
 import { Typography } from "src/typography";

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { ProgressIndicator } from "src/progress-indicator";
 import { StoryDecorator } from "stories/storybook-common";
 

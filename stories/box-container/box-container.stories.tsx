@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { BoxContainer } from "src/box-container";
 import { Button } from "src/button";
 import { Typography } from "src/typography";

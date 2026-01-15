@@ -7,11 +7,9 @@ const config: StorybookConfig = {
     addons: [
         "@storybook/addon-webpack5-compiler-swc",
         "@storybook/addon-links",
-        "@storybook/addon-essentials",
         "@storybook/addon-a11y",
         "@storybook/addon-themes",
         "storybook-dark-mode",
-        "@storybook/addon-interactions",
         {
             name: "@storybook/addon-docs",
             options: {
@@ -21,16 +19,7 @@ const config: StorybookConfig = {
                     },
                 },
             },
-        },
-        {
-            name: "@storybook/addon-storysource",
-            options: {
-                loaderOptions: {
-                    parser: "typescript",
-                    injectStoryParameters: true,
-                },
-            },
-        },
+        }
     ],
     staticDirs: ["../public"],
     webpackFinal: async (config) => {

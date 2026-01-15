@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import dedent from "dedent";
 import { useState } from "react";
 import { Button } from "src/button";

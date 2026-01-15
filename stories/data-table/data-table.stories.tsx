@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useMemo, useState } from "react";
 import { DataTable, SortIndicatorsProps } from "src/data-table";
 import { Pill } from "src/pill";

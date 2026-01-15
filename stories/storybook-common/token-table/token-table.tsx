@@ -1,5 +1,5 @@
 import { DocIcon } from "@lifesg/react-icons/doc";
-import { Unstyled } from "@storybook/blocks";
+import { Unstyled } from "@storybook/addon-docs/blocks";
 import { Fragment } from "react";
 import { StorybookLink } from "../storybook-link";
 import {

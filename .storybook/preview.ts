@@ -1,5 +1,5 @@
-import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
-import type { Preview } from "@storybook/react";
+import { INITIAL_VIEWPORTS } from "storybook/viewport";
+import type { Preview } from "@storybook/react-webpack5";
 import { ThemeProvider } from "styled-components";
 import {
     A11yPlaygroundTheme,
@@ -83,7 +83,7 @@ const preview: Preview = {
         controls: { disable: true },
         layout: "centered",
         viewport: {
-            viewports: INITIAL_VIEWPORTS,
+            options: INITIAL_VIEWPORTS,
         },
         darkMode: {
             stylePreview: true,

@@ -3,7 +3,7 @@ import { DocIcon } from "@lifesg/react-icons/doc";
 import { Person2Icon } from "@lifesg/react-icons/person-2";
 import { Square2x2Icon } from "@lifesg/react-icons/square-2x2";
 import { TicketIcon } from "@lifesg/react-icons/ticket";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Sidenav } from "src/sidenav";
 
 type Component = typeof Sidenav;

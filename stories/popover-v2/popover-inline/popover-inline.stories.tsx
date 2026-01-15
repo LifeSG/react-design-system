@@ -1,5 +1,5 @@
 import { ICircleFillIcon } from "@lifesg/react-icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { PopoverInline } from "src/popover-v2";
 import { Typography } from "src/typography";
 import { StackDecorator } from "stories/storybook-common";
