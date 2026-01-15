@@ -2,13 +2,13 @@
     "compilerOptions": {
         /** General settings **/
         "target": "es6",
-        "module": "nodenext", // required by Storybook
+        "module": "preserve", // required by Storybook
         "lib": ["dom", "esnext"],
         "jsx": "react-jsx", // transpile JSX to React.createElement
         "isolatedModules": true, // warns if code can’t be correctly interpreted by a single-file transpilation process
         "noEmit": true, // declares that tsc is only used for type checking and compiler to not output transpiled code
         /** Module settings **/
-        "moduleResolution": "nodenext", // required by Storybook
+        "moduleResolution": "bundler", // required by Storybook
         "baseUrl": "./", // for absolute file resolution
         "esModuleInterop": true, // allow interop between ESM and CJS/AMD/UMD modules
         "resolveJsonModule": true, // allow importing .json files
@@ -25,7 +25,8 @@
         "strictBindCallApply": true, // check that functions are invoked with the correct arguments
         "allowSyntheticDefaultImports": true, // allow for imports e.g. import React from "react"
         "alwaysStrict": true, // ensures files are parsed in ECMAScript strict mode
-        "noFallthroughCasesInSwitch": true // report error for fallthrough cases
+        "noFallthroughCasesInSwitch": true, // report error for fallthrough cases
+        "allowImportingTsExtensions": true
     },
     "include": [
         "src/**/*",

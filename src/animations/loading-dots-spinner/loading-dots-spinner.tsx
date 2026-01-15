@@ -5,7 +5,7 @@ import { ThemeAnimation } from "src/theme/components/theme-helper";
 
 // lazy load to fix next.js SSR errors
 const LottieLoadingDotsSpinner = lazy(async () => ({
-    default: (await import("./lottie-animation.js")).LottieLoadingDotsSpinner,
+    default: (await import("./lottie-animation")).LottieLoadingDotsSpinner,
 }));
 
 export const LoadingDotsSpinner = ({

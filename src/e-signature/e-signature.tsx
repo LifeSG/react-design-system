@@ -29,7 +29,7 @@ import { EsignatureProps } from "./types";
 
 // lazy load to fix next.js SSR errors
 const ESignatureCanvas = lazy(async () => ({
-    default: (await import("./e-signature-canvas.js")).ESignatureCanvas,
+    default: (await import("./e-signature-canvas")).ESignatureCanvas,
 }));
 
 export const ESignature = (props: EsignatureProps) => {
