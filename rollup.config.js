@@ -30,6 +30,10 @@ export const plugins = [
                 "**/custom-types/svg.d.ts",
                 "codemods",
             ],
+            compilerOptions: {
+                module: "esnext", // for compatibility with rollup
+                moduleResolution: "node",
+            },
         },
     }),
     postcss({

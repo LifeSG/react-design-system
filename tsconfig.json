@@ -2,13 +2,13 @@
     "compilerOptions": {
         /** General settings **/
         "target": "es6",
-        "module": "esnext",
+        "module": "nodenext", // required by Storybook
         "lib": ["dom", "esnext"],
         "jsx": "react-jsx", // transpile JSX to React.createElement
         "isolatedModules": true, // warns if code can’t be correctly interpreted by a single-file transpilation process
         "noEmit": true, // declares that tsc is only used for type checking and compiler to not output transpiled code
         /** Module settings **/
-        "moduleResolution": "node", // use Nodejs module resolution strategy (else uses classic TS strategy)
+        "moduleResolution": "nodenext", // required by Storybook
         "baseUrl": "./", // for absolute file resolution
         "esModuleInterop": true, // allow interop between ESM and CJS/AMD/UMD modules
         "resolveJsonModule": true, // allow importing .json files

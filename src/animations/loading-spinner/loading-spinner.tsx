@@ -5,7 +5,7 @@ import { BaseAnimationProps } from "../types";
 
 // lazy load to fix next.js SSR errors
 const LottieSpinner = lazy(async () => ({
-    default: (await import("./lottie-animation")).LottieSpinner,
+    default: (await import("./lottie-animation.js")).LottieSpinner,
 }));
 
 export const LoadingSpinner = (props: BaseAnimationProps) => {
