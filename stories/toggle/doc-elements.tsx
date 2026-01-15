@@ -1,6 +1,6 @@
 import { ReactRenderer } from "@storybook/react";
-import { DecoratorFunction } from "@storybook/types";
 import { Typography } from "src/typography";
+import { DecoratorFunction } from "storybook/internal/types";
 import styled from "styled-components";
 
 // =============================================================================
