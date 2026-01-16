@@ -9,8 +9,8 @@ interface BlockStyleProps {
     $mainColor: string;
     $altColor: string;
     $isClickable?: boolean;
-    $customMain?: string | ((props: ThemeStyleProps) => string) | undefined;
-    $customAltColour?: string | ((props: ThemeStyleProps) => string) | undefined;
+    $customMainColor?: string | ((props: ThemeStyleProps) => string) | undefined;
+    $customAltColor?: string | ((props: ThemeStyleProps) => string) | undefined;
     $customHoverColor?: string | ((props: ThemeStyleProps) => string) | undefined;
 }
 
@@ -51,8 +51,8 @@ export const Block = styled.div<BlockStyleProps>`
     $mainColor,
     $isClickable,
     $altColor,
-    $customMain,
-    $customAltColour,
+    $customMainColor,
+    $customAltColor,
     $customHoverColor,
 }) => {
         switch ($status) {
@@ -60,8 +60,8 @@ export const Block = styled.div<BlockStyleProps>`
                 return css`
                     background: repeating-linear-gradient(
                         135deg,
-                        ${$customMain || Colour["bg-stronger"]} 0px 6px,
-                        ${$customAltColour || Colour["bg-strongest"]} 6px 12px
+                        ${$customMainColor || Colour["bg-stronger"]} 0px 6px,
+                        ${$customAltColor || Colour["bg-strongest"]} 6px 12px
                     );
                     &:hover {
                         background: ${$customHoverColor || ""};
@@ -70,7 +70,7 @@ export const Block = styled.div<BlockStyleProps>`
                 `;
             case "filled":
                 return css`
-                    background: ${$customMain || $mainColor};
+                    background: ${$customMainColor || $mainColor};
                     &:hover {
                         background-color: ${$customHoverColor || ""};
                         cursor: ${$isClickable ? "pointer" : "default"};
@@ -78,7 +78,7 @@ export const Block = styled.div<BlockStyleProps>`
                 `;
             case "disabled":
                 return css`
-                    background: ${$customMain || Colour["bg-disabled"]};
+                    background: ${$customMainColor || Colour["bg-disabled"]};
                     &:hover {
                         background-color: ${$customHoverColor || ""};
                         cursor: ${$isClickable ? "pointer" : "not-allowed"};
@@ -88,8 +88,8 @@ export const Block = styled.div<BlockStyleProps>`
                 return css`
                     background: repeating-linear-gradient(
                         135deg,
-                        ${$customMain || $mainColor} 0px 6px,
-                        ${$customAltColour || $altColor} 6px 12px
+                        ${$customMainColor || $mainColor} 0px 6px,
+                        ${$customAltColor || $altColor} 6px 12px
                     );
                     &:hover {
                         background: ${$customHoverColor || ""};
@@ -98,7 +98,7 @@ export const Block = styled.div<BlockStyleProps>`
                 `;
             default:
                 return css`
-                    background: ${$customMain || ''};
+                    background: ${$customMainColor || ''};
                     &:hover {
                         background-color: ${$isClickable
                         ? $customHoverColor || Colour["bg-hover-subtle"]

@@ -87,8 +87,8 @@ const Component = ({
                         $mainColor={rowBarColor.mainColor}
                         $altColor={rowBarColor.alternateColor}
                         $isClickable={isClickable}
-                        $customMain={cellStyleAttributes?.backgroundColor}
-                        $customAltColour={cellStyleAttributes?.altBackgroundColor}
+                        $customMainColor={cellStyleAttributes?.backgroundColor}
+                        $customAltColor={cellStyleAttributes?.altBackgroundColor}
                         $customHoverColor={cellStyleAttributes?.hoverBackgroundColor}
                         onClick={handleCellClick}
                     >
