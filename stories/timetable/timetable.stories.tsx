@@ -441,7 +441,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
                             altBackgroundColor: "#FFEE8D",
-                            hoverBackgroundColor: "#FFF59D",
+                            hoverBackgroundColor: "#fbe207",
                         },
                     },
                 ],
@@ -767,7 +767,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
                             altBackgroundColor: "#FFEE8D",
-                            hoverBackgroundColor: "#FFF59D",
+                            hoverBackgroundColor: "#fbe207",
                         },
                     },
                     {
@@ -780,7 +780,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
                             altBackgroundColor: "#FFEE8D",
-                            hoverBackgroundColor: "#FFF59D",
+                            hoverBackgroundColor: "#fbe207",
                         },
                     },
                     {
@@ -793,7 +793,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
                             altBackgroundColor: "#FFEE8D",
-                            hoverBackgroundColor: "#FFF59D",
+                            hoverBackgroundColor: "#fbe207",
                         },
                     },
                     {
@@ -806,7 +806,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
                             altBackgroundColor: "#FFEE8D",
-                            hoverBackgroundColor: "#FFF59D",
+                            hoverBackgroundColor: "#fbe207",
                         },
                     },
                     {
@@ -819,7 +819,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
                             altBackgroundColor: "#FFEE8D",
-                            hoverBackgroundColor: "#FFF59D",
+                            hoverBackgroundColor: "#fbe207",
                         },
                     },
                     {
@@ -832,7 +832,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
                             altBackgroundColor: "#FFEE8D",
-                            hoverBackgroundColor: "#FFF59D",
+                            hoverBackgroundColor: "#fbe207",
                         },
                     },
                 ],

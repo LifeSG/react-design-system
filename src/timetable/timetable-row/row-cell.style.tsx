@@ -64,7 +64,7 @@ export const Block = styled.div<BlockStyleProps>`
                         ${$customAltColour || Colour["bg-strongest"]} 6px 12px
                     );
                     &:hover {
-                        background-color: ${$customHoverColor || ""};
+                        background: ${$customHoverColor || ""};
                         cursor: ${$isClickable ? "pointer" : "not-allowed"};
                     }
                 `;
@@ -92,7 +92,7 @@ export const Block = styled.div<BlockStyleProps>`
                         ${$customAltColour || $altColor} 6px 12px
                     );
                     &:hover {
-                        background-color: ${$customHoverColor || ""};
+                        background: ${$customHoverColor || ""};
                         cursor: ${$isClickable ? "pointer" : "not-allowed"};
                     }
                 `;
