@@ -1,4 +1,5 @@
 import { PopoverV2TriggerType } from "../popover-v2";
+import { ThemeStyleProps } from "../theme/types";
 
 export type TimeTableCellType =
     | "filled"
@@ -6,6 +7,24 @@ export type TimeTableCellType =
     | "default"
     | "disabled"
     | "pending";
+
+export interface TimeTableCellStyleAttributes {
+    /** Main background color for the cell */
+    backgroundColor?:
+        | string
+        | ((props: ThemeStyleProps) => string)
+        | undefined;
+    /** Alternate background color (used for striped patterns in blocked/pending status) */
+    altBackgroundColor?:
+        | string
+        | ((props: ThemeStyleProps) => string)
+        | undefined;
+    /** Hover background color for the cell */
+    hoverBackgroundColor?:
+        | string
+        | ((props: ThemeStyleProps) => string)
+        | undefined;
+}
 
 export interface TimeTableRef {
     /** Resets the scroll position to the initialScrollTime if provided */
@@ -108,6 +127,8 @@ export interface TimeTableRowCellData {
     subtitle?: string | undefined;
     /** Custom popover configuration for this cell */
     customPopover?: TimeTablePopoverProps | undefined;
+    /** Custom style attributes for the cell. If not specified, falls back to default row bar colors. */
+    cellStyleAttributes?: TimeTableCellStyleAttributes | undefined;
     /** Callback function when the cell is clicked */
     onClick?:
         | ((data: TimeTableRowCellData, e: React.MouseEvent) => void)

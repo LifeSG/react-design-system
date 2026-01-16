@@ -30,6 +30,7 @@ const Component = ({
     rowBarColor,
     containerRef,
     customPopover,
+    cellStyleAttributes,
     roundedStartTime = startTime,
     roundedEndTime = endTime,
     onClick,
@@ -86,6 +87,9 @@ const Component = ({
                         $mainColor={rowBarColor.mainColor}
                         $altColor={rowBarColor.alternateColor}
                         $isClickable={isClickable}
+                        $customMain={cellStyleAttributes?.backgroundColor}
+                        $customAltColour={cellStyleAttributes?.altBackgroundColor}
+                        $customHoverColor={cellStyleAttributes?.hoverBackgroundColor}
                         onClick={handleCellClick}
                     >
                         {title && (

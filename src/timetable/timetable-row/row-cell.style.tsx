@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius, Spacing } from "../../theme";
+import { Border, Colour, Radius, Spacing, ThemeStyleProps } from "../../theme";
 import { Typography } from "../../typography";
 import { TimeTableCellType } from "../types";
 
@@ -9,6 +9,9 @@ interface BlockStyleProps {
     $mainColor: string;
     $altColor: string;
     $isClickable?: boolean;
+    $customMain?: string | ((props: ThemeStyleProps) => string) | undefined;
+    $customAltColour?: string | ((props: ThemeStyleProps) => string) | undefined;
+    $customHoverColor?: string | ((props: ThemeStyleProps) => string) | undefined;
 }
 
 interface BlockContainerProps {
@@ -43,30 +46,41 @@ export const Block = styled.div<BlockStyleProps>`
     border-radius: ${Radius["sm"]};
     box-sizing: border-box;
     padding: ${Spacing["spacing-4"]};
-    ${({ $status, $mainColor, $isClickable, $altColor }) => {
+    ${({
+    $status,
+    $mainColor,
+    $isClickable,
+    $altColor,
+    $customMain,
+    $customAltColour,
+    $customHoverColor,
+}) => {
         switch ($status) {
             case "blocked":
                 return css`
                     background: repeating-linear-gradient(
                         135deg,
-                        ${Colour["bg-stronger"]} 0px 6px,
-                        ${Colour["bg-strongest"]} 6px 12px
+                        ${$customMain || Colour["bg-stronger"]} 0px 6px,
+                        ${$customAltColour || Colour["bg-strongest"]} 6px 12px
                     );
                     &:hover {
+                        background-color: ${$customHoverColor || ""};
                         cursor: ${$isClickable ? "pointer" : "not-allowed"};
                     }
                 `;
             case "filled":
                 return css`
-                    background: ${$mainColor};
+                    background: ${$customMain || $mainColor};
                     &:hover {
+                        background-color: ${$customHoverColor || ""};
                         cursor: ${$isClickable ? "pointer" : "default"};
                     }
                 `;
             case "disabled":
                 return css`
-                    background: ${Colour["bg-disabled"]};
+                    background: ${$customMain || Colour["bg-disabled"]};
                     &:hover {
+                        background-color: ${$customHoverColor || ""};
                         cursor: ${$isClickable ? "pointer" : "not-allowed"};
                     }
                 `;
@@ -74,19 +88,21 @@ export const Block = styled.div<BlockStyleProps>`
                 return css`
                     background: repeating-linear-gradient(
                         135deg,
-                        ${$mainColor} 0px 6px,
-                        ${$altColor} 6px 12px
+                        ${$customMain || $mainColor} 0px 6px,
+                        ${$customAltColour || $altColor} 6px 12px
                     );
                     &:hover {
+                        background-color: ${$customHoverColor || ""};
                         cursor: ${$isClickable ? "pointer" : "not-allowed"};
                     }
                 `;
             default:
                 return css`
+                    background: ${$customMain || ''};
                     &:hover {
                         background-color: ${$isClickable
-                            ? Colour["bg-hover-subtle"]
-                            : ""};
+                        ? $customHoverColor || Colour["bg-hover-subtle"]
+                        : ""};
                         cursor: ${$isClickable ? "pointer" : "default"};
                     }
                 `;
