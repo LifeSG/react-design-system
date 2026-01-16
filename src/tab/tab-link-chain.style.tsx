@@ -93,6 +93,8 @@ export const ChainLink = styled.div<ChainLinkStyleProps>`
     gap: 0.5rem;
     ${padding}
     cursor: pointer;
+    width: 100%;
+    justify-content: center;
 
     &:has(button:focus-visible) {
         outline: 2px solid ${Colour["focus-ring"]};
@@ -114,9 +116,6 @@ const buttonBase = css`
 export const Label = styled.div<LabelStyleProps>`
     ${buttonBase}
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); // Based on testing
     color: ${Colour["text-subtler"]};
     opacity: 1;
 
