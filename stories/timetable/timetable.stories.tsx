@@ -402,6 +402,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "blocked",
                         cellStyleAttributes: {
                             backgroundColor: "#FFE5E5",
+                            altBackgroundColor: "#FFCCCC",
                             hoverBackgroundColor: "#FFD1D1",
                         },
                     },
@@ -439,6 +440,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "pending",
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
+                            altBackgroundColor: "#FFEE8D",
                             hoverBackgroundColor: "#FFF59D",
                         },
                     },
@@ -536,6 +538,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "blocked",
                         cellStyleAttributes: {
                             backgroundColor: "#FFE5E5",
+                            altBackgroundColor: "#FFCCCC",
                             hoverBackgroundColor: "#FFD1D1",
                         },
                     },
@@ -548,6 +551,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "blocked",
                         cellStyleAttributes: {
                             backgroundColor: "#FFE5E5",
+                            altBackgroundColor: "#FFCCCC",
                             hoverBackgroundColor: "#FFD1D1",
                         },
                     },
@@ -560,6 +564,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "blocked",
                         cellStyleAttributes: {
                             backgroundColor: "#FFE5E5",
+                            altBackgroundColor: "#FFCCCC",
                             hoverBackgroundColor: "#FFD1D1",
                         },
                     },
@@ -572,6 +577,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "blocked",
                         cellStyleAttributes: {
                             backgroundColor: "#FFE5E5",
+                            altBackgroundColor: "#FFCCCC",
                             hoverBackgroundColor: "#FFD1D1",
                         },
                     },
@@ -584,6 +590,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "blocked",
                         cellStyleAttributes: {
                             backgroundColor: "#FFE5E5",
+                            altBackgroundColor: "#FFCCCC",
                             hoverBackgroundColor: "#FFD1D1",
                         },
                     },
@@ -596,6 +603,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "blocked",
                         cellStyleAttributes: {
                             backgroundColor: "#FFE5E5",
+                            altBackgroundColor: "#FFCCCC",
                             hoverBackgroundColor: "#FFD1D1",
                         },
                     },
@@ -758,6 +766,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "pending",
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
+                            altBackgroundColor: "#FFEE8D",
                             hoverBackgroundColor: "#FFF59D",
                         },
                     },
@@ -770,6 +779,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "pending",
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
+                            altBackgroundColor: "#FFEE8D",
                             hoverBackgroundColor: "#FFF59D",
                         },
                     },
@@ -782,6 +792,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "pending",
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
+                            altBackgroundColor: "#FFEE8D",
                             hoverBackgroundColor: "#FFF59D",
                         },
                     },
@@ -794,6 +805,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "pending",
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
+                            altBackgroundColor: "#FFEE8D",
                             hoverBackgroundColor: "#FFF59D",
                         },
                     },
@@ -806,6 +818,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "pending",
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
+                            altBackgroundColor: "#FFEE8D",
                             hoverBackgroundColor: "#FFF59D",
                         },
                     },
@@ -818,6 +831,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "pending",
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
+                            altBackgroundColor: "#FFEE8D",
                             hoverBackgroundColor: "#FFF59D",
                         },
                     },
