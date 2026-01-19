@@ -3,13 +3,19 @@ import image from "@rollup/plugin-image";
 import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
+import { readFileSync } from "fs-extra";
+import { globSync } from "glob";
+import path from "path";
 import copy from "rollup-plugin-copy";
 import generatePackageJson from "rollup-plugin-generate-package-json";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
 import typescript from "rollup-plugin-typescript2";
+import { fileURLToPath } from "url";
 import pkg from "./package.json";
 import { getFolders, injectCss } from "./scripts/build-util";
+
+const folders = getFolders("./src");
 
 export const plugins = [
     peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
@@ -88,9 +94,52 @@ const codemodBuildConfigs = [
     },
 ];
 
+const packagePath = process.cwd();
+const packageData = readFileSync(
+    path.resolve(packagePath, "./package.json"),
+    "utf8"
+);
+const { ...packageOthers } = JSON.parse(packageData);
+const newPackageData = {
+    ...packageOthers,
+    private: false,
+    typings: "./index.d.ts",
+    main: "./cjs/index.js",
+    module: "./index.js",
+    exports: {
+        ".": {
+            import: "./index.js",
+            require: "./cjs/index.js",
+        },
+        ...Object.fromEntries(
+            folders.map((folder) => [
+                `./${folder}`,
+                {
+                    import: `./${folder}/index.js`,
+                    require: `./cjs/${folder}/index.js`,
+                },
+            ])
+        ),
+    },
+};
+
 export default [
     {
-        input: "src/index.ts",
+        input: Object.fromEntries(
+            globSync("src/**/*.{tsx,ts}", {
+                ignore: ["src/**/types.ts"],
+            }).map((file) => [
+                // This removes `src/` as well as the file extension from each
+                // file, so e.g. src/nested/foo.js becomes nested/foo
+                path.relative(
+                    "src",
+                    file.slice(0, file.length - path.extname(file).length)
+                ),
+                // This expands the relative paths to absolute paths, so e.g.
+                // src/nested/foo becomes /project/src/nested/foo.js
+                fileURLToPath(new URL(file, import.meta.url)),
+            ])
+        ),
         output: [
             {
                 dir: "dist",
@@ -98,7 +147,7 @@ export default [
                 sourcemap: true,
                 exports: "named",
                 interop: "compat",
-                chunkFileNames: "chunks/[name].[hash].js",
+                // chunkFileNames: "chunks/[name].[hash].js",
             },
             {
                 dir: "dist/cjs",
@@ -106,12 +155,17 @@ export default [
                 sourcemap: true,
                 exports: "named",
                 interop: "compat",
-                chunkFileNames: "chunks/[name].[hash].js",
+                // chunkFileNames: "chunks/[name].[hash].js",
             },
         ],
-        plugins,
-        external: ["react", "react-dom", "styled-components"],
+        plugins: [
+            ...plugins,
+            generatePackageJson({
+                baseContents: newPackageData,
+            }),
+        ],
+        external: ["react", "react-dom", "styled-components", "./*", "../*"],
     },
-    ...folderBuildConfigs,
-    ...codemodBuildConfigs,
+    // ...folderBuildConfigs,
+    // ...codemodBuildConfigs,
 ];

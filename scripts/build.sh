@@ -36,7 +36,7 @@ pushd ${PROJECT_DIR}
 
 # Build and pack
 echo "Building"
-npm run build
+npm run rollup
 
 echo "Packaging"
 pushd dist
