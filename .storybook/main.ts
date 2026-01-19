@@ -31,6 +31,19 @@ const config: StorybookConfig = {
             path.resolve(__dirname, ".."),
             "node_modules",
         ];
+
+        if (config.module?.rules) {
+            config.module.rules.push({
+                test: /\.(tsx|ts|js|mjs|jsx)$/,
+                use: [{ loader: "@wyw-in-js/webpack-loader" }],
+                exclude: [
+                    /node_modules/,
+                    path.resolve(process.cwd(), "storybook-stories.js"),
+                    path.resolve(process.cwd(), "storybook-config-entry.js"),
+                ],
+            });
+        }
+
         return config;
     },
     framework: {

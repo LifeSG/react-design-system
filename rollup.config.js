@@ -3,7 +3,9 @@ import image from "@rollup/plugin-image";
 import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
+import wyw from "@wyw-in-js/rollup";
 import copy from "rollup-plugin-copy";
+import css from "rollup-plugin-css-only";
 import generatePackageJson from "rollup-plugin-generate-package-json";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
@@ -33,6 +35,7 @@ export const plugins = [
             compilerOptions: {
                 module: "esnext", // for compatibility with rollup
                 moduleResolution: "node",
+                allowImportingTsExtensions: false,
             },
         },
     }),
@@ -43,6 +46,13 @@ export const plugins = [
     image(),
     json(),
     terser(), // Helps remove comments, whitespace or logging codes
+    wyw.default({
+        sourceMap: true,
+        prefixer: false,
+    }),
+    css({
+        output: "styles.css",
+    }),
 ];
 
 const subfolderPlugins = (folderName) => [
@@ -116,6 +126,6 @@ export default [
         plugins,
         external: ["react", "react-dom", "styled-components"],
     },
-    ...folderBuildConfigs,
-    ...codemodBuildConfigs,
+    // ...folderBuildConfigs,
+    // ...codemodBuildConfigs,
 ];
