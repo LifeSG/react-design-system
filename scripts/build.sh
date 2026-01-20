@@ -36,7 +36,25 @@ pushd ${PROJECT_DIR}
 
 # Build and pack
 echo "Building"
-npm run rollup
+npm run build
+
+npx wyw-in-js \
+  --config ./wyw-in-js.config.js \
+  --source-root ./src \
+  --out-dir ./dist/wyw-css \
+  --insert-css-requires ./dist \
+  --modules esnext \
+  --transform \
+  "src/**/*.{ts,tsx,js,jsx}"
+
+npx wyw-in-js \
+  --config ./wyw-in-js.config.js \
+  --source-root ./src \
+  --out-dir ./dist/cjs/wyw-css \
+  --insert-css-requires ./dist/cjs \
+  --modules commonjs \
+  --transform \
+  "src/**/*.{ts,tsx,js,jsx}"
 
 echo "Packaging"
 pushd dist

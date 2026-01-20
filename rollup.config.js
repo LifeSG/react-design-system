@@ -15,7 +15,10 @@ import { fileURLToPath } from "url";
 import pkg from "./package.json";
 import { getFolders, injectCss } from "./scripts/build-util";
 import linaria from "@wyw-in-js/rollup";
-import css from "rollup-plugin-css-only";
+import cssOnly from "rollup-plugin-css-only";
+import importCss from "rollup-plugin-import-css";
+import keepCssImports from "rollup-plugin-keep-css-imports";
+import styler from "rollup-plugin-styler";
 
 const folders = getFolders("./src");
 
@@ -45,11 +48,41 @@ export const plugins = [
     }),
     // postcss({
     //     plugins: [require("postcss-import")],
-    //     inject: injectCss,
+    //     extract: "styles.css",
+    //     // inject: injectCss,
     // }),
-    css({
-        output: "styles.css",
+    // cssOnly({
+    //     // output: "styles.css",
+    // }),
+    styler({
+        mode: "extract",
+        plugins: [require("postcss-import")],
     }),
+    // importCss({ preserveImports: true }),
+    // keepCssImports({
+    //     outputPath: (assetId) => {
+    //         // Generate a custom output path based on the input assetId
+
+    //         // Make the assetId path relative to the current working directory (CWD)
+    //         const relativePath = path.relative(process.cwd(), assetId);
+
+    //         const filename = path.basename(assetId);
+
+    //         console.log("@ relative path", relativePath);
+    //         if (assetId.includes("node_modules")) {
+    //             return path.join(process.cwd(), `dist/${filename}`);
+    //         }
+
+    //         // Replace 'src' with 'styles' in the relativePath
+    //         const newPath = relativePath.replace("src", "styles");
+
+    //         console.log("@@@@@@ new path", newPath);
+
+    //         // Add a '.min' suffix before the file extension,
+    //         // extension will be replaced with `outputExt` by the plugin
+    //         return newPath.replace(/(\.css)$/, ".css");
+    //     },
+    // }),
     image(),
     json(),
     terser(), // Helps remove comments, whitespace or logging codes
@@ -149,6 +182,7 @@ export default [
                 fileURLToPath(new URL(file, import.meta.url)),
             ])
         ),
+        // input: "src/index.ts",
         output: [
             {
                 dir: "dist",
@@ -156,16 +190,22 @@ export default [
                 sourcemap: true,
                 exports: "named",
                 interop: "compat",
+                preserveModules: true,
+                preserveModulesRoot: "src",
                 // chunkFileNames: "chunks/[name].[hash].js",
+                assetFileNames: "[name].[hash][extname]",
             },
-            {
-                dir: "dist/cjs",
-                format: "cjs",
-                sourcemap: true,
-                exports: "named",
-                interop: "compat",
-                // chunkFileNames: "chunks/[name].[hash].js",
-            },
+            // {
+            //     dir: "dist/cjs",
+            //     format: "cjs",
+            //     sourcemap: true,
+            //     exports: "named",
+            //     interop: "compat",
+            //     preserveModules: true,
+            //     preserveModulesRoot: "src",
+            //     // chunkFileNames: "chunks/[name].[hash].js",
+            //     assetFileNames: "[name].[hash][extname]",
+            // },
         ],
         plugins: [
             ...plugins,
@@ -173,7 +213,8 @@ export default [
                 baseContents: newPackageData,
             }),
         ],
-        external: ["react", "react-dom", "styled-components", "./*", "../*"],
+        // external: ["react", "react-dom", "styled-components", /.css$/],
+        external: ["react", "react-dom", "styled-components"],
     },
     // ...folderBuildConfigs,
     // ...codemodBuildConfigs,
