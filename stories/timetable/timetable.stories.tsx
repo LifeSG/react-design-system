@@ -532,7 +532,7 @@ export const CustomCellColors: StoryObj<Component> = {
                     to customize cell colors and customize hover colors.{" "}
                     <br></br>
                     First row shows custom styling of cellStyleAttributes<br ></br>
-                    The last row shows default styling when no cellStyleAttributes
+                    2nd row shows default styling when no cellStyleAttributes
                     are provided.<br ></br>
                 </Typography.BodyBL>
                 <StyledTimeTable
