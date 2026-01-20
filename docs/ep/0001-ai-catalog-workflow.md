@@ -83,25 +83,25 @@ CI fails when component source or story changes would modify the catalog but `co
 ### Notes/Constraints/Caveats (Optional)
 
 -   Some components may lack JSDoc or an informative story; descriptions may remain blank unless story authors add text.
-    -- Compound components require grouping multiple prop interfaces under a single
-    module entry; script must detect nested exports (e.g., `AccordionItem`).
-    -- Prop-level descriptions often absent in TypeScript source; story `PropsTable` data arrays become authoritative augmentation.
-    -- Search keys and related lists depend entirely on story markers; no fallback generation or inference will occur.
-    -- Prop table parsing complexity: JSX fragments and React elements inside `description` must be converted to plain text (strip tags) while preserving meaningful wording.
-    -- Generic prop types should retain generic parameters to support AI signature
-    awareness.
-    -- Design tokens inclusion is optional to keep file size manageable.
+    -   Compound components require grouping multiple prop interfaces under a single
+        module entry; script must detect nested exports (e.g., `AccordionItem`).
+    -   Prop-level descriptions often absent in TypeScript source; story `PropsTable` data arrays become authoritative augmentation.
+    -   Search keys and related lists depend entirely on story markers; no fallback generation or inference will occur.
+    -   Prop table parsing complexity: JSX fragments and React elements inside `description` must be converted to plain text (strip tags) while preserving meaningful wording.
+    -   Generic prop types should retain generic parameters to support AI signature
+        awareness.
+    -   Design tokens inclusion is optional to keep file size manageable.
 -   Overly large story code snippets will be truncated to a safe length.
 
 ### Risks and Mitigation
 
--- Incomplete descriptions: surfaced with `descriptionSource: "none"`; remediation requires story author updates (no automated enhancement).
--- Missing search keys / related markers: flagged; authors must add markers manually.
--- Drift between code and catalog: `--check` mode + CI gate reduces risk.
--- Performance overhead: single TypeScript program reused across modules; hashing avoids unnecessary recomputation.
--- Incorrect component detection: fallback logic still captures exported symbol list; validation flags anomalies.
--- Parsing of prop tables may fail if dynamic expressions are used; mitigation: skip non-literal entries and mark incomplete enrichment.
--- Reliance on author discipline (no overrides) centralizes responsibility in story content; documentation guidelines should emphasize marker usage.
+-   Incomplete descriptions: surfaced with `descriptionSource: "none"`; remediation requires story author updates (no automated enhancement).
+-   Missing search keys / related markers: flagged; authors must add markers manually.
+-   Drift between code and catalog: `--check` mode + CI gate reduces risk.
+-   Performance overhead: single TypeScript program reused across modules; hashing avoids unnecessary recomputation.
+-   Incorrect component detection: fallback logic still captures exported symbol list; validation flags anomalies.
+-   Parsing of prop tables may fail if dynamic expressions are used; mitigation: skip non-literal entries and mark incomplete enrichment.
+-   Reliance on author discipline (no overrides) centralizes responsibility in story content; documentation guidelines should emphasize marker usage.
 
 ## Design Details
 

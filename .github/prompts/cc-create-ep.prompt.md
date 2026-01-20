@@ -119,6 +119,12 @@ generate Part-1 content — output only the clarifying questions list.
     -   Infrastructure / deployment changes
     -   Data migrations (with rollback strategy)
 
+10. After completing Part-2, offer the optional, but recommended Part-3: Generate an Implementation Plan with stepwise tasks.
+
+-   If the user agrees, follow the instructions in `/cc-plan-implementation.prompt.md`
+-   Read the /cc-plan-implementation prompt in full before proceeding.
+-   Follow all instructions in that prompt strictly.
+
 ## EP Creation general rules (enforced)
 
 1. Template verification & selection

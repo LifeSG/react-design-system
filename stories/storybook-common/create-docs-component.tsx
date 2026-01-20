@@ -17,7 +17,7 @@
  * import { createDocsComponent } from '../storybook-common/create-docs-component';
  * import type { FilterItemProps } from 'src/filter/types';
  *
- * <ArgsTable of={createDocsComponent({} as FilterItemProps)} />
+ * <ArgsTable of={createDocsComponent<FilterItemProps>()} />
  * ```
  */
 export function createDocsComponent<TProps>(

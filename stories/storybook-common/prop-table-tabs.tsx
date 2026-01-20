@@ -10,6 +10,9 @@ interface PropTableTabsProps {
     }[];
 }
 
+/**
+ * A tabbed interface for displaying multiple prop tables in Storybook docs.
+ */
 export const PropTableTabs: React.FC<PropTableTabsProps> = ({ tabs }) => {
     const [activeIndex, setActiveIndex] = useState(0);
 
