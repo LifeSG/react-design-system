@@ -1,13 +1,14 @@
 import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
 import { FontScheme } from "../types";
+import { A11yPlaygroundFontSpecSet } from "./specs/a11yplayground-font-spec-set";
 import { BookingSgFontSpecSet } from "./specs/bookingsg-font-spec-set";
 import { DefaultFontSpecSet } from "./specs/default-font-spec-set";
-import { PAFontSpecSet } from "./specs/pa-font-spec-set";
-import { A11yPlaygroundFontSpecSet } from "./specs/a11yplayground-font-spec-set";
-import { SupportGoWhereFontSpecSet } from "./specs/supportgowhere-font-spec-set";
 import { IMDAFontSpecSet } from "./specs/imda-font-spec-set";
+import { OneServiceFontSpecSet } from "./specs/oneservice-font-spec-set";
+import { PAFontSpecSet } from "./specs/pa-font-spec-set";
 import { SPFFontSpecSet } from "./specs/spf-font-spec-set";
+import { SupportGoWhereFontSpecSet } from "./specs/supportgowhere-font-spec-set";
 import { FontSpecCollectionMap, FontSpecSet } from "./types";
 
 const FontSpec: ThemeCollectionSpec<FontSpecCollectionMap, FontScheme> = {
@@ -19,6 +20,7 @@ const FontSpec: ThemeCollectionSpec<FontSpecCollectionMap, FontScheme> = {
         supportgowhere: SupportGoWhereFontSpecSet,
         imda: IMDAFontSpecSet,
         spf: SPFFontSpecSet,
+        oneservice: OneServiceFontSpecSet,
     },
     defaultValue: "default",
 };

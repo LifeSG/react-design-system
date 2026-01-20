@@ -1,0 +1,25 @@
+import { Meta } from "@storybook/blocks";
+import { OneServiceTheme } from "src/theme";
+import { DocInfo } from "stories/storybook-common";
+import { FontDisplay } from "../doc-elements";
+
+<Meta title="Foundations/Font/OneService" />
+
+# OneService font
+
+This is the font set used when the `fontScheme` is `"oneservice"`.
+
+```tsx
+const theme: ThemeSpec = {
+    fontScheme: "oneservice",
+    // ...other specifications
+};
+```
+
+This stylesheet should be loaded in your app.
+
+```
+https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css
+```
+
+<FontDisplay theme={OneServiceTheme} />
