@@ -12,6 +12,7 @@ interface BlockStyleProps {
     $customMainColor?: string | ((props: ThemeStyleProps) => string) | undefined;
     $customAltColor?: string | ((props: ThemeStyleProps) => string) | undefined;
     $customHoverColor?: string | ((props: ThemeStyleProps) => string) | undefined;
+    $customAltHoverColor?: string | ((props: ThemeStyleProps) => string) | undefined;
 }
 
 interface BlockContainerProps {
@@ -54,6 +55,7 @@ export const Block = styled.div<BlockStyleProps>`
     $customMainColor,
     $customAltColor,
     $customHoverColor,
+    $customAltHoverColor,
 }) => {
         switch ($status) {
             case "blocked":
@@ -64,7 +66,11 @@ export const Block = styled.div<BlockStyleProps>`
                         ${$customAltColor || Colour["bg-strongest"]} 6px 12px
                     );
                     &:hover {
-                        background: ${$customHoverColor || ""};
+                        background: repeating-linear-gradient(
+                            135deg,
+                            ${$customHoverColor} 0px 6px,
+                            ${$customAltHoverColor} 6px 12px
+                        );
                         cursor: ${$isClickable ? "pointer" : "not-allowed"};
                     }
                 `;
@@ -92,7 +98,11 @@ export const Block = styled.div<BlockStyleProps>`
                         ${$customAltColor || $altColor} 6px 12px
                     );
                     &:hover {
-                        background: ${$customHoverColor || ""};
+                        background: repeating-linear-gradient(
+                            135deg,
+                            ${$customHoverColor} 0px 6px,
+                            ${$customAltHoverColor} 6px 12px
+                        );
                         cursor: ${$isClickable ? "pointer" : "not-allowed"};
                     }
                 `;

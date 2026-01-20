@@ -404,6 +404,7 @@ export const CustomCellColors: StoryObj<Component> = {
                             backgroundColor: "#FFE5E5",
                             altBackgroundColor: "#FFCCCC",
                             hoverBackgroundColor: "#FFD1D1",
+                            altHoverBackgroundColor: "#FFB8B8",
                         },
                     },
                     {
@@ -442,6 +443,7 @@ export const CustomCellColors: StoryObj<Component> = {
                             backgroundColor: "#FFF9C4",
                             altBackgroundColor: "#FFEE8D",
                             hoverBackgroundColor: "#fbe207",
+                            altHoverBackgroundColor: "#f9d905",
                         },
                     },
                 ],

@@ -24,6 +24,11 @@ export interface TimeTableCellStyleAttributes {
         | string
         | ((props: ThemeStyleProps) => string)
         | undefined;
+    /** Alternate hover background color for the cell */
+    altHoverBackgroundColor?:
+        | string
+        | ((props: ThemeStyleProps) => string)
+        | undefined;
 }
 
 export interface TimeTableRef {
