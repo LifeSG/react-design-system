@@ -400,6 +400,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         startTime: "10:00",
                         endTime: "11:30",
                         status: "blocked",
+                        onClick: () => { },
                         cellStyleAttributes: {
                             backgroundColor: "#FFE5E5",
                             altBackgroundColor: "#FFCCCC",
@@ -439,6 +440,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         startTime: "16:00",
                         endTime: "17:30",
                         status: "pending",
+                        onClick: () => { },
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
                             altBackgroundColor: "#FFEE8D",
