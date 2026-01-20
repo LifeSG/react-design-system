@@ -34,6 +34,7 @@ export const FilterModal = ({
     toggleFilterButtonLabel: _toggleFilterButtonLabel,
     headerTitle: _headerTitle,
     doneButtonLabel: _doneButtonLabel,
+    ...otherProps
 }: FilterModalProps) => {
     const { context, refs } = useFloating();
     const nodeRef = useRef<HTMLDivElement>(null);
@@ -73,15 +74,17 @@ export const FilterModal = ({
 
     return (
         <FilterContext.Provider value={{ mode: "mobile", rootNode: nodeRef }}>
-            <FilterButton
-                data-testid="filter-show-button"
-                styleType={toggleFilterButtonStyle}
-                onClick={handleShowFilter}
-                type="button"
-                icon={<FilterIcon />}
-            >
-                {labels.toggle}
-            </FilterButton>
+            <div {...otherProps}>
+                <FilterButton
+                    data-testid="filter-show-button"
+                    styleType={toggleFilterButtonStyle}
+                    onClick={handleShowFilter}
+                    type="button"
+                    icon={<FilterIcon />}
+                >
+                    {labels.toggle}
+                </FilterButton>
+            </div>
             <Overlay show={visible} disableTransition>
                 <FloatingWrapper inert={inertValue(!visible)}>
                     <FloatingFocusManager context={context} disabled={!visible}>

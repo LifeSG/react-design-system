@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { InputSelect } from "../input-select";
 import { FormWrapper } from "./form-wrapper";
 import { FormInputSelectProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 
 export const FormSelect = <T, V>({
     label,
     errorMessage,
-    id = "form-select",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     enableSearch = false,
@@ -23,9 +25,14 @@ export const FormSelect = <T, V>({
     variant,
     ...otherProps
 }: FormInputSelectProps<T, V>): JSX.Element => {
+    const [internalId] = useState(
+        () => `form-field-${SimpleIdGenerator.generate()}`
+    );
+    const inputId = id ?? internalId;
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
@@ -43,8 +50,8 @@ export const FormSelect = <T, V>({
             xxlCols={xxlCols}
         >
             <InputSelect
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 error={!!errorMessage}
                 enableSearch={enableSearch}
                 variant={variant}

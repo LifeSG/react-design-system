@@ -9,6 +9,7 @@ export interface TabItemComponentProps extends TabItemProps {
 export const TabItem = ({
     index,
     children,
+    titleAddon: _titleAddon, // destructure so it doesn't get passed into the dom
     ...otherProps
 }: TabItemComponentProps) => {
     // =========================================================================
@@ -25,3 +26,5 @@ export const TabItem = ({
         </div>
     ) : null;
 };
+
+TabItem.displayName = "Tab.Item";

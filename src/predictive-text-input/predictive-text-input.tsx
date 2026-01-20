@@ -81,7 +81,7 @@ export const PredictiveTextInput = <T, V>({
             setSearchedInput(input);
             setOptions(fetchedOptions ?? []);
             setIsLoading(false);
-        } catch (err) {
+        } catch {
             setIsError(true);
             setIsLoading(false);
         }
@@ -289,7 +289,7 @@ export const PredictiveTextInput = <T, V>({
                     results.
                 </VisuallyHidden>
                 {resultAnnouncement && (
-                    <VisuallyHidden as="span" aria-live="polite">
+                    <VisuallyHidden aria-live="polite">
                         {resultAnnouncement}
                     </VisuallyHidden>
                 )}

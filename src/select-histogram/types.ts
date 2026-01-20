@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import { AriaAttributes, RefObject } from "react";
 import { HistogramSliderProps } from "../histogram-slider";
 import { TruncateType } from "../shared/dropdown-list-v2/types";
 import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
@@ -8,7 +8,11 @@ export type SelectHistogramSliderProps = Pick<
     "bins" | "interval" | "renderEmptyView" | "ariaLabels"
 >;
 
-export interface SelectHistogramProps {
+export interface SelectHistogramProps
+    extends Pick<
+        AriaAttributes,
+        "aria-labelledby" | "aria-describedby" | "aria-invalid"
+    > {
     alignment?: DropdownAlignmentType | undefined;
     className?: string | undefined;
     "data-testid"?: string | undefined;

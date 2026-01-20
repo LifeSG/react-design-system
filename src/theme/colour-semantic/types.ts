@@ -15,6 +15,7 @@ export type SemanticColourSet = {
     "text-subtler": SemanticColourValue;
     "text-subtlest": SemanticColourValue;
     "text-primary": SemanticColourValue;
+    "text-primary-strongest": SemanticColourValue;
 
     "text-hover": SemanticColourValue;
     "text-selected": SemanticColourValue;

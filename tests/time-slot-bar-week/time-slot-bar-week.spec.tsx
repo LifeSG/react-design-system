@@ -269,8 +269,3 @@ describe("TimeSlotBarWeekCalendar", () => {
         expect(onChange).toHaveBeenCalledTimes(1);
     });
 });
-
-// =============================================================================
-// CONSTANTS
-// =============================================================================
-const EXPAND_COLLAPSE_BUTTON_ID = "time-bar-expand-collapse-button";

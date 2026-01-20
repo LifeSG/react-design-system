@@ -1,5 +1,11 @@
 import { isEmpty, throttle } from "lodash";
-import { useEffect, useRef, useState } from "react";
+import {
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { PopoverV2TriggerProps } from "../popover-v2";
 import { TimeHelper } from "../util/time-helper";
@@ -32,30 +38,33 @@ import {
     StyledPopoverTrigger,
     TimeTableContainer,
 } from "./timetable.style";
-import { TimeTableProps, TimeTableRowData } from "./types";
+import { TimeTableProps, TimeTableRef, TimeTableRowData } from "./types";
 
-export const TimeTable = ({
-    date,
-    emptyContentMessage,
-    rowData,
-    loading,
-    minTime = "00:00",
-    maxTime = "23:00",
-    minDate,
-    maxDate,
-    totalRecords,
-    showCurrentDateAsToday,
-    showDateAsShortForm,
-    onPage,
-    onRefresh,
-    onNextDayClick,
-    onPreviousDayClick,
-    onCalendarDateSelect,
-    ...otherProps
-}: TimeTableProps): JSX.Element => {
+const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const {
+        date,
+        emptyContentMessage,
+        rowData,
+        loading,
+        minTime = "00:00",
+        maxTime = "23:00",
+        initialScrollTime,
+        minDate,
+        maxDate,
+        totalRecords,
+        showCurrentDateAsToday,
+        showDateAsShortForm,
+        onPage,
+        onRefresh,
+        onNextDayClick,
+        onPreviousDayClick,
+        onCalendarDateSelect,
+        roundInitialScrollTime = true,
+        ...otherProps
+    } = props;
     const testId = otherProps["data-testid"] || "timetable";
     const timetableMinTime = TimeHelper.roundToNearestInterval(minTime, 60);
     const timetableMaxTime = TimeHelper.roundToNearestInterval(
@@ -76,6 +85,11 @@ export const TimeTable = ({
     const [isScrolledY, setIsScrolledY] = useState<boolean>(false);
     const [intervalWidth, setIntervalWidth] = useState<number>(0);
     const [loadMore, setLoadMore] = useState<boolean>(false);
+
+    // Expose imperative handle
+    useImperativeHandle(ref, () => ({
+        resetScroll,
+    }));
 
     // =============================================================================
     // EFFECTS
@@ -120,6 +134,11 @@ export const TimeTable = ({
     useEffect(() => {
         setLoadMore(false);
     }, [rowData]);
+
+    // Initial scroll on mount and when dependencies change
+    useEffect(() => {
+        resetScroll();
+    }, [initialScrollTime, intervalWidth, timetableMinTime, timetableMaxTime]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -209,6 +228,30 @@ export const TimeTable = ({
                 {child}
             </StyledPopoverTrigger>
         );
+    };
+
+    // Function to reset scroll to initialScrollTime
+    const resetScroll = () => {
+        if (
+            initialScrollTime &&
+            tableContainerRef.current &&
+            intervalWidth > 0
+        ) {
+            const scrollPosition = TimeHelper.calculateScrollPosition({
+                scrollTime: initialScrollTime,
+                minTime: timetableMinTime,
+                maxTime: timetableMaxTime,
+                interval: ROW_INTERVAL,
+                intervalWidth,
+                options: {
+                    roundToInterval: roundInitialScrollTime,
+                },
+            });
+
+            if (scrollPosition !== null) {
+                tableContainerRef.current.scrollLeft = scrollPosition;
+            }
+        }
     };
 
     // =============================================================================
@@ -411,3 +454,5 @@ export const TimeTable = ({
         </Container>
     );
 };
+
+export const TimeTable = forwardRef<TimeTableRef, TimeTableProps>(Component);

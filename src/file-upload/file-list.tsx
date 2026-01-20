@@ -178,7 +178,9 @@ function Component(
             if (item.errorMessage) {
                 if (fileStatus?.status !== "error") {
                     messages.push(
-                        `Error uploading ${item.name}: ${item.errorMessage}`
+                        typeof item.errorMessage === "string"
+                            ? `Error uploading ${item.name}: ${item.errorMessage}`
+                            : `Error uploading ${item.name}`
                     );
                     lastAnnouncedRef.current[item.id] = {
                         progress: item.progress ?? 1,

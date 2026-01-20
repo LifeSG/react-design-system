@@ -6,7 +6,8 @@ export type Variant =
     | "upcoming-active"
     | "upcoming-inactive"
     | "error"
-    | "disabled";
+    | "disabled"
+    | "numeric";
 
 export interface TimelineItemProps {
     title: string | JSX.Element;

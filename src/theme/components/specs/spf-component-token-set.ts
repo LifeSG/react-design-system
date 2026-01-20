@@ -16,4 +16,27 @@ export const SPFComponentTokenSet: ComponentTokenSet = {
     Animation: {
         "loading-dots-spinner-colour": ColourSemantic["icon-primary"],
     },
+    Navbar: {
+        "navbar-full-height": "6rem",
+        "navbar-full-logo-height": "3rem",
+        "navbar-compressed-height": "5rem",
+        "navbar-compressed-logo-height": "2rem",
+        "navbar-mobile-height": "4rem",
+        "navbar-mobile-logo-height": "2rem",
+        "navbar-colour-bg": ColourSemantic["bg"],
+        "navbar-colour-icon": ColourSemantic["icon"],
+        "navbar-link-colour-text": ColourSemantic["text-primary-strongest"],
+        "navbar-link-colour-text-hover": ColourSemantic["text-subtler"],
+        "navbar-link-colour-text-selected-hover":
+            ColourSemantic["text-subtler"],
+    },
+    Footer: {
+        "footer-colour-bg": ColourSemantic["bg-inverse"],
+        "footer-colour-text": ColourSemantic["text-inverse"],
+        "footer-link-colour-text": ColourSemantic["text-inverse"],
+        "footer-link-colour-text-hover": ColourSemantic["text-inverse"],
+        "footer-disclaimer-link-colour-text": ColourSemantic["text-inverse"],
+        "footer-disclaimer-link-colour-text-hover":
+            ColourSemantic["text-inverse"],
+    },
 };

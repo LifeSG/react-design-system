@@ -14,39 +14,36 @@ export const StyledContainer = styled.div<StyleProps>`
     width: auto;
     height: auto;
 
+    padding: 0 ${Breakpoint["xxl-margin"]}px;
+
+    ${MediaQuery.MaxWidth.xl} {
+        padding: 0 ${Breakpoint["xl-margin"]}px;
+    }
+
+    ${MediaQuery.MaxWidth.lg} {
+        padding: 0 ${Breakpoint["lg-margin"]}px;
+    }
+
+    ${MediaQuery.MaxWidth.md} {
+        padding: 0 ${Breakpoint["md-margin"]}px;
+    }
+
+    ${MediaQuery.MaxWidth.sm} {
+        padding: 0 ${Breakpoint["sm-margin"]}px;
+    }
+
+    ${MediaQuery.MaxWidth.xs} {
+        padding: 0 ${Breakpoint["xs-margin"]}px;
+    }
+
+    ${MediaQuery.MaxWidth.xxs} {
+        padding: 0 ${Breakpoint["xxs-margin"]}px;
+    }
+
     ${(props) => {
-        if (props.$stretch) {
+        if (!props.$stretch) {
             return css`
-                padding: 0 ${Breakpoint["xxl-margin"]}px;
-            `;
-        } else {
-            return css`
-                padding: 0 ${Breakpoint["xxl-margin"]}px;
                 max-width: 1440px;
-
-                ${MediaQuery.MaxWidth.xl} {
-                    padding: 0 ${Breakpoint["xl-margin"]}px;
-                }
-
-                ${MediaQuery.MaxWidth.lg} {
-                    padding: 0 ${Breakpoint["lg-margin"]}px;
-                }
-
-                ${MediaQuery.MaxWidth.md} {
-                    padding: 0 ${Breakpoint["md-margin"]}px;
-                }
-
-                ${MediaQuery.MaxWidth.sm} {
-                    padding: 0 ${Breakpoint["sm-margin"]}px;
-                }
-
-                ${MediaQuery.MaxWidth.xs} {
-                    padding: 0 ${Breakpoint["xs-margin"]}px;
-                }
-
-                ${MediaQuery.MaxWidth.xxs} {
-                    padding: 0 ${Breakpoint["xxs-margin"]}px;
-                }
             `;
         }
     }}

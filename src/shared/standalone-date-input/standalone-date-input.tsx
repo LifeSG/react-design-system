@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
-import { StringHelper, useStateRef } from "../../util";
+import { DateInputHelper, StringHelper, useStateRef } from "../../util";
 import {
     DayInput,
     Divider,
@@ -307,11 +307,13 @@ export const Component = (
         if (!stringVal) {
             return [undefined, undefined, undefined];
         } else {
-            const day = dayjs(new Date(stringVal));
+            const sanitized = DateInputHelper.sanitizeInput(stringVal);
 
-            if (!day.isValid()) {
+            if (!sanitized) {
                 return [undefined, undefined, undefined];
             }
+
+            const day = dayjs(sanitized, "YYYY-MM-DD", true);
 
             return [
                 StringHelper.padValue(day.date().toString()),

@@ -84,7 +84,6 @@ export const Component = <T, V>(
     const textboxLabelId = `${internalId}-textbox-label`;
 
     const nodeRef = useRef<HTMLDivElement>(null);
-    const positionRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);
 
     // =============================================================================
@@ -200,12 +199,7 @@ export const Component = <T, V>(
 
     const renderElement = () => {
         return (
-            <div
-                ref={nodeRef}
-                tabIndex={-1}
-                onFocus={handleNodeFocus}
-                onBlur={handleNodeBlur}
-            >
+            <div>
                 <ExpandableElement
                     ref={selectorRef}
                     disabled={disabled}
@@ -283,7 +277,7 @@ export const Component = <T, V>(
                     fitAvailableHeight
                     customZIndex={dropdownZIndex}
                     rootNode={dropdownRootNode}
-                    positionRef={positionRef}
+                    positionRef={nodeRef}
                 />
             );
         }
@@ -297,10 +291,13 @@ export const Component = <T, V>(
                 $readOnly={readOnly}
                 $error={error}
                 $position={position}
-                ref={positionRef}
+                ref={nodeRef}
                 className={className}
                 data-testid={testId}
                 $noBorder={noBorder}
+                tabIndex={-1}
+                onFocus={handleNodeFocus}
+                onBlur={handleNodeBlur}
             >
                 <VisuallyHidden aria-hidden id={comboboxLabelId}>
                     {comboboxAriaLabel}

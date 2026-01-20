@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Pill } from "../pill";
-import { Colour, MediaQuery, Radius } from "../theme";
+import { Colour, Font, MediaQuery, Radius } from "../theme";
 import { Typography } from "../typography";
 import { Variant } from "./types";
 
@@ -54,6 +54,12 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
                         color: ${Colour["icon-inverse"]};
                     }
                 `;
+            case "numeric":
+                return css`
+                    background-color: ${Colour["icon-info"]};
+                    color: ${Colour["text-inverse"]};
+                    font-size: ${Font["body-sm-bold"]};
+                `;
             case "error":
                 return css`
                     width: 1.8rem;
@@ -95,6 +101,10 @@ export const LineIndicator = styled.div<VariantStyleProps>`
             case "completed":
                 return css`
                     background-color: ${Colour["icon-success"]};
+                `;
+            case "numeric":
+                return css`
+                    background-color: ${Colour["icon-info"]};
                 `;
             case "error":
                 return css`

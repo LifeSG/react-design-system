@@ -2,9 +2,9 @@ import React from "react";
 import { TimeHelper } from "../../util/time-helper";
 import { PositionedSlot } from "./types";
 import {
+    SlotAvailability,
     SlotContentContainer,
     SlotServiceName,
-    SlotAvailability,
 } from "./slot-content.styles";
 
 interface SlotContentProps {

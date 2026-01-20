@@ -193,3 +193,324 @@ describe("roundToNearestInterval tests", () => {
         );
     });
 });
+
+describe("calculateScrollPosition tests", () => {
+    describe("Valid scroll positions", () => {
+        it("should calculate scroll position at the start time", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "08:00",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 50,
+            });
+
+            expect(result).toBe(0);
+        });
+
+        it("should calculate scroll position for a time in the middle", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "09:00",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 50,
+            });
+
+            // 09:00 is 60 minutes from 08:00
+            // 60 / 15 = 4 intervals
+            // 4 * 50 = 200px
+            expect(result).toBe(200);
+        });
+
+        it("should calculate scroll position with 30-minute intervals", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "10:00",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 30,
+                intervalWidth: 100,
+            });
+
+            // 10:00 is 120 minutes from 08:00
+            // 120 / 30 = 4 intervals
+            // 4 * 100 = 400px
+            expect(result).toBe(400);
+        });
+
+        it("should calculate scroll position with 60-minute intervals", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "11:00",
+                minTime: "08:00",
+                maxTime: "20:00",
+                interval: 60,
+                intervalWidth: 80,
+            });
+
+            // 11:00 is 180 minutes from 08:00
+            // 180 / 60 = 3 intervals
+            // 3 * 80 = 240px
+            expect(result).toBe(240);
+        });
+
+        it("should calculate scroll position with fractional intervals", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "08:45",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 50,
+            });
+
+            // 08:45 is 45 minutes from 08:00
+            // 45 / 15 = 3 intervals
+            // 3 * 50 = 150px
+            expect(result).toBe(150);
+        });
+
+        it("should handle times starting from midnight", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "06:00",
+                minTime: "00:00",
+                maxTime: "24:00",
+                interval: 30,
+                intervalWidth: 40,
+            });
+
+            // 06:00 is 360 minutes from 00:00
+            // 360 / 30 = 12 intervals
+            // 12 * 40 = 480px
+            expect(result).toBe(480);
+        });
+    });
+
+    describe("Round to interval option", () => {
+        it("should round scroll time to nearest interval when option is enabled", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "08:37",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 50,
+                options: {
+                    roundToInterval: true,
+                },
+            });
+
+            // 08:37 rounds to 08:30 (30 minutes from 08:00)
+            // 30 / 15 = 2 intervals
+            // 2 * 50 = 100px
+            expect(result).toBe(100);
+        });
+
+        it("should not round when option is disabled", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "08:37",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 50,
+                options: {
+                    roundToInterval: false,
+                },
+            });
+
+            // 08:37 is 37 minutes from 08:00
+            // 37 / 15 = 2.4666... intervals
+            // 2.4666... * 50 = 123.333...px
+            expect(result).toBeCloseTo(123.33, 1);
+        });
+
+        it("should not round by default when option is not specified", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "08:22",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 50,
+            });
+
+            // 08:22 is 22 minutes from 08:00
+            // 22 / 15 = 1.4666... intervals
+            // 1.4666... * 50 = 73.333...px
+            expect(result).toBeCloseTo(73.33, 1);
+        });
+    });
+
+    describe("Out of range warnings", () => {
+        let localConsoleWarnSpy: jest.SpyInstance;
+
+        beforeEach(() => {
+            localConsoleWarnSpy = jest
+                .spyOn(console, "warn")
+                .mockImplementation();
+        });
+
+        afterEach(() => {
+            localConsoleWarnSpy.mockRestore();
+        });
+
+        it("should warn when scroll time is before min time", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "06:00",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 50,
+            });
+
+            expect(localConsoleWarnSpy).toHaveBeenCalledWith(
+                expect.stringContaining(
+                    'scrollTime "06:00" is outside the range (08:00 - 18:00)'
+                )
+            );
+            // Should still return a calculated position (negative)
+            // 06:00 is 120 minutes before 08:00
+            // -120 / 15 = -8 intervals
+            // -8 * 50 = -400px
+            expect(result).toBe(-400);
+        });
+
+        it("should warn when scroll time is after max time", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "20:00",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 50,
+            });
+
+            expect(localConsoleWarnSpy).toHaveBeenCalledWith(
+                expect.stringContaining(
+                    'scrollTime "20:00" is outside the range (08:00 - 18:00)'
+                )
+            );
+            // Should still return a calculated position
+            // 20:00 is 720 minutes from 08:00
+            // 720 / 15 = 48 intervals
+            // 48 * 50 = 2400px
+            expect(result).toBe(2400);
+        });
+    });
+
+    describe("Invalid input handling", () => {
+        it("should return null and warn for invalid time format", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "invalid",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 50,
+            });
+
+            expect(result).toBeNull();
+        });
+
+        it("should return null for time with invalid hour", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "25:00",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 50,
+            });
+
+            expect(result).toBeNull();
+        });
+
+        it("should return null for time with invalid minute", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "08:60",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 50,
+            });
+
+            expect(result).toBeNull();
+        });
+
+        it("should return null for malformed time string", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "8:0",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 50,
+            });
+
+            expect(result).toBeNull();
+        });
+
+        it("should return null for empty string", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 50,
+            });
+
+            expect(result).toBeNull();
+        });
+    });
+
+    describe("Edge cases", () => {
+        it("should handle midnight (00:00) correctly", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "00:00",
+                minTime: "00:00",
+                maxTime: "12:00",
+                interval: 30,
+                intervalWidth: 60,
+            });
+
+            expect(result).toBe(0);
+        });
+
+        it("should handle very small intervals", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "08:05",
+                minTime: "08:00",
+                maxTime: "09:00",
+                interval: 5,
+                intervalWidth: 10,
+            });
+
+            // 08:05 is 5 minutes from 08:00
+            // 5 / 5 = 1 interval
+            // 1 * 10 = 10px
+            expect(result).toBe(10);
+        });
+
+        it("should handle very large intervals", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "12:00",
+                minTime: "00:00",
+                maxTime: "24:00",
+                interval: 240,
+                intervalWidth: 200,
+            });
+
+            // 12:00 is 720 minutes from 00:00
+            // 720 / 240 = 3 intervals
+            // 3 * 200 = 600px
+            expect(result).toBe(600);
+        });
+
+        it("should handle fractional pixel widths", () => {
+            const result = TimeHelper.calculateScrollPosition({
+                scrollTime: "08:30",
+                minTime: "08:00",
+                maxTime: "18:00",
+                interval: 15,
+                intervalWidth: 33.5,
+            });
+
+            // 08:30 is 30 minutes from 08:00
+            // 30 / 15 = 2 intervals
+            // 2 * 33.5 = 67px
+            expect(result).toBe(67);
+        });
+    });
+});

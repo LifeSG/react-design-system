@@ -14,6 +14,12 @@ export const Filter = ({
     className,
     style,
     onDismiss,
+    onDone,
+    onModalOpen,
+    toggleFilterButtonStyle,
+    insets,
+    id,
+    "data-testid": testId,
     ...props
 }: FilterProps) => {
     const theme = useContext(ThemeContext);
@@ -27,9 +33,16 @@ export const Filter = ({
     }, [isMobile]);
 
     return (
-        <div className={className} style={style}>
+        <div className={className} style={style} id={id} data-testid={testId}>
             {isMobile ? (
-                <FilterModal onDismiss={onDismiss} {...props}>
+                <FilterModal
+                    onDismiss={onDismiss}
+                    onDone={onDone}
+                    onModalOpen={onModalOpen}
+                    toggleFilterButtonStyle={toggleFilterButtonStyle}
+                    insets={insets}
+                    {...props}
+                >
                     {typeof children === "function"
                         ? children("mobile")
                         : children}

@@ -25,6 +25,9 @@ export const InputSelect = <T, V>({
     className,
     "data-testid": testId,
     id,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
     enableSearch = false,
     searchFunction,
     searchPlaceholder,
@@ -50,7 +53,7 @@ export const InputSelect = <T, V>({
     alignment,
     dropdownZIndex,
     dropdownRootNode,
-    dropdownWidth
+    dropdownWidth,
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
@@ -228,6 +231,9 @@ export const InputSelect = <T, V>({
                     popupRole="listbox"
                     readOnly={readOnly}
                     variant={variant}
+                    aria-labelledby={ariaLabelledBy}
+                    aria-describedby={ariaDescribedBy}
+                    aria-invalid={ariaInvalid}
                 >
                     {renderSelectorContent()}
                 </ExpandableElement>

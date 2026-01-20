@@ -4,11 +4,11 @@ import { ColourTokenInspector } from "stories/storybook-common";
 import styled, { useTheme } from "styled-components";
 import { ColourDisplay } from "./colour-display";
 
-interface SemanticColourPalette {
+interface SemanticColourPaletteProps {
     tokens: (keyof SemanticColourSet)[];
 }
 
-const SemanticColourPalette = ({ tokens }: SemanticColourPalette) => {
+const SemanticColourPalette = ({ tokens }: SemanticColourPaletteProps) => {
     const theme = useTheme();
 
     const component = (

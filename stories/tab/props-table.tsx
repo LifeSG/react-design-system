@@ -122,6 +122,28 @@ const TAB_ITEM_DATA: ApiTableSectionProps[] = [
                 description: "The tab selector width",
                 propTypes: ["string"],
             },
+            {
+                name: "titleAddon",
+                description:
+                    "Custom addon content displayed next to the tab title",
+                propTypes: ["TitleAddonProps"],
+            },
+        ],
+    },
+    {
+        name: "TitleAddonProps",
+        attributes: [
+            {
+                name: "content",
+                description: "The addon content",
+                propTypes: ["JSX.Element"],
+            },
+            {
+                name: "position",
+                description: "The position of the addon",
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"right"`,
+            },
         ],
     },
 ];

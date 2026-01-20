@@ -77,7 +77,7 @@ export const ProgressIndicator = <T,>({
 
             return (
                 <Indicator key={stepIndex} id={getId(stepIndex, currentIndex)}>
-                    <IndicatorBar highlighted={highlighted}></IndicatorBar>
+                    <IndicatorBar $highlighted={highlighted}></IndicatorBar>
                 </Indicator>
             );
         });
@@ -95,7 +95,7 @@ export const ProgressIndicator = <T,>({
                     id={`${getId(stepIndex, currentIndex)}-title`}
                 >
                     <IndicatorTitleDesktop
-                        highlighted={highlighted}
+                        $highlighted={highlighted}
                         weight={fontWeight}
                         aria-current={current}
                     >

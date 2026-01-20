@@ -4,7 +4,8 @@
  *
  */
 
-import { Children, ComponentType, cloneElement } from "react";
+import { Children, ComponentType, cloneElement, useState } from "react";
+import { SimpleIdGenerator } from "../util";
 import { FormLabel } from "./form-label";
 import {
     ErrorIcon,
@@ -20,7 +21,7 @@ import { FormElementLayoutType, FormWrapperProps } from "./types";
 
 export const FormWrapper = ({
     label,
-    errorMessage,
+    errorMessage: eRaw,
     id,
     disabled,
     children,
@@ -35,39 +36,36 @@ export const FormWrapper = ({
     lgCols,
     xlCols,
     xxlCols,
+    "data-testid": testId,
     "data-error-testid": errorTestId,
 }: FormWrapperProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
     const updatedLayoutType = getLayoutType();
-    const labelId = id ? `${id}-label` : undefined;
+    const errorMessage = typeof eRaw === "string" ? eRaw.trim() : eRaw;
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const labelId = `${id ?? internalId}-label`; // matches FormLabel
+    const subtitleId = `${id ?? internalId}-label-subtitle`; // matches FormLabel
+    const errorMessageId = `${id ?? internalId}-error-message`;
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
 
-    const getErrorTestMessageId = (): string => {
-        return errorTestId || (id ? `${id}-error-message` : "error-message");
-    };
-
     const isInvalidState = (): boolean => {
-        return !!errorMessage;
+        return !!eRaw;
     };
 
     const hasSubtitleLabel = (): boolean => {
         return typeof label === "object" && !!label?.subtitle;
     };
 
-    const getSubtitleId = (): string => {
-        return `${id}-label-subtitle`;
-    };
-
     const getAriaDescribedBy = (): string | undefined => {
         return (
             [
-                isInvalidState() ? getErrorTestMessageId() : undefined,
-                hasSubtitleLabel() ? getSubtitleId() : undefined,
+                errorMessage ? errorMessageId : undefined,
+                hasSubtitleLabel() ? subtitleId : undefined,
             ]
                 .filter(Boolean)
                 .join(" ") || undefined
@@ -140,6 +138,8 @@ export const FormWrapper = ({
             return (
                 <FormLabel
                     htmlFor={`${id}-base`}
+                    // FIXME: kept for backwards-compatibility
+                    // in most cases data-testid should be separate from id
                     data-testid={id ? `${id}-label` : "form-label"}
                     id={labelId}
                     disabled={disabled}
@@ -163,6 +163,7 @@ export const FormWrapper = ({
         const ariaState = {
             "aria-invalid": isInvalidState(),
             "aria-describedby": getAriaDescribedBy(),
+            "aria-labelledby": label ? labelId : undefined,
         };
         return Children.map(children, (child) =>
             cloneElement(child, ariaState)
@@ -172,16 +173,24 @@ export const FormWrapper = ({
     const ContainerComponent = getContainerComponent(updatedLayoutType);
 
     return (
-        <ContainerComponent {...getContainerLayoutProps(updatedLayoutType)}>
+        <ContainerComponent
+            data-testid={testId}
+            {...getContainerLayoutProps(updatedLayoutType)}
+        >
             {label && renderFormLabel()}
             {renderChildren()}
             {errorMessage && (
                 <ErrorMessageContainer>
                     <ErrorIcon aria-hidden />
                     <ErrorMessage
-                        id={getErrorTestMessageId()}
+                        id={errorMessageId}
                         tabIndex={0}
-                        data-testid={getErrorTestMessageId()}
+                        data-testid={
+                            errorTestId ??
+                            // FIXME: kept for backwards-compatibility
+                            // in most cases data-testid should be separate from id
+                            (id ? `${id}-error-message` : "error-message")
+                        }
                     >
                         {errorMessage}
                     </ErrorMessage>

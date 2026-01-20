@@ -77,9 +77,7 @@ export const DateInput = ({
         performOnBlurHandler();
 
         // clear hover value for mobile scrolling
-        if (hoveredDate) {
-            setHoveredDate(undefined);
-        }
+        setHoveredDate(undefined);
     };
 
     const handleDismiss = () => {
@@ -124,9 +122,7 @@ export const DateInput = ({
             }
 
             // clear hover value for mobile when onMouseLeave={handleMouseLeaveCell} is not triggered due to touch input
-            if (hoveredDate) {
-                setHoveredDate(undefined);
-            }
+            setHoveredDate(undefined);
         }
     };
 
@@ -194,7 +190,11 @@ export const DateInput = ({
         const isValid = dayjs(selectedDate, "YYYY-MM-DD", true).isValid();
 
         // Focus on year input if the selected date is valid to avoid restarting entire tab order
-        isValid ? inputRef.current?.focusYearRef() : nodeRef.current?.focus();
+        if (isValid) {
+            inputRef.current?.focusYearRef();
+        } else {
+            nodeRef.current?.focus();
+        }
         setCalendarOpen(false);
     };
 

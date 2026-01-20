@@ -146,7 +146,7 @@ const RBSThemeBase: ThemeSpec = {
 
 const OneServiceThemeBase: ThemeSpec = {
     colourScheme: "oneservice",
-    fontScheme: "default",
+    fontScheme: "oneservice",
     motionScheme: "default",
     borderScheme: "default",
     spacingScheme: "default",

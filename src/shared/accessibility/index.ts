@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { isReact19 } from "../../util";
 
-export const VisuallyHidden = styled.div`
+export const VisuallyHidden = styled.span`
     clip-path: inset(50%);
     height: 1px;
     width: 1px;

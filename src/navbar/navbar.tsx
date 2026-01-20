@@ -49,6 +49,7 @@ const Component = <T,>(
         resources,
         hideNavElements = false,
         hideNavBranding = false,
+        hideLinkIndicator = false,
         drawerDismissalExclusions: blockDrawerDismissalMethods = [],
         actionButtons,
         onItemClick,
@@ -237,6 +238,7 @@ const Component = <T,>(
                     onItemClick={handleNavItemClick}
                     selectedId={selectedId}
                     mobile
+                    hideLinkIndicator={hideLinkIndicator}
                 />
                 <NavbarActionButtons
                     actionButtons={actionButtons}
@@ -310,6 +312,7 @@ const Component = <T,>(
                                 onItemClick={handleNavItemClick}
                                 selectedId={selectedId}
                                 hideNavBranding={hideNavBranding}
+                                hideLinkIndicator={hideLinkIndicator}
                             />
                             <NavbarActionButtons
                                 actionButtons={actionButtons}

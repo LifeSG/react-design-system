@@ -17,9 +17,9 @@ import { Breakpoint } from "../theme";
 import { isEmpty } from "lodash";
 import {
     Container,
-    ScheduleBodyContainer,
     EmptyTableContainer,
     NoResultsFound,
+    ScheduleBodyContainer,
 } from "./schedule.styles";
 
 export const Schedule = ({

@@ -55,7 +55,10 @@ export const Container = styled.nav<StyleProps>`
 
     ${(props) => VISIBILITY_STYLE(props.$show)}
     ${(props) => {
-        const viewHeight = `${props.$viewHeight}px` || "1vh";
+        let viewHeight = "1vh";
+        if (props.$viewHeight) {
+            viewHeight = `${props.$viewHeight}px`;
+        }
         return css`
             height: calc(${viewHeight} * 100);
         `;

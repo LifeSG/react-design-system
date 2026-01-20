@@ -16,4 +16,27 @@ export const A11yPlaygroundComponentTokenSet: ComponentTokenSet = {
     Animation: {
         "loading-dots-spinner-colour": ColourSemantic["icon-primary"],
     },
+    Navbar: {
+        "navbar-full-height": "6rem",
+        "navbar-full-logo-height": "2rem",
+        "navbar-compressed-height": "4rem",
+        "navbar-compressed-logo-height": "1.5rem",
+        "navbar-mobile-height": "3.5rem",
+        "navbar-mobile-logo-height": "1.5rem",
+        "navbar-colour-bg": ColourSemantic["bg"],
+        "navbar-colour-icon": ColourSemantic["icon"],
+        "navbar-link-colour-text": ColourSemantic["text"],
+        "navbar-link-colour-text-hover": ColourSemantic["text-hover"],
+        "navbar-link-colour-text-selected-hover":
+            ColourSemantic["text-selected-hover"],
+    },
+    Footer: {
+        "footer-colour-bg": ColourSemantic["bg-strong"],
+        "footer-colour-text": ColourSemantic["text"],
+        "footer-link-colour-text": ColourSemantic["text"],
+        "footer-link-colour-text-hover": ColourSemantic["text-hover"],
+        "footer-disclaimer-link-colour-text": ColourSemantic["text"],
+        "footer-disclaimer-link-colour-text-hover":
+            ColourSemantic["text-subtler"],
+    },
 };
