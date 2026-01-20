@@ -370,6 +370,7 @@ export const InitialScrollTime: StoryObj<Component> = {
         );
     },
 };
+
 export const CustomCellColors: StoryObj<Component> = {
     render: () => {
         const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
@@ -377,13 +378,11 @@ export const CustomCellColors: StoryObj<Component> = {
         const customColorData: TimeTableRowData[] = [
             {
                 id: "1",
-                name: "All custom",
-                subtitle: "custom description",
+                name: "Custom colours",
+                subtitle: "Custom colours with default cell style",
                 rowCells: [
                     {
-                        id: "cell-1",
                         title: "Custom Filled",
-                        subtitle: "1h30m slot",
                         startTime: "08:00",
                         endTime: "09:30",
                         status: "filled",
@@ -394,9 +393,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         },
                     },
                     {
-                        id: "cell-2",
                         title: "Custom Blocked",
-                        subtitle: "1h30m slot",
                         startTime: "10:00",
                         endTime: "11:30",
                         status: "blocked",
@@ -409,22 +406,19 @@ export const CustomCellColors: StoryObj<Component> = {
                         },
                     },
                     {
-                        id: "cell-3",
                         title: "Custom Default",
-                        subtitle: "1h30m slot",
                         startTime: "12:00",
                         endTime: "13:30",
                         status: "default",
                         onClick: () => {},
                         cellStyleAttributes: {
-                            backgroundColor: Colour["bg-available"],
-                            hoverBackgroundColor: Colour["bg-primary-hover"],
+                            backgroundColor: Colour.Primitive["secondary-80"],
+                            hoverBackgroundColor:
+                                Colour.Primitive["secondary-70"],
                         },
                     },
                     {
-                        id: "cell-4",
                         title: "Custom Disabled",
-                        subtitle: "1h30m slot",
                         startTime: "14:00",
                         endTime: "15:30",
                         status: "disabled",
@@ -434,9 +428,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         },
                     },
                     {
-                        id: "cell-5",
                         title: "Custom Pending",
-                        subtitle: "1h30m slot",
                         startTime: "16:00",
                         endTime: "17:30",
                         status: "pending",
@@ -451,55 +443,77 @@ export const CustomCellColors: StoryObj<Component> = {
                 ],
             },
             {
-                id: "4",
-                name: "Default",
-                subtitle: "default description",
+                id: "2",
+                name: "Custom cell style",
+                subtitle: "Custom colours with custom cell style",
                 rowCells: [
                     {
-                        id: "cell-11",
-                        title: "Default Filled",
-                        subtitle: "1h30m slot",
+                        title: "Custom Filled",
+                        subtitle: "Striped",
                         startTime: "08:00",
                         endTime: "09:30",
                         status: "filled",
-                        // No cellStyleAttributes - will use default styling
+                        onClick: () => {},
+                        cellStyleAttributes: {
+                            backgroundColor: "#E3F2FD",
+                            altBackgroundColor: "#FCFCFC",
+                            hoverBackgroundColor: "#BBDEFB",
+                            altHoverBackgroundColor: "#D5ECFF",
+                            styleType: "stripes",
+                        },
                     },
                     {
-                        id: "cell-12",
-                        title: "Default Blocked",
-                        subtitle: "1h30m slot",
+                        title: "Custom Blocked",
+                        subtitle: "Solid",
                         startTime: "10:00",
                         endTime: "11:30",
                         status: "blocked",
-                        // No cellStyleAttributes - will use default styling
+                        onClick: () => {},
+                        cellStyleAttributes: {
+                            backgroundColor: "#FFE5E5",
+                            altBackgroundColor: "#FFCCCC",
+                            hoverBackgroundColor: "#FFD1D1",
+                            altHoverBackgroundColor: "#FFB8B8",
+                            styleType: "solid",
+                        },
+                    },
+                ],
+            },
+            {
+                id: "3",
+                name: "Default",
+                subtitle: "Default colours and cell style",
+                rowCells: [
+                    {
+                        title: "Default Filled",
+                        startTime: "08:00",
+                        endTime: "09:30",
+                        status: "filled",
                     },
                     {
-                        id: "cell-13",
+                        title: "Default Blocked",
+                        startTime: "10:00",
+                        endTime: "11:30",
+                        status: "blocked",
+                    },
+                    {
                         title: "Default Available",
-                        subtitle: "1h30m slot",
                         startTime: "12:00",
                         endTime: "13:30",
                         status: "default",
                         onClick: () => {},
-                        // No cellStyleAttributes - will use default styling
                     },
                     {
-                        id: "cell-14",
                         title: "Default Disabled",
-                        subtitle: "1h30m slot",
                         startTime: "14:00",
                         endTime: "15:30",
                         status: "disabled",
-                        // No cellStyleAttributes - will use default styling
                     },
                     {
-                        id: "cell-15",
                         title: "Default Pending",
-                        subtitle: "1h30m slot",
                         startTime: "16:00",
                         endTime: "17:30",
                         status: "pending",
-                        // No cellStyleAttributes - will use default styling
                     },
                 ],
             },
@@ -520,32 +534,15 @@ export const CustomCellColors: StoryObj<Component> = {
         };
 
         return (
-            <div>
-                <Typography.HeadingSM
-                    weight="semibold"
-                    style={{ marginBottom: "1rem" }}
-                >
-                    Custom Cell Colors
-                </Typography.HeadingSM>
-                <Typography.BodyBL style={{ marginBottom: "2rem" }}>
-                    This example demonstrates using{" "}
-                    <code>cellStyleAttributes</code> to customize cell colors
-                    and customize hover colors. <br></br>
-                    First row shows custom styling of cellStyleAttributes
-                    <br></br>
-                    2nd row shows default styling when no cellStyleAttributes
-                    are provided.<br></br>
-                </Typography.BodyBL>
-                <StyledTimeTable
-                    date={date}
-                    minTime={"08:00"}
-                    maxTime={"16:00"}
-                    rowData={customColorData}
-                    loading={false}
-                    onNextDayClick={onNextDayClick}
-                    onPreviousDayClick={onPreviousDayClick}
-                />
-            </div>
+            <StyledTimeTable
+                date={date}
+                minTime={"08:00"}
+                maxTime={"16:00"}
+                rowData={customColorData}
+                loading={false}
+                onNextDayClick={onNextDayClick}
+                onPreviousDayClick={onPreviousDayClick}
+            />
         );
     },
 };

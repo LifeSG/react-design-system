@@ -119,7 +119,7 @@ const DATA: ApiTableSectionProps[] = [
                         the nearest 15-minute grid interval. For example, 09:23
                         will snap to 09:15, and 09:38 will snap to 09:30. This
                         ensures the initial scroll position aligns with the
-                        timetable's grid.
+                        timetable&apos;s grid.
                     </>
                 ),
                 propTypes: ["boolean"],
@@ -383,6 +383,12 @@ const DATA: ApiTableSectionProps[] = [
                     "(data: TimeTableRowCellData, e: React.MouseEvent) => void",
                 ],
             },
+            {
+                name: "cellStyleAttributes",
+                description:
+                    "Custom style attributes for the cell. If not specified, falls back to default row bar colors.",
+                propTypes: ["TimeTableCellStyleAttributes"],
+            },
         ],
     },
     {
@@ -417,6 +423,38 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "How much offset (in px) to apply for the popover.",
                 propTypes: ["number"],
+            },
+        ],
+    },
+    {
+        name: "TimeTableCellStyleAttributes",
+        attributes: [
+            {
+                name: "backgroundColor",
+                description: "Main background color for the cell",
+                propTypes: ["string", "(props: ThemeStyleProps) => string"],
+            },
+            {
+                name: "altBackgroundColor",
+                description:
+                    "Alternate background color (used for striped displays)",
+                propTypes: ["string", "(props: ThemeStyleProps) => string"],
+            },
+            {
+                name: "hoverBackgroundColor",
+                description: "Background color on hover",
+                propTypes: ["string", "(props: ThemeStyleProps) => string"],
+            },
+            {
+                name: "altHoverBackgroundColor",
+                description: "Alternative background color on hover",
+                propTypes: ["string", "(props: ThemeStyleProps) => string"],
+            },
+            {
+                name: "styleType",
+                description:
+                    "Display style for the cell. If not set, defaults to the cell type (blocked/pending = striped, others = solid)",
+                propTypes: [`"default"`, `"solid"`, `"stripes"`],
             },
         ],
     },
