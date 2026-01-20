@@ -118,7 +118,7 @@ const contactInputStyles = css<
             position: absolute;
             top: 0;
             left: 0;
-            right: -2.5px;
+            right: -2px;
             bottom: 0;
             border-top-left-radius: ${ThemeButton["button-radius"]};
             border-bottom-left-radius: ${ThemeButton["button-radius"]};
@@ -138,6 +138,11 @@ const contactInputStyles = css<
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+            }
+            &:focus-within {
+                &:after {
+                    right: -2.5px;
+                }
             }
         `}
 

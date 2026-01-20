@@ -1,7 +1,6 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { OtpVerification } from "src/otp-verification";
-import { OtpVerifyType } from "src/otp-verification/types";
+import { OtpVerification, OtpVerificationState } from "src/otp-verification";
 
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
     observe: jest.fn(),
@@ -22,11 +21,17 @@ describe("OtpVerification", () => {
     // =============================================================================
     describe("Basic Rendering", () => {
         const defaultEmailProps = {
-            type: OtpVerifyType.EMAIL as const,
+            type: "email" as const,
             emailValue: "test@example.com",
             onEmailChange: jest.fn(),
             onSendOtp: jest.fn(),
             onVerifyOtp: jest.fn(),
+            otpState: OtpVerificationState.DEFAULT,
+            onOtpStateChange: jest.fn(),
+            isLoading: false,
+            onLoadingChange: jest.fn(),
+            isVerifyLoading: false,
+            onVerifyLoadingChange: jest.fn(),
         };
 
         it("should render email input form", () => {
@@ -42,7 +47,7 @@ describe("OtpVerification", () => {
 
         it("should render phone number input form", () => {
             const phoneProps = {
-                type: OtpVerifyType.PHONE_NUMBER as const,
+                type: "phone-number" as const,
                 phoneNumberValue: {
                     countryCode: "+65",
                     number: "12345678",
@@ -50,6 +55,12 @@ describe("OtpVerification", () => {
                 onPhoneNumberChange: jest.fn(),
                 onSendOtp: jest.fn(),
                 onVerifyOtp: jest.fn(),
+                otpState: OtpVerificationState.DEFAULT,
+                onOtpStateChange: jest.fn(),
+                isLoading: false,
+                onLoadingChange: jest.fn(),
+                isVerifyLoading: false,
+                onVerifyLoadingChange: jest.fn(),
             };
 
             render(<OtpVerification {...phoneProps} />);
@@ -96,11 +107,17 @@ describe("OtpVerification", () => {
     // =============================================================================
     describe("User Interactions", () => {
         const defaultEmailProps = {
-            type: OtpVerifyType.EMAIL as const,
+            type: "email" as const,
             emailValue: "test@example.com",
             onEmailChange: jest.fn(),
             onSendOtp: jest.fn(),
             onVerifyOtp: jest.fn(),
+            otpState: OtpVerificationState.DEFAULT,
+            onOtpStateChange: jest.fn(),
+            isLoading: false,
+            onLoadingChange: jest.fn(),
+            isVerifyLoading: false,
+            onVerifyLoadingChange: jest.fn(),
         };
 
         it("should call onEmailChange when email input changes", async () => {
@@ -128,7 +145,7 @@ describe("OtpVerification", () => {
         it("should call onPhoneNumberChange when phone input changes", async () => {
             const user = userEvent.setup();
             const phoneProps = {
-                type: OtpVerifyType.PHONE_NUMBER as const,
+                type: "phone-number" as const,
                 phoneNumberValue: {
                     countryCode: "+65",
                     number: "12345678",
@@ -136,6 +153,12 @@ describe("OtpVerification", () => {
                 onPhoneNumberChange: jest.fn(),
                 onSendOtp: jest.fn(),
                 onVerifyOtp: jest.fn(),
+                otpState: OtpVerificationState.DEFAULT,
+                onOtpStateChange: jest.fn(),
+                isLoading: false,
+                onLoadingChange: jest.fn(),
+                isVerifyLoading: false,
+                onVerifyLoadingChange: jest.fn(),
             };
 
             render(<OtpVerification {...phoneProps} />);
@@ -153,16 +176,23 @@ describe("OtpVerification", () => {
     // =============================================================================
     describe("Loading States", () => {
         const defaultProps = {
-            type: OtpVerifyType.EMAIL as const,
+            type: "email" as const,
             emailValue: "test@example.com",
             onEmailChange: jest.fn(),
             onSendOtp: jest.fn(),
             onVerifyOtp: jest.fn(),
+            otpState: OtpVerificationState.DEFAULT,
+            onOtpStateChange: jest.fn(),
+            isLoading: false,
+            onLoadingChange: jest.fn(),
+            isVerifyLoading: false,
+            onVerifyLoadingChange: jest.fn(),
         };
 
         it("should show loading state when sending OTP", async () => {
             const user = userEvent.setup();
             let resolveSendOtp: () => void;
+            const mockOnLoadingChange = jest.fn();
             const slowSendOtp = jest.fn(
                 () =>
                     new Promise<void>((resolve) => {
@@ -170,8 +200,12 @@ describe("OtpVerification", () => {
                     })
             );
 
-            render(
-                <OtpVerification {...defaultProps} onSendOtp={slowSendOtp} />
+            const { rerender } = render(
+                <OtpVerification
+                    {...defaultProps}
+                    onSendOtp={slowSendOtp}
+                    onLoadingChange={mockOnLoadingChange}
+                />
             );
 
             const sendButton = screen.getByRole("button", {
@@ -179,11 +213,31 @@ describe("OtpVerification", () => {
             });
             await user.click(sendButton);
 
+            rerender(
+                <OtpVerification
+                    {...defaultProps}
+                    onSendOtp={slowSendOtp}
+                    onLoadingChange={mockOnLoadingChange}
+                    isLoading={true}
+                />
+            );
+
             expect(sendButton).toHaveAttribute("aria-busy", "true");
 
             act(() => {
                 resolveSendOtp!();
             });
+
+            rerender(
+                <OtpVerification
+                    {...defaultProps}
+                    onSendOtp={slowSendOtp}
+                    onLoadingChange={mockOnLoadingChange}
+                    isLoading={false}
+                />
+            );
+
+            expect(sendButton).toHaveAttribute("aria-busy", "false");
         });
     });
 
@@ -192,11 +246,17 @@ describe("OtpVerification", () => {
     // =============================================================================
     describe("Error Handling", () => {
         const defaultProps = {
-            type: OtpVerifyType.EMAIL as const,
+            type: "email" as const,
             emailValue: "test@example.com",
             onEmailChange: jest.fn(),
             onSendOtp: jest.fn(),
             onVerifyOtp: jest.fn(),
+            otpState: OtpVerificationState.DEFAULT,
+            onOtpStateChange: jest.fn(),
+            isLoading: false,
+            onLoadingChange: jest.fn(),
+            isVerifyLoading: false,
+            onVerifyLoadingChange: jest.fn(),
         };
 
         it("should display send OTP error message", () => {
@@ -214,7 +274,14 @@ describe("OtpVerification", () => {
 
         it("should handle missing required props gracefully", () => {
             const minimalProps = {
-                type: OtpVerifyType.EMAIL as const,
+                type: "email" as const,
+
+                otpState: OtpVerificationState.DEFAULT,
+                onOtpStateChange: jest.fn(),
+                isLoading: false,
+                onLoadingChange: jest.fn(),
+                isVerifyLoading: false,
+                onVerifyLoadingChange: jest.fn(),
             };
 
             expect(() => {
@@ -228,11 +295,17 @@ describe("OtpVerification", () => {
     // =============================================================================
     describe("Accessibility", () => {
         const defaultProps = {
-            type: OtpVerifyType.EMAIL as const,
+            type: "email" as const,
             emailValue: "test@example.com",
             onEmailChange: jest.fn(),
             onSendOtp: jest.fn(),
             onVerifyOtp: jest.fn(),
+            otpState: OtpVerificationState.DEFAULT,
+            onOtpStateChange: jest.fn(),
+            isLoading: false,
+            onLoadingChange: jest.fn(),
+            isVerifyLoading: false,
+            onVerifyLoadingChange: jest.fn(),
         };
 
         it("should have proper ARIA region", () => {

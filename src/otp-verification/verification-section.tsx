@@ -7,7 +7,6 @@ import { Breakpoint } from "../theme";
 import { Typography } from "../typography";
 import { VerificationSectionProps } from "./internal-types";
 import { EmailThumbnail, PhoneThumbnail } from "./thumbnail";
-import { OtpVerifyType } from "./types";
 import {
     InputSectionWrapper,
     ReSendMessage,
@@ -40,12 +39,10 @@ export const VerificationSection = ({
     const renderThumbnail = () => {
         if (!showVerifyOtpThumbnail) return null;
         const iconLabel =
-            type === OtpVerifyType.EMAIL
-                ? "Email verification"
-                : "Phone verification";
+            type === "email" ? "Email verification" : "Phone verification";
         return (
             <div aria-label={iconLabel} role="img">
-                {type === OtpVerifyType.EMAIL ? (
+                {type === "email" ? (
                     <EmailThumbnail
                         width={thumbnailSize}
                         height={thumbnailSize}

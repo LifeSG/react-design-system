@@ -1,15 +1,10 @@
 import { BaseFormElementProps } from "src/form/types";
 import { PhoneNumberInputValue } from "../phone-number-input";
 
-export enum InternalOtpState {
+export enum OtpVerificationState {
     DEFAULT = "default",
     SENT = "sent",
     VERIFIED = "verified",
-}
-
-export enum OtpVerifyType {
-    EMAIL = "email",
-    PHONE_NUMBER = "phone-number",
 }
 
 // Base props for OTP verification component
@@ -20,18 +15,24 @@ export interface BaseOtpVerificationProps {
     readOnly?: boolean | undefined;
     className?: string | undefined;
     inputId?: string | undefined;
+    otpState: OtpVerificationState;
+    onOtpStateChange: (state: OtpVerificationState) => void;
+    isLoading: boolean;
+    onLoadingChange: (loading: boolean) => void;
+    isVerifyLoading: boolean;
+    onVerifyLoadingChange: (loading: boolean) => void;
 }
 
 // Email input specific props
 export interface OtpVerificationEmailInputProps {
-    type: OtpVerifyType.EMAIL;
+    type: "email";
     emailValue?: string | undefined;
     onEmailChange?: ((input: string) => void) | undefined;
 }
 
 // Phone number input specific props
 export interface OtpVerificationPhoneNumberInputProps {
-    type: OtpVerifyType.PHONE_NUMBER;
+    type: "phone-number";
     phoneNumberValue?: PhoneNumberInputValue | undefined;
     onPhoneNumberChange?: ((value: PhoneNumberInputValue) => void) | undefined;
 }
@@ -80,8 +81,8 @@ export type OtpVerificationProps =
     | EmailOtpVerificationProps
     | PhoneOtpVerificationProps;
 
-// Form wrapper props (for Form.OtpVerification)
-export interface FormOtpVerificationProps extends BaseFormElementProps {
+// Base form props shared between email and phone
+export interface BaseFormOtpVerificationProps extends BaseFormElementProps {
     // Form element props
     id?: string | undefined;
     "data-testid"?: string | undefined;
@@ -89,16 +90,12 @@ export interface FormOtpVerificationProps extends BaseFormElementProps {
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
 
-    // Contact input type (required)
-    type: OtpVerifyType;
-
-    // Email specific props (when type is "email")
-    emailValue?: string | undefined;
-    onEmailChange?: ((input: string) => void) | undefined;
-
-    // Phone number specific props (when type is "phone-number")
-    phoneNumberValue?: PhoneNumberInputValue | undefined;
-    onPhoneNumberChange?: ((value: PhoneNumberInputValue) => void) | undefined;
+    otpState: OtpVerificationState;
+    onOtpStateChange: (state: OtpVerificationState) => void;
+    isLoading: boolean;
+    onLoadingChange: (loading: boolean) => void;
+    isVerifyLoading: boolean;
+    onVerifyLoadingChange: (loading: boolean) => void;
 
     // Contact input props
     onSendOtp?: (() => Promise<void>) | undefined;
@@ -123,3 +120,24 @@ export interface FormOtpVerificationProps extends BaseFormElementProps {
     verifyOtpTitle?: string | undefined;
     verifyOtpMessage?: string | undefined;
 }
+
+// Form wrapper props for email-based OTP verification
+export interface FormEmailOtpVerificationProps
+    extends BaseFormOtpVerificationProps {
+    type: "email";
+    emailValue?: string | undefined;
+    onEmailChange?: ((input: string) => void) | undefined;
+}
+
+// Form wrapper props for phone-based OTP verification
+export interface FormPhoneOtpVerificationProps
+    extends BaseFormOtpVerificationProps {
+    type: "phone-number";
+    phoneNumberValue?: PhoneNumberInputValue | undefined;
+    onPhoneNumberChange?: ((value: PhoneNumberInputValue) => void) | undefined;
+}
+
+// Union type for all form OTP verification props
+export type FormOtpVerificationProps =
+    | FormEmailOtpVerificationProps
+    | FormPhoneOtpVerificationProps;

@@ -1,6 +1,5 @@
 import { PhoneNumberInputValue } from "../phone-number-input";
 import { useCountdown } from "../util";
-import { OtpVerifyType } from "./types";
 
 export interface ContactInputSectionProps {
     id?: string | undefined;
@@ -8,7 +7,7 @@ export interface ContactInputSectionProps {
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
     inputId?: string | undefined;
-    type: OtpVerifyType;
+    type: "email" | "phone-number";
     sendOtpPlaceholder?: string | undefined;
     sendOtpError?: string | undefined;
     emailValue?: string | undefined;
@@ -25,7 +24,7 @@ export interface ContactInputSectionProps {
 export interface VerificationSectionProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
-    type: OtpVerifyType;
+    type: "email" | "phone-number";
     showVerifyOtpThumbnail?: boolean | undefined;
     verifyOtpTitle?: string | undefined;
     verifyOtpMessage?: string | undefined;

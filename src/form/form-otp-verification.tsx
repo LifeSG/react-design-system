@@ -1,12 +1,11 @@
 import { useState } from "react";
+import { OtpVerification } from "../otp-verification";
+import { FormOtpVerificationProps } from "../otp-verification/types";
 import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormOtpVerificationProps } from "../otp-verification/types";
-import { OtpVerification } from "../otp-verification";
 
 export const FormOtpVerification = ({
     label,
-    errorMessage,
     id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
@@ -33,7 +32,6 @@ export const FormOtpVerification = ({
             id={inputId}
             data-testid={testId}
             label={label}
-            errorMessage={errorMessage}
             data-error-testid={errorTestId}
             layoutType={layoutType}
             mobileCols={mobileCols}

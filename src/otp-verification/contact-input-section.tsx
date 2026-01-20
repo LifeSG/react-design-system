@@ -1,7 +1,6 @@
 import { TickCircleFillIcon } from "@lifesg/react-icons";
 import { FormErrorMessage } from "../form/form-label";
 import { PhoneNumberInputValue } from "../phone-number-input";
-import { VisuallyHidden } from "../shared/accessibility";
 import {
     ContactButton,
     ContactButtonWrapper,
@@ -13,7 +12,6 @@ import {
     VerifiedIconWrapper,
 } from "./contact-input-section-styles";
 import { ContactInputSectionProps } from "./internal-types";
-import { OtpVerifyType } from "./types";
 
 export const ContactInputSection = ({
     id,
@@ -38,21 +36,21 @@ export const ContactInputSection = ({
         e: React.ChangeEvent<HTMLInputElement>
     ) => {
         onStateReset();
-        if (type === OtpVerifyType.EMAIL && onEmailChange) {
+        if (type === "email" && onEmailChange) {
             onEmailChange(e.target.value);
         }
     };
 
     const handlePhoneInputChange = (value: PhoneNumberInputValue) => {
         onStateReset();
-        if (type === OtpVerifyType.PHONE_NUMBER && onPhoneNumberChange) {
+        if (type === "phone-number" && onPhoneNumberChange) {
             onPhoneNumberChange(value);
         }
     };
 
     const renderContactInput = () => (
         <>
-            {type === OtpVerifyType.EMAIL ? (
+            {type === "email" ? (
                 <EmailContactInput
                     id={inputId}
                     data-testid={dataTestId ? `${dataTestId}-input` : undefined}
@@ -105,7 +103,7 @@ export const ContactInputSection = ({
     return (
         <ContactSectionWrapper id={id} data-testid={dataTestId} role="group">
             <ContactInputSectionWrapper>
-                <ContactInputWrapper $isMaxWidth={type === OtpVerifyType.EMAIL}>
+                <ContactInputWrapper $isMaxWidth={type === "email"}>
                     {renderContactInput()}
                     {isVerified && (
                         <VerifiedIconWrapper
@@ -147,16 +145,6 @@ export const ContactInputSection = ({
                 >
                     {sendOtpError}
                 </FormErrorMessage>
-            )}
-            {countdown.isRunning && (
-                <VisuallyHidden
-                    id={id ? `${id}-countdown` : undefined}
-                    data-testid={
-                        dataTestId ? `${dataTestId}-countdown` : undefined
-                    }
-                >
-                    Resend available in {countdown.formatTime()}
-                </VisuallyHidden>
             )}
         </ContactSectionWrapper>
     );

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { Form } from "src/form";
-import { OtpVerifyType } from "src/otp-verification/types";
+import { OtpVerificationState } from "src/otp-verification";
 import { StoryDecorator } from "stories/storybook-common";
 
 type Component = typeof Form.OtpVerification;
@@ -24,12 +24,24 @@ export const PhoneNumberDefault: StoryObj<Component> = {
         const [otpError, setOtpError] = useState<string | undefined>();
         const [sendError, setSendError] = useState<string | undefined>();
 
+        const [otpState, setOtpState] = useState<OtpVerificationState>(
+            OtpVerificationState.DEFAULT
+        );
+        const [isLoading, setIsLoading] = useState(true);
+        const [isVerifyLoading, setIsVerifyLoading] = useState(true);
+
         return (
             <Form.OtpVerification
                 label="Mobile Number"
-                type={OtpVerifyType.PHONE_NUMBER}
+                type="phone-number"
                 phoneNumberValue={phoneValue}
                 onPhoneNumberChange={setPhoneValue}
+                otpState={otpState}
+                onOtpStateChange={setOtpState}
+                isLoading={isLoading}
+                onLoadingChange={setIsLoading}
+                isVerifyLoading={isVerifyLoading}
+                onVerifyLoadingChange={setIsVerifyLoading}
                 onSendOtp={async () => {
                     setSendError(undefined);
                     // Simulate API call
@@ -41,10 +53,15 @@ export const PhoneNumberDefault: StoryObj<Component> = {
                 }}
                 otpValue={{ value: otpCode }}
                 onOtpChange={setOtpCode}
-                onVerifyOtp={async () => {
+                onVerifyOtp={async (inputOtp) => {
                     setOtpError(undefined);
-                    // Simulate API call
                     await new Promise((resolve) => setTimeout(resolve, 1500));
+                    // Simulate OTP validation
+                    if (inputOtp !== "123456") {
+                        setOtpError("Invalid OTP code. Please try again.");
+                        throw new Error("Invalid OTP");
+                    }
+                    // Success - OTP will be cleared automatically
                 }}
                 onResendOtp={async () => {
                     // Simulate resend API call
@@ -54,7 +71,7 @@ export const PhoneNumberDefault: StoryObj<Component> = {
                 sendOtpError={sendError}
                 verifyOtpError={otpError}
                 verifyOtpTitle="Verify your mobile number"
-                verifyOtpMessage="An SMS with a 6-digit verification code was sent to you. It will be valid for 30 minutes."
+                verifyOtpMessage="An SMS with a 6-digit verification code was sent to you. It will be valid for 30 minutes. Test OTP: 123456"
                 showVerifyOtpThumbnail
             />
         );
@@ -70,12 +87,24 @@ export const EmailDefault: StoryObj<Component> = {
         const [otpError, setOtpError] = useState<string | undefined>();
         const [sendError, setSendError] = useState<string | undefined>();
 
+        const [otpState, setOtpState] = useState<OtpVerificationState>(
+            OtpVerificationState.DEFAULT
+        );
+        const [isLoading, setIsLoading] = useState(false);
+        const [isVerifyLoading, setIsVerifyLoading] = useState(false);
+
         return (
             <Form.OtpVerification
                 label="Email"
-                type={OtpVerifyType.EMAIL}
+                type="email"
                 emailValue={emailValue}
                 onEmailChange={setEmailValue}
+                otpState={otpState}
+                onOtpStateChange={setOtpState}
+                isLoading={isLoading}
+                onLoadingChange={setIsLoading}
+                isVerifyLoading={isVerifyLoading}
+                onVerifyLoadingChange={setIsVerifyLoading}
                 onSendOtp={async () => {
                     setSendError(undefined);
                     // Simulate API call
@@ -83,10 +112,15 @@ export const EmailDefault: StoryObj<Component> = {
                 }}
                 otpValue={{ value: otpCode }}
                 onOtpChange={setOtpCode}
-                onVerifyOtp={async () => {
+                onVerifyOtp={async (inputOtp) => {
                     setOtpError(undefined);
-                    // Simulate API call
                     await new Promise((resolve) => setTimeout(resolve, 1500));
+                    // Simulate OTP validation
+                    if (inputOtp !== "654321") {
+                        setOtpError("Invalid OTP code. Please try again.");
+                        throw new Error("Invalid OTP");
+                    }
+                    // Success - OTP will be cleared automatically
                 }}
                 onResendOtp={async () => {
                     // Simulate resend API call
@@ -96,7 +130,7 @@ export const EmailDefault: StoryObj<Component> = {
                 sendOtpError={sendError}
                 verifyOtpError={otpError}
                 verifyOtpTitle="Verify your email address"
-                verifyOtpMessage="An email with a 6-digit verification code was sent to you. It will be valid for 30 minutes."
+                verifyOtpMessage="An email with a 6-digit verification code was sent to you. It will be valid for 30 minutes. Test OTP: 654321"
                 showVerifyOtpThumbnail
             />
         );
@@ -113,12 +147,24 @@ export const WithErrors: StoryObj<Component> = {
         }>({ countryCode: "+65", number: "" });
         const [otpCode, setOtpCode] = useState<string>("");
 
+        const [otpState, setOtpState] = useState<OtpVerificationState>(
+            OtpVerificationState.DEFAULT
+        );
+        const [isLoading, setIsLoading] = useState(false);
+        const [isVerifyLoading, setIsVerifyLoading] = useState(false);
+
         return (
             <Form.OtpVerification
                 label="Mobile Number"
-                type={OtpVerifyType.PHONE_NUMBER}
+                type="phone-number"
                 phoneNumberValue={phoneValue}
                 onPhoneNumberChange={setPhoneValue}
+                otpState={otpState}
+                onOtpStateChange={setOtpState}
+                isLoading={isLoading}
+                onLoadingChange={setIsLoading}
+                isVerifyLoading={isVerifyLoading}
+                onVerifyLoadingChange={setIsVerifyLoading}
                 onSendOtp={async () => {
                     await new Promise((resolve) => setTimeout(resolve, 1000));
                     throw new Error("Failed to send OTP");
@@ -130,6 +176,11 @@ export const WithErrors: StoryObj<Component> = {
                     // Always throw error to demonstrate error handling
                     throw new Error("Invalid OTP");
                 }}
+                onResendOtp={async () => {
+                    // Simulate resend API call
+                    await new Promise((resolve) => setTimeout(resolve, 800));
+                }}
+                verifyOtpCountdownTimer={30}
                 sendOtpError="Unable to send OTP. Please check your phone number."
                 verifyOtpError="Invalid OTP code. Please try again."
                 verifyOtpTitle="Verify your mobile number"
