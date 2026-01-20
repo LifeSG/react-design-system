@@ -387,7 +387,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         startTime: "08:00",
                         endTime: "09:30",
                         status: "filled",
-                        onClick: () => { },
+                        onClick: () => {},
                         cellStyleAttributes: {
                             backgroundColor: "#E3F2FD",
                             hoverBackgroundColor: "#BBDEFB",
@@ -400,7 +400,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         startTime: "10:00",
                         endTime: "11:30",
                         status: "blocked",
-                        onClick: () => { },
+                        onClick: () => {},
                         cellStyleAttributes: {
                             backgroundColor: "#FFE5E5",
                             altBackgroundColor: "#FFCCCC",
@@ -415,7 +415,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         startTime: "12:00",
                         endTime: "13:30",
                         status: "default",
-                        onClick: () => { },
+                        onClick: () => {},
                         cellStyleAttributes: {
                             backgroundColor: Colour["bg-available"],
                             hoverBackgroundColor: Colour["bg-primary-hover"],
@@ -440,7 +440,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         startTime: "16:00",
                         endTime: "17:30",
                         status: "pending",
-                        onClick: () => { },
+                        onClick: () => {},
                         cellStyleAttributes: {
                             backgroundColor: "#FFF9C4",
                             altBackgroundColor: "#FFEE8D",
@@ -480,7 +480,7 @@ export const CustomCellColors: StoryObj<Component> = {
                         startTime: "12:00",
                         endTime: "13:30",
                         status: "default",
-                        onClick: () => { },
+                        onClick: () => {},
                         // No cellStyleAttributes - will use default styling
                     },
                     {
@@ -528,12 +528,13 @@ export const CustomCellColors: StoryObj<Component> = {
                     Custom Cell Colors
                 </Typography.HeadingSM>
                 <Typography.BodyBL style={{ marginBottom: "2rem" }}>
-                    This example demonstrates using <code>cellStyleAttributes</code>{" "}
-                    to customize cell colors and customize hover colors.{" "}
+                    This example demonstrates using{" "}
+                    <code>cellStyleAttributes</code> to customize cell colors
+                    and customize hover colors. <br></br>
+                    First row shows custom styling of cellStyleAttributes
                     <br></br>
-                    First row shows custom styling of cellStyleAttributes<br ></br>
                     2nd row shows default styling when no cellStyleAttributes
-                    are provided.<br ></br>
+                    are provided.<br></br>
                 </Typography.BodyBL>
                 <StyledTimeTable
                     date={date}

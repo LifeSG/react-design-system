@@ -9,10 +9,19 @@ interface BlockStyleProps {
     $mainColor: string;
     $altColor: string;
     $isClickable?: boolean;
-    $customMainColor?: string | ((props: ThemeStyleProps) => string) | undefined;
+    $customMainColor?:
+        | string
+        | ((props: ThemeStyleProps) => string)
+        | undefined;
     $customAltColor?: string | ((props: ThemeStyleProps) => string) | undefined;
-    $customHoverColor?: string | ((props: ThemeStyleProps) => string) | undefined;
-    $customAltHoverColor?: string | ((props: ThemeStyleProps) => string) | undefined;
+    $customHoverColor?:
+        | string
+        | ((props: ThemeStyleProps) => string)
+        | undefined;
+    $customAltHoverColor?:
+        | string
+        | ((props: ThemeStyleProps) => string)
+        | undefined;
     $styleType?: "default" | "solid" | "stripes" | undefined;
 }
 
@@ -49,54 +58,62 @@ export const Block = styled.div<BlockStyleProps>`
     box-sizing: border-box;
     padding: ${Spacing["spacing-4"]};
     ${({
-    $status,
-    $mainColor,
-    $isClickable,
-    $altColor,
-    $customMainColor,
-    $customAltColor,
-    $customHoverColor,
-    $customAltHoverColor,
-    $styleType,
-}) => {
+        $status,
+        $mainColor,
+        $isClickable,
+        $altColor,
+        $customMainColor,
+        $customAltColor,
+        $customHoverColor,
+        $customAltHoverColor,
+        $styleType,
+    }) => {
         // Map status to default colors, cursor behavior, and style type
-        const statusDefaults: Record<TimeTableCellType, {
-            mainColor?: string | ((props: ThemeStyleProps) => string);
-            altColor?: string | ((props: ThemeStyleProps) => string);
-            hoverColor?: string | ((props: ThemeStyleProps) => string);
-            defaultStyleType: "solid" | "stripes";
-            nonClickablePointer?: "default" | "not-allowed";
-        }> = {
+        const statusDefaults: Record<
+            TimeTableCellType,
+            {
+                mainColor?: string | ((props: ThemeStyleProps) => string);
+                altColor?: string | ((props: ThemeStyleProps) => string);
+                hoverColor?: string | ((props: ThemeStyleProps) => string);
+                defaultStyleType: "solid" | "stripes";
+                nonClickablePointer?: "default" | "not-allowed";
+            }
+        > = {
             blocked: {
                 mainColor: Colour["bg-stronger"],
                 altColor: Colour["bg-strongest"],
                 defaultStyleType: "stripes",
-                nonClickablePointer: "not-allowed"
+                nonClickablePointer: "not-allowed",
             },
             filled: {
                 mainColor: $mainColor,
-                defaultStyleType: "solid"
+                defaultStyleType: "solid",
             },
             disabled: {
                 mainColor: Colour["bg-disabled"],
                 defaultStyleType: "solid",
-                nonClickablePointer: "not-allowed"
+                nonClickablePointer: "not-allowed",
             },
             pending: {
                 mainColor: $mainColor,
                 altColor: $altColor,
                 defaultStyleType: "stripes",
-                nonClickablePointer: "not-allowed"
+                nonClickablePointer: "not-allowed",
             },
             default: {
                 hoverColor: Colour["bg-hover-subtle"],
-                defaultStyleType: "solid"
+                defaultStyleType: "solid",
             },
         };
 
         const defaults = statusDefaults[$status];
-        const effectiveStyleType = $styleType === "default" || !$styleType ? defaults.defaultStyleType : $styleType;
-        const cursor = $isClickable ? "pointer" : (defaults.nonClickablePointer || "default");
+        const effectiveStyleType =
+            $styleType === "default" || !$styleType
+                ? defaults.defaultStyleType
+                : $styleType;
+        const cursor = $isClickable
+            ? "pointer"
+            : defaults.nonClickablePointer || "default";
 
         if (effectiveStyleType === "stripes") {
             return css`
@@ -106,13 +123,14 @@ export const Block = styled.div<BlockStyleProps>`
                     ${$customAltColor || defaults.altColor || ""} 6px 12px
                 );
                 &:hover {
-                   ${$isClickable && css`
+                    ${$isClickable &&
+                    css`
                         background: repeating-linear-gradient(
                             135deg,
                             ${$customHoverColor || ""} 0px 6px,
                             ${$customAltHoverColor || ""} 6px 12px
-                        ); `
-                }
+                        );
+                    `}
                     cursor: ${cursor};
                 }
             `;
@@ -120,7 +138,9 @@ export const Block = styled.div<BlockStyleProps>`
             return css`
                 background: ${$customMainColor || defaults.mainColor};
                 &:hover {
-                    background-color: ${$isClickable ? ($customHoverColor || defaults.hoverColor) : ''};
+                    background-color: ${$isClickable
+                        ? $customHoverColor || defaults.hoverColor
+                        : ""};
                     cursor: ${cursor};
                 }
             `;

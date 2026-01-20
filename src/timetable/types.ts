@@ -10,10 +10,7 @@ export type TimeTableCellType =
 
 export interface TimeTableCellStyleAttributes {
     /** Main background color for the cell */
-    backgroundColor?:
-        | string
-        | ((props: ThemeStyleProps) => string)
-        | undefined;
+    backgroundColor?: string | ((props: ThemeStyleProps) => string) | undefined;
     /** Alternate background color (used for striped patterns in blocked/pending status) */
     altBackgroundColor?:
         | string
