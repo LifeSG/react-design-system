@@ -492,9 +492,11 @@ describe("PredictiveTextInput", () => {
                 await user.keyboard("{ArrowDown}");
             });
 
-            expect(
-                screen.getByRole("option", { name: "Option 1" })
-            ).toHaveFocus();
+            await waitFor(() => {
+                expect(
+                    screen.getByRole("option", { name: "Option 1" })
+                ).toHaveFocus();
+            });
 
             await act(async () => {
                 await user.keyboard("{Escape}");

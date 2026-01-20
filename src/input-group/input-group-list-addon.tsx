@@ -1,10 +1,13 @@
 import { OpenChangeReason } from "@floating-ui/react";
+import findIndex from "lodash/findIndex";
+import isEqual from "lodash/isEqual";
 import React, { useEffect, useRef, useState } from "react";
 import { VisuallyHidden, concatIds } from "../shared/accessibility";
 import {
     DropdownList,
     DropdownListState,
     ExpandableElement,
+    useDropdownListState,
 } from "../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
@@ -76,6 +79,12 @@ export const Component = <T, V>(
     const [selected, setSelected] = useState<T | undefined>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
+    const { context, setSelectedIndex, onKeyDown } = useDropdownListState({
+        options,
+        disabled,
+        readOnly,
+        onOpenChange: setShowOptions,
+    });
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
     const listboxId = `${internalId}-listbox`;
     const instructionId = `${internalId}-instruction`;
@@ -90,6 +99,13 @@ export const Component = <T, V>(
     // =============================================================================
     useEffect(() => {
         setSelected(selectedOption);
+        setSelectedIndex(
+            selectedOption
+                ? findIndex(options, (option) => {
+                      return isEqual(option, selectedOption);
+                  })
+                : -1
+        );
     }, [selectedOption]);
 
     // =============================================================================
@@ -123,6 +139,7 @@ export const Component = <T, V>(
     const handleListItemClick = (item: T, extractedValue: V) => {
         selectorRef.current?.focus();
         setSelected(item);
+        setSelectedIndex(findIndex(options, (option) => isEqual(option, item)));
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
 
@@ -209,11 +226,12 @@ export const Component = <T, V>(
                     aria-labelledby={concatIds(ariaLabelledBy, comboboxLabelId)}
                     aria-describedby={concatIds(ariaDescribedBy, instructionId)}
                     aria-invalid={ariaInvalid}
+                    onKeyDown={onKeyDown}
                 >
                     {renderSelectorContent()}
                 </ExpandableElement>
                 <VisuallyHidden id={instructionId}>
-                    Press space to open options
+                    Press Space or Enter to open options
                 </VisuallyHidden>
             </div>
         );
@@ -283,7 +301,7 @@ export const Component = <T, V>(
     };
 
     return (
-        <DropdownListState>
+        <DropdownListState context={context}>
             <FieldWrapper
                 $focused={focused}
                 $disabled={disabled}

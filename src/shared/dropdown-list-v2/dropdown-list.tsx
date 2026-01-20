@@ -90,11 +90,18 @@ export const DropdownList = <T, V>({
     const { focusedIndex, setFocusedIndex } = useContext(
         DropdownListStateContext
     );
-    const { elementWidth, setFloatingRef, getFloatingProps, styles } =
-        useDropdownRender();
+    const {
+        elementWidth,
+        setFloatingRef,
+        getFloatingProps,
+        styles,
+        resized,
+        open,
+    } = useDropdownRender();
     const [searchValue, setSearchValue] = useState<string>("");
     const [displayListItems, setDisplayListItems] = useState(listItems ?? []);
     const itemsLoadStateChanged = useCompare(itemsLoadState);
+    const resizedChanged = useCompare(resized);
     const mounted = useIsMounted();
 
     const nodeRef = useRef<HTMLDivElement | null>(null);
@@ -156,6 +163,22 @@ export const DropdownList = <T, V>({
         });
     });
 
+    const focusListItem = (index: number) => {
+        // Cannot go further than first or last element
+        let clampedIndex = index;
+        if (index < 0) {
+            clampedIndex = 0;
+        } else if (index >= displayListItems.length) {
+            clampedIndex = displayListItems.length - 1;
+        }
+        virtuosoRef.current?.scrollToIndex({
+            index: clampedIndex,
+            align: "center",
+        });
+        setFocusedIndex(clampedIndex);
+        setTimeout(() => listItemRefs.current[clampedIndex]?.focus(), 200);
+    };
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
@@ -163,24 +186,24 @@ export const DropdownList = <T, V>({
         switch (event.code) {
             case "ArrowDown":
                 event.preventDefault();
-                // Cannot go further than last element
-                if (focusedIndex < displayListItems.length - 1) {
-                    const upcomingIndex = focusedIndex + 1;
-                    listItemRefs.current[upcomingIndex]?.focus();
-                    setFocusedIndex(upcomingIndex);
-                }
+                focusListItem(focusedIndex + 1);
                 break;
             case "ArrowUp":
                 event.preventDefault();
-                // Cannot go further than first element
                 if (focusedIndex > 0) {
-                    const upcomingIndex = focusedIndex - 1;
-                    listItemRefs.current[upcomingIndex]?.focus();
-                    setFocusedIndex(upcomingIndex);
+                    focusListItem(focusedIndex - 1);
                 } else if (focusedIndex === 0 && searchInputRef.current) {
                     searchInputRef.current.focus();
                     setFocusedIndex(-1);
                 }
+                break;
+            case "Home":
+                event.preventDefault();
+                focusListItem(0);
+                break;
+            case "End":
+                event.preventDefault();
+                focusListItem(displayListItems.length - 1);
                 break;
             case "Space":
             case "Enter":
@@ -259,46 +282,45 @@ export const DropdownList = <T, V>({
     }, [listItemRefs, listItems, setFocusedIndex, topScrollItem]);
 
     useEffect(() => {
-        if (mounted) {
-            // only run on mount
+        if (!open || disableItemFocus || !listItems) return;
+
+        if (!resized || !resizedChanged) {
+            // only run when dropdown has completed resizing
             return;
         }
 
-        if (disableItemFocus || !listItems) return;
-
-        const index = listItems.findIndex((item) =>
-            checkListItemSelected(item)
-        );
+        let timeout: NodeJS.Timeout;
 
         // Focus search input if there is one
         if (searchInputRef.current) {
             setFocusedIndex(-1);
-            setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
-        } else if (focusedIndex > 0) {
+            timeout = setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
+        } else if (focusedIndex >= 0 && focusedIndex < listItems.length) {
             // Else focus on the specified element
             virtuosoRef.current?.scrollToIndex({
                 index: focusedIndex,
                 align: "center",
             });
-            setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
-        } else if (index !== -1) {
-            // Else focus on the selected element
-            virtuosoRef.current?.scrollToIndex({ index, align: "center" });
-            setFocusedIndex(index);
-            setTimeout(() => listItemRefs.current[index]?.focus(), 200);
+            timeout = setTimeout(
+                () => listItemRefs.current[focusedIndex]?.focus(),
+                200
+            );
         } else {
             // Else focus on the first list item
             virtuosoRef.current?.scrollToIndex({ index: 0 });
             setFocusedIndex(0);
-            setTimeout(() => listItemRefs.current[0]?.focus(), 200);
+            timeout = setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
+
+        return () => clearTimeout(timeout);
     }, [
         checkListItemSelected,
         disableItemFocus,
         focusedIndex,
         listItems,
-        mounted,
         setFocusedIndex,
+        resizedChanged,
+        resized,
     ]);
 
     useEffect(() => {
