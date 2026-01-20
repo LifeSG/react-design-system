@@ -102,18 +102,16 @@ export const Block = styled.div<BlockStyleProps>`
             return css`
                 background: repeating-linear-gradient(
                     135deg,
-                    ${$customMainColor || defaults.mainColor} 0px 6px,
-                    ${$customAltColor || defaults.altColor} 6px 12px
+                    ${$customMainColor || defaults.mainColor || ""} 0px 6px,
+                    ${$customAltColor || defaults.altColor || ""} 6px 12px
                 );
                 &:hover {
-                   ${$isClickable
-                    ? css`
+                   ${$isClickable && css`
                         background: repeating-linear-gradient(
                             135deg,
                             ${$customHoverColor || ""} 0px 6px,
                             ${$customAltHoverColor || ""} 6px 12px
                         ); `
-                    : ""
                 }
                     cursor: ${cursor};
                 }
