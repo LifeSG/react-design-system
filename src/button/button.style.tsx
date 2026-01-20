@@ -159,6 +159,8 @@ export const Main = styled.button<MainStyleProps>`
     }}
 `;
 
-export const Spinner = styled(ComponentLoadingSpinner)`
-    margin-right: 0.5rem;
+export const Spinner = styled(ComponentLoadingSpinner)<{
+    $hasChildren: boolean;
+}>`
+    margin-right: ${(props) => (props.$hasChildren ? "0.5rem" : "0")};
 `;

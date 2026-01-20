@@ -479,7 +479,7 @@ export const NestedDropdownList = <T,>({
         if (onRetry && itemsLoadState === "loading") {
             return (
                 <ResultStateContainer data-testid="list-loading">
-                    <Spinner />
+                    <Spinner $hasChildren={true} />
                     Loading...
                 </ResultStateContainer>
             );
