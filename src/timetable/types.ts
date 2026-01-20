@@ -29,6 +29,8 @@ export interface TimeTableCellStyleAttributes {
         | string
         | ((props: ThemeStyleProps) => string)
         | undefined;
+    /** Display style for the cell. If not set, defaults based on cell type (blocked/pending = striped, others = solid) */
+    styleType?: "default" | "solid" | "stripes" | undefined;
 }
 
 export interface TimeTableRef {

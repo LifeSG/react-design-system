@@ -91,6 +91,7 @@ const Component = ({
                         $customAltColor={cellStyleAttributes?.altBackgroundColor}
                         $customHoverColor={cellStyleAttributes?.hoverBackgroundColor}
                         $customAltHoverColor={cellStyleAttributes?.altHoverBackgroundColor}
+                        $styleType={cellStyleAttributes?.styleType}
                         onClick={handleCellClick}
                     >
                         {title && (

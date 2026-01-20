@@ -13,6 +13,7 @@ interface BlockStyleProps {
     $customAltColor?: string | ((props: ThemeStyleProps) => string) | undefined;
     $customHoverColor?: string | ((props: ThemeStyleProps) => string) | undefined;
     $customAltHoverColor?: string | ((props: ThemeStyleProps) => string) | undefined;
+    $styleType?: "default" | "solid" | "stripes" | undefined;
 }
 
 interface BlockContainerProps {
@@ -56,66 +57,75 @@ export const Block = styled.div<BlockStyleProps>`
     $customAltColor,
     $customHoverColor,
     $customAltHoverColor,
+    $styleType,
 }) => {
-        switch ($status) {
-            case "blocked":
-                return css`
-                    background: repeating-linear-gradient(
-                        135deg,
-                        ${$customMainColor || Colour["bg-stronger"]} 0px 6px,
-                        ${$customAltColor || Colour["bg-strongest"]} 6px 12px
-                    );
-                    &:hover {
+        // Map status to default colors, cursor behavior, and style type
+        const statusDefaults: Record<TimeTableCellType, {
+            mainColor?: string | ((props: ThemeStyleProps) => string);
+            altColor?: string | ((props: ThemeStyleProps) => string);
+            hoverColor?: string | ((props: ThemeStyleProps) => string);
+            defaultStyleType: "solid" | "stripes";
+            nonClickablePointer?: "default" | "not-allowed";
+        }> = {
+            blocked: {
+                mainColor: Colour["bg-stronger"],
+                altColor: Colour["bg-strongest"],
+                defaultStyleType: "stripes",
+                nonClickablePointer: "not-allowed"
+            },
+            filled: {
+                mainColor: $mainColor,
+                defaultStyleType: "solid"
+            },
+            disabled: {
+                mainColor: Colour["bg-disabled"],
+                defaultStyleType: "solid",
+                nonClickablePointer: "not-allowed"
+            },
+            pending: {
+                mainColor: $mainColor,
+                altColor: $altColor,
+                defaultStyleType: "stripes",
+                nonClickablePointer: "not-allowed"
+            },
+            default: {
+                hoverColor: Colour["bg-hover-subtle"],
+                defaultStyleType: "solid"
+            },
+        };
+
+        const defaults = statusDefaults[$status];
+        const effectiveStyleType = $styleType === "default" || !$styleType ? defaults.defaultStyleType : $styleType;
+        const cursor = $isClickable ? "pointer" : (defaults.nonClickablePointer || "default");
+
+        if (effectiveStyleType === "stripes") {
+            return css`
+                background: repeating-linear-gradient(
+                    135deg,
+                    ${$customMainColor || defaults.mainColor} 0px 6px,
+                    ${$customAltColor || defaults.altColor} 6px 12px
+                );
+                &:hover {
+                   ${$isClickable
+                    ? css`
                         background: repeating-linear-gradient(
                             135deg,
-                            ${$customHoverColor} 0px 6px,
-                            ${$customAltHoverColor} 6px 12px
-                        );
-                        cursor: ${$isClickable ? "pointer" : "not-allowed"};
-                    }
-                `;
-            case "filled":
-                return css`
-                    background: ${$customMainColor || $mainColor};
-                    &:hover {
-                        background-color: ${$customHoverColor || ""};
-                        cursor: ${$isClickable ? "pointer" : "default"};
-                    }
-                `;
-            case "disabled":
-                return css`
-                    background: ${$customMainColor || Colour["bg-disabled"]};
-                    &:hover {
-                        background-color: ${$customHoverColor || ""};
-                        cursor: ${$isClickable ? "pointer" : "not-allowed"};
-                    }
-                `;
-            case "pending":
-                return css`
-                    background: repeating-linear-gradient(
-                        135deg,
-                        ${$customMainColor || $mainColor} 0px 6px,
-                        ${$customAltColor || $altColor} 6px 12px
-                    );
-                    &:hover {
-                        background: repeating-linear-gradient(
-                            135deg,
-                            ${$customHoverColor} 0px 6px,
-                            ${$customAltHoverColor} 6px 12px
-                        );
-                        cursor: ${$isClickable ? "pointer" : "not-allowed"};
-                    }
-                `;
-            default:
-                return css`
-                    background: ${$customMainColor || ''};
-                    &:hover {
-                        background-color: ${$isClickable
-                        ? $customHoverColor || Colour["bg-hover-subtle"]
-                        : ""};
-                        cursor: ${$isClickable ? "pointer" : "default"};
-                    }
-                `;
+                            ${$customHoverColor || ""} 0px 6px,
+                            ${$customAltHoverColor || ""} 6px 12px
+                        ); `
+                    : ""
+                }
+                    cursor: ${cursor};
+                }
+            `;
+        } else {
+            return css`
+                background: ${$customMainColor || defaults.mainColor};
+                &:hover {
+                    background-color: ${$isClickable ? ($customHoverColor || defaults.hoverColor) : ''};
+                    cursor: ${cursor};
+                }
+            `;
         }
     }}
 `;
