@@ -27,8 +27,8 @@ export const PhoneNumberDefault: StoryObj<Component> = {
         const [otpState, setOtpState] = useState<OtpVerificationState>(
             OtpVerificationState.DEFAULT
         );
-        const [isLoading, setIsLoading] = useState(true);
-        const [isVerifyLoading, setIsVerifyLoading] = useState(true);
+        const [isLoading, setIsLoading] = useState(false);
+        const [isVerifyLoading, setIsVerifyLoading] = useState(false);
 
         return (
             <Form.OtpVerification

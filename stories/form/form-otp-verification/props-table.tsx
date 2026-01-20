@@ -9,17 +9,17 @@ const DATA: ApiTableSectionProps[] = [
                 name: "type",
                 description:
                     "The type of OTP verification (phone number or email)",
-                propTypes: ["OtpVerifyType"],
+                propTypes: ['"phone-number" | "email"'],
             },
             {
                 name: "phoneNumberValue",
                 description:
-                    "The phone number value (required when type is PHONE_NUMBER)",
+                    'The phone number value (required when type is "phone-number")',
                 propTypes: ["PhoneNumberInputValue"],
             },
             {
                 name: "emailValue",
-                description: "The email value (required when type is EMAIL)",
+                description: 'The email value (required when type is "email")',
                 propTypes: ["string"],
             },
             {
@@ -46,6 +46,36 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onResendOtp",
                 description: "Called when OTP resend is requested",
                 propTypes: ["() => Promise<void>"],
+            },
+            {
+                name: "otpState",
+                description: "Current state of the OTP verification process",
+                propTypes: ["OtpVerificationState"],
+            },
+            {
+                name: "onOtpStateChange",
+                description: "Called when OTP state changes",
+                propTypes: ["(state: OtpVerificationState) => void"],
+            },
+            {
+                name: "isLoading",
+                description: "Whether the send OTP operation is in progress",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "onLoadingChange",
+                description: "Called when loading state changes",
+                propTypes: ["(loading: boolean) => void"],
+            },
+            {
+                name: "isVerifyLoading",
+                description: "Whether the verify OTP operation is in progress",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "onVerifyLoadingChange",
+                description: "Called when verify loading state changes",
+                propTypes: ["(loading: boolean) => void"],
             },
             {
                 name: "sendOtpError",
@@ -95,6 +125,26 @@ const DATA: ApiTableSectionProps[] = [
                 name: "data-testid",
                 description: "The test identifier of the component",
                 propTypes: ["string"],
+            },
+        ],
+    },
+    {
+        name: "OtpVerificationState",
+        attributes: [
+            {
+                name: "DEFAULT",
+                description: "Initial state - contact input is shown",
+                propTypes: ["enum value"],
+            },
+            {
+                name: "OTP_SENT",
+                description: "OTP has been sent - verification input is shown",
+                propTypes: ["enum value"],
+            },
+            {
+                name: "VERIFIED",
+                description: "OTP has been successfully verified",
+                propTypes: ["enum value"],
             },
         ],
     },
