@@ -14,6 +14,8 @@ import typescript from "rollup-plugin-typescript2";
 import { fileURLToPath } from "url";
 import pkg from "./package.json";
 import { getFolders, injectCss } from "./scripts/build-util";
+import linaria from "@wyw-in-js/rollup";
+import css from "rollup-plugin-css-only";
 
 const folders = getFolders("./src");
 
@@ -38,9 +40,15 @@ export const plugins = [
             ],
         },
     }),
-    postcss({
-        plugins: [require("postcss-import")],
-        inject: injectCss,
+    linaria.default({
+        sourceMap: true,
+    }),
+    // postcss({
+    //     plugins: [require("postcss-import")],
+    //     inject: injectCss,
+    // }),
+    css({
+        output: "styles.css",
     }),
     image(),
     json(),
@@ -111,6 +119,7 @@ const newPackageData = {
             import: "./index.js",
             require: "./cjs/index.js",
         },
+        "./styles.css": "./styles.css",
         ...Object.fromEntries(
             folders.map((folder) => [
                 `./${folder}`,

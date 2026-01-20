@@ -91,3 +91,5 @@ export * from "./v2_text";
 export * from "./v2_text-list";
 export * from "./v2_theme";
 export * from "./v2_transition";
+export * from "./cat";
+export * from "./dog";
