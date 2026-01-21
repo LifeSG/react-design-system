@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius, Spacing } from "../../theme";
+import { Border, Colour, Radius, Spacing, ThemeStyleProps } from "../../theme";
 import { Typography } from "../../typography";
 import { TimeTableCellType } from "../types";
 
@@ -9,6 +9,20 @@ interface BlockStyleProps {
     $mainColor: string;
     $altColor: string;
     $isClickable?: boolean;
+    $customMainColor?:
+        | string
+        | ((props: ThemeStyleProps) => string)
+        | undefined;
+    $customAltColor?: string | ((props: ThemeStyleProps) => string) | undefined;
+    $customHoverColor?:
+        | string
+        | ((props: ThemeStyleProps) => string)
+        | undefined;
+    $customAltHoverColor?:
+        | string
+        | ((props: ThemeStyleProps) => string)
+        | undefined;
+    $styleType?: "default" | "solid" | "stripes" | undefined;
 }
 
 interface BlockContainerProps {
@@ -43,53 +57,93 @@ export const Block = styled.div<BlockStyleProps>`
     border-radius: ${Radius["sm"]};
     box-sizing: border-box;
     padding: ${Spacing["spacing-4"]};
-    ${({ $status, $mainColor, $isClickable, $altColor }) => {
-        switch ($status) {
-            case "blocked":
-                return css`
-                    background: repeating-linear-gradient(
-                        135deg,
-                        ${Colour["bg-stronger"]} 0px 6px,
-                        ${Colour["bg-strongest"]} 6px 12px
-                    );
-                    &:hover {
-                        cursor: ${$isClickable ? "pointer" : "not-allowed"};
-                    }
-                `;
-            case "filled":
-                return css`
-                    background: ${$mainColor};
-                    &:hover {
-                        cursor: ${$isClickable ? "pointer" : "default"};
-                    }
-                `;
-            case "disabled":
-                return css`
-                    background: ${Colour["bg-disabled"]};
-                    &:hover {
-                        cursor: ${$isClickable ? "pointer" : "not-allowed"};
-                    }
-                `;
-            case "pending":
-                return css`
-                    background: repeating-linear-gradient(
-                        135deg,
-                        ${$mainColor} 0px 6px,
-                        ${$altColor} 6px 12px
-                    );
-                    &:hover {
-                        cursor: ${$isClickable ? "pointer" : "not-allowed"};
-                    }
-                `;
-            default:
-                return css`
-                    &:hover {
-                        background-color: ${$isClickable
-                            ? Colour["bg-hover-subtle"]
-                            : ""};
-                        cursor: ${$isClickable ? "pointer" : "default"};
-                    }
-                `;
+    ${({
+        $status,
+        $mainColor,
+        $isClickable,
+        $altColor,
+        $customMainColor,
+        $customAltColor,
+        $customHoverColor,
+        $customAltHoverColor,
+        $styleType,
+    }) => {
+        // Map status to default colors, cursor behavior, and style type
+        const statusDefaults: Record<
+            TimeTableCellType,
+            {
+                mainColor?: string | ((props: ThemeStyleProps) => string);
+                altColor?: string | ((props: ThemeStyleProps) => string);
+                hoverColor?: string | ((props: ThemeStyleProps) => string);
+                defaultStyleType: "solid" | "stripes";
+                nonClickablePointer?: "default" | "not-allowed";
+            }
+        > = {
+            blocked: {
+                mainColor: Colour["bg-stronger"],
+                altColor: Colour["bg-strongest"],
+                defaultStyleType: "stripes",
+                nonClickablePointer: "not-allowed",
+            },
+            filled: {
+                mainColor: $mainColor,
+                defaultStyleType: "solid",
+            },
+            disabled: {
+                mainColor: Colour["bg-disabled"],
+                defaultStyleType: "solid",
+                nonClickablePointer: "not-allowed",
+            },
+            pending: {
+                mainColor: $mainColor,
+                altColor: $altColor,
+                defaultStyleType: "stripes",
+                nonClickablePointer: "not-allowed",
+            },
+            default: {
+                hoverColor: Colour["bg-hover-subtle"],
+                defaultStyleType: "solid",
+            },
+        };
+
+        const defaults = statusDefaults[$status];
+        const effectiveStyleType =
+            $styleType === "default" || !$styleType
+                ? defaults.defaultStyleType
+                : $styleType;
+        const cursor = $isClickable
+            ? "pointer"
+            : defaults.nonClickablePointer || "default";
+
+        if (effectiveStyleType === "stripes") {
+            return css`
+                background: repeating-linear-gradient(
+                    135deg,
+                    ${$customMainColor || defaults.mainColor || ""} 0px 6px,
+                    ${$customAltColor || defaults.altColor || ""} 6px 12px
+                );
+                &:hover {
+                    ${$isClickable &&
+                    css`
+                        background: repeating-linear-gradient(
+                            135deg,
+                            ${$customHoverColor || ""} 0px 6px,
+                            ${$customAltHoverColor || ""} 6px 12px
+                        );
+                    `}
+                    cursor: ${cursor};
+                }
+            `;
+        } else {
+            return css`
+                background: ${$customMainColor || defaults.mainColor};
+                &:hover {
+                    background-color: ${$isClickable
+                        ? $customHoverColor || defaults.hoverColor
+                        : ""};
+                    cursor: ${cursor};
+                }
+            `;
         }
     }}
 `;
