@@ -19,6 +19,9 @@ import cssOnly from "rollup-plugin-css-only";
 import importCss from "rollup-plugin-import-css";
 import keepCssImports from "rollup-plugin-keep-css-imports";
 import styler from "rollup-plugin-styler";
+import postcssProcessor from "postcss";
+import postcssImports from "postcss-import";
+import { libStylePlugin } from "rollup-plugin-lib-style";
 
 const folders = getFolders("./src");
 
@@ -54,11 +57,8 @@ export const plugins = [
     // cssOnly({
     //     // output: "styles.css",
     // }),
-    styler({
-        mode: "extract",
-        plugins: [require("postcss-import")],
-    }),
     // importCss({ preserveImports: true }),
+    // keepCssImports({ includeRegexp: /\.css$/ }),
     // keepCssImports({
     //     outputPath: (assetId) => {
     //         // Generate a custom output path based on the input assetId
@@ -66,22 +66,51 @@ export const plugins = [
     //         // Make the assetId path relative to the current working directory (CWD)
     //         const relativePath = path.relative(process.cwd(), assetId);
 
-    //         const filename = path.basename(assetId);
-
-    //         console.log("@ relative path", relativePath);
-    //         if (assetId.includes("node_modules")) {
-    //             return path.join(process.cwd(), `dist/${filename}`);
+    //         if (relativePath.includes("node_modules")) {
+    //             // Bundle the css from node_modules
+    //             let filename = relativePath.replace("node_modules/", "");
+    //             return path.join(process.cwd(), `dist/externals/${filename}`);
     //         }
 
     //         // Replace 'src' with 'styles' in the relativePath
     //         const newPath = relativePath.replace("src", "styles");
-
-    //         console.log("@@@@@@ new path", newPath);
-
-    //         // Add a '.min' suffix before the file extension,
-    //         // extension will be replaced with `outputExt` by the plugin
-    //         return newPath.replace(/(\.css)$/, ".css");
+    //         return newPath;
     //     },
+    //     postProcessor: () => postcssProcessor([postcssImports()]),
+    // }),
+    // styler({
+    //     mode: "emit",
+    //     plugins: [require("postcss-import")],
+    // }),
+    // keepCssImports(),
+    // styler({
+    //     mode: "extract",
+    // }),
+    libStylePlugin({
+        exclude: ["**/node_modules/**"],
+        customCSSInjectedPath: (id) => {
+            const filename = path.basename(id);
+            return "/" + filename;
+        },
+        customCSSPath: (id) => {
+            const relative = path.relative(process.cwd(), id);
+            const outputPath = relative.replace("src/", "");
+            return "/" + outputPath;
+        },
+    }),
+    libStylePlugin({
+        include: ["node_modules/@govtechsg/sgds-web-component/**/*.css"],
+        postCssPlugins: [postcssImports()],
+        customCSSInjectedPath: () => {
+            return "/sgds.css";
+        },
+        customCSSPath: () => {
+            return "/masthead/sgds.css";
+        },
+    }),
+    // libStylePlugin({
+    //     include: ["node_modules/@govtechsg/sgds-web-component/**/*.css"],
+    //     postCssPlugins: [postcssImports()],
     // }),
     image(),
     json(),
@@ -190,22 +219,22 @@ export default [
                 sourcemap: true,
                 exports: "named",
                 interop: "compat",
-                preserveModules: true,
-                preserveModulesRoot: "src",
+                // preserveModules: true,
+                // preserveModulesRoot: "src",
                 // chunkFileNames: "chunks/[name].[hash].js",
                 assetFileNames: "[name].[hash][extname]",
             },
-            // {
-            //     dir: "dist/cjs",
-            //     format: "cjs",
-            //     sourcemap: true,
-            //     exports: "named",
-            //     interop: "compat",
-            //     preserveModules: true,
-            //     preserveModulesRoot: "src",
-            //     // chunkFileNames: "chunks/[name].[hash].js",
-            //     assetFileNames: "[name].[hash][extname]",
-            // },
+            {
+                dir: "dist/cjs",
+                format: "cjs",
+                sourcemap: true,
+                exports: "named",
+                interop: "compat",
+                // preserveModules: true,
+                // preserveModulesRoot: "src",
+                // chunkFileNames: "chunks/[name].[hash].js",
+                assetFileNames: "[name].[hash][extname]",
+            },
         ],
         plugins: [
             ...plugins,

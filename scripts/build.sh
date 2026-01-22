@@ -41,7 +41,7 @@ npm run build
 npx wyw-in-js \
   --config ./wyw-in-js.config.js \
   --source-root ./src \
-  --out-dir ./dist/wyw-css \
+  --out-dir ./dist \
   --insert-css-requires ./dist \
   --modules esnext \
   --transform \
@@ -50,7 +50,7 @@ npx wyw-in-js \
 npx wyw-in-js \
   --config ./wyw-in-js.config.js \
   --source-root ./src \
-  --out-dir ./dist/cjs/wyw-css \
+  --out-dir ./dist/cjs \
   --insert-css-requires ./dist/cjs \
   --modules commonjs \
   --transform \

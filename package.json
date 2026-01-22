@@ -144,6 +144,7 @@
         "rollup-plugin-generate-package-json": "^3.2.0",
         "rollup-plugin-import-css": "^4.1.2",
         "rollup-plugin-keep-css-imports": "^1.0.0",
+        "rollup-plugin-lib-style": "^2.4.5",
         "rollup-plugin-peer-deps-external": "^2.2.4",
         "rollup-plugin-postcss": "^4.0.2",
         "rollup-plugin-styler": "^2.0.0",

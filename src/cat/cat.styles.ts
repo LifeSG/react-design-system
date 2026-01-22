@@ -22,11 +22,6 @@ export const Container = styled.div<{ size: CatProps["size"] }>`
             : "450px"};
 `;
 
-export const Title = styled.h1`
-    color: ${V4_Token.Color["neutral-100"]};
-    font-size: ${V4_Token.Font["body-bl-size"]};
-`;
-
 export const Tabby = css`
     background: repeating-linear-gradient(
         135deg,

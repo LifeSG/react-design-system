@@ -1,5 +1,6 @@
 import { cx } from "@linaria/core";
 import { Container, Eye, Eyes, Siamese, Tabby } from "./cat.styles";
+import { Title } from "./kitty/kitty.styles";
 import { CatProps } from "./types";
 
 export const Cat = ({
@@ -26,6 +27,7 @@ export const Cat = ({
                 <Eye />
                 <Eye />
             </Eyes>
+            <Title />
         </Container>
     );
 };
