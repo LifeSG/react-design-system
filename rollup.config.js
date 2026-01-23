@@ -12,14 +12,14 @@ import copy from "rollup-plugin-copy";
 import excludeDependenciesFromBundle from "rollup-plugin-exclude-dependencies-from-bundle";
 import generatePackageJson from "rollup-plugin-generate-package-json";
 import { libStylePlugin } from "rollup-plugin-lib-style";
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import typescript from "rollup-plugin-typescript2";
 import { fileURLToPath } from "url";
 import { getFolders } from "./scripts/build-util";
+import postcss from "rollup-plugin-postcss";
 
 const folders = getFolders("./src");
 
-export const plugins = [
+const basePlugins = [
     excludeDependenciesFromBundle(), // Add the externals for me. [react, react-dom, styled-components]
     nodeResolve({ browser: true }), // Locates modules in the project's node_modules directory
     commonjs(), // converts CommonJS to ES6 modules
@@ -40,34 +40,6 @@ export const plugins = [
             ],
         },
     }),
-    linaria.default({
-        sourceMap: true,
-    }),
-    libStylePlugin({
-        exclude: ["**/node_modules/**"],
-        customCSSInjectedPath: (id) => {
-            const filename = path.basename(id);
-            return "/" + filename;
-        },
-        customCSSPath: (id) => {
-            const relative = path.relative(process.cwd(), id);
-            const outputPath = relative.replace("src/", "");
-            return "/" + outputPath;
-        },
-    }),
-    libStylePlugin({
-        include: ["node_modules/@govtechsg/sgds-web-component/**/*.css"],
-        postCssPlugins: [postcssImports()],
-        customCSSInjectedPath: () => {
-            return "/sgds.css";
-        },
-        customCSSPath: () => {
-            return "/masthead/sgds.css";
-        },
-    }),
-    image(),
-    json(),
-    terser(), // Helps remove comments, whitespace or logging codes
 ];
 
 const codemodBuildConfigs = [
@@ -81,26 +53,7 @@ const codemodBuildConfigs = [
             format: "cjs",
         },
         plugins: [
-            peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
-            nodeResolve({ browser: true }), // Locates modules in the project's node_modules directory
-            commonjs(), // converts CommonJS to ES6 modules
-            typescript({
-                useTsconfigDeclarationDir: true,
-                tsconfig: "tsconfig.json",
-                tsconfigOverride: {
-                    // Override base tsconfig.json during build
-                    exclude: [
-                        "tests",
-                        "**/stories/**",
-                        "**/__mocks__/**",
-                        "**/custom-types/css.d.ts",
-                        "**/custom-types/jpg.d.ts",
-                        "**/custom-types/mdx.d.ts",
-                        "**/custom-types/svg.d.ts",
-                        "codemods",
-                    ],
-                },
-            }),
+            ...basePlugins,
             image(),
             json(),
             terser(), // Helps remove comments, whitespace or logging codes
@@ -117,29 +70,6 @@ const packageData = readFileSync(
     "utf8"
 );
 const { ...packageOthers } = JSON.parse(packageData);
-const newPackageData = {
-    ...packageOthers,
-    private: false,
-    typings: "./index.d.ts",
-    // main: "./cjs/index.js",
-    module: "./index.js",
-    exports: {
-        ".": {
-            import: "./index.js",
-            // require: "./cjs/index.js",
-        },
-        "./styles.css": "./styles.css",
-        ...Object.fromEntries(
-            folders.map((folder) => [
-                `./${folder}`,
-                {
-                    import: `./${folder}/index.js`,
-                    // require: `./cjs/${folder}/index.js`,
-                },
-            ])
-        ),
-    },
-};
 
 export default [
     {
@@ -166,7 +96,6 @@ export default [
                 preserveModules: true,
                 preserveModulesRoot: "src",
                 chunkFileNames: "chunks/[name].[hash].js",
-                assetFileNames: "[name].[hash][extname]",
                 entryFileNames: (chunkInfo) => {
                     if (chunkInfo.name.includes("node_modules")) {
                         return (
@@ -178,31 +107,88 @@ export default [
                     return "[name].js";
                 },
             },
-            // {
-            //     dir: "dist/cjs",
-            //     format: "cjs",
-            //     sourcemap: true,
-            //     exports: "named",
-            //     interop: "compat",
-            //     chunkFileNames: "chunks/[name].[hash].js",
-            //     assetFileNames: "[name].[hash][extname]",
-            //     entryFileNames: (chunkInfo) => {
-            //         if (chunkInfo.name.includes("node_modules")) {
-            //             return (
-            //                 chunkInfo.name.replace("node_modules", "external") +
-            //                 ".js"
-            //             );
-            //         }
-
-            //         return "[name].js";
-            //     },
-            // },
         ],
         plugins: [
-            ...plugins,
-            generatePackageJson({
-                baseContents: newPackageData,
+            ...basePlugins,
+            linaria.default({
+                sourceMap: true,
             }),
+            libStylePlugin({
+                exclude: ["**/node_modules/**"],
+                customCSSInjectedPath: (id) => {
+                    const filename = path.basename(id);
+                    return "/" + filename;
+                },
+                customCSSPath: (id) => {
+                    const relative = path.relative(process.cwd(), id);
+                    const outputPath = relative.replace("src/", "");
+                    return "/" + outputPath;
+                },
+                scopedName: "[local]",
+            }),
+            libStylePlugin({
+                include: [
+                    "node_modules/@govtechsg/sgds-web-component/**/*.css",
+                ],
+                postCssPlugins: [postcssImports()],
+                customCSSInjectedPath: () => {
+                    return "/sgds.css";
+                },
+                customCSSPath: () => {
+                    return "/masthead/sgds.css";
+                },
+            }),
+            image(),
+            json(),
+            terser(), // Helps remove comments, whitespace or logging codes
+            generatePackageJson({
+                baseContents: {
+                    ...packageOthers,
+                    private: false,
+                    typings: "./index.d.ts",
+                    module: "./index.js",
+                    main: "./index.js",
+                    exports: {
+                        ".": {
+                            import: "./index.js",
+                        },
+                        ...Object.fromEntries(
+                            folders.map((folder) => [
+                                `./${folder}`,
+                                { import: `./${folder}/index.js` },
+                            ])
+                        ),
+                    },
+                },
+            }),
+        ],
+        external: ["react", "react-dom", "styled-components"],
+    },
+    {
+        input: "src/index.ts",
+        output: [
+            {
+                dir: "dist/cjs",
+                format: "cjs",
+                sourcemap: true,
+                exports: "named",
+                interop: "compat",
+                chunkFileNames: "chunks/[name].[hash].js",
+                banner: `require("./styles.css");`,
+            },
+        ],
+        plugins: [
+            ...basePlugins,
+            linaria.default({
+                sourceMap: true,
+            }),
+            postcss({
+                plugins: [postcssImports()],
+                extract: "styles.css",
+            }),
+            image(),
+            json(),
+            terser(), // Helps remove comments, whitespace or logging codes
         ],
         external: ["react", "react-dom", "styled-components"],
     },
