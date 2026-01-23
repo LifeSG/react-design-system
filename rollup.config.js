@@ -15,7 +15,6 @@ import { libStylePlugin } from "rollup-plugin-lib-style";
 import typescript from "rollup-plugin-typescript2";
 import { fileURLToPath } from "url";
 import { getFolders } from "./scripts/build-util";
-import postcss from "rollup-plugin-postcss";
 
 const folders = getFolders("./src");
 
@@ -107,6 +106,26 @@ export default [
                     return "[name].js";
                 },
             },
+            {
+                dir: "dist/cjs",
+                format: "cjs",
+                sourcemap: true,
+                exports: "named",
+                interop: "compat",
+                chunkFileNames: "chunks/[name].[hash].js",
+                preserveModules: true,
+                preserveModulesRoot: "src",
+                entryFileNames: (chunkInfo) => {
+                    if (chunkInfo.name.includes("node_modules")) {
+                        return (
+                            chunkInfo.name.replace("node_modules", "external") +
+                            ".js"
+                        );
+                    }
+
+                    return "[name].js";
+                },
+            },
         ],
         plugins: [
             ...basePlugins,
@@ -151,44 +170,22 @@ export default [
                     exports: {
                         ".": {
                             import: "./index.js",
+                            require: `./cjs/index.js`,
+                            default: "./index.js",
                         },
                         ...Object.fromEntries(
                             folders.map((folder) => [
                                 `./${folder}`,
-                                { import: `./${folder}/index.js` },
+                                {
+                                    import: `./${folder}/index.js`,
+                                    require: `./cjs/${folder}/index.js`,
+                                    default: `./${folder}/index.js`,
+                                },
                             ])
                         ),
                     },
                 },
             }),
-        ],
-        external: ["react", "react-dom", "styled-components"],
-    },
-    {
-        input: "src/index.ts",
-        output: [
-            {
-                dir: "dist/cjs",
-                format: "cjs",
-                sourcemap: true,
-                exports: "named",
-                interop: "compat",
-                chunkFileNames: "chunks/[name].[hash].js",
-                banner: `require("./styles.css");`,
-            },
-        ],
-        plugins: [
-            ...basePlugins,
-            linaria.default({
-                sourceMap: true,
-            }),
-            postcss({
-                plugins: [postcssImports()],
-                extract: "styles.css",
-            }),
-            image(),
-            json(),
-            terser(), // Helps remove comments, whitespace or logging codes
         ],
         external: ["react", "react-dom", "styled-components"],
     },
