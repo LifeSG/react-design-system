@@ -5,6 +5,7 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
 import linaria from "@wyw-in-js/rollup";
 import { readFileSync } from "fs-extra";
+import { globSync } from "glob";
 import path from "path";
 import postcssImports from "postcss-import";
 import copy from "rollup-plugin-copy";
@@ -13,6 +14,7 @@ import generatePackageJson from "rollup-plugin-generate-package-json";
 import { libStylePlugin } from "rollup-plugin-lib-style";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import typescript from "rollup-plugin-typescript2";
+import { fileURLToPath } from "url";
 import { getFolders } from "./scripts/build-util";
 
 const folders = getFolders("./src");
@@ -38,16 +40,6 @@ export const plugins = [
             ],
         },
     }),
-    libStylePlugin({
-        include: ["node_modules/@govtechsg/sgds-web-component/**/*.css"],
-        postCssPlugins: [postcssImports()],
-        customCSSInjectedPath: () => {
-            return "/sgds.css";
-        },
-        customCSSPath: () => {
-            return "/masthead/sgds.css";
-        },
-    }),
     linaria.default({
         sourceMap: true,
     }),
@@ -61,6 +53,16 @@ export const plugins = [
             const relative = path.relative(process.cwd(), id);
             const outputPath = relative.replace("src/", "");
             return "/" + outputPath;
+        },
+    }),
+    libStylePlugin({
+        include: ["node_modules/@govtechsg/sgds-web-component/**/*.css"],
+        postCssPlugins: [postcssImports()],
+        customCSSInjectedPath: () => {
+            return "/sgds.css";
+        },
+        customCSSPath: () => {
+            return "/masthead/sgds.css";
         },
     }),
     image(),
@@ -119,12 +121,12 @@ const newPackageData = {
     ...packageOthers,
     private: false,
     typings: "./index.d.ts",
-    main: "./cjs/index.js",
+    // main: "./cjs/index.js",
     module: "./index.js",
     exports: {
         ".": {
             import: "./index.js",
-            require: "./cjs/index.js",
+            // require: "./cjs/index.js",
         },
         "./styles.css": "./styles.css",
         ...Object.fromEntries(
@@ -132,7 +134,7 @@ const newPackageData = {
                 `./${folder}`,
                 {
                     import: `./${folder}/index.js`,
-                    require: `./cjs/${folder}/index.js`,
+                    // require: `./cjs/${folder}/index.js`,
                 },
             ])
         ),
@@ -141,7 +143,19 @@ const newPackageData = {
 
 export default [
     {
-        input: "src/index.ts",
+        input: Object.fromEntries(
+            globSync("src/**/index.{tsx,ts}").map((file) => [
+                // This removes `src/` as well as the file extension from each
+                // file, so e.g. src/nested/foo.js becomes nested/foo
+                path.relative(
+                    "src",
+                    file.slice(0, file.length - path.extname(file).length)
+                ),
+                // This expands the relative paths to absolute paths, so e.g.
+                // src/nested/foo becomes /project/src/nested/foo.js
+                fileURLToPath(new URL(file, import.meta.url)),
+            ])
+        ),
         output: [
             {
                 dir: "dist",
@@ -153,18 +167,36 @@ export default [
                 preserveModulesRoot: "src",
                 chunkFileNames: "chunks/[name].[hash].js",
                 assetFileNames: "[name].[hash][extname]",
+                entryFileNames: (chunkInfo) => {
+                    if (chunkInfo.name.includes("node_modules")) {
+                        return (
+                            chunkInfo.name.replace("node_modules", "external") +
+                            ".js"
+                        );
+                    }
+
+                    return "[name].js";
+                },
             },
-            {
-                dir: "dist/cjs",
-                format: "cjs",
-                sourcemap: true,
-                exports: "named",
-                interop: "compat",
-                preserveModules: true,
-                preserveModulesRoot: "src",
-                chunkFileNames: "chunks/[name].[hash].js",
-                assetFileNames: "[name].[hash][extname]",
-            },
+            // {
+            //     dir: "dist/cjs",
+            //     format: "cjs",
+            //     sourcemap: true,
+            //     exports: "named",
+            //     interop: "compat",
+            //     chunkFileNames: "chunks/[name].[hash].js",
+            //     assetFileNames: "[name].[hash][extname]",
+            //     entryFileNames: (chunkInfo) => {
+            //         if (chunkInfo.name.includes("node_modules")) {
+            //             return (
+            //                 chunkInfo.name.replace("node_modules", "external") +
+            //                 ".js"
+            //             );
+            //         }
+
+            //         return "[name].js";
+            //     },
+            // },
         ],
         plugins: [
             ...plugins,
@@ -172,12 +204,7 @@ export default [
                 baseContents: newPackageData,
             }),
         ],
-        external: [
-            "react",
-            "react-dom",
-            "styled-components",
-            "@react-spring/web",
-        ],
+        external: ["react", "react-dom", "styled-components"],
     },
     ...codemodBuildConfigs,
 ];
