@@ -15,6 +15,7 @@ import { libStylePlugin } from "rollup-plugin-lib-style";
 import typescript from "rollup-plugin-typescript2";
 import { fileURLToPath } from "url";
 import { getFolders } from "./scripts/build-util";
+import postcss from "rollup-plugin-postcss";
 
 const folders = getFolders("./src");
 
@@ -132,31 +133,32 @@ export default [
             linaria.default({
                 sourceMap: true,
             }),
-            libStylePlugin({
-                exclude: ["**/node_modules/**"],
-                customCSSInjectedPath: (id) => {
-                    const filename = path.basename(id);
-                    return "/" + filename;
-                },
-                customCSSPath: (id) => {
-                    const relative = path.relative(process.cwd(), id);
-                    const outputPath = relative.replace("src/", "");
-                    return "/" + outputPath;
-                },
-                scopedName: "[local]",
-            }),
-            libStylePlugin({
-                include: [
-                    "node_modules/@govtechsg/sgds-web-component/**/*.css",
-                ],
-                postCssPlugins: [postcssImports()],
-                customCSSInjectedPath: () => {
-                    return "/sgds.css";
-                },
-                customCSSPath: () => {
-                    return "/masthead/sgds.css";
-                },
-            }),
+            // libStylePlugin({
+            //     exclude: ["**/node_modules/**"],
+            //     customCSSInjectedPath: (id) => {
+            //         const filename = path.basename(id);
+            //         return "/" + filename;
+            //     },
+            //     customCSSPath: (id) => {
+            //         const relative = path.relative(process.cwd(), id);
+            //         const outputPath = relative.replace("src/", "");
+            //         return "/" + outputPath;
+            //     },
+            //     scopedName: "[local]",
+            // }),
+            // libStylePlugin({
+            //     include: [
+            //         "node_modules/@govtechsg/sgds-web-component/**/*.css",
+            //     ],
+            //     postCssPlugins: [postcssImports()],
+            //     customCSSInjectedPath: () => {
+            //         return "/sgds.css";
+            //     },
+            //     customCSSPath: () => {
+            //         return "/masthead/sgds.css";
+            //     },
+            // }),
+            postcss({ extract: "styles.css", plugins: [postcssImports()] }),
             image(),
             json(),
             terser(), // Helps remove comments, whitespace or logging codes
@@ -172,6 +174,11 @@ export default [
                             import: "./index.js",
                             require: `./cjs/index.js`,
                             default: "./index.js",
+                        },
+                        "./styles.css": {
+                            import: "./styles.css",
+                            require: `./cjs/styles.css`,
+                            default: "./styles.css",
                         },
                         ...Object.fromEntries(
                             folders.map((folder) => [
