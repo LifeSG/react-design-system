@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { useCountdown } from "../util";
 import { ContactInputSection } from "./contact-input-section";
 import { OTPInputWrapper } from "./otp-verification-styles";
-import { OtpVerificationProps, OtpVerificationState } from "./types";
+import { OtpVerificationProps } from "./types";
 import { VerificationSection } from "./verification-section";
 
 export const OtpVerification = (props: OtpVerificationProps) => {
@@ -22,11 +23,10 @@ export const OtpVerification = (props: OtpVerificationProps) => {
         onOtpChange,
         otpState,
         onOtpStateChange,
-        isLoading,
-        onLoadingChange,
-        isVerifyLoading,
-        onVerifyLoadingChange,
     } = props;
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [isVerifyLoading, setIsVerifyLoading] = useState(false);
 
     const countdown = useCountdown({
         duration: verifyOtpCountdownTimer,
@@ -40,17 +40,15 @@ export const OtpVerification = (props: OtpVerificationProps) => {
         if (!onSendOtp) return;
 
         try {
-            onLoadingChange(true);
+            setIsLoading(true);
             await onSendOtp();
-            onOtpStateChange(OtpVerificationState.SENT);
-            // Reset the countdown
+            onOtpStateChange("sent");
             countdown.reset();
-            // Start the countdown
             countdown.start();
-        } catch (error) {
+        } catch {
             // do nothing
         } finally {
-            onLoadingChange(false);
+            setIsLoading(false);
         }
     };
 
@@ -59,16 +57,16 @@ export const OtpVerification = (props: OtpVerificationProps) => {
         if (!onVerifyOtp || !otpValue?.value) return;
 
         try {
-            onVerifyLoadingChange(true);
+            setIsVerifyLoading(true);
             await onVerifyOtp(otpValue?.value);
-            onOtpStateChange(OtpVerificationState.VERIFIED);
+            onOtpStateChange("verified");
             // Reset the countdown and clear the OTP code in case user enter new OTP later
             countdown.reset();
             onOtpChange?.("");
-        } catch (error) {
+        } catch {
             // do nothing
         } finally {
-            onVerifyLoadingChange(false);
+            setIsVerifyLoading(false);
         }
     };
 
@@ -76,8 +74,8 @@ export const OtpVerification = (props: OtpVerificationProps) => {
     // HELPER FUNCTIONS
     // =============================================================================
     const resetToDefault = () => {
-        if (otpState === OtpVerificationState.VERIFIED) {
-            onOtpStateChange(OtpVerificationState.DEFAULT);
+        if (otpState === "verified") {
+            onOtpStateChange("default");
         }
     };
 
@@ -85,26 +83,20 @@ export const OtpVerification = (props: OtpVerificationProps) => {
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <OTPInputWrapper
-            id={id}
-            data-testid={dataTestId}
-            className={className}
-            role="region"
-            aria-label="OTP verification"
-        >
+        <OTPInputWrapper id={id} data-testid={dataTestId} className={className}>
             <ContactInputSection
                 {...props}
                 inputId={inputId}
                 data-testid={dataTestId ? `${dataTestId}-contact` : undefined}
                 isLoading={isLoading}
-                isVerified={otpState === OtpVerificationState.VERIFIED}
+                isVerified={otpState === "verified"}
                 countdown={countdown}
                 onSendOtp={handleSendOtp}
                 onStateReset={resetToDefault}
                 sendOtpError={sendOtpError}
             />
 
-            {otpState === OtpVerificationState.SENT && (
+            {otpState === "sent" && (
                 <VerificationSection
                     {...props}
                     data-testid={

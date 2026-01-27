@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Typography } from "../typography";
 import { Colour, MediaQuery, Spacing } from "../theme";
+import { Button } from "../button";
 
 export const VerificationSectionWrapper = styled.div`
     display: flex;
@@ -34,4 +35,8 @@ export const VerifyInputWrapper = styled.div`
     display: flex;
     gap: ${Spacing["spacing-8"]};
     max-width: 472px;
+`;
+
+export const VerifyButton = styled(Button.Default)`
+    flex-shrink: 0;
 `;

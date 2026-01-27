@@ -98,7 +98,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "showVerifyOtpIcon",
+                name: "showVerifyOtpThumbnail",
                 description: "Whether to show the icon in verify OTP step",
                 propTypes: ["boolean"],
                 defaultValue: "false",

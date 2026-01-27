@@ -24,11 +24,8 @@ export const PhoneNumberDefault: StoryObj<Component> = {
         const [otpError, setOtpError] = useState<string | undefined>();
         const [sendError, setSendError] = useState<string | undefined>();
 
-        const [otpState, setOtpState] = useState<OtpVerificationState>(
-            OtpVerificationState.DEFAULT
-        );
-        const [isLoading, setIsLoading] = useState(false);
-        const [isVerifyLoading, setIsVerifyLoading] = useState(false);
+        const [otpState, setOtpState] =
+            useState<OtpVerificationState>("default");
 
         return (
             <Form.OtpVerification
@@ -38,10 +35,6 @@ export const PhoneNumberDefault: StoryObj<Component> = {
                 onPhoneNumberChange={setPhoneValue}
                 otpState={otpState}
                 onOtpStateChange={setOtpState}
-                isLoading={isLoading}
-                onLoadingChange={setIsLoading}
-                isVerifyLoading={isVerifyLoading}
-                onVerifyLoadingChange={setIsVerifyLoading}
                 onSendOtp={async () => {
                     setSendError(undefined);
                     // Simulate API call
@@ -87,11 +80,8 @@ export const EmailDefault: StoryObj<Component> = {
         const [otpError, setOtpError] = useState<string | undefined>();
         const [sendError, setSendError] = useState<string | undefined>();
 
-        const [otpState, setOtpState] = useState<OtpVerificationState>(
-            OtpVerificationState.DEFAULT
-        );
-        const [isLoading, setIsLoading] = useState(false);
-        const [isVerifyLoading, setIsVerifyLoading] = useState(false);
+        const [otpState, setOtpState] =
+            useState<OtpVerificationState>("default");
 
         return (
             <Form.OtpVerification
@@ -101,10 +91,6 @@ export const EmailDefault: StoryObj<Component> = {
                 onEmailChange={setEmailValue}
                 otpState={otpState}
                 onOtpStateChange={setOtpState}
-                isLoading={isLoading}
-                onLoadingChange={setIsLoading}
-                isVerifyLoading={isVerifyLoading}
-                onVerifyLoadingChange={setIsVerifyLoading}
                 onSendOtp={async () => {
                     setSendError(undefined);
                     // Simulate API call
@@ -147,11 +133,8 @@ export const WithErrors: StoryObj<Component> = {
         }>({ countryCode: "+65", number: "" });
         const [otpCode, setOtpCode] = useState<string>("");
 
-        const [otpState, setOtpState] = useState<OtpVerificationState>(
-            OtpVerificationState.DEFAULT
-        );
-        const [isLoading, setIsLoading] = useState(false);
-        const [isVerifyLoading, setIsVerifyLoading] = useState(false);
+        const [otpState, setOtpState] =
+            useState<OtpVerificationState>("default");
 
         return (
             <Form.OtpVerification
@@ -161,10 +144,6 @@ export const WithErrors: StoryObj<Component> = {
                 onPhoneNumberChange={setPhoneValue}
                 otpState={otpState}
                 onOtpStateChange={setOtpState}
-                isLoading={isLoading}
-                onLoadingChange={setIsLoading}
-                isVerifyLoading={isVerifyLoading}
-                onVerifyLoadingChange={setIsVerifyLoading}
                 onSendOtp={async () => {
                     await new Promise((resolve) => setTimeout(resolve, 1000));
                     throw new Error("Failed to send OTP");

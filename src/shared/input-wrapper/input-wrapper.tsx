@@ -78,10 +78,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
                 }
                 ${props.$focused && disabledFocusCss}
             `;
-        }
-    }}
-    ${(props) => {
-        if (props.$error) {
+        } else if (props.$error) {
             return css`
                 border-color: ${Colour["border-error"]};
 

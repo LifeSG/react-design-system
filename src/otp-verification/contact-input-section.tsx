@@ -3,7 +3,6 @@ import { FormErrorMessage } from "../form/form-label";
 import { PhoneNumberInputValue } from "../phone-number-input";
 import {
     ContactButton,
-    ContactButtonWrapper,
     ContactInputSectionWrapper,
     ContactInputWrapper,
     ContactSectionWrapper,
@@ -32,9 +31,10 @@ export const ContactInputSection = ({
     onStateReset,
     sendOtpError,
 }: ContactInputSectionProps) => {
-    const handleContactInputChange = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleEmailInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         onStateReset();
         if (type === "email" && onEmailChange) {
             onEmailChange(e.target.value);
@@ -48,42 +48,9 @@ export const ContactInputSection = ({
         }
     };
 
-    const renderContactInput = () => (
-        <>
-            {type === "email" ? (
-                <EmailContactInput
-                    id={inputId}
-                    data-testid={dataTestId ? `${dataTestId}-input` : undefined}
-                    placeholder={sendOtpPlaceholder || "Enter email"}
-                    value={emailValue || ""}
-                    onChange={handleContactInputChange}
-                    type="email"
-                    noBorder
-                    $error={!!sendOtpError}
-                    $verified={isVerified}
-                    aria-labelledby={id ? `${id}-label` : undefined}
-                    aria-invalid={!!sendOtpError}
-                    aria-required={true}
-                />
-            ) : (
-                <PhoneContactInput
-                    id={inputId}
-                    data-testid={dataTestId ? `${dataTestId}-input` : undefined}
-                    placeholder={sendOtpPlaceholder || "Enter mobile number"}
-                    value={phoneNumberValue}
-                    onChange={handlePhoneInputChange}
-                    noBorder
-                    fixedCountry
-                    $error={!!sendOtpError}
-                    $verified={isVerified}
-                    aria-labelledby={id ? `${id}-label` : undefined}
-                    aria-invalid={!!sendOtpError}
-                    aria-required={true}
-                />
-            )}
-        </>
-    );
-
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
     const getContactButtonText = () => {
         if (isVerified) {
             return "Verified";
@@ -100,10 +67,51 @@ export const ContactInputSection = ({
         return "Send OTP";
     };
 
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
+    const renderContactInput = () =>
+        type === "email" ? (
+            <EmailContactInput
+                id={inputId}
+                data-testid={
+                    dataTestId ? `${dataTestId}-contact-input` : undefined
+                }
+                placeholder={sendOtpPlaceholder || "Enter email"}
+                value={emailValue}
+                onChange={handleEmailInputChange}
+                type="email"
+                noBorder
+                aria-invalid={!!sendOtpError}
+                aria-required={true}
+            />
+        ) : (
+            <PhoneContactInput
+                id={inputId}
+                data-testid={
+                    dataTestId ? `${dataTestId}-contact-input` : undefined
+                }
+                placeholder={sendOtpPlaceholder || "Enter mobile number"}
+                value={phoneNumberValue}
+                onChange={handlePhoneInputChange}
+                noBorder
+                fixedCountry
+                aria-invalid={!!sendOtpError}
+                aria-required={true}
+            />
+        );
+
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
     return (
-        <ContactSectionWrapper id={id} data-testid={dataTestId} role="group">
+        <ContactSectionWrapper id={id} data-testid={dataTestId}>
             <ContactInputSectionWrapper>
-                <ContactInputWrapper $isMaxWidth={type === "email"}>
+                <ContactInputWrapper
+                    $isMaxWidth={type === "email"}
+                    $error={!!sendOtpError}
+                    $verified={isVerified}
+                >
                     {renderContactInput()}
                     {isVerified && (
                         <VerifiedIconWrapper
@@ -115,32 +123,31 @@ export const ContactInputSection = ({
                         </VerifiedIconWrapper>
                     )}
                 </ContactInputWrapper>
-                <ContactButtonWrapper
+                <ContactButton
+                    id={id ? `${id}-contact-button` : undefined}
+                    data-testid={
+                        dataTestId ? `${dataTestId}-contact-button` : undefined
+                    }
+                    onClick={onSendOtp}
+                    disabled={
+                        disabled ||
+                        readOnly ||
+                        countdown.isRunning ||
+                        isVerified
+                    }
+                    loading={isLoading}
                     $isVerified={isVerified}
                     $isCountdownRunning={countdown.isRunning}
                 >
-                    <ContactButton
-                        id={id ? `${id}-button` : undefined}
-                        data-testid={
-                            dataTestId ? `${dataTestId}-button` : undefined
-                        }
-                        onClick={onSendOtp}
-                        disabled={
-                            disabled ||
-                            readOnly ||
-                            countdown.isRunning ||
-                            isVerified
-                        }
-                        loading={isLoading}
-                    >
-                        {getContactButtonText()}
-                    </ContactButton>
-                </ContactButtonWrapper>
+                    {getContactButtonText()}
+                </ContactButton>
             </ContactInputSectionWrapper>
             {sendOtpError && (
                 <FormErrorMessage
-                    id={id ? `${id}-error` : undefined}
-                    data-testid={dataTestId ? `${dataTestId}-error` : undefined}
+                    id={id ? `${id}-contact-error` : undefined}
+                    data-testid={
+                        dataTestId ? `${dataTestId}-contact-error` : undefined
+                    }
                     role="alert"
                 >
                     {sendOtpError}

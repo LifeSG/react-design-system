@@ -1,6 +1,5 @@
 import { useMediaQuery } from "react-responsive";
 import { useTheme } from "styled-components";
-import { Button } from "../button/button";
 import { FormErrorMessage } from "../form/form-label";
 import { InputGroup } from "../input-group";
 import { Breakpoint } from "../theme";
@@ -13,6 +12,7 @@ import {
     SectionContainer,
     TitleWrapper,
     VerificationSectionWrapper,
+    VerifyButton,
     VerifyInputWrapper,
 } from "./verification-section-styles";
 
@@ -63,7 +63,6 @@ export const VerificationSection = ({
             data-testid={dataTestId}
             role="group"
             aria-labelledby={id ? `${id}-title` : undefined}
-            aria-describedby={id ? `${id}-message` : undefined}
         >
             {renderThumbnail()}
             <SectionContainer>
@@ -90,9 +89,11 @@ export const VerificationSection = ({
                 <InputSectionWrapper>
                     <VerifyInputWrapper>
                         <InputGroup
-                            id={id ? `${id}-input` : undefined}
+                            id={id ? `${id}-verify-input` : undefined}
                             data-testid={
-                                dataTestId ? `${dataTestId}-input` : undefined
+                                dataTestId
+                                    ? `${dataTestId}-verify-input`
+                                    : undefined
                             }
                             value={otpCode}
                             onChange={(e) => setOtpCode?.(e.target.value)}
@@ -109,10 +110,12 @@ export const VerificationSection = ({
                             aria-invalid={!!verifyOtpError}
                             aria-required={true}
                         />
-                        <Button.Default
-                            id={id ? `${id}-button` : undefined}
+                        <VerifyButton
+                            id={id ? `${id}-verify-button` : undefined}
                             data-testid={
-                                dataTestId ? `${dataTestId}-button` : undefined
+                                dataTestId
+                                    ? `${dataTestId}-verify-button`
+                                    : undefined
                             }
                             onClick={onVerifyOtp}
                             loading={isVerifyLoading}
@@ -120,13 +123,15 @@ export const VerificationSection = ({
                             disabled={!otpCode || otpCode.length === 0}
                         >
                             {!isVerifyLoading && "Verify"}
-                        </Button.Default>
+                        </VerifyButton>
                     </VerifyInputWrapper>
                     {verifyOtpError && (
                         <FormErrorMessage
-                            id={id ? `${id}-error` : undefined}
+                            id={id ? `${id}-verify-error` : undefined}
                             data-testid={
-                                dataTestId ? `${dataTestId}-error` : undefined
+                                dataTestId
+                                    ? `${dataTestId}-verify-error`
+                                    : undefined
                             }
                             role="alert"
                         >
