@@ -1,7 +1,9 @@
 import { css } from "@linaria/core";
 import { styled } from "@linaria/react";
+import { styled as scStyled } from "styled-components";
 import { V4_Token } from "../v4-token";
 import { CatProps } from "./types";
+import { Button } from "../button";
 
 export const Container = styled.div<{ size: CatProps["size"] }>`
     border-radius: 8px;
@@ -45,4 +47,16 @@ export const Eye = styled.div`
 export const Eyes = styled.div`
     display: flex;
     gap: 100px;
+`;
+
+export const LionButton = styled(Button.Default)`
+    && {
+        background-color: ${V4_Token.Color["secondary"]};
+    }
+`;
+
+export const TigerContainer = scStyled(Container)`
+    border: 2px solid ${V4_Token.Color["secondary"]};
+    width: 50px;
+    height: 50px;
 `;

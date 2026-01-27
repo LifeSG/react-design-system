@@ -1,5 +1,13 @@
 import { cx } from "@linaria/core";
-import { Container, Eye, Eyes, Siamese, Tabby } from "./cat.styles";
+import {
+    Container,
+    Eye,
+    Eyes,
+    LionButton,
+    Siamese,
+    Tabby,
+    TigerContainer,
+} from "./cat.styles";
 import { DDATA, Title } from "./kitty/kitty.styles";
 import { CatProps } from "./types";
 
@@ -30,4 +38,17 @@ export const Cat = ({
             <Title>{DDATA}</Title>
         </Container>
     );
+};
+
+export const Lion = (props: React.HTMLAttributes<HTMLDivElement>) => {
+    return (
+        <div {...props}>
+            <div>Roar! I am a Lion!</div>
+            <LionButton>Roar</LionButton>
+        </div>
+    );
+};
+
+export const Tiger = (props: React.HTMLAttributes<HTMLDivElement>) => {
+    return <TigerContainer size="small" {...props} />;
 };

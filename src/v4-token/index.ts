@@ -5,6 +5,7 @@ export const V4_Token = {
         "neutral-10": "#232323",
         "neutral-40": "#8E8E8E",
         "neutral-60": "#ECEFEF",
+        secondary: "tomato",
     },
     Font: {
         "body-bl-size": "18px",
