@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TypographyWeight } from "../typography";
-import { Menu } from "./menu";
+import { Menu } from "src/menu";
 import {
     ChevronIcon,
     ExpandCollapseButton,
@@ -71,8 +71,11 @@ export const NavbarItems = <T,>({
     // =============================================================================
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (ref.current && !ref.current.contains(event.target as Node)) {
-                onBlur();
+            if (
+                listRef.current &&
+                !listRef.current.contains(event.target as Node)
+            ) {
+                resetAll();
             }
         };
         document.addEventListener("click", handleClickOutside, true);
@@ -82,44 +85,22 @@ export const NavbarItems = <T,>({
     }, []);
 
     // =============================================================================
-    // HELPER FUNCTION
-    // =============================================================================
-    const onBlur = () => {
-        setShowSubMenu(false);
-    };
-
-    const checkSelected = (item: NavItemLinkProps<T>): boolean => {
-        if (item.id === selectedId) {
-            return true;
-        } else if (item.subMenu && item.subMenu.length >= 1) {
-            const foundSubItem = item.subMenu.find(
-                (dataS) => dataS.id === selectedId
-            );
-            return !!foundSubItem;
-        }
-        return false;
-    };
-
-    // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleLinkClick = (item: NavItemProps<T>, index: number) => {
+    const handleLinkClick = (item: NavItemLinkProps<T>, index: number) => {
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
-            event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
-            setSelectedIndex(index);
-            setShowSubMenu(true);
+            event.stopPropagation();
+
+            if (mobile && item.subMenu?.length) {
+                const nextExpanded = !(selectedIndex === index && showSubMenu);
+                setSelectedIndex(index);
+                setShowSubMenu(nextExpanded);
+            }
+
             onItemClick(event, item);
         };
     };
 
-    const handleSubLinkClick = (
-        event: React.MouseEvent<HTMLAnchorElement>,
-        item: NavItemCommonProps<T>
-    ) => {
-        event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
-        onItemClick(event, item);
-        setShowSubMenu(false);
-    };
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -134,15 +115,34 @@ export const NavbarItems = <T,>({
             </Menu.Section>
         </Menu.Content>
     );
+
+    const renderItems = () =>
+        items.map((item, index) => {
             switch (item.itemType) {
                 case "component": {
-                    const component = (item && item.children) || null;
-                    return <li key={index}>{component}</li>;
+                    return <li key={index}>{item.children ?? null}</li>;
                 }
+
                 case "link":
                 default: {
-                    const selected = checkSelected(item);
-                    const { children, options, ...otherItemAttrs } = item;
+                    const { children, options, subMenu, ...otherItemAttrs } =
+                        item;
+
+                    const hasSubMenu = !!subMenu?.length;
+                    const isDesktop = !mobile;
+                    const isSubMenuTrigger = isDesktop && hasSubMenu;
+
+                    const isRouteSelected = checkSelected(item);
+                    const isOpen =
+                        isSubMenuTrigger && openSubMenuIndex === index;
+
+                    const ownerIndex =
+                        focusedIndex ??
+                        openSubMenuIndex ??
+                        (isRouteSelected ? index : null);
+
+                    const selected = ownerIndex === index;
+                    const showIndicator = !hideLinkIndicator && selected;
 
                     const textWeight: TypographyWeight = selected
                         ? mobile
@@ -153,71 +153,117 @@ export const NavbarItems = <T,>({
                         ? `link__mobile-${index + 1}`
                         : `link__${index + 1}`;
                     const expanded =
-                        selectedIndex >= 0 &&
+                        mobile &&
+                        hasSubMenu &&
                         selectedIndex === index &&
                         showSubMenu;
 
-                    return (
-                        <LinkItem key={index} $hiddenBranding={hideNavBranding}>
-                            <Link
-                                data-testid={testId}
-                                weight={textWeight}
-                                $selected={selected} /* for mobile */
-                                underlineStyle="none"
-                                {...otherItemAttrs}
-                                onClick={handleLinkClick(item, index)}
-                                aria-current={selected ? "page" : undefined}
-                                aria-haspopup={item.subMenu ? true : undefined}
-                                aria-expanded={
-                                    mobile && item.subMenu
-                                        ? expanded
-                                        : undefined
-                                }
-                                {...options}
-                            >
-                                <LinkLabel>{children}</LinkLabel>
-                                {selected && !hideLinkIndicator && (
-                                    <LinkIndicator
-                                        aria-hidden
-                                        data-testid={`${testId}-indicator`}
-                                        $selected={selected}
-                                    />
-                                )}
-                                {mobile && item.subMenu && (
-                                    <LinkIconContainer>
-                                        <ExpandCollapseButton
-                                            data-testid={`${testId}-expand-collapse-button`}
-                                            $selected={expanded}
-                                            focusHighlight={false}
-                                            focusOutline="browser"
-                                            aria-label={
-                                                expanded ? "Collapse" : "Expand"
-                                            }
-                                        >
-                                            <ChevronIcon $selected={selected} />
-                                        </ExpandCollapseButton>
-                                    </LinkIconContainer>
-                                )}
-                            </Link>
-                            {expanded && item.subMenu && (
-                                <Menu
-                                    items={item.subMenu}
-                                    mobile={mobile}
-                                    onItemClick={handleSubLinkClick}
+                    const subMenuChildren = (
+                        <Link
+                            ref={(el: HTMLElement | null) => {
+                                topLevelRefs.current[index] = el;
+                            }}
+                            as={isSubMenuTrigger ? "button" : "a"}
+                            type={isSubMenuTrigger ? "button" : undefined}
+                            data-testid={testId}
+                            weight={textWeight}
+                            $selected={selected}
+                            underlineStyle="none"
+                            {...otherItemAttrs}
+                            aria-current={
+                                !isSubMenuTrigger && isRouteSelected
+                                    ? "page"
+                                    : undefined
+                            }
+                            aria-haspopup={
+                                isSubMenuTrigger ? "menu" : undefined
+                            }
+                            aria-expanded={
+                                isSubMenuTrigger ? isOpen : undefined
+                            }
+                            onClick={
+                                isSubMenuTrigger
+                                    ? undefined
+                                    : handleLinkClick(item, index)
+                            }
+                            {...options}
+                        >
+                            <LinkLabel>{children}</LinkLabel>
+                            {showIndicator && (
+                                <LinkIndicator
+                                    data-testid={`${testId}-indicator`}
+                                    $selected={selected}
                                 />
                             )}
+
+                            {mobile && hasSubMenu && (
+                                <LinkIconContainer>
+                                    <ExpandCollapseButton
+                                        data-testid={`${testId}-expand-collapse-button`}
+                                        $selected={expanded}
+                                        focusHighlight={false}
+                                        focusOutline="browser"
+                                        aria-label={
+                                            expanded ? "Collapse" : "Expand"
+                                        }
+                                    >
+                                        <ChevronIcon $selected={selected} />
+                                    </ExpandCollapseButton>
+                                </LinkIconContainer>
+                            )}
+                        </Link>
+                    );
+
+                    return (
+                        <LinkItem
+                            key={index}
+                            $hiddenBranding={hideNavBranding}
+                            onFocusCapture={() => setFocusedIndex(index)}
+                            onBlurCapture={(
+                                e: React.FocusEvent<HTMLElement>
+                            ) => {
+                                const next = e.relatedTarget as Node | null;
+                                if (!next || !e.currentTarget.contains(next)) {
+                                    setFocusedIndex((prev) =>
+                                        prev === index ? null : prev
+                                    );
+                                }
+                            }}
+                        >
+                            {isSubMenuTrigger ? (
+                                <Menu
+                                    position={"bottom"}
+                                    customOffset={0}
+                                    menuContent={renderSubMenu(subMenu!)}
+                                    onPopoverAppear={() =>
+                                        setOpenSubMenuIndex(index)
+                                    }
+                                    onPopoverDismiss={() =>
+                                        setOpenSubMenuIndex(null)
+                                    }
+                                >
+                                    {subMenuChildren}
+                                </Menu>
+                            ) : (
+                                subMenuChildren
+                            )}
+
+                            {/* MOBILE inline submenu */}
+                            {mobile &&
+                                hasSubMenu &&
+                                expanded &&
+                                renderSubMenu(subMenu!)}
                         </LinkItem>
                     );
                 }
             }
         });
-    };
 
     if (items && items.length > 0) {
         return mobile ? (
-            <MobileWrapper ref={ref}>{renderItems()}</MobileWrapper>
+            <MobileWrapper ref={listRef}>{renderItems()}</MobileWrapper>
         ) : (
-            <Wrapper ref={ref} $alignLeft={hideNavBranding}>
+            <Wrapper ref={listRef} $alignLeft={hideNavBranding}>
                 {renderItems()}
             </Wrapper>
         );
