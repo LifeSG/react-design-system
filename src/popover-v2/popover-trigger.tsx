@@ -47,8 +47,8 @@ export const PopoverTrigger = ({
     // CONST, STATE, REF
     // =========================================================================
     const [visible, setVisible] = useState<boolean>(false);
-    const nodeRef = useRef<HTMLDivElement | null>(null);
-    const popoverRef = useRef<HTMLDivElement | null>(null);
+    const nodeRef = useRef<HTMLElement | null>(null);
+    const popoverRef = useRef<HTMLElement | null>(null);
     const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
@@ -126,6 +126,41 @@ export const PopoverTrigger = ({
         if (nextVisible && onPopoverAppear) onPopoverAppear();
         if (!nextVisible && onPopoverDismiss) onPopoverDismiss();
     };
+
+    const handleBlurCapture = (e: React.FocusEvent<HTMLElement>) => {
+        const refEl = nodeRef.current;
+        const floatingEl = popoverRef.current;
+
+        const isInside = (node: Node | null) => {
+            if (!node) return false;
+
+            if (
+                node instanceof HTMLElement &&
+                node.hasAttribute("data-floating-ui-focus-guard")
+            ) {
+                return true;
+            }
+
+            return (
+                (!!refEl && refEl.contains(node)) ||
+                (!!floatingEl && floatingEl.contains(node))
+            );
+        };
+
+        const next = e.relatedTarget as Node | null;
+
+        if (next && isInside(next)) return;
+
+        requestAnimationFrame(() => {
+            const active = document.activeElement as HTMLElement | null;
+
+            if (active && isInside(active)) return;
+
+            setVisible(false);
+            handleVisibilityChange(false);
+        });
+    };
+
     const focusFirstItemOnTab = () => {
         const floatingEl = popoverRef.current;
         if (!floatingEl) return;
@@ -200,6 +235,7 @@ export const PopoverTrigger = ({
                                 refs.setFloating(node);
                             }}
                             tabIndex={-1}
+                            onBlurCapture={handleBlurCapture}
                             style={{
                                 ...floatingStyles,
                                 outline: "none",
