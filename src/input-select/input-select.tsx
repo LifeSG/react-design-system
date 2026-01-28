@@ -53,7 +53,7 @@ export const InputSelect = <T, V>({
     alignment,
     dropdownZIndex,
     dropdownRootNode,
-    dropdownWidth
+    dropdownWidth,
 }: InputSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE

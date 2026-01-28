@@ -20,6 +20,7 @@ export const PhoneNumberInput = ({
     onShowOptions,
     placeholder,
     autoComplete,
+    noBorder = false,
     ...otherProps
 }: PhoneNumberInputProps) => {
     // =============================================================================
@@ -168,6 +169,7 @@ export const PhoneNumberInput = ({
             inputMode="numeric"
             autoComplete={autoComplete}
             aria-label="Enter phone number"
+            noBorder={noBorder}
             {...otherProps}
         />
     );

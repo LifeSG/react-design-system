@@ -51,7 +51,7 @@ export const InputMultiSelect = <T, V>({
     dropdownZIndex,
     maxSelectable,
     dropdownRootNode,
-    dropdownWidth
+    dropdownWidth,
 }: InputMultiSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
