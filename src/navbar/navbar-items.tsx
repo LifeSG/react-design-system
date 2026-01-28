@@ -104,9 +104,98 @@ export const NavbarItems = <T,>({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderSubMenu = (subMenu: NavItemCommonProps<T>[]) => (
+    const renderSubMenu = (
+        subMenu: NavItemCommonProps<T>[],
+        parentIndex: number
+    ) => (
         <Menu.Content>
-            <Menu.Section showDivider={false}>
+            <Menu.Section
+                showDivider={false}
+                onKeyDownCapture={(e: React.KeyboardEvent<HTMLElement>) => {
+                    const container = e.currentTarget;
+
+                    const focusables = Array.from(
+                        container.querySelectorAll<HTMLElement>(
+                            'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                        )
+                    ).filter(
+                        (el) =>
+                            !el.hasAttribute("disabled") && el.tabIndex !== -1
+                    );
+
+                    if (!focusables.length) return;
+
+                    const active = document.activeElement as HTMLElement | null;
+                    const idx = active ? focusables.indexOf(active) : -1;
+
+                    const isNextKey =
+                        e.key === "ArrowDown" || e.key === "ArrowRight";
+                    const isPrevKey =
+                        e.key === "ArrowUp" || e.key === "ArrowLeft";
+
+                    if (isNextKey || isPrevKey) {
+                        e.preventDefault();
+
+                        const delta = isNextKey ? 1 : -1;
+
+                        const start =
+                            idx === -1
+                                ? isNextKey
+                                    ? 0
+                                    : focusables.length - 1
+                                : (idx + delta + focusables.length) %
+                                  focusables.length;
+
+                        focusables[start].focus();
+                        return;
+                    }
+
+                    if (e.key === "Tab") {
+                        const first = focusables[0];
+                        const last = focusables[focusables.length - 1];
+
+                        if (e.shiftKey) {
+                            e.preventDefault();
+
+                            if (active && active !== first && idx > 0) {
+                                focusables[idx - 1].focus();
+                                return;
+                            }
+
+                            const prevTop =
+                                topLevelRefs.current[parentIndex - 1];
+                            if (prevTop) {
+                                prevTop.focus();
+                                setOpenSubMenuIndex(null);
+                            } else {
+                                topLevelRefs.current[parentIndex]?.focus();
+                                setOpenSubMenuIndex(null);
+                            }
+                            return;
+                        }
+
+                        if (!e.shiftKey) {
+                            if (active && active !== last && idx >= 0) {
+                                e.preventDefault();
+                                focusables[
+                                    Math.min(idx + 1, focusables.length - 1)
+                                ].focus();
+                                return;
+                            }
+
+                            const nextTop =
+                                topLevelRefs.current[parentIndex + 1];
+
+                            if (nextTop) {
+                                e.preventDefault();
+                                nextTop.focus();
+                                setOpenSubMenuIndex(null);
+                            }
+                            return;
+                        }
+                    }
+                }}
+            >
                 {subMenu.map((item, subIndex) => (
                     <Menu.Link key={`${item.id}-${subIndex}`} href={item.href}>
                         {item.children}
@@ -115,7 +204,6 @@ export const NavbarItems = <T,>({
             </Menu.Section>
         </Menu.Content>
     );
-
     const renderItems = () =>
         items.map((item, index) => {
             switch (item.itemType) {
@@ -234,6 +322,7 @@ export const NavbarItems = <T,>({
                                 <Menu
                                     position={"bottom"}
                                     customOffset={0}
+                                    menuContent={renderSubMenu(subMenu!, index)}
                                     triggerOnFocus
                                     isModal={false}
                                     onPopoverAppear={() =>
@@ -253,7 +342,7 @@ export const NavbarItems = <T,>({
                             {mobile &&
                                 hasSubMenu &&
                                 expanded &&
-                                renderSubMenu(subMenu!)}
+                                renderSubMenu(subMenu!, index)}
                         </LinkItem>
                     );
                 }
