@@ -41,7 +41,30 @@ export const NavbarItems = <T,>({
     // =============================================================================
     const [selectedIndex, setSelectedIndex] = useState<number>(-1);
     const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
-    const ref = useRef<HTMLUListElement>(null);
+    const [openSubMenuIndex, setOpenSubMenuIndex] = useState<number | null>(
+        null
+    );
+    const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+    const listRef = useRef<HTMLUListElement>(null);
+    const topLevelRefs = useRef<Array<HTMLElement | null>>([]);
+
+    // =============================================================================
+    // HELPERS
+    // =============================================================================
+    const resetAll = () => {
+        setShowSubMenu(false);
+        setSelectedIndex(-1);
+        setOpenSubMenuIndex(null);
+        setFocusedIndex(null);
+    };
+
+    const checkSelected = (item: NavItemLinkProps<T>): boolean => {
+        if (item.id === selectedId) return true;
+        if (item.subMenu?.length) {
+            return !!item.subMenu.find((s) => s.id === selectedId);
+        }
+        return false;
+    };
 
     // =============================================================================
     // EFFECTS
@@ -100,8 +123,17 @@ export const NavbarItems = <T,>({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderItems = () => {
-        return items.map((item, index) => {
+    const renderSubMenu = (subMenu: NavItemCommonProps<T>[]) => (
+        <Menu.Content>
+            <Menu.Section showDivider={false}>
+                {subMenu.map((item, subIndex) => (
+                    <Menu.Link key={`${item.id}-${subIndex}`} href={item.href}>
+                        {item.children}
+                    </Menu.Link>
+                ))}
+            </Menu.Section>
+        </Menu.Content>
+    );
             switch (item.itemType) {
                 case "component": {
                     const component = (item && item.children) || null;
