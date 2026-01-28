@@ -23,10 +23,6 @@ export const SectionContainer = styled.div`
     gap: ${Spacing["spacing-16"]};
 `;
 
-export const TitleWrapper = styled.div``;
-
-export const InputSectionWrapper = styled.div``;
-
 export const ReSendMessage = styled(Typography.BodyMD)`
     color: ${Colour["text-subtlest"]};
 `;
@@ -39,4 +35,5 @@ export const VerifyInputWrapper = styled.div`
 
 export const VerifyButton = styled(Button.Default)`
     flex-shrink: 0;
+    width: 83px;
 `;

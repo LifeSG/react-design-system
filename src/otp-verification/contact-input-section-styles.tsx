@@ -3,7 +3,7 @@ import { Button } from "../button";
 import { InputGroup } from "../input-group";
 import { PhoneNumberInput } from "../phone-number-input";
 import { InputWrapperStyleProps } from "../shared/input-wrapper";
-import { Colour, Motion, Spacing } from "../theme";
+import { Colour, Spacing } from "../theme";
 import { ThemeButton } from "../theme/components/theme-helper";
 
 // =============================================================================
@@ -12,12 +12,6 @@ import { ThemeButton } from "../theme/components/theme-helper";
 interface ContactInputWrapperStyleProps {
     $isMaxWidth?: boolean;
     $error?: boolean;
-    $verified?: boolean;
-}
-
-interface ContactButtonWrapperStyleProps {
-    $isVerified: boolean;
-    $isCountdownRunning?: boolean;
 }
 
 // =============================================================================
@@ -71,7 +65,6 @@ export const VerifiedIconWrapper = styled.div`
     padding: 0 ${Spacing["spacing-12"]};
     color: ${Colour["icon-success"]};
     flex-shrink: 0;
-    height: 100%;
 
     svg {
         width: 1.25rem;
@@ -79,77 +72,22 @@ export const VerifiedIconWrapper = styled.div`
     }
 `;
 
-export const ContactButton = styled(
-    Button.Default
-)<ContactButtonWrapperStyleProps>`
+export const ContactButton = styled(Button.Default)`
     min-width: 120px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     flex-shrink: 0;
-
-    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
-
-    ${(props) => {
-        if (props.$isVerified) {
-            return css`
-                background-color: ${Colour["bg-disabled"]};
-                cursor: not-allowed;
-                &:hover {
-                    box-shadow: none;
-                }
-                color: ${Colour["text-disabled"]};
-            `;
-        }
-        if (props.$isCountdownRunning) {
-            return css`
-                background-color: ${Colour["bg-disabled"]};
-            `;
-        } else {
-            return css`
-                background-color: ${ThemeButton["button-default-colour-bg"]};
-                &:hover,
-                &:active {
-                    @media (pointer: fine) {
-                        background-color: ${ThemeButton[
-                            "button-default-colour-bg-hover"
-                        ]};
-                    }
-                }
-            `;
-        }
-    }}
 `;
 
-const contactInputStyles = css<
-    InputWrapperStyleProps & { $verified?: boolean }
->`
-    border: none;
-    border-radius: 0;
-    position: relative;
+export const EmailContactInput = styled(InputGroup)<InputWrapperStyleProps>`
+    padding: 0 ${Spacing["spacing-16"]};
+    width: 100%;
+    background: transparent;
+`;
+
+export const PhoneContactInput = styled(
+    PhoneNumberInput
+)<InputWrapperStyleProps>`
     padding: 0 ${Spacing["spacing-16"]};
     background: transparent;
-
-    ${(props) =>
-        props.$verified &&
-        css`
-            padding-right: 0;
-            input {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-        `}
-`;
-
-export const EmailContactInput = styled(InputGroup)<
-    InputWrapperStyleProps & { $verified?: boolean }
->`
-    ${contactInputStyles}
-    width: 100%;
-`;
-
-export const PhoneContactInput = styled(PhoneNumberInput)<
-    InputWrapperStyleProps & { $verified?: boolean }
->`
-    ${contactInputStyles}
 `;

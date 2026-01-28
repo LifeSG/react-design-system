@@ -110,15 +110,10 @@ export const ContactInputSection = ({
                 <ContactInputWrapper
                     $isMaxWidth={type === "email"}
                     $error={!!sendOtpError}
-                    $verified={isVerified}
                 >
                     {renderContactInput()}
                     {isVerified && (
-                        <VerifiedIconWrapper
-                            className="contact-verified-icon"
-                            aria-label="Verified"
-                            role="img"
-                        >
+                        <VerifiedIconWrapper aria-label="Verified" role="img">
                             <TickCircleFillIcon />
                         </VerifiedIconWrapper>
                     )}
@@ -136,8 +131,6 @@ export const ContactInputSection = ({
                         isVerified
                     }
                     loading={isLoading}
-                    $isVerified={isVerified}
-                    $isCountdownRunning={countdown.isRunning}
                 >
                     {getContactButtonText()}
                 </ContactButton>

@@ -38,6 +38,11 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["() => Promise<void>"],
             },
             {
+                name: "onOtpChange",
+                description: "Called when OTP input value changes",
+                propTypes: ["(value: string) => void"],
+            },
+            {
                 name: "onVerifyOtp",
                 description: "Called when OTP verification is submitted",
                 propTypes: ["(otp: string) => Promise<void>"],
@@ -58,28 +63,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(state: OtpVerificationState) => void"],
             },
             {
-                name: "isLoading",
-                description: "Whether the send OTP operation is in progress",
-                propTypes: ["boolean"],
-            },
-            {
-                name: "onLoadingChange",
-                description: "Called when loading state changes",
-                propTypes: ["(loading: boolean) => void"],
-            },
-            {
-                name: "isVerifyLoading",
-                description: "Whether the verify OTP operation is in progress",
-                propTypes: ["boolean"],
-            },
-            {
-                name: "onVerifyLoadingChange",
-                description: "Called when verify loading state changes",
-                propTypes: ["(loading: boolean) => void"],
-            },
-            {
                 name: "sendOtpError",
                 description: "Error message for send OTP step",
+                propTypes: ["string"],
+            },
+            {
+                name: "sendOtpPlaceholder",
+                description: "Placeholder text for the contact input field",
                 propTypes: ["string"],
             },
             {
@@ -99,9 +89,22 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "showVerifyOtpThumbnail",
-                description: "Whether to show the icon in verify OTP step",
+                description: "Whether to show the thumbnail in verify OTP step",
                 propTypes: ["boolean"],
                 defaultValue: "false",
+            },
+            {
+                name: "verifyOtpIcon",
+                description: "Custom icon for the verify OTP step",
+                propTypes: ["React.ReactNode"],
+            },
+            {
+                name: "otpValue",
+                description:
+                    "Current OTP input value with prefix and separator",
+                propTypes: [
+                    "{ prefix?: string; separator?: string; value?: string }",
+                ],
             },
             {
                 name: "verifyOtpCountdownTimer",
@@ -109,12 +112,6 @@ const DATA: ApiTableSectionProps[] = [
                     "Countdown timer in seconds before allowing resend",
                 propTypes: ["number"],
                 defaultValue: "60",
-            },
-            {
-                name: "otpLength",
-                description: "Number of OTP input fields",
-                propTypes: ["number"],
-                defaultValue: "6",
             },
             {
                 name: "className",
@@ -132,19 +129,19 @@ const DATA: ApiTableSectionProps[] = [
         name: "OtpVerificationState",
         attributes: [
             {
-                name: "DEFAULT",
+                name: '"default"',
                 description: "Initial state - contact input is shown",
-                propTypes: ["enum value"],
+                propTypes: ["string literal"],
             },
             {
-                name: "OTP_SENT",
+                name: '"sent"',
                 description: "OTP has been sent - verification input is shown",
-                propTypes: ["enum value"],
+                propTypes: ["string literal"],
             },
             {
-                name: "VERIFIED",
+                name: '"verified"',
                 description: "OTP has been successfully verified",
-                propTypes: ["enum value"],
+                propTypes: ["string literal"],
             },
         ],
     },

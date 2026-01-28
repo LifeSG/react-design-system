@@ -7,10 +7,8 @@ import { Typography } from "../typography";
 import { VerificationSectionProps } from "./internal-types";
 import { EmailThumbnail, PhoneThumbnail } from "./thumbnail";
 import {
-    InputSectionWrapper,
     ReSendMessage,
     SectionContainer,
-    TitleWrapper,
     VerificationSectionWrapper,
     VerifyButton,
     VerifyInputWrapper,
@@ -66,7 +64,7 @@ export const VerificationSection = ({
         >
             {renderThumbnail()}
             <SectionContainer>
-                <TitleWrapper>
+                <div>
                     <Typography.BodyMD
                         weight="semibold"
                         id={id ? `${id}-title` : undefined}
@@ -85,8 +83,8 @@ export const VerificationSection = ({
                     >
                         {verifyOtpMessage}
                     </Typography.BodyMD>
-                </TitleWrapper>
-                <InputSectionWrapper>
+                </div>
+                <div>
                     <VerifyInputWrapper>
                         <InputGroup
                             id={id ? `${id}-verify-input` : undefined}
@@ -138,10 +136,9 @@ export const VerificationSection = ({
                             {verifyOtpError}
                         </FormErrorMessage>
                     )}
-                </InputSectionWrapper>
+                </div>
                 {countdown.isRunning && (
                     <ReSendMessage
-                        weight="semibold"
                         id={id ? `${id}-countdown` : undefined}
                         data-testid={
                             dataTestId ? `${dataTestId}-countdown` : undefined
