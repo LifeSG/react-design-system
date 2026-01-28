@@ -70,17 +70,26 @@ export const LinkItem = styled.li<ItemStyleProps>`
 `;
 
 export const Link = styled(Typography.LinkMD)<StyleProps>`
+    background: none;
+    border: none;
+    margin: 0;
+    box-shadow: none;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+
+    padding: 0 0.5rem;
+
     display: flex;
     position: relative;
     align-items: center;
     text-align: center;
     color: ${ThemeNavbar["navbar-link-colour-text"]};
     height: 100%;
-    padding: 0 0.5rem;
 
     &:active,
-    &:focus,
-    &:hover {
+    &:hover,
+    &:focus {
         color: ${(props) =>
             props.$selected
                 ? ThemeNavbar["navbar-link-colour-text-selected-hover"]
