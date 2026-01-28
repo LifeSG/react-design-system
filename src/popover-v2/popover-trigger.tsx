@@ -10,10 +10,11 @@ import {
     useClick,
     useDismiss,
     useFloating,
+    useFocus,
     useHover,
     useInteractions,
 } from "@floating-ui/react";
-import { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { useFloatingChild } from "../overlay/use-floating-context";
@@ -38,6 +39,8 @@ export const PopoverTrigger = ({
     enableFlip = true,
     enableResize = false,
     overflow = "auto",
+    triggerOnFocus = false,
+    isModal = true,
     ...otherProps
 }: PopoverV2TriggerProps) => {
     // =========================================================================
@@ -100,10 +103,15 @@ export const PopoverTrigger = ({
         },
     });
 
+    const focus = useFocus(context, {
+        enabled: triggerOnFocus,
+    });
+
     const { getReferenceProps, getFloatingProps } = useInteractions([
         click,
         dismiss,
         hover,
+        focus,
     ]);
 
     // =========================================================================
@@ -117,6 +125,18 @@ export const PopoverTrigger = ({
     const handleVisibilityChange = (nextVisible: boolean) => {
         if (nextVisible && onPopoverAppear) onPopoverAppear();
         if (!nextVisible && onPopoverDismiss) onPopoverDismiss();
+    };
+    const focusFirstItemOnTab = () => {
+        const floatingEl = popoverRef.current;
+        if (!floatingEl) return;
+
+        const focusables = Array.from(
+            floatingEl.querySelectorAll<HTMLElement>(
+                'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            )
+        ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
+
+        focusables[0]?.focus();
     };
 
     // =========================================================================
@@ -156,6 +176,11 @@ export const PopoverTrigger = ({
                         event.stopPropagation();
                         event.preventDefault();
                     },
+                    onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
+                        if (visible && e.key === "Tab" && !e.shiftKey) {
+                            focusFirstItemOnTab();
+                        }
+                    },
                 })}
                 {...otherProps}
             >
@@ -163,12 +188,18 @@ export const PopoverTrigger = ({
             </TriggerContainer>
             {visible && (
                 <FloatingPortal root={rootNode}>
-                    <FloatingFocusManager context={context}>
+                    <FloatingFocusManager
+                        context={context}
+                        initialFocus={-1}
+                        returnFocus={false}
+                        modal={isModal}
+                    >
                         <div
                             ref={(node) => {
                                 popoverRef.current = node;
                                 refs.setFloating(node);
                             }}
+                            tabIndex={-1}
                             style={{
                                 ...floatingStyles,
                                 outline: "none",

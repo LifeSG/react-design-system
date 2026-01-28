@@ -234,7 +234,8 @@ export const NavbarItems = <T,>({
                                 <Menu
                                     position={"bottom"}
                                     customOffset={0}
-                                    menuContent={renderSubMenu(subMenu!)}
+                                    triggerOnFocus
+                                    isModal={false}
                                     onPopoverAppear={() =>
                                         setOpenSubMenuIndex(index)
                                     }
