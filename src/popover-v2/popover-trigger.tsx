@@ -234,7 +234,6 @@ export const PopoverTrigger = ({
                                 popoverRef.current = node;
                                 refs.setFloating(node);
                             }}
-                            tabIndex={-1}
                             onBlurCapture={handleBlurCapture}
                             style={{
                                 ...floatingStyles,

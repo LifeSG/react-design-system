@@ -27,7 +27,7 @@ type MenuSectionItem =
     | ReactElement<typeof MenuItem>
     | ReactElement<typeof MenuLink>;
 
-export interface MenuSectionProps extends HTMLAttributes<HTMLDivElement> {
+export interface MenuSectionProps extends HTMLAttributes<HTMLUListElement> {
     children: MenuSectionItem | MenuSectionItem[];
     showDivider?: boolean | undefined;
     label?: string | undefined;
