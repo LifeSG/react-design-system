@@ -202,6 +202,26 @@ export const ListAddon: StoryObj<Component> = {
                     noBorder
                 />
                 <Form.InputGroup
+                    label="With a list addon on the right and no border wrapper"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "list",
+                        attributes: listAddonOptions,
+                        position: "right",
+                    }}
+                    noBorder
+                />
+                <Form.InputGroup
+                    label="With a list addon, no border wrapper, and disabled"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "list",
+                        attributes: listAddonOptions,
+                    }}
+                    noBorder
+                    disabled
+                />
+                <Form.InputGroup
                     label="This is the list addon readonly state (pristine)"
                     placeholder="Enter something"
                     addon={{
