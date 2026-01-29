@@ -186,6 +186,48 @@ describe("PredictiveTextInput", () => {
         expect(mockOnSelectOption).toHaveBeenCalledWith(undefined, undefined);
     });
 
+    it("should fetch and display options correctly when input contains space", async () => {
+        const user = userEvent.setup({
+            advanceTimers: jest.advanceTimersByTime,
+        });
+        const mockFetchOptions = jest.fn().mockImplementation(
+            () =>
+                new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(OPTIONS);
+                    }, FETCH_DELAY);
+                })
+        );
+
+        render(
+            <PredictiveTextInput
+                data-testid={FIELD_TESTID}
+                fetchOptions={mockFetchOptions}
+            />
+        );
+
+        await user.type(
+            screen.getByPlaceholderText("Enter here..."),
+            "hello world"
+        );
+        jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
+
+        expect(mockFetchOptions).toHaveBeenCalledWith("hello world");
+
+        await waitFor(() => {
+            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+            expect(screen.getByText("Loading...")).toBeVisible();
+        });
+
+        await act(async () => {
+            jest.advanceTimersByTime(FETCH_DELAY);
+        });
+
+        expect(screen.getByText("Option 1")).toBeVisible();
+        expect(screen.getByText("Option 2")).toBeVisible();
+        expect(screen.getByText("Option 3")).toBeVisible();
+    });
+
     it("readOnly", async () => {
         const user = userEvent.setup({
             advanceTimers: jest.advanceTimersByTime,
