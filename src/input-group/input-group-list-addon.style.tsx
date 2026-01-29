@@ -12,6 +12,7 @@ interface StyleProps {
     $readOnly?: boolean;
     $expanded?: boolean;
     $position?: InputGroupAddonPosition;
+    $noBorder?: boolean;
 }
 
 interface DividerStyleProps {
@@ -38,6 +39,25 @@ export const FieldWrapper = styled(InputBox)<StyleProps>`
                 `;
         }
     }}
+
+    ${(props) => {
+        if (props.$noBorder) {
+            switch (props.$position) {
+                case "right":
+                    return css`
+                        button[role="combobox"] {
+                            padding-right: 0;
+                        }
+                    `;
+                default:
+                    return css`
+                        button[role="combobox"] {
+                            padding-left: 0;
+                        }
+                    `;
+            }
+        }
+    }}
 `;
 
 export const FieldSelector = styled.div`
@@ -50,6 +70,19 @@ export const FieldInput = styled(Input)<StyleProps>`
             return css`
                 padding: 0;
             `;
+        }
+
+        if (props.$noBorder) {
+            switch (props.$position) {
+                case "right":
+                    return css`
+                        padding-left: 0;
+                    `;
+                default:
+                    return css`
+                        padding-right: 0;
+                    `;
+            }
         }
 
         switch (props.$position) {

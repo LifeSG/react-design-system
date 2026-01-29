@@ -313,6 +313,7 @@ export const Component = <T, V>(
                     ref={ref}
                     {...otherProps}
                     $position={position}
+                    $noBorder={noBorder}
                     readOnly={readOnly}
                     disabled={disabled}
                     error={error}
