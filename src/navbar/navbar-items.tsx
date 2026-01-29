@@ -251,6 +251,7 @@ export const NavbarItems = <T,>({
                             ref={(el: HTMLElement | null) => {
                                 topLevelRefs.current[index] = el;
                             }}
+                            tabIndex={0}
                             as={isSubMenuTrigger ? "button" : "a"}
                             type={isSubMenuTrigger ? "button" : undefined}
                             data-testid={testId}
