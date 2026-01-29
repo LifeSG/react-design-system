@@ -4,27 +4,40 @@ import { MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography/typography";
 
 // =============================================================================
-// WRAPPER
+// COMMONS
 // =============================================================================
-export const Wrapper = styled.ul`
+const baseWrapperCss = css`
     display: flex;
-    list-style: none;
     margin-left: ${Spacing["spacing-64"]};
     flex-shrink: 0;
+`;
+
+const ulResetCss = css`
+    list-style: none;
+    padding: 0;
+    margin: 0;
+`;
+
+// =============================================================================
+// WRAPPERS
+// =============================================================================
+export const DesktopActionsWrapper = styled.div`
+    ${baseWrapperCss};
+
+    ${(props) => (props.as === "ul" ? ulResetCss : "")}
 
     ${MediaQuery.MaxWidth.lg} {
         display: none;
     }
 `;
 
-export const MobileWrapper = styled.ul`
+export const MobileActionsWrapper = styled.div`
     display: none;
 
     ${MediaQuery.MaxWidth.lg} {
-        display: flex;
-        list-style: none;
-        margin-left: ${Spacing["spacing-64"]};
-        flex-shrink: 0;
+        ${baseWrapperCss};
+
+        ${(props) => (props.as === "ul" ? ulResetCss : "")}
     }
 `;
 

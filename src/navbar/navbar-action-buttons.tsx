@@ -4,13 +4,13 @@ import { ButtonProps } from "../button/types";
 import {
     ActionButton,
     ButtonItem,
+    DesktopActionsWrapper,
     DownloadAppImageLink,
     DownloadAppImageLinkWrapper,
     DownloadAppTitle,
     DownloadAppWrapper,
     DrawerWrapper,
-    MobileWrapper,
-    Wrapper,
+    MobileActionsWrapper,
 } from "./navbar-action-buttons.styles";
 import { NavbarActionButtonsProps, NavbarButtonProps } from "./types";
 
@@ -41,17 +41,14 @@ export const NavbarActionButtons = ({
     const handleDownloadAppImageLinkClick = (
         event: React.MouseEvent<HTMLAnchorElement>
     ) => {
-        /**
-         * Have to do this to prevent the Overlay
-         * from picking the click, causing the action
-         * to not be run
-         */
+        // prevent overlay from intercepting
         event.stopPropagation();
     };
 
     const handleActionButtonClick = (actionButton: NavbarButtonProps) => {
         return (event: React.MouseEvent<HTMLButtonElement>) => {
-            event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
+            event.stopPropagation();
+
             if (actionButton.type === "download") {
                 window.scrollTo({
                     left: 0,
@@ -75,13 +72,9 @@ export const NavbarActionButtons = ({
         });
 
         if (downloadButtonIndex > -1) {
-            const updatedButtons = [...actionButtons];
-            const removedButtons = updatedButtons.splice(
-                downloadButtonIndex,
-                1
-            );
-
-            return [...updatedButtons, removedButtons[0]];
+            const updated = [...actionButtons];
+            const [removed] = updated.splice(downloadButtonIndex, 1);
+            return [...updated, removed];
         }
 
         return actionButtons;
@@ -122,7 +115,8 @@ export const NavbarActionButtons = ({
 
     const renderButtons = (
         isMobile: boolean,
-        actionButtonList: NavbarButtonProps[]
+        actionButtonList: NavbarButtonProps[],
+        itemTag: "li" | "div"
     ) => {
         /**
          * In drawer view, download app button will always be at
@@ -176,54 +170,77 @@ export const NavbarActionButtons = ({
                     break;
             }
 
-            if (component) {
-                return (
-                    <ButtonItem
-                        key={`action-button-${index + 1}`}
-                        $mobile={isMobile}
-                    >
-                        {component}
-                    </ButtonItem>
-                );
-            }
+            if (!component) return null;
+
+            return (
+                <ButtonItem
+                    as={itemTag}
+                    key={`action-button-${index + 1}`}
+                    $mobile={isMobile}
+                >
+                    {component}
+                </ButtonItem>
+            );
         });
     };
 
-    if (actionButtons) {
-        const actionButtonList = actionButtons?.mobile || actionButtons.desktop;
-        const uncollapsableActionButtons = actionButtonList.filter(
-            (actionButton) => !!actionButton.uncollapsible
+    const renderActions = (
+        WrapperComp: typeof DesktopActionsWrapper,
+        buttons: NavbarButtonProps[],
+        renderMobileArg: boolean
+    ) => {
+        if (!buttons.length) return null;
+
+        const wrapperTag: "div" | "ul" = buttons.length === 1 ? "div" : "ul";
+        const itemTag: "div" | "li" = buttons.length === 1 ? "div" : "li";
+
+        return (
+            <WrapperComp as={wrapperTag}>
+                {renderButtons(renderMobileArg, buttons, itemTag)}
+            </WrapperComp>
         );
-        const collapsableActionButtons = actionButtonList.filter(
-            (actionButton) => !actionButton.uncollapsible
+    };
+
+    // =============================================================================
+    // MAIN RENDER
+    // =============================================================================
+    if (!actionButtons) return <></>;
+
+    const actionButtonList = actionButtons.mobile || actionButtons.desktop;
+
+    const uncollapsableActionButtons = actionButtonList.filter(
+        (actionButton) => !!actionButton.uncollapsible
+    );
+
+    const collapsableActionButtons = actionButtonList.filter(
+        (actionButton) => !actionButton.uncollapsible
+    );
+
+    if (mobile) {
+        return (
+            <>
+                {collapsableActionButtons.length > 0 && (
+                    <DrawerWrapper>
+                        {/* Drawer is always a list, so items are li */}
+                        {renderButtons(true, collapsableActionButtons, "li")}
+                    </DrawerWrapper>
+                )}
+            </>
         );
-        if (mobile) {
-            return (
-                <>
-                    {collapsableActionButtons.length > 0 && (
-                        <DrawerWrapper>
-                            {renderButtons(mobile, collapsableActionButtons)}
-                        </DrawerWrapper>
-                    )}
-                </>
-            );
-        } else {
-            return (
-                <>
-                    {uncollapsableActionButtons.length > 0 && (
-                        <MobileWrapper>
-                            {renderButtons(false, uncollapsableActionButtons)}
-                        </MobileWrapper>
-                    )}
-                    {actionButtons.desktop.length > 0 && (
-                        <Wrapper>
-                            {renderButtons(mobile, actionButtons.desktop)}
-                        </Wrapper>
-                    )}
-                </>
-            );
-        }
     }
 
-    return <></>;
+    return (
+        <>
+            {renderActions(
+                MobileActionsWrapper,
+                uncollapsableActionButtons,
+                false
+            )}
+            {renderActions(
+                DesktopActionsWrapper,
+                actionButtons.desktop,
+                mobile
+            )}
+        </>
+    );
 };
