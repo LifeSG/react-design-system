@@ -73,7 +73,6 @@ export const BoxContainer = ({
                     style={expandableStyles}
                     data-testid={"expandable-container"}
                     id={contentId}
-                    aria-labelledby={headerId}
                 >
                     <ChildContainer
                         ref={childRef}
