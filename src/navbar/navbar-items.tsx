@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TypographyWeight } from "../typography";
-import { Menu } from "src/menu";
+import { Menu as DesktopMenu } from "src/menu";
+import { Menu as MobileMenu } from "./menu";
+
 import {
     ChevronIcon,
     ExpandCollapseButton,
@@ -58,6 +60,11 @@ export const NavbarItems = <T,>({
         setFocusedIndex(null);
     };
 
+    const closeMobileSubMenu = () => {
+        setShowSubMenu(false);
+        setSelectedIndex(-1);
+    };
+
     const checkSelected = (item: NavItemLinkProps<T>): boolean => {
         if (item.id === selectedId) return true;
         if (item.subMenu?.length) {
@@ -101,15 +108,24 @@ export const NavbarItems = <T,>({
         };
     };
 
+    const handleSubLinkClick = (
+        event: React.MouseEvent<HTMLAnchorElement>,
+        item: NavItemCommonProps<T>
+    ) => {
+        event.stopPropagation();
+        onItemClick(event, item);
+        closeMobileSubMenu();
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderSubMenu = (
+    const renderDesktopSubMenu = (
         subMenu: NavItemCommonProps<T>[],
         parentIndex: number
     ) => (
-        <Menu.Content>
-            <Menu.Section
+        <DesktopMenu.Content>
+            <DesktopMenu.Section
                 showDivider={false}
                 onKeyDownCapture={(e: React.KeyboardEvent<HTMLElement>) => {
                     const container = e.currentTarget;
@@ -197,13 +213,24 @@ export const NavbarItems = <T,>({
                 }}
             >
                 {subMenu.map((item, subIndex) => (
-                    <Menu.Link key={`${item.id}-${subIndex}`} href={item.href}>
+                    <DesktopMenu.Link
+                        key={`${item.id}-${subIndex}`}
+                        href={item.href}
+                    >
                         {item.children}
-                    </Menu.Link>
+                    </DesktopMenu.Link>
                 ))}
-            </Menu.Section>
-        </Menu.Content>
+            </DesktopMenu.Section>
+        </DesktopMenu.Content>
     );
+
+    const renderMobileSubMenu = (subMenu: NavItemCommonProps<T>[]) => (
+        <MobileMenu items={subMenu} onItemClick={handleSubLinkClick} />
+    );
+
+    // =============================================================================
+    // RENDER
+    // =============================================================================
     const renderItems = () =>
         items.map((item, index) => {
             switch (item.itemType) {
@@ -320,10 +347,13 @@ export const NavbarItems = <T,>({
                             }}
                         >
                             {isSubMenuTrigger ? (
-                                <Menu
+                                <DesktopMenu
                                     position={"bottom"}
                                     customOffset={0}
-                                    menuContent={renderSubMenu(subMenu!, index)}
+                                    menuContent={renderDesktopSubMenu(
+                                        subMenu!,
+                                        index
+                                    )}
                                     triggerOnFocus
                                     isModal={false}
                                     onPopoverAppear={() =>
@@ -334,16 +364,15 @@ export const NavbarItems = <T,>({
                                     }
                                 >
                                     {subMenuChildren}
-                                </Menu>
+                                </DesktopMenu>
                             ) : (
                                 subMenuChildren
                             )}
 
-                            {/* MOBILE inline submenu */}
                             {mobile &&
                                 hasSubMenu &&
                                 expanded &&
-                                renderSubMenu(subMenu!, index)}
+                                renderMobileSubMenu(subMenu!)}
                         </LinkItem>
                     );
                 }
