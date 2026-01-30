@@ -46,11 +46,6 @@ const navItems: NavItemProps<undefined>[] = [
         children: "LifeSG app",
         href: "https://www.life.gov.sg",
     },
-    {
-        id: "icon",
-        children: <MagnifierIcon height={24} width={24} aria-label="Search" />,
-        href: "",
-    },
 ];
 
 const actionButtons: NavbarButtonProps[] = [{ type: "download" }];
@@ -277,6 +272,17 @@ export const CustomItems: StoryObj<Component> = {
                         {
                             id: "home",
                             children: "Home",
+                        },
+                        {
+                            id: "icon",
+                            children: (
+                                <MagnifierIcon
+                                    height={24}
+                                    width={24}
+                                    aria-label="Search"
+                                />
+                            ),
+                            href: "",
                         },
                         {
                             itemType: "component",
