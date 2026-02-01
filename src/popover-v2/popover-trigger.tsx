@@ -55,6 +55,8 @@ export const PopoverTrigger = ({
     const [availableHeight, setAvailableHeight] = useState(0);
     const internalId = useRef(SimpleIdGenerator.generate());
     const popoverContainerId = `${internalId.current}-popover`;
+    const currentRef = nodeRef.current;
+    const floatingEl = popoverRef.current;
 
     const { refs, floatingStyles, context } = useFloating({
         open: visible,
@@ -115,6 +117,25 @@ export const PopoverTrigger = ({
     ]);
 
     // =========================================================================
+    // HELPER FUNCTIONS
+    // =========================================================================
+    const isFocusInside = (node: Node | null) => {
+        if (!node) return false;
+
+        if (
+            node instanceof HTMLElement &&
+            node.hasAttribute("data-floating-ui-focus-guard")
+        ) {
+            return true;
+        }
+
+        return (
+            (!!currentRef && currentRef.contains(node)) ||
+            (!!floatingEl && floatingEl.contains(node))
+        );
+    };
+
+    // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const handlePopoverMobileClose = () => {
@@ -128,30 +149,11 @@ export const PopoverTrigger = ({
     };
 
     const handleBlur = (e: React.FocusEvent<HTMLElement>) => {
-        const refEl = nodeRef.current;
-        const floatingEl = popoverRef.current;
-
-        const isInside = (node: Node | null) => {
-            if (!node) return false;
-
-            if (
-                node instanceof HTMLElement &&
-                node.hasAttribute("data-floating-ui-focus-guard")
-            ) {
-                return true;
-            }
-
-            return (
-                (!!refEl && refEl.contains(node)) ||
-                (!!floatingEl && floatingEl.contains(node))
-            );
-        };
-
         const next =
             (e.relatedTarget as Node | null) ??
             (document.activeElement as Node | null);
 
-        if (next && isInside(next)) return;
+        if (next && isFocusInside(next)) return;
 
         setVisible(false);
         handleVisibilityChange(false);
