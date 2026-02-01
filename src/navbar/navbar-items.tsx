@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TypographyWeight } from "../typography";
-import { Menu as DesktopMenu } from "src/menu";
+import { Menu as DesktopMenu } from "../menu";
 import { Menu as MobileMenu } from "./menu";
 
 import {
@@ -131,11 +131,10 @@ export const NavbarItems = <T,>({
         subMenuId: string
     ) => (
         <DesktopMenu.Content>
-            {/* This wrapper is what we will focus INTO (skipping any “group/guard” focus stop) */}
             <div id={subMenuId}>
                 <DesktopMenu.Section
                     showDivider={false}
-                    onKeyDownCapture={(e: React.KeyboardEvent<HTMLElement>) => {
+                    onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
                         const container = e.currentTarget;
 
                         const focusables = Array.from(
