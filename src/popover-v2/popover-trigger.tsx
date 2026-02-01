@@ -147,18 +147,14 @@ export const PopoverTrigger = ({
             );
         };
 
-        const next = e.relatedTarget as Node | null;
+        const next =
+            (e.relatedTarget as Node | null) ??
+            (document.activeElement as Node | null);
 
         if (next && isInside(next)) return;
 
-        requestAnimationFrame(() => {
-            const active = document.activeElement as HTMLElement | null;
-
-            if (active && isInside(active)) return;
-
-            setVisible(false);
-            handleVisibilityChange(false);
-        });
+        setVisible(false);
+        handleVisibilityChange(false);
     };
 
     // =========================================================================
