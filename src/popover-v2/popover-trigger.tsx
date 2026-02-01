@@ -127,7 +127,7 @@ export const PopoverTrigger = ({
         if (!nextVisible && onPopoverDismiss) onPopoverDismiss();
     };
 
-    const handleBlurCapture = (e: React.FocusEvent<HTMLElement>) => {
+    const handleBlur = (e: React.FocusEvent<HTMLElement>) => {
         const refEl = nodeRef.current;
         const floatingEl = popoverRef.current;
 
@@ -225,16 +225,18 @@ export const PopoverTrigger = ({
                 <FloatingPortal root={rootNode}>
                     <FloatingFocusManager
                         context={context}
-                        initialFocus={-1}
-                        returnFocus={false}
-                        modal={isModal}
+                        {...(!isModal && {
+                            initialFocus: -1,
+                            returnFocus: false,
+                            modal: false,
+                        })}
                     >
                         <div
                             ref={(node) => {
                                 popoverRef.current = node;
                                 refs.setFloating(node);
                             }}
-                            onBlurCapture={handleBlurCapture}
+                            onBlur={handleBlur}
                             style={{
                                 ...floatingStyles,
                                 outline: "none",
