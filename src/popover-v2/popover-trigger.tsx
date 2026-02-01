@@ -161,19 +161,6 @@ export const PopoverTrigger = ({
         });
     };
 
-    const focusFirstItemOnTab = () => {
-        const floatingEl = popoverRef.current;
-        if (!floatingEl) return;
-
-        const focusables = Array.from(
-            floatingEl.querySelectorAll<HTMLElement>(
-                'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-            )
-        ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
-
-        focusables[0]?.focus();
-    };
-
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -210,11 +197,6 @@ export const PopoverTrigger = ({
                         // prevent popover interaction from triggering click events on parents
                         event.stopPropagation();
                         event.preventDefault();
-                    },
-                    onKeyDown: (e: React.KeyboardEvent<HTMLElement>) => {
-                        if (visible && e.key === "Tab" && !e.shiftKey) {
-                            focusFirstItemOnTab();
-                        }
                     },
                 })}
                 {...otherProps}

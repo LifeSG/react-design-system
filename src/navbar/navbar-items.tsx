@@ -15,6 +15,7 @@ import {
     Wrapper,
 } from "./navbar-items.styles";
 import { NavItemCommonProps, NavItemLinkProps, NavItemProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 
 interface Props<T> {
     items: NavItemProps<T>[];
@@ -49,6 +50,10 @@ export const NavbarItems = <T,>({
     const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
     const listRef = useRef<HTMLUListElement>(null);
     const topLevelRefs = useRef<Array<HTMLElement | null>>([]);
+
+    // Used to generate stable submenu ids so we can focus into the right one.
+    const instanceIdRef = useRef<string>(SimpleIdGenerator.generate());
+    const subMenuIdsRef = useRef<Array<string | null>>([]);
 
     // =============================================================================
     // HELPERS
@@ -122,105 +127,111 @@ export const NavbarItems = <T,>({
     // =============================================================================
     const renderDesktopSubMenu = (
         subMenu: NavItemCommonProps<T>[],
-        parentIndex: number
+        parentIndex: number,
+        subMenuId: string
     ) => (
         <DesktopMenu.Content>
-            <DesktopMenu.Section
-                showDivider={false}
-                onKeyDownCapture={(e: React.KeyboardEvent<HTMLElement>) => {
-                    const container = e.currentTarget;
+            {/* This wrapper is what we will focus INTO (skipping any “group/guard” focus stop) */}
+            <div id={subMenuId}>
+                <DesktopMenu.Section
+                    showDivider={false}
+                    onKeyDownCapture={(e: React.KeyboardEvent<HTMLElement>) => {
+                        const container = e.currentTarget;
 
-                    const focusables = Array.from(
-                        container.querySelectorAll<HTMLElement>(
-                            'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-                        )
-                    ).filter(
-                        (el) =>
-                            !el.hasAttribute("disabled") && el.tabIndex !== -1
-                    );
+                        const focusables = Array.from(
+                            container.querySelectorAll<HTMLElement>(
+                                'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                            )
+                        ).filter(
+                            (el) =>
+                                !el.hasAttribute("disabled") &&
+                                el.tabIndex !== -1
+                        );
 
-                    if (!focusables.length) return;
+                        if (!focusables.length) return;
 
-                    const active = document.activeElement as HTMLElement | null;
-                    const idx = active ? focusables.indexOf(active) : -1;
+                        const active =
+                            document.activeElement as HTMLElement | null;
+                        const idx = active ? focusables.indexOf(active) : -1;
 
-                    const isNextKey =
-                        e.key === "ArrowDown" || e.key === "ArrowRight";
-                    const isPrevKey =
-                        e.key === "ArrowUp" || e.key === "ArrowLeft";
+                        const isNextKey =
+                            e.key === "ArrowDown" || e.key === "ArrowRight";
+                        const isPrevKey =
+                            e.key === "ArrowUp" || e.key === "ArrowLeft";
 
-                    if (isNextKey || isPrevKey) {
-                        e.preventDefault();
-
-                        const delta = isNextKey ? 1 : -1;
-
-                        const start =
-                            idx === -1
-                                ? isNextKey
-                                    ? 0
-                                    : focusables.length - 1
-                                : (idx + delta + focusables.length) %
-                                  focusables.length;
-
-                        focusables[start].focus();
-                        return;
-                    }
-
-                    if (e.key === "Tab") {
-                        const first = focusables[0];
-                        const last = focusables[focusables.length - 1];
-
-                        if (e.shiftKey) {
+                        if (isNextKey || isPrevKey) {
                             e.preventDefault();
 
-                            if (active && active !== first && idx > 0) {
-                                focusables[idx - 1].focus();
-                                return;
-                            }
+                            const delta = isNextKey ? 1 : -1;
 
-                            const prevTop =
-                                topLevelRefs.current[parentIndex - 1];
-                            if (prevTop) {
-                                prevTop.focus();
-                                setOpenSubMenuIndex(null);
-                            } else {
-                                topLevelRefs.current[parentIndex]?.focus();
-                                setOpenSubMenuIndex(null);
-                            }
+                            const start =
+                                idx === -1
+                                    ? isNextKey
+                                        ? 0
+                                        : focusables.length - 1
+                                    : (idx + delta + focusables.length) %
+                                      focusables.length;
+
+                            focusables[start].focus();
                             return;
                         }
 
-                        if (!e.shiftKey) {
-                            if (active && active !== last && idx >= 0) {
+                        if (e.key === "Tab") {
+                            const first = focusables[0];
+                            const last = focusables[focusables.length - 1];
+
+                            if (e.shiftKey) {
                                 e.preventDefault();
-                                focusables[
-                                    Math.min(idx + 1, focusables.length - 1)
-                                ].focus();
+
+                                if (active && active !== first && idx > 0) {
+                                    focusables[idx - 1].focus();
+                                    return;
+                                }
+
+                                const prevTop =
+                                    topLevelRefs.current[parentIndex - 1];
+                                if (prevTop) {
+                                    prevTop.focus();
+                                    setOpenSubMenuIndex(null);
+                                } else {
+                                    topLevelRefs.current[parentIndex]?.focus();
+                                    setOpenSubMenuIndex(null);
+                                }
                                 return;
                             }
 
-                            const nextTop =
-                                topLevelRefs.current[parentIndex + 1];
+                            if (!e.shiftKey) {
+                                if (active && active !== last && idx >= 0) {
+                                    e.preventDefault();
+                                    focusables[
+                                        Math.min(idx + 1, focusables.length - 1)
+                                    ].focus();
+                                    return;
+                                }
 
-                            if (nextTop) {
-                                e.preventDefault();
-                                nextTop.focus();
-                                setOpenSubMenuIndex(null);
+                                const nextTop =
+                                    topLevelRefs.current[parentIndex + 1];
+
+                                if (nextTop) {
+                                    e.preventDefault();
+                                    nextTop.focus();
+                                    setOpenSubMenuIndex(null);
+                                }
+                                return;
                             }
-                            return;
                         }
-                    }
-                }}
-            >
-                {subMenu.map((item, subIndex) => (
-                    <DesktopMenu.Link
-                        key={`${item.id}-${subIndex}`}
-                        href={item.href}
-                    >
-                        {item.children}
-                    </DesktopMenu.Link>
-                ))}
-            </DesktopMenu.Section>
+                    }}
+                >
+                    {subMenu.map((item, subIndex) => (
+                        <DesktopMenu.Link
+                            key={`${item.id}-${subIndex}`}
+                            href={item.href}
+                        >
+                            {item.children}
+                        </DesktopMenu.Link>
+                    ))}
+                </DesktopMenu.Section>
+            </div>
         </DesktopMenu.Content>
     );
 
@@ -246,6 +257,14 @@ export const NavbarItems = <T,>({
                     const hasSubMenu = !!subMenu?.length;
                     const isDesktop = !mobile;
                     const isSubMenuTrigger = isDesktop && hasSubMenu;
+
+                    // Ensure a stable submenu id for this index (desktop only)
+                    if (isSubMenuTrigger && !subMenuIdsRef.current[index]) {
+                        subMenuIdsRef.current[
+                            index
+                        ] = `navbar-submenu-${instanceIdRef.current}-${index}`;
+                    }
+                    const subMenuId = subMenuIdsRef.current[index] ?? undefined;
 
                     const isRouteSelected = checkSelected(item);
                     const isOpen =
@@ -297,6 +316,42 @@ export const NavbarItems = <T,>({
                             aria-expanded={
                                 isSubMenuTrigger ? isOpen : undefined
                             }
+                            onKeyDown={(
+                                e: React.KeyboardEvent<HTMLElement>
+                            ) => {
+                                if (!isSubMenuTrigger) return;
+
+                                if (e.key === "Tab" && !e.shiftKey) {
+                                    if (!subMenuId) return;
+
+                                    e.preventDefault();
+                                    const tryFocus = (attempt = 0) => {
+                                        const el =
+                                            document.getElementById(subMenuId);
+                                        if (!el) {
+                                            if (attempt < 3)
+                                                requestAnimationFrame(() =>
+                                                    tryFocus(attempt + 1)
+                                                );
+                                            return;
+                                        }
+
+                                        const focusables = Array.from(
+                                            el.querySelectorAll<HTMLElement>(
+                                                'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+                                            )
+                                        ).filter(
+                                            (x) =>
+                                                !x.hasAttribute("disabled") &&
+                                                x.tabIndex !== -1
+                                        );
+
+                                        focusables[0]?.focus();
+                                    };
+
+                                    requestAnimationFrame(() => tryFocus());
+                                }
+                            }}
                             onClick={
                                 isSubMenuTrigger
                                     ? undefined
@@ -352,7 +407,8 @@ export const NavbarItems = <T,>({
                                     customOffset={0}
                                     menuContent={renderDesktopSubMenu(
                                         subMenu!,
-                                        index
+                                        index,
+                                        subMenuId!
                                     )}
                                     triggerOnFocus
                                     isModal={false}
