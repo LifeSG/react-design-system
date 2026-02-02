@@ -16,7 +16,7 @@ export const MenuContent = ({
             $overflow={overflow}
             $maxHeight={maxHeight}
             data-testid={testId}
-            tabIndex={0}
+            tabIndex={-1}
             {...otherProps}
         >
             {children}

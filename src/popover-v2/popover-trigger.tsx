@@ -55,8 +55,6 @@ export const PopoverTrigger = ({
     const [availableHeight, setAvailableHeight] = useState(0);
     const internalId = useRef(SimpleIdGenerator.generate());
     const popoverContainerId = `${internalId.current}-popover`;
-    const currentRef = nodeRef.current;
-    const floatingEl = popoverRef.current;
 
     const { refs, floatingStyles, context } = useFloating({
         open: visible,
@@ -129,8 +127,11 @@ export const PopoverTrigger = ({
             return true;
         }
 
+        const refEl = nodeRef.current;
+        const floatingEl = popoverRef.current;
+
         return (
-            (!!currentRef && currentRef.contains(node)) ||
+            (!!refEl && refEl.contains(node)) ||
             (!!floatingEl && floatingEl.contains(node))
         );
     };

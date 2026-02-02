@@ -127,7 +127,6 @@ export const NavbarItems = <T,>({
     // =============================================================================
     const renderDesktopSubMenu = (
         subMenu: NavItemCommonProps<T>[],
-        parentIndex: number,
         subMenuId: string
     ) => (
         <DesktopMenu.Content>
@@ -173,51 +172,6 @@ export const NavbarItems = <T,>({
 
                             focusables[start].focus();
                             return;
-                        }
-
-                        if (e.key === "Tab") {
-                            const first = focusables[0];
-                            const last = focusables[focusables.length - 1];
-
-                            if (e.shiftKey) {
-                                e.preventDefault();
-
-                                if (active && active !== first && idx > 0) {
-                                    focusables[idx - 1].focus();
-                                    return;
-                                }
-
-                                const prevTop =
-                                    topLevelRefs.current[parentIndex - 1];
-                                if (prevTop) {
-                                    prevTop.focus();
-                                    setOpenSubMenuIndex(null);
-                                } else {
-                                    topLevelRefs.current[parentIndex]?.focus();
-                                    setOpenSubMenuIndex(null);
-                                }
-                                return;
-                            }
-
-                            if (!e.shiftKey) {
-                                if (active && active !== last && idx >= 0) {
-                                    e.preventDefault();
-                                    focusables[
-                                        Math.min(idx + 1, focusables.length - 1)
-                                    ].focus();
-                                    return;
-                                }
-
-                                const nextTop =
-                                    topLevelRefs.current[parentIndex + 1];
-
-                                if (nextTop) {
-                                    e.preventDefault();
-                                    nextTop.focus();
-                                    setOpenSubMenuIndex(null);
-                                }
-                                return;
-                            }
                         }
                     }}
                 >
@@ -321,19 +275,15 @@ export const NavbarItems = <T,>({
                                 if (!isSubMenuTrigger) return;
 
                                 if (e.key === "Tab" && !e.shiftKey) {
+                                    const isOpen = openSubMenuIndex === index;
+                                    if (!isOpen) return;
+
                                     if (!subMenuId) return;
 
-                                    e.preventDefault();
-                                    const tryFocus = (attempt = 0) => {
+                                    requestAnimationFrame(() => {
                                         const el =
                                             document.getElementById(subMenuId);
-                                        if (!el) {
-                                            if (attempt < 3)
-                                                requestAnimationFrame(() =>
-                                                    tryFocus(attempt + 1)
-                                                );
-                                            return;
-                                        }
+                                        if (!el) return;
 
                                         const focusables = Array.from(
                                             el.querySelectorAll<HTMLElement>(
@@ -346,9 +296,7 @@ export const NavbarItems = <T,>({
                                         );
 
                                         focusables[0]?.focus();
-                                    };
-
-                                    requestAnimationFrame(() => tryFocus());
+                                    });
                                 }
                             }}
                             onClick={
@@ -406,7 +354,6 @@ export const NavbarItems = <T,>({
                                     customOffset={0}
                                     menuContent={renderDesktopSubMenu(
                                         subMenu!,
-                                        index,
                                         subMenuId!
                                     )}
                                     triggerOnFocus
