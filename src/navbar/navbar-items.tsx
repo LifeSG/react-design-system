@@ -50,8 +50,6 @@ export const NavbarItems = <T,>({
     const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
     const listRef = useRef<HTMLUListElement>(null);
     const topLevelRefs = useRef<Array<HTMLElement | null>>([]);
-
-    // Used to generate stable submenu ids so we can focus into the right one.
     const instanceIdRef = useRef<string>(SimpleIdGenerator.generate());
     const subMenuIdsRef = useRef<Array<string | null>>([]);
 
@@ -129,52 +127,9 @@ export const NavbarItems = <T,>({
         subMenu: NavItemCommonProps<T>[],
         subMenuId: string
     ) => (
-        <DesktopMenu.Content>
+        <DesktopMenu.Content enableArrowNavigation>
             <div id={subMenuId}>
-                <DesktopMenu.Section
-                    showDivider={false}
-                    onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
-                        const container = e.currentTarget;
-
-                        const focusables = Array.from(
-                            container.querySelectorAll<HTMLElement>(
-                                'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-                            )
-                        ).filter(
-                            (el) =>
-                                !el.hasAttribute("disabled") &&
-                                el.tabIndex !== -1
-                        );
-
-                        if (!focusables.length) return;
-
-                        const active =
-                            document.activeElement as HTMLElement | null;
-                        const idx = active ? focusables.indexOf(active) : -1;
-
-                        const isNextKey =
-                            e.key === "ArrowDown" || e.key === "ArrowRight";
-                        const isPrevKey =
-                            e.key === "ArrowUp" || e.key === "ArrowLeft";
-
-                        if (isNextKey || isPrevKey) {
-                            e.preventDefault();
-
-                            const delta = isNextKey ? 1 : -1;
-
-                            const start =
-                                idx === -1
-                                    ? isNextKey
-                                        ? 0
-                                        : focusables.length - 1
-                                    : (idx + delta + focusables.length) %
-                                      focusables.length;
-
-                            focusables[start].focus();
-                            return;
-                        }
-                    }}
-                >
+                <DesktopMenu.Section showDivider={false}>
                     {subMenu.map((item, subIndex) => (
                         <DesktopMenu.Link
                             key={`${item.id}-${subIndex}`}
@@ -211,7 +166,6 @@ export const NavbarItems = <T,>({
                     const isDesktop = !mobile;
                     const isSubMenuTrigger = isDesktop && hasSubMenu;
 
-                    // Ensure a stable submenu id for this index (desktop only)
                     if (isSubMenuTrigger && !subMenuIdsRef.current[index]) {
                         subMenuIdsRef.current[
                             index

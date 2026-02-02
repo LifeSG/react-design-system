@@ -21,6 +21,7 @@ export interface MenuContentProps
         | ReactElement<typeof MenuSection>
         | ReactElement<typeof MenuSection>[];
     "data-testid"?: string | undefined;
+    enableArrowNavigation?: boolean | undefined;
 }
 
 type MenuSectionItem =
