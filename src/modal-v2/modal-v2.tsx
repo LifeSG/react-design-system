@@ -5,7 +5,7 @@ import {
     useInteractions,
     useTransitionStatus,
 } from "@floating-ui/react";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
 import { ModalContext } from "./modal-context";
@@ -31,6 +31,10 @@ export const ModalV2 = ({
     // =========================================================================
     const { verticalHeight, offsetTop } = useViewport();
     const containerRef = useRef<HTMLElement | null>(null);
+    const childRef = useRef<HTMLDivElement>(null);
+    const childWithRef =
+        children &&
+        React.cloneElement(children as React.ReactElement, { ref: childRef });
 
     // =========================================================================
     // FLOATING UI CONFIG
@@ -74,7 +78,7 @@ export const ModalV2 = ({
             onOverlayClick={onOverlayClick}
             id={id}
             rootId={rootComponentId}
-            containerRef={containerRef}
+            containerRef={childRef}
             zIndex={zIndex}
         >
             <Container
@@ -102,7 +106,7 @@ export const ModalV2 = ({
                                     aria-modal
                                     role="dialog"
                                 >
-                                    {children}
+                                    {childWithRef}
                                 </ModalContainer>
                             </ScrollContainer>
                         </FloatingFocusManager>
