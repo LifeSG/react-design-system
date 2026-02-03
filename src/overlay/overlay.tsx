@@ -22,6 +22,7 @@ const OverlayComponent = ({
     zIndex: customZIndex,
     id,
     containerRef,
+    childWithRef,
 }: OverlayProps): JSX.Element | null => {
     // =============================================================================
     // CONST, STATE, REF
@@ -259,7 +260,10 @@ const OverlayComponent = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleDocumentMouseDown = (e: MouseEvent) => {
-        const container = containerRef?.current ?? wrapperRef.current;
+        const container =
+            containerRef?.current ??
+            childWithRef?.current ??
+            wrapperRef.current;
         if (!container) {
             mouseDownInsideModalRef.current = false;
             return;
@@ -276,7 +280,10 @@ const OverlayComponent = ({
 
     const handleWrapperClick = (event: React.MouseEvent<HTMLDivElement>) => {
         const target = event.target as Node;
-        const container = containerRef?.current ?? wrapperRef.current;
+        const container =
+            containerRef?.current ??
+            childWithRef?.current ??
+            wrapperRef.current;
         const clickedInsideModal = Boolean(
             container && container !== target && container.contains(target)
         );

@@ -13,6 +13,8 @@ export interface OverlayProps {
     onOverlayClick?: (() => void) | undefined;
     id?: string | undefined;
     containerRef?: React.RefObject<HTMLElement> | undefined;
+    /** Optional ref to a cloned child element passed by Modal/ModalV2 */
+    childWithRef?: React.RefObject<HTMLElement> | undefined;
 }
 
 /**
