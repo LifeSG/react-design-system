@@ -15,33 +15,9 @@ describe("Menu", () => {
             expect(screen.getByText("hello")).toBeInTheDocument();
         });
 
-        it("should NOT move focus with arrow keys when enableArrowNavigation is false", () => {
+        it("should move focus forward with ArrowDown", () => {
             render(
                 <Menu.Content data-testid="menu-content">
-                    <Menu.Section showDivider={false}>
-                        <Menu.Link href="#a">A</Menu.Link>
-                        <Menu.Link href="#b">B</Menu.Link>
-                        <Menu.Link href="#c">C</Menu.Link>
-                    </Menu.Section>
-                </Menu.Content>
-            );
-
-            const panel = screen.getByTestId("menu-content");
-            const a = screen.getByRole("link", { name: "A" });
-            const b = screen.getByRole("link", { name: "B" });
-
-            a.focus();
-            expect(a).toHaveFocus();
-
-            fireEvent.keyDown(panel, { key: "ArrowDown" });
-
-            expect(a).toHaveFocus();
-            expect(b).not.toHaveFocus();
-        });
-
-        it("should move focus forward with ArrowDown when enableArrowNavigation is true", () => {
-            render(
-                <Menu.Content data-testid="menu-content" enableArrowNavigation>
                     <Menu.Section showDivider={false}>
                         <Menu.Link href="#a">A</Menu.Link>
                         <Menu.Link href="#b">B</Menu.Link>
@@ -65,9 +41,9 @@ describe("Menu", () => {
             expect(c).toHaveFocus();
         });
 
-        it("should move focus forward with ArrowRight when enableArrowNavigation is true", () => {
+        it("should move focus forward with ArrowRight", () => {
             render(
-                <Menu.Content data-testid="menu-content" enableArrowNavigation>
+                <Menu.Content data-testid="menu-content">
                     <Menu.Section showDivider={false}>
                         <Menu.Link href="#a">A</Menu.Link>
                         <Menu.Link href="#b">B</Menu.Link>
@@ -84,9 +60,9 @@ describe("Menu", () => {
             expect(b).toHaveFocus();
         });
 
-        it("should move focus backward with ArrowUp when enableArrowNavigation is true", () => {
+        it("should move focus backward with ArrowUp", () => {
             render(
-                <Menu.Content data-testid="menu-content" enableArrowNavigation>
+                <Menu.Content data-testid="menu-content">
                     <Menu.Section showDivider={false}>
                         <Menu.Link href="#a">A</Menu.Link>
                         <Menu.Link href="#b">B</Menu.Link>
@@ -106,9 +82,9 @@ describe("Menu", () => {
             expect(a).toHaveFocus();
         });
 
-        it("should move focus backward with ArrowLeft when enableArrowNavigation is true", () => {
+        it("should move focus backward with ArrowLeft", () => {
             render(
-                <Menu.Content data-testid="menu-content" enableArrowNavigation>
+                <Menu.Content data-testid="menu-content">
                     <Menu.Section showDivider={false}>
                         <Menu.Link href="#a">A</Menu.Link>
                         <Menu.Link href="#b">B</Menu.Link>
@@ -127,7 +103,7 @@ describe("Menu", () => {
 
         it("should wrap focus from last -> first (ArrowDown)", () => {
             render(
-                <Menu.Content data-testid="menu-content" enableArrowNavigation>
+                <Menu.Content data-testid="menu-content">
                     <Menu.Section showDivider={false}>
                         <Menu.Link href="#a">A</Menu.Link>
                         <Menu.Link href="#b">B</Menu.Link>
@@ -149,7 +125,7 @@ describe("Menu", () => {
 
         it("should wrap focus from first -> last (ArrowUp)", () => {
             render(
-                <Menu.Content data-testid="menu-content" enableArrowNavigation>
+                <Menu.Content data-testid="menu-content">
                     <Menu.Section showDivider={false}>
                         <Menu.Link href="#a">A</Menu.Link>
                         <Menu.Link href="#b">B</Menu.Link>
@@ -171,7 +147,7 @@ describe("Menu", () => {
 
         it("should do nothing if there are no focusable elements", () => {
             render(
-                <Menu.Content data-testid="menu-content" enableArrowNavigation>
+                <Menu.Content data-testid="menu-content">
                     <div>no focusables here</div>
                 </Menu.Content>
             );
@@ -188,7 +164,7 @@ describe("Menu", () => {
 
         it("should not prevent default for non-arrow keys", () => {
             render(
-                <Menu.Content data-testid="menu-content" enableArrowNavigation>
+                <Menu.Content data-testid="menu-content">
                     <Menu.Section showDivider={false}>
                         <Menu.Link href="#a">A</Menu.Link>
                         <Menu.Link href="#b">B</Menu.Link>

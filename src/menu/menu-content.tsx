@@ -21,7 +21,6 @@ export const MenuContent = ({
     "data-testid": testId = "menu-content",
     overflow,
     maxHeight,
-    enableArrowNavigation = false,
     ...otherProps
 }: MenuContentProps): JSX.Element => {
     return (
@@ -31,8 +30,6 @@ export const MenuContent = ({
             data-testid={testId}
             tabIndex={-1}
             onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
-                if (!enableArrowNavigation) return;
-
                 const isNextKey =
                     e.key === "ArrowDown" || e.key === "ArrowRight";
                 const isPrevKey = e.key === "ArrowUp" || e.key === "ArrowLeft";
