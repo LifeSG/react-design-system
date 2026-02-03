@@ -279,74 +279,76 @@ export const Component = (
 
     return (
         <Modal {...otherProps} data-testid="image-carousel-modal">
-            <CloseButton
-                aria-label="Close image carousel"
-                onClick={onClose}
-                focusHighlight={false}
-                $insetTop={insets?.top}
-                $insetRight={insets?.right}
-            >
-                <CrossIcon aria-hidden />
-            </CloseButton>
-            {!hideMagnifier && (
-                <MagnifierButton
-                    aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
-                    onClick={handleMagnifier}
+            <div>
+                <CloseButton
+                    aria-label="Close image carousel"
+                    onClick={onClose}
                     focusHighlight={false}
                     $insetTop={insets?.top}
                     $insetRight={insets?.right}
                 >
-                    {zoom === 1 ? (
-                        <MagnifierPlusIcon aria-hidden />
-                    ) : (
-                        <MagnifierMinusIcon aria-hidden />
-                    )}
-                </MagnifierButton>
-            )}
-            <ImageGalleryContainer>
-                <ImageGalleryWrapper>
-                    {!hideNavigation && (
-                        <>
-                            <ArrowButton
-                                aria-label="View previous image"
-                                data-testid="prev-btn"
-                                $position="left"
-                                onClick={goToPrevSlide}
-                                $insetLeft={insets?.left}
-                                $insetRight={insets?.right}
-                            >
-                                <ChevronLeftIcon aria-hidden />
-                            </ArrowButton>
-                            <ArrowButton
-                                aria-label="View next image"
-                                data-testid="forward-btn"
-                                $position="right"
-                                onClick={goToNextSlide}
-                                $insetLeft={insets?.left}
-                                $insetRight={insets?.right}
-                            >
-                                <ChevronRightIcon aria-hidden />
-                            </ArrowButton>
-                        </>
-                    )}
-                    <ImageGallerySwipe
-                        ref={containerRef}
-                        onTouchStart={handleTouchStart}
-                        onTouchMove={handleTouchMove}
-                        onTouchEnd={handleTouchEnd}
+                    <CrossIcon aria-hidden />
+                </CloseButton>
+                {!hideMagnifier && (
+                    <MagnifierButton
+                        aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
+                        onClick={handleMagnifier}
+                        focusHighlight={false}
+                        $insetTop={insets?.top}
+                        $insetRight={insets?.right}
                     >
-                        {renderSlides()}
-                    </ImageGallerySwipe>
-                    {!hideCounter && (
-                        <BoxChip>
-                            <Chip weight="semibold">{`${currentSlide + 1}/${
-                                items.length
-                            }`}</Chip>
-                        </BoxChip>
-                    )}
-                </ImageGalleryWrapper>
-                {!hideThumbnail && renderThumbnails()}
-            </ImageGalleryContainer>
+                        {zoom === 1 ? (
+                            <MagnifierPlusIcon aria-hidden />
+                        ) : (
+                            <MagnifierMinusIcon aria-hidden />
+                        )}
+                    </MagnifierButton>
+                )}
+                <ImageGalleryContainer>
+                    <ImageGalleryWrapper>
+                        {!hideNavigation && (
+                            <>
+                                <ArrowButton
+                                    aria-label="View previous image"
+                                    data-testid="prev-btn"
+                                    $position="left"
+                                    onClick={goToPrevSlide}
+                                    $insetLeft={insets?.left}
+                                    $insetRight={insets?.right}
+                                >
+                                    <ChevronLeftIcon aria-hidden />
+                                </ArrowButton>
+                                <ArrowButton
+                                    aria-label="View next image"
+                                    data-testid="forward-btn"
+                                    $position="right"
+                                    onClick={goToNextSlide}
+                                    $insetLeft={insets?.left}
+                                    $insetRight={insets?.right}
+                                >
+                                    <ChevronRightIcon aria-hidden />
+                                </ArrowButton>
+                            </>
+                        )}
+                        <ImageGallerySwipe
+                            ref={containerRef}
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
+                        >
+                            {renderSlides()}
+                        </ImageGallerySwipe>
+                        {!hideCounter && (
+                            <BoxChip>
+                                <Chip weight="semibold">{`${currentSlide + 1}/${
+                                    items.length
+                                }`}</Chip>
+                            </BoxChip>
+                        )}
+                    </ImageGalleryWrapper>
+                    {!hideThumbnail && renderThumbnails()}
+                </ImageGalleryContainer>
+            </div>
         </Modal>
     );
 };
