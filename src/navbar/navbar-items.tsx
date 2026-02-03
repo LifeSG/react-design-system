@@ -76,9 +76,6 @@ export const NavbarItems = <T,>({
         return false;
     };
 
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
@@ -127,7 +124,7 @@ export const NavbarItems = <T,>({
         subMenu: NavItemCommonProps<T>[],
         subMenuId: string
     ) => (
-        <DesktopMenu.Content enableArrowNavigation>
+        <DesktopMenu.Content>
             <div id={subMenuId}>
                 <DesktopMenu.Section showDivider={false}>
                     {subMenu.map((item, subIndex) => (
@@ -223,36 +220,6 @@ export const NavbarItems = <T,>({
                             aria-expanded={
                                 isSubMenuTrigger ? isOpen : undefined
                             }
-                            onKeyDown={(
-                                e: React.KeyboardEvent<HTMLElement>
-                            ) => {
-                                if (!isSubMenuTrigger) return;
-
-                                if (e.key === "Tab" && !e.shiftKey) {
-                                    const isOpen = openSubMenuIndex === index;
-                                    if (!isOpen) return;
-
-                                    if (!subMenuId) return;
-
-                                    requestAnimationFrame(() => {
-                                        const el =
-                                            document.getElementById(subMenuId);
-                                        if (!el) return;
-
-                                        const focusables = Array.from(
-                                            el.querySelectorAll<HTMLElement>(
-                                                'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-                                            )
-                                        ).filter(
-                                            (x) =>
-                                                !x.hasAttribute("disabled") &&
-                                                x.tabIndex !== -1
-                                        );
-
-                                        focusables[0]?.focus();
-                                    });
-                                }
-                            }}
                             onClick={
                                 isSubMenuTrigger
                                     ? undefined

@@ -13,7 +13,7 @@ interface Props<T> {
 export const Menu = <T,>({ items, onItemClick }: Props<T>): JSX.Element => {
     const handleLinkClick = (item: NavItemCommonProps<T>) => {
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
-            event.stopPropagation();
+            event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
             onItemClick(event, item);
         };
     };
