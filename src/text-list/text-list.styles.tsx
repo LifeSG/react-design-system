@@ -18,6 +18,7 @@ interface OrderedListStyleProps extends ListStyleProps {
 
 interface UnorderedListStyleProps extends ListStyleProps {
     $bulletType: BulletType | undefined;
+    $hasCustomIcon: boolean | undefined;
 }
 
 // =============================================================================
@@ -92,5 +93,16 @@ export const StyledUnorderedList = styled.ul<UnorderedListStyleProps>`
     ${baseStyle}
 
     margin-left: 2.5em;
-    list-style-type: ${(props) => props.$bulletType || "disc"};
+    list-style-type: ${(props) =>
+        props.$hasCustomIcon ? "none" : props.$bulletType || "disc"};
+
+    ${(props) =>
+        props.$hasCustomIcon &&
+        css`
+            li {
+                display: flex;
+                align-items: flex-start;
+                gap: 0.5em;
+            }
+        `}
 `;

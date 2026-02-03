@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { TextList } from "src/text-list";
 import { GridDecorator, StoryDecorator } from "stories/storybook-common";
 import { CustomOrderedList } from "./doc-elements";
+import { CaretRightIcon, TickCircleIcon } from "@lifesg/react-icons";
 
 const meta: Meta = {
     title: "Core/TextList",
@@ -159,4 +160,29 @@ export const AdvancedUsage: StoryObj = {
         );
     },
     decorators: [StoryDecorator()],
+};
+
+export const CustomIconUnordered: StoryObj = {
+    render: (_args) => {
+        return (
+            <>
+                <TextList.Ul
+                    customIcon={<TickCircleIcon width={20} height={20} />}
+                >
+                    <li>
+                        Free nationally-recommended screenings & vaccinations
+                        for Singapore Citizens only
+                    </li>
+                    <li>Another finished item</li>
+                    <li>All done here</li>
+                </TextList.Ul>
+                <TextList.Ul customIcon={<CaretRightIcon />}>
+                    <li>Featured item</li>
+                    <li>Highlighted content</li>
+                    <li>Important note</li>
+                </TextList.Ul>
+            </>
+        );
+    },
+    decorators: [GridDecorator({ columns: 2 })],
 };

@@ -26,4 +26,6 @@ export type BulletType = "disc" | "circle" | "square" | "none";
 export interface UnorderedListProps extends BaseListProps {
     /** Values: "disc" | "circle" | "square" | "none" */
     bulletType?: BulletType | undefined;
+    /** Custom icon to use as bullet. When provided, bulletType is ignored */
+    customIcon?: React.ReactNode | undefined;
 }
