@@ -8,6 +8,8 @@ import {
     DropdownStyleProps,
     ItemsLoadStateType,
 } from "../shared/dropdown-list/types";
+import { RefObject } from "react";
+import { DropdownAlignmentType } from "src/shared/dropdown-wrapper";
 
 export interface InputRangeSelectOptionsProps<T>
     extends Omit<InputSelectOptionsProps<T>, "options" | "optionsLoadState"> {
@@ -30,6 +32,10 @@ export interface InputRangeSelectProps<T, V>
     readOnly?: boolean | undefined;
     placeholders?: InputRangeProp<string> | undefined;
     selectedOptions?: InputRangeProp<T> | undefined;
+    alignment?: DropdownAlignmentType | undefined;
+    dropdownZIndex?: number | undefined;
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
+    dropdownWidth?: string | undefined;
     onSelectOption?:
         | ((option: InputRangeProp<T>, extractedValue: V | undefined) => void)
         | undefined;
