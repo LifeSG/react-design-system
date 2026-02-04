@@ -108,6 +108,40 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "alignment",
+                description:
+                    "Controls the dropdown alignment relative to the trigger element.",
+                propTypes: ["DropdownAlignmentType"],
+            },
+            {
+                name: "dropdownZIndex",
+                description:
+                    "Sets a custom z-index for the dropdown (useful when the dropdown needs to appear above other positioned elements).",
+                propTypes: ["number"],
+            },
+            {
+                name: "dropdownRootNode",
+                description: (
+                    <>
+                        The root element that contains the dropdown element.
+                        Defaults to the document body.
+                        <br />
+                        <br />
+                        If the parent that contains the trigger element has a
+                        higher z-index than the dropdown, the dropdown may not
+                        be visible. Specify the parent element here instead.
+                    </>
+                ),
+                propTypes: ["RefObject<HTMLElement> "],
+            },
+            {
+                name: "dropdownWidth",
+                description:
+                    "Custom width for the dropdown. When specified, the dropdown will use this width instead of matching the trigger element width.",
+                propTypes: ["string"],
+            },
+
+            {
                 name: "enableSearch",
                 description:
                     "When specified, it will allow a text base search for the items in the list",
