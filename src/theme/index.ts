@@ -110,7 +110,7 @@ const CCubeThemeBase: ThemeSpec = {
 
 const MyLegacyThemeBase: ThemeSpec = {
     colourScheme: "mylegacy",
-    fontScheme: "default",
+    fontScheme: "mylegacy",
     motionScheme: "default",
     borderScheme: "default",
     spacingScheme: "default",

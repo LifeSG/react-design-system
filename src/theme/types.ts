@@ -52,6 +52,7 @@ export type ColourScheme =
 export type FontScheme =
     | "default"
     | "bookingsg"
+    | "mylegacy"
     | "pa"
     | "a11yplayground"
     | "supportgowhere"
