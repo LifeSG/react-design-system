@@ -2,8 +2,7 @@ import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { InputGroup } from "../input-group";
 import { PhoneNumberInput } from "../phone-number-input";
-import { InputWrapperStyleProps } from "../shared/input-wrapper";
-import { Colour, Spacing } from "../theme";
+import { Colour, MediaQuery, Spacing } from "../theme";
 import { ThemeButton } from "../theme/components/theme-helper";
 
 // =============================================================================
@@ -12,6 +11,8 @@ import { ThemeButton } from "../theme/components/theme-helper";
 interface ContactInputWrapperStyleProps {
     $isMaxWidth?: boolean;
     $error?: boolean;
+    $disabled?: boolean;
+    $readonly?: boolean;
 }
 
 // =============================================================================
@@ -54,6 +55,41 @@ export const ContactInputWrapper = styled.div<ContactInputWrapperStyleProps>`
                         inset 0 -2px 0 ${Colour["border-error-focus"]};
                 }
             `;
+        } else if (props.$disabled) {
+            return css`
+                box-shadow: inset 0 0 0 1px ${Colour["border"]};
+                border-radius: ${ThemeButton["button-radius"]};
+                background: ${Colour["bg-disabled"]};
+                color: ${Colour["text-disabled"]};
+                &:focus-within {
+                    box-shadow: inset 0 0 0 1px ${Colour["border"]};
+                }
+
+                /* Spacer to maintain width when disabled */
+                ${!props.$isMaxWidth &&
+                css`
+                    &::after {
+                        content: "";
+                        min-width: 120px;
+                        flex-shrink: 0;
+                    }
+
+                    /* Hide spacer on mobile to prevent text coverage */
+                    ${MediaQuery.MaxWidth.sm} {
+                        &::after {
+                            display: none;
+                        }
+                    }
+                `}
+            `;
+        } else if (props.$readonly) {
+            return css`
+                box-shadow: none;
+                border-radius: 0;
+                &:focus-within {
+                    box-shadow: none;
+                }
+            `;
         }
     }}
 `;
@@ -77,17 +113,49 @@ export const ContactButton = styled(Button.Default)`
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     flex-shrink: 0;
+    ${MediaQuery.MaxWidth.sm} {
+        width: fit-content;
+    }
 `;
 
-export const EmailContactInput = styled(InputGroup)<InputWrapperStyleProps>`
+export const EmailContactInput = styled(InputGroup)`
     padding: 0 ${Spacing["spacing-16"]};
     width: 100%;
     background: transparent;
+
+    ${(props) =>
+        props.disabled &&
+        css`
+            input {
+                color: ${Colour["text-disabled"]};
+            }
+        `}
+
+    ${(props) =>
+        props.readOnly &&
+        css`
+            padding: 0;
+        `}
 `;
 
-export const PhoneContactInput = styled(
-    PhoneNumberInput
-)<InputWrapperStyleProps>`
+export const PhoneContactInput = styled(PhoneNumberInput)`
     padding: 0 ${Spacing["spacing-16"]};
     background: transparent;
+
+    ${(props) =>
+        props.disabled &&
+        css`
+            input {
+                color: ${Colour["text-disabled"]};
+            }
+        `}
+
+    ${(props) =>
+        props.readOnly &&
+        css`
+            padding: 0;
+            input {
+                margin-left: ${Spacing["spacing-12"]};
+            }
+        `}
 `;

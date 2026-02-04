@@ -84,6 +84,8 @@ export const ContactInputSection = ({
                 noBorder
                 aria-invalid={!!sendOtpError}
                 aria-required={true}
+                disabled={disabled}
+                readOnly={readOnly}
             />
         ) : (
             <PhoneContactInput
@@ -98,6 +100,8 @@ export const ContactInputSection = ({
                 fixedCountry
                 aria-invalid={!!sendOtpError}
                 aria-required={true}
+                disabled={disabled}
+                readOnly={readOnly}
             />
         );
 
@@ -110,6 +114,8 @@ export const ContactInputSection = ({
                 <ContactInputWrapper
                     $isMaxWidth={type === "email"}
                     $error={!!sendOtpError}
+                    $disabled={disabled}
+                    $readonly={readOnly}
                 >
                     {renderContactInput()}
                     {isVerified && (
@@ -118,22 +124,21 @@ export const ContactInputSection = ({
                         </VerifiedIconWrapper>
                     )}
                 </ContactInputWrapper>
-                <ContactButton
-                    id={id ? `${id}-contact-button` : undefined}
-                    data-testid={
-                        dataTestId ? `${dataTestId}-contact-button` : undefined
-                    }
-                    onClick={onSendOtp}
-                    disabled={
-                        disabled ||
-                        readOnly ||
-                        countdown.isRunning ||
-                        isVerified
-                    }
-                    loading={isLoading}
-                >
-                    {getContactButtonText()}
-                </ContactButton>
+                {!disabled && !readOnly && (
+                    <ContactButton
+                        id={id ? `${id}-contact-button` : undefined}
+                        data-testid={
+                            dataTestId
+                                ? `${dataTestId}-contact-button`
+                                : undefined
+                        }
+                        onClick={onSendOtp}
+                        disabled={countdown.isRunning || isVerified}
+                        loading={isLoading}
+                    >
+                        {getContactButtonText()}
+                    </ContactButton>
+                )}
             </ContactInputSectionWrapper>
             {sendOtpError && (
                 <FormErrorMessage

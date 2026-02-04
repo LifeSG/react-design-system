@@ -13,7 +13,6 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-// Phone Number OTP Verification
 export const PhoneNumberDefault: StoryObj<Component> = {
     render: (_args) => {
         const [phoneValue, setPhoneValue] = useState<{
@@ -72,7 +71,6 @@ export const PhoneNumberDefault: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
-// Email OTP Verification
 export const EmailDefault: StoryObj<Component> = {
     render: (_args) => {
         const [emailValue, setEmailValue] = useState<string>("");
@@ -124,7 +122,6 @@ export const EmailDefault: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
-// Error Handling
 export const WithErrors: StoryObj<Component> = {
     render: (_args) => {
         const [phoneValue, setPhoneValue] = useState<{
@@ -166,6 +163,86 @@ export const WithErrors: StoryObj<Component> = {
                 verifyOtpMessage="An SMS with a 6-digit verification code was sent to you."
                 showVerifyOtpThumbnail
             />
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const Disabled: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Form.OtpVerification
+                    label="Mobile Number (Disabled)"
+                    type="phone-number"
+                    phoneNumberValue={{
+                        countryCode: "+65",
+                        number: "91234567",
+                    }}
+                    onPhoneNumberChange={() => {}}
+                    otpState="default"
+                    onOtpStateChange={() => {}}
+                    onSendOtp={async () => {}}
+                    otpValue={{ value: "" }}
+                    onOtpChange={() => {}}
+                    onVerifyOtp={async () => {}}
+                    disabled
+                />
+                <br />
+                <Form.OtpVerification
+                    label="Email (Disabled)"
+                    type="email"
+                    emailValue="john.doe@example.com"
+                    onEmailChange={() => {}}
+                    otpState="default"
+                    onOtpStateChange={() => {}}
+                    onSendOtp={async () => {}}
+                    otpValue={{ value: "" }}
+                    onOtpChange={() => {}}
+                    onVerifyOtp={async () => {}}
+                    disabled
+                />
+            </>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const ReadOnly: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Form.OtpVerification
+                    label="Mobile Number (Read Only)"
+                    type="phone-number"
+                    phoneNumberValue={{
+                        countryCode: "+65",
+                        number: "91234567",
+                    }}
+                    onPhoneNumberChange={() => {}}
+                    otpState="default"
+                    onOtpStateChange={() => {}}
+                    onSendOtp={async () => {}}
+                    otpValue={{ value: "" }}
+                    onOtpChange={() => {}}
+                    onVerifyOtp={async () => {}}
+                    readOnly
+                />
+                <br />
+                <Form.OtpVerification
+                    label="Email (Read Only)"
+                    type="email"
+                    emailValue="john.doe@example.com"
+                    onEmailChange={() => {}}
+                    otpState="default"
+                    onOtpStateChange={() => {}}
+                    onSendOtp={async () => {}}
+                    otpValue={{ value: "" }}
+                    onOtpChange={() => {}}
+                    onVerifyOtp={async () => {}}
+                    readOnly
+                />
+            </>
         );
     },
     decorators: [StoryDecorator({ maxWidth: true })],
