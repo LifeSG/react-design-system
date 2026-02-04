@@ -76,6 +76,26 @@ export const NavbarItems = <T,>({
         return false;
     };
 
+    const getActiveDesktopSubmenuOwnerIndex = (): number | null => {
+        if (mobile) return null;
+
+        if (openSubMenuIndex !== null) return openSubMenuIndex;
+
+        if (focusedIndex !== null) {
+            const focusedItem = items[focusedIndex];
+            if (
+                focusedItem?.itemType !== "component" &&
+                (focusedItem as NavItemLinkProps<T>)?.subMenu?.length
+            ) {
+                return focusedIndex;
+            }
+        }
+
+        return null;
+    };
+
+    const activeDesktopSubmenuOwnerIndex = getActiveDesktopSubmenuOwnerIndex();
+
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
@@ -95,6 +115,7 @@ export const NavbarItems = <T,>({
     // EVENT HANDLERS
     // =============================================================================
     const handleLinkClick = (item: NavItemLinkProps<T>, index: number) => {
+        console.log("link clicked");
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.stopPropagation();
 
@@ -108,10 +129,11 @@ export const NavbarItems = <T,>({
         };
     };
 
-    const handleSubLinkClick = (
+    const handleMobileLinkClick = (
         event: React.MouseEvent<HTMLAnchorElement>,
         item: NavItemCommonProps<T>
     ) => {
+        console.log("sub link clicked");
         event.stopPropagation();
         onItemClick(event, item);
         closeMobileSubMenu();
@@ -141,7 +163,7 @@ export const NavbarItems = <T,>({
     );
 
     const renderMobileSubMenu = (subMenu: NavItemCommonProps<T>[]) => (
-        <MobileMenu items={subMenu} onItemClick={handleSubLinkClick} />
+        <MobileMenu items={subMenu} onItemClick={handleMobileLinkClick} />
     );
 
     const renderLinkItem = (item: NavItemLinkProps<T>, index: number) => {
@@ -161,12 +183,11 @@ export const NavbarItems = <T,>({
         const isRouteSelected = checkSelected(item);
         const isOpen = isSubMenuTrigger && openSubMenuIndex === index;
 
-        const ownerIndex =
-            focusedIndex ??
-            openSubMenuIndex ??
-            (isRouteSelected ? index : null);
+        const selected =
+            activeDesktopSubmenuOwnerIndex !== null
+                ? activeDesktopSubmenuOwnerIndex === index
+                : isRouteSelected;
 
-        const selected = ownerIndex === index;
         const showIndicator = !hideLinkIndicator && selected;
 
         const textWeight: TypographyWeight = selected
@@ -204,6 +225,7 @@ export const NavbarItems = <T,>({
                 {...options}
             >
                 <LinkLabel>{children}</LinkLabel>
+
                 {showIndicator && (
                     <LinkIndicator
                         data-testid={`${testId}-indicator`}
