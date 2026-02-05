@@ -5,6 +5,7 @@ import { Input } from "src/input";
 import { Layout } from "src/layout";
 import {
     FullWidthStoryDecorator,
+    StackDecorator,
     StoryDecorator,
 } from "stories/storybook-common";
 
@@ -59,7 +60,6 @@ export const ClearButton: StoryObj<Component> = {
                 onChange={(event) => setInput(event.target.value)}
                 onClear={() => setInput("")}
                 allowClear
-                styleType="no-border"
             />
         );
     },
@@ -81,6 +81,33 @@ export const TextSpacing: StoryObj<Component> = {
         );
     },
     decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const NoBorder: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Input
+                    value="Default lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                    onClear={() => {}}
+                    allowClear
+                    styleType="no-border"
+                />
+                <Input
+                    value="Disabled lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                    styleType="no-border"
+                    disabled
+                />
+                <Input
+                    value="Readonly lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                    styleType="no-border"
+                    readOnly
+                />
+            </>
+        );
+    },
+    parameters: { outline: { disable: false } },
+    decorators: [StackDecorator(), StoryDecorator({ maxWidth: true })],
 };
 
 export const RenderingInGridLayout: StoryObj<Component> = {
