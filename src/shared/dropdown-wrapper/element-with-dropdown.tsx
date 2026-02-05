@@ -210,7 +210,11 @@ export const ElementWithDropdown = ({
         duration: 300,
     });
 
-    const click = useClick(context, { enabled, toggle: clickToToggle });
+    const click = useClick(context, {
+        enabled,
+        toggle: clickToToggle,
+        keyboardHandlers: clickToToggle,
+    });
     const dismiss = useDismiss(context, { enabled });
 
     const { getReferenceProps, getFloatingProps } = useInteractions([

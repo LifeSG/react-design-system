@@ -16,6 +16,7 @@ import {
     MobileCustomComponent,
     NavbarAvatar,
 } from "./doc-elements";
+import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 
 type Component = typeof Navbar;
 
@@ -189,7 +190,7 @@ export const MultipleActionButtons: StoryObj<Component> = {
                         },
                     ],
                 }}
-                selectedId="home"
+                selectedId="icon"
                 fixed={false}
             />
         );
@@ -271,6 +272,17 @@ export const CustomItems: StoryObj<Component> = {
                         {
                             id: "home",
                             children: "Home",
+                        },
+                        {
+                            id: "icon",
+                            children: (
+                                <MagnifierIcon
+                                    height={24}
+                                    width={24}
+                                    aria-label="Search"
+                                />
+                            ),
+                            href: "",
                         },
                         {
                             itemType: "component",
