@@ -31,6 +31,7 @@ export const Component = <T, V>(
         disabled,
         className,
         onBlur,
+        noBorder,
         "data-testid": testId,
         "aria-labelledby": ariaLabelledBy,
         "aria-describedby": ariaDescribedBy,
@@ -293,6 +294,7 @@ export const Component = <T, V>(
                 ref={nodeRef}
                 className={className}
                 data-testid={testId}
+                $noBorder={noBorder}
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}

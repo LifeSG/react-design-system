@@ -1,6 +1,7 @@
 import React from "react";
 import { Main, MainStyleProps, Spinner } from "./button.style";
 import { ButtonProps, ButtonRef } from "./types";
+import { hasValidChildren } from "./button-helper";
 
 /**
  * NOTE: Due to the way we intend to customise both components, with forwardRef behaviour
@@ -37,7 +38,7 @@ const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
             {...mainStyle}
             {...otherProps}
         >
-            {loading && <Spinner />}
+            {loading && <Spinner $hasChildren={hasValidChildren(children)} />}
             <span>{children}</span>
         </Main>
     );
@@ -73,7 +74,7 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
             {...mainStyle}
             {...otherProps}
         >
-            {loading && <Spinner />}
+            {loading && <Spinner $hasChildren={hasValidChildren(children)} />}
             <span>{children}</span>
         </Main>
     );
@@ -109,7 +110,7 @@ const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
             {...mainStyle}
             {...otherProps}
         >
-            {loading && <Spinner />}
+            {loading && <Spinner $hasChildren={hasValidChildren(children)} />}
             <span>{children}</span>
         </Main>
     );

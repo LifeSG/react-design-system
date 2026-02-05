@@ -93,7 +93,7 @@ const DATA: ApiTableSectionProps[] = [
                         the nearest 30-minute interval. For example, 09:23 will
                         snap to 09:00, and 09:38 will snap to 09:30. This
                         ensures the initial scroll position aligns with the time
-                        slot bar's cells.
+                        slot bar&apos;s cells.
                     </>
                 ),
                 propTypes: ["boolean"],
