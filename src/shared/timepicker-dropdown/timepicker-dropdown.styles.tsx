@@ -15,11 +15,7 @@ import { BasicInput, InputBox } from "../input-wrapper/input-wrapper";
 // MAIN WRAPPER
 // -----------------------------------------------------------------------------
 export const AnimatedDiv = animated(styled.div`
-    position: absolute;
-    top: calc(3rem + ${Spacing["spacing-8"]});
-    left: 0;
     overflow: hidden;
-    z-index: 1;
 
     ${MediaQuery.MaxWidth.xxs} {
         max-width: 100%;
@@ -79,12 +75,7 @@ export const TimePeriodSection = styled.div`
     display: flex;
     gap: ${Spacing["spacing-8"]};
 
-    ${MediaQuery.MaxWidth.lg} {
-        flex-direction: column;
-    }
-
     ${MediaQuery.MaxWidth.xxs} {
-        flex-direction: row;
         width: 100%;
     }
 `;
