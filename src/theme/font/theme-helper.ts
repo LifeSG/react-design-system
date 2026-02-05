@@ -16,6 +16,7 @@ const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
     collections: {
         default: DefaultFontSet,
         bookingsg: BookingSgFontSet,
+        mylegacy: DefaultFontSet,
         pa: PAFontSet,
         a11yplayground: A11yPlaygroundFontSet,
         supportgowhere: SupportGoWhereFontSet,
