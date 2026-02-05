@@ -36,6 +36,7 @@ export const FileUpload = ({
     editableFileItems = false,
     errorMessage,
     readOnly,
+    uploadButtonText,
     onChange,
     onDelete,
     onEdit,
@@ -171,7 +172,7 @@ export const FileUpload = ({
                             }
                             onClick={handleUploadButtonClick}
                         >
-                            Upload files
+                            {uploadButtonText ?? "Upload files"}
                         </UploadButton>
                         <UploadButtonText weight="semibold">
                             or drop them here
