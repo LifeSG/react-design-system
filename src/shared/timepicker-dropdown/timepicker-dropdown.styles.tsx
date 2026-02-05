@@ -49,7 +49,7 @@ export const ControlSection = styled.div`
     display: flex;
     justify-content: flex-end;
     margin-top: ${Spacing["spacing-16"]};
-    gap: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
+    gap: ${Spacing["spacing-8"]};
 
     ${MediaQuery.MaxWidth.xxs} {
         flex-direction: column-reverse; // FIXME: this breaks tab focus
