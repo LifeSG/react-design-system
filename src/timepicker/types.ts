@@ -1,3 +1,6 @@
+import { RefObject } from "react";
+import { DropdownAlignmentType } from "../shared/dropdown-wrapper/types";
+
 export type TimepickerFormat = "12hr" | "24hr";
 
 export interface TimepickerProps {
@@ -24,6 +27,9 @@ export interface TimepickerProps {
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
     error?: boolean | undefined;
+    alignment?: DropdownAlignmentType | undefined;
+    dropdownZIndex?: number | undefined;
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
     /**
      * Called when the user makes a selection and clicks on the "Confirm" button
      * in the time selection box. Returns a string based format.
