@@ -18,7 +18,7 @@ describe("StyledFontTests", () => {
         const fontSize = "3rem";
         const fontWeight = "700";
         const lineHeight = "3.5rem";
-        const letterSpacing = "-0.056rem";
+        const letterSpacing = "-0.035rem";
 
         const { container } = render(
             <ThemeProvider theme={MOCK_THEME}>

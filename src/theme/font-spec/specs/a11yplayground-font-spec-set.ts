@@ -15,9 +15,9 @@ export const A11yPlaygroundFontSpecSet: FontSpecSet = {
     "heading-lh-sm": "1.75rem",
     "heading-lh-xs": "1.625rem",
 
-    "heading-ls-xxl": "-0.056rem",
-    "heading-ls-xl": "-0.032rem",
-    "heading-ls-lg": "-0.032rem",
+    "heading-ls-xxl": "-0.035rem",
+    "heading-ls-xl": "-0.02rem",
+    "heading-ls-lg": "-0.02rem",
     "heading-ls-md": "0rem",
     "heading-ls-sm": "0rem",
     "heading-ls-xs": "0rem",
@@ -39,9 +39,9 @@ export const A11yPlaygroundFontSpecSet: FontSpecSet = {
     "body-lh-xs": "1.25rem",
 
     "body-ls-baseline": "0rem",
-    "body-ls-md": "0.014rem",
-    "body-ls-sm": "0.012rem",
-    "body-ls-xs": "0.012rem",
+    "body-ls-md": "0.009rem",
+    "body-ls-sm": "0.008rem",
+    "body-ls-xs": "0.008rem",
 
     "form-label-size": "1.125rem",
     "form-description-size": "1rem",
@@ -50,5 +50,5 @@ export const A11yPlaygroundFontSpecSet: FontSpecSet = {
     "form-description-lh": "1.625rem",
 
     "form-label-ls": "0rem",
-    "form-description-ls": "0.00875rem",
+    "form-description-ls": "0.009rem",
 };
