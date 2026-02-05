@@ -94,6 +94,28 @@ export const AllowClear: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+export const NoBorder: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Form.PhoneNumberInput
+                    label="This has no border"
+                    placeholder="Enter phone number"
+                    noBorder
+                />
+                <Form.PhoneNumberInput
+                    label="This has no border with fixed country code"
+                    placeholder="Enter phone number"
+                    value={{ number: "", countryCode: "+65" }}
+                    fixedCountry
+                    noBorder
+                />
+            </>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
 export const RenderingInGridLayout: StoryObj<Component> = {
     render: (_args) => {
         return (

@@ -146,6 +146,7 @@ export const NavbarItems = <T,>({
                                 <LinkLabel>{children}</LinkLabel>
                                 {selected && !hideLinkIndicator && (
                                     <LinkIndicator
+                                        aria-hidden
                                         data-testid={`${testId}-indicator`}
                                         $selected={selected}
                                     />
