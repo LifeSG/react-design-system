@@ -43,7 +43,7 @@ export const SGWDigitalLobbyFontSpecSet: FontSpecSet = {
     "body-ls-sm": "0rem",
     "body-ls-xs": "0.009rem",
 
-    "form-label-size": "1.2rem",
+    "form-label-size": "1.25rem",
     "form-description-size": "1.125rem",
 
     "form-label-lh": "1.625rem",

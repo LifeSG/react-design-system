@@ -197,7 +197,7 @@ export const SupportGoWhereThemeBase: ThemeSpec = {
 
 export const SGWDigitalLobbyThemeBase: ThemeSpec = {
     colourScheme: "supportgowhere",
-    fontScheme: "sgw-digital-lobby",
+    fontScheme: "sgwdigitallobby",
     motionScheme: "default",
     borderScheme: "default",
     spacingScheme: "default",
