@@ -14,7 +14,7 @@ export interface ContactInputSectionProps {
     onEmailChange?: ((input: string) => void) | undefined;
     phoneNumberValue?: PhoneNumberInputValue | undefined;
     onPhoneNumberChange?: ((value: PhoneNumberInputValue) => void) | undefined;
-    fixedCountry?: boolean | undefined;
+    fixedCountry: true;
     isLoading: boolean;
     isVerified: boolean;
     countdown: ReturnType<typeof useCountdown>;

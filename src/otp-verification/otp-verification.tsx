@@ -58,14 +58,7 @@ export const OtpVerification = (props: OtpVerificationProps) => {
 
         try {
             setIsVerifyLoading(true);
-            const otpCode = [
-                otpValue?.prefix,
-                otpValue?.separator,
-                otpValue?.value,
-            ]
-                .filter(Boolean)
-                .join("");
-            await onVerifyOtp(otpCode);
+            await onVerifyOtp(otpValue.value);
             onOtpStateChange("verified");
             // Reset the countdown and clear the OTP code in case user enter new OTP later
             countdown.reset();
@@ -102,9 +95,7 @@ export const OtpVerification = (props: OtpVerificationProps) => {
                 onStateReset={resetToDefault}
                 sendOtpError={sendOtpError}
                 fixedCountry={
-                    props.type === "phone-number"
-                        ? props.fixedCountry
-                        : undefined
+                    props.type === "phone-number" ? props.fixedCountry : true
                 }
             />
 

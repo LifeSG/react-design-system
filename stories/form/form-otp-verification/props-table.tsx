@@ -134,9 +134,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "fixedCountry",
-                description: "If true, fixed to Singapore country code",
-                propTypes: ["boolean"],
-                defaultValue: "true",
+                description: "If true, the country code cannot be changed",
+                propTypes: ["true"],
             },
         ],
     },

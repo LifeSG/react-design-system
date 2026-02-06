@@ -24,7 +24,7 @@ export const ContactInputSection = ({
     onEmailChange,
     phoneNumberValue,
     onPhoneNumberChange,
-    fixedCountry = true,
+    fixedCountry,
     isLoading,
     isVerified,
     countdown,
