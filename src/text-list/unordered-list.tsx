@@ -1,17 +1,19 @@
 import React from "react";
 import { StyledUnorderedList } from "./text-list.styles";
-import { UnorderedListProps } from "./types";
+import { BulletType, UnorderedListProps } from "./types";
 
 export const UnorderedList = ({
     size,
     bulletType,
     bottomMargin,
-    customIcon,
     children,
     ...otherProps
 }: UnorderedListProps) => {
+    const isCustomIcon =
+        bulletType !== undefined && typeof bulletType !== "string";
+
     const renderChildren = () => {
-        if (!customIcon) {
+        if (!isCustomIcon) {
             return children;
         }
 
@@ -24,7 +26,7 @@ export const UnorderedList = ({
                     children: (
                         <>
                             {/* Icon is decorative, hide from screen readers */}
-                            <span aria-hidden="true">{customIcon}</span>
+                            <span aria-hidden="true">{bulletType}</span>
                             <span>{child.props.children}</span>
                         </>
                     ),
@@ -37,9 +39,9 @@ export const UnorderedList = ({
     return (
         <StyledUnorderedList
             $size={size}
-            $bulletType={bulletType}
+            $bulletType={isCustomIcon ? undefined : (bulletType as BulletType)}
             $bottomMargin={bottomMargin}
-            $hasCustomIcon={!!customIcon}
+            $hasCustomIcon={isCustomIcon}
             {...otherProps}
         >
             {renderChildren()}

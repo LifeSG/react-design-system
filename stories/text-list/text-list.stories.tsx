@@ -167,7 +167,7 @@ export const CustomIconUnordered: StoryObj = {
         return (
             <>
                 <TextList.Ul
-                    customIcon={<TickCircleIcon width={20} height={20} />}
+                    bulletType={<TickCircleIcon width={20} height={20} />}
                 >
                     <li>
                         Free nationally-recommended screenings & vaccinations
@@ -176,7 +176,7 @@ export const CustomIconUnordered: StoryObj = {
                     <li>Another finished item</li>
                     <li>All done here</li>
                 </TextList.Ul>
-                <TextList.Ul customIcon={<CaretRightIcon />}>
+                <TextList.Ul bulletType={<CaretRightIcon />}>
                     <li>Featured item</li>
                     <li>Highlighted content</li>
                     <li>Important note</li>
