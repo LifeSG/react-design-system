@@ -56,6 +56,7 @@ export type FontScheme =
     | "pa"
     | "a11yplayground"
     | "supportgowhere"
+    | "sgw-digital-lobby"
     | "imda"
     | "spf"
     | "oneservice";
