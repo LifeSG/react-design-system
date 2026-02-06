@@ -54,7 +54,7 @@ export interface FileUploadProps extends FileInputProps {
     /** Indicates if the component is in the readonly state */
     readOnly?: boolean | undefined;
     /** Text for the primary upload button */
-    uploadButtonText?: string | JSX.Element | undefined;
+    customLabels?: { uploadButtonLabel?: string | undefined } | undefined;
     /** Called when an upload happens via drag drop or click */
     onChange?: ((files: File[]) => void) | undefined;
     /** Called when an update to the description happens */
