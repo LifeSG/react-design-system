@@ -61,6 +61,7 @@ describe("OtpVerification", () => {
                 onLoadingChange: jest.fn(),
                 isVerifyLoading: false,
                 onVerifyLoadingChange: jest.fn(),
+                fixedCountry: true as const,
             };
 
             render(<OtpVerification {...phoneProps} />);
@@ -151,6 +152,7 @@ describe("OtpVerification", () => {
                 onLoadingChange: jest.fn(),
                 isVerifyLoading: false,
                 onVerifyLoadingChange: jest.fn(),
+                fixedCountry: true as const,
             };
 
             render(<OtpVerification {...phoneProps} />);

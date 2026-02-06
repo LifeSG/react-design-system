@@ -48,7 +48,7 @@ export const PhoneNumberDefault: StoryObj<Component> = {
                     }
                 }}
                 sendOtpError={sendOtpError}
-                otpValue={{ value: otpValue }}
+                otpValue={{ value: otpValue, prefix: "BZO", separator: "-" }}
                 onOtpChange={setOtpValue}
                 onVerifyOtp={async (otpInput) => {
                     setVerifyOtpError(undefined);
@@ -68,6 +68,7 @@ export const PhoneNumberDefault: StoryObj<Component> = {
                 verifyOtpTitle="Verify your mobile number"
                 verifyOtpMessage="Test OTP: 123456"
                 showVerifyOtpThumbnail
+                fixedCountry
             />
         );
     },
@@ -84,6 +85,7 @@ export const PhoneNumberVariants: StoryObj<Component> = {
                     otpState="default"
                     onOtpStateChange={() => {}}
                     phoneNumberValue={{ countryCode: "+65", number: "" }}
+                    fixedCountry
                 />
                 <Form.OtpVerification
                     label="This is the send otp error state"
@@ -92,16 +94,19 @@ export const PhoneNumberVariants: StoryObj<Component> = {
                     onOtpStateChange={() => {}}
                     phoneNumberValue={{ countryCode: "+65", number: "" }}
                     sendOtpError="Something went wrong"
+                    fixedCountry
                 />
                 <Form.OtpVerification
                     label="This is the verify otp error state"
                     type="phone-number"
                     otpState="sent"
+                    otpValue={{ value: "", prefix: "BZO", separator: "-" }}
                     onOtpStateChange={() => {}}
                     phoneNumberValue={{ countryCode: "+65", number: "" }}
                     verifyOtpTitle="Verify your mobile number"
                     verifyOtpError="Something went wrong"
                     showVerifyOtpThumbnail
+                    fixedCountry
                 />
                 <Form.OtpVerification
                     label="This is the verified state"
@@ -109,6 +114,7 @@ export const PhoneNumberVariants: StoryObj<Component> = {
                     otpState="verified"
                     onOtpStateChange={() => {}}
                     phoneNumberValue={{ countryCode: "+65", number: "" }}
+                    fixedCountry
                 />
                 <Form.OtpVerification
                     label="This is the disabled state"
@@ -117,6 +123,7 @@ export const PhoneNumberVariants: StoryObj<Component> = {
                     onOtpStateChange={() => {}}
                     phoneNumberValue={{ countryCode: "+65", number: "" }}
                     disabled
+                    fixedCountry
                 />
                 <Form.OtpVerification
                     label="This is the readonly state"
@@ -125,6 +132,7 @@ export const PhoneNumberVariants: StoryObj<Component> = {
                     onOtpStateChange={() => {}}
                     phoneNumberValue={{ countryCode: "+65", number: "" }}
                     readOnly
+                    fixedCountry
                 />
             </>
         );
@@ -162,7 +170,7 @@ export const EmailDefault: StoryObj<Component> = {
                     }
                 }}
                 sendOtpError={sendOtpError}
-                otpValue={{ value: otpValue }}
+                otpValue={{ value: otpValue, prefix: "BZO", separator: "-" }}
                 onOtpChange={setOtpValue}
                 onVerifyOtp={async (otpInput) => {
                     setVerifyOtpError(undefined);
@@ -209,6 +217,7 @@ export const EmailVariants: StoryObj<Component> = {
                     label="This is the verify otp error state"
                     type="email"
                     otpState="sent"
+                    otpValue={{ value: "", prefix: "BZO", separator: "-" }}
                     onOtpStateChange={() => {}}
                     verifyOtpTitle="Verify your email address"
                     verifyOtpError="Something went wrong"

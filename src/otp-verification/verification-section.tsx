@@ -27,6 +27,8 @@ export const VerificationSection = ({
     countdown,
     onVerifyOtp,
     verifyOtpError,
+    otpPrefix,
+    otpSeparator,
 }: VerificationSectionProps) => {
     const theme = useTheme();
     const isMobile = useMediaQuery({
@@ -99,7 +101,9 @@ export const VerificationSection = ({
                             addon={{
                                 type: "label",
                                 attributes: {
-                                    value: "BZO-",
+                                    value: `${otpPrefix ?? ""}${
+                                        otpSeparator ?? ""
+                                    }`,
                                 },
                             }}
                             type="number"

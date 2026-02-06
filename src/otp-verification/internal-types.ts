@@ -14,6 +14,7 @@ export interface ContactInputSectionProps {
     onEmailChange?: ((input: string) => void) | undefined;
     phoneNumberValue?: PhoneNumberInputValue | undefined;
     onPhoneNumberChange?: ((value: PhoneNumberInputValue) => void) | undefined;
+    fixedCountry: true;
     isLoading: boolean;
     isVerified: boolean;
     countdown: ReturnType<typeof useCountdown>;
@@ -29,9 +30,11 @@ export interface VerificationSectionProps {
     verifyOtpTitle?: string | undefined;
     verifyOtpMessage?: string | undefined;
     verifyOtpError?: string | undefined;
-    otpCode: string | undefined;
+    otpCode?: string | undefined;
     setOtpCode?: (value: string) => void;
     isVerifyLoading: boolean;
     countdown: ReturnType<typeof useCountdown>;
     onVerifyOtp: () => void;
+    otpPrefix?: string | undefined;
+    otpSeparator?: string | undefined;
 }
