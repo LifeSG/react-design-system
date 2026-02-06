@@ -24,6 +24,7 @@ export const ContactInputSection = ({
     onEmailChange,
     phoneNumberValue,
     onPhoneNumberChange,
+    fixedCountry = true,
     isLoading,
     isVerified,
     countdown,
@@ -97,7 +98,7 @@ export const ContactInputSection = ({
                 value={phoneNumberValue}
                 onChange={handlePhoneInputChange}
                 noBorder
-                fixedCountry
+                fixedCountry={fixedCountry}
                 aria-invalid={!!sendOtpError}
                 aria-required={true}
                 disabled={disabled}

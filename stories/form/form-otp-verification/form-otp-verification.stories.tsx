@@ -48,7 +48,7 @@ export const PhoneNumberDefault: StoryObj<Component> = {
                     }
                 }}
                 sendOtpError={sendOtpError}
-                otpValue={{ value: otpValue }}
+                otpValue={{ value: otpValue, prefix: "BZO", separator: "-" }}
                 onOtpChange={setOtpValue}
                 onVerifyOtp={async (otpInput) => {
                     setVerifyOtpError(undefined);
@@ -97,6 +97,7 @@ export const PhoneNumberVariants: StoryObj<Component> = {
                     label="This is the verify otp error state"
                     type="phone-number"
                     otpState="sent"
+                    otpValue={{ value: "", prefix: "BZO", separator: "-" }}
                     onOtpStateChange={() => {}}
                     phoneNumberValue={{ countryCode: "+65", number: "" }}
                     verifyOtpTitle="Verify your mobile number"
@@ -162,7 +163,7 @@ export const EmailDefault: StoryObj<Component> = {
                     }
                 }}
                 sendOtpError={sendOtpError}
-                otpValue={{ value: otpValue }}
+                otpValue={{ value: otpValue, prefix: "BZO", separator: "-" }}
                 onOtpChange={setOtpValue}
                 onVerifyOtp={async (otpInput) => {
                     setVerifyOtpError(undefined);
@@ -209,6 +210,7 @@ export const EmailVariants: StoryObj<Component> = {
                     label="This is the verify otp error state"
                     type="email"
                     otpState="sent"
+                    otpValue={{ value: "", prefix: "BZO", separator: "-" }}
                     onOtpStateChange={() => {}}
                     verifyOtpTitle="Verify your email address"
                     verifyOtpError="Something went wrong"

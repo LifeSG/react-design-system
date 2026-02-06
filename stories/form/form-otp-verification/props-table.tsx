@@ -132,6 +132,12 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Callback when the phone number value changes",
                 propTypes: ["(value: PhoneNumberInputValue) => void"],
             },
+            {
+                name: "fixedCountry",
+                description: "If true, fixed to Singapore country code",
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
         ],
     },
     {
