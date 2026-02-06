@@ -36,11 +36,15 @@ export const FileUpload = ({
     editableFileItems = false,
     errorMessage,
     readOnly,
+    customLabels,
     onChange,
     onDelete,
     onEdit,
     onSort,
 }: FileUploadProps) => {
+    const labels = {
+        uploadButton: customLabels?.uploadButtonLabel || "Upload files",
+    };
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
@@ -171,7 +175,7 @@ export const FileUpload = ({
                             }
                             onClick={handleUploadButtonClick}
                         >
-                            Upload files
+                            {labels.uploadButton}
                         </UploadButton>
                         <UploadButtonText weight="semibold">
                             or drop them here
