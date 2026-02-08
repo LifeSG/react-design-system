@@ -20,6 +20,7 @@ const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
         pa: PAFontSet,
         a11yplayground: A11yPlaygroundFontSet,
         supportgowhere: SupportGoWhereFontSet,
+        sgwdigitallobby: SupportGoWhereFontSet,
         imda: IMDAFontSet,
         spf: SPFFontSet,
         oneservice: OneServiceFontSet,

@@ -13,6 +13,7 @@ import {
     RBSTheme,
     SPFTheme,
     SupportGoWhereTheme,
+    SGWDigitalLobbyTheme,
 } from "../src/theme";
 import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
@@ -24,12 +25,13 @@ const preview: Preview = {
                 BookingSG: BookingSGTheme,
                 CCube: CCubeTheme,
                 MyLegacy: MyLegacyTheme,
-                RBS: RBSTheme,
                 OneService: OneServiceTheme,
                 PA: PATheme,
-                A11yPlayground: A11yPlaygroundTheme,
                 SupportGoWhere: SupportGoWhereTheme,
+                SGWDigitalLobby: SGWDigitalLobbyTheme,
+                A11yPlayground: A11yPlaygroundTheme,
                 IMDA: IMDATheme,
+                RBS: RBSTheme,
                 SPF: SPFTheme,
             },
             Provider: ThemeProvider,

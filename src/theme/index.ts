@@ -195,6 +195,19 @@ export const SupportGoWhereThemeBase: ThemeSpec = {
     componentScheme: "default",
 };
 
+export const SGWDigitalLobbyThemeBase: ThemeSpec = {
+    colourScheme: "supportgowhere",
+    fontScheme: "sgwdigitallobby",
+    motionScheme: "default",
+    borderScheme: "default",
+    spacingScheme: "default",
+    radiusScheme: "default",
+    shadowScheme: "default",
+    breakpointScheme: "default",
+    resourceScheme: "supportgowhere",
+    componentScheme: "default",
+};
+
 const IMDAThemeBase: ThemeSpec = {
     colourScheme: "imda",
     fontScheme: "imda",
@@ -278,6 +291,12 @@ export const SupportGoWhereTheme = {
     ...SupportGoWhereThemeBase,
     light: createThemeWithColourMode(SupportGoWhereThemeBase, "light"),
     dark: createThemeWithColourMode(SupportGoWhereThemeBase, "dark"),
+};
+
+export const SGWDigitalLobbyTheme = {
+    ...SGWDigitalLobbyThemeBase,
+    light: createThemeWithColourMode(SGWDigitalLobbyThemeBase, "light"),
+    dark: createThemeWithColourMode(SGWDigitalLobbyThemeBase, "dark"),
 };
 
 export const IMDATheme = {
