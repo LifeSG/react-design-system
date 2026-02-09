@@ -1,10 +1,10 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { MediaQuery } from "../theme";
 import { Colour } from "../theme";
-import { Typography } from "../typography/typography";
 import { ThemeNavbar } from "../theme/components/theme-helper";
+import { TypographyWeight } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -69,7 +69,7 @@ export const LinkItem = styled.li<ItemStyleProps>`
     }
 `;
 
-export const Link = styled(Typography.LinkMD)<StyleProps>`
+const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
     background: none;
     border: none;
     margin: 0;
@@ -102,6 +102,21 @@ export const Link = styled(Typography.LinkMD)<StyleProps>`
         text-align: left;
         align-items: flex-start;
     }
+`;
+export const Link = styled.a<{ $selected: boolean; weight: TypographyWeight }>`
+    ${linkCss}
+`;
+
+export const LinkButton = styled.button<{
+    $selected: boolean;
+    weight: TypographyWeight;
+}>`
+    ${linkCss}
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
 `;
 
 export const LinkLabel = styled.div`
