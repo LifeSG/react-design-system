@@ -93,6 +93,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
         if (props.$noBorder) {
             return css`
                 border-color: transparent;
+                background: transparent;
                 &:focus-within {
                     ${noFocusCss}
                 }

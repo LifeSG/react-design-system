@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { Input } from "../input";
+import { ExpandableElement } from "../shared/dropdown-list-v2";
 import { InputBox } from "../shared/input-wrapper";
 import { Colour, Spacing } from "../theme";
 import { InputGroupAddonPosition } from "./types";
@@ -39,21 +40,19 @@ export const FieldWrapper = styled(InputBox)<StyleProps>`
                 `;
         }
     }}
+`;
 
+export const StyledExpandableElement = styled(ExpandableElement)<StyleProps>`
     ${(props) => {
         if (props.$noBorder) {
             switch (props.$position) {
                 case "right":
                     return css`
-                        button[role="combobox"] {
-                            padding-right: 0;
-                        }
+                        padding-right: 0;
                     `;
                 default:
                     return css`
-                        button[role="combobox"] {
-                            padding-left: 0;
-                        }
+                        padding-left: 0;
                     `;
             }
         }

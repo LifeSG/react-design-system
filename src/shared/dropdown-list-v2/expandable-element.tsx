@@ -3,7 +3,7 @@ import { AriaAttributes, Ref, forwardRef } from "react";
 import { IconContainer, Selector } from "./expandable-element.styles";
 import { DropdownVariantType } from "./types";
 
-interface ExpandableElementProps
+export interface ExpandableElementProps
     extends Pick<
         AriaAttributes,
         "aria-labelledby" | "aria-describedby" | "aria-invalid"
