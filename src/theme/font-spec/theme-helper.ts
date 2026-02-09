@@ -5,8 +5,10 @@ import { A11yPlaygroundFontSpecSet } from "./specs/a11yplayground-font-spec-set"
 import { BookingSgFontSpecSet } from "./specs/bookingsg-font-spec-set";
 import { DefaultFontSpecSet } from "./specs/default-font-spec-set";
 import { IMDAFontSpecSet } from "./specs/imda-font-spec-set";
+import { MyLegacyFontSpecSet } from "./specs/mylegacy-font-spec-set";
 import { OneServiceFontSpecSet } from "./specs/oneservice-font-spec-set";
 import { PAFontSpecSet } from "./specs/pa-font-spec-set";
+import { SGWDigitalLobbyFontSpecSet } from "./specs/sgw-digital-lobby-font-spec-set";
 import { SPFFontSpecSet } from "./specs/spf-font-spec-set";
 import { SupportGoWhereFontSpecSet } from "./specs/supportgowhere-font-spec-set";
 import { FontSpecCollectionMap, FontSpecSet } from "./types";
@@ -15,9 +17,11 @@ const FontSpec: ThemeCollectionSpec<FontSpecCollectionMap, FontScheme> = {
     collections: {
         default: DefaultFontSpecSet,
         bookingsg: BookingSgFontSpecSet,
+        mylegacy: MyLegacyFontSpecSet,
         pa: PAFontSpecSet,
         a11yplayground: A11yPlaygroundFontSpecSet,
         supportgowhere: SupportGoWhereFontSpecSet,
+        sgwdigitallobby: SGWDigitalLobbyFontSpecSet,
         imda: IMDAFontSpecSet,
         spf: SPFFontSpecSet,
         oneservice: OneServiceFontSpecSet,

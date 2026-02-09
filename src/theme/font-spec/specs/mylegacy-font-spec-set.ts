@@ -1,6 +1,6 @@
 import { FontSpecSet } from "../types";
 
-export const A11yPlaygroundFontSpecSet: FontSpecSet = {
+export const MyLegacyFontSpecSet: FontSpecSet = {
     "heading-size-xxl": "3rem",
     "heading-size-xl": "2.5rem",
     "heading-size-lg": "2rem",
@@ -26,7 +26,7 @@ export const A11yPlaygroundFontSpecSet: FontSpecSet = {
     "weight-regular": "400",
     "weight-semibold": "600",
     "weight-bold": "700",
-    "font-family": "Atkinson Hyperlegible Next",
+    "font-family": "Open Sans",
 
     "body-size-baseline": "1.125rem",
     "body-size-md": "1rem",

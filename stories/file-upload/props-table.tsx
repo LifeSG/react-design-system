@@ -123,6 +123,23 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Called when a drag sort is made",
                 propTypes: ["(fileItems: FileItemProps[]) => void"],
             },
+            {
+                name: "customLabels",
+                description: `Specifies custom labels. See the "Custom labels" section below for more details`,
+                propTypes: ["object"],
+            },
+        ],
+    },
+    {
+        name: "Custom labels",
+        attributes: [
+            {
+                name: "uploadButtonLabel",
+                description:
+                    "The label of the button that triggers the file dialog",
+                propTypes: ["string"],
+                defaultValue: `"Upload files"`,
+            },
         ],
     },
     {

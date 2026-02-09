@@ -30,6 +30,7 @@ export interface OtpVerificationPhoneNumberInputProps {
     type: "phone-number";
     phoneNumberValue?: PhoneNumberInputValue | undefined;
     onPhoneNumberChange?: ((value: PhoneNumberInputValue) => void) | undefined;
+    fixedCountry: true;
 }
 
 // OTP input and verification props

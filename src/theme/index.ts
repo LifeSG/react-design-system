@@ -110,7 +110,7 @@ const CCubeThemeBase: ThemeSpec = {
 
 const MyLegacyThemeBase: ThemeSpec = {
     colourScheme: "mylegacy",
-    fontScheme: "default",
+    fontScheme: "mylegacy",
     motionScheme: "default",
     borderScheme: "default",
     spacingScheme: "default",
@@ -185,6 +185,19 @@ const A11yPlaygroundThemeBase: ThemeSpec = {
 export const SupportGoWhereThemeBase: ThemeSpec = {
     colourScheme: "supportgowhere",
     fontScheme: "supportgowhere",
+    motionScheme: "default",
+    borderScheme: "default",
+    spacingScheme: "default",
+    radiusScheme: "default",
+    shadowScheme: "default",
+    breakpointScheme: "default",
+    resourceScheme: "supportgowhere",
+    componentScheme: "default",
+};
+
+export const SGWDigitalLobbyThemeBase: ThemeSpec = {
+    colourScheme: "supportgowhere",
+    fontScheme: "sgwdigitallobby",
     motionScheme: "default",
     borderScheme: "default",
     spacingScheme: "default",
@@ -278,6 +291,12 @@ export const SupportGoWhereTheme = {
     ...SupportGoWhereThemeBase,
     light: createThemeWithColourMode(SupportGoWhereThemeBase, "light"),
     dark: createThemeWithColourMode(SupportGoWhereThemeBase, "dark"),
+};
+
+export const SGWDigitalLobbyTheme = {
+    ...SGWDigitalLobbyThemeBase,
+    light: createThemeWithColourMode(SGWDigitalLobbyThemeBase, "light"),
+    dark: createThemeWithColourMode(SGWDigitalLobbyThemeBase, "dark"),
 };
 
 export const IMDATheme = {
