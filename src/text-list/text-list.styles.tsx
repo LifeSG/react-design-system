@@ -99,7 +99,7 @@ export const StyledUnorderedList = styled.ul<UnorderedListStyleProps>`
     ${(props) =>
         props.$hasCustomIcon &&
         css`
-            li {
+            & > li {
                 display: flex;
                 align-items: flex-start;
                 gap: 0.5em;

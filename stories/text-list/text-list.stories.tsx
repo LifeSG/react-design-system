@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { CaretRightIcon, StarIcon, TickCircleIcon } from "@lifesg/react-icons";
+import styled from "styled-components";
 import { TextList } from "src/text-list";
 import { GridDecorator, StoryDecorator } from "stories/storybook-common";
 import { CustomOrderedList } from "./doc-elements";
-import { CaretRightIcon, TickCircleIcon } from "@lifesg/react-icons";
 
 const meta: Meta = {
     title: "Core/TextList",
@@ -162,27 +163,49 @@ export const AdvancedUsage: StoryObj = {
     decorators: [StoryDecorator()],
 };
 
+const StyledListItem = styled.li`
+    color: teal;
+    font-weight: 600;
+`;
+
+const CustomListItem = ({ children }: { children: React.ReactNode }) => {
+    return <li style={{ fontStyle: "italic" }}>{children}</li>;
+};
+
 export const CustomIconUnordered: StoryObj = {
     render: (_args) => {
         return (
             <>
+                <TextList.Ul bulletType={<StarIcon width={20} height={20} />}>
+                    <li>Item 1</li>
+                    <li>Item 2</li>
+                    <li>Item 3</li>
+                </TextList.Ul>
                 <TextList.Ul
                     bulletType={<TickCircleIcon width={20} height={20} />}
                 >
-                    <li>
-                        Free nationally-recommended screenings & vaccinations
-                        for Singapore Citizens only
-                    </li>
-                    <li>Another finished item</li>
-                    <li>All done here</li>
+                    <StyledListItem>Styled component item 1</StyledListItem>
+                    <StyledListItem>Styled component item 2</StyledListItem>
+                    <StyledListItem>Styled component item 3</StyledListItem>
                 </TextList.Ul>
-                <TextList.Ul bulletType={<CaretRightIcon />}>
-                    <li>Featured item</li>
-                    <li>Highlighted content</li>
-                    <li>Important note</li>
+                <TextList.Ul
+                    bulletType={<CaretRightIcon width={20} height={20} />}
+                >
+                    <CustomListItem>React component item 1</CustomListItem>
+                    <CustomListItem>React component item 2</CustomListItem>
+                    <CustomListItem>React component item 3</CustomListItem>
                 </TextList.Ul>
             </>
         );
     },
-    decorators: [GridDecorator({ columns: 2 })],
+    decorators: [
+        GridDecorator({
+            columns: 3,
+            columnHeaders: [
+                "ReactNode",
+                "Styled Component (styled.li)",
+                "React Component",
+            ],
+        }),
+    ],
 };

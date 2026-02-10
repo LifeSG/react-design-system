@@ -18,16 +18,13 @@ export const UnorderedList = ({
         }
 
         return React.Children.map(children, (child) => {
-            if (
-                React.isValidElement<{ children?: React.ReactNode }>(child) &&
-                child.type === "li"
-            ) {
+            if (React.isValidElement<{ children?: React.ReactNode }>(child)) {
                 return React.cloneElement(child, {
                     children: (
                         <>
                             {/* Icon is decorative, hide from screen readers */}
-                            <span aria-hidden="true">{bulletType}</span>
-                            <span>{child.props.children}</span>
+                            <div aria-hidden>{bulletType}</div>
+                            <div>{child.props.children}</div>
                         </>
                     ),
                 });
