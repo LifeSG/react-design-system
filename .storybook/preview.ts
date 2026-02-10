@@ -92,6 +92,9 @@ const preview: Preview = {
             darkClass: "storybook-dark-mode",
             lightClass: "storybook-light-mode",
         },
+        docs: {
+            codePanel: true,
+        },
     },
 };
 

@@ -25,6 +25,7 @@ const config: StorybookConfig = {
             },
         },
     ],
+    features: { interactions: false },
     staticDirs: ["../public"],
     webpackFinal: async (config) => {
         config.resolve!.modules = [
