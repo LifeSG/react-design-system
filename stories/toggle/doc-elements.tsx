@@ -1,4 +1,4 @@
-import { ReactRenderer } from "@storybook/react";
+import { ReactRenderer } from "@storybook/react-webpack5";
 import { DecoratorFunction } from "@storybook/types";
 import { Typography } from "src/typography";
 import styled from "styled-components";
