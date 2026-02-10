@@ -1,11 +1,7 @@
 import { OpenChangeReason } from "@floating-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { VisuallyHidden, concatIds } from "../shared/accessibility";
-import {
-    DropdownList,
-    DropdownListState,
-    ExpandableElement,
-} from "../shared/dropdown-list-v2";
+import { DropdownList, DropdownListState } from "../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     LabelContainer,
@@ -19,6 +15,7 @@ import {
     FieldSelector,
     FieldWrapper,
     SelectorReadOnly,
+    StyledExpandableElement,
 } from "./input-group-list-addon.style";
 import { InputGroupProps, ListAddon } from "./types";
 
@@ -200,7 +197,7 @@ export const Component = <T, V>(
     const renderElement = () => {
         return (
             <div>
-                <ExpandableElement
+                <StyledExpandableElement
                     ref={selectorRef}
                     disabled={disabled}
                     expanded={showOptions}
@@ -210,9 +207,11 @@ export const Component = <T, V>(
                     aria-labelledby={concatIds(ariaLabelledBy, comboboxLabelId)}
                     aria-describedby={concatIds(ariaDescribedBy, instructionId)}
                     aria-invalid={ariaInvalid}
+                    $noBorder={noBorder}
+                    $position={position}
                 >
                     {renderSelectorContent()}
-                </ExpandableElement>
+                </StyledExpandableElement>
                 <VisuallyHidden id={instructionId}>
                     Press space to open options
                 </VisuallyHidden>
@@ -313,6 +312,7 @@ export const Component = <T, V>(
                     ref={ref}
                     {...otherProps}
                     $position={position}
+                    $noBorder={noBorder}
                     readOnly={readOnly}
                     disabled={disabled}
                     error={error}

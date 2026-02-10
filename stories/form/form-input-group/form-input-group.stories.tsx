@@ -6,6 +6,7 @@ import { InputGroup, ListAddon as ListAddonProps } from "src/input-group";
 import { Layout } from "src/layout";
 import {
     FullWidthStoryDecorator,
+    StackDecorator,
     StoryDecorator,
 } from "stories/storybook-common";
 
@@ -20,7 +21,7 @@ const meta: Meta<Component> = {
 export default meta;
 
 export const LabelAddon: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
                 <Form.InputGroup
@@ -41,16 +42,6 @@ export const LabelAddon: StoryObj<Component> = {
                             value: "kg",
                         },
                     }}
-                />
-                <Form.InputGroup
-                    label="With a label addon on and no border wrapper"
-                    placeholder="Enter an amount"
-                    addon={{
-                        attributes: {
-                            value: "kg",
-                        },
-                    }}
-                    noBorder
                 />
                 <Form.InputGroup
                     label="This is the disabled state"
@@ -112,17 +103,6 @@ export const CustomAddon: StoryObj<Component> = {
                         },
                         position: "right",
                     }}
-                />
-                <Form.InputGroup
-                    label="With a custom addon on and no border wrapper"
-                    placeholder="Enter an amount"
-                    addon={{
-                        type: "custom",
-                        attributes: {
-                            children: <MagnifierIcon />,
-                        },
-                    }}
-                    noBorder
                 />
                 <Form.InputGroup
                     label="This is the disabled state"
@@ -191,15 +171,6 @@ export const ListAddon: StoryObj<Component> = {
                         type: "list",
                         attributes: listAddonOptions,
                     }}
-                />
-                <Form.InputGroup
-                    label="With a list addon on and no border wrapper"
-                    placeholder="Enter something"
-                    addon={{
-                        type: "list",
-                        attributes: listAddonOptions,
-                    }}
-                    noBorder
                 />
                 <Form.InputGroup
                     label="This is the list addon readonly state (pristine)"
@@ -291,6 +262,109 @@ export const AllowClear: StoryObj<Component> = {
         );
     },
     decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const NoBorderLabelAddon: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <InputGroup
+                    value="Default lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                    addon={{
+                        attributes: {
+                            value: "$",
+                        },
+                    }}
+                    noBorder
+                />
+                <InputGroup
+                    value="Default lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                    addon={{
+                        position: "right",
+                        attributes: {
+                            value: "kg",
+                        },
+                    }}
+                    noBorder
+                />
+                <InputGroup
+                    value="Disabled lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                    addon={{
+                        attributes: {
+                            value: "$",
+                        },
+                    }}
+                    disabled
+                    noBorder
+                />
+                <InputGroup
+                    value="Readonly lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                    addon={{
+                        attributes: {
+                            value: "$",
+                        },
+                    }}
+                    readOnly
+                    noBorder
+                />
+            </>
+        );
+    },
+    decorators: [StackDecorator(), StoryDecorator({ maxWidth: true })],
+};
+
+export const NoBorderListAddon: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <InputGroup
+                    value="Default lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            ...listAddonOptions,
+                            selectedOption: {
+                                value: "SG",
+                                display: "Singapore",
+                            },
+                        },
+                    }}
+                    noBorder
+                />
+                <InputGroup
+                    value="Disabled lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            ...listAddonOptions,
+                            selectedOption: {
+                                value: "SG",
+                                display: "Singapore",
+                            },
+                        },
+                    }}
+                    disabled
+                    noBorder
+                />
+                <InputGroup
+                    value="Readonly lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            ...listAddonOptions,
+                            selectedOption: {
+                                value: "SG",
+                                display: "Singapore",
+                            },
+                        },
+                    }}
+                    readOnly
+                    noBorder
+                />
+            </>
+        );
+    },
+    decorators: [StackDecorator(), StoryDecorator({ maxWidth: true })],
 };
 
 export const RenderingInGridLayout: StoryObj<Component> = {

@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { Input } from "../input";
+import { ExpandableElement } from "../shared/dropdown-list-v2";
 import { InputBox } from "../shared/input-wrapper";
 import { Colour, Spacing } from "../theme";
 import { InputGroupAddonPosition } from "./types";
@@ -12,6 +13,7 @@ interface StyleProps {
     $readOnly?: boolean;
     $expanded?: boolean;
     $position?: InputGroupAddonPosition;
+    $noBorder?: boolean;
 }
 
 interface DividerStyleProps {
@@ -40,6 +42,23 @@ export const FieldWrapper = styled(InputBox)<StyleProps>`
     }}
 `;
 
+export const StyledExpandableElement = styled(ExpandableElement)<StyleProps>`
+    ${(props) => {
+        if (props.$noBorder) {
+            switch (props.$position) {
+                case "right":
+                    return css`
+                        padding-right: 0;
+                    `;
+                default:
+                    return css`
+                        padding-left: 0;
+                    `;
+            }
+        }
+    }}
+`;
+
 export const FieldSelector = styled.div`
     flex: 0 0 auto;
 `;
@@ -50,6 +69,19 @@ export const FieldInput = styled(Input)<StyleProps>`
             return css`
                 padding: 0;
             `;
+        }
+
+        if (props.$noBorder) {
+            switch (props.$position) {
+                case "right":
+                    return css`
+                        padding-left: 0;
+                    `;
+                default:
+                    return css`
+                        padding-right: 0;
+                    `;
+            }
         }
 
         switch (props.$position) {
