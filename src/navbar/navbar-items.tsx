@@ -48,7 +48,6 @@ export const NavbarItems = <T,>({
     const [openSubMenuIndex, setOpenSubMenuIndex] = useState<number | null>(
         null
     );
-    const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
     const listRef = useRef<HTMLUListElement>(null);
     const [instanceId] = useState(() => SimpleIdGenerator.generate());
 
@@ -59,7 +58,6 @@ export const NavbarItems = <T,>({
         setShowSubMenu(false);
         setSelectedIndex(-1);
         setOpenSubMenuIndex(null);
-        setFocusedIndex(null);
     };
 
     const closeMobileSubMenu = () => {
@@ -73,26 +71,6 @@ export const NavbarItems = <T,>({
             return !!item.subMenu.find((s) => s.id === selectedId);
         }
         return false;
-    };
-
-    const getActiveDesktopSubmenuOwnerIndex = (): number | null => {
-        console.log("openSubMenuIndex", openSubMenuIndex);
-        console.log("focusedIndex", focusedIndex);
-        if (mobile) return null;
-
-        if (openSubMenuIndex !== null) return openSubMenuIndex;
-
-        if (focusedIndex !== null) {
-            const focusedItem = items[focusedIndex];
-            if (
-                focusedItem?.itemType !== "component" &&
-                (focusedItem as NavItemLinkProps<T>)?.subMenu?.length
-            ) {
-                return focusedIndex;
-            }
-        }
-
-        return null;
     };
 
     useEffect(() => {
@@ -162,8 +140,6 @@ export const NavbarItems = <T,>({
         <MobileMenu items={subMenu} onItemClick={handleMobileSubLinkClick} />
     );
 
-    const activeDesktopSubmenuOwnerIndex = getActiveDesktopSubmenuOwnerIndex();
-
     const renderLinkItem = (item: NavItemLinkProps<T>, index: number) => {
         const { children, options, subMenu, ...otherItemAttrs } = item;
 
@@ -182,8 +158,8 @@ export const NavbarItems = <T,>({
         const isExpanded = isDesktopExpanded || isMobileExpanded;
 
         const selected =
-            activeDesktopSubmenuOwnerIndex !== null
-                ? activeDesktopSubmenuOwnerIndex === index
+            openSubMenuIndex !== null
+                ? openSubMenuIndex === index
                 : isRouteSelected;
 
         const showIndicator = !hideLinkIndicator && selected;
@@ -193,6 +169,7 @@ export const NavbarItems = <T,>({
                 ? "bold"
                 : "semibold"
             : "regular";
+
         const testId = mobile
             ? `link__mobile-${index + 1}`
             : `link__${index + 1}`;
@@ -285,7 +262,11 @@ export const NavbarItems = <T,>({
                         triggerOnFocus
                         isModal={false}
                         onPopoverAppear={() => setOpenSubMenuIndex(index)}
-                        onPopoverDismiss={() => setOpenSubMenuIndex(null)}
+                        onPopoverDismiss={() => {
+                            setOpenSubMenuIndex((prev) =>
+                                prev === index ? null : prev
+                            );
+                        }}
                     >
                         {desktopTrigger}
                     </DesktopMenu>
@@ -301,23 +282,7 @@ export const NavbarItems = <T,>({
         };
 
         return (
-            <LinkItem
-                key={index}
-                $hiddenBranding={hideNavBranding}
-                onFocus={() => {
-                    console.log("@@ focus index", index);
-                    setFocusedIndex(index);
-                }}
-                onBlur={(e: React.FocusEvent<HTMLElement>) => {
-                    console.log("@@ blur index", index);
-                    const next = e.relatedTarget as Node | null;
-                    if (!next || !e.currentTarget.contains(next)) {
-                        setFocusedIndex((prev) =>
-                            prev === index ? null : prev
-                        );
-                    }
-                }}
-            >
+            <LinkItem key={index} $hiddenBranding={hideNavBranding}>
                 {hasSubMenu ? renderLinkWithSubmenu() : renderLink()}
             </LinkItem>
         );
