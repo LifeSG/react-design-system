@@ -25,6 +25,9 @@ export const Timepicker = ({
     dropdownRootNode,
     ...otherProps
 }: TimepickerProps) => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
     const [isOpen, setIsOpen] = useState(false);
     const nodeRef = useRef<HTMLDivElement>(null);
 
@@ -39,6 +42,9 @@ export const Timepicker = ({
         onBlur?.();
     };
 
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
     const getPlaceholderValue = useCallback(() => {
         switch (format) {
             case "12hr":
@@ -49,6 +55,9 @@ export const Timepicker = ({
         }
     }, [format]);
 
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
     const renderElement = () => (
         <InputWrapper
             ref={nodeRef}
