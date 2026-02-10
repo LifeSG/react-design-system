@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { ClearButton } from "../input/input.style";
 import { Selector } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { Spacing } from "../theme";
+import { InputWrapper } from "../shared/input-wrapper";
 
 // =============================================================================
 // STYLING
@@ -23,4 +24,8 @@ export const ClearIconContainer = styled(ClearButton)`
 export const SelectorDropdown = styled(Selector)`
     // space for clear icon
     padding-right: calc(1.25rem + ${Spacing["spacing-16"]});
+`;
+
+export const StyledInputWrapper = styled(InputWrapper)`
+    height: 3rem;
 `;
