@@ -1,6 +1,6 @@
 import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Pill } from "src/pill";
 import { GridDecorator, RowDecorator } from "stories/storybook-common";
 

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useEffect, useState } from "react";
 import { OtpInput } from "src/otp-input";
 import { StoryDecorator } from "stories/storybook-common";

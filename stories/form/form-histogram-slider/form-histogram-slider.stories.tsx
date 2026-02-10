@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Form } from "src/form";
 import { HistogramSlider } from "src/histogram-slider";
 import { Layout } from "src/layout";

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Menu } from "src/menu";
 import { GridDecorator } from "../storybook-common";
 import { Avatar } from "../../src";

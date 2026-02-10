@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Colour } from "src/theme";
 import { TimeSlotBar } from "src/time-slot-bar";
 import { FullWidthStoryDecorator } from "stories/storybook-common";
