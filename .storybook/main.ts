@@ -1,6 +1,10 @@
 import type { StorybookConfig } from "@storybook/react-webpack5";
-import path from "path";
+import { fileURLToPath } from "node:url";
+import path, { dirname } from "path";
 import remarkGfm from "remark-gfm";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const config: StorybookConfig = {
     stories: ["../stories/**/*.mdx", "../stories/**/*.stories.@(ts|tsx)"],
