@@ -5,9 +5,8 @@ import {
 import {
     DropdownDisplayProps,
     DropdownSearchProps,
-    DropdownStyleProps,
     ItemsLoadStateType,
-} from "../shared/dropdown-list/types";
+} from "../shared/dropdown-list-v2/types";
 import { RefObject } from "react";
 import { DropdownAlignmentType } from "src/shared/dropdown-wrapper";
 
@@ -27,8 +26,8 @@ export interface InputRangeSelectProps<T, V>
         InputRangeSelectOptionsProps<T>,
         Omit<InputSelectSharedProps<T>, "options">,
         DropdownDisplayProps<T, V>,
-        DropdownSearchProps<T>,
-        DropdownStyleProps {
+        DropdownSearchProps<T> {
+    listStyleWidth?: string | undefined;
     readOnly?: boolean | undefined;
     placeholders?: InputRangeProp<string> | undefined;
     selectedOptions?: InputRangeProp<T> | undefined;

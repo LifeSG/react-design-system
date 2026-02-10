@@ -243,7 +243,9 @@ describe("InputRangeSelect", () => {
             expect(screen.queryAllByText("To Option A")).toHaveLength(0);
         });
 
-        it("should be disabled when 'disabled' prop is true", () => {
+        it("should be disabled when 'disabled' prop is true", async () => {
+            const user = userEvent.setup();
+
             render(
                 <Wrapper>
                     <InputRangeSelect
@@ -252,31 +254,28 @@ describe("InputRangeSelect", () => {
                                 { value: "A", label: "From Option A" },
                                 { value: "B", label: "From Option B" },
                             ],
-                            to: [
-                                { value: "TA", label: "To Option A" },
-                                { value: "TB", label: "To Option B" },
-                            ],
+                            to: [{ value: "TA", label: "To Option A" }],
                         }}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
                         placeholders={{ from: "From", to: "To" }}
-                        disabled={true} // Set the disabled prop to true
+                        disabled
                     />
                 </Wrapper>
             );
 
-            const selector = screen.getByTestId(
-                "selector"
-            ) as HTMLButtonElement;
+            await user.click(screen.getByText("From"));
+            expect(screen.queryByText("From Option A")).not.toBeInTheDocument();
 
-            expect(selector).toBeDisabled();
-
-            userEvent.click(selector); // Try to open the dropdown
-            expect(screen.queryAllByText("From Option A")).toHaveLength(0);
+            await user.click(screen.getByText("To"));
+            expect(screen.queryByText("From Option A")).not.toBeInTheDocument();
+            expect(screen.queryByText("To Option A")).not.toBeInTheDocument();
         });
 
-        it("should be readonly when 'readOnly' prop is true", () => {
+        it("should be readonly when 'readOnly' prop is true", async () => {
+            const user = userEvent.setup();
+
             render(
                 <Wrapper>
                     <InputRangeSelect
@@ -285,26 +284,24 @@ describe("InputRangeSelect", () => {
                                 { value: "A", label: "From Option A" },
                                 { value: "B", label: "From Option B" },
                             ],
-                            to: [
-                                { value: "TA", label: "To Option A" },
-                                { value: "TB", label: "To Option B" },
-                            ],
+                            to: [{ value: "TA", label: "To Option A" }],
                         }}
                         data-testid={"input-range-select"}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
                         placeholders={{ from: "From", to: "To" }}
-                        readOnly={true} // Set the readOnly prop to true
+                        readOnly
                     />
                 </Wrapper>
             );
 
-            const selector = screen.getByTestId(
-                "selector"
-            ) as HTMLButtonElement;
-            userEvent.click(selector); // Try to open the dropdown
-            expect(screen.queryAllByText("From Option A")).toHaveLength(0);
+            await user.click(screen.getByText("From"));
+            expect(screen.queryByText("From Option A")).not.toBeInTheDocument();
+
+            await user.click(screen.getByText("To"));
+            expect(screen.queryByText("From Option A")).not.toBeInTheDocument();
+            expect(screen.queryByText("To Option A")).not.toBeInTheDocument();
         });
 
         it("should display error message when 'error' prop is true", () => {
