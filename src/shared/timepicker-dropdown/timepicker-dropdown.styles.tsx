@@ -1,4 +1,3 @@
-import { animated } from "@react-spring/web";
 import styled from "styled-components";
 import { Button } from "../../button";
 import { Border, Colour, MediaQuery, Radius, Spacing } from "../../theme";
@@ -14,13 +13,13 @@ import { BasicInput, InputBox } from "../input-wrapper/input-wrapper";
 // -----------------------------------------------------------------------------
 // MAIN WRAPPER
 // -----------------------------------------------------------------------------
-export const AnimatedDiv = animated(styled.div`
+export const StyledDiv = styled.div`
     overflow: hidden;
 
     ${MediaQuery.MaxWidth.xxs} {
         max-width: 100%;
     }
-`);
+`;
 
 export const Container = styled.div`
     position: relative;
