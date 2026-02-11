@@ -24,12 +24,6 @@ You can also choose the bullet type from the selection. Types include `disc`,
 
 <Canvas of={TextListStories.Unordered} />
 
-## Custom Icon Unordered List
-
-You can also pass a custom icon as the `bulletType` prop.
-
-<Canvas of={TextListStories.CustomIconUnordered} />
-
 ## Ordered List
 
 This list is used when order matters and it follows a numbering system for each
@@ -47,7 +41,15 @@ The list inherits the font size of its parent container by default. Specify
 
 <Canvas of={TextListStories.TextSize} />
 
-## Nested Lists
+## Custom bullet
+
+A custom bullet can be specified for unordered lists. A default `0.5em` spacing
+is applied between the bullet and content; you will need to manage the bullet
+width yourself.
+
+<Canvas of={TextListStories.CustomBullet} />
+
+## Nested lists
 
 <Canvas of={TextListStories.Nested} />
 
