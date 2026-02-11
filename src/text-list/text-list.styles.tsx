@@ -92,7 +92,7 @@ export const StyledOrderedList = styled.ol<OrderedListStyleProps>`
 export const StyledUnorderedList = styled.ul<UnorderedListStyleProps>`
     ${baseStyle}
 
-    margin-left: 2.5em;
+    margin-left: ${(props) => (props.$hasCustomIcon ? 0 : "2.5em")};
     list-style-type: ${(props) =>
         props.$hasCustomIcon ? "none" : props.$bulletType || "disc"};
 
