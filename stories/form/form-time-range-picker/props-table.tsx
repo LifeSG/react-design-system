@@ -150,6 +150,39 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
+        name: "Dial variant specific props",
+        attributes: [
+            {
+                name: "alignment",
+                description:
+                    "Specifies if the dropdown is aligned to the left or right of the main field",
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"left"`,
+            },
+            {
+                name: "dropdownZIndex",
+                description:
+                    "The custom z-index of the dropdown. Try specifying this if you encounter z-index conflicts.",
+                propTypes: ["number"],
+                defaultValue: "50",
+            },
+            {
+                name: "dropdownRootNode",
+                description: (
+                    <>
+                        The root element that contains the dropdown popover.
+                        Defaults to the document body.
+                        <br />
+                        Use this when the parent that contains the trigger
+                        element has a higher z-index than the popover (e.g.
+                        within a modal), so that the popover remains visible.
+                    </>
+                ),
+                propTypes: ["React.RefObject<HTMLElement>"],
+            },
+        ],
+    },
+    {
         name: "TimeRangePickerValue",
         attributes: [
             {
