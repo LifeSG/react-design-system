@@ -16,7 +16,7 @@ const getListItemByText = (text: string) => {
     // Workround to get list item by truncated text.
     return screen.getAllByText(text)[0];
 };
-const testId = "input-range-test";
+const testId = "input-range-select-test-id";
 
 describe("InputRangeSelect", () => {
     beforeEach(() => {
@@ -159,10 +159,10 @@ describe("InputRangeSelect", () => {
 
             await waitFor(() => {
                 expect(
-                    screen.queryByTestId(`${testId}-dropdown`)
-                ).not.toBeInTheDocument();
-                expect(getListItemByText("From Option A")).toBeInTheDocument();
+                    screen.queryByTestId("dropdown-list")
+                ).toBeInTheDocument();
             });
+            expect(getListItemByText("From Option A")).toBeInTheDocument();
         });
 
         it("should open 'to' dropdown list when 'from' value is selected", async () => {
@@ -299,7 +299,7 @@ describe("InputRangeSelect", () => {
                             ],
                             to: [{ value: "TA", label: "To Option A" }],
                         }}
-                        data-testid={"input-range-select"}
+                        data-testid={testId}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
@@ -378,7 +378,7 @@ describe("InputRangeSelect", () => {
 
             await waitFor(() => {
                 expect(
-                    screen.queryByTestId(`${testId}-dropdown`)
+                    screen.queryByTestId("dropdown-list")
                 ).not.toBeInTheDocument();
             });
         });
