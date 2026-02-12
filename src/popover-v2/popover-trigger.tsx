@@ -10,10 +10,11 @@ import {
     useClick,
     useDismiss,
     useFloating,
+    useFocus,
     useHover,
     useInteractions,
 } from "@floating-ui/react";
-import { useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { useFloatingChild } from "../overlay/use-floating-context";
@@ -38,14 +39,16 @@ export const PopoverTrigger = ({
     enableFlip = true,
     enableResize = false,
     overflow = "auto",
+    triggerOnFocus = false,
+    isModal = true,
     ...otherProps
 }: PopoverV2TriggerProps) => {
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
     const [visible, setVisible] = useState<boolean>(false);
-    const nodeRef = useRef<HTMLDivElement | null>(null);
-    const popoverRef = useRef<HTMLDivElement | null>(null);
+    const nodeRef = useRef<HTMLElement | null>(null);
+    const popoverRef = useRef<HTMLElement | null>(null);
     const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
@@ -100,11 +103,38 @@ export const PopoverTrigger = ({
         },
     });
 
+    const focus = useFocus(context, {
+        enabled: triggerOnFocus,
+    });
+
     const { getReferenceProps, getFloatingProps } = useInteractions([
         click,
         dismiss,
         hover,
+        focus,
     ]);
+
+    // =========================================================================
+    // HELPER FUNCTIONS
+    // =========================================================================
+    const isFocusInside = (node: Node | null) => {
+        if (!node) return false;
+
+        if (
+            node instanceof HTMLElement &&
+            node.hasAttribute("data-floating-ui-focus-guard")
+        ) {
+            return true;
+        }
+
+        const refEl = nodeRef.current;
+        const floatingEl = popoverRef.current;
+
+        return (
+            (!!refEl && refEl.contains(node)) ||
+            (!!floatingEl && floatingEl.contains(node))
+        );
+    };
 
     // =========================================================================
     // EVENT HANDLERS
@@ -117,6 +147,17 @@ export const PopoverTrigger = ({
     const handleVisibilityChange = (nextVisible: boolean) => {
         if (nextVisible && onPopoverAppear) onPopoverAppear();
         if (!nextVisible && onPopoverDismiss) onPopoverDismiss();
+    };
+
+    const handleBlur = (e: React.FocusEvent<HTMLElement>) => {
+        const next =
+            (e.relatedTarget as Node | null) ??
+            (document.activeElement as Node | null);
+
+        if (next && isFocusInside(next)) return;
+
+        setVisible(false);
+        handleVisibilityChange(false);
     };
 
     // =========================================================================
@@ -163,12 +204,20 @@ export const PopoverTrigger = ({
             </TriggerContainer>
             {visible && (
                 <FloatingPortal root={rootNode}>
-                    <FloatingFocusManager context={context}>
+                    <FloatingFocusManager
+                        context={context}
+                        {...(!isModal && {
+                            initialFocus: -1,
+                            returnFocus: false,
+                            modal: false,
+                        })}
+                    >
                         <div
                             ref={(node) => {
                                 popoverRef.current = node;
                                 refs.setFloating(node);
                             }}
+                            onBlur={handleBlur}
                             style={{
                                 ...floatingStyles,
                                 outline: "none",

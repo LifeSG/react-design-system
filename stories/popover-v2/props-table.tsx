@@ -145,6 +145,34 @@ export const COMMON_POPOVER_ATTRIBUTES: ApiTableSectionProps["attributes"] = [
         propTypes: ["string"],
         defaultValue: "More information",
     },
+    {
+        name: "triggerOnFocus",
+        description: (
+            <>
+                Opens the popover when the trigger element receives keyboard
+                focus (e.g. via Tab), instead of requiring a click.
+            </>
+        ),
+        propTypes: ["boolean"],
+        defaultValue: "false",
+    },
+    {
+        name: "isModal",
+        description: (
+            <>
+                Controls whether the popover behaves as a modal.
+                <br />
+                <br />
+                When <code>true</code>, focus is trapped within the popover and
+                interaction outside is disabled until it is dismissed.
+                <br />
+                When <code>false</code>, focus may move outside the popover and
+                it behaves as a non-modal element (e.g. navigation menus).
+            </>
+        ),
+        propTypes: ["boolean"],
+        defaultValue: "true",
+    },
 ];
 
 const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [

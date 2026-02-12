@@ -22,7 +22,6 @@ export const MenuSection = ({
         <Section
             $showDivider={showDivider}
             data-testid={testId}
-            role="group"
             aria-labelledby={internalId}
             {...otherProps}
         >

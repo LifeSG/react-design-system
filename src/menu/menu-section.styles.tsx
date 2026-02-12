@@ -12,7 +12,7 @@ interface MenuSectionStyleProps {
 // =============================================================================
 // MENU SECTION STYLES
 // =============================================================================
-export const Section = styled.div<MenuSectionStyleProps>`
+export const Section = styled.ul<MenuSectionStyleProps>`
     ${(props) =>
         props.$showDivider &&
         css`
@@ -20,6 +20,8 @@ export const Section = styled.div<MenuSectionStyleProps>`
                 ${Colour["border"]};
         `}
     padding: ${Spacing["spacing-8"]} 0;
+    margin: 0;
+    list-style: none;
 `;
 
 export const Label = styled(Typography.BodyXS)`
