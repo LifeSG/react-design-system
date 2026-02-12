@@ -102,12 +102,6 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `"middle"`,
             },
             {
-                name: "listStyleWidth",
-                description:
-                    "Style option: The width of the option display. (E.g. '100%' or '12rem')",
-                propTypes: ["string"],
-            },
-            {
                 name: "alignment",
                 description:
                     "Controls the dropdown alignment relative to the trigger element.",

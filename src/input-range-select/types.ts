@@ -27,7 +27,6 @@ export interface InputRangeSelectProps<T, V>
         Omit<InputSelectSharedProps<T>, "options">,
         DropdownDisplayProps<T, V>,
         DropdownSearchProps<T> {
-    listStyleWidth?: string | undefined;
     readOnly?: boolean | undefined;
     placeholders?: InputRangeProp<string> | undefined;
     selectedOptions?: InputRangeProp<T> | undefined;
