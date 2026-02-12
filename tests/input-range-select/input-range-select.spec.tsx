@@ -1,9 +1,11 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { act } from "react-dom/test-utils";
 import { FormRangeSelect } from "src/form/form-range-select";
 import { InputRangeSelect } from "src/input-range-select";
 import styled from "styled-components";
 
+// TODO: act can be removed after upgrading react-testing-library
 // =============================================================================
 // UNIT TESTS
 // =============================================================================
@@ -370,7 +372,9 @@ describe("InputRangeSelect", () => {
             fireEvent.click(screen.getByText("From"));
             expect(getListItemByText("From Option A")).toBeInTheDocument();
 
-            await user.click(document.body);
+            await act(async () => {
+                await user.click(document.body);
+            });
 
             await waitFor(() => {
                 expect(
@@ -412,7 +416,9 @@ describe("InputRangeSelect", () => {
                 expect(getListItemByText("To Option A")).toBeInTheDocument();
             });
 
-            await user.click(document.body);
+            await act(async () => {
+                await user.click(document.body);
+            });
 
             await waitFor(() => {
                 expect(screen.getByText("From")).toBeInTheDocument();
@@ -453,7 +459,9 @@ describe("InputRangeSelect", () => {
             expect(screen.getByText("From ... on A")).toBeInTheDocument();
             expect(screen.getByText("To O ... on A")).toBeInTheDocument();
 
-            await user.click(document.body);
+            await act(async () => {
+                await user.click(document.body);
+            });
 
             await waitFor(() => {
                 expect(screen.getByText("From ... on A")).toBeInTheDocument();
@@ -487,7 +495,9 @@ describe("InputRangeSelect", () => {
                 </Wrapper>
             );
 
-            await user.click(screen.getByText("From"));
+            await user.tab();
+            await user.keyboard("{Enter}");
+
             await waitFor(() => {
                 expect(getListItemByText("From Option A")).toBeInTheDocument();
             });
@@ -497,17 +507,24 @@ describe("InputRangeSelect", () => {
                 expect(items[0]).toHaveFocus();
             });
 
-            await user.keyboard("{ArrowDown}");
+            await act(async () => {
+                await user.keyboard("{ArrowDown}");
+            });
             expect(items[1]).toHaveFocus();
 
-            await user.keyboard("{ArrowDown}");
+            await act(async () => {
+                await user.keyboard("{ArrowDown}");
+            });
             expect(items[2]).toHaveFocus();
 
-            await user.keyboard("{ArrowUp}");
+            await act(async () => {
+                await user.keyboard("{ArrowUp}");
+            });
             expect(items[1]).toHaveFocus();
 
-            await user.keyboard("{Enter}");
-
+            await act(async () => {
+                await user.keyboard("{Enter}");
+            });
             expect(screen.getByText("From ... on B")).toBeInTheDocument();
             await waitFor(() => {
                 expect(getListItemByText("To Option A")).toBeInTheDocument();
@@ -536,7 +553,8 @@ describe("InputRangeSelect", () => {
                 </Wrapper>
             );
 
-            await user.click(screen.getByText("From"));
+            await user.tab();
+            await user.keyboard("{Enter}");
 
             const searchInput = await screen.findByTestId("search-input");
 
@@ -544,11 +562,15 @@ describe("InputRangeSelect", () => {
                 expect(searchInput).toHaveFocus();
             });
 
-            await user.keyboard("{ArrowDown}");
+            await act(async () => {
+                await user.keyboard("{ArrowDown}");
+            });
             const items = getListItems();
             expect(items[0]).toHaveFocus();
 
-            await user.keyboard("{ArrowUp}");
+            await act(async () => {
+                await user.keyboard("{ArrowUp}");
+            });
             expect(searchInput).toHaveFocus();
         });
     });

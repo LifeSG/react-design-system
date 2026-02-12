@@ -53,7 +53,7 @@ export const InputRangeSelect = <T, V>({
     ...otherProps
 }: InputRangeSelectProps<T, V>): JSX.Element => {
     // =============================================================================
-    // CONST, STATE
+    // CONST, STATE, REF
     // =============================================================================
     const [selectedFromValue, setSelectedFromValue] = useState<T | undefined>();
     const [selectedToValue, setSelectedToValue] = useState<T | undefined>();
@@ -259,6 +259,24 @@ export const InputRangeSelect = <T, V>({
         }
     };
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (disabled || readOnly) return;
+
+        if (isOpen) return;
+
+        switch (event.key) {
+            case "Enter":
+            case " ":
+            case "ArrowDown":
+                event.preventDefault();
+                setFocusedInput("from");
+                triggerOptionDisplayCallback(true);
+                break;
+            default:
+                break;
+        }
+    };
+
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
@@ -301,13 +319,14 @@ export const InputRangeSelect = <T, V>({
                 className={className}
                 data-testid={testId}
                 ref={nodeRef}
-                tabIndex={-1}
+                tabIndex={disabled || readOnly ? -1 : 0}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
                 $focused={isFocused || isOpen}
                 $disabled={disabled}
                 $readOnly={readOnly}
                 $error={error}
+                onKeyDown={handleKeyDown}
             >
                 <RangeInputInnerContainer
                     currentActive={getCurrentFocused()}
