@@ -129,9 +129,9 @@ export const LinkLabel = styled.div`
 export const LinkIndicator = styled.div<StyleProps>`
     position: absolute;
     bottom: 0;
+    left: 0;
+    right: 0;
     height: 0.25rem;
-    left: 0.5rem;
-    right: 0.5rem;
     background-color: ${Colour["border-selected"]};
 
     &:hover {
