@@ -566,4 +566,118 @@ describe("TimeRangePicker", () => {
             });
         });
     });
+
+    describe("Dial variant", () => {
+        const getFrom = () => screen.getByTestId("timepicker-selector-from");
+        const getTo = () => screen.getByTestId("timepicker-selector-to");
+        const getTimepickerDropdown = () =>
+            screen.queryByTestId("timepicker-dropdown");
+
+        const getHourInput = () => screen.getByTestId("hour-input");
+        const getMinuteInput = () => screen.getByTestId("minute-input");
+        const getDoneButton = () => screen.getByTestId("confirm-button");
+        const getCancelButton = () => screen.getByTestId("cancel-button");
+
+        const setTimeAndDone = async (
+            user: ReturnType<typeof userEvent.setup>,
+            hour: string,
+            minute: string
+        ) => {
+            await user.clear(getHourInput());
+            await user.type(getHourInput(), hour);
+            await user.clear(getMinuteInput());
+            await user.type(getMinuteInput(), minute);
+            await user.click(getDoneButton());
+        };
+
+        it("should render the component", () => {
+            render(<TimeRangePicker />);
+
+            expect(getFrom()).toBeInTheDocument();
+            expect(getTo()).toBeInTheDocument();
+            expect(getTimepickerDropdown()).not.toBeInTheDocument();
+        });
+
+        it("should open dropdown on input click", async () => {
+            const user = userEvent.setup();
+
+            render(<TimeRangePicker />);
+            await user.click(getFrom());
+            await waitFor(() => expect(getTimepickerDropdown()).toBeVisible());
+        });
+
+        it("should call onFocus on click", async () => {
+            const user = userEvent.setup();
+            const mockOnFocus = jest.fn();
+
+            render(<TimeRangePicker onFocus={mockOnFocus} />);
+
+            await user.click(getFrom());
+            await waitFor(() => expect(getTimepickerDropdown()).toBeVisible());
+            expect(mockOnFocus).toHaveBeenCalledTimes(1);
+        });
+
+        it("should close dropdown upon input completion and trigger onBlur", async () => {
+            const user = userEvent.setup();
+            const mockOnChange = jest.fn();
+            const mockOnBlur = jest.fn();
+
+            render(
+                <TimeRangePicker
+                    onChange={mockOnChange}
+                    onBlur={mockOnBlur}
+                    format="24hr"
+                />
+            );
+
+            // Input "From" time
+            await user.click(getFrom());
+            await waitFor(() => expect(getTimepickerDropdown()).toBeVisible());
+            await setTimeAndDone(user, "09", "00");
+
+            // Input "To" time
+            await waitFor(() => expect(getTimepickerDropdown()).toBeVisible());
+            await setTimeAndDone(user, "10", "00");
+
+            await waitForElementToBeRemoved(() => getTimepickerDropdown());
+
+            expect(mockOnChange).toHaveBeenCalledTimes(2);
+            expect(mockOnChange).toHaveBeenLastCalledWith({
+                start: "09:00",
+                end: "10:00",
+            });
+            expect(mockOnBlur).toHaveBeenCalledTimes(1);
+            expect(getTimepickerDropdown()).not.toBeInTheDocument();
+        });
+
+        it("should close dropdown and call onBlur when Cancel is clicked", async () => {
+            const user = userEvent.setup();
+            const mockOnBlur = jest.fn();
+
+            render(<TimeRangePicker onBlur={mockOnBlur} />);
+
+            await user.click(getFrom());
+            await waitFor(() => expect(getTimepickerDropdown()).toBeVisible());
+
+            await user.click(getCancelButton());
+
+            await waitForElementToBeRemoved(() => getTimepickerDropdown());
+            expect(mockOnBlur).toHaveBeenCalledTimes(1);
+        });
+
+        it("should close dropdown and call onBlur when clicking outside", async () => {
+            const user = userEvent.setup();
+            const mockOnBlur = jest.fn();
+
+            render(<TimeRangePicker onBlur={mockOnBlur} />);
+
+            await user.click(getFrom());
+            await waitFor(() => expect(getTimepickerDropdown()).toBeVisible());
+
+            await user.click(document.body);
+
+            await waitForElementToBeRemoved(() => getTimepickerDropdown());
+            expect(mockOnBlur).toHaveBeenCalledTimes(1);
+        });
+    });
 });
