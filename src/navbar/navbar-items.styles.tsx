@@ -1,7 +1,7 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { MediaQuery } from "../theme";
+import { Font, MediaQuery } from "../theme";
 import { Colour } from "../theme";
 import { ThemeNavbar } from "../theme/components/theme-helper";
 import { TypographyWeight } from "../typography";
@@ -54,7 +54,7 @@ export const MobileWrapper = styled.ul`
 // =============================================================================
 export const LinkItem = styled.li<ItemStyleProps>`
     display: flex;
-    margin-left: 1rem;
+    margin: 0 1rem;
 
     &:first-child {
         // negative margin to preserve touch target size for link
@@ -70,15 +70,7 @@ export const LinkItem = styled.li<ItemStyleProps>`
 `;
 
 const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
-    background: none;
-    border: none;
-    margin: 0;
-    box-shadow: none;
-    font: inherit;
-    color: inherit;
-    text-align: inherit;
-
-    padding: 0 0.5rem;
+    ${(props) => Font[`body-md-${props.weight}`]}
 
     display: flex;
     position: relative;
@@ -117,6 +109,10 @@ export const LinkButton = styled.button<{
     padding: 0;
     cursor: pointer;
     text-align: left;
+    margin: 0;
+    box-shadow: none;
+    font: inherit;
+    color: inherit;
 `;
 
 export const LinkLabel = styled.div`

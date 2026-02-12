@@ -24,10 +24,12 @@ export const Menu = <T,>({ items, onItemClick }: Props<T>): JSX.Element => {
         <MobileWrapper>
             {items.map((item, index) => {
                 const { children, options, ...otherItemAttrs } = item;
+                const testId = `link__${index + 1}`;
 
                 return (
                     <MenuItem key={index}>
                         <Link
+                            data-testid={testId}
                             {...otherItemAttrs}
                             {...options}
                             onClick={handleLinkClick(item)}

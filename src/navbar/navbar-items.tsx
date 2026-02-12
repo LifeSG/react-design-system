@@ -217,67 +217,59 @@ export const NavbarItems = <T,>({
         const renderLinkWithSubmenu = () => {
             const subMenuId = `navbar-submenu-${instanceId}-${item.id}`;
 
-            const desktopTrigger = (
-                <LinkButton
-                    type="button"
-                    tabIndex={0}
-                    data-testid={testId}
-                    weight={textWeight}
-                    $selected={selected}
-                    aria-haspopup="menu"
-                    aria-expanded={isExpanded}
-                    {...options}
-                >
-                    <LinkLabel>{children}</LinkLabel>
-                    {renderIndicator()}
-                </LinkButton>
-            );
-
-            const mobileTrigger = (
-                <Link
-                    tabIndex={0}
-                    data-testid={testId}
-                    weight={textWeight}
-                    $selected={selected}
-                    underlineStyle="none"
-                    {...otherItemAttrs}
-                    aria-current={isRouteSelected ? "page" : undefined}
-                    aria-haspopup="menu"
-                    aria-expanded={isExpanded}
-                    onClick={handleLinkClick(item, index)}
-                    {...options}
-                >
-                    <LinkLabel>{children}</LinkLabel>
-                    {renderIndicator()}
-                    {renderMobileChevron()}
-                </Link>
-            );
-
-            if (!mobile) {
+            if (mobile) {
                 return (
-                    <DesktopMenu
-                        position="bottom"
-                        customOffset={0}
-                        menuContent={renderDesktopSubMenu(subMenu!, subMenuId)}
-                        triggerOnFocus
-                        isModal={false}
-                        onPopoverAppear={() => setOpenSubMenuIndex(index)}
-                        onPopoverDismiss={() => {
-                            setOpenSubMenuIndex((prev) =>
-                                prev === index ? null : prev
-                            );
-                        }}
-                    >
-                        {desktopTrigger}
-                    </DesktopMenu>
+                    <>
+                        <Link
+                            data-testid={testId}
+                            weight={textWeight}
+                            $selected={selected}
+                            underlineStyle="none"
+                            {...otherItemAttrs}
+                            aria-current={isRouteSelected ? "page" : undefined}
+                            aria-haspopup="menu"
+                            aria-expanded={isExpanded}
+                            onClick={handleLinkClick(item, index)}
+                            {...options}
+                        >
+                            <LinkLabel>{children}</LinkLabel>
+                            {renderIndicator()}
+                            {renderMobileChevron()}
+                        </Link>
+
+                        {isMobileExpanded && renderMobileSubMenu(subMenu!)}
+                    </>
                 );
             }
 
             return (
-                <>
-                    {mobileTrigger}
-                    {isMobileExpanded && renderMobileSubMenu(subMenu!)}
-                </>
+                <DesktopMenu
+                    position="bottom"
+                    customOffset={0}
+                    menuContent={renderDesktopSubMenu(subMenu!, subMenuId)}
+                    triggerOnFocus
+                    isModal={false}
+                    onPopoverAppear={() => setOpenSubMenuIndex(index)}
+                    onPopoverDismiss={() => {
+                        setOpenSubMenuIndex((prev) =>
+                            prev === index ? null : prev
+                        );
+                    }}
+                >
+                    <LinkButton
+                        type="button"
+                        tabIndex={0}
+                        data-testid={testId}
+                        weight={textWeight}
+                        $selected={selected}
+                        aria-haspopup="menu"
+                        aria-expanded={isExpanded}
+                        {...options}
+                    >
+                        <LinkLabel>{children}</LinkLabel>
+                        {renderIndicator()}
+                    </LinkButton>
+                </DesktopMenu>
             );
         };
 
