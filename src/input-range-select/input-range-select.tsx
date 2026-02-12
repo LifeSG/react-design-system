@@ -339,6 +339,7 @@ export const InputRangeSelect = <T, V>({
 
         return (
             <DropdownList
+                data-testid={`${testId}-dropdown`}
                 listboxId={listboxId}
                 listItems={currentOptions}
                 onSelectItem={handleListItemClick}

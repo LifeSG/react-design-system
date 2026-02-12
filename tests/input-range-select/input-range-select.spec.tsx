@@ -14,6 +14,8 @@ const getListItemByText = (text: string) => {
     // Workround to get list item by truncated text.
     return screen.getAllByText(text)[0];
 };
+const testId = "input-range-test";
+
 describe("InputRangeSelect", () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -45,10 +47,12 @@ describe("InputRangeSelect", () => {
                     listExtractor={(item) => item.label}
                     displayValueExtractor={(item) => item.label}
                     placeholders={{ from: "From", to: "To" }}
+                    data-testid={testId}
                 />
             </Wrapper>
         );
 
+        expect(screen.queryByTestId(testId)).toBeInTheDocument();
         expect(screen.getByText("From")).toBeInTheDocument();
         expect(screen.getByText("To")).toBeInTheDocument();
     });
@@ -126,7 +130,7 @@ describe("InputRangeSelect", () => {
     });
 
     describe("select behaviour", () => {
-        it("should open dropdown list when selector is clicked", () => {
+        it("should open dropdown list when selector is clicked", async () => {
             render(
                 <Wrapper>
                     <InputRangeSelect
@@ -144,12 +148,19 @@ describe("InputRangeSelect", () => {
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
                         placeholders={{ from: "From", to: "To" }}
+                        data-testid={testId}
                     />
                 </Wrapper>
             );
 
             fireEvent.click(screen.getByText("From"));
-            expect(getListItemByText("From Option A")).toBeInTheDocument();
+
+            await waitFor(() => {
+                expect(
+                    screen.queryByTestId(`${testId}-dropdown`)
+                ).not.toBeInTheDocument();
+                expect(getListItemByText("From Option A")).toBeInTheDocument();
+            });
         });
 
         it("should open 'to' dropdown list when 'from' value is selected", async () => {
@@ -351,6 +362,7 @@ describe("InputRangeSelect", () => {
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
                         placeholders={{ from: "From", to: "To" }}
+                        data-testid={testId}
                     />
                 </Wrapper>
             );
@@ -361,7 +373,9 @@ describe("InputRangeSelect", () => {
             await user.click(document.body);
 
             await waitFor(() => {
-                expect(screen.queryAllByTestId("list-item")).toHaveLength(0);
+                expect(
+                    screen.queryByTestId(`${testId}-dropdown`)
+                ).not.toBeInTheDocument();
             });
         });
 
