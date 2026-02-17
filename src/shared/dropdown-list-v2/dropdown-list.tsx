@@ -102,6 +102,7 @@ export const DropdownList = <T, V>({
     const listItemRefs = useRef<(HTMLElement | null)[]>([]);
     const searchInputRef = useRef<HTMLInputElement>(null);
     const virtuosoRef = useRef<VirtuosoHandle>(null);
+    const prevListSigRef = useRef<string>("");
 
     const hasSelectedMax =
         !!maxSelectable &&
@@ -166,8 +167,11 @@ export const DropdownList = <T, V>({
                 // Cannot go further than last element
                 if (focusedIndex < displayListItems.length - 1) {
                     const upcomingIndex = focusedIndex + 1;
-                    listItemRefs.current[upcomingIndex]?.focus();
                     setFocusedIndex(upcomingIndex);
+
+                    setTimeout(() => {
+                        listItemRefs.current[upcomingIndex]?.focus();
+                    }, 0);
                 }
                 break;
             case "ArrowUp":
@@ -175,28 +179,33 @@ export const DropdownList = <T, V>({
                 // Cannot go further than first element
                 if (focusedIndex > 0) {
                     const upcomingIndex = focusedIndex - 1;
-                    listItemRefs.current[upcomingIndex]?.focus();
                     setFocusedIndex(upcomingIndex);
+
+                    setTimeout(() => {
+                        listItemRefs.current[upcomingIndex]?.focus();
+                    }, 0);
                 } else if (focusedIndex === 0 && searchInputRef.current) {
                     searchInputRef.current.focus();
                     setFocusedIndex(-1);
                 }
                 break;
             case "Space":
-            case "Enter":
-                if (
-                    document.activeElement ===
-                    listItemRefs.current[focusedIndex]
-                ) {
+            case "Enter": {
+                const focusedEl = listItemRefs.current[focusedIndex];
+                const active = document.activeElement;
+
+                const isOnFocusedItem =
+                    !!focusedEl && !!active && focusedEl.contains(active);
+
+                if (isOnFocusedItem) {
                     event.preventDefault();
-                    if (displayListItems[focusedIndex]) {
-                        handleListItemClick(
-                            displayListItems[focusedIndex],
-                            focusedIndex
-                        );
+                    const item = displayListItems[focusedIndex];
+                    if (item) {
+                        handleListItemClick(item, focusedIndex);
                     }
                 }
                 break;
+            }
             default:
                 break;
         }
@@ -259,39 +268,57 @@ export const DropdownList = <T, V>({
     }, [listItemRefs, listItems, setFocusedIndex, topScrollItem]);
 
     useEffect(() => {
-        if (mounted) {
-            // only run on mount
+        if (disableItemFocus || !listItems) return;
+
+        // keep track of when we swapped datasets (e.g from -> to)
+        const listSignature = listItems
+            .map((item, i) => {
+                const v = valueExtractor ? valueExtractor(item) : (item as any);
+                return `${i}:${String(v)}`;
+            })
+            .join("|");
+
+        const listChanged = prevListSigRef.current !== listSignature;
+        const isFirstRun = !mounted;
+
+        if (!isFirstRun && !listChanged) {
             return;
         }
 
-        if (disableItemFocus || !listItems) return;
+        prevListSigRef.current = listSignature;
 
-        const index = listItems.findIndex((item) =>
+        const selectedIndex = listItems.findIndex((item) =>
             checkListItemSelected(item)
         );
 
-        // Focus search input if there is one
-        if (searchInputRef.current) {
+        const focusIndex = (() => {
+            if (searchInputRef.current) return -1;
+
+            if (listChanged) return 0;
+
+            if (focusedIndex >= 0 && focusedIndex < listItems.length)
+                return focusedIndex;
+
+            if (selectedIndex !== -1) return selectedIndex;
+
+            return 0;
+        })();
+
+        if (focusIndex === -1) {
             setFocusedIndex(-1);
-            setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
-        } else if (focusedIndex > 0) {
-            // Else focus on the specified element
-            virtuosoRef.current?.scrollToIndex({
-                index: focusedIndex,
-                align: "center",
-            });
-            setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
-        } else if (index !== -1) {
-            // Else focus on the selected element
-            virtuosoRef.current?.scrollToIndex({ index, align: "center" });
-            setFocusedIndex(index);
-            setTimeout(() => listItemRefs.current[index]?.focus(), 200);
-        } else {
-            // Else focus on the first list item
-            virtuosoRef.current?.scrollToIndex({ index: 0 });
-            setFocusedIndex(0);
-            setTimeout(() => listItemRefs.current[0]?.focus(), 200);
+            setTimeout(() => searchInputRef.current?.focus(), 200);
+            return;
         }
+
+        virtuosoRef.current?.scrollToIndex({
+            index: focusIndex,
+            align: "center",
+        });
+        setFocusedIndex(focusIndex);
+
+        setTimeout(() => {
+            listItemRefs.current[focusIndex]?.focus();
+        }, 200);
     }, [
         checkListItemSelected,
         disableItemFocus,
@@ -299,6 +326,7 @@ export const DropdownList = <T, V>({
         listItems,
         mounted,
         setFocusedIndex,
+        valueExtractor,
     ]);
 
     useEffect(() => {
