@@ -369,8 +369,13 @@ describe("InputRangeSelect", () => {
                 </Wrapper>
             );
 
-            fireEvent.click(screen.getByText("From"));
-            expect(getListItemByText("From Option A")).toBeInTheDocument();
+            await user.tab();
+
+            await user.keyboard("{Enter}");
+            const firstOption = await screen.findByRole("option", {
+                name: "From Option A",
+            });
+            await waitFor(() => expect(firstOption).toHaveFocus());
 
             await act(async () => {
                 await user.click(document.body);
@@ -380,6 +385,7 @@ describe("InputRangeSelect", () => {
                 expect(
                     screen.queryByTestId("dropdown-list")
                 ).not.toBeInTheDocument();
+                expect(firstOption).not.toBeInTheDocument();
             });
         });
 
@@ -407,18 +413,19 @@ describe("InputRangeSelect", () => {
                 </Wrapper>
             );
 
-            fireEvent.click(screen.getByText("From"));
-            fireEvent.click(getListItemByText("From Option A"));
+            await user.tab();
 
+            await user.keyboard("{Enter}");
+            const firstOption = await screen.findByRole("option", {
+                name: "From Option A",
+            });
+            await waitFor(() => expect(firstOption).toHaveFocus());
+
+            await user.keyboard("{Enter}");
             expect(screen.getByText("From ... on A")).toBeInTheDocument();
 
-            await waitFor(() => {
-                expect(getListItemByText("To Option A")).toBeInTheDocument();
-            });
-
-            await act(async () => {
-                await user.click(document.body);
-            });
+            await screen.findByText("To Option A");
+            await user.click(document.body);
 
             await waitFor(() => {
                 expect(screen.getByText("From")).toBeInTheDocument();
@@ -426,46 +433,6 @@ describe("InputRangeSelect", () => {
                 expect(
                     screen.queryByText("From ... on A")
                 ).not.toBeInTheDocument();
-            });
-        });
-
-        it("should not reset selections when range is complete and dismissed", async () => {
-            const user = userEvent.setup();
-
-            render(
-                <Wrapper>
-                    <InputRangeSelect
-                        options={{
-                            from: [{ value: "A", label: "From Option A" }],
-                            to: [{ value: "TA", label: "To Option A" }],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{ from: "From", to: "To" }}
-                    />
-                </Wrapper>
-            );
-
-            fireEvent.click(screen.getByText("From"));
-            fireEvent.click(getListItemByText("From Option A"));
-
-            await waitFor(() => {
-                expect(getListItemByText("To Option A")).toBeInTheDocument();
-            });
-
-            fireEvent.click(getListItemByText("To Option A"));
-
-            expect(screen.getByText("From ... on A")).toBeInTheDocument();
-            expect(screen.getByText("To O ... on A")).toBeInTheDocument();
-
-            await act(async () => {
-                await user.click(document.body);
-            });
-
-            await waitFor(() => {
-                expect(screen.getByText("From ... on A")).toBeInTheDocument();
-                expect(screen.getByText("To O ... on A")).toBeInTheDocument();
             });
         });
     });
@@ -572,6 +539,56 @@ describe("InputRangeSelect", () => {
                 await user.keyboard("{ArrowUp}");
             });
             expect(searchInput).toHaveFocus();
+        });
+
+        it("should allow user to finish the entire selection process via keyboard alone", async () => {
+            const user = userEvent.setup();
+
+            render(
+                <Wrapper>
+                    <InputRangeSelect
+                        data-testid="input-range-select"
+                        options={{
+                            from: [{ value: "A", label: "From Option A" }],
+                            to: [{ value: "TA", label: "To Option A" }],
+                        }}
+                        valueExtractor={(item) => item.value}
+                        listExtractor={(item) => item.label}
+                        displayValueExtractor={(item) => item.label}
+                        placeholders={{ from: "From", to: "To" }}
+                    />
+                </Wrapper>
+            );
+
+            await user.tab();
+            const wrapper = screen.getByTestId("input-range-select");
+            expect(wrapper).toHaveFocus();
+
+            await user.keyboard("{Enter}");
+            const fromOption = await screen.findByRole("option", {
+                name: "From Option A",
+            });
+            await waitFor(() => {
+                expect(fromOption).toHaveFocus();
+            });
+
+            await user.keyboard("{Enter}");
+            const toOption = await screen.findByRole("option", {
+                name: "To Option A",
+            });
+            await waitFor(() => {
+                expect(toOption).toHaveFocus();
+            });
+
+            await user.keyboard("{Enter}");
+            await waitFor(() => {
+                expect(
+                    screen.queryByTestId("dropdown-container")
+                ).not.toBeInTheDocument();
+            });
+
+            expect(screen.getByText("From ... on A")).toBeInTheDocument();
+            expect(screen.getByText("To O ... on A")).toBeInTheDocument();
         });
     });
 });
