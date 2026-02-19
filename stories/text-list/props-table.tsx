@@ -55,8 +55,15 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "bulletType",
-                description: "The bullet type for the unordered list",
-                propTypes: [`"disc"`, `"circle"`, `"square"`, `"none"`],
+                description:
+                    "The bullet type for the unordered list. Accepts a custom bullet",
+                propTypes: [
+                    `"disc"`,
+                    `"circle"`,
+                    `"square"`,
+                    `"none"`,
+                    "React.ReactNode",
+                ],
             },
         ],
     },

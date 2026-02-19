@@ -1,10 +1,10 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { MediaQuery } from "../theme";
+import { Font, MediaQuery } from "../theme";
 import { Colour } from "../theme";
-import { Typography } from "../typography/typography";
 import { ThemeNavbar } from "../theme/components/theme-helper";
+import { TypographyWeight } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -54,7 +54,7 @@ export const MobileWrapper = styled.ul`
 // =============================================================================
 export const LinkItem = styled.li<ItemStyleProps>`
     display: flex;
-    margin-left: 1rem;
+    margin: 0 1rem;
 
     &:first-child {
         // negative margin to preserve touch target size for link
@@ -69,18 +69,19 @@ export const LinkItem = styled.li<ItemStyleProps>`
     }
 `;
 
-export const Link = styled(Typography.LinkMD)<StyleProps>`
+const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
+    ${(props) => Font[`body-md-${props.weight}`]}
+
     display: flex;
     position: relative;
     align-items: center;
     text-align: center;
     color: ${ThemeNavbar["navbar-link-colour-text"]};
     height: 100%;
-    padding: 0 0.5rem;
 
     &:active,
-    &:focus,
-    &:hover {
+    &:hover,
+    &:focus {
         color: ${(props) =>
             props.$selected
                 ? ThemeNavbar["navbar-link-colour-text-selected-hover"]
@@ -93,6 +94,25 @@ export const Link = styled(Typography.LinkMD)<StyleProps>`
         text-align: left;
         align-items: flex-start;
     }
+`;
+export const Link = styled.a<{ $selected: boolean; weight: TypographyWeight }>`
+    ${linkCss}
+`;
+
+export const LinkButton = styled.button<{
+    $selected: boolean;
+    weight: TypographyWeight;
+}>`
+    ${linkCss}
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    margin: 0;
+    box-shadow: none;
+    font: inherit;
+    color: inherit;
 `;
 
 export const LinkLabel = styled.div`
@@ -109,9 +129,9 @@ export const LinkLabel = styled.div`
 export const LinkIndicator = styled.div<StyleProps>`
     position: absolute;
     bottom: 0;
+    left: 0;
+    right: 0;
     height: 0.25rem;
-    left: 0.5rem;
-    right: 0.5rem;
     background-color: ${Colour["border-selected"]};
 
     &:hover {

@@ -1,71 +1,26 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { lineClampCss } from "../shared/styles";
-import {
-    Border,
-    Colour,
-    Font,
-    MediaQuery,
-    Radius,
-    Shadow,
-    Spacing,
-} from "../theme";
+import { Border, Colour, Radius, Spacing } from "../theme";
 import { Typography } from "../typography";
 
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-
-// =============================================================================
-// WRAPPER
-// =============================================================================
-
-export const Wrapper = styled.ul`
+export const MobileWrapper = styled.ul`
+    list-style: none;
     display: flex;
     flex-direction: column;
-    position: absolute;
-    left: 0;
-    top: 100%;
 
-    min-width: 15.625rem;
+    margin: 0;
+    padding: 0;
+
+    border-left: ${Border["width-040"]} solid ${Colour["border-selected"]};
+`;
+
+export const MenuItem = styled.li`
     width: 100%;
-    max-height: 20rem;
-    overflow: auto;
-
-    padding: ${Spacing["spacing-8"]} 0;
-
-    background: ${Colour["bg"]};
-    border-radius: ${Radius["md"]};
-    ${(props) => {
-        return props.theme?.colourMode === "dark"
-            ? css`
-                  border: ${Border["width-010"]} ${Border["solid"]}
-                      ${Colour["border"]};
-              `
-            : css`
-                  box-shadow: ${Shadow["md-subtle"]};
-              `;
-    }}
+    display: flex;
 `;
-
-export const MobileWrapper = styled.ul`
-    display: none;
-    list-style: none;
-
-    ${MediaQuery.MaxWidth.lg} {
-        border-left: ${Border["width-040"]} solid ${Colour["border-selected"]};
-        display: flex;
-        flex-direction: column;
-    }
-`;
-
-// =============================================================================
-// LINK ITEMS
-// =============================================================================
 
 export const Link = styled(Typography.LinkBL)`
     width: 100%;
-    position: relative;
     text-align: left;
     color: ${Colour["text"]};
 
@@ -74,7 +29,6 @@ export const Link = styled(Typography.LinkBL)`
     // use border, as padding still shows an extra line after the ellipsis
     border: ${Border["solid"]} transparent;
     border-width: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
-
     border-radius: ${Radius["md"]};
 
     ${lineClampCss(2)}
@@ -86,18 +40,4 @@ export const Link = styled(Typography.LinkBL)`
         background-color: ${Colour["bg-hover"]};
         color: ${Colour["text"]};
     }
-
-    ${MediaQuery.MaxWidth.lg} {
-        ${Font["body-md-regular"]}
-    }
-`;
-
-// =============================================================================
-// LINK ITEMS
-// =============================================================================
-export const MenuItem = styled.li`
-    width: 100%;
-    position: relative;
-    display: flex;
-    align-items: flex-start;
 `;

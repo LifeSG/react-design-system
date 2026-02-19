@@ -59,6 +59,8 @@ export interface PopoverV2TriggerProps {
     enableResize?: boolean | undefined;
     overflow?: PopoverOverflowType | undefined;
     popoverAriaLabel?: string | undefined;
+    triggerOnFocus?: boolean | undefined;
+    isModal?: boolean | undefined;
     onPopoverAppear?: (() => void) | undefined;
     onPopoverDismiss?: (() => void) | undefined;
 }

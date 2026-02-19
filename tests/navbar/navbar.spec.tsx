@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { Navbar } from "src/navbar";
+import userEvent from "@testing-library/user-event";
 
 describe("Navbar", () => {
     describe("Basic functions", () => {
@@ -46,6 +47,27 @@ describe("Navbar", () => {
 
             const { getByTestId } = rendered;
             expect(getByTestId("link__1-indicator")).toBeInTheDocument();
+        });
+
+        it("should not move the indicator when focusing another non-submenu item", async () => {
+            const user = userEvent.setup();
+
+            render(
+                <Navbar items={{ desktop: MOCK_ITEMS() }} selectedId="first" />
+            );
+
+            expect(screen.getByTestId("link__1-indicator")).toBeInTheDocument();
+            expect(
+                screen.queryByTestId("link__2-indicator")
+            ).not.toBeInTheDocument();
+
+            await user.tab(); // focuses first item
+            await user.tab(); // tabbed focus to second item
+
+            expect(screen.getByTestId("link__1-indicator")).toBeInTheDocument();
+            expect(
+                screen.queryByTestId("link__2-indicator")
+            ).not.toBeInTheDocument();
         });
 
         it("should render the primary brand", () => {
