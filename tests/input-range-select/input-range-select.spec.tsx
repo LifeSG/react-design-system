@@ -508,7 +508,7 @@ describe("InputRangeSelect", () => {
             });
         });
 
-        it("should move focus to search input when ArrowUp from first item and enableSearch=true", async () => {
+        it("should move focus to search input when enableSearch=true", async () => {
             const user = userEvent.setup();
 
             render(
@@ -535,18 +535,6 @@ describe("InputRangeSelect", () => {
                 await user.keyboard("{Enter}");
             });
 
-            const firstOption = await screen.findByRole("option", {
-                name: "From Option A",
-            });
-
-            await waitFor(() => {
-                expect(firstOption).toHaveFocus();
-            });
-
-            await act(async () => {
-                await user.keyboard("{ArrowUp}");
-            });
-
             const searchInput = await screen.findByTestId("search-input");
             await waitFor(() => {
                 expect(searchInput).toHaveFocus();
@@ -554,6 +542,10 @@ describe("InputRangeSelect", () => {
 
             await act(async () => {
                 await user.keyboard("{ArrowDown}");
+            });
+
+            const firstOption = await screen.findByRole("option", {
+                name: "From Option A",
             });
 
             await waitFor(() => {

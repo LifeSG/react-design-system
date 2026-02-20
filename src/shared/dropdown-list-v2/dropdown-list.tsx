@@ -224,56 +224,43 @@ const DropdownListInner = <T, V>(
     // EVENT HANDLERS
     // =========================================================================
     const handleKeyboardPress = (event: KeyboardEvent) => {
-        const active = document.activeElement as HTMLElement | null;
-
-        if (!active || !nodeRef.current || !nodeRef.current.contains(active)) {
-            return;
-        }
-
         switch (event.code) {
             case "ArrowDown":
                 event.preventDefault();
+                // Cannot go further than last element
                 if (focusedIndex < displayListItems.length - 1) {
-                    const next = focusedIndex + 1;
-                    setFocusedIndex(next);
-                    listItemRefs.current[next]?.focus();
+                    const upcomingIndex = focusedIndex + 1;
+                    listItemRefs.current[upcomingIndex]?.focus();
+                    setFocusedIndex(upcomingIndex);
                 }
                 break;
             case "ArrowUp":
                 event.preventDefault();
+                // Cannot go further than first element
                 if (focusedIndex > 0) {
-                    const next = focusedIndex - 1;
-                    setFocusedIndex(next);
-                    listItemRefs.current[next]?.focus();
+                    const upcomingIndex = focusedIndex - 1;
+                    listItemRefs.current[upcomingIndex]?.focus();
+                    setFocusedIndex(upcomingIndex);
                 } else if (focusedIndex === 0 && searchInputRef.current) {
-                    setFocusedIndex(-1);
                     searchInputRef.current.focus();
+                    setFocusedIndex(-1);
                 }
                 break;
             case "Space":
-            case "Enter": {
-                event.preventDefault();
-
-                const active = document.activeElement as HTMLElement | null;
-
-                const activeIndex = active
-                    ? listItemRefs.current.findIndex(
-                          (el) => !!el && el.contains(active)
-                      )
-                    : -1;
-
-                const indexToUse =
-                    activeIndex !== -1 ? activeIndex : focusedIndex;
-
-                if (indexToUse === -1) return;
-
-                const item = displayListItems[indexToUse];
-                if (!item) return;
-
-                handleListItemClick(item, indexToUse);
+            case "Enter":
+                if (
+                    document.activeElement ===
+                    listItemRefs.current[focusedIndex]
+                ) {
+                    event.preventDefault();
+                    if (displayListItems[focusedIndex]) {
+                        handleListItemClick(
+                            displayListItems[focusedIndex],
+                            focusedIndex
+                        );
+                    }
+                }
                 break;
-            }
-
             default:
                 break;
         }
