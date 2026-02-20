@@ -371,7 +371,9 @@ describe("InputRangeSelect", () => {
 
             await user.tab();
 
-            await user.keyboard("{Enter}");
+            await act(async () => {
+                await user.keyboard("{Enter}");
+            });
             const firstOption = await screen.findByRole("option", {
                 name: "From Option A",
             });
@@ -415,17 +417,23 @@ describe("InputRangeSelect", () => {
 
             await user.tab();
 
-            await user.keyboard("{Enter}");
+            await act(async () => {
+                await user.keyboard("{Enter}");
+            });
             const firstOption = await screen.findByRole("option", {
                 name: "From Option A",
             });
             await waitFor(() => expect(firstOption).toHaveFocus());
 
-            await user.keyboard("{Enter}");
+            await act(async () => {
+                await user.keyboard("{Enter}");
+            });
             expect(screen.getByText("From ... on A")).toBeInTheDocument();
 
             await screen.findByText("To Option A");
-            await user.click(document.body);
+            await act(async () => {
+                await user.click(document.body);
+            });
 
             await waitFor(() => {
                 expect(screen.getByText("From")).toBeInTheDocument();
@@ -463,7 +471,9 @@ describe("InputRangeSelect", () => {
             );
 
             await user.tab();
-            await user.keyboard("{Enter}");
+            await act(async () => {
+                await user.keyboard("{Enter}");
+            });
 
             await waitFor(() => {
                 expect(getListItemByText("From Option A")).toBeInTheDocument();
@@ -498,7 +508,7 @@ describe("InputRangeSelect", () => {
             });
         });
 
-        it("should focus search input initially when enableSearch=true and ArrowUp from first item returns focus to search", async () => {
+        it("should move focus to search input when ArrowUp from first item and enableSearch=true", async () => {
             const user = userEvent.setup();
 
             render(
@@ -521,10 +531,23 @@ describe("InputRangeSelect", () => {
             );
 
             await user.tab();
-            await user.keyboard("{Enter}");
+            await act(async () => {
+                await user.keyboard("{Enter}");
+            });
+
+            const firstOption = await screen.findByRole("option", {
+                name: "From Option A",
+            });
+
+            await waitFor(() => {
+                expect(firstOption).toHaveFocus();
+            });
+
+            await act(async () => {
+                await user.keyboard("{ArrowUp}");
+            });
 
             const searchInput = await screen.findByTestId("search-input");
-
             await waitFor(() => {
                 expect(searchInput).toHaveFocus();
             });
@@ -532,13 +555,10 @@ describe("InputRangeSelect", () => {
             await act(async () => {
                 await user.keyboard("{ArrowDown}");
             });
-            const items = getListItems();
-            expect(items[0]).toHaveFocus();
 
-            await act(async () => {
-                await user.keyboard("{ArrowUp}");
+            await waitFor(() => {
+                expect(firstOption).toHaveFocus();
             });
-            expect(searchInput).toHaveFocus();
         });
 
         it("should allow user to finish the entire selection process via keyboard alone", async () => {
@@ -564,7 +584,9 @@ describe("InputRangeSelect", () => {
             const wrapper = screen.getByTestId("input-range-select");
             expect(wrapper).toHaveFocus();
 
-            await user.keyboard("{Enter}");
+            await act(async () => {
+                await user.keyboard("{Enter}");
+            });
             const fromOption = await screen.findByRole("option", {
                 name: "From Option A",
             });
@@ -572,7 +594,9 @@ describe("InputRangeSelect", () => {
                 expect(fromOption).toHaveFocus();
             });
 
-            await user.keyboard("{Enter}");
+            await act(async () => {
+                await user.keyboard("{Enter}");
+            });
             const toOption = await screen.findByRole("option", {
                 name: "To Option A",
             });
@@ -580,7 +604,9 @@ describe("InputRangeSelect", () => {
                 expect(toOption).toHaveFocus();
             });
 
-            await user.keyboard("{Enter}");
+            await act(async () => {
+                await user.keyboard("{Enter}");
+            });
             await waitFor(() => {
                 expect(
                     screen.queryByTestId("dropdown-container")

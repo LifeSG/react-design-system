@@ -1,9 +1,11 @@
 import find from "lodash/find";
 import isEqual from "lodash/isEqual";
 import React, {
+    forwardRef,
     useCallback,
     useContext,
     useEffect,
+    useImperativeHandle,
     useRef,
     useState,
 } from "react";
@@ -37,44 +39,51 @@ import {
     UnselectedIndicator,
 } from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
-import { DropdownListProps, ListItemDisplayProps } from "./types";
+import {
+    DropdownListApi,
+    DropdownListProps,
+    ListItemDisplayProps,
+} from "./types";
 
 /**
  * NOTE: This component is not directly exportable but forms part of a component
  */
-export const DropdownList = <T, V>({
-    listItems,
-    multiSelect,
-    maxSelectable,
-    selectedItems,
-    disableItemFocus,
-    itemsLoadState = "success",
-    itemTruncationType = "end",
-    itemMaxLines = 2,
-    labelDisplayType = "inline",
-    variant = "default",
-    listboxId,
-    matchElementWidth = false,
-    width,
-    topScrollItem,
-    onSelectItem,
-    onSelectAll,
-    onDismiss,
-    onRetry,
-    /* DropdownDisplayProps */
-    valueExtractor,
-    listExtractor,
-    renderListItem,
-    renderCustomCallToAction,
-    /* DropdownSearchProps */
-    enableSearch,
-    hideNoResultsDisplay,
-    noResultsDescription: _noResultsDescription,
-    customLabels,
-    searchPlaceholder: _searchPlaceholder,
-    searchFunction,
-    onSearch,
-}: DropdownListProps<T, V>): JSX.Element => {
+const DropdownListInner = <T, V>(
+    {
+        listItems,
+        multiSelect,
+        maxSelectable,
+        selectedItems,
+        disableItemFocus,
+        itemsLoadState = "success",
+        itemTruncationType = "end",
+        itemMaxLines = 2,
+        labelDisplayType = "inline",
+        variant = "default",
+        listboxId,
+        matchElementWidth = false,
+        width,
+        topScrollItem,
+        onSelectItem,
+        onSelectAll,
+        onDismiss,
+        onRetry,
+        /* DropdownDisplayProps */
+        valueExtractor,
+        listExtractor,
+        renderListItem,
+        renderCustomCallToAction,
+        /* DropdownSearchProps */
+        enableSearch,
+        hideNoResultsDisplay,
+        noResultsDescription: _noResultsDescription,
+        customLabels,
+        searchPlaceholder: _searchPlaceholder,
+        searchFunction,
+        onSearch,
+    }: DropdownListProps<T, V>,
+    ref: React.ForwardedRef<DropdownListApi>
+): JSX.Element => {
     // =========================================================================
     // CONST, REF, STATE
     // =========================================================================
@@ -102,7 +111,9 @@ export const DropdownList = <T, V>({
     const listItemRefs = useRef<(HTMLElement | null)[]>([]);
     const searchInputRef = useRef<HTMLInputElement>(null);
     const virtuosoRef = useRef<VirtuosoHandle>(null);
-    const prevListSigRef = useRef<string>("");
+
+    const focusItemWithRetryRef =
+        useRef<(index: number, tries?: number) => void>();
 
     const hasSelectedMax =
         !!maxSelectable &&
@@ -157,90 +168,129 @@ export const DropdownList = <T, V>({
         });
     });
 
+    const handleListItemClick = (item: T, upcomingIndex: number) => {
+        if (hasSelectedMax && !checkListItemSelected(item)) return;
+        setFocusedIndex(upcomingIndex);
+        onSelectItem?.(item, getValue(item));
+    };
+
+    const handleListItemHover = (index: number) => setFocusedIndex(index);
+
+    const refocus = useCallback(
+        (opts?: { index?: number; preferSelected?: boolean }) => {
+            if (disableItemFocus) return;
+
+            if (searchInputRef.current) {
+                setFocusedIndex(-1);
+                setTimeout(() => searchInputRef.current?.focus(), 0);
+                return;
+            }
+
+            const items = displayListItems ?? [];
+            if (items.length === 0) return;
+
+            if (opts?.index !== undefined) {
+                const forced = Math.max(
+                    0,
+                    Math.min(opts.index, items.length - 1)
+                );
+                virtuosoRef.current?.scrollToIndex({
+                    index: forced,
+                    align: "center",
+                });
+                setFocusedIndex(forced);
+                focusItemWithRetryRef.current?.(forced);
+                return;
+            }
+
+            const selectedIndex = opts?.preferSelected
+                ? items.findIndex((item) => checkListItemSelected(item))
+                : -1;
+
+            const nextIndex =
+                selectedIndex !== -1
+                    ? selectedIndex
+                    : focusedIndex >= 0 && focusedIndex < items.length
+                    ? focusedIndex
+                    : 0;
+
+            virtuosoRef.current?.scrollToIndex({
+                index: nextIndex,
+                align: "center",
+            });
+            setFocusedIndex(nextIndex);
+            focusItemWithRetryRef.current?.(nextIndex);
+        },
+        [
+            checkListItemSelected,
+            disableItemFocus,
+            displayListItems,
+            focusedIndex,
+            setFocusedIndex,
+        ]
+    );
+
+    useImperativeHandle(ref, () => ({ refocus }), [refocus]);
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const handleKeyboardPress = (event: KeyboardEvent) => {
+        const active = document.activeElement as HTMLElement | null;
+
+        if (!active || !nodeRef.current || !nodeRef.current.contains(active)) {
+            return;
+        }
+
         switch (event.code) {
             case "ArrowDown":
                 event.preventDefault();
-                // Cannot go further than last element
                 if (focusedIndex < displayListItems.length - 1) {
-                    const upcomingIndex = focusedIndex + 1;
-                    setFocusedIndex(upcomingIndex);
-
-                    setTimeout(() => {
-                        listItemRefs.current[upcomingIndex]?.focus();
-                    }, 0);
+                    const next = focusedIndex + 1;
+                    setFocusedIndex(next);
+                    listItemRefs.current[next]?.focus();
                 }
                 break;
             case "ArrowUp":
                 event.preventDefault();
-                // Cannot go further than first element
                 if (focusedIndex > 0) {
-                    const upcomingIndex = focusedIndex - 1;
-                    setFocusedIndex(upcomingIndex);
-
-                    setTimeout(() => {
-                        listItemRefs.current[upcomingIndex]?.focus();
-                    }, 0);
+                    const next = focusedIndex - 1;
+                    setFocusedIndex(next);
+                    listItemRefs.current[next]?.focus();
                 } else if (focusedIndex === 0 && searchInputRef.current) {
-                    searchInputRef.current.focus();
                     setFocusedIndex(-1);
+                    searchInputRef.current.focus();
                 }
                 break;
-            case "Space":
-            case "Enter": {
-                const focusedEl = listItemRefs.current[focusedIndex];
-                const active = document.activeElement;
+            case "Enter":
+            case "Space": {
+                event.preventDefault();
 
-                const isOnFocusedItem =
-                    !!focusedEl && !!active && focusedEl.contains(active);
+                const activeIndex = active
+                    ? listItemRefs.current.findIndex(
+                          (el) => !!el && el.contains(active)
+                      )
+                    : -1;
 
-                if (isOnFocusedItem) {
-                    event.preventDefault();
-                    const item = displayListItems[focusedIndex];
-                    if (item) {
-                        handleListItemClick(item, focusedIndex);
-                    }
+                const indexToUse =
+                    activeIndex !== -1
+                        ? activeIndex
+                        : focusedIndex >= 0 &&
+                          focusedIndex < displayListItems.length
+                        ? focusedIndex
+                        : -1;
+
+                if (indexToUse === -1) return;
+
+                const item = displayListItems[indexToUse];
+                if (item) {
+                    handleListItemClick(item, indexToUse);
                 }
                 break;
             }
             default:
                 break;
         }
-    };
-
-    const handleListItemClick = (item: T, upcomingIndex: number) => {
-        if (hasSelectedMax && !checkListItemSelected(item)) {
-            return;
-        }
-        setFocusedIndex(upcomingIndex);
-        onSelectItem?.(item, getValue(item));
-    };
-
-    const handleListItemHover = (index: number) => {
-        setFocusedIndex(index);
-    };
-
-    const handleSearchInputChange = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        const value = event.target.value;
-        setSearchValue(value);
-
-        onSearch?.();
-    };
-
-    const handleOnClear = () => {
-        setSearchValue("");
-        searchInputRef.current?.focus();
-
-        onSearch?.();
-    };
-
-    const handleTryAgain = () => {
-        onRetry?.();
     };
 
     // =========================================================================
@@ -268,76 +318,9 @@ export const DropdownList = <T, V>({
     }, [listItemRefs, listItems, setFocusedIndex, topScrollItem]);
 
     useEffect(() => {
-        if (disableItemFocus || !listItems) return;
-
-        // keep track of when we swapped datasets (e.g from -> to)
-        const listSignature = listItems
-            .map((item, i) => {
-                const v = valueExtractor ? valueExtractor(item) : (item as any);
-                return `${i}:${String(v)}`;
-            })
-            .join("|");
-
-        const listChanged = prevListSigRef.current !== listSignature;
-        const isFirstRun = !mounted;
-
-        if (!isFirstRun && !listChanged) {
-            return;
-        }
-
-        prevListSigRef.current = listSignature;
-
-        const selectedIndex = listItems.findIndex((item) =>
-            checkListItemSelected(item)
-        );
-
-        const focusIndex = (() => {
-            if (searchInputRef.current) return -1;
-
-            if (listChanged) return 0;
-
-            if (focusedIndex >= 0 && focusedIndex < listItems.length)
-                return focusedIndex;
-
-            if (selectedIndex !== -1) return selectedIndex;
-
-            return 0;
-        })();
-
-        if (focusIndex === -1) {
-            setFocusedIndex(-1);
-            setTimeout(() => searchInputRef.current?.focus(), 200);
-            return;
-        }
-
-        virtuosoRef.current?.scrollToIndex({
-            index: focusIndex,
-            align: "center",
-        });
-        setFocusedIndex(focusIndex);
-
-        setTimeout(() => {
-            listItemRefs.current[focusIndex]?.focus();
-        }, 200);
-    }, [
-        checkListItemSelected,
-        disableItemFocus,
-        focusedIndex,
-        listItems,
-        mounted,
-        setFocusedIndex,
-        valueExtractor,
-    ]);
-
-    useEffect(() => {
-        if (!mounted || !itemsLoadStateChanged) {
-            // skip effect as dependency did not change
-            return;
-        }
-
+        if (!mounted || !itemsLoadStateChanged) return;
         if (disableItemFocus) return;
 
-        // Reset focus when options are loaded
         if (itemsLoadState === "success") {
             if (searchInputRef.current) {
                 setFocusedIndex(-1);
@@ -371,6 +354,61 @@ export const DropdownList = <T, V>({
         searchFunction,
         searchValue,
     ]);
+
+    useEffect(() => {
+        focusItemWithRetryRef.current = (index: number, tries = 10) => {
+            const el = listItemRefs.current[index];
+            if (el) {
+                el.focus();
+                return;
+            }
+            if (tries <= 0) return;
+
+            setTimeout(() => {
+                focusItemWithRetryRef.current?.(index, tries - 1);
+            }, 16);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!listItems || listItems.length === 0) return;
+        if (disableItemFocus) return;
+
+        let rafId: number | null = null;
+        let cancelled = false;
+
+        rafId = requestAnimationFrame(() => {
+            if (cancelled) return;
+
+            setFocusedIndex(0);
+            focusItemWithRetryRef.current?.(0);
+        });
+
+        // Cleanup to prevent state updates after unmount.
+        return () => {
+            cancelled = true;
+            if (rafId !== null) cancelAnimationFrame(rafId);
+        };
+    }, [listItems, disableItemFocus, setFocusedIndex]);
+
+    // =========================================================================
+    // EVENT HANDLERS
+    // =========================================================================
+    const handleSearchInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const value = event.target.value;
+        setSearchValue(value);
+        onSearch?.();
+    };
+
+    const handleOnClear = () => {
+        setSearchValue("");
+        searchInputRef.current?.focus();
+        onSearch?.();
+    };
+
+    const handleTryAgain = () => onRetry?.();
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -609,3 +647,7 @@ export const DropdownList = <T, V>({
         </Container>
     );
 };
+
+export const DropdownList = forwardRef(DropdownListInner) as <T, V>(
+    props: DropdownListProps<T, V> & { ref?: React.Ref<DropdownListApi> }
+) => JSX.Element;

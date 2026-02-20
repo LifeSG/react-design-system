@@ -1,5 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { DropdownList, DropdownListState } from "../shared/dropdown-list-v2";
+import {
+    DropdownList,
+    DropdownListApi,
+    DropdownListState,
+} from "../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     LabelContainer,
@@ -49,7 +53,6 @@ export const InputRangeSelect = <T, V>({
     dropdownZIndex,
     dropdownRootNode,
     dropdownWidth,
-
     ...otherProps
 }: InputRangeSelectProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -57,7 +60,6 @@ export const InputRangeSelect = <T, V>({
     // =============================================================================
     const [selectedFromValue, setSelectedFromValue] = useState<T | undefined>();
     const [selectedToValue, setSelectedToValue] = useState<T | undefined>();
-
     const [focusedInput, setFocusedInput] = useState<RangeType | "none">(
         "none"
     );
@@ -72,6 +74,9 @@ export const InputRangeSelect = <T, V>({
         to: useRef<HTMLDivElement>(null),
     };
 
+    // forwardRef API from DropdownList (optional for future usage)
+    const dropdownRef = useRef<DropdownListApi>(null);
+
     const [internalId] = useState<string>(
         () => id ?? SimpleIdGenerator.generate()
     );
@@ -84,6 +89,28 @@ export const InputRangeSelect = <T, V>({
         setSelectedFromValue(selectedOptions?.from);
         setSelectedToValue(selectedOptions?.to);
     }, [selectedOptions]);
+
+    useEffect(() => {
+        if (!isFocused) return;
+
+        const handlePointerDown = (e: PointerEvent) => {
+            const target = e.target as Node | null;
+            if (!target) return;
+
+            if (nodeRef.current && !nodeRef.current.contains(target)) {
+                setIsFocused(false);
+                (nodeRef.current as any)?.blur?.();
+            }
+        };
+        document.addEventListener("pointerdown", handlePointerDown, true);
+        return () => {
+            document.removeEventListener(
+                "pointerdown",
+                handlePointerDown,
+                true
+            );
+        };
+    }, [isFocused]);
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -235,11 +262,13 @@ export const InputRangeSelect = <T, V>({
 
     const handleClear = (event: React.MouseEvent) => {
         event.stopPropagation();
+        event.preventDefault();
         setSelectedFromValue(undefined);
         setSelectedToValue(undefined);
         onSelectOption?.({ from: undefined, to: undefined }, undefined);
-        selectorRef.current?.blur();
-        setIsFocused(false);
+
+        nodeRef.current?.focus();
+        setIsFocused(true);
     };
 
     const handleNodeFocus = () => setIsFocused(true);
@@ -261,7 +290,6 @@ export const InputRangeSelect = <T, V>({
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (disabled || readOnly) return;
-
         if (isOpen) return;
 
         switch (event.key) {
@@ -278,7 +306,7 @@ export const InputRangeSelect = <T, V>({
     };
 
     // =============================================================================
-    // RENDER FUNCTION
+    // RENDER
     // =============================================================================
     const renderLabel = (rangeType: RangeType) => {
         const selected =
@@ -358,6 +386,7 @@ export const InputRangeSelect = <T, V>({
 
         return (
             <DropdownList
+                ref={dropdownRef}
                 data-testid={`${testId}-dropdown`}
                 listboxId={listboxId}
                 listItems={currentOptions}
