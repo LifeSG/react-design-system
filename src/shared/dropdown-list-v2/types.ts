@@ -105,6 +105,7 @@ export interface DropdownListProps<T, V>
 export interface DropdownListApi {
     refocus: (opts?: { index?: number; preferSelected?: boolean }) => void;
 }
+
 // =============================================================================
 // NESTED DROPDOWN PROPS
 // =============================================================================

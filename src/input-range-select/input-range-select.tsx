@@ -67,7 +67,6 @@ export const InputRangeSelect = <T, V>({
 
     const [isFocused, setIsFocused] = useState(false);
     const nodeRef = useRef<HTMLDivElement | null>(null);
-    const selectorRef = useRef<HTMLButtonElement>(null);
 
     const labelContainerRef = {
         from: useRef<HTMLDivElement>(null),
@@ -92,6 +91,7 @@ export const InputRangeSelect = <T, V>({
 
     useEffect(() => {
         if (!isFocused) return;
+        if (isOpen) return;
 
         const handlePointerDown = (e: PointerEvent) => {
             const target = e.target as Node | null;
@@ -99,18 +99,26 @@ export const InputRangeSelect = <T, V>({
 
             if (nodeRef.current && !nodeRef.current.contains(target)) {
                 setIsFocused(false);
-                (nodeRef.current as any)?.blur?.();
+                nodeRef.current?.blur();
             }
         };
+
         document.addEventListener("pointerdown", handlePointerDown, true);
-        return () => {
+        return () =>
             document.removeEventListener(
                 "pointerdown",
                 handlePointerDown,
                 true
             );
-        };
-    }, [isFocused]);
+    }, [isFocused, isOpen]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+
+        if (focusedInput === "to") {
+            dropdownRef.current?.refocus({ index: 0 });
+        }
+    }, [isOpen, focusedInput]);
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -183,20 +191,12 @@ export const InputRangeSelect = <T, V>({
 
             if (disabled || readOnly) return;
 
-            if (rangeType === "from") {
+            if (rangeType === "to" && selectedFromValue) {
+                setFocusedInput("to");
+            } else {
                 setFocusedInput("from");
-                triggerOptionDisplayCallback(true);
-                return;
             }
 
-            if (rangeType === "to") {
-                const next = selectedFromValue ? "to" : "from";
-                setFocusedInput(next);
-                triggerOptionDisplayCallback(true);
-                return;
-            }
-
-            setFocusedInput("from");
             triggerOptionDisplayCallback(true);
         };
 
@@ -218,21 +218,17 @@ export const InputRangeSelect = <T, V>({
 
         setFocusedInput("none");
         triggerOptionDisplayCallback(false);
-        selectorRef.current?.focus();
+        nodeRef.current?.focus();
         setIsFocused(true);
     };
 
-    const handleDismiss = (setSelectorFocus?: boolean) => {
+    const handleDismiss = () => {
         setFocusedInput("none");
         triggerOptionDisplayCallback(false);
 
-        if (setSelectorFocus === true) {
-            selectorRef.current?.focus();
-            setIsFocused(true);
-        } else {
-            selectorRef.current?.blur();
-            setIsFocused(false);
-        }
+        nodeRef.current?.blur();
+        setIsFocused(true);
+
         if (!selectedFromValue || !selectedToValue) {
             setSelectedFromValue(undefined);
             setSelectedToValue(undefined);
@@ -249,7 +245,6 @@ export const InputRangeSelect = <T, V>({
         }
 
         setIsFocused(false);
-        selectorRef.current?.blur();
     };
 
     const handleOpen = () => {
@@ -274,16 +269,10 @@ export const InputRangeSelect = <T, V>({
     const handleNodeFocus = () => setIsFocused(true);
 
     const handleNodeBlur = (e: React.FocusEvent) => {
-        if (isOpen) return;
-
-        const next = e.relatedTarget as Node | null;
-
-        if (!next) {
-            setIsFocused(false);
-            return;
-        }
-
-        if (nodeRef.current && !nodeRef.current.contains(next)) {
+        if (
+            nodeRef.current &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
+        ) {
             setIsFocused(false);
         }
     };
@@ -291,6 +280,7 @@ export const InputRangeSelect = <T, V>({
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (disabled || readOnly) return;
         if (isOpen) return;
+        if (event.currentTarget !== event.target) return;
 
         switch (event.key) {
             case "Enter":
@@ -347,7 +337,7 @@ export const InputRangeSelect = <T, V>({
                 className={className}
                 data-testid={testId}
                 ref={nodeRef}
-                tabIndex={disabled || readOnly ? -1 : 0}
+                tabIndex={0}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
                 $focused={isFocused || isOpen}
@@ -382,8 +372,6 @@ export const InputRangeSelect = <T, V>({
     };
 
     const renderDropdown = () => {
-        if (!isOpen) return null;
-
         return (
             <DropdownList
                 ref={dropdownRef}
@@ -395,7 +383,7 @@ export const InputRangeSelect = <T, V>({
                 valueExtractor={valueExtractor}
                 listExtractor={listExtractor}
                 selectedItems={currentSelectedItems}
-                itemsLoadState={optionsLoadState[focusedInput]}
+                itemsLoadState={optionsLoadState[focusedInput as RangeType]}
                 itemTruncationType={optionTruncationType}
                 onRetry={onRetry}
                 width={dropdownWidth}
