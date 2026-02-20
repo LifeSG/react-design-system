@@ -64,16 +64,13 @@ export const InputRangeSelect = <T, V>({
         "none"
     );
     const isOpen = focusedInput !== "none";
-
     const [isFocused, setIsFocused] = useState(false);
-    const nodeRef = useRef<HTMLDivElement | null>(null);
 
+    const nodeRef = useRef<HTMLDivElement | null>(null);
     const labelContainerRef = {
         from: useRef<HTMLDivElement>(null),
         to: useRef<HTMLDivElement>(null),
     };
-
-    // forwardRef API from DropdownList (optional for future usage)
     const dropdownRef = useRef<DropdownListApi>(null);
 
     const [internalId] = useState<string>(

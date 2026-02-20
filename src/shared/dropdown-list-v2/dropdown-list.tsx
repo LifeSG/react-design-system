@@ -316,9 +316,12 @@ const DropdownListInner = <T, V>(
     }, [listItemRefs, listItems, setFocusedIndex, topScrollItem]);
 
     useEffect(() => {
-        if (!mounted || !itemsLoadStateChanged) return;
         if (disableItemFocus) return;
 
+        // skip effect as dependency did not change
+        if (!mounted || !itemsLoadStateChanged) return;
+
+        // Reset focus when options are loaded
         if (itemsLoadState === "success") {
             if (searchInputRef.current) {
                 setFocusedIndex(-1);
@@ -634,6 +637,4 @@ const DropdownListInner = <T, V>(
     );
 };
 
-export const DropdownList = forwardRef(DropdownListInner) as <T, V>(
-    props: DropdownListProps<T, V> & { ref?: React.Ref<DropdownListApi> }
-) => JSX.Element;
+export const DropdownList = forwardRef(DropdownListInner);
