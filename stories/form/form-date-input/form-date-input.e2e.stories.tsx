@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { DateInput } from "src/date-input";
 
 type StandaloneComponent = typeof DateInput;

@@ -1,17 +1,19 @@
 import type { StorybookConfig } from "@storybook/react-webpack5";
-import path from "path";
+import { fileURLToPath } from "node:url";
+import path, { dirname } from "path";
 import remarkGfm from "remark-gfm";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const config: StorybookConfig = {
     stories: ["../stories/**/*.mdx", "../stories/**/*.stories.@(ts|tsx)"],
     addons: [
         "@storybook/addon-webpack5-compiler-swc",
         "@storybook/addon-links",
-        "@storybook/addon-essentials",
         "@storybook/addon-a11y",
         "@storybook/addon-themes",
-        "storybook-dark-mode",
-        "@storybook/addon-interactions",
+        "@storybook-community/storybook-dark-mode",
         {
             name: "@storybook/addon-docs",
             options: {
@@ -22,16 +24,8 @@ const config: StorybookConfig = {
                 },
             },
         },
-        {
-            name: "@storybook/addon-storysource",
-            options: {
-                loaderOptions: {
-                    parser: "typescript",
-                    injectStoryParameters: true,
-                },
-            },
-        },
     ],
+    features: { interactions: false, sidebarOnboardingChecklist: false },
     staticDirs: ["../public"],
     webpackFinal: async (config) => {
         config.resolve!.modules = [

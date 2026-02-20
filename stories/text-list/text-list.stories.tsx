@@ -1,5 +1,5 @@
 import { StarIcon, TickCircleIcon } from "@lifesg/react-icons";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { TextList } from "src/text-list";
 import {
     GridDecorator,

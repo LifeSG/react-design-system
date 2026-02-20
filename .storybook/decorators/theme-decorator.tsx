@@ -1,7 +1,7 @@
 // adapted from https://github.com/storybookjs/storybook/blob/1a0665ccfe179cc3519e8619fe93dbb15c1ef835/code/addons/themes/src/decorators/provider.decorator.tsx
 // integrates with `storybook-dark-mode` for dark mode support
+import { useDarkMode } from "@storybook-community/storybook-dark-mode";
 import { DecoratorHelpers } from "@storybook/addon-themes";
-import { useDarkMode } from "storybook-dark-mode";
 import type { DecoratorFunction, Renderer } from "storybook/internal/types";
 
 const { initializeThemeState, pluckThemeFromContext } = DecoratorHelpers;

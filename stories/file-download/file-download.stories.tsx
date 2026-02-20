@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useEffect, useState } from "react";
 import { FileDownload, FileItemDownloadProps } from "src/file-download";
 

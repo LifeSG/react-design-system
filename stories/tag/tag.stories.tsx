@@ -1,5 +1,5 @@
 import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Tag } from "src/tag";
 import { GridDecorator, RowDecorator } from "stories/storybook-common";
 

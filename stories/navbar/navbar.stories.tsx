@@ -1,6 +1,6 @@
 import { GearIcon } from "@lifesg/react-icons/gear";
 import { InboxIcon } from "@lifesg/react-icons/inbox";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useRef, useState } from "react";
 import { IconButton } from "src/icon-button";
 import {

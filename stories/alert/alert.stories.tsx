@@ -1,5 +1,5 @@
 import { CalendarEventIcon } from "@lifesg/react-icons/calendar-event";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Alert } from "src/alert";
 import { StackDecorator, StoryDecorator } from "stories/storybook-common";
 

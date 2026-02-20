@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { TimeSlotWeekView } from "src/time-slot-week-view";

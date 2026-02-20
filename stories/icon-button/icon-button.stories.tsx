@@ -1,5 +1,5 @@
 import { BoxIcon } from "@lifesg/react-icons/box";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { IconButton } from "src/icon-button";
 import { GridDecorator } from "stories/storybook-common";
 

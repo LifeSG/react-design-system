@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Footer } from "src/footer";
 import { Layout } from "src/layout";
 import { MyLegacyTheme } from "src/theme";

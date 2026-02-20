@@ -1,5 +1,5 @@
 import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { ButtonWithIcon } from "src/button-with-icon";
 import { Container } from "../button/doc-elements";
 

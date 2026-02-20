@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useEffect, useState } from "react";
 import { FileItemProps, FileUpload } from "src/file-upload";
 import { SimpleIdGenerator } from "src/util/simple-id-generator";

@@ -1,5 +1,5 @@
 import { LightbulbFillIcon } from "@lifesg/react-icons";
-import { Unstyled } from "@storybook/blocks";
+import { Unstyled } from "@storybook/addon-docs/blocks";
 import { Alert } from "src/alert";
 import styled from "styled-components";
 
