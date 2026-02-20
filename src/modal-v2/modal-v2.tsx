@@ -34,7 +34,6 @@ export const ModalV2 = ({
     // CONST, STATE, REF
     // =========================================================================
     const { verticalHeight, offsetTop } = useViewport();
-    const containerRef = useRef<HTMLElement | null>(null);
     const childRef = useRef<HTMLDivElement>(null);
     const childWithRef =
         children &&
@@ -104,10 +103,7 @@ export const ModalV2 = ({
                         >
                             <ScrollContainer>
                                 <ModalContainer
-                                    ref={(node) => {
-                                        refs.setFloating(node);
-                                        containerRef.current = node || null;
-                                    }}
+                                    ref={refs.setFloating}
                                     {...getFloatingProps()}
                                     role="dialog"
                                     aria-label={ariaLabel}

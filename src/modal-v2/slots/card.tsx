@@ -1,4 +1,4 @@
-import React from "react";
+import React, { NamedExoticComponent } from "react";
 import { isStyledComponent } from "styled-components";
 import { ModalCardProps } from "../types";
 import { CloseButton } from "./close-button";
@@ -64,4 +64,4 @@ function CardInner(
 
 export const Card = React.forwardRef<HTMLDivElement, ModalCardProps>(CardInner);
 
-(Card as any).displayName = "ModalV2.Card";
+(Card as NamedExoticComponent).displayName = "ModalV2.Card";
