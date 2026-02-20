@@ -75,12 +75,11 @@ const Component = (
                 height: canvasHeight,
             });
 
-            // change x and y position of the viewport to centralise the drawing
-            const viewport = fabricCanvas.current.viewportTransform;
-            if (viewport) {
-                viewport[4] = (canvasWidth - 640) / 2;
-                viewport[5] = (canvasHeight - 320) * 0.75;
-            }
+            fabricCanvas.current.forEachObject((obj) => {
+                if (fabricCanvas.current) {
+                    fabricCanvas.current.centerObject(obj);
+                }
+            });
         }
     }, []);
 
@@ -132,14 +131,8 @@ const Component = (
                     if (fabricCanvas.current.width && img.width) {
                         img.scale(fabricCanvas.current.width / img.width);
                     }
-
-                    const viewport = fabricCanvas.current.viewportTransform;
-                    if (viewport) {
-                        img.left = -viewport[4];
-                        img.top = -viewport[5];
-                    }
-
                     fabricCanvas.current.add(img);
+                    fabricCanvas.current.centerObject(img);
                 }
             }
         };

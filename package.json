@@ -39,7 +39,7 @@
     "homepage": "https://github.com/LifeSG/react-design-system#readme",
     "dependencies": {
         "@react-spring/web": "^10.0.1",
-        "fabric": "^6.7.0",
+        "fabric": "^7.2.0",
         "immer": "^10.0.2",
         "react-slider": "^2.0.6",
         "react-virtuoso": "^4.12.5",
