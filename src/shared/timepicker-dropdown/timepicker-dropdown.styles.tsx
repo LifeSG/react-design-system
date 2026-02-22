@@ -74,7 +74,12 @@ export const TimePeriodSection = styled.div`
     display: flex;
     gap: ${Spacing["spacing-8"]};
 
+    ${MediaQuery.MaxWidth.lg} {
+        flex-direction: column;
+    }
+
     ${MediaQuery.MaxWidth.xxs} {
+        flex-direction: row;
         width: 100%;
     }
 `;
