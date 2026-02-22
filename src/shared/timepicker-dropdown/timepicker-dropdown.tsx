@@ -72,7 +72,7 @@ export const TimepickerDropdown = ({
     useEffect(() => {
         // Focus hour input on display of dropdown
         if (show && hourInputRef.current) {
-            hourInputRef.current.focus();
+            hourInputRef.current.focus({ preventScroll: true });
         }
 
         if (show) {

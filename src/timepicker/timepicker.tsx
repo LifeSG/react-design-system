@@ -46,9 +46,7 @@ export const Timepicker = ({
     }, [format]);
 
     const restoreFocusToSelector = () => {
-        requestAnimationFrame(() => {
-            selectorRef.current?.focus();
-        });
+        selectorRef.current?.focus({ preventScroll: true });
     };
 
     // =============================================================================
