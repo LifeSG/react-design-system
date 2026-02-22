@@ -29,18 +29,8 @@ export const Timepicker = ({
     // CONST, STATE, REF
     // =============================================================================
     const [isOpen, setIsOpen] = useState(false);
-    const nodeRef = useRef<HTMLDivElement>(null);
-
-    const open = () => {
-        if (disabled || readOnly) return;
-        setIsOpen(true);
-        onFocus?.();
-    };
-
-    const close = () => {
-        setIsOpen(false);
-        onBlur?.();
-    };
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const selectorRef = useRef<HTMLInputElement>(null);
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -55,12 +45,50 @@ export const Timepicker = ({
         }
     }, [format]);
 
+    const restoreFocusToSelector = () => {
+        requestAnimationFrame(() => {
+            selectorRef.current?.focus();
+        });
+    };
+
     // =============================================================================
-    // RENDER FUNCTIONS
+    // EVENT LISTENERS
+    // =============================================================================
+    const handleOpen = () => {
+        if (disabled || readOnly) return;
+        setIsOpen(true);
+    };
+
+    const handleClose = () => {
+        setIsOpen(false);
+        onBlur?.();
+        restoreFocusToSelector();
+    };
+
+    const handleChange = (v: string) => {
+        onChange?.(v);
+        handleClose();
+    };
+
+    const handleFocus = () => {
+        onFocus?.();
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (disabled || readOnly) return;
+
+        if (e.key === "Enter" || e.key === " " || e.key === "ArrowDown") {
+            e.preventDefault();
+            handleOpen();
+        }
+    };
+
+    // =============================================================================
+    // RENDER
     // =============================================================================
     const renderElement = () => (
         <InputWrapper
-            ref={nodeRef}
+            ref={wrapperRef}
             id={id}
             $readOnly={readOnly}
             $disabled={disabled}
@@ -69,7 +97,7 @@ export const Timepicker = ({
             {...otherProps}
         >
             <InputSelectorElement
-                onFocus={open}
+                ref={selectorRef}
                 readOnly
                 placeholder={placeholder || getPlaceholderValue()}
                 value={TimeHelper.formatDisplayValue(value, format)}
@@ -77,6 +105,9 @@ export const Timepicker = ({
                 data-testid={
                     id ? `${id}-timepicker-selector` : "timepicker-selector"
                 }
+                onFocus={handleFocus}
+                onClick={handleOpen}
+                onKeyDown={handleKeyDown}
             />
         </InputWrapper>
     );
@@ -85,25 +116,18 @@ export const Timepicker = ({
         styles,
         setFloatingRef,
         getFloatingProps,
-    }: DropdownRenderProps) => {
-        if (!isOpen) return null;
-
-        return (
-            <div ref={setFloatingRef} style={styles} {...getFloatingProps()}>
-                <TimepickerDropdown
-                    id={id}
-                    show={isOpen}
-                    value={value}
-                    format={format}
-                    onCancel={close}
-                    onChange={(v) => {
-                        onChange?.(v);
-                        close();
-                    }}
-                />
-            </div>
-        );
-    };
+    }: DropdownRenderProps) => (
+        <div ref={setFloatingRef} style={styles} {...getFloatingProps()}>
+            <TimepickerDropdown
+                id={id}
+                show={isOpen}
+                value={value}
+                format={format}
+                onCancel={handleClose}
+                onChange={handleChange}
+            />
+        </div>
+    );
 
     return (
         <ElementWithDropdown
@@ -111,10 +135,9 @@ export const Timepicker = ({
             isOpen={isOpen}
             renderElement={renderElement}
             renderDropdown={renderDropdown}
-            onOpen={open}
-            onClose={() => close()}
-            onDismiss={() => close()}
-            clickToToggle={false}
+            onOpen={handleOpen}
+            onClose={handleClose}
+            onDismiss={handleClose}
             offset={8}
             alignment={alignment}
             fitAvailableHeight
