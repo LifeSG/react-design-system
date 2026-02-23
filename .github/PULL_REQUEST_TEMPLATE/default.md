@@ -6,9 +6,10 @@
 -   [ ] New feature (non-breaking change which adds functionality)
 -   [ ] Breaking change (fix or feature that would cause existing apis or functionality to change)
 
-**Changes**
+**Description of changes**
 
 -   Link to [ticket](url)
+-   Link to [Figma](url)
 -   Description of changes
 
 **Checklist**
