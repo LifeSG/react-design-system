@@ -38,7 +38,7 @@ export const SearchBox = styled.label<StyleProps>`
                   ${Spacing["spacing-8"]} ${Spacing["spacing-16"]}
               `
             : // TODO: confirm vertical spacing
-              css`10px ${Spacing["spacing-16"]}`};
+              css`10px ${Spacing["spacing-8"]}`};
 `;
 
 export const SearchInput = styled(BasicInput)<InputStyleProps>`

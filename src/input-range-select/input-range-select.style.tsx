@@ -1,18 +1,11 @@
 import styled from "styled-components";
 import { ClearButton } from "../input/input.style";
-import { Selector } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { Spacing } from "../theme";
+import { InputWrapper } from "../shared/input-wrapper";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const InputSelectorWrapper = styled.div`
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: space-between;
-`;
-
 export const ClearIconContainer = styled(ClearButton)`
     position: absolute;
     right: 0;
@@ -20,7 +13,6 @@ export const ClearIconContainer = styled(ClearButton)`
     margin-right: 0;
 `;
 
-export const SelectorDropdown = styled(Selector)`
-    // space for clear icon
-    padding-right: calc(1.25rem + ${Spacing["spacing-16"]});
+export const StyledInputWrapper = styled(InputWrapper)`
+    height: 3rem;
 `;

@@ -1,11 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import { DropdownList } from "../shared/dropdown-list/dropdown-list";
-import { DropdownWrapper } from "../shared/dropdown-wrapper";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
-    Divider,
+    DropdownList,
+    DropdownListApi,
+    DropdownListState,
+} from "../shared/dropdown-list-v2";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import {
     LabelContainer,
     PlaceholderLabel,
     ValueLabel,
+    Wrapper,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
 import { StringHelper } from "../util/string-helper";
@@ -13,9 +17,9 @@ import { InputRangeSelectProps } from "./types";
 import { ClearIcon } from "../input/input.style";
 import {
     ClearIconContainer,
-    InputSelectorWrapper,
-    SelectorDropdown,
+    StyledInputWrapper,
 } from "./input-range-select.style";
+import { SimpleIdGenerator } from "../util";
 
 type RangeType = "from" | "to";
 
@@ -37,7 +41,6 @@ export const InputRangeSelect = <T, V>({
     listExtractor,
     displayValueExtractor,
     onSelectOption,
-    listStyleWidth,
     onShowOptions,
     onHideOptions,
     onRetry,
@@ -46,23 +49,35 @@ export const InputRangeSelect = <T, V>({
     renderCustomSelectedOption,
     renderListItem,
     renderCustomCallToAction,
+    alignment,
+    dropdownZIndex,
+    dropdownRootNode,
+    dropdownWidth,
     ...otherProps
 }: InputRangeSelectProps<T, V>): JSX.Element => {
     // =============================================================================
-    // CONST, STATE
+    // CONST, STATE, REF
     // =============================================================================
-
     const [selectedFromValue, setSelectedFromValue] = useState<T | undefined>();
     const [selectedToValue, setSelectedToValue] = useState<T | undefined>();
+    const [focusedInput, setFocusedInput] = useState<RangeType | "none">(
+        "none"
+    );
+    const isOpen = focusedInput !== "none";
+    const [isFocused, setIsFocused] = useState(false);
 
-    const selectorRef = useRef<HTMLButtonElement>(null);
+    const nodeRef = useRef<HTMLDivElement | null>(null);
     const labelContainerRef = {
         from: useRef<HTMLDivElement>(null),
         to: useRef<HTMLDivElement>(null),
     };
-    const [focusedInput, setFocusedInput] = useState<RangeType | "none">(
-        "none"
+    const dropdownRef = useRef<DropdownListApi>(null);
+
+    const [internalId] = useState<string>(
+        () => id ?? SimpleIdGenerator.generate()
     );
+    const listboxId = `${internalId}-range-listbox`;
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -71,103 +86,34 @@ export const InputRangeSelect = <T, V>({
         setSelectedToValue(selectedOptions?.to);
     }, [selectedOptions]);
 
-    // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
-    const handleSelectorClick =
-        (rangeType?: RangeType) => (event: React.MouseEvent) => {
-            event.stopPropagation();
-            event.preventDefault();
-            if (disabled || readOnly) {
-                return;
-            }
-            if (rangeType === "from") {
-                setFocusedInput("from");
-            } else if (rangeType === "to" && selectedFromValue) {
-                setFocusedInput("to");
-            } else if (rangeType === "to" && !selectedFromValue) {
-                setFocusedInput("from");
-            } else {
-                setFocusedInput("from");
-            }
-        };
+    useEffect(() => {
+        if (!isOpen) return;
 
-    const handleListItemClick = (
-        item: T,
-        extractedValue: V,
-        rangeType: RangeType
-    ) => {
-        if (rangeType === "from") {
-            setSelectedFromValue(item);
-        } else {
-            setSelectedToValue(item);
+        if (focusedInput === "to") {
+            dropdownRef.current?.refocus({ index: 0 });
         }
-        triggerOptionDisplayCallback(false);
-        if (selectorRef) {
-            selectorRef.current?.focus();
-        }
-        if (onSelectOption) {
-            onSelectOption({ [rangeType]: item }, extractedValue);
-        }
-        if (rangeType === "from") {
-            setSelectedToValue(undefined);
-            setFocusedInput("to");
-            triggerOptionDisplayCallback(true);
-        } else {
-            setFocusedInput("none");
-        }
-    };
-
-    const handleListDismiss = () => {
-        setFocusedInput("none");
-        triggerOptionDisplayCallback(false);
-
-        if (selectorRef) {
-            selectorRef.current?.focus();
-        }
-
-        if (!selectedFromValue || !selectedToValue) {
-            setSelectedToValue(undefined);
-            setSelectedFromValue(undefined);
-        }
-    };
-
-    const handleWrapperBlur = () => {
-        triggerOptionDisplayCallback(false);
-        setFocusedInput("none");
-        if (!selectedFromValue || !selectedToValue) {
-            setSelectedToValue(undefined);
-            setSelectedFromValue(undefined);
-        }
-    };
-
-    const handleClear = (event: React.MouseEvent) => {
-        event.stopPropagation();
-        setSelectedFromValue(undefined);
-        setSelectedToValue(undefined);
-        if (onSelectOption) {
-            onSelectOption({ from: undefined, to: undefined }, undefined);
-        }
-    };
+    }, [isOpen, focusedInput]);
 
     // =============================================================================
-    // HELPER FUNCTION
+    // HELPER FUNCTIONS
     // =============================================================================
+    const triggerOptionDisplayCallback = (show: boolean) => {
+        if (!show) onHideOptions?.();
+        if (show) onShowOptions?.();
+    };
+
     const getDisplayValue = (rangeType: RangeType): string => {
         const selected =
             rangeType === "from" ? selectedFromValue : selectedToValue;
-
         if (!selected) return "";
 
-        if (displayValueExtractor) {
-            return displayValueExtractor(selected);
-        }
+        if (displayValueExtractor) return displayValueExtractor(selected);
 
         if (valueExtractor) {
             const value = valueExtractor(selected);
             return valueToStringFunction
                 ? valueToStringFunction(value)
-                : value?.toString() ?? "";
+                : value?.toString?.() ?? "";
         }
 
         return selected.toString();
@@ -176,7 +122,7 @@ export const InputRangeSelect = <T, V>({
     const truncateValue = (type: RangeType, value: string) => {
         if (optionTruncationType === "middle") {
             let widthOfElement = 0;
-            if (labelContainerRef[type] && labelContainerRef[type].current) {
+            if (labelContainerRef[type]?.current) {
                 widthOfElement =
                     labelContainerRef[type].current.getBoundingClientRect()
                         .width;
@@ -184,16 +130,6 @@ export const InputRangeSelect = <T, V>({
             return StringHelper.truncateOneLine(value, widthOfElement, 120, 8);
         }
         return value;
-    };
-
-    const triggerOptionDisplayCallback = (show: boolean) => {
-        if (!show && onHideOptions) {
-            onHideOptions();
-        }
-
-        if (show && onShowOptions) {
-            onShowOptions();
-        }
     };
 
     const getCurrentFocused = (): "none" | "start" | "end" => {
@@ -207,105 +143,194 @@ export const InputRangeSelect = <T, V>({
         }
     };
 
+    const currentOptions = useMemo(() => {
+        if (focusedInput === "none") return [];
+        return options?.[focusedInput] ?? [];
+    }, [focusedInput, options]);
+
+    const currentSelectedItems = useMemo(() => {
+        if (focusedInput === "none") return [];
+        const selected =
+            focusedInput === "from" ? selectedFromValue : selectedToValue;
+        return selected ? [selected] : [];
+    }, [focusedInput, selectedFromValue, selectedToValue]);
+
     // =============================================================================
-    // RENDER FUNCTION
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleSelectorClick =
+        (rangeType?: RangeType) => (event: React.MouseEvent) => {
+            event.stopPropagation();
+            event.preventDefault();
+
+            if (disabled || readOnly) return;
+
+            if (rangeType === "to" && selectedFromValue) {
+                setFocusedInput("to");
+            } else {
+                setFocusedInput("from");
+            }
+
+            triggerOptionDisplayCallback(true);
+        };
+
+    const handleListItemClick = (item: T, extractedValue: V) => {
+        if (focusedInput === "none") return;
+
+        if (focusedInput === "from") {
+            setSelectedFromValue(item);
+            onSelectOption?.({ from: item }, extractedValue);
+
+            setSelectedToValue(undefined);
+            setFocusedInput("to");
+            triggerOptionDisplayCallback(true);
+            return;
+        }
+
+        setSelectedToValue(item);
+        onSelectOption?.({ to: item }, extractedValue);
+
+        setFocusedInput("none");
+        triggerOptionDisplayCallback(false);
+        nodeRef.current?.focus();
+        setIsFocused(true);
+    };
+
+    const handleDismiss = () => {
+        setFocusedInput("none");
+        triggerOptionDisplayCallback(false);
+
+        nodeRef.current?.focus();
+        setIsFocused(true);
+
+        if (!selectedFromValue || !selectedToValue) {
+            setSelectedFromValue(undefined);
+            setSelectedToValue(undefined);
+        }
+    };
+
+    const handleClose = () => {
+        setFocusedInput("none");
+        triggerOptionDisplayCallback(false);
+
+        if (!selectedFromValue || !selectedToValue) {
+            setSelectedFromValue(undefined);
+            setSelectedToValue(undefined);
+        }
+
+        setIsFocused(false);
+    };
+
+    const handleOpen = () => {
+        if (disabled || readOnly) return;
+        if (focusedInput === "none") {
+            setFocusedInput("from");
+            triggerOptionDisplayCallback(true);
+        }
+    };
+
+    const handleClear = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        event.preventDefault();
+        setSelectedFromValue(undefined);
+        setSelectedToValue(undefined);
+        onSelectOption?.({ from: undefined, to: undefined }, undefined);
+
+        nodeRef.current?.focus();
+        setIsFocused(true);
+    };
+
+    const handleNodeFocus = () => setIsFocused(true);
+
+    const handleNodeBlur = (e: React.FocusEvent) => {
+        if (
+            isFocused &&
+            !isOpen &&
+            nodeRef.current &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
+        ) {
+            setIsFocused(false);
+        }
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (disabled || readOnly) return;
+        if (isOpen) return;
+        if (event.currentTarget !== event.target) return;
+
+        switch (event.key) {
+            case "Enter":
+            case " ":
+            case "ArrowDown":
+                event.preventDefault();
+                setFocusedInput("from");
+                triggerOptionDisplayCallback(true);
+                break;
+            default:
+                break;
+        }
+    };
+
+    // =============================================================================
+    // RENDER
     // =============================================================================
     const renderLabel = (rangeType: RangeType) => {
         const selected =
             rangeType === "from" ? selectedFromValue : selectedToValue;
+
         if (!selected) {
             return (
                 <PlaceholderLabel $truncateType={optionTruncationType}>
-                    {truncateValue(rangeType, placeholders[rangeType] || "")}
+                    {truncateValue(rangeType, placeholders?.[rangeType] || "")}
                 </PlaceholderLabel>
             );
-        } else if (renderCustomSelectedOption) {
-            return renderCustomSelectedOption(selected);
-        } else {
-            return (
-                <ValueLabel $truncateType={optionTruncationType}>
-                    {truncateValue(rangeType, getDisplayValue(rangeType))}
-                </ValueLabel>
-            );
         }
-    };
 
-    const renderSelectorContent = (rangeType: RangeType) => {
+        if (renderCustomSelectedOption) {
+            return renderCustomSelectedOption(selected);
+        }
+
         return (
-            <LabelContainer
-                onClick={handleSelectorClick(rangeType)}
-                ref={labelContainerRef[rangeType]}
-                $disabled={disabled}
-            >
-                {renderLabel(rangeType)}
-            </LabelContainer>
+            <ValueLabel $truncateType={optionTruncationType}>
+                {truncateValue(rangeType, getDisplayValue(rangeType))}
+            </ValueLabel>
         );
     };
 
-    const renderOptionsList = () => {
-        if (focusedInput === "none") {
-            return null;
-        }
-
-        const optionsArr = options[focusedInput];
-
-        if (optionsArr && optionsArr.length > 0) {
-            const selected =
-                focusedInput === "from" ? selectedFromValue : selectedToValue;
-            return (
-                <DropdownList
-                    listItems={optionsArr}
-                    onSelectItem={(i, v) =>
-                        handleListItemClick(i, v, focusedInput)
-                    }
-                    onDismiss={() => handleListDismiss()}
-                    valueExtractor={valueExtractor}
-                    listExtractor={listExtractor}
-                    listStyleWidth={listStyleWidth}
-                    visible
-                    enableSearch={enableSearch}
-                    searchPlaceholder={searchPlaceholder}
-                    searchFunction={searchFunction}
-                    data-testid={`${focusedInput}-dropdown-list`}
-                    selectedItems={selected ? [selected] : []}
-                    onRetry={onRetry}
-                    itemsLoadState={optionsLoadState[focusedInput]}
-                    itemTruncationType={optionTruncationType}
-                    renderListItem={renderListItem}
-                    renderCustomCallToAction={renderCustomCallToAction}
-                />
-            );
-        }
-
-        return null;
-    };
-    return (
-        <DropdownWrapper
-            show={focusedInput !== "none"}
-            error={error && !(focusedInput !== "none")}
-            disabled={disabled}
-            readOnly={readOnly}
-            testId={testId}
-            onBlur={handleWrapperBlur}
-            className={className}
+    const renderSelectorContent = (rangeType: RangeType) => (
+        <LabelContainer
+            onClick={handleSelectorClick(rangeType)}
+            ref={labelContainerRef[rangeType]}
+            $disabled={disabled}
         >
-            <InputSelectorWrapper>
-                <SelectorDropdown
-                    type="button"
-                    data-testid={id || "selector"}
-                    disabled={disabled}
-                    ref={selectorRef}
-                    onClick={handleSelectorClick()}
-                    {...otherProps}
+            {renderLabel(rangeType)}
+        </LabelContainer>
+    );
+
+    const renderElement = () => {
+        return (
+            <StyledInputWrapper
+                className={className}
+                data-testid={testId}
+                ref={nodeRef}
+                tabIndex={0}
+                onFocus={handleNodeFocus}
+                onBlur={handleNodeBlur}
+                $focused={isFocused || isOpen}
+                $disabled={disabled}
+                $readOnly={readOnly}
+                $error={error}
+                onKeyDown={handleKeyDown}
+            >
+                <RangeInputInnerContainer
+                    currentActive={getCurrentFocused()}
+                    error={error}
                 >
-                    <RangeInputInnerContainer
-                        currentActive={getCurrentFocused()}
-                    >
-                        {renderSelectorContent("from")}
-                        {renderSelectorContent("to")}
-                    </RangeInputInnerContainer>
-                </SelectorDropdown>
-                {focusedInput === "none" &&
+                    {renderSelectorContent("from")}
+                    {renderSelectorContent("to")}
+                </RangeInputInnerContainer>
+
+                {!isOpen &&
                     selectedFromValue &&
                     selectedToValue &&
                     !readOnly &&
@@ -318,9 +343,55 @@ export const InputRangeSelect = <T, V>({
                             <ClearIcon aria-hidden />
                         </ClearIconContainer>
                     )}
-            </InputSelectorWrapper>
-            {focusedInput !== "none" && <Divider />}
-            {renderOptionsList()}
-        </DropdownWrapper>
+            </StyledInputWrapper>
+        );
+    };
+
+    const renderDropdown = () => {
+        return (
+            <DropdownList
+                ref={dropdownRef}
+                data-testid={`${testId}-dropdown`}
+                listboxId={listboxId}
+                listItems={currentOptions}
+                onSelectItem={handleListItemClick}
+                onDismiss={handleDismiss}
+                valueExtractor={valueExtractor}
+                listExtractor={listExtractor}
+                selectedItems={currentSelectedItems}
+                itemsLoadState={optionsLoadState[focusedInput as RangeType]}
+                itemTruncationType={optionTruncationType}
+                onRetry={onRetry}
+                width={dropdownWidth}
+                matchElementWidth={!dropdownWidth}
+                enableSearch={enableSearch}
+                searchFunction={searchFunction}
+                searchPlaceholder={searchPlaceholder}
+                renderListItem={renderListItem}
+                renderCustomCallToAction={renderCustomCallToAction}
+            />
+        );
+    };
+
+    return (
+        <Wrapper id={id} {...otherProps}>
+            <DropdownListState>
+                <ElementWithDropdown
+                    enabled={!readOnly && !disabled}
+                    isOpen={isOpen}
+                    renderElement={renderElement}
+                    renderDropdown={renderDropdown}
+                    onOpen={handleOpen}
+                    onClose={handleClose}
+                    onDismiss={handleDismiss}
+                    clickToToggle={false}
+                    offset={8}
+                    alignment={alignment}
+                    fitAvailableHeight
+                    customZIndex={dropdownZIndex}
+                    rootNode={dropdownRootNode}
+                />
+            </DropdownListState>
+        </Wrapper>
     );
 };

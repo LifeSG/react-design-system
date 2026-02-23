@@ -105,17 +105,6 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["DropdownCustomLabelProps"],
             },
             {
-                name: "dropdownWidth",
-                description: (
-                    <>
-                        Custom width for the dropdown. When specified, the
-                        dropdown will use this exact width instead of matching
-                        the input element width.
-                    </>
-                ),
-                propTypes: ["string"],
-            },
-            {
                 name: "enableSearch",
                 description:
                     "When specified, it will allow a text base search for the items in the list",
@@ -170,6 +159,12 @@ const DATA: ApiTableSectionProps[] = [
                         document <code>body</code>
                     </>
                 ),
+            },
+            {
+                name: "dropdownWidth",
+                description:
+                    "Custom width for the dropdown. When specified, the dropdown will use this exact width instead of matching the input element width.",
+                propTypes: ["string"],
             },
             {
                 name: "onSelectOption",

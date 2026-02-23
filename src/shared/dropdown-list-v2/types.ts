@@ -102,6 +102,10 @@ export interface DropdownListProps<T, V>
     onRetry?: (() => void) | undefined;
 }
 
+export interface DropdownListApi {
+    refocus: (opts?: { index?: number; preferSelected?: boolean }) => void;
+}
+
 // =============================================================================
 // NESTED DROPDOWN PROPS
 // =============================================================================
