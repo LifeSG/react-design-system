@@ -1,0 +1,43 @@
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
+import * as ExampleStories from "./example.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={ExampleStories} />
+
+# Card
+
+## Overview
+
+A content container that has rounded corners and appears elevated.
+
+```tsx
+import { Card } from "@lifesg/react-design-system/card";
+```
+
+<Canvas of={ExampleStories.Default} />
+
+## Custom content
+
+You can construct a custom layout and pass it into the component.
+
+<Canvas of={ExampleStories.CustomContent} />
+
+## Customising the style
+
+You can customize/override the style of the `Card` component by extending it:
+
+```tsx
+import { Card } from "@lifesg/react-design-system/card";
+import styled from "styled-components";
+
+export const StyledCard = styled(Card)`
+    max-width: 30rem;
+    /* Other CSS properties... */
+`;
+```
+
+## Component API
+
+This component also inherits the [HTMLDivAttributes](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement)
+
+<PropsTable />
