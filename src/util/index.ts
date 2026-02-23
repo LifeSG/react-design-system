@@ -4,6 +4,7 @@ export * from "./date-input-helper";
 export * from "./merge-refs";
 export * from "./simple-id-generator";
 export * from "./string-helper";
+export * from "./use-apply-style";
 export * from "./use-container-query";
 export * from "./use-countdown";
 export * from "./use-event";
