@@ -236,8 +236,8 @@ const description = css`
 /** component.tsx */
 return (
     <div className={wrapper}>
-        <label className={label}>This is the label</div>
-        <span className={description}>Lorem ipsum dolar sit amet...</div>
+        <label className={label}>This is the label</label>
+        <span className={description}>Lorem ipsum dolar sit amet...</span>
     </div>
 );
 ```
