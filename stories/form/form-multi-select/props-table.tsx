@@ -74,17 +74,6 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `"end"`,
             },
             {
-                name: "dropdownWidth",
-                description: (
-                    <>
-                        Custom width for the dropdown. When specified, the
-                        dropdown will use this exact width instead of matching
-                        the input element width.
-                    </>
-                ),
-                propTypes: ["string"],
-            },
-            {
                 name: "enableSearch",
                 description:
                     "When specified, it will allow a text base search for the items in the list",
@@ -166,6 +155,12 @@ const DATA: ApiTableSectionProps[] = [
                     "The custom z-index of the dropdown. Try specifying this if you encounter z-index conflicts.",
                 propTypes: ["number"],
                 defaultValue: "50",
+            },
+            {
+                name: "dropdownWidth",
+                description:
+                    "Custom width for the dropdown. When specified, the dropdown will use this exact width instead of matching the input element width.",
+                propTypes: ["string"],
             },
             {
                 name: "maxSelectable",

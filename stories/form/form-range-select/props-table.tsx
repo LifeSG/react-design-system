@@ -104,37 +104,48 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "alignment",
                 description:
-                    "Controls the dropdown alignment relative to the trigger element.",
-                propTypes: ["DropdownAlignmentType"],
+                    "Specifies if the dropdown is aligned to the left or right of the main field",
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"left"`,
             },
             {
                 name: "dropdownZIndex",
                 description:
-                    "Sets a custom z-index for the dropdown (useful when the dropdown needs to appear above other positioned elements).",
+                    "The custom z-index of the dropdown. Try specifying this if you encounter z-index conflicts.",
                 propTypes: ["number"],
+                defaultValue: "50",
             },
             {
                 name: "dropdownRootNode",
                 description: (
                     <>
-                        The root element that contains the dropdown element.
-                        Defaults to the document body.
+                        The root element that hosts the dropdown element. Only
+                        specify this if you absolutely need to change the parent
+                        of the dropdown.
                         <br />
                         <br />
-                        If the parent that contains the trigger element has a
-                        higher z-index than the dropdown, the dropdown may not
-                        be visible. Specify the parent element here instead.
+                        For example, the dropdown is rendered in{" "}
+                        <code>body</code> by default. This could cause scroll
+                        issues if your UI only scrolls within a certain
+                        container. In that case, you can specify this prop so
+                        that they share the same stacking context. However, note
+                        that this might cause z-index issues since it will no
+                        longer be rendered in <code>body</code>.
                     </>
                 ),
-                propTypes: ["RefObject<HTMLElement> "],
+                propTypes: ["RefObject<HTMLElement>"],
+                defaultValue: (
+                    <>
+                        document <code>body</code>
+                    </>
+                ),
             },
             {
                 name: "dropdownWidth",
                 description:
-                    "Custom width for the dropdown. When specified, the dropdown will use this width instead of matching the trigger element width.",
+                    "Custom width for the dropdown. When specified, the dropdown will use this exact width instead of matching the input element width.",
                 propTypes: ["string"],
             },
-
             {
                 name: "enableSearch",
                 description:
