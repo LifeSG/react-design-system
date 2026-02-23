@@ -7,6 +7,14 @@ type Component = typeof LinkList;
 const meta: Meta<Component> = {
     title: "Navigation/LinkList",
     component: LinkList,
+
+    // prevents JSX recursion crash when passing in secondaryDescription into link list items
+    parameters: {
+        docs: {
+            source: { type: "code" },
+        },
+        controls: { disable: true },
+    },
 };
 
 export default meta;

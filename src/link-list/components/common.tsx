@@ -1,3 +1,4 @@
+import React from "react";
 import { LinkListItemProps, LinkListStyle } from "../internal-types";
 import {
     Description,
@@ -36,11 +37,26 @@ export const LinkListItems = <T,>({
                     ...otherProps
                 } = item;
 
+                const descriptionId = description
+                    ? `${testId || "link-list"}-desc-${index}`
+                    : undefined;
+
+                const secondaryDescriptionId = secondaryDescription
+                    ? `${testId || "link-list"}-secondary-desc-${index}`
+                    : undefined;
+
+                const ariaDescribedBy = [descriptionId, secondaryDescriptionId]
+                    .filter(Boolean)
+                    .join(" ")
+                    .trim();
+
                 return (
                     <ItemContainer
                         key={`${testId}-${index}`}
                         data-testid={`${testId}-${index}`}
                         onClick={(event) => handleItemClick(event, item)}
+                        aria-label={title}
+                        aria-describedby={ariaDescribedBy || undefined}
                         {...otherProps}
                     >
                         <ItemContentContainer>
@@ -53,12 +69,18 @@ export const LinkListItems = <T,>({
                             </ItemTitle>
                             {description && (
                                 <Description
+                                    id={descriptionId}
+                                    forwardedAs="div"
                                     data-testid={`link-description-${index}`}
                                 >
                                     {description}
                                 </Description>
                             )}
-                            {secondaryDescription}
+                            {secondaryDescription && (
+                                <div id={secondaryDescriptionId}>
+                                    {secondaryDescription}
+                                </div>
+                            )}
                         </ItemContentContainer>
                         <ItemIcon />
                     </ItemContainer>

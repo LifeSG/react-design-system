@@ -15,6 +15,7 @@ import {
     ViewMoreIcon,
 } from "../link-list.styles";
 import { LinkListItems } from "./common";
+import { useId } from "@floating-ui/react";
 
 type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
     Omit<LinkListEagerProps, "loadMode">;
@@ -36,6 +37,9 @@ export const EagerLinkList = <T,>({
 
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
+
+    const minimisedRegionId = useId();
+    const isExpanded = showMinimised;
 
     // =============================================================================
     // EVENT HANDLERS
@@ -71,23 +75,25 @@ export const EagerLinkList = <T,>({
             type="button"
             onClick={handleToggleButtonClick}
             data-testid="toggle-button"
+            aria-expanded={isExpanded}
+            aria-controls={minimisedRegionId}
         >
             <ToggleButtonLabel
                 forwardedAs="span"
                 weight="semibold"
                 data-testid="toggle-button-label"
             >
-                {showMinimised
+                {isExpanded
                     ? customLabels?.viewLess || "View less"
                     : customLabels?.viewMore || "View more"}
             </ToggleButtonLabel>
-            {showMinimised ? <ViewLessIcon /> : <ViewMoreIcon />}
+            {isExpanded ? <ViewLessIcon /> : <ViewMoreIcon />}
         </ToggleButton>
     );
 
     // React spring animation configuration
     const expandableStyles = useSpring({
-        height: showMinimised ? resizeDetector.height : 0,
+        height: isExpanded ? resizeDetector.height : 0,
     });
 
     return (
@@ -100,8 +106,11 @@ export const EagerLinkList = <T,>({
             />
             {itemsMinimised.length > 0 && (
                 <Expandable
+                    id={minimisedRegionId}
                     style={expandableStyles}
                     data-testid="minimised-content"
+                    aria-hidden={!isExpanded}
+                    inert={!isExpanded ? "" : undefined}
                 >
                     <ExpandableChild ref={childRef} $border>
                         <LinkListItems

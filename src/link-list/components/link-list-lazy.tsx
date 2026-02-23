@@ -10,7 +10,6 @@ import {
 import {
     Expandable,
     ExpandableChild,
-    LoadingContainer,
     ToggleButton,
     ToggleButtonLabel,
     ViewMoreIcon,
@@ -58,6 +57,8 @@ export const LazyLinkList = <T,>({
     };
 
     const handleClickViewMore = async () => {
+        if (isLoading) return;
+
         setIsLoading(true);
         try {
             await onLoadMore();
@@ -70,22 +71,31 @@ export const LazyLinkList = <T,>({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderViewMore = () => (
-        <ToggleButton
-            type="button"
-            onClick={handleClickViewMore}
-            data-testid="toggle-button"
-        >
-            <ToggleButtonLabel
-                forwardedAs="span"
-                weight="semibold"
-                data-testid="toggle-button-label"
+    const renderToggle = () => {
+        const label = isLoading
+            ? "Loading..."
+            : customLabels?.viewMore || "View more";
+
+        return (
+            <ToggleButton
+                type="button"
+                onClick={handleClickViewMore}
+                data-testid="toggle-button"
+                style={isLoading ? { pointerEvents: "none" } : undefined}
             >
-                {customLabels?.viewMore || "View more"}
-            </ToggleButtonLabel>
-            <ViewMoreIcon />
-        </ToggleButton>
-    );
+                <ToggleButtonLabel
+                    forwardedAs="span"
+                    weight="semibold"
+                    data-testid="toggle-button-label"
+                    aria-live="polite"
+                >
+                    {label}
+                </ToggleButtonLabel>
+
+                {isLoading ? <ComponentLoadingSpinner /> : <ViewMoreIcon />}
+            </ToggleButton>
+        );
+    };
 
     // React spring animation configuration
     const expandableStyles = useSpring({
@@ -104,13 +114,7 @@ export const LazyLinkList = <T,>({
                     />
                 </ExpandableChild>
             </Expandable>
-            {isLoading && (
-                <LoadingContainer>
-                    <ComponentLoadingSpinner />
-                    Loading...
-                </LoadingContainer>
-            )}
-            {!isLoading && loadMore && renderViewMore()}
+            {loadMore && renderToggle()}
         </>
     );
 };
