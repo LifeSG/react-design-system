@@ -90,29 +90,6 @@ export const InputRangeSelect = <T, V>({
     }, [selectedOptions]);
 
     useEffect(() => {
-        if (!isFocused) return;
-        if (isOpen) return;
-
-        const handlePointerDown = (e: PointerEvent) => {
-            const target = e.target as Node | null;
-            if (!target) return;
-
-            if (nodeRef.current && !nodeRef.current.contains(target)) {
-                setIsFocused(false);
-                nodeRef.current?.blur();
-            }
-        };
-
-        document.addEventListener("pointerdown", handlePointerDown, true);
-        return () =>
-            document.removeEventListener(
-                "pointerdown",
-                handlePointerDown,
-                true
-            );
-    }, [isFocused, isOpen]);
-
-    useEffect(() => {
         if (!isOpen) return;
 
         if (focusedInput === "to") {
@@ -226,7 +203,7 @@ export const InputRangeSelect = <T, V>({
         setFocusedInput("none");
         triggerOptionDisplayCallback(false);
 
-        nodeRef.current?.blur();
+        nodeRef.current?.focus();
         setIsFocused(true);
 
         if (!selectedFromValue || !selectedToValue) {
@@ -270,6 +247,8 @@ export const InputRangeSelect = <T, V>({
 
     const handleNodeBlur = (e: React.FocusEvent) => {
         if (
+            isFocused &&
+            !isOpen &&
             nodeRef.current &&
             !nodeRef.current.contains(e.relatedTarget as Node)
         ) {
