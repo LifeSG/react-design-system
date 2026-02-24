@@ -3,7 +3,6 @@ import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export type TimeRangePickerFormat = "12hr" | "24hr";
 export type TimeRangePickerVariant = "dial" | "combobox";
-export type Active = "start" | "end" | "none";
 
 export interface TimeRangePickerValue {
     start: string;

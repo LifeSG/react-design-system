@@ -617,7 +617,7 @@ describe("TimeRangePicker", () => {
             expect(mockOnFocus).toHaveBeenCalledTimes(1);
         });
 
-        it("should close dropdown upon input completion and trigger onBlur", async () => {
+        it("should close dropdown upon input completion", async () => {
             const user = userEvent.setup();
             const mockOnChange = jest.fn();
             const mockOnBlur = jest.fn();
@@ -630,12 +630,10 @@ describe("TimeRangePicker", () => {
                 />
             );
 
-            // Input "From" time
             await user.click(getFrom());
             await waitFor(() => expect(getTimepickerDropdown()).toBeVisible());
             await setTimeAndDone(user, "09", "00");
 
-            // Input "To" time
             await waitFor(() => expect(getTimepickerDropdown()).toBeVisible());
             await setTimeAndDone(user, "10", "00");
 
@@ -646,7 +644,6 @@ describe("TimeRangePicker", () => {
                 start: "09:00",
                 end: "10:00",
             });
-            expect(mockOnBlur).toHaveBeenCalledTimes(1);
             expect(getTimepickerDropdown()).not.toBeInTheDocument();
         });
 
@@ -678,6 +675,21 @@ describe("TimeRangePicker", () => {
 
             await waitForElementToBeRemoved(() => getTimepickerDropdown());
             expect(mockOnBlur).toHaveBeenCalledTimes(1);
+        });
+
+        it("should call onFocus once only when moving from start to end", async () => {
+            const user = userEvent.setup();
+            const mockOnFocus = jest.fn();
+
+            render(<TimeRangePicker onFocus={mockOnFocus} />);
+
+            await user.click(getFrom());
+            await waitFor(() => expect(getTimepickerDropdown()).toBeVisible());
+            expect(mockOnFocus).toHaveBeenCalledTimes(1);
+
+            await user.click(getTo());
+            await waitFor(() => expect(getTimepickerDropdown()).toBeVisible());
+            expect(mockOnFocus).toHaveBeenCalledTimes(1);
         });
     });
 });

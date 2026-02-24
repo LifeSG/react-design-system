@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
 import { SelectorInput, TimeContainer, Wrapper } from "../common.styles";
 import { TimeHelper } from "../../util/time-helper";
-import { Active, TimeRangePickerProps, TimeRangePickerValue } from "../types";
+import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
 import { TimepickerDropdown } from "../../shared/timepicker-dropdown/timepicker-dropdown";
 import {
     DropdownRenderProps,
     ElementWithDropdown,
 } from "../../shared/dropdown-wrapper";
+
+type Active = "start" | "end" | "none";
 
 export const DialPicker = ({
     id,
@@ -31,28 +33,10 @@ export const DialPicker = ({
     const [active, setActive] = useState<Active>("none");
     const [startTimeVal, setStartTimeVal] = useState("");
     const [endTimeVal, setEndTimeVal] = useState("");
+    const [focused, setFocused] = useState(false);
 
     const enabled = !readOnly && !disabled;
-
-    const openStart = () => {
-        if (!enabled) return;
-        setActive("start");
-        if (!isOpen) onFocus?.();
-        setIsOpen(true);
-    };
-
-    const openEnd = () => {
-        if (!enabled) return;
-        setActive("end");
-        if (!isOpen) onFocus?.();
-        setIsOpen(true);
-    };
-
-    const close = () => {
-        setIsOpen(false);
-        setActive("none");
-        onBlur?.();
-    };
+    const nodeRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // EFFECTS
@@ -67,13 +51,55 @@ export const DialPicker = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
+    const handleOpen = (next: Exclude<Active, "none">) => {
+        if (!enabled) return;
+        if (!focused && !isOpen) onFocus?.();
+        setFocused(true);
+        setActive(next);
+        setIsOpen(true);
+    };
+
+    const handleClose = (opts?: {
+        keepFocus?: boolean;
+        triggerBlur?: boolean;
+    }) => {
+        const keepFocus = !!opts?.keepFocus;
+        const triggerBlur = opts?.triggerBlur ?? !keepFocus;
+
+        setIsOpen(false);
+        setActive("none");
+        setFocused(keepFocus);
+
+        if (triggerBlur) onBlur?.();
+
+        if (keepFocus) nodeRef.current?.focus();
+    };
+
+    const handleContainerBlur = (
+        event: React.FocusEvent<HTMLDivElement, Element>
+    ) => {
+        if (!focused || isOpen) return;
+
+        const target = event.relatedTarget as HTMLElement | null;
+
+        const isFloatingElement =
+            target?.matches?.("[data-floating-ui-focusable]") ||
+            target?.matches?.("[data-floating-ui-focus-guard]");
+        const isInsideNode = !!(target && nodeRef.current?.contains(target));
+
+        if (!isInsideNode && !isFloatingElement) {
+            setFocused(false);
+            onBlur?.();
+        }
+    };
+
     const handleStartTime = (v: string) => {
         setStartTimeVal(v);
         onChange?.({ start: v, end: endTimeVal } as TimeRangePickerValue);
 
-        // move to end without closing dropdown (same behavior as before)
         setActive("end");
         setIsOpen(true);
+        setFocused(true);
     };
 
     const handleEndTime = (v: string) => {
@@ -83,24 +109,30 @@ export const DialPicker = ({
         if (startTimeVal === "") {
             setActive("start");
             setIsOpen(true);
+            setFocused(true);
         } else {
-            close();
+            handleClose({ keepFocus: true });
         }
     };
 
-    // =============================================================================
-    // RENDER FUNCTIONS
-    // =============================================================================
     const renderElement = () => (
-        <Wrapper id={id} {...otherProps}>
+        <Wrapper
+            ref={nodeRef}
+            id={id}
+            tabIndex={-1}
+            onBlur={handleContainerBlur}
+            {...otherProps}
+        >
             <TimeContainer
                 $disabled={disabled}
                 $error={error}
                 $readOnly={readOnly}
+                $focused={focused}
             >
                 <RangeInputInnerContainer error={error} currentActive={active}>
                     <SelectorInput
-                        onFocus={openStart}
+                        onFocus={() => handleOpen("start")}
+                        onClick={() => handleOpen("start")}
                         readOnly
                         placeholder="From"
                         value={TimeHelper.formatDisplayValue(
@@ -115,7 +147,7 @@ export const DialPicker = ({
                         }
                     />
                     <SelectorInput
-                        onFocus={openEnd}
+                        onClick={() => handleOpen("end")}
                         readOnly
                         placeholder="To"
                         value={TimeHelper.formatDisplayValue(
@@ -141,28 +173,25 @@ export const DialPicker = ({
     }: DropdownRenderProps) => {
         if (!isOpen) return null;
 
-        const showStart = active === "start";
-        const showEnd = active === "end";
-
         return (
             <div ref={setFloatingRef} style={styles} {...getFloatingProps()}>
-                {showStart && (
+                {active === "start" && (
                     <TimepickerDropdown
                         id={id}
                         show
                         value={startTimeVal}
                         format={format}
-                        onCancel={close}
+                        onCancel={() => handleClose({ keepFocus: false })}
                         onChange={handleStartTime}
                     />
                 )}
-                {showEnd && (
+                {active === "end" && (
                     <TimepickerDropdown
                         id={id}
                         show
                         value={endTimeVal}
                         format={format}
-                        onCancel={close}
+                        onCancel={() => handleClose({ keepFocus: false })}
                         onChange={handleEndTime}
                     />
                 )}
@@ -177,8 +206,8 @@ export const DialPicker = ({
                 isOpen={isOpen}
                 renderElement={renderElement}
                 renderDropdown={renderDropdown}
-                onClose={() => close()}
-                onDismiss={() => close()}
+                onClose={() => handleClose({ keepFocus: false })}
+                onDismiss={() => handleClose({ keepFocus: true })}
                 clickToToggle={false}
                 offset={8}
                 alignment={alignment}
