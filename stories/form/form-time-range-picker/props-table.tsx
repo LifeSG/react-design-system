@@ -111,47 +111,6 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Called when the field is focused",
                 propTypes: ["() => void"],
             },
-        ],
-    },
-    {
-        name: "Combobox variant specific props",
-        attributes: [
-            {
-                name: "interval",
-                description:
-                    "The interval (minutes) between each dropdown option",
-                propTypes: ["number"],
-                defaultValue: "15",
-            },
-            {
-                name: "startLimit",
-                description: "The starting time for the dropdown options",
-                propTypes: ["string"],
-            },
-            {
-                name: "endLimit",
-                description: "The ending time for the dropdown options",
-                propTypes: ["string"],
-            },
-            {
-                name: "alignment",
-                description:
-                    "Specifies if the dropdown is aligned to the left or right of the main field",
-                propTypes: [`"left"`, `"right"`],
-                defaultValue: `"left"`,
-            },
-            {
-                name: "dropdownZIndex",
-                description:
-                    "The custom z-index of the dropdown. Try specifying this if you encounter z-index conflicts.",
-                propTypes: ["number"],
-                defaultValue: "50",
-            },
-        ],
-    },
-    {
-        name: "Dial variant specific props",
-        attributes: [
             {
                 name: "alignment",
                 description:
@@ -179,6 +138,28 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["React.RefObject<HTMLElement>"],
+            },
+        ],
+    },
+    {
+        name: "Combobox variant specific props",
+        attributes: [
+            {
+                name: "interval",
+                description:
+                    "The interval (minutes) between each dropdown option",
+                propTypes: ["number"],
+                defaultValue: "15",
+            },
+            {
+                name: "startLimit",
+                description: "The starting time for the dropdown options",
+                propTypes: ["string"],
+            },
+            {
+                name: "endLimit",
+                description: "The ending time for the dropdown options",
+                propTypes: ["string"],
             },
         ],
     },
