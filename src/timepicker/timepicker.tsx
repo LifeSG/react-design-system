@@ -60,16 +60,30 @@ export const Timepicker = ({
     const handleClose = () => {
         setIsOpen(false);
         onBlur?.();
+    };
+
+    const handleDismiss = () => {
+        setIsOpen(false);
         restoreFocusToSelector();
     };
 
     const handleChange = (v: string) => {
         onChange?.(v);
-        handleClose();
+        setIsOpen(false);
+        restoreFocusToSelector();
     };
 
     const handleFocus = () => {
         onFocus?.();
+    };
+
+    const handleSelectorBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        if (isOpen) return;
+
+        const next = e.relatedTarget as Node | null;
+        if (next && wrapperRef.current?.contains(next)) return;
+
+        onBlur?.();
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -106,6 +120,7 @@ export const Timepicker = ({
                 onFocus={handleFocus}
                 onClick={handleOpen}
                 onKeyDown={handleKeyDown}
+                onBlur={handleSelectorBlur}
             />
         </InputWrapper>
     );
@@ -121,7 +136,7 @@ export const Timepicker = ({
                 show={isOpen}
                 value={value}
                 format={format}
-                onCancel={handleClose}
+                onCancel={handleDismiss}
                 onChange={handleChange}
             />
         </div>
@@ -135,7 +150,7 @@ export const Timepicker = ({
             renderDropdown={renderDropdown}
             onOpen={handleOpen}
             onClose={handleClose}
-            onDismiss={handleClose}
+            onDismiss={handleDismiss}
             offset={8}
             alignment={alignment}
             fitAvailableHeight

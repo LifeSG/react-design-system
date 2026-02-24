@@ -30,7 +30,7 @@ describe("Timepicker (Floating UI)", () => {
     };
 
     describe("selection behaviour", () => {
-        it("should call onChange and onBlur when clicking Done", async () => {
+        it("should call onChange and refocus selector when clicking Done", async () => {
             const user = userEvent.setup();
             const onChange = jest.fn();
             const onBlur = jest.fn();
@@ -55,21 +55,21 @@ describe("Timepicker (Floating UI)", () => {
             await user.clear(minute);
             await user.type(minute, "05");
 
-            // Select PM
             await user.click(screen.getByLabelText("PM"));
-
             await user.click(screen.getByTestId(confirmBtnId));
 
             expect(onChange).toHaveBeenCalledTimes(1);
             expect(onChange).toHaveBeenCalledWith("01:05PM");
-            expect(onBlur).toHaveBeenCalledTimes(1);
+            expect(onBlur).toHaveBeenCalledTimes(0);
 
             await waitForElementToBeRemoved(() =>
                 screen.queryByTestId(dropdownTestId)
             );
+
+            expect(screen.getByTestId(selectorTestId)).toHaveFocus();
         });
 
-        it("should NOT call onChange when clicking Cancel", async () => {
+        it("should NOT call onChange and should refocus selector when clicking Cancel", async () => {
             const user = userEvent.setup();
             const onChange = jest.fn();
             const onBlur = jest.fn();
@@ -86,7 +86,6 @@ describe("Timepicker (Floating UI)", () => {
 
             await openDropdown(user);
 
-            // Modify hour
             const hour = screen.getByTestId(hourInputId);
             await user.clear(hour);
             await user.type(hour, "9");
@@ -94,11 +93,13 @@ describe("Timepicker (Floating UI)", () => {
             await user.click(screen.getByTestId(cancelBtnId));
 
             expect(onChange).toHaveBeenCalledTimes(0);
-            expect(onBlur).toHaveBeenCalledTimes(1);
+            expect(onBlur).toHaveBeenCalledTimes(0);
 
             await waitForElementToBeRemoved(() =>
                 screen.queryByTestId(dropdownTestId)
             );
+
+            expect(screen.getByTestId(selectorTestId)).toHaveFocus();
         });
 
         it("should disable Done when hour or minute is empty", async () => {
@@ -154,7 +155,7 @@ describe("Timepicker (Floating UI)", () => {
             );
         });
 
-        it("should dismiss dropdown via Esc (no onBlur if you intend dismiss only)", async () => {
+        it("should dismiss dropdown via Esc", async () => {
             const user = userEvent.setup();
             const onBlur = jest.fn();
 
@@ -164,22 +165,20 @@ describe("Timepicker (Floating UI)", () => {
 
             await user.keyboard("{Escape}");
 
+            expect(onBlur).toHaveBeenCalledTimes(0);
+
             await waitForElementToBeRemoved(() =>
                 screen.queryByTestId(dropdownTestId)
             );
 
+            expect(screen.getByTestId(selectorTestId)).toHaveFocus();
+
+            await act(async () => {
+                await user.click(document.body);
+            });
+
             expect(onBlur).toHaveBeenCalledTimes(1);
-        });
-
-        it("should keep trigger focused styling while dropdown is open", async () => {
-            const user = userEvent.setup();
-
-            render(<Timepicker id={ID} />);
-
-            await openDropdown(user);
-
-            expect(screen.getByTestId(selectorTestId)).toBeInTheDocument();
-            expect(screen.getByTestId(dropdownTestId)).toBeVisible();
+            expect(screen.getByTestId(selectorTestId)).not.toHaveFocus();
         });
     });
 
