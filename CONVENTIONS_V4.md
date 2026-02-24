@@ -175,7 +175,7 @@ const styledDiv = css`
 ### No `styled` helpers
 
 Do not use Linaria `styled` helpers to avoid accidental function interpolation,
-as that does not work with strict CSP configs. Use `css` and `cx` for
+as that does not work with strict CSP configs. Use `css` and `clsx` for
 conditional styling.
 
 Example:
@@ -184,7 +184,14 @@ Example:
 // Correct
 
 /** component.tsx */
-return <div className={cx(defaultDiv, loading && loadingDiv)} />;
+return <div className={clsx(defaultDiv, loading && loadingDiv)} />;
+```
+
+If you are working with complex conditional styles, you may use the object
+notation for `clsx` for readability
+
+```tsx
+clsx(defaultDiv, { loadingDiv: loading && !disabled && !readOnly });
 ```
 
 ### No nested classes
