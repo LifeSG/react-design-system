@@ -45,18 +45,11 @@ export const LinkListItems = <T,>({
                     ? `${testId || "link-list"}-secondary-desc-${index}`
                     : undefined;
 
-                const ariaDescribedBy = [descriptionId, secondaryDescriptionId]
-                    .filter(Boolean)
-                    .join(" ")
-                    .trim();
-
                 return (
                     <ItemContainer
                         key={`${testId}-${index}`}
                         data-testid={`${testId}-${index}`}
                         onClick={(event) => handleItemClick(event, item)}
-                        aria-label={title}
-                        aria-describedby={ariaDescribedBy || undefined}
                         {...otherProps}
                     >
                         <ItemContentContainer>
@@ -82,7 +75,7 @@ export const LinkListItems = <T,>({
                                 </div>
                             )}
                         </ItemContentContainer>
-                        <ItemIcon />
+                        <ItemIcon aria-hidden />
                     </ItemContainer>
                 );
             })}

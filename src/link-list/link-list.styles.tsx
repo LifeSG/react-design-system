@@ -107,12 +107,25 @@ export const ToggleButton = styled.button`
     cursor: pointer;
     border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 
-    &:hover {
+    &:hover:not([aria-disabled="true"]) {
         ${ToggleButtonLabel},
         ${ViewMoreIcon},
         ${ViewLessIcon} {
             color: ${Colour["text-hover"]};
             text-decoration: underline;
+        }
+    }
+
+    &[aria-disabled="true"] {
+        cursor: default;
+        flex-direction: row-reverse;
+        gap: 1rem;
+
+        ${ToggleButtonLabel},
+        ${ViewMoreIcon},
+        ${ViewLessIcon} {
+            color: ${Colour["text-disabled"]};
+            text-decoration: none;
         }
     }
 `;

@@ -15,7 +15,8 @@ import {
     ViewMoreIcon,
 } from "../link-list.styles";
 import { LinkListItems } from "./common";
-import { useId } from "@floating-ui/react";
+import { SimpleIdGenerator } from "../../util";
+import { inertValue } from "../../shared/accessibility";
 
 type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
     Omit<LinkListEagerProps, "loadMode">;
@@ -38,8 +39,7 @@ export const EagerLinkList = <T,>({
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
 
-    const minimisedRegionId = useId();
-    const isExpanded = showMinimised;
+    const [id] = useState(() => SimpleIdGenerator.generate());
 
     // =============================================================================
     // EVENT HANDLERS
@@ -75,25 +75,29 @@ export const EagerLinkList = <T,>({
             type="button"
             onClick={handleToggleButtonClick}
             data-testid="toggle-button"
-            aria-expanded={isExpanded}
-            aria-controls={minimisedRegionId}
+            aria-expanded={showMinimised}
+            aria-controls={id}
         >
             <ToggleButtonLabel
                 forwardedAs="span"
                 weight="semibold"
                 data-testid="toggle-button-label"
             >
-                {isExpanded
+                {showMinimised
                     ? customLabels?.viewLess || "View less"
                     : customLabels?.viewMore || "View more"}
             </ToggleButtonLabel>
-            {isExpanded ? <ViewLessIcon /> : <ViewMoreIcon />}
+            {showMinimised ? (
+                <ViewLessIcon aria-hidden />
+            ) : (
+                <ViewMoreIcon aria-hidden />
+            )}
         </ToggleButton>
     );
 
     // React spring animation configuration
     const expandableStyles = useSpring({
-        height: isExpanded ? resizeDetector.height : 0,
+        height: showMinimised ? resizeDetector.height : 0,
     });
 
     return (
@@ -106,11 +110,11 @@ export const EagerLinkList = <T,>({
             />
             {itemsMinimised.length > 0 && (
                 <Expandable
-                    id={minimisedRegionId}
+                    id={id}
                     style={expandableStyles}
                     data-testid="minimised-content"
-                    aria-hidden={!isExpanded}
-                    inert={!isExpanded ? "" : undefined}
+                    aria-hidden={!showMinimised}
+                    inert={inertValue(!showMinimised)}
                 >
                     <ExpandableChild ref={childRef} $border>
                         <LinkListItems

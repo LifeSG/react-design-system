@@ -15,6 +15,7 @@ import {
     ViewMoreIcon,
 } from "../link-list.styles";
 import { LinkListItems } from "./common";
+import { Colour } from "../../theme";
 
 type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
     Omit<LinkListLazyProps, "loadMode">;
@@ -81,18 +82,22 @@ export const LazyLinkList = <T,>({
                 type="button"
                 onClick={handleClickViewMore}
                 data-testid="toggle-button"
-                style={isLoading ? { pointerEvents: "none" } : undefined}
+                aria-disabled={isLoading}
             >
                 <ToggleButtonLabel
                     forwardedAs="span"
                     weight="semibold"
                     data-testid="toggle-button-label"
-                    aria-live="polite"
+                    aria-busy={isLoading}
                 >
                     {label}
                 </ToggleButtonLabel>
 
-                {isLoading ? <ComponentLoadingSpinner /> : <ViewMoreIcon />}
+                {isLoading ? (
+                    <ComponentLoadingSpinner color={Colour["text-disabled"]} />
+                ) : (
+                    <ViewMoreIcon aria-hidden />
+                )}
             </ToggleButton>
         );
     };
