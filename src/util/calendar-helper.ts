@@ -11,8 +11,8 @@ dayjs.extend(isSameOrAfter);
 
 dayjs.extend(customParseFormat);
 dayjs.extend(timezone);
-export namespace CalendarHelper {
-    export const generateDays = (calendarDate: Dayjs): Dayjs[][] => {
+export class CalendarHelper {
+    public static generateDays(calendarDate: Dayjs): Dayjs[][] {
         const firstDayOfTheMonth = calendarDate.startOf("month");
 
         const firstDayOfFirstWeekOfMonth =
@@ -23,17 +23,15 @@ export namespace CalendarHelper {
         );
 
         return firstDayOfEachWeek.map((date) => generateWeek(date));
-    };
+    }
 
-    export const generateDaysForCurrentWeek = (
-        calendarDate: Dayjs
-    ): Dayjs[] => {
+    public static generateDaysForCurrentWeek(calendarDate: Dayjs): Dayjs[] {
         const firstDayOfWeek = calendarDate.startOf("week");
 
         return generateWeek(firstDayOfWeek);
-    };
+    }
 
-    export const generateMonths = (calendarDate: Dayjs): Dayjs[] => {
+    public static generateMonths(calendarDate: Dayjs): Dayjs[] {
         const months: Dayjs[] = [];
 
         for (let i = 0; i < 12; i++) {
@@ -42,9 +40,9 @@ export namespace CalendarHelper {
         }
 
         return months;
-    };
+    }
 
-    export const generateDecadeOfYears = (calendarDate: Dayjs): Dayjs[] => {
+    public static generateDecadeOfYears(calendarDate: Dayjs): Dayjs[] {
         const year = calendarDate.year();
         const decade = Math.floor(year / 10) * 10;
 
@@ -58,9 +56,9 @@ export namespace CalendarHelper {
         }
 
         return years;
-    };
+    }
 
-    export const getStartEndDecade = (calendarDate: Dayjs) => {
+    public static getStartEndDecade(calendarDate: Dayjs) {
         const beginDecade = Math.floor(+calendarDate.format("YYYY") / 10) * 10;
         const endDecade = +dayjs(`${beginDecade + 9}-01-01`).format("YYYY");
 
@@ -68,15 +66,15 @@ export namespace CalendarHelper {
             beginDecade,
             endDecade,
         };
-    };
+    }
 
-    export const convertTo12HourFormat = (time: string): string => {
+    public static convertTo12HourFormat(time: string): string {
         const parsedTime = dayjs(time, "HH:mm");
         if (!parsedTime.isValid()) {
             return "";
         }
         return parsedTime.format("h:mm a");
-    };
+    }
     /**
      * Returns if a date is within a min and max date (inclusive)
      *
@@ -86,12 +84,12 @@ export namespace CalendarHelper {
      * If only maxDate is provided, then it will return true if
      * same or before.
      */
-    export const isWithinRange = (
+    public static isWithinRange(
         day: Dayjs,
         minDate?: Dayjs,
         maxDate?: Dayjs,
         unit: OpUnitType = "day"
-    ) => {
+    ) {
         if (!minDate && !maxDate) {
             return true;
         } else if (minDate && maxDate) {
@@ -101,36 +99,36 @@ export namespace CalendarHelper {
         } else {
             return day.isSameOrBefore(maxDate, unit);
         }
-    };
+    }
 
     /**
      * If the previous month of this date is within min date
      */
-    export const isPreviousMonthWithinRange = (day: Dayjs, minDate: Dayjs) => {
+    public static isPreviousMonthWithinRange(day: Dayjs, minDate: Dayjs) {
         return CalendarHelper.isWithinRange(
             day.subtract(1, "month"),
             minDate,
             undefined,
             "month"
         );
-    };
+    }
 
     /**
      * If the previous year of this date is within min date
      */
-    export const isPreviousYearWithinRange = (day: Dayjs, minDate: Dayjs) => {
+    public static isPreviousYearWithinRange(day: Dayjs, minDate: Dayjs) {
         return CalendarHelper.isWithinRange(
             day.subtract(1, "year"),
             minDate,
             undefined,
             "year"
         );
-    };
+    }
 
     /**
      * If the previous decade of this date is within min date
      */
-    export const isPreviousDecadeWithinRange = (day: Dayjs, minDate: Dayjs) => {
+    public static isPreviousDecadeWithinRange(day: Dayjs, minDate: Dayjs) {
         const { beginDecade } = CalendarHelper.getStartEndDecade(day);
         return CalendarHelper.isWithinRange(
             day.year(beginDecade).subtract(1, "year"),
@@ -138,36 +136,36 @@ export namespace CalendarHelper {
             undefined,
             "year"
         );
-    };
+    }
 
     /**
      * If the next month of this date is within max date
      */
-    export const isNextMonthWithinRange = (day: Dayjs, maxDate: Dayjs) => {
+    public static isNextMonthWithinRange(day: Dayjs, maxDate: Dayjs) {
         return CalendarHelper.isWithinRange(
             day.add(1, "month"),
             undefined,
             maxDate,
             "month"
         );
-    };
+    }
 
     /**
      * If the next year of this date is within max date
      */
-    export const isNextYearWithinRange = (day: Dayjs, maxDate: Dayjs) => {
+    public static isNextYearWithinRange(day: Dayjs, maxDate: Dayjs) {
         return CalendarHelper.isWithinRange(
             day.add(1, "year"),
             undefined,
             maxDate,
             "year"
         );
-    };
+    }
 
     /**
      * If the next decade of this date is within max date
      */
-    export const isNextDecadeWithinRange = (day: Dayjs, maxDate: Dayjs) => {
+    public static isNextDecadeWithinRange(day: Dayjs, maxDate: Dayjs) {
         const { endDecade } = CalendarHelper.getStartEndDecade(day);
         return CalendarHelper.isWithinRange(
             day.year(endDecade).add(1, "year"),
@@ -175,9 +173,9 @@ export namespace CalendarHelper {
             maxDate,
             "year"
         );
-    };
+    }
 
-    export const getWeekStartEnd = (day: Dayjs) => {
+    public static getWeekStartEnd(day: Dayjs) {
         const firstDayOfWeek = day.startOf("week").format("YYYY-MM-DD");
         const lastDayOfWeek = day.endOf("week").format("YYYY-MM-DD");
 
@@ -185,21 +183,21 @@ export namespace CalendarHelper {
             start: firstDayOfWeek,
             end: lastDayOfWeek,
         };
-    };
+    }
 
-    export const getFixedRangeStartEnd = (day: Dayjs, numberOfDays: number) => {
+    public static getFixedRangeStartEnd(day: Dayjs, numberOfDays: number) {
         return {
             start: day.format("YYYY-MM-DD"),
             end: day.add(numberOfDays - 1, "day").format("YYYY-MM-DD"),
         };
-    };
+    }
 
-    export const isDisabledDay = (
+    public static isDisabledDay(
         day: Dayjs,
         disabledDates?: string[] | undefined,
         minDate?: string | undefined,
         maxDate?: string | undefined
-    ): boolean => {
+    ): boolean {
         const isWithinRange = CalendarHelper.isWithinRange(
             day,
             minDate ? dayjs(minDate) : undefined,
@@ -210,7 +208,7 @@ export namespace CalendarHelper {
             disabledDates && disabledDates.includes(day.format("YYYY-MM-DD"));
 
         return !isWithinRange || !!isDisabledDate;
-    };
+    }
 }
 
 // =============================================================================

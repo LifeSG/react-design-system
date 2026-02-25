@@ -45,7 +45,7 @@ interface TimeValuesPlain {
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
-export namespace TimeHelper {
+export class TimeHelper {
     /**
      * Rounds time to the nearest interval, e.g 6:30 will be clamped to 6:00 when interval = 60
      * @param time the input time in HH:mm format
@@ -54,11 +54,11 @@ export namespace TimeHelper {
      * If the time is already a valid interval, it will not be rounded
      * @returns the rounded time in HH:mm format,
      */
-    export const roundToNearestInterval = (
+    public static roundToNearestInterval(
         time: string,
         interval: number,
         toNextInterval?: boolean
-    ): string => {
+    ): string {
         const [hoursStr, minutesStr] = time.split(":");
         const hours = parseInt(hoursStr, 10);
         const minutes = parseInt(minutesStr, 10);
@@ -91,13 +91,13 @@ export namespace TimeHelper {
             .padStart(2, "0");
 
         return `${formattedHours}:${formattedMinutes}`;
-    };
+    }
 
-    export const generateHourlyIntervals = (
+    public static generateHourlyIntervals(
         startTime: string,
         endTime: string,
         generatedFormat = "ha"
-    ) => {
+    ): string[] {
         const format = "HH:mm";
         let start = dayjs(startTime, format);
         let end = dayjs(endTime, format);
@@ -114,12 +114,12 @@ export namespace TimeHelper {
         }
 
         return intervals;
-    };
+    }
 
-    export const getTimeValues = (
+    public static getTimeValues(
         format: TimeFormat,
         value: string | undefined
-    ): TimeValues => {
+    ): TimeValues {
         // Default value
         const timeValues: TimeValues = {
             hour: "",
@@ -168,12 +168,12 @@ export namespace TimeHelper {
         } catch {
             return timeValues;
         }
-    };
+    }
 
-    export const updateMinutes = (
+    public static updateMinutes(
         valueString: string,
         direction: "add" | "minus"
-    ): string => {
+    ): string {
         const currentValue = parseInt(valueString);
 
         if (isNaN(currentValue)) {
@@ -208,12 +208,12 @@ export namespace TimeHelper {
         const newStep = ((nextStep % steps) + steps) % steps;
 
         return StringHelper.padValue((newStep * 5).toString());
-    };
+    }
 
-    export const updateHours = (
+    public static updateHours(
         valueString: string,
         direction: "add" | "minus"
-    ): string => {
+    ): string {
         const currentValue = parseInt(valueString);
 
         if (isNaN(currentValue)) {
@@ -228,9 +228,9 @@ export namespace TimeHelper {
             : nextValue === 13
             ? StringHelper.padValue("1")
             : "12";
-    };
+    }
 
-    export const convertTo24HourFormat = (values: TimeValues): string => {
+    public static convertTo24HourFormat(values: TimeValues): string {
         const hour = parseInt(values.hour);
         let hourString: string;
 
@@ -241,20 +241,20 @@ export namespace TimeHelper {
         }
 
         return `${hourString}:${values.minute}`;
-    };
+    }
 
-    export const convertHourTo12HourFormat = (hourValue: string): string => {
+    public static convertHourTo12HourFormat(hourValue: string): string {
         const hour = parseInt(hourValue);
         const hourString =
             hour % 12 === 0 ? (12).toString() : (hour % 12).toString();
 
         return StringHelper.padValue(hourString);
-    };
+    }
 
-    export const formatDisplayValue = (
+    public static formatDisplayValue(
         value: string | undefined,
         format: TimeFormat
-    ): string => {
+    ): string {
         try {
             const { hour, minute, period = "" } = convertToPlain(value, format);
 
@@ -273,9 +273,9 @@ export namespace TimeHelper {
         } catch {
             return "";
         }
-    };
+    }
 
-    export const toMinutesSeconds = (_seconds: number) => {
+    public static toMinutesSeconds(_seconds: number) {
         const minutes = Math.floor(_seconds / 60);
         const seconds = _seconds % 60;
 
@@ -283,10 +283,10 @@ export namespace TimeHelper {
             minutes,
             seconds,
         };
-    };
+    }
 
     // Converts h:mma/hh:mma to 24hr (eg. 13:00)
-    export const to24Hour = (time: string) => {
+    public static to24Hour(time: string) {
         if (time?.includes("am") || time?.includes("pm")) {
             const [t, p] = time.split(/(am|pm)/i);
             const [hr, m] = t.split(":").map(Number);
@@ -296,25 +296,25 @@ export namespace TimeHelper {
             return toTimeString(h, m);
         }
         return time; // No conversion if string alr has am/pm
-    };
+    }
 
     // Generates an array of timings based on given startTime/interval/format
-    export const generateTimings = (
+    public static generateTimings(
         interval: number, // In minutes
         format: TimeFormat = "12hr",
         startTime?: string | undefined,
         endTime?: string | undefined // Inclusive
-    ): string[] => {
+    ): string[] {
         const timings = [];
         let currentMinutes = 0;
         let endMinutes = 1440 - interval; // Do not include next day's 12am
 
         // Convert startTime (h:mma) to minutes
         if (startTime) {
-            currentMinutes = timeToMinutes(startTime);
+            currentMinutes = this.timeToMinutes(startTime);
         }
         if (endTime) {
-            endMinutes = timeToMinutes(endTime);
+            endMinutes = this.timeToMinutes(endTime);
         }
 
         while (currentMinutes <= endMinutes) {
@@ -338,13 +338,13 @@ export namespace TimeHelper {
         }
 
         return timings;
-    };
+    }
 
     // Return undefined = invalid field, "" = empty field, else returns h:mma
-    export const parseInput = (
+    public static parseInput(
         input: string,
         format: TimeFormat = "12hr" // Returned format
-    ): string | undefined => {
+    ): string | undefined {
         if (input === "" || input === undefined) return input;
 
         const sanitizedInput = input.trim().toLowerCase();
@@ -401,20 +401,20 @@ export namespace TimeHelper {
         const formattedTime = toTimeString(hours, minutes, period);
 
         return formattedTime;
-    };
+    }
 
-    export const findClosestFlooredTime = (
+    public static findClosestFlooredTime(
         inputTime: string | undefined,
         timeArray: string[] // Should already be sorted in ascending order
-    ): string | undefined => {
+    ): string | undefined {
         if (!inputTime) return inputTime;
-        const flooredInputMinutes = timeToMinutes(inputTime);
+        const flooredInputMinutes = this.timeToMinutes(inputTime);
 
         let closestTime = "";
         let minDifference = Infinity;
 
         for (const time of timeArray) {
-            const timeInMinutes = timeToMinutes(time);
+            const timeInMinutes = this.timeToMinutes(time);
             const difference = timeInMinutes - flooredInputMinutes;
 
             // If the difference is negative or zero, update the closest time
@@ -429,10 +429,10 @@ export namespace TimeHelper {
         }
 
         return closestTime;
-    };
+    }
 
     // Accepts both 12hr and 24hr formats
-    export const timeToMinutes = (time: string) => {
+    public static timeToMinutes(time: string): number {
         const [startHourMin, ampm] = time.toLowerCase().split(/(am|pm)/);
         const [startHoursRaw, startMinutes] = startHourMin
             .split(":")
@@ -447,26 +447,26 @@ export namespace TimeHelper {
         }
 
         return startHours * 60 + startMinutes;
-    };
+    }
 
     // Calculate duration between two time strings
-    export const calculateDuration = (
+    public static calculateDuration(
         startTime: string,
         endTime: string
-    ): number => {
-        const startMinutes = timeToMinutes(startTime);
-        const endMinutes = timeToMinutes(endTime);
+    ): number {
+        const startMinutes = this.timeToMinutes(startTime);
+        const endMinutes = this.timeToMinutes(endTime);
         return endMinutes - startMinutes;
-    };
+    }
 
     /**
      * Validates and calculates scroll position for a given time
      * @param props - The configuration object for calculating scroll position
      * @returns the calculated scroll position in pixels, or null if invalid
      */
-    export const calculateScrollPosition = (
+    public static calculateScrollPosition(
         props: CalculateScrollPositionProps
-    ): number | null => {
+    ): number | null {
         const {
             scrollTime,
             minTime,
@@ -488,7 +488,7 @@ export namespace TimeHelper {
 
             // Round to nearest interval if specified
             const timeToUse = options?.roundToInterval
-                ? roundToNearestInterval(scrollTime, interval)
+                ? this.roundToNearestInterval(scrollTime, interval)
                 : scrollTime;
 
             const [hours, minutes] = parseTimeToNumbers(timeToUse);
@@ -529,7 +529,7 @@ export namespace TimeHelper {
             );
             return null;
         }
-    };
+    }
 }
 
 // =============================================================================

@@ -12,17 +12,17 @@ interface MaskValueOptions {
 // =============================================================================
 // EXPORTS
 // =============================================================================
-export namespace StringHelper {
-    export const transformWithSpaces = (
+export class StringHelper {
+    public static transformWithSpaces(
         value: string | any,
         groupLength: number
-    ) => {
+    ): string {
         const regex = "(.{" + groupLength + "})";
         return value
             .replace(/[^\dA-Z]/gi, "")
             .replace(new RegExp(regex, "g"), "$1 ")
             .trim();
-    };
+    }
 
     /**
      * Pads single digit values with a zero and trims leading zero for
@@ -30,10 +30,7 @@ export namespace StringHelper {
      * @param value the string value
      * @param retainSingleZero setting true will allow single zero value
      */
-    export const padValue = (
-        value: string,
-        retainSingleZero?: boolean
-    ): string => {
+    public static padValue(value: string, retainSingleZero?: boolean): string {
         if (value === "0") {
             return retainSingleZero ? value : value.padStart(2, "0");
         }
@@ -44,7 +41,7 @@ export namespace StringHelper {
 
         const trimmedValue = parseInt(value);
         return trimmedValue.toString().padStart(2, "0");
-    };
+    }
 
     /**
      * Checks if the text is required to be truncated and broken into two lines based
@@ -52,10 +49,10 @@ export namespace StringHelper {
      * @param text input text
      * @param widthOfElement element width in px
      */
-    export const shouldTruncateToTwoLines = (
+    public static shouldTruncateToTwoLines(
         text: string,
         widthOfElement: number
-    ): boolean => {
+    ): boolean {
         // This is arbitrary and based on tests to derive that every 9px increment ~= 1 char length.
         // But this applies to font size 18px or 1.125rem only
         const estimatedCharOnLine = Math.floor(widthOfElement / 9);
@@ -63,7 +60,7 @@ export namespace StringHelper {
             text.length >= estimatedCharOnLine * 2 ||
             (text.split(" ").length === 1 && text.length > estimatedCharOnLine)
         );
-    };
+    }
 
     /**
      * Performs a truncation by adding ellipsis in the middle of the text.
@@ -74,13 +71,13 @@ export namespace StringHelper {
      * will be increased if there is more space available (derived from `widthOfElement`)
      * @param incrementFactor the size (in px).
      */
-    export const truncateOneLine = (
+    public static truncateOneLine(
         text: string,
         widthOfElement: number,
         minDivSize: number,
         baselineCharLength: number,
         incrementFactor = 8 // Arbitrary based on tests and applies to font size of 18px or 1.125rem
-    ): string => {
+    ): string {
         let additionalCharAllowed = 0;
         if (widthOfElement > minDivSize) {
             additionalCharAllowed = Math.floor(
@@ -98,7 +95,7 @@ export namespace StringHelper {
         }
 
         return text;
-    };
+    }
 
     /**
      * Performs a truncation by adding ellipsis in the middle of the text.
@@ -107,12 +104,12 @@ export namespace StringHelper {
      * @param fontSize the fontsize of the text
      * @param lineHeight the line height of the text
      */
-    export const truncateTwoLines = (
+    public static truncateTwoLines(
         text: string,
         widthOfElement: number,
         fontSize: number,
         lineHeight = 1.2
-    ): string => {
+    ): string {
         // Estimate characters per line based on width and font size
         const charsPerLine = Math.floor(
             (widthOfElement * 2) / (fontSize * 0.6) // 0.6 is an approximation for average char width
@@ -134,29 +131,30 @@ export namespace StringHelper {
         const end = text.substring(text.length - keepFromEnd);
 
         return `${start}...${end}`;
-    };
+    }
 
     /**
      * Returns the width of the text in the specified font
      * https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript/21015393#21015393
      */
-    export const getTextWidth = (text: string, font: string): number => {
+    public static getTextWidth(text: string, font: string): number {
         if (typeof document === "undefined") {
             return 0;
         }
 
         // create a reusable canvas object for better performance
         const canvas =
-            (getTextWidth as any).canvas ||
-            ((getTextWidth as any).canvas = document.createElement("canvas"));
+            (this.getTextWidth as any).canvas ||
+            ((this.getTextWidth as any).canvas =
+                document.createElement("canvas"));
         const context = canvas.getContext("2d");
         context.font = font;
 
         const metrics = context.measureText(text);
         return metrics.width;
-    };
+    }
 
-    export const maskValue = (value: string, options: MaskValueOptions) => {
+    public static maskValue(value: string, options: MaskValueOptions): string {
         if (!value) {
             return value;
         }
@@ -174,7 +172,7 @@ export namespace StringHelper {
         } else if (maskRegex) {
             return value.replace(maskRegex, maskChar);
         } else if (maskRange) {
-            const { startIndex, endIndex } = determineStartAndEndIndex(
+            const { startIndex, endIndex } = this.determineStartAndEndIndex(
                 maskRange[0],
                 maskRange[1]
             );
@@ -186,7 +184,7 @@ export namespace StringHelper {
                 value.substring(endIndex + 1)
             );
         } else if (unmaskRange) {
-            const { startIndex, endIndex } = determineStartAndEndIndex(
+            const { startIndex, endIndex } = this.determineStartAndEndIndex(
                 unmaskRange[0],
                 unmaskRange[1]
             );
@@ -198,36 +196,36 @@ export namespace StringHelper {
         }
 
         return value;
-    };
+    }
 
-    const determineStartAndEndIndex = (index0: number, index1: number) => {
+    private static determineStartAndEndIndex(index0: number, index1: number) {
         return index0 < index1
             ? { startIndex: index0, endIndex: index1 }
             : { startIndex: index1, endIndex: index0 };
-    };
+    }
 
-    const ordinalPluralRules = new Intl.PluralRules("en", {
+    private static ordinalPluralRules = new Intl.PluralRules("en", {
         type: "ordinal",
     });
 
-    const suffixes = new Map([
+    private static suffixes = new Map([
         ["one", "st"],
         ["two", "nd"],
         ["few", "rd"],
         ["other", "th"],
     ]);
 
-    export const formatOrdinal = (n: number) => {
-        const rule = ordinalPluralRules.select(n);
-        const suffix = suffixes.get(rule);
+    public static formatOrdinal(n: number) {
+        const rule = this.ordinalPluralRules.select(n);
+        const suffix = this.suffixes.get(rule);
         return `${n}${suffix}`;
-    };
+    }
 
-    export const getMaskedDescription = (
+    public static getMaskedDescription(
         value: string,
         displayMaskState: "masked" | "unmasked",
         maskRange?: number[]
-    ): string => {
+    ): string {
         if (!value || displayMaskState !== "masked" || !maskRange) return "";
 
         const [startIndex, endIndex] = maskRange;
@@ -243,5 +241,5 @@ export namespace StringHelper {
         if (hasEnd) return `Ending with ${end}`;
 
         return "";
-    };
+    }
 }

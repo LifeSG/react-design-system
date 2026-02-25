@@ -1,10 +1,10 @@
 import dayjs from "dayjs";
 
-export namespace DateInputHelper {
-    export const isDateDisabled = (
+export class DateInputHelper {
+    public static isDateDisabled(
         val: string | undefined,
         props: { disabledDates?: string[]; minDate?: string; maxDate?: string }
-    ): boolean => {
+    ): boolean {
         const { disabledDates, minDate, maxDate } = props;
         if (
             val &&
@@ -28,11 +28,11 @@ export namespace DateInputHelper {
         }
 
         return false;
-    };
+    }
 
-    export const sanitizeInput = (date: string | undefined): string => {
+    public static sanitizeInput(date: string | undefined): string {
         if (date) {
-            const normalized = normalizeDateString(date);
+            const normalized = this.normalizeDateString(date);
 
             const day = dayjs(normalized, "YYYY-MM-DD", true);
 
@@ -41,9 +41,9 @@ export namespace DateInputHelper {
             }
         }
         return "";
-    };
+    }
 
-    const normalizeDateString = (dateString: string): string => {
+    private static normalizeDateString(dateString: string): string {
         const match = dateString.match(/^(\d{1,4})-(\d{1,2})-(\d{1,2})$/);
 
         if (!match) {
@@ -63,5 +63,5 @@ export namespace DateInputHelper {
         const paddedDay = day.padStart(2, "0");
 
         return `${paddedYear}-${paddedMonth}-${paddedDay}`;
-    };
+    }
 }

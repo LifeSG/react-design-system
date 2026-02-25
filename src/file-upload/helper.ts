@@ -1,6 +1,6 @@
-export namespace FileUploadHelper {
+export class FileUploadHelper {
     // Adapted from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-size-to-kb-mb-gb-in-javascript
-    export const formatFileSizeDisplay = (size?: number) => {
+    public static formatFileSizeDisplay(size?: number) {
         if (!size || size === 0) return "0 KB";
 
         const sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
@@ -11,9 +11,9 @@ export namespace FileUploadHelper {
         const measurement = sizes[index];
 
         return `${value} ${measurement}`;
-    };
+    }
 
-    export const isSupportedImageType = (type: string) => {
+    public static isSupportedImageType(type: string): boolean {
         /** Currently only images supported by html <img> */
         const acceptedImageTypes = [
             "image/avif",
@@ -25,5 +25,5 @@ export namespace FileUploadHelper {
         ];
 
         return acceptedImageTypes.includes(type);
-    };
+    }
 }
