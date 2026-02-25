@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Radius } from "../theme";
+import { Border, Colour, Font, Radius } from "../v3_theme";
 import { BadgeProps } from "./types";
 
 // =============================================================================

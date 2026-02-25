@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
-import { Border, Colour, Font, MediaQuery, Motion, Spacing } from "../theme";
-import { ThemeButton } from "../theme/components/theme-helper";
+import { Border, Colour, Font, MediaQuery, Motion, Spacing } from "../v3_theme";
+import { ThemeButton } from "../v3_theme/components/theme-helper";
 
 export type MainButtonStyle =
     | "default"

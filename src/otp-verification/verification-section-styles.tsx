@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Typography } from "../typography";
-import { Colour, MediaQuery, Spacing } from "../theme";
+import { Colour, MediaQuery, Spacing } from "../v3_theme";
 import { Button } from "../button";
 
 export const VerificationSectionWrapper = styled.div`

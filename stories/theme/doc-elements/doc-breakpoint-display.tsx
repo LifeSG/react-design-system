@@ -1,6 +1,6 @@
-import { BreakpointSet, ThemeSpec } from "src/theme/types";
+import { BreakpointSet, ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
-import { getBreakpoint } from "src/theme/breakpoint/theme-helper";
+import { getBreakpoint } from "src/v3_theme/breakpoint/theme-helper";
 
 interface BreakpointDisplayProps {
     theme: ThemeSpec;

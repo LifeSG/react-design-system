@@ -1,5 +1,11 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius, Spacing, ThemeStyleProps } from "../../theme";
+import {
+    Border,
+    Colour,
+    Radius,
+    Spacing,
+    ThemeStyleProps,
+} from "../../v3_theme";
 import { Typography } from "../../typography";
 import { TimeTableCellType } from "../types";
 

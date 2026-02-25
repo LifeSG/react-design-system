@@ -1,4 +1,4 @@
-import { Colour, Font } from "src/theme";
+import { Colour, Font } from "src/v3_theme";
 import styled from "styled-components";
 
 // =============================================================================

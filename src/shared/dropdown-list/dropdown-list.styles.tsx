@@ -2,7 +2,7 @@ import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circl
 import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { Checkbox } from "../../checkbox";
-import { Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
+import { Colour, Font, MediaQuery, Radius, Spacing } from "../../v3_theme";
 import { ComponentLoadingSpinner } from "../component-loading-spinner";
 import {
     DropdownVariantType,

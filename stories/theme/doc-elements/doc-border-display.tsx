@@ -1,7 +1,7 @@
-import { getBorder, getBorderWidth } from "src/theme/border/theme-helper";
-import { ThemeSpec } from "src/theme/types";
+import { getBorder, getBorderWidth } from "src/v3_theme/border/theme-helper";
+import { ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
-import { Border } from "../../../src/theme";
+import { Border } from "../../../src/v3_theme";
 
 interface BorderDisplayProps {
     theme: ThemeSpec;

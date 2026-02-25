@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "../v3_theme";
 import { Typography } from "../typography";
 import { PopoverCard, PopoverContainer } from "./popover.styles";
 import { PopoverV2Props } from "./types";

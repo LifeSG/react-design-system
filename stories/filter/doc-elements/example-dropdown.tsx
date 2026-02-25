@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "src/button";
 import { Card } from "src/card";
-import { Colour } from "src/theme";
+import { Colour } from "src/v3_theme";
 import styled from "styled-components";
 
 interface Props {

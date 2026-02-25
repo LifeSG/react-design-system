@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { MIN_COLUMN_WIDTH } from "./const";
 import { ErrorDisplay } from "../error-display";
-import { Border, Colour, Radius, Spacing } from "../theme";
+import { Border, Colour, Radius, Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLING

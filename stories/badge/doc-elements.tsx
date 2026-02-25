@@ -1,5 +1,5 @@
 import { MagnifierIcon } from "@lifesg/react-icons";
-import { Colour } from "src/theme";
+import { Colour } from "src/v3_theme";
 import styled from "styled-components";
 
 const Container = styled.div`

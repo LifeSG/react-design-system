@@ -1,6 +1,6 @@
 import { MinusSquareFillIcon } from "@lifesg/react-icons/minus-square-fill";
 import styled, { css } from "styled-components";
-import { Colour, Motion, Radius, Spacing } from "../../theme";
+import { Colour, Motion, Radius, Spacing } from "../../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACE

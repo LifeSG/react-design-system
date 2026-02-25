@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Motion } from "../theme";
+import { Motion } from "../v3_theme";
 import { BrandType } from "./types";
 
 // =============================================================================

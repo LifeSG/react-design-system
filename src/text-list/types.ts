@@ -1,4 +1,4 @@
-import { TypographySizeType } from "../theme/font/types";
+import { TypographySizeType } from "../v3_theme/font/types";
 
 interface BaseListProps {
     children: JSX.Element | JSX.Element[];

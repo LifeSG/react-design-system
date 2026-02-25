@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { MediaQuery, Motion } from "../theme";
+import { MediaQuery, Motion } from "../v3_theme";
 import { ModalAnimationDirection } from "./types";
 
 interface Props {

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { TagColorType, TagType } from "./types";
-import { Border, Colour, Font, MediaQuery, Radius } from "../theme";
+import { Border, Colour, Font, MediaQuery, Radius } from "../v3_theme";
 
 // =============================================================================
 // STYLING

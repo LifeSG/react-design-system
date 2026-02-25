@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Button } from "../button";
 import { Input } from "../input";
-import { Spacing } from "../theme";
+import { Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 
 export const Wrapper = styled.div`

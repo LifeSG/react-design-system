@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius } from "../../theme";
-import type { getPrimitiveColour } from "../../theme/colour-primitive/theme-helper";
-import type { getSemanticColour } from "../../theme/colour-semantic/theme-helper";
+import { Border, Colour, Radius } from "../../v3_theme";
+import type { getPrimitiveColour } from "../../v3_theme/colour-primitive/theme-helper";
+import type { getSemanticColour } from "../../v3_theme/colour-semantic/theme-helper";
 
 type ThemeColorFunctions = ReturnType<
     typeof getSemanticColour | typeof getPrimitiveColour

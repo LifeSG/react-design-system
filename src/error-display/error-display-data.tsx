@@ -1,4 +1,4 @@
-import { ResourceScheme, ThemeSpec } from "../theme/types";
+import { ResourceScheme, ThemeSpec } from "../v3_theme/types";
 import { renderDescriptionWithProps } from "./error-display-helper-comp";
 import { ErrorDisplayHelper } from "./helper";
 import {

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Card } from "src/card";
-import { Colour } from "src/theme";
+import { Colour } from "src/v3_theme";
 import {
     TimeTable,
     TimeTablePopoverProps,

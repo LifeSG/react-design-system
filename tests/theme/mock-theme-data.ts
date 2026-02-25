@@ -1,4 +1,4 @@
-import { ThemeSpec } from "../../src/theme/types";
+import { ThemeSpec } from "../../src/v3_theme/types";
 
 export const MOCK_THEME: ThemeSpec = {
     colourScheme: "lifesg",

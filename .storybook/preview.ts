@@ -14,7 +14,7 @@ import {
     SPFTheme,
     SupportGoWhereTheme,
     SGWDigitalLobbyTheme,
-} from "../src/theme";
+} from "../src/v3_theme";
 import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
 const preview: Preview = {

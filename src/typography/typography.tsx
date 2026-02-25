@@ -1,6 +1,6 @@
 import React, { RefObject } from "react";
 import { IStyledComponent } from "styled-components";
-import { TypographySizeType } from "../theme/font/types";
+import { TypographySizeType } from "../v3_theme/font/types";
 import { TypographyLinkProps, TypographyProps } from "./types";
 import {
     HyperlinkBase,

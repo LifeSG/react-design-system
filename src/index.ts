@@ -69,7 +69,7 @@ export * from "./tab";
 export * from "./table";
 export * from "./tag";
 export * from "./text-list";
-export * from "./theme";
+export * from "./v3_theme";
 export * from "./time-range-picker";
 export * from "./time-slot-bar";
 export * from "./time-slot-bar-week";

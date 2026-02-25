@@ -1,5 +1,5 @@
 import { ColProps } from "../layout";
-import { ThemeStyleProps } from "../theme/types";
+import { ThemeStyleProps } from "../v3_theme/types";
 import { V2_ColProps } from "../v2_layout/types";
 
 export type DividerLineStyleType = "solid" | "dashed";

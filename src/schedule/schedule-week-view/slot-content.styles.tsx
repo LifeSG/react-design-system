@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Radius, Spacing } from "../../theme";
+import { Border, Colour, Font, Radius, Spacing } from "../../v3_theme";
 import { Typography } from "../../typography";
 import { CELL_HEIGHT } from "../const";
 

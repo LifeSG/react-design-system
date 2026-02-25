@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "styled-components";
-import { LifeSGTheme } from "../theme";
+import { LifeSGTheme } from "../v3_theme";
 import { getErrorDisplayData } from "./error-display-data";
 import {
     ActionButton,

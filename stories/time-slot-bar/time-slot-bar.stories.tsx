@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import { Colour } from "src/theme";
+import { Colour } from "src/v3_theme";
 import { TimeSlotBar } from "src/time-slot-bar";
 import { FullWidthStoryDecorator } from "stories/storybook-common";
 

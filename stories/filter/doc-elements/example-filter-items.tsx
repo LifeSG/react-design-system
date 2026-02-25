@@ -3,7 +3,7 @@ import isEmpty from "lodash/isEmpty";
 import { useState } from "react";
 import { Filter, Mode } from "src/filter";
 import { Form } from "src/form";
-import { Colour } from "src/theme";
+import { Colour } from "src/v3_theme";
 import { Typography } from "src/typography";
 import styled from "styled-components";
 

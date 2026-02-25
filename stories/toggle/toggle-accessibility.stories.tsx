@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
-import { Colour } from "src/theme";
+import { Colour } from "src/v3_theme";
 import { Toggle } from "src/toggle";
 import { Typography } from "src/typography";
 import styled from "styled-components";

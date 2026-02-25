@@ -1,7 +1,7 @@
 import ReactSlider from "react-slider";
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius, Shadow, Spacing } from "../theme";
-import { ThemeStyleProps } from "../theme/types";
+import { Border, Colour, Radius, Shadow, Spacing } from "../v3_theme";
+import { ThemeStyleProps } from "../v3_theme/types";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -80,9 +80,9 @@ export const Knob = styled.div<ThumbStyleProps>`
         box-shadow: ${Shadow["sm-subtle"]};
         border: ${Border["width-010"]} ${Border["solid"]}
             ${(props) =>
-        props.$disabled
-            ? Colour["border-selected-disabled"]
-            : Colour["border-strong"]};
+                props.$disabled
+                    ? Colour["border-selected-disabled"]
+                    : Colour["border-strong"]};
         border-radius: ${Radius["full"]};
     }
 `;

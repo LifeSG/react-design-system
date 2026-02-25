@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, Spacing } from "../theme";
+import { Border, Colour, Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACES

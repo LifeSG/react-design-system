@@ -1,5 +1,5 @@
 import styled, { ThemeProvider } from "styled-components";
-import { MediaQuery } from "../../src/theme/breakpoint/media-query-helper";
+import { MediaQuery } from "../../src/v3_theme/breakpoint/media-query-helper";
 import { render } from "@testing-library/react";
 import "jest-styled-components";
 import { MOCK_THEME } from "./mock-theme-data";

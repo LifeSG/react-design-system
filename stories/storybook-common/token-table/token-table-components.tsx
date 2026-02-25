@@ -1,5 +1,5 @@
 import React from "react";
-import { StyledComponentProps } from "src/theme/helpers";
+import { StyledComponentProps } from "src/v3_theme/helpers";
 import styled, { DefaultTheme, useTheme } from "styled-components";
 import { DocTable, DocTextStyle } from "../doc-table";
 import { ColourTokenInspector } from "../token-inspector";

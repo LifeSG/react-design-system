@@ -1,4 +1,4 @@
-import { ThemeButton } from "src/theme/components/theme-helper";
+import { ThemeButton } from "src/v3_theme/components/theme-helper";
 import { TokenTable, TokenTableSectionProps } from "../storybook-common";
 
 const DATA: TokenTableSectionProps[] = [

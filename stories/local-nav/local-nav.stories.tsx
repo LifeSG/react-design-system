@@ -6,7 +6,7 @@ import {
     LocalNavItemProps,
     LocalNavMenu,
 } from "src/local-nav";
-import { Breakpoint } from "src/theme";
+import { Breakpoint } from "src/v3_theme";
 import { useTheme } from "styled-components";
 import { Content, Page, TopContent } from "./doc-elements";
 

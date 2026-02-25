@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../button";
-import { Border, Colour, Font, Radius, Spacing } from "../theme";
+import { Border, Colour, Font, Radius, Spacing } from "../v3_theme";
 
 // =============================================================================
 // CONTAINER STYLES

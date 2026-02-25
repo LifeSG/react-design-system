@@ -1,4 +1,4 @@
-import { MediaQuery } from "src/theme";
+import { MediaQuery } from "src/v3_theme";
 import styled from "styled-components";
 
 const Page = styled.div`

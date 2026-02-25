@@ -1,9 +1,9 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Font, MediaQuery } from "../theme";
-import { Colour } from "../theme";
-import { ThemeNavbar } from "../theme/components/theme-helper";
+import { Font, MediaQuery } from "../v3_theme";
+import { Colour } from "../v3_theme";
+import { ThemeNavbar } from "../v3_theme/components/theme-helper";
 import { TypographyWeight } from "../typography";
 
 // =============================================================================

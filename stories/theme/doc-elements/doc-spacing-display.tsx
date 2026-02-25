@@ -1,5 +1,5 @@
-import { getSpace } from "src/theme/spacing/theme-helper";
-import { SpacingSet, ThemeSpec } from "src/theme/types";
+import { getSpace } from "src/v3_theme/spacing/theme-helper";
+import { SpacingSet, ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
 
 interface SpacingDisplayProps {

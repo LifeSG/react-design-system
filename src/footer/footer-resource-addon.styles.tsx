@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Spacing } from "../theme";
+import { Spacing } from "../v3_theme";
 
 export const Img = styled.img`
     max-height: ${Spacing["spacing-72"]};

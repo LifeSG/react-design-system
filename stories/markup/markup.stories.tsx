@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Markup } from "src/markup";
-import { Colour } from "src/theme";
+import { Colour } from "src/v3_theme";
 
 type Component = typeof Markup;
 

@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
-import { Border, Colour, Font, Motion, Radius, Shadow } from "../theme";
+import { Border, Colour, Font, Motion, Radius, Shadow } from "../v3_theme";
 import { Typography } from "../typography";
 
 //=============================================================================

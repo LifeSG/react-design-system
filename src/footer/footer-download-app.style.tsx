@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { MediaQuery, Spacing } from "../theme";
+import { MediaQuery, Spacing } from "../v3_theme";
 import { Typography } from "../typography";
-import { ThemeFooter } from "../theme/components/theme-helper";
+import { ThemeFooter } from "../v3_theme/components/theme-helper";
 
 export const Wrapper = styled.div`
     display: flex;

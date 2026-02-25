@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { ResourceScheme } from "../theme/types";
+import { ResourceScheme } from "../v3_theme/types";
 import { TypographyLinkProps } from "../typography";
 import { getDefaultDisclaimerLinks } from "./footer-disclaimer-links-data";
 import { DisclaimerLinks } from "./types";

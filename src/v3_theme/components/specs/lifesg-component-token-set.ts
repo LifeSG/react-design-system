@@ -1,4 +1,4 @@
-import { Colour } from "src/theme";
+import { Colour } from "src/v3_theme";
 import { ColourSemantic } from "../../colour-semantic/theme-helper";
 import { RadiusValues } from "../../radius/theme-helper";
 import { ComponentTokenSet } from "../types";

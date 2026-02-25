@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius, Shadow, Spacing } from "../theme";
+import { Border, Colour, Radius, Shadow, Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLING

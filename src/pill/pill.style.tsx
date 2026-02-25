@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Radius } from "../theme";
-import { ThemeStyleProps } from "../theme/types";
+import { Border, Colour, Font, Radius } from "../v3_theme";
+import { ThemeStyleProps } from "../v3_theme/types";
 import { PillColorType, PillType } from "./types";
 
 // =============================================================================

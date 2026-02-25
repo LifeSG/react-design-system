@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { InputGroup } from "../input-group";
 import { PhoneNumberInput } from "../phone-number-input";
-import { Colour, MediaQuery, Radius, Spacing } from "../theme";
+import { Colour, MediaQuery, Radius, Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACES

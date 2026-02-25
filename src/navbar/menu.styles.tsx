@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { lineClampCss } from "../shared/styles";
-import { Border, Colour, Radius, Spacing } from "../theme";
+import { Border, Colour, Radius, Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 
 export const MobileWrapper = styled.ul`

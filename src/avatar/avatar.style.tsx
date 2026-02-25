@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour } from "../theme";
+import { Colour } from "../v3_theme";
 import { Typography } from "../typography";
 import { AvatarSize } from "./types";
 

@@ -1,4 +1,4 @@
-import { Font } from "src/theme";
+import { Font } from "src/v3_theme";
 import styled from "styled-components";
 
 // =============================================================================

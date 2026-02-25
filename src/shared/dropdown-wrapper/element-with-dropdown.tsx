@@ -26,7 +26,7 @@ import {
 import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
 import { useFloatingChild } from "../../overlay/use-floating-context";
-import { Breakpoint } from "../../theme";
+import { Breakpoint } from "../../v3_theme";
 import { DropdownAlignmentType } from "./types";
 
 export interface DropdownRenderProps {

@@ -1,8 +1,8 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, MediaQuery, Motion, Shadow } from "../theme";
-import { ThemeNavbar } from "../theme/components/theme-helper";
+import { Border, Colour, MediaQuery, Motion, Shadow } from "../v3_theme";
+import { ThemeNavbar } from "../v3_theme/components/theme-helper";
 
 // =============================================================================
 // STYLE INTERFACE

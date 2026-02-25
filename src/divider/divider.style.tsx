@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { Colour } from "../theme";
-import { StyledComponentProps } from "../theme/helpers";
-import { ThemeStyleProps } from "../theme/types";
+import { Colour } from "../v3_theme";
+import { StyledComponentProps } from "../v3_theme/helpers";
+import { ThemeStyleProps } from "../v3_theme/types";
 import { DividerLineStyleType } from "./types";
 
 // =============================================================================

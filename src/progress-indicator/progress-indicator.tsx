@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { VisuallyHidden } from "../shared/accessibility";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "../v3_theme";
 import {
     Content,
     Indicator,

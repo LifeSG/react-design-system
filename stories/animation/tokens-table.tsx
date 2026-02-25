@@ -1,4 +1,4 @@
-import { ThemeAnimation } from "src/theme/components/theme-helper";
+import { ThemeAnimation } from "src/v3_theme/components/theme-helper";
 import { TokenTable, TokenTableSectionProps } from "../storybook-common";
 
 const DATA: TokenTableSectionProps[] = [

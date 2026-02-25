@@ -1,7 +1,7 @@
-import { Font } from "src/theme";
-import { FontSet, FontSpecSet, ThemeSpec } from "src/theme/types";
+import { Font } from "src/v3_theme";
+import { FontSet, FontSpecSet, ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
-import { getFontSpec } from "../../../src/theme/font-spec/theme-helper";
+import { getFontSpec } from "../../../src/v3_theme/font-spec/theme-helper";
 
 interface FontCollectionProps {
     tokens: (keyof FontSet)[];

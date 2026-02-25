@@ -1,6 +1,6 @@
-import { MotionSet, ThemeSpec } from "src/theme/types";
+import { MotionSet, ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider, keyframes, useTheme } from "styled-components";
-import { getMotion } from "../../../src/theme/motion/theme-helper";
+import { getMotion } from "../../../src/v3_theme/motion/theme-helper";
 
 interface MotionDisplayProps {
     theme: ThemeSpec;

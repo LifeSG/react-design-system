@@ -9,7 +9,7 @@ import {
     useRef,
 } from "react";
 import { ThemeContext } from "styled-components";
-import { Colour } from "../theme";
+import { Colour } from "../v3_theme";
 import {
     SignatureCanvas,
     SignatureCanvasContainer,

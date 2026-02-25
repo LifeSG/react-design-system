@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Layout } from "../layout";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, Font, Motion, Radius, Spacing } from "../theme";
+import { Colour, Font, Motion, Radius, Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 
 // =============================================================================

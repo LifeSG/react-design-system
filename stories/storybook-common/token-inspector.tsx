@@ -1,12 +1,12 @@
-import { PrimitiveColourSet, SemanticColourSet } from "src/theme";
+import { PrimitiveColourSet, SemanticColourSet } from "src/v3_theme";
 import {
     ColourSpec as PrimitiveColourSpec,
     DarkColourSpec as PrimitiveDarkColourSpec,
-} from "src/theme/colour-primitive/theme-helper";
+} from "src/v3_theme/colour-primitive/theme-helper";
 import {
     ColourSpec as SemanticColourSpec,
     DarkColourSpec as SemanticDarkColourSpec,
-} from "src/theme/colour-semantic/theme-helper";
+} from "src/v3_theme/colour-semantic/theme-helper";
 import { DefaultTheme } from "styled-components";
 
 /**

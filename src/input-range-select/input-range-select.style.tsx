@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ClearButton } from "../input/input.style";
-import { Spacing } from "../theme";
+import { Spacing } from "../v3_theme";
 import { InputWrapper } from "../shared/input-wrapper";
 
 // =============================================================================

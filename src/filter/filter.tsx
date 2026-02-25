@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "../v3_theme";
 import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
 import { FilterItem } from "./filter-item";
 import { FilterItemPage } from "./filter-item-page";

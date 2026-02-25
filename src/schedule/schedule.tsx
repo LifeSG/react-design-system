@@ -13,7 +13,7 @@ import { ScheduleHeader } from "./schedule-header/schedule-header";
 
 import { ScheduleWeekView } from "./schedule-week-view/schedule-week-view";
 import { ScheduleDayView } from "./schedule-day-view/schedule-day-view";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "../v3_theme";
 import { isEmpty } from "lodash";
 import {
     Container,

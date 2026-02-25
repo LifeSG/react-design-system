@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Alert } from "../alert";
 import { Button } from "../button";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Colour, MediaQuery, Spacing } from "../theme";
+import { Colour, MediaQuery, Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 
 // =============================================================================

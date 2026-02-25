@@ -8,7 +8,7 @@ import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal"
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { InputSelect } from "../input-select";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "../v3_theme";
 import {
     EllipsisButton,
     EllipsisContainer,

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour } from "../../theme";
+import { Colour } from "../../v3_theme";
 
 export const Placeholder = styled.div`
     background-color: ${Colour["bg-stronger"]};

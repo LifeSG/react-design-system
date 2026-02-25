@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { SizeType, StyleType } from "./types";
-import { Border, Colour, Radius } from "../theme";
+import { Border, Colour, Radius } from "../v3_theme";
 interface StyleProps {
     $styleType: StyleType | "disabled";
     $sizeType: SizeType;

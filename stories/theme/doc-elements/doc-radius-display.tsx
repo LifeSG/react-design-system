@@ -1,5 +1,5 @@
-import { getRadius } from "src/theme/radius/theme-helper";
-import { RadiusSet, ThemeSpec } from "src/theme/types";
+import { getRadius } from "src/v3_theme/radius/theme-helper";
+import { RadiusSet, ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
 
 interface RadiusDisplayProps {

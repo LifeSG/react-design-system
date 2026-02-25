@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, MediaQuery, Radius, Spacing } from "../theme";
+import { Colour, MediaQuery, Radius, Spacing } from "../v3_theme";
 import { Typography } from "../typography/typography";
 
 // Units in rem

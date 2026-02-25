@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Button } from "../button";
 import { ButtonWithIcon } from "../button-with-icon";
-import { Colour, Font, Spacing } from "../theme";
+import { Colour, Font, Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACES

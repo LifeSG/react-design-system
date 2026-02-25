@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { Colour, Motion, Spacing } from "../theme";
-import { ThemeButton } from "../theme/components/theme-helper";
+import { Colour, Motion, Spacing } from "../v3_theme";
+import { ThemeButton } from "../v3_theme/components/theme-helper";
 import { SingpassButtonStyleType } from "./types";
 
 export type MainButtonSize = "default" | "small" | "large";

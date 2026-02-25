@@ -9,7 +9,7 @@ import {
     MediaQuery,
     Radius,
     Spacing,
-} from "../theme";
+} from "../v3_theme";
 
 export const HistogramSliderDropdownContainer = styled.div`
     overflow: hidden;

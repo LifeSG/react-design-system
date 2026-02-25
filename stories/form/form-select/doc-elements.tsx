@@ -1,5 +1,5 @@
 import { TickIcon } from "@lifesg/react-icons/tick";
-import { Colour } from "src/theme";
+import { Colour } from "src/v3_theme";
 import styled from "styled-components";
 
 export const ImageWrapper = styled.div`

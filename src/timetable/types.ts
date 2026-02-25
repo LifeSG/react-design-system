@@ -1,5 +1,5 @@
 import { PopoverV2TriggerType } from "../popover-v2";
-import { ThemeStyleProps } from "../theme/types";
+import { ThemeStyleProps } from "../v3_theme/types";
 
 export type TimeTableCellType =
     | "filled"

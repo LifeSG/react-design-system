@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "src/button";
 import { Checkbox } from "src/checkbox";
 import { ModalV2 } from "src/modal-v2";
-import { Colour, Font } from "src/theme";
+import { Colour, Font } from "src/v3_theme";
 import { Typography } from "src/typography";
 import styled from "styled-components";
 

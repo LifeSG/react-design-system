@@ -7,7 +7,7 @@ import {
     MediaQuery,
     Radius,
     Shadow,
-} from "../theme";
+} from "../v3_theme";
 
 // =============================================================================
 // STYLES INTERFACE

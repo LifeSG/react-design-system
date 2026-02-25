@@ -12,7 +12,7 @@ import {
     MediaQuery,
     Radius,
     Spacing,
-} from "../../theme";
+} from "../../v3_theme";
 import { ComponentLoadingSpinner } from "../component-loading-spinner";
 import { applyHtmlContentStyle } from "../html-content/html-content";
 import { BasicButton } from "../input-wrapper/input-wrapper";

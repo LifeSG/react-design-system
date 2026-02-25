@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Divider } from "src/divider";
-import { Colour } from "src/theme";
+import { Colour } from "src/v3_theme";
 import {
     FullWidthStoryDecorator,
     GridDecorator,

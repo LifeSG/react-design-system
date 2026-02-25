@@ -5,7 +5,7 @@ import { ThemeContext } from "styled-components";
 import { Button } from "../button";
 import { ButtonWithIcon } from "../button-with-icon";
 import { ProgressBar } from "../shared/progress-bar";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "../v3_theme";
 import { Typography } from "../typography";
 import { ESignatureCanvasRef } from "./e-signature-canvas";
 import {

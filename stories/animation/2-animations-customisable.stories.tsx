@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { LoadingDotsSpinner } from "src/animations";
-import { Colour, LifeSGTheme } from "src/theme";
+import { Colour, LifeSGTheme } from "src/v3_theme";
 import { AnimationDisplay, AnimationItem } from "./doc-elements";
 import { TokensTable } from "./tokens-table";
 

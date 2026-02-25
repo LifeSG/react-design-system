@@ -1,4 +1,4 @@
-import { ResourceScheme } from "../theme/types";
+import { ResourceScheme } from "../v3_theme/types";
 import { InternalDisclaimerLinks } from "./footer-helper";
 
 const BaseDisclaimerLinks: InternalDisclaimerLinks = {

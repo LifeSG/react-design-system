@@ -1,5 +1,5 @@
-import { getPrimitiveColour } from "src/theme/colour-primitive/theme-helper";
-import { PrimitiveColourSet, ThemeSpec } from "src/theme/types";
+import { getPrimitiveColour } from "src/v3_theme/colour-primitive/theme-helper";
+import { PrimitiveColourSet, ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
 
 interface PrimitiveColourPaletteProps {

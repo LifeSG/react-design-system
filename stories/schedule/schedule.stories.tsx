@@ -10,7 +10,7 @@ import styled from "styled-components";
 type Component = typeof Schedule;
 import { mockScheduleData } from "./mockScheduleData";
 import { ClockIcon } from "@lifesg/react-icons";
-import { Colour } from "src/theme";
+import { Colour } from "src/v3_theme";
 
 const meta: Meta<Component> = {
     title: "Selection and input/Schedule",

@@ -1,4 +1,4 @@
-import { ThemeStyleProps } from "src/theme";
+import { ThemeStyleProps } from "src/v3_theme";
 
 export interface TokenTableAttributeRowProps {
     name: string;

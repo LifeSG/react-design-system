@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Motion, Radius } from "../theme";
-import { MediaQuery } from "../theme";
+import { Border, Colour, Font, Motion, Radius } from "../v3_theme";
+import { MediaQuery } from "../v3_theme";
 
 export const Main = styled.button<{
     $selected?: boolean;

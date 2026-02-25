@@ -3,7 +3,7 @@ import { useContext, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "../v3_theme";
 import {
     AlertIcon,
     CallToActionContainer,

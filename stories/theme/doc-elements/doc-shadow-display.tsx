@@ -1,5 +1,5 @@
-import { getShadow } from "src/theme/shadow/theme-helper";
-import { ShadowSet, ThemeSpec } from "src/theme/types";
+import { getShadow } from "src/v3_theme/shadow/theme-helper";
+import { ShadowSet, ThemeSpec } from "src/v3_theme/types";
 import styled, { CSSProp, ThemeProvider, useTheme } from "styled-components";
 
 interface ShadowDisplayProps {

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, Spacing } from "../theme";
+import { Colour, Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 
 // =============================================================================

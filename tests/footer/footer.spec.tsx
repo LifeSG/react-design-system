@@ -4,7 +4,7 @@ import {
     FooterHelper,
     InternalDisclaimerLinks,
 } from "src/footer/footer-helper";
-import { ResourceScheme } from "src/theme";
+import { ResourceScheme } from "src/v3_theme";
 import { KeyOf } from "src/util/utility-types";
 import { ThemeProvider } from "styled-components";
 import { MOCK_THEME } from "../theme/mock-theme-data";

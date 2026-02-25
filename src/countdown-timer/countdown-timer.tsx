@@ -4,7 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { VisuallyHidden, inertValue } from "../shared/accessibility";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "../v3_theme";
 import { TimeHelper } from "../util/time-helper";
 import {
     Countdown,

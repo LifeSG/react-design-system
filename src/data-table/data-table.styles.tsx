@@ -9,7 +9,7 @@ import {
     Radius,
     Shadow,
     Spacing,
-} from "../theme";
+} from "../v3_theme";
 import { Typography } from "../typography";
 
 // =============================================================================

@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { ResizeCallbackParams } from "../shared/fade-wrapper";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "../v3_theme";
 import { Typography } from "../typography/typography";
 import { TabContext } from "./tab-context";
 import {

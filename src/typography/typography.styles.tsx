@@ -1,7 +1,7 @@
 import { ExternalIcon } from "@lifesg/react-icons/external";
 import styled, { css } from "styled-components";
-import { Colour } from "../theme";
-import { TypographySizeType } from "../theme/font/types";
+import { Colour } from "../v3_theme";
+import { TypographySizeType } from "../v3_theme/font/types";
 import { createTypographyStyles, getTextStyle } from "./helper";
 import { TypographyWeight } from "./types";
 

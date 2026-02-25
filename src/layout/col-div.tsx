@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ColDivProps } from "./types";
 import { StyledDiv } from "./col-div.style";
-import { BreakpointValues } from "../theme/breakpoint/theme-helper";
+import { BreakpointValues } from "../v3_theme/breakpoint/theme-helper";
 import { ThemeContext } from "styled-components";
 
 const Component = (

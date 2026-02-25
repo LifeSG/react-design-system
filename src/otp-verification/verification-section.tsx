@@ -2,7 +2,7 @@ import { useMediaQuery } from "react-responsive";
 import { useTheme } from "styled-components";
 import { FormErrorMessage } from "../form/form-label";
 import { InputGroup } from "../input-group";
-import { Breakpoint } from "../theme";
+import { Breakpoint } from "../v3_theme";
 import { Typography } from "../typography";
 import { VerificationSectionProps } from "./internal-types";
 import { EmailThumbnail, PhoneThumbnail } from "./thumbnail";

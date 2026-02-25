@@ -2,7 +2,14 @@ import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ImagePlaceholder } from "../shared/image-placeholder";
 import { InsetStyleProps } from "../shared/types";
-import { Border, Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
+import {
+    Border,
+    Colour,
+    MediaQuery,
+    Radius,
+    Shadow,
+    Spacing,
+} from "../v3_theme";
 import { Typography } from "../typography";
 import { StatefulImage } from "./stateful-image";
 

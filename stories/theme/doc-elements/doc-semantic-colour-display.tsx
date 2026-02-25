@@ -1,5 +1,5 @@
-import { getSemanticColour } from "src/theme/colour-semantic/theme-helper";
-import { SemanticColourSet, ThemeSpec } from "src/theme/types";
+import { getSemanticColour } from "src/v3_theme/colour-semantic/theme-helper";
+import { SemanticColourSet, ThemeSpec } from "src/v3_theme/types";
 import { ColourTokenInspector } from "stories/storybook-common";
 import styled, { useTheme } from "styled-components";
 import { ColourDisplay } from "./colour-display";
