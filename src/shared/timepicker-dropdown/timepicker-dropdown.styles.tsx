@@ -1,4 +1,3 @@
-import { animated } from "@react-spring/web";
 import styled from "styled-components";
 import { Button } from "../../button";
 import { Border, Colour, MediaQuery, Radius, Spacing } from "../../theme";
@@ -14,17 +13,13 @@ import { BasicInput, InputBox } from "../input-wrapper/input-wrapper";
 // -----------------------------------------------------------------------------
 // MAIN WRAPPER
 // -----------------------------------------------------------------------------
-export const AnimatedDiv = animated(styled.div`
-    position: absolute;
-    top: calc(3rem + ${Spacing["spacing-8"]});
-    left: 0;
+export const StyledDiv = styled.div`
     overflow: hidden;
-    z-index: 1;
 
     ${MediaQuery.MaxWidth.xxs} {
         max-width: 100%;
     }
-`);
+`;
 
 export const Container = styled.div`
     position: relative;
@@ -53,7 +48,7 @@ export const ControlSection = styled.div`
     display: flex;
     justify-content: flex-end;
     margin-top: ${Spacing["spacing-16"]};
-    gap: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
+    gap: ${Spacing["spacing-8"]};
 
     ${MediaQuery.MaxWidth.xxs} {
         flex-direction: column-reverse; // FIXME: this breaks tab focus

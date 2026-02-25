@@ -1,12 +1,10 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "@react-spring/web";
 import { StringHelper } from "../../util/string-helper";
 import { EPeriod, TimeFormat, TimeHelper } from "../../util/time-helper";
+import { inertValue } from "../accessibility";
 import {
-    AnimatedDiv,
     Container,
     ControlButton,
     ControlSection,
@@ -14,13 +12,13 @@ import {
     HourMinuteSection,
     InputContainer,
     InputSection,
+    StyledDiv,
     SwitchButton,
     TimeInput,
     TimeInputBox,
     TimePeriodSection,
     TimePeriodToggle,
 } from "./timepicker-dropdown.styles";
-import { inertValue } from "../accessibility";
 
 enum EInputButtonName {
     HOUR_UP = "hour-up",
@@ -67,7 +65,6 @@ export const TimepickerDropdown = ({
 
     const hourInputRef = useRef<HTMLInputElement>(null);
     const minuteInputRef = useRef<HTMLInputElement>(null);
-    const resizeDetector = useResizeDetector();
 
     // =============================================================================
     // EFFECTS
@@ -75,7 +72,7 @@ export const TimepickerDropdown = ({
     useEffect(() => {
         // Focus hour input on display of dropdown
         if (show && hourInputRef.current) {
-            hourInputRef.current.focus();
+            hourInputRef.current.focus({ preventScroll: true });
         }
 
         if (show) {
@@ -384,18 +381,9 @@ export const TimepickerDropdown = ({
         </TimePeriodSection>
     );
 
-    // React spring animation configuration
-    const styles = useSpring({
-        opacity: show ? 1 : 0, // prevent top border from staying too long
-        height: show
-            ? (resizeDetector.height ?? 0) + 32 + 2 // include vertical padding and border
-            : 0,
-    });
-
     return (
-        <AnimatedDiv data-testid="animated-dropdown-wrapper" style={styles}>
+        <StyledDiv>
             <Container
-                ref={resizeDetector.ref}
                 data-testid={getTestId("timepicker-dropdown")}
                 inert={inertValue(!show)}
             >
@@ -428,6 +416,6 @@ export const TimepickerDropdown = ({
                     </ControlButton>
                 </ControlSection>
             </Container>
-        </AnimatedDiv>
+        </StyledDiv>
     );
 };
