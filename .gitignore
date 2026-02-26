@@ -20,7 +20,3 @@ storybook-static
 
 # test artifacts
 junit.xml
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
