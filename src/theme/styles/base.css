@@ -1,0 +1,9 @@
+:root {
+    /* Radius */
+    --fds-radius-none: 0;
+    --fds-radius-xs: 2;
+    --fds-radius-sm: 4;
+    --fds-radius-md: 8;
+    --fds-radius-lg: 12;
+    --fds-radius-full: 9999;
+}
