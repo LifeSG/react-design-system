@@ -1,4 +1,4 @@
-import { Typography } from "../typography/typography";
+import { Typography } from "../typography";
 import { FeedbackRatingData } from "./feedback-rating-data";
 import { FeedbackRatingStarsContainer } from "./feedback-rating-stars-container";
 import {

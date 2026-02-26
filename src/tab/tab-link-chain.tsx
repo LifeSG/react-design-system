@@ -3,7 +3,7 @@ import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { ResizeCallbackParams } from "../shared/fade-wrapper";
 import { V3_Breakpoint } from "../v3_theme";
-import { Typography } from "../typography/typography";
+import { Typography } from "../typography";
 import { TabContext } from "./tab-context";
 import {
     BoldLabel,
