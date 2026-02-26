@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Input } from "../input";
 import { LabelAddonContainer } from "../input-group/input-group.style";
-import { Colour } from "../v3_theme";
+import { V3_Colour } from "../v3_theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -42,7 +42,7 @@ export const UnitNumberDivider = styled(Typography.BodyBL)<LabelStyleProps>`
     ${(props) => {
         if (props.$inactive) {
             return css`
-                color: ${Colour["text-disabled"]};
+                color: ${V3_Colour["text-disabled"]};
             `;
         }
     }}

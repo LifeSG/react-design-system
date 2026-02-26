@@ -3,7 +3,7 @@ import { MinusIcon } from "@lifesg/react-icons/minus";
 import { PlusIcon } from "@lifesg/react-icons/plus";
 import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Spacing } from "../v3_theme";
+import { V3_Border, V3_Colour, V3_Font, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -20,21 +20,22 @@ interface ExpandableChildStyleProps {
 const iconStyle = css`
     height: 1.125rem;
     width: 1.125rem;
-    color: ${Colour["icon-primary"]};
+    color: ${V3_Colour["icon-primary"]};
 `;
 
 export const Container = styled.div`
-    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    border-top: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour.border};
+    border-bottom: ${V3_Border["width-010"]} ${V3_Border.solid}
+        ${V3_Colour.border};
 `;
 
 export const ItemTitleDefault = styled(Typography.HeadingSM)`
-    color: ${Colour["text-primary"]};
+    color: ${V3_Colour["text-primary"]};
     margin-bottom: 0.5rem;
 `;
 
 export const ItemTitleSmall = styled(Typography.HeadingXS)`
-    color: ${Colour["text-primary"]};
+    color: ${V3_Colour["text-primary"]};
 `;
 
 export const ItemIcon = styled(ChevronRightIcon)`
@@ -49,14 +50,15 @@ export const ItemContainer = styled.a`
     min-height: 4rem;
 
     &:not(:last-of-type) {
-        border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+        border-bottom: ${V3_Border["width-010"]} ${V3_Border.solid}
+            ${V3_Colour.border};
     }
 
     &:hover {
         ${ItemTitleDefault},
         ${ItemTitleSmall},
         ${ItemIcon} {
-            color: ${Colour["text-hover"]};
+            color: ${V3_Colour["text-hover"]};
         }
     }
 `;
@@ -80,12 +82,13 @@ export const ExpandableChild = styled.div<ExpandableChildStyleProps>`
     ${(props) =>
         props.$border &&
         css`
-            border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+            border-top: ${V3_Border["width-010"]} ${V3_Border.solid}
+                ${V3_Colour.border};
         `}
 `;
 
 export const ToggleButtonLabel = styled(Typography.BodyMD)`
-    color: ${Colour["text-primary"]};
+    color: ${V3_Colour["text-primary"]};
     margin-right: 1rem;
 `;
 
@@ -105,13 +108,13 @@ export const ToggleButton = styled.button`
     border: none;
     background: none;
     cursor: pointer;
-    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    border-top: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour.border};
 
     &:hover {
         ${ToggleButtonLabel},
         ${ViewMoreIcon},
         ${ViewLessIcon} {
-            color: ${Colour["text-hover"]};
+            color: ${V3_Colour["text-hover"]};
             text-decoration: underline;
         }
     }
@@ -123,9 +126,9 @@ export const LoadingContainer = styled.div`
     align-items: center;
     gap: 0.5rem;
 
-    padding: ${Spacing["spacing-16"]} 0;
-    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    padding: ${V3_Spacing["spacing-16"]} 0;
+    border-top: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour.border};
 
-    color: ${Colour["text-disabled"]};
-    ${Font["body-md-semibold"]};
+    color: ${V3_Colour["text-disabled"]};
+    ${V3_Font["body-md-semibold"]};
 `;

@@ -4,7 +4,7 @@ import { Button } from "src/button";
 import { Divider } from "src/divider";
 import { IconButton } from "src/icon-button";
 import { PopoverTrigger } from "src/popover-v2";
-import { Breakpoint, Colour } from "src/v3_theme";
+import { V3_Breakpoint, V3_Colour } from "src/v3_theme";
 import { Typography } from "src/typography";
 import styled, { useTheme } from "styled-components";
 import { Avatar } from "../../src/avatar";
@@ -31,7 +31,7 @@ const DesktopCustomComponentWrapper = styled.div`
 `;
 
 const SubLabel = styled(Typography.BodySM)`
-    color: ${Colour["text-subtle"]};
+    color: ${V3_Colour["text-subtle"]};
 `;
 
 // =============================================================================
@@ -76,7 +76,7 @@ export const MobileCustomComponent = ({ onClick }: Props) => {
 
 export const NavbarAvatar = () => {
     const theme = useTheme();
-    const desktop = Breakpoint["xl-min"]({ theme });
+    const desktop = V3_Breakpoint["xl-min"]({ theme });
     const [isTablet, setIsTablet] = useState(window.innerWidth < desktop);
 
     useEffect(() => {

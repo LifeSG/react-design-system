@@ -1,14 +1,14 @@
 import { css } from "styled-components";
-import { FontSet, FontSpecSet } from "../types";
+import { V3_FontSet, V3_FontSpecSet } from "../types";
 import { getFontSpec } from "../font-spec/theme-helper";
-import { FontSetAdditionalOptions } from "./types";
+import { V3_FontSetAdditionalOptions } from "./types";
 
 export const generateFontCSS = (
-    fontSizeKey: keyof FontSpecSet,
-    fontWeightKey: keyof FontSpecSet,
-    lineHeightKey: keyof FontSpecSet,
-    letterSpacingKey: keyof FontSpecSet,
-    options?: FontSetAdditionalOptions
+    fontSizeKey: keyof V3_FontSpecSet,
+    fontWeightKey: keyof V3_FontSpecSet,
+    lineHeightKey: keyof V3_FontSpecSet,
+    letterSpacingKey: keyof V3_FontSpecSet,
+    options?: V3_FontSetAdditionalOptions
 ) => {
     const { disableLigatures } = options || {};
 
@@ -24,8 +24,8 @@ export const generateFontCSS = (
 };
 
 export const getFontSet = (
-    options: FontSetAdditionalOptions = {}
-): FontSet => ({
+    options: V3_FontSetAdditionalOptions = {}
+): V3_FontSet => ({
     "heading-xxl-light": generateFontCSS(
         "heading-size-xxl",
         "weight-light",

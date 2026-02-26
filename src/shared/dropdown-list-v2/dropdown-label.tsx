@@ -1,7 +1,7 @@
 import { useCallback, useContext, useMemo } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
-import { Font } from "../../v3_theme";
+import { V3_Font } from "../../v3_theme";
 import { StringHelper } from "../../util/string-helper";
 import { DropdownVariantType, LabelDisplayType } from "../dropdown-list/types";
 import {
@@ -42,9 +42,9 @@ export const DropdownLabel = ({
 
     const fontSize =
         variant === "small"
-            ? Font.Spec["body-size-md"]({ theme })
-            : Font.Spec["body-size-baseline"]({ theme });
-    const fontFamily = Font.Spec["font-family"]({ theme });
+            ? V3_Font.Spec["body-size-md"]({ theme })
+            : V3_Font.Spec["body-size-baseline"]({ theme });
+    const fontFamily = V3_Font.Spec["font-family"]({ theme });
     const { ref, width } = useResizeDetector();
 
     // =========================================================================

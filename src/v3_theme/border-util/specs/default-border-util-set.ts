@@ -1,7 +1,7 @@
-import { BorderUtilSet } from "../types";
+import { V3_BorderUtilSet } from "../types";
 import { dashedBorderStyle, solidBorderStyle } from "../utils";
 
-export const DefaultBorderUtilSet: BorderUtilSet = {
+export const V3_DefaultBorderUtilSet: V3_BorderUtilSet = {
     solid: solidBorderStyle,
     "dashed-default": dashedBorderStyle,
 };

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
-import { MediaQuery, Spacing } from "../v3_theme";
+import { V3_MediaQuery, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography/typography";
 
 // =============================================================================
@@ -9,10 +9,10 @@ import { Typography } from "../typography/typography";
 export const Wrapper = styled.ul`
     display: flex;
     list-style: none;
-    margin-left: ${Spacing["spacing-64"]};
+    margin-left: ${V3_Spacing["spacing-64"]};
     flex-shrink: 0;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         display: none;
     }
 `;
@@ -20,10 +20,10 @@ export const Wrapper = styled.ul`
 export const MobileWrapper = styled.ul`
     display: none;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         display: flex;
         list-style: none;
-        margin-left: ${Spacing["spacing-64"]};
+        margin-left: ${V3_Spacing["spacing-64"]};
         flex-shrink: 0;
     }
 `;
@@ -32,16 +32,16 @@ export const DrawerWrapper = styled.ul`
     display: none;
     list-style: none;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         display: flex;
         flex-direction: column;
-        margin-top: ${Spacing["spacing-40"]};
+        margin-top: ${V3_Spacing["spacing-40"]};
         width: max-content;
         min-width: 22rem;
         max-width: 24rem;
     }
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         width: 100%;
         max-width: unset;
         min-width: unset;
@@ -57,26 +57,26 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
     align-items: center;
 
     &:not(:last-of-type) {
-        margin-right: ${Spacing["spacing-16"]};
+        margin-right: ${V3_Spacing["spacing-16"]};
     }
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         width: 100%;
-        padding: 0 0 0 ${Spacing["spacing-16"]};
+        padding: 0 0 0 ${V3_Spacing["spacing-16"]};
         justify-content: center;
 
         &:not(:last-of-type) {
             margin-right: 0;
             margin-bottom: ${(props) =>
-                props.$mobile ? Spacing["spacing-16"] : "0"};
+                props.$mobile ? V3_Spacing["spacing-16"] : "0"};
         }
     }
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         ${(props) => {
             if (props.$mobile) {
                 return css`
-                    padding: 0 ${Spacing["spacing-16"]};
+                    padding: 0 ${V3_Spacing["spacing-16"]};
                 `;
             }
         }}
@@ -84,7 +84,7 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
 `;
 
 export const ActionButton = styled(Button.Small)`
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         width: 100%;
     }
 `;
@@ -95,15 +95,15 @@ export const ActionButton = styled(Button.Small)`
 export const DownloadAppWrapper = styled.div`
     display: none;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         display: flex;
         flex-direction: column;
-        margin-top: ${Spacing["spacing-40"]};
+        margin-top: ${V3_Spacing["spacing-40"]};
     }
 `;
 
 export const DownloadAppTitle = styled(Typography.BodyMD)`
-    margin-bottom: ${Spacing["spacing-8"]};
+    margin-bottom: ${V3_Spacing["spacing-8"]};
 `;
 
 export const DownloadAppImageLinkWrapper = styled.div`
@@ -112,7 +112,7 @@ export const DownloadAppImageLinkWrapper = styled.div`
 
 export const DownloadAppImageLink = styled.a`
     &:not(:last-child) {
-        margin-right: ${Spacing["spacing-16"]};
+        margin-right: ${V3_Spacing["spacing-16"]};
     }
 
     img {
@@ -121,13 +121,13 @@ export const DownloadAppImageLink = styled.a`
         object-fit: contain;
     }
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         img {
             max-width: 11rem;
         }
     }
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         img {
             max-width: 100%;
         }

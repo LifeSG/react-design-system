@@ -1,16 +1,16 @@
 import styled, { ThemeProvider } from "styled-components";
 import { render } from "@testing-library/react";
-import { ThemeSpec } from "../../src/v3_theme/types";
+import { V3_ThemeSpec } from "../../src/v3_theme/types";
 import "jest-styled-components";
-import { Font } from "../../src";
+import { V3_Font } from "../../src";
 import { MOCK_THEME } from "./mock-theme-data";
 
 const StyledFontTest = styled.div`
-    ${Font["heading-xxl-bold"]};
+    ${V3_Font["heading-xxl-bold"]};
 `;
 
 const StyledFontSpecSet = styled.div`
-    font-size: ${Font.Spec["heading-size-xs"]};
+    font-size: ${V3_Font.Spec["heading-size-xs"]};
 `;
 
 describe("StyledFontTests", () => {
@@ -36,7 +36,7 @@ describe("StyledFontTests", () => {
     });
 
     it("should apply correct font styles when overriding font token", () => {
-        const overrideTheme: ThemeSpec = {
+        const overrideTheme: V3_ThemeSpec = {
             ...MOCK_THEME,
             overrides: {
                 font: {

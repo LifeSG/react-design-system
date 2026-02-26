@@ -1,5 +1,5 @@
 import { ColProps } from "../layout";
-import { ThemeStyleProps } from "../v3_theme/types";
+import { V3_ThemeStyleProps } from "../v3_theme/types";
 import { V2_ColProps } from "../v2_layout/types";
 
 export type DividerLineStyleType = "solid" | "dashed";
@@ -16,5 +16,5 @@ export interface DividerProps
     /** The layout type. Values: "flex" | "grid" */
     layoutType?: DividerLayoutType | undefined;
     /** The line color */
-    color?: string | ((props: ThemeStyleProps) => string) | undefined;
+    color?: string | ((props: V3_ThemeStyleProps) => string) | undefined;
 }

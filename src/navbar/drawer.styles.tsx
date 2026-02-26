@@ -1,7 +1,13 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, MediaQuery, Motion, Shadow, Spacing } from "../v3_theme";
+import {
+    V3_Colour,
+    V3_MediaQuery,
+    V3_Motion,
+    V3_Shadow,
+    V3_Spacing,
+} from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -19,14 +25,14 @@ const VISIBILITY_STYLE = (show: boolean | undefined) => {
     if (show) {
         return css`
             right: 0;
-            transition: all 300ms ${Motion["ease-entrance"]};
+            transition: all 300ms ${V3_Motion["ease-entrance"]};
             transition-delay: 200ms;
         `;
     }
 
     return css`
         right: -100%;
-        transition: all 300ms ${Motion["ease-exit"]};
+        transition: all 300ms ${V3_Motion["ease-exit"]};
     `;
 };
 
@@ -36,7 +42,7 @@ const VISIBILITY_STYLE = (show: boolean | undefined) => {
 export const Wrapper = styled.div`
     display: none;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         display: flex;
     }
 `;
@@ -47,9 +53,9 @@ export const Container = styled.nav<StyleProps>`
     overflow-x: hidden;
     height: 100vh;
     display: block;
-    padding: 0 0 ${Spacing["spacing-16"]};
-    background-color: ${Colour.bg};
-    box-shadow: ${Shadow["xs-subtle"]};
+    padding: 0 0 ${V3_Spacing["spacing-16"]};
+    background-color: ${V3_Colour.bg};
+    box-shadow: ${V3_Shadow["xs-subtle"]};
     visibility: ${(props) => (props.$show ? "visible" : "hidden")};
     outline: none;
 
@@ -64,11 +70,11 @@ export const Container = styled.nav<StyleProps>`
         `;
     }}
 
-	${MediaQuery.MaxWidth.lg} {
+	${V3_MediaQuery.MaxWidth.lg} {
         width: 75%;
     }
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         width: 100%;
     }
 `;
@@ -86,8 +92,8 @@ export const TopBar = styled.div`
     justify-content: space-between;
     align-items: center;
     position: relative;
-    padding: ${Spacing["spacing-40"]} ${Spacing["spacing-20"]}
-        ${Spacing["spacing-32"]};
+    padding: ${V3_Spacing["spacing-40"]} ${V3_Spacing["spacing-20"]}
+        ${V3_Spacing["spacing-32"]};
 `;
 
 export const CloseIcon = styled(CrossIcon)`
@@ -97,12 +103,12 @@ export const CloseIcon = styled(CrossIcon)`
 
 export const CloseButton = styled(ClickableIcon)`
     position: absolute;
-    right: -${Spacing["spacing-4"]};
-    color: ${Colour["icon"]};
+    right: -${V3_Spacing["spacing-4"]};
+    color: ${V3_Colour["icon"]};
 
     &:active,
     &:focus {
-        color: ${Colour["icon-hover"]};
+        color: ${V3_Colour["icon-hover"]};
     }
 
     svg {

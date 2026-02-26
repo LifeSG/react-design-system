@@ -1,4 +1,4 @@
-export interface ThemeCollectionSpec<T, V> {
+export interface V3_ThemeCollectionSpec<T, V> {
     collections: T;
     defaultValue: V;
 }

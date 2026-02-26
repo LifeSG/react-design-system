@@ -1,13 +1,13 @@
 import { render } from "@testing-library/react";
 import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
-import { ThemeSpec } from "../../src/v3_theme/types";
-import { Spacing } from "../../src";
+import { V3_ThemeSpec } from "../../src/v3_theme/types";
+import { V3_Spacing } from "../../src";
 import { MOCK_THEME } from "./mock-theme-data";
 
 const SpacingTestComponent = styled.div`
-    margin: ${Spacing["spacing-16"]};
-    padding: ${Spacing["layout-lg"]};
+    margin: ${V3_Spacing["spacing-16"]};
+    padding: ${V3_Spacing["layout-lg"]};
 `;
 
 describe("Spacing Themeing Test", () => {
@@ -26,7 +26,7 @@ describe("Spacing Themeing Test", () => {
     });
 
     it("should apply correct spacing when overriding spacing token", () => {
-        const overrideTheme: ThemeSpec = {
+        const overrideTheme: V3_ThemeSpec = {
             ...MOCK_THEME,
             overrides: {
                 spacing: {
@@ -49,7 +49,7 @@ describe("Spacing Themeing Test", () => {
     });
 
     it("should apply correct spacing when overriding spacing token", () => {
-        const overrideTheme: ThemeSpec = {
+        const overrideTheme: V3_ThemeSpec = {
             ...MOCK_THEME,
             overrides: {
                 spacing: {

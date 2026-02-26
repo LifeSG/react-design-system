@@ -1,13 +1,13 @@
-import { Font } from "src/v3_theme";
-import { FontSet, FontSpecSet, ThemeSpec } from "src/v3_theme/types";
+import { V3_Font } from "src/v3_theme";
+import { V3_FontSet, V3_FontSpecSet, V3_ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
 import { getFontSpec } from "../../../src/v3_theme/font-spec/theme-helper";
 
 interface FontCollectionProps {
-    tokens: (keyof FontSet)[];
-    fontSizeToken: keyof FontSpecSet;
-    lineHeightToken: keyof FontSpecSet;
-    letterSpacingToken: keyof FontSpecSet;
+    tokens: (keyof V3_FontSet)[];
+    fontSizeToken: keyof V3_FontSpecSet;
+    lineHeightToken: keyof V3_FontSpecSet;
+    letterSpacingToken: keyof V3_FontSpecSet;
 }
 
 const FontCollection = ({
@@ -40,7 +40,7 @@ const FontCollection = ({
 };
 
 interface FontDisplayProps {
-    theme: ThemeSpec;
+    theme: V3_ThemeSpec;
 }
 
 export const FontDisplay = ({ theme }: FontDisplayProps) => {
@@ -49,7 +49,7 @@ export const FontDisplay = ({ theme }: FontDisplayProps) => {
             <Display>
                 <HeaderRow>
                     <div>Token</div>
-                    <div>Font size</div>
+                    <div>V3_Font size</div>
                     <div>Line height</div>
                     <div>Letter spacing</div>
                 </HeaderRow>
@@ -184,7 +184,7 @@ export const FontDisplay = ({ theme }: FontDisplayProps) => {
 // STYLE INTERFACE
 // =============================================================================
 interface TextPreviewProps {
-    $token: keyof FontSet;
+    $token: keyof V3_FontSet;
 }
 
 // =============================================================================
@@ -218,6 +218,6 @@ const HeaderRow = styled(Row)`
 `;
 
 const TextPreview = styled.div<TextPreviewProps>`
-    ${(props) => Font[props.$token](props)}
+    ${(props) => V3_Font[props.$token](props)}
     margin-right: 3rem;
 `;

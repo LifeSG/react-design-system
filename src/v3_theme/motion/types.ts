@@ -1,6 +1,6 @@
-import { MotionScheme } from "../types";
+import { V3_MotionScheme } from "../types";
 
-export type MotionSet = {
+export type V3_MotionSet = {
     "duration-150": string;
     "duration-250": string;
     "duration-350": string;
@@ -14,8 +14,8 @@ export type MotionSet = {
     "ease-exit": string;
 };
 
-export type MotionCollectionsMap = {
-    [key in MotionScheme]: MotionSet;
+export type V3_MotionCollectionsMap = {
+    [key in V3_MotionScheme]: V3_MotionSet;
 };
 
-export type MotionSetOptions = Partial<MotionSet>;
+export type V3_MotionSetOptions = Partial<V3_MotionSet>;

@@ -1,157 +1,157 @@
-import { ColourScheme } from "../types";
+import { V3_ColourScheme } from "../types";
 
-export type SemanticColourCollectionMap = {
-    [key in ColourScheme]: SemanticColourSet;
+export type V3_SemanticColourCollectionMap = {
+    [key in V3_ColourScheme]: V3_SemanticColourSet;
 };
 
-export type SemanticColourSetOptions = Partial<SemanticColourSet>;
+export type V3_SemanticColourSetOptions = Partial<V3_SemanticColourSet>;
 
-type SemanticColourValue = string | ((props: any) => string);
+type V3_SemanticColourValue = string | ((props: any) => string);
 
-export type SemanticColourSet = {
+export type V3_SemanticColourSet = {
     // text
-    text: SemanticColourValue;
-    "text-subtle": SemanticColourValue;
-    "text-subtler": SemanticColourValue;
-    "text-subtlest": SemanticColourValue;
-    "text-primary": SemanticColourValue;
-    "text-primary-strongest": SemanticColourValue;
+    text: V3_SemanticColourValue;
+    "text-subtle": V3_SemanticColourValue;
+    "text-subtler": V3_SemanticColourValue;
+    "text-subtlest": V3_SemanticColourValue;
+    "text-primary": V3_SemanticColourValue;
+    "text-primary-strongest": V3_SemanticColourValue;
 
-    "text-hover": SemanticColourValue;
-    "text-selected": SemanticColourValue;
-    "text-selected-hover": SemanticColourValue;
+    "text-hover": V3_SemanticColourValue;
+    "text-selected": V3_SemanticColourValue;
+    "text-selected-hover": V3_SemanticColourValue;
 
-    "text-disabled": SemanticColourValue;
-    "text-disabled-subtle": SemanticColourValue;
-    "text-disabled-subtlest": SemanticColourValue;
-    "text-selected-disabled": SemanticColourValue;
+    "text-disabled": V3_SemanticColourValue;
+    "text-disabled-subtle": V3_SemanticColourValue;
+    "text-disabled-subtlest": V3_SemanticColourValue;
+    "text-selected-disabled": V3_SemanticColourValue;
 
-    "text-success": SemanticColourValue;
-    "text-warning": SemanticColourValue;
-    "text-error": SemanticColourValue;
-    "text-info": SemanticColourValue;
-    "text-inverse": SemanticColourValue;
+    "text-success": V3_SemanticColourValue;
+    "text-warning": V3_SemanticColourValue;
+    "text-error": V3_SemanticColourValue;
+    "text-info": V3_SemanticColourValue;
+    "text-inverse": V3_SemanticColourValue;
 
     // icon
-    icon: SemanticColourValue;
-    "icon-subtle": SemanticColourValue;
-    "icon-strongest": SemanticColourValue;
-    "icon-primary": SemanticColourValue;
-    "icon-primary-subtle": SemanticColourValue;
-    "icon-primary-subtlest": SemanticColourValue;
+    icon: V3_SemanticColourValue;
+    "icon-subtle": V3_SemanticColourValue;
+    "icon-strongest": V3_SemanticColourValue;
+    "icon-primary": V3_SemanticColourValue;
+    "icon-primary-subtle": V3_SemanticColourValue;
+    "icon-primary-subtlest": V3_SemanticColourValue;
 
-    "icon-hover": SemanticColourValue;
-    "icon-selected": SemanticColourValue;
-    "icon-selected-hover": SemanticColourValue;
+    "icon-hover": V3_SemanticColourValue;
+    "icon-selected": V3_SemanticColourValue;
+    "icon-selected-hover": V3_SemanticColourValue;
 
-    "icon-disabled": SemanticColourValue;
-    "icon-disabled-subtle": SemanticColourValue;
-    "icon-selected-disabled": SemanticColourValue;
+    "icon-disabled": V3_SemanticColourValue;
+    "icon-disabled-subtle": V3_SemanticColourValue;
+    "icon-selected-disabled": V3_SemanticColourValue;
 
-    "icon-success": SemanticColourValue;
-    "icon-warning": SemanticColourValue;
-    "icon-error": SemanticColourValue;
-    "icon-error-strong": SemanticColourValue;
-    "icon-info": SemanticColourValue;
-    "icon-inverse": SemanticColourValue;
-    "icon-primary-inverse": SemanticColourValue;
+    "icon-success": V3_SemanticColourValue;
+    "icon-warning": V3_SemanticColourValue;
+    "icon-error": V3_SemanticColourValue;
+    "icon-error-strong": V3_SemanticColourValue;
+    "icon-info": V3_SemanticColourValue;
+    "icon-inverse": V3_SemanticColourValue;
+    "icon-primary-inverse": V3_SemanticColourValue;
 
     // border
-    border: SemanticColourValue;
-    "border-strong": SemanticColourValue;
-    "border-stronger": SemanticColourValue;
-    "border-primary": SemanticColourValue;
-    "border-primary-subtle": SemanticColourValue;
+    border: V3_SemanticColourValue;
+    "border-strong": V3_SemanticColourValue;
+    "border-stronger": V3_SemanticColourValue;
+    "border-primary": V3_SemanticColourValue;
+    "border-primary-subtle": V3_SemanticColourValue;
 
-    "border-hover": SemanticColourValue;
-    "border-hover-strong": SemanticColourValue;
+    "border-hover": V3_SemanticColourValue;
+    "border-hover-strong": V3_SemanticColourValue;
 
-    "border-selected": SemanticColourValue;
-    "border-selected-subtle": SemanticColourValue;
-    "border-selected-subtlest": SemanticColourValue;
-    "border-selected-hover": SemanticColourValue;
+    "border-selected": V3_SemanticColourValue;
+    "border-selected-subtle": V3_SemanticColourValue;
+    "border-selected-subtlest": V3_SemanticColourValue;
+    "border-selected-hover": V3_SemanticColourValue;
 
-    "border-focus": SemanticColourValue;
-    "border-focus-strong": SemanticColourValue;
+    "border-focus": V3_SemanticColourValue;
+    "border-focus-strong": V3_SemanticColourValue;
 
-    "border-disabled": SemanticColourValue;
-    "border-selected-disabled": SemanticColourValue;
+    "border-disabled": V3_SemanticColourValue;
+    "border-selected-disabled": V3_SemanticColourValue;
 
-    "border-success": SemanticColourValue;
-    "border-warning": SemanticColourValue;
-    "border-error": SemanticColourValue;
-    "border-error-focus": SemanticColourValue;
-    "border-error-focus-strong": SemanticColourValue;
-    "border-error-strong": SemanticColourValue;
-    "border-info": SemanticColourValue;
+    "border-success": V3_SemanticColourValue;
+    "border-warning": V3_SemanticColourValue;
+    "border-error": V3_SemanticColourValue;
+    "border-error-focus": V3_SemanticColourValue;
+    "border-error-focus-strong": V3_SemanticColourValue;
+    "border-error-strong": V3_SemanticColourValue;
+    "border-info": V3_SemanticColourValue;
 
     // background
-    bg: SemanticColourValue;
-    "bg-strong": SemanticColourValue;
-    "bg-stronger": SemanticColourValue;
-    "bg-strongest": SemanticColourValue;
+    bg: V3_SemanticColourValue;
+    "bg-strong": V3_SemanticColourValue;
+    "bg-stronger": V3_SemanticColourValue;
+    "bg-strongest": V3_SemanticColourValue;
 
-    "bg-hover": SemanticColourValue;
-    "bg-hover-strong": SemanticColourValue;
-    "bg-hover-subtle": SemanticColourValue;
-    "bg-hover-neutral": SemanticColourValue;
-    "bg-hover-neutral-strong": SemanticColourValue;
+    "bg-hover": V3_SemanticColourValue;
+    "bg-hover-strong": V3_SemanticColourValue;
+    "bg-hover-subtle": V3_SemanticColourValue;
+    "bg-hover-neutral": V3_SemanticColourValue;
+    "bg-hover-neutral-strong": V3_SemanticColourValue;
 
-    "bg-selected": SemanticColourValue;
-    "bg-selected-hover": SemanticColourValue;
-    "bg-selected-strong": SemanticColourValue;
-    "bg-selected-stronger": SemanticColourValue;
-    "bg-selected-strongest": SemanticColourValue;
-    "bg-selected-strongest-hover": SemanticColourValue;
+    "bg-selected": V3_SemanticColourValue;
+    "bg-selected-hover": V3_SemanticColourValue;
+    "bg-selected-strong": V3_SemanticColourValue;
+    "bg-selected-stronger": V3_SemanticColourValue;
+    "bg-selected-strongest": V3_SemanticColourValue;
+    "bg-selected-strongest-hover": V3_SemanticColourValue;
 
-    "bg-disabled": SemanticColourValue;
-    "bg-selected-disabled": SemanticColourValue;
-    "bg-selected-stronger-disabled": SemanticColourValue;
+    "bg-disabled": V3_SemanticColourValue;
+    "bg-selected-disabled": V3_SemanticColourValue;
+    "bg-selected-stronger-disabled": V3_SemanticColourValue;
 
-    "bg-success": SemanticColourValue;
-    "bg-success-hover": SemanticColourValue;
-    "bg-success-strong": SemanticColourValue;
-    "bg-success-strong-hover": SemanticColourValue;
-    "bg-warning": SemanticColourValue;
-    "bg-warning-hover": SemanticColourValue;
-    "bg-warning-strong": SemanticColourValue;
-    "bg-warning-strong-hover": SemanticColourValue;
-    "bg-info": SemanticColourValue;
-    "bg-info-hover": SemanticColourValue;
-    "bg-info-strong": SemanticColourValue;
-    "bg-info-strong-hover": SemanticColourValue;
-    "bg-error": SemanticColourValue;
-    "bg-error-hover": SemanticColourValue;
-    "bg-error-strong": SemanticColourValue;
-    "bg-error-strong-hover": SemanticColourValue;
+    "bg-success": V3_SemanticColourValue;
+    "bg-success-hover": V3_SemanticColourValue;
+    "bg-success-strong": V3_SemanticColourValue;
+    "bg-success-strong-hover": V3_SemanticColourValue;
+    "bg-warning": V3_SemanticColourValue;
+    "bg-warning-hover": V3_SemanticColourValue;
+    "bg-warning-strong": V3_SemanticColourValue;
+    "bg-warning-strong-hover": V3_SemanticColourValue;
+    "bg-info": V3_SemanticColourValue;
+    "bg-info-hover": V3_SemanticColourValue;
+    "bg-info-strong": V3_SemanticColourValue;
+    "bg-info-strong-hover": V3_SemanticColourValue;
+    "bg-error": V3_SemanticColourValue;
+    "bg-error-hover": V3_SemanticColourValue;
+    "bg-error-strong": V3_SemanticColourValue;
+    "bg-error-strong-hover": V3_SemanticColourValue;
 
-    "bg-inverse": SemanticColourValue;
-    "bg-inverse-subtle": SemanticColourValue;
-    "bg-inverse-subtler": SemanticColourValue;
-    "bg-inverse-subtlest": SemanticColourValue;
-    "bg-inverse-hover": SemanticColourValue;
+    "bg-inverse": V3_SemanticColourValue;
+    "bg-inverse-subtle": V3_SemanticColourValue;
+    "bg-inverse-subtler": V3_SemanticColourValue;
+    "bg-inverse-subtlest": V3_SemanticColourValue;
+    "bg-inverse-hover": V3_SemanticColourValue;
 
-    "bg-primary": SemanticColourValue;
-    "bg-primary-subtle": SemanticColourValue;
-    "bg-primary-subtler": SemanticColourValue;
-    "bg-primary-subtlest": SemanticColourValue;
-    "bg-available": SemanticColourValue;
+    "bg-primary": V3_SemanticColourValue;
+    "bg-primary-subtle": V3_SemanticColourValue;
+    "bg-primary-subtler": V3_SemanticColourValue;
+    "bg-primary-subtlest": V3_SemanticColourValue;
+    "bg-available": V3_SemanticColourValue;
 
-    "bg-primary-hover": SemanticColourValue;
-    "bg-primary-subtlest-hover": SemanticColourValue;
-    "bg-primary-subtlest-selected": SemanticColourValue;
+    "bg-primary-hover": V3_SemanticColourValue;
+    "bg-primary-subtlest-hover": V3_SemanticColourValue;
+    "bg-primary-subtlest-selected": V3_SemanticColourValue;
 
     // overlay
-    "overlay-strong": SemanticColourValue;
-    "overlay-subtle": SemanticColourValue;
+    "overlay-strong": V3_SemanticColourValue;
+    "overlay-subtle": V3_SemanticColourValue;
 
     // hyperlink
-    hyperlink: SemanticColourValue;
-    "hyperlink-hover": SemanticColourValue;
-    "hyperlink-visited": SemanticColourValue;
-    "hyperlink-inverse": SemanticColourValue;
+    hyperlink: V3_SemanticColourValue;
+    "hyperlink-hover": V3_SemanticColourValue;
+    "hyperlink-visited": V3_SemanticColourValue;
+    "hyperlink-inverse": V3_SemanticColourValue;
 
     // focus ring
-    "focus-ring": SemanticColourValue;
-    "focus-ring-inverse": SemanticColourValue;
+    "focus-ring": V3_SemanticColourValue;
+    "focus-ring-inverse": V3_SemanticColourValue;
 };

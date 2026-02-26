@@ -7,7 +7,7 @@ import React, { useMemo, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
-import { Colour } from "../v3_theme";
+import { V3_Colour } from "../v3_theme";
 import { TimeSlot } from "../time-slot-bar/types";
 import { DateHelper } from "../util";
 import { CalendarHelper } from "../util/calendar-helper";
@@ -199,7 +199,7 @@ export const TimeSlotBarWeekDays = ({
             endTime: "",
             clickable: false,
             styleAttributes: {
-                backgroundColor: Colour["bg-stronger"],
+                backgroundColor: V3_Colour["bg-stronger"],
             },
             cellLength,
         };

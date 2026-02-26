@@ -3,7 +3,7 @@ import {
     BasicInput,
     InputWrapper,
 } from "../shared/input-wrapper/input-wrapper";
-import { Spacing } from "../v3_theme";
+import { V3_Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLING
@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
 
 export const TimeContainer = styled(InputWrapper)`
     height: 3rem;
-    gap: ${Spacing["spacing-8"]};
+    gap: ${V3_Spacing["spacing-8"]};
 `;
 
 export const SelectorInput = styled(BasicInput)`

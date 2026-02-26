@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { Border, Colour, Font, Radius, Spacing } from "../../v3_theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_Radius,
+    V3_Spacing,
+} from "../../v3_theme";
 import { Typography } from "../../typography";
 import { HEADER_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
@@ -19,9 +25,9 @@ export const LoadingContainer = styled.div`
     align-items: center;
     min-height: 25rem;
     height: 100%;
-    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
-    border-radius: ${Radius["md"]};
-    background: ${Colour["bg"]};
+    border: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour["border"]};
+    border-radius: ${V3_Radius["md"]};
+    background: ${V3_Colour["bg"]};
 `;
 
 export const HeaderContainer = styled.div`
@@ -48,12 +54,12 @@ export const ServiceHeader = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    padding: ${Spacing["spacing-24"]};
-    color: ${Colour["text-primary"]};
+    padding: ${V3_Spacing["spacing-24"]};
+    color: ${V3_Colour["text-primary"]};
 `;
 
 export const Description = styled(Typography.BodyMD)`
-    font-weight: ${Font.Spec["weight-semibold"]};
+    font-weight: ${V3_Font.Spec["weight-semibold"]};
 `;
 
 export const BodyContainer = styled.div`
@@ -63,7 +69,7 @@ export const BodyContainer = styled.div`
     overflow-y: auto;
     flex: 1;
     height: 100%;
-    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    border: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour["border"]};
 `;
 export const SlotGrid = styled.div`
     grid-column-start: 2;
@@ -77,7 +83,7 @@ export const Timeline = styled.div<TimelineStyleProps>`
     position: absolute;
     width: 100%;
     height: 2px;
-    background: ${Colour["icon-primary"]};
+    background: ${V3_Colour["icon-primary"]};
     top: ${(props) => props.$top}px;
     z-index: 2;
 
@@ -86,10 +92,10 @@ export const Timeline = styled.div<TimelineStyleProps>`
         position: absolute;
         left: -6px;
         top: -6px;
-        width: ${Spacing["spacing-12"]};
-        height: ${Spacing["spacing-12"]};
-        border-radius: ${Radius["full"]};
-        background: ${Colour["icon-primary"]};
+        width: ${V3_Spacing["spacing-12"]};
+        height: ${V3_Spacing["spacing-12"]};
+        border-radius: ${V3_Radius["full"]};
+        background: ${V3_Colour["icon-primary"]};
         z-index: 1;
     }
 `;
@@ -98,7 +104,8 @@ export const SlotColumn = styled.div`
     display: flex;
     position: relative;
     flex-direction: column;
-    border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    border-right: ${V3_Border["width-010"]} ${V3_Border.solid}
+        ${V3_Colour["border"]};
     &:last-child {
         border-right: none;
     }

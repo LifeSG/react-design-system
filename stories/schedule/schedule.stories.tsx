@@ -10,7 +10,7 @@ import styled from "styled-components";
 type Component = typeof Schedule;
 import { mockScheduleData } from "./mockScheduleData";
 import { ClockIcon } from "@lifesg/react-icons";
-import { Colour } from "src/v3_theme";
+import { V3_Colour } from "src/v3_theme";
 
 const meta: Meta<Component> = {
     title: "Selection and input/Schedule",
@@ -65,7 +65,7 @@ const PopoverContent = styled.div`
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    color: ${Colour["bg-primary"]};
+    color: ${V3_Colour["bg-primary"]};
 `;
 
 export const Default: StoryObj<Component> = {

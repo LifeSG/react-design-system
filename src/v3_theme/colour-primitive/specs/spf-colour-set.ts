@@ -1,6 +1,6 @@
-import { PrimitiveColourSet } from "../../types";
+import { V3_PrimitiveColourSet } from "../../types";
 
-export const SPFColourSet: PrimitiveColourSet = {
+export const V3_SPFColourSet: V3_PrimitiveColourSet = {
     "brand-10": "#00143A",
     "brand-20": "#00205B",
     "brand-30": "#153368",

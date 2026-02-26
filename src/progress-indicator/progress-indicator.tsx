@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { VisuallyHidden } from "../shared/accessibility";
-import { Breakpoint } from "../v3_theme";
+import { V3_Breakpoint } from "../v3_theme";
 import {
     Content,
     Indicator,
@@ -26,7 +26,7 @@ export const ProgressIndicator = <T,>({
     // CONST, STATE, REFS
     // =============================================================================
     const theme = useContext(ThemeContext);
-    const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
+    const tabletBreakpoint = V3_Breakpoint["lg-max"]({ theme });
     const isTablet = useMediaQuery({
         maxWidth: tabletBreakpoint,
     });

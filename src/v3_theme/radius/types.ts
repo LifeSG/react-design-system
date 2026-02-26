@@ -1,6 +1,6 @@
-import { RadiusScheme } from "../types";
+import { V3_RadiusScheme } from "../types";
 
-export type RadiusSet = {
+export type V3_RadiusSet = {
     none: number;
     xs: number;
     sm: number;
@@ -9,8 +9,8 @@ export type RadiusSet = {
     full: number;
 };
 
-export type RadiusSetOptions = Partial<RadiusSet>;
+export type V3_RadiusSetOptions = Partial<V3_RadiusSet>;
 
-export type RadiusCollectionsMap = {
-    [key in RadiusScheme]: RadiusSet;
+export type V3_RadiusCollectionsMap = {
+    [key in V3_RadiusScheme]: V3_RadiusSet;
 };

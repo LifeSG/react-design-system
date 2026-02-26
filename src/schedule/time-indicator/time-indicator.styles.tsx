@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { Border, Colour, Font, Radius, Spacing } from "../../v3_theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_Radius,
+    V3_Spacing,
+} from "../../v3_theme";
 import { Typography } from "../../typography";
 import { CELL_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
@@ -23,8 +29,9 @@ export const TimeColumn = styled.div`
     display: flex;
     flex-direction: column;
     min-width: ${TIME_INDICATOR_WIDTH}px;
-    background: ${Colour["bg"]};
-    border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    background: ${V3_Colour["bg"]};
+    border-right: ${V3_Border["width-010"]} ${V3_Border.solid}
+        ${V3_Colour["border"]};
 `;
 
 export const TimeLabel = styled(Typography.BodySM)`
@@ -32,9 +39,9 @@ export const TimeLabel = styled(Typography.BodySM)`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    color: ${Colour["text-subtler"]};
-    padding-right: ${Spacing["spacing-8"]};
-    font-weight: ${Font.Spec["weight-bold"]};
+    color: ${V3_Colour["text-subtler"]};
+    padding-right: ${V3_Spacing["spacing-8"]};
+    font-weight: ${V3_Font.Spec["weight-bold"]};
     position: relative;
 `;
 export const HourDisplay = styled.span`
@@ -46,10 +53,10 @@ export const TimelineCircle = styled.div<TimelineCircleStyleProps>`
     position: absolute;
     right: -6px;
     top: ${(props) => props.$top - 6}px;
-    width: ${Spacing["spacing-12"]};
-    height: ${Spacing["spacing-12"]};
-    border-radius: ${Radius["full"]};
-    background: ${Colour["icon-primary"]};
+    width: ${V3_Spacing["spacing-12"]};
+    height: ${V3_Spacing["spacing-12"]};
+    border-radius: ${V3_Radius["full"]};
+    background: ${V3_Colour["icon-primary"]};
     z-index: 4;
     display: ${(props) => (props.$isWeekView ? "none" : "block")};
 `;

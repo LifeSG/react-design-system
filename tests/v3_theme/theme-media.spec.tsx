@@ -1,5 +1,5 @@
 import styled, { ThemeProvider } from "styled-components";
-import { MediaQuery } from "../../src/v3_theme/breakpoint/media-query-helper";
+import { V3_MediaQuery } from "../../src/v3_theme/breakpoint/media-query-helper";
 import { render } from "@testing-library/react";
 import "jest-styled-components";
 import { MOCK_THEME } from "./mock-theme-data";
@@ -7,11 +7,11 @@ import { MOCK_THEME } from "./mock-theme-data";
 const StyledComponentTest = styled.div`
     background-color: red;
 
-    ${MediaQuery.MinWidth.xs} {
+    ${V3_MediaQuery.MinWidth.xs} {
         background-color: yellow;
     }
 
-    ${MediaQuery.MaxWidth.xs} {
+    ${V3_MediaQuery.MaxWidth.xs} {
         background-color: purple;
     }
 `;

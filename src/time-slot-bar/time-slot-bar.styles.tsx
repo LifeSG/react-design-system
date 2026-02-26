@@ -2,8 +2,8 @@ import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, Shadow } from "../v3_theme";
-import { ThemeStyleProps } from "../v3_theme/types";
+import { V3_Border, V3_Colour, V3_Shadow } from "../v3_theme";
+import { V3_ThemeStyleProps } from "../v3_theme/types";
 import { Typography } from "../typography";
 import { Direction, SlotStyle, TimeSlotBarVariant } from "./types";
 
@@ -47,8 +47,8 @@ export interface TimeSlotStyleProps {
     $width?: number;
     $left?: number;
     $styleType: SlotStyle;
-    $bgColor: string | ((props: ThemeStyleProps) => string);
-    $bgColor2?: string | ((props: ThemeStyleProps) => string);
+    $bgColor: string | ((props: V3_ThemeStyleProps) => string);
+    $bgColor2?: string | ((props: V3_ThemeStyleProps) => string);
     $clickable?: boolean;
 }
 
@@ -75,8 +75,8 @@ export const ArrowButton = styled(ClickableIcon)<ArrowStyleProps>`
     z-index: 2;
     position: absolute;
     bottom: ${({ $variant }) => ($variant === "default" ? "0.25rem" : "0rem")};
-    background-color: ${Colour.bg};
-    box-shadow: ${Shadow["md-strong"]};
+    background-color: ${V3_Colour.bg};
+    box-shadow: ${V3_Shadow["md-strong"]};
     border-radius: 100%;
     padding: 0.5rem;
     width: 2rem;
@@ -105,12 +105,12 @@ export const ArrowButton = styled(ClickableIcon)<ArrowStyleProps>`
 export const ArrowIconRight = styled(ChevronRightIcon)`
     width: 1rem;
     height: 1rem;
-    color: ${Colour["icon-primary"]};
+    color: ${V3_Colour["icon-primary"]};
 `;
 
 export const ArrowIconLeft = styled(ChevronLeftIcon)`
     font-size: 1rem;
-    color: ${Colour["icon-primary"]};
+    color: ${V3_Colour["icon-primary"]};
 `;
 
 export const TimeSlotBarContainer = styled.div<{
@@ -138,8 +138,8 @@ export const TimeMarker = styled.div<TimeMarkerStyleProps>`
     display: inline-block;
     width: ${({ $variant }) => `${getCellWidth($variant)}px`};
     position: relative;
-    border-left: ${Border["width-010"]} ${Border.solid}
-        ${Colour["border-stronger"]};
+    border-left: ${V3_Border["width-010"]} ${V3_Border.solid}
+        ${V3_Colour["border-stronger"]};
     ${(props) => {
         let markerHeight = 0;
 
@@ -162,7 +162,7 @@ export const TimeMarker = styled.div<TimeMarkerStyleProps>`
 `;
 
 export const TimeLabel = styled(Typography.BodyXS)`
-    color: ${Colour["text-subtle"]};
+    color: ${V3_Colour["text-subtle"]};
     position: absolute;
     bottom: 10%;
     left: 10%;
@@ -196,10 +196,10 @@ export const TimeSlot = styled.div<TimeSlotStyleProps>`
         css`
             background: repeating-linear-gradient(
                 135deg,
-                ${props.$bgColor2 || Colour["bg-strongest"]} 0px,
-                ${props.$bgColor2 || Colour["bg-strongest"]} 10px,
-                ${props.$bgColor || Colour["bg-stronger"]} 10px,
-                ${props.$bgColor || Colour["bg-stronger"]} 20px
+                ${props.$bgColor2 || V3_Colour["bg-strongest"]} 0px,
+                ${props.$bgColor2 || V3_Colour["bg-strongest"]} 10px,
+                ${props.$bgColor || V3_Colour["bg-stronger"]} 10px,
+                ${props.$bgColor || V3_Colour["bg-stronger"]} 20px
             );
         `}
 `;
@@ -209,12 +209,12 @@ export const TimeSlotBorder = styled.div<{ $variant: TimeSlotBarVariant }>`
     top: ${MAX_LINE_HEIGHT}rem;
     height: ${({ $variant }) => `${getCellHeight($variant)}px`};
     z-index: 1;
-    border-right: ${Border["width-010"]} ${Border.solid}
-        ${Colour["border-stronger"]};
+    border-right: ${V3_Border["width-010"]} ${V3_Border.solid}
+        ${V3_Colour["border-stronger"]};
 `;
 
 export const CellText = styled(Typography.BodyXS)<CellTextStyleProps>`
-    color: ${(props) => props.$color || Colour.text(props)};
+    color: ${(props) => props.$color || V3_Colour.text(props)};
     position: absolute;
     bottom: 0;
     padding-left: 4px;

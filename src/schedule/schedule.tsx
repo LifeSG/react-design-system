@@ -13,7 +13,7 @@ import { ScheduleHeader } from "./schedule-header/schedule-header";
 
 import { ScheduleWeekView } from "./schedule-week-view/schedule-week-view";
 import { ScheduleDayView } from "./schedule-day-view/schedule-day-view";
-import { Breakpoint } from "../v3_theme";
+import { V3_Breakpoint } from "../v3_theme";
 import { isEmpty } from "lodash";
 import {
     Container,
@@ -51,7 +51,7 @@ export const Schedule = ({
     // =============================================================================
     const [currentView, setCurrentView] = useState<"day" | "week">(view);
     const theme = useContext(ThemeContext);
-    const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
+    const tabletBreakpoint = V3_Breakpoint["lg-max"]({ theme });
     const isSmallScreen = useMediaQuery({
         maxWidth: tabletBreakpoint,
     });

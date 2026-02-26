@@ -1,8 +1,14 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, MediaQuery, Motion, Shadow } from "../v3_theme";
-import { ThemeNavbar } from "../v3_theme/components/theme-helper";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_MediaQuery,
+    V3_Motion,
+    V3_Shadow,
+} from "../v3_theme";
+import { V3_ThemeNavbar } from "../v3_theme/components/theme-helper";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -18,7 +24,7 @@ interface StyleProps {
 // =============================================================================
 export const Wrapper = styled.div<StyleProps>`
     position: ${(props) => (props.$fixed ? "sticky" : "relative")};
-    background-color: ${ThemeNavbar["navbar-colour-bg"]};
+    background-color: ${V3_ThemeNavbar["navbar-colour-bg"]};
     z-index: 30;
     top: 0;
     left: 0;
@@ -27,11 +33,11 @@ export const Wrapper = styled.div<StyleProps>`
     ${(props) => {
         return props.theme?.colourMode === "dark"
             ? css`
-                  border-bottom: ${Border["width-010"]} ${Border["solid"]}
-                      ${Colour["border"]};
+                  border-bottom: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+                      ${V3_Colour["border"]};
               `
             : css`
-                  box-shadow: ${Shadow["xs-subtle"]};
+                  box-shadow: ${V3_Shadow["xs-subtle"]};
               `;
     }}
 `;
@@ -39,8 +45,8 @@ export const Wrapper = styled.div<StyleProps>`
 export const Nav = styled.nav<StyleProps>`
     height: ${(props) => {
         const baseHeight = props.$compress
-            ? ThemeNavbar["navbar-compressed-height"](props)
-            : ThemeNavbar["navbar-full-height"](props);
+            ? V3_ThemeNavbar["navbar-compressed-height"](props)
+            : V3_ThemeNavbar["navbar-full-height"](props);
         return props.theme?.colourMode === "dark"
             ? `calc(${baseHeight} - 1px)`
             : `${baseHeight}`;
@@ -51,13 +57,13 @@ export const Nav = styled.nav<StyleProps>`
     justify-content: space-between;
     align-items: center;
     position: relative;
-    transition: ${Motion["duration-350"]} ${Motion["ease-standard"]};
+    transition: ${V3_Motion["duration-350"]} ${V3_Motion["ease-standard"]};
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         height: ${(props) =>
             props.theme?.colourMode === "dark"
-                ? `calc(${ThemeNavbar["navbar-mobile-height"](props)} - 1px)`
-                : `${ThemeNavbar["navbar-mobile-height"](props)}`};
+                ? `calc(${V3_ThemeNavbar["navbar-mobile-height"](props)} - 1px)`
+                : `${V3_ThemeNavbar["navbar-mobile-height"](props)}`};
     }
 `;
 
@@ -68,7 +74,7 @@ export const NavElementsContainer = styled.div<StyleProps>`
     flex: 1;
     justify-content: flex-end;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         margin-left: 0rem;
     }
 `;
@@ -76,7 +82,7 @@ export const NavElementsContainer = styled.div<StyleProps>`
 export const MobileMenuButton = styled(ClickableIcon)`
     display: none;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         display: flex;
         padding: 0 1.5rem;
         margin-right: -1.5rem;
@@ -86,7 +92,7 @@ export const MobileMenuButton = styled(ClickableIcon)`
 export const MobileMenuIcon = styled(MenuIcon)`
     height: 1.5rem;
     width: 1.5rem;
-    color: ${ThemeNavbar["navbar-colour-icon"]};
+    color: ${V3_ThemeNavbar["navbar-colour-icon"]};
 `;
 
 export const NavBrandContainer = styled.div<StyleProps>`
@@ -97,30 +103,30 @@ export const NavBrandContainer = styled.div<StyleProps>`
 
     height: ${(props) =>
         props.$compress
-            ? ThemeNavbar["navbar-compressed-logo-height"]
-            : ThemeNavbar["navbar-full-logo-height"]};
+            ? V3_ThemeNavbar["navbar-compressed-logo-height"]
+            : V3_ThemeNavbar["navbar-full-logo-height"]};
 
-    ${MediaQuery.MaxWidth.lg} {
-        height: ${ThemeNavbar["navbar-mobile-logo-height"]};
+    ${V3_MediaQuery.MaxWidth.lg} {
+        height: ${V3_ThemeNavbar["navbar-mobile-logo-height"]};
     }
 
-    ${MediaQuery.MaxWidth.xxs} {
+    ${V3_MediaQuery.MaxWidth.xxs} {
         height: 1.25rem;
     }
 `;
 
 export const NavSeparator = styled.div<StyleProps>`
     display: flex;
-    background-color: ${Colour.border};
+    background-color: ${V3_Colour.border};
     height: 100%;
     width: 2px;
     margin: 0 ${(props) => (props.$compress ? 1 : 1.5)}rem;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         margin: 0 1rem;
     }
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         margin: 0 0.75rem;
     }
 `;

@@ -1,12 +1,12 @@
-import { ColourScheme } from "../types";
+import { V3_ColourScheme } from "../types";
 
-export type ColourCollectionsMap = {
-    [key in ColourScheme]: PrimitiveColourSet;
+export type V3_ColourCollectionsMap = {
+    [key in V3_ColourScheme]: V3_PrimitiveColourSet;
 };
 
-export type PrimitiveColourSetOptions = Partial<PrimitiveColourSet>;
+export type V3_PrimitiveColourSetOptions = Partial<V3_PrimitiveColourSet>;
 
-export type PrimitiveColourSet = {
+export type V3_PrimitiveColourSet = {
     "brand-10": string;
     "brand-20": string;
     "brand-30": string;

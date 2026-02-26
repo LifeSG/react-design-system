@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ModalAnimationDirection } from "../modal-v2/types";
-import { MediaQuery } from "../v3_theme";
+import { V3_MediaQuery } from "../v3_theme";
 
 interface Props {
     $show: boolean;
@@ -39,7 +39,7 @@ export const Container = styled.div<Props>`
     overflow: hidden;
     ${(props) => visibilityStyle(props.$show, props.$animationFrom || "bottom")}
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         height: calc(
             ${(props) =>
                     props.$verticalHeight

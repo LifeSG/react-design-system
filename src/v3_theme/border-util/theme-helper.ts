@@ -1,36 +1,36 @@
 import { CSSProp } from "styled-components";
-import { StyledComponentProps, getCollection } from "../helpers";
-import { ThemeCollectionSpec } from "../internal-types";
-import { BorderScheme } from "../types";
-import { DefaultBorderUtilSet } from "./specs/default-border-util-set";
-import { BorderUtilCollectionMap, BorderUtilSet } from "./types";
+import { V3_StyledComponentProps, getCollection } from "../helpers";
+import { V3_ThemeCollectionSpec } from "../internal-types";
+import { V3_BorderScheme } from "../types";
+import { V3_DefaultBorderUtilSet } from "./specs/default-border-util-set";
+import { V3_BorderUtilCollectionMap, V3_BorderUtilSet } from "./types";
 
-const BorderUtilSpec: ThemeCollectionSpec<
-    BorderUtilCollectionMap,
-    BorderScheme
+const V3_BorderUtilSpec: V3_ThemeCollectionSpec<
+    V3_BorderUtilCollectionMap,
+    V3_BorderScheme
 > = {
     collections: {
-        default: DefaultBorderUtilSet,
+        default: V3_DefaultBorderUtilSet,
     },
     defaultValue: "default",
 };
 
-const isStyledProps = (args: any): args is [StyledComponentProps] =>
+const isStyledProps = (args: any): args is [V3_StyledComponentProps] =>
     args.length === 1 && "theme" in args[0];
 
-export const getBorderStyle = (key: keyof BorderUtilSet) => {
+export const getBorderStyle = (key: keyof V3_BorderUtilSet) => {
     return (
             ...args:
-                | Parameters<BorderUtilSet[typeof key]>
-                | [StyledComponentProps]
+                | Parameters<V3_BorderUtilSet[typeof key]>
+                | [V3_StyledComponentProps]
         ) =>
-        (props: StyledComponentProps): CSSProp => {
+        (props: V3_StyledComponentProps): CSSProp => {
             const resolvedOptions = isStyledProps(args) ? [] : args;
             const resolvedStyledProps = isStyledProps(args) ? args[0] : props;
 
             const theme = resolvedStyledProps.theme;
-            const borderUtilSet: BorderUtilSet = getCollection(
-                BorderUtilSpec,
+            const borderUtilSet: V3_BorderUtilSet = getCollection(
+                V3_BorderUtilSpec,
                 theme?.borderScheme
             );
 
@@ -39,7 +39,7 @@ export const getBorderStyle = (key: keyof BorderUtilSet) => {
         };
 };
 
-export const BorderUtilValues = {
+export const V3_BorderUtilValues = {
     solid: getBorderStyle("solid"),
     "dashed-default": getBorderStyle("dashed-default"),
 };

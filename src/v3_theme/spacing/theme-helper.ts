@@ -1,21 +1,24 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { ThemeCollectionSpec } from "../internal-types";
-import { SpacingScheme } from "../types";
-import { DefaultSpacingSet } from "./specs/default-spacing-set";
-import { SpacingCollectionsMap, SpacingSet } from "./types";
+import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
+import { V3_ThemeCollectionSpec } from "../internal-types";
+import { V3_SpacingScheme } from "../types";
+import { V3_DefaultSpacingSet } from "./specs/default-spacing-set";
+import { V3_SpacingCollectionsMap, V3_SpacingSet } from "./types";
 
-const SpacingSpec: ThemeCollectionSpec<SpacingCollectionsMap, SpacingScheme> = {
+const V3_SpacingSpec: V3_ThemeCollectionSpec<
+    V3_SpacingCollectionsMap,
+    V3_SpacingScheme
+> = {
     collections: {
-        default: DefaultSpacingSet,
+        default: V3_DefaultSpacingSet,
     },
     defaultValue: "default",
 };
 
-export const getSpace = (key: keyof SpacingSet) => {
-    return (props: StyledComponentProps): string => {
+export const getSpace = (key: keyof V3_SpacingSet) => {
+    return (props: V3_StyledComponentProps): string => {
         const theme = props.theme;
-        const spacingSet: SpacingSet = getCollection(
-            SpacingSpec,
+        const spacingSet: V3_SpacingSet = getCollection(
+            V3_SpacingSpec,
             theme?.spacingScheme
         );
 
@@ -27,8 +30,8 @@ export const getSpace = (key: keyof SpacingSet) => {
     };
 };
 
-export const SpacingValues: {
-    [key in keyof SpacingSet]: (props: StyledComponentProps) => string;
+export const V3_SpacingValues: {
+    [key in keyof V3_SpacingSet]: (props: V3_StyledComponentProps) => string;
 } = {
     "spacing-0": getSpace("spacing-0"),
     "spacing-4": getSpace("spacing-4"),

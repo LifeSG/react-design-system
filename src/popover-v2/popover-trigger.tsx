@@ -18,7 +18,7 @@ import React, { useContext, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { useFloatingChild } from "../overlay/use-floating-context";
-import { Breakpoint } from "../v3_theme";
+import { V3_Breakpoint } from "../v3_theme";
 import { SimpleIdGenerator } from "../util";
 import { PopoverV2 } from "./popover";
 import { TriggerContainer } from "./popover-trigger.styles";
@@ -50,7 +50,7 @@ export const PopoverTrigger = ({
     const nodeRef = useRef<HTMLElement | null>(null);
     const popoverRef = useRef<HTMLElement | null>(null);
     const theme = useContext(ThemeContext);
-    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const [availableHeight, setAvailableHeight] = useState(0);
     const internalId = useRef(SimpleIdGenerator.generate());

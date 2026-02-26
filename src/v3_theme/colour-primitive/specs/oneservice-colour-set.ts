@@ -1,6 +1,6 @@
-import { PrimitiveColourSet } from "../../types";
+import { V3_PrimitiveColourSet } from "../../types";
 
-export const OneServiceColourSet: PrimitiveColourSet = {
+export const V3_OneServiceColourSet: V3_PrimitiveColourSet = {
     "brand-10": "#001A19",
     "brand-20": "#002D2B",
     "brand-30": "#00413D",

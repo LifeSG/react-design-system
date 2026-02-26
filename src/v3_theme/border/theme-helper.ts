@@ -1,12 +1,15 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { ThemeCollectionSpec } from "../internal-types";
-import { BorderScheme } from "../types";
-import { DefaultBorderSet } from "./specs/default-border-set";
-import { BorderCollectionMap, BorderSet } from "./types";
+import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
+import { V3_ThemeCollectionSpec } from "../internal-types";
+import { V3_BorderScheme } from "../types";
+import { V3_DefaultBorderSet } from "./specs/default-border-set";
+import { V3_BorderCollectionMap, V3_BorderSet } from "./types";
 
-const BorderSpec: ThemeCollectionSpec<BorderCollectionMap, BorderScheme> = {
+const V3_BorderSpec: V3_ThemeCollectionSpec<
+    V3_BorderCollectionMap,
+    V3_BorderScheme
+> = {
     collections: {
-        default: DefaultBorderSet,
+        default: V3_DefaultBorderSet,
     },
     defaultValue: "default",
 };
@@ -14,10 +17,10 @@ const BorderSpec: ThemeCollectionSpec<BorderCollectionMap, BorderScheme> = {
 export const getBorderWidth = (
     key: "width-005" | "width-010" | "width-020" | "width-040"
 ) => {
-    return (props: StyledComponentProps) => {
+    return (props: V3_StyledComponentProps) => {
         const theme = props.theme;
-        const borderSet: BorderSet = getCollection(
-            BorderSpec,
+        const borderSet: V3_BorderSet = getCollection(
+            V3_BorderSpec,
             theme?.borderScheme
         );
 
@@ -30,10 +33,10 @@ export const getBorderWidth = (
 };
 
 export const getBorder = (key: "solid") => {
-    return (props: StyledComponentProps): string => {
+    return (props: V3_StyledComponentProps): string => {
         const theme = props.theme;
-        const borderSet: BorderSet = getCollection(
-            BorderSpec,
+        const borderSet: V3_BorderSet = getCollection(
+            V3_BorderSpec,
             theme?.borderScheme
         );
 
@@ -51,7 +54,7 @@ export const getBorder = (key: "solid") => {
     };
 };
 
-export const BorderValues = {
+export const V3_BorderValues = {
     "width-005": getBorderWidth("width-005"),
     "width-010": getBorderWidth("width-010"),
     "width-020": getBorderWidth("width-020"),

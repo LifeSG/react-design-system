@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour } from "../../v3_theme";
+import { V3_Colour } from "../../v3_theme";
 
 interface EmailThumbnailProps {
     width?: number;
@@ -9,23 +9,23 @@ interface EmailThumbnailProps {
 
 const StyledSvg = styled.svg`
     .background-circle {
-        fill: ${Colour["bg-stronger"]};
+        fill: ${V3_Colour["bg-stronger"]};
     }
 
     .primary-path {
-        fill: ${Colour["icon-primary"]};
+        fill: ${V3_Colour["icon-primary"]};
     }
 
     .validation-icon {
-        fill: ${Colour["bg-available"]};
+        fill: ${V3_Colour["bg-available"]};
     }
 
     .accent-light-3 {
-        fill: ${Colour["icon-primary-subtle"]};
+        fill: ${V3_Colour["icon-primary-subtle"]};
     }
 
     .accent-light-4 {
-        fill: ${Colour["icon-primary-subtlest"]};
+        fill: ${V3_Colour["icon-primary-subtlest"]};
     }
 `;
 export const EmailThumbnail = ({

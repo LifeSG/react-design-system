@@ -1,6 +1,6 @@
-import { PrimitiveColourSet } from "../../types";
+import { V3_PrimitiveColourSet } from "../../types";
 
-export const BookingSgColourSet: PrimitiveColourSet = {
+export const V3_BookingSgColourSet: V3_PrimitiveColourSet = {
     "brand-10": "#2C0C0B",
     "brand-20": "#4C1513",
     "brand-30": "#6C1D1B",

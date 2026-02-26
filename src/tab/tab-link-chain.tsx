@@ -2,7 +2,7 @@ import { useContext, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { ResizeCallbackParams } from "../shared/fade-wrapper";
-import { Breakpoint } from "../v3_theme";
+import { V3_Breakpoint } from "../v3_theme";
 import { Typography } from "../typography/typography";
 import { TabContext } from "./tab-context";
 import {
@@ -38,13 +38,13 @@ export const TabLinkChain = ({
         useContext(TabContext);
 
     const theme = useContext(ThemeContext);
-    const mobileBreakpoint = Breakpoint["md-max"]({ theme });
+    const mobileBreakpoint = V3_Breakpoint["md-max"]({ theme });
 
     const isMobile = useMediaQuery({
         maxWidth: mobileBreakpoint,
     });
 
-    const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
+    const tabletBreakpoint = V3_Breakpoint["lg-max"]({ theme });
 
     const activeLinkRef = useRef<HTMLLIElement>(null);
     const chainLinkRefs = useRef<(HTMLButtonElement | null)[]>([]);

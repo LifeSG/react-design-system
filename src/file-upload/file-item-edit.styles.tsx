@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button/button";
-import { Border, Colour, MediaQuery, Spacing } from "../v3_theme";
+import { V3_Border, V3_Colour, V3_MediaQuery, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -16,18 +16,19 @@ interface ActionButtonSectionStyleProps {
 export const Item = styled.li`
     display: flex;
     flex-direction: column;
-    padding: ${Spacing["spacing-32"]} 0;
+    padding: ${V3_Spacing["spacing-32"]} 0;
     background: transparent;
 
     &:not(:last-child) {
-        border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+        border-bottom: ${V3_Border["width-010"]} ${V3_Border.solid}
+            ${V3_Colour.border};
     }
 `;
 
 export const ContentSection = styled.div`
     display: flex;
     align-items: flex-start;
-    margin-bottom: ${Spacing["spacing-16"]};
+    margin-bottom: ${V3_Spacing["spacing-16"]};
     width: 100%;
 `;
 
@@ -41,9 +42,9 @@ export const NameSection = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: ${Spacing["spacing-16"]};
+    margin-bottom: ${V3_Spacing["spacing-16"]};
 
-    ${MediaQuery.MaxWidth.md} {
+    ${V3_MediaQuery.MaxWidth.md} {
         flex-direction: column;
         justify-content: flex-start;
     }
@@ -52,11 +53,11 @@ export const NameSection = styled.div`
 export const FileNameText = styled(Typography.BodyMD)`
     display: flex;
     flex: 1;
-    margin-right: ${Spacing["spacing-16"]};
+    margin-right: ${V3_Spacing["spacing-16"]};
 
-    ${MediaQuery.MaxWidth.md} {
+    ${V3_MediaQuery.MaxWidth.md} {
         margin-right: 0;
-        margin-bottom: ${Spacing["spacing-8"]};
+        margin-bottom: ${V3_Spacing["spacing-8"]};
     }
 `;
 
@@ -64,7 +65,7 @@ export const FileSizeText = styled(Typography.BodyMD)``;
 
 export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
     display: flex;
-    ${MediaQuery.MaxWidth.md} {
+    ${V3_MediaQuery.MaxWidth.md} {
         flex-direction: column;
     }
 
@@ -72,10 +73,10 @@ export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
         if (props.$thumbnail) {
             return css`
                 margin-left: calc(
-                    96px + ${Spacing["spacing-32"]}
+                    96px + ${V3_Spacing["spacing-32"]}
                 ); // thumbnail width + right margin
 
-                ${MediaQuery.MaxWidth.md} {
+                ${V3_MediaQuery.MaxWidth.md} {
                     margin-left: 0;
                 }
             `;
@@ -86,13 +87,13 @@ export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
 export const ActionButton = styled(Button.Small)`
     width: 7.5rem;
     &:not(:last-of-type) {
-        margin-right: ${Spacing["spacing-16"]};
+        margin-right: ${V3_Spacing["spacing-16"]};
     }
 
-    ${MediaQuery.MaxWidth.md} {
+    ${V3_MediaQuery.MaxWidth.md} {
         width: 100%;
         &:not(:last-of-type) {
-            margin-bottom: ${Spacing["spacing-16"]};
+            margin-bottom: ${V3_Spacing["spacing-16"]};
         }
     }
 `;

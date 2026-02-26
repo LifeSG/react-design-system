@@ -1,4 +1,4 @@
-import { ResourceScheme } from "../v3_theme/types";
+import { V3_ResourceScheme } from "../v3_theme/types";
 import { InternalDisclaimerLinks } from "./footer-helper";
 
 const BaseDisclaimerLinks: InternalDisclaimerLinks = {
@@ -115,7 +115,9 @@ const SupportGoWhereDisclaimerLinks: InternalDisclaimerLinks = {
     },
 };
 
-export const getDefaultDisclaimerLinks = (resourceScheme?: ResourceScheme) => {
+export const getDefaultDisclaimerLinks = (
+    resourceScheme?: V3_ResourceScheme
+) => {
     switch (resourceScheme) {
         case "bookingsg":
             return BookingSgDisclaimerLinks;

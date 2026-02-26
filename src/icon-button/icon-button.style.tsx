@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { SizeType, StyleType } from "./types";
-import { Border, Colour, Radius } from "../v3_theme";
+import { V3_Border, V3_Colour, V3_Radius } from "../v3_theme";
 interface StyleProps {
     $styleType: StyleType | "disabled";
     $sizeType: SizeType;
@@ -8,7 +8,7 @@ interface StyleProps {
 
 export const Main = styled.button<StyleProps>`
     align-items: center;
-    border-radius: ${Radius["sm"]};
+    border-radius: ${V3_Radius["sm"]};
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -59,43 +59,43 @@ export const Main = styled.button<StyleProps>`
         switch (props.$styleType) {
             case "secondary":
                 return css`
-                    background-color: ${Colour.bg};
-                    border: ${Border["width-010"]} ${Border.solid}
-                        ${Colour["border-primary"]};
-                    color: ${Colour["text-primary"]};
+                    background-color: ${V3_Colour.bg};
+                    border: ${V3_Border["width-010"]} ${V3_Border.solid}
+                        ${V3_Colour["border-primary"]};
+                    color: ${V3_Colour["text-primary"]};
 
                     &:hover {
-                        background-color: ${Colour["bg-hover-neutral"]};
+                        background-color: ${V3_Colour["bg-hover-neutral"]};
                     }
                 `;
 
             case "light":
                 return css`
-                    background-color: ${Colour.bg};
-                    border: ${Border["width-010"]} ${Border.solid}
-                        ${Colour.border};
-                    color: ${Colour["text-primary"]};
+                    background-color: ${V3_Colour.bg};
+                    border: ${V3_Border["width-010"]} ${V3_Border.solid}
+                        ${V3_Colour["border-primary"]};
+                    color: ${V3_Colour["text-primary"]};
 
                     &:hover {
-                        background-color: ${Colour["bg-hover-neutral"]};
+                        background-color: ${V3_Colour["bg-hover-neutral"]};
                     }
                 `;
             case "disabled":
                 return css`
-                    background-color: ${Colour["bg-disabled"]};
-                    border: ${Border["width-010"]} ${Border["solid"]}
-                        ${Colour["border-disabled"]};
-                    color: ${Colour["text-disabled"]};
+                    background-color: ${V3_Colour["bg-disabled"]};
+                    border: ${V3_Border["width-010"]} ${V3_Border.solid}
+                        ${V3_Colour["border-disabled"]};
+                    color: ${V3_Colour["text-disabled"]};
                     cursor: not-allowed;
                 `;
             default:
                 return css`
-                    background-color: ${Colour["bg-primary"]};
+                    background-color: ${V3_Colour["bg-primary"]};
                     border: none;
-                    color: ${Colour["text-inverse"]};
+                    color: ${V3_Colour["text-inverse"]};
 
                     &:hover {
-                        background-color: ${Colour["bg-primary-hover"]};
+                        background-color: ${V3_Colour["bg-primary-hover"]};
                     }
                 `;
         }

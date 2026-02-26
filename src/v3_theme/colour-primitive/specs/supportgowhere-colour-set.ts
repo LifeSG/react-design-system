@@ -1,6 +1,6 @@
-import { PrimitiveColourSet } from "../../types";
+import { V3_PrimitiveColourSet } from "../../types";
 
-export const SupportGoWhereColourSet: PrimitiveColourSet = {
+export const V3_SupportGoWhereColourSet: V3_PrimitiveColourSet = {
     "brand-10": "#0E113C",
     "brand-20": "#191E67",
     "brand-30": "#232A92",

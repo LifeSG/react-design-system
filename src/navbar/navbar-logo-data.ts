@@ -1,4 +1,4 @@
-import { ResourceScheme } from "../v3_theme/types";
+import { V3_ResourceScheme } from "../v3_theme/types";
 import { NavbarResourcesProps } from "./types";
 
 const DEFAULT_RESOURCES_LOGO: NavbarResourcesProps = {
@@ -53,7 +53,7 @@ const SUPPORTGOWHERE_RESOURCE_LOGO: NavbarResourcesProps = {
     },
 };
 
-export const getDefaultResourceLogo = (resourceScheme?: ResourceScheme) => {
+export const getDefaultResourceLogo = (resourceScheme?: V3_ResourceScheme) => {
     switch (resourceScheme) {
         case "bookingsg":
             return BOOKINGSG_RESOURCES_LOGO;

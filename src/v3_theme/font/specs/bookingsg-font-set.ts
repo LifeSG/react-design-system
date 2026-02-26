@@ -1,6 +1,6 @@
-import { FontSet } from "../types";
+import { V3_FontSet } from "../types";
 import { getFontSet } from "../utils";
 
-export const BookingSgFontSet: FontSet = getFontSet({
+export const V3_BookingSgFontSet: V3_FontSet = getFontSet({
     disableLigatures: true,
 });

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Breakpoint, MediaQuery } from "../v3_theme";
+import { V3_Breakpoint, V3_MediaQuery } from "../v3_theme";
 import { ContainerType } from "./types";
 
 interface StyleProps {
@@ -14,30 +14,30 @@ export const StyledContainer = styled.div<StyleProps>`
     width: auto;
     height: auto;
 
-    padding: 0 ${Breakpoint["xxl-margin"]}px;
+    padding: 0 ${V3_Breakpoint["xxl-margin"]}px;
 
-    ${MediaQuery.MaxWidth.xl} {
-        padding: 0 ${Breakpoint["xl-margin"]}px;
+    ${V3_MediaQuery.MaxWidth.xl} {
+        padding: 0 ${V3_Breakpoint["xl-margin"]}px;
     }
 
-    ${MediaQuery.MaxWidth.lg} {
-        padding: 0 ${Breakpoint["lg-margin"]}px;
+    ${V3_MediaQuery.MaxWidth.lg} {
+        padding: 0 ${V3_Breakpoint["lg-margin"]}px;
     }
 
-    ${MediaQuery.MaxWidth.md} {
-        padding: 0 ${Breakpoint["md-margin"]}px;
+    ${V3_MediaQuery.MaxWidth.md} {
+        padding: 0 ${V3_Breakpoint["md-margin"]}px;
     }
 
-    ${MediaQuery.MaxWidth.sm} {
-        padding: 0 ${Breakpoint["sm-margin"]}px;
+    ${V3_MediaQuery.MaxWidth.sm} {
+        padding: 0 ${V3_Breakpoint["sm-margin"]}px;
     }
 
-    ${MediaQuery.MaxWidth.xs} {
-        padding: 0 ${Breakpoint["xs-margin"]}px;
+    ${V3_MediaQuery.MaxWidth.xs} {
+        padding: 0 ${V3_Breakpoint["xs-margin"]}px;
     }
 
-    ${MediaQuery.MaxWidth.xxs} {
-        padding: 0 ${Breakpoint["xxs-margin"]}px;
+    ${V3_MediaQuery.MaxWidth.xxs} {
+        padding: 0 ${V3_Breakpoint["xxs-margin"]}px;
     }
 
     ${(props) => {
@@ -52,57 +52,57 @@ export const StyledContainer = styled.div<StyleProps>`
         switch (props.$type) {
             case "grid":
                 return css`
-                    column-gap: ${Breakpoint["xxl-gutter"]}px;
+                    column-gap: ${V3_Breakpoint["xxl-gutter"]}px;
                     display: grid;
                     grid-template-columns: repeat(
-                        ${Breakpoint["xxl-column"]},
+                        ${V3_Breakpoint["xxl-column"]},
                         minmax(0, 1fr)
                     );
 
-                    ${MediaQuery.MaxWidth.xl} {
-                        column-gap: ${Breakpoint["xl-gutter"]}px;
+                    ${V3_MediaQuery.MaxWidth.xl} {
+                        column-gap: ${V3_Breakpoint["xl-gutter"]}px;
                         grid-template-columns: repeat(
-                            ${Breakpoint["xl-column"]},
+                            ${V3_Breakpoint["xl-column"]},
                             minmax(0, 1fr)
                         );
                     }
 
-                    ${MediaQuery.MaxWidth.lg} {
-                        column-gap: ${Breakpoint["lg-gutter"]}px;
+                    ${V3_MediaQuery.MaxWidth.lg} {
+                        column-gap: ${V3_Breakpoint["lg-gutter"]}px;
                         grid-template-columns: repeat(
-                            ${Breakpoint["lg-column"]},
+                            ${V3_Breakpoint["lg-column"]},
                             minmax(0, 1fr)
                         );
                     }
 
-                    ${MediaQuery.MaxWidth.md} {
-                        column-gap: ${Breakpoint["md-gutter"]}px;
+                    ${V3_MediaQuery.MaxWidth.md} {
+                        column-gap: ${V3_Breakpoint["md-gutter"]}px;
                         grid-template-columns: repeat(
-                            ${Breakpoint["md-column"]},
+                            ${V3_Breakpoint["md-column"]},
                             minmax(0, 1fr)
                         );
                     }
 
-                    ${MediaQuery.MaxWidth.sm} {
-                        column-gap: ${Breakpoint["sm-gutter"]}px;
+                    ${V3_MediaQuery.MaxWidth.sm} {
+                        column-gap: ${V3_Breakpoint["sm-gutter"]}px;
                         grid-template-columns: repeat(
-                            ${Breakpoint["sm-column"]},
+                            ${V3_Breakpoint["sm-column"]},
                             minmax(0, 1fr)
                         );
                     }
 
-                    ${MediaQuery.MaxWidth.xs} {
-                        column-gap: ${Breakpoint["xs-gutter"]}px;
+                    ${V3_MediaQuery.MaxWidth.xs} {
+                        column-gap: ${V3_Breakpoint["xs-gutter"]}px;
                         grid-template-columns: repeat(
-                            ${Breakpoint["xs-column"]},
+                            ${V3_Breakpoint["xs-column"]},
                             minmax(0, 1fr)
                         );
                     }
 
-                    ${MediaQuery.MaxWidth.xxs} {
-                        column-gap: ${Breakpoint["xxs-gutter"]}px;
+                    ${V3_MediaQuery.MaxWidth.xxs} {
+                        column-gap: ${V3_Breakpoint["xxs-gutter"]}px;
                         grid-template-columns: repeat(
-                            ${Breakpoint["xxs-column"]},
+                            ${V3_Breakpoint["xxs-column"]},
                             minmax(0, 1fr)
                         );
                     }

@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Radius } from "../../v3_theme";
+import { V3_Border, V3_Colour, V3_Radius } from "../../v3_theme";
 import type { getPrimitiveColour } from "../../v3_theme/colour-primitive/theme-helper";
 import type { getSemanticColour } from "../../v3_theme/colour-semantic/theme-helper";
 
@@ -65,12 +65,13 @@ const Bar = styled.div<StyleProps>`
         } else if (color) {
             colorToUse = (color as ThemeColorFunctions)(props);
         } else {
-            colorToUse = Colour["icon-primary-subtle"](props);
+            colorToUse = V3_Colour["icon-primary-subtle"](props);
         }
 
         return css`
-            border: ${Border["width-010"]} ${Border["solid"]} ${colorToUse};
-            border-radius: ${Radius["sm"]};
+            border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+                ${colorToUse};
+            border-radius: ${V3_Radius["sm"]};
 
             &:after {
                 content: "";

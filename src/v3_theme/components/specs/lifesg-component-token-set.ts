@@ -1,21 +1,21 @@
-import { Colour } from "src/v3_theme";
-import { ColourSemantic } from "../../colour-semantic/theme-helper";
-import { RadiusValues } from "../../radius/theme-helper";
-import { ComponentTokenSet } from "../types";
+import { V3_Colour } from "src/v3_theme";
+import { V3_ColourSemantic } from "../../colour-semantic/theme-helper";
+import { V3_RadiusValues } from "../../radius/theme-helper";
+import { V3_ComponentTokenSet } from "../types";
 
-export const LifeSGComponentTokenSet: ComponentTokenSet = {
+export const V3_LifeSGComponentTokenSet: V3_ComponentTokenSet = {
     Button: {
-        "button-radius": RadiusValues.sm,
-        "button-default-colour-bg": ColourSemantic["bg-primary"],
-        "button-default-colour-bg-hover": ColourSemantic["bg-primary-hover"],
-        "button-default-colour-text": ColourSemantic["text-inverse"],
-        "button-secondary-colour-border": ColourSemantic["border-primary"],
-        "button-secondary-colour-text": ColourSemantic["text-primary"],
-        "button-light-colour-text": ColourSemantic["text-primary"],
-        "button-link-colour-text": ColourSemantic["text-primary"],
+        "button-radius": V3_RadiusValues.sm,
+        "button-default-colour-bg": V3_ColourSemantic["bg-primary"],
+        "button-default-colour-bg-hover": V3_ColourSemantic["bg-primary-hover"],
+        "button-default-colour-text": V3_ColourSemantic["text-inverse"],
+        "button-secondary-colour-border": V3_ColourSemantic["border-primary"],
+        "button-secondary-colour-text": V3_ColourSemantic["text-primary"],
+        "button-light-colour-text": V3_ColourSemantic["text-primary"],
+        "button-link-colour-text": V3_ColourSemantic["text-primary"],
     },
     Animation: {
-        "loading-dots-spinner-colour": Colour.Primitive["brand-50"],
+        "loading-dots-spinner-colour": V3_Colour.Primitive["brand-50"],
     },
     Navbar: {
         "navbar-full-height": "6rem",
@@ -24,20 +24,20 @@ export const LifeSGComponentTokenSet: ComponentTokenSet = {
         "navbar-compressed-logo-height": "1.5rem",
         "navbar-mobile-height": "3.5rem",
         "navbar-mobile-logo-height": "1.5rem",
-        "navbar-colour-bg": ColourSemantic["bg"],
-        "navbar-colour-icon": ColourSemantic["icon"],
-        "navbar-link-colour-text": ColourSemantic["text"],
-        "navbar-link-colour-text-hover": ColourSemantic["text-hover"],
+        "navbar-colour-bg": V3_ColourSemantic["bg"],
+        "navbar-colour-icon": V3_ColourSemantic["icon"],
+        "navbar-link-colour-text": V3_ColourSemantic["text"],
+        "navbar-link-colour-text-hover": V3_ColourSemantic["text-hover"],
         "navbar-link-colour-text-selected-hover":
-            ColourSemantic["text-selected-hover"],
+            V3_ColourSemantic["text-selected-hover"],
     },
     Footer: {
-        "footer-colour-bg": ColourSemantic["bg-strong"],
-        "footer-colour-text": ColourSemantic["text"],
-        "footer-link-colour-text": ColourSemantic["text"],
-        "footer-link-colour-text-hover": ColourSemantic["text-hover"],
-        "footer-disclaimer-link-colour-text": ColourSemantic["text"],
+        "footer-colour-bg": V3_ColourSemantic["bg-strong"],
+        "footer-colour-text": V3_ColourSemantic["text"],
+        "footer-link-colour-text": V3_ColourSemantic["text"],
+        "footer-link-colour-text-hover": V3_ColourSemantic["text-hover"],
+        "footer-disclaimer-link-colour-text": V3_ColourSemantic["text"],
         "footer-disclaimer-link-colour-text-hover":
-            ColourSemantic["text-subtler"],
+            V3_ColourSemantic["text-subtler"],
     },
 };

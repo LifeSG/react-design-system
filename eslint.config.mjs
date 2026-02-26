@@ -167,7 +167,7 @@ export default defineConfig([
         },
     },
     {
-        files: ["src/v2_*/**/*.{ts,tsx}"],
+        files: ["src/v2_*/**/*.{ts,tsx}", "src/v3_*/**/*.{ts,tsx}"],
         rules: {
             "@typescript-eslint/naming-convention": "off",
         },

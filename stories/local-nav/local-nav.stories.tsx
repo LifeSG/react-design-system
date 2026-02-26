@@ -6,7 +6,7 @@ import {
     LocalNavItemProps,
     LocalNavMenu,
 } from "src/local-nav";
-import { Breakpoint } from "src/v3_theme";
+import { V3_Breakpoint } from "src/v3_theme";
 import { useTheme } from "styled-components";
 import { Content, Page, TopContent } from "./doc-elements";
 
@@ -210,7 +210,7 @@ export const CombinedUsage: StoryObj = {
         );
         const theme = useTheme();
         const isMobile = useMediaQuery({
-            maxWidth: Breakpoint["sm-max"]({ theme }),
+            maxWidth: V3_Breakpoint["sm-max"]({ theme }),
         });
 
         const handleNavItemClick = (

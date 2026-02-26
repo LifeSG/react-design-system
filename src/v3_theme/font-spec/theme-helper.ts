@@ -1,39 +1,42 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { ThemeCollectionSpec } from "../internal-types";
-import { FontScheme } from "../types";
-import { A11yPlaygroundFontSpecSet } from "./specs/a11yplayground-font-spec-set";
-import { BookingSgFontSpecSet } from "./specs/bookingsg-font-spec-set";
-import { DefaultFontSpecSet } from "./specs/default-font-spec-set";
-import { IMDAFontSpecSet } from "./specs/imda-font-spec-set";
-import { MyLegacyFontSpecSet } from "./specs/mylegacy-font-spec-set";
-import { OneServiceFontSpecSet } from "./specs/oneservice-font-spec-set";
-import { PAFontSpecSet } from "./specs/pa-font-spec-set";
-import { SGWDigitalLobbyFontSpecSet } from "./specs/sgw-digital-lobby-font-spec-set";
-import { SPFFontSpecSet } from "./specs/spf-font-spec-set";
-import { SupportGoWhereFontSpecSet } from "./specs/supportgowhere-font-spec-set";
-import { FontSpecCollectionMap, FontSpecSet } from "./types";
+import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
+import { V3_ThemeCollectionSpec } from "../internal-types";
+import { V3_FontScheme } from "../types";
+import { V3_A11yPlaygroundFontSpecSet } from "./specs/a11yplayground-font-spec-set";
+import { V3_BookingSgFontSpecSet } from "./specs/bookingsg-font-spec-set";
+import { V3_DefaultFontSpecSet } from "./specs/default-font-spec-set";
+import { V3_IMDAFontSpecSet } from "./specs/imda-font-spec-set";
+import { V3_MyLegacyFontSpecSet } from "./specs/mylegacy-font-spec-set";
+import { V3_OneServiceFontSpecSet } from "./specs/oneservice-font-spec-set";
+import { V3_PAFontSpecSet } from "./specs/pa-font-spec-set";
+import { V3_SGWDigitalLobbyFontSpecSet } from "./specs/sgw-digital-lobby-font-spec-set";
+import { V3_SPFFontSpecSet } from "./specs/spf-font-spec-set";
+import { V3_SupportGoWhereFontSpecSet } from "./specs/supportgowhere-font-spec-set";
+import { V3_FontSpecCollectionMap, V3_FontSpecSet } from "./types";
 
-const FontSpec: ThemeCollectionSpec<FontSpecCollectionMap, FontScheme> = {
+const V3_FontSpec: V3_ThemeCollectionSpec<
+    V3_FontSpecCollectionMap,
+    V3_FontScheme
+> = {
     collections: {
-        default: DefaultFontSpecSet,
-        bookingsg: BookingSgFontSpecSet,
-        mylegacy: MyLegacyFontSpecSet,
-        pa: PAFontSpecSet,
-        a11yplayground: A11yPlaygroundFontSpecSet,
-        supportgowhere: SupportGoWhereFontSpecSet,
-        sgwdigitallobby: SGWDigitalLobbyFontSpecSet,
-        imda: IMDAFontSpecSet,
-        spf: SPFFontSpecSet,
-        oneservice: OneServiceFontSpecSet,
+        default: V3_DefaultFontSpecSet,
+        bookingsg: V3_BookingSgFontSpecSet,
+        mylegacy: V3_MyLegacyFontSpecSet,
+        pa: V3_PAFontSpecSet,
+        a11yplayground: V3_A11yPlaygroundFontSpecSet,
+        supportgowhere: V3_SupportGoWhereFontSpecSet,
+        sgwdigitallobby: V3_SGWDigitalLobbyFontSpecSet,
+        imda: V3_IMDAFontSpecSet,
+        spf: V3_SPFFontSpecSet,
+        oneservice: V3_OneServiceFontSpecSet,
     },
     defaultValue: "default",
 };
 
-export const getFontSpec = (key: keyof FontSpecSet) => {
-    return (props: StyledComponentProps): string => {
+export const getFontSpec = (key: keyof V3_FontSpecSet) => {
+    return (props: V3_StyledComponentProps): string => {
         const theme = props.theme;
-        const fontSpecSet: FontSpecSet = getCollection(
-            FontSpec,
+        const fontSpecSet: V3_FontSpecSet = getCollection(
+            V3_FontSpec,
             theme?.fontScheme
         );
 
@@ -45,8 +48,8 @@ export const getFontSpec = (key: keyof FontSpecSet) => {
     };
 };
 
-export const FontSpecValues: {
-    [key in keyof FontSpecSet]: (props: StyledComponentProps) => string;
+export const V3_FontSpecValues: {
+    [key in keyof V3_FontSpecSet]: (props: V3_StyledComponentProps) => string;
 } = {
     "heading-size-xxl": getFontSpec("heading-size-xxl"),
     "heading-size-xl": getFontSpec("heading-size-xl"),

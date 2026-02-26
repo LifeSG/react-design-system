@@ -1,6 +1,6 @@
-import { FontSpecSet } from "../types";
+import { V3_FontSpecSet } from "../types";
 
-export const SGWDigitalLobbyFontSpecSet: FontSpecSet = {
+export const V3_SGWDigitalLobbyFontSpecSet: V3_FontSpecSet = {
     "heading-size-xxl": "3.75rem",
     "heading-size-xl": "3rem",
     "heading-size-lg": "2.5rem",

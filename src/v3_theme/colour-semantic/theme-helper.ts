@@ -1,65 +1,65 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { ThemeCollectionSpec } from "../internal-types";
-import { ColourScheme, SemanticColourSet } from "../types";
+import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
+import { V3_ThemeCollectionSpec } from "../internal-types";
+import { V3_ColourScheme, V3_SemanticColourSet } from "../types";
 import {
-    LifeSGColourSet,
-    LifeSGDarkColourSet,
+    V3_LifeSGColourSet,
+    V3_LifeSGDarkColourSet,
 } from "./specs/lifesg-semantic-tokens";
-import { PAColourSet } from "./specs/pa-semantic-tokens";
+import { V3_PAColourSet } from "./specs/pa-semantic-tokens";
 import {
-    A11yPlaygroundColourSet,
-    A11yPlaygroundDarkColourSet,
+    V3_A11yPlaygroundColourSet,
+    V3_A11yPlaygroundDarkColourSet,
 } from "./specs/a11yplayground-semantic-tokens";
-import { SemanticColourCollectionMap } from "./types";
+import { V3_SemanticColourCollectionMap } from "./types";
 
-export const ColourSpec: ThemeCollectionSpec<
-    SemanticColourCollectionMap,
-    ColourScheme
+export const V3_ColourSpec: V3_ThemeCollectionSpec<
+    V3_SemanticColourCollectionMap,
+    V3_ColourScheme
 > = {
     collections: {
-        lifesg: LifeSGColourSet,
-        bookingsg: LifeSGColourSet,
-        rbs: LifeSGColourSet,
-        mylegacy: LifeSGColourSet,
-        ccube: LifeSGColourSet,
-        oneservice: LifeSGColourSet,
-        pa: PAColourSet,
-        a11yplayground: A11yPlaygroundColourSet,
-        supportgowhere: LifeSGColourSet,
-        imda: LifeSGColourSet,
-        spf: LifeSGColourSet,
+        lifesg: V3_LifeSGColourSet,
+        bookingsg: V3_LifeSGColourSet,
+        rbs: V3_LifeSGColourSet,
+        mylegacy: V3_LifeSGColourSet,
+        ccube: V3_LifeSGColourSet,
+        oneservice: V3_LifeSGColourSet,
+        pa: V3_PAColourSet,
+        a11yplayground: V3_A11yPlaygroundColourSet,
+        supportgowhere: V3_LifeSGColourSet,
+        imda: V3_LifeSGColourSet,
+        spf: V3_LifeSGColourSet,
     },
     defaultValue: "lifesg",
 };
 
-export const DarkColourSpec: ThemeCollectionSpec<
-    SemanticColourCollectionMap,
-    ColourScheme
+export const V3_DarkColourSpec: V3_ThemeCollectionSpec<
+    V3_SemanticColourCollectionMap,
+    V3_ColourScheme
 > = {
     collections: {
-        lifesg: LifeSGDarkColourSet,
-        bookingsg: LifeSGDarkColourSet,
-        rbs: LifeSGDarkColourSet,
-        mylegacy: LifeSGDarkColourSet,
-        ccube: LifeSGDarkColourSet,
-        oneservice: LifeSGDarkColourSet,
-        pa: LifeSGDarkColourSet,
-        a11yplayground: A11yPlaygroundDarkColourSet,
-        supportgowhere: LifeSGDarkColourSet,
-        imda: LifeSGDarkColourSet,
-        spf: LifeSGDarkColourSet,
+        lifesg: V3_LifeSGDarkColourSet,
+        bookingsg: V3_LifeSGDarkColourSet,
+        rbs: V3_LifeSGDarkColourSet,
+        mylegacy: V3_LifeSGDarkColourSet,
+        ccube: V3_LifeSGDarkColourSet,
+        oneservice: V3_LifeSGDarkColourSet,
+        pa: V3_PAColourSet,
+        a11yplayground: V3_A11yPlaygroundDarkColourSet,
+        supportgowhere: V3_LifeSGDarkColourSet,
+        imda: V3_LifeSGDarkColourSet,
+        spf: V3_LifeSGDarkColourSet,
     },
     defaultValue: "lifesg",
 };
 
-export const getSemanticColour = (key: keyof SemanticColourSet) => {
-    return (props: StyledComponentProps): string => {
+export const getSemanticColour = (key: keyof V3_SemanticColourSet) => {
+    return (props: V3_StyledComponentProps): string => {
         const theme = props.theme;
         const isDarkMode = theme?.colourMode === "dark";
 
         // Select the appropriate color spec based on theme mode
-        const spec = isDarkMode ? DarkColourSpec : ColourSpec;
-        const colorSet: SemanticColourSet = getCollection(
+        const spec = isDarkMode ? V3_DarkColourSpec : V3_ColourSpec;
+        const colorSet: V3_SemanticColourSet = getCollection(
             spec,
             theme?.colourScheme
         );
@@ -84,8 +84,10 @@ export const getSemanticColour = (key: keyof SemanticColourSet) => {
     };
 };
 
-export const ColourSemantic: {
-    [key in keyof SemanticColourSet]: (props: StyledComponentProps) => string;
+export const V3_ColourSemantic: {
+    [key in keyof V3_SemanticColourSet]: (
+        props: V3_StyledComponentProps
+    ) => string;
 } = {
     // text
     text: getSemanticColour("text"),

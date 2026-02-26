@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
 import {
-    Border,
-    Colour,
-    Radius,
-    Spacing,
-    ThemeStyleProps,
+    V3_Border,
+    V3_Colour,
+    V3_Radius,
+    V3_Spacing,
+    V3_ThemeStyleProps,
 } from "../../v3_theme";
 import { Typography } from "../../typography";
 import { TimeTableCellType } from "../types";
@@ -17,16 +17,19 @@ interface BlockStyleProps {
     $isClickable?: boolean;
     $customMainColor?:
         | string
-        | ((props: ThemeStyleProps) => string)
+        | ((props: V3_ThemeStyleProps) => string)
         | undefined;
-    $customAltColor?: string | ((props: ThemeStyleProps) => string) | undefined;
+    $customAltColor?:
+        | string
+        | ((props: V3_ThemeStyleProps) => string)
+        | undefined;
     $customHoverColor?:
         | string
-        | ((props: ThemeStyleProps) => string)
+        | ((props: V3_ThemeStyleProps) => string)
         | undefined;
     $customAltHoverColor?:
         | string
-        | ((props: ThemeStyleProps) => string)
+        | ((props: V3_ThemeStyleProps) => string)
         | undefined;
     $styleType?: "default" | "solid" | "stripes" | undefined;
 }
@@ -36,11 +39,12 @@ interface BlockContainerProps {
 }
 
 export const BlockContainer = styled.div<BlockContainerProps>`
-    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-bottom: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        ${V3_Colour["border"]};
     ${(props) => {
         if (props.$isOnTheHour) {
             return css`
-                box-shadow: inset -0.5px 0px ${Colour["border-primary"]};
+                box-shadow: inset -0.5px 0px ${V3_Colour["border-primary"]};
             `;
         }
     }}
@@ -60,9 +64,9 @@ export const Gap = styled.div`
 export const Block = styled.div<BlockStyleProps>`
     height: 100%;
     width: ${({ $width }) => `${$width}px`};
-    border-radius: ${Radius["sm"]};
+    border-radius: ${V3_Radius["sm"]};
     box-sizing: border-box;
-    padding: ${Spacing["spacing-4"]};
+    padding: ${V3_Spacing["spacing-4"]};
     ${({
         $status,
         $mainColor,
@@ -78,16 +82,16 @@ export const Block = styled.div<BlockStyleProps>`
         const statusDefaults: Record<
             TimeTableCellType,
             {
-                mainColor?: string | ((props: ThemeStyleProps) => string);
-                altColor?: string | ((props: ThemeStyleProps) => string);
-                hoverColor?: string | ((props: ThemeStyleProps) => string);
+                mainColor?: string | ((props: V3_ThemeStyleProps) => string);
+                altColor?: string | ((props: V3_ThemeStyleProps) => string);
+                hoverColor?: string | ((props: V3_ThemeStyleProps) => string);
                 defaultStyleType: "solid" | "stripes";
                 nonClickablePointer?: "default" | "not-allowed";
             }
         > = {
             blocked: {
-                mainColor: Colour["bg-stronger"],
-                altColor: Colour["bg-strongest"],
+                mainColor: V3_Colour["bg-stronger"],
+                altColor: V3_Colour["bg-strongest"],
                 defaultStyleType: "stripes",
                 nonClickablePointer: "not-allowed",
             },
@@ -96,7 +100,7 @@ export const Block = styled.div<BlockStyleProps>`
                 defaultStyleType: "solid",
             },
             disabled: {
-                mainColor: Colour["bg-disabled"],
+                mainColor: V3_Colour["bg-disabled"],
                 defaultStyleType: "solid",
                 nonClickablePointer: "not-allowed",
             },
@@ -107,7 +111,7 @@ export const Block = styled.div<BlockStyleProps>`
                 nonClickablePointer: "not-allowed",
             },
             default: {
-                hoverColor: Colour["bg-hover-subtle"],
+                hoverColor: V3_Colour["bg-hover-subtle"],
                 defaultStyleType: "solid",
             },
         };
@@ -161,7 +165,7 @@ export const BlockTitle = styled(Typography.BodySM)`
 `;
 
 export const BlockDescription = styled(Typography.BodyXS)`
-    color: ${Colour["text-subtler"]};
+    color: ${V3_Colour["text-subtler"]};
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

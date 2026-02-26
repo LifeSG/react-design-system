@@ -1,23 +1,23 @@
 import { getPrimitiveColour } from "../../colour-primitive/theme-helper";
 import { getSemanticColour } from "../../colour-semantic/theme-helper";
-import { StyledComponentProps } from "../../helpers";
-import { PrimitiveColourSet, SemanticColourSet } from "../../types";
-import { ShadowSet } from "../types";
+import { V3_StyledComponentProps } from "../../helpers";
+import { V3_PrimitiveColourSet, V3_SemanticColourSet } from "../../types";
+import { V3_ShadowSet } from "../types";
 
 const createShadow =
     (
         shadowDef: string,
-        colourKey: keyof PrimitiveColourSet | keyof SemanticColourSet,
+        colourKey: keyof V3_PrimitiveColourSet | keyof V3_SemanticColourSet,
         alpha: number
     ) =>
-    (props: StyledComponentProps) => {
+    (props: V3_StyledComponentProps) => {
         const color =
-            getSemanticColour(colourKey as keyof SemanticColourSet)(props) ||
-            getPrimitiveColour(colourKey as keyof PrimitiveColourSet)(props);
+            getSemanticColour(colourKey as keyof V3_SemanticColourSet)(props) ||
+            getPrimitiveColour(colourKey as keyof V3_PrimitiveColourSet)(props);
         return `${shadowDef} rgba(from ${color} r g b / ${alpha * 100}%)`;
     };
 
-export const DefaultShadowSet: ShadowSet = {
+export const V3_DefaultShadowSet: V3_ShadowSet = {
     "xs-subtle": createShadow("0 0 4px 1px", "neutral-50", 0.24),
     "xs-strong": createShadow("0 0 4px 1px", "neutral-50", 0.5),
     "xs-focus-strong": createShadow("0 0 4px 1px", "border-focus", 0.5),

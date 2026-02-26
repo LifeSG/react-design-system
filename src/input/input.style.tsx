@@ -1,7 +1,7 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
 import { BasicButton, BasicInput, InputBox } from "../shared/input-wrapper";
-import { Colour, Spacing } from "../v3_theme";
+import { V3_Colour, V3_Spacing } from "../v3_theme";
 import { InputStyleType } from "./types";
 
 // =============================================================================
@@ -25,24 +25,24 @@ export const InputElement = styled(BasicInput)<InputStyleProps>`
         css`
             padding-left: ${props.$visuallyReadOnly
                 ? 0
-                : Spacing["spacing-16"]};
+                : V3_Spacing["spacing-16"]};
             padding-right: ${props.$visuallyReadOnly || props.$showClear
                 ? 0
-                : Spacing["spacing-16"]};
+                : V3_Spacing["spacing-16"]};
         `}
 `;
 
 export const ClearButton = styled(BasicButton)<InputStyleProps>`
     height: auto;
-    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
+    padding: ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-16"]};
 
     cursor: pointer;
-    color: ${Colour["icon"]};
+    color: ${V3_Colour["icon"]};
 
     ${(props) =>
         props.$styleType === "no-border" &&
         css`
-            margin-right: -${Spacing["spacing-12"]};
+            margin-right: -${V3_Spacing["spacing-12"]};
         `}
 `;
 

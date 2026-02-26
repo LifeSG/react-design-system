@@ -1,12 +1,13 @@
 import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
 import { render } from "@testing-library/react";
-import { Motion } from "../../src";
-import { ThemeSpec } from "../../src/v3_theme/types";
+import { V3_Motion } from "../../src";
+import { V3_ThemeSpec } from "../../src/v3_theme/types";
 import { MOCK_THEME } from "./mock-theme-data";
 
 const StyledMotionTest = styled.div`
-    transition: transform ${Motion["duration-500"]}, ${Motion["ease-default"]};
+    transition: transform ${V3_Motion["duration-500"]},
+        ${V3_Motion["ease-default"]};
 `;
 
 describe("StyledMotionTest", () => {
@@ -27,7 +28,7 @@ describe("StyledMotionTest", () => {
     });
 
     it("should apply correct motion styles when overriding motion token", () => {
-        const overrideTheme: ThemeSpec = {
+        const overrideTheme: V3_ThemeSpec = {
             ...MOCK_THEME,
             overrides: {
                 motion: {

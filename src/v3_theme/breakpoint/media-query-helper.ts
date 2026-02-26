@@ -1,13 +1,13 @@
-import { BreakpointValues } from "./theme-helper";
-import { StyledComponentProps } from "../helpers";
+import { V3_BreakpointValues } from "./theme-helper";
+import { V3_StyledComponentProps } from "../helpers";
 
-// Typings for MedaiQuery
+// Typings for MediaQuery
 type MaxWidthBreakpoints = "xxs" | "xs" | "sm" | "md" | "lg" | "xl";
 type MinWidthBreakpoints = MaxWidthBreakpoints | "xxl";
 type MediaQueryMinMax = "max-width" | "min-width";
 type MediaQuerySpec<T extends string> = Record<
     T,
-    (props: StyledComponentProps) => string
+    (props: V3_StyledComponentProps) => string
 >;
 
 const createMediaQueryFunction = <T extends string>(
@@ -16,9 +16,9 @@ const createMediaQueryFunction = <T extends string>(
 ) => {
     const mappedKey = type === "max-width" ? `${key}-max` : `${key}-min`;
     const breakpointFunction =
-        BreakpointValues[mappedKey as keyof typeof BreakpointValues];
+        V3_BreakpointValues[mappedKey as keyof typeof V3_BreakpointValues];
 
-    return (props: StyledComponentProps) => {
+    return (props: V3_StyledComponentProps) => {
         const value = breakpointFunction(props);
         return `@media screen and (${type}: ${value}px)`;
     };
@@ -41,7 +41,7 @@ const getMediaQuerySpec = <T extends string>(
 };
 
 // Export with typing
-export const MediaQuery = {
+export const V3_MediaQuery = {
     MaxWidth: getMediaQuerySpec<MaxWidthBreakpoints>("max-width"),
     MinWidth: getMediaQuerySpec<MinWidthBreakpoints>("min-width"),
 };

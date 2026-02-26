@@ -1,40 +1,34 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { ThemeCollectionSpec } from "../internal-types";
-import { BreakpointScheme } from "../types";
-import { DefaultBreakpointSet } from "./specs/default-breakpoint-set";
-import { BreakpointCollectionsMap, BreakpointSet } from "./types";
+import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
+import { V3_ThemeCollectionSpec } from "../internal-types";
+import { V3_BreakpointScheme } from "../types";
+import { V3_DefaultBreakpointSet } from "./specs/default-breakpoint-set";
+import { V3_BreakpointCollectionsMap, V3_BreakpointSet } from "./types";
 
-const BreakpointSpec: ThemeCollectionSpec<
-    BreakpointCollectionsMap,
-    BreakpointScheme
+const V3_BreakpointSpec: V3_ThemeCollectionSpec<
+    V3_BreakpointCollectionsMap,
+    V3_BreakpointScheme
 > = {
     collections: {
-        default: DefaultBreakpointSet,
+        default: V3_DefaultBreakpointSet,
     },
     defaultValue: "default",
 };
 
-export const getBreakpoint = (key: keyof BreakpointSet) => {
-    return (props: StyledComponentProps): number => {
+export const getBreakpoint = (key: keyof V3_BreakpointSet) => {
+    return (props: V3_StyledComponentProps): number => {
         const theme = props.theme;
-        const breakpointSet: BreakpointSet = getCollection(
-            BreakpointSpec,
+        const breakpointSet: V3_BreakpointSet = getCollection(
+            V3_BreakpointSpec,
             theme?.breakpointScheme
         );
 
-        let value: number | undefined;
-
-        if (theme?.overrides?.breakpoint) {
-            value = getValue(breakpointSet, key, theme.overrides.breakpoint);
-        } else {
-            value = breakpointSet[key];
-        }
-
-        return value;
+        return theme?.overrides?.breakpoint
+            ? getValue(breakpointSet, key, theme.overrides.breakpoint)
+            : breakpointSet[key];
     };
 };
 
-export const BreakpointValues = {
+export const V3_BreakpointValues = {
     "xxs-min": getBreakpoint("xxs-min"),
     "xxs-max": getBreakpoint("xxs-max"),
     "xs-min": getBreakpoint("xs-min"),

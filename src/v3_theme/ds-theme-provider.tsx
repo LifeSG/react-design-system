@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
-import { ColourMode, DSThemeProviderProps, ThemeSpec } from "./types";
+import { V3_ColourMode, V3_DSThemeProviderProps, V3_ThemeSpec } from "./types";
 import { getSystemColourMode } from "./use-theme-mode";
 
 // Wraps styled-components ThemeProvider and automatically handles colourMode
 // detection based on system preferences when not explicitly set in theme
-export const DSThemeProvider = ({ theme, children }: DSThemeProviderProps) => {
+export const V3_DSThemeProvider = ({
+    theme,
+    children,
+}: V3_DSThemeProviderProps) => {
     const [computedColourMode, setComputedColourMode] = useState<
-        ColourMode | undefined
+        V3_ColourMode | undefined
     >(theme?.colourMode);
 
     useEffect(() => {
@@ -54,7 +57,7 @@ export const DSThemeProvider = ({ theme, children }: DSThemeProviderProps) => {
     }, [theme?.colourMode]);
 
     // Ensure that every theme object has a definitive colourMode
-    const enhancedTheme: ThemeSpec = {
+    const enhancedTheme: V3_ThemeSpec = {
         ...theme,
         colourMode: computedColourMode || "light",
     };

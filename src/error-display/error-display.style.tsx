@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Button } from "../button";
-import { Colour, MediaQuery, Spacing } from "../v3_theme";
+import { V3_Colour, V3_MediaQuery, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 
 export const Container = styled.div`
@@ -17,15 +17,15 @@ export const Img = styled.img`
     width: 400px;
     height: auto;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         width: 320px;
     }
 
-    ${MediaQuery.MaxWidth.xs} {
+    ${V3_MediaQuery.MaxWidth.xs} {
         width: 288px;
     }
 
-    ${MediaQuery.MaxWidth.xxs} {
+    ${V3_MediaQuery.MaxWidth.xxs} {
         width: 240px;
     }
 `;
@@ -40,22 +40,22 @@ export const TextContainer = styled.div`
 `;
 
 export const Title = styled(Typography.HeadingMD)`
-    margin: ${Spacing["spacing-32"]} 0 ${Spacing["spacing-16"]};
+    margin: ${V3_Spacing["spacing-32"]} 0 ${V3_Spacing["spacing-16"]};
     text-align: center;
 `;
 
 export const DescriptionContainer = styled.div`
-    color: ${Colour.text};
+    color: ${V3_Colour.text};
     text-align: center;
 
     ${applyHtmlContentStyle({ textSize: "body-baseline" })}
 `;
 
 export const ActionButton = styled(Button.Default)`
-    margin: ${Spacing["spacing-32"]} auto 0;
+    margin: ${V3_Spacing["spacing-32"]} auto 0;
     width: 21rem;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         width: 100%;
     }
 `;

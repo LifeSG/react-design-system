@@ -1,6 +1,6 @@
-import { BorderScheme } from "../types";
+import { V3_BorderScheme } from "../types";
 
-export interface BorderSet {
+export interface V3_BorderSet {
     "width-005": number;
     "width-010": number;
     "width-020": number;
@@ -8,8 +8,8 @@ export interface BorderSet {
     solid: string;
 }
 
-export type BorderCollectionMap = {
-    [key in BorderScheme]: BorderSet;
+export type V3_BorderCollectionMap = {
+    [key in V3_BorderScheme]: V3_BorderSet;
 };
 
-export type BorderSetOptions = Partial<BorderSet>;
+export type V3_BorderSetOptions = Partial<V3_BorderSet>;

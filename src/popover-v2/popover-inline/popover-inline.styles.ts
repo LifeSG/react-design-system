@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour } from "../../v3_theme";
+import { V3_Colour } from "../../v3_theme";
 import { PopoverInlineStyle } from "../types";
 
 // =============================================================================
@@ -28,7 +28,7 @@ const getTextStyle = (style: PopoverInlineStyle) => {
 };
 
 export const StyledText = styled.span<StyledTextProps>`
-    color: ${Colour["text-primary"]};
+    color: ${V3_Colour["text-primary"]};
     font-weight: 600;
     text-underline-position: under;
 
@@ -36,7 +36,7 @@ export const StyledText = styled.span<StyledTextProps>`
 
     &:hover,
     &:focus-visible {
-        color: ${Colour["text-hover"]};
+        color: ${V3_Colour["text-hover"]};
         ${({ $hoverStyle }) => getTextStyle($hoverStyle)}
     }
 

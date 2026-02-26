@@ -1,6 +1,6 @@
 import React, { RefObject } from "react";
 import { IStyledComponent } from "styled-components";
-import { TypographySizeType } from "../v3_theme/font/types";
+import { V3_TypographySizeType } from "../v3_theme/font/types";
 import { TypographyLinkProps, TypographyProps } from "./types";
 import {
     HyperlinkBase,
@@ -11,7 +11,7 @@ import {
 export namespace Typography {
     const createHeading = (
         tag: keyof JSX.IntrinsicElements,
-        textStyle: TypographySizeType,
+        textStyle: V3_TypographySizeType,
         displayName: string
     ) => {
         const Header = (
@@ -47,7 +47,10 @@ export namespace Typography {
     export const HeadingSM = createHeading("h5", "heading-sm", "HeadingSM");
     export const HeadingXS = createHeading("h6", "heading-xs", "HeadingXS");
 
-    const createBody = (textStyle: TypographySizeType, displayName: string) => {
+    const createBody = (
+        textStyle: V3_TypographySizeType,
+        displayName: string
+    ) => {
         const Body = (
             { weight, inline, paragraph, maxLines, ...props }: TypographyProps,
             ref: React.Ref<HTMLParagraphElement>
@@ -80,7 +83,7 @@ export namespace Typography {
     export const BodyXS = createBody("body-xs", "BodyXS");
 
     const createLinkComponent = (
-        textStyle: TypographySizeType,
+        textStyle: V3_TypographySizeType,
         displayName: string
     ) => {
         const Hyperlink = (

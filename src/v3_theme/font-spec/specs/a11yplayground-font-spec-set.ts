@@ -1,6 +1,6 @@
-import { FontSpecSet } from "../types";
+import { V3_FontSpecSet } from "../types";
 
-export const A11yPlaygroundFontSpecSet: FontSpecSet = {
+export const V3_A11yPlaygroundFontSpecSet: V3_FontSpecSet = {
     "heading-size-xxl": "3rem",
     "heading-size-xl": "2.5rem",
     "heading-size-lg": "2rem",

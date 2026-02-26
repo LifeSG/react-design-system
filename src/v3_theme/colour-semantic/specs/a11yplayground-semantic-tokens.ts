@@ -1,11 +1,11 @@
 import { getPrimitiveColour } from "../../colour-primitive/theme-helper";
-import { SemanticColourSet } from "../../types";
+import { V3_SemanticColourSet } from "../../types";
 
 // ============================================================================
 // LIGHT MODE COLOURS
 // ============================================================================
 
-export const A11yPlaygroundColourSet: SemanticColourSet = {
+export const V3_A11yPlaygroundColourSet: V3_SemanticColourSet = {
     // text
     text: getPrimitiveColour("neutral-20"),
     "text-subtle": getPrimitiveColour("neutral-30"),
@@ -157,7 +157,7 @@ export const A11yPlaygroundColourSet: SemanticColourSet = {
 // DARK MODE COLOURS
 // ============================================================================
 
-export const A11yPlaygroundDarkColourSet: SemanticColourSet = {
+export const V3_A11yPlaygroundDarkColourSet: V3_SemanticColourSet = {
     // text - lighter colours for dark backgrounds
     text: getPrimitiveColour("neutral-100"),
     "text-subtle": getPrimitiveColour("neutral-80"),

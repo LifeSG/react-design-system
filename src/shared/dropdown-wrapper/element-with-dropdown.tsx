@@ -26,7 +26,7 @@ import {
 import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
 import { useFloatingChild } from "../../overlay/use-floating-context";
-import { Breakpoint } from "../../v3_theme";
+import { V3_Breakpoint } from "../../v3_theme";
 import { DropdownAlignmentType } from "./types";
 
 export interface DropdownRenderProps {
@@ -139,7 +139,7 @@ export const ElementWithDropdown = ({
     // CONST, STATE, REF
     // =============================================================================
     const theme = useContext(ThemeContext);
-    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
     const elementRef = useRef<HTMLDivElement | null>(null);
     const { width: referenceWidth = 0 } = useResizeDetector({
         targetRef: positionRef ?? elementRef,

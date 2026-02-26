@@ -1,6 +1,6 @@
-import { FontSpecSet } from "../types";
+import { V3_FontSpecSet } from "../types";
 
-export const OneServiceFontSpecSet: FontSpecSet = {
+export const V3_OneServiceFontSpecSet: V3_FontSpecSet = {
     "heading-size-xxl": "2.5rem",
     "heading-size-xl": "2rem",
     "heading-size-lg": "1.75rem",

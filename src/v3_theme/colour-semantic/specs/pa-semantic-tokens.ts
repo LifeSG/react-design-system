@@ -1,11 +1,11 @@
 import { getPrimitiveColour } from "../../colour-primitive/theme-helper";
-import { SemanticColourSet } from "../../types";
+import { V3_SemanticColourSet } from "../../types";
 
 // ============================================================================
 // LIGHT MODE COLOURS
 // ============================================================================
 
-export const PAColourSet: SemanticColourSet = {
+export const V3_PAColourSet: V3_SemanticColourSet = {
     // text
     text: getPrimitiveColour("neutral-30"),
     "text-subtle": getPrimitiveColour("neutral-40"),

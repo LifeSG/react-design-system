@@ -10,7 +10,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { VisuallyHidden, inertValue } from "../shared/accessibility";
-import { Breakpoint } from "../v3_theme";
+import { V3_Breakpoint } from "../v3_theme";
 import {
     ActionButton,
     ContentWrapper,
@@ -52,7 +52,7 @@ export const Toast = ({
 
     const theme = useContext(ThemeContext);
 
-    const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
+    const mobileBreakpoint = V3_Breakpoint["lg-max"]({ theme });
     const isMobile = useMediaQuery({
         maxWidth: mobileBreakpoint,
     });

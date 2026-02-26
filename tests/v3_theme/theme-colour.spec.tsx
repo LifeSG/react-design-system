@@ -3,12 +3,12 @@ import { act } from "@testing-library/react";
 import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
 import {
-    Colour,
-    DSThemeProvider,
-    LifeSGTheme,
+    V3_Colour,
+    V3_DSThemeProvider,
+    V3_LifeSGTheme,
     useDSTheme,
 } from "../../src/v3_theme";
-import { ThemeSpec } from "../../src/v3_theme/types";
+import { V3_ThemeSpec } from "../../src/v3_theme/types";
 import { MOCK_THEME } from "./mock-theme-data";
 
 // Mock window.matchMedia
@@ -33,14 +33,14 @@ const mockMatchMedia = (matches: boolean) => {
 };
 
 const StyledComponentTest = styled.div`
-    background-color: ${Colour.Primitive["primary-10"]};
-    color: ${Colour["border-primary"]};
+    background-color: ${V3_Colour.Primitive["primary-10"]};
+    color: ${V3_Colour["border-primary"]};
 `;
 
 // Test component that uses theme colors for dark mode testing
 const TestComponent = styled.div`
-    background: ${Colour["bg"]};
-    color: ${Colour["text"]};
+    background: ${V3_Colour["bg"]};
+    color: ${V3_Colour["text"]};
 `;
 
 // Component to test the useDSTheme hook
@@ -75,7 +75,7 @@ describe("Colour Themeing Test", () => {
     });
 
     it("should apply correct styles when overriding primitive colour token", () => {
-        const overrideTheme: ThemeSpec = {
+        const overrideTheme: V3_ThemeSpec = {
             ...MOCK_THEME,
             overrides: {
                 primitiveColour: {
@@ -101,7 +101,7 @@ describe("Colour Themeing Test", () => {
     });
 
     it("should apply correct styles when overriding semantic colour token", () => {
-        const overrideTheme: ThemeSpec = {
+        const overrideTheme: V3_ThemeSpec = {
             ...MOCK_THEME,
             overrides: {
                 semanticColour: {
@@ -130,9 +130,9 @@ describe("Colour Themeing Test", () => {
 describe("Colour mode", () => {
     it("should use light mode by default", () => {
         const { getByTestId } = render(
-            <DSThemeProvider theme={LifeSGTheme}>
+            <V3_DSThemeProvider theme={V3_LifeSGTheme}>
                 <ThemeModeDisplay />
-            </DSThemeProvider>
+            </V3_DSThemeProvider>
         );
 
         expect(getByTestId("theme-mode")).toHaveTextContent("light");
@@ -144,9 +144,9 @@ describe("Colour mode", () => {
 
     it("should use dark mode when explicitly set", () => {
         const { getByTestId } = render(
-            <DSThemeProvider theme={LifeSGTheme.dark}>
+            <V3_DSThemeProvider theme={V3_LifeSGTheme.dark}>
                 <ThemeModeDisplay />
-            </DSThemeProvider>
+            </V3_DSThemeProvider>
         );
 
         expect(getByTestId("theme-mode")).toHaveTextContent("dark");
@@ -158,14 +158,14 @@ describe("Colour mode", () => {
 
     it("should handle theme with explicit colourMode", () => {
         const customTheme = {
-            ...LifeSGTheme.light,
+            ...V3_LifeSGTheme.light,
             colourMode: "dark" as const,
         };
 
         const { getByTestId } = render(
-            <DSThemeProvider theme={customTheme}>
+            <V3_DSThemeProvider theme={customTheme}>
                 <ThemeModeDisplay />
-            </DSThemeProvider>
+            </V3_DSThemeProvider>
         );
 
         expect(getByTestId("theme-mode")).toHaveTextContent("dark");
@@ -173,7 +173,7 @@ describe("Colour mode", () => {
 
     it("should render without errors with dark theme overrides", () => {
         const customTheme = {
-            ...LifeSGTheme.light,
+            ...V3_LifeSGTheme.light,
             colourMode: "dark" as const,
             overrides: {
                 semanticColourDark: {
@@ -183,9 +183,9 @@ describe("Colour mode", () => {
         };
 
         const { container } = render(
-            <DSThemeProvider theme={customTheme}>
+            <V3_DSThemeProvider theme={customTheme}>
                 <TestComponent data-testid="test-component" />
-            </DSThemeProvider>
+            </V3_DSThemeProvider>
         );
 
         expect(
@@ -210,9 +210,9 @@ describe("System Preference Detection", () => {
         mockMatchMedia(false); // false = light mode
 
         const result = render(
-            <DSThemeProvider theme={LifeSGTheme}>
+            <V3_DSThemeProvider theme={V3_LifeSGTheme}>
                 <ThemeModeDisplay />
-            </DSThemeProvider>
+            </V3_DSThemeProvider>
         );
 
         expect(result.getByTestId("theme-mode")).toHaveTextContent("light");
@@ -227,9 +227,9 @@ describe("System Preference Detection", () => {
         mockMatchMedia(true); // true = dark mode
 
         const result = render(
-            <DSThemeProvider theme={LifeSGTheme}>
+            <V3_DSThemeProvider theme={V3_LifeSGTheme}>
                 <ThemeModeDisplay />
-            </DSThemeProvider>
+            </V3_DSThemeProvider>
         );
 
         expect(result.getByTestId("theme-mode")).toHaveTextContent("dark");
@@ -244,9 +244,9 @@ describe("System Preference Detection", () => {
         const mockMediaQueryList = mockMatchMedia(false);
 
         const result = render(
-            <DSThemeProvider theme={LifeSGTheme}>
+            <V3_DSThemeProvider theme={V3_LifeSGTheme}>
                 <ThemeModeDisplay />
-            </DSThemeProvider>
+            </V3_DSThemeProvider>
         );
 
         // Initially should be light mode
@@ -274,9 +274,9 @@ describe("System Preference Detection", () => {
         const mockMediaQueryList = mockMatchMedia(false);
 
         const result = render(
-            <DSThemeProvider theme={LifeSGTheme.light}>
+            <V3_DSThemeProvider theme={V3_LifeSGTheme.light}>
                 <ThemeModeDisplay />
-            </DSThemeProvider>
+            </V3_DSThemeProvider>
         );
 
         // Should be light mode (explicit)
@@ -310,9 +310,9 @@ describe("useDSTheme hook", () => {
         };
 
         render(
-            <DSThemeProvider theme={LifeSGTheme.light}>
+            <V3_DSThemeProvider theme={V3_LifeSGTheme.light}>
                 <TestHookComponent />
-            </DSThemeProvider>
+            </V3_DSThemeProvider>
         );
 
         expect(hookResult.colourMode).toBe("light");
@@ -329,9 +329,9 @@ describe("useDSTheme hook", () => {
         };
 
         render(
-            <DSThemeProvider theme={LifeSGTheme.dark}>
+            <V3_DSThemeProvider theme={V3_LifeSGTheme.dark}>
                 <TestHookComponent />
-            </DSThemeProvider>
+            </V3_DSThemeProvider>
         );
 
         expect(hookResult.colourMode).toBe("dark");

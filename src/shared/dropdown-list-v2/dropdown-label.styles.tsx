@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour, Font } from "../../v3_theme";
+import { V3_Colour, V3_Font } from "../../v3_theme";
 import {
     DropdownVariantType,
     LabelDisplayType,
@@ -35,21 +35,21 @@ interface MatchedTextStyleProps {
 export const PrimaryText = styled.div<LabelTextStyleProps>`
     font-weight: ${(props) =>
         props.$bold
-            ? Font.Spec["weight-semibold"]
-            : Font.Spec["weight-regular"]};
+            ? V3_Font.Spec["weight-semibold"]
+            : V3_Font.Spec["weight-regular"]};
 
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${Colour["text-disabled"]};
+                color: ${V3_Colour["text-disabled"]};
             `;
         } else if (props.$selected) {
             return css`
-                color: ${Colour["text-selected"]};
+                color: ${V3_Colour["text-selected"]};
             `;
         } else {
             return css`
-                color: ${Colour["text"]};
+                color: ${V3_Colour["text"]};
             `;
         }
     }}
@@ -61,7 +61,7 @@ export const PrimaryText = styled.div<LabelTextStyleProps>`
 `;
 
 export const SecondaryText = styled.div<LabelTextStyleProps>`
-    color: ${Colour["text-subtlest"]};
+    color: ${V3_Colour["text-subtlest"]};
     width: 100%;
 
     ${(props) =>
@@ -72,19 +72,19 @@ export const SecondaryText = styled.div<LabelTextStyleProps>`
         switch (props.$labelDisplayType) {
             case "next-line":
                 return css`
-                    ${Font["body-md-semibold"]}
+                    ${V3_Font["body-md-semibold"]}
                 `;
             case "inline":
             default:
                 return css`
-                    ${Font["body-baseline-regular"]}
+                    ${V3_Font["body-baseline-regular"]}
                 `;
         }
     }}
 `;
 
 export const MatchedText = styled.span<MatchedTextStyleProps>`
-    font-weight: ${Font.Spec["weight-semibold"]};
+    font-weight: ${V3_Font.Spec["weight-semibold"]};
 `;
 
 export const Label = styled.div<LabelStyleProps>`
@@ -95,8 +95,8 @@ export const Label = styled.div<LabelStyleProps>`
 
     ${(props) =>
         props.$variant === "small"
-            ? Font["body-md-regular"]
-            : Font["body-baseline-regular"]}
+            ? V3_Font["body-md-regular"]
+            : V3_Font["body-baseline-regular"]}
 
     ${(props) => {
         switch (props.$labelDisplayType) {

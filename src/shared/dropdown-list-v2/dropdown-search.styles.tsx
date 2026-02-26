@@ -1,6 +1,6 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import styled, { css } from "styled-components";
-import { Colour, Font, Radius, Spacing } from "../../v3_theme";
+import { V3_Colour, V3_Font, V3_Radius, V3_Spacing } from "../../v3_theme";
 import { ClickableIcon } from "../clickable-icon";
 import { DropdownVariantType } from "../dropdown-list/types";
 import { BasicInput, InputStyleProps } from "../input-wrapper/input-wrapper";
@@ -16,29 +16,29 @@ export interface StyleProps {
 // STYLING
 //=============================================================================
 export const Container = styled.div<StyleProps>`
-    background: ${Colour["bg-strong"]};
-    border-radius: ${Radius["sm"]};
+    background: ${V3_Colour["bg-strong"]};
+    border-radius: ${V3_Radius["sm"]};
     display: flex;
     align-items: center;
 
     ${(props) =>
         props.$variant === "small"
-            ? Font["body-md-regular"]
-            : Font["body-baseline-regular"]}
+            ? V3_Font["body-md-regular"]
+            : V3_Font["body-baseline-regular"]}
 `;
 
 export const SearchBox = styled.label<StyleProps>`
     flex: 1;
     display: flex;
     align-items: center;
-    gap: ${Spacing["spacing-8"]};
+    gap: ${V3_Spacing["spacing-8"]};
     padding: ${(props) =>
         props.$variant === "small"
             ? css`
-                  ${Spacing["spacing-8"]} ${Spacing["spacing-16"]}
+                  ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-16"]}
               `
             : // TODO: confirm vertical spacing
-              css`10px ${Spacing["spacing-8"]}`};
+              css`10px ${V3_Spacing["spacing-8"]}`};
 `;
 
 export const SearchInput = styled(BasicInput)<InputStyleProps>`
@@ -46,7 +46,7 @@ export const SearchInput = styled(BasicInput)<InputStyleProps>`
 `;
 
 export const SearchIcon = styled(MagnifierIcon)`
-    color: ${Colour["icon"]};
+    color: ${V3_Colour["icon"]};
     flex-shrink: 0;
     height: 1em;
     width: 1em;
@@ -56,9 +56,9 @@ export const ClearButton = styled(ClickableIcon)`
     flex-shrink: 0;
     align-self: stretch;
     box-sizing: content-box;
-    padding: ${Spacing["spacing-8"]};
-    margin-left: -${Spacing["spacing-8"]};
-    color: ${Colour["icon"]};
+    padding: ${V3_Spacing["spacing-8"]};
+    margin-left: -${V3_Spacing["spacing-8"]};
+    color: ${V3_Colour["icon"]};
     cursor: pointer;
     font-size: inherit;
 

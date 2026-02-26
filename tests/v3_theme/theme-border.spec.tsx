@@ -1,14 +1,14 @@
 import { render } from "@testing-library/react";
 import "jest-styled-components";
-import { Border } from "src/v3_theme";
-import { ThemeSpec } from "src/v3_theme/types";
+import { V3_Border } from "src/v3_theme";
+import { V3_ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider } from "styled-components";
 import { MOCK_THEME } from "./mock-theme-data";
 
 describe("Border Theming Test", () => {
     it("should apply correct solid border styles based on the theme", () => {
         const SolidBorderComponent = styled.div`
-            border: ${Border["width-010"]} ${Border.solid};
+            border: ${V3_Border["width-010"]} ${V3_Border.solid};
         `;
 
         const { container } = render(
@@ -21,7 +21,7 @@ describe("Border Theming Test", () => {
     });
 
     it("should apply correct solid border styles based on theme overrides", () => {
-        const mockTheme: ThemeSpec = {
+        const mockTheme: V3_ThemeSpec = {
             ...MOCK_THEME,
             overrides: {
                 border: {
@@ -31,7 +31,7 @@ describe("Border Theming Test", () => {
         };
 
         const SolidBorderComponent = styled.div`
-            border: ${Border["width-010"]} ${Border.solid};
+            border: ${V3_Border["width-010"]} ${V3_Border.solid};
         `;
         const { container } = render(
             <ThemeProvider theme={mockTheme}>
@@ -44,7 +44,7 @@ describe("Border Theming Test", () => {
 
     it("should apply correct solid border util styles when setting options", () => {
         const SolidBorderComponent = styled.div`
-            ${Border.Util["solid"]({
+            ${V3_Border.Util["solid"]({
                 thickness: 10,
                 radius: 11,
                 colour: "red",
@@ -66,7 +66,7 @@ describe("Border Theming Test", () => {
 
     it("should apply correct dashed border util styles based on the theme", () => {
         const DashedBorderUtilComponent = styled.div`
-            ${Border.Util["dashed-default"]};
+            ${V3_Border.Util["dashed-default"]};
         `;
 
         const { container } = render(
@@ -86,7 +86,7 @@ describe("Border Theming Test", () => {
 
     it("should apply correct dashed border util styles when setting options", () => {
         const DashedBorderUtilComponent = styled.div`
-            ${Border.Util["dashed-default"]({
+            ${V3_Border.Util["dashed-default"]({
                 thickness: 10,
                 radius: 11,
                 colour: "red",
@@ -109,7 +109,7 @@ describe("Border Theming Test", () => {
     });
 
     fit("should apply correct dashed border util styles based on theme overrides", () => {
-        const mockTheme: ThemeSpec = {
+        const mockTheme: V3_ThemeSpec = {
             ...MOCK_THEME,
             overrides: {
                 border: {
@@ -119,7 +119,7 @@ describe("Border Theming Test", () => {
         };
 
         const DashedBorderUtilComponent = styled.div`
-            ${Border.Util["dashed-default"]};
+            ${V3_Border.Util["dashed-default"]};
         `;
 
         const { container } = render(

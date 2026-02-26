@@ -1,9 +1,9 @@
 import { getPrimitiveColour } from "src/v3_theme/colour-primitive/theme-helper";
-import { PrimitiveColourSet, ThemeSpec } from "src/v3_theme/types";
+import { V3_PrimitiveColourSet, V3_ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
 
 interface PrimitiveColourPaletteProps {
-    tokens: (keyof PrimitiveColourSet)[];
+    tokens: (keyof V3_PrimitiveColourSet)[];
     category: string;
 }
 
@@ -33,7 +33,7 @@ const PrimitiveColourPalette = ({
 };
 
 interface PrimitiveColourDisplayProps {
-    theme: ThemeSpec;
+    theme: V3_ThemeSpec;
 }
 
 export const PrimitiveColourDisplay = ({

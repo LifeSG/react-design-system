@@ -1,9 +1,9 @@
 import get from "lodash/get";
-import { ThemeCollectionSpec } from "./internal-types";
-import { ThemeSpec } from "./types";
+import { V3_ThemeCollectionSpec } from "./internal-types";
+import { V3_ThemeSpec } from "./types";
 
-export interface StyledComponentProps {
-    theme?: ThemeSpec;
+export interface V3_StyledComponentProps {
+    theme?: V3_ThemeSpec;
 }
 
 export const getValue = <C, T, K extends keyof C | keyof T>(
@@ -15,7 +15,7 @@ export const getValue = <C, T, K extends keyof C | keyof T>(
 };
 
 export const getCollection = <T, V, C>(
-    collectionSpec: ThemeCollectionSpec<T, V>,
+    collectionSpec: V3_ThemeCollectionSpec<T, V>,
     contextValue?: string
 ): C => {
     const themeContextValue = contextValue || collectionSpec.defaultValue;

@@ -1,13 +1,13 @@
 import { ClockIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
 import {
-    Border,
-    Colour,
-    Font,
-    MediaQuery,
-    Radius,
-    Shadow,
-    Spacing,
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_MediaQuery,
+    V3_Radius,
+    V3_Shadow,
+    V3_Spacing,
 } from "../v3_theme";
 
 // =============================================================================
@@ -31,25 +31,25 @@ export const Wrapper = styled.div`
 `;
 
 export const BaseCountdown = styled.div<CountdownStyleProps>`
-    ${Font["body-baseline-regular"]}
+    ${V3_Font["body-baseline-regular"]}
     display: flex;
     align-items: center;
-    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
-    border-radius: ${Radius["sm"]};
-    color: ${Colour["text-primary"]};
-    border: ${Border["width-010"]} ${Border["solid"]};
-    border-color: ${Colour["border-primary"]};
-    background-color: ${Colour["bg"]};
+    padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-16"]};
+    border-radius: ${V3_Radius["sm"]};
+    color: ${V3_Colour["text-primary"]};
+    border: ${V3_Border["width-010"]} ${V3_Border["solid"]};
+    border-color: ${V3_Colour["border-primary"]};
+    background-color: ${V3_Colour["bg"]};
 
-    ${MediaQuery.MaxWidth.sm} {
-        padding: ${Spacing["spacing-16"]};
+    ${V3_MediaQuery.MaxWidth.sm} {
+        padding: ${V3_Spacing["spacing-16"]};
     }
 
     ${(props) => {
         if (props.$warn) {
             return css`
-                color: ${Colour["text-error"]};
-                border-color: ${Colour["border-error"]};
+                color: ${V3_Colour["text-error"]};
+                border-color: ${V3_Colour["border-error"]};
             `;
         }
     }}
@@ -71,10 +71,10 @@ export const FixedCountdown = styled(BaseCountdown)`
             ${{ top: $top, left: $left, right: $right }}
 
             box-shadow: ${$warn
-                ? Shadow["xs-error-strong"]
-                : Shadow["xs-focus-strong"]};
+                ? V3_Shadow["xs-error-strong"]
+                : V3_Shadow["xs-focus-strong"]};
 
-            ${MediaQuery.MaxWidth.sm} {
+            ${V3_MediaQuery.MaxWidth.sm} {
                 left: 0;
                 right: 0;
                 border-radius: 0;
@@ -87,21 +87,21 @@ export const FixedCountdown = styled(BaseCountdown)`
 `;
 
 export const TimeLeft = styled.div`
-    font-weight: ${Font.Spec["weight-bold"]};
-    margin-left: ${Spacing["spacing-8"]};
-    margin-right: ${Spacing["spacing-24"]};
+    font-weight: ${V3_Font.Spec["weight-bold"]};
+    margin-left: ${V3_Spacing["spacing-8"]};
+    margin-right: ${V3_Spacing["spacing-24"]};
 
-    ${MediaQuery.MaxWidth.sm} {
-        margin-right: ${Spacing["spacing-48"]};
+    ${V3_MediaQuery.MaxWidth.sm} {
+        margin-right: ${V3_Spacing["spacing-48"]};
     }
 `;
 
 export const Timer = styled.div`
-    font-weight: ${Font.Spec["weight-semibold"]};
+    font-weight: ${V3_Font.Spec["weight-semibold"]};
     margin-left: auto;
 `;
 
 export const TimerIcon = styled(ClockIcon)<CountdownStyleProps>`
     color: ${(props) =>
-        props.$warn ? Colour["icon-error"] : Colour["icon-primary"]};
+        props.$warn ? V3_Colour["icon-error"] : V3_Colour["icon-primary"]};
 `;

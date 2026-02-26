@@ -1,6 +1,6 @@
-import { SpacingScheme } from "../types";
+import { V3_SpacingScheme } from "../types";
 
-export type SpacingSet = {
+export type V3_SpacingSet = {
     "spacing-0": number;
     "spacing-4": number;
     "spacing-8": number;
@@ -23,8 +23,8 @@ export type SpacingSet = {
     "layout-xxxl": number;
 };
 
-export type SpacingSetOptions = Partial<SpacingSet>;
+export type V3_SpacingSetOptions = Partial<V3_SpacingSet>;
 
-export type SpacingCollectionsMap = {
-    [key in SpacingScheme]: SpacingSet;
+export type V3_SpacingCollectionsMap = {
+    [key in V3_SpacingScheme]: V3_SpacingSet;
 };

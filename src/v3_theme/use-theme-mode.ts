@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { ThemeContext } from "styled-components";
-import { ColourMode, DSTheme, ThemeSpec } from "./types";
+import { V3_ColourMode, V3_DSTheme, V3_ThemeSpec } from "./types";
 
 // Hook to access the current theme mode and theme object
-export const useDSTheme = (): DSTheme => {
-    const theme = useContext(ThemeContext) as ThemeSpec;
+export const useDSTheme = (): V3_DSTheme => {
+    const theme = useContext(ThemeContext) as V3_ThemeSpec;
 
     if (!theme) {
         console.warn(
@@ -27,7 +27,7 @@ export const useDSTheme = (): DSTheme => {
 // =============================================================================
 
 // Utility function to detect system color scheme preference
-export const getSystemColourMode = (): ColourMode => {
+export const getSystemColourMode = (): V3_ColourMode => {
     if (typeof window !== "undefined" && window.matchMedia) {
         return window.matchMedia("(prefers-color-scheme: dark)").matches
             ? "dark"
@@ -38,9 +38,9 @@ export const getSystemColourMode = (): ColourMode => {
 
 // Utility function to create a theme with a specific color mode
 export const createThemeWithColourMode = (
-    baseTheme: ThemeSpec,
-    colourMode: ColourMode
-): ThemeSpec => ({
+    baseTheme: V3_ThemeSpec,
+    colourMode: V3_ColourMode
+): V3_ThemeSpec => ({
     ...baseTheme,
     colourMode,
 });

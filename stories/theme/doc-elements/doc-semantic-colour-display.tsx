@@ -1,11 +1,11 @@
 import { getSemanticColour } from "src/v3_theme/colour-semantic/theme-helper";
-import { SemanticColourSet, ThemeSpec } from "src/v3_theme/types";
+import { V3_SemanticColourSet, V3_ThemeSpec } from "src/v3_theme/types";
 import { ColourTokenInspector } from "stories/storybook-common";
 import styled, { useTheme } from "styled-components";
 import { ColourDisplay } from "./colour-display";
 
 interface SemanticColourPaletteProps {
-    tokens: (keyof SemanticColourSet)[];
+    tokens: (keyof V3_SemanticColourSet)[];
 }
 
 const SemanticColourPalette = ({ tokens }: SemanticColourPaletteProps) => {
@@ -39,7 +39,7 @@ const SemanticColourPalette = ({ tokens }: SemanticColourPaletteProps) => {
 };
 
 interface SemanticColourDisplayProps {
-    theme: ThemeSpec;
+    theme: V3_ThemeSpec;
 }
 
 export const SemanticColourDisplay = ({

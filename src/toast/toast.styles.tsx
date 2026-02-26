@@ -2,8 +2,8 @@ import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, Font, MediaQuery, Radius } from "../v3_theme";
-import { SemanticColourSet } from "../v3_theme/types";
+import { V3_Colour, V3_Font, V3_MediaQuery, V3_Radius } from "../v3_theme";
+import { V3_SemanticColourSet } from "../v3_theme/types";
 import { Typography } from "../typography/typography";
 import { ToastType } from "./types";
 
@@ -20,7 +20,7 @@ const getValidationColorAttributes = (props: StyleProps) => {
 
     const typeMapping: Record<
         ToastType,
-        Record<string, keyof SemanticColourSet>
+        Record<string, keyof V3_SemanticColourSet>
     > = {
         success: {
             Background: "bg-success",
@@ -51,10 +51,10 @@ const getValidationColorAttributes = (props: StyleProps) => {
     const selectedTypeMapping = typeMapping[type];
 
     return {
-        Background: Colour[selectedTypeMapping.Background],
-        Border: Colour[selectedTypeMapping.Border],
-        Text: Colour[selectedTypeMapping.Text],
-        Icon: Colour[selectedTypeMapping.Icon],
+        Background: V3_Colour[selectedTypeMapping.Background],
+        Border: V3_Colour[selectedTypeMapping.Border],
+        Text: V3_Colour[selectedTypeMapping.Text],
+        Icon: V3_Colour[selectedTypeMapping.Icon],
     };
 };
 
@@ -69,12 +69,12 @@ export const Wrapper = animated(styled.div<StyleProps>`
     top: 0;
     right: 0;
     padding: 1rem;
-    border-radius: ${Radius["md"]};
+    border-radius: ${V3_Radius["md"]};
     z-index: 10;
     align-items: center;
     gap: 2rem;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         left: 0;
     }
 
@@ -94,7 +94,7 @@ export const ContentWrapper = styled.div`
     flex: 1;
     justify-content: space-between;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         display: flex;
         align-items: flex-start;
         flex-direction: column;
@@ -128,7 +128,7 @@ export const TextContainer = styled.div`
 
 export const Title = styled.h2<StyleProps>`
     display: flex;
-    ${Font["body-baseline-semibold"]}
+    ${V3_Font["body-baseline-semibold"]}
 
     ${(props) => {
         return css`
@@ -160,7 +160,7 @@ export const ActionButton = styled(Button.Small)`
     width: fit-content;
     flex-shrink: 0;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         align-self: flex-start;
         margin-left: 2rem;
     }
@@ -181,7 +181,7 @@ export const DismissButton = styled(ClickableIcon)<StyleProps>`
             &:hover {
                 background: transparent;
             }
-            ${MediaQuery.MaxWidth.sm} {
+            ${V3_MediaQuery.MaxWidth.sm} {
                 align-self: center;
             }
         `;

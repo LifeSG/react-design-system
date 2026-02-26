@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { Colour, Font, MediaQuery } from "../v3_theme";
-import { TypographySizeType } from "../v3_theme/font/types";
+import { V3_Colour, V3_Font, V3_MediaQuery } from "../v3_theme";
+import { V3_TypographySizeType } from "../v3_theme/font/types";
 import { BulletType, CounterType } from "./types";
 
 // =============================================================================
@@ -8,7 +8,7 @@ import { BulletType, CounterType } from "./types";
 // =============================================================================
 interface ListStyleProps {
     $bottomMargin: number | undefined;
-    $size: TypographySizeType | undefined;
+    $size: V3_TypographySizeType | undefined;
 }
 
 interface OrderedListStyleProps extends ListStyleProps {
@@ -30,9 +30,9 @@ const baseStyle = css<ListStyleProps>`
     // Counter matters
     counter-reset: list;
 
-    ${(props) => props.$size && Font[`${props.$size}-regular`]}
-    font-weight: ${Font.Spec["weight-regular"]};
-    color: ${Colour.text};
+    ${(props) => props.$size && V3_Font[`${props.$size}-regular`]}
+    font-weight: ${V3_Font.Spec["weight-regular"]};
+    color: ${V3_Colour.text};
 
     // nested lists styling
     ol,
@@ -47,7 +47,7 @@ export const StyledOrderedList = styled.ol<OrderedListStyleProps>`
 
     margin-left: 3em;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         margin-left: 2.5em;
     }
 

@@ -1,4 +1,4 @@
-import { MediaQuery } from "src/v3_theme";
+import { V3_MediaQuery } from "src/v3_theme";
 import { Typography } from "src/typography";
 import styled from "styled-components";
 
@@ -9,7 +9,7 @@ export const Page = styled.div`
     gap: 1rem;
     grid-template-columns: 1fr 2fr;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         grid-template-columns: 1fr;
     }
 

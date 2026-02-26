@@ -1,6 +1,6 @@
-import { PrimitiveColourSet } from "../../types";
+import { V3_PrimitiveColourSet } from "../../types";
 
-export const MyLegacyColourSet: PrimitiveColourSet = {
+export const V3_MyLegacyColourSet: V3_PrimitiveColourSet = {
     // brand,secondary from lifesg
     "brand-10": "#2C0C0B",
     "brand-20": "#4C1513",

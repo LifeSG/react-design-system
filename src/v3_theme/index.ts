@@ -1,16 +1,16 @@
-import { BorderUtilValues } from "./border-util/theme-helper";
-import { BorderValues } from "./border/theme-helper";
-import { MediaQuery as MediaQueryValues } from "./breakpoint/media-query-helper";
-import { BreakpointValues } from "./breakpoint/theme-helper";
-import { PrimitiveColour } from "./colour-primitive/theme-helper";
-import { ColourSemantic } from "./colour-semantic/theme-helper";
-import { FontSpecValues } from "./font-spec/theme-helper";
-import { FontValues } from "./font/theme-helper";
-import { MotionValues } from "./motion/theme-helper";
-import { RadiusValues } from "./radius/theme-helper";
-import { ShadowValues } from "./shadow/theme-helper";
-import { SpacingValues } from "./spacing/theme-helper";
-import { ThemeSpec } from "./types";
+import { V3_BorderUtilValues } from "./border-util/theme-helper";
+import { V3_BorderValues } from "./border/theme-helper";
+import { V3_MediaQuery as V3_MediaQueryValues } from "./breakpoint/media-query-helper";
+import { V3_BreakpointValues } from "./breakpoint/theme-helper";
+import { V3_PrimitiveColour } from "./colour-primitive/theme-helper";
+import { V3_ColourSemantic } from "./colour-semantic/theme-helper";
+import { V3_FontSpecValues } from "./font-spec/theme-helper";
+import { V3_FontValues } from "./font/theme-helper";
+import { V3_MotionValues } from "./motion/theme-helper";
+import { V3_RadiusValues } from "./radius/theme-helper";
+import { V3_ShadowValues } from "./shadow/theme-helper";
+import { V3_SpacingValues } from "./spacing/theme-helper";
+import { V3_ThemeSpec } from "./types";
 import { createThemeWithColourMode } from "./use-theme-mode";
 
 export * from "./types";
@@ -21,39 +21,39 @@ export * from "./use-theme-mode";
 // TOKENS
 // =============================================================================
 
-export const Colour = {
-    ...ColourSemantic,
-    Primitive: PrimitiveColour,
+export const V3_Colour = {
+    ...V3_ColourSemantic,
+    Primitive: V3_PrimitiveColour,
 };
 
-export const Font = {
-    ...FontValues,
-    Spec: FontSpecValues,
+export const V3_Font = {
+    ...V3_FontValues,
+    Spec: V3_FontSpecValues,
 };
 
-export const Motion = MotionValues;
+export const V3_Motion = V3_MotionValues;
 
-export const Border = {
-    ...BorderValues,
-    Util: BorderUtilValues,
+export const V3_Border = {
+    ...V3_BorderValues,
+    Util: V3_BorderUtilValues,
 };
 
-export const Spacing = SpacingValues;
+export const V3_Spacing = V3_SpacingValues;
 
-export const Radius = RadiusValues;
+export const V3_Radius = V3_RadiusValues;
 
-export const Shadow = ShadowValues;
+export const V3_Shadow = V3_ShadowValues;
 
-export const Breakpoint = BreakpointValues;
+export const V3_Breakpoint = V3_BreakpointValues;
 
-export const MediaQuery = MediaQueryValues;
+export const V3_MediaQuery = V3_MediaQueryValues;
 
 // =============================================================================
 // THEME PRESETS
 // =============================================================================
 
 // Theme definitions
-const LifeSGThemeBase: ThemeSpec = {
+const V3_LifeSGThemeBase: V3_ThemeSpec = {
     colourScheme: "lifesg",
     fontScheme: "default",
     motionScheme: "default",
@@ -72,7 +72,7 @@ const LifeSGThemeBase: ThemeSpec = {
     },
 };
 
-const BookingSGThemeBase: ThemeSpec = {
+const V3_BookingSGThemeBase: V3_ThemeSpec = {
     colourScheme: "bookingsg",
     fontScheme: "bookingsg",
     motionScheme: "default",
@@ -90,7 +90,7 @@ const BookingSGThemeBase: ThemeSpec = {
     },
 };
 
-const CCubeThemeBase: ThemeSpec = {
+const V3_CCubeThemeBase: V3_ThemeSpec = {
     colourScheme: "ccube",
     fontScheme: "default",
     motionScheme: "default",
@@ -108,7 +108,7 @@ const CCubeThemeBase: ThemeSpec = {
     },
 };
 
-const MyLegacyThemeBase: ThemeSpec = {
+const V3_MyLegacyThemeBase: V3_ThemeSpec = {
     colourScheme: "mylegacy",
     fontScheme: "mylegacy",
     motionScheme: "default",
@@ -126,7 +126,7 @@ const MyLegacyThemeBase: ThemeSpec = {
     },
 };
 
-const RBSThemeBase: ThemeSpec = {
+const V3_RBSThemeBase: V3_ThemeSpec = {
     colourScheme: "rbs",
     fontScheme: "default",
     motionScheme: "default",
@@ -144,7 +144,7 @@ const RBSThemeBase: ThemeSpec = {
     },
 };
 
-const OneServiceThemeBase: ThemeSpec = {
+const V3_OneServiceThemeBase: V3_ThemeSpec = {
     colourScheme: "oneservice",
     fontScheme: "oneservice",
     motionScheme: "default",
@@ -156,7 +156,7 @@ const OneServiceThemeBase: ThemeSpec = {
     resourceScheme: "oneservice",
 };
 
-const PAThemeBase: ThemeSpec = {
+const V3_PAThemeBase: V3_ThemeSpec = {
     colourScheme: "pa",
     fontScheme: "pa",
     motionScheme: "default",
@@ -169,7 +169,7 @@ const PAThemeBase: ThemeSpec = {
     componentScheme: "pa",
 };
 
-const A11yPlaygroundThemeBase: ThemeSpec = {
+const V3_A11yPlaygroundThemeBase: V3_ThemeSpec = {
     colourScheme: "a11yplayground",
     fontScheme: "a11yplayground",
     motionScheme: "default",
@@ -182,7 +182,7 @@ const A11yPlaygroundThemeBase: ThemeSpec = {
     componentScheme: "a11yplayground",
 };
 
-export const SupportGoWhereThemeBase: ThemeSpec = {
+export const V3_SupportGoWhereThemeBase: V3_ThemeSpec = {
     colourScheme: "supportgowhere",
     fontScheme: "supportgowhere",
     motionScheme: "default",
@@ -195,7 +195,7 @@ export const SupportGoWhereThemeBase: ThemeSpec = {
     componentScheme: "default",
 };
 
-export const SGWDigitalLobbyThemeBase: ThemeSpec = {
+export const V3_SGWDigitalLobbyThemeBase: V3_ThemeSpec = {
     colourScheme: "supportgowhere",
     fontScheme: "sgwdigitallobby",
     motionScheme: "default",
@@ -208,7 +208,7 @@ export const SGWDigitalLobbyThemeBase: ThemeSpec = {
     componentScheme: "default",
 };
 
-const IMDAThemeBase: ThemeSpec = {
+const V3_IMDAThemeBase: V3_ThemeSpec = {
     colourScheme: "imda",
     fontScheme: "imda",
     motionScheme: "default",
@@ -221,7 +221,7 @@ const IMDAThemeBase: ThemeSpec = {
     componentScheme: "default",
 };
 
-const SPFThemeBase: ThemeSpec = {
+const V3_SPFThemeBase: V3_ThemeSpec = {
     colourScheme: "spf",
     fontScheme: "spf",
     motionScheme: "default",
@@ -239,74 +239,74 @@ const SPFThemeBase: ThemeSpec = {
 // =============================================================================
 
 // Theme presets with backward compatibility and light/dark variants
-export const LifeSGTheme = {
-    ...LifeSGThemeBase,
-    light: createThemeWithColourMode(LifeSGThemeBase, "light"),
-    dark: createThemeWithColourMode(LifeSGThemeBase, "dark"),
+export const V3_LifeSGTheme = {
+    ...V3_LifeSGThemeBase,
+    light: createThemeWithColourMode(V3_LifeSGThemeBase, "light"),
+    dark: createThemeWithColourMode(V3_LifeSGThemeBase, "dark"),
 };
 
-export const BookingSGTheme = {
-    ...BookingSGThemeBase,
-    light: createThemeWithColourMode(BookingSGThemeBase, "light"),
-    dark: createThemeWithColourMode(BookingSGThemeBase, "dark"),
+export const V3_BookingSGTheme = {
+    ...V3_BookingSGThemeBase,
+    light: createThemeWithColourMode(V3_BookingSGThemeBase, "light"),
+    dark: createThemeWithColourMode(V3_BookingSGThemeBase, "dark"),
 };
 
-export const CCubeTheme = {
-    ...CCubeThemeBase,
-    light: createThemeWithColourMode(CCubeThemeBase, "light"),
-    dark: createThemeWithColourMode(CCubeThemeBase, "dark"),
+export const V3_CCubeTheme = {
+    ...V3_CCubeThemeBase,
+    light: createThemeWithColourMode(V3_CCubeThemeBase, "light"),
+    dark: createThemeWithColourMode(V3_CCubeThemeBase, "dark"),
 };
 
-export const MyLegacyTheme = {
-    ...MyLegacyThemeBase,
-    light: createThemeWithColourMode(MyLegacyThemeBase, "light"),
-    dark: createThemeWithColourMode(MyLegacyThemeBase, "dark"),
+export const V3_MyLegacyTheme = {
+    ...V3_MyLegacyThemeBase,
+    light: createThemeWithColourMode(V3_MyLegacyThemeBase, "light"),
+    dark: createThemeWithColourMode(V3_MyLegacyThemeBase, "dark"),
 };
 
-export const RBSTheme = {
-    ...RBSThemeBase,
-    light: createThemeWithColourMode(RBSThemeBase, "light"),
-    dark: createThemeWithColourMode(RBSThemeBase, "dark"),
+export const V3_RBSTheme = {
+    ...V3_RBSThemeBase,
+    light: createThemeWithColourMode(V3_RBSThemeBase, "light"),
+    dark: createThemeWithColourMode(V3_RBSThemeBase, "dark"),
 };
 
-export const OneServiceTheme = {
-    ...OneServiceThemeBase,
-    light: createThemeWithColourMode(OneServiceThemeBase, "light"),
-    dark: createThemeWithColourMode(OneServiceThemeBase, "dark"),
+export const V3_OneServiceTheme = {
+    ...V3_OneServiceThemeBase,
+    light: createThemeWithColourMode(V3_OneServiceThemeBase, "light"),
+    dark: createThemeWithColourMode(V3_OneServiceThemeBase, "dark"),
 };
 
-export const PATheme = {
-    ...PAThemeBase,
-    light: createThemeWithColourMode(PAThemeBase, "light"),
-    dark: createThemeWithColourMode(PAThemeBase, "dark"),
+export const V3_PATheme = {
+    ...V3_PAThemeBase,
+    light: createThemeWithColourMode(V3_PAThemeBase, "light"),
+    dark: createThemeWithColourMode(V3_PAThemeBase, "dark"),
 };
 
-export const A11yPlaygroundTheme = {
-    ...A11yPlaygroundThemeBase,
-    light: createThemeWithColourMode(A11yPlaygroundThemeBase, "light"),
-    dark: createThemeWithColourMode(A11yPlaygroundThemeBase, "dark"),
+export const V3_A11yPlaygroundTheme = {
+    ...V3_A11yPlaygroundThemeBase,
+    light: createThemeWithColourMode(V3_A11yPlaygroundThemeBase, "light"),
+    dark: createThemeWithColourMode(V3_A11yPlaygroundThemeBase, "dark"),
 };
 
-export const SupportGoWhereTheme = {
-    ...SupportGoWhereThemeBase,
-    light: createThemeWithColourMode(SupportGoWhereThemeBase, "light"),
-    dark: createThemeWithColourMode(SupportGoWhereThemeBase, "dark"),
+export const V3_SupportGoWhereTheme = {
+    ...V3_SupportGoWhereThemeBase,
+    light: createThemeWithColourMode(V3_SupportGoWhereThemeBase, "light"),
+    dark: createThemeWithColourMode(V3_SupportGoWhereThemeBase, "dark"),
 };
 
-export const SGWDigitalLobbyTheme = {
-    ...SGWDigitalLobbyThemeBase,
-    light: createThemeWithColourMode(SGWDigitalLobbyThemeBase, "light"),
-    dark: createThemeWithColourMode(SGWDigitalLobbyThemeBase, "dark"),
+export const V3_SGWDigitalLobbyTheme = {
+    ...V3_SGWDigitalLobbyThemeBase,
+    light: createThemeWithColourMode(V3_SGWDigitalLobbyThemeBase, "light"),
+    dark: createThemeWithColourMode(V3_SGWDigitalLobbyThemeBase, "dark"),
 };
 
-export const IMDATheme = {
-    ...IMDAThemeBase,
-    light: createThemeWithColourMode(IMDAThemeBase, "light"),
-    dark: createThemeWithColourMode(IMDAThemeBase, "dark"),
+export const V3_IMDATheme = {
+    ...V3_IMDAThemeBase,
+    light: createThemeWithColourMode(V3_IMDAThemeBase, "light"),
+    dark: createThemeWithColourMode(V3_IMDAThemeBase, "dark"),
 };
 
-export const SPFTheme = {
-    ...SPFThemeBase,
-    light: createThemeWithColourMode(SPFThemeBase, "light"),
-    dark: createThemeWithColourMode(SPFThemeBase, "dark"),
+export const V3_SPFTheme = {
+    ...V3_SPFThemeBase,
+    light: createThemeWithColourMode(V3_SPFThemeBase, "light"),
+    dark: createThemeWithColourMode(V3_SPFThemeBase, "dark"),
 };

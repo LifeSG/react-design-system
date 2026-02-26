@@ -1,22 +1,25 @@
 import { CSSProp } from "styled-components";
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { ThemeCollectionSpec } from "../internal-types";
-import { ShadowScheme } from "../types";
-import { DefaultShadowSet } from "./specs/default-shadow-set";
-import { ShadowCollectionsMap, ShadowSet } from "./types";
+import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
+import { V3_ThemeCollectionSpec } from "../internal-types";
+import { V3_ShadowScheme } from "../types";
+import { V3_DefaultShadowSet } from "./specs/default-shadow-set";
+import { V3_ShadowCollectionsMap, V3_ShadowSet } from "./types";
 
-const ShadowSpec: ThemeCollectionSpec<ShadowCollectionsMap, ShadowScheme> = {
+const V3_ShadowSpec: V3_ThemeCollectionSpec<
+    V3_ShadowCollectionsMap,
+    V3_ShadowScheme
+> = {
     collections: {
-        default: DefaultShadowSet,
+        default: V3_DefaultShadowSet,
     },
     defaultValue: "default",
 };
 
-export const getShadow = (key: keyof ShadowSet) => {
-    return (props: StyledComponentProps): CSSProp => {
+export const getShadow = (key: keyof V3_ShadowSet) => {
+    return (props: V3_StyledComponentProps): CSSProp => {
         const theme = props.theme;
-        const shadowSet: ShadowSet = getCollection(
-            ShadowSpec,
+        const shadowSet: V3_ShadowSet = getCollection(
+            V3_ShadowSpec,
             theme?.shadowScheme
         );
 
@@ -33,8 +36,8 @@ export const getShadow = (key: keyof ShadowSet) => {
     };
 };
 
-export const ShadowValues: {
-    [key in keyof ShadowSet]: (props: StyledComponentProps) => CSSProp;
+export const V3_ShadowValues: {
+    [key in keyof V3_ShadowSet]: (props: V3_StyledComponentProps) => CSSProp;
 } = {
     "xs-subtle": getShadow("xs-subtle"),
     "xs-strong": getShadow("xs-strong"),

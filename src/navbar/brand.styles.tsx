@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Motion } from "../v3_theme";
+import { V3_Motion } from "../v3_theme";
 import { BrandType } from "./types";
 
 // =============================================================================
@@ -21,7 +21,7 @@ export const Container = styled.a<StyleProps>`
     img {
         width: auto;
         height: 100%;
-        transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+        transition: ${V3_Motion["duration-150"]} ${V3_Motion["ease-default"]};
         object-fit: contain;
     }
 `;

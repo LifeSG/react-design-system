@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Colour } from "../../v3_theme";
+import { V3_Colour } from "../../v3_theme";
 
 export const Placeholder = styled.div`
-    background-color: ${Colour["bg-stronger"]};
+    background-color: ${V3_Colour["bg-stronger"]};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,6 +12,6 @@ export const Placeholder = styled.div`
         min-width: 48px;
         width: 18%;
         height: auto;
-        color: ${Colour["icon-subtle"]};
+        color: ${V3_Colour["icon-subtle"]};
     }
 `;

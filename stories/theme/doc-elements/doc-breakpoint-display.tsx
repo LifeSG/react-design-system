@@ -1,9 +1,9 @@
-import { BreakpointSet, ThemeSpec } from "src/v3_theme/types";
+import { V3_BreakpointSet, V3_ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
 import { getBreakpoint } from "src/v3_theme/breakpoint/theme-helper";
 
 interface BreakpointDisplayProps {
-    theme: ThemeSpec;
+    theme: V3_ThemeSpec;
 }
 
 export const BreakpointDisplay = ({ theme }: BreakpointDisplayProps) => {
@@ -35,11 +35,11 @@ interface BreakpointCollectionProps {
 
 const BreakpointCollection = ({ size }: BreakpointCollectionProps) => {
     const theme = useTheme();
-    const minToken = (size + "-min") as keyof BreakpointSet;
-    const maxToken = (size + "-max") as keyof BreakpointSet;
-    const columnNumberToken = (size + "-column") as keyof BreakpointSet;
-    const columnSpacingToken = (size + "-gutter") as keyof BreakpointSet;
-    const insetToken = (size + "-margin") as keyof BreakpointSet;
+    const minToken = (size + "-min") as keyof V3_BreakpointSet;
+    const maxToken = (size + "-max") as keyof V3_BreakpointSet;
+    const columnNumberToken = (size + "-column") as keyof V3_BreakpointSet;
+    const columnSpacingToken = (size + "-gutter") as keyof V3_BreakpointSet;
+    const insetToken = (size + "-margin") as keyof V3_BreakpointSet;
 
     const minValue = getBreakpoint(minToken)({ theme });
     const maxValue = getBreakpoint(maxToken)({ theme });

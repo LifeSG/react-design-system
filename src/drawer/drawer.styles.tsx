@@ -1,14 +1,14 @@
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
 import {
-    Border,
-    Colour,
-    Font,
-    MediaQuery,
-    Motion,
-    Radius,
-    Shadow,
-    Spacing,
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_MediaQuery,
+    V3_Motion,
+    V3_Radius,
+    V3_Shadow,
+    V3_Spacing,
 } from "../v3_theme";
 import { Typography } from "../typography";
 
@@ -33,15 +33,15 @@ const FLOATING_TRANSITION_STYLES = css`
     }
 
     &[data-status="open"] {
-        transition-duration: ${Motion["duration-800"]};
-        transition-timing-function: ${Motion["ease-entrance"]};
+        transition-duration: ${V3_Motion["duration-800"]};
+        transition-timing-function: ${V3_Motion["ease-entrance"]};
         right: 0;
         visibility: visible;
     }
 
     &[data-status="close"] {
-        transition-duration: ${Motion["duration-800"]};
-        transition-timing-function: ${Motion["ease-exit"]};
+        transition-duration: ${V3_Motion["duration-800"]};
+        transition-timing-function: ${V3_Motion["ease-exit"]};
         right: -100%;
         visibility: hidden;
     }
@@ -58,22 +58,22 @@ export const Container = styled.div<StyleProps>`
     flex-direction: column;
     height: 100%;
 
-    background-color: ${Colour.bg};
-    box-shadow: ${Shadow["lg-subtle"]};
+    background-color: ${V3_Colour.bg};
+    box-shadow: ${V3_Shadow["lg-subtle"]};
 
     ${FLOATING_TRANSITION_STYLES}
 
     width: 40%;
-    border-top-left-radius: ${Radius["md"]};
-    border-bottom-left-radius: ${Radius["md"]};
+    border-top-left-radius: ${V3_Radius["md"]};
+    border-bottom-left-radius: ${V3_Radius["md"]};
     overflow: hidden;
 
-    ${MediaQuery.MaxWidth.xl} {
+    ${V3_MediaQuery.MaxWidth.xl} {
         width: 50%;
         min-width: 700px;
     }
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         width: 100%;
         min-width: unset;
         border-top-left-radius: 0;
@@ -85,35 +85,36 @@ export const Header = styled.div`
     top: 0;
     display: flex;
     align-items: center;
-    gap: ${Spacing["spacing-16"]};
-    padding: ${Spacing["spacing-32"]} ${Spacing["spacing-16"]}
-        ${Spacing["spacing-16"]}
-        calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-32"]});
-    background-color: ${Colour.bg};
-    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    gap: ${V3_Spacing["spacing-16"]};
+    padding: ${V3_Spacing["spacing-32"]} ${V3_Spacing["spacing-16"]}
+        ${V3_Spacing["spacing-16"]}
+        calc(${V3_Font.Spec["heading-lh-md"]} + ${V3_Spacing["spacing-32"]});
+    background-color: ${V3_Colour.bg};
+    border-bottom: ${V3_Border["width-010"]} ${V3_Border.solid}
+        ${V3_Colour.border};
 
-    ${MediaQuery.MaxWidth.lg} {
-        gap: ${Spacing["spacing-8"]};
-        padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]}
-            ${Spacing["spacing-16"]}
-            calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-24"]});
+    ${V3_MediaQuery.MaxWidth.lg} {
+        gap: ${V3_Spacing["spacing-8"]};
+        padding: ${V3_Spacing["spacing-32"]} ${V3_Spacing["spacing-20"]}
+            ${V3_Spacing["spacing-16"]}
+            calc(${V3_Font.Spec["heading-lh-md"]} + ${V3_Spacing["spacing-24"]});
     }
 `;
 
 export const CloseButton = styled(ClickableIcon)`
-    color: ${Colour.icon};
+    color: ${V3_Colour.icon};
     padding: 0;
     position: absolute;
-    top: ${Spacing["spacing-32"]};
-    left: ${Spacing["spacing-16"]};
+    top: ${V3_Spacing["spacing-32"]};
+    left: ${V3_Spacing["spacing-16"]};
     &:active,
     &:focus {
-        color: ${Colour["icon-hover"]};
+        color: ${V3_Colour["icon-hover"]};
     }
 
     svg {
-        height: ${Font.Spec["heading-lh-md"]};
-        width: ${Font.Spec["heading-lh-md"]};
+        height: ${V3_Font.Spec["heading-lh-md"]};
+        width: ${V3_Font.Spec["heading-lh-md"]};
     }
 `;
 

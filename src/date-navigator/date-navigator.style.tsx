@@ -1,14 +1,14 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { IconButton } from "../icon-button";
-import { Colour, Radius, Spacing } from "../v3_theme";
+import { V3_Colour, V3_Radius, V3_Spacing } from "../v3_theme";
 
 interface StyledDateTextProps {
     $enableDateClick?: boolean;
 }
 
 export const HeaderArrowButton = styled(IconButton)`
-    margin: ${Spacing["spacing-8"]};
+    margin: ${V3_Spacing["spacing-8"]};
 `;
 
 export const Container = styled.div`
@@ -16,13 +16,13 @@ export const Container = styled.div`
     position: relative;
     align-items: center;
     justify-content: space-between;
-    background-color: ${Colour["bg-strong"]};
-    border-radius: ${Radius["sm"]};
+    background-color: ${V3_Colour["bg-strong"]};
+    border-radius: ${V3_Radius["sm"]};
 `;
 
 export const StyledDateTextButton = styled(Button.Default)<StyledDateTextProps>`
     color: ${(props) =>
-        props.$enableDateClick ? Colour["text-primary"] : Colour["text"]};
+        props.$enableDateClick ? V3_Colour["text-primary"] : V3_Colour["text"]};
     white-space: nowrap;
     display: inline-block;
     text-wrap: auto;

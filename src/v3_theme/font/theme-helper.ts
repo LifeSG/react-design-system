@@ -1,37 +1,37 @@
 import { CSSProp } from "styled-components";
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { ThemeCollectionSpec } from "../internal-types";
-import { FontScheme } from "../types";
-import { BookingSgFontSet } from "./specs/bookingsg-font-set";
-import { DefaultFontSet } from "./specs/default-font-set";
-import { PAFontSet } from "./specs/pa-font-set";
-import { A11yPlaygroundFontSet } from "./specs/a11yplayground-font-set";
-import { SupportGoWhereFontSet } from "./specs/supportgowhere-font-set";
-import { IMDAFontSet } from "./specs/imda-font-set";
-import { SPFFontSet } from "./specs/spf-font-set";
-import { FontCollectionMap, FontSet } from "./types";
-import { OneServiceFontSet } from "./specs/oneservice-font-set";
+import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
+import { V3_ThemeCollectionSpec } from "../internal-types";
+import { V3_FontScheme } from "../types";
+import { V3_BookingSgFontSet } from "./specs/bookingsg-font-set";
+import { V3_DefaultFontSet } from "./specs/default-font-set";
+import { V3_PAFontSet } from "./specs/pa-font-set";
+import { V3_A11yPlaygroundFontSet } from "./specs/a11yplayground-font-set";
+import { V3_SupportGoWhereFontSet } from "./specs/supportgowhere-font-set";
+import { V3_IMDAFontSet } from "./specs/imda-font-set";
+import { V3_SPFFontSet } from "./specs/spf-font-set";
+import { V3_FontCollectionMap, V3_FontSet } from "./types";
+import { V3_OneServiceFontSet } from "./specs/oneservice-font-set";
 
-const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
+const FontSpec: V3_ThemeCollectionSpec<V3_FontCollectionMap, V3_FontScheme> = {
     collections: {
-        default: DefaultFontSet,
-        bookingsg: BookingSgFontSet,
-        mylegacy: DefaultFontSet,
-        pa: PAFontSet,
-        a11yplayground: A11yPlaygroundFontSet,
-        supportgowhere: SupportGoWhereFontSet,
-        sgwdigitallobby: SupportGoWhereFontSet,
-        imda: IMDAFontSet,
-        spf: SPFFontSet,
-        oneservice: OneServiceFontSet,
+        default: V3_DefaultFontSet,
+        bookingsg: V3_BookingSgFontSet,
+        mylegacy: V3_DefaultFontSet,
+        pa: V3_PAFontSet,
+        a11yplayground: V3_A11yPlaygroundFontSet,
+        supportgowhere: V3_SupportGoWhereFontSet,
+        sgwdigitallobby: V3_SupportGoWhereFontSet,
+        imda: V3_IMDAFontSet,
+        spf: V3_SPFFontSet,
+        oneservice: V3_OneServiceFontSet,
     },
     defaultValue: "default",
 };
 
-export const getFont = (key: keyof FontSet) => {
-    return (props: StyledComponentProps): CSSProp | string => {
+export const getFont = (key: keyof V3_FontSet) => {
+    return (props: V3_StyledComponentProps): CSSProp | string => {
         const theme = props.theme;
-        const fontSet: FontSet = getCollection(FontSpec, theme?.fontScheme);
+        const fontSet: V3_FontSet = getCollection(FontSpec, theme?.fontScheme);
 
         // Check for an override
         const fontValue = theme?.overrides?.font
@@ -45,8 +45,8 @@ export const getFont = (key: keyof FontSet) => {
     };
 };
 
-export const FontValues: {
-    [key in keyof FontSet]: (props: StyledComponentProps) => CSSProp;
+export const V3_FontValues: {
+    [key in keyof V3_FontSet]: (props: V3_StyledComponentProps) => CSSProp;
 } = {
     "heading-xxl-light": getFont("heading-xxl-light"),
     "heading-xxl-regular": getFont("heading-xxl-regular"),

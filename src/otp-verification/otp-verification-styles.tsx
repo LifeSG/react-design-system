@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Spacing } from "../v3_theme";
+import { V3_Spacing } from "../v3_theme";
 
 export const OTPInputWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    gap: ${Spacing["spacing-16"]};
+    gap: ${V3_Spacing["spacing-16"]};
 `;

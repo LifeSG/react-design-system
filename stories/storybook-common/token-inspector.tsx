@@ -1,11 +1,11 @@
-import { PrimitiveColourSet, SemanticColourSet } from "src/v3_theme";
+import { V3_PrimitiveColourSet, V3_SemanticColourSet } from "src/v3_theme";
 import {
-    ColourSpec as PrimitiveColourSpec,
-    DarkColourSpec as PrimitiveDarkColourSpec,
+    V3_ColourSpec as PrimitiveColourSpec,
+    V3_DarkColourSpec as PrimitiveDarkColourSpec,
 } from "src/v3_theme/colour-primitive/theme-helper";
 import {
-    ColourSpec as SemanticColourSpec,
-    DarkColourSpec as SemanticDarkColourSpec,
+    V3_ColourSpec as SemanticColourSpec,
+    V3_DarkColourSpec as SemanticDarkColourSpec,
 } from "src/v3_theme/colour-semantic/theme-helper";
 import { DefaultTheme } from "styled-components";
 
@@ -18,9 +18,9 @@ import { DefaultTheme } from "styled-components";
  * ```
  */
 export class ColourTokenInspector {
-    private primitiveOriginal!: PrimitiveColourSet;
+    private primitiveOriginal!: V3_PrimitiveColourSet;
     private primitiveColourToken!: string | undefined;
-    private semanticOriginal!: SemanticColourSet;
+    private semanticOriginal!: V3_SemanticColourSet;
     private semanticColourToken!: string | undefined;
 
     private constructor(private theme: DefaultTheme) {}
@@ -51,7 +51,10 @@ export class ColourTokenInspector {
 
         this.primitiveOriginal = primitiveSpec.collections[scheme];
         const primitiveProxy = {
-            get(target: PrimitiveColourSet, prop: keyof PrimitiveColourSet) {
+            get(
+                target: V3_PrimitiveColourSet,
+                prop: keyof V3_PrimitiveColourSet
+            ) {
                 self.primitiveColourToken = prop;
                 return target[prop];
             },
@@ -63,7 +66,10 @@ export class ColourTokenInspector {
 
         this.semanticOriginal = semanticSpec.collections[scheme];
         const semanticProxy = {
-            get(target: SemanticColourSet, prop: keyof SemanticColourSet) {
+            get(
+                target: V3_SemanticColourSet,
+                prop: keyof V3_SemanticColourSet
+            ) {
                 self.semanticColourToken = prop;
                 return target[prop];
             },

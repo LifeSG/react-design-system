@@ -4,7 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { VisuallyHidden, inertValue } from "../shared/accessibility";
-import { Breakpoint } from "../v3_theme";
+import { V3_Breakpoint } from "../v3_theme";
 import { TimeHelper } from "../util/time-helper";
 import {
     Countdown,
@@ -61,7 +61,7 @@ export const CountdownTimer = ({
         typeof notifyTimer === "number" && remainingSeconds <= notifyTimer;
 
     const theme = useContext(ThemeContext);
-    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
 
     // =============================================================================

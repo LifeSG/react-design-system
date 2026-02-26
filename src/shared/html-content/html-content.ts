@@ -1,9 +1,9 @@
 import { css } from "styled-components";
-import { Colour, Font } from "../../v3_theme";
-import { TypographySizeType } from "../../v3_theme/font/types";
+import { V3_Colour, V3_Font } from "../../v3_theme";
+import { V3_TypographySizeType } from "../../v3_theme/font/types";
 
 export interface HtmlContentStyleOptions {
-    textSize?: TypographySizeType | undefined;
+    textSize?: V3_TypographySizeType | undefined;
 }
 
 export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
@@ -11,11 +11,11 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
 
     return css`
         // Text styling
-        ${textSize && Font[`${textSize}-regular`]}
+        ${textSize && V3_Font[`${textSize}-regular`]}
 
         strong {
-            font-weight: ${Font.Spec["weight-semibold"]};
-            ${textSize && Font[`${textSize}-semibold`]};
+            font-weight: ${V3_Font.Spec["weight-semibold"]};
+            ${textSize && V3_Font[`${textSize}-semibold`]};
         }
 
         p {
@@ -24,13 +24,13 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
 
         // Link styling
         a {
-            font-weight: ${Font.Spec["weight-semibold"]};
-            ${textSize && Font[`${textSize}-semibold`]}
-            color: ${Colour.hyperlink};
+            font-weight: ${V3_Font.Spec["weight-semibold"]};
+            ${textSize && V3_Font[`${textSize}-semibold`]}
+            color: ${V3_Colour.hyperlink};
             text-decoration: underline;
 
             svg {
-                color: ${Colour["icon-primary"]};
+                color: ${V3_Colour["icon-primary"]};
                 height: 1lh;
                 width: 1em;
                 margin-left: 0.4rem;
@@ -41,10 +41,10 @@ export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
             &:active,
             &:visited,
             &:focus {
-                color: ${Colour["hyperlink-hover"]};
+                color: ${V3_Colour["hyperlink-hover"]};
 
                 svg {
-                    color: ${Colour["icon-hover"]};
+                    color: ${V3_Colour["icon-hover"]};
                 }
             }
         }

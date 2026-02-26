@@ -5,7 +5,14 @@ import { StarHalfIcon } from "@lifesg/react-icons/star-half";
 import styled, { css, keyframes } from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Border, Colour, Font, MediaQuery, Radius, Shadow } from "../v3_theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_MediaQuery,
+    V3_Radius,
+    V3_Shadow,
+} from "../v3_theme";
 import { Typography } from "../typography/typography";
 
 const slideDown = keyframes`
@@ -35,18 +42,18 @@ export const SmartAppBannerContainer = styled.div<{
     width: calc(100% - 2.5rem);
     min-height: 5.5rem;
     z-index: 9001;
-    background: ${Colour.bg};
+    background: ${V3_Colour.bg};
     ${(props) => {
         return props.theme?.colourMode === "dark"
             ? css`
-                  border: ${Border["width-010"]} ${Border["solid"]}
-                      ${Colour["border"]};
+                  border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+                      ${V3_Colour["border"]};
               `
             : css`
-                  box-shadow: ${Shadow["md-subtle"]};
+                  box-shadow: ${V3_Shadow["md-subtle"]};
               `;
     }}
-    border-radius: ${Radius["md"]};
+    border-radius: ${V3_Radius["md"]};
     ${(props) => {
         if (props.$isAnimated)
             return css`
@@ -66,7 +73,7 @@ export const DismissButton = styled(ClickableIcon)`
 `;
 
 export const Cross = styled(CrossIcon)`
-    color: ${Colour.icon};
+    color: ${V3_Colour.icon};
     height: 1.25rem;
     width: 1.25rem;
 `;
@@ -85,7 +92,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
     align-items: left;
     margin: 0.5rem;
-    ${MediaQuery.MaxWidth.xs} {
+    ${V3_MediaQuery.MaxWidth.xs} {
         margin: 0 0.5rem;
     }
 `;
@@ -105,15 +112,15 @@ export const StyledButton = styled(Button.Small)`
     height: auto;
     & > span {
         overflow-wrap: anywhere;
-        ${Font["body-xs-semibold"]}
+        ${V3_Font["body-xs-semibold"]}
     }
 `;
 
 export const Title = styled(Typography.BodySM)`
-    font-weight: ${Font.Spec["weight-bold"]};
+    font-weight: ${V3_Font.Spec["weight-bold"]};
     overflow-wrap: anywhere;
-    ${MediaQuery.MaxWidth.xs} {
-        ${Font["body-xs-bold"]}
+    ${V3_MediaQuery.MaxWidth.xs} {
+        ${V3_Font["body-xs-bold"]}
     }
 `;
 

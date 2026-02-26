@@ -1,9 +1,9 @@
-import { Colour } from "src/v3_theme";
+import { V3_Colour } from "src/v3_theme";
 import styled from "styled-components";
 
 const CustomCounterLabel = styled.p`
     text-align: right;
-    color: ${Colour["text"]};
+    color: ${V3_Colour["text"]};
     font-size: 14px;
     font-weight: 600;
 `;

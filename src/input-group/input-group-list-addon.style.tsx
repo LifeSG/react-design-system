@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { Input } from "../input";
 import { ExpandableElement } from "../shared/dropdown-list-v2";
 import { InputBox } from "../shared/input-wrapper";
-import { Colour, Spacing } from "../v3_theme";
+import { V3_Colour, V3_Spacing } from "../v3_theme";
 import { InputGroupAddonPosition } from "./types";
 
 // =============================================================================
@@ -87,11 +87,11 @@ export const FieldInput = styled(Input)<StyleProps>`
         switch (props.$position) {
             case "right":
                 return css`
-                    padding-left: ${Spacing["spacing-16"]};
+                    padding-left: ${V3_Spacing["spacing-16"]};
                 `;
             default:
                 return css`
-                    padding-right: ${Spacing["spacing-16"]};
+                    padding-right: ${V3_Spacing["spacing-16"]};
                 `;
         }
     }}
@@ -103,13 +103,13 @@ export const SelectorReadOnly = styled.div`
     align-items: center;
     padding: 0;
     background: transparent;
-    margin-right: ${Spacing["spacing-12"]};
-    color: ${Colour["text"]};
+    margin-right: ${V3_Spacing["spacing-12"]};
+    color: ${V3_Colour["text"]};
 `;
 
 export const Divider = styled.div<DividerStyleProps>`
     width: 1px;
-    background: ${Colour["border"]};
+    background: ${V3_Colour["border"]};
     flex-shrink: 0;
     height: 1.25rem;
 
@@ -125,11 +125,11 @@ export const Divider = styled.div<DividerStyleProps>`
         switch (props.$position) {
             case "right":
                 return css`
-                    margin-left: ${Spacing["spacing-12"]};
+                    margin-left: ${V3_Spacing["spacing-12"]};
                 `;
             default:
                 return css`
-                    margin-right: ${Spacing["spacing-12"]};
+                    margin-right: ${V3_Spacing["spacing-12"]};
                 `;
         }
     }}

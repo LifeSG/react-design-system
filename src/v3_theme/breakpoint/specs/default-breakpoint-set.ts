@@ -1,6 +1,6 @@
-import { BreakpointSet } from "../types";
+import { V3_BreakpointSet } from "../types";
 
-export const DefaultBreakpointSet: BreakpointSet = {
+export const V3_DefaultBreakpointSet: V3_BreakpointSet = {
     "xxs-min": 0,
     "xxs-max": 320,
     "xs-min": 321,

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, Font } from "../../../v3_theme";
+import { V3_Colour, V3_Font } from "../../../v3_theme";
 
 export const Wrapper = styled.div`
     width: 100%;
@@ -16,8 +16,8 @@ export const HeaderCell = styled.div`
     pointer-events: none;
     user-select: none;
 
-    ${Font["body-sm-semibold"]};
-    color: ${Colour["text"]};
+    ${V3_Font["body-sm-semibold"]};
+    color: ${V3_Colour["text"]};
 `;
 
 export const RowDayCell = styled.div`

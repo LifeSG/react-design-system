@@ -1,6 +1,6 @@
-import { PrimitiveColourSet } from "../../types";
+import { V3_PrimitiveColourSet } from "../../types";
 
-export const CCubeColourSet: PrimitiveColourSet = {
+export const V3_CCubeColourSet: V3_PrimitiveColourSet = {
     "brand-10": "#1F1221",
     "brand-20": "#371F3B",
     "brand-30": "#4E2C53",

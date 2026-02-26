@@ -9,7 +9,7 @@ import {
     useRef,
 } from "react";
 import { ThemeContext } from "styled-components";
-import { Colour } from "../v3_theme";
+import { V3_Colour } from "../v3_theme";
 import {
     SignatureCanvas,
     SignatureCanvasContainer,
@@ -94,7 +94,7 @@ const Component = (
             fabricCanvas.current.isDrawingMode = true;
 
             pencilBrush.current = new PencilBrush(fabricCanvas.current);
-            pencilBrush.current.color = Colour["text"]({ theme });
+            pencilBrush.current.color = V3_Colour["text"]({ theme });
             pencilBrush.current.width = 3;
 
             fabricCanvas.current.freeDrawingBrush = pencilBrush.current;

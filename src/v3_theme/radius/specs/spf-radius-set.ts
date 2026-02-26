@@ -1,6 +1,6 @@
-import { RadiusSet } from "../types";
+import { V3_RadiusSet } from "../types";
 
-export const SPFRadiusSet: RadiusSet = {
+export const V3_SPFRadiusSet: V3_RadiusSet = {
     none: 0,
     xs: 2,
     sm: 8,

@@ -1,9 +1,9 @@
-import { TypographySizeType } from "../v3_theme/font/types";
+import { V3_TypographySizeType } from "../v3_theme/font/types";
 
 interface BaseListProps {
     children: JSX.Element | JSX.Element[];
     bottomMargin?: number | undefined;
-    size?: TypographySizeType | undefined;
+    size?: V3_TypographySizeType | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;

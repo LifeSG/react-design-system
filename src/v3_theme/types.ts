@@ -1,43 +1,46 @@
 import { ReactNode } from "react";
 import { V2_ThemeSpec } from "../v2_theme/types";
-import { BorderSetOptions } from "./border/types";
-import { BreakpointSetOptions } from "./breakpoint/types";
-import { PrimitiveColourSetOptions } from "./colour-primitive/types";
-import { SemanticColourSetOptions } from "./colour-semantic/types";
-import { ComponentOverrideOptions } from "./components/types";
-import { FontSpecSetOptions } from "./font-spec/types";
-import { FontSetOptions } from "./font/types";
-import { MotionSetOptions } from "./motion/types";
-import { RadiusSetOptions } from "./radius/types";
-import { ShadowSetOptions } from "./shadow/types";
-import { SpacingSetOptions } from "./spacing/types";
+import { V3_BorderSetOptions } from "./border/types";
+import { V3_BreakpointSetOptions } from "./breakpoint/types";
+import { V3_PrimitiveColourSetOptions } from "./colour-primitive/types";
+import { V3_SemanticColourSetOptions } from "./colour-semantic/types";
+import { V3_ComponentOverrideOptions } from "./components/types";
+import { V3_FontSpecSetOptions } from "./font-spec/types";
+import { V3_FontSetOptions } from "./font/types";
+import { V3_MotionSetOptions } from "./motion/types";
+import { V3_RadiusSetOptions } from "./radius/types";
+import { V3_ShadowSetOptions } from "./shadow/types";
+import { V3_SpacingSetOptions } from "./spacing/types";
 
 export type {
-    PrimitiveColourSet,
-    PrimitiveColourSetOptions,
+    V3_PrimitiveColourSet,
+    V3_PrimitiveColourSetOptions,
 } from "./colour-primitive/types";
 export type {
-    SemanticColourSet,
-    SemanticColourSetOptions,
+    V3_SemanticColourSet,
+    V3_SemanticColourSetOptions,
 } from "./colour-semantic/types";
 
-export type { FontSpecSet, FontSpecSetOptions } from "./font-spec/types";
+export type { V3_FontSpecSet, V3_FontSpecSetOptions } from "./font-spec/types";
 
-export type { FontSet, FontSetOptions } from "./font/types";
+export type { V3_FontSet, V3_FontSetOptions } from "./font/types";
 
-export type { MotionSet, MotionSetOptions } from "./motion/types";
+export type { V3_MotionSet, V3_MotionSetOptions } from "./motion/types";
 
-export type { BorderSet, BorderSetOptions } from "./border/types";
+export type { V3_BorderSet, V3_BorderSetOptions } from "./border/types";
 
-export type { RadiusSet, RadiusSetOptions } from "./radius/types";
+export type { V3_RadiusSet, V3_RadiusSetOptions } from "./radius/types";
 
-export type { ShadowSet, ShadowSetOptions } from "./shadow/types";
+export type { V3_ShadowSet, V3_ShadowSetOptions } from "./shadow/types";
 
-export type { SpacingSet, SpacingSetOptions } from "./spacing/types";
+export type { V3_SpacingSet, V3_SpacingSetOptions } from "./spacing/types";
 
-export type { BreakpointSet, BreakpointSetOptions } from "./breakpoint/types";
+export type {
+    V3_BreakpointSet,
+    V3_BreakpointSetOptions,
+} from "./breakpoint/types";
 
-export type ColourScheme =
+export type V3_ColourScheme =
     | "lifesg"
     | "bookingsg"
     | "rbs"
@@ -49,7 +52,7 @@ export type ColourScheme =
     | "supportgowhere"
     | "imda"
     | "spf";
-export type FontScheme =
+export type V3_FontScheme =
     | "default"
     | "bookingsg"
     | "mylegacy"
@@ -60,19 +63,19 @@ export type FontScheme =
     | "imda"
     | "spf"
     | "oneservice";
-export type MotionScheme = "default";
-export type BorderScheme = "default";
-export type SpacingScheme = "default";
-export type RadiusScheme = "default" | "spf";
-export type ShadowScheme = "default";
-export type BreakpointScheme = "default";
-export type ComponentScheme =
+export type V3_MotionScheme = "default";
+export type V3_BorderScheme = "default";
+export type V3_SpacingScheme = "default";
+export type V3_RadiusScheme = "default" | "spf";
+export type V3_ShadowScheme = "default";
+export type V3_BreakpointScheme = "default";
+export type V3_ComponentScheme =
     | "default"
     | "pa"
     | "a11yplayground"
     | "lifesg"
     | "spf";
-export type ResourceScheme =
+export type V3_ResourceScheme =
     | "lifesg"
     | "bookingsg"
     | "rbs"
@@ -85,53 +88,53 @@ export type ResourceScheme =
     | "imda"
     | "spf";
 
-export type ColourMode = "light" | "dark";
+export type V3_ColourMode = "light" | "dark";
 
-export interface ThemeSpecOptions {
-    primitiveColour?: PrimitiveColourSetOptions | undefined;
-    primitiveColourDark?: PrimitiveColourSetOptions | undefined;
-    semanticColour?: SemanticColourSetOptions | undefined;
-    semanticColourDark?: SemanticColourSetOptions | undefined;
-    fontSpec?: FontSpecSetOptions | undefined;
-    font?: FontSetOptions | undefined;
-    motion?: MotionSetOptions | undefined;
-    spacing?: SpacingSetOptions | undefined;
-    border?: BorderSetOptions | undefined;
-    radius?: RadiusSetOptions | undefined;
-    shadow?: ShadowSetOptions | undefined;
-    resourceScheme?: ResourceScheme | undefined;
-    breakpoint?: BreakpointSetOptions | undefined;
+export interface V3_ThemeSpecOptions {
+    primitiveColour?: V3_PrimitiveColourSetOptions | undefined;
+    primitiveColourDark?: V3_PrimitiveColourSetOptions | undefined;
+    semanticColour?: V3_SemanticColourSetOptions | undefined;
+    semanticColourDark?: V3_SemanticColourSetOptions | undefined;
+    fontSpec?: V3_FontSpecSetOptions | undefined;
+    font?: V3_FontSetOptions | undefined;
+    motion?: V3_MotionSetOptions | undefined;
+    spacing?: V3_SpacingSetOptions | undefined;
+    border?: V3_BorderSetOptions | undefined;
+    radius?: V3_RadiusSetOptions | undefined;
+    shadow?: V3_ShadowSetOptions | undefined;
+    resourceScheme?: V3_ResourceScheme | undefined;
+    breakpoint?: V3_BreakpointSetOptions | undefined;
 }
 
-export interface ThemeSpec {
-    colourScheme: ColourScheme;
-    colourMode?: ColourMode | undefined;
-    fontScheme: FontScheme;
-    motionScheme: MotionScheme;
-    borderScheme: BorderScheme;
-    spacingScheme: SpacingScheme;
-    radiusScheme: RadiusScheme;
-    shadowScheme: ShadowScheme;
-    breakpointScheme: BreakpointScheme;
-    resourceScheme: ResourceScheme;
-    componentScheme?: ComponentScheme | undefined;
-    componentOverrides?: ComponentOverrideOptions | undefined;
-    overrides?: ThemeSpecOptions | undefined;
+export interface V3_ThemeSpec {
+    colourScheme: V3_ColourScheme;
+    colourMode?: V3_ColourMode | undefined;
+    fontScheme: V3_FontScheme;
+    motionScheme: V3_MotionScheme;
+    borderScheme: V3_BorderScheme;
+    spacingScheme: V3_SpacingScheme;
+    radiusScheme: V3_RadiusScheme;
+    shadowScheme: V3_ShadowScheme;
+    breakpointScheme: V3_BreakpointScheme;
+    resourceScheme: V3_ResourceScheme;
+    componentScheme?: V3_ComponentScheme | undefined;
+    componentOverrides?: V3_ComponentOverrideOptions | undefined;
+    overrides?: V3_ThemeSpecOptions | undefined;
 
     maxColumns?: any;
     /** @deprecated For backwards compatibility with V2 theme */
     _v2?: V2_ThemeSpec;
 }
-export interface ThemeStyleProps {
-    theme?: ThemeSpec;
+export interface V3_ThemeStyleProps {
+    theme?: V3_ThemeSpec;
 }
 
-export interface DSThemeProviderProps {
-    theme: ThemeSpec;
+export interface V3_DSThemeProviderProps {
+    theme: V3_ThemeSpec;
     children: ReactNode;
 }
 
-export interface DSTheme {
-    colourMode: ColourMode;
-    theme: ThemeSpec | null;
+export interface V3_DSTheme {
+    colourMode: V3_ColourMode;
+    theme: V3_ThemeSpec | null;
 }

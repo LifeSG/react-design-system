@@ -1,19 +1,19 @@
 import styled from "styled-components";
-import { Border, Colour, Radius, Spacing } from "../v3_theme";
+import { V3_Border, V3_Colour, V3_Radius, V3_Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLES CONSTANTS
 // =============================================================================
-const borderColor = Colour["border"];
-const fontColor = Colour["text"];
+const borderColor = V3_Colour["border"];
+const fontColor = V3_Colour["text"];
 
 // =============================================================================
 // STYLES
 // =============================================================================
 export const TableWrapper = styled.div`
     overflow: auto;
-    border: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
-    border-radius: ${Radius["md"]};
+    border: ${V3_Border["width-010"]} ${V3_Border["solid"]} ${borderColor};
+    border-radius: ${V3_Radius["md"]};
 
     // Hide scrollbar
     &::-webkit-scrollbar {
@@ -45,38 +45,40 @@ export const TableBody = styled.tbody`
 `;
 
 export const HeaderCell = styled.th`
-    padding: ${Spacing["spacing-20"]} ${Spacing["spacing-16"]};
+    padding: ${V3_Spacing["spacing-20"]} ${V3_Spacing["spacing-16"]};
     text-align: left;
     cursor: default;
     vertical-align: middle;
     color: ${fontColor};
-    background-color: ${Colour["bg-stronger"]};
+    background-color: ${V3_Colour["bg-stronger"]};
     height: 6rem;
-    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
+    border-bottom: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        ${borderColor};
 
     &:where(&:first-child) {
-        padding-left: ${Spacing["spacing-24"]};
+        padding-left: ${V3_Spacing["spacing-24"]};
     }
     &:where(&:last-child) {
-        padding-right: ${Spacing["spacing-24"]};
+        padding-right: ${V3_Spacing["spacing-24"]};
     }
 `;
 
 export const BodyRow = styled.tr`
-    background-color: ${Colour["bg"]};
-    border-top: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
+    background-color: ${V3_Colour["bg"]};
+    border-top: ${V3_Border["width-010"]} ${V3_Border["solid"]} ${borderColor};
 `;
 
 export const BodyCell = styled.td`
-    padding: ${Spacing["spacing-20"]} ${Spacing["spacing-16"]};
+    padding: ${V3_Spacing["spacing-20"]} ${V3_Spacing["spacing-16"]};
     vertical-align: middle;
     color: ${fontColor};
-    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
+    border-bottom: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        ${borderColor};
 
     &:where(&:first-child) {
-        padding-left: ${Spacing["spacing-24"]};
+        padding-left: ${V3_Spacing["spacing-24"]};
     }
     &:where(&:last-child) {
-        padding-right: ${Spacing["spacing-24"]};
+        padding-right: ${V3_Spacing["spacing-24"]};
     }
 `;

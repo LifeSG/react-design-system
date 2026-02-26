@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
-import { Breakpoint } from "../v3_theme";
+import { V3_Breakpoint } from "../v3_theme";
 import { Typography } from "../typography";
 import { PopoverCard, PopoverContainer } from "./popover.styles";
 import { PopoverV2Props } from "./types";
@@ -22,7 +22,7 @@ export const PopoverV2 = ({
     // =============================================================================
     const testId = otherProps["data-testid"] || "popover";
     const theme = useContext(ThemeContext);
-    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
 
     // =============================================================================

@@ -1,9 +1,9 @@
-import { MotionSet, ThemeSpec } from "src/v3_theme/types";
+import { V3_MotionSet, V3_ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider, keyframes, useTheme } from "styled-components";
 import { getMotion } from "../../../src/v3_theme/motion/theme-helper";
 
 interface MotionDisplayProps {
-    theme: ThemeSpec;
+    theme: V3_ThemeSpec;
 }
 
 export const MotionDisplay = ({ theme }: MotionDisplayProps) => {
@@ -71,7 +71,7 @@ export const MotionDisplay = ({ theme }: MotionDisplayProps) => {
 };
 
 interface MotionCollectionProps {
-    token: keyof MotionSet;
+    token: keyof V3_MotionSet;
     children: React.ReactNode;
 }
 

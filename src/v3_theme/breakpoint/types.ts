@@ -1,6 +1,6 @@
-import { BreakpointScheme } from "../types";
+import { V3_BreakpointScheme } from "../types";
 
-export interface BreakpointSet {
+export interface V3_BreakpointSet {
     "xxs-min": number;
     "xxs-max": number;
     "xs-min": number;
@@ -37,8 +37,8 @@ export interface BreakpointSet {
     "xxl-margin": number;
 }
 
-export type BreakpointCollectionsMap = {
-    [key in BreakpointScheme]: BreakpointSet;
+export type V3_BreakpointCollectionsMap = {
+    [key in V3_BreakpointScheme]: V3_BreakpointSet;
 };
 
-export type BreakpointSetOptions = Partial<BreakpointSet>;
+export type V3_BreakpointSetOptions = Partial<V3_BreakpointSet>;

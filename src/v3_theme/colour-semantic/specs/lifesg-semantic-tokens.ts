@@ -1,11 +1,11 @@
 import { getPrimitiveColour } from "../../colour-primitive/theme-helper";
-import { SemanticColourSet } from "../../types";
+import { V3_SemanticColourSet } from "../../types";
 
 // ============================================================================
 // LIGHT MODE COLOURS
 // ============================================================================
 
-export const LifeSGColourSet: SemanticColourSet = {
+export const V3_LifeSGColourSet: V3_SemanticColourSet = {
     // text
     text: getPrimitiveColour("neutral-20"),
     "text-subtle": getPrimitiveColour("neutral-30"),
@@ -158,7 +158,7 @@ export const LifeSGColourSet: SemanticColourSet = {
 // ============================================================================
 
 // currently used for testing and fallback for dark mode
-export const LifeSGDarkColourSet: SemanticColourSet = {
+export const V3_LifeSGDarkColourSet: V3_SemanticColourSet = {
     // text
     text: getPrimitiveColour("neutral-100"),
     "text-subtle": getPrimitiveColour("neutral-80"),

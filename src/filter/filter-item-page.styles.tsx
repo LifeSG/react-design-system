@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import { Colour } from "../v3_theme";
+import { V3_Colour } from "../v3_theme";
 
 // =============================================================================
 // FILTER ITEM PAGE STYLES
 // =============================================================================
 
 export const FilterItemPageContainer = styled.div`
-    background-color: ${Colour["bg"]};
+    background-color: ${V3_Colour["bg"]};
     height: 100%;
     width: 100%;
     display: flex;

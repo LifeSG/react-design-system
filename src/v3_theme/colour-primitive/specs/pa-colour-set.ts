@@ -1,6 +1,6 @@
-import { PrimitiveColourSet } from "../../types";
+import { V3_PrimitiveColourSet } from "../../types";
 
-export const PAColourSet: PrimitiveColourSet = {
+export const V3_PAColourSet: V3_PrimitiveColourSet = {
     "brand-10": "#881317",
     "brand-20": "#B5191E",
     "brand-30": "#B5040A",

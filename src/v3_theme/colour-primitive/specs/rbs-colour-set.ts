@@ -1,6 +1,6 @@
-import { PrimitiveColourSet } from "../../types";
+import { V3_PrimitiveColourSet } from "../../types";
 
-export const RBSColourSet: PrimitiveColourSet = {
+export const V3_RBSColourSet: V3_PrimitiveColourSet = {
     "brand-10": "#0E123A",
     "brand-20": "#191E65",
     "brand-30": "#232B90",

@@ -1,13 +1,13 @@
 import { CSSProp } from "styled-components";
-import { FontScheme } from "../types";
+import { V3_FontScheme } from "../types";
 
-export type FontCollectionMap = {
-    [key in FontScheme]: FontSet;
+export type V3_FontCollectionMap = {
+    [key in V3_FontScheme]: V3_FontSet;
 };
 
-export type FontSetOptions = Partial<FontSet>;
+export type V3_FontSetOptions = Partial<V3_FontSet>;
 
-export type TypographySizeType =
+export type V3_TypographySizeType =
     | "heading-xxl"
     | "heading-xl"
     | "heading-lg"
@@ -19,7 +19,7 @@ export type TypographySizeType =
     | "body-sm"
     | "body-xs";
 
-export type FontSet = {
+export type V3_FontSet = {
     "heading-xxl-light": CSSProp | string;
     "heading-xxl-regular": CSSProp | string;
     "heading-xxl-semibold": CSSProp | string;
@@ -74,6 +74,6 @@ export type FontSet = {
     "form-description": CSSProp | string;
 };
 
-export type FontSetAdditionalOptions = {
+export type V3_FontSetAdditionalOptions = {
     disableLigatures?: boolean;
 };

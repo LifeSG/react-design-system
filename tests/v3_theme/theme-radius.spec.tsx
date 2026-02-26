@@ -1,12 +1,12 @@
 import { render } from "@testing-library/react";
 import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
-import { ThemeSpec } from "../../src/v3_theme/types";
-import { Radius } from "../../src";
+import { V3_ThemeSpec } from "../../src/v3_theme/types";
+import { V3_Radius } from "../../src";
 import { MOCK_THEME } from "./mock-theme-data";
 
 const RadiusTestComponent = styled.div`
-    border-radius: ${Radius["sm"]};
+    border-radius: ${V3_Radius["sm"]};
 `;
 
 describe("Radius Theming Test", () => {
@@ -26,7 +26,7 @@ describe("Radius Theming Test", () => {
     });
 
     it("should apply correct border-radius when overriding radius token", () => {
-        const overrideTheme: ThemeSpec = {
+        const overrideTheme: V3_ThemeSpec = {
             ...MOCK_THEME,
             overrides: {
                 radius: {
@@ -51,11 +51,11 @@ describe("Radius Theming Test", () => {
 
     it("should apply correct border-radius when overriding multiple radius tokens", () => {
         const RadiusTestComponent2 = styled.div`
-            border-radius: ${Radius.sm};
-            line-height: ${Radius.md};
+            border-radius: ${V3_Radius.sm};
+            line-height: ${V3_Radius.md};
         `;
 
-        const overrideTheme: ThemeSpec = {
+        const overrideTheme: V3_ThemeSpec = {
             ...MOCK_THEME,
             overrides: {
                 radius: {

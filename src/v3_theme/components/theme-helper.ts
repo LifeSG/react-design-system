@@ -1,57 +1,56 @@
-import { StyledComponentProps, getCollection } from "../helpers";
-import { ThemeStyleProps } from "../types";
-import { A11yPlaygroundComponentTokenSet } from "./specs/a11yplayground-component-token-set";
-import { DefaultComponentTokenSet } from "./specs/default-component-token-set";
-import { LifeSGComponentTokenSet } from "./specs/lifesg-component-token-set";
-import { PAComponentTokenSet } from "./specs/pa-component-token-set";
-import { SPFComponentTokenSet } from "./specs/spf-component-token-set";
+import { V3_StyledComponentProps, getCollection } from "../helpers";
+import { V3_ThemeStyleProps } from "../types";
+import { V3_A11yPlaygroundComponentTokenSet } from "./specs/a11yplayground-component-token-set";
+import { V3_DefaultComponentTokenSet } from "./specs/default-component-token-set";
+import { V3_LifeSGComponentTokenSet } from "./specs/lifesg-component-token-set";
+import { V3_PAComponentTokenSet } from "./specs/pa-component-token-set";
+import { V3_SPFComponentTokenSet } from "./specs/spf-component-token-set";
 import {
-    AnimationTokens,
-    ButtonTokens,
-    ComponentTokenSet,
-    FooterTokens,
-    NavbarTokens,
+    V3_AnimationTokens,
+    V3_ButtonTokens,
+    V3_ComponentTokenSet,
+    V3_FooterTokens,
+    V3_NavbarTokens,
 } from "./types";
 
-const ComponentTokenSpec = {
+const V3_ComponentTokenSpec = {
     collections: {
-        default: DefaultComponentTokenSet,
-        pa: PAComponentTokenSet,
-        a11yplayground: A11yPlaygroundComponentTokenSet,
-        lifesg: LifeSGComponentTokenSet,
-        spf: SPFComponentTokenSet,
+        default: V3_DefaultComponentTokenSet,
+        pa: V3_PAComponentTokenSet,
+        a11yplayground: V3_A11yPlaygroundComponentTokenSet,
+        lifesg: V3_LifeSGComponentTokenSet,
+        spf: V3_SPFComponentTokenSet,
     },
     defaultValue: "default",
 };
 
 export const getComponentTokenValue = <
-    Component extends keyof ComponentTokenSet,
-    Token extends keyof ComponentTokenSet[Component]
+    Component extends keyof V3_ComponentTokenSet,
+    Token extends keyof V3_ComponentTokenSet[Component]
 >(
     component: Component,
     token: Token
 ) => {
-    return (props: StyledComponentProps): string => {
+    return (props: V3_StyledComponentProps): string => {
         const theme = props.theme;
-        const components: ComponentTokenSet = getCollection(
-            ComponentTokenSpec,
+        const components: V3_ComponentTokenSet = getCollection(
+            V3_ComponentTokenSpec,
             theme?.componentScheme
         );
 
-        return getTokenValue(
+        const componentToken: V3_ComponentTokenSet[Component][Token] =
             theme?.componentOverrides?.[component]?.[token] ||
-                components[component][token],
-            props
-        );
+            components[component][token];
+        return getTokenValue(componentToken, props);
     };
 };
 
 export const getTokenValue = <
-    Component extends keyof ComponentTokenSet,
-    Token extends keyof ComponentTokenSet[Component]
+    Component extends keyof V3_ComponentTokenSet,
+    Token extends keyof V3_ComponentTokenSet[Component]
 >(
-    token: ComponentTokenSet[Component][Token],
-    props: ThemeStyleProps
+    token: V3_ComponentTokenSet[Component][Token],
+    props: V3_ThemeStyleProps
 ) => {
     switch (typeof token) {
         case "function":
@@ -63,8 +62,8 @@ export const getTokenValue = <
     }
 };
 
-export const ThemeButton: {
-    [key in keyof ButtonTokens]: (props: StyledComponentProps) => string;
+export const V3_ThemeButton: {
+    [key in keyof V3_ButtonTokens]: (props: V3_StyledComponentProps) => string;
 } = {
     "button-radius": getComponentTokenValue("Button", "button-radius"),
     "button-default-colour-bg": getComponentTokenValue(
@@ -97,8 +96,10 @@ export const ThemeButton: {
     ),
 };
 
-export const ThemeAnimation: {
-    [key in keyof AnimationTokens]: (props: StyledComponentProps) => string;
+export const V3_ThemeAnimation: {
+    [key in keyof V3_AnimationTokens]: (
+        props: V3_StyledComponentProps
+    ) => string;
 } = {
     "loading-dots-spinner-colour": getComponentTokenValue(
         "Animation",
@@ -106,8 +107,8 @@ export const ThemeAnimation: {
     ),
 };
 
-export const ThemeNavbar: {
-    [key in keyof NavbarTokens]: (props: StyledComponentProps) => string;
+export const V3_ThemeNavbar: {
+    [key in keyof V3_NavbarTokens]: (props: V3_StyledComponentProps) => string;
 } = {
     "navbar-full-height": getComponentTokenValue(
         "Navbar",
@@ -152,8 +153,8 @@ export const ThemeNavbar: {
     ),
 };
 
-export const ThemeFooter: {
-    [key in keyof FooterTokens]: (props: StyledComponentProps) => string;
+export const V3_ThemeFooter: {
+    [key in keyof V3_FooterTokens]: (props: V3_StyledComponentProps) => string;
 } = {
     "footer-colour-bg": getComponentTokenValue("Footer", "footer-colour-bg"),
     "footer-colour-text": getComponentTokenValue(

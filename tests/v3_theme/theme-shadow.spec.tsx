@@ -1,12 +1,12 @@
 import { render } from "@testing-library/react";
 import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
-import { ThemeSpec } from "../../src/v3_theme/types";
-import { Shadow } from "../../src";
+import { V3_ThemeSpec } from "../../src/v3_theme/types";
+import { V3_Shadow } from "../../src";
 import { MOCK_THEME } from "./mock-theme-data";
 
 const ShadowTestComponent = styled.div`
-    box-shadow: ${Shadow["md-subtle"]};
+    box-shadow: ${V3_Shadow["md-subtle"]};
 `;
 
 describe("Shadow Theming Test", () => {
@@ -27,7 +27,7 @@ describe("Shadow Theming Test", () => {
     it("should apply correct box-shadow when overriding shadow token", () => {
         const customShadowFunction = () => "0 8px 16px rgba(0, 0, 0, 0.15)";
 
-        const overrideTheme: ThemeSpec = {
+        const overrideTheme: V3_ThemeSpec = {
             ...MOCK_THEME,
             overrides: {
                 shadow: {
@@ -50,14 +50,14 @@ describe("Shadow Theming Test", () => {
 
     it("should apply correct box-shadow when overriding multiple shadow tokens", () => {
         const ShadowTestComponent2 = styled.div`
-            box-shadow: ${Shadow["sm-subtle"]};
-            filter: drop-shadow(${Shadow["lg-strong"]});
+            box-shadow: ${V3_Shadow["sm-subtle"]};
+            filter: drop-shadow(${V3_Shadow["lg-strong"]});
         `;
 
         const customSmFunction = () => "0 2px 4px rgba(0, 0, 0, 0.1)";
         const customLgFunction = () => "0 12px 20px rgba(0, 0, 0, 0.15)";
 
-        const overrideTheme: ThemeSpec = {
+        const overrideTheme: V3_ThemeSpec = {
             ...MOCK_THEME,
             overrides: {
                 shadow: {
@@ -86,25 +86,25 @@ describe("Shadow Theming Test", () => {
 
     it("should provide all shadow token variants", () => {
         // Test that all shadow tokens are accessible and are functions
-        expect(typeof Shadow["xs-subtle"]).toBe("function");
-        expect(typeof Shadow["xs-strong"]).toBe("function");
-        expect(typeof Shadow["xs-focus-strong"]).toBe("function");
-        expect(typeof Shadow["xs-error-strong"]).toBe("function");
-        expect(typeof Shadow["sm-subtle"]).toBe("function");
-        expect(typeof Shadow["sm-strong"]).toBe("function");
-        expect(typeof Shadow["md-subtle"]).toBe("function");
-        expect(typeof Shadow["md-strong"]).toBe("function");
-        expect(typeof Shadow["lg-subtle"]).toBe("function");
-        expect(typeof Shadow["lg-strong"]).toBe("function");
+        expect(typeof V3_Shadow["xs-subtle"]).toBe("function");
+        expect(typeof V3_Shadow["xs-strong"]).toBe("function");
+        expect(typeof V3_Shadow["xs-focus-strong"]).toBe("function");
+        expect(typeof V3_Shadow["xs-error-strong"]).toBe("function");
+        expect(typeof V3_Shadow["sm-subtle"]).toBe("function");
+        expect(typeof V3_Shadow["sm-strong"]).toBe("function");
+        expect(typeof V3_Shadow["md-subtle"]).toBe("function");
+        expect(typeof V3_Shadow["md-strong"]).toBe("function");
+        expect(typeof V3_Shadow["lg-subtle"]).toBe("function");
+        expect(typeof V3_Shadow["lg-strong"]).toBe("function");
     });
 
     it("should handle semantic shadow tokens correctly", () => {
         const PrimaryShadowComponent = styled.div`
-            box-shadow: ${Shadow["xs-focus-strong"]};
+            box-shadow: ${V3_Shadow["xs-focus-strong"]};
         `;
 
         const ErrorShadowComponent = styled.div`
-            box-shadow: ${Shadow["xs-error-strong"]};
+            box-shadow: ${V3_Shadow["xs-error-strong"]};
         `;
 
         const { container: primaryContainer } = render(

@@ -1,5 +1,11 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Motion, Radius } from "../../v3_theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_Motion,
+    V3_Radius,
+} from "../../v3_theme";
 import { YearVariant } from "./internal-calendar-year";
 
 // =============================================================================
@@ -29,15 +35,15 @@ export const YearCell = styled.div<StyleProps>`
     justify-content: center;
     align-items: center;
     margin: 1rem 0.5rem;
-    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+    transition: ${V3_Motion["duration-150"]} ${V3_Motion["ease-default"]};
     padding: 0.5rem;
 
     // default styles
-    ${Font["body-md-regular"]}
-    border-radius: ${Radius["md"]};
-    border: ${Border["width-010"]} ${Border.solid} transparent;
+    ${V3_Font["body-md-regular"]}
+    border-radius: ${V3_Radius["md"]};
+    border: ${V3_Border["width-010"]} ${V3_Border.solid} transparent;
     background-clip: border-box;
-    color: ${Colour["text"]};
+    color: ${V3_Colour["text"]};
     cursor: default;
 
     // cursor style
@@ -59,17 +65,17 @@ export const YearCell = styled.div<StyleProps>`
     ${({ $variant, $interactive, $disabledDisplay }) => {
         if ($variant === "selected-year") {
             return css`
-                background: ${Colour["bg-selected"]};
-                border-color: ${Colour["border-selected"]};
-                color: ${Colour["text-selected"]};
-                font-weight: ${Font.Spec["weight-semibold"]};
+                background: ${V3_Colour["bg-selected"]};
+                border-color: ${V3_Colour["border-selected"]};
+                color: ${V3_Colour["text-selected"]};
+                font-weight: ${V3_Font.Spec["weight-semibold"]};
 
                 ${$interactive &&
                 css`
                     &:hover {
-                        background: ${Colour["bg-selected-hover"]};
-                        border-color: ${Colour["border-selected-hover"]};
-                        color: ${Colour["text-selected-hover"]};
+                        background: ${V3_Colour["bg-selected-hover"]};
+                        border-color: ${V3_Colour["border-selected-hover"]};
+                        color: ${V3_Colour["text-selected-hover"]};
                     }
                 `}
             `;
@@ -77,20 +83,20 @@ export const YearCell = styled.div<StyleProps>`
 
         if ($variant === "current-year") {
             return css`
-                color: ${Colour["text-primary"]};
-                font-weight: ${Font.Spec["weight-semibold"]};
+                color: ${V3_Colour["text-primary"]};
+                font-weight: ${V3_Font.Spec["weight-semibold"]};
             `;
         }
 
         if ($variant === "other-decade") {
             return css`
-                color: ${Colour["text-disabled-subtlest"]};
+                color: ${V3_Colour["text-disabled-subtlest"]};
             `;
         }
 
         if ($disabledDisplay) {
             return css`
-                color: ${Colour["text-disabled-subtlest"]};
+                color: ${V3_Colour["text-disabled-subtlest"]};
             `;
         }
     }}
@@ -104,19 +110,19 @@ export const YearCell = styled.div<StyleProps>`
         if ($variant === "selected-year") {
             return css`
                 &:hover {
-                    background: ${Colour["bg-selected-hover"]};
-                    border-color: ${Colour["border-selected-hover"]};
-                    color: ${Colour["text-selected-hover"]};
-                    font-weight: ${Font.Spec["weight-semibold"]};
+                    background: ${V3_Colour["bg-selected-hover"]};
+                    border-color: ${V3_Colour["border-selected-hover"]};
+                    color: ${V3_Colour["text-selected-hover"]};
+                    font-weight: ${V3_Font.Spec["weight-semibold"]};
                 }
             `;
         }
 
         return css`
             &:hover {
-                background: ${Colour["bg-hover"]};
-                color: ${Colour["text-hover"]};
-                font-weight: ${Font.Spec["weight-semibold"]};
+                background: ${V3_Colour["bg-hover"]};
+                color: ${V3_Colour["text-hover"]};
+                font-weight: ${V3_Font.Spec["weight-semibold"]};
             }
         `;
     }}

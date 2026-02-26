@@ -1,4 +1,4 @@
-import { ThemeButton } from "src/v3_theme/components/theme-helper";
+import { V3_ThemeButton } from "src/v3_theme/components/theme-helper";
 import { TokenTable, TokenTableSectionProps } from "../storybook-common";
 
 const DATA: TokenTableSectionProps[] = [
@@ -9,7 +9,7 @@ const DATA: TokenTableSectionProps[] = [
                 description: "The radius of the button",
                 defaultValue: {
                     type: "default",
-                    token: ThemeButton["button-radius"],
+                    token: V3_ThemeButton["button-radius"],
                 },
             },
             {
@@ -17,7 +17,7 @@ const DATA: TokenTableSectionProps[] = [
                 description: "The background colour of the default button",
                 defaultValue: {
                     type: "colour-token",
-                    token: ThemeButton["button-default-colour-bg"],
+                    token: V3_ThemeButton["button-default-colour-bg"],
                 },
             },
             {
@@ -26,7 +26,7 @@ const DATA: TokenTableSectionProps[] = [
                     "The background colour of the default button when hovered",
                 defaultValue: {
                     type: "colour-token",
-                    token: ThemeButton["button-default-colour-bg-hover"],
+                    token: V3_ThemeButton["button-default-colour-bg-hover"],
                 },
             },
             {
@@ -34,7 +34,7 @@ const DATA: TokenTableSectionProps[] = [
                 description: "The text colour of the default button",
                 defaultValue: {
                     type: "colour-token",
-                    token: ThemeButton["button-default-colour-text"],
+                    token: V3_ThemeButton["button-default-colour-text"],
                 },
             },
             {
@@ -42,7 +42,7 @@ const DATA: TokenTableSectionProps[] = [
                 description: "The border colour of the secondary button",
                 defaultValue: {
                     type: "colour-token",
-                    token: ThemeButton["button-secondary-colour-border"],
+                    token: V3_ThemeButton["button-secondary-colour-border"],
                 },
             },
             {
@@ -50,7 +50,7 @@ const DATA: TokenTableSectionProps[] = [
                 description: "The text colour of the secondary button",
                 defaultValue: {
                     type: "colour-token",
-                    token: ThemeButton["button-secondary-colour-text"],
+                    token: V3_ThemeButton["button-secondary-colour-text"],
                 },
             },
             {
@@ -58,7 +58,7 @@ const DATA: TokenTableSectionProps[] = [
                 description: "The text colour of the light button",
                 defaultValue: {
                     type: "colour-token",
-                    token: ThemeButton["button-light-colour-text"],
+                    token: V3_ThemeButton["button-light-colour-text"],
                 },
             },
             {
@@ -66,7 +66,7 @@ const DATA: TokenTableSectionProps[] = [
                 description: "The text colour of the link button",
                 defaultValue: {
                     type: "colour-token",
-                    token: ThemeButton["button-link-colour-text"],
+                    token: V3_ThemeButton["button-link-colour-text"],
                 },
             },
         ],

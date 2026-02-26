@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { ColourMode, ThemeSpec } from "src/v3_theme/types";
+import { V3_ColourMode, V3_ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider } from "styled-components";
 
 interface ColourModeSwitcherProps {
-    colourMode: ColourMode;
-    onColourModeChange: (colourMode: ColourMode) => void;
+    colourMode: V3_ColourMode;
+    onColourModeChange: (colourMode: V3_ColourMode) => void;
 }
 
 const ColourModeSwitcher = ({
@@ -28,12 +28,12 @@ const ColourModeSwitcher = ({
 };
 
 interface ColourDisplayProps {
-    theme: ThemeSpec;
+    theme: V3_ThemeSpec;
     children: React.ReactNode;
 }
 
 export const ColourDisplay = ({ theme, children }: ColourDisplayProps) => {
-    const [colourMode, setColourMode] = useState<ColourMode>("light");
+    const [colourMode, setColourMode] = useState<V3_ColourMode>("light");
 
     return (
         <ThemeProvider theme={{ ...theme, colourMode }}>

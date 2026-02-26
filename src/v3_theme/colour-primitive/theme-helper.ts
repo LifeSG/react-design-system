@@ -1,71 +1,71 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { ThemeCollectionSpec } from "../internal-types";
-import { ColourScheme, PrimitiveColourSet } from "../types";
-import { BookingSgColourSet } from "./specs/bookingsg-colour-set";
-import { CCubeColourSet } from "./specs/ccube-colour-set";
-import { LifeSgColourSet } from "./specs/lifesg-colour-set";
-import { MyLegacyColourSet } from "./specs/mylegacy-colour-set";
-import { OneServiceColourSet } from "./specs/oneservice-colour-set";
-import { PAColourSet } from "./specs/pa-colour-set";
-import { RBSColourSet } from "./specs/rbs-colour-set";
-import { A11yPlaygroundColourSet } from "./specs/a11yplayground-colour-set";
-import { SupportGoWhereColourSet } from "./specs/supportgowhere-colour-set";
-import { IMDAColourSet } from "./specs/imda-colour-set";
-import { SPFColourSet } from "./specs/spf-colour-set";
-import { ColourCollectionsMap } from "./types";
+import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
+import { V3_ThemeCollectionSpec } from "../internal-types";
+import { V3_ColourScheme, V3_PrimitiveColourSet } from "../types";
+import { V3_BookingSgColourSet } from "./specs/bookingsg-colour-set";
+import { V3_CCubeColourSet } from "./specs/ccube-colour-set";
+import { V3_LifeSgColourSet } from "./specs/lifesg-colour-set";
+import { V3_MyLegacyColourSet } from "./specs/mylegacy-colour-set";
+import { V3_OneServiceColourSet } from "./specs/oneservice-colour-set";
+import { V3_PAColourSet } from "./specs/pa-colour-set";
+import { V3_RBSColourSet } from "./specs/rbs-colour-set";
+import { V3_A11yPlaygroundColourSet } from "./specs/a11yplayground-colour-set";
+import { V3_SupportGoWhereColourSet } from "./specs/supportgowhere-colour-set";
+import { V3_IMDAColourSet } from "./specs/imda-colour-set";
+import { V3_SPFColourSet } from "./specs/spf-colour-set";
+import { V3_ColourCollectionsMap } from "./types";
 
-export const ColourSpec: ThemeCollectionSpec<
-    ColourCollectionsMap,
-    ColourScheme
+export const V3_ColourSpec: V3_ThemeCollectionSpec<
+    V3_ColourCollectionsMap,
+    V3_ColourScheme
 > = {
     collections: {
-        lifesg: LifeSgColourSet,
-        bookingsg: BookingSgColourSet,
-        rbs: RBSColourSet,
-        mylegacy: MyLegacyColourSet,
-        ccube: CCubeColourSet,
-        oneservice: OneServiceColourSet,
-        pa: PAColourSet,
-        a11yplayground: A11yPlaygroundColourSet,
-        supportgowhere: SupportGoWhereColourSet,
-        imda: IMDAColourSet,
-        spf: SPFColourSet,
+        lifesg: V3_LifeSgColourSet,
+        bookingsg: V3_BookingSgColourSet,
+        rbs: V3_RBSColourSet,
+        mylegacy: V3_MyLegacyColourSet,
+        ccube: V3_CCubeColourSet,
+        oneservice: V3_OneServiceColourSet,
+        pa: V3_PAColourSet,
+        a11yplayground: V3_A11yPlaygroundColourSet,
+        supportgowhere: V3_SupportGoWhereColourSet,
+        imda: V3_IMDAColourSet,
+        spf: V3_SPFColourSet,
     },
     defaultValue: "lifesg",
 };
 
 // Dark colour spec - uses explicit dark sets where available, falls back to light sets
-export const DarkColourSpec: ThemeCollectionSpec<
-    ColourCollectionsMap,
-    ColourScheme
+export const V3_DarkColourSpec: V3_ThemeCollectionSpec<
+    V3_ColourCollectionsMap,
+    V3_ColourScheme
 > = {
     collections: {
         // Currently all schemes use light primitive colours as fallback
         // In the future, add custom dark primitive sets like:
         // lifesg: LifeSgDarkColourSet,
-        lifesg: LifeSgColourSet,
-        bookingsg: BookingSgColourSet,
-        rbs: RBSColourSet,
-        mylegacy: MyLegacyColourSet,
-        ccube: CCubeColourSet,
-        oneservice: OneServiceColourSet,
-        pa: PAColourSet,
-        a11yplayground: A11yPlaygroundColourSet,
-        supportgowhere: SupportGoWhereColourSet,
-        imda: IMDAColourSet,
-        spf: SPFColourSet,
+        lifesg: V3_LifeSgColourSet,
+        bookingsg: V3_BookingSgColourSet,
+        rbs: V3_RBSColourSet,
+        mylegacy: V3_MyLegacyColourSet,
+        ccube: V3_CCubeColourSet,
+        oneservice: V3_OneServiceColourSet,
+        pa: V3_PAColourSet,
+        a11yplayground: V3_A11yPlaygroundColourSet,
+        supportgowhere: V3_SupportGoWhereColourSet,
+        imda: V3_IMDAColourSet,
+        spf: V3_SPFColourSet,
     },
     defaultValue: "lifesg",
 };
 
-export const getPrimitiveColour = (key: keyof PrimitiveColourSet) => {
-    return (props: StyledComponentProps): string => {
+export const getPrimitiveColour = (key: keyof V3_PrimitiveColourSet) => {
+    return (props: V3_StyledComponentProps): string => {
         const theme = props.theme;
         const isDarkMode = theme?.colourMode === "dark";
 
         // Select the appropriate colour spec based on theme mode
-        const spec = isDarkMode ? DarkColourSpec : ColourSpec;
-        const colourSet: PrimitiveColourSet = getCollection(
+        const spec = isDarkMode ? V3_DarkColourSpec : V3_ColourSpec;
+        const colourSet: V3_PrimitiveColourSet = getCollection(
             spec,
             theme?.colourScheme
         );
@@ -85,8 +85,10 @@ export const getPrimitiveColour = (key: keyof PrimitiveColourSet) => {
     };
 };
 
-export const PrimitiveColour: {
-    [key in keyof PrimitiveColourSet]: (props: StyledComponentProps) => string;
+export const V3_PrimitiveColour: {
+    [key in keyof V3_PrimitiveColourSet]: (
+        props: V3_StyledComponentProps
+    ) => string;
 } = {
     "brand-10": getPrimitiveColour("brand-10"),
     "brand-20": getPrimitiveColour("brand-20"),

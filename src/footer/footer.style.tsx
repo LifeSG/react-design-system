@@ -1,23 +1,23 @@
 import styled from "styled-components";
-import { MediaQuery, Spacing } from "../v3_theme";
+import { V3_MediaQuery, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 import { Layout } from "../layout";
 import { Divider } from "../divider";
-import { ThemeFooter } from "../v3_theme/components/theme-helper";
+import { V3_ThemeFooter } from "../v3_theme/components/theme-helper";
 
 // =============================================================================
 // GENERIC
 // =============================================================================
 
 export const BaseFooter = styled.footer`
-    background: ${ThemeFooter["footer-colour-bg"]};
+    background: ${V3_ThemeFooter["footer-colour-bg"]};
 `;
 
 export const StyledFooterLink = styled(Typography.LinkMD)`
-    color: ${ThemeFooter["footer-link-colour-text"]};
+    color: ${V3_ThemeFooter["footer-link-colour-text"]};
 
     &:hover {
-        color: ${ThemeFooter["footer-link-colour-text-hover"]};
+        color: ${V3_ThemeFooter["footer-link-colour-text-hover"]};
     }
 `;
 
@@ -30,14 +30,14 @@ export const FullWidthDivider = styled(Divider)`
 `;
 
 export const TopSection = styled(Layout.Content)`
-    padding: ${Spacing["spacing-64"]} 0;
+    padding: ${V3_Spacing["spacing-64"]} 0;
 
-    ${MediaQuery.MaxWidth.lg} {
-        padding: ${Spacing["spacing-32"]} 0;
+    ${V3_MediaQuery.MaxWidth.lg} {
+        padding: ${V3_Spacing["spacing-32"]} 0;
 
         [data-id="container"] {
             flex-direction: column;
-            gap: ${Spacing["spacing-32"]};
+            gap: ${V3_Spacing["spacing-32"]};
         }
     }
 `;
@@ -45,7 +45,7 @@ export const TopSection = styled(Layout.Content)`
 export const LogoSection = styled.div`
     display: flex;
     width: fit-content;
-    margin-right: ${Spacing["spacing-64"]};
+    margin-right: ${V3_Spacing["spacing-64"]};
 
     img {
         max-height: 4rem;
@@ -53,7 +53,7 @@ export const LogoSection = styled.div`
         object-fit: contain;
     }
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         width: 100%;
         margin-right: 0;
     }
@@ -61,11 +61,11 @@ export const LogoSection = styled.div`
 
 export const LinkSectionWrapper = styled.div`
     display: flex;
-    gap: ${Spacing["spacing-32"]};
+    gap: ${V3_Spacing["spacing-32"]};
     flex: 1 1 auto;
-    max-width: calc(32% + ${Spacing["spacing-32"]});
+    max-width: calc(32% + ${V3_Spacing["spacing-32"]});
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         max-width: 100%;
     }
 `;
@@ -81,7 +81,7 @@ export const LinkSection = styled.ul`
 
     li {
         &:not(:last-child) {
-            margin-bottom: ${Spacing["spacing-8"]};
+            margin-bottom: ${V3_Spacing["spacing-8"]};
         }
 
         a {
@@ -89,7 +89,7 @@ export const LinkSection = styled.ul`
         }
     }
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         // first col
         grid-column: 1 / span 6;
 
@@ -99,7 +99,7 @@ export const LinkSection = styled.ul`
         }
     }
 
-    ${MediaQuery.MaxWidth.md} {
+    ${V3_MediaQuery.MaxWidth.md} {
         // first col
         grid-column: 1 / span 4;
 
@@ -114,7 +114,7 @@ export const AddonSection = styled.div`
     flex: 0 1 33%;
     margin-left: auto;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         flex: 1 1 100%;
         margin-left: 0;
     }
@@ -125,15 +125,15 @@ export const AddonSection = styled.div`
 // =============================================================================
 
 export const BottomSection = styled(Layout.Content)`
-    padding: ${Spacing["spacing-20"]} 0;
+    padding: ${V3_Spacing["spacing-20"]} 0;
 
     [data-id="container"] {
-        column-gap: ${Spacing["spacing-32"]};
+        column-gap: ${V3_Spacing["spacing-32"]};
     }
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         border-top: none;
-        padding: ${Spacing["spacing-16"]} 0;
+        padding: ${V3_Spacing["spacing-16"]} 0;
 
         [data-id="container"] {
             flex-direction: column;
@@ -145,7 +145,7 @@ export const BottomSectionContent = styled.div`
     flex: 1 1 50%;
     display: flex;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         flex-direction: column;
         &:not(:last-child) {
             margin-right: 0;
@@ -156,34 +156,34 @@ export const BottomSectionContent = styled.div`
 export const CopyrightSection = styled(BottomSectionContent)`
     justify-content: flex-end;
 
-    ${MediaQuery.MaxWidth.lg} {
-        margin-top: ${Spacing["spacing-16"]};
+    ${V3_MediaQuery.MaxWidth.lg} {
+        margin-top: ${V3_Spacing["spacing-16"]};
         justify-content: flex-start;
     }
 `;
 
 export const CopyrightText = styled(Typography.BodyXS)`
-    color: ${ThemeFooter["footer-colour-text"]};
+    color: ${V3_ThemeFooter["footer-colour-text"]};
 `;
 
 export const DisclaimerTextLink = styled(Typography.LinkXS)`
-    color: ${ThemeFooter["footer-disclaimer-link-colour-text"]};
+    color: ${V3_ThemeFooter["footer-disclaimer-link-colour-text"]};
     &:not(:last-child) {
-        margin-right: ${Spacing["spacing-16"]};
+        margin-right: ${V3_Spacing["spacing-16"]};
     }
 
     &:hover {
-        color: ${ThemeFooter["footer-disclaimer-link-colour-text-hover"]};
+        color: ${V3_ThemeFooter["footer-disclaimer-link-colour-text-hover"]};
     }
 
-    ${MediaQuery.MaxWidth.lg} {
-        margin-bottom: ${Spacing["spacing-12"]};
+    ${V3_MediaQuery.MaxWidth.lg} {
+        margin-bottom: ${V3_Spacing["spacing-12"]};
         &:not(:last-child) {
             margin-right: 0;
         }
     }
 
-    ${MediaQuery.MaxWidth.lg} {
-        margin-bottom: ${Spacing["spacing-8"]};
+    ${V3_MediaQuery.MaxWidth.lg} {
+        margin-bottom: ${V3_Spacing["spacing-8"]};
     }
 `;

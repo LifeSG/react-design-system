@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { lineClampCss } from "../shared/styles";
-import { Border, Colour, Radius, Spacing } from "../v3_theme";
+import { V3_Border, V3_Colour, V3_Radius, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -12,14 +12,14 @@ export const MenuLinkDiv = styled.li`
 `;
 
 export const Link = styled(Typography.LinkMD)`
-    color: ${Colour["text"]};
+    color: ${V3_Colour["text"]};
 
-    margin: 0 ${Spacing["spacing-8"]};
+    margin: 0 ${V3_Spacing["spacing-8"]};
 
-    border: ${Border["solid"]} transparent;
-    border-width: ${Spacing["spacing-8"]} ${Spacing["spacing-8"]};
+    border: ${V3_Border["solid"]} transparent;
+    border-width: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-8"]};
 
-    border-radius: ${Radius["md"]};
+    border-radius: ${V3_Radius["md"]};
 
     ${lineClampCss(2)}
     white-space: pre-wrap;
@@ -27,12 +27,12 @@ export const Link = styled(Typography.LinkMD)`
     &:hover,
     &:active,
     &:focus {
-        background-color: ${Colour["bg-hover"]};
-        color: ${Colour["text"]};
+        background-color: ${V3_Colour["bg-hover"]};
+        color: ${V3_Colour["text"]};
     }
 
     &:focus-visible {
-        outline: 2px solid ${Colour["focus-ring"]};
+        outline: 2px solid ${V3_Colour["focus-ring"]};
         outline-offset: 0;
     }
 `;

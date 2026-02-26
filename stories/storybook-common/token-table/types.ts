@@ -1,4 +1,4 @@
-import { ThemeStyleProps } from "src/v3_theme";
+import { V3_ThemeStyleProps } from "src/v3_theme";
 
 export interface TokenTableAttributeRowProps {
     name: string;
@@ -11,12 +11,12 @@ export interface TokenTableAttributeRowProps {
 
 export interface TokenTableDefaultValueColourTokenProps {
     type: "colour-token";
-    token: (props: ThemeStyleProps) => string;
+    token: (props: V3_ThemeStyleProps) => string;
 }
 
 export interface TokenTableDefaultValueDefaultProps {
     type: "default";
-    token: (props: ThemeStyleProps) => string;
+    token: (props: V3_ThemeStyleProps) => string;
 }
 
 export interface TokenTableSectionProps {

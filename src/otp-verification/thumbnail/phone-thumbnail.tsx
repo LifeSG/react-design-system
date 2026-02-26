@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour } from "../../v3_theme";
+import { V3_Colour } from "../../v3_theme";
 
 interface PhoneThumbnailProps {
     width?: number;
@@ -9,19 +9,19 @@ interface PhoneThumbnailProps {
 
 const StyledSvg = styled.svg`
     .background-circle {
-        fill: ${Colour["bg-stronger"]};
+        fill: ${V3_Colour["bg-stronger"]};
     }
 
     .primary-path {
-        fill: ${Colour["icon-primary"]};
+        fill: ${V3_Colour["icon-primary"]};
     }
 
     .validation-icon {
-        fill: ${Colour["bg-available"]};
+        fill: ${V3_Colour["bg-available"]};
     }
 
     .accent-light {
-        fill: ${Colour["bg-selected-stronger"]};
+        fill: ${V3_Colour["bg-selected-stronger"]};
     }
 `;
 

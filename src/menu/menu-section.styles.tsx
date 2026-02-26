@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Spacing } from "../v3_theme";
+import { V3_Border, V3_Colour, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -16,15 +16,15 @@ export const Section = styled.ul<MenuSectionStyleProps>`
     ${(props) =>
         props.$showDivider &&
         css`
-            border-top: ${Border["width-010"]} ${Border["solid"]}
-                ${Colour["border"]};
+            border-top: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+                ${V3_Colour["border"]};
         `}
-    padding: ${Spacing["spacing-8"]} 0;
+    padding: ${V3_Spacing["spacing-8"]} 0;
     margin: 0;
     list-style: none;
 `;
 
 export const Label = styled(Typography.BodyXS)`
-    margin: 0 ${Spacing["spacing-16"]} ${Spacing["spacing-8"]};
-    color: ${Colour["text-subtler"]};
+    margin: 0 ${V3_Spacing["spacing-16"]} ${V3_Spacing["spacing-8"]};
+    color: ${V3_Colour["text-subtler"]};
 `;

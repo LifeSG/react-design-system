@@ -1,21 +1,24 @@
-import { StyledComponentProps, getCollection, getValue } from "../helpers";
-import { ThemeCollectionSpec } from "../internal-types";
-import { MotionScheme } from "../types";
-import { DefaultMotionSet } from "./specs/default-motion-set";
-import { MotionCollectionsMap, MotionSet } from "./types";
+import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
+import { V3_ThemeCollectionSpec } from "../internal-types";
+import { V3_MotionScheme } from "../types";
+import { V3_DefaultMotionSet } from "./specs/default-motion-set";
+import { V3_MotionCollectionsMap, V3_MotionSet } from "./types";
 
-const MotionSpec: ThemeCollectionSpec<MotionCollectionsMap, MotionScheme> = {
+const V3_MotionSpec: V3_ThemeCollectionSpec<
+    V3_MotionCollectionsMap,
+    V3_MotionScheme
+> = {
     collections: {
-        default: DefaultMotionSet,
+        default: V3_DefaultMotionSet,
     },
     defaultValue: "default",
 };
 
-export const getMotion = (key: keyof MotionSet) => {
-    return (props: StyledComponentProps): string => {
+export const getMotion = (key: keyof V3_MotionSet) => {
+    return (props: V3_StyledComponentProps): string => {
         const theme = props.theme;
-        const motionSet: MotionSet = getCollection(
-            MotionSpec,
+        const motionSet: V3_MotionSet = getCollection(
+            V3_MotionSpec,
             theme?.motionScheme
         );
 
@@ -27,8 +30,8 @@ export const getMotion = (key: keyof MotionSet) => {
     };
 };
 
-export const MotionValues: {
-    [key in keyof MotionSet]: (props: StyledComponentProps) => string;
+export const V3_MotionValues: {
+    [key in keyof V3_MotionSet]: (props: V3_StyledComponentProps) => string;
 } = {
     "duration-150": getMotion("duration-150"),
     "duration-250": getMotion("duration-250"),

@@ -1,12 +1,12 @@
-import { FontScheme } from "../types";
+import { V3_FontScheme } from "../types";
 
-export type FontSpecCollectionMap = {
-    [key in FontScheme]: FontSpecSet;
+export type V3_FontSpecCollectionMap = {
+    [key in V3_FontScheme]: V3_FontSpecSet;
 };
 
-export type FontSpecSetOptions = Partial<FontSpecSet>;
+export type V3_FontSpecSetOptions = Partial<V3_FontSpecSet>;
 
-export type FontSpecSet = {
+export type V3_FontSpecSet = {
     // Header sizes
     "heading-size-xxl": string;
     "heading-size-xl": string;

@@ -1,22 +1,22 @@
 import { CSSProp } from "styled-components";
-import { BorderScheme } from "../types";
-import { StyledComponentProps } from "../helpers";
+import { V3_BorderScheme } from "../types";
+import { V3_StyledComponentProps } from "../helpers";
 
-export interface BorderUtilSet {
+export interface V3_BorderUtilSet {
     solid: (options?: {
-        thickness?: number | ((props: StyledComponentProps) => string);
-        radius?: number | ((props: StyledComponentProps) => string);
-        colour?: string | ((props: StyledComponentProps) => string);
-    }) => (props: StyledComponentProps) => CSSProp;
+        thickness?: number | ((props: V3_StyledComponentProps) => string);
+        radius?: number | ((props: V3_StyledComponentProps) => string);
+        colour?: string | ((props: V3_StyledComponentProps) => string);
+    }) => (props: V3_StyledComponentProps) => CSSProp;
     "dashed-default": (options?: {
-        thickness?: number | ((props: StyledComponentProps) => string);
-        radius?: number | ((props: StyledComponentProps) => string);
-        colour?: string | ((props: StyledComponentProps) => string);
-    }) => (props: StyledComponentProps) => CSSProp;
+        thickness?: number | ((props: V3_StyledComponentProps) => string);
+        radius?: number | ((props: V3_StyledComponentProps) => string);
+        colour?: string | ((props: V3_StyledComponentProps) => string);
+    }) => (props: V3_StyledComponentProps) => CSSProp;
 }
 
-export type BorderUtilCollectionMap = {
-    [key in BorderScheme]: BorderUtilSet;
+export type V3_BorderUtilCollectionMap = {
+    [key in V3_BorderScheme]: V3_BorderUtilSet;
 };
 
-export type BorderUtilSetOptions = Partial<BorderUtilSet>;
+export type V3_BorderUtilSetOptions = Partial<V3_BorderUtilSet>;

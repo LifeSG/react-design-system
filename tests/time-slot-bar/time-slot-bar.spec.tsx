@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { TimeSlotBar } from "../../src/time-slot-bar/time-slot-bar";
 import { TimeSlot } from "../../src/time-slot-bar/types";
-import { Colour } from "../../src";
+import { V3_Colour } from "../../src";
 
 describe("TimeSlotBar", () => {
     const mockSlots: TimeSlot[] = [
@@ -23,7 +23,7 @@ describe("TimeSlotBar", () => {
             label: "Meeting 2",
             clickable: false,
             styleAttributes: {
-                backgroundColor: Colour["bg-available"],
+                backgroundColor: V3_Colour["bg-available"],
             },
         },
     ];

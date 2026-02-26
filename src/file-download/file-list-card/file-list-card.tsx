@@ -3,7 +3,7 @@ import { memo, useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { FileUploadHelper } from "../../file-upload/helper";
-import { Breakpoint } from "../../v3_theme";
+import { V3_Breakpoint } from "../../v3_theme";
 import { StringHelper } from "../../util";
 import {
     ActionContainer,
@@ -43,7 +43,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     const [isError, setIsError] = useState<boolean>(false);
     const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
     const theme = useContext(ThemeContext);
-    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const [displayText, setDisplayText] = useState<string>();
     const containerRef = useRef<HTMLDivElement>(null);

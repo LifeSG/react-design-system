@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Pill } from "../pill";
-import { Colour, Font, MediaQuery, Radius } from "../v3_theme";
+import { V3_Colour, V3_Font, V3_MediaQuery, V3_Radius } from "../v3_theme";
 import { Typography } from "../typography";
 import { Variant } from "./types";
 
@@ -33,32 +33,32 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
         switch (props.$variant) {
             case "current":
                 return css`
-                    background-color: ${Colour["icon-primary-subtle"]};
+                    background-color: ${V3_Colour["icon-primary-subtle"]};
                 `;
             case "upcoming-active":
                 return css`
-                    border: 4px solid ${Colour["icon-primary-subtle"]};
+                    border: 4px solid ${V3_Colour["icon-primary-subtle"]};
                 `;
             case "upcoming-inactive":
                 return css`
-                    border: 4px solid ${Colour["icon-subtle"]};
+                    border: 4px solid ${V3_Colour["icon-subtle"]};
                 `;
             case "disabled":
                 return css`
-                    background-color: ${Colour["icon-disabled-subtle"]};
+                    background-color: ${V3_Colour["icon-disabled-subtle"]};
                 `;
             case "completed":
                 return css`
-                    background-color: ${Colour["icon-success"]};
+                    background-color: ${V3_Colour["icon-success"]};
                     svg {
-                        color: ${Colour["icon-inverse"]};
+                        color: ${V3_Colour["icon-inverse"]};
                     }
                 `;
             case "numeric":
                 return css`
-                    background-color: ${Colour["icon-info"]};
-                    color: ${Colour["text-inverse"]};
-                    font-size: ${Font["body-sm-bold"]};
+                    background-color: ${V3_Colour["icon-info"]};
+                    color: ${V3_Colour["text-inverse"]};
+                    font-size: ${V3_Font["body-sm-bold"]};
                 `;
             case "error":
                 return css`
@@ -67,7 +67,7 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
                     margin: -0.15rem 0 -0.15rem -0.15rem;
 
                     svg {
-                        color: ${Colour["icon-error"]};
+                        color: ${V3_Colour["icon-error"]};
                         height: 100%;
                         width: 100%;
                     }
@@ -81,35 +81,35 @@ export const LineIndicator = styled.div<VariantStyleProps>`
     flex-grow: 1;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    border-radius: ${Radius["full"]};
+    border-radius: ${V3_Radius["full"]};
 
     ${(props) => {
         switch (props.$variant) {
             case "current":
             case "upcoming-active":
                 return css`
-                    background-color: ${Colour["icon-primary-subtle"]};
+                    background-color: ${V3_Colour["icon-primary-subtle"]};
                 `;
             case "upcoming-inactive":
                 return css`
-                    background-color: ${Colour["icon-subtle"]};
+                    background-color: ${V3_Colour["icon-subtle"]};
                 `;
             case "disabled":
                 return css`
-                    background-color: ${Colour["icon-disabled-subtle"]};
+                    background-color: ${V3_Colour["icon-disabled-subtle"]};
                 `;
             case "completed":
                 return css`
-                    background-color: ${Colour["icon-success"]};
+                    background-color: ${V3_Colour["icon-success"]};
                 `;
             case "numeric":
                 return css`
-                    background-color: ${Colour["icon-info"]};
+                    background-color: ${V3_Colour["icon-info"]};
                 `;
             case "error":
                 return css`
                     margin-left: -0.15rem;
-                    background-color: ${Colour["icon-error"]};
+                    background-color: ${V3_Colour["icon-error"]};
                 `;
         }
     }}
@@ -126,11 +126,11 @@ export const TimelineWrapper = styled.div<TimelineWrapperStyleProps>`
     grid-column: ${(props) => (props.$startCol ? props.$startCol : 3)} / span
         ${(props) => (props.$colSpan ? props.$colSpan : 8)};
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         grid-column: span 8;
     }
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         grid-column: span 8;
     }
 `;
@@ -138,7 +138,7 @@ export const TimelineWrapper = styled.div<TimelineWrapperStyleProps>`
 export const TimelineTitle = styled(Typography.HeadingSM)`
     margin-bottom: 1rem;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         margin-bottom: 1.5rem;
     }
 `;

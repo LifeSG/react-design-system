@@ -2,7 +2,13 @@ import { ChevronDownIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { AlertSizeType, AlertType } from "./types";
-import { Border, Colour, Font, Motion, Spacing } from "../v3_theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_Motion,
+    V3_Spacing,
+} from "../v3_theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -27,7 +33,7 @@ export interface ShowMoreIconStyleProps {
 // =============================================================================
 
 export const Wrapper = styled.div<StyleProps>`
-    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
+    padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-16"]};
     display: flex;
 
     ${(props) => {
@@ -35,34 +41,34 @@ export const Wrapper = styled.div<StyleProps>`
         let borderColor: string;
         switch (props.$type) {
             case "error":
-                backgroundColor = Colour["bg-error"](props);
-                borderColor = Colour["border-error"](props);
+                backgroundColor = V3_Colour["bg-error"](props);
+                borderColor = V3_Colour["border-error"](props);
                 break;
             case "success":
-                backgroundColor = Colour["bg-success"](props);
-                borderColor = Colour["border-success"](props);
+                backgroundColor = V3_Colour["bg-success"](props);
+                borderColor = V3_Colour["border-success"](props);
                 break;
             case "warning":
-                backgroundColor = Colour["bg-warning"](props);
-                borderColor = Colour["border-warning"](props);
+                backgroundColor = V3_Colour["bg-warning"](props);
+                borderColor = V3_Colour["border-warning"](props);
                 break;
             case "info":
-                backgroundColor = Colour["bg-info"](props);
-                borderColor = Colour["border-info"](props);
+                backgroundColor = V3_Colour["bg-info"](props);
+                borderColor = V3_Colour["border-info"](props);
                 break;
             case "description":
-                backgroundColor = Colour["bg-strong"](props);
-                borderColor = Colour["border-strong"](props);
+                backgroundColor = V3_Colour["bg-strong"](props);
+                borderColor = V3_Colour["border-strong"](props);
                 break;
             default:
-                backgroundColor = Colour["bg-warning"](props);
-                borderColor = Colour["border-warning"](props);
+                backgroundColor = V3_Colour["bg-warning"](props);
+                borderColor = V3_Colour["border-warning"](props);
                 break;
         }
 
         return css`
             background: ${backgroundColor};
-            border-left: ${Border["width-020"]} ${Border["solid"]}
+            border-left: ${V3_Border["width-020"]} ${V3_Border["solid"]}
                 ${borderColor};
         `;
     }}
@@ -72,29 +78,29 @@ export const AlertIconWrapper = styled.div<StyleProps>`
     display: flex;
     align-items: center;
     height: 1lh;
-    margin-right: ${Spacing["spacing-8"]};
+    margin-right: ${V3_Spacing["spacing-8"]};
 
     ${(props) => {
         let iconColor: string;
         const iconSize = props.$sizeType === "small" ? "1.25rem" : "1.5rem";
         switch (props.$type) {
             case "error":
-                iconColor = Colour["icon-error"](props);
+                iconColor = V3_Colour["icon-error"](props);
                 break;
             case "success":
-                iconColor = Colour["icon-success"](props);
+                iconColor = V3_Colour["icon-success"](props);
                 break;
             case "warning":
-                iconColor = Colour["icon-warning"](props);
+                iconColor = V3_Colour["icon-warning"](props);
                 break;
             case "info":
-                iconColor = Colour["icon-info"](props);
+                iconColor = V3_Colour["icon-info"](props);
                 break;
             case "description":
-                iconColor = Colour["icon-subtle"](props);
+                iconColor = V3_Colour["icon-subtle"](props);
                 break;
             default:
-                iconColor = Colour["icon-warning"](props);
+                iconColor = V3_Colour["icon-warning"](props);
                 break;
         }
 
@@ -112,13 +118,13 @@ export const ActionLinkText = styled(Typography.LinkSM)<StyleProps>`
     ${(props) => {
         if (props.$sizeType === "small")
             return css`
-                ${Font["body-sm-semibold"]}
-                margin-top: ${Spacing["spacing-4"]};
+                ${V3_Font["body-sm-semibold"]}
+                margin-top: ${V3_Spacing["spacing-4"]};
             `;
         else {
             return css`
-                ${Font["body-md-semibold"]}
-                margin-top: ${Spacing["spacing-8"]};
+                ${V3_Font["body-md-semibold"]}
+                margin-top: ${V3_Spacing["spacing-8"]};
             `;
         }
     }}
@@ -129,7 +135,7 @@ export const ActionLinkText = styled(Typography.LinkSM)<StyleProps>`
     svg {
         height: 1rem;
         width: 1rem;
-        margin-left: ${Spacing["spacing-4"]};
+        margin-left: ${V3_Spacing["spacing-4"]};
     }
 `;
 
@@ -148,7 +154,7 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
     ${(props) => {
         if (props.$showMore && props.$hasActionLink)
             return css`
-                margin-bottom: ${Spacing["spacing-8"]};
+                margin-bottom: ${V3_Spacing["spacing-8"]};
             `;
     }}
     ${(props) => {
@@ -165,7 +171,7 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
 `;
 
 export const TextWrapper = styled.div<StyleProps>`
-    color: ${Colour.text};
+    color: ${V3_Colour.text};
 
     ${(props) => {
         if (props.$sizeType === "small") {
@@ -179,11 +185,11 @@ export const ShowMoreButton = styled.button<StyleProps>`
     ${(props) => {
         if (props.$sizeType === "small")
             return css`
-                ${Font["body-sm-semibold"]}
+                ${V3_Font["body-sm-semibold"]}
             `;
         else {
             return css`
-                ${Font["body-md-semibold"]}
+                ${V3_Font["body-md-semibold"]}
             `;
         }
     }}
@@ -191,8 +197,8 @@ export const ShowMoreButton = styled.button<StyleProps>`
     display: flex;
     align-items: center;
     align-self: flex-start;
-    gap: ${Spacing["spacing-4"]};
-    margin-top: ${Spacing["spacing-8"]};
+    gap: ${V3_Spacing["spacing-4"]};
+    margin-top: ${V3_Spacing["spacing-8"]};
     order: 2;
 
     cursor: pointer;
@@ -200,10 +206,11 @@ export const ShowMoreButton = styled.button<StyleProps>`
     border: none;
     background: transparent;
 
-    color: ${Colour["text-primary"]};
+    color: ${V3_Colour["text-primary"]};
 `;
 
 export const ChevronIcon = styled(ChevronDownIcon)<ShowMoreIconStyleProps>`
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
-    transition: transform ${Motion["duration-350"]} ${Motion["ease-standard"]};
+    transition: transform ${V3_Motion["duration-350"]}
+        ${V3_Motion["ease-standard"]};
 `;
