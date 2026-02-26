@@ -39,7 +39,9 @@ export const TextContainer = styled.div`
     white-space: pre-wrap;
 `;
 
-export const Title = styled(Typography.HeadingMD)`
+export const Title = styled(Typography.HeadingMD).attrs(() => ({
+    forwardedAs: "h2",
+}))`
     margin: ${Spacing["spacing-32"]} 0 ${Spacing["spacing-16"]};
     text-align: center;
 `;
@@ -48,7 +50,11 @@ export const DescriptionContainer = styled.div`
     color: ${Colour.text};
     text-align: center;
 
-    ${applyHtmlContentStyle({ textSize: "body-baseline" })}
+    ${applyHtmlContentStyle({ textSize: "body-baseline" })};
+
+    p + p {
+        margin-top: ${Spacing["spacing-16"]};
+    }
 `;
 
 export const ActionButton = styled(Button.Default)`
