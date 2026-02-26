@@ -677,6 +677,24 @@ describe("TimeRangePicker", () => {
             expect(mockOnBlur).toHaveBeenCalledTimes(1);
         });
 
+        it("should close dropdown and keep focus when ESC is pressed", async () => {
+            const user = userEvent.setup();
+            const mockOnBlur = jest.fn();
+
+            render(<TimeRangePicker onBlur={mockOnBlur} />);
+
+            await user.click(getFrom());
+            await waitFor(() => expect(getTimepickerDropdown()).toBeVisible());
+
+            await user.keyboard("{Escape}");
+
+            await waitForElementToBeRemoved(() => getTimepickerDropdown());
+
+            expect(mockOnBlur).toHaveBeenCalledTimes(0);
+
+            expect(screen.getByTestId("timepicker-container")).toHaveFocus();
+        });
+
         it("should call onFocus once only when moving from start to end", async () => {
             const user = userEvent.setup();
             const mockOnFocus = jest.fn();
