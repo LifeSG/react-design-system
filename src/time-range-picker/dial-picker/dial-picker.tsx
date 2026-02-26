@@ -93,18 +93,18 @@ export const DialPicker = ({
         }
     };
 
-    const handleStartTime = (v: string) => {
-        setStartTimeVal(v);
-        onChange?.({ start: v, end: endTimeVal } as TimeRangePickerValue);
+    const handleStartTime = (value: string) => {
+        setStartTimeVal(value);
+        onChange?.({ start: value, end: endTimeVal } as TimeRangePickerValue);
 
         setActive("end");
         setIsOpen(true);
         setFocused(true);
     };
 
-    const handleEndTime = (v: string) => {
-        setEndTimeVal(v);
-        onChange?.({ start: startTimeVal, end: v } as TimeRangePickerValue);
+    const handleEndTime = (value: string) => {
+        setEndTimeVal(value);
+        onChange?.({ start: startTimeVal, end: value } as TimeRangePickerValue);
 
         if (startTimeVal === "") {
             setActive("start");
@@ -121,6 +121,7 @@ export const DialPicker = ({
             id={id}
             tabIndex={-1}
             onBlur={handleContainerBlur}
+            data-testid="timepicker-container"
             {...otherProps}
         >
             <TimeContainer
@@ -181,7 +182,7 @@ export const DialPicker = ({
                         show
                         value={startTimeVal}
                         format={format}
-                        onCancel={() => handleClose({ keepFocus: false })}
+                        onCancel={() => handleClose({ keepFocus: true })}
                         onChange={handleStartTime}
                     />
                 )}
@@ -211,7 +212,6 @@ export const DialPicker = ({
                 clickToToggle={false}
                 offset={8}
                 alignment={alignment}
-                fitAvailableHeight
                 customZIndex={dropdownZIndex}
                 rootNode={dropdownRootNode}
             />
