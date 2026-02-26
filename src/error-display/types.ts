@@ -29,6 +29,8 @@ export interface MaintenanceAdditionalAttributes {
 
 export interface InactivityAdditionalAttributes {
     secondsLeft: number;
+    /** Interval (in seconds) for announcing remaining time via screen readers */
+    reminderInterval?: number | undefined;
 }
 
 export interface ErrorDisplayAttributes {
