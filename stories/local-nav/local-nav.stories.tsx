@@ -6,8 +6,8 @@ import {
     LocalNavItemProps,
     LocalNavMenu,
 } from "src/local-nav";
-import { V3_Breakpoint } from "src/v3_theme";
-import { useTheme } from "styled-components";
+import { V3_Breakpoint, V3_LifeSGTheme } from "src/v3_theme";
+import { ThemeProvider, useTheme } from "styled-components";
 import { Content, Page, TopContent } from "./doc-elements";
 
 type MenuComponent = typeof LocalNavMenu;
@@ -254,4 +254,11 @@ export const CombinedUsage: StoryObj = {
         layout: "fullscreen",
         docs: { story: { inline: false, iframeHeight: 500 } },
     },
+    decorators: [
+        (Story) => (
+            <ThemeProvider theme={V3_LifeSGTheme}>
+                <Story />
+            </ThemeProvider>
+        ),
+    ],
 };
