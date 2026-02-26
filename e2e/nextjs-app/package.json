@@ -6,9 +6,12 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "eslint"
+        "lint": "eslint",
+        "use-local": "sh ./prepare-local.sh",
+        "use-published": "npm i @lifesg/react-design-system@latest && rm -rf .next"
     },
     "dependencies": {
+        "@lifesg/react-design-system": "^3.2.0-canary.5",
         "next": "16.1.6",
         "react": "19.2.3",
         "react-dom": "19.2.3"

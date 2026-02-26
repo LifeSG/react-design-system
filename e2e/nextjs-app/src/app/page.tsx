@@ -9,6 +9,10 @@ export default function Home() {
                     <p>
                         You&apos;re on the landing page of the E2E test suite.
                     </p>
+                    <p>
+                        To make changes, edit the files in the{" "}
+                        <code>e2e/nextjs-app/src/app</code> directory.
+                    </p>
                 </div>
             </main>
         </div>
