@@ -83,6 +83,7 @@ export const LazyLinkList = <T,>({
                 onClick={handleClickViewMore}
                 data-testid="toggle-button"
                 aria-disabled={isLoading}
+                $loading={isLoading}
             >
                 <ToggleButtonLabel
                     forwardedAs="span"

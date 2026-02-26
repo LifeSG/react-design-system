@@ -113,7 +113,6 @@ export const EagerLinkList = <T,>({
                     id={id}
                     style={expandableStyles}
                     data-testid="minimised-content"
-                    aria-hidden={!showMinimised}
                     inert={inertValue(!showMinimised)}
                 >
                     <ExpandableChild ref={childRef} $border>

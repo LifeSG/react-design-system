@@ -3,7 +3,7 @@ import { MinusIcon } from "@lifesg/react-icons/minus";
 import { PlusIcon } from "@lifesg/react-icons/plus";
 import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Spacing } from "../theme";
+import { Border, Colour } from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -86,7 +86,6 @@ export const ExpandableChild = styled.div<ExpandableChildStyleProps>`
 
 export const ToggleButtonLabel = styled(Typography.BodyMD)`
     color: ${Colour["text-primary"]};
-    margin-right: 1rem;
 `;
 
 export const ViewMoreIcon = styled(PlusIcon)`
@@ -96,7 +95,7 @@ export const ViewLessIcon = styled(MinusIcon)`
     ${iconStyle}
 `;
 
-export const ToggleButton = styled.button`
+export const ToggleButton = styled.button<{ $loading?: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -106,39 +105,33 @@ export const ToggleButton = styled.button`
     background: none;
     cursor: pointer;
     border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    gap: 1rem;
+    flex-direction: row;
 
-    &:hover:not([aria-disabled="true"]) {
-        ${ToggleButtonLabel},
-        ${ViewMoreIcon},
-        ${ViewLessIcon} {
-            color: ${Colour["text-hover"]};
-            text-decoration: underline;
-        }
-    }
+    ${({ $loading }) =>
+        $loading &&
+        css`
+            cursor: default;
+            flex-direction: row-reverse;
 
-    &[aria-disabled="true"] {
-        cursor: default;
-        flex-direction: row-reverse;
-        gap: 1rem;
+            ${ToggleButtonLabel},
+            ${ViewMoreIcon},
+            ${ViewLessIcon} {
+                color: ${Colour["text-disabled"]};
+                text-decoration: none;
+            }
+        `}
 
-        ${ToggleButtonLabel},
-        ${ViewMoreIcon},
-        ${ViewLessIcon} {
-            color: ${Colour["text-disabled"]};
-            text-decoration: none;
-        }
-    }
-`;
-
-export const LoadingContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-
-    padding: ${Spacing["spacing-16"]} 0;
-    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-
-    color: ${Colour["text-disabled"]};
-    ${Font["body-md-semibold"]};
+    ${({ $loading }) =>
+        !$loading &&
+        css`
+            &:hover {
+                ${ToggleButtonLabel},
+                ${ViewMoreIcon},
+                ${ViewLessIcon} {
+                    color: ${Colour["text-hover"]};
+                    text-decoration: underline;
+                }
+            }
+        `}
 `;

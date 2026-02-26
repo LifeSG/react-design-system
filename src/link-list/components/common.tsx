@@ -37,14 +37,6 @@ export const LinkListItems = <T,>({
                     ...otherProps
                 } = item;
 
-                const descriptionId = description
-                    ? `${testId || "link-list"}-desc-${index}`
-                    : undefined;
-
-                const secondaryDescriptionId = secondaryDescription
-                    ? `${testId || "link-list"}-secondary-desc-${index}`
-                    : undefined;
-
                 return (
                     <ItemContainer
                         key={`${testId}-${index}`}
@@ -62,18 +54,13 @@ export const LinkListItems = <T,>({
                             </ItemTitle>
                             {description && (
                                 <Description
-                                    id={descriptionId}
                                     forwardedAs="div"
                                     data-testid={`link-description-${index}`}
                                 >
                                     {description}
                                 </Description>
                             )}
-                            {secondaryDescription && (
-                                <div id={secondaryDescriptionId}>
-                                    {secondaryDescription}
-                                </div>
-                            )}
+                            {secondaryDescription && { secondaryDescription }}
                         </ItemContentContainer>
                         <ItemIcon aria-hidden />
                     </ItemContainer>
