@@ -1,6 +1,12 @@
 import styled, { css } from "styled-components";
 import { FadeWrapper } from "../shared/fade-wrapper";
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_MediaQuery,
+    V3_Radius,
+    V3_Spacing,
+} from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -38,8 +44,8 @@ export const Chain = styled.ul<ChainStyleProps>`
                     height: inherit;
                     flex-grow: 1;
                     /* follows the border in ChainItem */
-                    border-bottom: ${Border["width-040"]} ${Border.solid}
-                        ${Colour.border};
+                    border-bottom: ${V3_Border["width-040"]} ${V3_Border.solid}
+                        ${V3_Colour.border};
                 }
             `;
         }
@@ -50,7 +56,8 @@ export const ChainItem = styled.li<ChainItemStyleProps>`
     display: flex;
     justify-content: center;
     flex-shrink: 0;
-    border-bottom: ${Border["width-040"]} ${Border.solid} ${Colour.border};
+    border-bottom: ${V3_Border["width-040"]} ${V3_Border.solid}
+        ${V3_Colour.border};
 
     ${(props) => {
         if (props.$width) {
@@ -63,12 +70,12 @@ export const ChainItem = styled.li<ChainItemStyleProps>`
     ${(props) => {
         if (props.$active) {
             return css`
-                border-color: ${Colour["border-primary"]};
+                border-color: ${V3_Colour["border-primary"]};
             `;
         }
     }}
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         flex: 1;
         justify-content: center;
     }
@@ -76,8 +83,8 @@ export const ChainItem = styled.li<ChainItemStyleProps>`
 
 /* keep this separate to contain the ts-styled error */
 const padding = css`
-    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-16"]}
-        ${Spacing["spacing-20"]};
+    padding: ${V3_Spacing["spacing-16"]} ${V3_Spacing["spacing-16"]}
+        ${V3_Spacing["spacing-20"]};
 `;
 
 const flexRow = css`
@@ -97,9 +104,9 @@ export const ChainLink = styled.div<ChainLinkStyleProps>`
     justify-content: center;
 
     &:has(button:focus-visible) {
-        outline: 2px solid ${Colour["focus-ring"]};
+        outline: 2px solid ${V3_Colour["focus-ring"]};
         outline-offset: -2px;
-        border-radius: ${Radius.sm};
+        border-radius: ${V3_Radius.sm};
     }
 `;
 
@@ -116,7 +123,7 @@ const buttonBase = css`
 export const Label = styled.div<LabelStyleProps>`
     ${buttonBase}
     position: absolute;
-    color: ${Colour["text-subtler"]};
+    color: ${V3_Colour["text-subtler"]};
     opacity: 1;
 
     ${(props) => {
@@ -130,7 +137,7 @@ export const Label = styled.div<LabelStyleProps>`
 
 export const BoldLabel = styled.button<LabelStyleProps>`
     ${buttonBase}
-    color: ${Colour["text-primary"]};
+    color: ${V3_Colour["text-primary"]};
     opacity: 0;
     outline: none;
 
@@ -146,6 +153,6 @@ export const BoldLabel = styled.button<LabelStyleProps>`
 export const CustomFadeWrapper = styled(FadeWrapper)`
     [data-id="left-fade-indicator-button"],
     [data-id="right-fade-indicator-button"] {
-        margin-bottom: ${Spacing["spacing-4"]};
+        margin-bottom: ${V3_Spacing["spacing-4"]};
     }
 `;

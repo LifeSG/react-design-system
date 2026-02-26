@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { ColDiv } from "../layout/col-div";
-import { Spacing } from "../theme";
+import { V3_Spacing } from "../v3_theme";
 import { V2_ColDiv } from "../v2_layout/col-div";
 
 const commonStyles = css`
@@ -8,7 +8,7 @@ const commonStyles = css`
     flex-direction: column;
 
     &:not(:last-child) {
-        margin-bottom: ${Spacing["spacing-32"]};
+        margin-bottom: ${V3_Spacing["spacing-32"]};
     }
 `;
 

@@ -3,7 +3,7 @@ import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, Font, Motion, Spacing } from "../theme";
+import { V3_Colour, V3_Font, V3_Motion, V3_Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLES INTERFACE
@@ -38,24 +38,24 @@ interface FilterItemTitleStyleProps {
 
 export const FilterItemWrapper = styled.div<StyleProps>`
     background-color: ${(props) =>
-        props.$collapsible ? Colour["bg-strong"] : Colour["bg"]};
+        props.$collapsible ? V3_Colour["bg-strong"] : V3_Colour["bg"]};
     ${(props) =>
         props.$isMobile &&
         css`
-            background-color: ${Colour["bg-strong"]};
+            background-color: ${V3_Colour["bg-strong"]};
         `}
 `;
 
 export const Divider = styled.div<DividerStyleProps>`
     display: ${(props) => (props.$showDivider ? "block" : "none")};
     height: 1px;
-    background-color: ${Colour["border"]};
+    background-color: ${V3_Colour["border"]};
 
     ${(props) =>
         props.$isMobile &&
         css`
             display: ${props.$showMobileDivider ? "block" : "none"};
-            margin: 0 ${Spacing["spacing-16"]};
+            margin: 0 ${V3_Spacing["spacing-16"]};
         `}
 `;
 
@@ -67,7 +67,7 @@ export const FilterItemHeader = styled.div<FilterItemHeaderStyleProps>`
     display: flex;
     align-items: center;
 
-    background-color: ${Colour["bg"]};
+    background-color: ${V3_Colour["bg"]};
 
     ${(props) =>
         props.$isMobile &&
@@ -79,35 +79,36 @@ export const FilterItemHeader = styled.div<FilterItemHeaderStyleProps>`
 export const FilterItemExpandButton = styled(ClickableIcon)`
     margin: 0 0 0 auto;
 
-    color: ${Colour["icon"]};
+    color: ${V3_Colour["icon"]};
     &:hover {
-        color: ${Colour["icon-hover"]};
+        color: ${V3_Colour["icon-hover"]};
     }
 `;
 
 export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
-    height: ${Font.Spec["body-size-baseline"]};
-    width: ${Font.Spec["body-size-baseline"]};
+    height: ${V3_Font.Spec["body-size-baseline"]};
+    width: ${V3_Font.Spec["body-size-baseline"]};
 
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
-    transition: transform ${Motion["duration-350"]} ${Motion["ease-standard"]};
+    transition: transform ${V3_Motion["duration-350"]}
+        ${V3_Motion["ease-standard"]};
 `;
 
 export const FilterItemTitle = styled.h3<FilterItemTitleStyleProps>`
-    ${Font["heading-xs-semibold"]}
-    color: ${Colour["text"]};
+    ${V3_Font["heading-xs-semibold"]}
+    color: ${V3_Colour["text"]};
 
-    margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
-        ${Spacing["spacing-20"]};
+    margin: ${V3_Spacing["spacing-24"]} 0 ${V3_Spacing["spacing-24"]}
+        ${V3_Spacing["spacing-20"]};
 
     ${(props) =>
         props.$isMobile &&
         css`
-            ${Font["body-md-semibold"]}
-            color: ${Colour["text-subtle"]};
+            ${V3_Font["body-md-semibold"]}
+            color: ${V3_Colour["text-subtle"]};
 
-            margin: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]} 0
-                ${Spacing["spacing-20"]};
+            margin: ${V3_Spacing["spacing-24"]} ${V3_Spacing["spacing-20"]} 0
+                ${V3_Spacing["spacing-20"]};
         `}
 `;
 
@@ -120,7 +121,7 @@ export const ExpandableItem = animated(styled.div`
 `);
 
 export const FilterItemBody = styled.div`
-    padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
+    padding: ${V3_Spacing["spacing-24"]} ${V3_Spacing["spacing-20"]};
 `;
 
 export const MinimisableContent = animated(styled.div<MinimisableContentProps>`
@@ -131,5 +132,5 @@ export const MinimisableContent = animated(styled.div<MinimisableContentProps>`
 export const FilterItemMinimiseButton = styled(Button.Small)`
     height: fit-content;
     padding: 0;
-    margin: ${Spacing["spacing-16"]} 0 0 0;
+    margin: ${V3_Spacing["spacing-16"]} 0 0 0;
 `;

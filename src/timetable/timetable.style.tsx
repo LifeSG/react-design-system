@@ -2,7 +2,7 @@ import styled, { css, keyframes } from "styled-components";
 import { LoadingDotsSpinner } from "../animations";
 import { ErrorDisplay } from "../error-display";
 import { PopoverTrigger } from "../popover-v2";
-import { Border, Colour, Shadow, Spacing } from "../theme";
+import { V3_Border, V3_Colour, V3_Shadow, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 import {
     MIN_HOURLY_INTERVAL_WIDTH,
@@ -85,14 +85,15 @@ export const RowColumnHeader = styled.div<RowColumnHeaderProps>`
     position: sticky;
     top: 0;
     left: 0;
-    background-color: ${Colour["bg"]};
+    background-color: ${V3_Colour["bg"]};
     width: ${ROW_HEADER_WIDTH}px;
     z-index: 2;
-    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-bottom: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        ${V3_Colour["border"]};
     ${(props) => {
         if (props.$isScrolledX || props.$isScrolledY) {
             return css`
-                box-shadow: ${Shadow["md-subtle"]};
+                box-shadow: ${V3_Shadow["md-subtle"]};
                 clip-path: inset(
                     0 ${props.$isScrolledX ? "-0.12px" : "0"}
                         ${props.$isScrolledY ? "-0.12px" : "0"} 0
@@ -117,7 +118,7 @@ export const RowHeaderColumn = styled.div<RowHeaderColumnProps>`
     grid-column: 1 / 2;
     left: 0;
     z-index: 1;
-    background-color: ${Colour["bg"]};
+    background-color: ${V3_Colour["bg"]};
     grid-template-rows: repeat(${(props) => props.$numOfRows}, ${ROW_HEIGHT}px);
 `;
 
@@ -128,15 +129,16 @@ export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
     grid-row: 1 / 2;
     top: 0;
     z-index: 1;
-    background-color: ${Colour["bg"]};
+    background-color: ${V3_Colour["bg"]};
     grid-template-columns: repeat(${(props) => props.$numOfColumns}, 1fr);
     width: 100%;
-    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-bottom: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        ${V3_Colour["border"]};
     transition: all 0.5s ease-in-out;
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: ${Shadow["md-subtle"]};
+                box-shadow: ${V3_Shadow["md-subtle"]};
             `;
         }
     }};
@@ -145,11 +147,11 @@ export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
 export const ColumnHeader = styled.div`
     min-width: ${MIN_HOURLY_INTERVAL_WIDTH}px;
     align-content: end;
-    margin-bottom: ${Spacing["spacing-4"]};
+    margin-bottom: ${V3_Spacing["spacing-4"]};
 `;
 
 export const ColumnHeaderTitle = styled(Typography.BodySM)`
-    color: ${Colour["text-subtler"]};
+    color: ${V3_Colour["text-subtler"]};
 `;
 
 export const ContentContainer = styled.div<ContentContainerPopoverProps>`
@@ -164,20 +166,22 @@ export const RowHeader = styled.div<RowHeaderProps>`
     justify-content: center;
     position: sticky;
     left: 0;
-    background-color: ${Colour["bg"]};
+    background-color: ${V3_Colour["bg"]};
     width: ${ROW_HEADER_WIDTH}px;
     height: ${ROW_HEIGHT}px;
     text-align: right;
-    padding: 0 ${Spacing["spacing-16"]} 0 ${Spacing["spacing-32"]};
-    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    border-right: ${Border["width-005"]} ${Border["solid"]}
-        ${Colour["border-primary"]};
-    border-left: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    padding: 0 ${V3_Spacing["spacing-16"]} 0 ${V3_Spacing["spacing-32"]};
+    border-bottom: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        ${V3_Colour["border"]};
+    border-right: ${V3_Border["width-005"]} ${V3_Border["solid"]}
+        ${V3_Colour["border-primary"]};
+    border-left: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        ${V3_Colour["border"]};
     transition: all 0.5s ease-in-out;
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: ${Shadow["md-subtle"]};
+                box-shadow: ${V3_Shadow["md-subtle"]};
                 clip-path: inset(0 -6px 0 0);
             `;
         } else {
@@ -196,7 +200,7 @@ export const ClickableRowHeaderTitle = styled(
     overflow: hidden;
     width: 100%;
     white-space: nowrap;
-    color: ${Colour["text-primary"]};
+    color: ${V3_Colour["text-primary"]};
     &:hover {
         cursor: ${(props) => (props.$isClickable ? "pointer" : "default")};
     }
@@ -206,9 +210,9 @@ export const RowHeaderSubtitle = styled(
     Typography.BodyXS
 )<RowHeaderSubtitleProps>`
     display: inline-flex;
-    gap: ${Spacing["spacing-4"]};
+    gap: ${V3_Spacing["spacing-4"]};
     align-items: center;
-    color: ${Colour["text-subtler"]};
+    color: ${V3_Colour["text-subtler"]};
     ${(props) => {
         if (!props.$show) {
             return css`
@@ -231,20 +235,21 @@ export const Loader = styled(LoadingDotsSpinner)<LoaderProps>`
 export const NoResultsFound = styled(ErrorDisplay)`
     grid-column: 1 / -1;
     grid-row: 2;
-    padding: ${Spacing["spacing-72"]} 0;
+    padding: ${V3_Spacing["spacing-72"]} 0;
 `;
 
 export const LoadingWrapper = styled.div`
     display: flex;
-    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-bottom: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        ${V3_Colour["border"]};
 `;
 
 export const LoadingCell = styled.div<LoadingCellWrapperProps>`
-    border-right: ${Border["width-005"]} ${Border["solid"]}
-        ${Colour["border-primary"]};
+    border-right: ${V3_Border["width-005"]} ${V3_Border["solid"]}
+        ${V3_Colour["border-primary"]};
     width: ${(props) => `${props.$width}px`};
     height: 100%;
-    padding: ${Spacing["spacing-20"]} ${Spacing["spacing-12"]};
+    padding: ${V3_Spacing["spacing-20"]} ${V3_Spacing["spacing-12"]};
 `;
 
 const gradientAnimation = keyframes`
@@ -261,9 +266,9 @@ export const LoadingBar = styled.div`
     width: 100%;
     background: linear-gradient(
         to right,
-        ${Colour.Primitive["neutral-95"]} 8%,
-        ${Colour.Primitive["neutral-100"]} 18%,
-        ${Colour.Primitive["neutral-95"]} 33%
+        ${V3_Colour.Primitive["neutral-95"]} 8%,
+        ${V3_Colour.Primitive["neutral-100"]} 18%,
+        ${V3_Colour.Primitive["neutral-95"]} 33%
     );
     background-size: 800px 104px;
     animation: ${gradientAnimation} 1.5s forwards infinite;

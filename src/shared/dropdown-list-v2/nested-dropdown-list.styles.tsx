@@ -1,6 +1,6 @@
 import { MinusSquareFillIcon } from "@lifesg/react-icons/minus-square-fill";
 import styled, { css } from "styled-components";
-import { Colour, Motion, Radius, Spacing } from "../../theme";
+import { V3_Colour, V3_Motion, V3_Radius, V3_Spacing } from "../../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -39,36 +39,38 @@ export const ListItem = styled.div<ListItemStyleProps>`
     flex: 1;
     display: flex;
     align-items: flex-start;
-    gap: ${Spacing["spacing-8"]};
-    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
+    gap: ${V3_Spacing["spacing-8"]};
+    padding: ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-8"]};
     cursor: ${(props) => (props.$toggleable ? "default" : "pointer")};
     overflow: hidden; // required for label to truncate properly
-    border-radius: ${Radius["none"]};
+    border-radius: ${V3_Radius["none"]};
     outline: none;
 
     ${(props) =>
         props.$active &&
         css`
-            background: ${Colour["bg-hover"]};
+            background: ${V3_Colour["bg-hover"]};
         `}
 `;
 
 export const Indent = styled.div<IndentStyleProps>`
     height: 1px;
-    width: calc((1lh + ${Spacing["spacing-8"]}) * ${(props) => props.$level});
+    width: calc(
+        (1lh + ${V3_Spacing["spacing-8"]}) * ${(props) => props.$level}
+    );
 `;
 
 export const ExpandButton = styled.div<ExpandButtonStyleProps>`
     width: 1lh;
     height: 1lh;
-    color: ${Colour["icon-primary"]};
+    color: ${V3_Colour["icon-primary"]};
     cursor: pointer;
 
     svg {
         width: 1lh;
         height: 1lh;
-        transition: transform ${Motion["duration-350"]}
-            ${Motion["ease-standard"]};
+        transition: transform ${V3_Motion["duration-350"]}
+            ${V3_Motion["ease-standard"]};
 
         ${(props) => {
             if (props.$expanded) {
@@ -83,14 +85,14 @@ export const ExpandButton = styled.div<ExpandButtonStyleProps>`
 export const UnexpandableIndicator = styled.div`
     width: 1lh;
     height: 1lh;
-    margin-right: ${Spacing["spacing-8"]};
+    margin-right: ${V3_Spacing["spacing-8"]};
 `;
 
 export const SelectionIndicator = styled.div<IndicatorStyleProps>`
     flex-shrink: 0;
     height: 1lh;
     width: ${(props) =>
-        props.$hasNestedSiblings ? "1lh" : Spacing["spacing-16"]};
+        props.$hasNestedSiblings ? "1lh" : V3_Spacing["spacing-16"]};
 
     display: flex;
     justify-content: center;
@@ -99,6 +101,6 @@ export const SelectionIndicator = styled.div<IndicatorStyleProps>`
 export const CheckboxMixedIndicator = styled(MinusSquareFillIcon)`
     flex-shrink: 0;
     height: 1lh;
-    width: 1lh;
-    color: ${Colour["icon-selected"]};
+    width: lh;
+    r: ${V3_Colour["icon-selected"]};
 `;

@@ -1,6 +1,13 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css, keyframes } from "styled-components";
-import { Border, Colour, Font, Motion, Radius, Spacing } from "../../theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_Motion,
+    V3_Radius,
+    V3_Spacing,
+} from "../../v3_theme";
 import { DropdownVariantType, TruncateType } from "../dropdown-list/types";
 import { lineClampCss } from "../styles";
 
@@ -51,11 +58,11 @@ export const baseSelectorCSS = css<SelectorStyleProps>`
     position: relative;
     align-items: center;
     justify-content: space-between;
-    padding: 0 ${Spacing["spacing-16"]};
+    padding: 0 ${V3_Spacing["spacing-16"]};
     // exclude top and bottom borders
     height: calc(${(props) => getHeight(props.$variant)}rem - 2px);
     width: 100%;
-    border-radius: ${Radius["sm"]};
+    border-radius: ${V3_Radius["sm"]};
     border: none;
     background: transparent;
 
@@ -65,7 +72,7 @@ export const baseSelectorCSS = css<SelectorStyleProps>`
     }
 
     &:focus-visible {
-        outline: 2px solid ${Colour["border-focus"]};
+        outline: 2px solid ${V3_Colour["border-focus"]};
     }
 `;
 
@@ -97,15 +104,16 @@ const zindexPositionHide = keyframes`
 
 export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
     position: relative;
-    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    border-radius: ${Radius["sm"]};
-    background: ${Colour["bg"]};
+    border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        ${V3_Colour["border"]};
+    border-radius: ${V3_Radius["sm"]};
+    background: ${V3_Colour["bg"]};
     overflow: hidden;
 
     &:focus-within {
-        border-color: ${Colour["border-focus"]};
+        border-color: ${V3_Colour["border-focus"]};
         box-shadow: 0px 0px 4px 0px
-            rgb(from ${Colour["border-focus"]} r g b / 50%) inset; // TODO: confirm shadow
+            rgb(from ${V3_Colour["border-focus"]} r g b / 50%) inset; // TODO: confirm shadow
     }
 
     ${(props) => {
@@ -127,14 +135,14 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
     ${(props) => {
         if (props.$disabled) {
             return css`
-                background: ${Colour["bg-disabled"]};
+                background: ${V3_Colour["bg-disabled"]};
 
                 ${Selector} {
                     cursor: not-allowed;
                 }
 
                 &:focus-within {
-                    border-color: ${Colour["border"]};
+                    border-color: ${V3_Colour["border"]};
                     box-shadow: none;
                 }
             `;
@@ -154,12 +162,12 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
             `;
         } else if (props.$error) {
             return css`
-                border-color: ${Colour["border-error"]};
+                border-color: ${V3_Colour["border-error"]};
 
                 &:focus-within {
-                    border-color: ${Colour["border-error"]};
+                    border-color: ${V3_Colour["border-error"]};
                     box-shadow: 0px 0px 4px 0px
-                        rgb(from ${Colour["border-error"]} r g b / 50%) inset; // TODO: confirm shadow
+                        rgb(from ${V3_Colour["border-error"]} r g b / 50%) inset; // TODO: confirm shadow
                 }
             `;
         }
@@ -168,18 +176,19 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
 
 export const IconContainer = styled.div<DropdownWrapperStyleProps>`
     transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
-    transition: transform ${Motion["duration-250"]} ${Motion["ease-default"]};
-    margin-left: ${Spacing["spacing-16"]};
+    transition: transform ${V3_Motion["duration-250"]}
+        ${V3_Motion["ease-default"]};
+    margin-left: ${V3_Spacing["spacing-16"]};
 `;
 
 export const StyledChevronIcon = styled(ChevronDownIcon)<SelectorStyleProps>`
-    color: ${Colour["icon"]};
+    color: ${V3_Colour["icon"]};
 `;
 
 export const Divider = styled.div`
     height: 1px;
-    background: ${Colour["border"]};
-    margin: 0 ${Spacing["spacing-8"]};
+    background: ${V3_Colour["border"]};
+    margin: 0 ${V3_Spacing["spacing-8"]};
 `;
 
 export const LabelContainer = styled.div<LabelContainerStyleProps>`
@@ -189,7 +198,7 @@ export const LabelContainer = styled.div<LabelContainerStyleProps>`
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${Colour["text-disabled"]};
+                color: ${V3_Colour["text-disabled"]};
             `;
         }
     }}
@@ -198,8 +207,8 @@ export const LabelContainer = styled.div<LabelContainerStyleProps>`
 export const ValueLabel = styled.div<ValueLabelStyleProps>`
     ${(props) =>
         props.$variant === "small"
-            ? Font["body-md-regular"]
-            : Font["body-baseline-regular"]}
+            ? V3_Font["body-md-regular"]
+            : V3_Font["body-baseline-regular"]}
     text-align: left;
     ${(props) => {
         switch (props.$truncateType) {
@@ -216,5 +225,5 @@ export const ValueLabel = styled.div<ValueLabelStyleProps>`
 `;
 
 export const PlaceholderLabel = styled(ValueLabel)`
-    color: ${Colour["text-subtler"]};
+    color: ${V3_Colour["text-subtler"]};
 `;

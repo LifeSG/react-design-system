@@ -1,4 +1,4 @@
-import { MediaQuery } from "src/theme";
+import { V3_MediaQuery } from "src/v3_theme";
 import styled from "styled-components";
 
 const Page = styled.div`
@@ -6,7 +6,7 @@ const Page = styled.div`
     width: 65vw;
     margin: auto;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         width: 100vw;
     }
 `;
@@ -16,7 +16,7 @@ const Section = styled.div`
     justify-content: space-between;
     gap: 2rem;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         flex-direction: column;
         align-items: center;
     }

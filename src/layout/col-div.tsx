@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ColDivProps } from "./types";
 import { StyledDiv } from "./col-div.style";
-import { BreakpointValues } from "../theme/breakpoint/theme-helper";
+import { V3_BreakpointValues } from "../v3_theme/breakpoint/theme-helper";
 import { ThemeContext } from "styled-components";
 
 const Component = (
@@ -56,13 +56,13 @@ const Component = (
     };
 
     const getStyleProps = () => {
-        const xxlColumnCount = BreakpointValues["xxl-column"]({ theme });
-        const xlColumnCount = BreakpointValues["xl-column"]({ theme });
-        const lgColumnCount = BreakpointValues["lg-column"]({ theme });
-        const mdColumnCount = BreakpointValues["md-column"]({ theme });
-        const smColumnCount = BreakpointValues["sm-column"]({ theme });
-        const xsColumnCount = BreakpointValues["xs-column"]({ theme });
-        const xxsColumnCount = BreakpointValues["xxs-column"]({ theme });
+        const xxlColumnCount = V3_BreakpointValues["xxl-column"]({ theme });
+        const xlColumnCount = V3_BreakpointValues["xl-column"]({ theme });
+        const lgColumnCount = V3_BreakpointValues["lg-column"]({ theme });
+        const mdColumnCount = V3_BreakpointValues["md-column"]({ theme });
+        const smColumnCount = V3_BreakpointValues["sm-column"]({ theme });
+        const xsColumnCount = V3_BreakpointValues["xs-column"]({ theme });
+        const xxsColumnCount = V3_BreakpointValues["xxs-column"]({ theme });
 
         const xxlStartSpan = getColSpan(
             xxlCols ||

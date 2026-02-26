@@ -1,7 +1,14 @@
 import styled, { css } from "styled-components";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
-import { Border, Colour, Font, MediaQuery, Motion, Spacing } from "../theme";
-import { ThemeButton } from "../theme/components/theme-helper";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_MediaQuery,
+    V3_Motion,
+    V3_Spacing,
+} from "../v3_theme";
+import { V3_ThemeButton } from "../v3_theme/components/theme-helper";
 
 export type MainButtonStyle =
     | "default"
@@ -19,11 +26,11 @@ export interface MainStyleProps {
 }
 
 export const Main = styled.button<MainStyleProps>`
-    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
+    padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-16"]};
     min-width: 4rem;
-    border: ${Border["width-010"]} ${Border["solid"]} transparent;
-    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
-    border-radius: ${ThemeButton["button-radius"]};
+    border: ${V3_Border["width-010"]} ${V3_Border["solid"]} transparent;
+    transition: all ${V3_Motion["duration-250"]} ${V3_Motion["ease-default"]};
+    border-radius: ${V3_ThemeButton["button-radius"]};
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -36,35 +43,35 @@ export const Main = styled.button<MainStyleProps>`
         switch (props.$buttonStyle) {
             case "secondary":
                 return css`
-                    background-color: ${Colour.bg};
+                    background-color: ${V3_Colour.bg};
                     border-color: ${props.$buttonIsDanger
-                        ? Colour["border-error-strong"]
-                        : ThemeButton["button-secondary-colour-border"]};
+                        ? V3_Colour["border-error-strong"]
+                        : V3_ThemeButton["button-secondary-colour-border"]};
 
                     color: ${props.$buttonIsDanger
-                        ? Colour["text-error"]
-                        : ThemeButton["button-secondary-colour-text"]};
+                        ? V3_Colour["text-error"]
+                        : V3_ThemeButton["button-secondary-colour-text"]};
 
                     &:hover,
                     &:active {
                         @media (pointer: fine) {
-                            background-color: ${Colour["bg-hover-neutral"]};
+                            background-color: ${V3_Colour["bg-hover-neutral"]};
                         }
                     }
                 `;
             case "light":
                 return css`
-                    background-color: ${Colour.bg};
-                    border-color: ${Colour.border};
+                    background-color: ${V3_Colour.bg};
+                    border-color: ${V3_Colour.border};
 
                     color: ${props.$buttonIsDanger
-                        ? Colour["text-error"]
-                        : ThemeButton["button-light-colour-text"]};
+                        ? V3_Colour["text-error"]
+                        : V3_ThemeButton["button-light-colour-text"]};
 
                     &:hover,
                     &:active {
                         @media (pointer: fine) {
-                            background-color: ${Colour["bg-hover-neutral"]};
+                            background-color: ${V3_Colour["bg-hover-neutral"]};
                         }
                     }
                 `;
@@ -74,18 +81,18 @@ export const Main = styled.button<MainStyleProps>`
                     background-color: transparent;
 
                     color: ${props.$buttonIsDanger
-                        ? Colour["text-error"]
-                        : ThemeButton["button-link-colour-text"]};
+                        ? V3_Colour["text-error"]
+                        : V3_ThemeButton["button-link-colour-text"]};
                     &:hover,
                     &:active {
                         @media (pointer: fine) {
-                            background-color: ${Colour["bg-hover-neutral"]};
+                            background-color: ${V3_Colour["bg-hover-neutral"]};
                         }
                     }
                 `;
             case "disabled":
                 return css`
-                    background-color: ${Colour["bg-disabled"]};
+                    background-color: ${V3_Colour["bg-disabled"]};
 
                     cursor: not-allowed;
 
@@ -93,26 +100,26 @@ export const Main = styled.button<MainStyleProps>`
                         box-shadow: none;
                     }
 
-                    color: ${Colour["text-disabled"]};
+                    color: ${V3_Colour["text-disabled"]};
                 `;
             default:
                 return css`
                     background-color: ${props.$buttonIsDanger
-                        ? Colour["bg-error-strong"]
-                        : ThemeButton["button-default-colour-bg"]};
+                        ? V3_Colour["bg-error-strong"]
+                        : V3_ThemeButton["button-default-colour-bg"]};
 
-                    ${MediaQuery.MaxWidth.sm} {
+                    ${V3_MediaQuery.MaxWidth.sm} {
                         width: 100%;
                     }
 
-                    color: ${ThemeButton["button-default-colour-text"]};
+                    color: ${V3_ThemeButton["button-default-colour-text"]};
 
                     &:hover,
                     &:active {
                         @media (pointer: fine) {
                             background-color: ${props.$buttonIsDanger
-                                ? Colour["bg-error-strong-hover"]
-                                : ThemeButton[
+                                ? V3_Colour["bg-error-strong-hover"]
+                                : V3_ThemeButton[
                                       "button-default-colour-bg-hover"
                                   ]};
                         }
@@ -129,9 +136,9 @@ export const Main = styled.button<MainStyleProps>`
             case "small":
                 return css`
                     height: 2.5rem;
-                    ${Font["body-md-semibold"]}
+                    ${V3_Font["body-md-semibold"]}
 
-                    ${MediaQuery.MaxWidth.xxs} {
+                    ${V3_MediaQuery.MaxWidth.xxs} {
                         height: auto;
                     }
                 `;
@@ -139,9 +146,9 @@ export const Main = styled.button<MainStyleProps>`
             case "large":
                 return css`
                     height: 4rem;
-                    ${Font["heading-md-semibold"]}
+                    ${V3_Font["heading-md-semibold"]}
 
-                    ${MediaQuery.MaxWidth.xxs} {
+                    ${V3_MediaQuery.MaxWidth.xxs} {
                         height: auto;
                     }
                 `;
@@ -149,9 +156,9 @@ export const Main = styled.button<MainStyleProps>`
             default:
                 return css`
                     height: 3rem;
-                    ${Font["heading-xs-semibold"]}
+                    ${V3_Font["heading-xs-semibold"]}
 
-                    ${MediaQuery.MaxWidth.xxs} {
+                    ${V3_MediaQuery.MaxWidth.xxs} {
                         height: auto;
                     }
                 `;

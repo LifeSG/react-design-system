@@ -1,6 +1,6 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
-import { Colour, Font, MediaQuery, Spacing } from "../theme";
+import { V3_Colour, V3_Font, V3_MediaQuery, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography/typography";
 
 // =============================================================================
@@ -23,14 +23,14 @@ export const Wrapper = styled.div`
     position: relative;
     width: 100%;
     z-index: 1;
-    margin: ${Spacing["spacing-32"]} 0;
+    margin: ${V3_Spacing["spacing-32"]} 0;
 
-    ${MediaQuery.MaxWidth.xl} {
-        margin: ${Spacing["spacing-24"]} 0;
+    ${V3_MediaQuery.MaxWidth.xl} {
+        margin: ${V3_Spacing["spacing-24"]} 0;
     }
 
-    ${MediaQuery.MaxWidth.lg} {
-        margin: ${Spacing["spacing-16"]} 0;
+    ${V3_MediaQuery.MaxWidth.lg} {
+        margin: ${V3_Spacing["spacing-16"]} 0;
     }
 `;
 
@@ -39,8 +39,8 @@ export const Content = styled.ul`
     width: 100%;
     flex-wrap: wrap;
     white-space: nowrap;
-    margin-left: -${Spacing["spacing-8"]};
-    font-size: ${Font.Spec["body-size-md"]};
+    margin-left: -${V3_Spacing["spacing-8"]};
+    font-size: ${V3_Font.Spec["body-size-md"]};
     overflow-x: scroll;
     overflow-y: hidden;
     scrollbar-width: none; /* Firefox */
@@ -49,14 +49,14 @@ export const Content = styled.ul`
         display: none; /* Chrome/Safari/Webkit */
     }
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         flex-wrap: nowrap;
     }
 `;
 
 export const Fade = styled.div<FadeProps>`
-    width: ${Spacing["spacing-64"]};
-    height: calc(1lh + ${Spacing["spacing-4"]});
+    width: ${V3_Spacing["spacing-64"]};
+    height: calc(1lh + ${V3_Spacing["spacing-4"]});
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -65,7 +65,7 @@ export const Fade = styled.div<FadeProps>`
     ${(props) => {
         let positionStyle: string;
         const transparentColor = "rgba(255,255,255,0.001)";
-        const fadeColor = Colour.bg(props);
+        const fadeColor = V3_Colour.bg(props);
 
         if (props.$position === "left") {
             positionStyle = `
@@ -88,7 +88,7 @@ export const Fade = styled.div<FadeProps>`
         }
 
         return css`
-            ${MediaQuery.MaxWidth.lg} {
+            ${V3_MediaQuery.MaxWidth.lg} {
                 ${positionStyle}
             }
         `;
@@ -109,18 +109,18 @@ export const Item = styled.li<ItemStyleProps>`
 export const Caret = styled(ChevronRightIcon)`
     height: 1em;
     width: 1em;
-    color: ${Colour["icon-subtle"]};
+    color: ${V3_Colour["icon-subtle"]};
 `;
 
 export const Slash = styled(Typography.BodyMD)`
     display: inline-block;
-    color: ${Colour["text-subtlest"]};
+    color: ${V3_Colour["text-subtlest"]};
 `;
 
 export const CurrentLabel = styled(Typography.BodyMD)`
-    margin: ${Spacing["spacing-8"]} !important;
+    margin: ${V3_Spacing["spacing-8"]} !important;
 `;
 
 export const PreviousLink = styled(Typography.LinkMD)`
-    margin: ${Spacing["spacing-8"]} !important;
+    margin: ${V3_Spacing["spacing-8"]} !important;
 `;

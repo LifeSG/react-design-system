@@ -1,5 +1,11 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Motion, Radius } from "../../theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_Motion,
+    V3_Radius,
+} from "../../v3_theme";
 import { MonthVariant } from "./internal-calendar-month";
 
 // =============================================================================
@@ -31,16 +37,16 @@ export const MonthCell = styled.div<StyleProps>`
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: ${Radius["md"]};
+    border-radius: ${V3_Radius["md"]};
     margin: 0 0.5rem;
-    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+    transition: ${V3_Motion["duration-150"]} ${V3_Motion["ease-default"]};
 
     // default styles
-    ${Font["body-md-regular"]}
-    border-radius: ${Radius["md"]};
-    border: ${Border["width-010"]} ${Border.solid} transparent;
+    ${V3_Font["body-md-regular"]}
+    border-radius: ${V3_Radius["md"]};
+    border: ${V3_Border["width-010"]} ${V3_Border.solid} transparent;
     background-clip: border-box;
-    color: ${Colour["text"]};
+    color: ${V3_Colour["text"]};
     cursor: default;
 
     // cursor style
@@ -61,17 +67,17 @@ export const MonthCell = styled.div<StyleProps>`
     ${({ $variant, $interactive, $disabledDisplay }) => {
         if ($variant === "selected-month") {
             return css`
-                background: ${Colour["bg-selected"]};
-                border-color: ${Colour["border-selected"]};
-                color: ${Colour["text-selected"]};
-                font-weight: ${Font.Spec["weight-semibold"]};
+                background: ${V3_Colour["bg-selected"]};
+                border-color: ${V3_Colour["border-selected"]};
+                color: ${V3_Colour["text-selected"]};
+                font-weight: ${V3_Font.Spec["weight-semibold"]};
 
                 ${$interactive &&
                 css`
                     &:hover {
-                        background: ${Colour["bg-selected-hover"]};
-                        border-color: ${Colour["border-selected-hover"]};
-                        color: ${Colour["text-selected-hover"]};
+                        background: ${V3_Colour["bg-selected-hover"]};
+                        border-color: ${V3_Colour["border-selected-hover"]};
+                        color: ${V3_Colour["text-selected-hover"]};
                     }
                 `}
             `;
@@ -79,14 +85,14 @@ export const MonthCell = styled.div<StyleProps>`
 
         if ($variant === "current-month") {
             return css`
-                color: ${Colour["text-primary"]};
-                font-weight: ${Font.Spec["weight-semibold"]};
+                color: ${V3_Colour["text-primary"]};
+                font-weight: ${V3_Font.Spec["weight-semibold"]};
             `;
         }
 
         if ($disabledDisplay) {
             return css`
-                color: ${Colour["text-disabled-subtlest"]};
+                color: ${V3_Colour["text-disabled-subtlest"]};
             `;
         }
     }}
@@ -100,19 +106,19 @@ export const MonthCell = styled.div<StyleProps>`
         if ($variant === "selected-month") {
             return css`
                 &:hover {
-                    background: ${Colour["bg-selected-hover"]};
-                    border-color: ${Colour["border-selected-hover"]};
-                    color: ${Colour["text-selected-hover"]};
-                    font-weight: ${Font.Spec["weight-semibold"]};
+                    background: ${V3_Colour["bg-selected-hover"]};
+                    border-color: ${V3_Colour["border-selected-hover"]};
+                    color: ${V3_Colour["text-selected-hover"]};
+                    font-weight: ${V3_Font.Spec["weight-semibold"]};
                 }
             `;
         }
 
         return css`
             &:hover {
-                background: ${Colour["bg-hover"]};
-                color: ${Colour["text-hover"]};
-                font-weight: ${Font.Spec["weight-semibold"]};
+                background: ${V3_Colour["bg-hover"]};
+                color: ${V3_Colour["text-hover"]};
+                font-weight: ${V3_Font.Spec["weight-semibold"]};
             }
         `;
     }}

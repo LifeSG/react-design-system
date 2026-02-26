@@ -3,7 +3,7 @@ import isBetween from "dayjs/plugin/isBetween";
 import { useMemo, useState } from "react";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
-import { Colour } from "../theme";
+import { V3_Colour } from "../v3_theme";
 import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.styles";
 import { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";
@@ -42,8 +42,8 @@ const fallbackSlot: TimeSlot = {
     styleAttributes: {
         color: "",
         styleType: "stripes",
-        backgroundColor: Colour["bg-stronger"],
-        backgroundColor2: Colour["bg-strongest"],
+        backgroundColor: V3_Colour["bg-stronger"],
+        backgroundColor2: V3_Colour["bg-strongest"],
     },
 };
 

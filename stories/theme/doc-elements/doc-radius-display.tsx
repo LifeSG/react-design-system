@@ -1,9 +1,9 @@
-import { getRadius } from "src/theme/radius/theme-helper";
-import { RadiusSet, ThemeSpec } from "src/theme/types";
+import { getRadius } from "src/v3_theme/radius/theme-helper";
+import { V3_RadiusSet, V3_ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
 
 interface RadiusDisplayProps {
-    theme: ThemeSpec;
+    theme: V3_ThemeSpec;
 }
 
 export const RadiusDisplay = ({ theme }: RadiusDisplayProps) => {
@@ -27,7 +27,7 @@ export const RadiusDisplay = ({ theme }: RadiusDisplayProps) => {
 };
 
 interface RadiusCollectionProps {
-    token: keyof RadiusSet;
+    token: keyof V3_RadiusSet;
 }
 
 const RadiusCollection = ({ token }: RadiusCollectionProps) => {

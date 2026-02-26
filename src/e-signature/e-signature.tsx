@@ -5,7 +5,7 @@ import { ThemeContext } from "styled-components";
 import { Button } from "../button";
 import { ButtonWithIcon } from "../button-with-icon";
 import { ProgressBar } from "../shared/progress-bar";
-import { Breakpoint } from "../theme";
+import { V3_Breakpoint } from "../v3_theme";
 import { Typography } from "../typography";
 import { ESignatureCanvasRef } from "./e-signature-canvas";
 import {
@@ -50,7 +50,7 @@ export const ESignature = (props: EsignatureProps) => {
     const eSignatureCanvasRef = useRef<ESignatureCanvasRef>(null);
     const [dataURL, setDataURL] = useState<string | null | undefined>(value);
     const theme = useContext(ThemeContext);
-    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const isMobileLandscape = useMediaQuery({
         maxHeight: mobileBreakpoint,

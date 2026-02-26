@@ -4,10 +4,10 @@ import {
     FooterHelper,
     InternalDisclaimerLinks,
 } from "src/footer/footer-helper";
-import { ResourceScheme } from "src/theme";
+import { V3_ResourceScheme } from "src/v3_theme";
 import { KeyOf } from "src/util/utility-types";
 import { ThemeProvider } from "styled-components";
-import { MOCK_THEME } from "../theme/mock-theme-data";
+import { MOCK_THEME } from "../v3_theme/mock-theme-data";
 
 // =============================================================================
 // UNIT TESTS
@@ -170,7 +170,7 @@ describe("Footer", () => {
             expect(copyrightText.textContent).not.toContain("Last updated");
         });
 
-        it.each<[ResourceScheme, string]>([
+        it.each<[V3_ResourceScheme, string]>([
             ["lifesg", "© 2023 LifeSG, Government of Singapore"],
             ["bookingsg", "© 2023 BookingSG, Government of Singapore"],
             ["mylegacy", "© 2023 MyLegacy@LifeSG, Government of Singapore"],

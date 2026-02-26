@@ -8,7 +8,7 @@ import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal"
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { InputSelect } from "../input-select";
-import { Breakpoint } from "../theme";
+import { V3_Breakpoint } from "../v3_theme";
 import {
     EllipsisButton,
     EllipsisContainer,
@@ -50,7 +50,7 @@ const Component = (
     // =============================================================================
 
     const theme = useContext(ThemeContext);
-    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
 
     const isMobile = useMediaQuery({
         maxWidth: mobileBreakpoint,

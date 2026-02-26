@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
-import { Spacing } from "../theme";
+import { V3_Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -20,11 +20,11 @@ export const Container = styled(InputWrapper)<StyleProps>`
         if (props.$wrap) {
             if (props.$readOnly === true) {
                 return css`
-                    padding: ${Spacing["spacing-12"]} 0;
+                    padding: ${V3_Spacing["spacing-12"]} 0;
                 `;
             }
             return css`
-                padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
+                padding: ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-16"]};
             `;
         }
     }}

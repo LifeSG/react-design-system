@@ -1,7 +1,13 @@
 import { animated } from "@react-spring/web";
 import styled from "styled-components";
 import { Button } from "../../button";
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../../theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_MediaQuery,
+    V3_Radius,
+    V3_Spacing,
+} from "../../v3_theme";
 import { Toggle } from "../../toggle";
 import { Typography } from "../../typography";
 import { ClickableIcon } from "../clickable-icon";
@@ -16,12 +22,12 @@ import { BasicInput, InputBox } from "../input-wrapper/input-wrapper";
 // -----------------------------------------------------------------------------
 export const AnimatedDiv = animated(styled.div`
     position: absolute;
-    top: calc(3rem + ${Spacing["spacing-8"]});
+    top: calc(3rem + ${V3_Spacing["spacing-8"]});
     left: 0;
     overflow: hidden;
     z-index: 1;
 
-    ${MediaQuery.MaxWidth.xxs} {
+    ${V3_MediaQuery.MaxWidth.xxs} {
         max-width: 100%;
     }
 `);
@@ -29,13 +35,14 @@ export const AnimatedDiv = animated(styled.div`
 export const Container = styled.div`
     position: relative;
     width: 100%;
-    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-20"]}
-        ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
+    padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-20"]}
+        ${V3_Spacing["spacing-24"]} ${V3_Spacing["spacing-20"]};
     display: flex;
     flex-direction: column;
-    background: ${Colour["bg"]};
-    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    border-radius: ${Radius["sm"]};
+    background: ${V3_Colour["bg"]};
+    border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        ${V3_Colour["border"]};
+    border-radius: ${V3_Radius["sm"]};
 `;
 
 export const InputSection = styled.div`
@@ -43,7 +50,7 @@ export const InputSection = styled.div`
     align-items: center;
     justify-content: space-between;
 
-    ${MediaQuery.MaxWidth.xxs} {
+    ${V3_MediaQuery.MaxWidth.xxs} {
         flex-direction: column;
         width: 100%;
     }
@@ -52,12 +59,12 @@ export const InputSection = styled.div`
 export const ControlSection = styled.div`
     display: flex;
     justify-content: flex-end;
-    margin-top: ${Spacing["spacing-16"]};
-    gap: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
+    margin-top: ${V3_Spacing["spacing-16"]};
+    gap: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-16"]};
 
-    ${MediaQuery.MaxWidth.xxs} {
+    ${V3_MediaQuery.MaxWidth.xxs} {
         flex-direction: column-reverse; // FIXME: this breaks tab focus
-        margin-top: ${Spacing["spacing-32"]};
+        margin-top: ${V3_Spacing["spacing-32"]};
     }
 `;
 
@@ -67,9 +74,9 @@ export const ControlSection = styled.div`
 export const HourMinuteSection = styled.div`
     display: flex;
     align-items: center;
-    margin-right: ${Spacing["spacing-32"]};
+    margin-right: ${V3_Spacing["spacing-32"]};
 
-    ${MediaQuery.MaxWidth.xxs} {
+    ${V3_MediaQuery.MaxWidth.xxs} {
         margin-right: 0;
         width: 100%;
     }
@@ -77,13 +84,13 @@ export const HourMinuteSection = styled.div`
 
 export const TimePeriodSection = styled.div`
     display: flex;
-    gap: ${Spacing["spacing-8"]};
+    gap: ${V3_Spacing["spacing-8"]};
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         flex-direction: column;
     }
 
-    ${MediaQuery.MaxWidth.xxs} {
+    ${V3_MediaQuery.MaxWidth.xxs} {
         flex-direction: row;
         width: 100%;
     }
@@ -94,15 +101,15 @@ export const InputContainer = styled.div`
     flex-direction: column;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.xxs} {
+    ${V3_MediaQuery.MaxWidth.xxs} {
         width: 6rem;
     }
 `;
 
 export const SwitchButton = styled(ClickableIcon)`
     width: 5rem;
-    padding: ${Spacing["spacing-16"]} 0;
-    color: ${Colour["icon"]};
+    padding: ${V3_Spacing["spacing-16"]} 0;
+    color: ${V3_Colour["icon"]};
 
     svg {
         height: 1rem;
@@ -110,7 +117,7 @@ export const SwitchButton = styled(ClickableIcon)`
     }
 
     &:hover {
-        color: ${Colour["icon-hover"]};
+        color: ${V3_Colour["icon-hover"]};
     }
 `;
 
@@ -127,7 +134,7 @@ export const TimeInputBox = styled(InputBox)`
     align-items: center;
     justify-content: center;
 
-    ${MediaQuery.MaxWidth.xxs} {
+    ${V3_MediaQuery.MaxWidth.xxs} {
         width: 100%;
     }
 `;
@@ -152,11 +159,11 @@ export const TimePeriodToggle = styled(Toggle)`
 export const ControlButton = styled(Button.Small)`
     width: 7rem;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         flex: 1;
     }
 
-    ${MediaQuery.MaxWidth.xxs} {
+    ${V3_MediaQuery.MaxWidth.xxs} {
         width: 100%;
     }
 `;

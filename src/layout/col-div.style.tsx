@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../theme/breakpoint/media-query-helper";
+import { V3_MediaQuery } from "../v3_theme/breakpoint/media-query-helper";
 
 export interface StyledDivStyleProps {
     $xxsStart?: number | undefined;
@@ -48,27 +48,27 @@ export const StyledDiv = styled.div<StyledDivStyleProps>`
         return css`
             grid-column: ${$xxlStart || "auto"} / span ${$xxlSpan || 1};
 
-            ${MediaQuery.MaxWidth.xl} {
+            ${V3_MediaQuery.MaxWidth.xl} {
                 grid-column: ${$xlStart || "auto"} / span ${$xlSpan || 1};
             }
 
-            ${MediaQuery.MaxWidth.lg} {
+            ${V3_MediaQuery.MaxWidth.lg} {
                 grid-column: ${$lgStart || "auto"} / span ${$lgSpan || 1};
             }
 
-            ${MediaQuery.MaxWidth.md} {
+            ${V3_MediaQuery.MaxWidth.md} {
                 grid-column: ${$mdStart || "auto"} / span ${$mdSpan || 1};
             }
 
-            ${MediaQuery.MaxWidth.sm} {
+            ${V3_MediaQuery.MaxWidth.sm} {
                 grid-column: ${$smStart || "auto"} / span ${$smSpan || 1};
             }
 
-            ${MediaQuery.MaxWidth.xs} {
+            ${V3_MediaQuery.MaxWidth.xs} {
                 grid-column: ${$xsStart || "auto"} / span ${$xsSpan || 1};
             }
 
-            ${MediaQuery.MaxWidth.xxs} {
+            ${V3_MediaQuery.MaxWidth.xxs} {
                 grid-column: ${$xxsStart || "auto"} / span ${$xxsSpan || 1};
             }
         `;

@@ -1,7 +1,7 @@
 import { Suspense, lazy, useContext } from "react";
 import styled, { ThemeContext } from "styled-components";
 import { CustomisableAnimationProps } from "../types";
-import { ThemeAnimation } from "src/theme/components/theme-helper";
+import { V3_ThemeAnimation } from "src/v3_theme/components/theme-helper";
 
 // lazy load to fix next.js SSR errors
 const LottieLoadingDotsSpinner = lazy(async () => ({
@@ -14,7 +14,7 @@ export const LoadingDotsSpinner = ({
 }: CustomisableAnimationProps) => {
     const theme = useContext(ThemeContext);
     const animationColor =
-        color || ThemeAnimation["loading-dots-spinner-colour"]({ theme });
+        color || V3_ThemeAnimation["loading-dots-spinner-colour"]({ theme });
     return (
         <Container {...otherProps}>
             <Suspense fallback={<Placeholder />}>

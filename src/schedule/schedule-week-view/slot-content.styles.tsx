@@ -1,5 +1,11 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Radius, Spacing } from "../../theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_Radius,
+    V3_Spacing,
+} from "../../v3_theme";
 import { Typography } from "../../typography";
 import { CELL_HEIGHT } from "../const";
 
@@ -27,10 +33,10 @@ export const SlotContentContainer = styled(
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    padding: ${Spacing["spacing-4"]};
+    padding: ${V3_Spacing["spacing-4"]};
     position: absolute;
     top: ${(props) => props.$offsetTop || 0}px;
-    border-radius: ${Radius["sm"]};
+    border-radius: ${V3_Radius["sm"]};
 
     background: ${(props) => {
         switch (props.$status) {
@@ -38,29 +44,29 @@ export const SlotContentContainer = styled(
                 return css`
                     repeating-linear-gradient(
                         135deg,
-                        ${Colour["bg-warning"]},
-                        ${Colour["bg-warning"]} 5px,
-                        ${Colour["bg-warning-hover"]} 5px,
-                        ${Colour["bg-warning-hover"]} 10px
+                        ${V3_Colour["bg-warning"]},
+                        ${V3_Colour["bg-warning"]} 5px,
+                        ${V3_Colour["bg-warning-hover"]} 5px,
+                        ${V3_Colour["bg-warning-hover"]} 10px
                     )
                 `;
             case "blocked":
-                return Colour["bg-inverse-subtle"];
+                return V3_Colour["bg-inverse-subtle"];
             case "available":
-                return Colour["bg-success-hover"];
+                return V3_Colour["bg-success-hover"];
             case "booked":
-                return Colour["bg-primary-subtler"];
+                return V3_Colour["bg-primary-subtler"];
             default:
-                return Colour["bg"];
+                return V3_Colour["bg"];
         }
     }};
 
     color: ${(props) =>
-        props.$status === "blocked" ? Colour["text-inverse"] : "inherit"};
+        props.$status === "blocked" ? V3_Colour["text-inverse"] : "inherit"};
 
-    border-left: ${Border["width-040"]} solid
+    border-left: ${V3_Border["width-040"]} solid
         ${(props) =>
-            props.$status === "available" ? Colour["icon-success"] : "none"};
+            props.$status === "available" ? V3_Colour["icon-success"] : "none"};
 `;
 
 export const SlotServiceName = styled.span`
@@ -68,7 +74,7 @@ export const SlotServiceName = styled.span`
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
-    font-weight: ${Font.Spec["weight-regular"]};
+    font-weight: ${V3_Font.Spec["weight-regular"]};
 `;
 
 export const SlotAvailability = styled.span`
@@ -76,5 +82,5 @@ export const SlotAvailability = styled.span`
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
-    font-weight: ${Font.Spec["weight-semibold"]};
+    font-weight: ${V3_Font.Spec["weight-semibold"]};
 `;

@@ -1,29 +1,29 @@
 import styled from "styled-components";
-import { MediaQuery, Spacing } from "../theme";
+import { V3_MediaQuery, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
-import { ThemeFooter } from "../theme/components/theme-helper";
+import { V3_ThemeFooter } from "../v3_theme/components/theme-helper";
 
 export const Wrapper = styled.div`
     display: flex;
     align-items: flex-start;
     flex-direction: column;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         justify-content: flex-start;
         padding: 0;
     }
 `;
 
 export const Label = styled(Typography.BodyMD)`
-    margin-bottom: ${Spacing["spacing-16"]};
-    color: ${ThemeFooter["footer-colour-text"]};
+    margin-bottom: ${V3_Spacing["spacing-16"]};
+    color: ${V3_ThemeFooter["footer-colour-text"]};
 `;
 
 export const AppButtonsWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
-    row-gap: ${Spacing["spacing-16"]};
-    column-gap: ${Spacing["spacing-16"]};
+    row-gap: ${V3_Spacing["spacing-16"]};
+    column-gap: ${V3_Spacing["spacing-16"]};
 `;
 
 export const AppStoreLink = styled.a`
@@ -34,7 +34,7 @@ export const AppStoreLink = styled.a`
         display: block;
     }
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         img {
             height: 3rem;
             width: 100%;

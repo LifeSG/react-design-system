@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour, Font } from "../theme";
+import { V3_Colour, V3_Font } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -21,13 +21,13 @@ export const HeaderCellWeek = styled.div`
 `;
 
 export const DayLabel = styled.div<LabelStyleProps>`
-    ${Font["body-xs-semibold"]}
-    color:${Colour["text"]};
+    ${V3_Font["body-xs-semibold"]}
+    color:${V3_Colour["text"]};
 
     ${(props) =>
         props.$disabled &&
         css`
-            color: ${Colour["text-disabled-subtlest"]};
+            color: ${V3_Colour["text-disabled-subtlest"]};
         `};
 `;
 
@@ -44,14 +44,14 @@ export const ColumnWeekCell = styled.div`
 `;
 
 export const TimeSlotText = styled.div`
-    ${Font["body-xs-semibold"]}
+    ${V3_Font["body-xs-semibold"]}
     margin: 1rem 0rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     max-width: 2.5rem;
-    color: ${Colour.text};
+    color: ${V3_Colour.text};
     span {
         display: block;
     }

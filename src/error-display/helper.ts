@@ -1,5 +1,5 @@
-import { Breakpoint } from "../theme";
-import { ThemeSpec } from "../theme/types";
+import { V3_Breakpoint } from "../v3_theme";
+import { V3_ThemeSpec } from "../v3_theme/types";
 
 export namespace ErrorDisplayHelper {
     export interface ImagePathAttributes {
@@ -25,11 +25,11 @@ export namespace ErrorDisplayHelper {
      */
     export const imgAttributeHelper = (
         pathAttributes: ImagePathAttributes,
-        theme?: ThemeSpec
+        theme?: V3_ThemeSpec
     ): React.ImgHTMLAttributes<HTMLImageElement> => {
         const { base, md, lg, width, height } = pathAttributes;
-        const mobile = Breakpoint["sm-max"]({ theme });
-        const tablet = Breakpoint["lg-max"]({ theme });
+        const mobile = V3_Breakpoint["sm-max"]({ theme });
+        const tablet = V3_Breakpoint["lg-max"]({ theme });
 
         return {
             srcSet: `${base} 400w, ${md} 800w, ${lg} 1200w`,

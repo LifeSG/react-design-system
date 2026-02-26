@@ -1,18 +1,18 @@
 import { css } from "styled-components";
 import { lineClampCss } from "../shared/styles";
-import { Colour, Font } from "../theme";
-import { FontSet, TypographySizeType } from "../theme/font/types";
+import { V3_Colour, V3_Font } from "../v3_theme";
+import { V3_FontSet, V3_TypographySizeType } from "../v3_theme/font/types";
 import { TypographyWeight } from "./types";
 
 export const getTextStyle = (
-    type: TypographySizeType,
+    type: V3_TypographySizeType,
     weight: TypographyWeight,
     paragraph = false
 ) => {
-    const token: keyof FontSet = `${type}-${weight}`;
+    const token: keyof V3_FontSet = `${type}-${weight}`;
 
     return css`
-        ${Font[token]}
+        ${V3_Font[token]}
         ${paragraph ? "margin-bottom: 1.05em;" : "margin-bottom: 0;"}
     `;
 };
@@ -48,7 +48,7 @@ export const getDisplayStyle = (
 };
 
 export const createTypographyStyles = (
-    textStyle: TypographySizeType,
+    textStyle: V3_TypographySizeType,
     weight: TypographyWeight | undefined,
     inline: boolean | undefined,
     paragraph: boolean | undefined,
@@ -56,5 +56,5 @@ export const createTypographyStyles = (
 ) => css`
     ${getTextStyle(textStyle, weight || "regular", paragraph)}
     ${getDisplayStyle(inline, paragraph, maxLines)}
-    color: ${Colour.text};
+    color: ${V3_Colour.text};
 `;

@@ -1,4 +1,4 @@
-import { MediaQuery } from "src/theme";
+import { V3_MediaQuery } from "src/v3_theme";
 import styled from "styled-components";
 
 export const AnimationDisplay = styled.div`
@@ -6,7 +6,7 @@ export const AnimationDisplay = styled.div`
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-gap: 1.25rem;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         grid-template-columns: repeat(1, minmax(0, 1fr));
     }
 `;

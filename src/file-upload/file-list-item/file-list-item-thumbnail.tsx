@@ -1,6 +1,13 @@
 import styled from "styled-components";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
-import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_MediaQuery,
+    V3_Radius,
+    V3_Spacing,
+} from "../../v3_theme";
 
 interface Props {
     thumbnailImageDataUrl: string;
@@ -41,7 +48,7 @@ export const FileListItemThumbnail = ({
 // =============================================================================
 export const Container = styled.div`
     width: auto;
-    margin-right: ${Spacing["spacing-32"]};
+    margin-right: ${V3_Spacing["spacing-32"]};
     display: flex;
     flex-shrink: 0;
     flex-direction: column;
@@ -52,11 +59,12 @@ export const Thumbnail = styled(ImageWithFallback)`
     width: 96px;
     height: 96px;
     aspect-ratio: 1;
-    border-radius: ${Radius["sm"]};
-    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${V3_Radius["sm"]};
+    border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        ${V3_Colour["border"]};
     object-fit: cover;
 
-    ${MediaQuery.MaxWidth.md} {
+    ${V3_MediaQuery.MaxWidth.md} {
         width: 64px;
         height: 64px;
     }
@@ -65,15 +73,15 @@ export const Thumbnail = styled(ImageWithFallback)`
 export const ReplaceButton = styled.button`
     width: 100%;
     height: 1.625rem;
-    margin-top: ${Spacing["spacing-8"]};
+    margin-top: ${V3_Spacing["spacing-8"]};
     border: none;
     background: transparent;
     cursor: pointer;
 
-    ${Font["body-md-semibold"]}
-    color: ${Colour["text-primary"]};
+    ${V3_Font["body-md-semibold"]}
+    color: ${V3_Colour["text-primary"]};
 
     &:hover {
-        color: ${Colour["text-hover"]};
+        color: ${V3_Colour["text-hover"]};
     }
 `;

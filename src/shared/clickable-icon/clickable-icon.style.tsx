@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour, Spacing } from "../../theme";
+import { V3_Colour, V3_Spacing } from "../../v3_theme";
 
 interface StyleProps {
     $outline: "none" | "browser";
@@ -10,7 +10,7 @@ export const Main = styled.button<StyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: ${Spacing["spacing-24"]};
+    padding: ${V3_Spacing["spacing-24"]};
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -32,7 +32,7 @@ export const Main = styled.button<StyleProps>`
         ${({ $highlight }) =>
             $highlight &&
             css`
-                background-color: ${Colour["bg-hover-neutral"]};
+                background-color: ${V3_Colour["bg-hover-neutral"]};
             `}
     }
 `;

@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Spacing } from "../theme";
+import { V3_Spacing } from "../v3_theme";
 
 export const AddonWrapper = styled.div`
-    padding-left: ${Spacing["spacing-4"]};
+    padding-left: ${V3_Spacing["spacing-4"]};
     display: inline;
 `;

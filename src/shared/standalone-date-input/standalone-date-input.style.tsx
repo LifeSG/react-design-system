@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour, Font, Spacing } from "../../theme";
+import { V3_Colour, V3_Font, V3_Spacing } from "../../v3_theme";
 import { BasicInput } from "../input-wrapper/input-wrapper";
 
 // =============================================================================
@@ -39,7 +39,7 @@ export const InputContainer = styled.div<InputContainerStyleProps>`
         if (props.$hover) {
             return css`
                 ${BaseInput}, ${Divider} {
-                    color: ${Colour["text-subtler"]};
+                    color: ${V3_Colour["text-subtler"]};
                 }
             `;
         }
@@ -53,7 +53,7 @@ const BaseInput = styled(BasicInput)`
 
 export const DayInput = styled(BaseInput)`
     width: 2rem;
-    margin-right: ${Spacing["spacing-4"]};
+    margin-right: ${V3_Spacing["spacing-4"]};
 `;
 
 export const MonthInput = styled(BaseInput)`
@@ -62,24 +62,24 @@ export const MonthInput = styled(BaseInput)`
 
 export const YearInput = styled(BaseInput)`
     width: 3rem;
-    margin-left: ${Spacing["spacing-4"]};
+    margin-left: ${V3_Spacing["spacing-4"]};
 `;
 
 export const Divider = styled.span<DividerStyleProps>`
-    ${Font["body-baseline-regular"]}
+    ${V3_Font["body-baseline-regular"]}
     ${(props) => {
         if (props.$inactive) {
             return css`
-                color: ${Colour["text"]};
+                color: ${V3_Colour["text"]};
             `;
         }
     }}
 `;
 
 export const Placeholder = styled.div<PlaceholderStyleProps>`
-    ${Font["body-baseline-regular"]}
-    background-color: ${Colour["bg"]};
-    color: ${Colour["text-subtler"]};
+    ${V3_Font["body-baseline-regular"]}
+    background-color: ${V3_Colour["bg"]};
+    color: ${V3_Colour["text-subtler"]};
     position: absolute;
     display: flex;
     align-items: center;
@@ -89,7 +89,7 @@ export const Placeholder = styled.div<PlaceholderStyleProps>`
     ${(props) => {
         if (props.$disabled) {
             return css`
-                background-color: ${Colour["bg-disabled"]};
+                background-color: ${V3_Colour["bg-disabled"]};
                 cursor: not-allowed;
             `;
         } else if (props.$hide) {

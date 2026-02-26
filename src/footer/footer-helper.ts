@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { ResourceScheme } from "../theme/types";
+import { V3_ResourceScheme } from "../v3_theme/types";
 import { TypographyLinkProps } from "../typography";
 import { getDefaultDisclaimerLinks } from "./footer-disclaimer-links-data";
 import { DisclaimerLinks } from "./types";
@@ -14,7 +14,7 @@ export interface InternalDisclaimerLinks {
 export namespace FooterHelper {
     export const getCopyrightInfo = (
         lastUpdated: Date = new Date(),
-        resourceScheme: ResourceScheme | undefined
+        resourceScheme: V3_ResourceScheme | undefined
     ): string => {
         const copyrightText = getCopyrightText(resourceScheme);
         const copyright = `${new Date().getFullYear()} ${copyrightText}`;
@@ -23,7 +23,9 @@ export namespace FooterHelper {
         return `${copyright} Last updated ${lastUpdatedDateString}`;
     };
 
-    const getCopyrightText = (resourceScheme: ResourceScheme | undefined) => {
+    const getCopyrightText = (
+        resourceScheme: V3_ResourceScheme | undefined
+    ) => {
         switch (resourceScheme) {
             case "lifesg":
                 return "LifeSG, Government of Singapore.";
@@ -41,7 +43,7 @@ export namespace FooterHelper {
     };
 
     export const getFooterLogoAttribute = (
-        resourceScheme?: ResourceScheme
+        resourceScheme?: V3_ResourceScheme
     ): React.ImgHTMLAttributes<HTMLImageElement> => {
         switch (resourceScheme) {
             case "lifesg":
@@ -82,7 +84,7 @@ export namespace FooterHelper {
     };
 
     export const getDisclaimerLinks = (
-        resourceScheme: ResourceScheme | undefined,
+        resourceScheme: V3_ResourceScheme | undefined,
         customDisclaimerLinks: DisclaimerLinks | undefined
     ): InternalDisclaimerLinks => {
         const defaultDisclaimerLinks =

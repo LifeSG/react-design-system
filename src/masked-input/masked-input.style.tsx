@@ -2,7 +2,7 @@ import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangl
 import styled from "styled-components";
 import { InputGroup } from "../input-group";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
-import { Colour, Font, Spacing } from "../theme";
+import { V3_Colour, V3_Font, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 import { BasicButton } from "../shared/input-wrapper";
 
@@ -26,7 +26,8 @@ interface IconProps {
 // =============================================================================
 
 export const InputGroupWrapper = styled(InputGroup)<InputGroupWrapperProps>`
-    padding: 0 0 0 ${({ readOnly }) => (readOnly ? "0" : Spacing["spacing-16"])};
+    padding: 0 0 0
+        ${({ readOnly }) => (readOnly ? "0" : V3_Spacing["spacing-16"])};
     input {
         cursor: ${({ readOnly, $isDisabled }) =>
             readOnly && !$isDisabled ? "pointer" : "initial"};
@@ -40,10 +41,10 @@ export const IconContainer = styled.div<IconProps>`
     cursor: ${({ $isDisabled }) => (!$isDisabled ? "pointer" : "initial")};
     color: ${({
         $isDisabled,
-        $inactiveColor = Colour.icon,
-        $activeColor = Colour["icon-primary"],
+        $inactiveColor = V3_Colour.icon,
+        $activeColor = V3_Colour["icon-primary"],
     }) => ($isDisabled ? $inactiveColor : $activeColor)};
-    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
+    padding: ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-16"]};
 
     svg {
         height: 1em;
@@ -61,12 +62,12 @@ export const LoadingWrapper = styled.div`
 `;
 
 export const LoadingLabel = styled(Typography.BodyBL)`
-    color: ${Colour["text-subtler"]};
+    color: ${V3_Colour["text-subtler"]};
 `;
 
 export const Spinner = styled(ComponentLoadingSpinner)`
-    margin-right: ${Spacing["spacing-8"]};
-    color: ${Colour["icon"]};
+    margin-right: ${V3_Spacing["spacing-8"]};
+    color: ${V3_Colour["icon"]};
 `;
 
 // -----------------------------------------------------------------------------
@@ -74,26 +75,26 @@ export const Spinner = styled(ComponentLoadingSpinner)`
 // -----------------------------------------------------------------------------
 
 export const TryAgainLabel = styled.span`
-    color: ${Colour["text-primary"]};
+    color: ${V3_Colour["text-primary"]};
     text-decoration: underline;
-    font-weight: ${Font.Spec["weight-semibold"]};
+    font-weight: ${V3_Font.Spec["weight-semibold"]};
 `;
 
 export const ErrorTextContainer = styled.span`
     display: flex;
     align-items: center;
-    margin-right: ${Spacing["spacing-8"]};
+    margin-right: ${V3_Spacing["spacing-8"]};
 `;
 
 export const ErrorIcon = styled(ExclamationTriangleIcon)`
-    color: ${Colour["icon-warning"]};
-    margin-right: ${Spacing["spacing-8"]};
+    color: ${V3_Colour["icon-warning"]};
+    margin-right: ${V3_Spacing["spacing-8"]};
     height: 1em;
     width: 1em;
 `;
 
 export const ErrorLabel = styled.span`
-    color: ${Colour["text-warning"]};
+    color: ${V3_Colour["text-warning"]};
 `;
 
 export const ClickableErrorWrapper = styled(BasicButton)`
@@ -106,11 +107,11 @@ export const ClickableErrorWrapper = styled(BasicButton)`
     background: transparent;
     cursor: pointer;
 
-    ${Font["body-baseline-regular"]}
+    ${V3_Font["body-baseline-regular"]}
 
     &:hover, &:active, &:focus {
         ${TryAgainLabel} {
-            color: ${Colour["text-hover"]};
+            color: ${V3_Colour["text-hover"]};
         }
     }
 `;

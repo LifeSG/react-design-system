@@ -2,7 +2,14 @@ import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ImagePlaceholder } from "../shared/image-placeholder";
 import { InsetStyleProps } from "../shared/types";
-import { Border, Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_MediaQuery,
+    V3_Radius,
+    V3_Shadow,
+    V3_Spacing,
+} from "../v3_theme";
 import { Typography } from "../typography";
 import { StatefulImage } from "./stateful-image";
 
@@ -23,11 +30,11 @@ interface ThumbnailItemStyleProps {
 const IconButton = styled(ClickableIcon)`
     padding: 0;
     border-radius: 100%;
-    background: ${Colour["bg"]};
-    color: ${Colour["icon-primary"]};
+    background: ${V3_Colour["bg"]};
+    color: ${V3_Colour["icon-primary"]};
     height: 2.5rem;
     width: 2.5rem;
-    box-shadow: ${Shadow["md-strong"]};
+    box-shadow: ${V3_Shadow["md-strong"]};
 
     svg {
         height: 1.5rem;
@@ -38,39 +45,41 @@ const IconButton = styled(ClickableIcon)`
 export const CloseButton = styled(IconButton)<InsetStyleProps>`
     position: absolute;
     top: ${(props) =>
-        css`calc(${Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
+        css`calc(${V3_Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
     right: ${(props) =>
-        css`calc(${Spacing["spacing-48"]} + ${props.$insetRight || 0}px)`};
+        css`calc(${V3_Spacing["spacing-48"]} + ${props.$insetRight || 0}px)`};
     z-index: 5;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         top: ${(props) =>
-            css`calc(${Spacing["spacing-20"]} + ${props.$insetTop || 0}px)`};
+            css`calc(${V3_Spacing["spacing-20"]} + ${props.$insetTop || 0}px)`};
         right: ${(props) =>
-            css`calc(${Spacing["spacing-20"]} + ${props.$insetRight || 0}px)`};
+            css`calc(${V3_Spacing["spacing-20"]} + ${
+                props.$insetRight || 0
+            }px)`};
     }
 `;
 
 export const MagnifierButton = styled(IconButton)<InsetStyleProps>`
     position: absolute;
     top: ${(props) =>
-        css`calc(${Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
+        css`calc(${V3_Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
     right: ${
         (props) =>
-            css`calc(2.5rem + ${Spacing["spacing-48"]} + ${
-                Spacing["spacing-16"]
+            css`calc(2.5rem + ${V3_Spacing["spacing-48"]} + ${
+                V3_Spacing["spacing-16"]
             } + ${props.$insetRight || 0}px)` // close button + space from screen + gap between buttons
     };
 
     z-index: 5;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         top: ${(props) =>
-            css`calc(${Spacing["spacing-20"]} + ${props.$insetTop || 0}px)`};
+            css`calc(${V3_Spacing["spacing-20"]} + ${props.$insetTop || 0}px)`};
         right: ${
             (props) =>
-                css`calc(2.5rem + ${Spacing["spacing-20"]} + ${
-                    Spacing["spacing-16"]
+                css`calc(2.5rem + ${V3_Spacing["spacing-20"]} + ${
+                    V3_Spacing["spacing-16"]
                 } + ${props.$insetRight || 0}px)` // close button + space from screen + gap between buttons
         };
     }
@@ -85,10 +94,12 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
     ${(props) =>
         props.$position === "left" &&
         css`
-            left: calc(${Spacing["spacing-48"]} + ${props.$insetLeft || 0}px);
-            ${MediaQuery.MaxWidth.sm} {
+            left: calc(
+                ${V3_Spacing["spacing-48"]} + ${props.$insetLeft || 0}px
+            );
+            ${V3_MediaQuery.MaxWidth.sm} {
                 left: calc(
-                    ${Spacing["spacing-20"]} + ${props.$insetLeft || 0}px
+                    ${V3_Spacing["spacing-20"]} + ${props.$insetLeft || 0}px
                 );
             }
         `}
@@ -96,10 +107,12 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
     ${(props) =>
         props.$position === "right" &&
         css`
-            right: calc(${Spacing["spacing-48"]} + ${props.$insetRight || 0}px);
-            ${MediaQuery.MaxWidth.sm} {
+            right: calc(
+                ${V3_Spacing["spacing-48"]} + ${props.$insetRight || 0}px
+            );
+            ${V3_MediaQuery.MaxWidth.sm} {
                 right: calc(
-                    ${Spacing["spacing-20"]} + ${props.$insetRight || 0}px
+                    ${V3_Spacing["spacing-20"]} + ${props.$insetRight || 0}px
                 );
             }
         `}
@@ -158,21 +171,21 @@ export const ImageGallerySlide = styled.div`
 export const SlideImage = styled(StatefulImage)`
     height: 100%;
     width: 100%;
-    border-radius: ${Radius["none"]};
+    border-radius: ${V3_Radius["none"]};
 `;
 
 export const SlidePlaceholderImage = styled(ImagePlaceholder)`
     width: 60vw;
     height: auto;
     max-height: 100%;
-    border-radius: ${Radius["none"]};
+    border-radius: ${V3_Radius["none"]};
     aspect-ratio: 4 / 3;
 `;
 
 export const BoxChip = styled.div`
     display: flex;
     justify-content: center;
-    padding: ${Spacing["spacing-16"]};
+    padding: ${V3_Spacing["spacing-16"]};
     position: absolute;
     bottom: 0;
     left: 0;
@@ -184,11 +197,11 @@ export const BoxChip = styled.div`
 
 export const Chip = styled(Typography.BodyXS)`
     display: inline-flex;
-    padding: ${Spacing["spacing-4"]} ${Spacing["spacing-16"]};
+    padding: ${V3_Spacing["spacing-4"]} ${V3_Spacing["spacing-16"]};
     justify-content: center;
     align-items: center;
-    border-radius: ${Radius["full"]};
-    background-color: ${Colour["bg"]};
+    border-radius: ${V3_Radius["full"]};
+    background-color: ${V3_Colour["bg"]};
     text-align: center;
 `;
 
@@ -200,20 +213,20 @@ export const ThumbnailContainer = styled.div<InsetStyleProps>`
     flex-shrink: 0;
     display: flex;
     overflow: auto;
-    background-color: ${Colour["bg-inverse"]};
+    background-color: ${V3_Colour["bg-inverse"]};
     padding: ${(props) =>
             css`
-                ${Spacing["spacing-24"]} ${Spacing[
+                ${V3_Spacing["spacing-24"]} ${V3_Spacing[
                     "spacing-16"
-                ]} calc(${Spacing["spacing-24"]} + ${props.$insetBottom ||
+                ]} calc(${V3_Spacing["spacing-24"]} + ${props.$insetBottom ||
                 0}px);
             `}
-        ${MediaQuery.MaxWidth.sm} {
+        ${V3_MediaQuery.MaxWidth.sm} {
         padding: ${(props) =>
             css`
-                ${Spacing["spacing-16"]} ${Spacing[
+                ${V3_Spacing["spacing-16"]} ${V3_Spacing[
                     "spacing-20"
-                ]} calc(${Spacing["spacing-16"]} + ${props.$insetBottom ||
+                ]} calc(${V3_Spacing["spacing-16"]} + ${props.$insetBottom ||
                 0}px);
             `};
     }
@@ -223,7 +236,7 @@ export const ThumbnailWrapper = styled.div`
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    gap: ${Spacing["spacing-16"]};
+    gap: ${V3_Spacing["spacing-16"]};
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -236,7 +249,7 @@ export const ThumbnailItemContainer = styled.div`
     height: 100px;
     width: 100px;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         height: 64px;
         width: 64px;
     }
@@ -244,9 +257,9 @@ export const ThumbnailItemContainer = styled.div`
 
 export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
     cursor: pointer;
-    background-color: ${Colour["bg-inverse"]};
-    border-radius: ${Radius["md"]};
-    border: ${Border["solid"]} transparent;
+    background-color: ${V3_Colour["bg-inverse"]};
+    border-radius: ${V3_Radius["md"]};
+    border: ${V3_Border["solid"]} transparent;
     box-sizing: content-box;
 
     flex-shrink: 0;
@@ -257,7 +270,7 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
     height: 92px;
     width: 92px;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         height: 60px;
         width: 60px;
     }
@@ -265,22 +278,22 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
     ${(props) =>
         props.$active
             ? css`
-                  border-width: ${Border["width-040"]};
-                  border-color: ${Colour["border-selected"]};
+                  border-width: ${V3_Border["width-040"]};
+                  border-color: ${V3_Colour["border-selected"]};
 
-                  ${MediaQuery.MaxWidth.sm} {
-                      border-width: ${Border["width-020"]};
+                  ${V3_MediaQuery.MaxWidth.sm} {
+                      border-width: ${V3_Border["width-020"]};
                   }
 
                   &:hover {
-                      border-color: ${Colour["border-selected-hover"]};
+                      border-color: ${V3_Colour["border-selected-hover"]};
                   }
               `
             : css`
-                  border-width: ${Border["width-010"]};
+                  border-width: ${V3_Border["width-010"]};
 
                   &:hover {
-                      border-color: ${Colour["border-hover"]};
+                      border-color: ${V3_Colour["border-hover"]};
                   }
               `};
 `;

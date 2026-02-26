@@ -13,7 +13,7 @@ import {
 } from "./breadcrumb.style";
 import { BreadcrumbProps, FadeColorSet } from "./types";
 import { ThemeContext } from "styled-components";
-import { Breakpoint } from "../theme";
+import { V3_Breakpoint } from "../v3_theme";
 
 export const Breadcrumb = ({
     links,
@@ -43,7 +43,7 @@ export const Breadcrumb = ({
     // =============================================================================
 
     const theme = useContext(ThemeContext);
-    const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
+    const tabletBreakpoint = V3_Breakpoint["lg-max"]({ theme });
 
     const onResize = useEvent(() => {
         const content = contentRef.current;

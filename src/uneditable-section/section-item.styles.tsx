@@ -2,7 +2,7 @@ import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangl
 import styled, { css } from "styled-components";
 import { Alert } from "../alert";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
-import { Colour, Font, MediaQuery } from "../theme";
+import { V3_Colour, V3_Font, V3_MediaQuery } from "../v3_theme";
 import { UneditableSectionItemDisplayWidth } from "./types";
 
 // =============================================================================
@@ -33,7 +33,7 @@ export const Container = styled.li<ContainerStyleProps>`
         }
     }}
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         grid-column: 1 / -1;
     }
 
@@ -45,18 +45,18 @@ export const IconContainer = styled.div`
     height: 100%;
     align-items: center;
     justify-content: center;
-    color: ${Colour["icon-primary"]};
+    color: ${V3_Colour["icon-primary"]};
     margin-left: 0.5rem;
 
     svg {
-        width: ${Font.Spec["body-size-baseline"]};
-        height: ${Font.Spec["body-size-baseline"]};
+        width: ${V3_Font.Spec["body-size-baseline"]};
+        height: ${V3_Font.Spec["body-size-baseline"]};
     }
 `;
 
 export const Clickable = styled.button`
-    ${Font["body-baseline-regular"]}
-    color: ${Colour["text"]};
+    ${V3_Font["body-baseline-regular"]}
+    color: ${V3_Colour["text"]};
     border: none;
     background: transparent;
     padding: 0;
@@ -76,31 +76,31 @@ export const Clickable = styled.button`
 // LOADING DISPLAY
 // -----------------------------------------------------------------------------
 export const LoadingLabel = styled.span`
-    color: ${Colour["text-disabled"]};
+    color: ${V3_Colour["text-disabled"]};
 `;
 
 export const Spinner = styled(ComponentLoadingSpinner)`
     margin-right: 0.5rem;
-    color: ${Colour["text-disabled"]};
+    color: ${V3_Colour["text-disabled"]};
 `;
 
 // -----------------------------------------------------------------------------
 // ERROR DISPLAY
 // -----------------------------------------------------------------------------
 export const ErrorIcon = styled(ExclamationTriangleIcon)`
-    color: ${Colour["icon-warning"]};
+    color: ${V3_Colour["icon-warning"]};
     margin-right: 0.5rem;
-    height: ${Font.Spec["body-size-baseline"]};
-    width: ${Font.Spec["body-size-baseline"]};
+    height: ${V3_Font.Spec["body-size-baseline"]};
+    width: ${V3_Font.Spec["body-size-baseline"]};
 `;
 
 export const ErrorLabel = styled.span`
-    color: ${Colour["text-warning"]};
+    color: ${V3_Colour["text-warning"]};
 `;
 
 export const TryAgainLabel = styled.span`
-    ${Font["body-baseline-semibold"]}
-    color: ${Colour["hyperlink"]};
+    ${V3_Font["body-baseline-semibold"]}
+    color: ${V3_Colour["hyperlink"]};
     text-decoration: underline;
     margin-left: 0.5rem;
 `;

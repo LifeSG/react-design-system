@@ -1,4 +1,4 @@
-import { Colour, Font } from "src/theme";
+import { V3_Colour, V3_Font } from "src/v3_theme";
 import styled from "styled-components";
 
 // =============================================================================
@@ -13,8 +13,8 @@ export const SubOption = styled.div`
 `;
 
 export const Label = styled.label`
-    ${Font["body-baseline-regular"]}
-    color: ${Colour.text};
+    ${V3_Font["body-baseline-regular"]}
+    color: ${V3_Colour.text};
     cursor: pointer;
 `;
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Markup } from "src/markup";
-import { Colour } from "src/theme";
+import { V3_Colour } from "src/v3_theme";
 
 type Component = typeof Markup;
 
@@ -13,7 +13,7 @@ export default meta;
 
 export const Default: StoryObj<Component> = {
     render: () => (
-        <Markup baseTextColor={Colour.text} baseTextSize="body-baseline">
+        <Markup baseTextColor={V3_Colour.text} baseTextSize="body-baseline">
             <p>
                 You can use <strong>bold text</strong> to emphasise important
                 information

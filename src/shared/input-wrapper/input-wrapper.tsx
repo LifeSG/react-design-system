@@ -1,5 +1,11 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Radius, Spacing } from "../../theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_Radius,
+    V3_Spacing,
+} from "../../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -23,19 +29,20 @@ export interface InputStyleProps {
 // =============================================================================
 const defaultFocusCss = css`
     outline-offset: -1px;
-    outline: ${Border["width-020"]} ${Border["solid"]} ${Colour["border-focus"]};
+    outline: ${V3_Border["width-020"]} ${V3_Border["solid"]}
+        ${V3_Colour["border-focus"]};
 `;
 
 const readOnlyFocusCss = css`
-    outline-color: ${Colour["border-focus"]};
+    outline-color: ${V3_Colour["border-focus"]};
 `;
 
 const disabledFocusCss = css`
-    outline-color: ${Colour["border-disabled"]};
+    outline-color: ${V3_Colour["border-disabled"]};
 `;
 
 const errorFocusCss = css`
-    outline-color: ${Colour["border-error-focus"]};
+    outline-color: ${V3_Colour["border-error-focus"]};
 `;
 
 const noFocusCss = css`
@@ -47,9 +54,10 @@ const noFocusCss = css`
  * prescibe any layout for content
  */
 export const InputBox = styled.div<InputWrapperStyleProps>`
-    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    border-radius: ${Radius["sm"]};
-    background: ${Colour["bg"]};
+    border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        ${V3_Colour["border"]};
+    border-radius: ${V3_Radius["sm"]};
+    background: ${V3_Colour["bg"]};
 
     &:focus-within {
         ${defaultFocusCss}
@@ -70,7 +78,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
             `;
         } else if (props.$disabled) {
             return css`
-                background: ${Colour["bg-disabled"]};
+                background: ${V3_Colour["bg-disabled"]};
                 cursor: not-allowed;
 
                 &:focus-within {
@@ -80,7 +88,7 @@ export const InputBox = styled.div<InputWrapperStyleProps>`
             `;
         } else if (props.$error) {
             return css`
-                border-color: ${Colour["border-error"]};
+                border-color: ${V3_Colour["border-error"]};
 
                 &:focus-within {
                     ${errorFocusCss}
@@ -108,8 +116,8 @@ export const InputWrapper = styled(InputBox)<InputWrapperStyleProps>`
     position: relative;
     height: max-content;
     width: 100%;
-    padding: 0 ${Spacing["spacing-16"]} 0
-        ${(props) => (props.$readOnly ? "0" : Spacing["spacing-16"])};
+    padding: 0 ${V3_Spacing["spacing-16"]} 0
+        ${(props) => (props.$readOnly ? "0" : V3_Spacing["spacing-16"])};
     flex-direction: ${(props) =>
         props.$position === "right" ? "row-reverse" : "row"};
 `;
@@ -121,9 +129,9 @@ export const InputWrapper = styled(InputBox)<InputWrapperStyleProps>`
 export const BasicInput = styled.input<InputStyleProps>`
     ${(props) =>
         props.$variant === "small"
-            ? Font["body-md-regular"]
-            : Font["body-baseline-regular"]}
-    color: ${Colour["text"]};
+            ? V3_Font["body-md-regular"]
+            : V3_Font["body-baseline-regular"]}
+    color: ${V3_Colour["text"]};
     display: block;
     background: transparent;
     border: none;
@@ -133,7 +141,7 @@ export const BasicInput = styled.input<InputStyleProps>`
     margin: 0;
 
     &:disabled {
-        color: ${Colour["text-subtler"]};
+        color: ${V3_Colour["text-subtler"]};
 
         &:hover {
             cursor: not-allowed;
@@ -142,7 +150,7 @@ export const BasicInput = styled.input<InputStyleProps>`
 
     &::placeholder,
     &::-webkit-input-placeholder {
-        color: ${Colour["text-subtler"]};
+        color: ${V3_Colour["text-subtler"]};
     }
 
     // Chrome, Safari, Edge, Opera
@@ -173,8 +181,8 @@ export const BasicButton = styled.button<InputStyleProps>`
     }
 
     &:focus-visible {
-        outline: ${Border["width-010"]} ${Border["solid"]}
-            ${Colour["border-focus"]};
-        border-radius: ${Radius["sm"]};
+        outline: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+            ${V3_Colour["border-focus"]};
+        border-radius: ${V3_Radius["sm"]};
     }
 `;

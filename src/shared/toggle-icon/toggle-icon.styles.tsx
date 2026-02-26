@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour } from "../../theme";
+import { V3_Colour } from "../../v3_theme";
 
 interface StyleProps {
     $active?: boolean;
@@ -24,23 +24,23 @@ export const Wrapper = styled.div<StyleProps>`
         if (props.$disabled) {
             if (props.$active) {
                 return css`
-                    color: ${Colour["icon-selected-disabled"]};
+                    color: ${V3_Colour["icon-selected-disabled"]};
                 `;
             } else {
                 return css`
-                    color: ${Colour["icon-disabled-subtle"]};
+                    color: ${V3_Colour["icon-disabled-subtle"]};
                 `;
             }
         }
 
         if (props.$active) {
             return css`
-                color: ${Colour["icon-selected"]};
+                color: ${V3_Colour["icon-selected"]};
             `;
         }
 
         return css`
-            color: ${Colour["icon-subtle"]};
+            color: ${V3_Colour["icon-subtle"]};
         `;
     }};
 `;

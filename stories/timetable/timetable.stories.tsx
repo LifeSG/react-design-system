@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Card } from "src/card";
-import { Colour } from "src/theme";
+import { V3_Colour } from "src/v3_theme";
 import {
     TimeTable,
     TimeTablePopoverProps,
@@ -412,9 +412,10 @@ export const CustomCellColors: StoryObj<Component> = {
                         status: "default",
                         onClick: () => {},
                         cellStyleAttributes: {
-                            backgroundColor: Colour.Primitive["secondary-80"],
+                            backgroundColor:
+                                V3_Colour.Primitive["secondary-80"],
                             hoverBackgroundColor:
-                                Colour.Primitive["secondary-70"],
+                                V3_Colour.Primitive["secondary-70"],
                         },
                     },
                     {
@@ -423,8 +424,8 @@ export const CustomCellColors: StoryObj<Component> = {
                         endTime: "15:30",
                         status: "disabled",
                         cellStyleAttributes: {
-                            backgroundColor: Colour["bg-strongest"],
-                            hoverBackgroundColor: Colour["bg-stronger"],
+                            backgroundColor: V3_Colour["bg-strongest"],
+                            hoverBackgroundColor: V3_Colour["bg-stronger"],
                         },
                     },
                     {

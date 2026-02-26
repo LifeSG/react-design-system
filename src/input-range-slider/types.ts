@@ -1,6 +1,6 @@
-import { ThemeStyleProps } from "../theme/types";
+import { V3_ThemeStyleProps } from "../v3_theme/types";
 
-type CustomColor = string | ((props: ThemeStyleProps) => string);
+type CustomColor = string | ((props: V3_ThemeStyleProps) => string);
 
 export interface BaseSliderProps {
     className?: string | undefined;

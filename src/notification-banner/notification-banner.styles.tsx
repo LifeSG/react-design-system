@@ -1,7 +1,13 @@
 import styled, { css } from "styled-components";
 import { Layout } from "../layout";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Colour, Font, Motion, Radius, Spacing } from "../theme";
+import {
+    V3_Colour,
+    V3_Font,
+    V3_Motion,
+    V3_Radius,
+    V3_Spacing,
+} from "../v3_theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -21,19 +27,19 @@ interface ContentStyleProps {
 // STYLING
 // =============================================================================
 const commonLinkStyle = css`
-    color: ${Colour["hyperlink-inverse"]};
+    color: ${V3_Colour["hyperlink-inverse"]};
 
     svg {
-        color: ${Colour["icon-primary-inverse"]};
+        color: ${V3_Colour["icon-primary-inverse"]};
     }
 
     &:hover,
     &:active,
     &:visited,
     &:focus {
-        color: ${Colour["hyperlink-inverse"]};
+        color: ${V3_Colour["hyperlink-inverse"]};
         svg {
-            color: ${Colour["icon-primary-inverse"]};
+            color: ${V3_Colour["icon-primary-inverse"]};
         }
     }
 `;
@@ -43,9 +49,9 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     left: 0;
     top: 0;
     width: 100%;
-    transition: all ${Motion["duration-800"]} ${Motion["ease-default"]};
-    background: ${Colour["bg-inverse-subtle"]};
-    border-radius: ${Radius["none"]};
+    transition: all ${V3_Motion["duration-800"]} ${V3_Motion["ease-default"]};
+    background: ${V3_Colour["bg-inverse-subtle"]};
+    border-radius: ${V3_Radius["none"]};
     z-index: 25;
     cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
 `;
@@ -55,7 +61,7 @@ export const Container = styled(Layout.Content)``;
 export const ContentContainer = styled.div`
     flex: 1;
     align-items: flex-start;
-    padding: ${Spacing["spacing-24"]} 0;
+    padding: ${V3_Spacing["spacing-24"]} 0;
 `;
 
 export const Content = styled.div<ContentStyleProps>`
@@ -63,20 +69,20 @@ export const Content = styled.div<ContentStyleProps>`
     flex: 1;
     align-items: flex-start;
 
-    ${Font["body-baseline-regular"]}
-    color: ${Colour["text-inverse"]};
+    ${V3_Font["body-baseline-regular"]}
+    color: ${V3_Colour["text-inverse"]};
 
     p {
         display: inline-block;
     }
 
     strong {
-        ${Font["body-baseline-semibold"]}
-        color: ${Colour["text-inverse"]};
+        ${V3_Font["body-baseline-semibold"]}
+        color: ${V3_Colour["text-inverse"]};
     }
 
     a {
-        ${Font["body-baseline-regular"]}
+        ${V3_Font["body-baseline-regular"]}
         ${commonLinkStyle}
     }
 `;
@@ -112,27 +118,27 @@ export const ContentLink = styled(Typography.LinkBL)`
 `;
 
 export const StyledIconButton = styled(ClickableIcon)`
-    margin-right: -${Spacing["spacing-24"]};
-    padding-left: ${Spacing["spacing-16"]};
+    margin-right: -${V3_Spacing["spacing-24"]};
+    padding-left: ${V3_Spacing["spacing-16"]};
     height: max-content;
     svg {
         height: 1.5rem;
         width: 1.5rem;
-        color: ${Colour["icon-inverse"]};
+        color: ${V3_Colour["icon-inverse"]};
     }
 `;
 
 export const ActionButton = styled.button`
     display: flex;
     align-items: center;
-    gap: ${Spacing["spacing-4"]};
+    gap: ${V3_Spacing["spacing-4"]};
     align-self: flex-start;
-    margin-top: ${Spacing["spacing-8"]};
+    margin-top: ${V3_Spacing["spacing-8"]};
 
     border: none;
     background: transparent;
-    color: ${Colour["hyperlink-inverse"]};
-    ${Font["body-md-semibold"]};
+    color: ${V3_Colour["hyperlink-inverse"]};
+    ${V3_Font["body-md-semibold"]};
 
     cursor: pointer;
 `;
@@ -150,12 +156,12 @@ export const AccessibleBannerButton = styled.button`
 export const IconContainer = styled.div`
     height: 1.5rem;
     width: 1.5rem;
-    margin: ${Spacing["spacing-24"]} ${Spacing["spacing-24"]} 0 0;
+    margin: ${V3_Spacing["spacing-24"]} ${V3_Spacing["spacing-24"]} 0 0;
     flex-shrink: 0;
 
     svg {
         height: 100%;
         width: 100%;
-        color: ${Colour["hyperlink-inverse"]};
+        color: ${V3_Colour["hyperlink-inverse"]};
     }
 `;

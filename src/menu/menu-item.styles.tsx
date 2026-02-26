@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, Spacing } from "../theme";
+import { V3_Colour, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -8,9 +8,9 @@ import { Typography } from "../typography";
 export const MenuItemDiv = styled.li`
     display: flex;
     flex-direction: column;
-    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
+    padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-16"]};
 `;
 
 export const SubLabel = styled(Typography.BodySM)`
-    color: ${Colour["text-subtler"]};
+    color: ${V3_Colour["text-subtler"]};
 `;

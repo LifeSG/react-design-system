@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour, MediaQuery, Spacing } from "../../theme";
+import { V3_Colour, V3_MediaQuery, V3_Spacing } from "../../v3_theme";
 import { ClickableIcon } from "../clickable-icon";
 
 // =============================================================================
@@ -36,7 +36,7 @@ export const Fade = styled.div<FadeProps>`
     ${(props) => {
         let positionStyle: string;
         const transparentColor = "rgba(255,255,255,0.001)";
-        const fadeColor = Colour.bg(props);
+        const fadeColor = V3_Colour.bg(props);
 
         if (props.$position === "left") {
             positionStyle = `
@@ -69,7 +69,7 @@ export const Fade = styled.div<FadeProps>`
         }
 
         return css`
-            ${MediaQuery.MaxWidth.lg} {
+            ${V3_MediaQuery.MaxWidth.lg} {
                 ${positionStyle}
             }
         `;
@@ -93,7 +93,7 @@ export const Content = styled.div`
 export const FadeIndicatorButton = styled(ClickableIcon)<IndicatorButtonProps>`
     display: none;
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${V3_MediaQuery.MaxWidth.lg} {
         display: flex;
         height: 100%;
         width: 100%;
@@ -104,18 +104,18 @@ export const FadeIndicatorButton = styled(ClickableIcon)<IndicatorButtonProps>`
             if (props.$position === "left") {
                 return css`
                     justify-content: left;
-                    padding-left: ${Spacing["spacing-8"]};
+                    padding-left: ${V3_Spacing["spacing-8"]};
                 `;
             } else {
                 return css`
                     justify-content: right;
-                    padding-right: ${Spacing["spacing-8"]};
+                    padding-right: ${V3_Spacing["spacing-8"]};
                 `;
             }
         }}
 
         svg {
-            color: ${Colour["icon"]};
+            color: ${V3_Colour["icon"]};
         }
     }
 `;

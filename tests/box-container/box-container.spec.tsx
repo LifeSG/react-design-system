@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { BoxContainer, Colour, LifeSGTheme } from "../../src";
+import { BoxContainer, V3_Colour, V3_LifeSGTheme } from "../../src";
 
 // =============================================================================
 // UNIT TESTS
@@ -57,8 +57,8 @@ describe("BoxContainer", () => {
         it.each`
             state        | color
             ${"default"} | ${"no"}
-            ${"error"}   | ${Colour["icon-error"]({ theme: LifeSGTheme })}
-            ${"warning"} | ${Colour["icon-warning"]({ theme: LifeSGTheme })}
+            ${"error"}   | ${V3_Colour["icon-error"]({ theme: V3_LifeSGTheme })}
+            ${"warning"} | ${V3_Colour["icon-warning"]({ theme: V3_LifeSGTheme })}
         `(
             "should render $state state with $color color icon",
             ({ state, color }) => {

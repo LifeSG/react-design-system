@@ -1,7 +1,14 @@
 import styled, { css } from "styled-components";
 import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
-import { Border, Colour, Font, Motion, Radius, Shadow } from "../theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_Motion,
+    V3_Radius,
+    V3_Shadow,
+} from "../v3_theme";
 import { Typography } from "../typography";
 
 //=============================================================================
@@ -29,9 +36,9 @@ export const IconContainer = styled.span`
     justify-content: center;
 
     padding: 0.25rem 1rem;
-    border-radius: ${Radius["md"]};
-    color: ${Colour["icon-primary"]};
-    transition: ${Motion["duration-250"]} ${Motion["ease-default"]};
+    border-radius: ${V3_Radius["md"]};
+    color: ${V3_Colour["icon-primary"]};
+    transition: ${V3_Motion["duration-250"]} ${V3_Motion["ease-default"]};
 
     svg {
         height: 1.25rem;
@@ -42,7 +49,7 @@ export const IconContainer = styled.span`
 export const TitleText = styled(Typography.BodyXS)`
     ${lineClampCss(2)}
     margin-top: 0.25rem;
-    transition: ${Motion["duration-250"]} ${Motion["ease-default"]};
+    transition: ${V3_Motion["duration-250"]} ${V3_Motion["ease-default"]};
 `;
 
 export const DefaultButton = styled(BasicButton)<StyleProps>`
@@ -58,12 +65,12 @@ export const DefaultButton = styled(BasicButton)<StyleProps>`
     &:hover,
     &:focus {
         ${IconContainer} {
-            background-color: ${Colour["bg-hover"]};
+            background-color: ${V3_Colour["bg-hover"]};
         }
 
         ${TitleText} {
-            ${Font["body-xs-semibold"]}
-            color: ${Colour["text-hover"]};
+            ${V3_Font["body-xs-semibold"]}
+            color: ${V3_Colour["text-hover"]};
         }
     }
 
@@ -71,12 +78,12 @@ export const DefaultButton = styled(BasicButton)<StyleProps>`
         props.$highlight &&
         css`
             ${IconContainer} {
-                background-color: ${Colour["bg-hover"]};
+                background-color: ${V3_Colour["bg-hover"]};
             }
 
             ${TitleText} {
-                ${Font["body-xs-semibold"]}
-                color: ${Colour["text-selected"]};
+                ${V3_Font["body-xs-semibold"]}
+                color: ${V3_Colour["text-selected"]};
             }
         `}
 `;
@@ -89,14 +96,14 @@ export const DesktopDrawer = styled.ul<DrawerStyleProps>`
     width: 15rem;
     height: 100%;
     padding: 1rem 0.5rem;
-    background-color: ${Colour["bg-primary-subtlest"]};
-    border-top-right-radius: ${Radius["md"]};
-    border-bottom-right-radius: ${Radius["md"]};
-    border: ${Border["width-010"]} ${Border["solid"]} ${Colour.border};
+    background-color: ${V3_Colour["bg-primary-subtlest"]};
+    border-top-right-radius: ${V3_Radius["md"]};
+    border-bottom-right-radius: ${V3_Radius["md"]};
+    border: ${V3_Border["width-010"]} ${V3_Border["solid"]} ${V3_Colour.border};
     ${(props) =>
         props.$showShadow &&
         css`
-            box-shadow: ${Shadow["xs-subtle"]};
+            box-shadow: ${V3_Shadow["xs-subtle"]};
             clip-path: inset(0 -6px 0 0);
         `}
 `;

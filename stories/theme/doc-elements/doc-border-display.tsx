@@ -1,10 +1,10 @@
-import { getBorder, getBorderWidth } from "src/theme/border/theme-helper";
-import { ThemeSpec } from "src/theme/types";
+import { getBorder, getBorderWidth } from "src/v3_theme/border/theme-helper";
+import { V3_ThemeSpec } from "src/v3_theme/types";
 import styled, { ThemeProvider, useTheme } from "styled-components";
-import { Border } from "../../../src/theme";
+import { V3_Border } from "../../../src/v3_theme";
 
 interface BorderDisplayProps {
-    theme: ThemeSpec;
+    theme: V3_ThemeSpec;
 }
 
 export const BorderDisplay = ({ theme }: BorderDisplayProps) => {
@@ -171,13 +171,13 @@ const BorderStyleExample = styled.div<BorderStyleProps>`
 const SolidBorderExample = styled.div`
     height: 24px;
     width: 48px;
-    ${Border.Util["solid"]({ colour: "tomato" })}
+    ${V3_Border.Util["solid"]({ colour: "tomato" })}
 `;
 
 const DashedBorderExample = styled.div`
     height: 24px;
     width: 48px;
-    ${Border.Util["dashed-default"]({ colour: "tomato" })}
+    ${V3_Border.Util["dashed-default"]({ colour: "tomato" })}
 `;
 
 const Divider = styled.div`

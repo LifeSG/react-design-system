@@ -1,4 +1,4 @@
-import { ResourceScheme, ThemeSpec } from "../theme/types";
+import { V3_ResourceScheme, V3_ThemeSpec } from "../v3_theme/types";
 import { renderDescriptionWithProps } from "./error-display-helper-comp";
 import { ErrorDisplayHelper } from "./helper";
 import {
@@ -450,7 +450,7 @@ interface ErrorDisplayDataAttrs {
 
 export const generateErrorDisplayData = (
     ImgPathsObject: Record<string, ErrorDisplayHelper.ImagePathAttributes>,
-    theme?: ThemeSpec
+    theme?: V3_ThemeSpec
 ) =>
     new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
         [
@@ -652,8 +652,8 @@ export const generateErrorDisplayData = (
 
 export const getErrorDisplayData = (
     type: ErrorDisplayType,
-    resourceScheme: ResourceScheme,
-    theme?: ThemeSpec
+    resourceScheme: V3_ResourceScheme,
+    theme?: V3_ThemeSpec
 ) => {
     switch (resourceScheme) {
         case "bookingsg":

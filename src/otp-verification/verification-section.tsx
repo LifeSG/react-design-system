@@ -2,7 +2,7 @@ import { useMediaQuery } from "react-responsive";
 import { useTheme } from "styled-components";
 import { FormErrorMessage } from "../form/form-label";
 import { InputGroup } from "../input-group";
-import { Breakpoint } from "../theme";
+import { V3_Breakpoint } from "../v3_theme";
 import { Typography } from "../typography";
 import { VerificationSectionProps } from "./internal-types";
 import { EmailThumbnail, PhoneThumbnail } from "./thumbnail";
@@ -32,7 +32,7 @@ export const VerificationSection = ({
 }: VerificationSectionProps) => {
     const theme = useTheme();
     const isMobile = useMediaQuery({
-        maxWidth: Breakpoint["sm-max"]({ theme }),
+        maxWidth: V3_Breakpoint["sm-max"]({ theme }),
     });
     const thumbnailSize = isMobile ? 64 : 120;
 

@@ -1,5 +1,11 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Motion, Radius } from "../../../theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_Motion,
+    V3_Radius,
+} from "../../../v3_theme";
 import { CellType, LabelType } from "./types";
 
 // =============================================================================
@@ -27,37 +33,37 @@ interface IndicatorStyleProps {
 // HELPERS
 // =============================================================================
 const getCellStyle = (props: StyleProps) => {
-    let color = Colour.bg;
+    let color = V3_Colour.bg;
     let borderColor: typeof color | string = "transparent";
 
     switch (props.$type) {
         case "hover-subtle":
-            color = Colour["bg-hover"];
-            borderColor = Colour["bg-hover"];
+            color = V3_Colour["bg-hover"];
+            borderColor = V3_Colour["bg-hover"];
             break;
         case "hover":
-            color = Colour["bg-hover-strong"];
-            borderColor = Colour["bg-hover-strong"];
+            color = V3_Colour["bg-hover-strong"];
+            borderColor = V3_Colour["bg-hover-strong"];
             break;
         case "hover-outline":
-            color = Colour["bg-hover-subtle"];
-            borderColor = Colour["border-hover"];
+            color = V3_Colour["bg-hover-subtle"];
+            borderColor = V3_Colour["border-hover"];
             break;
         case "selected-outline":
-            color = Colour["bg-selected"];
-            borderColor = Colour["border-selected"];
+            color = V3_Colour["bg-selected"];
+            borderColor = V3_Colour["border-selected"];
             break;
         case "selected-outline-subtle":
-            color = Colour["bg-selected"];
-            borderColor = Colour["border-selected-subtle"];
+            color = V3_Colour["bg-selected"];
+            borderColor = V3_Colour["border-selected-subtle"];
             break;
         case "selected-hover":
-            color = Colour["bg-selected-hover"];
+            color = V3_Colour["bg-selected-hover"];
             // no border to give it an overlay effect
             break;
         case "selected-hover-outline":
-            color = Colour["bg-selected-hover"];
-            borderColor = Colour["border-selected-hover"];
+            color = V3_Colour["bg-selected-hover"];
+            borderColor = V3_Colour["border-selected-hover"];
             break;
     }
 
@@ -80,8 +86,8 @@ const Half = styled.div<StyleProps>`
     position: absolute;
     height: 2.5rem;
     width: 50%;
-    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
-    border: ${Border["width-010"]} ${Border["solid"]} transparent;
+    transition: ${V3_Motion["duration-150"]} ${V3_Motion["ease-default"]};
+    border: ${V3_Border["width-010"]} ${V3_Border["solid"]} transparent;
     border-left: none;
     border-right: none;
 
@@ -116,10 +122,10 @@ export const Circle = styled.div<StyleProps>`
     justify-content: center;
     height: 2.5rem;
     width: 2.5rem;
-    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+    transition: ${V3_Motion["duration-150"]} ${V3_Motion["ease-default"]};
 
-    border: ${Border["width-010"]} ${Border["solid"]} transparent;
-    border-radius: ${Radius["md"]};
+    border: ${V3_Border["width-010"]} ${V3_Border["solid"]} transparent;
+    border-radius: ${V3_Radius["md"]};
 
     ${(props) => {
         if (props.$type) {
@@ -165,8 +171,8 @@ export const Label = styled.div<LabelStyleProps>`
     justify-content: center;
     height: 2.5rem;
     width: 2.5rem;
-    ${Font["body-md-regular"]}
-    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+    ${V3_Font["body-md-regular"]}
+    transition: ${V3_Motion["duration-150"]} ${V3_Motion["ease-default"]};
 
     pointer-events: ${(props) => {
         if (props.$interactive || props.$interactive === null) {
@@ -187,34 +193,34 @@ export const Label = styled.div<LabelStyleProps>`
             }
 
             return css`
-                color: ${Colour["text-disabled-subtlest"]};
+                color: ${V3_Colour["text-disabled-subtlest"]};
             `;
         }
 
         switch ($type) {
             case "selected":
                 return css`
-                    font-weight: ${Font.Spec["weight-semibold"]};
-                    color: ${Colour["text-selected"]};
+                    font-weight: ${V3_Font.Spec["weight-semibold"]};
+                    color: ${V3_Colour["text-selected"]};
                 `;
             case "selected-hover":
                 return css`
-                    font-weight: ${Font.Spec["weight-semibold"]};
-                    color: ${Colour["text-selected-hover"]};
+                    font-weight: ${V3_Font.Spec["weight-semibold"]};
+                    color: ${V3_Colour["text-selected-hover"]};
                 `;
             case "current":
                 return css`
-                    font-weight: ${Font.Spec["weight-semibold"]};
-                    color: ${Colour["text-primary"]};
+                    font-weight: ${V3_Font.Spec["weight-semibold"]};
+                    color: ${V3_Colour["text-primary"]};
                 `;
             case "hover":
                 return css`
-                    font-weight: ${Font.Spec["weight-semibold"]};
-                    color: ${Colour["text-hover"]};
+                    font-weight: ${V3_Font.Spec["weight-semibold"]};
+                    color: ${V3_Colour["text-hover"]};
                 `;
             case "unavailable":
                 return css`
-                    color: ${Colour["text-disabled-subtlest"]};
+                    color: ${V3_Colour["text-disabled-subtlest"]};
                 `;
             case "hidden":
                 return css`
@@ -223,7 +229,7 @@ export const Label = styled.div<LabelStyleProps>`
             case "available":
             default:
                 return css`
-                    color: ${Colour.text};
+                    color: ${V3_Colour["text"]};
                 `;
         }
     }}

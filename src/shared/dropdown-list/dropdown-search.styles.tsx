@@ -1,6 +1,6 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import styled, { css } from "styled-components";
-import { Colour, Radius, Spacing } from "../../theme";
+import { V3_Colour, V3_Radius, V3_Spacing } from "../../v3_theme";
 import { ClickableIcon } from "../clickable-icon";
 import { BasicInput, InputStyleProps } from "../input-wrapper/input-wrapper";
 import { DropdownVariantType, IconProps } from "./types";
@@ -16,16 +16,16 @@ const getCssHeightAndWidth = (variant?: DropdownVariantType) => {
 };
 
 export const Container = styled.li`
-    background: ${Colour["bg-strong"]};
+    background: ${V3_Colour["bg-strong"]};
     display: flex;
-    border-radius: ${Radius["sm"]};
+    border-radius: ${V3_Radius["sm"]};
     align-items: center;
 `;
 
 export const SearchInput = styled(BasicInput)<InputStyleProps>`
     height: ${(props) => (props.$variant === "small" ? 2.5 : 3)}rem;
     flex: 1;
-    padding: 0 ${Spacing["spacing-8"]} 0 0;
+    padding: 0 ${V3_Spacing["spacing-8"]} 0 0;
     width: 100%;
 `;
 
@@ -33,8 +33,8 @@ export const SearchIcon = styled(MagnifierIcon)<IconProps>`
     ${(props) => {
         return getCssHeightAndWidth(props.$variant);
     }}
-    margin: 0 ${Spacing["spacing-8"]};
-    color: ${Colour["icon"]};
+    margin: 0 ${V3_Spacing["spacing-8"]};
+    color: ${V3_Colour["icon"]};
 `;
 
 export const CancelButton = styled(ClickableIcon)<IconProps>`
@@ -42,8 +42,8 @@ export const CancelButton = styled(ClickableIcon)<IconProps>`
         return getCssHeightAndWidth(props.$variant);
     }}
     padding: 0;
-    margin: 0 ${Spacing["spacing-8"]};
-    color: ${Colour["icon"]};
+    margin: 0 ${V3_Spacing["spacing-8"]};
+    color: ${V3_Colour["icon"]};
     cursor: pointer;
     ${(props) => {
         if (props.$variant === "small")

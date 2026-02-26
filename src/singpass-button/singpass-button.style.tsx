@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { Colour, Motion, Spacing } from "../theme";
-import { ThemeButton } from "../theme/components/theme-helper";
+import { V3_Colour, V3_Motion, V3_Spacing } from "../v3_theme";
+import { V3_ThemeButton } from "../v3_theme/components/theme-helper";
 import { SingpassButtonStyleType } from "./types";
 
 export type MainButtonSize = "default" | "small" | "large";
@@ -11,9 +11,9 @@ export interface MainStyleProps {
 }
 
 export const Main = styled.button<MainStyleProps>`
-    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
-    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
-    border-radius: ${ThemeButton["button-radius"]};
+    padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-16"]};
+    transition: all ${V3_Motion["duration-250"]} ${V3_Motion["ease-default"]};
+    border-radius: ${V3_ThemeButton["button-radius"]};
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -35,7 +35,7 @@ export const Main = styled.button<MainStyleProps>`
         }
 
         return css`
-            background-color: ${Colour.Primitive.white};
+            background-color: ${V3_Colour.Primitive.white};
             border: 1px #c8c9cc solid;
 
             &:hover,

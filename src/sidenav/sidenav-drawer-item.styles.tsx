@@ -3,7 +3,7 @@ import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
-import { Colour, Font, Motion, Radius } from "../theme";
+import { V3_Colour, V3_Font, V3_Motion, V3_Radius } from "../v3_theme";
 
 //=============================================================================
 // STYLE INTERFACE
@@ -30,24 +30,24 @@ export const LinkButton = styled(BasicButton)<LinkButtonStyleProp>`
 
     width: 100%;
     padding: 0.75rem 1rem;
-    border-radius: ${Radius["md"]};
+    border-radius: ${V3_Radius["md"]};
 
-    ${Font["body-md-semibold"]}
-    color: ${Colour.text};
+    ${V3_Font["body-md-semibold"]}
+    color: ${V3_Colour.text};
 
     ${(props) =>
         props.$noChildren
             ? css`
                   &:hover,
                   &:focus {
-                      background: ${Colour["bg-hover"]};
-                      color: ${Colour["text-hover"]};
+                      background: ${V3_Colour["bg-hover"]};
+                      color: ${V3_Colour["text-hover"]};
                   }
               `
             : css`
                   &:hover,
                   &:focus {
-                      background: ${Colour["bg-hover-strong"]};
+                      background: ${V3_Colour["bg-hover-strong"]};
                   }
               `}
 `;
@@ -59,9 +59,10 @@ export const DrawerSubitemContainer = animated(styled.div`
 
 export const ChevronIcon = styled(ChevronUpIcon)<IconStyleProp>`
     flex-shrink: 0;
-    color: ${Colour.icon};
+    color: ${V3_Colour.icon};
     transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
-    transition: transform ${Motion["duration-150"]} ${Motion["ease-default"]};
+    transition: transform ${V3_Motion["duration-150"]}
+        ${V3_Motion["ease-default"]};
 `;
 
 export const TextElement = styled.span`

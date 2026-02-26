@@ -1,5 +1,11 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Radius, Shadow } from "../../theme";
+import {
+    V3_Border,
+    V3_Colour,
+    V3_Font,
+    V3_Radius,
+    V3_Shadow,
+} from "../../v3_theme";
 import { CELL_HEIGHT } from "../const";
 
 // =============================================================================
@@ -24,7 +30,7 @@ interface HiddenColumnsStyleProps {
 export const SlotCell = styled.div<SlotCellStyleProps>`
     min-height: ${CELL_HEIGHT}px;
     position: relative;
-    border-bottom: ${Border["width-010"]} solid ${Colour["border"]};
+    border-bottom: ${V3_Border["width-010"]} solid ${V3_Colour["border"]};
     ${(props) =>
         props.$dashed &&
         css`
@@ -56,8 +62,8 @@ export const HiddenColumns = styled.button<HiddenColumnsStyleProps>`
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: ${Colour["text-primary"]};
-    ${Font["body-xs-semibold"]};
+    color: ${V3_Colour["text-primary"]};
+    ${V3_Font["body-xs-semibold"]};
     min-height: ${(props) =>
         props.$heightPercentage
             ? `${props.$heightPercentage}%`
@@ -65,7 +71,7 @@ export const HiddenColumns = styled.button<HiddenColumnsStyleProps>`
     height: ${(props) =>
         props.$heightPercentage ? `${props.$heightPercentage}%` : "auto"};
     &:hover {
-        border-radius: ${Radius["sm"]};
-        box-shadow: ${Shadow["sm-subtle"]};
+        border-radius: ${V3_Radius["sm"]};
+        box-shadow: ${V3_Shadow["sm-subtle"]};
     }
 `;

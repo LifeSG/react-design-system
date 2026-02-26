@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { InternalCalendar } from "../shared/internal-calendar";
-import { Border, Colour, Radius, Spacing } from "../theme";
+import { V3_Border, V3_Colour, V3_Radius, V3_Spacing } from "../v3_theme";
 import { CalendarProps } from "./types";
 
 export const Calendar = ({
@@ -53,17 +53,18 @@ interface StyleProps {
 // STYLING
 // =============================================================================
 const Wrapper = styled.div<StyleProps>`
-    --vertical-inset: ${Spacing["spacing-24"]};
-    --horizontal-inset: ${Spacing["spacing-32"]};
-    --header-bottom-spacing: ${Spacing["spacing-8"]};
+    --vertical-inset: ${V3_Spacing["spacing-24"]};
+    --horizontal-inset: ${V3_Spacing["spacing-32"]};
+    --header-bottom-spacing: ${V3_Spacing["spacing-8"]};
 
     width: 41rem;
 
     ${(props) => {
         if (props.$hasBorder) {
             return css`
-                border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-                border-radius: ${Radius["lg"]};
+                border: ${V3_Border["width-010"]} ${V3_Border.solid}
+                    ${V3_Colour.border};
+                border-radius: ${V3_Radius["lg"]};
                 overflow: hidden;
             `;
         }

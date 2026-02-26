@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "src/button";
 import { Card } from "src/card";
-import { Colour } from "src/theme";
+import { V3_Colour } from "src/v3_theme";
 import styled from "styled-components";
 
 interface Props {
@@ -39,5 +39,5 @@ const Dropdown = styled(Card)`
     position: absolute;
     top: calc(100% + 16px);
     height: 100px;
-    background-color: ${Colour["bg"]};
+    background-color: ${V3_Colour["bg"]};
 `;

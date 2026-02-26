@@ -1,4 +1,4 @@
-import { ThemeStyleProps } from "../theme/types";
+import { V3_ThemeStyleProps } from "../v3_theme/types";
 
 export type SlotStyle = "default" | "stripes";
 
@@ -17,11 +17,11 @@ interface TimeSlotBarStyleAttributes {
     /** The label color */
     color?: string | undefined;
     /** The background color */
-    backgroundColor: string | ((props: ThemeStyleProps) => string);
+    backgroundColor: string | ((props: V3_ThemeStyleProps) => string);
     /** The secondary background color. Used in conjunction if styleType is "stripes" */
     backgroundColor2?:
         | string
-        | ((props: ThemeStyleProps) => string)
+        | ((props: V3_ThemeStyleProps) => string)
         | undefined;
 }
 

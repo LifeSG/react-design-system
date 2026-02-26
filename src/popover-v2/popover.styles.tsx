@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Card } from "../card";
 import { ModalBox } from "../modal/modal-box";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Colour, MediaQuery, Radius } from "../theme";
+import { V3_Colour, V3_MediaQuery, V3_Radius } from "../v3_theme";
 import { PopoverOverflowType } from "./types";
 // =============================================================================
 // STYLES INTERFACE
@@ -23,10 +23,10 @@ export const PopoverContainer = styled.div`
 `;
 
 export const PopoverCard = styled(Card)<PopoverCardStyleProps>`
-    color: ${Colour.text};
+    color: ${V3_Colour.text};
     ${applyHtmlContentStyle({ textSize: "body-md" })}
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${V3_MediaQuery.MaxWidth.sm} {
         display: none;
     }
 
@@ -51,9 +51,9 @@ export const PopoverCard = styled(Card)<PopoverCardStyleProps>`
     }
 
     &::-webkit-scrollbar-thumb {
-        background: ${Colour["bg-inverse-subtlest"]};
+        background: ${V3_Colour["bg-inverse-subtlest"]};
         border: 5px solid transparent;
-        border-radius: ${Radius["full"]};
+        border-radius: ${V3_Radius["full"]};
         background-clip: padding-box;
     }
 `;
@@ -69,6 +69,6 @@ export const ContentWrapper = styled.div`
         display: none; /* Chrome/Safari/Webkit */
     }
 
-    color: ${Colour.text};
+    color: ${V3_Colour.text};
     ${applyHtmlContentStyle({ textSize: "body-md" })}
 `;

@@ -5,7 +5,7 @@ import {
     SquareTickFillIcon,
 } from "@lifesg/react-icons";
 import styled, { css, keyframes } from "styled-components";
-import { Colour, Motion } from "../theme";
+import { V3_Colour, V3_Motion } from "../v3_theme";
 import { CheckboxProps, CheckboxSize } from "./types";
 
 // =============================================================================
@@ -31,36 +31,37 @@ const fadeIn = keyframes`
 `;
 
 const BaseIconStyles = css`
-    animation: ${Motion["duration-150"]} ${Motion["ease-default"]} ${fadeIn};
+    animation: ${V3_Motion["duration-150"]} ${V3_Motion["ease-default"]}
+        ${fadeIn};
     width: 100%;
     height: 100%;
-    transition: color ${Motion["duration-150"]} ${Motion["ease-default"]};
+    transition: color ${V3_Motion["duration-150"]} ${V3_Motion["ease-default"]};
 `;
 
 export const StyledUncheckedIcon = styled(SquareIcon)<StyleProps>`
     ${BaseIconStyles}
-    color: ${Colour["icon-primary-subtlest"]};
+    color: ${V3_Colour["icon-primary-subtlest"]};
 `;
 
 export const StyledUncheckedDisabledIcon = styled(SquareFillIcon)<StyleProps>`
     ${BaseIconStyles}
-    color: ${Colour["icon-disabled-subtle"]};
+    color: ${V3_Colour["icon-disabled-subtle"]};
 `;
 
 export const StyledCheckedIcon = styled(SquareTickFillIcon)<StyleProps>`
     ${BaseIconStyles}
     color: ${(props) =>
         props.$disabled
-            ? Colour["icon-disabled-subtle"](props)
-            : Colour["icon-selected"](props)};
+            ? V3_Colour["icon-disabled-subtle"](props)
+            : V3_Colour["icon-selected"](props)};
 `;
 
 export const StyledInteremediateIcon = styled(MinusSquareFillIcon)<StyleProps>`
     ${BaseIconStyles}
     color: ${(props) =>
         props.$disabled
-            ? Colour["icon-disabled-subtle"](props)
-            : Colour["icon-selected"](props)};
+            ? V3_Colour["icon-disabled-subtle"](props)
+            : V3_Colour["icon-selected"](props)};
 `;
 
 export const Container = styled.div<StyleProps>`
@@ -76,7 +77,7 @@ export const Container = styled.div<StyleProps>`
 
     // Show custom focus ring when input is focused
     input:focus-visible + svg {
-        outline: 2px solid ${Colour["focus-ring"]};
+        outline: 2px solid ${V3_Colour["focus-ring"]};
         outline-offset: 0px;
         border-radius: 4px;
     }
@@ -96,7 +97,8 @@ export const Input = styled.input<CheckboxProps>`
         &:hover
         + ${StyledInteremediateIcon} {
         @media (pointer: fine) {
-            color: ${(props) => !props.disabled && Colour["icon-hover"](props)};
+            color: ${(props) =>
+                !props.disabled && V3_Colour["icon-hover"](props)};
         }
     }
 `;

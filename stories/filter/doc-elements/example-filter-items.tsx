@@ -3,7 +3,7 @@ import isEmpty from "lodash/isEmpty";
 import { useState } from "react";
 import { Filter, Mode } from "src/filter";
 import { Form } from "src/form";
-import { Colour } from "src/theme";
+import { V3_Colour } from "src/v3_theme";
 import { Typography } from "src/typography";
 import styled from "styled-components";
 
@@ -14,7 +14,7 @@ interface Props<T> {
 }
 
 const SearchIcon = styled(MagnifierIcon)`
-    color: ${Colour["icon"]};
+    color: ${V3_Colour["icon"]};
 `;
 
 export const StyledFilterItem = styled(Filter.Item)<{ $mode: Mode }>`

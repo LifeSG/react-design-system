@@ -1,4 +1,4 @@
-import { Font } from "src/theme";
+import { V3_Font } from "src/v3_theme";
 import styled from "styled-components";
 
 // =============================================================================
@@ -16,13 +16,13 @@ export const OptionContainer = styled.div`
 OptionContainer.displayName = "div";
 
 export const OptionLabel = styled.label`
-    ${Font["body-baseline-regular"]}
+    ${V3_Font["body-baseline-regular"]}
     cursor: pointer;
 `;
 OptionLabel.displayName = "label";
 
 export const RadioGroupLabel = styled.div`
-    ${Font["body-baseline-semibold"]}
+    ${V3_Font["body-baseline-semibold"]}
     margin-bottom: 1rem;
 `;
 RadioGroupLabel.displayName = "div";

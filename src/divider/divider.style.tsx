@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
-import { Colour } from "../theme";
-import { StyledComponentProps } from "../theme/helpers";
-import { ThemeStyleProps } from "../theme/types";
+import { V3_Colour } from "../v3_theme";
+import { V3_StyledComponentProps } from "../v3_theme/helpers";
+import { V3_ThemeStyleProps } from "../v3_theme/types";
 import { DividerLineStyleType } from "./types";
 
 // =============================================================================
@@ -9,20 +9,20 @@ import { DividerLineStyleType } from "./types";
 // =============================================================================
 interface StyleProps {
     $thickness: number;
-    $color?: string | ((props: ThemeStyleProps) => string);
+    $color?: string | ((props: V3_ThemeStyleProps) => string);
     $lineStyle?: DividerLineStyleType;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-const dashedLineStyle = () => (props: StyleProps & StyledComponentProps) => {
+const dashedLineStyle = () => (props: StyleProps & V3_StyledComponentProps) => {
     let color: string;
 
     if (typeof props.$color === "function") {
         color = props.$color(props);
     } else {
-        color = props.$color || Colour.border(props);
+        color = props.$color || V3_Colour.border(props);
     }
 
     const encodedColor = encodeURIComponent(color);
@@ -48,7 +48,7 @@ export const Line = styled.hr<StyleProps>`
             case "solid":
                 return css`
                     height: ${props.$thickness}px;
-                    background-color: ${props.$color || Colour.border};
+                    background-color: ${props.$color || V3_Colour.border};
                 `;
         }
     }}

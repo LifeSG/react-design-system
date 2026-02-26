@@ -1,45 +1,45 @@
 import styled from "styled-components";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { Colour, Font, Spacing } from "../theme";
+import { V3_Colour, V3_Font, V3_Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
 export const LabelContainer = styled.div`
-    margin-bottom: ${Spacing["spacing-8"]};
+    margin-bottom: ${V3_Spacing["spacing-8"]};
 `;
 export const Label = styled.label`
-    color: ${Colour["text-subtle"]};
+    color: ${V3_Colour["text-subtle"]};
     display: inline-block;
 
-    ${Font["form-label"]}
+    ${V3_Font["form-label"]}
     ${applyHtmlContentStyle()}
-    font-weight: ${Font.Spec["weight-semibold"]};
+    font-weight: ${V3_Font.Spec["weight-semibold"]};
 `;
 
 export const ErrorIcon = styled(ExclamationCircleFillIcon)`
     height: 1lh;
     width: 1em;
     flex-shrink: 0;
-    color: ${Colour["icon-error-strong"]};
+    color: ${V3_Colour["icon-error-strong"]};
 `;
 
 export const ErrorMessageContainer = styled.div`
-    ${Font["body-sm-semibold"]}
+    ${V3_Font["body-sm-semibold"]}
     display: flex;
-    gap: ${Spacing["spacing-4"]};
-    margin-top: ${Spacing["spacing-8"]};
+    gap: ${V3_Spacing["spacing-4"]};
+    margin-top: ${V3_Spacing["spacing-8"]};
 `;
 
 export const ErrorMessage = styled.p`
-    color: ${Colour["text-error"]};
+    color: ${V3_Colour["text-error"]};
     margin-bottom: 0;
     outline: none;
 `;
 
 export const Subtitle = styled.span`
-    ${Font["form-description"]}
-    color: ${Colour["text-subtler"]};
+    ${V3_Font["form-description"]}
+    color: ${V3_Colour["text-subtler"]};
     display: block;
 `;

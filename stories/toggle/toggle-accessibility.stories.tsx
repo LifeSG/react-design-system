@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
-import { Colour } from "src/theme";
+import { V3_Colour } from "src/v3_theme";
 import { Toggle } from "src/toggle";
 import { Typography } from "src/typography";
 import styled from "styled-components";
@@ -14,7 +14,7 @@ const meta: Meta<Component> = {
 export default meta;
 
 const ErrorText = styled(Typography.BodyMD)`
-    color: ${Colour["text-error"]};
+    color: ${V3_Colour["text-error"]};
 `;
 
 export const GroupExample: StoryObj<Component> = {

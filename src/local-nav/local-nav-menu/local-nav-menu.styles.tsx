@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, Radius, Spacing } from "../../theme";
+import { V3_Colour, V3_Radius, V3_Spacing } from "../../v3_theme";
 import { Typography } from "../../typography";
 
 // =============================================================================
@@ -40,25 +40,25 @@ export const NavItem = styled.li<NavItemStyleProps>`
         top: 0;
         background-color: ${(props) =>
             props.$isSelected
-                ? Colour["bg-primary"]
-                : Colour["bg-primary-subtler"]};
+                ? V3_Colour["bg-primary"]
+                : V3_Colour["bg-primary-subtler"]};
         transition: all 250ms linear;
     }
 
     &:hover,
     &:focus-within {
-        background-color: ${Colour["bg-hover-subtle"]};
+        background-color: ${V3_Colour["bg-hover-subtle"]};
     }
 `;
 
 export const NavItemContent = styled.div`
     display: block;
-    padding: ${Spacing["spacing-16"]};
-    padding-left: ${Spacing["spacing-20"]};
+    padding: ${V3_Spacing["spacing-16"]};
+    padding-left: ${V3_Spacing["spacing-20"]};
 
     &:focus-visible {
-        outline: 2px solid ${Colour["focus-ring"]};
+        outline: 2px solid ${V3_Colour["focus-ring"]};
         outline-offset: 2px;
-        border-radius: ${Radius["sm"]};
+        border-radius: ${V3_Radius["sm"]};
     }
 `;

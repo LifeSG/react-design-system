@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { Input } from "../input/input";
 import { InputBox, InputWrapperStyleProps } from "../shared/input-wrapper";
-import { Colour, Font, Spacing } from "../theme";
+import { V3_Colour, V3_Font, V3_Spacing } from "../v3_theme";
 import { InputGroupAddonPosition } from "./types";
 
 // =============================================================================
@@ -27,7 +27,9 @@ export const AddonWrapper = styled(InputBox)<InputWrapperStyleProps>`
     width: 100%;
     padding: 0
         ${(props) =>
-            props.$readOnly || props.$noBorder ? "0" : Spacing["spacing-16"]};
+            props.$readOnly || props.$noBorder
+                ? "0"
+                : V3_Spacing["spacing-16"]};
     flex-direction: ${(props) =>
         props.$position === "right" ? "row-reverse" : "row"};
 `;
@@ -38,7 +40,9 @@ export const NoAddonWrapper = styled(InputBox)<AddonStyleProps>`
     width: 100%;
     padding: 0
         ${(props) =>
-            props.$readOnly || props.$noBorder ? "0" : Spacing["spacing-16"]};
+            props.$readOnly || props.$noBorder
+                ? "0"
+                : V3_Spacing["spacing-16"]};
     flex-direction: ${(props) =>
         props.$position === "right" ? "row-reverse" : "row"};
 `;
@@ -50,8 +54,8 @@ export const LabelAddonContainer = styled.div<AddonStyleProps>`
     display: flex;
     align-items: center;
 
-    ${Font["body-baseline-regular"]}
-    color: ${Colour["text"]};
+    ${V3_Font["body-baseline-regular"]}
+    color: ${V3_Colour["text"]};
 
     /* SVG Icon */
     svg {
@@ -62,7 +66,7 @@ export const LabelAddonContainer = styled.div<AddonStyleProps>`
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${Colour["text-subtler"]};
+                color: ${V3_Colour["text-subtler"]};
             `;
         }
     }}
@@ -72,15 +76,15 @@ export const LabelAddonContainer = styled.div<AddonStyleProps>`
             case "right":
                 return css`
                     margin-left: ${props.$readOnly
-                        ? Spacing["spacing-4"]
-                        : Spacing["spacing-12"]};
+                        ? V3_Spacing["spacing-4"]
+                        : V3_Spacing["spacing-12"]};
                 `;
             case "left":
             default:
                 return css`
                     margin-right: ${props.$readOnly
-                        ? Spacing["spacing-4"]
-                        : Spacing["spacing-12"]};
+                        ? V3_Spacing["spacing-4"]
+                        : V3_Spacing["spacing-12"]};
                 `;
         }
     }};

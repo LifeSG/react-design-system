@@ -1,9 +1,9 @@
 import { MagnifierIcon } from "@lifesg/react-icons";
-import { Colour } from "src/theme";
+import { V3_Colour } from "src/v3_theme";
 import styled from "styled-components";
 
 const Container = styled.div`
-    color: ${Colour["text"]};
+    color: ${V3_Colour["text"]};
 `;
 
 export const Icon = () => {

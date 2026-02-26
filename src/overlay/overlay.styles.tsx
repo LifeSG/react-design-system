@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Colour } from "../theme";
+import { V3_Colour } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -51,7 +51,9 @@ export const Wrapper = styled.div<StyleProps>`
     left: 0;
     top: 0;
     background-color: ${(props) =>
-        props.$stacked ? Colour["overlay-subtle"] : Colour["overlay-strong"]};
+        props.$stacked
+            ? V3_Colour["overlay-subtle"]
+            : V3_Colour["overlay-strong"]};
     backdrop-filter: ${(props) => getBackdropFilter(props.$backgroundBlur)};
     transition: opacity 200ms ease;
 
