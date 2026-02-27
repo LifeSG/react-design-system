@@ -426,7 +426,7 @@
     --fds-navbar-link-colour-text-selected-hover: var(
         --fds-text-selected-hover
     );
-    /* Footer: { */
+    /* Footer: */
     --fds-footer-colour-bg: var(--fds-bg-strong);
     --fds-footer-colour-text: var(--fds-text);
     --fds-footer-link-colour-text: var(--fds-text);
