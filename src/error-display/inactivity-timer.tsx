@@ -1,11 +1,27 @@
 import { useEffect, useRef, useState } from "react";
 import { VisuallyHidden } from "../shared/accessibility";
-import { InactivityAdditionalAttributes } from "./types";
+
+interface InactivityTimerProps {
+    secondsLeft?: number;
+    reminderInterval?: number;
+    imageOnly?: boolean;
+    hasCustomDescription?: boolean;
+}
 
 export const InactivityTimer = ({
     secondsLeft,
     reminderInterval = 120,
-}: InactivityAdditionalAttributes) => {
+    imageOnly,
+    hasCustomDescription,
+}: InactivityTimerProps) => {
+    const shouldEnable =
+        !imageOnly &&
+        !hasCustomDescription &&
+        typeof secondsLeft === "number" &&
+        secondsLeft >= 0;
+
+    if (!shouldEnable) return null;
+
     const [liveReminderText, setLiveReminderText] = useState<string>("");
 
     const prevSecondsLeftRef = useRef<number | undefined>(undefined);
@@ -23,11 +39,8 @@ export const InactivityTimer = ({
             return;
         }
 
-        if (typeof secondsLeft !== "number") return;
-
         const prev = prevSecondsLeftRef.current;
         prevSecondsLeftRef.current = secondsLeft;
-        const interval = Math.max(1, reminderInterval);
 
         if (prev == null) {
             setLiveReminderText(buildReminderSentence(secondsLeft));
@@ -36,6 +49,7 @@ export const InactivityTimer = ({
 
         if (secondsLeft >= prev) return;
 
+        const interval = Math.max(1, reminderInterval);
         const prevBucket = Math.floor(prev / interval);
         const currBucket = Math.floor(secondsLeft / interval);
 

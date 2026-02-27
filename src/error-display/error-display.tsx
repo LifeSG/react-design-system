@@ -130,15 +130,14 @@ export const ErrorDisplay = ({
 
     return (
         <Container {...otherProps} data-testid={testId}>
-            {type === "inactivity" &&
-                !imageOnly &&
-                !description &&
-                typeof secondsLeft === "number" && (
-                    <InactivityTimer
-                        secondsLeft={secondsLeft}
-                        reminderInterval={reminderInterval}
-                    />
-                )}
+            {type === "inactivity" && (
+                <InactivityTimer
+                    secondsLeft={secondsLeft}
+                    reminderInterval={reminderInterval}
+                    imageOnly={imageOnly}
+                    hasCustomDescription={!!description}
+                />
+            )}
             <Img {...updatedAssets.img} alt="" data-id="error-display-image" />
             {!imageOnly && renderContentDisplay()}
             {actionButton && renderActionButton()}

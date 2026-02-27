@@ -50,7 +50,7 @@ export const DescriptionContainer = styled.div`
     color: ${Colour.text};
     text-align: center;
 
-    ${applyHtmlContentStyle({ textSize: "body-baseline" })};
+    ${applyHtmlContentStyle({ textSize: "body-baseline" })}
 
     p + p {
         margin-top: ${Spacing["spacing-16"]};
