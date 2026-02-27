@@ -99,6 +99,8 @@
    FONT
    ============================================================================ */
 [data-fds-theme="bookingsg"] {
+    --fds-font-variant: no-common-ligatures;
+
     --fds-heading-size-xxl: 3rem;
     --fds-heading-size-xl: 2.5rem;
     --fds-heading-size-lg: 2rem;
