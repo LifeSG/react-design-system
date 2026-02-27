@@ -1,3 +1,4 @@
+import React from "react";
 import { LinkListItemProps, LinkListStyle } from "../internal-types";
 import {
     Description,
@@ -60,7 +61,7 @@ export const LinkListItems = <T,>({
                             )}
                             {secondaryDescription}
                         </ItemContentContainer>
-                        <ItemIcon />
+                        <ItemIcon aria-hidden />
                     </ItemContainer>
                 );
             })}
