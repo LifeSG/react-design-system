@@ -14,17 +14,14 @@ export const InactivityTimer = ({
     imageOnly,
     hasCustomDescription,
 }: InactivityTimerProps) => {
+    const [liveReminderText, setLiveReminderText] = useState<string>("");
+    const prevSecondsLeftRef = useRef<number | undefined>(undefined);
+
     const shouldEnable =
         !imageOnly &&
         !hasCustomDescription &&
         typeof secondsLeft === "number" &&
         secondsLeft >= 0;
-
-    if (!shouldEnable) return null;
-
-    const [liveReminderText, setLiveReminderText] = useState<string>("");
-
-    const prevSecondsLeftRef = useRef<number | undefined>(undefined);
 
     const buildReminderSentence = (s: number): string => {
         const min = Math.floor(s / 60);
@@ -33,7 +30,11 @@ export const InactivityTimer = ({
     };
 
     useEffect(() => {
-        if (typeof secondsLeft !== "number" || secondsLeft < 0) {
+        if (
+            !shouldEnable ||
+            typeof secondsLeft !== "number" ||
+            secondsLeft < 0
+        ) {
             prevSecondsLeftRef.current = undefined;
             setLiveReminderText("");
             return;
@@ -58,7 +59,7 @@ export const InactivityTimer = ({
         }
     }, [secondsLeft, reminderInterval]);
 
-    if (!liveReminderText) return null;
+    if (!liveReminderText || !shouldEnable) return null;
 
     return (
         <VisuallyHidden aria-live="polite" aria-atomic="true">
