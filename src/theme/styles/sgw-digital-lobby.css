@@ -1,0 +1,55 @@
+/* ============================================================================
+   FONT
+   ============================================================================ */
+[data-fds-theme="sgw-digital-lobby"] {
+    --fds-heading-size-xxl: 3.75rem;
+    --fds-heading-size-xl: 3rem;
+    --fds-heading-size-lg: 2.5rem;
+    --fds-heading-size-md: 2rem;
+    --fds-heading-size-sm: 1.625rem;
+    --fds-heading-size-xs: 1.375rem;
+
+    --fds-heading-lh-xxl: 4.5rem;
+    --fds-heading-lh-xl: 3.5rem;
+    --fds-heading-lh-lg: 3rem;
+    --fds-heading-lh-md: 2.5rem;
+    --fds-heading-lh-sm: 2.25rem;
+    --fds-heading-lh-xs: 1.75rem;
+
+    --fds-heading-ls-xxl: -0.035rem;
+    --fds-heading-ls-xl: -0.035em;
+    --fds-heading-ls-lg: -0.02rem;
+    --fds-heading-ls-md: -0.02rem;
+    --fds-heading-ls-sm: 0rem;
+    --fds-heading-ls-xs: 0rem;
+
+    --fds-weight-light: 300;
+    --fds-weight-regular: 400;
+    --fds-weight-semibold: 600;
+    --fds-weight-bold: 700;
+    --fds-font-family: "Libre Franklin";
+
+    --fds-body-size-baseline: 1.375rem;
+    --fds-body-size-md: 1.2rem;
+    --fds-body-size-sm: 1.125rem;
+    --fds-body-size-xs: 1rem;
+
+    --fds-body-lh-baseline: 1.75rem;
+    --fds-body-lh-md: 1.625rem;
+    --fds-body-lh-sm: 1.625rem;
+    --fds-body-lh-xs: 1.5rem;
+
+    --fds-body-ls-baseline: 0rem;
+    --fds-body-ls-md: 0rem;
+    --fds-body-ls-sm: 0rem;
+    --fds-body-ls-xs: 0.009rem;
+
+    --fds-form-label-size: 1.25rem;
+    --fds-form-description-size: 1.125rem;
+
+    --fds-form-label-lh: 1.625rem;
+    --fds-form-description-lh: 1.625rem;
+
+    --fds-form-label-ls: 0rem;
+    --fds-form-description-ls: 0rem;
+}
