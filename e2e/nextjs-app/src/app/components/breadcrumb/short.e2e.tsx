@@ -1,7 +1,7 @@
 "use client";
 import { Breadcrumb } from "@lifesg/react-design-system/breadcrumb";
 
-export default function Page() {
+export default function Story() {
     return (
         <Breadcrumb
             links={[

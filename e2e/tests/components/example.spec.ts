@@ -8,7 +8,7 @@ test.describe("Example", () => {
         });
 
         test("Can render successfully", async ({ page }) => {
-            await page.goto("/components/example/default");
+            await page.goto("/components/example/basic");
 
             await expect(page.getByText("Hello world")).toBeVisible();
         });
@@ -20,7 +20,7 @@ test.describe("Example", () => {
         });
 
         test("Can render successfully", async ({ page }) => {
-            await page.goto("/components/example/default");
+            await page.goto("/components/example/basic");
 
             await expect(page.getByText("Hello world")).toBeVisible();
         });
@@ -32,7 +32,7 @@ test.describe("Example", () => {
         });
 
         test("Can render successfully", async ({ page }) => {
-            await page.goto("/components/example/default");
+            await page.goto("/components/example/basic");
 
             await expect(page.getByText("Hello world")).toBeVisible();
         });
