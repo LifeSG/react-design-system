@@ -54,13 +54,12 @@ export const LinkListItems = <T,>({
                             </ItemTitle>
                             {description && (
                                 <Description
-                                    forwardedAs="div"
                                     data-testid={`link-description-${index}`}
                                 >
                                     {description}
                                 </Description>
                             )}
-                            {secondaryDescription && { secondaryDescription }}
+                            {secondaryDescription}
                         </ItemContentContainer>
                         <ItemIcon aria-hidden />
                     </ItemContainer>

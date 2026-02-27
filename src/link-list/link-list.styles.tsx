@@ -14,6 +14,10 @@ interface ExpandableChildStyleProps {
     $border?: boolean;
 }
 
+interface ToggleButtonStyleProps {
+    $loading?: boolean;
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -95,7 +99,7 @@ export const ViewLessIcon = styled(MinusIcon)`
     ${iconStyle}
 `;
 
-export const ToggleButton = styled.button<{ $loading?: boolean }>`
+export const ToggleButton = styled.button<ToggleButtonStyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -106,10 +110,9 @@ export const ToggleButton = styled.button<{ $loading?: boolean }>`
     cursor: pointer;
     border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     gap: 1rem;
-    flex-direction: row;
 
-    ${({ $loading }) =>
-        $loading &&
+    ${(props) =>
+        props.$loading &&
         css`
             cursor: default;
             flex-direction: row-reverse;
@@ -122,8 +125,8 @@ export const ToggleButton = styled.button<{ $loading?: boolean }>`
             }
         `}
 
-    ${({ $loading }) =>
-        !$loading &&
+    ${(props) =>
+        !props.$loading &&
         css`
             &:hover {
                 ${ToggleButtonLabel},
