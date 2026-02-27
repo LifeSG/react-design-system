@@ -1,0 +1,7 @@
+export declare const Wrapper: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never>> & string;
+export declare const TimeContainer: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("styled-components").FastOmit<Omit<import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof import("../shared/input-wrapper/input-wrapper").InputWrapperStyleProps> & import("../shared/input-wrapper/input-wrapper").InputWrapperStyleProps, "ref"> & {
+    ref?: ((instance: HTMLDivElement | null) => void) | import("react").RefObject<HTMLDivElement> | null | undefined;
+}, keyof import("../shared/input-wrapper/input-wrapper").InputWrapperStyleProps> & import("../shared/input-wrapper/input-wrapper").InputWrapperStyleProps, never>> & string;
+export declare const SelectorInput: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<Omit<import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "$variant"> & import("../shared/input-wrapper/input-wrapper").InputStyleProps, "ref"> & {
+    ref?: ((instance: HTMLInputElement | null) => void) | import("react").RefObject<HTMLInputElement> | null | undefined;
+}, never>> & string;
