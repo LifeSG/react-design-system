@@ -7,7 +7,7 @@ import {
     SearchInput,
 } from "./dropdown-search.styles";
 
-interface Props extends React.HTMLAttributes<HTMLInputElement> {
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     value: string /** override to cast type */;
     onClear?: () => void | undefined;
 }

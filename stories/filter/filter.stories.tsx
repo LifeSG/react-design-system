@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Filter } from "../../src/filter";
 import { FilterItem } from "../../src/filter/filter-item";
@@ -55,6 +55,7 @@ const meta: Meta<Component> = {
             },
             options: ["do nothing", "show alert", "log console"],
             mapping: {
+                // eslint-disable-next-line @typescript-eslint/no-empty-function
                 "do nothing": () => {},
                 "show alert": () => alert("Done clicked"),
                 "log console": () => console.log("Done clicked"),

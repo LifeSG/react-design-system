@@ -170,7 +170,7 @@ export const Component = <T, V>(
                 )}
                 {selected && (
                     <ValueLabel data-testid="selector-label">
-                        {getDisplayValue()}
+                        {getDisplayValue() as React.ReactNode}
                     </ValueLabel>
                 )}
             </LabelContainer>
@@ -185,7 +185,7 @@ export const Component = <T, V>(
             return selected ? (
                 <SelectorReadOnly>
                     <ValueLabel data-testid="selector-label">
-                        {getDisplayValue()}
+                        {getDisplayValue() as React.ReactNode}
                     </ValueLabel>
                 </SelectorReadOnly>
             ) : null;

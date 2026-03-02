@@ -31,7 +31,9 @@ export const ColorPalette = ({ set, category }: ColorPaletteProps) => {
                         <SwatchLabel>
                             {category ? `${category}.${key}` : key}
                         </SwatchLabel>
-                        <PaletteItemLabel>{color}</PaletteItemLabel>
+                        <PaletteItemLabel>
+                            {color as React.ReactNode}
+                        </PaletteItemLabel>
                     </PaletteItem>
                 );
             })}

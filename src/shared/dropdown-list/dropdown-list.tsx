@@ -71,7 +71,7 @@ export const DropdownList = <T, V>({
     const nodeRef = useRef<HTMLDivElement>();
     const listRef = useRef<HTMLUListElement>();
     const listItemRefs = useRef<HTMLButtonElement[]>([]);
-    const searchInputRef = useRef<HTMLInputElement>();
+    const searchInputRef = useRef<HTMLInputElement>(null);
     const customCallToActionRef = useRef<HTMLDivElement>();
 
     /**
@@ -414,7 +414,7 @@ export const DropdownList = <T, V>({
         if ((enableSearch || searchFunction) && itemsLoadState === "success") {
             return (
                 <DropdownSearch
-                    ref={searchInputRef}
+                    ref={searchInputRef as React.Ref<HTMLInputElement>}
                     onChange={handleSearchInputChange}
                     value={searchValue}
                     placeholder={searchPlaceholder}

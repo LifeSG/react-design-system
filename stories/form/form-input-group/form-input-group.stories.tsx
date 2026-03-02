@@ -1,5 +1,5 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Form } from "src/form";
 import { InputGroup } from "src/input-group";
 import { Layout } from "src/layout";

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { NotificationBanner } from "src/notification-banner";
 import { Text } from "src/text";
 import { StyledContent } from "./doc-elements";

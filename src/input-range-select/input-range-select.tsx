@@ -220,7 +220,12 @@ export const InputRangeSelect = <T, V>({
         if (!selected) {
             return (
                 <PlaceholderLabel truncateType={optionTruncationType}>
-                    {truncateValue(rangeType, placeholders[rangeType])}
+                    {
+                        truncateValue(
+                            rangeType,
+                            placeholders[rangeType]
+                        ) as React.ReactNode
+                    }
                 </PlaceholderLabel>
             );
         } else if (renderCustomSelectedOption) {
@@ -228,7 +233,12 @@ export const InputRangeSelect = <T, V>({
         } else {
             return (
                 <ValueLabel truncateType={optionTruncationType}>
-                    {truncateValue(rangeType, getDisplayValue(rangeType))}
+                    {
+                        truncateValue(
+                            rangeType,
+                            getDisplayValue(rangeType)
+                        ) as React.ReactNode
+                    }
                 </ValueLabel>
             );
         }

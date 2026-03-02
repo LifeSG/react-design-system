@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Button } from "src/button";
 import { Container } from "./doc-elements";
 
@@ -7,6 +7,25 @@ type Component = typeof Button.Default;
 const meta: Meta<Component> = {
     title: "General/Button",
     component: Button.Default,
+    tags: ["autodocs", "general", "cta", "action", "forms"],
+    parameters: {
+        docs: {
+            description: {
+                component:
+                    "Primary call-to-action component for triggering user actions. Supports multiple styles, loading states, and danger variants for destructive actions.",
+            },
+        },
+        keywords: [
+            "button",
+            "cta",
+            "submit",
+            "action",
+            "click",
+            "primary",
+            "secondary",
+            "call to action",
+        ],
+    },
 };
 
 export default meta;

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { LoadingDotsSpinner } from "src/animations";
 import { Color } from "src/color";
 import { BaseTheme } from "src/theme";

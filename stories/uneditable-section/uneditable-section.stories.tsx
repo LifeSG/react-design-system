@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Alert } from "src/alert";
 import { Button } from "src/button";
 import { Text } from "src/text";

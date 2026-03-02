@@ -10,6 +10,11 @@
         /** Module settings **/
         "moduleResolution": "node", // use Nodejs module resolution strategy (else uses classic TS strategy)
         "baseUrl": "./", // for absolute file resolution
+        "paths": {
+            "@storybook/addon-docs/blocks": [
+                "./node_modules/@storybook/addon-docs/dist/blocks"
+            ]
+        },
         "esModuleInterop": true, // allow interop between ESM and CJS/AMD/UMD modules
         "resolveJsonModule": true, // allow importing .json files
         /** Output files **/
