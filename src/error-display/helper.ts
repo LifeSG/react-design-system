@@ -1,32 +1,32 @@
 import { V3_Breakpoint } from "../v3_theme";
 import { V3_ThemeSpec } from "../v3_theme/types";
 
-export namespace ErrorDisplayHelper {
-    export interface ImagePathAttributes {
-        /** base sized image path */
-        base: string;
+export interface ErrorDisplayImagePathAttributes {
+    /** base sized image path */
+    base: string;
 
-        /** medium sized image path */
-        md: string;
+    /** medium sized image path */
+    md: string;
 
-        /** large sized image path */
-        lg: string;
+    /** large sized image path */
+    lg: string;
 
-        /** used with `height` to determine the aspect ratio for layout purposes */
-        width: number;
+    /** used with `height` to determine the aspect ratio for layout purposes */
+    width: number;
 
-        /** used with `width` to determine the aspect ratio for layout purposes */
-        height: number;
-    }
+    /** used with `width` to determine the aspect ratio for layout purposes */
+    height: number;
+}
 
+export class ErrorDisplayHelper {
     /**
      * returns the html attributes required for the img element
-     * @param {ImagePathAttributes} pathAttributes
+     * @param {ErrorDisplayImagePathAttributes} pathAttributes
      */
-    export const imgAttributeHelper = (
-        pathAttributes: ImagePathAttributes,
+    public static imgAttributeHelper(
+        pathAttributes: ErrorDisplayImagePathAttributes,
         theme?: V3_ThemeSpec
-    ): React.ImgHTMLAttributes<HTMLImageElement> => {
+    ): React.ImgHTMLAttributes<HTMLImageElement> {
         const { base, md, lg, width, height } = pathAttributes;
         const mobile = V3_Breakpoint["sm-max"]({ theme });
         const tablet = V3_Breakpoint["lg-max"]({ theme });
@@ -38,5 +38,5 @@ export namespace ErrorDisplayHelper {
             width,
             height,
         };
-    };
+    }
 }

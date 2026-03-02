@@ -1,6 +1,6 @@
 import { V3_ResourceScheme, V3_ThemeSpec } from "../v3_theme/types";
 import { renderDescriptionWithProps } from "./error-display-helper-comp";
-import { ErrorDisplayHelper } from "./helper";
+import { ErrorDisplayHelper, ErrorDisplayImagePathAttributes } from "./helper";
 import {
     ErrorDisplayType,
     InactivityAdditionalAttributes,
@@ -13,7 +13,7 @@ const { imgAttributeHelper } = ErrorDisplayHelper;
 // IMAGE PATHS
 // =============================================================================
 
-const ImgPaths: Record<string, ErrorDisplayHelper.ImagePathAttributes> = {
+const ImgPaths: Record<string, ErrorDisplayImagePathAttributes> = {
     "400": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/400.png",
         md: "https://assets.life.gov.sg/react-design-system/img/error/400@2x.png",
@@ -142,7 +142,7 @@ const ImgPaths: Record<string, ErrorDisplayHelper.ImagePathAttributes> = {
     },
 };
 
-const BsgImgPaths: Record<string, ErrorDisplayHelper.ImagePathAttributes> = {
+const BsgImgPaths: Record<string, ErrorDisplayImagePathAttributes> = {
     "400": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/400.png",
         md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/400@2x.png",
@@ -271,7 +271,7 @@ const BsgImgPaths: Record<string, ErrorDisplayHelper.ImagePathAttributes> = {
     },
 };
 
-const CCubeImgPaths: Record<string, ErrorDisplayHelper.ImagePathAttributes> = {
+const CCubeImgPaths: Record<string, ErrorDisplayImagePathAttributes> = {
     ...ImgPaths,
     "400": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/ccube/400.png",
@@ -324,115 +324,114 @@ const CCubeImgPaths: Record<string, ErrorDisplayHelper.ImagePathAttributes> = {
     },
 };
 
-const MyLegacyImgPaths: Record<string, ErrorDisplayHelper.ImagePathAttributes> =
-    {
-        ...ImgPaths,
-        "400": {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/400.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/400@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/400@3x.png",
-            width: 400,
-            height: 280,
-        },
-        "403": {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/403.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/403@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/403@3x.png",
-            width: 400,
-            height: 280,
-        },
-        "404": {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/404.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/404@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/404@3x.png",
-            width: 400,
-            height: 280,
-        },
-        "408": {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/408.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/408@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/408@3x.png",
-            width: 400,
-            height: 280,
-        },
-        "500": {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/generic-error.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/generic-error@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/generic-error@3x.png",
-            width: 400,
-            height: 280,
-        },
-        "502": {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/502.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/502@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/502@3x.png",
-            width: 400,
-            height: 280,
-        },
-        "503": {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/503.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/503@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/503@3x.png",
-            width: 400,
-            height: 280,
-        },
-        "504": {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/504.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/504@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/504@3x.png",
-            width: 400,
-            height: 280,
-        },
-        confirmation: {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/confirmation.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/confirmation@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/confirmation@3x.png",
-            width: 400,
-            height: 280,
-        },
-        inactivity: {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/inactivity.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/inactivity@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/inactivity@3x.png",
-            width: 400,
-            height: 280,
-        },
-        "link-error": {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/link-error.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/link-error@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/link-error@3x.png",
-            width: 400,
-            height: 280,
-        },
-        logout: {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/logout.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/logout@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/logout@3x.png",
-            width: 400,
-            height: 280,
-        },
-        warning: {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/warning.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/warning@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/warning@3x.png",
-            width: 400,
-            height: 280,
-        },
-        "payment-unsuccessful": {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/payment-unsuccessful.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/payment-unsuccessful@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/payment-unsuccessful@3x.png",
-            width: 400,
-            height: 280,
-        },
-        "no-item-found": {
-            base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/no-item-found.png",
-            md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/no-item-found@2x.png",
-            lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/no-item-found@3x.png",
-            width: 400,
-            height: 280,
-        },
-    };
+const MyLegacyImgPaths: Record<string, ErrorDisplayImagePathAttributes> = {
+    ...ImgPaths,
+    "400": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/400.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/400@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/400@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "403": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/403.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/403@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/403@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "404": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/404.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/404@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/404@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "408": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/408.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/408@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/408@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "500": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/generic-error.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/generic-error@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/generic-error@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "502": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/502.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/502@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/502@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "503": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/503.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/503@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/503@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "504": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/504.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/504@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/504@3x.png",
+        width: 400,
+        height: 280,
+    },
+    confirmation: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/confirmation.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/confirmation@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/confirmation@3x.png",
+        width: 400,
+        height: 280,
+    },
+    inactivity: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/inactivity.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/inactivity@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/inactivity@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "link-error": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/link-error.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/link-error@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/link-error@3x.png",
+        width: 400,
+        height: 280,
+    },
+    logout: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/logout.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/logout@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/logout@3x.png",
+        width: 400,
+        height: 280,
+    },
+    warning: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/warning.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/warning@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/warning@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "payment-unsuccessful": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/payment-unsuccessful.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/payment-unsuccessful@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/payment-unsuccessful@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "no-item-found": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/no-item-found.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/no-item-found@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/no-item-found@3x.png",
+        width: 400,
+        height: 280,
+    },
+};
 
 // =============================================================================
 // ERROR DISPLAY ATTRIBUTES
@@ -449,7 +448,7 @@ interface ErrorDisplayDataAttrs {
 }
 
 export const generateErrorDisplayData = (
-    ImgPathsObject: Record<string, ErrorDisplayHelper.ImagePathAttributes>,
+    ImgPathsObject: Record<string, ErrorDisplayImagePathAttributes>,
     theme?: V3_ThemeSpec
 ) =>
     new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([

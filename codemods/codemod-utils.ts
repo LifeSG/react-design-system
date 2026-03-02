@@ -6,8 +6,8 @@ import {
     MemberExpression,
 } from "jscodeshift";
 
-export namespace CodemodUtils {
-    export function hasImport(
+export class CodemodUtils {
+    public static hasImport(
         source: Collection,
         api: API,
         importPath: string | string[],
@@ -42,7 +42,7 @@ export namespace CodemodUtils {
         return imported;
     }
 
-    export function addImport(
+    public static addImport(
         source: Collection,
         api: API,
         importPath: string,
@@ -85,7 +85,7 @@ export namespace CodemodUtils {
         }
     }
 
-    export function removeImport(
+    public static removeImport(
         source: Collection,
         api: API,
         importPath: string | string[],
@@ -122,7 +122,7 @@ export namespace CodemodUtils {
         });
     }
 
-    export function hasReferences(
+    public static hasReferences(
         source: Collection,
         api: API,
         importPath: string | string[],
@@ -130,7 +130,12 @@ export namespace CodemodUtils {
     ) {
         const j: JSCodeshift = api.jscodeshift;
 
-        const imported = hasImport(source, api, importPath, importSpecifier);
+        const imported = CodemodUtils.hasImport(
+            source,
+            api,
+            importPath,
+            importSpecifier
+        );
         if (imported) {
             return (
                 source
@@ -145,7 +150,7 @@ export namespace CodemodUtils {
         return false;
     }
 
-    export function getObjectPath(
+    public static getObjectPath(
         source: Collection,
         api: API,
         path: ASTPath<MemberExpression>

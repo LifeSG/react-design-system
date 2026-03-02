@@ -1,4 +1,4 @@
-import { Typography } from "../typography/typography";
+import { Typography } from "../typography";
 import { StyledCard } from "./card.style";
 import { CardProps } from "./types";
 

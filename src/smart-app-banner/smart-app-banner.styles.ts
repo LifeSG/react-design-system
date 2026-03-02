@@ -13,7 +13,7 @@ import {
     V3_Radius,
     V3_Shadow,
 } from "../v3_theme";
-import { Typography } from "../typography/typography";
+import { Typography } from "../typography";
 
 const slideDown = keyframes`
 	from {

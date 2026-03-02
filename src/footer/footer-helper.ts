@@ -11,21 +11,21 @@ export interface InternalDisclaimerLinks {
     reportVulnerability?: TypographyLinkProps | undefined;
 }
 
-export namespace FooterHelper {
-    export const getCopyrightInfo = (
+export class FooterHelper {
+    public static getCopyrightInfo(
         lastUpdated: Date = new Date(),
         resourceScheme: V3_ResourceScheme | undefined
-    ): string => {
-        const copyrightText = getCopyrightText(resourceScheme);
+    ): string {
+        const copyrightText = FooterHelper.getCopyrightText(resourceScheme);
         const copyright = `${new Date().getFullYear()} ${copyrightText}`;
         const lastUpdatedDateString = dayjs(lastUpdated).format("D MMMM YYYY");
 
         return `${copyright} Last updated ${lastUpdatedDateString}`;
-    };
+    }
 
-    const getCopyrightText = (
+    private static getCopyrightText(
         resourceScheme: V3_ResourceScheme | undefined
-    ) => {
+    ): string {
         switch (resourceScheme) {
             case "lifesg":
                 return "LifeSG, Government of Singapore.";
@@ -40,11 +40,11 @@ export namespace FooterHelper {
             default:
                 return "Government of Singapore.";
         }
-    };
+    }
 
-    export const getFooterLogoAttribute = (
+    public static getFooterLogoAttribute(
         resourceScheme?: V3_ResourceScheme
-    ): React.ImgHTMLAttributes<HTMLImageElement> => {
+    ): React.ImgHTMLAttributes<HTMLImageElement> {
         switch (resourceScheme) {
             case "lifesg":
                 return {
@@ -81,12 +81,12 @@ export namespace FooterHelper {
             default:
                 return {};
         }
-    };
+    }
 
-    export const getDisclaimerLinks = (
+    public static getDisclaimerLinks(
         resourceScheme: V3_ResourceScheme | undefined,
         customDisclaimerLinks: DisclaimerLinks | undefined
-    ): InternalDisclaimerLinks => {
+    ): InternalDisclaimerLinks {
         const defaultDisclaimerLinks =
             getDefaultDisclaimerLinks(resourceScheme);
         return {
@@ -113,5 +113,5 @@ export namespace FooterHelper {
                 children: "Report Vulnerability",
             },
         };
-    };
+    }
 }
