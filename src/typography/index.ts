@@ -15,24 +15,21 @@ import {
     LinkXS,
 } from "./typography";
 
-export const Typography = Object.assign(
-    {},
-    {
-        HeadingXXL,
-        HeadingXL,
-        HeadingLG,
-        HeadingMD,
-        HeadingSM,
-        HeadingXS,
-        BodyBL,
-        BodyMD,
-        BodySM,
-        BodyXS,
-        LinkBL,
-        LinkMD,
-        LinkSM,
-        LinkXS,
-    }
-);
+export const Typography = {
+    HeadingXXL,
+    HeadingXL,
+    HeadingLG,
+    HeadingMD,
+    HeadingSM,
+    HeadingXS,
+    BodyBL,
+    BodyMD,
+    BodySM,
+    BodyXS,
+    LinkBL,
+    LinkMD,
+    LinkSM,
+    LinkXS,
+};
 
 export * from "./types";

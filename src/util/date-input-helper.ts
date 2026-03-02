@@ -32,7 +32,7 @@ export class DateInputHelper {
 
     public static sanitizeInput(date: string | undefined): string {
         if (date) {
-            const normalized = this.normalizeDateString(date);
+            const normalized = DateInputHelper.normalizeDateString(date);
 
             const day = dayjs(normalized, "YYYY-MM-DD", true);
 

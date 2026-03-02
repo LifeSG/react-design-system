@@ -16,7 +16,7 @@ export class FooterHelper {
         lastUpdated: Date = new Date(),
         resourceScheme: V3_ResourceScheme | undefined
     ): string {
-        const copyrightText = this.getCopyrightText(resourceScheme);
+        const copyrightText = FooterHelper.getCopyrightText(resourceScheme);
         const copyright = `${new Date().getFullYear()} ${copyrightText}`;
         const lastUpdatedDateString = dayjs(lastUpdated).format("D MMMM YYYY");
 

@@ -1,7 +1,7 @@
 import { V3_Breakpoint } from "../v3_theme";
 import { V3_ThemeSpec } from "../v3_theme/types";
 
-export interface ImagePathAttributes {
+export interface ErrorImagePathAttributes {
     /** base sized image path */
     base: string;
 
@@ -21,10 +21,10 @@ export interface ImagePathAttributes {
 export class ErrorDisplayHelper {
     /**
      * returns the html attributes required for the img element
-     * @param {ImagePathAttributes} pathAttributes
+     * @param {ErrorImagePathAttributes} pathAttributes
      */
     public static imgAttributeHelper(
-        pathAttributes: ImagePathAttributes,
+        pathAttributes: ErrorImagePathAttributes,
         theme?: V3_ThemeSpec
     ): React.ImgHTMLAttributes<HTMLImageElement> {
         const { base, md, lg, width, height } = pathAttributes;

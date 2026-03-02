@@ -144,8 +144,8 @@ export class StringHelper {
 
         // create a reusable canvas object for better performance
         const canvas =
-            (this.getTextWidth as any).canvas ||
-            ((this.getTextWidth as any).canvas =
+            (StringHelper.getTextWidth as any).canvas ||
+            ((StringHelper.getTextWidth as any).canvas =
                 document.createElement("canvas"));
         const context = canvas.getContext("2d");
         context.font = font;
@@ -172,10 +172,11 @@ export class StringHelper {
         } else if (maskRegex) {
             return value.replace(maskRegex, maskChar);
         } else if (maskRange) {
-            const { startIndex, endIndex } = this.determineStartAndEndIndex(
-                maskRange[0],
-                maskRange[1]
-            );
+            const { startIndex, endIndex } =
+                StringHelper.determineStartAndEndIndex(
+                    maskRange[0],
+                    maskRange[1]
+                );
             return (
                 value.substring(0, startIndex) +
                 maskChar.repeat(
@@ -184,10 +185,11 @@ export class StringHelper {
                 value.substring(endIndex + 1)
             );
         } else if (unmaskRange) {
-            const { startIndex, endIndex } = this.determineStartAndEndIndex(
-                unmaskRange[0],
-                unmaskRange[1]
-            );
+            const { startIndex, endIndex } =
+                StringHelper.determineStartAndEndIndex(
+                    unmaskRange[0],
+                    unmaskRange[1]
+                );
             return (
                 maskChar.repeat(value.substring(0, startIndex).length) +
                 value.substring(startIndex, endIndex + 1) +
@@ -216,8 +218,8 @@ export class StringHelper {
     ]);
 
     public static formatOrdinal(n: number) {
-        const rule = this.ordinalPluralRules.select(n);
-        const suffix = this.suffixes.get(rule);
+        const rule = StringHelper.ordinalPluralRules.select(n);
+        const suffix = StringHelper.suffixes.get(rule);
         return `${n}${suffix}`;
     }
 

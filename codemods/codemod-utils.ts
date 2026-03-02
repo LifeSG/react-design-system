@@ -130,7 +130,7 @@ export class CodemodUtils {
     ) {
         const j: JSCodeshift = api.jscodeshift;
 
-        const imported = this.hasImport(
+        const imported = CodemodUtils.hasImport(
             source,
             api,
             importPath,

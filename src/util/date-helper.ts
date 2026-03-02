@@ -28,7 +28,7 @@ export class DateHelper {
         }
 
         if (monthNumber === 2) {
-            return this.isLeapYear(yearNumber)
+            return DateHelper.isLeapYear(yearNumber)
                 ? Math.min(dayNumber, 29).toString()
                 : Math.min(dayNumber, 28).toString();
         }

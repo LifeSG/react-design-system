@@ -311,10 +311,10 @@ export class TimeHelper {
 
         // Convert startTime (h:mma) to minutes
         if (startTime) {
-            currentMinutes = this.timeToMinutes(startTime);
+            currentMinutes = TimeHelper.timeToMinutes(startTime);
         }
         if (endTime) {
-            endMinutes = this.timeToMinutes(endTime);
+            endMinutes = TimeHelper.timeToMinutes(endTime);
         }
 
         while (currentMinutes <= endMinutes) {
@@ -408,13 +408,13 @@ export class TimeHelper {
         timeArray: string[] // Should already be sorted in ascending order
     ): string | undefined {
         if (!inputTime) return inputTime;
-        const flooredInputMinutes = this.timeToMinutes(inputTime);
+        const flooredInputMinutes = TimeHelper.timeToMinutes(inputTime);
 
         let closestTime = "";
         let minDifference = Infinity;
 
         for (const time of timeArray) {
-            const timeInMinutes = this.timeToMinutes(time);
+            const timeInMinutes = TimeHelper.timeToMinutes(time);
             const difference = timeInMinutes - flooredInputMinutes;
 
             // If the difference is negative or zero, update the closest time
@@ -454,8 +454,8 @@ export class TimeHelper {
         startTime: string,
         endTime: string
     ): number {
-        const startMinutes = this.timeToMinutes(startTime);
-        const endMinutes = this.timeToMinutes(endTime);
+        const startMinutes = TimeHelper.timeToMinutes(startTime);
+        const endMinutes = TimeHelper.timeToMinutes(endTime);
         return endMinutes - startMinutes;
     }
 
@@ -488,7 +488,7 @@ export class TimeHelper {
 
             // Round to nearest interval if specified
             const timeToUse = options?.roundToInterval
-                ? this.roundToNearestInterval(scrollTime, interval)
+                ? TimeHelper.roundToNearestInterval(scrollTime, interval)
                 : scrollTime;
 
             const [hours, minutes] = parseTimeToNumbers(timeToUse);
