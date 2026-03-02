@@ -1,4 +1,4 @@
-import React from "react";
+import React, { NamedExoticComponent } from "react";
 import { isStyledComponent } from "styled-components";
 import { ModalCardProps } from "../types";
 import { CloseButton } from "./close-button";
@@ -6,12 +6,15 @@ import { Content } from "./content";
 import { Footer } from "./footer";
 import { ModalCard, SlotSpacer } from "./slot-styles";
 
-export const Card = ({
-    id,
-    "data-testid": testId = "modal-card",
-    children,
-    ...otherProps
-}: ModalCardProps) => {
+function CardInner(
+    {
+        id,
+        "data-testid": testId = "modal-card",
+        children,
+        ...otherProps
+    }: ModalCardProps,
+    ref: React.ForwardedRef<HTMLDivElement>
+) {
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -44,6 +47,7 @@ export const Card = ({
 
     return (
         <ModalCard
+            ref={ref}
             id={id}
             data-testid={testId}
             {...otherProps}
@@ -56,6 +60,8 @@ export const Card = ({
             {hasCloseButton && CloseButtonSlot}
         </ModalCard>
     );
-};
+}
 
-Card.displayName = "ModalV2.Card";
+export const Card = React.forwardRef<HTMLDivElement, ModalCardProps>(CardInner);
+
+(Card as NamedExoticComponent).displayName = "ModalV2.Card";
