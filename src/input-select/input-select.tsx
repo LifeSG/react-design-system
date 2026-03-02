@@ -174,7 +174,7 @@ export const InputSelect = <T, V>({
         } else {
             return (
                 <ValueLabel truncateType={optionTruncationType}>
-                    {truncateValue(getDisplayValue())}
+                    {truncateValue(getDisplayValue()) as React.ReactNode}
                 </ValueLabel>
             );
         }

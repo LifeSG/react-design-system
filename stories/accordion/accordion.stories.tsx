@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Accordion } from "src/accordion";
 import { Text } from "src/text";
 
@@ -7,6 +7,14 @@ type Component = typeof Accordion;
 const meta: Meta<Component> = {
     title: "Modules/Accordion",
     component: Accordion,
+    tags: [
+        "accordion",
+        "collapsible",
+        "expandable",
+        "expand collapse",
+        "panel",
+        "disclosure",
+    ],
 };
 
 export default meta;

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Text } from "src/text";
 import { TextList } from "src/text-list";
 import { Container, CustomOrderedList, SubContainer } from "./doc-elements";

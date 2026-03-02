@@ -1,5 +1,5 @@
 import { LinkIcon as DSLinkIcon } from "@lifesg/react-icons/link";
-import { Unstyled } from "@storybook/blocks";
+import { Unstyled } from "@storybook/addon-docs/blocks";
 import React from "react";
 import styled from "styled-components";
 import { Color } from "../../src/color";

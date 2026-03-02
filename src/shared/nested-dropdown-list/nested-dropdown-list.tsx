@@ -81,7 +81,7 @@ export const NestedDropdownList = <V1, V2, V3>({
     const nodeRef = useRef<HTMLDivElement>();
     const listRef = useRef<HTMLUListElement>();
     const listItemRefs = useRef<ListItemRef>({});
-    const searchInputRef = useRef<HTMLInputElement>();
+    const searchInputRef = useRef<HTMLInputElement>(null);
 
     // =============================================================================
     // EFFECTS
@@ -478,7 +478,7 @@ export const NestedDropdownList = <V1, V2, V3>({
         if (enableSearch && itemsLoadState === "success") {
             return (
                 <DropdownSearch
-                    ref={searchInputRef}
+                    ref={searchInputRef as React.Ref<HTMLInputElement>}
                     onChange={handleSearchInputChange}
                     value={searchValue}
                     placeholder={searchPlaceholder}

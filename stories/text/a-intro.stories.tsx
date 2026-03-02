@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Text } from "src/text";
 import { DisplayContainer, LinkDiv, TextDisplay } from "./doc-elements";
 

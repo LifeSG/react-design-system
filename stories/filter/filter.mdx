@@ -2,7 +2,7 @@ import {
     Canvas,
     Meta,
     Controls,
-    ArgsTable,
+    ArgTypes,
     Description,
 } from "@storybook/blocks";
 import { Heading3, Secondary, Title } from "../storybook-common";
@@ -75,11 +75,11 @@ Some filters may need to rendered as a fullscreen page while editing. A display 
         },
         {
             label: "Filter.Item",
-            content: <ArgsTable of={FilterItemDocs} />,
+            content: <ArgTypes of={FilterItemDocs} />,
         },
         {
             label: "Filter.Page",
-            content: <ArgsTable of={FilterPageDocs} />,
+            content: <ArgTypes of={FilterPageDocs} />,
         },
     ]}
 />

@@ -1,5 +1,5 @@
 import { LockIcon } from "@lifesg/react-icons/lock";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { IconButton } from "src/icon-button";
 import { StoryContainer } from "../storybook-common";
 import { Grid, Row } from "./doc-elements";

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Color } from "src/color";
 import { Divider } from "src/divider";
 import { Layout } from "src/layout";

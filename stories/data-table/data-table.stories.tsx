@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useMemo, useState } from "react";
 import { DataTable, SortIndicatorsProps } from "src/data-table";
 import { Pill } from "src/pill";
@@ -10,7 +10,14 @@ type Component = typeof DataTable;
 const meta: Meta<Component> = {
     title: "Modules/DataTable",
     component: DataTable,
-    tags: ["autodocs"],
+    tags: [
+        "autodocs",
+        "data-table",
+        "table",
+        "data-display",
+        "sortable",
+        "selectable",
+    ],
     parameters: {
         controls: {
             expanded: true,

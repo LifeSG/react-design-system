@@ -1,5 +1,5 @@
 import { withThemeFromJSXProvider } from "@storybook/addon-themes";
-import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
+import { INITIAL_VIEWPORTS } from "storybook/viewport";
 import {
     BaseTheme,
     BookingSGTheme,
@@ -23,6 +23,7 @@ const preview = {
             Provider: ThemeProvider,
         }),
     ],
+
     parameters: {
         options: {
             storySort: {
@@ -42,9 +43,11 @@ const preview = {
         },
         layout: "centered",
         viewport: {
-            viewports: INITIAL_VIEWPORTS,
+            options: INITIAL_VIEWPORTS,
         },
     },
+
+    tags: ["autodocs"],
 };
 
 export default preview;
