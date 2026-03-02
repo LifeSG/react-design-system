@@ -6,7 +6,7 @@
     "module": "dist/index.js",
     "typings": "dist/index.d.ts",
     "scripts": {
-        "build": "npm run rollup && npm run post:build",
+        "build": "npm run rollup && npm run catalog:generate && npm run post:build",
         "build-check": "npm run rollup rollup.check.config.js",
         "rollup": "rm -rf dist && rollup --bundleConfigAsCjs -c",
         "pack-package": "cd dist && npm pack",
@@ -15,9 +15,14 @@
         "start": "rollup -c -w",
         "test": "jest --coverage",
         "test-watch": "jest --watch",
+        "lint": "eslint src --ext .ts,.tsx",
+        "lint:fix": "eslint src --ext .ts,.tsx --fix",
+        "lint:docs": "eslint src --ext .ts,.tsx",
         "prepare": "(test -d ./.git && npx husky install) || true",
         "storybook": "storybook dev -p 6006",
-        "build-storybook": "storybook build"
+        "build-storybook": "storybook build",
+        "catalog:generate": "node ./scripts/generate-component-catalog.js --update",
+        "catalog:check": "node ./scripts/generate-component-catalog.js --check"
     },
     "repository": {
         "type": "git",
@@ -76,8 +81,10 @@
         "dompurify": "^2.4.0",
         "eslint": "^8.11.0",
         "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-jsdoc": "^62.5.4",
         "eslint-plugin-mdx": "^2.0.4",
         "eslint-plugin-react": "^7.29.4",
+        "fs-extra": "^11.3.3",
         "html-react-parser": "^2.0.0",
         "husky": "^7.0.4",
         "identity-obj-proxy": "^3.0.0",

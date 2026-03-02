@@ -19,6 +19,11 @@ export const plugins = [
         tsconfig: "tsconfig.json",
         tsconfigOverride: {
             // Override base tsconfig.json during build
+            compilerOptions: {
+                // Strip Storybook path aliases — they bloat the TS type graph
+                // and cause rollup-plugin-typescript2 to hang during compilation.
+                paths: {},
+            },
             exclude: [
                 "tests",
                 "**/stories/**",

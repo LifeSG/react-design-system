@@ -20,12 +20,15 @@
             "jsx": true
         }
     },
-    "plugins": ["eslint-plugin-react", "@typescript-eslint"],
+    "plugins": ["eslint-plugin-react", "@typescript-eslint", "jsdoc"],
     "settings": {
         "react": {
             "version": "detect"
         },
-        "mdx/code-blocks": true
+        "mdx/code-blocks": true,
+        "jsdoc": {
+            "mode": "typescript"
+        }
     },
     "rules": {
         "indent": "off", // Need this else it clashes with @typescript-eslint/indent
@@ -84,6 +87,12 @@
             }
         ],
         "react/react-in-jsx-scope": "off",
-        "react/no-unknown-property": ["error", { "ignore": ["inert"] }]
+        "react/no-unknown-property": ["error", { "ignore": ["inert"] }],
+        "jsdoc/require-description": "warn",
+        "jsdoc/require-param-description": "warn",
+        "jsdoc/check-param-names": "error",
+        "jsdoc/check-tag-names": "error",
+        "jsdoc/check-types": "warn",
+        "jsdoc/no-undefined-types": "off"
     }
 }

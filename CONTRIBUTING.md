@@ -112,6 +112,94 @@ A suggested folder structure is as such:
 		└── types.ts
 ```
 
+<a id="documenting-components"></a>
+<br />
+
+### **4.1. Documenting components**
+
+All component props must be documented using JSDoc comments to enable automatic documentation generation in Storybook.
+
+#### **JSDoc Requirements**
+
+**For component types** (`types.ts`):
+
+1. Add interface-level JSDoc with component overview and usage examples
+2. Document every public prop with:
+    - Brief description (first line, under 80 characters)
+    - Detailed explanation of when/how to use
+    - `@default` tag for default values
+    - `@example` tag for complex or non-obvious usage
+
+**Example:**
+
+````typescript
+/**
+ * Props for the Button component - primary call-to-action element
+ *
+ * Use buttons to trigger immediate actions like form submissions or dialog confirmations.
+ * Choose the appropriate style type based on action hierarchy.
+ *
+ * @example
+ * ```tsx
+ * <Button.Default onClick={handleSubmit}>Submit</Button.Default>
+ * <Button.Default styleType="secondary" loading={isLoading}>Save</Button.Default>
+ * ```
+ */
+export interface ButtonProps
+    extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    /**
+     * The visual style variant of the button
+     *
+     * - `default`: Primary blue button for main CTAs and form submissions
+     * - `secondary`: Outlined button for secondary actions with less emphasis
+     * - `light`: Minimal button with transparent background for tertiary actions
+     * - `link`: Text-only button styled as a hyperlink
+     *
+     * @default "default"
+     */
+    styleType?: "default" | "secondary" | "light" | "link";
+}
+````
+
+#### **Story Tags and Keywords**
+
+**For component stories** (`.stories.tsx`):
+
+Add tags and keywords to enable component discovery:
+
+```typescript
+const meta: Meta<Component> = {
+    title: "Category/ComponentName",
+    component: ComponentName,
+    tags: ["autodocs", "forms", "input", "validation", "stable"],
+    parameters: {
+        docs: {
+            description: {
+                component:
+                    "Brief description of the component and its purpose.",
+            },
+        },
+        keywords: ["search", "terms", "for", "discoverability"],
+    },
+};
+```
+
+#### **Documentation Standards**
+
+See [`docs/jsdoc-standards.md`](/docs/jsdoc-standards.md) for detailed guidelines and examples.
+
+See [`docs/component-taxonomy.md`](/docs/component-taxonomy.md) for tag and keyword conventions.
+
+#### **Linting**
+
+Run documentation linting before committing:
+
+```bash
+npm run lint:docs
+```
+
+This checks that all public props have JSDoc descriptions.
+
 <a id="pull-request"></a>
 <br />
 
