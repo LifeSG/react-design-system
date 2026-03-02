@@ -26,7 +26,7 @@ describe("ErrorDisplay", () => {
         );
 
         const title = getErrorDisplayData("404", "lifesg", LifeSGTheme)!.title;
-        expect(screen.getByRole("heading", { level: 4, name: title }));
+        expect(screen.getByRole("heading", { level: 2, name: title }));
     });
 
     it("should render action button if prop is provided", () => {
@@ -56,7 +56,7 @@ describe("ErrorDisplay", () => {
         );
 
         expect(
-            screen.getByRole("heading", { level: 4, name: CUSTOM_TITLE })
+            screen.getByRole("heading", { level: 2, name: CUSTOM_TITLE })
         ).toBeInTheDocument();
     });
 
@@ -139,7 +139,7 @@ describe("ErrorDisplay", () => {
                 const error = getErrorDisplayData(type, "lifesg", LifeSGTheme)!;
 
                 expect(
-                    screen.getByRole("heading", { level: 4, name: error.title })
+                    screen.getByRole("heading", { level: 2, name: error.title })
                 ).toBeInTheDocument();
 
                 expect(screen.getByRole("img")).toHaveAttribute(
@@ -170,7 +170,7 @@ describe("ErrorDisplay", () => {
 
                 expect(
                     screen.getByRole("heading", {
-                        level: 4,
+                        level: 2,
                         name: error.title,
                     })
                 ).toBeInTheDocument();
@@ -197,7 +197,7 @@ describe("ErrorDisplay", () => {
 
             expect(
                 screen.getByRole("heading", {
-                    level: 4,
+                    level: 2,
                     name: error.title,
                 })
             ).toBeInTheDocument();
