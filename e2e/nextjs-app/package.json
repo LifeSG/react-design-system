@@ -7,7 +7,6 @@
         "build": "next build",
         "start": "next start",
         "lint": "eslint",
-        "use-local": "sh ./prepare-local.sh",
         "use-published": "npm i @lifesg/react-design-system@latest && rm -rf .next"
     },
     "dependencies": {

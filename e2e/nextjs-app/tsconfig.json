@@ -19,6 +19,8 @@
             }
         ],
         "paths": {
+            "@lifesg/react-design-system/*": ["../../src/*"],
+            "src/*": ["../../src/*"],
             "@/*": ["./src/*"]
         }
     },
