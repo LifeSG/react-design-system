@@ -1,6 +1,6 @@
 import { V3_ResourceScheme, V3_ThemeSpec } from "../v3_theme/types";
 import { renderDescriptionWithProps } from "./error-display-helper-comp";
-import { ErrorDisplayHelper, ErrorImagePathAttributes } from "./helper";
+import { ErrorDisplayHelper, ErrorDisplayImagePathAttributes } from "./helper";
 import {
     ErrorDisplayType,
     InactivityAdditionalAttributes,
@@ -13,7 +13,7 @@ const { imgAttributeHelper } = ErrorDisplayHelper;
 // IMAGE PATHS
 // =============================================================================
 
-const ImgPaths: Record<string, ErrorImagePathAttributes> = {
+const ImgPaths: Record<string, ErrorDisplayImagePathAttributes> = {
     "400": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/400.png",
         md: "https://assets.life.gov.sg/react-design-system/img/error/400@2x.png",
@@ -142,7 +142,7 @@ const ImgPaths: Record<string, ErrorImagePathAttributes> = {
     },
 };
 
-const BsgImgPaths: Record<string, ErrorImagePathAttributes> = {
+const BsgImgPaths: Record<string, ErrorDisplayImagePathAttributes> = {
     "400": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/bsg/400.png",
         md: "https://assets.life.gov.sg/react-design-system/img/error/bsg/400@2x.png",
@@ -271,7 +271,7 @@ const BsgImgPaths: Record<string, ErrorImagePathAttributes> = {
     },
 };
 
-const CCubeImgPaths: Record<string, ErrorImagePathAttributes> = {
+const CCubeImgPaths: Record<string, ErrorDisplayImagePathAttributes> = {
     ...ImgPaths,
     "400": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/ccube/400.png",
@@ -324,7 +324,7 @@ const CCubeImgPaths: Record<string, ErrorImagePathAttributes> = {
     },
 };
 
-const MyLegacyImgPaths: Record<string, ErrorImagePathAttributes> = {
+const MyLegacyImgPaths: Record<string, ErrorDisplayImagePathAttributes> = {
     ...ImgPaths,
     "400": {
         base: "https://assets.life.gov.sg/react-design-system/img/error/mylegacy/400.png",
@@ -448,7 +448,7 @@ interface ErrorDisplayDataAttrs {
 }
 
 export const generateErrorDisplayData = (
-    ImgPathsObject: Record<string, ErrorImagePathAttributes>,
+    ImgPathsObject: Record<string, ErrorDisplayImagePathAttributes>,
     theme?: V3_ThemeSpec
 ) =>
     new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
