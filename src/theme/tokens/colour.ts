@@ -11,6 +11,7 @@ export const Colour = {
         "brand-90": "var(--fds-brand-90)",
         "brand-95": "var(--fds-brand-95)",
         "brand-100": "var(--fds-brand-100)",
+
         "primary-10": "var(--fds-primary-10)",
         "primary-20": "var(--fds-primary-20)",
         "primary-30": "var(--fds-primary-30)",
@@ -22,6 +23,7 @@ export const Colour = {
         "primary-90": "var(--fds-primary-90)",
         "primary-95": "var(--fds-primary-95)",
         "primary-100": "var(--fds-primary-100)",
+
         "secondary-10": "var(--fds-secondary-10)",
         "secondary-20": "var(--fds-secondary-20)",
         "secondary-30": "var(--fds-secondary-30)",
@@ -33,6 +35,7 @@ export const Colour = {
         "secondary-90": "var(--fds-secondary-90)",
         "secondary-95": "var(--fds-secondary-95)",
         "secondary-100": "var(--fds-secondary-100)",
+
         "neutral-10": "var(--fds-neutral-10)",
         "neutral-20": "var(--fds-neutral-20)",
         "neutral-30": "var(--fds-neutral-30)",
@@ -44,6 +47,7 @@ export const Colour = {
         "neutral-90": "var(--fds-neutral-90)",
         "neutral-95": "var(--fds-neutral-95)",
         "neutral-100": "var(--fds-neutral-100)",
+
         "success-10": "var(--fds-success-10)",
         "success-20": "var(--fds-success-20)",
         "success-30": "var(--fds-success-30)",
@@ -55,6 +59,7 @@ export const Colour = {
         "success-90": "var(--fds-success-90)",
         "success-95": "var(--fds-success-95)",
         "success-100": "var(--fds-success-100)",
+
         "warning-10": "var(--fds-warning-10)",
         "warning-20": "var(--fds-warning-20)",
         "warning-30": "var(--fds-warning-30)",
@@ -66,6 +71,7 @@ export const Colour = {
         "warning-90": "var(--fds-warning-90)",
         "warning-95": "var(--fds-warning-95)",
         "warning-100": "var(--fds-warning-100)",
+
         "error-10": "var(--fds-error-10)",
         "error-20": "var(--fds-error-20)",
         "error-30": "var(--fds-error-30)",
@@ -77,6 +83,7 @@ export const Colour = {
         "error-90": "var(--fds-error-90)",
         "error-95": "var(--fds-error-95)",
         "error-100": "var(--fds-error-100)",
+
         "info-10": "var(--fds-info-10)",
         "info-20": "var(--fds-info-20)",
         "info-30": "var(--fds-info-30)",
@@ -88,10 +95,12 @@ export const Colour = {
         "info-90": "var(--fds-info-90)",
         "info-95": "var(--fds-info-95)",
         "info-100": "var(--fds-info-100)",
+
         white: "var(--fds-white)",
         black: "var(--fds-black)",
         "primary-inverse": "var(--fds-primary-inverse)",
     },
+
     text: "var(--fds-text)",
     "text-subtle": "var(--fds-text-subtle)",
     "text-subtler": "var(--fds-text-subtler)",
@@ -110,6 +119,7 @@ export const Colour = {
     "text-error": "var(--fds-text-error)",
     "text-info": "var(--fds-text-info)",
     "text-inverse": "var(--fds-text-inverse)",
+
     icon: "var(--fds-icon)",
     "icon-subtle": "var(--fds-icon-subtle)",
     "icon-strongest": "var(--fds-icon-strongest)",
@@ -129,6 +139,7 @@ export const Colour = {
     "icon-info": "var(--fds-icon-info)",
     "icon-inverse": "var(--fds-icon-inverse)",
     "icon-primary-inverse": "var(--fds-icon-primary-inverse)",
+
     border: "var(--fds-border)",
     "border-strong": "var(--fds-border-strong)",
     "border-stronger": "var(--fds-border-stronger)",
@@ -151,6 +162,7 @@ export const Colour = {
     "border-error-focus-strong": "var(--fds-border-error-focus-strong)",
     "border-error-strong": "var(--fds-border-error-strong)",
     "border-info": "var(--fds-border-info)",
+
     bg: "var(--fds-bg)",
     "bg-strong": "var(--fds-bg-strong)",
     "bg-stronger": "var(--fds-bg-stronger)",

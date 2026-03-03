@@ -12,6 +12,7 @@ export const Breakpoint = {
     "xl-min": "var(--fds-breakpoint-xl-min)",
     "xl-max": "var(--fds-breakpoint-xl-max)",
     "xxl-min": "var(--fds-breakpoint-xxl-min)",
+
     "xxs-column": "var(--fds-column-xxs)",
     "xs-column": "var(--fds-column-xs)",
     "sm-column": "var(--fds-column-sm)",
@@ -19,6 +20,7 @@ export const Breakpoint = {
     "lg-column": "var(--fds-column-lg)",
     "xl-column": "var(--fds-column-xl)",
     "xxl-column": "var(--fds-column-xxl)",
+
     "xxs-gutter": "var(--fds-gutter-xxs)",
     "xs-gutter": "var(--fds-gutter-xs)",
     "sm-gutter": "var(--fds-gutter-sm)",
@@ -26,6 +28,7 @@ export const Breakpoint = {
     "lg-gutter": "var(--fds-gutter-lg)",
     "xl-gutter": "var(--fds-gutter-xl)",
     "xxl-gutter": "var(--fds-gutter-xxl)",
+
     "xxs-margin": "var(--fds-margin-xxs)",
     "xs-margin": "var(--fds-margin-xs)",
     "sm-margin": "var(--fds-margin-sm)",

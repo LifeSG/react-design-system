@@ -5,6 +5,7 @@ export const Motion = {
     "duration-500": "var(--fds-motion-duration-500)",
     "duration-800": "var(--fds-motion-duration-800)",
     "duration-1000": "var(--fds-motion-duration-1000)",
+
     "ease-default": "var(--fds-motion-timing-ease-default)",
     "ease-standard": "var(--fds-motion-timing-ease-standard)",
     "ease-entrance": "var(--fds-motion-timing-ease-entrance)",
