@@ -3,6 +3,7 @@
 import { useDarkMode } from "@storybook-community/storybook-dark-mode";
 import { DecoratorHelpers } from "@storybook/addon-themes";
 import type { DecoratorFunction, Renderer } from "storybook/internal/types";
+import { ThemeProvider, ThemeType } from "../../src/theme";
 
 const { initializeThemeState, pluckThemeFromContext } = DecoratorHelpers;
 
@@ -15,6 +16,9 @@ export interface ProviderStrategyConfiguration {
     defaultTheme?: string;
     themes?: ThemeMap;
 }
+
+const _toKebab = (value: string) =>
+    value.toLowerCase().trim().replace(/\s+/g, "-");
 
 export const withThemeFromJSXProvider = <TRenderer extends Renderer = any>({
     Provider,
@@ -29,7 +33,7 @@ export const withThemeFromJSXProvider = <TRenderer extends Renderer = any>({
 
     // eslint-disable-next-line react/display-name
     return (storyFn, context) => {
-        const mode = useDarkMode();
+        const isDark = useDarkMode();
         const selectedTheme = pluckThemeFromContext(context);
         const { themeOverride } = context.parameters.themes ?? {};
 
@@ -37,6 +41,7 @@ export const withThemeFromJSXProvider = <TRenderer extends Renderer = any>({
         const pairs = Object.entries(themes);
 
         const theme = pairs.length === 1 ? pairs[0] : themes[selected];
+        const mode = isDark ? "dark" : "light";
 
         if (!Provider) {
             return (
@@ -48,10 +53,12 @@ export const withThemeFromJSXProvider = <TRenderer extends Renderer = any>({
         }
 
         return (
-            <Provider theme={{ ...theme, colourMode: mode ? "dark" : "light" }}>
-                {GlobalStyles && <GlobalStyles />}
-                {storyFn()}
-            </Provider>
+            <ThemeProvider theme={_toKebab(selected) as ThemeType} mode={mode}>
+                <Provider theme={{ ...theme, colourMode: mode }}>
+                    {GlobalStyles && <GlobalStyles />}
+                    {storyFn()}
+                </Provider>
+            </ThemeProvider>
         );
     };
 };

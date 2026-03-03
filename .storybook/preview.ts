@@ -17,23 +17,25 @@ import {
 } from "../src/v3_theme";
 import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
+export const V3_THEME_MAP = {
+    LifeSG: V3_LifeSGTheme,
+    BookingSG: V3_BookingSGTheme,
+    CCube: V3_CCubeTheme,
+    MyLegacy: V3_MyLegacyTheme,
+    OneService: V3_OneServiceTheme,
+    PA: V3_PATheme,
+    SupportGoWhere: V3_SupportGoWhereTheme,
+    "SGW Digital Lobby": V3_SGWDigitalLobbyTheme,
+    "A11y Playground": V3_A11yPlaygroundTheme,
+    IMDA: V3_IMDATheme,
+    RBS: V3_RBSTheme,
+    SPF: V3_SPFTheme,
+};
+
 const preview: Preview = {
     decorators: [
         withThemeFromJSXProvider({
-            themes: {
-                LifeSG: V3_LifeSGTheme,
-                BookingSG: V3_BookingSGTheme,
-                CCube: V3_CCubeTheme,
-                MyLegacy: V3_MyLegacyTheme,
-                OneService: V3_OneServiceTheme,
-                PA: V3_PATheme,
-                SupportGoWhere: V3_SupportGoWhereTheme,
-                SGWDigitalLobby: V3_SGWDigitalLobbyTheme,
-                A11yPlayground: V3_A11yPlaygroundTheme,
-                IMDA: V3_IMDATheme,
-                RBS: V3_RBSTheme,
-                SPF: V3_SPFTheme,
-            },
+            themes: V3_THEME_MAP,
             Provider: ThemeProvider,
         }),
     ],

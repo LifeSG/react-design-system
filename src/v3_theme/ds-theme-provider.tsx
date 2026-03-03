@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
-import { V3_ColourMode, V3_DSThemeProviderProps, V3_ThemeSpec } from "./types";
+import type {
+    V3_ColourMode,
+    V3_DSThemeProviderProps,
+    V3_ThemeSpec,
+} from "./types";
 import { getSystemColourMode } from "./use-theme-mode";
 
 // Wraps styled-components ThemeProvider and automatically handles colourMode

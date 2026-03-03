@@ -1,3 +1,4 @@
+export { ThemeProvider } from "./ds-theme-provider";
 export { Border } from "./tokens/border";
 export { Breakpoint } from "./tokens/breakpoint";
 export { Colour } from "./tokens/colour";
@@ -6,3 +7,5 @@ export { Motion } from "./tokens/motion";
 export { Radius } from "./tokens/radius";
 export { Shadow } from "./tokens/shadow";
 export { Spacing } from "./tokens/spacing";
+export type { ThemeMode, ThemeType } from "./types";
+export { useTheme } from "./use-ds-theme";
