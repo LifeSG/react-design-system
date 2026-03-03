@@ -647,11 +647,15 @@ describe("TimeRangePicker", () => {
             expect(getTimepickerDropdown()).not.toBeInTheDocument();
         });
 
-        it("should close dropdown and call onBlur when Cancel is clicked", async () => {
+        it("should close dropdown and keep focus when Cancel is clicked", async () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(<TimeRangePicker onBlur={mockOnBlur} />);
+            render(
+                <>
+                    <TimeRangePicker onBlur={mockOnBlur} />
+                </>
+            );
 
             await user.click(getFrom());
             await waitFor(() => expect(getTimepickerDropdown()).toBeVisible());
@@ -659,7 +663,17 @@ describe("TimeRangePicker", () => {
             await user.click(getCancelButton());
 
             await waitForElementToBeRemoved(() => getTimepickerDropdown());
+
+            expect(mockOnBlur).toHaveBeenCalledTimes(0);
+            expect(screen.getByTestId("timepicker-container")).toHaveFocus();
+
+            await act(async () => {
+                await user.click(document.body);
+            });
             expect(mockOnBlur).toHaveBeenCalledTimes(1);
+            expect(
+                screen.getByTestId("timepicker-container")
+            ).not.toHaveFocus();
         });
 
         it("should close dropdown and call onBlur when clicking outside", async () => {
@@ -693,6 +707,15 @@ describe("TimeRangePicker", () => {
             expect(mockOnBlur).toHaveBeenCalledTimes(0);
 
             expect(screen.getByTestId("timepicker-container")).toHaveFocus();
+
+            await act(async () => {
+                await user.click(document.body);
+            });
+
+            expect(mockOnBlur).toHaveBeenCalledTimes(1);
+            expect(
+                screen.getByTestId("timepicker-container")
+            ).not.toHaveFocus();
         });
 
         it("should call onFocus once only when moving from start to end", async () => {
