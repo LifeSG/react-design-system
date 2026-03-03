@@ -64,6 +64,8 @@ export const Font = {
     Spec: {
         "font-family": "var(--fds-font-family)",
         "font-variant": "var(--fds-font-variant)",
+        "font-variant-no-common-ligatures":
+            "var(--fds-font-variant) no-common-ligatures",
 
         "weight-light": "var(--fds-weight-light)",
         "weight-regular": "var(--fds-weight-regular)",

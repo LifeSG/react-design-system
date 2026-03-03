@@ -89,10 +89,26 @@ const weightVarMap: Record<FontWeight, string> = {
  *
  * @example
  * generateFont("heading-xxl", "light")
- * // => "font-family: var(--fds-font-family); font-size: var(--fds-heading-size-xxl); ..."
+ * // => "font-family: var(--fds-font-family); font-variant: var(--fds-font-variant); ..."
  */
-export const generateFont = (size: FontSize, weight: FontWeight): string => {
+export const generateFont = (
+    size: FontSize,
+    weight: FontWeight,
+    options?: { noCommonLigatures?: boolean; fontVariant?: string }
+): string => {
     const { size: s, lh, ls } = sizeVarMap[size];
     const w = weightVarMap[weight];
-    return `font-family: var(--fds-font-family); font-variant: var(--fds-font-variant); font-size: ${s}; font-weight: ${w}; line-height: ${lh}; letter-spacing: ${ls};`;
+
+    const extraVariant = [
+        options?.fontVariant,
+        options?.noCommonLigatures ? "no-common-ligatures" : "",
+    ]
+        .filter((v) => Boolean(v))
+        .join(" ");
+
+    const fontVariant = `var(--fds-font-variant)${
+        extraVariant ? ` ${extraVariant}` : ""
+    }`;
+
+    return `font-family: var(--fds-font-family); font-variant: ${fontVariant}; font-size: ${s}; font-weight: ${w}; line-height: ${lh}; letter-spacing: ${ls};`;
 };
