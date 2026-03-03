@@ -234,8 +234,8 @@
     --fds-bg-primary-subtlest-selected: var(--fds-brand-40);
 
     /* overlay */
-    --fds-overlay-strong: rgba(25; 25; 25; 0.95);
-    --fds-overlay-subtle: rgba(25; 25; 25; 0.2);
+    --fds-overlay-strong: rgba(25, 25, 25, 0.95);
+    --fds-overlay-subtle: rgba(25, 25, 25, 0.2);
 
     /* hyperlink */
     --fds-hyperlink: var(--fds-neutral-10);

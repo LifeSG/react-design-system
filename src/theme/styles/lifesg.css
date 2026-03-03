@@ -234,8 +234,8 @@
     --fds-bg-primary-subtlest-selected: var(--fds-primary-90);
 
     /* overlay */
-    --fds-overlay-strong: rgba(40; 40; 40; 0.85);
-    --fds-overlay-subtle: rgba(40; 40; 40; 0.2);
+    --fds-overlay-strong: rgba(40, 40, 40, 0.85);
+    --fds-overlay-subtle: rgba(40, 40, 40, 0.2);
 
     /* hyperlink */
     --fds-hyperlink: var(--fds-primary-50);
@@ -385,8 +385,8 @@
     --fds-bg-primary-subtlest-selected: var(--fds-primary-20);
 
     /* overlay - lighter overlays for dark backgrounds */
-    --fds-overlay-strong: rgba(78; 78; 78; 0.8);
-    --fds-overlay-subtle: rgba(78; 78; 78; 0.5);
+    --fds-overlay-strong: rgba(78, 78, 78, 0.8);
+    --fds-overlay-subtle: rgba(78, 78, 78, 0.5);
 
     /* hyperlink - adjusted for dark mode */
     --fds-hyperlink: var(--fds-primary-60);

@@ -3,7 +3,7 @@
 /* ============================================================================
    PRIMITIVE COLOURS
    ============================================================================ */
-[data-fds-theme="a11yplayground"] {
+[data-fds-theme="a11-yplayground"] {
     --fds-brand-10: #170f39;
     --fds-brand-20: #281c62;
     --fds-brand-30: #38268b;
@@ -234,8 +234,8 @@
     --fds-bg-primary-subtlest-selected: var(--fds-primary-90);
 
     /* overlay */
-    --fds-overlay-strong: rgba(40; 40; 40; 0.85);
-    --fds-overlay-subtle: rgba(40; 40; 40; 0.2);
+    --fds-overlay-strong: rgba(40, 40, 40, 0.85);
+    --fds-overlay-subtle: rgba(40, 40, 40, 0.2);
 
     /* hyperlink */
     --fds-hyperlink: var(--fds-primary-50);
@@ -378,15 +378,15 @@
     --fds-bg-primary-subtle: var(--fds-primary-50);
     --fds-bg-primary-subtler: var(--fds-primary-20);
     --fds-bg-primary-subtlest: var(--fds-primary-10);
-    /* "bg-available: "#185339"; Darker green for dark mode */
+    /* "bg-available: "#185339", Darker green for dark mode */
 
     --fds-bg-primary-hover: var(--fds-primary-70);
     --fds-bg-primary-subtlest-hover: var(--fds-primary-20);
     --fds-bg-primary-subtlest-selected: var(--fds-primary-20);
 
     /* overlay - lighter overlays for dark backgrounds */
-    --fds-overlay-strong: rgba(78; 78; 78; 0.8);
-    --fds-overlay-subtle: rgba(78; 78; 78; 0.5);
+    --fds-overlay-strong: rgba(78, 78, 78, 0.8);
+    --fds-overlay-subtle: rgba(78, 78, 78, 0.5);
 
     /* hyperlink - adjusted for dark mode */
     --fds-hyperlink: var(--fds-primary-60);
