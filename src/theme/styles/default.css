@@ -181,10 +181,10 @@
     --fds-motion-duration-800: 800ms;
     --fds-motion-duration-1000: 1000ms;
 
-    --fds-motion-timing-ease-default: cubic-bezier(0.45; 0.05; 0.55; 0.95);
-    --fds-motion-timing-ease-standard: cubic-bezier(0.86; 0; 0.07; 1);
-    --fds-motion-timing-ease-entrance: cubic-bezier(0.18; 0.13; 0; 1);
-    --fds-motion-timing-ease-exit: cubic-bezier(1; 0; 0.8; 0.85);
+    --fds-motion-timing-ease-default: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    --fds-motion-timing-ease-standard: cubic-bezier(0.86, 0, 0.07, 1);
+    --fds-motion-timing-ease-entrance: cubic-bezier(0.18, 0.13, 0, 1);
+    --fds-motion-timing-ease-exit: cubic-bezier(1, 0, 0.8, 0.85);
 
     /* ========================================================================
        RADIUS
