@@ -2,29 +2,29 @@
     /* ========================================================================
        BORDER
        ======================================================================== */
-    --fds-border-width-005: 0.5;
-    --fds-border-width-010: 1;
-    --fds-border-width-020: 2;
-    --fds-border-width-040: 4;
+    --fds-border-width-005: 0.5px;
+    --fds-border-width-010: 1px;
+    --fds-border-width-020: 2px;
+    --fds-border-width-040: 4px;
 
-    --fds-border-style-solid: "solid";
+    --fds-border-style-solid: solid;
 
     /* ========================================================================
        BREAKPOINT
        ======================================================================== */
     --fds-breakpoint-xxs-min: 0;
-    --fds-breakpoint-xxs-max: 320;
-    --fds-breakpoint-xs-min: 321;
-    --fds-breakpoint-xs-max: 375;
-    --fds-breakpoint-sm-min: 376;
-    --fds-breakpoint-sm-max: 480;
-    --fds-breakpoint-md-min: 481;
-    --fds-breakpoint-md-max: 768;
-    --fds-breakpoint-lg-min: 769;
-    --fds-breakpoint-lg-max: 1200;
-    --fds-breakpoint-xl-min: 1201;
-    --fds-breakpoint-xl-max: 1440;
-    --fds-breakpoint-xxl-min: 1441;
+    --fds-breakpoint-xxs-max: 320px;
+    --fds-breakpoint-xs-min: 321px;
+    --fds-breakpoint-xs-max: 375px;
+    --fds-breakpoint-sm-min: 376px;
+    --fds-breakpoint-sm-max: 480px;
+    --fds-breakpoint-md-min: 481px;
+    --fds-breakpoint-md-max: 768px;
+    --fds-breakpoint-lg-min: 769px;
+    --fds-breakpoint-lg-max: 1200px;
+    --fds-breakpoint-xl-min: 1201px;
+    --fds-breakpoint-xl-max: 1440px;
+    --fds-breakpoint-xxl-min: 1441px;
 
     --fds-column-xxs: 8;
     --fds-column-xs: 8;
@@ -34,21 +34,21 @@
     --fds-column-xl: 12;
     --fds-column-xxl: 12;
 
-    --fds-gutter-xxs: 16;
-    --fds-gutter-xs: 16;
-    --fds-gutter-sm: 16;
-    --fds-gutter-md: 16;
-    --fds-gutter-lg: 32;
-    --fds-gutter-xl: 32;
-    --fds-gutter-xxl: 32;
+    --fds-gutter-xxs: 16px;
+    --fds-gutter-xs: 16px;
+    --fds-gutter-sm: 16px;
+    --fds-gutter-md: 16px;
+    --fds-gutter-lg: 32px;
+    --fds-gutter-xl: 32px;
+    --fds-gutter-xxl: 32px;
 
-    --fds-margin-xxs: 24;
-    --fds-margin-xs: 24;
-    --fds-margin-sm: 24;
-    --fds-margin-md: 24;
-    --fds-margin-lg: 48;
-    --fds-margin-xl: 48;
-    --fds-margin-xxl: 48;
+    --fds-margin-xxs: 24px;
+    --fds-margin-xs: 24px;
+    --fds-margin-sm: 24px;
+    --fds-margin-md: 24px;
+    --fds-margin-lg: 48px;
+    --fds-margin-xl: 48px;
+    --fds-margin-xxl: 48px;
 
     /* ========================================================================
        COMPONENT TOKENS
@@ -67,12 +67,12 @@
     --fds-loading-dots-spinner-colour: var(--fds-icon-primary);
 
     /* Navbar */
-    --fds-navbar-full-height: "6rem";
-    --fds-navbar-full-logo-height: "2rem";
-    --fds-navbar-compressed-height: "4rem";
-    --fds-navbar-compressed-logo-height: "1.5rem";
-    --fds-navbar-mobile-height: "3.5rem";
-    --fds-navbar-mobile-logo-height: "1.5rem";
+    --fds-navbar-full-height: 6rem;
+    --fds-navbar-full-logo-height: 2rem;
+    --fds-navbar-compressed-height: 4rem;
+    --fds-navbar-compressed-logo-height: 1.5rem;
+    --fds-navbar-mobile-height: 3.5rem;
+    --fds-navbar-mobile-logo-height: 1.5rem;
     --fds-navbar-colour-bg: var(--fds-bg);
     --fds-navbar-colour-icon: var(--fds-icon);
     --fds-navbar-link-colour-text: var(--fds-text);
@@ -149,25 +149,25 @@
        LAYOUT
        ======================================================================== */
     --fds-spacing-0: 0;
-    --fds-spacing-4: 4;
-    --fds-spacing-8: 8;
-    --fds-spacing-12: 12;
-    --fds-spacing-16: 16;
-    --fds-spacing-20: 20;
-    --fds-spacing-24: 24;
-    --fds-spacing-32: 32;
-    --fds-spacing-40: 40;
-    --fds-spacing-48: 48;
-    --fds-spacing-64: 64;
-    --fds-spacing-72: 72;
+    --fds-spacing-4: 4px;
+    --fds-spacing-8: 8px;
+    --fds-spacing-12: 12px;
+    --fds-spacing-16: 16px;
+    --fds-spacing-20: 20px;
+    --fds-spacing-24: 24px;
+    --fds-spacing-32: 32px;
+    --fds-spacing-40: 40px;
+    --fds-spacing-48: 48px;
+    --fds-spacing-64: 64px;
+    --fds-spacing-72: 72px;
 
-    --fds-layout-xs: 8;
-    --fds-layout-sm: 16;
-    --fds-layout-md: 24;
-    --fds-layout-lg: 32;
-    --fds-layout-xl: 48;
-    --fds-layout-xxl: 64;
-    --fds-layout-xxxl: 128;
+    --fds-layout-xs: 8px;
+    --fds-layout-sm: 16px;
+    --fds-layout-md: 24px;
+    --fds-layout-lg: 32px;
+    --fds-layout-xl: 48px;
+    --fds-layout-xxl: 64px;
+    --fds-layout-xxxl: 128px;
 
     /* ========================================================================
        MOTION
@@ -188,11 +188,11 @@
        RADIUS
        ======================================================================== */
     --fds-radius-none: 0;
-    --fds-radius-xs: 2;
-    --fds-radius-sm: 4;
-    --fds-radius-md: 8;
-    --fds-radius-lg: 12;
-    --fds-radius-full: 9999;
+    --fds-radius-xs: 2px;
+    --fds-radius-sm: 4px;
+    --fds-radius-md: 8px;
+    --fds-radius-lg: 12px;
+    --fds-radius-full: 9999px;
 
     /* ========================================================================
        SHADOW
