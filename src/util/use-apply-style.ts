@@ -9,14 +9,22 @@ import { useIsomorphicLayoutEffect } from "./use-isomorphic-layout-effect";
 export const useApplyStyle = <T extends HTMLElement = HTMLDivElement>(
     ref: RefObject<T>,
     variableName: string,
-    value: string | number | undefined
+    value: string | number | (({ theme }: { theme: any }) => string) | undefined
 ) => {
     useIsomorphicLayoutEffect(() => {
         const element = ref?.current;
         if (!element) return;
 
         if (value !== undefined && value !== null) {
-            element.style.setProperty(variableName, String(value));
+            let valueToApply: string;
+            if (typeof value === "function") {
+                valueToApply = value({ theme: undefined });
+            } else if (typeof value === "number") {
+                valueToApply = value + "px";
+            } else {
+                valueToApply = value;
+            }
+            element.style.setProperty(variableName, valueToApply);
         } else {
             element.style.removeProperty(variableName);
         }
