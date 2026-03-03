@@ -11,6 +11,7 @@ export const Spacing = {
     "spacing-48": "var(--fds-spacing-48)",
     "spacing-64": "var(--fds-spacing-64)",
     "spacing-72": "var(--fds-spacing-72)",
+
     "layout-xs": "var(--fds-layout-xs)",
     "layout-sm": "var(--fds-layout-sm)",
     "layout-md": "var(--fds-layout-md)",

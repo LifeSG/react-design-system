@@ -94,5 +94,5 @@ const weightVarMap: Record<FontWeight, string> = {
 export const generateFont = (size: FontSize, weight: FontWeight): string => {
     const { size: s, lh, ls } = sizeVarMap[size];
     const w = weightVarMap[weight];
-    return `font-family: var(--fds-font-family); font-size: ${s}; font-weight: ${w}; line-height: ${lh}; letter-spacing: ${ls};`;
+    return `font-family: var(--fds-font-family); font-variant: var(--fds-font-variant); font-size: ${s}; font-weight: ${w}; line-height: ${lh}; letter-spacing: ${ls};`;
 };

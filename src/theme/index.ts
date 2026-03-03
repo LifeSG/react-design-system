@@ -1,8 +1,8 @@
-export { Colour } from "./colour";
-export { Font } from "./font";
-export { Border } from "./border";
-export { Radius } from "./radius";
-export { Spacing } from "./spacing";
-export { Shadow } from "./shadow";
-export { Motion } from "./motion";
-export { Breakpoint } from "./breakpoint";
+export { Colour } from "./tokens/colour";
+export { Font } from "./tokens/font";
+export { Border } from "./tokens/border";
+export { Radius } from "./tokens/radius";
+export { Spacing } from "./tokens/spacing";
+export { Shadow } from "./tokens/shadow";
+export { Motion } from "./tokens/motion";
+export { Breakpoint } from "./tokens/breakpoint";
