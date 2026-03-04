@@ -11,6 +11,7 @@ export interface OtpInputProps extends React.AriaAttributes {
     cooldownDuration: number;
     /** The props for the submit button */
     actionButtonProps?: ButtonProps | undefined;
+    otpOnly?: boolean | undefined;
     /** The number of characters for the Otp */
     numOfInput: number;
     prefix?:
@@ -23,6 +24,7 @@ export interface OtpInputProps extends React.AriaAttributes {
         | undefined;
     /** Called when one of the input is changed. Returns an array of all the input values */
     onChange?: ((value: string[]) => void) | undefined;
+    onCountdownChange?: (remaining: number) => void;
     /** Called when the cooldown begins */
     onCooldownStart?: () => void;
     /** Called when the cooldown ends */
