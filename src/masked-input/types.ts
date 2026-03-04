@@ -26,7 +26,6 @@ export interface MaskedInputProps extends InputProps, MaskAttributeProps {
      * Values: "loading" | "fail" | "success"
      */
     loadState?: MaskedInputLoadState | undefined;
-    accessibleLabel?: string | undefined;
     onMask?: (() => void) | undefined;
     onUnmask?: (() => void) | undefined;
     /** The callback function when the "Try again" button is clicked in error state */

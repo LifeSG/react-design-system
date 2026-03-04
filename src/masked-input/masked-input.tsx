@@ -38,7 +38,6 @@ const Component = (
         disableMask,
         transformInput,
         loadState,
-        accessibleLabel,
         onMask,
         onUnmask,
         onChange,
@@ -55,7 +54,15 @@ const Component = (
     const isEmptyReadOnlyState = readOnly && isEmpty(value);
     const [isMasked, setIsMasked] = useState<boolean>(!disableMask);
     const [updatedValue, setUpdatedValue] = useState<string>(value || "");
-    const labelText = accessibleLabel ?? "value";
+    const valueId = `${otherProps.id ?? dataTestId ?? "masked-input"}-value`;
+
+    const ariaLabelledBy = (otherProps as any)["aria-labelledby"] as
+        | string
+        | undefined;
+    const ariaDescribedBy = (otherProps as any)["aria-describedby"] as
+        | string
+        | undefined;
+    const descId = `${otherProps.id ?? dataTestId ?? "masked-input"}-desc`;
 
     // =============================================================================
     // EFFECTS
@@ -174,18 +181,21 @@ const Component = (
                 onClick={handleToggleMask}
                 aria-busy={loadState === "loading"}
                 type="button"
-                aria-label={StringHelper.getMaskedDescription(
-                    updatedValue,
-                    isMasked ? "masked" : "unmasked",
-                    maskRange
-                )}
+                aria-labelledby={[valueId, ariaLabelledBy]
+                    .filter(Boolean)
+                    .join(" ")}
+                aria-describedby={ariaDescribedBy}
             >
+                <VisuallyHidden id={valueId}>{getValue()}</VisuallyHidden>
+                <VisuallyHidden id={descId}>
+                    {StringHelper.getMaskedDescription(
+                        updatedValue,
+                        isMasked ? "masked" : "unmasked",
+                        maskRange
+                    )}
+                </VisuallyHidden>
                 <span>{getValue()}</span>
-                <ReadOnlyIconContainer
-                    aria-label={
-                        isMasked ? `Display ${labelText}` : `Hide ${labelText}`
-                    }
-                >
+                <ReadOnlyIconContainer>
                     {isMasked ? (
                         <EyeIcon data-testid="masked-icon" />
                     ) : (
@@ -213,7 +223,7 @@ const Component = (
                             <TryAgainLabel>
                                 Try again?
                                 <VisuallyHidden>
-                                    {`Error in displaying ${labelText}, Try again?`}
+                                    {`Error. Try again?`}
                                 </VisuallyHidden>
                             </TryAgainLabel>
                         </ClickableErrorWrapper>
