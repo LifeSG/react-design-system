@@ -39,8 +39,20 @@ export const V3_THEME_MAP = {
     SupportGoWhere: V3_SupportGoWhereTheme,
 };
 
-const _toKebab = (value: string) =>
-    value.toLowerCase().trim().replace(/\s+/g, "-");
+const THEME_KEY_TO_TYPE_MAPPING = {
+    "A11y Playground": "a11y-playground",
+    BookingSG: "bookingsg",
+    CCube: "ccube",
+    IMDA: "imda",
+    LifeSG: "lifesg",
+    MyLegacy: "mylegacy",
+    OneService: "oneservice",
+    PA: "pa",
+    RBS: "rbs",
+    "SGW Digital Lobby": "sgw-digital-lobby",
+    SPF: "spf",
+    SupportGoWhere: "supportgowhere",
+};
 
 export const withThemeFromJSXProvider = <
     TRenderer extends Renderer = any
@@ -64,7 +76,10 @@ export const withThemeFromJSXProvider = <
         const mode = isDark ? "dark" : "light";
 
         return (
-            <ThemeProvider theme={_toKebab(selected) as ThemeType} mode={mode}>
+            <ThemeProvider
+                theme={THEME_KEY_TO_TYPE_MAPPING[selected] as ThemeType}
+                mode={mode}
+            >
                 <StyledComponentsThemeProvider
                     theme={{ ...theme, colourMode: mode }}
                 >
