@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
 import {
@@ -56,6 +56,10 @@ const Component = (
     const [updatedValue, setUpdatedValue] = useState<string>(value || "");
     const valueId = `${otherProps.id ?? dataTestId ?? "masked-input"}-value`;
 
+    const inputRef = useRef<HTMLInputElement>(null);
+    const iconRef = useRef<HTMLDivElement>(null);
+    useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
+
     const ariaLabelledBy = (otherProps as any)["aria-labelledby"] as
         | string
         | undefined;
@@ -111,9 +115,20 @@ const Component = (
     };
 
     const handleToggleMask = () => {
-        toggleMasking(!isMasked);
-    };
+        const nextMasked = !isMasked;
 
+        toggleMasking(nextMasked);
+
+        if (!nextMasked) {
+            inputRef.current?.focus();
+            return;
+        }
+
+        if (document.activeElement === inputRef.current) {
+            inputRef.current?.blur();
+            iconRef.current?.focus();
+        }
+    };
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
@@ -220,12 +235,7 @@ const Component = (
                                 <ErrorIcon />
                                 <ErrorLabel>Error</ErrorLabel>
                             </ErrorTextContainer>
-                            <TryAgainLabel>
-                                Try again?
-                                <VisuallyHidden>
-                                    {`Error. Try again?`}
-                                </VisuallyHidden>
-                            </TryAgainLabel>
+                            <TryAgainLabel>Try again?</TryAgainLabel>
                         </ClickableErrorWrapper>
                     );
                 case "loading":
@@ -243,7 +253,7 @@ const Component = (
 
         return (
             <InputGroupWrapper
-                ref={ref}
+                ref={inputRef}
                 data-testid={`${dataTestId || "masked-input"}${
                     isMasked ? "-masked" : "-unmasked"
                 }`}
