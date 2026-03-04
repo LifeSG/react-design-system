@@ -1,76 +1,44 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ThemeContext } from "./context";
-import type { ThemeMode, ThemeType } from "../types";
 import type { ThemeProviderProps } from "./types";
 import {
     getSystemColourMode,
     listenToSystemColourMode,
 } from "./system-colour-mode";
-
-const useIsomorphicLayoutEffect =
-    typeof window !== "undefined" ? useLayoutEffect : useEffect;
+import { useIsomorphicLayoutEffect } from "../../util";
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     children,
-    theme: controlledTheme,
-    mode: controlledMode,
-    initialTheme = "lifesg",
-    initialMode,
-    onThemeChange,
-    onModeChange,
+    theme = "lifesg",
+    mode,
 }) => {
-    const isThemeControlled = controlledTheme !== undefined;
-    const isModeControlled = controlledMode !== undefined;
+    const isModeControlled = mode !== undefined;
 
-    const [internalTheme, setInternalTheme] = useState(initialTheme);
-    const [internalMode, setInternalMode] = useState(
-        initialMode ?? getSystemColourMode()
+    const [computedMode, setComputedMode] = useState(
+        mode ?? getSystemColourMode()
     );
-    console.log({ internalMode });
-
-    const theme = isThemeControlled ? controlledTheme : internalTheme;
-
-    const mode = isModeControlled ? controlledMode : internalMode;
 
     useIsomorphicLayoutEffect(() => {
         document.documentElement.dataset.fdsTheme = theme;
     }, [theme]);
 
     useIsomorphicLayoutEffect(() => {
-        document.documentElement.dataset.fdsThemeMode = mode;
-    }, [mode]);
+        document.documentElement.dataset.fdsThemeMode = isModeControlled
+            ? mode!
+            : computedMode;
+    }, [theme, mode, computedMode, isModeControlled]);
 
     useEffect(() => {
         if (isModeControlled) return;
 
-        const cleanup = listenToSystemColourMode((newMode) => {
-            setInternalMode(newMode);
-        });
-
-        return cleanup;
+        return listenToSystemColourMode(setComputedMode);
     }, [isModeControlled]);
-
-    const setTheme = (nextTheme: ThemeType) => {
-        if (!isThemeControlled) {
-            setInternalTheme(nextTheme);
-        }
-        onThemeChange?.(nextTheme);
-    };
-
-    const setMode = (nextMode: ThemeMode) => {
-        if (!isModeControlled) {
-            setInternalMode(nextMode);
-        }
-        onModeChange?.(nextMode);
-    };
 
     return (
         <ThemeContext.Provider
             value={{
                 theme,
-                mode,
-                setTheme,
-                setMode,
+                mode: isModeControlled ? mode! : computedMode,
             }}
         >
             {children}
