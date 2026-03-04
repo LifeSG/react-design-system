@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useCountdown } from "../util";
 import { ContactInputSection } from "./contact-input-section";
+import { OtpTimerAnnouncer } from "./otp-timer-announcer";
 import { OTPInputWrapper } from "./otp-verification-styles";
 import { OtpVerificationProps } from "./types";
 import { VerificationSection } from "./verification-section";
@@ -84,6 +85,11 @@ export const OtpVerification = (props: OtpVerificationProps) => {
     // =============================================================================
     return (
         <OTPInputWrapper id={id} data-testid={dataTestId} className={className}>
+            <OtpTimerAnnouncer
+                timeLeft={countdown.timeLeft}
+                isRunning={countdown.isRunning}
+                duration={countdown.duration}
+            />
             <ContactInputSection
                 {...props}
                 inputId={inputId}

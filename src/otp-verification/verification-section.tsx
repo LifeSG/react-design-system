@@ -31,6 +31,56 @@ export const VerificationSection = ({
     otpSeparator,
 }: VerificationSectionProps) => {
     const theme = useTheme();
+
+    // =========================================================================
+    // ARIA LIVE REGION
+    // =========================================================================
+    // const [liveMessage, setLiveMessage] = useState("");
+    // const prevIsRunningRef = useRef(false);
+    // const liveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // const announce = (message: string) => {
+    //     // Clear first so the DOM mutation is always observed by screen readers,
+    //     // even when the same message is announced twice (e.g. OTP resent).
+    //     setLiveMessage("");
+    //     liveTimerRef.current = setTimeout(() => {
+    //         setLiveMessage(message);
+    //     }, 500);
+    // };
+
+    // useEffect(() => {
+    //     return () => {
+    //         if (liveTimerRef.current) clearTimeout(liveTimerRef.current);
+    //     };
+    // }, []);
+
+    // useEffect(() => {
+    //     const wasRunning = prevIsRunningRef.current;
+    //     prevIsRunningRef.current = countdown.isRunning;
+
+    //     // Step 1: countdown started
+    //     if (!wasRunning && countdown.isRunning) {
+    //         announce(
+    //             `You can resend the OTP in ${countdown.timeLeft} seconds.`
+    //         );
+    //         return;
+    //     }
+
+    //     // Step 3: countdown completed
+    //     if (wasRunning && !countdown.isRunning && countdown.timeLeft === 0) {
+    //         announce("You can now resend the OTP.");
+    //         return;
+    //     }
+
+    //     // Step 2: periodic milestone announcements at 30s and 15s
+    //     if (
+    //         countdown.isRunning &&
+    //         (countdown.timeLeft === 30 || countdown.timeLeft === 15)
+    //     ) {
+    //         announce(`${countdown.timeLeft} seconds remaining.`);
+    //     }
+    // }, [countdown.isRunning, countdown.timeLeft]);
+
     const isMobile = useMediaQuery({
         maxWidth: Breakpoint["sm-max"]({ theme }),
     });
@@ -44,11 +94,13 @@ export const VerificationSection = ({
             <div aria-label={iconLabel} role="img">
                 {type === "email" ? (
                     <EmailThumbnail
+                        aria-hidden={true}
                         width={thumbnailSize}
                         height={thumbnailSize}
                     />
                 ) : (
                     <PhoneThumbnail
+                        aria-hidden={true}
                         width={thumbnailSize}
                         height={thumbnailSize}
                     />
@@ -62,7 +114,11 @@ export const VerificationSection = ({
             id={id}
             data-testid={dataTestId}
             role="group"
-            aria-labelledby={id ? `${id}-title` : undefined}
+            aria-label={
+                type === "email"
+                    ? "Verify your email address"
+                    : "Verify your mobile number"
+            }
         >
             {renderThumbnail()}
             <SectionContainer>
@@ -106,9 +162,15 @@ export const VerificationSection = ({
                                     }`,
                                 },
                             }}
-                            type="number"
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
                             error={!!verifyOtpError}
-                            aria-label="Enter OTP code"
+                            aria-label={
+                                `${otpPrefix ?? ""}${
+                                    otpSeparator ?? ""
+                                }`.trim() || undefined
+                            }
                             aria-invalid={!!verifyOtpError}
                             aria-required={true}
                         />

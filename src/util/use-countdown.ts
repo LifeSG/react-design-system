@@ -12,6 +12,8 @@ export interface UseCountdownReturn {
     timeLeft: number;
     /** Whether countdown is currently running */
     isRunning: boolean;
+    /** Duration in seconds */
+    duration: number;
     /** Start the countdown */
     start: () => void;
     /** Stop the countdown */
@@ -88,6 +90,7 @@ export const useCountdown = ({
     return {
         timeLeft,
         isRunning,
+        duration,
         start,
         stop,
         reset,
