@@ -102,150 +102,150 @@
    ============================================================================ */
 [data-fds-theme="pa"] {
     /* text */
-    --fds-colour-text: var(--fds-neutral-30);
-    --fds-colour-text-subtle: var(--fds-neutral-40);
-    --fds-colour-text-subtler: var(--fds-neutral-50);
-    --fds-colour-text-subtlest: var(--fds-neutral-70);
-    --fds-colour-text-primary: var(--fds-neutral-10);
-    --fds-colour-text-primary-strongest: var(--fds-neutral-10);
+    --fds-colour-text: var(--fds-colour-neutral-30);
+    --fds-colour-text-subtle: var(--fds-colour-neutral-40);
+    --fds-colour-text-subtler: var(--fds-colour-neutral-50);
+    --fds-colour-text-subtlest: var(--fds-colour-neutral-70);
+    --fds-colour-text-primary: var(--fds-colour-neutral-10);
+    --fds-colour-text-primary-strongest: var(--fds-colour-neutral-10);
 
-    --fds-colour-text-hover: var(--fds-neutral-70);
-    --fds-colour-text-selected: var(--fds-neutral-20);
-    --fds-colour-text-selected-hover: var(--fds-neutral-10);
+    --fds-colour-text-hover: var(--fds-colour-neutral-70);
+    --fds-colour-text-selected: var(--fds-colour-neutral-20);
+    --fds-colour-text-selected-hover: var(--fds-colour-neutral-10);
 
-    --fds-colour-text-disabled: var(--fds-neutral-50);
-    --fds-colour-text-disabled-subtle: var(--fds-neutral-70);
-    --fds-colour-text-disabled-subtlest: var(--fds-neutral-80);
-    --fds-colour-text-selected-disabled: var(--fds-neutral-40);
+    --fds-colour-text-disabled: var(--fds-colour-neutral-50);
+    --fds-colour-text-disabled-subtle: var(--fds-colour-neutral-70);
+    --fds-colour-text-disabled-subtlest: var(--fds-colour-neutral-80);
+    --fds-colour-text-selected-disabled: var(--fds-colour-neutral-40);
 
-    --fds-colour-text-success: var(--fds-success-40);
-    --fds-colour-text-warning: var(--fds-warning-40);
-    --fds-colour-text-error: var(--fds-brand-30);
-    --fds-colour-text-info: var(--fds-neutral-40);
-    --fds-colour-text-inverse: var(--fds-neutral-100);
+    --fds-colour-text-success: var(--fds-colour-success-40);
+    --fds-colour-text-warning: var(--fds-colour-warning-40);
+    --fds-colour-text-error: var(--fds-colour-brand-30);
+    --fds-colour-text-info: var(--fds-colour-neutral-40);
+    --fds-colour-text-inverse: var(--fds-colour-neutral-100);
 
     /* icon */
-    --fds-colour-icon: var(--fds-neutral-40);
-    --fds-colour-icon-subtle: var(--fds-neutral-50);
-    --fds-colour-icon-strongest: var(--fds-neutral-10);
-    --fds-colour-icon-primary: var(--fds-neutral-10);
-    --fds-colour-icon-primary-subtle: var(--fds-neutral-30);
-    --fds-colour-icon-primary-subtlest: var(--fds-neutral-60);
+    --fds-colour-icon: var(--fds-colour-neutral-40);
+    --fds-colour-icon-subtle: var(--fds-colour-neutral-50);
+    --fds-colour-icon-strongest: var(--fds-colour-neutral-10);
+    --fds-colour-icon-primary: var(--fds-colour-neutral-10);
+    --fds-colour-icon-primary-subtle: var(--fds-colour-neutral-30);
+    --fds-colour-icon-primary-subtlest: var(--fds-colour-neutral-60);
 
-    --fds-colour-icon-hover: var(--fds-neutral-70);
-    --fds-colour-icon-selected: var(--fds-brand-20);
-    --fds-colour-icon-selected-hover: var(--fds-brand-10);
+    --fds-colour-icon-hover: var(--fds-colour-neutral-70);
+    --fds-colour-icon-selected: var(--fds-colour-brand-20);
+    --fds-colour-icon-selected-hover: var(--fds-colour-brand-10);
 
-    --fds-colour-icon-disabled: var(--fds-neutral-50);
-    --fds-colour-icon-disabled-subtle: var(--fds-neutral-70);
-    --fds-colour-icon-selected-disabled: var(--fds-neutral-40);
+    --fds-colour-icon-disabled: var(--fds-colour-neutral-50);
+    --fds-colour-icon-disabled-subtle: var(--fds-colour-neutral-70);
+    --fds-colour-icon-selected-disabled: var(--fds-colour-neutral-40);
 
-    --fds-colour-icon-success: var(--fds-success-40);
-    --fds-colour-icon-warning: var(--fds-warning-60);
-    --fds-colour-icon-error: var(--fds-brand-30);
-    --fds-colour-icon-error-strong: var(--fds-brand-10);
-    --fds-colour-icon-info: var(--fds-neutral-40);
-    --fds-colour-icon-inverse: var(--fds-neutral-100);
+    --fds-colour-icon-success: var(--fds-colour-success-40);
+    --fds-colour-icon-warning: var(--fds-colour-warning-60);
+    --fds-colour-icon-error: var(--fds-colour-brand-30);
+    --fds-colour-icon-error-strong: var(--fds-colour-brand-10);
+    --fds-colour-icon-info: var(--fds-colour-neutral-40);
+    --fds-colour-icon-inverse: var(--fds-colour-neutral-100);
     --fds-colour-icon-primary-inverse: #f9b371;
 
     /* border */
-    --fds-colour-border: var(--fds-neutral-90);
-    --fds-colour-border-strong: var(--fds-neutral-30);
-    --fds-colour-border-stronger: var(--fds-neutral-20);
-    --fds-colour-border-primary: var(--fds-neutral-40);
-    --fds-colour-border-primary-subtle: var(--fds-neutral-60);
+    --fds-colour-border: var(--fds-colour-neutral-90);
+    --fds-colour-border-strong: var(--fds-colour-neutral-30);
+    --fds-colour-border-stronger: var(--fds-colour-neutral-20);
+    --fds-colour-border-primary: var(--fds-colour-neutral-40);
+    --fds-colour-border-primary-subtle: var(--fds-colour-neutral-60);
 
-    --fds-colour-border-hover: var(--fds-neutral-80);
-    --fds-colour-border-hover-strong: var(--fds-neutral-10);
+    --fds-colour-border-hover: var(--fds-colour-neutral-80);
+    --fds-colour-border-hover-strong: var(--fds-colour-neutral-10);
 
-    --fds-colour-border-selected: var(--fds-brand-20);
-    --fds-colour-border-selected-subtle: var(--fds-neutral-40);
-    --fds-colour-border-selected-subtlest: var(--fds-neutral-70);
-    --fds-colour-border-selected-hover: var(--fds-neutral-10);
+    --fds-colour-border-selected: var(--fds-colour-brand-20);
+    --fds-colour-border-selected-subtle: var(--fds-colour-neutral-40);
+    --fds-colour-border-selected-subtlest: var(--fds-colour-neutral-70);
+    --fds-colour-border-selected-hover: var(--fds-colour-neutral-10);
 
-    --fds-colour-border-focus: var(--fds-neutral-20);
-    --fds-colour-border-focus-strong: var(--fds-neutral-10);
+    --fds-colour-border-focus: var(--fds-colour-neutral-20);
+    --fds-colour-border-focus-strong: var(--fds-colour-neutral-10);
 
-    --fds-colour-border-disabled: var(--fds-neutral-90);
-    --fds-colour-border-selected-disabled: var(--fds-neutral-80);
+    --fds-colour-border-disabled: var(--fds-colour-neutral-90);
+    --fds-colour-border-selected-disabled: var(--fds-colour-neutral-80);
 
-    --fds-colour-border-success: var(--fds-success-40);
-    --fds-colour-border-warning: var(--fds-warning-60);
-    --fds-colour-border-error: var(--fds-brand-30);
-    --fds-colour-border-error-focus: var(--fds-brand-20);
-    --fds-colour-border-error-focus-strong: var(--fds-brand-10);
-    --fds-colour-border-error-strong: var(--fds-brand-20);
-    --fds-colour-border-info: var(--fds-neutral-40);
+    --fds-colour-border-success: var(--fds-colour-success-40);
+    --fds-colour-border-warning: var(--fds-colour-warning-60);
+    --fds-colour-border-error: var(--fds-colour-brand-30);
+    --fds-colour-border-error-focus: var(--fds-colour-brand-20);
+    --fds-colour-border-error-focus-strong: var(--fds-colour-brand-10);
+    --fds-colour-border-error-strong: var(--fds-colour-brand-20);
+    --fds-colour-border-info: var(--fds-colour-neutral-40);
 
     /* background */
-    --fds-colour-bg: var(--fds-neutral-100);
-    --fds-colour-bg-strong: var(--fds-neutral-95);
-    --fds-colour-bg-stronger: var(--fds-neutral-90);
-    --fds-colour-bg-strongest: var(--fds-neutral-80);
+    --fds-colour-bg: var(--fds-colour-neutral-100);
+    --fds-colour-bg-strong: var(--fds-colour-neutral-95);
+    --fds-colour-bg-stronger: var(--fds-colour-neutral-90);
+    --fds-colour-bg-strongest: var(--fds-colour-neutral-80);
 
-    --fds-colour-bg-hover: var(--fds-brand-90);
-    --fds-colour-bg-hover-strong: var(--fds-brand-80);
-    --fds-colour-bg-hover-subtle: var(--fds-neutral-90);
-    --fds-colour-bg-hover-neutral: var(--fds-neutral-90);
-    --fds-colour-bg-hover-neutral-strong: var(--fds-neutral-90);
+    --fds-colour-bg-hover: var(--fds-colour-brand-90);
+    --fds-colour-bg-hover-strong: var(--fds-colour-brand-80);
+    --fds-colour-bg-hover-subtle: var(--fds-colour-neutral-90);
+    --fds-colour-bg-hover-neutral: var(--fds-colour-neutral-90);
+    --fds-colour-bg-hover-neutral-strong: var(--fds-colour-neutral-90);
 
-    --fds-colour-bg-selected: var(--fds-brand-100);
-    --fds-colour-bg-selected-hover: var(--fds-brand-30);
-    --fds-colour-bg-selected-strong: var(--fds-brand-50);
-    --fds-colour-bg-selected-stronger: var(--fds-brand-40);
-    --fds-colour-bg-selected-strongest: var(--fds-brand-20);
-    --fds-colour-bg-selected-strongest-hover: var(--fds-brand-10);
+    --fds-colour-bg-selected: var(--fds-colour-brand-100);
+    --fds-colour-bg-selected-hover: var(--fds-colour-brand-30);
+    --fds-colour-bg-selected-strong: var(--fds-colour-brand-50);
+    --fds-colour-bg-selected-stronger: var(--fds-colour-brand-40);
+    --fds-colour-bg-selected-strongest: var(--fds-colour-brand-20);
+    --fds-colour-bg-selected-strongest-hover: var(--fds-colour-brand-10);
 
-    --fds-colour-bg-disabled: var(--fds-neutral-90);
-    --fds-colour-bg-selected-disabled: var(--fds-neutral-90);
-    --fds-colour-bg-selected-stronger-disabled: var(--fds-neutral-80);
+    --fds-colour-bg-disabled: var(--fds-colour-neutral-90);
+    --fds-colour-bg-selected-disabled: var(--fds-colour-neutral-90);
+    --fds-colour-bg-selected-stronger-disabled: var(--fds-colour-neutral-80);
 
-    --fds-colour-bg-success: var(--fds-success-100);
-    --fds-colour-bg-success-hover: var(--fds-success-95);
-    --fds-colour-bg-success-strong: var(--fds-success-50);
-    --fds-colour-bg-success-strong-hover: var(--fds-success-40);
-    --fds-colour-bg-warning: var(--fds-warning-100);
-    --fds-colour-bg-warning-hover: var(--fds-warning-95);
-    --fds-colour-bg-warning-strong: var(--fds-warning-50);
-    --fds-colour-bg-warning-strong-hover: var(--fds-warning-40);
-    --fds-colour-bg-info: var(--fds-neutral-95);
-    --fds-colour-bg-info-hover: var(--fds-info-95);
-    --fds-colour-bg-info-strong: var(--fds-info-50);
-    --fds-colour-bg-info-strong-hover: var(--fds-info-40);
-    --fds-colour-bg-error: var(--fds-brand-100);
-    --fds-colour-bg-error-hover: var(--fds-error-95);
-    --fds-colour-bg-error-strong: var(--fds-error-50);
-    --fds-colour-bg-error-strong-hover: var(--fds-error-40);
+    --fds-colour-bg-success: var(--fds-colour-success-100);
+    --fds-colour-bg-success-hover: var(--fds-colour-success-95);
+    --fds-colour-bg-success-strong: var(--fds-colour-success-50);
+    --fds-colour-bg-success-strong-hover: var(--fds-colour-success-40);
+    --fds-colour-bg-warning: var(--fds-colour-warning-100);
+    --fds-colour-bg-warning-hover: var(--fds-colour-warning-95);
+    --fds-colour-bg-warning-strong: var(--fds-colour-warning-50);
+    --fds-colour-bg-warning-strong-hover: var(--fds-colour-warning-40);
+    --fds-colour-bg-info: var(--fds-colour-neutral-95);
+    --fds-colour-bg-info-hover: var(--fds-colour-info-95);
+    --fds-colour-bg-info-strong: var(--fds-colour-info-50);
+    --fds-colour-bg-info-strong-hover: var(--fds-colour-info-40);
+    --fds-colour-bg-error: var(--fds-colour-brand-100);
+    --fds-colour-bg-error-hover: var(--fds-colour-error-95);
+    --fds-colour-bg-error-strong: var(--fds-colour-error-50);
+    --fds-colour-bg-error-strong-hover: var(--fds-colour-error-40);
 
-    --fds-colour-bg-inverse: var(--fds-neutral-40);
-    --fds-colour-bg-inverse-subtle: var(--fds-neutral-60);
-    --fds-colour-bg-inverse-subtler: var(--fds-neutral-70);
-    --fds-colour-bg-inverse-subtlest: var(--fds-neutral-80);
-    --fds-colour-bg-inverse-hover: var(--fds-neutral-30);
+    --fds-colour-bg-inverse: var(--fds-colour-neutral-40);
+    --fds-colour-bg-inverse-subtle: var(--fds-colour-neutral-60);
+    --fds-colour-bg-inverse-subtler: var(--fds-colour-neutral-70);
+    --fds-colour-bg-inverse-subtlest: var(--fds-colour-neutral-80);
+    --fds-colour-bg-inverse-hover: var(--fds-colour-neutral-30);
 
-    --fds-colour-bg-primary: var(--fds-brand-20);
-    --fds-colour-bg-primary-subtle: var(--fds-brand-60);
-    --fds-colour-bg-primary-subtler: var(--fds-brand-80);
-    --fds-colour-bg-primary-subtlest: var(--fds-brand-100);
-    --fds-colour-bg-available: var(--fds-success-60);
+    --fds-colour-bg-primary: var(--fds-colour-brand-20);
+    --fds-colour-bg-primary-subtle: var(--fds-colour-brand-60);
+    --fds-colour-bg-primary-subtler: var(--fds-colour-brand-80);
+    --fds-colour-bg-primary-subtlest: var(--fds-colour-brand-100);
+    --fds-colour-bg-available: var(--fds-colour-success-60);
 
-    --fds-colour-bg-primary-hover: var(--fds-brand-10);
-    --fds-colour-bg-primary-subtlest-hover: var(--fds-brand-80);
-    --fds-colour-bg-primary-subtlest-selected: var(--fds-brand-40);
+    --fds-colour-bg-primary-hover: var(--fds-colour-brand-10);
+    --fds-colour-bg-primary-subtlest-hover: var(--fds-colour-brand-80);
+    --fds-colour-bg-primary-subtlest-selected: var(--fds-colour-brand-40);
 
     /* overlay */
     --fds-colour-overlay-strong: rgba(25, 25, 25, 0.95);
     --fds-colour-overlay-subtle: rgba(25, 25, 25, 0.2);
 
     /* hyperlink */
-    --fds-colour-hyperlink: var(--fds-neutral-10);
-    --fds-colour-hyperlink-hover: var(--fds-neutral-40);
-    --fds-colour-hyperlink-visited: var(--fds-neutral-50);
+    --fds-colour-hyperlink: var(--fds-colour-neutral-10);
+    --fds-colour-hyperlink-hover: var(--fds-colour-neutral-40);
+    --fds-colour-hyperlink-visited: var(--fds-colour-neutral-50);
     --fds-colour-hyperlink-inverse: #f8ae68;
 
     /* focus ring */
-    --fds-colour-focus-ring: var(--fds-primary-50);
-    --fds-colour-focus-ring-inverse: var(--fds-white);
+    --fds-colour-focus-ring: var(--fds-colour-primary-50);
+    --fds-colour-focus-ring-inverse: var(--fds-colour-white);
 }
 
 /* ============================================================================
@@ -253,16 +253,16 @@
    ============================================================================ */
 [data-fds-theme="pa"] {
     /* Button */
-    --fds-button-radius: var(--fds-radius-full);
-    --fds-button-default-colour-bg: var(--fds-bg-primary);
-    --fds-button-default-colour-bg-hover: var(--fds-bg-primary-hover);
-    --fds-button-default-colour-text: var(--fds-text-inverse);
-    --fds-button-secondary-colour-border: var(--fds-border-primary);
-    --fds-button-secondary-colour-text: var(--fds-text-primary);
-    --fds-button-light-colour-text: var(--fds-text-primary);
-    --fds-button-link-colour-text: var(--fds-text-primary);
+    --fds-button-radius: var(--fds-colour-radius-full);
+    --fds-button-default-colour-bg: var(--fds-colour-bg-primary);
+    --fds-button-default-colour-bg-hover: var(--fds-colour-bg-primary-hover);
+    --fds-button-default-colour-text: var(--fds-colour-text-inverse);
+    --fds-button-secondary-colour-border: var(--fds-colour-border-primary);
+    --fds-button-secondary-colour-text: var(--fds-colour-text-primary);
+    --fds-button-light-colour-text: var(--fds-colour-text-primary);
+    --fds-button-link-colour-text: var(--fds-colour-text-primary);
     /* Animation */
-    --fds-loading-dots-spinner-colour: var(--fds-icon-primary);
+    --fds-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
     /* Navbar */
     --fds-navbar-full-height: 6rem;
     --fds-navbar-full-logo-height: 2rem;
@@ -270,20 +270,22 @@
     --fds-navbar-compressed-logo-height: 1.5rem;
     --fds-navbar-mobile-height: 3.5rem;
     --fds-navbar-mobile-logo-height: 1.5rem;
-    --fds-navbar-colour-bg: var(--fds-bg);
-    --fds-navbar-colour-icon: var(--fds-icon);
-    --fds-navbar-link-colour-text: var(--fds-text);
-    --fds-navbar-link-colour-text-hover: var(--fds-text-hover);
+    --fds-navbar-colour-bg: var(--fds-colour-bg);
+    --fds-navbar-colour-icon: var(--fds-colour-icon);
+    --fds-navbar-link-colour-text: var(--fds-colour-text);
+    --fds-navbar-link-colour-text-hover: var(--fds-colour-text-hover);
     --fds-navbar-link-colour-text-selected-hover: var(
         --fds-text-selected-hover
     );
     /* Footer */
-    --fds-footer-colour-bg: var(--fds-bg-strong);
-    --fds-footer-colour-text: var(--fds-text);
-    --fds-footer-link-colour-text: var(--fds-text);
-    --fds-footer-link-colour-text-hover: var(--fds-text-hover);
-    --fds-footer-disclaimer-link-colour-text: var(--fds-text);
-    --fds-footer-disclaimer-link-colour-text-hover: var(--fds-text-subtler);
+    --fds-footer-colour-bg: var(--fds-colour-bg-strong);
+    --fds-footer-colour-text: var(--fds-colour-text);
+    --fds-footer-link-colour-text: var(--fds-colour-text);
+    --fds-footer-link-colour-text-hover: var(--fds-colour-text-hover);
+    --fds-footer-disclaimer-link-colour-text: var(--fds-colour-text);
+    --fds-footer-disclaimer-link-colour-text-hover: var(
+        --fds-colour-text-subtler
+    );
 }
 
 /* ============================================================================
@@ -317,7 +319,7 @@
     --fds-font-weight-regular: 400;
     --fds-font-weight-semibold: 600;
     --fds-font-weight-bold: 700;
-    --fds-font-font-family: "Lato";
+    --fds-font-family: "Lato";
 
     --fds-font-body-size-baseline: 1rem;
     --fds-font-body-size-md: 0.875rem;

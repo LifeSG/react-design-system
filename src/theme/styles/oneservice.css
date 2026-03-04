@@ -4,6 +4,8 @@
    PRIMITIVE COLORS
    ============================================================================ */
 [data-fds-theme="oneservice"] {
+    --fds-font-variant: normal;
+
     --fds-colour-brand-10: #001a19;
     --fds-colour-brand-20: #002d2b;
     --fds-colour-brand-30: #00413d;
@@ -128,7 +130,7 @@
     --fds-font-weight-regular: 400;
     --fds-font-weight-semibold: 600;
     --fds-font-weight-bold: 700;
-    --fds-font-font-family: "Open Sans";
+    --fds-font-family: "Open Sans";
 
     --fds-font-body-size-baseline: 1rem;
     --fds-font-body-size-md: 0.875rem;
