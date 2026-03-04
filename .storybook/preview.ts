@@ -1,6 +1,5 @@
 import { INITIAL_VIEWPORTS } from "storybook/viewport";
 import type { Preview } from "@storybook/react-webpack5";
-import { ThemeProvider } from "styled-components";
 import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
 const preview: Preview = {

@@ -8,4 +8,4 @@ export { Motion } from "./tokens/motion";
 export { Radius } from "./tokens/radius";
 export { Shadow } from "./tokens/shadow";
 export { Spacing } from "./tokens/spacing";
-export type { ThemeMode, ThemeType } from "./types";
+export * from "./types";
