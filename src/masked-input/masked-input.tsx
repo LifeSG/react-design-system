@@ -10,12 +10,15 @@ import {
     InputGroupWrapper,
     LoadingLabel,
     LoadingWrapper,
+    ReadOnlyClickable,
+    ReadOnlyIconContainer,
     Spinner,
     TryAgainLabel,
 } from "./masked-input.style";
 import { MaskedInputProps } from "./types";
 import { isEmpty } from "lodash";
 import { StringHelper } from "../util";
+import { VisuallyHidden } from "../shared/accessibility";
 
 const Component = (
     {
@@ -35,6 +38,7 @@ const Component = (
         disableMask,
         transformInput,
         loadState,
+        accessibleLabel,
         onMask,
         onUnmask,
         onChange,
@@ -51,6 +55,7 @@ const Component = (
     const isEmptyReadOnlyState = readOnly && isEmpty(value);
     const [isMasked, setIsMasked] = useState<boolean>(!disableMask);
     const [updatedValue, setUpdatedValue] = useState<string>(value || "");
+    const labelText = accessibleLabel ?? "value";
 
     // =============================================================================
     // EFFECTS
@@ -157,6 +162,40 @@ const Component = (
         );
     };
 
+    const renderReadOnlyButton = () => {
+        // if masking cannot apply (no value or disableMask), show plain text without button/icon
+        if (shouldDisableMasking() || isEmptyReadOnlyState) {
+            return <span>{getValue()}</span>;
+        }
+
+        return (
+            <ReadOnlyClickable
+                data-testid="masked-input-readonly-button"
+                onClick={handleToggleMask}
+                aria-busy={loadState === "loading"}
+                type="button"
+                aria-label={StringHelper.getMaskedDescription(
+                    updatedValue,
+                    isMasked ? "masked" : "unmasked",
+                    maskRange
+                )}
+            >
+                <span>{getValue()}</span>
+                <ReadOnlyIconContainer
+                    aria-label={
+                        isMasked ? `Display ${labelText}` : `Hide ${labelText}`
+                    }
+                >
+                    {isMasked ? (
+                        <EyeIcon data-testid="masked-icon" />
+                    ) : (
+                        <EyeSlashIcon data-testid="unmasked-icon" />
+                    )}
+                </ReadOnlyIconContainer>
+            </ReadOnlyClickable>
+        );
+    };
+
     const renderElement = () => {
         if (readOnly) {
             switch (loadState) {
@@ -165,12 +204,18 @@ const Component = (
                         <ClickableErrorWrapper
                             onClick={handleTryAgain}
                             data-testid="try-again-button"
+                            type="button"
                         >
                             <ErrorTextContainer>
                                 <ErrorIcon />
                                 <ErrorLabel>Error</ErrorLabel>
                             </ErrorTextContainer>
-                            <TryAgainLabel>Try again?</TryAgainLabel>
+                            <TryAgainLabel>
+                                Try again?
+                                <VisuallyHidden>
+                                    {`Error in displaying ${labelText}, Try again?`}
+                                </VisuallyHidden>
+                            </TryAgainLabel>
                         </ClickableErrorWrapper>
                     );
                 case "loading":
@@ -182,7 +227,7 @@ const Component = (
                     );
                 case "success":
                 default:
-                    break;
+                    return renderReadOnlyButton();
             }
         }
 

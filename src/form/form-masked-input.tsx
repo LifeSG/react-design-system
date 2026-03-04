@@ -37,6 +37,7 @@ const Component = (
                 id={`${id}-base`}
                 data-testid={testId || id}
                 error={!!errorMessage}
+                accessibleLabel={typeof label === "string" ? label : id}
                 {...otherProps}
             />
         </FormWrapper>
