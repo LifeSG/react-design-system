@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormWrapper } from "./form-wrapper";
 import { FormMaskedInputProps } from "./types";
 import { MaskedInput } from "../masked-input/masked-input";
+import { SimpleIdGenerator } from "../util";
 
 const Component = (
     props: FormMaskedInputProps,
@@ -10,7 +11,7 @@ const Component = (
     const {
         label,
         errorMessage,
-        id = "form-field-masked-input",
+        id,
         "data-error-testid": errorTestId,
         "data-testid": testId,
         layoutType,
@@ -20,9 +21,12 @@ const Component = (
         ...otherProps
     } = props;
 
+    const [formInputId] = useState(() => SimpleIdGenerator.generate());
+    const uniqueId = id ?? `form-field-masked-input-${formInputId}`;
+
     return (
         <FormWrapper
-            id={id}
+            id={uniqueId}
             label={label}
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
@@ -34,8 +38,8 @@ const Component = (
         >
             <MaskedInput
                 ref={ref}
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${uniqueId}-base`}
+                data-testid={testId || uniqueId}
                 error={!!errorMessage}
                 {...otherProps}
             />
