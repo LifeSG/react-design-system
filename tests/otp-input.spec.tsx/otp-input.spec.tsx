@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { OtpInput } from "src/otp-input";
+import { OtpInput, OtpInputRef } from "src/otp-input";
 
 // =============================================================================
 // UNIT TESTS
@@ -142,6 +142,99 @@ describe("OtpInput", () => {
         await user.keyboard("{ArrowLeft}");
 
         expect(screen.getByLabelText("1st digit")).toHaveFocus();
+    });
+
+    it("should not render the action button when otpOnly is true", () => {
+        render(<OtpInput numOfInput={3} cooldownDuration={10} otpOnly />);
+
+        expect(screen.queryByRole("button")).not.toBeInTheDocument();
+    });
+
+    describe("startCooldown ref", () => {
+        it("should invoke onCooldownStart when startCooldown is called", () => {
+            const onCooldownStart = jest.fn();
+            const ref = { current: null as OtpInputRef | null };
+
+            render(
+                <OtpInput
+                    ref={ref}
+                    numOfInput={3}
+                    cooldownDuration={10}
+                    otpOnly
+                    onCooldownStart={onCooldownStart}
+                />
+            );
+
+            // clear the initial call from mount
+            onCooldownStart.mockClear();
+
+            act(() => ref.current?.startCooldown());
+
+            expect(onCooldownStart).toHaveBeenCalledTimes(1);
+        });
+
+        it("should run the countdown and invoke onCooldownEnd when startCooldown is called", () => {
+            const onCooldownEnd = jest.fn();
+            const ref = { current: null as OtpInputRef | null };
+
+            render(
+                <OtpInput
+                    ref={ref}
+                    numOfInput={3}
+                    cooldownDuration={10}
+                    otpOnly
+                    onCooldownEnd={onCooldownEnd}
+                />
+            );
+
+            act(() => ref.current?.startCooldown());
+
+            act(() => jest.advanceTimersByTime(10000));
+
+            expect(onCooldownEnd).toHaveBeenCalledTimes(1);
+        });
+
+        it("should invoke onCountdownChange with remaining seconds during countdown", () => {
+            const onCountdownChange = jest.fn();
+            const ref = { current: null as OtpInputRef | null };
+
+            render(
+                <OtpInput
+                    ref={ref}
+                    numOfInput={3}
+                    cooldownDuration={5}
+                    otpOnly
+                    onCountdownChange={onCountdownChange}
+                />
+            );
+
+            act(() => ref.current?.startCooldown());
+
+            act(() => jest.advanceTimersByTime(1000));
+            expect(onCountdownChange).toHaveBeenLastCalledWith(4);
+
+            act(() => jest.advanceTimersByTime(1000));
+            expect(onCountdownChange).toHaveBeenLastCalledWith(3);
+        });
+
+        it("should not start countdown if cooldownDuration is 0", () => {
+            const onCooldownStart = jest.fn();
+            const ref = { current: null as OtpInputRef | null };
+
+            render(
+                <OtpInput
+                    ref={ref}
+                    numOfInput={3}
+                    cooldownDuration={0}
+                    otpOnly
+                    onCooldownStart={onCooldownStart}
+                />
+            );
+
+            act(() => ref.current?.startCooldown());
+
+            expect(onCooldownStart).not.toHaveBeenCalled();
+        });
     });
 
     describe.each(["autofill", "paste"])("%s", (type) => {
