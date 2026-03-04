@@ -18,16 +18,16 @@ const V3_FontSpec: V3_ThemeCollectionSpec<
     V3_FontScheme
 > = {
     collections: {
-        default: V3_DefaultFontSpecSet,
-        bookingsg: V3_BookingSgFontSpecSet,
-        mylegacy: V3_MyLegacyFontSpecSet,
-        pa: V3_PAFontSpecSet,
         a11yplayground: V3_A11yPlaygroundFontSpecSet,
-        supportgowhere: V3_SupportGoWhereFontSpecSet,
-        sgwdigitallobby: V3_SGWDigitalLobbyFontSpecSet,
+        bookingsg: V3_BookingSgFontSpecSet,
+        default: V3_DefaultFontSpecSet,
         imda: V3_IMDAFontSpecSet,
-        spf: V3_SPFFontSpecSet,
+        mylegacy: V3_MyLegacyFontSpecSet,
         oneservice: V3_OneServiceFontSpecSet,
+        pa: V3_PAFontSpecSet,
+        sgwdigitallobby: V3_SGWDigitalLobbyFontSpecSet,
+        spf: V3_SPFFontSpecSet,
+        supportgowhere: V3_SupportGoWhereFontSpecSet,
     },
     defaultValue: "default",
 };
