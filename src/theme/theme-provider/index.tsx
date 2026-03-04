@@ -1,21 +1,7 @@
 import React, { useEffect, useState } from "react";
-import type { ThemeMode, ThemeType } from "./types";
-import { ThemeContext } from "./ds-theme-context";
-
-interface ThemeProviderProps {
-    children: React.ReactNode;
-
-    // Controlled
-    theme?: ThemeType;
-    mode?: ThemeMode;
-
-    // Uncontrolled
-    initialTheme?: ThemeType;
-    initialMode?: ThemeMode;
-
-    onThemeChange?: (theme: ThemeType) => void;
-    onModeChange?: (mode: ThemeMode) => void;
-}
+import { ThemeContext } from "./context";
+import type { ThemeMode, ThemeType } from "../types";
+import type { ThemeProviderProps } from "./types";
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     children,

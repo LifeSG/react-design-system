@@ -14,10 +14,3 @@ export type ThemeType =
     | "supportgowhere";
 
 export type ThemeMode = "light" | "dark";
-
-export interface ThemeContextValue {
-    theme: ThemeType;
-    mode: ThemeMode;
-    setTheme: (theme: ThemeType) => void;
-    setMode: (mode: ThemeMode) => void;
-}
