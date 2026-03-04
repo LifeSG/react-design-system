@@ -60,13 +60,9 @@ const Component = (
     const iconRef = useRef<HTMLDivElement>(null);
     const tryAgainRef = useRef<HTMLButtonElement>(null);
     const readOnlyButtonRef = useRef<HTMLButtonElement>(null);
+    const ariaLabelledBy = otherProps["aria-labelledby"];
 
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
-
-    const ariaLabelledBy = (otherProps as any)["aria-labelledby"] as
-        | string
-        | undefined;
-    const descId = `${otherProps.id ?? dataTestId ?? "masked-input"}-desc`;
 
     // =============================================================================
     // EFFECTS
@@ -90,7 +86,6 @@ const Component = (
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         toggleMasking(false);
         onFocus?.(event);
@@ -146,12 +141,16 @@ const Component = (
     // HELPER FUNCTIONS
     // =============================================================================
     const toggleMasking = (mask: boolean) => {
-        setIsMasked(mask);
-        if (mask) {
-            onMask?.();
-        } else {
-            onUnmask?.();
-        }
+        setIsMasked((prev) => {
+            if (prev === mask) return prev;
+
+            if (mask) {
+                onMask?.();
+            } else {
+                onUnmask?.();
+            }
+            return mask;
+        });
     };
 
     const getValue = () => {
@@ -172,6 +171,24 @@ const Component = (
 
     const shouldDisableMasking = () =>
         !updatedValue?.toString().length || disableMask;
+
+    const getValueDescription = () => {
+        if (isEmptyReadOnlyState) {
+            return "-";
+        }
+
+        if (isMasked && !disableMask) {
+            const desc = StringHelper.getMaskedDescription(
+                updatedValue,
+                "masked",
+                maskRange
+            );
+
+            return desc || "Masked value";
+        }
+
+        return updatedValue;
+    };
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -197,39 +214,35 @@ const Component = (
     };
 
     const renderReadOnlyButton = () => {
-        // if masking cannot apply (no value or disableMask), show plain text without button/icon
         if (shouldDisableMasking() || isEmptyReadOnlyState) {
             return <span>{getValue()}</span>;
         }
 
         return (
-            <ReadOnlyClickable
-                ref={readOnlyButtonRef}
-                data-testid="masked-input-readonly-button"
-                onClick={handleToggleMask}
-                aria-busy={loadState === "loading"}
-                type="button"
-                aria-labelledby={[valueId, ariaLabelledBy]
-                    .filter(Boolean)
-                    .join(" ")}
-            >
-                <VisuallyHidden id={valueId}>{getValue()}</VisuallyHidden>
-                <VisuallyHidden id={descId}>
-                    {StringHelper.getMaskedDescription(
-                        updatedValue,
-                        isMasked ? "masked" : "unmasked",
-                        maskRange
-                    )}
+            <>
+                <VisuallyHidden id={valueId}>
+                    {getValueDescription()}
                 </VisuallyHidden>
-                <span>{getValue()}</span>
-                <ReadOnlyIconContainer>
-                    {isMasked ? (
-                        <EyeIcon data-testid="masked-icon" />
-                    ) : (
-                        <EyeSlashIcon data-testid="unmasked-icon" />
-                    )}
-                </ReadOnlyIconContainer>
-            </ReadOnlyClickable>
+                <ReadOnlyClickable
+                    ref={readOnlyButtonRef}
+                    data-testid="masked-input-readonly-button"
+                    onClick={handleToggleMask}
+                    aria-busy={loadState === "loading"}
+                    type="button"
+                    aria-labelledby={[valueId, ariaLabelledBy]
+                        .filter(Boolean)
+                        .join(" ")}
+                >
+                    <span>{getValue()}</span>
+                    <ReadOnlyIconContainer>
+                        {isMasked ? (
+                            <EyeIcon data-testid="masked-icon" />
+                        ) : (
+                            <EyeSlashIcon data-testid="unmasked-icon" />
+                        )}
+                    </ReadOnlyIconContainer>
+                </ReadOnlyClickable>
+            </>
         );
     };
 
