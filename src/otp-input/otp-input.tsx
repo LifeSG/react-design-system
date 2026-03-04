@@ -15,12 +15,8 @@ import {
     Prefix,
     Wrapper,
 } from "./otp-input.styles";
-import { OtpInputProps } from "./types";
+import { OtpInputProps, OtpInputRef } from "./types";
 import { stripOtpFromAutofill, validateUserInput } from "./utils";
-
-export interface OtpInputRef {
-    startCooldown: () => void;
-}
 
 const Component = (
     {
