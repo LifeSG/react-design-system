@@ -190,7 +190,6 @@ const Component = (
                 $isDisabled={isDisabled}
                 $inactiveColor={maskIconInactiveColor}
                 $activeColor={maskIconActiveColor}
-                aria-hidden="true"
             >
                 {isMasked ? iconUnmask : iconMask}
             </IconContainer>
@@ -223,7 +222,7 @@ const Component = (
                     )}
                 </VisuallyHidden>
                 <span>{getValue()}</span>
-                <ReadOnlyIconContainer aria-hidden="true">
+                <ReadOnlyIconContainer>
                     {isMasked ? (
                         <EyeIcon data-testid="masked-icon" />
                     ) : (
@@ -277,6 +276,7 @@ const Component = (
                         children: renderIcon(),
                     },
                     position: "right",
+                    hideAriaVisibility: true,
                 }}
                 onFocus={!readOnly ? handleFocus : undefined}
                 onBlur={!readOnly ? handleBlur : undefined}

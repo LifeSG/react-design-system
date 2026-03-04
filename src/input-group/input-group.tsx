@@ -67,6 +67,7 @@ const Component = <T, V>(
                         >
                             <LabelAddonContainer
                                 data-testid="addon"
+                                aria-hidden={addon.hideAriaVisibility}
                                 $disabled={otherProps.disabled}
                                 $readOnly={otherProps.readOnly}
                                 $position={position}

@@ -56,6 +56,7 @@ export interface AddonProps<T, V> {
     type?: InputGroupAddonType | undefined;
     attributes: ListAddon<T, V> | LabelAddon | CustomAddon;
     position?: InputGroupAddonPosition;
+    hideAriaVisibility?: boolean | undefined;
 }
 
 export interface InputGroupProps<T, V> extends InputProps {
