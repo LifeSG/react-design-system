@@ -2,7 +2,6 @@ import type { StorybookConfig } from "@storybook/react-webpack5";
 import { fileURLToPath } from "node:url";
 import path, { dirname } from "path";
 import remarkGfm from "remark-gfm";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -29,14 +28,27 @@ const config: StorybookConfig = {
     features: { interactions: false, sidebarOnboardingChecklist: false },
     staticDirs: ["../public"],
     webpackFinal: async (config) => {
+        config.module?.rules?.unshift({
+            test: /\.(js|jsx|ts|tsx)$/,
+            include: [
+                path.resolve(__dirname, "../src"),
+                path.resolve(__dirname, "../stories"),
+            ],
+            exclude: /node_modules/,
+            use: [
+                {
+                    loader: "@wyw-in-js/webpack-loader",
+                    options: {
+                        sourceMap: process.env.NODE_ENV !== "production",
+                    },
+                },
+            ],
+        });
+
         config.resolve!.modules = [
             path.resolve(__dirname, ".."),
             "node_modules",
         ];
-
-        config.plugins!.push(
-            new MiniCssExtractPlugin({ filename: "[name].css" })
-        );
 
         return config;
     },
