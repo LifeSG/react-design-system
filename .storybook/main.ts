@@ -2,7 +2,6 @@ import type { StorybookConfig } from "@storybook/react-webpack5";
 import { fileURLToPath } from "node:url";
 import path, { dirname } from "path";
 import remarkGfm from "remark-gfm";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
