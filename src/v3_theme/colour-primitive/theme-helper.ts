@@ -19,17 +19,17 @@ export const V3_ColourSpec: V3_ThemeCollectionSpec<
     V3_ColourScheme
 > = {
     collections: {
-        lifesg: V3_LifeSgColourSet,
+        a11yplayground: V3_A11yPlaygroundColourSet,
         bookingsg: V3_BookingSgColourSet,
-        rbs: V3_RBSColourSet,
-        mylegacy: V3_MyLegacyColourSet,
         ccube: V3_CCubeColourSet,
+        imda: V3_IMDAColourSet,
+        lifesg: V3_LifeSgColourSet,
+        mylegacy: V3_MyLegacyColourSet,
         oneservice: V3_OneServiceColourSet,
         pa: V3_PAColourSet,
-        a11yplayground: V3_A11yPlaygroundColourSet,
-        supportgowhere: V3_SupportGoWhereColourSet,
-        imda: V3_IMDAColourSet,
+        rbs: V3_RBSColourSet,
         spf: V3_SPFColourSet,
+        supportgowhere: V3_SupportGoWhereColourSet,
     },
     defaultValue: "lifesg",
 };

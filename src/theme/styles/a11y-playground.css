@@ -443,7 +443,7 @@
    FONT
    ============================================================================ */
 [data-fds-theme="a11y-playground"] {
-    --fds-font-variant: normal;
+    --fds-font-variant: no-common-ligatures;
 
     --fds-font-heading-size-xxl: 3rem;
     --fds-font-heading-size-xl: 2.5rem;

@@ -17,17 +17,17 @@ export const V3_ColourSpec: V3_ThemeCollectionSpec<
     V3_ColourScheme
 > = {
     collections: {
-        lifesg: V3_LifeSGColourSet,
+        a11yplayground: V3_A11yPlaygroundColourSet,
         bookingsg: V3_LifeSGColourSet,
-        rbs: V3_LifeSGColourSet,
-        mylegacy: V3_LifeSGColourSet,
         ccube: V3_LifeSGColourSet,
+        imda: V3_LifeSGColourSet,
+        lifesg: V3_LifeSGColourSet,
+        mylegacy: V3_LifeSGColourSet,
         oneservice: V3_LifeSGColourSet,
         pa: V3_PAColourSet,
-        a11yplayground: V3_A11yPlaygroundColourSet,
-        supportgowhere: V3_LifeSGColourSet,
-        imda: V3_LifeSGColourSet,
+        rbs: V3_LifeSGColourSet,
         spf: V3_LifeSGColourSet,
+        supportgowhere: V3_LifeSGColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -37,17 +37,17 @@ export const V3_DarkColourSpec: V3_ThemeCollectionSpec<
     V3_ColourScheme
 > = {
     collections: {
-        lifesg: V3_LifeSGDarkColourSet,
+        a11yplayground: V3_A11yPlaygroundDarkColourSet,
         bookingsg: V3_LifeSGDarkColourSet,
-        rbs: V3_LifeSGDarkColourSet,
-        mylegacy: V3_LifeSGDarkColourSet,
         ccube: V3_LifeSGDarkColourSet,
+        imda: V3_LifeSGDarkColourSet,
+        lifesg: V3_LifeSGDarkColourSet,
+        mylegacy: V3_LifeSGDarkColourSet,
         oneservice: V3_LifeSGDarkColourSet,
         pa: V3_PAColourSet,
-        a11yplayground: V3_A11yPlaygroundDarkColourSet,
-        supportgowhere: V3_LifeSGDarkColourSet,
-        imda: V3_LifeSGDarkColourSet,
+        rbs: V3_LifeSGDarkColourSet,
         spf: V3_LifeSGDarkColourSet,
+        supportgowhere: V3_LifeSGDarkColourSet,
     },
     defaultValue: "lifesg",
 };
