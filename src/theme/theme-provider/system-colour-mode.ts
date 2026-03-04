@@ -20,7 +20,6 @@ export function listenToSystemColourMode(callback: (mode: ThemeMode) => void) {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
     const handler = (e: MediaQueryListEvent) => {
-        console.log({ e });
         callback(e.matches ? "dark" : "light");
     };
 
