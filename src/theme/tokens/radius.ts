@@ -1,4 +1,6 @@
-export const Radius = {
+import { RadiusCSSVariableString } from "../types";
+
+export const Radius: { [key: string]: RadiusCSSVariableString } = {
     none: "var(--fds-radius-none)",
     xs: "var(--fds-radius-xs)",
     sm: "var(--fds-radius-sm)",

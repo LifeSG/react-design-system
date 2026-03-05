@@ -1,4 +1,6 @@
-export const Spacing = {
+import { SpacingCSSVariableString } from "../types";
+
+export const Spacing: { [key: string]: SpacingCSSVariableString } = {
     "spacing-0": "var(--fds-spacing-0)",
     "spacing-4": "var(--fds-spacing-4)",
     "spacing-8": "var(--fds-spacing-8)",

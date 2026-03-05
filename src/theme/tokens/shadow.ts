@@ -1,4 +1,6 @@
-export const Shadow = {
+import { ShadowCSSVariableString } from "../types";
+
+export const Shadow: { [key: string]: ShadowCSSVariableString } = {
     "xs-subtle": "var(--fds-shadow-xs-subtle)",
     "xs-strong": "var(--fds-shadow-xs-strong)",
     "xs-focus-strong": "var(--fds-shadow-xs-focus-strong)",

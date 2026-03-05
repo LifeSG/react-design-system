@@ -1,4 +1,6 @@
-export const Breakpoint = {
+import { BreakpointCSSVariableString } from "../types";
+
+export const Breakpoint: { [key: string]: BreakpointCSSVariableString } = {
     "xxs-min": "var(--fds-breakpoint-xxs-min)",
     "xxs-max": "var(--fds-breakpoint-xxs-max)",
     "xs-min": "var(--fds-breakpoint-xs-min)",
