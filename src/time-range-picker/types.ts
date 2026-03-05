@@ -1,3 +1,4 @@
+import { RefObject } from "react";
 import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export type TimeRangePickerFormat = "12hr" | "24hr";
@@ -50,6 +51,11 @@ export interface TimeRangePickerProps {
     alignment?: DropdownAlignmentType | undefined;
     /** Specifies the z-index of the dropdown element */
     dropdownZIndex?: number | undefined;
+    /**
+     * Use this when the parent container has a higher z-index
+     * and the dropdown would otherwise be hidden.
+     */
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
 
     /**
      * Called when a selection is made. Returns an object with `start` and
