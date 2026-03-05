@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { act, render, screen } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
 import {
     ApplyStyleMap,
     useApplyStyle,
@@ -95,7 +95,6 @@ describe("useApplyStyle Hooks", () => {
                 <TestComponent styles={{ background: null }} props={{}} />
             );
         });
-        screen.debug(element);
 
         expect(element.style.getPropertyValue("background")).toBe("");
     });
