@@ -4,7 +4,7 @@ import { defineConfig, devices } from "@playwright/test";
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-    testDir: "./e2e",
+    testDir: "./e2e/tests",
     /* Run tests in files in parallel */
     fullyParallel: true,
     /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -15,13 +15,13 @@ export default defineConfig({
     workers: process.env.CI ? 1 : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     reporter: "html",
-    /* Location of screenshots. See https://playwright.dev/docs/api/class-testproject#test-project-snapshot-path-template */
+    /* Location of screenshots */
     snapshotPathTemplate:
-        "{testDir}/{testFileDir}/__screenshots__/{projectName}/{arg}{ext}",
+        "{testDir}/{testFileDir}/__screenshots__/{projectName}/{testName}-{arg}{ext}",
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
-        /* Base URL to use in actions like `await page.goto('/')`. */
-        baseURL: "http://127.0.0.1:6006",
+        /* Base URL to use in actions like `await page.goto('')`. */
+        baseURL: "http://localhost:3000",
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: "on-first-retry",
@@ -33,16 +33,16 @@ export default defineConfig({
             name: "chromium",
             use: { ...devices["Desktop Chrome"] },
         },
-        {
-            name: "chrome-mobile",
-            use: { ...devices["Pixel 5"] },
-        },
     ],
 
     /* Run your local dev server before starting the tests */
-    // webServer: {
-    //   command: 'npm run storybook',
-    //   url: 'http://127.0.0.1:6006',
-    //   reuseExistingServer: !process.env.CI,
-    // },
+    webServer: {
+        command: process.env.CI
+            ? "cd e2e/nextjs-app && npm run build && npm run start"
+            : "cd e2e/nextjs-app && npm run dev",
+        url: "http://localhost:3000",
+        reuseExistingServer: !process.env.CI,
+        stderr: "pipe",
+        stdout: "pipe",
+    },
 });

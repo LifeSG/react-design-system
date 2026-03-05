@@ -1,0 +1,44 @@
+import { expect, Page } from "@playwright/test";
+import { viewport } from "./consts";
+
+export abstract class AbstractStoryPage {
+    public readonly page: Page;
+    protected abstract readonly component: string;
+
+    constructor(page: Page) {
+        this.page = page;
+    }
+
+    public async init(
+        story: string,
+        options?: {
+            size?: keyof typeof viewport;
+            mode?: "light" | "dark" | "auto";
+        }
+    ) {
+        await this.page.setViewportSize(viewport[options?.size ?? "desktop"]);
+
+        if (options?.mode) {
+            await this.page.emulateMedia({
+                colorScheme:
+                    options.mode === "dark" || options.mode === "light"
+                        ? options.mode
+                        : "no-preference",
+            });
+        }
+
+        await this.page.goto(`/components/${this.component}/${story}`);
+    }
+}
+
+export const compareScreenshot = async (
+    page: AbstractStoryPage,
+    name: string
+) => {
+    await expect(page.page.getByTestId("story-layout")).toHaveScreenshot(
+        `${name}.png`,
+        {
+            threshold: 0, // Strict colour matching
+        }
+    );
+};

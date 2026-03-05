@@ -3,6 +3,7 @@ import image from "@rollup/plugin-image";
 import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
+import wyw from "@wyw-in-js/rollup";
 import copy from "rollup-plugin-copy";
 import generatePackageJson from "rollup-plugin-generate-package-json";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
@@ -32,6 +33,7 @@ export const plugins = [
             ],
         },
     }),
+    wyw.default(),
     postcss({
         plugins: [require("postcss-import")],
         inject: injectCss,
@@ -80,7 +82,23 @@ const codemodBuildConfigs = [
             format: "cjs",
         },
         plugins: [
-            ...plugins,
+            peerDepsExternal(), // Exclude peer deps
+            nodeResolve(), // Locates modules in the project's node_modules directory
+            commonjs(), // Converts CommonJS to ES6 modules
+            typescript({
+                useTsconfigDeclarationDir: true,
+                tsconfig: "tsconfig.json",
+                tsconfigOverride: {
+                    exclude: [
+                        "tests",
+                        "**/stories/**",
+                        "**/__mocks__/**",
+                        "**/custom-types/**",
+                        "src/**",
+                    ],
+                },
+            }),
+            json(),
             copy({
                 targets: [{ src: "codemods/**/*", dest: "dist/codemods" }],
             }),
