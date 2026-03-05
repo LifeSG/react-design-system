@@ -44,6 +44,7 @@ import {
     DropdownListProps,
     ListItemDisplayProps,
 } from "./types";
+import { VisuallyHidden } from "../accessibility";
 
 /**
  * NOTE: This component is not directly exportable but forms part of a component
@@ -64,6 +65,7 @@ const DropdownListInner = <T, V>(
         matchElementWidth = false,
         width,
         topScrollItem,
+        accessibilityLabel,
         onSelectItem,
         onSelectAll,
         onDismiss,
@@ -105,6 +107,8 @@ const DropdownListInner = <T, V>(
     const [displayListItems, setDisplayListItems] = useState(listItems ?? []);
     const itemsLoadStateChanged = useCompare(itemsLoadState);
     const mounted = useIsMounted();
+    const [accessibilityAnnouncement, setAccessibilityAnnouncement] =
+        useState<string>("");
 
     const nodeRef = useRef<HTMLDivElement | null>(null);
     const listRef = useRef<HTMLDivElement>(null);
@@ -295,6 +299,16 @@ const DropdownListInner = <T, V>(
     // =========================================================================
     useEventListener("keydown", handleKeyboardPress);
     useImperativeHandle(ref, () => ({ refocus }), [refocus]);
+
+    useEffect(() => {
+        if (!accessibilityLabel) return;
+
+        const t = setTimeout(() => {
+            setAccessibilityAnnouncement(accessibilityLabel);
+        }, 10);
+
+        return () => clearTimeout(t);
+    }, [accessibilityLabel]);
 
     useEffect(() => {
         if (!topScrollItem) {
@@ -631,6 +645,10 @@ const DropdownListInner = <T, V>(
             $customWidth={width}
             $variant={variant}
         >
+            <VisuallyHidden role="status">
+                {accessibilityAnnouncement}
+            </VisuallyHidden>
+
             {renderList()}
             {renderBottomCta()}
         </Container>

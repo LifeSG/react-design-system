@@ -95,6 +95,8 @@ export interface DropdownListProps<T, V>
     matchElementWidth?: boolean | undefined;
     /** Custom width for the dropdown. When specified, takes precedence over matchElementWidth */
     width?: string | undefined;
+    /** Accessibility text for the screen reader to announce upon rendering of dropdown */
+    accessibilityLabel?: string | undefined;
 
     onSelectItem?: ((item: T, extractedValue: V) => void) | undefined;
     onSelectAll?: (() => void) | undefined;
