@@ -28,10 +28,28 @@ const config: StorybookConfig = {
     features: { interactions: false, sidebarOnboardingChecklist: false },
     staticDirs: ["../public"],
     webpackFinal: async (config) => {
+        config.module?.rules?.unshift({
+            test: /\.(js|jsx|ts|tsx)$/,
+            include: [
+                path.resolve(__dirname, "../src"),
+                path.resolve(__dirname, "../stories"),
+            ],
+            exclude: /node_modules/,
+            use: [
+                {
+                    loader: "@wyw-in-js/webpack-loader",
+                    options: {
+                        sourceMap: process.env.NODE_ENV !== "production",
+                    },
+                },
+            ],
+        });
+
         config.resolve!.modules = [
             path.resolve(__dirname, ".."),
             "node_modules",
         ];
+
         return config;
     },
     framework: {
