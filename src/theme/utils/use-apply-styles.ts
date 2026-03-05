@@ -1,25 +1,20 @@
 import { RefObject } from "react";
 import { useIsomorphicLayoutEffect } from "../../util";
 
-type StyleValue<TProps> =
-    | string
-    | number
-    | ((props: TProps) => string)
-    | null
-    | undefined;
+type StyleValue = string | number | null | undefined;
 
+// TODO: Update to FDSVariableName once 9839 merged
 type CSSVariableKey = `--${string}`;
 
-export type ApplyStyleMap<TProps> = {
-    [K in keyof React.CSSProperties]?: StyleValue<TProps>;
+export type ApplyStyleMap = {
+    [K in keyof React.CSSProperties]?: StyleValue;
 } & {
-    [key in CSSVariableKey]?: StyleValue<TProps>;
+    [key in CSSVariableKey]?: StyleValue;
 };
 
-export function useApplyStyle<TElement extends HTMLElement, TProps>(
+export function useApplyStyle<TElement extends HTMLElement>(
     ref: RefObject<TElement>,
-    styles: ApplyStyleMap<TProps>,
-    props: TProps
+    styles: ApplyStyleMap
 ) {
     useIsomorphicLayoutEffect(() => {
         const element = ref?.current;
@@ -31,10 +26,7 @@ export function useApplyStyle<TElement extends HTMLElement, TProps>(
                 return;
             }
 
-            const resolved =
-                typeof value === "function" ? value(props) : String(value);
-
-            element.style.setProperty(key, resolved);
+            element.style.setProperty(key, String(value));
         });
-    }, [ref, styles, props]);
+    }, [ref, styles]);
 }
