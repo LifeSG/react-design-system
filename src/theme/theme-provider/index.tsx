@@ -26,7 +26,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
         document.documentElement.dataset.fdsThemeMode = isModeControlled
             ? mode!
             : computedMode;
-    }, [theme, mode, computedMode, isModeControlled]);
+    }, [mode, computedMode, isModeControlled]);
 
     useEffect(() => {
         if (isModeControlled) return;
