@@ -1,4 +1,4 @@
-import { generateFont } from "../helper";
+import { generateFont } from "../utils";
 
 export const FontSpec = {
     "font-family": "var(--fds-font-family)",
