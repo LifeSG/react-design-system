@@ -14,3 +14,19 @@ export type ThemeType =
     | "supportgowhere";
 
 export type ThemeMode = "light" | "dark";
+
+export type FontSize =
+    | "heading-xxl"
+    | "heading-xl"
+    | "heading-lg"
+    | "heading-md"
+    | "heading-sm"
+    | "heading-xs"
+    | "body-baseline"
+    | "body-md"
+    | "body-sm"
+    | "body-xs"
+    | "form-label"
+    | "form-description";
+
+export type FontWeight = "light" | "regular" | "semibold" | "bold";

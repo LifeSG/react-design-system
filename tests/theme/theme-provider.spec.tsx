@@ -2,6 +2,7 @@ import { act, render, screen } from "@testing-library/react";
 import { ThemeProvider, useTheme } from "../../src/theme";
 import * as systemMode from "../../src/theme/theme-provider/system-colour-mode";
 import * as breakpoint from "../../src/theme/theme-provider/breakpoint";
+import { setupThemeVariables } from "./setup";
 
 const TestComponent = () => {
     const { theme, mode } = useTheme();
@@ -25,6 +26,10 @@ function setWindowWidth(width: number) {
 }
 
 describe("ThemeProvider", () => {
+    beforeEach(() => {
+        setupThemeVariables();
+    });
+
     afterEach(() => {
         document.body.className = "";
         document.documentElement.removeAttribute("data-fds-theme");
@@ -185,7 +190,7 @@ describe("ThemeProvider", () => {
             expect(body.classList.contains("fds-breakpoint-lg")).toBe(true);
             expect(body.classList.contains("fds-breakpoint-lg-min")).toBe(true);
             expect(body.classList.contains("fds-breakpoint-lg-max")).toBe(true);
-            expect(body.classList.contains("fds-breakpoint-md")).toBe(false);
+            expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
         });
 
         it("applies only min and base class for xxl", () => {

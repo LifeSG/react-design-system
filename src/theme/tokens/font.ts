@@ -1,4 +1,4 @@
-import { generateFont } from "../helper";
+import { generateFont } from "../utils";
 
 export const Font = {
     "heading-xxl-light": generateFont("heading-xxl", "light"),
