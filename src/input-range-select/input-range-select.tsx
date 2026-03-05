@@ -296,6 +296,8 @@ export const InputRangeSelect = <T, V>({
             disabled={disabled || readOnly}
             tabIndex={disabled || readOnly ? -1 : 0}
             aria-controls={listboxId}
+            aria-disabled={disabled}
+            aria-readonly={readOnly}
         >
             {renderLabel(rangeType)}
         </RangeSelectorButton>
@@ -310,6 +312,9 @@ export const InputRangeSelect = <T, V>({
                 $readOnly={readOnly}
                 $error={error}
                 $focused={isOpen}
+                tabIndex={disabled || readOnly ? 0 : -1}
+                aria-disabled={disabled}
+                aria-readonly={readOnly}
             >
                 <RangeInputInnerContainer
                     currentActive={getCurrentFocused()}
