@@ -295,8 +295,6 @@ export const InputRangeSelect = <T, V>({
             ref={labelButtonRef[rangeType]}
             disabled={disabled || readOnly}
             tabIndex={disabled || readOnly ? -1 : 0}
-            aria-haspopup="listbox"
-            aria-expanded={isOpen && focusedInput === rangeType}
             aria-controls={listboxId}
         >
             {renderLabel(rangeType)}
@@ -360,6 +358,13 @@ export const InputRangeSelect = <T, V>({
                 searchPlaceholder={searchPlaceholder}
                 renderListItem={renderListItem}
                 renderCustomCallToAction={renderCustomCallToAction}
+                accessibilityLabel={
+                    focusedInput === "from"
+                        ? `Selecting for: ${placeholders.from}`
+                        : focusedInput === "to"
+                        ? `Selecting for: ${placeholders.to}`
+                        : undefined
+                }
             />
         );
     };
