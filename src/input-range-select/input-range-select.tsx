@@ -290,6 +290,9 @@ export const InputRangeSelect = <T, V>({
             type="button"
             role="combobox"
             aria-autocomplete={enableSearch ? "list" : "none"}
+            aria-label={
+                rangeType === "from" ? placeholders?.from : placeholders?.to
+            }
             onClick={handleSelectorClick(rangeType)}
             onKeyDown={handleSelectorKeyDown(rangeType)}
             ref={labelButtonRef[rangeType]}
