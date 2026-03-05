@@ -1,42 +1,9 @@
 import { INITIAL_VIEWPORTS } from "storybook/viewport";
 import type { Preview } from "@storybook/react-webpack5";
-import { ThemeProvider } from "styled-components";
-import {
-    V3_A11yPlaygroundTheme,
-    V3_BookingSGTheme,
-    V3_CCubeTheme,
-    V3_IMDATheme,
-    V3_LifeSGTheme,
-    V3_MyLegacyTheme,
-    V3_OneServiceTheme,
-    V3_PATheme,
-    V3_RBSTheme,
-    V3_SPFTheme,
-    V3_SupportGoWhereTheme,
-    V3_SGWDigitalLobbyTheme,
-} from "../src/v3_theme";
 import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
 const preview: Preview = {
-    decorators: [
-        withThemeFromJSXProvider({
-            themes: {
-                LifeSG: V3_LifeSGTheme,
-                BookingSG: V3_BookingSGTheme,
-                CCube: V3_CCubeTheme,
-                MyLegacy: V3_MyLegacyTheme,
-                OneService: V3_OneServiceTheme,
-                PA: V3_PATheme,
-                SupportGoWhere: V3_SupportGoWhereTheme,
-                SGWDigitalLobby: V3_SGWDigitalLobbyTheme,
-                A11yPlayground: V3_A11yPlaygroundTheme,
-                IMDA: V3_IMDATheme,
-                RBS: V3_RBSTheme,
-                SPF: V3_SPFTheme,
-            },
-            Provider: ThemeProvider,
-        }),
-    ],
+    decorators: [withThemeFromJSXProvider()],
     parameters: {
         options: {
             storySort: {
