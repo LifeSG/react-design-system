@@ -5,17 +5,28 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
 import wyw from "@wyw-in-js/rollup";
 import copy from "rollup-plugin-copy";
-import generatePackageJson from "rollup-plugin-generate-package-json";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import postcss from "rollup-plugin-postcss";
 import typescript from "rollup-plugin-typescript2";
-import pkg from "./package.json";
-import { getFolders, injectCss } from "./scripts/build-util";
+import { libStylePlugin } from "rollup-plugin-lib-style";
 
 export const plugins = [
     peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
     nodeResolve({ browser: true }), // Locates modules in the project's node_modules directory
     commonjs(), // converts CommonJS to ES6 modules
+    wyw({
+        include: ["src/**/*.{ts,tsx,js,jsx}"],
+        exclude: [
+            "**/*.test.*",
+            "**/*.spec.*",
+            "**/*.stories.*",
+            "**/__mocks__/**",
+            "codemods/**",
+        ],
+        sourceMap: true,
+        babelOptions: {
+            presets: ["@wyw-in-js/babel-preset"],
+        },
+    }),
     typescript({
         useTsconfigDeclarationDir: true,
         tsconfig: "tsconfig.json",
@@ -33,43 +44,11 @@ export const plugins = [
             ],
         },
     }),
-    wyw.default(),
-    postcss({
-        plugins: [require("postcss-import")],
-        inject: injectCss,
-    }),
     image(),
     json(),
     terser(), // Helps remove comments, whitespace or logging codes
+    libStylePlugin(),
 ];
-
-const subfolderPlugins = (folderName) => [
-    ...plugins,
-    generatePackageJson({
-        baseContents: {
-            name: `${pkg.name}/${folderName}`,
-            private: true,
-            main: "../cjs/index.js", // point to cjs format entry point
-            module: "./index.js", // point to esm format entry point of indiv components
-            types: "./index.d.ts", // point to esm format entry point of indiv components
-        },
-    }),
-];
-
-const folderBuildConfigs = getFolders("./src").map((folder) => {
-    return {
-        input: `src/${folder}/index.ts`,
-        output: {
-            dir: `dist/${folder}`,
-            sourcemap: true,
-            exports: "named",
-            format: "esm",
-            chunkFileNames: "chunks/[name].[hash].js",
-        },
-        plugins: subfolderPlugins(folder),
-        external: ["react", "react-dom", "styled-components"],
-    };
-});
 
 const codemodBuildConfigs = [
     {
@@ -116,7 +95,8 @@ export default [
                 sourcemap: true,
                 exports: "named",
                 interop: "compat",
-                chunkFileNames: "chunks/[name].[hash].js",
+                preserveModules: true,
+                preserveModulesRoot: "src",
             },
             {
                 dir: "dist/cjs",
@@ -124,12 +104,12 @@ export default [
                 sourcemap: true,
                 exports: "named",
                 interop: "compat",
-                chunkFileNames: "chunks/[name].[hash].js",
+                preserveModules: true,
+                preserveModulesRoot: "src",
             },
         ],
         plugins,
         external: ["react", "react-dom", "styled-components"],
     },
-    ...folderBuildConfigs,
     ...codemodBuildConfigs,
 ];

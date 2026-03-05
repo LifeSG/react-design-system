@@ -1,4 +1,4 @@
-import { plugins } from "./rollup.config";
+import { plugins } from "./rollup.config.js";
 
 export default [
     {
