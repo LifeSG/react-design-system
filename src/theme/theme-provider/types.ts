@@ -3,6 +3,10 @@ import type { ThemeMode, ThemeType } from "../types";
 export interface ThemeContextValue {
     theme: ThemeType;
     mode: ThemeMode;
+    /**
+     * Element that hosts the current theme scope. Useful for scoped theming.
+     */
+    themeElement: HTMLElement | null;
 }
 
 export interface ThemeProviderProps {

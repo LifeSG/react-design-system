@@ -14,10 +14,8 @@ const TestComponent = () => {
 };
 
 describe("ThemeProvider", () => {
-    afterEach(() => {
-        document.documentElement.removeAttribute("data-fds-theme");
-        document.documentElement.removeAttribute("data-fds-theme-mode");
-    });
+    const getWrapper = () =>
+        document.querySelector<HTMLElement>("[data-fds-theme]");
 
     it("applies theme and mode", () => {
         render(
@@ -29,8 +27,9 @@ describe("ThemeProvider", () => {
         expect(screen.getByTestId("theme")).toHaveTextContent("lifesg");
         expect(screen.getByTestId("mode")).toHaveTextContent("light");
 
-        expect(document.documentElement.dataset.fdsTheme).toBe("lifesg");
-        expect(document.documentElement.dataset.fdsThemeMode).toBe("light");
+        const wrapper = getWrapper();
+        expect(wrapper).toHaveAttribute("data-fds-theme", "lifesg");
+        expect(wrapper).toHaveAttribute("data-fds-theme-mode", "light");
     });
 
     it("respects theme prop", () => {
@@ -40,7 +39,7 @@ describe("ThemeProvider", () => {
             </ThemeProvider>
         );
 
-        expect(document.documentElement.dataset.fdsTheme).toBe("lifesg");
+        expect(getWrapper()).toHaveAttribute("data-fds-theme", "lifesg");
 
         act(() => {
             rerender(
@@ -50,7 +49,7 @@ describe("ThemeProvider", () => {
             );
         });
 
-        expect(document.documentElement.dataset.fdsTheme).toBe("bookingsg");
+        expect(getWrapper()).toHaveAttribute("data-fds-theme", "bookingsg");
     });
 
     it("respects mode prop", () => {
@@ -60,7 +59,7 @@ describe("ThemeProvider", () => {
             </ThemeProvider>
         );
 
-        expect(document.documentElement.dataset.fdsThemeMode).toBe("light");
+        expect(getWrapper()).toHaveAttribute("data-fds-theme-mode", "light");
 
         act(() => {
             rerender(
@@ -70,7 +69,7 @@ describe("ThemeProvider", () => {
             );
         });
 
-        expect(document.documentElement.dataset.fdsThemeMode).toBe("dark");
+        expect(getWrapper()).toHaveAttribute("data-fds-theme-mode", "dark");
     });
 
     it("listens to system mode changes when uncontrolled", () => {
@@ -93,7 +92,7 @@ describe("ThemeProvider", () => {
             mockListener("dark");
         });
 
-        expect(document.documentElement.dataset.fdsThemeMode).toBe("dark");
+        expect(getWrapper()).toHaveAttribute("data-fds-theme-mode", "dark");
     });
 
     it("does NOT react to system changes when controlled", () => {
@@ -116,6 +115,25 @@ describe("ThemeProvider", () => {
             mockListener("dark");
         });
 
-        expect(document.documentElement.dataset.fdsThemeMode).toBe("light");
+        expect(getWrapper()).toHaveAttribute("data-fds-theme-mode", "light");
+    });
+
+    it("supports nested theming", () => {
+        render(
+            <ThemeProvider theme="lifesg" mode="light">
+                <ThemeProvider theme="bookingsg" mode="dark">
+                    <TestComponent />
+                </ThemeProvider>
+            </ThemeProvider>
+        );
+
+        const wrappers = document.querySelectorAll("[data-fds-theme]");
+        expect(wrappers).toHaveLength(2);
+
+        expect(wrappers[0]).toHaveAttribute("data-fds-theme", "lifesg");
+        expect(wrappers[0]).toHaveAttribute("data-fds-theme-mode", "light");
+
+        expect(wrappers[1]).toHaveAttribute("data-fds-theme", "bookingsg");
+        expect(wrappers[1]).toHaveAttribute("data-fds-theme-mode", "dark");
     });
 });
