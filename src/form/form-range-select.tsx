@@ -51,6 +51,7 @@ export const FormRangeSelect = <T, V>({
                 data-testid={testId || uniqueId}
                 error={!!errorMessage}
                 enableSearch={enableSearch}
+                aria-labelledby={`${uniqueId}-label`}
                 {...otherProps}
             />
         </FormWrapper>
