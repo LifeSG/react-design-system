@@ -1,5 +1,3 @@
-import { BorderCSSVariableString } from "../types";
-
 export const Border = {
     "width-005": "var(--fds-border-width-005)",
     "width-010": "var(--fds-border-width-010)",
@@ -7,4 +5,4 @@ export const Border = {
     "width-040": "var(--fds-border-width-040)",
 
     solid: "var(--fds-border-style-solid)",
-} as const satisfies Record<string, BorderCSSVariableString>;
+} as const;

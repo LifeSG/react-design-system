@@ -1,5 +1,3 @@
-import { ShadowCSSVariableString } from "../types";
-
 export const Shadow = {
     "xs-subtle": "var(--fds-shadow-xs-subtle)",
     "xs-strong": "var(--fds-shadow-xs-strong)",
@@ -11,4 +9,4 @@ export const Shadow = {
     "md-strong": "var(--fds-shadow-md-strong)",
     "lg-subtle": "var(--fds-shadow-lg-subtle)",
     "lg-strong": "var(--fds-shadow-lg-strong)",
-} as const satisfies Record<string, ShadowCSSVariableString>;
+} as const;

@@ -1,5 +1,3 @@
-import { BreakpointCSSVariableString } from "../types";
-
 export const Breakpoint = {
     "xxs-min": "var(--fds-breakpoint-xxs-min)",
     "xxs-max": "var(--fds-breakpoint-xxs-max)",
@@ -38,4 +36,4 @@ export const Breakpoint = {
     "lg-margin": "var(--fds-breakpoint-margin-lg)",
     "xl-margin": "var(--fds-breakpoint-margin-xl)",
     "xxl-margin": "var(--fds-breakpoint-margin-xxl)",
-} as const satisfies Record<string, BreakpointCSSVariableString>;
+} as const;

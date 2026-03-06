@@ -1,5 +1,3 @@
-import { SpacingCSSVariableString } from "../types";
-
 export const Spacing = {
     "spacing-0": "var(--fds-spacing-0)",
     "spacing-4": "var(--fds-spacing-4)",
@@ -21,4 +19,4 @@ export const Spacing = {
     "layout-xl": "var(--fds-layout-xl)",
     "layout-xxl": "var(--fds-layout-xxl)",
     "layout-xxxl": "var(--fds-layout-xxxl)",
-} as const satisfies Record<string, SpacingCSSVariableString>;
+} as const;

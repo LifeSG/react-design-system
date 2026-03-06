@@ -1,13 +1,4 @@
-import {
-    PrimitiveColourCSSVariableString,
-    SemanticColourCSSVariableString,
-} from "../types";
-
-type PrimitiveColourTokens = {
-    [key: string]: PrimitiveColourCSSVariableString;
-};
-
-const PrimitiveColours = {
+export const PrimitiveColours = {
     "brand-10": "var(--fds-colour-brand-10)",
     "brand-20": "var(--fds-colour-brand-20)",
     "brand-30": "var(--fds-colour-brand-30)",
@@ -107,7 +98,7 @@ const PrimitiveColours = {
     white: "var(--fds-colour-white)",
     black: "var(--fds-colour-black)",
     "primary-inverse": "var(--fds-colour-primary-inverse)",
-} as const satisfies Record<string, PrimitiveColourCSSVariableString>;
+} as const;
 
 export const Colour = {
     Primitive: PrimitiveColours,
@@ -232,7 +223,4 @@ export const Colour = {
     "hyperlink-inverse": "var(--fds-colour-hyperlink-inverse)",
     "focus-ring": "var(--fds-colour-focus-ring)",
     "focus-ring-inverse": "var(--fds-colour-focus-ring-inverse)",
-} as const satisfies Record<
-    string,
-    SemanticColourCSSVariableString | PrimitiveColourTokens
->;
+} as const;

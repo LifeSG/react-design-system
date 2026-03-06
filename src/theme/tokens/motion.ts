@@ -1,5 +1,3 @@
-import { MotionCSSVariableString } from "../types";
-
 export const Motion = {
     "duration-150": "var(--fds-motion-duration-150)",
     "duration-250": "var(--fds-motion-duration-250)",
@@ -12,4 +10,4 @@ export const Motion = {
     "ease-standard": "var(--fds-motion-timing-ease-standard)",
     "ease-entrance": "var(--fds-motion-timing-ease-entrance)",
     "ease-exit": "var(--fds-motion-timing-ease-exit)",
-} as const satisfies Record<string, MotionCSSVariableString>;
+} as const;
