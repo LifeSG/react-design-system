@@ -83,7 +83,9 @@ export const withThemeFromJSXProvider = <
                 <StyledComponentsThemeProvider
                     theme={{ ...theme, colourMode: mode }}
                 >
-                    {storyFn()}
+                    <ThemeProvider theme="pa" mode={mode}>
+                        {storyFn()}
+                    </ThemeProvider>
                 </StyledComponentsThemeProvider>
             </ThemeProvider>
         );
