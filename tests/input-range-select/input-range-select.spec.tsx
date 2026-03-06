@@ -573,8 +573,8 @@ describe("InputRangeSelect", () => {
             );
 
             await user.tab();
-            const wrapper = screen.getByTestId("input-range-select");
-            expect(wrapper).toHaveFocus();
+            const fromButton = screen.getByRole("combobox", { name: "From" });
+            expect(fromButton).toHaveFocus();
 
             await act(async () => {
                 await user.keyboard("{Enter}");
@@ -599,6 +599,7 @@ describe("InputRangeSelect", () => {
             await act(async () => {
                 await user.keyboard("{Enter}");
             });
+
             await waitFor(() => {
                 expect(
                     screen.queryByTestId("dropdown-container")
