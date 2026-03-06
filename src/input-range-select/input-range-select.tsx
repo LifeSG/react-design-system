@@ -54,6 +54,7 @@ export const InputRangeSelect = <T, V>({
     dropdownRootNode,
     dropdownWidth,
     "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
     ...otherProps
 }: InputRangeSelectProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -71,10 +72,8 @@ export const InputRangeSelect = <T, V>({
     };
     const dropdownRef = useRef<DropdownListApi>(null);
 
-    const [internalId] = useState<string>(
-        () => id ?? SimpleIdGenerator.generate()
-    );
-    const listboxId = `${internalId}-range-listbox`;
+    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const contentId = `${id ?? internalId}-${internalId}-range-listbox`;
 
     // =============================================================================
     // EFFECTS
@@ -300,7 +299,9 @@ export const InputRangeSelect = <T, V>({
             ref={labelButtonRef[rangeType]}
             disabled={disabled || readOnly}
             tabIndex={disabled || readOnly ? -1 : 0}
-            aria-controls={listboxId}
+            aria-expanded={isOpen && focusedInput === rangeType}
+            aria-controls={contentId}
+            aria-describedby={ariaDescribedBy}
             aria-disabled={disabled}
             aria-readonly={readOnly}
         >
@@ -309,6 +310,15 @@ export const InputRangeSelect = <T, V>({
     );
 
     const renderElement = () => {
+        const wrapperAccessibilityProps =
+            disabled || readOnly
+                ? {
+                      tabIndex: 0,
+                      "aria-disabled": disabled || undefined,
+                      "aria-readonly": readOnly || undefined,
+                  }
+                : {};
+
         return (
             <StyledInputWrapper
                 className={className}
@@ -317,9 +327,7 @@ export const InputRangeSelect = <T, V>({
                 $readOnly={readOnly}
                 $error={error}
                 $focused={isOpen}
-                tabIndex={disabled || readOnly ? 0 : -1}
-                aria-disabled={disabled}
-                aria-readonly={readOnly}
+                {...wrapperAccessibilityProps}
             >
                 <RangeInputInnerContainer
                     currentActive={getCurrentFocused()}
@@ -351,7 +359,7 @@ export const InputRangeSelect = <T, V>({
             <DropdownList
                 ref={dropdownRef}
                 data-testid={`${testId}-dropdown`}
-                listboxId={listboxId}
+                listboxId={contentId}
                 listItems={currentOptions}
                 onSelectItem={handleListItemClick}
                 onDismiss={handleDismiss}
