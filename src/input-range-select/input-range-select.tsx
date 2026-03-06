@@ -53,6 +53,7 @@ export const InputRangeSelect = <T, V>({
     dropdownZIndex,
     dropdownRootNode,
     dropdownWidth,
+    "aria-labelledby": ariaLabelledBy,
     ...otherProps
 }: InputRangeSelectProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -293,6 +294,7 @@ export const InputRangeSelect = <T, V>({
             aria-label={
                 rangeType === "from" ? placeholders?.from : placeholders?.to
             }
+            aria-labelledby={ariaLabelledBy}
             onClick={handleSelectorClick(rangeType)}
             onKeyDown={handleSelectorKeyDown(rangeType)}
             ref={labelButtonRef[rangeType]}
