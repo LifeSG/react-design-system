@@ -24,12 +24,12 @@ export const FormRangeSelect = <T, V>({
     xxlCols,
     ...otherProps
 }: FormInputRangeSelectProps<T, V>): JSX.Element => {
-    const [formInputId] = useState(() => SimpleIdGenerator.generate());
-    const uniqueId = id ?? `form-field-range-select-${formInputId}`;
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const contendId = id ?? `form-field-range-select-${internalId}`;
 
     return (
         <FormWrapper
-            id={uniqueId}
+            id={contendId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
@@ -47,11 +47,10 @@ export const FormRangeSelect = <T, V>({
             xxlCols={xxlCols}
         >
             <InputRangeSelect
-                id={`${uniqueId}-base`}
-                data-testid={testId || uniqueId}
+                id={`${contendId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 error={!!errorMessage}
                 enableSearch={enableSearch}
-                aria-labelledby={`${uniqueId}-label`}
                 {...otherProps}
             />
         </FormWrapper>
