@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTheme } from "./theme-provider/hooks";
 import { CSSVariableString, FDSVariableName } from "./types";
 
-const extractVariableName = (
+const extractFDSVariableName = (
     cssVarString: CSSVariableString
 ): FDSVariableName => {
     const match = cssVarString.match(/--fds-[\w-]+/)!;
@@ -16,7 +16,7 @@ export const useDesignToken = (
     const [value, setValue] = useState<string | undefined>(undefined);
 
     useEffect(() => {
-        const variableName = extractVariableName(tokenName);
+        const variableName = extractFDSVariableName(tokenName);
 
         const computedValue = getComputedStyle(
             document.documentElement
