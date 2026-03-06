@@ -8,7 +8,7 @@ import { CSSVariableString } from "../types";
 export function parseCSSVariableValue(cssVarString: CSSVariableString): number {
     if (typeof window === "undefined") return 0;
 
-    const variableName = cssVarString.match(/--fds-[\w-]+/)?.[0];
+    const variableName = (cssVarString as string).match(/--fds-[\w-]+/)?.[0];
     if (!variableName) return 0;
 
     const value = getComputedStyle(document.documentElement)
