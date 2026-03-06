@@ -22,6 +22,7 @@
         "allowJs": true, // allow JS files to be imported
         "skipLibCheck": true, // type check code specifically referring to rather than all d.ts files for libs
         "forceConsistentCasingInFileNames": true, // issue error if file import is of different case
+        "typeRoots": ["./custom-types", "./node_modules/@types"],
         "strictBindCallApply": true, // check that functions are invoked with the correct arguments
         "allowSyntheticDefaultImports": true, // allow for imports e.g. import React from "react"
         "alwaysStrict": true, // ensures files are parsed in ECMAScript strict mode
