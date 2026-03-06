@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useTheme } from "./theme-provider/hooks";
-import { CSSVariableString, FDSVariableName } from "./types";
+import { useTheme } from "../theme-provider/hooks";
+import { CSSVariableString, FDSVariableName } from "../types";
 
 const extractFDSVariableName = (
     cssVarString: CSSVariableString

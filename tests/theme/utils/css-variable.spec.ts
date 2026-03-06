@@ -1,4 +1,4 @@
-import { parseCSSVariableValue } from "../../../src/theme/utils/css-variable";
+import { parseCSSVariableValue } from "../../../src/theme/utils";
 import { setupThemeVariables } from "../setup";
 
 describe("parseCSSVariableValue", () => {
