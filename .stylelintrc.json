@@ -1,0 +1,15 @@
+{
+    "extends": ["stylelint-config-standard", "stylelint-config-recess-order"],
+    "plugins": ["@stylistic/stylelint-plugin"],
+    "rules": {
+        "declaration-block-no-duplicate-properties": true,
+        "no-descending-specificity": true,
+        "selector-max-id": 0,
+        "custom-property-empty-line-before": [
+            "always",
+            { "ignore": ["after-comment"] }
+        ],
+
+        "@stylistic/color-hex-case": "upper"
+    }
+}

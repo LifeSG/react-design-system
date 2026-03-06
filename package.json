@@ -23,7 +23,10 @@
         "prepare": "(test -d ./.git && npx husky install) || true",
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
-        "codemod": "ENV=dev npx tsx codemods/run-codemod.ts"
+        "codemod": "ENV=dev npx tsx codemods/run-codemod.ts",
+        "lint": "eslint 'src/**/*.{ts,tsx,js,jsx}' && yarn lint:css",
+        "lint:css": "stylelint '**/*.css'",
+        "lint:css:fix": "stylelint '**/*.css' --fix"
     },
     "repository": {
         "type": "git",
@@ -76,6 +79,8 @@
         "@storybook/addon-themes": "^10.2.10",
         "@storybook/addon-webpack5-compiler-swc": "^4.0.2",
         "@storybook/react-webpack5": "^10.2.10",
+        "@stylistic/stylelint-config": "^4.0.0",
+        "@stylistic/stylelint-plugin": "^5.0.1",
         "@testing-library/jest-dom": "^5.16.3",
         "@testing-library/react": "^12.1.4",
         "@testing-library/user-event": "^14.5.2",
@@ -141,6 +146,9 @@
         "storybook": "^10.2.10",
         "style-loader": "^2.0.0",
         "styled-components": "^6.1.19",
+        "stylelint": "^17.4.0",
+        "stylelint-config-recess-order": "^7.6.1",
+        "stylelint-config-standard": "^40.0.0",
         "typescript": "^5.7.3"
     },
     "peerDependencies": {
@@ -153,6 +161,9 @@
     "lint-staged": {
         "*.{tsx,ts}": [
             "eslint --fix"
+        ],
+        "*.{css,module.css}": [
+            "stylelint --fix"
         ]
     }
 }
