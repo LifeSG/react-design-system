@@ -1,4 +1,5 @@
 import type { ThemeMode, ThemeType } from "../types";
+import type { CSSProperties } from "react";
 
 export interface ThemeContextValue {
     theme: ThemeType;
@@ -13,4 +14,6 @@ export interface ThemeProviderProps {
     children: React.ReactNode;
     theme?: ThemeType;
     mode?: ThemeMode;
+    className?: string;
+    style?: CSSProperties;
 }

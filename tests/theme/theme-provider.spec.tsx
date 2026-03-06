@@ -32,6 +32,22 @@ describe("ThemeProvider", () => {
         expect(wrapper).toHaveAttribute("data-fds-theme-mode", "light");
     });
 
+    it("passes className and style to theme wrapper", () => {
+        render(
+            <ThemeProvider
+                theme="lifesg"
+                className="custom-theme-root"
+                style={{ minHeight: "24px" }}
+            >
+                <TestComponent />
+            </ThemeProvider>
+        );
+
+        const wrapper = getWrapper();
+        expect(wrapper).toHaveClass("custom-theme-root");
+        expect(wrapper).toHaveStyle({ minHeight: "24px" });
+    });
+
     it("respects theme prop", () => {
         const { rerender } = render(
             <ThemeProvider theme="lifesg">
