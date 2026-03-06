@@ -1,4 +1,5 @@
 import { generateFont } from "../helper";
+import { FontCSSVariableString } from "../types";
 
 export const Font = {
     "heading-xxl-light": generateFont("heading-xxl", "light"),
@@ -114,4 +115,7 @@ export const Font = {
         "form-description-lh": "var(--fds-font-form-description-lh)",
         "form-description-ls": "var(--fds-font-form-description-ls)",
     },
-};
+} as const satisfies Record<
+    string,
+    string | Record<string, FontCSSVariableString>
+>;
