@@ -36,4 +36,4 @@ export const Breakpoint = {
     "lg-margin": "var(--fds-breakpoint-margin-lg)",
     "xl-margin": "var(--fds-breakpoint-margin-xl)",
     "xxl-margin": "var(--fds-breakpoint-margin-xxl)",
-};
+} as const;

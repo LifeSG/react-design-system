@@ -19,4 +19,4 @@ export const Spacing = {
     "layout-xl": "var(--fds-layout-xl)",
     "layout-xxl": "var(--fds-layout-xxl)",
     "layout-xxxl": "var(--fds-layout-xxxl)",
-};
+} as const;

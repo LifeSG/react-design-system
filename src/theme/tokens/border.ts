@@ -5,4 +5,4 @@ export const Border = {
     "width-040": "var(--fds-border-width-040)",
 
     solid: "var(--fds-border-style-solid)",
-};
+} as const;

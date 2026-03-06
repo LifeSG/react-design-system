@@ -1,5 +1,59 @@
 import { generateFont } from "../helper";
 
+export const FontSpec = {
+    "font-family": "var(--fds-font-family)",
+    "font-variant": "var(--fds-font-variant)",
+
+    "weight-light": "var(--fds-font-weight-light)",
+    "weight-regular": "var(--fds-font-weight-regular)",
+    "weight-semibold": "var(--fds-font-weight-semibold)",
+    "weight-bold": "var(--fds-font-weight-bold)",
+
+    "heading-size-xxl": "var(--fds-font-heading-size-xxl)",
+    "heading-size-xl": "var(--fds-font-heading-size-xl)",
+    "heading-size-lg": "var(--fds-font-heading-size-lg)",
+    "heading-size-md": "var(--fds-font-heading-size-md)",
+    "heading-size-sm": "var(--fds-font-heading-size-sm)",
+    "heading-size-xs": "var(--fds-font-heading-size-xs)",
+
+    "heading-lh-xxl": "var(--fds-font-heading-lh-xxl)",
+    "heading-lh-xl": "var(--fds-font-heading-lh-xl)",
+    "heading-lh-lg": "var(--fds-font-heading-lh-lg)",
+    "heading-lh-md": "var(--fds-font-heading-lh-md)",
+    "heading-lh-sm": "var(--fds-font-heading-lh-sm)",
+    "heading-lh-xs": "var(--fds-font-heading-lh-xs)",
+
+    "heading-ls-xxl": "var(--fds-font-heading-ls-xxl)",
+    "heading-ls-xl": "var(--fds-font-heading-ls-xl)",
+    "heading-ls-lg": "var(--fds-font-heading-ls-lg)",
+    "heading-ls-md": "var(--fds-font-heading-ls-md)",
+    "heading-ls-sm": "var(--fds-font-heading-ls-sm)",
+    "heading-ls-xs": "var(--fds-font-heading-ls-xs)",
+
+    "body-size-baseline": "var(--fds-font-body-size-baseline)",
+    "body-size-md": "var(--fds-font-body-size-md)",
+    "body-size-sm": "var(--fds-font-body-size-sm)",
+    "body-size-xs": "var(--fds-font-body-size-xs)",
+
+    "body-lh-baseline": "var(--fds-font-body-lh-baseline)",
+    "body-lh-md": "var(--fds-font-body-lh-md)",
+    "body-lh-sm": "var(--fds-font-body-lh-sm)",
+    "body-lh-xs": "var(--fds-font-body-lh-xs)",
+
+    "body-ls-baseline": "var(--fds-font-body-ls-baseline)",
+    "body-ls-md": "var(--fds-font-body-ls-md)",
+    "body-ls-sm": "var(--fds-font-body-ls-sm)",
+    "body-ls-xs": "var(--fds-font-body-ls-xs)",
+
+    "form-label-size": "var(--fds-font-form-label-size)",
+    "form-label-lh": "var(--fds-font-form-label-lh)",
+    "form-label-ls": "var(--fds-font-form-label-ls)",
+
+    "form-description-size": "var(--fds-font-form-description-size)",
+    "form-description-lh": "var(--fds-font-form-description-lh)",
+    "form-description-ls": "var(--fds-font-form-description-ls)",
+} as const;
+
 export const Font = {
     "heading-xxl-light": generateFont("heading-xxl", "light"),
     "heading-xxl-regular": generateFont("heading-xxl", "regular"),
@@ -61,57 +115,5 @@ export const Font = {
     "form-description-semibold": generateFont("form-description", "semibold"),
     "form-description-bold": generateFont("form-description", "bold"),
 
-    Spec: {
-        "font-family": "var(--fds-font-family)",
-        "font-variant": "var(--fds-font-variant)",
-
-        "weight-light": "var(--fds-font-weight-light)",
-        "weight-regular": "var(--fds-font-weight-regular)",
-        "weight-semibold": "var(--fds-font-weight-semibold)",
-        "weight-bold": "var(--fds-font-weight-bold)",
-
-        "heading-size-xxl": "var(--fds-font-heading-size-xxl)",
-        "heading-size-xl": "var(--fds-font-heading-size-xl)",
-        "heading-size-lg": "var(--fds-font-heading-size-lg)",
-        "heading-size-md": "var(--fds-font-heading-size-md)",
-        "heading-size-sm": "var(--fds-font-heading-size-sm)",
-        "heading-size-xs": "var(--fds-font-heading-size-xs)",
-
-        "heading-lh-xxl": "var(--fds-font-heading-lh-xxl)",
-        "heading-lh-xl": "var(--fds-font-heading-lh-xl)",
-        "heading-lh-lg": "var(--fds-font-heading-lh-lg)",
-        "heading-lh-md": "var(--fds-font-heading-lh-md)",
-        "heading-lh-sm": "var(--fds-font-heading-lh-sm)",
-        "heading-lh-xs": "var(--fds-font-heading-lh-xs)",
-
-        "heading-ls-xxl": "var(--fds-font-heading-ls-xxl)",
-        "heading-ls-xl": "var(--fds-font-heading-ls-xl)",
-        "heading-ls-lg": "var(--fds-font-heading-ls-lg)",
-        "heading-ls-md": "var(--fds-font-heading-ls-md)",
-        "heading-ls-sm": "var(--fds-font-heading-ls-sm)",
-        "heading-ls-xs": "var(--fds-font-heading-ls-xs)",
-
-        "body-size-baseline": "var(--fds-font-body-size-baseline)",
-        "body-size-md": "var(--fds-font-body-size-md)",
-        "body-size-sm": "var(--fds-font-body-size-sm)",
-        "body-size-xs": "var(--fds-font-body-size-xs)",
-
-        "body-lh-baseline": "var(--fds-font-body-lh-baseline)",
-        "body-lh-md": "var(--fds-font-body-lh-md)",
-        "body-lh-sm": "var(--fds-font-body-lh-sm)",
-        "body-lh-xs": "var(--fds-font-body-lh-xs)",
-
-        "body-ls-baseline": "var(--fds-font-body-ls-baseline)",
-        "body-ls-md": "var(--fds-font-body-ls-md)",
-        "body-ls-sm": "var(--fds-font-body-ls-sm)",
-        "body-ls-xs": "var(--fds-font-body-ls-xs)",
-
-        "form-label-size": "var(--fds-font-form-label-size)",
-        "form-label-lh": "var(--fds-font-form-label-lh)",
-        "form-label-ls": "var(--fds-font-form-label-ls)",
-
-        "form-description-size": "var(--fds-font-form-description-size)",
-        "form-description-lh": "var(--fds-font-form-description-lh)",
-        "form-description-ls": "var(--fds-font-form-description-ls)",
-    },
-};
+    Spec: FontSpec,
+} as const;
