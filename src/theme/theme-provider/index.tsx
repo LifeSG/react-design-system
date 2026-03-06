@@ -13,6 +13,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     children,
     theme = "lifesg",
     mode,
+    className,
+    style,
 }) => {
     const isModeControlled = mode !== undefined;
 
@@ -50,6 +52,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
                 ref={themeElementRef}
                 data-fds-theme={theme}
                 data-fds-theme-mode={themeMode}
+                className={className}
+                style={style}
             >
                 {children}
             </div>
