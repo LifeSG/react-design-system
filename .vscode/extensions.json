@@ -12,6 +12,7 @@
         "mikestead.dotenv",
         "naumovs.color-highlight",
         "styled-components.vscode-styled-components",
+        "stylelint.vscode-stylelint",
         "unifiedjs.vscode-mdx",
         "vunguyentuan.vscode-css-variables",
 

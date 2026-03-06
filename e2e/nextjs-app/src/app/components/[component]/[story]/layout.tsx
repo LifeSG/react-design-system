@@ -12,7 +12,7 @@ export default function Layout({
 }>) {
     return (
         <V3_DSThemeProvider theme={V3_LifeSGTheme}>
-            <div data-testid="story-layout" className={styles.storyLayout}>
+            <div data-testid="story-layout" className={styles["story-layout"]}>
                 {children}
             </div>
         </V3_DSThemeProvider>
