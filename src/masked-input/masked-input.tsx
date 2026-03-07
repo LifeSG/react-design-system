@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
 import {
@@ -10,47 +10,55 @@ import {
     InputGroupWrapper,
     LoadingLabel,
     LoadingWrapper,
+    ReadOnlyClickable,
+    ReadOnlyIconContainer,
     Spinner,
     TryAgainLabel,
 } from "./masked-input.style";
 import { MaskedInputProps } from "./types";
 import { isEmpty } from "lodash";
-import { StringHelper } from "../util";
+import { SimpleIdGenerator, StringHelper } from "../util";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 
-const Component = (
-    {
-        value,
-        readOnly,
-        "data-testid": dataTestId,
-        maskRange,
-        unmaskRange,
-        maskRegex,
-        maskTransformer,
-        iconMask = <EyeSlashIcon />,
-        iconUnmask = <EyeIcon />,
-        iconActiveColor: maskIconActiveColor,
-        iconInactiveColor: maskIconInactiveColor,
-        maskChar = "•",
-        error,
-        disableMask,
-        transformInput,
-        loadState,
-        onMask,
-        onUnmask,
-        onChange,
-        onFocus,
-        onBlur,
-        onTryAgain,
-        ...otherProps
-    }: MaskedInputProps,
-    ref: React.Ref<HTMLInputElement>
-) => {
+const Component = ({
+    value,
+    readOnly,
+    "data-testid": dataTestId,
+    maskRange,
+    unmaskRange,
+    maskRegex,
+    maskTransformer,
+    iconMask = <EyeSlashIcon />,
+    iconUnmask = <EyeIcon />,
+    iconActiveColor: maskIconActiveColor,
+    iconInactiveColor: maskIconInactiveColor,
+    maskChar = "•",
+    error,
+    disableMask,
+    transformInput,
+    loadState,
+    onMask,
+    onUnmask,
+    onChange,
+    onFocus,
+    onBlur,
+    onTryAgain,
+    ...otherProps
+}: MaskedInputProps) => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
     const isEmptyReadOnlyState = readOnly && isEmpty(value);
     const [isMasked, setIsMasked] = useState<boolean>(!disableMask);
     const [updatedValue, setUpdatedValue] = useState<string>(value || "");
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const valueId = `${otherProps.id ?? internalId}-value`;
+
+    const inputRef = useRef<HTMLInputElement>(null);
+    const tryAgainRef = useRef<HTMLButtonElement>(null);
+    const readOnlyButtonRef = useRef<HTMLButtonElement>(null);
+    const isMaskedRef = useRef<boolean>(!disableMask);
+    const ariaLabelledBy = otherProps["aria-labelledby"];
 
     // =============================================================================
     // EFFECTS
@@ -59,10 +67,21 @@ const Component = (
         setUpdatedValue(value || "");
     }, [value]);
 
+    useEffect(() => {
+        if (!readOnly) return;
+
+        if (loadState === "fail") {
+            tryAgainRef.current?.focus();
+        }
+
+        if (loadState === "success") {
+            readOnlyButtonRef.current?.focus();
+        }
+    }, [readOnly, loadState]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         toggleMasking(false);
         onFocus?.(event);
@@ -98,15 +117,34 @@ const Component = (
         }
     };
 
+    const handleIconMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+        event.preventDefault();
+    };
+
     const handleToggleMask = () => {
-        toggleMasking(!isMasked);
+        const nextMasked = !isMasked;
+
+        toggleMasking(nextMasked);
+
+        if (!nextMasked) {
+            inputRef.current?.focus();
+            return;
+        }
+
+        if (document.activeElement === inputRef.current) {
+            inputRef.current?.blur();
+        }
     };
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
     const toggleMasking = (mask: boolean) => {
+        if (isMaskedRef.current === mask) return;
+
+        isMaskedRef.current = mask;
         setIsMasked(mask);
+
         if (mask) {
             onMask?.();
         } else {
@@ -133,10 +171,27 @@ const Component = (
     const shouldDisableMasking = () =>
         !updatedValue?.toString().length || disableMask;
 
+    const getValueDescription = () => {
+        if (isEmptyReadOnlyState) {
+            return "-";
+        }
+
+        if (isMasked && !disableMask) {
+            const desc = StringHelper.getMaskedDescription(
+                updatedValue,
+                "masked",
+                maskRange
+            );
+
+            return desc || "Masked value";
+        }
+
+        return updatedValue;
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-
     const renderIcon = () => {
         if (isEmptyReadOnlyState) {
             return <></>;
@@ -147,13 +202,46 @@ const Component = (
         return (
             <IconContainer
                 data-testid={`icon-${isMasked ? "masked" : "unmasked"}`}
+                onMouseDown={!isDisabled ? handleIconMouseDown : undefined}
                 onClick={!isDisabled ? handleToggleMask : undefined}
                 $isDisabled={isDisabled}
                 $inactiveColor={maskIconInactiveColor}
                 $activeColor={maskIconActiveColor}
+                aria-hidden="true"
             >
                 {isMasked ? iconUnmask : iconMask}
             </IconContainer>
+        );
+    };
+
+    const renderReadOnlyButton = () => {
+        const isButtonDisabled = shouldDisableMasking() || isEmptyReadOnlyState;
+
+        return (
+            <>
+                <VisuallyHidden id={valueId}>
+                    {getValueDescription()}
+                </VisuallyHidden>
+                <ReadOnlyClickable
+                    ref={readOnlyButtonRef}
+                    data-testid="masked-input-readonly-button"
+                    onClick={!isButtonDisabled ? handleToggleMask : undefined}
+                    type="button"
+                    aria-labelledby={concatIds(valueId, ariaLabelledBy)}
+                    aria-disabled={isButtonDisabled}
+                >
+                    <span>{getValue()}</span>
+                    {!isButtonDisabled && (
+                        <ReadOnlyIconContainer>
+                            {isMasked ? (
+                                <EyeIcon data-testid="masked-icon" />
+                            ) : (
+                                <EyeSlashIcon data-testid="unmasked-icon" />
+                            )}
+                        </ReadOnlyIconContainer>
+                    )}
+                </ReadOnlyClickable>
+            </>
         );
     };
 
@@ -163,8 +251,10 @@ const Component = (
                 case "fail":
                     return (
                         <ClickableErrorWrapper
+                            ref={tryAgainRef}
                             onClick={handleTryAgain}
                             data-testid="try-again-button"
+                            type="button"
                         >
                             <ErrorTextContainer>
                                 <ErrorIcon />
@@ -182,13 +272,13 @@ const Component = (
                     );
                 case "success":
                 default:
-                    break;
+                    return renderReadOnlyButton();
             }
         }
 
         return (
             <InputGroupWrapper
-                ref={ref}
+                ref={inputRef}
                 data-testid={`${dataTestId || "masked-input"}${
                     isMasked ? "-masked" : "-unmasked"
                 }`}
@@ -212,11 +302,7 @@ const Component = (
         );
     };
 
-    return (
-        <div aria-busy={loadState === "loading"} aria-live="polite">
-            {renderElement()}
-        </div>
-    );
+    return <div aria-busy={loadState === "loading"}>{renderElement()}</div>;
 };
 
 export const MaskedInput = React.forwardRef(Component);
