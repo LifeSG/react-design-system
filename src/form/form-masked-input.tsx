@@ -21,12 +21,12 @@ const Component = (
         ...otherProps
     } = props;
 
-    const [formInputId] = useState(() => SimpleIdGenerator.generate());
-    const uniqueId = id ?? `form-field-masked-input-${formInputId}`;
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const inputId = id ?? `form-field-masked-input-${internalId}`;
 
     return (
         <FormWrapper
-            id={uniqueId}
+            id={inputId}
             label={label}
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
@@ -38,8 +38,8 @@ const Component = (
         >
             <MaskedInput
                 ref={ref}
-                id={`${uniqueId}-base`}
-                data-testid={testId || uniqueId}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 error={!!errorMessage}
                 {...otherProps}
             />

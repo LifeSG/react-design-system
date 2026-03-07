@@ -123,22 +123,17 @@ export const ReadOnlyClickable = styled.button`
     color: ${Colour["text"]};
     border: none;
     background: transparent;
-    padding: 0;
+    padding-left: 1rem;
     display: flex;
     align-items: center;
     cursor: pointer;
     text-align: left;
     width: 100%;
     justify-content: space-between;
-
-    span {
-        overflow-wrap: anywhere;
-        text-align: left;
-        flex: 1;
-    }
+    min-height: 3rem;
 `;
 
-export const ReadOnlyIconContainer = styled.div`
+export const ReadOnlyIconContainer = styled.span`
     display: flex;
     align-items: center;
     justify-content: center;
