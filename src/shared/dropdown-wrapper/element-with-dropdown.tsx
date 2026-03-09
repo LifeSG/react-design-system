@@ -24,6 +24,7 @@ import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
 
 import { useFloatingChild } from "../../overlay/use-floating-context";
+import { ThemeContext as FDSThemeContext } from "../../theme/theme-provider/context";
 import { V3_Breakpoint } from "../../v3_theme";
 import type { DropdownAlignmentType } from "./types";
 
@@ -137,6 +138,7 @@ export const ElementWithDropdown = ({
     // CONST, STATE, REF
     // =============================================================================
     const theme = useContext(ThemeContext);
+    const themeContext = useContext(FDSThemeContext);
     const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
     const elementRef = useRef<HTMLDivElement | null>(null);
     const { width: referenceWidth = 0 } = useResizeDetector({
@@ -246,7 +248,7 @@ export const ElementWithDropdown = ({
                 {renderElement()}
             </div>
             {isMounted && (
-                <FloatingPortal root={rootNode}>
+                <FloatingPortal root={rootNode ?? themeContext?.themeElement}>
                     <FloatingFocusManager
                         context={context}
                         modal={false}

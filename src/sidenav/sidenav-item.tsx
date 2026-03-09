@@ -16,6 +16,7 @@ import type { HTMLAttributes } from "react";
 import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { ThemeContext as FDSThemeContext } from "../theme/theme-provider/context";
 import { SidenavContext } from "./sidenav-context";
 import {
     Container,
@@ -49,6 +50,7 @@ export const SidenavItem = ({
     } = useContext(SidenavContext);
 
     const id = otherProps.id || title.toLowerCase().replaceAll(" ", "-");
+    const themeContext = useContext(FDSThemeContext);
     const drawerId = `${internalId}-drawer`;
     const isSelected = !!selectedItem && selectedItem.itemId === id;
     const isCurrent = !!currentItem && currentItem.itemId === id;
@@ -209,7 +211,7 @@ export const SidenavItem = ({
                 <TitleText inline>{title}</TitleText>
             </DefaultButton>
             {isMounted && (
-                <FloatingPortal>
+                <FloatingPortal root={themeContext?.themeElement}>
                     <FloatingFocusManager
                         context={context}
                         modal={false}

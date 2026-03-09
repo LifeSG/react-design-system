@@ -20,6 +20,7 @@ import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 
 import { useFloatingChild } from "../overlay/use-floating-context";
+import { ThemeContext as FDSThemeContext } from "../theme/theme-provider/context";
 import { SimpleIdGenerator } from "../util";
 import { V3_Breakpoint } from "../v3_theme";
 import { PopoverV2 } from "./popover";
@@ -52,6 +53,7 @@ export const PopoverTrigger = ({
     const nodeRef = useRef<HTMLElement | null>(null);
     const popoverRef = useRef<HTMLElement | null>(null);
     const theme = useContext(ThemeContext);
+    const themeContext = useContext(FDSThemeContext);
     const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const [availableHeight, setAvailableHeight] = useState(0);
@@ -205,7 +207,7 @@ export const PopoverTrigger = ({
                 {children}
             </TriggerContainer>
             {visible && (
-                <FloatingPortal root={rootNode}>
+                <FloatingPortal root={rootNode ?? themeContext?.themeElement}>
                     <FloatingFocusManager
                         context={context}
                         {...(!isModal && {

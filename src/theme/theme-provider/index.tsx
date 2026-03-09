@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import type { FC } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useIsomorphicLayoutEffect } from "../../util";
 import { setupBreakpointListener } from "./breakpoint";
@@ -9,7 +10,7 @@ import {
 } from "./system-colour-mode";
 import type { ThemeProviderProps } from "./types";
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({
+export const ThemeProvider: FC<ThemeProviderProps> = ({
     children,
     theme = "lifesg",
     mode,
@@ -21,10 +22,15 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     const [computedMode, setComputedMode] = useState(
         mode ?? getSystemColourMode()
     );
+    const [themeElement, setThemeElement] = useState<HTMLDivElement | null>(
+        null
+    );
 
     const themeMode = isModeControlled ? mode : computedMode;
 
-    const themeElementRef = useRef<HTMLDivElement | null>(null);
+    const setThemeElementRef = useCallback((node: HTMLDivElement | null) => {
+        setThemeElement(node);
+    }, []);
 
     useIsomorphicLayoutEffect(() => {
         const cleanup = setupBreakpointListener();
@@ -40,16 +46,16 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     const contextValue = useMemo(
         () => ({
             theme,
-            mode: isModeControlled ? mode : computedMode,
-            themeElement: themeElementRef.current,
+            mode: themeMode,
+            themeElement,
         }),
-        [theme, isModeControlled, mode, computedMode]
+        [theme, themeMode, themeElement]
     );
 
     return (
         <ThemeContext.Provider value={contextValue}>
             <div
-                ref={themeElementRef}
+                ref={setThemeElementRef}
                 data-fds-theme={theme}
                 data-fds-theme-mode={themeMode}
                 className={className}
