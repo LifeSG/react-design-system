@@ -20,7 +20,11 @@ import {
     StyledInputWrapper,
 } from "./input-range-select.style";
 import { SimpleIdGenerator } from "../util";
-import { VisuallyHidden } from "../shared/accessibility";
+import {
+    LiveAnnouncer,
+    VisuallyHidden,
+    concatIds,
+} from "../shared/accessibility";
 
 type RangeType = "from" | "to";
 
@@ -66,6 +70,7 @@ export const InputRangeSelect = <T, V>({
     const [focusedInput, setFocusedInput] = useState<RangeType | "none">(
         "none"
     );
+    const [announcement, setAnnouncement] = useState<string>("");
     const isOpen = focusedInput !== "none";
 
     const labelButtonRef = {
@@ -157,13 +162,17 @@ export const InputRangeSelect = <T, V>({
     const openDropdownFor = (rangeType: RangeType) => {
         if (disabled || readOnly) return;
 
-        if (rangeType === "to" && !selectedFromValue) {
-            setFocusedInput("from");
-        } else {
-            setFocusedInput(rangeType);
-        }
+        const nextFocusedInput =
+            rangeType === "to" && !selectedFromValue ? "from" : rangeType;
 
+        setFocusedInput(nextFocusedInput);
         triggerOptionDisplayCallback(true);
+
+        setAnnouncement(
+            nextFocusedInput === "from"
+                ? `Selecting for: ${placeholders.from}`
+                : `Selecting for: ${placeholders.to}`
+        );
     };
 
     const focusButton = (type: RangeType) => {
@@ -172,7 +181,7 @@ export const InputRangeSelect = <T, V>({
 
     const getButtonLabelledBy = (rangeType: RangeType) => {
         const rangeLabelId = rangeType === "from" ? fromLabelId : toLabelId;
-        return [rangeLabelId, ariaLabelledBy].filter(Boolean).join(" ");
+        return concatIds(rangeLabelId, ariaLabelledBy);
     };
 
     // =============================================================================
@@ -213,6 +222,7 @@ export const InputRangeSelect = <T, V>({
             setFocusedInput("to");
             triggerOptionDisplayCallback(true);
             focusButton("to");
+            setAnnouncement(`Selecting for: ${placeholders.to}`);
             return;
         }
 
@@ -324,6 +334,8 @@ export const InputRangeSelect = <T, V>({
                 $error={error}
                 $focused={isOpen}
             >
+                <LiveAnnouncer message={announcement} />
+
                 <VisuallyHidden id={fromLabelId}>
                     {placeholders?.from || "Select"}
                 </VisuallyHidden>
@@ -378,13 +390,6 @@ export const InputRangeSelect = <T, V>({
                 searchPlaceholder={searchPlaceholder}
                 renderListItem={renderListItem}
                 renderCustomCallToAction={renderCustomCallToAction}
-                accessibilityLabel={
-                    focusedInput === "from"
-                        ? `Selecting for: ${placeholders.from}`
-                        : focusedInput === "to"
-                        ? `Selecting for: ${placeholders.to}`
-                        : undefined
-                }
             />
         );
     };
