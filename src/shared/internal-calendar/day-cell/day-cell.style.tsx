@@ -1,70 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Border, Colour, Font, Motion, Radius } from "../../../theme";
-import { CellType, LabelType } from "./types";
 
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface StyleProps {
-    $type: CellType | undefined;
-}
-
-interface LabelStyleProps {
-    $type: LabelType | undefined;
-    $disabled: boolean | undefined;
-    $interactive: boolean | null | undefined;
-}
-
-interface LabelWrapperProps {
-    $interactive: boolean | null | undefined;
-}
-
-interface IndicatorStyleProps {
-    $disabled: boolean | undefined;
-}
-
-// =============================================================================
-// HELPERS
-// =============================================================================
-const getCellStyle = (props: StyleProps) => {
-    let color: string = Colour.bg;
-    let borderColor: string = "transparent";
-
-    switch (props.$type) {
-        case "hover-subtle":
-            color = Colour["bg-hover"];
-            borderColor = Colour["bg-hover"];
-            break;
-        case "hover":
-            color = Colour["bg-hover-strong"];
-            borderColor = Colour["bg-hover-strong"];
-            break;
-        case "hover-outline":
-            color = Colour["bg-hover-subtle"];
-            borderColor = Colour["border-hover"];
-            break;
-        case "selected-outline":
-            color = Colour["bg-selected"];
-            borderColor = Colour["border-selected"];
-            break;
-        case "selected-outline-subtle":
-            color = Colour["bg-selected"];
-            borderColor = Colour["border-selected-subtle"];
-            break;
-        case "selected-hover":
-            color = Colour["bg-selected-hover"];
-            // no border to give it an overlay effect
-            break;
-        case "selected-hover-outline":
-            color = Colour["bg-selected-hover"];
-            borderColor = Colour["border-selected-hover"];
-            break;
-    }
-
-    return { color, borderColor };
-};
-
-// =============================================================================
 // COMPONENTS
 // =============================================================================
 export const Cell = styled.div`
@@ -76,7 +12,7 @@ export const Cell = styled.div`
     height: 2.5rem;
 `;
 
-const Half = styled.div<StyleProps>`
+const Half = styled.div`
     position: absolute;
     height: 2.5rem;
     width: 50%;
@@ -85,18 +21,53 @@ const Half = styled.div<StyleProps>`
     border-left: none;
     border-right: none;
 
-    ${(props) => {
-        if (!props.$type) {
-            return;
-        }
-        const { color, borderColor } = getCellStyle(props);
-        return css`
-            background-color: ${color};
-            background-clip: border-box;
-            border-top-color: ${borderColor};
-            border-bottom-color: ${borderColor};
-        `;
-    }}
+    &.halfHoverSubtle {
+        background-color: ${Colour["bg-hover"]};
+        background-clip: border-box;
+        border-top-color: ${Colour["bg-hover"]};
+        border-bottom-color: ${Colour["bg-hover"]};
+    }
+
+    &.halfHover {
+        background-color: ${Colour["bg-hover-strong"]};
+        background-clip: border-box;
+        border-top-color: ${Colour["bg-hover-strong"]};
+        border-bottom-color: ${Colour["bg-hover-strong"]};
+    }
+
+    &.halfHoverOutline {
+        background-color: ${Colour["bg-hover-subtle"]};
+        background-clip: border-box;
+        border-top-color: ${Colour["border-hover"]};
+        border-bottom-color: ${Colour["border-hover"]};
+    }
+
+    &.halfSelectedOutline {
+        background-color: ${Colour["bg-selected"]};
+        background-clip: border-box;
+        border-top-color: ${Colour["border-selected"]};
+        border-bottom-color: ${Colour["border-selected"]};
+    }
+
+    &.halfSelectedOutlineSubtle {
+        background-color: ${Colour["bg-selected"]};
+        background-clip: border-box;
+        border-top-color: ${Colour["border-selected-subtle"]};
+        border-bottom-color: ${Colour["border-selected-subtle"]};
+    }
+
+    &.halfSelectedHover {
+        background-color: ${Colour["bg-selected-hover"]};
+        background-clip: border-box;
+        /* no border to give it an overlay effect */
+    }
+
+    &.halfSelectedHoverOutline {
+        background-color: ${Colour["bg-selected-hover"]};
+        background-clip: border-box;
+        border-top-color: ${Colour["border-selected-hover"]};
+        border-bottom-color: ${Colour["border-selected-hover"]};
+    }
 `;
 
 export const LeftHalf = styled(Half)`
@@ -107,7 +78,7 @@ export const RightHalf = styled(Half)`
     right: 0;
 `;
 
-export const Circle = styled.div<StyleProps>`
+const Circle = styled.div`
     position: absolute;
     z-index: 1;
 
@@ -121,16 +92,47 @@ export const Circle = styled.div<StyleProps>`
     border: ${Border["width-010"]} ${Border.solid} transparent;
     border-radius: ${Radius.md};
 
-    ${(props) => {
-        if (props.$type) {
-            const { color, borderColor } = getCellStyle(props);
-            return css`
-                background-color: ${color};
-                background-clip: content-box;
-                border-color: ${borderColor};
-            `;
-        }
-    }}
+    &.circleHoverSubtle {
+        background-color: ${Colour["bg-hover"]};
+        background-clip: content-box;
+        border-color: ${Colour["bg-hover"]};
+    }
+
+    &.circleHover {
+        background-color: ${Colour["bg-hover-strong"]};
+        background-clip: content-box;
+        border-color: ${Colour["bg-hover-strong"]};
+    }
+
+    &.circleHoverOutline {
+        background-color: ${Colour["bg-hover-subtle"]};
+        background-clip: content-box;
+        border-color: ${Colour["border-hover"]};
+    }
+
+    &.circleSelectedOutline {
+        background-color: ${Colour["bg-selected"]};
+        background-clip: content-box;
+        border-color: ${Colour["border-selected"]};
+    }
+
+    &.circleSelectedOutlineSubtle {
+        background-color: ${Colour["bg-selected"]};
+        background-clip: content-box;
+        border-color: ${Colour["border-selected-subtle"]};
+    }
+
+    &.circleSelectedHover {
+        background-color: ${Colour["bg-selected-hover"]};
+        background-clip: content-box;
+        /* no border to give it an overlay effect */
+    }
+
+    &.circleSelectedHoverOutline {
+        background-color: ${Colour["bg-selected-hover"]};
+        background-clip: content-box;
+        border-color: ${Colour["border-selected-hover"]};
+    }
 `;
 
 export const LeftCircle = styled(Circle)`
@@ -143,23 +145,26 @@ export const RightCircle = styled(Circle)`
     clip-path: inset(-3px -3px -3px 1.25rem);
 `;
 
-export const LabelWrapper = styled.span<LabelWrapperProps>`
+export const LabelWrapper = styled.span`
     position: absolute;
     top: 0;
     bottom: 0;
     z-index: 2;
-    cursor: ${(props) => {
-        if (props.$interactive) {
-            return "pointer";
-        } else if (props.$interactive === null) {
-            return "default";
-        } else {
-            return "not-allowed";
-        }
-    }};
+
+    &.labelWrapperInteractive {
+        cursor: pointer;
+    }
+
+    &.labelWrapperEnabled {
+        cursor: default;
+    }
+
+    &.labelWrapperDisabled {
+        cursor: not-allowed;
+    }
 `;
 
-export const Label = styled.div<LabelStyleProps>`
+export const Label = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -168,72 +173,52 @@ export const Label = styled.div<LabelStyleProps>`
     ${Font["body-md-regular"]}
     transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
-    pointer-events: ${(props) => {
-        if (props.$interactive || props.$interactive === null) {
-            return "auto";
-        } else {
-            return "none";
-        }
-    }};
+    &.labelCursorDisabled {
+        pointer-events: none;
+    }
 
-    ${(props) => {
-        const { $disabled, $type } = props;
+    &.labelHidden {
+        visibility: hidden;
+    }
 
-        if ($disabled) {
-            if ($type === "hidden") {
-                return css`
-                    visibility: hidden;
-                `;
-            }
+    &.labelDisabled {
+        color: ${Colour["text-disabled-subtlest"]};
+    }
 
-            return css`
-                color: ${Colour["text-disabled-subtlest"]};
-            `;
-        }
+    &.labelSelected {
+        font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour["text-selected"]};
+    }
 
-        switch ($type) {
-            case "selected":
-                return css`
-                    font-weight: ${Font.Spec["weight-semibold"]};
-                    color: ${Colour["text-selected"]};
-                `;
-            case "selected-hover":
-                return css`
-                    font-weight: ${Font.Spec["weight-semibold"]};
-                    color: ${Colour["text-selected-hover"]};
-                `;
-            case "current":
-                return css`
-                    font-weight: ${Font.Spec["weight-semibold"]};
-                    color: ${Colour["text-primary"]};
-                `;
-            case "hover":
-                return css`
-                    font-weight: ${Font.Spec["weight-semibold"]};
-                    color: ${Colour["text-hover"]};
-                `;
-            case "unavailable":
-                return css`
-                    color: ${Colour["text-disabled-subtlest"]};
-                `;
-            case "hidden":
-                return css`
-                    visibility: hidden;
-                `;
-            case "available":
-            default:
-                return css`
-                    color: ${Colour["text"]};
-                `;
-        }
-    }}
+    &.labelSelectedHover {
+        font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour["text-selected-hover"]};
+    }
+
+    &.labelCurrent {
+        font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour["text-primary"]};
+    }
+
+    &.labelHover {
+        font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour["text-hover"]};
+    }
+
+    &.labelUnavailable {
+        color: ${Colour["text-disabled-subtlest"]};
+    }
+
+    &.labelAvailable {
+        color: ${Colour["text"]};
+    }
 
     &:focus {
         outline: none;
     }
 `;
 
-export const Indicator = styled.div<IndicatorStyleProps>`
+export const Indicator = styled.div`
     position: absolute;
     width: 4px;
     height: 4px;

@@ -42,4 +42,5 @@ export interface DayCellProps extends CellStyleProps {
     tabIndex?: number | undefined;
     label?: string | undefined;
     ariaHidden?: boolean | undefined;
+    className?: string | undefined;
 }
