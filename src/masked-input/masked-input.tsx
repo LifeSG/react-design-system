@@ -131,10 +131,6 @@ const Component = ({
             inputRef.current?.focus();
             return;
         }
-
-        if (document.activeElement === inputRef.current) {
-            inputRef.current?.blur();
-        }
     };
 
     // =============================================================================
