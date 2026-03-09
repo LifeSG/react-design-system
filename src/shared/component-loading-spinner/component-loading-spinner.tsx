@@ -1,9 +1,12 @@
+import { useRef } from "react";
+import { useApplyStyle } from "../../theme/utils";
 import {
     InnerRing1,
     InnerRing2,
     InnerRing3,
     InnerRing4,
     OuterRing,
+    tokens,
 } from "./component-loading-spinner.style";
 
 /**
@@ -34,11 +37,17 @@ export const ComponentLoadingSpinner = ({
     className,
     size,
 }: ComponentLoadingSpinnerProps): JSX.Element => {
+    const outerRingRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(outerRingRef, {
+        [tokens.outerRing.size]: size != null ? `${size}px` : null,
+        [tokens.outerRing.color]: color ?? null,
+    });
+
     return (
         <OuterRing
+            ref={outerRingRef}
             className={className}
-            $size={size}
-            $color={color}
             data-testid={"component-loading-spinner"}
         >
             <InnerRing1 id="inner1" />

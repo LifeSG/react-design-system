@@ -1,23 +1,26 @@
 import styled, { keyframes } from "styled-components";
 
 // =============================================================================
-// STYLE INTERFACES, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
+// TOKENS
 // =============================================================================
-interface StyleProps {
-    $size?: number;
-    $color?: string;
-}
+export const tokens = {
+    outerRing: {
+        size: "--fds-internal-componentLoadingSpinner-outerRing-size",
+        color: "--fds-internal-componentLoadingSpinner-outerRing-color",
+    },
+} as const;
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const OuterRing = styled.div<StyleProps>`
+export const OuterRing = styled.div`
     display: inline-block;
     position: relative;
-    width: ${({ $size }) => ($size ? `${$size}px` : "1em")};
-    height: ${({ $size }) => ($size ? `${$size}px` : "1em")};
-    color: ${(props) => props.$color || "currentColor"};
+    ${tokens.outerRing.size}: initial;
+    ${tokens.outerRing.color}: initial;
+    width: var(${tokens.outerRing.size}, 1em);
+    height: var(${tokens.outerRing.size}, 1em);
+    color: var(${tokens.outerRing.color}, currentColor);
 `;
 
 const rotate = keyframes`
