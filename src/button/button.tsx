@@ -1,7 +1,38 @@
+import { clsx } from "clsx";
 import React from "react";
-import { Main, MainStyleProps, Spinner } from "./button.style";
-import { ButtonProps, ButtonRef } from "./types";
+import { Main, Spinner } from "./button.style";
+import { ButtonProps, ButtonRef, ButtonStyleType } from "./types";
 import { hasValidChildren } from "./button-helper";
+
+const getStyleClass = (
+    disabled: boolean,
+    styleType: ButtonStyleType,
+    danger: boolean
+): string => {
+    if (disabled) return "mainDisabled";
+    if (danger) {
+        switch (styleType) {
+            case "secondary":
+                return "mainSecondaryDanger";
+            case "light":
+                return "mainLightDanger";
+            case "link":
+                return "mainLinkDanger";
+            default:
+                return "mainDefaultDanger";
+        }
+    }
+    switch (styleType) {
+        case "secondary":
+            return "mainSecondary";
+        case "light":
+            return "mainLight";
+        case "link":
+            return "mainLink";
+        default:
+            return "mainDefault";
+    }
+};
 
 /**
  * NOTE: Due to the way we intend to customise both components, with forwardRef behaviour
@@ -12,6 +43,7 @@ import { hasValidChildren } from "./button-helper";
 const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
     const {
         children,
+        className,
         disabled = false,
         loading = false,
         styleType = "default",
@@ -21,12 +53,6 @@ const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
         ...otherProps
     } = props;
 
-    const mainStyle: MainStyleProps = {
-        $buttonStyle: disabled ? "disabled" : styleType,
-        $buttonSizeStyle: "default",
-        $buttonIsDanger: danger,
-    };
-
     return (
         <Main
             ref={ref}
@@ -35,10 +61,20 @@ const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
             aria-disabled={disabled}
             aria-busy={loading}
             onClick={disabled ? undefined : onClick}
-            {...mainStyle}
             {...otherProps}
+            className={clsx(
+                getStyleClass(disabled, styleType, danger),
+                "mainSizeDefault",
+                className
+            )}
         >
-            {loading && <Spinner $hasChildren={hasValidChildren(children)} />}
+            {loading && (
+                <Spinner
+                    className={clsx(
+                        hasValidChildren(children) && "spinnerWithChildren"
+                    )}
+                />
+            )}
             <span>{children}</span>
         </Main>
     );
@@ -48,6 +84,7 @@ DefaultComponent.displayName = "Button.Default";
 const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
     const {
         children,
+        className,
         disabled = false,
         loading = false,
         styleType = "default",
@@ -57,12 +94,6 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
         ...otherProps
     } = props;
 
-    const mainStyle: MainStyleProps = {
-        $buttonStyle: disabled ? "disabled" : styleType,
-        $buttonSizeStyle: "small",
-        $buttonIsDanger: danger,
-    };
-
     return (
         <Main
             ref={ref}
@@ -71,10 +102,20 @@ const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
             aria-disabled={disabled}
             aria-busy={loading}
             onClick={disabled ? undefined : onClick}
-            {...mainStyle}
             {...otherProps}
+            className={clsx(
+                getStyleClass(disabled, styleType, danger),
+                "mainSmall",
+                className
+            )}
         >
-            {loading && <Spinner $hasChildren={hasValidChildren(children)} />}
+            {loading && (
+                <Spinner
+                    className={clsx(
+                        hasValidChildren(children) && "spinnerWithChildren"
+                    )}
+                />
+            )}
             <span>{children}</span>
         </Main>
     );
@@ -84,6 +125,7 @@ SmallComponent.displayName = "Button.Small";
 const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
     const {
         children,
+        className,
         disabled = false,
         loading = false,
         styleType = "default",
@@ -93,12 +135,6 @@ const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
         ...otherProps
     } = props;
 
-    const mainStyle: MainStyleProps = {
-        $buttonStyle: disabled ? "disabled" : styleType,
-        $buttonSizeStyle: "large",
-        $buttonIsDanger: danger,
-    };
-
     return (
         <Main
             ref={ref}
@@ -107,10 +143,20 @@ const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
             aria-disabled={disabled}
             aria-busy={loading}
             onClick={disabled ? undefined : onClick}
-            {...mainStyle}
             {...otherProps}
+            className={clsx(
+                getStyleClass(disabled, styleType, danger),
+                "mainLarge",
+                className
+            )}
         >
-            {loading && <Spinner $hasChildren={hasValidChildren(children)} />}
+            {loading && (
+                <Spinner
+                    className={clsx(
+                        hasValidChildren(children) && "spinnerWithChildren"
+                    )}
+                />
+            )}
             <span>{children}</span>
         </Main>
     );
