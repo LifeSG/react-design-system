@@ -1,5 +1,5 @@
 import { Breakpoint } from "../tokens/breakpoint";
-import { parseCSSVariableValue } from "../utils";
+import { parseCSSVariableValue, parsePxOrRemValue } from "../utils";
 
 function getBreakpointRanges() {
     return [
@@ -56,7 +56,9 @@ export function applyBreakpointClasses() {
     const BREAKPOINT_RANGES = getBreakpointRanges();
 
     const currentIndex = BREAKPOINT_RANGES.findIndex(
-        (r) => width >= r.min && (r.max === Infinity || width <= r.max)
+        (r) =>
+            width >= parsePxOrRemValue(r.min) &&
+            (r.max === Infinity || width <= parsePxOrRemValue(r.max as string))
     );
 
     if (currentIndex === -1) return;
@@ -74,12 +76,12 @@ export function applyBreakpointClasses() {
 }
 
 export function setupBreakpointListener() {
-    if (typeof window === "undefined") return;
+    if (!globalThis.window) return;
 
     applyBreakpointClasses();
-    window.addEventListener("resize", applyBreakpointClasses);
+    globalThis.window.addEventListener("resize", applyBreakpointClasses);
 
     return () => {
-        window.removeEventListener("resize", applyBreakpointClasses);
+        globalThis.window.removeEventListener("resize", applyBreakpointClasses);
     };
 }

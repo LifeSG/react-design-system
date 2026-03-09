@@ -16,13 +16,13 @@ const TestComponent = () => {
 };
 
 function setWindowWidth(width: number) {
-    Object.defineProperty(window, "innerWidth", {
+    Object.defineProperty(globalThis, "innerWidth", {
         writable: true,
         configurable: true,
         value: width,
     });
 
-    window.dispatchEvent(new Event("resize"));
+    globalThis.dispatchEvent(new Event("resize"));
 }
 
 describe("ThemeProvider", () => {
@@ -32,8 +32,8 @@ describe("ThemeProvider", () => {
 
     afterEach(() => {
         document.body.className = "";
-        document.documentElement.removeAttribute("data-fds-theme");
-        document.documentElement.removeAttribute("data-fds-theme-mode");
+        delete document.documentElement.dataset.fdsTheme;
+        delete document.documentElement.dataset.fdsThemeMode;
         jest.restoreAllMocks();
     });
 
