@@ -20,8 +20,6 @@ describe("useDesignToken", () => {
             </ThemeProvider>
         );
 
-        screen.debug();
-
         await waitFor(() => {
             expect(screen.getByTestId("token-value")).toHaveTextContent(
                 "481px"

@@ -1,26 +1,36 @@
 import { CSSVariableString } from "../types";
 
 /**
- * Parse a CSS variable string and return its numeric value
+ * Parse a CSS variable string and return its computed value.
  * @param cssVarString CSS variable string (e.g., "var(--fds-breakpoint-xxs-min)")
- * @returns The numeric value of the CSS variable, or 0 if not found or invalid
+ * @returns The CSS variable value, or an empty string if not found or invalid
  */
-export function parseCSSVariableValue(cssVarString: CSSVariableString): number {
-    if (typeof window === "undefined") return 0;
+export function parseCSSVariableValue(cssVarString: CSSVariableString): string {
+    if (!globalThis.window) return "";
 
-    const variableName = (cssVarString as string).match(/--fds-[\w-]+/)?.[0];
-    if (!variableName) return 0;
-
-    const value = getComputedStyle(document.documentElement)
-        .getPropertyValue(variableName)
-        .trim();
-    const numValue = parseFloat(value);
-
-    // we only care about values with a unit (e.g. "12px"); unitless numbers should be ignored
-    const hasUnit = /[a-z]+$/i.test(value);
-    if (isNaN(numValue) || !hasUnit) {
-        return 0;
+    const variableName = /--fds-[\w-]+/.exec(cssVarString as string)?.[0];
+    if (!variableName) {
+        console.warn(
+            `Invalid CSS variable string: ${cssVarString}. Expected format: var(--fds-token-name)`
+        );
+        return "";
     }
 
-    return numValue;
+    return getComputedStyle(document.documentElement)
+        .getPropertyValue(variableName)
+        .trim();
+}
+
+/**
+ * Parse a pixel or rem value and return its numeric value.
+ * @param cssValue CSS unit value (e.g., "12px", "1.5rem")
+ * @returns Parsed numeric value, or 0 if the value is not px/rem or invalid
+ */
+export function parsePxOrRemValue(cssValue: string): number {
+    const value = cssValue.trim();
+    const match = /^(-?\d*\.?\d+)(px|rem)$/i.exec(value);
+    if (!match) return 0;
+
+    const parsedValue = Number.parseFloat(match[1]);
+    return Number.isNaN(parsedValue) ? 0 : parsedValue;
 }

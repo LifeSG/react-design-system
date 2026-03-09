@@ -41,8 +41,8 @@ export const Footer = {
 } as const;
 
 export const Component = {
-    ...Button,
-    ...Animation,
-    ...Navbar,
-    ...Footer,
+    Animation,
+    Button,
+    Footer,
+    Navbar,
 } as const;

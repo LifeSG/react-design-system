@@ -1,18 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "../theme-provider/hooks";
 import { CSSVariableString } from "../types";
-
-const extractFDSVariableName = (cssVarString: CSSVariableString): string => {
-    const match = new RegExp(/--fds-[\w-]+/).exec(cssVarString as string);
-    if (!match) {
-        console.warn(
-            `Invalid CSS variable string: ${cssVarString}. Expected format: var(--fds-token-name)`
-        );
-        return "";
-    }
-
-    return match[0];
-};
+import { parseCSSVariableValue } from "./css-variable";
 
 export const useDesignToken = (
     tokenName: CSSVariableString
@@ -21,12 +10,7 @@ export const useDesignToken = (
     const [value, setValue] = useState<string | undefined>(undefined);
 
     useEffect(() => {
-        const variableName = extractFDSVariableName(tokenName);
-
-        const computedValue = getComputedStyle(
-            document.documentElement
-        ).getPropertyValue(variableName);
-        setValue(computedValue);
+        setValue(parseCSSVariableValue(tokenName));
     }, [theme, mode, tokenName]);
 
     return value;
