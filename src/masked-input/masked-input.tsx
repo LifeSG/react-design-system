@@ -12,6 +12,7 @@ import {
     LoadingWrapper,
     ReadOnlyClickable,
     ReadOnlyIconContainer,
+    ReadOnlyValueText,
     Spinner,
     TryAgainLabel,
 } from "./masked-input.style";
@@ -230,7 +231,7 @@ const Component = ({
                     aria-labelledby={concatIds(valueId, ariaLabelledBy)}
                     aria-disabled={isButtonDisabled}
                 >
-                    <span>{getValue()}</span>
+                    <ReadOnlyValueText>{getValue()}</ReadOnlyValueText>
                     {!isButtonDisabled && (
                         <ReadOnlyIconContainer>
                             {isMasked ? (

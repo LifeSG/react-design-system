@@ -133,6 +133,10 @@ export const ReadOnlyClickable = styled.button`
     min-height: 3rem;
 `;
 
+export const ReadOnlyValueText = styled.span`
+    overflow-wrap: anywhere;
+`;
+
 export const ReadOnlyIconContainer = styled.span`
     display: flex;
     align-items: center;
