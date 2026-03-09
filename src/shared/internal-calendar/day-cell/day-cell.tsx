@@ -1,16 +1,7 @@
 import { clsx } from "clsx";
 import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
-import {
-    Cell,
-    Indicator,
-    Label,
-    LabelWrapper,
-    LeftCircle,
-    LeftHalf,
-    RightCircle,
-    RightHalf,
-} from "./day-cell.style";
+import * as styles from "./day-cell.style";
 import { CellType, DayCellProps, LabelType } from "./types";
 
 // =============================================================================
@@ -19,69 +10,69 @@ import { CellType, DayCellProps, LabelType } from "./types";
 const getHalfClass = (type: CellType | undefined): string | undefined => {
     switch (type) {
         case "hover-subtle":
-            return "halfHoverSubtle";
+            return styles.halfHoverSubtle;
         case "hover":
-            return "halfHover";
+            return styles.halfHover;
         case "hover-outline":
-            return "halfHoverOutline";
+            return styles.halfHoverOutline;
         case "selected-outline":
-            return "halfSelectedOutline";
+            return styles.halfSelectedOutline;
         case "selected-outline-subtle":
-            return "halfSelectedOutlineSubtle";
+            return styles.halfSelectedOutlineSubtle;
         case "selected-hover":
-            return "halfSelectedHover";
+            return styles.halfSelectedHover;
         case "selected-hover-outline":
-            return "halfSelectedHoverOutline";
+            return styles.halfSelectedHoverOutline;
     }
 };
 
 const getCircleClass = (type: CellType | undefined): string | undefined => {
     switch (type) {
         case "hover-subtle":
-            return "circleHoverSubtle";
+            return styles.circleHoverSubtle;
         case "hover":
-            return "circleHover";
+            return styles.circleHover;
         case "hover-outline":
-            return "circleHoverOutline";
+            return styles.circleHoverOutline;
         case "selected-outline":
-            return "circleSelectedOutline";
+            return styles.circleSelectedOutline;
         case "selected-outline-subtle":
-            return "circleSelectedOutlineSubtle";
+            return styles.circleSelectedOutlineSubtle;
         case "selected-hover":
-            return "circleSelectedHover";
+            return styles.circleSelectedHover;
         case "selected-hover-outline":
-            return "circleSelectedHoverOutline";
+            return styles.circleSelectedHoverOutline;
     }
 };
 
 const getLabelWrapperClass = (
     interactive: boolean | null | undefined
 ): string => {
-    if (interactive) return "labelWrapperInteractive";
-    if (interactive === null) return "labelWrapperEnabled";
-    return "labelWrapperDisabled";
+    if (interactive) return styles.labelWrapperInteractive;
+    if (interactive === null) return styles.labelWrapperEnabled;
+    return styles.labelWrapperDisabled;
 };
 
 const getLabelClass = (
     type: LabelType | undefined,
     disabled: boolean | undefined
 ): string => {
-    if (type === "hidden") return "labelHidden";
-    if (disabled) return "labelDisabled";
+    if (type === "hidden") return styles.labelHidden;
+    if (disabled) return styles.labelDisabled;
     switch (type) {
         case "selected":
-            return "labelSelected";
+            return styles.labelSelected;
         case "selected-hover":
-            return "labelSelectedHover";
+            return styles.labelSelectedHover;
         case "current":
-            return "labelCurrent";
+            return styles.labelCurrent;
         case "hover":
-            return "labelHover";
+            return styles.labelHover;
         case "unavailable":
-            return "labelUnavailable";
+            return styles.labelUnavailable;
         case "available":
         default:
-            return "labelAvailable";
+            return styles.labelAvailable;
     }
 };
 
@@ -150,13 +141,42 @@ export const DayCell = ({
     // RENDER FUNCTION
     // =========================================================================
     return (
-        <Cell aria-hidden={ariaHidden} className={className}>
-            <LeftHalf className={getHalfClass(bgLeft)} />
-            <LeftCircle className={getCircleClass(circleLeft)} />
-            <RightHalf className={getHalfClass(bgRight)} />
-            <RightCircle className={getCircleClass(circleRight)} />
-            <LabelWrapper className={getLabelWrapperClass(interactive)}>
-                <Label
+        <div aria-hidden={ariaHidden} className={clsx(styles.cell, className)}>
+            <div
+                className={clsx(
+                    styles.half,
+                    styles.leftHalf,
+                    getHalfClass(bgLeft)
+                )}
+            />
+            <div
+                className={clsx(
+                    styles.circle,
+                    styles.leftCircle,
+                    getCircleClass(circleLeft)
+                )}
+            />
+            <div
+                className={clsx(
+                    styles.half,
+                    styles.rightHalf,
+                    getHalfClass(bgRight)
+                )}
+            />
+            <div
+                className={clsx(
+                    styles.circle,
+                    styles.rightCircle,
+                    getCircleClass(circleRight)
+                )}
+            />
+            <span
+                className={clsx(
+                    styles.labelWrapper,
+                    getLabelWrapperClass(interactive)
+                )}
+            >
+                <div
                     ref={ref}
                     tabIndex={tabIndex}
                     role={role}
@@ -167,9 +187,10 @@ export const DayCell = ({
                         labelType === "selected-hover"
                     }
                     className={clsx(
+                        styles.label,
                         !interactive &&
                             interactive !== null &&
-                            "labelCursorDisabled",
+                            styles.labelCursorDisabled,
                         getLabelClass(labelType, disabled)
                     )}
                     onClick={handleClick}
@@ -181,9 +202,11 @@ export const DayCell = ({
                     onFocus={handleFocus}
                 >
                     {date.date()}
-                    {currentDateIndicator && today && <Indicator />}
-                </Label>
-            </LabelWrapper>
-        </Cell>
+                    {currentDateIndicator && today && (
+                        <div className={styles.indicator} />
+                    )}
+                </div>
+            </span>
+        </div>
     );
 };
