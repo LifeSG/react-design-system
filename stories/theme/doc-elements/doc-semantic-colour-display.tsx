@@ -1,45 +1,42 @@
-import { getSemanticColour } from "src/v3_theme/colour-semantic/theme-helper";
-import { V3_SemanticColourSet, V3_ThemeSpec } from "src/v3_theme/types";
-import { ColourTokenInspector } from "stories/storybook-common";
-import styled, { useTheme } from "styled-components";
+import { SemanticColours, ThemeType, useDesignToken } from "src/theme";
+import styled from "styled-components";
 import { ColourDisplay } from "./colour-display";
 
+interface ColourSwatchProps {
+    token: keyof typeof SemanticColours;
+}
+
+const ColourSwatch = ({ token }: ColourSwatchProps) => {
+    const colour = useDesignToken(SemanticColours[token]) as string;
+    return (
+        <SwatchItem>
+            <SwatchColour $colour={colour} />
+            <div>
+                <SwatchLabel>{token}</SwatchLabel>
+                <SwatchReference>{colour}</SwatchReference>
+            </div>
+        </SwatchItem>
+    );
+};
+
 interface SemanticColourPaletteProps {
-    tokens: (keyof V3_SemanticColourSet)[];
+    tokens: (keyof typeof SemanticColours)[];
 }
 
 const SemanticColourPalette = ({ tokens }: SemanticColourPaletteProps) => {
-    const theme = useTheme();
-
-    const component = (
+    return (
         <Palette>
             <Swatch>
-                {tokens.map((token) => {
-                    const { primitive, result: colour } =
-                        ColourTokenInspector.from(theme).inspect(() =>
-                            getSemanticColour(token)({ theme })
-                        );
-                    return (
-                        <SwatchItem key={token}>
-                            <SwatchColour $colour={colour} />
-                            <div>
-                                <SwatchLabel>{token}</SwatchLabel>
-                                <SwatchReference>
-                                    {primitive || colour}
-                                </SwatchReference>
-                            </div>
-                        </SwatchItem>
-                    );
-                })}
+                {tokens.map((token) => (
+                    <ColourSwatch key={token} token={token} />
+                ))}
             </Swatch>
         </Palette>
     );
-
-    return component;
 };
 
 interface SemanticColourDisplayProps {
-    theme: V3_ThemeSpec;
+    theme: ThemeType;
 }
 
 export const SemanticColourDisplay = ({
@@ -331,4 +328,5 @@ const SwatchReference = styled.div`
     border-radius: 4px;
     padding: 0 0.5rem;
     color: #787878;
+    text-transform: uppercase;
 `;

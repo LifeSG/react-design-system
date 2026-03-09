@@ -1,9 +1,28 @@
-import { getPrimitiveColour } from "src/v3_theme/colour-primitive/theme-helper";
-import { V3_PrimitiveColourSet, V3_ThemeSpec } from "src/v3_theme/types";
-import styled, { ThemeProvider, useTheme } from "styled-components";
+import {
+    PrimitiveColours,
+    ThemeProvider,
+    ThemeType,
+    useDesignToken,
+} from "src/theme";
+import styled from "styled-components";
+
+interface ColourSwatchProps {
+    token: keyof typeof PrimitiveColours;
+}
+
+const ColourSwatch = ({ token }: ColourSwatchProps) => {
+    const colour = useDesignToken(PrimitiveColours[token]) as string;
+    return (
+        <SwatchItem>
+            <SwatchColour $colour={colour} />
+            <SwatchLabel>{token}</SwatchLabel>
+            <SwatchValue>{colour}</SwatchValue>
+        </SwatchItem>
+    );
+};
 
 interface PrimitiveColourPaletteProps {
-    tokens: (keyof V3_PrimitiveColourSet)[];
+    tokens: (keyof typeof PrimitiveColours)[];
     category: string;
 }
 
@@ -11,29 +30,20 @@ const PrimitiveColourPalette = ({
     tokens,
     category,
 }: PrimitiveColourPaletteProps) => {
-    const theme = useTheme();
     return (
         <Palette>
             <PaletteLabel>{category}</PaletteLabel>
             <Swatch>
-                {tokens.map((token) => {
-                    const colour = getPrimitiveColour(token)({ theme });
-
-                    return (
-                        <SwatchItem key={token}>
-                            <SwatchColour $colour={colour} />
-                            <SwatchLabel>{token}</SwatchLabel>
-                            <SwatchValue>{colour}</SwatchValue>
-                        </SwatchItem>
-                    );
-                })}
+                {tokens.map((token) => (
+                    <ColourSwatch key={token} token={token} />
+                ))}
             </Swatch>
         </Palette>
     );
 };
 
 interface PrimitiveColourDisplayProps {
-    theme: V3_ThemeSpec;
+    theme: ThemeType;
 }
 
 export const PrimitiveColourDisplay = ({
@@ -253,4 +263,5 @@ const SwatchLabel = styled.span`
 const SwatchValue = styled.span`
     font-size: 0.875rem;
     color: #787878;
+    text-transform: uppercase;
 `;
