@@ -31,6 +31,7 @@ export const RangeSelectorButton = styled.button`
 
     &:focus-visible {
         outline: 2px solid ${Colour["border-focus"]};
+        border-radius: 4px;
     }
 
     &:disabled {

@@ -20,6 +20,7 @@ import {
     StyledInputWrapper,
 } from "./input-range-select.style";
 import { SimpleIdGenerator } from "../util";
+import { VisuallyHidden } from "../shared/accessibility";
 
 type RangeType = "from" | "to";
 
@@ -66,6 +67,7 @@ export const InputRangeSelect = <T, V>({
         "none"
     );
     const isOpen = focusedInput !== "none";
+
     const labelButtonRef = {
         from: useRef<HTMLButtonElement>(null),
         to: useRef<HTMLButtonElement>(null),
@@ -73,7 +75,9 @@ export const InputRangeSelect = <T, V>({
     const dropdownRef = useRef<DropdownListApi>(null);
 
     const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
-    const contentId = `${id ?? internalId}-${internalId}-range-listbox`;
+    const listboxId = `${internalId}-range-listbox`;
+    const fromLabelId = `${internalId}-from-label`;
+    const toLabelId = `${internalId}-to-label`;
 
     // =============================================================================
     // EFFECTS
@@ -164,6 +168,11 @@ export const InputRangeSelect = <T, V>({
 
     const focusButton = (type: RangeType) => {
         labelButtonRef[type].current?.focus();
+    };
+
+    const getButtonLabelledBy = (rangeType: RangeType) => {
+        const rangeLabelId = rangeType === "from" ? fromLabelId : toLabelId;
+        return [rangeLabelId, ariaLabelledBy].filter(Boolean).join(" ");
     };
 
     // =============================================================================
@@ -290,35 +299,22 @@ export const InputRangeSelect = <T, V>({
             type="button"
             role="combobox"
             aria-autocomplete={enableSearch ? "list" : "none"}
-            aria-label={
-                rangeType === "from" ? placeholders?.from : placeholders?.to
-            }
-            aria-labelledby={ariaLabelledBy}
+            aria-labelledby={getButtonLabelledBy(rangeType)}
+            aria-describedby={ariaDescribedBy}
+            aria-expanded={isOpen && focusedInput === rangeType}
+            aria-controls={listboxId}
+            aria-disabled={disabled}
+            aria-readonly={readOnly}
             onClick={handleSelectorClick(rangeType)}
             onKeyDown={handleSelectorKeyDown(rangeType)}
             ref={labelButtonRef[rangeType]}
-            disabled={disabled || readOnly}
-            tabIndex={disabled || readOnly ? -1 : 0}
-            aria-expanded={isOpen && focusedInput === rangeType}
-            aria-controls={contentId}
-            aria-describedby={ariaDescribedBy}
-            aria-disabled={disabled}
-            aria-readonly={readOnly}
+            tabIndex={0}
         >
             {renderLabel(rangeType)}
         </RangeSelectorButton>
     );
 
     const renderElement = () => {
-        const wrapperAccessibilityProps =
-            disabled || readOnly
-                ? {
-                      tabIndex: 0,
-                      "aria-disabled": disabled || undefined,
-                      "aria-readonly": readOnly || undefined,
-                  }
-                : {};
-
         return (
             <StyledInputWrapper
                 className={className}
@@ -327,8 +323,14 @@ export const InputRangeSelect = <T, V>({
                 $readOnly={readOnly}
                 $error={error}
                 $focused={isOpen}
-                {...wrapperAccessibilityProps}
             >
+                <VisuallyHidden id={fromLabelId}>
+                    {placeholders?.from || "Select"}
+                </VisuallyHidden>
+                <VisuallyHidden id={toLabelId}>
+                    {placeholders?.to || "Select"}
+                </VisuallyHidden>
+
                 <RangeInputInnerContainer
                     currentActive={getCurrentFocused()}
                     error={error}
@@ -359,7 +361,7 @@ export const InputRangeSelect = <T, V>({
             <DropdownList
                 ref={dropdownRef}
                 data-testid={`${testId}-dropdown`}
-                listboxId={contentId}
+                listboxId={listboxId}
                 listItems={currentOptions}
                 onSelectItem={handleListItemClick}
                 onDismiss={handleDismiss}
