@@ -12,10 +12,15 @@ import styled from "styled-components";
 const Wrapper = styled.div`
     width: 600px;
 `;
+
 const getListItemByText = (text: string) => {
-    // Workround to get list item by truncated text.
+    // Workaround to get list item by truncated text.
     return screen.getAllByText(text)[0];
 };
+
+const getRangeButton = (label: "From" | "To") =>
+    screen.getByRole("combobox", { name: new RegExp(label, "i") });
+
 const testId = "input-range-select-test-id";
 
 describe("InputRangeSelect", () => {
@@ -55,8 +60,8 @@ describe("InputRangeSelect", () => {
         );
 
         expect(screen.queryByTestId(testId)).toBeInTheDocument();
-        expect(screen.getByText("From")).toBeInTheDocument();
-        expect(screen.getByText("To")).toBeInTheDocument();
+        expect(getRangeButton("From")).toBeInTheDocument();
+        expect(getRangeButton("To")).toBeInTheDocument();
     });
 
     describe("truncation of display values", () => {
@@ -155,7 +160,7 @@ describe("InputRangeSelect", () => {
                 </Wrapper>
             );
 
-            fireEvent.click(screen.getByText("From"));
+            fireEvent.click(getRangeButton("From"));
 
             await waitFor(() => {
                 expect(
@@ -187,7 +192,7 @@ describe("InputRangeSelect", () => {
                 </Wrapper>
             );
 
-            fireEvent.click(screen.getByText("From"));
+            fireEvent.click(getRangeButton("From"));
             fireEvent.click(getListItemByText("From Option A"));
             expect(screen.getByText("From ... on A")).toBeInTheDocument();
             await waitFor(() => {
@@ -217,7 +222,7 @@ describe("InputRangeSelect", () => {
                 </Wrapper>
             );
 
-            fireEvent.click(screen.getByText("From"));
+            fireEvent.click(getRangeButton("From"));
             fireEvent.click(getListItemByText("From Option A"));
             expect(screen.getByText("From ... on A")).toBeInTheDocument();
             await waitFor(() => {
@@ -251,7 +256,7 @@ describe("InputRangeSelect", () => {
                 </Wrapper>
             );
 
-            fireEvent.click(screen.getByText("To"));
+            fireEvent.click(getRangeButton("To"));
             expect(getListItemByText("From Option A")).toBeInTheDocument();
             expect(screen.queryAllByText("To Option A")).toHaveLength(0);
         });
@@ -278,10 +283,10 @@ describe("InputRangeSelect", () => {
                 </Wrapper>
             );
 
-            await user.click(screen.getByText("From"));
+            await user.click(getRangeButton("From"));
             expect(screen.queryByText("From Option A")).not.toBeInTheDocument();
 
-            await user.click(screen.getByText("To"));
+            await user.click(getRangeButton("To"));
             expect(screen.queryByText("From Option A")).not.toBeInTheDocument();
             expect(screen.queryByText("To Option A")).not.toBeInTheDocument();
         });
@@ -309,10 +314,10 @@ describe("InputRangeSelect", () => {
                 </Wrapper>
             );
 
-            await user.click(screen.getByText("From"));
+            await user.click(getRangeButton("From"));
             expect(screen.queryByText("From Option A")).not.toBeInTheDocument();
 
-            await user.click(screen.getByText("To"));
+            await user.click(getRangeButton("To"));
             expect(screen.queryByText("From Option A")).not.toBeInTheDocument();
             expect(screen.queryByText("To Option A")).not.toBeInTheDocument();
         });
@@ -340,8 +345,7 @@ describe("InputRangeSelect", () => {
                 </Wrapper>
             );
 
-            const errorElement = screen.getByText("Error Message"); // Replace "Error Message" with your actual error message
-
+            const errorElement = screen.getByText("Error Message");
             expect(errorElement).toBeInTheDocument();
         });
     });
@@ -436,8 +440,8 @@ describe("InputRangeSelect", () => {
             });
 
             await waitFor(() => {
-                expect(screen.getByText("From")).toBeInTheDocument();
-                expect(screen.getByText("To")).toBeInTheDocument();
+                expect(getRangeButton("From")).toBeInTheDocument();
+                expect(getRangeButton("To")).toBeInTheDocument();
                 expect(
                     screen.queryByText("From ... on A")
                 ).not.toBeInTheDocument();
