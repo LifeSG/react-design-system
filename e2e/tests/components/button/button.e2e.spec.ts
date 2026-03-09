@@ -46,4 +46,34 @@ test.describe("Button", () => {
             await compareScreenshot(story, "style-variants-dark");
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("danger-variants");
+        });
+
+        test("Danger variants (desktop)", async ({ story }) => {
+            await compareScreenshot(story, "danger-variants");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("danger-variants", { size: "mobile" });
+        });
+
+        test("Danger variants (mobile)", async ({ story }) => {
+            await compareScreenshot(story, "danger-variants-mobile");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("danger-variants", { mode: "dark" });
+        });
+
+        test("Danger variants (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "danger-variants-dark");
+        });
+    });
 });
