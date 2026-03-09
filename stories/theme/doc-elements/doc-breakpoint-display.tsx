@@ -1,9 +1,13 @@
-import { V3_BreakpointSet, V3_ThemeSpec } from "src/v3_theme/types";
-import styled, { ThemeProvider, useTheme } from "styled-components";
-import { getBreakpoint } from "src/v3_theme/breakpoint/theme-helper";
+import {
+    Breakpoint,
+    ThemeProvider,
+    ThemeType,
+    useDesignToken,
+} from "src/theme";
+import styled from "styled-components";
 
 interface BreakpointDisplayProps {
-    theme: V3_ThemeSpec;
+    theme: ThemeType;
 }
 
 export const BreakpointDisplay = ({ theme }: BreakpointDisplayProps) => {
@@ -34,18 +38,17 @@ interface BreakpointCollectionProps {
 }
 
 const BreakpointCollection = ({ size }: BreakpointCollectionProps) => {
-    const theme = useTheme();
-    const minToken = (size + "-min") as keyof V3_BreakpointSet;
-    const maxToken = (size + "-max") as keyof V3_BreakpointSet;
-    const columnNumberToken = (size + "-column") as keyof V3_BreakpointSet;
-    const columnSpacingToken = (size + "-gutter") as keyof V3_BreakpointSet;
-    const insetToken = (size + "-margin") as keyof V3_BreakpointSet;
+    const minToken = (size + "-min") as keyof typeof Breakpoint;
+    const maxToken = (size + "-max") as keyof typeof Breakpoint;
+    const columnNumberToken = (size + "-column") as keyof typeof Breakpoint;
+    const columnSpacingToken = (size + "-gutter") as keyof typeof Breakpoint;
+    const insetToken = (size + "-margin") as keyof typeof Breakpoint;
 
-    const minValue = getBreakpoint(minToken)({ theme });
-    const maxValue = getBreakpoint(maxToken)({ theme });
-    const columnNumberValue = getBreakpoint(columnNumberToken)({ theme });
-    const columnSpacingValue = getBreakpoint(columnSpacingToken)({ theme });
-    const insetValue = getBreakpoint(insetToken)({ theme });
+    const minValue = useDesignToken(Breakpoint[minToken]);
+    const maxValue = useDesignToken(Breakpoint[maxToken]);
+    const columnNumberValue = useDesignToken(Breakpoint[columnNumberToken]);
+    const columnSpacingValue = useDesignToken(Breakpoint[columnSpacingToken]);
+    const insetValue = useDesignToken(Breakpoint[insetToken]);
 
     return (
         <Row key={size}>
@@ -54,14 +57,14 @@ const BreakpointCollection = ({ size }: BreakpointCollectionProps) => {
             </div>
             {maxValue ? (
                 <div>
-                    {minValue} - {maxValue}px
+                    {minValue} - {maxValue}
                 </div>
             ) : (
-                <div>&gt;= {minValue}px</div>
+                <div>&gt;= {minValue}</div>
             )}
             <div>{columnNumberValue}</div>
-            <div>{columnSpacingValue}px</div>
-            <div>{insetValue}px</div>
+            <div>{columnSpacingValue}</div>
+            <div>{insetValue}</div>
         </Row>
     );
 };
