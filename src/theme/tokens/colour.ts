@@ -225,5 +225,5 @@ export const SemanticColours = {
 
 export const Colour = {
     Primitive: PrimitiveColours,
-    Semantic: SemanticColours,
+    ...SemanticColours,
 } as const;
