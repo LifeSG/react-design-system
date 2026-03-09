@@ -76,4 +76,24 @@ test.describe("Button", () => {
             await compareScreenshot(story, "danger-variants-dark");
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("loading");
+        });
+
+        test("Loading state (desktop)", async ({ story }) => {
+            await compareScreenshot(story, "loading");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("loading", { mode: "dark" });
+        });
+
+        test("Loading state (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "loading-dark");
+        });
+    });
 });
