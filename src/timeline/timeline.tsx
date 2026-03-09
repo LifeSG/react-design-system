@@ -26,6 +26,7 @@ export const Timeline = ({
     "data-base-indicator-testid": baseIndicatorTestId,
     "data-testid": testId = "timeline",
     headingLevel = 2,
+    counterOffset = 0,
 }: TimelineProps): JSX.Element => {
     // ===========================================================================
     // RENDER
@@ -87,7 +88,7 @@ export const Timeline = ({
             case "error":
                 return <ExclamationCircleFillIcon aria-hidden />;
             case "numeric":
-                return <span aria-hidden>{index + 1}</span>;
+                return <span aria-hidden>{index + 1 + counterOffset}</span>;
             default:
                 return null;
         }
@@ -108,7 +109,7 @@ export const Timeline = ({
             case "error":
                 return "Current step, action required";
             case "numeric":
-                return `Step number ${index + 1}`;
+                return `Step number ${index + 1 + counterOffset}`;
             default:
                 return "";
         }
@@ -118,7 +119,9 @@ export const Timeline = ({
         items.map((item: TimelineItemProps, index) => {
             const { title, content, statuses, variant: _variant } = item;
             const circleIndicatorTestId = baseIndicatorTestId
-                ? `circleindicator${index + 1}_div_${baseIndicatorTestId}`
+                ? `circleindicator${
+                      index + 1 + counterOffset
+                  }_div_${baseIndicatorTestId}`
                 : "circleindicator";
             const variant =
                 _variant || (index === 0 ? "current" : "upcoming-active");
