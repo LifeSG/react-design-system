@@ -100,9 +100,7 @@ export const PrimitiveColours = {
     "primary-inverse": "var(--fds-colour-primary-inverse)",
 } as const;
 
-export const Colour = {
-    Primitive: PrimitiveColours,
-
+export const SemanticColours = {
     text: "var(--fds-colour-text)",
     "text-subtle": "var(--fds-colour-text-subtle)",
     "text-subtler": "var(--fds-colour-text-subtler)",
@@ -223,4 +221,9 @@ export const Colour = {
     "hyperlink-inverse": "var(--fds-colour-hyperlink-inverse)",
     "focus-ring": "var(--fds-colour-focus-ring)",
     "focus-ring-inverse": "var(--fds-colour-focus-ring-inverse)",
+} as const;
+
+export const Colour = {
+    Primitive: PrimitiveColours,
+    Semantic: SemanticColours,
 } as const;

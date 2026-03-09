@@ -1,13 +1,15 @@
-import { Tokens } from "./tokens";
-import { Border } from "./tokens/border";
-import { Breakpoint } from "./tokens/breakpoint";
-import { Colour, PrimitiveColours } from "./tokens/colour";
-import { Component } from "./tokens/component";
-import { FontSpec } from "./tokens/font";
-import { Motion } from "./tokens/motion";
-import { Radius } from "./tokens/radius";
-import { Shadow } from "./tokens/shadow";
-import { Spacing } from "./tokens/spacing";
+import {
+    Border,
+    Breakpoint,
+    Component,
+    FontSpec,
+    Motion,
+    PrimitiveColours,
+    Radius,
+    SemanticColours,
+    Shadow,
+    Spacing,
+} from "./tokens";
 
 export type ThemeType =
     | "a11y-playground"
@@ -43,19 +45,28 @@ export type FontSize =
 export type FontWeight = "light" | "regular" | "semibold" | "bold";
 
 type ValueOf<T> = T[keyof T];
-type StringValueOf<T> = Extract<T[keyof T], string>;
 
 export type BreakpointCSSVariableString = ValueOf<typeof Breakpoint>;
 export type BorderCSSVariableString = ValueOf<typeof Border>;
+export type ComponentCSSVariableString = ValueOf<typeof Component>;
 export type FontSpecCSSVariableString = ValueOf<typeof FontSpec>;
 export type MotionCSSVariableString = ValueOf<typeof Motion>;
 export type PrimitiveColourCSSVariableString = ValueOf<typeof PrimitiveColours>;
 export type RadiusCSSVariableString = ValueOf<typeof Radius>;
+export type SemanticColourCSSVariableString = ValueOf<typeof SemanticColours>;
 export type ColourCSSVariableString =
     | PrimitiveColourCSSVariableString
-    | StringValueOf<typeof Colour>;
+    | SemanticColourCSSVariableString;
 export type ShadowCSSVariableString = ValueOf<typeof Shadow>;
 export type SpacingCSSVariableString = ValueOf<typeof Spacing>;
-export type ComponentCSSVariableString = ValueOf<typeof Component>;
 
-export type CSSVariableString = ValueOf<typeof Tokens>;
+export type CSSVariableString =
+    | BreakpointCSSVariableString
+    | BorderCSSVariableString
+    | ColourCSSVariableString
+    | ComponentCSSVariableString
+    | FontSpecCSSVariableString
+    | MotionCSSVariableString
+    | RadiusCSSVariableString
+    | ShadowCSSVariableString
+    | SpacingCSSVariableString;
