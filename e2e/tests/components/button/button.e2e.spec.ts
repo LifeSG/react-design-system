@@ -1,11 +1,21 @@
-import { test as base, expect, Page } from "@playwright/test";
+import { test as base, expect, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "button";
 
+    public readonly locators: {
+        button: Locator;
+        clickCount: Locator;
+    };
+
     constructor(page: Page) {
         super(page);
+
+        this.locators = {
+            button: page.getByTestId("e2e"),
+            clickCount: page.getByTestId("click-count"),
+        };
     }
 }
 
@@ -94,6 +104,65 @@ test.describe("Button", () => {
 
         test("Loading state (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "loading-dark");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("disabled");
+        });
+
+        test("Disabled button does not fire click handler", async ({
+            story,
+        }) => {
+            await expect(story.locators.clickCount).toHaveText(
+                "Click count: 0"
+            );
+
+            await story.locators.button.click({ force: true });
+
+            await expect(story.locators.clickCount).toHaveText(
+                "Click count: 0"
+            );
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("focusable-when-disabled");
+        });
+
+        test("focusableWhenDisabled button is focusable but does not fire click handler", async ({
+            story,
+        }) => {
+            await test.step("Button can receive keyboard focus", async () => {
+                await story.page.keyboard.press("Tab");
+                await expect(story.locators.button).toBeFocused();
+            });
+
+            await test.step("Space does not invoke onClick", async () => {
+                await expect(story.locators.clickCount).toHaveText(
+                    "Click count: 0"
+                );
+
+                await story.page.keyboard.press("Space");
+
+                await expect(story.locators.clickCount).toHaveText(
+                    "Click count: 0"
+                );
+            });
+
+            await test.step("Clicking does not invoke onClick", async () => {
+                await expect(story.locators.clickCount).toHaveText(
+                    "Click count: 0"
+                );
+
+                await story.locators.button.click({ force: true });
+
+                await expect(story.locators.clickCount).toHaveText(
+                    "Click count: 0"
+                );
+            });
         });
     });
 });
