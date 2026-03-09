@@ -3,7 +3,7 @@ import { useTheme } from "../theme-provider/hooks";
 import { CSSVariableString } from "../types";
 
 const extractFDSVariableName = (cssVarString: CSSVariableString): string => {
-    const match = (cssVarString as string).match(/--fds-[\w-]+/);
+    const match = new RegExp(/--fds-[\w-]+/).exec(cssVarString as string);
     if (!match) {
         console.warn(
             `Invalid CSS variable string: ${cssVarString}. Expected format: var(--fds-token-name)`
