@@ -1,13 +1,7 @@
+import { clsx } from "clsx";
 import { useRef } from "react";
 import { useApplyStyle } from "../../theme/utils";
-import {
-    InnerRing1,
-    InnerRing2,
-    InnerRing3,
-    InnerRing4,
-    OuterRing,
-    tokens,
-} from "./component-loading-spinner.style";
+import * as styles from "./component-loading-spinner.style";
 
 /**
  * This component is mainly used within components and is not to be confused
@@ -15,14 +9,8 @@ import {
  *
  * By default it inherits the font size and color of the parent container.
  *
- * The color can be customised via the prop or through styled-components.
- *
- * Example:
- * ```
- * styled(ComponentLoadingSpinner)`
- *   color: red;
- * `
- * ```
+ * The color can be customised via the `color` prop or through the CSS
+ * `color` property on the parent container.
  */
 export interface ComponentLoadingSpinnerProps {
     className?: string | undefined;
@@ -40,20 +28,29 @@ export const ComponentLoadingSpinner = ({
     const outerRingRef = useRef<HTMLDivElement>(null);
 
     useApplyStyle(outerRingRef, {
-        [tokens.outerRing.size]: size != null ? `${size}px` : null,
-        [tokens.outerRing.color]: color ?? null,
+        [styles.tokens.outerRing.size]: size != null ? `${size}px` : null,
+        [styles.tokens.outerRing.color]: color ?? null,
     });
 
     return (
-        <OuterRing
+        <div
             ref={outerRingRef}
-            className={className}
+            className={clsx(styles.outerRing, className)}
             data-testid={"component-loading-spinner"}
         >
-            <InnerRing1 id="inner1" />
-            <InnerRing2 id="inner2" />
-            <InnerRing3 id="inner3" />
-            <InnerRing4 id="inner4" />
-        </OuterRing>
+            <div id="inner1" className={styles.innerRing} />
+            <div
+                id="inner2"
+                className={clsx(styles.innerRing, styles.innerRing2)}
+            />
+            <div
+                id="inner3"
+                className={clsx(styles.innerRing, styles.innerRing3)}
+            />
+            <div
+                id="inner4"
+                className={clsx(styles.innerRing, styles.innerRing4)}
+            />
+        </div>
     );
 };
