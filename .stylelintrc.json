@@ -5,11 +5,10 @@
         "declaration-block-no-duplicate-properties": true,
         "no-descending-specificity": true,
         "selector-max-id": 0,
-        "custom-property-empty-line-before": [
-            "always",
-            { "ignore": ["after-comment"] }
-        ],
+        "custom-property-empty-line-before": "never",
 
-        "@stylistic/color-hex-case": "upper"
+        "@stylistic/color-hex-case": "upper",
+        "@stylistic/indentation": 4,
+        "@stylistic/max-empty-lines": 1
     }
 }
