@@ -165,4 +165,33 @@ test.describe("Button", () => {
             });
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("keyboard-activation");
+        });
+
+        test("Keyboard activation triggers click via Space and Enter", async ({
+            story,
+        }) => {
+            await test.step("Button can receive keyboard focus", async () => {
+                await story.page.keyboard.press("Tab");
+                await expect(story.locators.button).toBeFocused();
+            });
+
+            await test.step("Space activates the button", async () => {
+                await story.page.keyboard.press("Space");
+                await expect(story.locators.clickCount).toHaveText(
+                    "Click count: 1"
+                );
+            });
+
+            await test.step("Enter activates the button", async () => {
+                await story.page.keyboard.press("Enter");
+                await expect(story.locators.clickCount).toHaveText(
+                    "Click count: 2"
+                );
+            });
+        });
+    });
 });
