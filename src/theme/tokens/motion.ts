@@ -10,4 +10,4 @@ export const Motion = {
     "ease-standard": "var(--fds-motion-timing-ease-standard)",
     "ease-entrance": "var(--fds-motion-timing-ease-entrance)",
     "ease-exit": "var(--fds-motion-timing-ease-exit)",
-};
+} as const;

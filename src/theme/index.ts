@@ -1,11 +1,5 @@
+export * from "./utils";
 export { ThemeProvider } from "./theme-provider";
 export { useTheme } from "./theme-provider/hooks";
-export { Border } from "./tokens/border";
-export { Breakpoint } from "./tokens/breakpoint";
-export { Colour } from "./tokens/colour";
-export { Font } from "./tokens/font";
-export { Motion } from "./tokens/motion";
-export { Radius } from "./tokens/radius";
-export { Shadow } from "./tokens/shadow";
-export { Spacing } from "./tokens/spacing";
+export * from "./tokens";
 export * from "./types";

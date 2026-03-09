@@ -9,4 +9,4 @@ export const Shadow = {
     "md-strong": "var(--fds-shadow-md-strong)",
     "lg-subtle": "var(--fds-shadow-lg-subtle)",
     "lg-strong": "var(--fds-shadow-lg-strong)",
-};
+} as const;

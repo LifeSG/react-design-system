@@ -1,0 +1,36 @@
+import { CSSVariableString } from "../types";
+
+/**
+ * Parse a CSS variable string and return its computed value.
+ * @param cssVarString CSS variable string (e.g., "var(--fds-breakpoint-xxs-min)")
+ * @returns The CSS variable value, or an empty string if not found or invalid
+ */
+export function parseCSSVariableValue(cssVarString: CSSVariableString): string {
+    if (!globalThis.window) return "";
+
+    const variableName = /--fds-[\w-]+/.exec(cssVarString as string)?.[0];
+    if (!variableName) {
+        console.warn(
+            `Invalid CSS variable string: ${cssVarString}. Expected format: var(--fds-token-name)`
+        );
+        return "";
+    }
+
+    return getComputedStyle(document.documentElement)
+        .getPropertyValue(variableName)
+        .trim();
+}
+
+/**
+ * Parse a pixel or rem value and return its numeric value.
+ * @param cssValue CSS unit value (e.g., "12px", "1.5rem")
+ * @returns Parsed numeric value, or 0 if the value is not px/rem or invalid
+ */
+export function parsePxOrRemValue(cssValue: string): number {
+    const value = cssValue.trim();
+    const match = /^(-?\d*\.?\d+)(px|rem)$/i.exec(value);
+    if (!match) return 0;
+
+    const parsedValue = Number.parseFloat(match[1]);
+    return Number.isNaN(parsedValue) ? 0 : parsedValue;
+}
