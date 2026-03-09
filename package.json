@@ -24,7 +24,7 @@
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
         "codemod": "ENV=dev npx tsx codemods/run-codemod.ts",
-        "lint": "eslint 'src/**/*.{ts,tsx,js,jsx}' && yarn lint:css",
+        "lint": "eslint 'src/**/*.{ts,tsx,js,jsx}' && npm run lint:css",
         "lint:css": "stylelint '**/*.css'",
         "lint:css:fix": "stylelint '**/*.css' --fix"
     },

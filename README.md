@@ -83,19 +83,6 @@ To see the full suite of components available, visit our [Storybook documentatio
 
 <br />
 
-## Linting
-
-This repository uses ESLint for JS/TS and Stylelint for stylesheet rules. Run the combined
-validator with:
-
-```bash
-npm run lint         # checks JS/TS and CSS
-npm run lint:css     # just runs Stylelint on all `.css` files
-npm run lint:css:fix # auto‑fixable issues
-```
-
-Linting is also wired into `lint-staged` so committed files are auto‑checked.
-
 ## Migrations
 
 If you are migrating from an older version of the Design System, you may refer to our [migration guides](https://github.com/LifeSG/react-design-system/wiki).
