@@ -6,7 +6,7 @@ import styled, { keyframes } from "styled-components";
 // =============================================================================
 interface StyleProps {
     $size?: number;
-    $color?: string | ((props: any) => string);
+    $color?: string;
 }
 
 // =============================================================================

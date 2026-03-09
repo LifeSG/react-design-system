@@ -26,7 +26,7 @@ export interface ComponentLoadingSpinnerProps {
     /** Measurement in px */
     size?: number | undefined;
     /** rgb/hex value or Color token */
-    color?: string | ((props: any) => string) | undefined;
+    color?: string | undefined;
 }
 
 export const ComponentLoadingSpinner = ({
