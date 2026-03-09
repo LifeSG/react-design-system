@@ -15,12 +15,13 @@ import {
     useInteractions,
 } from "@floating-ui/react";
 import type React from "react";
-import { useContext, useRef, useState } from "react";
+import { useContext, useMemo, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 
 import { useFloatingChild } from "../overlay/use-floating-context";
 import { ThemeContext as FDSThemeContext } from "../theme/theme-provider/context";
+import { getInheritedInlineCssVariables } from "../theme/utils/get-inline-css-variables";
 import { SimpleIdGenerator } from "../util";
 import { V3_Breakpoint } from "../v3_theme";
 import { PopoverV2 } from "./popover";
@@ -87,6 +88,20 @@ export const PopoverTrigger = ({
         },
     });
     const parentZIndex = useFloatingChild();
+    const themeVariables = useMemo(() => {
+        if (!visible) return {};
+
+        return getInheritedInlineCssVariables(
+            nodeRef.current,
+            themeContext?.themeElement ?? null
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        visible,
+        themeContext?.theme,
+        themeContext?.mode,
+        themeContext?.themeElement,
+    ]);
 
     const trigger: PopoverV2TriggerType = isMobile ? "click" : _trigger;
     const isTooltip = trigger === "hover";
@@ -207,7 +222,7 @@ export const PopoverTrigger = ({
                 {children}
             </TriggerContainer>
             {visible && (
-                <FloatingPortal root={rootNode ?? themeContext?.themeElement}>
+                <FloatingPortal root={rootNode}>
                     <FloatingFocusManager
                         context={context}
                         {...(!isModal && {
@@ -221,8 +236,11 @@ export const PopoverTrigger = ({
                                 popoverRef.current = node;
                                 refs.setFloating(node);
                             }}
+                            data-fds-theme={themeContext?.theme}
+                            data-fds-theme-mode={themeContext?.mode}
                             onBlur={handleBlur}
                             style={{
+                                ...themeVariables,
                                 ...floatingStyles,
                                 outline: "none",
                                 zIndex: zIndex ?? parentZIndex,

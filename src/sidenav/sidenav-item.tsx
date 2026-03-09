@@ -13,10 +13,11 @@ import {
     useTransitionStyles,
 } from "@floating-ui/react";
 import type { HTMLAttributes } from "react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 import { ThemeContext as FDSThemeContext } from "../theme/theme-provider/context";
+import { getInheritedInlineCssVariables } from "../theme/utils/get-inline-css-variables";
 import { SidenavContext } from "./sidenav-context";
 import {
     Container,
@@ -120,6 +121,20 @@ export const SidenavItem = ({
     ]);
 
     const { isMounted, styles } = useTransitionStyles(context);
+    const themeVariables = useMemo(() => {
+        if (!isMounted) return {};
+
+        return getInheritedInlineCssVariables(
+            anchorRef,
+            themeContext?.themeElement ?? null
+        );
+    }, [
+        isMounted,
+        anchorRef,
+        themeContext?.theme,
+        themeContext?.mode,
+        themeContext?.themeElement,
+    ]);
 
     // =========================================================================
     // EFFECTS
@@ -211,7 +226,7 @@ export const SidenavItem = ({
                 <TitleText inline>{title}</TitleText>
             </DefaultButton>
             {isMounted && (
-                <FloatingPortal root={themeContext?.themeElement}>
+                <FloatingPortal>
                     <FloatingFocusManager
                         context={context}
                         modal={false}
@@ -220,8 +235,13 @@ export const SidenavItem = ({
                         <div
                             id={drawerId}
                             data-testid="sidenav-drawer"
+                            data-fds-theme={themeContext?.theme}
+                            data-fds-theme-mode={themeContext?.mode}
                             ref={setDrawerRef}
-                            style={floatingStyles}
+                            style={{
+                                ...themeVariables,
+                                ...floatingStyles,
+                            }}
                             {...getFloatingProps()}
                         >
                             <DesktopDrawer

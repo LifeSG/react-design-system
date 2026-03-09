@@ -19,12 +19,13 @@ import {
     useTransitionStyles,
 } from "@floating-ui/react";
 import type { CSSProperties, RefObject } from "react";
-import { createContext, useContext, useRef } from "react";
+import { createContext, useContext, useMemo, useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
 
 import { useFloatingChild } from "../../overlay/use-floating-context";
 import { ThemeContext as FDSThemeContext } from "../../theme/theme-provider/context";
+import { getInheritedInlineCssVariables } from "../../theme/utils/get-inline-css-variables";
 import { V3_Breakpoint } from "../../v3_theme";
 import type { DropdownAlignmentType } from "./types";
 
@@ -209,6 +210,23 @@ export const ElementWithDropdown = ({
         open: { opacity: 1 },
         duration: 300,
     });
+    const themeVariables = useMemo(() => {
+        if (!isMounted) return {};
+
+        const referenceElement =
+            (positionRef?.current as HTMLElement | null) ?? elementRef.current;
+        return getInheritedInlineCssVariables(
+            referenceElement,
+            themeContext?.themeElement ?? null
+        );
+    }, [
+        isMounted,
+        positionRef?.current,
+        elementRef.current,
+        themeContext?.theme,
+        themeContext?.mode,
+        themeContext?.themeElement,
+    ]);
 
     const click = useClick(context, {
         enabled,
@@ -248,7 +266,7 @@ export const ElementWithDropdown = ({
                 {renderElement()}
             </div>
             {isMounted && (
-                <FloatingPortal root={rootNode ?? themeContext?.themeElement}>
+                <FloatingPortal root={rootNode}>
                     <FloatingFocusManager
                         context={context}
                         modal={false}
@@ -258,7 +276,13 @@ export const ElementWithDropdown = ({
                         <DropdownRenderContext.Provider
                             value={dropdownRenderProps}
                         >
-                            {renderDropdown(dropdownRenderProps)}
+                            <div
+                                data-fds-theme={themeContext?.theme}
+                                data-fds-theme-mode={themeContext?.mode}
+                                style={themeVariables}
+                            >
+                                {renderDropdown(dropdownRenderProps)}
+                            </div>
                         </DropdownRenderContext.Provider>
                     </FloatingFocusManager>
                 </FloatingPortal>

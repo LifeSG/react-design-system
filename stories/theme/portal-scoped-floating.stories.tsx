@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import type { CSSProperties } from "react";
+import { type CSSProperties, useMemo } from "react";
 import { Button } from "src/button";
 import { PopoverTrigger } from "src/popover-v2";
-import { ThemeMode, ThemeProvider } from "src/theme";
+import { ThemeMode, ThemeProvider, useTheme } from "src/theme";
+import { useApplyStyle } from "src/theme/utils/use-apply-styles";
 import { V3_LifeSGTheme, V3_OneServiceTheme, V3_RBSTheme } from "src/v3_theme";
 import { ThemeProvider as StyledComponentsThemeProvider } from "styled-components";
 
@@ -16,6 +17,13 @@ interface PortalScopedThemingStoryArgs {
     leftMode: ThemeMode;
     rightTheme: ShowcaseTheme;
     rightMode: ThemeMode;
+}
+
+interface InlineStylePortalStoryArgs {
+    theme: ShowcaseTheme;
+    mode: ThemeMode;
+    primaryColor: string;
+    inverseColor: string;
 }
 
 const STYLED_THEME_MAP = {
@@ -88,6 +96,29 @@ const PreviewPopoverContent = ({
             </div>
         </div>
     );
+};
+
+const ThemeScopeInlineVariables = ({
+    primaryColor,
+    inverseColor,
+}: {
+    primaryColor: string;
+    inverseColor: string;
+}) => {
+    const { themeElement } = useTheme();
+    const themeElementRef = useMemo(
+        () => ({
+            current: themeElement,
+        }),
+        [themeElement]
+    );
+
+    useApplyStyle(themeElementRef, {
+        "--fds-colour-bg-primary": primaryColor,
+        "--fds-colour-bg-inverse": inverseColor,
+    });
+
+    return null;
 };
 
 const ScopedPortalDemo = ({
@@ -198,6 +229,82 @@ export const SideBySideScopes: Story = {
                     mode={args.rightMode}
                 />
             </div>
+        );
+    },
+};
+
+type InlineStyleStory = StoryObj<InlineStylePortalStoryArgs>;
+
+export const WithUseApplyStyleOverrides: InlineStyleStory = {
+    args: {
+        theme: "lifesg",
+        mode: "light",
+        primaryColor: "#1f7a8c",
+        inverseColor: "#2f2d2e",
+    },
+    argTypes: {
+        theme: {
+            control: "select",
+            options: ["lifesg", "oneservice", "rbs"],
+        },
+        mode: {
+            control: "radio",
+            options: ["light", "dark"],
+        },
+        primaryColor: {
+            control: "color",
+        },
+        inverseColor: {
+            control: "color",
+        },
+    },
+    render: (args) => {
+        return (
+            <ThemeProvider theme={args.theme} mode={args.mode}>
+                <StyledComponentsThemeProvider
+                    theme={{
+                        ...STYLED_THEME_MAP[args.theme],
+                        colourMode: args.mode,
+                    }}
+                >
+                    <ThemeScopeInlineVariables
+                        primaryColor={args.primaryColor}
+                        inverseColor={args.inverseColor}
+                    />
+                    <div style={SCOPE_STYLE}>
+                        <div
+                            style={{
+                                marginBottom: "12px",
+                                fontWeight: 700,
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                            }}
+                        >
+                            <span>Scope with useApplyStyle overrides</span>
+                            <span style={{ fontWeight: 500 }}>
+                                {args.theme} / {args.mode}
+                            </span>
+                        </div>
+                        <div style={{ marginBottom: "12px", fontSize: "14px" }}>
+                            The popover should reflect inline CSS variable
+                            overrides applied via <code>useApplyStyle</code>.
+                        </div>
+                        <PopoverTrigger
+                            popoverContent={
+                                <PreviewPopoverContent
+                                    theme={args.theme}
+                                    mode={args.mode}
+                                />
+                            }
+                        >
+                            <Button.Default>
+                                Open popover with overridden vars
+                            </Button.Default>
+                        </PopoverTrigger>
+                    </div>
+                </StyledComponentsThemeProvider>
+            </ThemeProvider>
         );
     },
 };
