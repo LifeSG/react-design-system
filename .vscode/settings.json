@@ -1,6 +1,7 @@
 {
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit"
+        "source.fixAll.eslint": "explicit",
+        "source.fixAll.stylelint": "always"
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
@@ -15,6 +16,7 @@
         "typescript",
         "typescriptreact"
     ],
+    "stylelint.validate": ["css", "postcss", "scss", "less"],
     "auto-close-tag.activationOnLanguage": [
         "html",
         "javascriptreact",
@@ -26,5 +28,8 @@
     "typescript.tsdk": "node_modules/typescript/lib",
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "stylelint.vscode-stylelint"
     }
 }

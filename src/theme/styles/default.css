@@ -1,17 +1,20 @@
 :root {
-    /* ========================================================================
-       BORDER
-       ======================================================================== */
+    /* 
+    ========================================================================
+    BORDER
+    ========================================================================
+    */
     --fds-border-width-005: 0.5px;
     --fds-border-width-010: 1px;
     --fds-border-width-020: 2px;
     --fds-border-width-040: 4px;
-
     --fds-border-style-solid: solid;
 
-    /* ========================================================================
-       BREAKPOINT
-       ======================================================================== */
+    /* 
+    ========================================================================
+    BREAKPOINT
+    ========================================================================
+    */
     --fds-breakpoint-xxs-min: 0;
     --fds-breakpoint-xxs-max: 320px;
     --fds-breakpoint-xs-min: 321px;
@@ -25,7 +28,6 @@
     --fds-breakpoint-xl-min: 1201px;
     --fds-breakpoint-xl-max: 1440px;
     --fds-breakpoint-xxl-min: 1441px;
-
     --fds-breakpoint-column-xxs: 8;
     --fds-breakpoint-column-xs: 8;
     --fds-breakpoint-column-sm: 8;
@@ -33,7 +35,6 @@
     --fds-breakpoint-column-lg: 12;
     --fds-breakpoint-column-xl: 12;
     --fds-breakpoint-column-xxl: 12;
-
     --fds-breakpoint-gutter-xxs: 16px;
     --fds-breakpoint-gutter-xs: 16px;
     --fds-breakpoint-gutter-sm: 16px;
@@ -41,7 +42,6 @@
     --fds-breakpoint-gutter-lg: 32px;
     --fds-breakpoint-gutter-xl: 32px;
     --fds-breakpoint-gutter-xxl: 32px;
-
     --fds-breakpoint-margin-xxs: 24px;
     --fds-breakpoint-margin-xs: 24px;
     --fds-breakpoint-margin-sm: 24px;
@@ -50,9 +50,12 @@
     --fds-breakpoint-margin-xl: 48px;
     --fds-breakpoint-margin-xxl: 48px;
 
-    /* ========================================================================
-       COMPONENT TOKENS
-       ======================================================================== */
+    /* 
+    ========================================================================
+    COMPONENT TOKENS
+    ========================================================================
+    */
+
     /* Button */
     --fds-button-radius: var(--fds-radius-sm);
     --fds-button-default-colour-bg: var(--fds-colour-bg-primary);
@@ -91,65 +94,59 @@
         --fds-colour-text-subtler
     );
 
-    /*  ========================================================================
-        FONT
-        ======================================================================== */
+    /*
+    ========================================================================
+    FONT
+    ========================================================================
+    */
     --fds-font-variant: normal;
-
     --fds-font-heading-size-xxl: 3rem;
     --fds-font-heading-size-xl: 2.5rem;
     --fds-font-heading-size-lg: 2rem;
     --fds-font-heading-size-md: 1.625rem;
     --fds-font-heading-size-sm: 1.375rem;
     --fds-font-heading-size-xs: 1.125rem;
-
     --fds-font-heading-lh-xxl: 3.5rem;
     --fds-font-heading-lh-xl: 3rem;
     --fds-font-heading-lh-lg: 2.5rem;
     --fds-font-heading-lh-md: 2.25rem;
     --fds-font-heading-lh-sm: 1.75rem;
     --fds-font-heading-lh-xs: 1.625rem;
-
     --fds-font-heading-ls-xxl: -0.035rem;
     --fds-font-heading-ls-xl: -0.02rem;
     --fds-font-heading-ls-lg: -0.02rem;
     --fds-font-heading-ls-md: 0rem;
     --fds-font-heading-ls-sm: 0rem;
     --fds-font-heading-ls-xs: 0rem;
-
     --fds-font-weight-light: 300;
     --fds-font-weight-regular: 400;
     --fds-font-weight-semibold: 600;
     --fds-font-weight-bold: 700;
     --fds-font-family: "Open Sans";
-
     --fds-font-body-size-baseline: 1.125rem;
     --fds-font-body-size-md: 1rem;
     --fds-font-body-size-sm: 0.875rem;
     --fds-font-body-size-xs: 0.75rem;
-
     --fds-font-body-lh-baseline: 1.625rem;
     --fds-font-body-lh-md: 1.5rem;
     --fds-font-body-lh-sm: 1.625rem;
     --fds-font-body-lh-xs: 1.25rem;
-
     --fds-font-body-ls-baseline: 0rem;
     --fds-font-body-ls-md: 0.009rem;
     --fds-font-body-ls-sm: 0.008rem;
     --fds-font-body-ls-xs: 0.008rem;
-
     --fds-font-form-label-size: 1rem;
     --fds-font-form-description-size: 0.875rem;
-
     --fds-font-form-label-lh: 1.5rem;
     --fds-font-form-description-lh: 1.625rem;
-
     --fds-font-form-label-ls: 0.009rem;
     --fds-font-form-description-ls: 0.008rem;
 
-    /* ========================================================================
-       SPACING
-       ======================================================================== */
+    /* 
+    ========================================================================
+    SPACING
+    ========================================================================
+    */
     --fds-spacing-0: 0;
     --fds-spacing-4: 4px;
     --fds-spacing-8: 8px;
@@ -162,7 +159,6 @@
     --fds-spacing-48: 48px;
     --fds-spacing-64: 64px;
     --fds-spacing-72: 72px;
-
     --fds-layout-xs: 8px;
     --fds-layout-sm: 16px;
     --fds-layout-md: 24px;
@@ -171,24 +167,27 @@
     --fds-layout-xxl: 64px;
     --fds-layout-xxxl: 128px;
 
-    /* ========================================================================
-       MOTION
-       ======================================================================== */
+    /* 
+    ========================================================================
+    MOTION
+    ========================================================================
+    */
     --fds-motion-duration-150: 150ms;
     --fds-motion-duration-250: 250ms;
     --fds-motion-duration-350: 350ms;
     --fds-motion-duration-500: 500ms;
     --fds-motion-duration-800: 800ms;
     --fds-motion-duration-1000: 1000ms;
-
     --fds-motion-timing-ease-default: cubic-bezier(0.45, 0.05, 0.55, 0.95);
     --fds-motion-timing-ease-standard: cubic-bezier(0.86, 0, 0.07, 1);
     --fds-motion-timing-ease-entrance: cubic-bezier(0.18, 0.13, 0, 1);
     --fds-motion-timing-ease-exit: cubic-bezier(1, 0, 0.8, 0.85);
 
-    /* ========================================================================
-       RADIUS
-       ======================================================================== */
+    /* 
+    ========================================================================
+    RADIUS
+    ========================================================================
+    */
     --fds-radius-none: 0;
     --fds-radius-xs: 2px;
     --fds-radius-sm: 4px;
@@ -196,27 +195,29 @@
     --fds-radius-lg: 12px;
     --fds-radius-full: 9999px;
 
-    /* ========================================================================
-       SHADOW
-       ======================================================================== */
+    /* 
+    ========================================================================
+    SHADOW
+    ========================================================================
+    */
     --fds-shadow-xs-subtle: 0 0 4px 1px
-        rgba(from var(--fds-colour-neutral-50) r g b / 24%);
+        rgb(from var(--fds-colour-neutral-50) r g b / 24%);
     --fds-shadow-xs-strong: 0 0 4px 1px
-        rgba(from var(--fds-colour-neutral-50) r g b / 50%);
+        rgb(from var(--fds-colour-neutral-50) r g b / 50%);
     --fds-shadow-xs-focus-strong: 0 0 4px 1px
-        rgba(from var(--fds-colour-border-focus) r g b / 50%);
+        rgb(from var(--fds-colour-border-focus) r g b / 50%);
     --fds-shadow-xs-error-strong: 0 0 4px 1px
-        rgba(from var(--fds-colour-border-error) r g b / 50%);
+        rgb(from var(--fds-colour-border-error) r g b / 50%);
     --fds-shadow-sm-subtle: 0 2px 4px 0
-        rgba(from var(--fds-colour-neutral-50) r g b / 24%);
+        rgb(from var(--fds-colour-neutral-50) r g b / 24%);
     --fds-shadow-sm-strong: 0 2px 4px 0
-        rgba(from var(--fds-colour-neutral-50) r g b / 50%);
+        rgb(from var(--fds-colour-neutral-50) r g b / 50%);
     --fds-shadow-md-subtle: 0 2px 8px 0
-        rgba(from var(--fds-colour-neutral-50) r g b / 24%);
+        rgb(from var(--fds-colour-neutral-50) r g b / 24%);
     --fds-shadow-md-strong: 0 2px 8px 0
-        rgba(from var(--fds-colour-neutral-50) r g b / 50%);
+        rgb(from var(--fds-colour-neutral-50) r g b / 50%);
     --fds-shadow-lg-subtle: 0 2px 12px 1px
-        rgba(from var(--fds-colour-neutral-50) r g b / 24%);
+        rgb(from var(--fds-colour-neutral-50) r g b / 24%);
     --fds-shadow-lg-strong: 0 2px 12px 1px
-        rgba(from var(--fds-colour-neutral-50) r g b / 50%);
+        rgb(from var(--fds-colour-neutral-50) r g b / 50%);
 }

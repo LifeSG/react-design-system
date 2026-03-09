@@ -10,6 +10,7 @@ Do also adhere to the guidelines mentioned below.
     -   <a href="#previewing-components">Previewing components</a>
     -   <a href="#writing-stories">Writing stories</a>
     -   <a href="#writing-functional-tests">Writing functional tests</a>
+    -   <a href="#linting">Linting</a>
     -   <a href="#pull-request">Creating pull requests</a>
 -   <a href="#repo-owner">As a repository owner</a>
     -   <a href="#versioning">Version Management</a>
@@ -164,10 +165,25 @@ CI mode uses actual builds to verify production behaviour. To run in CI mode:
 npm run test-e2e-ci
 ```
 
+<a id="linting"></a>
+<br />
+
+### **6. Linting**
+
+This repository uses ESLint for JS/TS and Stylelint for stylesheets. Run:
+
+```bash
+npm run lint         # checks JS/TS and CSS
+npm run lint:css     # runs Stylelint on all `.css` files
+npm run lint:css:fix # auto-fixable CSS issues
+```
+
+Linting is also wired into `lint-staged` so committed files are auto-checked.
+
 <a id="pull-request"></a>
 <br />
 
-### **6. Creating pull requests**
+### **7. Creating pull requests**
 
 Once you have committed and pushed your code, you are to create a pull request to have it approved to be in the `master` branch.
 
