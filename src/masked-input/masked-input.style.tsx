@@ -115,7 +115,7 @@ export const ClickableErrorWrapper = styled(BasicButton)`
 `;
 
 // -----------------------------------------------------------------------------
-// READONLY MASKED DISPLAY (button-like)
+// READONLY MASKED DISPLAY
 // -----------------------------------------------------------------------------
 
 export const ReadOnlyClickable = styled.button`
@@ -123,7 +123,6 @@ export const ReadOnlyClickable = styled.button`
     color: ${Colour["text"]};
     border: none;
     background: transparent;
-    padding-left: 1rem;
     display: flex;
     align-items: center;
     cursor: pointer;
