@@ -81,9 +81,9 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            const firstStarButton = getStarButton(container, 0);
+            const firstStar = getStar(container, 0);
             act(() => {
-                fireEvent.click(firstStarButton);
+                fireEvent.click(firstStar);
             });
 
             expect(getRatingSlider()).toHaveAttribute("aria-valuenow", "1");
@@ -102,9 +102,9 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            const fiveStarButton = getStarButton(container, 4);
+            const fiveStar = getStar(container, 4);
             act(() => {
-                fireEvent.click(fiveStarButton);
+                fireEvent.click(fiveStar);
             });
 
             expect(getRatingSlider()).toHaveAttribute("aria-valuenow", "5");
@@ -113,9 +113,9 @@ describe("FeedbackRating", () => {
                 "5 stars"
             );
 
-            const oneStarButton = getStarButton(container, 0);
+            const oneStar = getStar(container, 0);
             act(() => {
-                fireEvent.click(oneStarButton);
+                fireEvent.click(oneStar);
             });
 
             expect(getRatingSlider()).toHaveAttribute("aria-valuenow", "1");
@@ -135,9 +135,9 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            const firstStarButton = getStarButton(container, 0);
+            const firstStar = getStar(container, 0);
             act(() => {
-                fireEvent.click(firstStarButton);
+                fireEvent.click(firstStar);
             });
 
             expect(spy).toHaveBeenCalledTimes(1);
@@ -191,8 +191,8 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            const button = getSubmitButton("Disabled submit rating button");
-            expect(button).toBeDisabled();
+            const button = getSubmitButton("Submit");
+            expect(button).toHaveAttribute("aria-disabled", "true");
         });
 
         it("should not be disabled if rating is provided", () => {
@@ -280,20 +280,17 @@ const getBannerImg = (): HTMLElement => {
     return screen.getByTestId("feedback-banner-image");
 };
 
-const getStarButton = (
-    container: HTMLElement,
-    index: number
-): HTMLButtonElement => {
-    const buttons = container.querySelectorAll(
-        'button[aria-hidden="true"]'
-    ) as NodeListOf<HTMLButtonElement>;
+const getStar = (container: HTMLElement, index: number): HTMLElement => {
+    const stars = container.querySelectorAll(
+        '[role="presentation"]'
+    ) as NodeListOf<HTMLElement>;
 
-    const button = buttons[index];
-    if (!button) {
-        throw new Error(`Star button at index ${index} was not found`);
+    const star = stars[index];
+    if (!star) {
+        throw new Error(`Star at index ${index} was not found`);
     }
 
-    return button;
+    return star;
 };
 
 // =============================================================================
