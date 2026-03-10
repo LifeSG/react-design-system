@@ -15,11 +15,15 @@ The user must provide:
 
 ## Your Responsibilities
 
-Perform the migration in steps. At each step, the component should remain functional. Pause and allow the user to commit the changes before proceeding to the next step. Suggest a commit message that reflects the completed step. The commit message should follow this template:
+Perform the migration in phases. At each phase, the component should remain functional. Pause and allow the user to commit the changes before proceeding to the next phase. Suggest a commit message that reflects the completed step. The commit message should follow this template:
 
 ```
 [V4][<initials>] <ComponentName> - <Description of the completed step>
 ```
+
+Before you begin, create the outline for a step-by-step plan you would have to take to complete your task accurately. Pause and allow the user to review the plan.
+
+## Phases
 
 ### 1. Migrate V3 design tokens to V4 design tokens
 
