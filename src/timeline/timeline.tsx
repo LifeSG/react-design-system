@@ -119,9 +119,7 @@ export const Timeline = ({
         items.map((item: TimelineItemProps, index) => {
             const { title, content, statuses, variant: _variant } = item;
             const circleIndicatorTestId = baseIndicatorTestId
-                ? `circleindicator${
-                      index + 1 + counterOffset
-                  }_div_${baseIndicatorTestId}`
+                ? `circleindicator${index + 1}_div_${baseIndicatorTestId}`
                 : "circleindicator";
             const variant =
                 _variant || (index === 0 ? "current" : "upcoming-active");

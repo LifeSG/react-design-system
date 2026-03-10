@@ -137,13 +137,13 @@ describe("Timeline", () => {
 
             // With counterOffset=2, first item should show 3 (0 + 1 + 2 = 3)
             const indicator1 = screen.getByTestId(
-                "circleindicator3_div_offset-test"
+                "circleindicator1_div_offset-test"
             );
             const indicator2 = screen.getByTestId(
-                "circleindicator4_div_offset-test"
+                "circleindicator2_div_offset-test"
             );
             const indicator3 = screen.getByTestId(
-                "circleindicator5_div_offset-test"
+                "circleindicator3_div_offset-test"
             );
 
             expect(indicator1).toHaveTextContent("3");
@@ -206,7 +206,7 @@ describe("Timeline", () => {
             expect(indicator2).toHaveTextContent("2");
         });
 
-        it("should apply counterOffset to test IDs correctly", () => {
+        it("should not apply counterOffset to test IDs correctly", () => {
             render(
                 <Timeline
                     data-base-indicator-testid="testid-offset"
@@ -221,9 +221,8 @@ describe("Timeline", () => {
                 />
             );
 
-            // Test ID should reflect the offset value (0 + 1 + 10 = 11)
             const indicator = screen.getByTestId(
-                "circleindicator11_div_testid-offset"
+                "circleindicator1_div_testid-offset"
             );
             expect(indicator).toBeInTheDocument();
             expect(indicator).toHaveTextContent("11");
@@ -256,7 +255,7 @@ describe("Timeline", () => {
 
             // The numeric variant at index 1 should show 5 (1 + 1 + 3 = 5)
             const numericIndicator = screen.getByTestId(
-                "circleindicator5_div_mixed-offset"
+                "circleindicator2_div_mixed-offset"
             );
             expect(numericIndicator).toHaveTextContent("5");
         });
