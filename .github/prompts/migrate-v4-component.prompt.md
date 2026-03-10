@@ -25,14 +25,19 @@ Before you begin, create the outline for a step-by-step plan you would have to t
 
 ## Phases
 
-### 1. Migrate V3 design tokens to V4 design tokens
+### 1. Rename style file extension
+
+-   Rename `<component>.style.tsx` or `<component>.styles.tsx` to `<component>.style.ts` to remain consistent with the project conventions
+-   Update the import in the main component file to reflect the new path
+
+### 2. Migrate V3 design tokens to V4 design tokens
 
 -   Update V3 design tokens from `src/v3_theme` to V4 design tokens in `src/theme`
 -   For media queries, they need to be reordered:
     -   Max width media queries should be ordered from smallest to largest (xxs, xs, sm, md, lg, xl)
     -   Min width media queries should be ordered from largest to smallest (xl, lg, md, sm, xs, xxs)
 
-### 2. Convert Styled Components interpolations to class names within the `styled` tags
+### 3. Convert Styled Components interpolations to class names within the `styled` tags
 
 -   In `<component>.styles.ts`, convert the function interpolations to nested css classes. Apply a logical class name scoped to the component name and variant.
 -   In `<component>.tsx`, convert the style props to conditionally applied classes using `clsx`. Example:
@@ -95,7 +100,7 @@ Before you begin, create the outline for a step-by-step plan you would have to t
     }
     ```
 
-### 3. Convert Styled Components `styled` tags to Linaria `css` tags
+### 4. Convert Styled Components `styled` tags to Linaria `css` tags
 
 -   In `<component>.styles.ts`, extract the nested css classes to standalone `css` tags
 -   In `<component>.tsx`, replace the Styled Component and hardcoded class name references to the new Linaria references. Import the styles as `import * as styles from "./<component>.styles"` to avoid collision with actual variable names or props. Example:
@@ -114,7 +119,7 @@ Before you begin, create the outline for a step-by-step plan you would have to t
 
 -   If the `css` tag is empty, it can be removed
 
-### 4. Update props documentation in Storybook
+### 5. Update props documentation in Storybook
 
 If the component is not a top-level component, skip this step.
 
@@ -122,7 +127,7 @@ If the component is not a top-level component, skip this step.
 -   If a type was removed, remove its entry from the api table
 -   If a type was modified, update its propTypes and/or description in the api table
 
-### 5. Add or update unit tests
+### 6. Add or update unit tests
 
 If the component is not a top-level component, skip this step.
 

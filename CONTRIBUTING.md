@@ -42,7 +42,7 @@ Components are to be added in the `src` directory in a structure like this
 ├── src
 │	├── component-name
 │	│	├── component-name.tsx
-│	│	├── component-name.style.tsx
+│	│	├── component-name.style.ts
 │	│	├── index.tsx
 │	│	└── types.ts
 │	└── index.ts
