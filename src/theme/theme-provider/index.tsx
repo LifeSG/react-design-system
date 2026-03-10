@@ -6,6 +6,7 @@ import {
     listenToSystemColourMode,
 } from "./system-colour-mode";
 import { useIsomorphicLayoutEffect } from "../../util";
+import { setupBreakpointListener } from "./breakpoint";
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     children,
@@ -27,6 +28,11 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
             ? mode!
             : computedMode;
     }, [mode, computedMode, isModeControlled]);
+
+    useIsomorphicLayoutEffect(() => {
+        const cleanup = setupBreakpointListener();
+        return cleanup;
+    }, []);
 
     useEffect(() => {
         if (isModeControlled) return;

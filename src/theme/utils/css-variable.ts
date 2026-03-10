@@ -1,5 +1,7 @@
 import { CSSVariableString } from "../types";
 
+const DEFAULT_FONT_SIZE_PX = 16;
+
 /**
  * Parse a CSS variable string and return its computed value.
  * @param cssVarString CSS variable string (e.g., "var(--fds-breakpoint-xxs-min)")
@@ -32,5 +34,18 @@ export function parsePxOrRemValue(cssValue: string): number {
     if (!match) return 0;
 
     const parsedValue = Number.parseFloat(match[1]);
-    return Number.isNaN(parsedValue) ? 0 : parsedValue;
+    if (Number.isNaN(parsedValue)) return 0;
+
+    const unit = match[2].toLowerCase();
+    if (unit === "px") return parsedValue;
+
+    const rootFontSize = globalThis.window
+        ? Number.parseFloat(getComputedStyle(document.documentElement).fontSize)
+        : DEFAULT_FONT_SIZE_PX;
+
+    const resolvedRootFontSize = Number.isNaN(rootFontSize)
+        ? DEFAULT_FONT_SIZE_PX
+        : rootFontSize;
+
+    return parsedValue * resolvedRootFontSize;
 }

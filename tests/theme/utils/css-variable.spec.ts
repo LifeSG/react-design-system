@@ -83,12 +83,17 @@ describe("parseCSSVariableValue", () => {
 });
 
 describe("parsePxOrRemValue", () => {
+    beforeEach(() => {
+        document.documentElement.style.fontSize = "16px";
+    });
+
     it("parses px values", () => {
         expect(parsePxOrRemValue("481px")).toBe(481);
     });
 
-    it("parses rem values", () => {
-        expect(parsePxOrRemValue("24rem")).toBe(24);
+    it("converts rem values to px based on root font size", () => {
+        document.documentElement.style.fontSize = "20px";
+        expect(parsePxOrRemValue("24rem")).toBe(480);
     });
 
     it("parses negative values", () => {
@@ -109,5 +114,10 @@ describe("parsePxOrRemValue", () => {
 
     it("returns 0 for non-numeric values", () => {
         expect(parsePxOrRemValue("not-a-number")).toBe(0);
+    });
+
+    it("falls back to 16px font size for rem conversion when font size is invalid", () => {
+        document.documentElement.style.fontSize = "invalid-size";
+        expect(parsePxOrRemValue("1.5rem")).toBe(24);
     });
 });

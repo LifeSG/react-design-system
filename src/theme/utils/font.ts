@@ -1,18 +1,4 @@
-type FontSize =
-    | "heading-xxl"
-    | "heading-xl"
-    | "heading-lg"
-    | "heading-md"
-    | "heading-sm"
-    | "heading-xs"
-    | "body-baseline"
-    | "body-md"
-    | "body-sm"
-    | "body-xs"
-    | "form-label"
-    | "form-description";
-
-type FontWeight = "light" | "regular" | "semibold" | "bold";
+import type { FontSize, FontWeight } from "../types";
 
 const sizeVarMap: Record<FontSize, { size: string; lh: string; ls: string }> = {
     "heading-xxl": {

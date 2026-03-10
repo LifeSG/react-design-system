@@ -1,6 +1,8 @@
 import { act, render, screen } from "@testing-library/react";
 import { ThemeProvider, useTheme } from "../../src/theme";
 import * as systemMode from "../../src/theme/theme-provider/system-colour-mode";
+import * as breakpoint from "../../src/theme/theme-provider/breakpoint";
+import { setupThemeVariables } from "./setup";
 
 const TestComponent = () => {
     const { theme, mode } = useTheme();
@@ -13,10 +15,26 @@ const TestComponent = () => {
     );
 };
 
+function setWindowWidth(width: number) {
+    Object.defineProperty(globalThis, "innerWidth", {
+        writable: true,
+        configurable: true,
+        value: width,
+    });
+
+    globalThis.dispatchEvent(new Event("resize"));
+}
+
 describe("ThemeProvider", () => {
+    beforeEach(() => {
+        setupThemeVariables();
+    });
+
     afterEach(() => {
-        document.documentElement.removeAttribute("data-fds-theme");
-        document.documentElement.removeAttribute("data-fds-theme-mode");
+        document.body.className = "";
+        delete document.documentElement.dataset.fdsTheme;
+        delete document.documentElement.dataset.fdsThemeMode;
+        jest.restoreAllMocks();
     });
 
     it("applies theme and mode", () => {
@@ -73,49 +91,180 @@ describe("ThemeProvider", () => {
         expect(document.documentElement.dataset.fdsThemeMode).toBe("dark");
     });
 
-    it("listens to system mode changes when uncontrolled", () => {
-        const mockListener = jest.fn();
+    describe("SYSTEM PREFERENCE", () => {
+        it("listens to system mode changes when uncontrolled", () => {
+            const mockListener = jest.fn();
 
-        jest.spyOn(systemMode, "listenToSystemColourMode").mockImplementation(
-            (cb) => {
+            jest.spyOn(
+                systemMode,
+                "listenToSystemColourMode"
+            ).mockImplementation((cb) => {
                 mockListener.mockImplementation(cb);
                 return () => {};
-            }
-        );
+            });
 
-        render(
-            <ThemeProvider>
-                <TestComponent />
-            </ThemeProvider>
-        );
+            render(
+                <ThemeProvider>
+                    <TestComponent />
+                </ThemeProvider>
+            );
 
-        act(() => {
-            mockListener("dark");
+            act(() => {
+                mockListener("dark");
+            });
+
+            expect(document.documentElement.dataset.fdsThemeMode).toBe("dark");
         });
 
-        expect(document.documentElement.dataset.fdsThemeMode).toBe("dark");
+        it("does NOT react to system changes when controlled", () => {
+            const mockListener = jest.fn();
+
+            jest.spyOn(
+                systemMode,
+                "listenToSystemColourMode"
+            ).mockImplementation((cb) => {
+                mockListener.mockImplementation(cb);
+                return () => {};
+            });
+
+            render(
+                <ThemeProvider mode="light">
+                    <TestComponent />
+                </ThemeProvider>
+            );
+
+            mockListener("dark");
+
+            expect(document.documentElement.dataset.fdsThemeMode).toBe("light");
+        });
     });
 
-    it("does NOT react to system changes when controlled", () => {
-        const mockListener = jest.fn();
+    describe("BREAKPOINT", () => {
+        it("does not crash when breakpoint listener setup returns undefined", () => {
+            jest.spyOn(
+                breakpoint,
+                "setupBreakpointListener"
+            ).mockImplementation(() => undefined);
 
-        jest.spyOn(systemMode, "listenToSystemColourMode").mockImplementation(
-            (cb) => {
-                mockListener.mockImplementation(cb);
-                return () => {};
-            }
-        );
-
-        render(
-            <ThemeProvider mode="light">
-                <TestComponent />
-            </ThemeProvider>
-        );
-
-        act(() => {
-            mockListener("dark");
+            expect(() =>
+                render(
+                    <ThemeProvider>
+                        <div>test</div>
+                    </ThemeProvider>
+                )
+            ).not.toThrow();
         });
 
-        expect(document.documentElement.dataset.fdsThemeMode).toBe("light");
+        it("applies correct breakpoint classes on initial load", () => {
+            setWindowWidth(500); // md range (481–768)
+
+            render(
+                <ThemeProvider>
+                    <TestComponent />
+                </ThemeProvider>
+            );
+
+            const body = document.body;
+
+            expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md-min")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md-max")).toBe(true);
+        });
+
+        it("updates breakpoint classes on resize", () => {
+            setWindowWidth(500); // md range (481–768)
+
+            render(
+                <ThemeProvider>
+                    <TestComponent />
+                </ThemeProvider>
+            );
+
+            const body = document.body;
+
+            expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
+
+            // Resize to lg range (769–1200)
+            setWindowWidth(900);
+
+            expect(body.classList.contains("fds-breakpoint-lg")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-lg-min")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-lg-max")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md")).toBe(false);
+            expect(body.classList.contains("fds-breakpoint-md-min")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md-max")).toBe(
+                false
+            );
+            expect(body.classList.contains("fds-breakpoint-sm-min")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-sm-max")).toBe(
+                false
+            );
+            expect(body.classList.contains("fds-breakpoint-xs-min")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-xs-max")).toBe(
+                false
+            );
+            expect(body.classList.contains("fds-breakpoint-xxs-min")).toBe(
+                true
+            );
+            expect(body.classList.contains("fds-breakpoint-xxs-max")).toBe(
+                false
+            );
+        });
+
+        it("applies only min and base class for xxl", () => {
+            setWindowWidth(1600); // xxl (1441+)
+
+            render(
+                <ThemeProvider>
+                    <TestComponent />
+                </ThemeProvider>
+            );
+
+            const body = document.body;
+
+            expect(body.classList.contains("fds-breakpoint-xxl")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-xxl-min")).toBe(
+                true
+            );
+            expect(body.classList.contains("fds-breakpoint-xxl-max")).toBe(
+                false
+            );
+        });
+
+        it("persist breakpoint when still within range", () => {
+            setWindowWidth(500); // md range (481–768)
+
+            render(
+                <ThemeProvider>
+                    <TestComponent />
+                </ThemeProvider>
+            );
+
+            const body = document.body;
+
+            expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md-min")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md-max")).toBe(true);
+
+            setWindowWidth(600); // md range (481–768)
+
+            expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md-min")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md-max")).toBe(true);
+        });
+
+        it("does not remove non-breakpoint classes", () => {
+            document.body.classList.add("random-class");
+
+            setWindowWidth(500);
+
+            render(
+                <ThemeProvider>
+                    <TestComponent />
+                </ThemeProvider>
+            );
+
+            expect(document.body.classList.contains("random-class")).toBe(true);
+        });
     });
 });
