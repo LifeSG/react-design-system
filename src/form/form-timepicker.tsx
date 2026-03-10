@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { Timepicker } from "../timepicker";
+import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormTimepickerProps } from "./types";
 
 export const FormTimepicker = ({
     label,
     errorMessage,
-    id = "form-timepicker",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
@@ -21,6 +23,11 @@ export const FormTimepicker = ({
     xxlCols,
     ...otherProps
 }: FormTimepickerProps): JSX.Element => {
+    const [internalId] = useState(
+        () => `form-timepicker-input-${SimpleIdGenerator.generate()}`
+    );
+    const inputId = id ?? internalId;
+
     return (
         <FormWrapper
             id={id}
@@ -44,6 +51,7 @@ export const FormTimepicker = ({
                 id={`${id}-base`}
                 data-testid={testId || id}
                 error={!!errorMessage}
+                ariaLabelledBy={inputId}
                 {...otherProps}
             />
         </FormWrapper>
