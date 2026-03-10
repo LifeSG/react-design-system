@@ -252,36 +252,39 @@ const OverlayComponent = ({
     // =============================================================================
     const handleDocumentMouseDown = (e: MouseEvent) => {
         const container = containerRef?.current ?? wrapperRef.current;
+        const wrapper = wrapperRef.current;
         if (!container) {
             mouseDownInsideModalRef.current = false;
             return;
         }
 
         const target = e.target as Node;
+        const clickedOnWrapper = wrapper === target;
         const clickedOnContainer = container === target;
         const clickedInsideContainer = container.contains(target);
 
         // Track if mousedown started inside modal content
         mouseDownInsideModalRef.current =
-            clickedInsideContainer && !clickedOnContainer;
+            !clickedOnWrapper && (clickedOnContainer || clickedInsideContainer);
     };
 
     const handleWrapperClick = (event: React.MouseEvent<HTMLDivElement>) => {
         const container = containerRef?.current ?? wrapperRef.current;
+        const wrapper = wrapperRef.current;
         if (!container) {
             mouseDownInsideModalRef.current = false;
             return;
         }
 
         const target = event.target as Node;
+        const clickedOnWrapper = wrapper === target;
         const clickedOnContainer = container === target;
         const clickedInsideContainer = container.contains(target);
-        const clickedInsideModal =
-            clickedInsideContainer && !clickedOnContainer;
+        const clickedInsideModal = clickedOnContainer || clickedInsideContainer;
 
         // Only close if both mousedown AND click happened outside modal
         if (
-            !clickedInsideModal &&
+            (clickedOnWrapper || !clickedInsideModal) &&
             !mouseDownInsideModalRef.current &&
             onOverlayClick &&
             enableOverlayClick
