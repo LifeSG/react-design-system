@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
+import { Form } from "src/form";
 import { Modal } from "src/modal";
 import { PopoverTrigger, PopoverV2 } from "src/popover-v2";
 import { GridDecorator } from "../storybook-common";
@@ -247,4 +248,31 @@ export const Overflow: StoryObj<TriggerComponent> = {
             columnHeaders: ["Visible", "Hidden", "Clip", "Scroll", "Auto"],
         }),
     ],
+};
+
+export const NestedOverlays: StoryObj<Component> = {
+    render: (_args) => {
+        const options = [
+            { label: "Option 1", value: "option1" },
+            { label: "Option 2", value: "option2" },
+            { label: "Option 3", value: "option3" },
+        ];
+
+        return (
+            <PopoverTrigger
+                popoverContent={() => (
+                    <Form.MultiSelect
+                        data-testid="multiselect-filter"
+                        options={options}
+                        listExtractor={(opt) => opt.label}
+                        valueExtractor={(opt) => opt.value}
+                        enableSearch
+                    />
+                )}
+                position="bottom-start"
+            >
+                <Button.Default>Click me</Button.Default>
+            </PopoverTrigger>
+        );
+    },
 };
