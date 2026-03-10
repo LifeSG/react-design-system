@@ -1,5 +1,9 @@
 import type { CSSVariableString } from "src/theme/types";
-import { parseCSSVariableValue, parsePxOrRemValue } from "src/theme/utils";
+import {
+    getInheritedInlineCssVariables,
+    parseCSSVariableValue,
+    parsePxOrRemValue,
+} from "src/theme/utils";
 
 import { setupThemeVariables } from "../setup";
 
@@ -121,5 +125,74 @@ describe("parsePxOrRemValue", () => {
     it("falls back to 16px font size for rem conversion when font size is invalid", () => {
         document.documentElement.style.fontSize = "invalid-size";
         expect(parsePxOrRemValue("1.5rem")).toBe(24);
+    });
+});
+
+describe("getInheritedInlineCssVariables", () => {
+    it("returns empty object when themeElement is null", () => {
+        const result = getInheritedInlineCssVariables(null);
+
+        expect(result).toEqual({});
+    });
+
+    it("returns empty object when no inline styles are found", () => {
+        const themeElement = document.createElement("div");
+
+        expect(themeElement.style.length).toBe(0);
+        expect(getInheritedInlineCssVariables(themeElement)).toEqual({});
+    });
+
+    it("extracts only --fds* variables from the theme element", () => {
+        const themeElement = document.createElement("div");
+
+        themeElement.style.setProperty("--fds-color", "red");
+        themeElement.style.setProperty("--color", "blue");
+        themeElement.style.color = "green";
+
+        const result = getInheritedInlineCssVariables(themeElement);
+
+        expect(result).toEqual({
+            "--fds-color": "red",
+        });
+    });
+
+    it("ignores --fds variables with empty or whitespace-only values", () => {
+        const themeElement = document.createElement("div");
+
+        themeElement.style.setProperty("--fds-empty", "");
+        themeElement.style.setProperty("--fds-space", "   ");
+        themeElement.style.setProperty("--fds-valid", "16px");
+
+        expect(getInheritedInlineCssVariables(themeElement)).toEqual({
+            "--fds-valid": "16px",
+        });
+    });
+
+    it("only reads variables from the provided theme element", () => {
+        const root = document.createElement("div");
+        const themeElement = document.createElement("div");
+        const child = document.createElement("button");
+
+        root.style.setProperty("--fds-root", "root");
+        child.style.setProperty("--fds-ref", "ref");
+        themeElement.style.setProperty("--fds-theme", "theme");
+
+        root.appendChild(themeElement);
+        themeElement.appendChild(child);
+
+        const result = getInheritedInlineCssVariables(themeElement);
+
+        expect(result).toEqual({
+            "--fds-theme": "theme",
+        });
+    });
+
+    it("returns empty object when theme element has no inline --fds* variables", () => {
+        const themeElement = document.createElement("div");
+
+        themeElement.style.setProperty("--color", "red");
+        themeElement.style.color = "blue";
+
+        expect(getInheritedInlineCssVariables(themeElement)).toEqual({});
     });
 });

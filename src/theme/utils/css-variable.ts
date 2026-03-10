@@ -1,4 +1,8 @@
+import type { CSSProperties } from "react";
+
 import type { CSSVariableString } from "../types";
+
+type InlineCssVariables = Record<`--${string}`, string>;
 
 const DEFAULT_FONT_SIZE_PX = 16;
 
@@ -49,3 +53,35 @@ export function parsePxOrRemValue(cssValue: string): number {
 
     return parsedValue * resolvedRootFontSize;
 }
+
+const mergeInlineCssVariables = (
+    element: HTMLElement,
+    target: InlineCssVariables
+) => {
+    const { style } = element;
+    if (style.length === 0) return;
+
+    for (let i = 0; i < style.length; i++) {
+        const propertyName = style.item(i);
+        if (!propertyName?.startsWith("--fds")) continue;
+
+        const value = style.getPropertyValue(propertyName).trim();
+        if (!value) continue;
+
+        target[propertyName as `--${string}`] = value;
+    }
+};
+
+/**
+ * Extracts inline token CSS custom properties from the theme element.
+ */
+export const getInheritedInlineCssVariables = (
+    themeElement: HTMLElement | null
+): CSSProperties => {
+    if (!themeElement) return {};
+
+    const variables: InlineCssVariables = {};
+    mergeInlineCssVariables(themeElement, variables);
+
+    return variables;
+};

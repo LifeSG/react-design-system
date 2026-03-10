@@ -25,7 +25,7 @@ import { ThemeContext } from "styled-components";
 
 import { useFloatingChild } from "../../overlay/use-floating-context";
 import { ThemeContext as FDSThemeContext } from "../../theme/theme-provider/context";
-import { getInheritedInlineCssVariables } from "../../theme/utils/get-inline-css-variables";
+import { getInheritedInlineCssVariables } from "../../theme/utils/css-variable";
 import { V3_Breakpoint } from "../../v3_theme";
 import type { DropdownAlignmentType } from "./types";
 
@@ -213,20 +213,10 @@ export const ElementWithDropdown = ({
     const themeVariables = useMemo(() => {
         if (!isMounted) return {};
 
-        const referenceElement =
-            (positionRef?.current as HTMLElement | null) ?? elementRef.current;
         return getInheritedInlineCssVariables(
-            referenceElement,
             themeContext?.themeElement ?? null
         );
-    }, [
-        isMounted,
-        positionRef?.current,
-        elementRef.current,
-        themeContext?.theme,
-        themeContext?.mode,
-        themeContext?.themeElement,
-    ]);
+    }, [isMounted, themeContext?.themeElement]);
 
     const click = useClick(context, {
         enabled,

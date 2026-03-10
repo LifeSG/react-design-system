@@ -17,7 +17,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 import { ThemeContext as FDSThemeContext } from "../theme/theme-provider/context";
-import { getInheritedInlineCssVariables } from "../theme/utils/get-inline-css-variables";
+import { getInheritedInlineCssVariables } from "../theme/utils/css-variable";
 import { SidenavContext } from "./sidenav-context";
 import {
     Container,
@@ -125,16 +125,9 @@ export const SidenavItem = ({
         if (!isMounted) return {};
 
         return getInheritedInlineCssVariables(
-            anchorRef,
             themeContext?.themeElement ?? null
         );
-    }, [
-        isMounted,
-        anchorRef,
-        themeContext?.theme,
-        themeContext?.mode,
-        themeContext?.themeElement,
-    ]);
+    }, [isMounted, themeContext?.themeElement]);
 
     // =========================================================================
     // EFFECTS

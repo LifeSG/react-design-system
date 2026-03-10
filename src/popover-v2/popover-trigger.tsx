@@ -21,7 +21,7 @@ import { ThemeContext } from "styled-components";
 
 import { useFloatingChild } from "../overlay/use-floating-context";
 import { ThemeContext as FDSThemeContext } from "../theme/theme-provider/context";
-import { getInheritedInlineCssVariables } from "../theme/utils/get-inline-css-variables";
+import { getInheritedInlineCssVariables } from "../theme/utils/css-variable";
 import { SimpleIdGenerator } from "../util";
 import { V3_Breakpoint } from "../v3_theme";
 import { PopoverV2 } from "./popover";
@@ -92,7 +92,6 @@ export const PopoverTrigger = ({
         if (!visible) return {};
 
         return getInheritedInlineCssVariables(
-            nodeRef.current,
             themeContext?.themeElement ?? null
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
