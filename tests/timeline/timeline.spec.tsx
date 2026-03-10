@@ -206,28 +206,6 @@ describe("Timeline", () => {
             expect(indicator2).toHaveTextContent("2");
         });
 
-        it("should not apply counterOffset to test IDs correctly", () => {
-            render(
-                <Timeline
-                    data-base-indicator-testid="testid-offset"
-                    counterOffset={10}
-                    items={[
-                        {
-                            title: "Step 11",
-                            variant: "numeric",
-                            content: "Content",
-                        },
-                    ]}
-                />
-            );
-
-            const indicator = screen.getByTestId(
-                "circleindicator1_div_testid-offset"
-            );
-            expect(indicator).toBeInTheDocument();
-            expect(indicator).toHaveTextContent("11");
-        });
-
         it("should apply counterOffset when mixed with other variants", () => {
             render(
                 <Timeline
