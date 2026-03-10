@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
+import { useEvent } from "../util";
 import { Container } from "./modal.styles";
 import { ModalProps } from "./types";
-import { useEvent } from "../util";
 
 export const Modal = ({
     id = "modal",
@@ -21,21 +21,20 @@ export const Modal = ({
     // CONST, STATE, REF
     // =============================================================================
     const { verticalHeight, offsetTop } = useViewport();
-    const containerRef = useRef<HTMLDivElement | null>(null);
     const childRef = useRef<HTMLDivElement>(null);
     const childWithRef =
         children &&
         React.cloneElement(children as React.ReactElement, { ref: childRef });
 
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
     const dismissKeyboard = useEvent(() => {
         if (dismissKeyboardOnShow) {
             (document.activeElement as HTMLElement)?.blur?.();
         }
-    })
+    });
 
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
     useEffect(() => {
         if (show) {
             dismissKeyboard();
@@ -57,7 +56,6 @@ export const Modal = ({
             zIndex={zIndex}
         >
             <Container
-                ref={containerRef}
                 $show={show}
                 $animationFrom={animationFrom}
                 data-testid={id}
