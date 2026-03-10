@@ -86,6 +86,20 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["() => void"],
             },
+            {
+                name: "containerRef",
+                description: (
+                    <>
+                        The visual container for the overlay content. Specify
+                        this if clicking on the overlay does not dismiss the
+                        overlay as expected. This can happen when the visual
+                        container is not the immediate child of the{" "}
+                        <code>Overlay</code> component and differs from its
+                        actual boundaries in the DOM.
+                    </>
+                ),
+                propTypes: ["React.RefObject<HTMLElement>"],
+            },
         ],
     },
 ];
