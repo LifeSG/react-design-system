@@ -47,11 +47,11 @@ Perform the migration in steps. At each step, the component should remain functi
     const Container = styled.div`
       background: red;
 
-      & .containerDisabled {
+      &.containerDisabled {
         ...
       }
 
-      & .containerIsOpen {
+      &.containerIsOpen {
         ...
       }
     `
