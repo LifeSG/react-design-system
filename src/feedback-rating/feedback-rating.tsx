@@ -33,12 +33,13 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
     const resolvedButtonLabel =
         buttonLabel ?? FeedbackRatingData.DEFAULT_BUTTON_LABEL;
     const isSubmitDisabled = !rating;
-    const submitButtonAriaLabel = isSubmitDisabled
-        ? `Disabled ${resolvedButtonLabel.toLowerCase()} rating button`
-        : resolvedButtonLabel;
 
     return (
-        <MainContainer role="group" {...otherProps}>
+        <MainContainer
+            role="group"
+            aria-labelledby={internalId}
+            {...otherProps}
+        >
             {bannerSrc && (
                 <Image
                     data-testid="feedback-banner-image"
@@ -54,8 +55,7 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                     {componentDescription}
                 </Typography.HeadingSM>
                 <FeedbackRatingStarsContainer
-                    description={internalId}
-                    describedBy={descriptionId}
+                    ariaDescribedBy={descriptionId}
                     rating={rating}
                     onRatingChange={onRatingChange}
                 />
@@ -64,8 +64,7 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                 </VisuallyHidden>
                 <SubmitButton
                     disabled={isSubmitDisabled}
-                    aria-disabled={isSubmitDisabled}
-                    aria-label={submitButtonAriaLabel}
+                    focusableWhenDisabled
                     onClick={onSubmit}
                     type="button"
                 >

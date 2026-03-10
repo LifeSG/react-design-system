@@ -6,7 +6,12 @@ import {
     StarFilled,
     StarUnfilled,
 } from "./feedback-rating-stars-container.styles";
-import { FeedbackRatingStarsContainerProps } from "./types";
+
+interface FeedbackRatingStarsContainerProps {
+    ariaDescribedBy: string;
+    rating: number;
+    onRatingChange: (value: number) => void;
+}
 
 export const FeedbackRatingStarsContainer = (
     props: FeedbackRatingStarsContainerProps
@@ -14,7 +19,7 @@ export const FeedbackRatingStarsContainer = (
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
-    const { description, describedBy, rating, onRatingChange } = props;
+    const { ariaDescribedBy, rating, onRatingChange } = props;
     const maxRating = StarContainerData.MAX_STAR;
     const currentRating = Math.min(Math.max(rating ?? 0, 0), maxRating);
 
@@ -54,23 +59,15 @@ export const FeedbackRatingStarsContainer = (
     // RENDER FUNCTIONS
     // =========================================================================
     const getAriaValueText = () => {
-        if (currentRating === 0) {
-            return "0 stars";
-        }
-
-        if (currentRating === 1) {
-            return "1 star";
-        }
-
-        return `${currentRating} stars`;
+        return `${currentRating} star${currentRating === 1 ? "" : "s"}`;
     };
 
     const renderStar = (starIndex: number) => {
         if (starIndex <= currentRating) {
-            return <StarFilled aria-hidden="true" />;
-        } else {
-            return <StarUnfilled aria-hidden="true" />;
+            return <StarFilled aria-hidden />;
         }
+
+        return <StarUnfilled aria-hidden />;
     };
 
     const renderRatings = () => {
@@ -80,9 +77,7 @@ export const FeedbackRatingStarsContainer = (
             return (
                 <Label
                     key={starIndex}
-                    type="button"
-                    tabIndex={-1}
-                    aria-hidden="true"
+                    role="presentation"
                     onClick={() => handleStarSelection(starIndex)}
                 >
                     {renderStar(starIndex)}
@@ -95,9 +90,7 @@ export const FeedbackRatingStarsContainer = (
         <Container
             role="slider"
             tabIndex={0}
-            aria-labelledby={description}
-            aria-describedby={describedBy}
-            aria-label="Rating"
+            aria-describedby={ariaDescribedBy}
             aria-valuemin={1}
             aria-valuemax={maxRating}
             aria-valuenow={currentRating}

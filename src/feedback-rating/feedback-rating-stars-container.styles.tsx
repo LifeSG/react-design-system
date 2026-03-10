@@ -17,7 +17,7 @@ export const StarFilled = styled(StarFillIcon)`
     ${starStyle}
 `;
 
-export const Label = styled.button`
+export const Label = styled.div`
     margin: 0 ${Spacing["spacing-8"]};
     line-height: 0;
     display: flex;
