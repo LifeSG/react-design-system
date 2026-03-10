@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "src/button";
 import { Modal } from "src/modal";
 import { PopoverTrigger, PopoverV2 } from "src/popover-v2";
+import { Form } from "../../src";
 import { GridDecorator } from "../storybook-common";
 import { CustomPopover, POPOVER_CONTENT } from "./doc-elements";
 
@@ -206,6 +207,32 @@ export const ResizeAndFlipWithCustomContent: StoryObj<Component> = {
                 enableResize
                 popoverContent={({ maxHeight, overflow }) => (
                     <CustomPopover style={{ maxHeight, overflow }} />
+                )}
+            >
+                <Button.Default>Click me</Button.Default>
+            </PopoverTrigger>
+        );
+    },
+};
+
+export const NestedOverlays: StoryObj<Component> = {
+    render: () => {
+        const options = [
+            { label: "Option 1", value: "option1" },
+            { label: "Option 2", value: "option2" },
+            { label: "Option 3", value: "option3" },
+        ];
+
+        return (
+            <PopoverTrigger
+                popoverContent={() => (
+                    <Form.MultiSelect
+                        data-testid="multiselect-filter"
+                        options={options}
+                        listExtractor={(opt) => opt.label}
+                        valueExtractor={(opt) => opt.value}
+                        enableSearch
+                    />
                 )}
             >
                 <Button.Default>Click me</Button.Default>
