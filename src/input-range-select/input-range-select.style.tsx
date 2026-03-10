@@ -23,6 +23,7 @@ export const RangeSelectorButton = styled.button`
     background: transparent;
     display: flex;
     flex: 1;
+    color: ${Colour.text};
 
     &:focus,
     &:active {
