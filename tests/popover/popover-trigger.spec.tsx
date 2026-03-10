@@ -16,10 +16,7 @@ const Wrapper = () => {
     );
 
     useApplyStyle(themeElementRef, {
-        "--unit-test-token": "theme-level",
-    });
-    useApplyStyle(ancestorRef, {
-        "--unit-test-token": "ancestor-level",
+        "--fds-unit-test-token": "value",
     });
 
     return (
@@ -65,9 +62,9 @@ describe("PopoverTrigger floating theme propagation", () => {
 
         expect(portalRoot).toHaveAttribute("data-fds-theme", "lifesg");
         expect(portalRoot).toHaveAttribute("data-fds-theme-mode", "light");
-        expect(portalRoot?.style.getPropertyValue("--unit-test-token")).toBe(
-            "theme-level"
-        );
+        expect(
+            portalRoot?.style.getPropertyValue("--fds-unit-test-token")
+        ).toBe("value");
     });
 
     it("updates floating mode attribute when provider mode changes", async () => {
