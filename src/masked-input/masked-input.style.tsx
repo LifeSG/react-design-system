@@ -75,7 +75,6 @@ export const Spinner = styled(ComponentLoadingSpinner)`
 
 export const TryAgainLabel = styled.span`
     color: ${Colour["text-primary"]};
-    text-decoration: underline;
     font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
@@ -112,5 +111,41 @@ export const ClickableErrorWrapper = styled(BasicButton)`
         ${TryAgainLabel} {
             color: ${Colour["text-hover"]};
         }
+    }
+`;
+
+// -----------------------------------------------------------------------------
+// READONLY MASKED DISPLAY
+// -----------------------------------------------------------------------------
+
+export const ReadOnlyClickable = styled.button`
+    ${Font["body-baseline-regular"]}
+    color: ${Colour["text"]};
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    justify-content: space-between;
+    min-height: 3rem;
+`;
+
+export const ReadOnlyValueText = styled.span`
+    overflow-wrap: anywhere;
+`;
+
+export const ReadOnlyIconContainer = styled.span`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: ${Colour["icon-primary"]};
+    padding: 0 1rem;
+    flex-shrink: 0;
+
+    svg {
+        width: ${Font.Spec["body-size-baseline"]};
+        height: ${Font.Spec["body-size-baseline"]};
     }
 `;
