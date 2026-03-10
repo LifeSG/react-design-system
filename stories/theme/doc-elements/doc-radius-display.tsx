@@ -1,9 +1,8 @@
-import { getRadius } from "src/v3_theme/radius/theme-helper";
-import { V3_RadiusSet, V3_ThemeSpec } from "src/v3_theme/types";
-import styled, { ThemeProvider, useTheme } from "styled-components";
+import { Radius, ThemeProvider, ThemeType, useDesignToken } from "src/theme";
+import styled from "styled-components";
 
 interface RadiusDisplayProps {
-    theme: V3_ThemeSpec;
+    theme: ThemeType;
 }
 
 export const RadiusDisplay = ({ theme }: RadiusDisplayProps) => {
@@ -27,14 +26,11 @@ export const RadiusDisplay = ({ theme }: RadiusDisplayProps) => {
 };
 
 interface RadiusCollectionProps {
-    token: keyof V3_RadiusSet;
+    token: keyof typeof Radius;
 }
 
 const RadiusCollection = ({ token }: RadiusCollectionProps) => {
-    const theme = useTheme();
-    const value = getRadius(token)({
-        theme,
-    });
+    const value = useDesignToken(Radius[token]) as string;
 
     return (
         <Row key={token}>
