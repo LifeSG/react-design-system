@@ -20,11 +20,8 @@ import {
     StyledInputWrapper,
 } from "./input-range-select.style";
 import { SimpleIdGenerator } from "../util";
-import {
-    LiveAnnouncer,
-    VisuallyHidden,
-    concatIds,
-} from "../shared/accessibility";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
+import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 
 type RangeType = "from" | "to";
 
@@ -70,7 +67,6 @@ export const InputRangeSelect = <T, V>({
     const [focusedInput, setFocusedInput] = useState<RangeType | "none">(
         "none"
     );
-    const [announcement, setAnnouncement] = useState<string>("");
     const isOpen = focusedInput !== "none";
 
     const labelButtonRef = {
@@ -167,12 +163,7 @@ export const InputRangeSelect = <T, V>({
 
         setFocusedInput(nextFocusedInput);
         triggerOptionDisplayCallback(true);
-
-        setAnnouncement(
-            nextFocusedInput === "from"
-                ? `Selecting for: ${placeholders.from}`
-                : `Selecting for: ${placeholders.to}`
-        );
+        announceSelectionContext(nextFocusedInput);
     };
 
     const focusButton = (type: RangeType) => {
@@ -182,6 +173,16 @@ export const InputRangeSelect = <T, V>({
     const getButtonLabelledBy = (rangeType: RangeType) => {
         const rangeLabelId = rangeType === "from" ? fromLabelId : toLabelId;
         return concatIds(rangeLabelId, ariaLabelledBy);
+    };
+
+    const announceSelectionContext = (rangeType: RangeType) => {
+        const message =
+            rangeType === "from"
+                ? `Selecting for: ${placeholders.from}`
+                : `Selecting for: ${placeholders.to}`;
+
+        clearAnnouncer("polite");
+        announce(message, "polite");
     };
 
     // =============================================================================
@@ -222,7 +223,7 @@ export const InputRangeSelect = <T, V>({
             setFocusedInput("to");
             triggerOptionDisplayCallback(true);
             focusButton("to");
-            setAnnouncement(`Selecting for: ${placeholders.to}`);
+            announceSelectionContext("to");
             return;
         }
 
@@ -334,8 +335,6 @@ export const InputRangeSelect = <T, V>({
                 $error={error}
                 $focused={isOpen}
             >
-                <LiveAnnouncer message={announcement} />
-
                 <VisuallyHidden id={fromLabelId}>
                     {placeholders?.from || "Select"}
                 </VisuallyHidden>

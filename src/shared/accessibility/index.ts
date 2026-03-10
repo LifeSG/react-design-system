@@ -25,5 +25,3 @@ export const inertValue = (value: boolean | undefined) => {
 export const concatIds = (...selectors: (string | undefined)[]) => {
     return selectors.filter((selector) => !!selector).join(" ");
 };
-
-export { LiveAnnouncer } from "./live-announcer";
