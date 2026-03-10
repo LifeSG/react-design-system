@@ -108,4 +108,134 @@ describe("Timeline", () => {
             expect(indicator3).toHaveTextContent("3");
         });
     });
+
+    describe("numeric variant with counterOffset", () => {
+        it("should apply counterOffset to numeric indices", () => {
+            render(
+                <Timeline
+                    data-base-indicator-testid="offset-test"
+                    counterOffset={2}
+                    items={[
+                        {
+                            title: "Step 3",
+                            variant: "numeric",
+                            content: "Third step content",
+                        },
+                        {
+                            title: "Step 4",
+                            variant: "numeric",
+                            content: "Fourth step content",
+                        },
+                        {
+                            title: "Step 5",
+                            variant: "numeric",
+                            content: "Fifth step content",
+                        },
+                    ]}
+                />
+            );
+
+            // With counterOffset=2, first item should show 3 (0 + 1 + 2 = 3)
+            const indicator1 = screen.getByTestId(
+                "circleindicator1_div_offset-test"
+            );
+            const indicator2 = screen.getByTestId(
+                "circleindicator2_div_offset-test"
+            );
+            const indicator3 = screen.getByTestId(
+                "circleindicator3_div_offset-test"
+            );
+
+            expect(indicator1).toHaveTextContent("3");
+            expect(indicator2).toHaveTextContent("4");
+            expect(indicator3).toHaveTextContent("5");
+        });
+
+        it("should include correct step number in visually hidden text with counterOffset", () => {
+            render(
+                <Timeline
+                    counterOffset={5}
+                    items={[
+                        {
+                            title: "Step 6",
+                            variant: "numeric",
+                            content: "Step content",
+                        },
+                        {
+                            title: "Step 7",
+                            variant: "numeric",
+                            content: "Step content",
+                        },
+                    ]}
+                />
+            );
+
+            // With counterOffset=5, steps should be numbered 6 and 7
+            expect(screen.getByText("Step number 6")).toBeInTheDocument();
+            expect(screen.getByText("Step number 7")).toBeInTheDocument();
+        });
+
+        it("should handle counterOffset of 0 (default behavior)", () => {
+            render(
+                <Timeline
+                    data-base-indicator-testid="zero-offset"
+                    counterOffset={0}
+                    items={[
+                        {
+                            title: "Step 1",
+                            variant: "numeric",
+                            content: "First step content",
+                        },
+                        {
+                            title: "Step 2",
+                            variant: "numeric",
+                            content: "Second step content",
+                        },
+                    ]}
+                />
+            );
+
+            const indicator1 = screen.getByTestId(
+                "circleindicator1_div_zero-offset"
+            );
+            const indicator2 = screen.getByTestId(
+                "circleindicator2_div_zero-offset"
+            );
+
+            expect(indicator1).toHaveTextContent("1");
+            expect(indicator2).toHaveTextContent("2");
+        });
+
+        it("should apply counterOffset when mixed with other variants", () => {
+            render(
+                <Timeline
+                    data-base-indicator-testid="mixed-offset"
+                    counterOffset={3}
+                    items={[
+                        {
+                            title: "Completed step",
+                            variant: "completed",
+                            content: "Completed content",
+                        },
+                        {
+                            title: "Numeric step",
+                            variant: "numeric",
+                            content: "Numeric content",
+                        },
+                        {
+                            title: "Current step",
+                            variant: "current",
+                            content: "Current content",
+                        },
+                    ]}
+                />
+            );
+
+            // The numeric variant at index 1 should show 5 (1 + 1 + 3 = 5)
+            const numericIndicator = screen.getByTestId(
+                "circleindicator2_div_mixed-offset"
+            );
+            expect(numericIndicator).toHaveTextContent("5");
+        });
+    });
 });
