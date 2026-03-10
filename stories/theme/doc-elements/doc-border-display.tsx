@@ -1,10 +1,8 @@
-import { getBorder, getBorderWidth } from "src/v3_theme/border/theme-helper";
-import { V3_ThemeSpec } from "src/v3_theme/types";
-import styled, { ThemeProvider, useTheme } from "styled-components";
-import { V3_Border } from "../../../src/v3_theme";
+import { Border, ThemeProvider, ThemeType, useDesignToken } from "src/theme";
+import styled from "styled-components";
 
 interface BorderDisplayProps {
-    theme: V3_ThemeSpec;
+    theme: ThemeType;
 }
 
 export const BorderDisplay = ({ theme }: BorderDisplayProps) => {
@@ -22,28 +20,16 @@ export const BorderDisplay = ({ theme }: BorderDisplayProps) => {
                 <Divider />
                 <BorderStyleCollection token="solid" />
             </Display>
-            <Display>
-                <HeaderRow>
-                    <div>Utility</div>
-                    <div>Parameters</div>
-                    <div></div>
-                </HeaderRow>
-                <SolidBorderUtilCollection />
-                <DashedBorderUtilCollection />
-            </Display>
         </ThemeProvider>
     );
 };
 
 interface BorderWidthCollectionProps {
-    token: Parameters<typeof getBorderWidth>[0];
+    token: keyof typeof Border;
 }
 
 const BorderWidthCollection = ({ token }: BorderWidthCollectionProps) => {
-    const theme = useTheme();
-    const value = getBorderWidth(token)({
-        theme,
-    });
+    const value = useDesignToken(Border[token]) as string;
 
     return (
         <Row key={token}>
@@ -59,12 +45,11 @@ const BorderWidthCollection = ({ token }: BorderWidthCollectionProps) => {
 };
 
 interface BorderStyleCollectionProps {
-    token: Parameters<typeof getBorder>[0];
+    token: keyof typeof Border;
 }
 
 const BorderStyleCollection = ({ token }: BorderStyleCollectionProps) => {
-    const theme = useTheme();
-    const value = getBorder(token)({ theme });
+    const value = useDesignToken(Border[token]) as string;
 
     return (
         <Row key={token}>
@@ -74,38 +59,6 @@ const BorderStyleCollection = ({ token }: BorderStyleCollectionProps) => {
             <div>{value}</div>
             <div>
                 <BorderStyleExample $style={value as unknown as string} />
-            </div>
-        </Row>
-    );
-};
-
-const SolidBorderUtilCollection = () => {
-    return (
-        <Row>
-            <div>
-                <code>solid</code>
-            </div>
-            <div>
-                <code>{"{ thickness, colour, radius }"}</code>
-            </div>
-            <div>
-                <SolidBorderExample />
-            </div>
-        </Row>
-    );
-};
-
-const DashedBorderUtilCollection = () => {
-    return (
-        <Row>
-            <div>
-                <code>dashed-default</code>
-            </div>
-            <div>
-                <code>{"{ thickness, colour, radius }"}</code>
-            </div>
-            <div>
-                <DashedBorderExample />
             </div>
         </Row>
     );
@@ -131,10 +84,6 @@ const Display = styled.div`
     flex-wrap: wrap;
 
     margin-bottom: 2.5rem;
-
-    &:last-child {
-        margin-bottom: 1rem;
-    }
 
     overflow-x: auto;
 `;
@@ -166,18 +115,6 @@ const BorderStyleExample = styled.div<BorderStyleProps>`
     height: 24px;
     width: 48px;
     border: 1px ${(props) => props.$style} tomato;
-`;
-
-const SolidBorderExample = styled.div`
-    height: 24px;
-    width: 48px;
-    ${V3_Border.Util["solid"]({ colour: "tomato" })}
-`;
-
-const DashedBorderExample = styled.div`
-    height: 24px;
-    width: 48px;
-    ${V3_Border.Util["dashed-default"]({ colour: "tomato" })}
 `;
 
 const Divider = styled.div`
