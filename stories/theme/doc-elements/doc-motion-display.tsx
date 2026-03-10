@@ -1,9 +1,8 @@
-import { V3_MotionSet, V3_ThemeSpec } from "src/v3_theme/types";
-import styled, { ThemeProvider, keyframes, useTheme } from "styled-components";
-import { getMotion } from "../../../src/v3_theme/motion/theme-helper";
+import { Motion, ThemeProvider, ThemeType, useDesignToken } from "src/theme";
+import styled, { keyframes } from "styled-components";
 
 interface MotionDisplayProps {
-    theme: V3_ThemeSpec;
+    theme: ThemeType;
 }
 
 export const MotionDisplay = ({ theme }: MotionDisplayProps) => {
@@ -71,13 +70,12 @@ export const MotionDisplay = ({ theme }: MotionDisplayProps) => {
 };
 
 interface MotionCollectionProps {
-    token: keyof V3_MotionSet;
+    token: keyof typeof Motion;
     children: React.ReactNode;
 }
 
 const DurationCollection = ({ token, children }: MotionCollectionProps) => {
-    const theme = useTheme();
-    const value = getMotion(token)({ theme });
+    const value = useDesignToken(Motion[token]) as string;
 
     return (
         <Row key={token}>
@@ -91,8 +89,7 @@ const DurationCollection = ({ token, children }: MotionCollectionProps) => {
 };
 
 const TimingCollection = ({ token, children }: MotionCollectionProps) => {
-    const theme = useTheme();
-    const value = getMotion(token)({ theme });
+    const value = useDesignToken(Motion[token]) as string;
 
     return (
         <Row key={token}>
