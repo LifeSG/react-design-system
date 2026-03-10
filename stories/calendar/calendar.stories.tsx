@@ -62,3 +62,12 @@ export const ShowActiveMonthDaysOnly: StoryObj<Component> = {
         return <Calendar showActiveMonthDaysOnly />;
     },
 };
+
+export const MultiSelect: StoryObj<Component> = {
+    render: (_args) => {
+        const [values, setValues] = useState<string[]>([]);
+        return (
+            <Calendar variant="multi" values={values} onChange={setValues} />
+        );
+    },
+};
