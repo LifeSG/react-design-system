@@ -1,9 +1,8 @@
-import { getSpace } from "src/v3_theme/spacing/theme-helper";
-import { V3_SpacingSet, V3_ThemeSpec } from "src/v3_theme/types";
-import styled, { ThemeProvider, useTheme } from "styled-components";
+import { Spacing, ThemeProvider, ThemeType, useDesignToken } from "src/theme";
+import styled from "styled-components";
 
 interface SpacingDisplayProps {
-    theme: V3_ThemeSpec;
+    theme: ThemeType;
 }
 
 export const SpacingDisplay = ({ theme }: SpacingDisplayProps) => {
@@ -55,12 +54,11 @@ export const LayoutDisplay = ({ theme }: SpacingDisplayProps) => {
 };
 
 interface SpacingCollectionProps {
-    token: keyof V3_SpacingSet;
+    token: keyof typeof Spacing;
 }
 
 const SpacingCollection = ({ token }: SpacingCollectionProps) => {
-    const theme = useTheme();
-    const value = getSpace(token)({ theme });
+    const value = useDesignToken(Spacing[token]) as string;
 
     return (
         <Row key={token}>
