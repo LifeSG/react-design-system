@@ -8,6 +8,7 @@ import {
 import React, { useEffect, useRef } from "react";
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
+import { useEvent } from "../util";
 import { ModalContext } from "./modal-context";
 import { Container, ModalContainer, ScrollContainer } from "./modal-v2.styles";
 import { ModalV2Props } from "./types";
@@ -63,12 +64,17 @@ export const ModalV2 = ({
     // =========================================================================
     // EFFECTS
     // =========================================================================
-    useEffect(() => {
-        if (show && dismissKeyboardOnShow) {
-            // dismiss software keyboard to put modal in fullscreen
+    const dismissKeyboard = useEvent(() => {
+        if (dismissKeyboardOnShow) {
             (document.activeElement as HTMLElement)?.blur?.();
         }
-    }, [dismissKeyboardOnShow, show]);
+    });
+
+    useEffect(() => {
+        if (show) {
+            dismissKeyboard();
+        }
+    }, [show, dismissKeyboard]);
 
     // =========================================================================
     // RENDER FUNCTIONS
