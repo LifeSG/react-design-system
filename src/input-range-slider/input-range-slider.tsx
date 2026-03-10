@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import { Colour } from "../theme";
 import {
     IndicatorLabelContainer,
@@ -11,17 +12,22 @@ import {
     Wrapper,
 } from "./input-range-slider.styles";
 import { InputRangeSliderProps } from "./types";
+import { SimpleIdGenerator } from "../util";
+import { VisuallyHidden } from "../shared/accessibility";
 
 export const InputRangeSlider = ({
+    id,
     value,
     min = 0,
     max = 100,
     step = 1,
-    minRange,
+    minRange = 0,
     numOfThumbs = 2,
     colors,
     disabled,
     readOnly,
+    ariaErrorMessage,
+    ariaInvalid,
     ariaLabels,
     showSliderLabels,
     sliderLabelPrefix,
@@ -30,6 +36,7 @@ export const InputRangeSlider = ({
     indicatorLabelPrefix,
     indicatorLabelSuffix,
     renderSliderLabel,
+    getAriaValueText,
     onChange,
     onChangeEnd,
     ...otherProps
@@ -38,7 +45,10 @@ export const InputRangeSlider = ({
     // CONST, STATE, REF
     // =========================================================================
     const [selection, setSelection] = useState<number[]>(initialiseSelection());
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
     const trackColors = getTrackColors();
+    const indicatorTextId = `${internalId}-indicator`;
+    const resolvedAriaLabels = getResolvedAriaLabels();
 
     // =========================================================================
     // EFFECTS
@@ -53,22 +63,31 @@ export const InputRangeSlider = ({
     // EVENT HANDLERS
     // =========================================================================
     const handleChange = (value: number | readonly number[], index: number) => {
-        if (typeof value === "number") {
-            const val = [value];
-            setSelection(val);
-            onChange?.(val);
-        } else {
-            if (index > -1 && selection[index] === value[index]) {
-                // skip unnecessary update when dragging the start thumb across the end thumb
-                return;
-            }
-            const newSelection = [...value];
-            setSelection(newSelection);
-            onChange?.(newSelection);
+        if (readOnly || disabled) {
+            return;
         }
+
+        if (typeof value === "number") {
+            const nextValue = [value];
+            setSelection(nextValue);
+            onChange?.(nextValue);
+            return;
+        }
+
+        if (index > -1 && selection[index] === value[index]) {
+            return;
+        }
+
+        const nextValue = [...value];
+        setSelection(nextValue);
+        onChange?.(nextValue);
     };
 
     const handleChangeEnd = (value: number | readonly number[]) => {
+        if (readOnly || disabled) {
+            return;
+        }
+
         if (typeof value === "number") {
             const val = [value];
             setSelection(val);
@@ -78,6 +97,24 @@ export const InputRangeSlider = ({
             setSelection(newSelection);
             onChangeEnd?.(newSelection);
         }
+    };
+
+    const handleThumbKeyDown = (
+        event: React.KeyboardEvent<HTMLDivElement>,
+        index: number
+    ) => {
+        if (disabled || readOnly) {
+            return;
+        }
+
+        const message = getBlockedMovementMessage(event.key, index);
+
+        if (!message) {
+            return;
+        }
+
+        clearAnnouncer("assertive");
+        announce(message, "assertive");
     };
 
     // =========================================================================
@@ -93,6 +130,44 @@ export const InputRangeSlider = ({
             values.push(min + step * i);
         }
         return values;
+    }
+
+    function getResolvedAriaLabels() {
+        return Array.from({ length: numOfThumbs }, (_, index) => {
+            return ariaLabels?.[index] || getDefaultAriaLabel(index);
+        });
+    }
+
+    function getDefaultAriaLabel(index: number) {
+        if (numOfThumbs === 1) {
+            return "Slider";
+        }
+
+        if (numOfThumbs === 2) {
+            return index === 0
+                ? "Minimum value slider"
+                : "Maximum value slider";
+        }
+
+        if (index === 0) {
+            return "Minimum value slider";
+        }
+
+        if (index === numOfThumbs - 1) {
+            return "Maximum value slider";
+        }
+
+        return "Indeterminate value slider";
+    }
+
+    function getThumbInstruction(label: string) {
+        const lowerCasedLabel = label.charAt(0).toLowerCase() + label.slice(1);
+        return `Use left and right arrow keys to adjust the ${lowerCasedLabel}.`;
+    }
+
+    function getThumbAccessibleLabel(index: number) {
+        const label = resolvedAriaLabels[index];
+        return `${label}. ${getThumbInstruction(label)}`;
     }
 
     function getTrackColors() {
@@ -116,13 +191,103 @@ export const InputRangeSlider = ({
             return [activeColor, inactiveColor];
         }
 
-        const defaultColors: typeof colors = [];
-        defaultColors.push(inactiveColor);
-        for (let i = 0; i < numOfThumbs - 1; i++) {
+        const defaultColors: typeof colors = [inactiveColor];
+
+        for (let index = 0; index < numOfThumbs - 1; index++) {
             defaultColors.push(activeColor);
         }
+
         defaultColors.push(inactiveColor);
         return defaultColors;
+    }
+
+    function getValueText(currentValue: number, index: number) {
+        if (getAriaValueText) {
+            return getAriaValueText(currentValue, index);
+        }
+
+        return `${sliderLabelPrefix || ""}${currentValue}${
+            sliderLabelSuffix || ""
+        }`;
+    }
+
+    function getThumbDescriptionIds() {
+        return [
+            showIndicatorLabel ? indicatorTextId : undefined,
+            ariaErrorMessage,
+        ]
+            .filter(Boolean)
+            .join(" ");
+    }
+
+    function isIncreaseKey(key: string) {
+        return ["ArrowRight", "ArrowUp", "PageUp", "End"].includes(key);
+    }
+
+    function isDecreaseKey(key: string) {
+        return ["ArrowLeft", "ArrowDown", "PageDown", "Home"].includes(key);
+    }
+    function getSliderTypeText(label?: string) {
+        if (!label) {
+            return "slider";
+        }
+
+        return label.toLowerCase();
+    }
+
+    function getSliderTargetText(label?: string) {
+        if (!label) {
+            return "slider";
+        }
+
+        return label.replace(/ slider$/i, "").toLowerCase();
+    }
+
+    function getBlockedMovementMessage(key: string, index: number) {
+        if (numOfThumbs < 2) {
+            return "";
+        }
+
+        const currentValue = selection[index];
+        const previousValue = index > 0 ? selection[index - 1] : undefined;
+        const nextValue =
+            index < selection.length - 1 ? selection[index + 1] : undefined;
+
+        const currentLabel = resolvedAriaLabels[index];
+        const previousLabel =
+            index > 0 ? resolvedAriaLabels[index - 1] : undefined;
+        const nextLabel =
+            index < resolvedAriaLabels.length - 1
+                ? resolvedAriaLabels[index + 1]
+                : undefined;
+
+        if (isIncreaseKey(key)) {
+            if (
+                nextValue !== undefined &&
+                currentValue >= nextValue - minRange
+            ) {
+                return `The ${getSliderTypeText(
+                    currentLabel
+                )} has reached its limit. Increase the ${getSliderTargetText(
+                    nextLabel
+                )} to set a higher ${getSliderTargetText(currentLabel)}.`;
+            }
+        }
+
+        if (isDecreaseKey(key)) {
+            if (
+                previousValue !== undefined &&
+                currentValue <= previousValue + minRange
+            ) {
+                return `The ${getSliderTypeText(
+                    currentLabel
+                )} has reached its limit. Decrease the ${getSliderTargetText(
+                    previousLabel
+                )} to set a lower ${getSliderTargetText(currentLabel)}.`;
+            }
+        }
+
+        return "";
     }
 
     // =========================================================================
@@ -165,12 +330,20 @@ export const InputRangeSlider = ({
     };
 
     return (
-        <Wrapper {...otherProps}>
+        <Wrapper
+            {...otherProps}
+            id={id}
+            role="group"
+            aria-disabled={disabled || undefined}
+            aria-readonly={readOnly || undefined}
+            aria-invalid={ariaInvalid || undefined}
+        >
             {showIndicatorLabel && (
-                <IndicatorLabelContainer>
+                <IndicatorLabelContainer id={indicatorTextId}>
                     {formatIndicationLabel()}
                 </IndicatorLabelContainer>
             )}
+
             <Slider
                 step={step}
                 min={min}
@@ -180,19 +353,38 @@ export const InputRangeSlider = ({
                 onChange={handleChange}
                 onAfterChange={handleChangeEnd}
                 minDistance={minRange}
-                ariaLabel={ariaLabels}
                 renderThumb={(
                     thumbProps: React.HTMLAttributes<HTMLDivElement>,
                     state
                 ) => {
+                    const thumbLabelTextId = `${internalId}-thumb-label-${state.index}`;
+                    const thumbValue = selection[state.index] ?? min;
+
                     return (
                         <SliderThumb
                             data-testid={`slider-thumb-${state.index}`}
                             {...thumbProps}
-                            tabIndex={
-                                disabled ? undefined : thumbProps.tabIndex
-                            }
+                            tabIndex={thumbProps.tabIndex}
+                            aria-labelledby={thumbLabelTextId}
+                            aria-describedby={getThumbDescriptionIds()}
+                            aria-valuetext={getValueText(
+                                thumbValue,
+                                state.index
+                            )}
+                            aria-valuemin={min}
+                            aria-valuemax={max}
+                            aria-valuenow={thumbValue}
+                            aria-readonly={readOnly || undefined}
+                            aria-invalid={ariaInvalid || undefined}
+                            aria-errormessage={ariaErrorMessage}
+                            onKeyDown={(event) => {
+                                handleThumbKeyDown(event, state.index);
+                                thumbProps.onKeyDown?.(event);
+                            }}
                         >
+                            <VisuallyHidden id={thumbLabelTextId}>
+                                {getThumbAccessibleLabel(state.index)}
+                            </VisuallyHidden>
                             <Knob $disabled={disabled} $readOnly={readOnly} />
                         </SliderThumb>
                     );

@@ -21,6 +21,7 @@ export interface BaseSliderProps {
     indicatorLabelPrefix?: string | undefined;
     indicatorLabelSuffix?: string | undefined;
     renderSliderLabel?: ((value: number) => React.ReactNode) | undefined;
+    getAriaValueText?: ((value: number, index: number) => string) | undefined;
 }
 
 export interface InputRangeSliderProps extends BaseSliderProps {
@@ -29,6 +30,8 @@ export interface InputRangeSliderProps extends BaseSliderProps {
     numOfThumbs?: number | undefined;
     /** The minimum difference between values */
     minRange?: number | undefined;
+    ariaErrorMessage?: string | undefined;
+    ariaInvalid?: boolean | undefined;
     ariaLabels?: string[] | undefined;
     /** Called on every selection change */
     onChange?: ((value: number[]) => void) | undefined;

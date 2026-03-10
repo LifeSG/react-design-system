@@ -21,6 +21,8 @@ export const FormRangeSlider = ({
     xxlCols,
     ...otherProps
 }: FormRangeSliderProps): JSX.Element => {
+    const errorId = `${id}-error-message`;
+
     return (
         <FormWrapper
             id={id}
@@ -43,6 +45,8 @@ export const FormRangeSlider = ({
             <InputRangeSlider
                 id={`${id}-base`}
                 data-testid={testId || id}
+                ariaErrorMessage={errorMessage ? errorId : undefined}
+                ariaInvalid={!!errorMessage}
                 {...otherProps}
             />
         </FormWrapper>
