@@ -190,7 +190,25 @@ describe("ThemeProvider", () => {
             expect(body.classList.contains("fds-breakpoint-lg")).toBe(true);
             expect(body.classList.contains("fds-breakpoint-lg-min")).toBe(true);
             expect(body.classList.contains("fds-breakpoint-lg-max")).toBe(true);
-            expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md")).toBe(false);
+            expect(body.classList.contains("fds-breakpoint-md-min")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md-max")).toBe(
+                false
+            );
+            expect(body.classList.contains("fds-breakpoint-sm-min")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-sm-max")).toBe(
+                false
+            );
+            expect(body.classList.contains("fds-breakpoint-xs-min")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-xs-max")).toBe(
+                false
+            );
+            expect(body.classList.contains("fds-breakpoint-xxs-min")).toBe(
+                true
+            );
+            expect(body.classList.contains("fds-breakpoint-xxs-max")).toBe(
+                false
+            );
         });
 
         it("applies only min and base class for xxl", () => {

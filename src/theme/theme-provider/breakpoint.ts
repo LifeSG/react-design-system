@@ -47,7 +47,7 @@ export function applyBreakpointClasses() {
     const body = document.body;
     const width = window.innerWidth;
 
-    body.classList.forEach((cls) => {
+    [...body.classList].forEach((cls) => {
         if (cls.startsWith(BREAKPOINT_CLASS_PREFIX)) {
             body.classList.remove(cls);
         }
@@ -55,24 +55,30 @@ export function applyBreakpointClasses() {
 
     const BREAKPOINT_RANGES = getBreakpointRanges();
 
-    const currentIndex = BREAKPOINT_RANGES.findIndex(
-        (r) =>
-            width >= parsePxOrRemValue(r.min) &&
-            (r.max === Infinity || width <= parsePxOrRemValue(r.max as string))
-    );
+    BREAKPOINT_RANGES.forEach((range) => {
+        const minValue = parsePxOrRemValue(range.min);
+        const maxValue =
+            range.max === Infinity
+                ? Infinity
+                : parsePxOrRemValue(range.max as string);
 
-    if (currentIndex === -1) return;
+        const isMinMatched = width >= minValue;
+        const isMaxMatched = maxValue === Infinity ? false : width <= maxValue;
+        const isWithinRange =
+            isMinMatched && (maxValue === Infinity || isMaxMatched);
 
-    for (let i = 0; i <= currentIndex; i++) {
-        const range = BREAKPOINT_RANGES[i];
-        body.classList.add(`${BREAKPOINT_CLASS_PREFIX}${range.key}`);
-    }
+        if (isWithinRange) {
+            body.classList.add(`${BREAKPOINT_CLASS_PREFIX}${range.key}`);
+        }
 
-    const current = BREAKPOINT_RANGES[currentIndex];
-    body.classList.add(`${BREAKPOINT_CLASS_PREFIX}${current.key}-min`);
-    if (current.max !== Infinity) {
-        body.classList.add(`${BREAKPOINT_CLASS_PREFIX}${current.key}-max`);
-    }
+        if (isMinMatched) {
+            body.classList.add(`${BREAKPOINT_CLASS_PREFIX}${range.key}-min`);
+        }
+
+        if (isMaxMatched) {
+            body.classList.add(`${BREAKPOINT_CLASS_PREFIX}${range.key}-max`);
+        }
+    });
 }
 
 export function setupBreakpointListener() {
