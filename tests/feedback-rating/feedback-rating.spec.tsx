@@ -73,7 +73,7 @@ describe("FeedbackRating", () => {
         });
 
         it("should be able to change rating by clicking a star", () => {
-            const { container } = render(
+            render(
                 <FeedbackRatingWithState
                     rating={0}
                     onRatingChange={NO_OP}
@@ -81,7 +81,7 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            const firstStar = getStar(container, 0);
+            const firstStar = getStar(0);
             act(() => {
                 fireEvent.click(firstStar);
             });
@@ -94,7 +94,7 @@ describe("FeedbackRating", () => {
         });
 
         it("should be able to reduce rating after selection", () => {
-            const { container } = render(
+            render(
                 <FeedbackRatingWithState
                     rating={0}
                     onRatingChange={NO_OP}
@@ -102,7 +102,7 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            const fiveStar = getStar(container, 4);
+            const fiveStar = getStar(4);
             act(() => {
                 fireEvent.click(fiveStar);
             });
@@ -113,7 +113,7 @@ describe("FeedbackRating", () => {
                 "5 stars"
             );
 
-            const oneStar = getStar(container, 0);
+            const oneStar = getStar(0);
             act(() => {
                 fireEvent.click(oneStar);
             });
@@ -127,7 +127,8 @@ describe("FeedbackRating", () => {
 
         it("should be able to support onRatingChange callback when clicking a star", () => {
             const spy = jest.fn();
-            const { container } = render(
+
+            render(
                 <FeedbackRating
                     rating={0}
                     onRatingChange={spy}
@@ -135,7 +136,7 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            const firstStar = getStar(container, 0);
+            const firstStar = getStar(0);
             act(() => {
                 fireEvent.click(firstStar);
             });
@@ -280,17 +281,8 @@ const getBannerImg = (): HTMLElement => {
     return screen.getByTestId("feedback-banner-image");
 };
 
-const getStar = (container: HTMLElement, index: number): HTMLElement => {
-    const stars = container.querySelectorAll(
-        '[role="presentation"]'
-    ) as NodeListOf<HTMLElement>;
-
-    const star = stars[index];
-    if (!star) {
-        throw new Error(`Star at index ${index} was not found`);
-    }
-
-    return star;
+const getStar = (index: number): HTMLElement => {
+    return screen.getByTestId(`feedback-rating-star-${index + 1}`);
 };
 
 // =============================================================================

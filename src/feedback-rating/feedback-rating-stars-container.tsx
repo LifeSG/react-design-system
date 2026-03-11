@@ -69,6 +69,7 @@ export const FeedbackRatingStarsContainer = (
             return (
                 <Label
                     key={starIndex}
+                    data-testid={`feedback-rating-star-${starIndex}`}
                     onClick={() => handleStarSelection(starIndex)}
                 >
                     {renderStar(starIndex)}
