@@ -6,6 +6,7 @@ import terser from "@rollup/plugin-terser";
 import wyw from "@wyw-in-js/rollup";
 import fs from "fs";
 import path from "path";
+import postcssImports from "postcss-import";
 import copy from "rollup-plugin-copy";
 import generatePackageJson from "rollup-plugin-generate-package-json";
 import { libStylePlugin } from "rollup-plugin-lib-style";
@@ -13,25 +14,26 @@ import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import typescript from "rollup-plugin-typescript2";
 
 const srcDir = "src";
-const subEntries = fs
+const subDirs = fs
     .readdirSync(srcDir, { withFileTypes: true })
     .filter(
         (dirent) =>
             dirent.isDirectory() &&
             fs.existsSync(path.join(srcDir, dirent.name, "index.ts"))
     )
-    .reduce((acc, dirent) => {
-        acc[dirent.name] = path.join(srcDir, dirent.name, "index.ts");
-        return acc;
-    }, {});
+    .map((dirent) => dirent.name);
+
+const subEntries = subDirs.reduce((acc, name) => {
+    acc[`${name}/index`] = path.join(srcDir, name, "index.ts");
+    return acc;
+}, {});
 
 const input = {
     index: "src/index.ts",
     ...subEntries,
 };
 
-// Build explicit exports map for every sub-entry
-const subExports = Object.keys(subEntries).reduce((acc, name) => {
+const subExports = subDirs.reduce((acc, name) => {
     acc[`./${name}`] = {
         types: `./${name}/index.d.ts`,
         import: `./${name}/index.js`,
@@ -46,18 +48,7 @@ export const plugins = [
     nodeResolve({ browser: true }), // Locates modules in the project's node_modules directory
     commonjs(), // converts CommonJS to ES6 modules
     wyw({
-        include: ["src/**/*.{ts,tsx,js,jsx}"],
-        exclude: [
-            "**/*.test.*",
-            "**/*.spec.*",
-            "**/*.stories.*",
-            "**/__mocks__/**",
-            "codemods/**",
-        ],
-        sourceMap: true,
-        babelOptions: {
-            presets: ["@wyw-in-js/babel-preset"],
-        },
+        sourcemap: true,
     }),
     typescript({
         useTsconfigDeclarationDir: true,
@@ -79,7 +70,54 @@ export const plugins = [
     image(),
     json(),
     terser(), // Helps remove comments, whitespace or logging codes
-    libStylePlugin(),
+    libStylePlugin({
+        exclude: ["**/node_modules/**"],
+        customCSSInjectedPath: (id) => {
+            const filename = path.basename(id);
+            return "/" + filename;
+        },
+        customCSSPath: (id) => {
+            const relative = path.relative(process.cwd(), id);
+            const outputPath = relative.replace("src/", "");
+            return "/" + outputPath;
+        },
+        scopedName: "[local]",
+    }),
+    libStylePlugin({
+        include: ["node_modules/@govtechsg/sgds-web-component/**/*.css"],
+        postCssPlugins: [postcssImports()],
+        customCSSInjectedPath: () => {
+            return "/sgds.css";
+        },
+        customCSSPath: () => {
+            return "/masthead/sgds.css";
+        },
+    }),
+    copy({
+        targets: [{ src: "src/theme/styles/*", dest: "dist/theme/styles" }],
+    }),
+    generatePackageJson({
+        outputFolder: "dist",
+        baseContents: (pkg) => ({
+            name: pkg.name,
+            version: pkg.version,
+            description: pkg.description,
+            type: "module",
+            main: "./cjs/index.js",
+            module: "./index.js",
+            types: "./index.d.ts",
+            exports: {
+                ".": {
+                    types: "./index.d.ts",
+                    import: "./index.js",
+                    require: "./cjs/index.js",
+                    default: "./index.js",
+                },
+                ...subExports,
+            },
+            peerDependencies: pkg.peerDependencies,
+        }),
+    }),
 ];
 
 const codemodBuildConfigs = [
@@ -129,6 +167,16 @@ export default [
                 interop: "compat",
                 preserveModules: true,
                 preserveModulesRoot: "src",
+                chunkFileNames: "chunks/[name].[hash].js",
+                entryFileNames: (chunkInfo) => {
+                    if (chunkInfo.name.includes("node_modules")) {
+                        return (
+                            chunkInfo.name.replace("node_modules", "external") +
+                            ".js"
+                        );
+                    }
+                    return "[name].js";
+                },
             },
             {
                 dir: "dist/cjs",
@@ -136,46 +184,21 @@ export default [
                 sourcemap: true,
                 exports: "named",
                 interop: "compat",
+                chunkFileNames: "chunks/[name].[hash].js",
                 preserveModules: true,
                 preserveModulesRoot: "src",
+                entryFileNames: (chunkInfo) => {
+                    if (chunkInfo.name.includes("node_modules")) {
+                        return (
+                            chunkInfo.name.replace("node_modules", "external") +
+                            ".js"
+                        );
+                    }
+                    return "[name].js";
+                },
             },
         ],
-        plugins: [
-            ...plugins,
-            copy({
-                targets: [
-                    { src: "src/theme/styles/*", dest: "dist/theme/styles" },
-                ],
-            }),
-            generatePackageJson({
-                outputFolder: "dist",
-                baseContents: (pkg) => ({
-                    name: pkg.name,
-                    version: pkg.version,
-                    description: pkg.description,
-                    type: "module",
-                    main: "./cjs/index.js",
-                    module: "./index.js",
-                    types: "./index.d.ts",
-                    exports: {
-                        ".": {
-                            types: "./index.d.ts",
-                            import: "./index.js",
-                            require: "./cjs/index.js",
-                            default: "./index.js",
-                        },
-                        ...subExports,
-                    },
-                    peerDependencies: pkg.peerDependencies,
-                }),
-            }),
-            generatePackageJson({
-                outputFolder: "dist/cjs",
-                baseContents: {
-                    type: "commonjs",
-                },
-            }),
-        ],
+        plugins,
         external: ["react", "react-dom", "styled-components"],
     },
     ...codemodBuildConfigs,
