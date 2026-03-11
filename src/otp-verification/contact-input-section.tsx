@@ -128,6 +128,7 @@ export const ContactInputSection = ({
                 {!disabled && !readOnly && (
                     <ContactButton
                         id={id ? `${id}-contact-button` : undefined}
+                        type="button"
                         data-testid={
                             dataTestId
                                 ? `${dataTestId}-contact-button`

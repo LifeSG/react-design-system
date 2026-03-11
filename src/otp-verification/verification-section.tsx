@@ -114,6 +114,7 @@ export const VerificationSection = ({
                         />
                         <VerifyButton
                             id={id ? `${id}-verify-button` : undefined}
+                            type="button"
                             data-testid={
                                 dataTestId
                                     ? `${dataTestId}-verify-button`
