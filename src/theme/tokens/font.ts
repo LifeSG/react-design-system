@@ -105,15 +105,8 @@ export const Font = {
     "body-xs-semibold": generateFont("body-xs", "semibold"),
     "body-xs-bold": generateFont("body-xs", "bold"),
 
-    "form-label-light": generateFont("form-label", "light"),
-    "form-label-regular": generateFont("form-label", "regular"),
-    "form-label-semibold": generateFont("form-label", "semibold"),
-    "form-label-bold": generateFont("form-label", "bold"),
-
-    "form-description-light": generateFont("form-description", "light"),
-    "form-description-regular": generateFont("form-description", "regular"),
-    "form-description-semibold": generateFont("form-description", "semibold"),
-    "form-description-bold": generateFont("form-description", "bold"),
+    "form-label": generateFont("form-label", "semibold"),
+    "form-description": generateFont("form-description", "regular"),
 
     Spec: FontSpec,
 } as const;

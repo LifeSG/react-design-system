@@ -1,14 +1,13 @@
-import { getShadow } from "src/v3_theme/shadow/theme-helper";
-import { V3_ShadowSet, V3_ThemeSpec } from "src/v3_theme/types";
-import styled, { CSSProp, ThemeProvider, useTheme } from "styled-components";
+import { Shadow, ThemeProvider, ThemeType, useDesignToken } from "src/theme";
+import styled from "styled-components";
 
 interface ShadowDisplayProps {
-    theme: V3_ThemeSpec;
+    theme: ThemeType;
 }
 
 // Mapping of shadow tokens to their color tokens
 const shadowColorTokens: Record<
-    keyof V3_ShadowSet,
+    keyof typeof Shadow,
     { colorToken: string; type: "primitive" | "semantic" }
 > = {
     "xs-subtle": { colorToken: "neutral-50", type: "primitive" },
@@ -49,14 +48,11 @@ export const ShadowDisplay = ({ theme }: ShadowDisplayProps) => {
 };
 
 interface ShadowCollectionProps {
-    token: keyof V3_ShadowSet;
+    token: keyof typeof Shadow;
 }
 
 const ShadowCollection = ({ token }: ShadowCollectionProps) => {
-    const theme = useTheme();
-    const value = getShadow(token)({
-        theme,
-    });
+    const value = useDesignToken(Shadow[token]) as string;
     const colorInfo = shadowColorTokens[token];
 
     return (
@@ -84,7 +80,7 @@ const ShadowCollection = ({ token }: ShadowCollectionProps) => {
 // STYLE INTERFACE
 // =============================================================================
 interface ShadowStyleProps {
-    $shadow: CSSProp;
+    $shadow: string;
 }
 
 interface TokenTypeProps {

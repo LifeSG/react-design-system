@@ -1,20 +1,10 @@
 import { Meta } from "@storybook/addon-docs/blocks";
-import { V3_LifeSGTheme } from "src/v3_theme";
 import { SpacingDisplay } from "../doc-elements";
 
 <Meta title="Foundations/Spacing/Default" />
 
 # Default spacing
 
-This is the spacing set used when the `spacingScheme` is `"default"`.
+This is the default spacing set used for all themes.
 
-```tsx
-const theme: ThemeSpec = {
-    spacingScheme: "default",
-    // ...other specifications
-};
-```
-
-<br />
-
-<SpacingDisplay theme={V3_LifeSGTheme} />
+<SpacingDisplay theme="lifesg" />

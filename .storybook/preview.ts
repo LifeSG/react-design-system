@@ -1,8 +1,19 @@
-import { INITIAL_VIEWPORTS } from "storybook/viewport";
 import type { Preview } from "@storybook/react-webpack5";
+import { INITIAL_VIEWPORTS } from "storybook/viewport";
 import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
-import "../src/theme/styles/default.css";
+import "src/theme/styles/a11y-playground.css";
+import "src/theme/styles/bookingsg.css";
+import "src/theme/styles/ccube.css";
+import "src/theme/styles/imda.css";
+import "src/theme/styles/lifesg.css";
+import "src/theme/styles/mylegacy.css";
+import "src/theme/styles/oneservice.css";
+import "src/theme/styles/pa.css";
+import "src/theme/styles/rbs.css";
+import "src/theme/styles/sgw-digital-lobby.css";
+import "src/theme/styles/spf.css";
+import "src/theme/styles/supportgowhere.css";
 
 const preview: Preview = {
     decorators: [withThemeFromJSXProvider()],

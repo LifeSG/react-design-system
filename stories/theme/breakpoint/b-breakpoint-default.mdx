@@ -1,18 +1,10 @@
 import { Meta } from "@storybook/addon-docs/blocks";
-import { V3_LifeSGTheme } from "src/v3_theme";
 import { BreakpointDisplay } from "../doc-elements";
 
 <Meta title="Foundations/Breakpoint/Default" />
 
 # Default breakpoint
 
-This is the breakpoint set used when the `breakpointScheme` is `"default"`.
+This is the default breakpoint set used for all themes.
 
-```tsx
-const theme: ThemeSpec = {
-    breakpointScheme: "default",
-    // ...other specifications
-};
-```
-
-<BreakpointDisplay theme={V3_LifeSGTheme} />
+<BreakpointDisplay theme="lifesg" />

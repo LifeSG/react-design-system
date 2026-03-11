@@ -24,7 +24,7 @@ const { initializeThemeState, pluckThemeFromContext } = DecoratorHelpers;
 
 type ThemeMapKey = keyof typeof V3_THEME_MAP;
 
-export const V3_THEME_MAP = {
+const V3_THEME_MAP = {
     "A11y Playground": V3_A11yPlaygroundTheme,
     BookingSG: V3_BookingSGTheme,
     CCube: V3_CCubeTheme,
@@ -58,7 +58,7 @@ export const withThemeFromJSXProvider = <
     TRenderer extends Renderer = any
 >(): DecoratorFunction<TRenderer> => {
     const themeNames = Object.keys(V3_THEME_MAP);
-    const initialTheme = themeNames[0];
+    const initialTheme: ThemeMapKey = "LifeSG";
 
     initializeThemeState(themeNames, initialTheme);
 

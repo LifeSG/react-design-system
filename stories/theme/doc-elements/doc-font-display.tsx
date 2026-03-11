@@ -1,13 +1,17 @@
-import { V3_Font } from "src/v3_theme";
-import { V3_FontSet, V3_FontSpecSet, V3_ThemeSpec } from "src/v3_theme/types";
-import styled, { ThemeProvider, useTheme } from "styled-components";
-import { getFontSpec } from "../../../src/v3_theme/font-spec/theme-helper";
+import {
+    Font,
+    FontSpec,
+    ThemeProvider,
+    ThemeType,
+    useDesignToken,
+} from "src/theme";
+import styled from "styled-components";
 
 interface FontCollectionProps {
-    tokens: (keyof V3_FontSet)[];
-    fontSizeToken: keyof V3_FontSpecSet;
-    lineHeightToken: keyof V3_FontSpecSet;
-    letterSpacingToken: keyof V3_FontSpecSet;
+    tokens: (keyof typeof Font)[];
+    fontSizeToken: keyof typeof FontSpec;
+    lineHeightToken: keyof typeof FontSpec;
+    letterSpacingToken: keyof typeof FontSpec;
 }
 
 const FontCollection = ({
@@ -16,10 +20,9 @@ const FontCollection = ({
     lineHeightToken,
     letterSpacingToken,
 }: FontCollectionProps) => {
-    const theme = useTheme();
-    const fontSize = getFontSpec(fontSizeToken)({ theme });
-    const lineHeight = getFontSpec(lineHeightToken)({ theme });
-    const letterSpacing = getFontSpec(letterSpacingToken)({ theme });
+    const fontSize = useDesignToken(FontSpec[fontSizeToken]);
+    const lineHeight = useDesignToken(FontSpec[lineHeightToken]);
+    const letterSpacing = useDesignToken(FontSpec[letterSpacingToken]);
 
     return (
         <Row key={fontSizeToken}>
@@ -40,7 +43,7 @@ const FontCollection = ({
 };
 
 interface FontDisplayProps {
-    theme: V3_ThemeSpec;
+    theme: ThemeType;
 }
 
 export const FontDisplay = ({ theme }: FontDisplayProps) => {
@@ -184,7 +187,7 @@ export const FontDisplay = ({ theme }: FontDisplayProps) => {
 // STYLE INTERFACE
 // =============================================================================
 interface TextPreviewProps {
-    $token: keyof V3_FontSet;
+    $token: keyof typeof Font;
 }
 
 // =============================================================================
@@ -218,6 +221,6 @@ const HeaderRow = styled(Row)`
 `;
 
 const TextPreview = styled.div<TextPreviewProps>`
-    ${(props) => V3_Font[props.$token](props)}
+    ${(props) => Font[props.$token]}
     margin-right: 3rem;
 `;
