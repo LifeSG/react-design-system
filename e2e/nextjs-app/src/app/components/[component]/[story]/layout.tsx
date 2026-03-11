@@ -1,9 +1,12 @@
 "use client";
+import "@lifesg/react-design-system/theme/styles/lifesg.css";
 import {
     V3_DSThemeProvider,
     V3_LifeSGTheme,
 } from "@lifesg/react-design-system/v3_theme";
 import styles from "./layout.module.css";
+
+import { ThemeProvider } from "@lifesg/react-design-system/theme";
 
 export default function Layout({
     children,
@@ -11,10 +14,26 @@ export default function Layout({
     children: React.ReactNode;
 }>) {
     return (
-        <V3_DSThemeProvider theme={V3_LifeSGTheme}>
-            <div data-testid="story-layout" className={styles["story-layout"]}>
-                {children}
-            </div>
-        </V3_DSThemeProvider>
+        <>
+            <link
+                rel="stylesheet"
+                href="https://assets.life.gov.sg/react-design-system/v3/css/main.css"
+            />
+
+            <link
+                rel="stylesheet"
+                href="https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css"
+            />
+            <V3_DSThemeProvider theme={V3_LifeSGTheme}>
+                <ThemeProvider>
+                    <div
+                        data-testid="story-layout"
+                        className={styles["story-layout"]}
+                    >
+                        {children}
+                    </div>
+                </ThemeProvider>
+            </V3_DSThemeProvider>
+        </>
     );
 }
