@@ -1,9 +1,11 @@
 import styled, { css } from "styled-components";
 
 import { Button } from "../button";
+import { DashedBorder } from "../dashed-border";
 import { IconButton } from "../icon-button";
 import { Modal } from "../modal";
 import { Typography } from "../typography";
+import { Border, Colour, Radius } from "../theme";
 import {
     V3_Border,
     V3_Breakpoint,
@@ -49,25 +51,18 @@ const mobileLandscapeMediaQuery = css`
 // MAIN FIELD
 // -----------------------------------------------------------------------------
 
-export const SignatureArea = styled.div<SignatureAreaProps>`
+export const SignatureArea = styled(DashedBorder).attrs<SignatureAreaProps>(
+    (props) => ({
+        thickness: Border["width-040"],
+        radius: Radius["sm"],
+        colour: props.$disabled ? Colour["border-disabled"] : Colour["border"],
+        backgroundColor: props.$disabled ? Colour["bg-disabled"] : Colour["bg"],
+    })
+)<SignatureAreaProps>`
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    ${(props) =>
-        css`
-            ${V3_Border.Util["dashed-default"]({
-                radius: V3_Radius["sm"],
-                thickness: V3_Border["width-040"],
-                colour: props.$disabled
-                    ? V3_Colour["border-disabled"]
-                    : V3_Colour["border"],
-            })}
-
-            background-color: ${props.$disabled
-                ? V3_Colour["bg-disabled"]
-                : V3_Colour["bg"]};
-        `}
     height: 14.125rem;
 `;
 
