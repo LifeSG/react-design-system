@@ -1,5 +1,6 @@
+import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useTheme } from "styled-components";
+import { ThemeContext } from "styled-components";
 import { FormErrorMessage } from "../form/form-label";
 import { InputGroup } from "../input-group";
 import { Breakpoint } from "../theme";
@@ -30,7 +31,7 @@ export const VerificationSection = ({
     otpPrefix,
     otpSeparator,
 }: VerificationSectionProps) => {
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     const isMobile = useMediaQuery({
         maxWidth: Breakpoint["sm-max"]({ theme }),
     });
