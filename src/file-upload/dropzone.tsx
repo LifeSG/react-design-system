@@ -1,7 +1,7 @@
 import type React from "react";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { useDropzone } from "react-dropzone";
-
+import { Border, Colour, Radius } from "../theme";
 import {
     Container,
     DragOverlay,
@@ -71,7 +71,11 @@ const Component = (
     // RENDER FUNCTIONS
     // =========================================================================
     const renderDragOverlay = () => (
-        <DragOverlay>
+        <DragOverlay
+            thickness={Border["width-040"]}
+            radius={Radius["sm"]}
+            colour={Colour["border-primary"]}
+        >
             <OverlayIcon />
             <OverlayText weight="semibold">Drop files here</OverlayText>
         </DragOverlay>
@@ -81,7 +85,10 @@ const Component = (
         <Container
             id={id}
             data-testid={testId || "dropzone"}
-            $border={border}
+            $showDashedBorder={border}
+            thickness={Border["width-040"]}
+            radius={Radius["sm"]}
+            colour={Colour["border"]}
             className={className}
             {...getRootProps()}
         >

@@ -1,7 +1,11 @@
+import { forwardRef } from "react";
 import { Border, Colour, Radius, useDesignToken } from "../theme";
 import { DashedBorderProps } from "./types";
 
-export const DashedBorder = (props: DashedBorderProps) => {
+const Component = (
+    props: DashedBorderProps,
+    ref: React.Ref<HTMLDivElement>
+) => {
     const {
         thickness = Border["width-040"],
         radius = Radius["sm"],
@@ -21,6 +25,7 @@ export const DashedBorder = (props: DashedBorderProps) => {
 
     return (
         <div
+            ref={ref}
             className={className}
             style={{
                 backgroundImage: `url("data:image/svg+xml,${encodedSvg}")`,
@@ -32,3 +37,5 @@ export const DashedBorder = (props: DashedBorderProps) => {
         />
     );
 };
+
+export const DashedBorder = forwardRef(Component);
