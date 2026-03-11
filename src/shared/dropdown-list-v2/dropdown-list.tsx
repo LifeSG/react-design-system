@@ -44,6 +44,7 @@ import {
     DropdownListProps,
     ListItemDisplayProps,
 } from "./types";
+import { VisuallyHidden } from "../accessibility";
 
 /**
  * NOTE: This component is not directly exportable but forms part of a component
@@ -637,6 +638,7 @@ const DropdownListInner = <T, V>(
             $customWidth={width}
             $variant={variant}
         >
+            <VisuallyHidden role="status">{ariaLabel}</VisuallyHidden>
             {renderList()}
             {renderBottomCta()}
         </Container>
