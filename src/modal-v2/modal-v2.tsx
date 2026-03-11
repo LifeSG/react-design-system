@@ -23,7 +23,13 @@ export const ModalV2 = ({
     zIndex,
     onOverlayClick,
     dismissKeyboardOnShow = true,
+    initialFocus,
+    fullscreen = false,
     "data-testid": testId = "modal",
+    role = "dialog",
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
     ...otherProps
 }: ModalV2Props): JSX.Element => {
     // =========================================================================
@@ -81,21 +87,25 @@ export const ModalV2 = ({
                 data-testid={testId}
                 $verticalHeight={verticalHeight}
                 $offsetTop={offsetTop}
-                {...otherProps}
                 data-status={status}
+                {...otherProps}
             >
                 <ModalContext.Provider value={{ onClose }}>
                     {isMounted && (
                         <FloatingFocusManager
                             context={context}
-                            initialFocus={refs.floating}
+                            initialFocus={initialFocus ?? refs.floating}
                         >
-                            <ScrollContainer>
+                            <ScrollContainer $fullscreen={fullscreen}>
                                 <ModalContainer
                                     ref={refs.setFloating}
                                     {...getFloatingProps()}
-                                    aria-modal
-                                    role="dialog"
+                                    aria-modal="true"
+                                    role={role}
+                                    aria-label={ariaLabel}
+                                    aria-labelledby={ariaLabelledBy}
+                                    aria-describedby={ariaDescribedBy}
+                                    $fullscreen={fullscreen}
                                 >
                                     {children}
                                 </ModalContainer>
