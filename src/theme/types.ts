@@ -70,3 +70,7 @@ export type CSSVariableString =
     | RadiusCSSVariableString
     | ShadowCSSVariableString
     | SpacingCSSVariableString;
+
+type ExtractCleanCSSVariableName<T extends string> =
+    T extends `var(${infer Name})` ? Name : never;
+export type CSSVariableKey = ExtractCleanCSSVariableName<CSSVariableString>;
