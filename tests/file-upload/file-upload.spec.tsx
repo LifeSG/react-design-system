@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { FileItemProps } from "src/file-upload";
 import { FileUpload } from "src/file-upload";
+import { ThemeProvider } from "../../src/theme";
 
 describe("FileUpload", () => {
     beforeEach(() => {
@@ -15,10 +16,12 @@ describe("FileUpload", () => {
     describe("Basic render", () => {
         it("should render the title and description if specified", () => {
             render(
-                <FileUpload
-                    title={DEFAULT_TITLE}
-                    description={DEFAULT_DESCRIPTION}
-                />
+                <ThemeProvider>
+                    <FileUpload
+                        title={DEFAULT_TITLE}
+                        description={DEFAULT_DESCRIPTION}
+                    />
+                </ThemeProvider>
             );
 
             expect(screen.getByText(DEFAULT_TITLE)).toBeInTheDocument();
@@ -38,7 +41,9 @@ describe("FileUpload", () => {
             );
 
             const rendered = render(
-                <FileUpload warning={warningBannerContent} />
+                <ThemeProvider>
+                    <FileUpload warning={warningBannerContent} />
+                </ThemeProvider>
             );
 
             expect(rendered.getByTestId("custom-warning")).toBeInTheDocument();
@@ -47,7 +52,11 @@ describe("FileUpload", () => {
         it("should render the file items if specified", () => {
             const fileItems: FileItemProps[] = [MOCK_NON_IMAGE_FILE];
 
-            const rendered = render(<FileUpload fileItems={fileItems} />);
+            const rendered = render(
+                <ThemeProvider>
+                    <FileUpload fileItems={fileItems} />
+                </ThemeProvider>
+            );
 
             expect(screen.getByText("bugs-bunny.pdf")).toBeInTheDocument();
             expect(screen.getByText("3 KB")).toBeInTheDocument();
@@ -60,7 +69,9 @@ describe("FileUpload", () => {
             const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
 
             const rendered = render(
-                <FileUpload fileItems={fileItems} editableFileItems />
+                <ThemeProvider>
+                    <FileUpload fileItems={fileItems} editableFileItems />
+                </ThemeProvider>
             );
 
             expect(screen.getByText("bugs-bunny.png")).toBeInTheDocument();
@@ -83,7 +94,9 @@ describe("FileUpload", () => {
             ];
 
             const rendered = render(
-                <FileUpload fileItems={fileItems} editableFileItems />
+                <ThemeProvider>
+                    <FileUpload fileItems={fileItems} editableFileItems />
+                </ThemeProvider>
             );
 
             // First image to be in list view but with edit button
@@ -107,7 +120,9 @@ describe("FileUpload", () => {
             ];
 
             const rendered = render(
-                <FileUpload fileItems={fileItems} editableFileItems />
+                <ThemeProvider>
+                    <FileUpload fileItems={fileItems} editableFileItems />
+                </ThemeProvider>
             );
 
             expect(
@@ -124,7 +139,9 @@ describe("FileUpload", () => {
             ];
 
             const rendered = render(
-                <FileUpload fileItems={fileItems} editableFileItems />
+                <ThemeProvider>
+                    <FileUpload fileItems={fileItems} editableFileItems />
+                </ThemeProvider>
             );
 
             expect(
@@ -147,7 +164,9 @@ describe("FileUpload", () => {
             ];
 
             const rendered = render(
-                <FileUpload fileItems={fileItems} editableFileItems />
+                <ThemeProvider>
+                    <FileUpload fileItems={fileItems} editableFileItems />
+                </ThemeProvider>
             );
 
             expect(rendered.getByTestId("some-thumbnail")).toBeInTheDocument();
@@ -169,7 +188,11 @@ describe("FileUpload", () => {
         it("should fire the onChange callback when a file is uploaded", async () => {
             const onChangeCallback = jest.fn();
 
-            const rendered = render(<FileUpload onChange={onChangeCallback} />);
+            const rendered = render(
+                <ThemeProvider>
+                    <FileUpload onChange={onChangeCallback} />
+                </ThemeProvider>
+            );
             const dropzoneInput = rendered.getByTestId("dropzone-input");
 
             await waitFor(() =>
@@ -189,7 +212,12 @@ describe("FileUpload", () => {
             const fileItems: FileItemProps[] = [MOCK_NON_IMAGE_FILE];
 
             const rendered = render(
-                <FileUpload fileItems={fileItems} onDelete={onDeleteCallback} />
+                <ThemeProvider>
+                    <FileUpload
+                        fileItems={fileItems}
+                        onDelete={onDeleteCallback}
+                    />
+                </ThemeProvider>
             );
             const deleteButton = rendered.getByTestId("some-delete-button");
 
@@ -204,7 +232,9 @@ describe("FileUpload", () => {
             const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
 
             const rendered = render(
-                <FileUpload fileItems={fileItems} editableFileItems />
+                <ThemeProvider>
+                    <FileUpload fileItems={fileItems} editableFileItems />
+                </ThemeProvider>
             );
 
             expect(screen.getByText("Photo description")).toBeInTheDocument();
@@ -223,7 +253,9 @@ describe("FileUpload", () => {
             const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
 
             const rendered = render(
-                <FileUpload fileItems={fileItems} editableFileItems />
+                <ThemeProvider>
+                    <FileUpload fileItems={fileItems} editableFileItems />
+                </ThemeProvider>
             );
 
             const saveButton = rendered.getByTestId("some-save-button");
@@ -241,11 +273,13 @@ describe("FileUpload", () => {
             const mockFn = jest.fn();
 
             const rendered = render(
-                <FileUpload
-                    fileItems={fileItems}
-                    editableFileItems
-                    onDelete={mockFn}
-                />
+                <ThemeProvider>
+                    <FileUpload
+                        fileItems={fileItems}
+                        editableFileItems
+                        onDelete={mockFn}
+                    />
+                </ThemeProvider>
             );
 
             expect(screen.getByText("bugs-bunny.png")).toBeInTheDocument();
@@ -261,11 +295,13 @@ describe("FileUpload", () => {
             const mockFn = jest.fn();
 
             const rendered = render(
-                <FileUpload
-                    fileItems={fileItems}
-                    editableFileItems
-                    onEdit={mockFn}
-                />
+                <ThemeProvider>
+                    <FileUpload
+                        fileItems={fileItems}
+                        editableFileItems
+                        onEdit={mockFn}
+                    />
+                </ThemeProvider>
             );
 
             const textarea = rendered.getByTestId("some-textarea");
@@ -290,7 +326,13 @@ describe("FileUpload", () => {
             ];
 
             const rendered = render(
-                <FileUpload fileItems={fileItems} editableFileItems sortable />
+                <ThemeProvider>
+                    <FileUpload
+                        fileItems={fileItems}
+                        editableFileItems
+                        sortable
+                    />
+                </ThemeProvider>
             );
 
             expect(
@@ -311,7 +353,13 @@ describe("FileUpload", () => {
             ];
 
             const rendered = render(
-                <FileUpload fileItems={fileItems} editableFileItems sortable />
+                <ThemeProvider>
+                    <FileUpload
+                        fileItems={fileItems}
+                        editableFileItems
+                        sortable
+                    />
+                </ThemeProvider>
             );
 
             expect(
@@ -335,12 +383,14 @@ describe("FileUpload", () => {
             ];
 
             const rendered = render(
-                <FileUpload
-                    fileItems={fileItems}
-                    readOnly
-                    editableFileItems
-                    sortable
-                />
+                <ThemeProvider>
+                    <FileUpload
+                        fileItems={fileItems}
+                        readOnly
+                        editableFileItems
+                        sortable
+                    />
+                </ThemeProvider>
             );
 
             const { queryByTestId } = rendered;
@@ -375,7 +425,11 @@ describe("FileUpload", () => {
                 },
             ];
 
-            render(<FileUpload fileItems={fileItems} />);
+            render(
+                <ThemeProvider>
+                    <FileUpload fileItems={fileItems} />
+                </ThemeProvider>
+            );
 
             const announcement = screen.getByText(
                 "Starting upload of bugs-bunny.pdf"
@@ -394,7 +448,11 @@ describe("FileUpload", () => {
                 },
             ];
 
-            render(<FileUpload fileItems={fileItems} />);
+            render(
+                <ThemeProvider>
+                    <FileUpload fileItems={fileItems} />
+                </ThemeProvider>
+            );
 
             const announcement = screen.getByText(
                 "bugs-bunny.pdf upload is complete"
@@ -414,7 +472,11 @@ describe("FileUpload", () => {
                 },
             ];
 
-            render(<FileUpload fileItems={fileItems} />);
+            render(
+                <ThemeProvider>
+                    <FileUpload fileItems={fileItems} />
+                </ThemeProvider>
+            );
 
             const announcement = screen.getByText(
                 `Error uploading bugs-bunny.pdf: ${errorMessage}`
@@ -448,7 +510,11 @@ describe("FileUpload", () => {
                 },
             ];
 
-            render(<FileUpload fileItems={fileItems} />);
+            render(
+                <ThemeProvider>
+                    <FileUpload fileItems={fileItems} />
+                </ThemeProvider>
+            );
 
             // Should announce all three states in one message
             const announcementText = screen.getByText(
