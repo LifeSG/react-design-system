@@ -1,58 +1,29 @@
-import { parseCSSVariableValue, parsePxOrRemValue } from "../utils";
-import { Breakpoint } from "./breakpoint";
+const MAX_WIDTH_BREAKPOINTS = ["xxs", "xs", "sm", "md", "lg", "xl"] as const;
+const MIN_WIDTH_BREAKPOINTS = [...MAX_WIDTH_BREAKPOINTS, "xxl"] as const;
 
-type MediaQueryType = "max-width" | "min-width";
-type MediaQueryFunction = () => string;
+type WidthConstraint = "min" | "max";
+type PseudoMediaQuerySpec<T extends readonly string[]> = Record<
+    T[number],
+    string
+>;
 
-function getMediaQueryValue(tokenKey: keyof typeof Breakpoint): string {
-    const value = parseCSSVariableValue(Breakpoint[tokenKey]);
+const getPseudoMediaQuery = (breakpoint: string, type: WidthConstraint) =>
+    `body.fds-breakpoint-${breakpoint}-${type} &`;
 
-    if (!value) {
-        throw new Error(
-            `Unable to resolve breakpoint token "${tokenKey}". Ensure theme CSS variables are loaded.`
-        );
-    }
+const getPseudoMediaQuerySpec = <T extends readonly string[]>(
+    breakpoints: T,
+    type: WidthConstraint
+): PseudoMediaQuerySpec<T> => {
+    const spec = {} as Record<T[number], string>;
 
-    const normalizedValue = /^\d+$/.test(value) ? `${value}px` : value;
-    const parsedValue = parsePxOrRemValue(normalizedValue);
-    const hasValidUnit = /(px|rem)$/i.test(normalizedValue);
+    breakpoints.forEach((breakpoint) => {
+        spec[breakpoint as T[number]] = getPseudoMediaQuery(breakpoint, type);
+    });
 
-    if (
-        !hasValidUnit ||
-        (parsedValue === 0 && !/^0(?:px|rem)$/i.test(normalizedValue))
-    ) {
-        throw new Error(
-            `Invalid breakpoint value "${normalizedValue}" for token "${tokenKey}". Expected a px or rem value.`
-        );
-    }
-
-    return normalizedValue;
-}
-
-function createMediaQueryFunction(
-    mediaType: MediaQueryType,
-    tokenKey: keyof typeof Breakpoint
-): MediaQueryFunction {
-    return () =>
-        `@media screen and (${mediaType}: ${getMediaQueryValue(tokenKey)})`;
-}
+    return spec;
+};
 
 export const MediaQuery = {
-    MaxWidth: {
-        xxs: createMediaQueryFunction("max-width", "xxs-max"),
-        xs: createMediaQueryFunction("max-width", "xs-max"),
-        sm: createMediaQueryFunction("max-width", "sm-max"),
-        md: createMediaQueryFunction("max-width", "md-max"),
-        lg: createMediaQueryFunction("max-width", "lg-max"),
-        xl: createMediaQueryFunction("max-width", "xl-max"),
-    },
-    MinWidth: {
-        xxs: createMediaQueryFunction("min-width", "xxs-min"),
-        xs: createMediaQueryFunction("min-width", "xs-min"),
-        sm: createMediaQueryFunction("min-width", "sm-min"),
-        md: createMediaQueryFunction("min-width", "md-min"),
-        lg: createMediaQueryFunction("min-width", "lg-min"),
-        xl: createMediaQueryFunction("min-width", "xl-min"),
-        xxl: createMediaQueryFunction("min-width", "xxl-min"),
-    },
+    MaxWidth: getPseudoMediaQuerySpec(MAX_WIDTH_BREAKPOINTS, "max"),
+    MinWidth: getPseudoMediaQuerySpec(MIN_WIDTH_BREAKPOINTS, "min"),
 } as const;

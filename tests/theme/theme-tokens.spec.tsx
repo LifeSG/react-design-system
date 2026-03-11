@@ -1,105 +1,37 @@
 import { MediaQuery } from "../../src/theme/tokens";
-import { setupThemeVariables } from "./setup";
 
 describe("Theme Tokens", () => {
-    beforeEach(() => {
-        setupThemeVariables();
+    it("maps MaxWidth breakpoints to pseudo-media selectors", () => {
+        expect(MediaQuery.MaxWidth.xxs).toBe("body.fds-breakpoint-xxs-max &");
+        expect(MediaQuery.MaxWidth.xs).toBe("body.fds-breakpoint-xs-max &");
+        expect(MediaQuery.MaxWidth.sm).toBe("body.fds-breakpoint-sm-max &");
+        expect(MediaQuery.MaxWidth.md).toBe("body.fds-breakpoint-md-max &");
+        expect(MediaQuery.MaxWidth.lg).toBe("body.fds-breakpoint-lg-max &");
+        expect(MediaQuery.MaxWidth.xl).toBe("body.fds-breakpoint-xl-max &");
     });
 
-    afterEach(() => {
-        document.head.querySelectorAll("style").forEach((styleTag) => {
-            if (styleTag.dataset.testid === "media-query-test") {
-                styleTag.remove();
-            }
-        });
+    it("maps MinWidth breakpoints to pseudo-media selectors", () => {
+        expect(MediaQuery.MinWidth.xxs).toBe("body.fds-breakpoint-xxs-min &");
+        expect(MediaQuery.MinWidth.xs).toBe("body.fds-breakpoint-xs-min &");
+        expect(MediaQuery.MinWidth.sm).toBe("body.fds-breakpoint-sm-min &");
+        expect(MediaQuery.MinWidth.md).toBe("body.fds-breakpoint-md-min &");
+        expect(MediaQuery.MinWidth.lg).toBe("body.fds-breakpoint-lg-min &");
+        expect(MediaQuery.MinWidth.xl).toBe("body.fds-breakpoint-xl-min &");
+        expect(MediaQuery.MinWidth.xxl).toBe("body.fds-breakpoint-xxl-min &");
     });
 
-    it("applies MediaQuery.MaxWidth with exact pixel value", () => {
+    it("can be used as pseudo-media selector text", () => {
         const styleTag = document.createElement("style");
-        styleTag.dataset.testid = "media-query-test";
         styleTag.textContent = `
             .mq-token-max-width { background-color: red; }
-            ${MediaQuery.MaxWidth.md()} {
+            ${MediaQuery.MaxWidth.md} {
                 .mq-token-max-width { background-color: yellow; }
             }
         `;
 
-        document.head.appendChild(styleTag);
-
-        expect(styleTag.textContent).toContain(
-            "@media screen and (max-width: 768px)"
-        );
+        expect(styleTag.textContent).toContain("body.fds-breakpoint-md-max &");
         expect(styleTag.textContent).toContain(
             ".mq-token-max-width { background-color: yellow; }"
-        );
-    });
-
-    it("applies MediaQuery.MinWidth with exact pixel value", () => {
-        const styleTag = document.createElement("style");
-        styleTag.dataset.testid = "media-query-test";
-        styleTag.textContent = `
-            .mq-token-min-width { background-color: red; }
-            ${MediaQuery.MinWidth.xxl()} {
-                .mq-token-min-width { background-color: yellow; }
-            }
-        `;
-
-        document.head.appendChild(styleTag);
-
-        expect(styleTag.textContent).toContain(
-            "@media screen and (min-width: 1441px)"
-        );
-        expect(styleTag.textContent).toContain(
-            ".mq-token-min-width { background-color: yellow; }"
-        );
-    });
-
-    it("normalizes numeric breakpoint values to px", () => {
-        expect(MediaQuery.MinWidth.xxs()).toBe(
-            "@media screen and (min-width: 0px)"
-        );
-    });
-
-    it("supports rem breakpoint values", () => {
-        document.documentElement.style.setProperty(
-            "--fds-breakpoint-md-max",
-            "48rem"
-        );
-
-        expect(MediaQuery.MaxWidth.md()).toBe(
-            "@media screen and (max-width: 48rem)"
-        );
-    });
-
-    it("throws when breakpoint CSS variable value is empty", () => {
-        document.documentElement.style.setProperty(
-            "--fds-breakpoint-md-max",
-            ""
-        );
-
-        expect(() => MediaQuery.MaxWidth.md()).toThrow(
-            'Unable to resolve breakpoint token "md-max". Ensure theme CSS variables are loaded.'
-        );
-    });
-
-    it("throws when breakpoint CSS variable value is missing", () => {
-        document.documentElement.style.removeProperty(
-            "--fds-breakpoint-md-max"
-        );
-
-        expect(() => MediaQuery.MaxWidth.md()).toThrow(
-            'Unable to resolve breakpoint token "md-max". Ensure theme CSS variables are loaded.'
-        );
-    });
-
-    it("throws when breakpoint CSS variable value is invalid", () => {
-        document.documentElement.style.setProperty(
-            "--fds-breakpoint-md-max",
-            "invalid"
-        );
-
-        expect(() => MediaQuery.MaxWidth.md()).toThrow(
-            'Invalid breakpoint value "invalid" for token "md-max". Expected a px or rem value.'
         );
     });
 });
