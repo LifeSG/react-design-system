@@ -13,13 +13,16 @@ import { libStylePlugin } from "rollup-plugin-lib-style";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import typescript from "rollup-plugin-typescript2";
 
+const dirsToIgnore = ["custom-types", "shared", "util", "v2_spec", "__mocks__"];
+
 const srcDir = "src";
 const subDirs = fs
     .readdirSync(srcDir, { withFileTypes: true })
     .filter(
         (dirent) =>
             dirent.isDirectory() &&
-            fs.existsSync(path.join(srcDir, dirent.name, "index.ts"))
+            fs.existsSync(path.join(srcDir, dirent.name, "index.ts")) &&
+            !dirsToIgnore.includes(dirent.name)
     )
     .map((dirent) => dirent.name);
 
@@ -38,7 +41,8 @@ const subExports = subDirs.reduce((acc, name) => {
         types: `./${name}/index.d.ts`,
         import: `./${name}/index.js`,
         require: `./cjs/${name}/index.js`,
-        default: `./${name}/index.js`,
+        // Reference: https://nodejs.org/api/packages.html#conditional-exports
+        default: `./${name}/index.js`, // For any unknown JS environment, fallback to ESM build
     };
     return acc;
 }, {});
@@ -111,7 +115,8 @@ export const plugins = [
                     types: "./index.d.ts",
                     import: "./index.js",
                     require: "./cjs/index.js",
-                    default: "./index.js",
+                    // Reference: https://nodejs.org/api/packages.html#conditional-exports
+                    default: "./index.js", // For any unknown JS environment, fallback to ESM build
                 },
                 ...subExports,
             },
