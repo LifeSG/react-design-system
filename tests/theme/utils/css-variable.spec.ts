@@ -91,6 +91,10 @@ describe("parsePxOrRemValue", () => {
         expect(parsePxOrRemValue("481px")).toBe(481);
     });
 
+    it("parses rem values", () => {
+        expect(parsePxOrRemValue("24rem")).toBe(384);
+    });
+
     it("converts rem values to px based on root font size", () => {
         document.documentElement.style.fontSize = "20px";
         expect(parsePxOrRemValue("24rem")).toBe(480);

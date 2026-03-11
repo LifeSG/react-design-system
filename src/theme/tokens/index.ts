@@ -3,6 +3,7 @@ export * from "./breakpoint";
 export * from "./colour";
 export * from "./component";
 export * from "./font";
+export * from "./media-query";
 export * from "./motion";
 export * from "./radius";
 export * from "./shadow";
