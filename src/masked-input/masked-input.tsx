@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
 import {
@@ -21,31 +21,34 @@ import { isEmpty } from "lodash";
 import { SimpleIdGenerator, StringHelper } from "../util";
 import { VisuallyHidden, concatIds } from "../shared/accessibility";
 
-const Component = ({
-    value,
-    readOnly,
-    "data-testid": dataTestId,
-    maskRange,
-    unmaskRange,
-    maskRegex,
-    maskTransformer,
-    iconMask = <EyeSlashIcon />,
-    iconUnmask = <EyeIcon />,
-    iconActiveColor: maskIconActiveColor,
-    iconInactiveColor: maskIconInactiveColor,
-    maskChar = "•",
-    error,
-    disableMask,
-    transformInput,
-    loadState,
-    onMask,
-    onUnmask,
-    onChange,
-    onFocus,
-    onBlur,
-    onTryAgain,
-    ...otherProps
-}: MaskedInputProps) => {
+const Component = (
+    {
+        value,
+        readOnly,
+        "data-testid": dataTestId,
+        maskRange,
+        unmaskRange,
+        maskRegex,
+        maskTransformer,
+        iconMask = <EyeSlashIcon />,
+        iconUnmask = <EyeIcon />,
+        iconActiveColor: maskIconActiveColor,
+        iconInactiveColor: maskIconInactiveColor,
+        maskChar = "•",
+        error,
+        disableMask,
+        transformInput,
+        loadState,
+        onMask,
+        onUnmask,
+        onChange,
+        onFocus,
+        onBlur,
+        onTryAgain,
+        ...otherProps
+    }: MaskedInputProps,
+    ref: React.Ref<HTMLInputElement>
+) => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
@@ -60,6 +63,8 @@ const Component = ({
     const readOnlyButtonRef = useRef<HTMLButtonElement>(null);
     const isMaskedRef = useRef<boolean>(!disableMask);
     const ariaLabelledBy = otherProps["aria-labelledby"];
+
+    useImperativeHandle(ref, () => inputRef.current as HTMLInputElement, []);
 
     // =============================================================================
     // EFFECTS
