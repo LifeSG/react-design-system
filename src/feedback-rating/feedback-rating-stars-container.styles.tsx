@@ -22,9 +22,6 @@ export const Label = styled.div`
     line-height: 0;
     display: flex;
     align-items: center;
-    background: transparent;
-    border: 0;
-    padding: 0;
     cursor: pointer;
 
     ${MediaQuery.MaxWidth.md} {

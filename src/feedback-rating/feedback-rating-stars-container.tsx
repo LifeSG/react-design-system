@@ -21,7 +21,7 @@ export const FeedbackRatingStarsContainer = (
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
-    const { ariaDescribedBy, rating, onRatingChange } = props;
+    const { ariaLabelledBy, ariaDescribedBy, rating, onRatingChange } = props;
     const maxRating = StarContainerData.MAX_STAR;
     const currentRating = Math.min(Math.max(rating ?? 0, 0), maxRating);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -51,10 +51,6 @@ export const FeedbackRatingStarsContainer = (
     // RENDER FUNCTIONS
     // =========================================================================
     const getAriaValueText = () => {
-        if (currentRating === 0) {
-            return "0 stars";
-        }
-
         return `${currentRating} star${currentRating === 1 ? "" : "s"}`;
     };
 
@@ -73,7 +69,6 @@ export const FeedbackRatingStarsContainer = (
             return (
                 <Label
                     key={starIndex}
-                    role="presentation"
                     onClick={() => handleStarSelection(starIndex)}
                 >
                     {renderStar(starIndex)}
@@ -92,6 +87,7 @@ export const FeedbackRatingStarsContainer = (
                     max={maxRating}
                     step={1}
                     value={currentRating}
+                    aria-labelledby={ariaLabelledBy}
                     aria-describedby={ariaDescribedBy}
                     aria-valuetext={getAriaValueText()}
                     onChange={handleRangeChange}
