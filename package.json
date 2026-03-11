@@ -5,14 +5,21 @@
     "main": "dist/cjs/index.js",
     "module": "dist/index.js",
     "typings": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/cjs/index.js",
+            "default": "./dist/index.js"
+        }
+    },
     "bin": {
         "lifesg-react-design-system": "./codemods/run-codemod.js"
     },
     "scripts": {
-        "build": "npm run rollup && npm run post:build",
+        "build": "npm run rollup",
         "rollup": "rm -rf dist && node node_modules/rollup/dist/bin/rollup -c",
         "pack-package": "cd dist && npm pack",
-        "post:build": "node ./scripts/post-build.js",
         "publish-lib": "npm publish ./dist",
         "start": "rollup -c -w",
         "test": "jest --coverage",
@@ -68,7 +75,7 @@
         "@lifesg/react-icons": "^1.12.0",
         "@linaria/babel-preset": "^5.0.4",
         "@linaria/core": "^7.0.0",
-        "@playwright/test": "^1.45.0",
+        "@playwright/test": "^1.58.2",
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-image": "^3.0.3",
         "@rollup/plugin-json": "^6.1.0",

@@ -4,10 +4,42 @@ import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
 import wyw from "@wyw-in-js/rollup";
+import fs from "fs";
+import path from "path";
 import copy from "rollup-plugin-copy";
+import generatePackageJson from "rollup-plugin-generate-package-json";
+import { libStylePlugin } from "rollup-plugin-lib-style";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import typescript from "rollup-plugin-typescript2";
-import { libStylePlugin } from "rollup-plugin-lib-style";
+
+const srcDir = "src";
+const subEntries = fs
+    .readdirSync(srcDir, { withFileTypes: true })
+    .filter(
+        (dirent) =>
+            dirent.isDirectory() &&
+            fs.existsSync(path.join(srcDir, dirent.name, "index.ts"))
+    )
+    .reduce((acc, dirent) => {
+        acc[dirent.name] = path.join(srcDir, dirent.name, "index.ts");
+        return acc;
+    }, {});
+
+const input = {
+    index: "src/index.ts",
+    ...subEntries,
+};
+
+// Build explicit exports map for every sub-entry
+const subExports = Object.keys(subEntries).reduce((acc, name) => {
+    acc[`./${name}`] = {
+        types: `./${name}/index.d.ts`,
+        import: `./${name}/index.js`,
+        require: `./cjs/${name}/index.js`,
+        default: `./${name}/index.js`,
+    };
+    return acc;
+}, {});
 
 export const plugins = [
     peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
@@ -87,7 +119,7 @@ const codemodBuildConfigs = [
 
 export default [
     {
-        input: "src/index.ts",
+        input,
         output: [
             {
                 dir: "dist",
@@ -114,6 +146,34 @@ export default [
                 targets: [
                     { src: "src/theme/styles/*", dest: "dist/theme/styles" },
                 ],
+            }),
+            generatePackageJson({
+                outputFolder: "dist",
+                baseContents: (pkg) => ({
+                    name: pkg.name,
+                    version: pkg.version,
+                    description: pkg.description,
+                    type: "module",
+                    main: "./cjs/index.js",
+                    module: "./index.js",
+                    types: "./index.d.ts",
+                    exports: {
+                        ".": {
+                            types: "./index.d.ts",
+                            import: "./index.js",
+                            require: "./cjs/index.js",
+                            default: "./index.js",
+                        },
+                        ...subExports,
+                    },
+                    peerDependencies: pkg.peerDependencies,
+                }),
+            }),
+            generatePackageJson({
+                outputFolder: "dist/cjs",
+                baseContents: {
+                    type: "commonjs",
+                },
             }),
         ],
         external: ["react", "react-dom", "styled-components"],
