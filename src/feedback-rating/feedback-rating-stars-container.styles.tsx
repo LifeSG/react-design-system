@@ -32,16 +32,18 @@ export const Label = styled.div`
     }
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{ $isFocused: boolean }>`
     display: flex;
     justify-content: center;
     margin: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
     border-radius: ${Radius["sm"]};
     outline: none;
 
-    &:focus-visible {
-        outline: ${Border["width-020"]} ${Border["solid"]};
-        ${Colour["icon-primary"]}
-        outline-offset: 2px;
-    }
+    ${({ $isFocused }) =>
+        $isFocused &&
+        css`
+            outline: ${Border["width-020"]} ${Border["solid"]}
+                ${Colour["icon-primary"]};
+            outline-offset: 2px;
+        `}
 `;

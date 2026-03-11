@@ -1,4 +1,5 @@
-import { KeyboardEvent } from "react";
+import { ChangeEvent, useRef, useState } from "react";
+import { VisuallyHidden } from "../shared/accessibility";
 import { StarContainerData } from "./feedback-rating-stars-container-data";
 import {
     Container,
@@ -8,6 +9,7 @@ import {
 } from "./feedback-rating-stars-container.styles";
 
 interface FeedbackRatingStarsContainerProps {
+    ariaLabelledBy: string;
     ariaDescribedBy: string;
     rating: number;
     onRatingChange: (value: number) => void;
@@ -22,43 +24,37 @@ export const FeedbackRatingStarsContainer = (
     const { ariaDescribedBy, rating, onRatingChange } = props;
     const maxRating = StarContainerData.MAX_STAR;
     const currentRating = Math.min(Math.max(rating ?? 0, 0), maxRating);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [isFocused, setIsFocused] = useState(false);
 
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const handleStarSelection = (starIndex: number) => {
         onRatingChange(starIndex);
+        inputRef.current?.focus();
     };
 
-    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-        switch (event.key) {
-            case "ArrowRight":
-            case "ArrowUp":
-                event.preventDefault();
-                onRatingChange(Math.min(currentRating + 1, maxRating));
-                break;
-            case "ArrowLeft":
-            case "ArrowDown":
-                event.preventDefault();
-                onRatingChange(Math.max(currentRating - 1, 0));
-                break;
-            case "Home":
-                event.preventDefault();
-                onRatingChange(1);
-                break;
-            case "End":
-                event.preventDefault();
-                onRatingChange(maxRating);
-                break;
-            default:
-                break;
-        }
+    const handleRangeChange = (event: ChangeEvent<HTMLInputElement>) => {
+        onRatingChange(Number(event.target.value));
+    };
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
     };
 
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     const getAriaValueText = () => {
+        if (currentRating === 0) {
+            return "0 stars";
+        }
+
         return `${currentRating} star${currentRating === 1 ? "" : "s"}`;
     };
 
@@ -87,17 +83,25 @@ export const FeedbackRatingStarsContainer = (
     };
 
     return (
-        <Container
-            role="slider"
-            tabIndex={0}
-            aria-describedby={ariaDescribedBy}
-            aria-valuemin={1}
-            aria-valuemax={maxRating}
-            aria-valuenow={currentRating}
-            aria-valuetext={getAriaValueText()}
-            onKeyDown={handleKeyDown}
-        >
-            {renderRatings()}
-        </Container>
+        <>
+            <VisuallyHidden>
+                <input
+                    ref={inputRef}
+                    type="range"
+                    min={0}
+                    max={maxRating}
+                    step={1}
+                    value={currentRating}
+                    aria-describedby={ariaDescribedBy}
+                    aria-valuetext={getAriaValueText()}
+                    onChange={handleRangeChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                />
+            </VisuallyHidden>
+            <Container aria-hidden $isFocused={isFocused}>
+                {renderRatings()}
+            </Container>
+        </>
     );
 };

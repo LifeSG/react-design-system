@@ -55,6 +55,7 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                     {componentDescription}
                 </Typography.HeadingSM>
                 <FeedbackRatingStarsContainer
+                    ariaLabelledBy={internalId}
                     ariaDescribedBy={descriptionId}
                     rating={rating}
                     onRatingChange={onRatingChange}

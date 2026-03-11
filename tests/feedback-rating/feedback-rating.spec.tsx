@@ -66,9 +66,9 @@ describe("FeedbackRating", () => {
             );
 
             const slider = getRatingSlider();
-            expect(slider).toHaveAttribute("aria-valuemin", "1");
-            expect(slider).toHaveAttribute("aria-valuemax", "5");
-            expect(slider).toHaveAttribute("aria-valuenow", "3");
+            expect(slider).toHaveAttribute("min", "0");
+            expect(slider).toHaveAttribute("max", "5");
+            expect(slider).toHaveValue("3");
             expect(slider).toHaveAttribute("aria-valuetext", "3 stars");
         });
 
@@ -86,7 +86,7 @@ describe("FeedbackRating", () => {
                 fireEvent.click(firstStar);
             });
 
-            expect(getRatingSlider()).toHaveAttribute("aria-valuenow", "1");
+            expect(getRatingSlider()).toHaveValue("1");
             expect(getRatingSlider()).toHaveAttribute(
                 "aria-valuetext",
                 "1 star"
@@ -107,7 +107,7 @@ describe("FeedbackRating", () => {
                 fireEvent.click(fiveStar);
             });
 
-            expect(getRatingSlider()).toHaveAttribute("aria-valuenow", "5");
+            expect(getRatingSlider()).toHaveValue("5");
             expect(getRatingSlider()).toHaveAttribute(
                 "aria-valuetext",
                 "5 stars"
@@ -118,7 +118,7 @@ describe("FeedbackRating", () => {
                 fireEvent.click(oneStar);
             });
 
-            expect(getRatingSlider()).toHaveAttribute("aria-valuenow", "1");
+            expect(getRatingSlider()).toHaveValue("1");
             expect(getRatingSlider()).toHaveAttribute(
                 "aria-valuetext",
                 "1 star"
@@ -155,10 +155,10 @@ describe("FeedbackRating", () => {
 
             const slider = getRatingSlider();
             act(() => {
-                fireEvent.keyDown(slider, { key: "ArrowRight" });
+                fireEvent.change(slider, { target: { value: "2" } });
             });
 
-            expect(slider).toHaveAttribute("aria-valuenow", "2");
+            expect(slider).toHaveValue("2");
             expect(slider).toHaveAttribute("aria-valuetext", "2 stars");
         });
 
@@ -173,10 +173,10 @@ describe("FeedbackRating", () => {
 
             const slider = getRatingSlider();
             act(() => {
-                fireEvent.keyDown(slider, { key: "ArrowLeft" });
+                fireEvent.change(slider, { target: { value: "2" } });
             });
 
-            expect(slider).toHaveAttribute("aria-valuenow", "2");
+            expect(slider).toHaveValue("2");
             expect(slider).toHaveAttribute("aria-valuetext", "2 stars");
         });
     });
@@ -205,7 +205,7 @@ describe("FeedbackRating", () => {
             );
 
             const button = getSubmitButton("Submit");
-            expect(button).not.toBeDisabled();
+            expect(button).not.toHaveAttribute("aria-disabled", "true");
         });
 
         it("should be able to support onSubmit callback", () => {
@@ -268,8 +268,8 @@ const NO_OP = () => {};
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
-const getRatingSlider = (): HTMLElement => {
-    return screen.getByRole("slider");
+const getRatingSlider = (): HTMLInputElement => {
+    return screen.getByRole("slider", { hidden: true }) as HTMLInputElement;
 };
 
 const getSubmitButton = (label: string): HTMLElement => {
