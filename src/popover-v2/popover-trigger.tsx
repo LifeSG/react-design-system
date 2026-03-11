@@ -94,13 +94,7 @@ export const PopoverTrigger = ({
         return getInheritedInlineCssVariables(
             themeContext?.themeElement ?? null
         );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        visible,
-        themeContext?.theme,
-        themeContext?.mode,
-        themeContext?.themeElement,
-    ]);
+    }, [visible, themeContext?.themeElement]);
 
     const trigger: PopoverV2TriggerType = isMobile ? "click" : _trigger;
     const isTooltip = trigger === "hover";

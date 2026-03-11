@@ -59,7 +59,6 @@ const mergeInlineCssVariables = (
     target: InlineCssVariables
 ) => {
     const { style } = element;
-    if (style.length === 0) return;
 
     for (let i = 0; i < style.length; i++) {
         const propertyName = style.item(i);
@@ -78,7 +77,7 @@ const mergeInlineCssVariables = (
 export const getInheritedInlineCssVariables = (
     themeElement: HTMLElement | null
 ): CSSProperties => {
-    if (!themeElement) return {};
+    if (!themeElement || themeElement.style.length === 0) return {};
 
     const variables: InlineCssVariables = {};
     mergeInlineCssVariables(themeElement, variables);
