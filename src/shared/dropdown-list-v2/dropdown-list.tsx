@@ -61,6 +61,7 @@ const DropdownListInner = <T, V>(
         labelDisplayType = "inline",
         variant = "default",
         listboxId,
+        ariaLabel,
         matchElementWidth = false,
         width,
         topScrollItem,
@@ -597,7 +598,12 @@ const DropdownListInner = <T, V>(
 
     const renderList = () => {
         return (
-            <List ref={listRef} data-testid="dropdown-list">
+            <List
+                ref={listRef}
+                data-testid="dropdown-list"
+                role="group"
+                aria-label={ariaLabel}
+            >
                 {renderSearchInput()}
                 {renderSelectAll()}
                 {renderNoResults()}

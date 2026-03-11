@@ -21,7 +21,6 @@ import {
 } from "./input-range-select.style";
 import { SimpleIdGenerator } from "../util";
 import { VisuallyHidden, concatIds } from "../shared/accessibility";
-import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 
 type RangeType = "from" | "to";
 
@@ -143,6 +142,7 @@ export const InputRangeSelect = <T, V>({
                 return focusedInput;
         }
     };
+
     const currentOptions = useMemo(() => {
         if (focusedInput === "none") return [];
         return options?.[focusedInput] ?? [];
@@ -163,7 +163,6 @@ export const InputRangeSelect = <T, V>({
 
         setFocusedInput(nextFocusedInput);
         triggerOptionDisplayCallback(true);
-        announceSelectionContext(nextFocusedInput);
     };
 
     const focusButton = (type: RangeType) => {
@@ -175,14 +174,16 @@ export const InputRangeSelect = <T, V>({
         return concatIds(rangeLabelId, ariaLabelledBy);
     };
 
-    const announceSelectionContext = (rangeType: RangeType) => {
-        const message =
-            rangeType === "from"
-                ? `Selecting for: ${placeholders.from}`
-                : `Selecting for: ${placeholders.to}`;
+    const getDropdownAriaLabel = () => {
+        if (focusedInput === "from") {
+            return `Selecting for: ${placeholders?.from}`;
+        }
 
-        clearAnnouncer("polite");
-        announce(message, "polite");
+        if (focusedInput === "to") {
+            return `Selecting for: ${placeholders?.to}`;
+        }
+
+        return undefined;
     };
 
     // =============================================================================
@@ -223,7 +224,6 @@ export const InputRangeSelect = <T, V>({
             setFocusedInput("to");
             triggerOptionDisplayCallback(true);
             focusButton("to");
-            announceSelectionContext("to");
             return;
         }
 
@@ -336,10 +336,10 @@ export const InputRangeSelect = <T, V>({
                 $focused={isOpen}
             >
                 <VisuallyHidden id={fromLabelId}>
-                    {placeholders?.from || "Select"}
+                    {placeholders?.from || "Select From"}
                 </VisuallyHidden>
                 <VisuallyHidden id={toLabelId}>
-                    {placeholders?.to || "Select"}
+                    {placeholders?.to || "Select To"}
                 </VisuallyHidden>
 
                 <RangeInputInnerContainer
@@ -373,6 +373,7 @@ export const InputRangeSelect = <T, V>({
                 ref={dropdownRef}
                 data-testid={`${testId}-dropdown`}
                 listboxId={listboxId}
+                ariaLabel={getDropdownAriaLabel()}
                 listItems={currentOptions}
                 onSelectItem={handleListItemClick}
                 onDismiss={handleDismiss}
