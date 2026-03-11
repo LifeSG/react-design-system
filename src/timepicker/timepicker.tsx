@@ -23,7 +23,8 @@ export const Timepicker = ({
     alignment,
     dropdownZIndex,
     dropdownRootNode,
-    ariaLabelledBy,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
     ...otherProps
 }: TimepickerProps) => {
     // =============================================================================
@@ -121,6 +122,7 @@ export const Timepicker = ({
                 aria-disabled={disabled || undefined}
                 aria-readonly={readOnly || undefined}
                 aria-labelledby={ariaLabelledBy}
+                aria-describedby={ariaDescribedBy}
                 aria-expanded={!disabled && !readOnly ? isOpen : false}
                 data-testid={
                     id ? `${id}-timepicker-selector` : "timepicker-selector"
@@ -142,7 +144,7 @@ export const Timepicker = ({
             ref={setFloatingRef}
             style={styles}
             role="dialog"
-            aria-modal="false"
+            aria-label="Time picker"
             {...getFloatingProps()}
         >
             <TimepickerDropdown

@@ -9,8 +9,8 @@ export interface TimepickerProps {
     id?: string | undefined;
     style?: React.CSSProperties | undefined;
     // Accessibility
-    ariaLabelledBy?: string | undefined;
-
+    "aria-labelledby"?: string | undefined;
+    "aria-describedby"?: string | undefined;
     // Input-specific attributes
     "data-testid"?: string | undefined;
     /**

@@ -275,6 +275,7 @@ export const TimepickerDropdown = ({
     const renderHourInput = () => (
         <InputContainer>
             <SwitchButton
+                aria-label="increase hour"
                 name={EInputButtonName.HOUR_UP}
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
                 onClick={handleInputButtonClick}
@@ -302,6 +303,7 @@ export const TimepickerDropdown = ({
                 />
             </TimeInputBox>
             <SwitchButton
+                aria-label="decrease hour"
                 name={EInputButtonName.HOUR_DOWN}
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
                 onClick={handleInputButtonClick}
@@ -315,6 +317,7 @@ export const TimepickerDropdown = ({
     const renderMinuteInput = () => (
         <InputContainer>
             <SwitchButton
+                aria-label="increase minute"
                 name={EInputButtonName.MINUTE_UP}
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
                 onClick={handleInputButtonClick}
@@ -342,6 +345,7 @@ export const TimepickerDropdown = ({
                 />
             </TimeInputBox>
             <SwitchButton
+                aria-label="decrease minute"
                 name={EInputButtonName.MINUTE_DOWN}
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
                 onClick={handleInputButtonClick}
@@ -393,6 +397,7 @@ export const TimepickerDropdown = ({
                 </InputSection>
                 <ControlSection>
                     <ControlButton
+                        aria-label="close selector"
                         type="button"
                         styleType="secondary"
                         onClick={onCancel}
@@ -401,6 +406,7 @@ export const TimepickerDropdown = ({
                         Cancel
                     </ControlButton>
                     <ControlButton
+                        aria-label="confirm selection"
                         type="button"
                         onClick={handleConfirm}
                         disabled={hourValue === "" || minuteValue === ""}
