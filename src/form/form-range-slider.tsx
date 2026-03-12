@@ -7,7 +7,7 @@ import { FormRangeSliderProps } from "./types";
 export const FormRangeSlider = ({
     label,
     errorMessage,
-    id = "form-range-slider",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
@@ -27,7 +27,6 @@ export const FormRangeSlider = ({
         () => `form-field-${SimpleIdGenerator.generate()}`
     );
     const inputId = id ?? internalId;
-    const errorId = `${inputId}-error-message`;
 
     return (
         <FormWrapper
@@ -51,8 +50,6 @@ export const FormRangeSlider = ({
             <InputRangeSlider
                 id={`${inputId}-base`}
                 data-testid={testId ? `${testId}-base` : undefined}
-                ariaErrorMessage={errorMessage ? errorId : undefined}
-                ariaInvalid={!!errorMessage}
                 {...otherProps}
             />
         </FormWrapper>

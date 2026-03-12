@@ -26,15 +26,14 @@ export const InputRangeSlider = ({
     colors,
     disabled,
     readOnly,
-    ariaErrorMessage,
-    ariaInvalid,
-    ariaLabels,
     showSliderLabels,
     sliderLabelPrefix,
     sliderLabelSuffix,
     showIndicatorLabel,
     indicatorLabelPrefix,
     indicatorLabelSuffix,
+    ariaLabels,
+    "aria-invalid": ariaInvalid,
     renderSliderLabel,
     onChange,
     onChangeEnd,
@@ -199,7 +198,6 @@ export const InputRangeSlider = ({
     function getThumbDescriptionIds() {
         return concatIds(
             showIndicatorLabel ? indicatorTextId : undefined,
-            ariaErrorMessage,
             instructionTextId
         );
     }
@@ -350,7 +348,10 @@ export const InputRangeSlider = ({
                             data-testid={`slider-thumb-${state.index}`}
                             {...thumbProps}
                             tabIndex={thumbProps.tabIndex}
-                            aria-labelledby={thumbLabelTextId}
+                            aria-labelledby={concatIds(
+                                thumbProps["aria-labelledby"],
+                                thumbLabelTextId
+                            )}
                             aria-describedby={getThumbDescriptionIds()}
                             aria-valuetext={getValueText(thumbValue)}
                             aria-valuemin={min}
@@ -358,7 +359,6 @@ export const InputRangeSlider = ({
                             aria-valuenow={thumbValue}
                             aria-readonly={readOnly || undefined}
                             aria-invalid={ariaInvalid || undefined}
-                            aria-errormessage={ariaErrorMessage}
                             onKeyDown={(event) => {
                                 handleThumbKeyDown(event, state.index);
                                 thumbProps.onKeyDown?.(event);
