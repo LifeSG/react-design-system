@@ -45,7 +45,7 @@ import {
     ImageDimension,
 } from "./types";
 
-export const Component = (
+const Component = (
     {
         items,
         initialActiveItemIndex,

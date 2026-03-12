@@ -11,7 +11,6 @@ export const getFolders = (entry) => {
         "util",
         "v2_spec",
         "__mocks__",
-        "theme",
     ];
 
     const dirsToUse = dirs

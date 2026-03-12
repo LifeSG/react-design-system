@@ -1,12 +1,12 @@
 "use client";
-import "@lifesg/react-design-system/theme/styles/lifesg.css";
+import { ThemeProvider } from "@lifesg/react-design-system/theme";
 import {
     V3_DSThemeProvider,
     V3_LifeSGTheme,
 } from "@lifesg/react-design-system/v3_theme";
 import styles from "./layout.module.css";
 
-import { ThemeProvider } from "@lifesg/react-design-system/theme";
+import "@lifesg/react-design-system/theme/styles/lifesg.css";
 
 export default function Layout({
     children,
