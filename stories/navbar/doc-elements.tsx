@@ -7,9 +7,9 @@ import { PopoverTrigger } from "src/popover-v2";
 import { V3_Breakpoint, V3_Colour } from "src/v3_theme";
 import { Typography } from "src/typography";
 import styled, { useTheme } from "styled-components";
-import { Avatar } from "../../src/avatar";
-import { Badge } from "../../src/badge";
-import { Menu } from "../../src/menu";
+import { Avatar } from "src/avatar";
+import { Badge } from "src/badge";
+import { Menu } from "src/menu";
 
 // =============================================================================
 // STYLING

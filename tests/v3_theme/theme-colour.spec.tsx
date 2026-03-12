@@ -7,8 +7,8 @@ import {
     V3_DSThemeProvider,
     V3_LifeSGTheme,
     useDSTheme,
-} from "../../src/v3_theme";
-import { V3_ThemeSpec } from "../../src/v3_theme/types";
+} from "src/v3_theme";
+import { V3_ThemeSpec } from "src/v3_theme/types";
 import { MOCK_THEME } from "./mock-theme-data";
 
 // Mock window.matchMedia

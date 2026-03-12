@@ -1,10 +1,6 @@
 import styled from "styled-components";
-import { V2_MediaQuery } from "../../src/v2_media";
-import {
-    V2_Text,
-    V2_TextStyleHelper,
-    V2_TextStyleSetType,
-} from "../../src/v2_text";
+import { V2_MediaQuery } from "src/v2_media";
+import { V2_Text, V2_TextStyleHelper, V2_TextStyleSetType } from "src/v2_text";
 
 export const FontDisplay = () => {
     return (

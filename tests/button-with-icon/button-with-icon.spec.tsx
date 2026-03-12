@@ -1,6 +1,6 @@
 import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { ButtonWithIcon } from "../../src/button-with-icon";
+import { ButtonWithIcon } from "src/button-with-icon";
 
 // =============================================================================
 // UNIT TESTS

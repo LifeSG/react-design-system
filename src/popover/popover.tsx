@@ -1,7 +1,7 @@
 import debounce from "lodash/debounce";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Card } from "src/card";
+import { Card } from "../card";
 import { Modal } from "../modal/modal";
 import { MediaWidths } from "../v2_spec/media-spec";
 import { V2_Text } from "../v2_text/text";

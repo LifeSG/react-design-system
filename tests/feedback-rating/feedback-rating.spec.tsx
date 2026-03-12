@@ -1,8 +1,8 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { useState } from "react";
 
-import { FeedbackRating, FeedbackRatingProps } from "../../src";
-import { FeedbackRatingData } from "../../src/feedback-rating/feedback-rating-data";
+import { FeedbackRating, FeedbackRatingProps } from "src";
+import { FeedbackRatingData } from "src/feedback-rating/feedback-rating-data";
 
 // =============================================================================
 // UNIT TESTS

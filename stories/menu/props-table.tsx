@@ -1,6 +1,6 @@
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
+import { ApiTable } from "stories/storybook-common/api-table";
+import { ApiTableSectionProps } from "stories/storybook-common/api-table/types";
+import { TabAttribute, Tabs } from "stories/storybook-common/tabs";
 
 const MENU_DATA: ApiTableSectionProps[] = [
     {

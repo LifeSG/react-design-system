@@ -5,7 +5,7 @@ import React, {
     useRef,
     useState,
 } from "react";
-import { FormErrorMessage } from "src/form/form-label";
+import { FormErrorMessage } from "../form/form-label";
 import { VisuallyHidden } from "../shared/accessibility";
 import { SimpleIdGenerator, StringHelper } from "../util";
 import {

@@ -1,4 +1,4 @@
-import { PhoneNumberInputHelper } from "../../src/phone-number-input/phone-number-input-helper";
+import { PhoneNumberInputHelper } from "src/phone-number-input/phone-number-input-helper";
 
 describe("PhoneNumberInputHelper", () => {
     describe("getCountries", () => {

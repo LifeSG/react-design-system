@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { V2_Color } from "../../src/v2_color";
-import { V2_MediaQuery } from "../../src/v2_media";
-import { withPopover } from "../../src/popover";
-import { V2_Text } from "../../src/v2_text";
+import { V2_Color } from "src/v2_color";
+import { V2_MediaQuery } from "src/v2_media";
+import { withPopover } from "src/popover";
+import { V2_Text } from "src/v2_text";
 
 // =============================================================================
 // STYLING

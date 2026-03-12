@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { FullscreenImageCarousel } from "../../src/fullscreen-image-carousel";
+import { FullscreenImageCarousel } from "src/fullscreen-image-carousel";
 
 // =============================================================================
 // UNIT TESTS

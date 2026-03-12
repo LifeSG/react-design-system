@@ -8,7 +8,7 @@ import {
     ItemsLoadStateType,
 } from "../shared/dropdown-list-v2/types";
 import { RefObject } from "react";
-import { DropdownAlignmentType } from "src/shared/dropdown-wrapper";
+import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export interface InputRangeSelectOptionsProps<T>
     extends Omit<InputSelectOptionsProps<T>, "options" | "optionsLoadState"> {

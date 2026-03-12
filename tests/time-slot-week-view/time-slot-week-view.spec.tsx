@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
-import { TimeSlot, TimeSlotWeekView } from "../../src";
+import { TimeSlot, TimeSlotWeekView } from "src";
 
 describe("TimeSlotWeekCalendar", () => {
     const DATE_FORMAT = "YYYY-MM-DD";

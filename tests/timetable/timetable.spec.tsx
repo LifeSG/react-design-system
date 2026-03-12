@@ -1,10 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
-import {
-    TimeTable,
-    TimeTableProps,
-    TimeTableRowData,
-} from "../../src/timetable";
+import { TimeTable, TimeTableProps, TimeTableRowData } from "src/timetable";
 
 describe("TimeTable", () => {
     const date = dayjs("2024-09-11");

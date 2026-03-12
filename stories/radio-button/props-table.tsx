@@ -1,4 +1,7 @@
-import { ApiTable, ApiTableSectionProps } from "../storybook-common/api-table";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+} from "stories/storybook-common/api-table";
 
 const DATA: ApiTableSectionProps[] = [
     {

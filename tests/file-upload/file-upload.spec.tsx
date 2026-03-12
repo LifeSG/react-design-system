@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { FileItemProps, FileUpload } from "../../src/file-upload";
+import { FileItemProps, FileUpload } from "src/file-upload";
 
 describe("FileUpload", () => {
     beforeEach(() => {

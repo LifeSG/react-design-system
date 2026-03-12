@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import { useDesignToken } from "../../../src/theme/utils";
-import { CSSVariableString, ThemeProvider } from "../../../src/theme";
+import { useDesignToken } from "src/theme/utils";
+import { CSSVariableString, ThemeProvider } from "src/theme";
 import { setupThemeVariables } from "../setup";
 
 const TestComponent = ({ tokenName }: { tokenName: CSSVariableString }) => {

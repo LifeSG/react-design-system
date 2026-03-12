@@ -1,7 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { LocalNavDropdown, LocalNavMenu } from "../../src/local-nav";
-import { LocalNavItemProps } from "../../src/local-nav/types";
+import { LocalNavDropdown, LocalNavMenu } from "src/local-nav";
+import { LocalNavItemProps } from "src/local-nav/types";
 
 const MOCK_ITEMS: LocalNavItemProps[] = [
     { title: "Section 1" },

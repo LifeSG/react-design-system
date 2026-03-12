@@ -1,6 +1,6 @@
 import { render, waitFor } from "@testing-library/react";
-import { Overlay } from "../../src/overlay";
-import { SimpleIdGenerator } from "../../src/util";
+import { Overlay } from "src/overlay";
+import { SimpleIdGenerator } from "src/util";
 
 // =============================================================================
 // UNIT TESTS

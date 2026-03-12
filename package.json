@@ -30,9 +30,12 @@
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
         "codemod": "ENV=dev npx tsx codemods/run-codemod.ts",
-        "lint": "eslint 'src/**/*.{ts,tsx,js,jsx}' && npm run lint:css",
+        "lint": "npm run lint:js && npm run lint:css",
+        "lint:js": "eslint '**/*.{ts,tsx,js,jsx}'",
+        "lint:js:fix": "eslint '**/*.{ts,tsx,js,jsx}' --fix",
         "lint:css": "stylelint '**/*.css'",
-        "lint:css:fix": "stylelint '**/*.css' --fix"
+        "lint:css:fix": "stylelint '**/*.css' --fix",
+        "test:eslint-rules": "node tests/eslint-rules/import-path-preferences.rule-test.mjs"
     },
     "repository": {
         "type": "git",

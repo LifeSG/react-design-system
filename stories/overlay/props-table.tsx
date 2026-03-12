@@ -3,7 +3,7 @@ import {
     DescriptionCol,
     NameCol,
     Table,
-} from "../storybook-common/api-table";
+} from "stories/storybook-common/api-table";
 
 export const PropsTable = () => (
     <Table>

@@ -1,4 +1,4 @@
-import { SimpleIdGenerator } from "../../src/util/simple-id-generator";
+import { SimpleIdGenerator } from "src/util/simple-id-generator";
 
 describe("SimpleIdGenerator", () => {
     describe("generate", () => {

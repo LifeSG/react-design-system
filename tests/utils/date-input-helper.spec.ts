@@ -1,4 +1,4 @@
-import { DateInputHelper } from "../../src/util/date-input-helper";
+import { DateInputHelper } from "src/util/date-input-helper";
 
 describe("DateInputHelper", () => {
     beforeAll(() => {

@@ -1,8 +1,8 @@
 import { FloatingFocusManager, useFloating } from "@floating-ui/react";
 import { CrossIcon, FilterIcon } from "@lifesg/react-icons";
 import { useEffect, useRef, useState } from "react";
-import { Overlay } from "src/overlay";
-import { inertValue } from "src/shared/accessibility";
+import { Overlay } from "../overlay";
+import { inertValue } from "../shared/accessibility";
 import { FilterContext } from "./filter-context";
 import {
     FilterButton,

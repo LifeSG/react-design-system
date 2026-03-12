@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Tag } from "../../src/tag";
+import { Tag } from "src/tag";
 import { PlusCircleFillIcon } from "@lifesg/react-icons";
 
 describe("Tag", () => {

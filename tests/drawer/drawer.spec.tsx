@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { Drawer } from "../../src";
+import { Drawer } from "src";
 
 // =============================================================================
 // UNIT TESTS

@@ -1,4 +1,4 @@
-import { V3_Colour } from "src/v3_theme";
+import { V3_Colour } from "../..";
 import { V3_ColourSemantic } from "../../colour-semantic/theme-helper";
 import { V3_RadiusValues } from "../../radius/theme-helper";
 import { V3_ComponentTokenSet } from "../types";

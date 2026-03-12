@@ -14,7 +14,7 @@ import {
     TimelineWrapper,
 } from "./timeline.style";
 import { TimelineItemProps, TimelineProps, Variant } from "./types";
-import { VisuallyHidden } from "src/shared/accessibility";
+import { VisuallyHidden } from "../shared/accessibility";
 
 export const Timeline = ({
     items,

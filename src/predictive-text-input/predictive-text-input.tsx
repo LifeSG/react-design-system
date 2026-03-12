@@ -7,7 +7,7 @@ import { Input } from "../input";
 import { SimpleIdGenerator } from "../util";
 import { PredictiveTextInputProps } from "./types";
 import { ItemsLoadStateType } from "../shared/dropdown-list/types";
-import { VisuallyHidden, concatIds } from "src/shared/accessibility";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 
 export const PredictiveTextInput = <T, V>({
     className,

@@ -1,4 +1,4 @@
-import { BaseFormElementProps } from "src/form/types";
+import { BaseFormElementProps } from "../form/types";
 import { PhoneNumberInputValue } from "../phone-number-input";
 
 export type OtpVerificationState = "default" | "sent" | "verified";

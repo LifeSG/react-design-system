@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SimpleIdGenerator } from "src/util";
+import { SimpleIdGenerator } from "../util";
 import { PredictiveTextInput } from "../predictive-text-input";
 import { FormWrapper } from "./form-wrapper";
 import { FormPredictiveTextInputProps } from "./types";

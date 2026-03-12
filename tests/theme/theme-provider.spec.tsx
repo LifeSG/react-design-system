@@ -1,7 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
-import { ThemeProvider, useTheme } from "../../src/theme";
-import * as systemMode from "../../src/theme/theme-provider/system-colour-mode";
-import * as breakpoint from "../../src/theme/theme-provider/breakpoint";
+import { ThemeProvider, useTheme } from "src/theme";
+import * as systemMode from "src/theme/theme-provider/system-colour-mode";
+import * as breakpoint from "src/theme/theme-provider/breakpoint";
 import { setupThemeVariables } from "./setup";
 
 const TestComponent = () => {

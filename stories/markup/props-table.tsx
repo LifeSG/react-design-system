@@ -1,6 +1,6 @@
-import { StorybookLink } from "../storybook-common";
-import { ApiTable, code } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { StorybookLink } from "stories/storybook-common";
+import { ApiTable, code } from "stories/storybook-common/api-table";
+import { ApiTableSectionProps } from "stories/storybook-common/api-table/types";
 
 const DATA: ApiTableSectionProps[] = [
     {

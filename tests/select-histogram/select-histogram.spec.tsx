@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { SelectHistogram } from "../../src";
+import { SelectHistogram } from "src";
 
 const SELECTOR_TESTID = "selector";
 const FIELD_TESTID = "select-histogram";

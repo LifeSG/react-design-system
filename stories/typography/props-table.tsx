@@ -3,7 +3,7 @@ import {
     ApiTableSectionProps,
     TabAttribute,
     Tabs,
-} from "../storybook-common";
+} from "stories/storybook-common";
 
 const TEXT_DATA: ApiTableSectionProps[] = [
     {

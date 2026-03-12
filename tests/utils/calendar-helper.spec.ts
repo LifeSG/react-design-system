@@ -1,5 +1,5 @@
 import dayjs, { Dayjs } from "dayjs";
-import { CalendarHelper } from "../../src/util/calendar-helper";
+import { CalendarHelper } from "src/util/calendar-helper";
 
 describe("CalendarHelper", () => {
     beforeAll(() => {

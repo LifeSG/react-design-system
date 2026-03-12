@@ -7,7 +7,7 @@ import {
     within,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { DateInput } from "../../src";
+import { DateInput } from "src";
 
 const FIELD_TESTID = "e2e";
 const CALENDAR_TESTID = "calendar-dropdown";

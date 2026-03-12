@@ -7,6 +7,7 @@ import js from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier/flat";
 import reactHooks from "eslint-plugin-react-hooks";
 import storybook from "eslint-plugin-storybook";
+import localRules from "./eslint-local-rules/import-path-preferences.mjs";
 
 export default defineConfig([
     {
@@ -170,6 +171,15 @@ export default defineConfig([
         files: ["src/v2_*/**/*.{ts,tsx}", "src/v3_*/**/*.{ts,tsx}"],
         rules: {
             "@typescript-eslint/naming-convention": "off",
+        },
+    },
+    {
+        files: ["**/*.{js,jsx,ts,tsx}"],
+        plugins: {
+            local: localRules,
+        },
+        rules: {
+            "local/import-path-preferences": "warn",
         },
     },
 ]);

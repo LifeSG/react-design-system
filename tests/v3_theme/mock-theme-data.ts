@@ -1,4 +1,4 @@
-import { V3_ThemeSpec } from "../../src/v3_theme/types";
+import { V3_ThemeSpec } from "src/v3_theme/types";
 
 export const MOCK_THEME: V3_ThemeSpec = {
     colourScheme: "lifesg",

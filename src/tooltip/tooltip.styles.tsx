@@ -1,4 +1,4 @@
-import { Card } from "src/card";
+import { Card } from "../card";
 import styled, { css } from "styled-components";
 import { V2_Color } from "../v2_color";
 import { V2_MediaQuery } from "../v2_media";

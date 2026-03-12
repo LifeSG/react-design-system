@@ -5,8 +5,8 @@ import {
     ErrorDisplayType,
     V3_BookingSGTheme,
     V3_LifeSGTheme,
-} from "../../src";
-import { getErrorDisplayData } from "../../src/error-display/error-display-data";
+} from "src";
+import { getErrorDisplayData } from "src/error-display/error-display-data";
 import { ThemeProvider } from "styled-components";
 import React from "react";
 

@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Breadcrumb } from "../../src";
+import { Breadcrumb } from "src";
 
 // =============================================================================
 // UNIT TESTS

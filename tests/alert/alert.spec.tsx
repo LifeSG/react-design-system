@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { Alert } from "../../src";
-import { V2_Color } from "../../src";
+import { Alert } from "src";
+import { V2_Color } from "src";
 import { StarIcon } from "@lifesg/react-icons/star";
 
 // =============================================================================

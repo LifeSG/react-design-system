@@ -1,8 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { Button, ButtonProps } from "../../src/button";
-import { V2_MediaQuery } from "../../src/v2_media";
-import { TooltipPosition, withTooltip } from "../../src/tooltip";
+import { Button, ButtonProps } from "src/button";
+import { V2_MediaQuery } from "src/v2_media";
+import { TooltipPosition, withTooltip } from "src/tooltip";
 
 // =============================================================================
 // STYLING

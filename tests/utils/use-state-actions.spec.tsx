@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { useStateActions } from "../../src/util/use-state-actions";
+import { useStateActions } from "src/util/use-state-actions";
 
 describe("useStateActions", () => {
     it("should update state correctly when an action is called", () => {

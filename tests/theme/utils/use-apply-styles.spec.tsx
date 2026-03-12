@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { act, render } from "@testing-library/react";
-import { ApplyStyleMap, useApplyStyle } from "../../../src/theme/utils";
+import { ApplyStyleMap, useApplyStyle } from "src/theme/utils";
 
 const TestComponent = ({ styles }: { styles: ApplyStyleMap }) => {
     const ref = useRef<HTMLDivElement>(null);

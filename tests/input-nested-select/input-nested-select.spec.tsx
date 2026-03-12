@@ -6,7 +6,7 @@ import {
     waitForElementToBeRemoved,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { InputNestedSelect, L1OptionProps } from "../../src";
+import { InputNestedSelect, L1OptionProps } from "src";
 
 const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";

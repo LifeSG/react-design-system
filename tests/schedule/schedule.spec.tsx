@@ -1,10 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
-import {
-    Schedule,
-    ScheduleEntityProps,
-    ScheduleProps,
-} from "../../src/schedule";
+import { Schedule, ScheduleEntityProps, ScheduleProps } from "src/schedule";
 import { useMediaQuery } from "react-responsive";
 
 jest.mock("react-responsive", () => ({

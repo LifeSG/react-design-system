@@ -1,8 +1,8 @@
 import { render } from "@testing-library/react";
 import "jest-styled-components";
 import styled, { ThemeProvider } from "styled-components";
-import { V3_ThemeSpec } from "../../src/v3_theme/types";
-import { V3_Spacing } from "../../src";
+import { V3_ThemeSpec } from "src/v3_theme/types";
+import { V3_Spacing } from "src";
 import { MOCK_THEME } from "./mock-theme-data";
 
 const SpacingTestComponent = styled.div`
