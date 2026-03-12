@@ -29,3 +29,6 @@ export type AddOne<
 
 // Extract the string keys of an object
 export type KeyOf<T extends object> = Extract<keyof T, string>;
+
+// Get the value types of an object as a union type
+export type ValueOf<T> = T[keyof T];
