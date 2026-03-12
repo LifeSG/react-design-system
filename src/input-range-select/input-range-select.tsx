@@ -309,7 +309,6 @@ export const InputRangeSelect = <T, V>({
         <RangeSelectorButton
             type="button"
             role="combobox"
-            aria-autocomplete={enableSearch ? "list" : "none"}
             aria-labelledby={getButtonLabelledBy(rangeType)}
             aria-describedby={ariaDescribedBy}
             aria-expanded={isOpen && focusedInput === rangeType}
