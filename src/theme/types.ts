@@ -1,7 +1,7 @@
 import {
     Border,
     Breakpoint,
-    Component,
+    ComponentToken,
     FontSpec,
     Motion,
     PrimitiveColours,
@@ -48,7 +48,11 @@ type ValueOf<T> = T[keyof T];
 
 export type BreakpointCSSVariableString = ValueOf<typeof Breakpoint>;
 export type BorderCSSVariableString = ValueOf<typeof Border>;
-export type ComponentCSSVariableString = ValueOf<typeof Component>;
+export type ComponentTokenCSSVariableString =
+    | ValueOf<typeof ComponentToken.Animation>
+    | ValueOf<typeof ComponentToken.Button>
+    | ValueOf<typeof ComponentToken.Footer>
+    | ValueOf<typeof ComponentToken.Navbar>;
 export type FontSpecCSSVariableString = ValueOf<typeof FontSpec>;
 export type MotionCSSVariableString = ValueOf<typeof Motion>;
 export type PrimitiveColourCSSVariableString = ValueOf<typeof PrimitiveColours>;
@@ -64,7 +68,7 @@ export type CSSVariableString =
     | BreakpointCSSVariableString
     | BorderCSSVariableString
     | ColourCSSVariableString
-    | ComponentCSSVariableString
+    | ComponentTokenCSSVariableString
     | FontSpecCSSVariableString
     | MotionCSSVariableString
     | RadiusCSSVariableString

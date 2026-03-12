@@ -1,4 +1,4 @@
-export const Button = {
+const Button = {
     radius: "var(--fds-button-radius)",
     "default-colour-bg": "var(--fds-button-default-colour-bg)",
     "default-colour-bg-hover": "var(--fds-button-default-colour-bg-hover)",
@@ -9,12 +9,12 @@ export const Button = {
     "link-colour-text": "var(--fds-button-link-colour-text)",
 } as const;
 
-export const Animation = {
+const Animation = {
     "loading-dots-spinner-colour":
         "var(--fds-animation-loading-dots-spinner-colour)",
 } as const;
 
-export const Navbar = {
+const Navbar = {
     "full-height": "var(--fds-navbar-full-height)",
     "full-logo-height": "var(--fds-navbar-full-logo-height)",
     "compressed-height": "var(--fds-navbar-compressed-height)",
@@ -29,7 +29,7 @@ export const Navbar = {
         "var(--fds-navbar-link-colour-text-selected-hover)",
 } as const;
 
-export const Footer = {
+const Footer = {
     "colour-bg": "var(--fds-footer-colour-bg)",
     "colour-text": "var(--fds-footer-colour-text)",
     "link-colour-text": "var(--fds-footer-link-colour-text)",
@@ -40,9 +40,9 @@ export const Footer = {
         "var(--fds-footer-disclaimer-link-colour-text-hover)",
 } as const;
 
-export const Component = {
-    ...Animation,
-    ...Button,
-    ...Footer,
-    ...Navbar,
+export const ComponentToken = {
+    Animation,
+    Button,
+    Footer,
+    Navbar,
 } as const;

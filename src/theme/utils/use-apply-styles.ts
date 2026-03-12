@@ -7,7 +7,9 @@ type StyleValue = string | number | null | undefined;
 export type ApplyStyleMap = {
     [K in keyof React.CSSProperties]?: StyleValue;
 } & {
-    [K in CSSVariableKey]?: string;
+    [K in CSSVariableKey]?: StyleValue;
+} & {
+    [K in `--${string}`]?: StyleValue;
 };
 
 export function useApplyStyle<TElement extends HTMLElement>(
