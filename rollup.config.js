@@ -97,6 +97,11 @@ const plugins = [
             peerDependencies: pkg.peerDependencies,
         }),
     }),
+    // Writes dist/cjs/package.json so Node.js treats those files as CommonJS.
+    generatePackageJson({
+        outputFolder: "dist/cjs",
+        baseContents: { type: "commonjs" },
+    }),
 
     // =========================================================================
     // COMPONENT-SPECIFIC PLUGINS
@@ -186,8 +191,10 @@ export default [
                 entryFileNames: (chunkInfo) => {
                     if (chunkInfo.name.includes("node_modules")) {
                         return (
-                            chunkInfo.name.replace("node_modules", "external") +
-                            ".js"
+                            chunkInfo.name.replace(
+                                /node_modules/g,
+                                "external"
+                            ) + ".js"
                         );
                     }
                     return "[name].js";
@@ -205,8 +212,10 @@ export default [
                 entryFileNames: (chunkInfo) => {
                     if (chunkInfo.name.includes("node_modules")) {
                         return (
-                            chunkInfo.name.replace("node_modules", "external") +
-                            ".js"
+                            chunkInfo.name.replace(
+                                /node_modules/g,
+                                "external"
+                            ) + ".js"
                         );
                     }
                     return "[name].js";
