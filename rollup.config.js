@@ -127,7 +127,14 @@ export default [
                 chunkFileNames: "chunks/[name].[hash].js",
             },
         ],
-        plugins,
+        plugins: [
+            ...plugins,
+            copy({
+                targets: [
+                    { src: "src/theme/styles/*", dest: "dist/theme/styles" },
+                ],
+            }),
+        ],
         external: ["react", "react-dom", "styled-components"],
     },
     ...folderBuildConfigs,
