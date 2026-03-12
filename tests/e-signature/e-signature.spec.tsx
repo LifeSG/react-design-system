@@ -1,27 +1,18 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ESignature } from "src/e-signature";
-import { ThemeProvider } from "../../src/theme";
 
 // =============================================================================
 // UNIT TESTS
 // =============================================================================
 describe("ESignature", () => {
     it("should render the default component", () => {
-        render(
-            <ThemeProvider>
-                <ESignature />
-            </ThemeProvider>
-        );
+        render(<ESignature />);
 
         expect(getAddSignatureButton()).toBeInTheDocument();
     });
 
     it("should render the component with value", () => {
-        render(
-            <ThemeProvider>
-                <ESignature value={PNG_BASE64} />
-            </ThemeProvider>
-        );
+        render(<ESignature value={PNG_BASE64} />);
 
         expect(screen.getByAltText("Signature preview")).toHaveAttribute(
             "src",
@@ -30,11 +21,7 @@ describe("ESignature", () => {
     });
 
     it("should show the progress indicator if loadingProgress is specified", () => {
-        render(
-            <ThemeProvider>
-                <ESignature loadingProgress={0.5} />
-            </ThemeProvider>
-        );
+        render(<ESignature loadingProgress={0.5} />);
 
         expect(
             screen.getByTestId("e-signature-progress-bar")
@@ -44,43 +31,27 @@ describe("ESignature", () => {
     });
 
     it("should render the loading text according to the loadingLabel", () => {
-        render(
-            <ThemeProvider>
-                <ESignature loadingLabel="Loading" loadingProgress={0.5} />
-            </ThemeProvider>
-        );
+        render(<ESignature loadingLabel="Loading" loadingProgress={0.5} />);
 
         expect(screen.getByText("Loading")).toBeInTheDocument();
     });
 
     it("should show edit button instead of add signature button if field has a value", () => {
-        render(
-            <ThemeProvider>
-                <ESignature value={PNG_BASE64} />
-            </ThemeProvider>
-        );
+        render(<ESignature value={PNG_BASE64} />);
 
         expect(queryAddSignatureButton()).not.toBeInTheDocument();
         expect(getEditSignatureButton()).toBeInTheDocument();
     });
 
     it("should show signature modal on clicking add signature button", () => {
-        render(
-            <ThemeProvider>
-                <ESignature />
-            </ThemeProvider>
-        );
+        render(<ESignature />);
         fireEvent.click(getAddSignatureButton());
 
         expect(getSignatureModal()).toBeVisible();
     });
 
     it("should show signature modal on clicking edit button", () => {
-        render(
-            <ThemeProvider>
-                <ESignature value={PNG_BASE64} />
-            </ThemeProvider>
-        );
+        render(<ESignature value={PNG_BASE64} />);
         fireEvent.click(getEditSignatureButton());
 
         expect(getSignatureModal()).toBeVisible();
@@ -88,11 +59,7 @@ describe("ESignature", () => {
 
     it("should dismiss the signature modal, call onChange callback and show the signature preview on clicking save button", () => {
         const changeFn = jest.fn();
-        render(
-            <ThemeProvider>
-                <ESignature onChange={changeFn} />
-            </ThemeProvider>
-        );
+        render(<ESignature onChange={changeFn} />);
 
         fireEvent.click(getAddSignatureButton());
         drawSignature();
@@ -106,11 +73,7 @@ describe("ESignature", () => {
     });
 
     it("should dismiss the signature modal and discard unsaved changes on clicking cross button in modal", () => {
-        render(
-            <ThemeProvider>
-                <ESignature value={PNG_BASE64} />
-            </ThemeProvider>
-        );
+        render(<ESignature value={PNG_BASE64} />);
 
         fireEvent.click(getEditSignatureButton());
         drawSignature();
@@ -123,11 +86,7 @@ describe("ESignature", () => {
     });
 
     it("should clear the field value on clicking clear button and save button subsequently", () => {
-        render(
-            <ThemeProvider>
-                <ESignature />
-            </ThemeProvider>
-        );
+        render(<ESignature />);
 
         fireEvent.click(getAddSignatureButton());
         drawSignature();
