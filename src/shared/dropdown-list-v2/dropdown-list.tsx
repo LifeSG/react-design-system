@@ -44,6 +44,7 @@ import {
     DropdownListProps,
     ListItemDisplayProps,
 } from "./types";
+import { VisuallyHidden } from "../accessibility";
 
 /**
  * NOTE: This component is not directly exportable but forms part of a component
@@ -61,6 +62,7 @@ const DropdownListInner = <T, V>(
         labelDisplayType = "inline",
         variant = "default",
         listboxId,
+        ariaLabel,
         matchElementWidth = false,
         width,
         topScrollItem,
@@ -597,7 +599,12 @@ const DropdownListInner = <T, V>(
 
     const renderList = () => {
         return (
-            <List ref={listRef} data-testid="dropdown-list">
+            <List
+                ref={listRef}
+                data-testid="dropdown-list"
+                role="group"
+                aria-label={ariaLabel}
+            >
                 {renderSearchInput()}
                 {renderSelectAll()}
                 {renderNoResults()}
@@ -631,6 +638,7 @@ const DropdownListInner = <T, V>(
             $customWidth={width}
             $variant={variant}
         >
+            <VisuallyHidden role="status">{ariaLabel}</VisuallyHidden>
             {renderList()}
             {renderBottomCta()}
         </Container>

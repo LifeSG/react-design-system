@@ -95,6 +95,7 @@ export interface DropdownListProps<T, V>
     matchElementWidth?: boolean | undefined;
     /** Custom width for the dropdown. When specified, takes precedence over matchElementWidth */
     width?: string | undefined;
+    ariaLabel?: string | undefined;
 
     onSelectItem?: ((item: T, extractedValue: V) => void) | undefined;
     onSelectAll?: (() => void) | undefined;

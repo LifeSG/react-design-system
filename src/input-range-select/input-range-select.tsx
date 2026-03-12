@@ -6,7 +6,6 @@ import {
 } from "../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
-    LabelContainer,
     PlaceholderLabel,
     ValueLabel,
     Wrapper,
@@ -17,9 +16,11 @@ import { InputRangeSelectProps } from "./types";
 import { ClearIcon } from "../input/input.style";
 import {
     ClearIconContainer,
+    RangeSelectorButton,
     StyledInputWrapper,
 } from "./input-range-select.style";
 import { SimpleIdGenerator } from "../util";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 
 type RangeType = "from" | "to";
 
@@ -53,6 +54,8 @@ export const InputRangeSelect = <T, V>({
     dropdownZIndex,
     dropdownRootNode,
     dropdownWidth,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
     ...otherProps
 }: InputRangeSelectProps<T, V>): JSX.Element => {
     // =============================================================================
@@ -64,19 +67,17 @@ export const InputRangeSelect = <T, V>({
         "none"
     );
     const isOpen = focusedInput !== "none";
-    const [isFocused, setIsFocused] = useState(false);
 
-    const nodeRef = useRef<HTMLDivElement | null>(null);
-    const labelContainerRef = {
-        from: useRef<HTMLDivElement>(null),
-        to: useRef<HTMLDivElement>(null),
+    const labelButtonRef = {
+        from: useRef<HTMLButtonElement>(null),
+        to: useRef<HTMLButtonElement>(null),
     };
     const dropdownRef = useRef<DropdownListApi>(null);
 
-    const [internalId] = useState<string>(
-        () => id ?? SimpleIdGenerator.generate()
-    );
+    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
     const listboxId = `${internalId}-range-listbox`;
+    const fromLabelId = `${internalId}-from-label`;
+    const toLabelId = `${internalId}-to-label`;
 
     // =============================================================================
     // EFFECTS
@@ -95,7 +96,7 @@ export const InputRangeSelect = <T, V>({
     }, [isOpen, focusedInput]);
 
     // =============================================================================
-    // HELPER FUNCTIONS
+    // HELPERS
     // =============================================================================
     const triggerOptionDisplayCallback = (show: boolean) => {
         if (!show) onHideOptions?.();
@@ -122,10 +123,9 @@ export const InputRangeSelect = <T, V>({
     const truncateValue = (type: RangeType, value: string) => {
         if (optionTruncationType === "middle") {
             let widthOfElement = 0;
-            if (labelContainerRef[type]?.current) {
+            if (labelButtonRef[type]?.current) {
                 widthOfElement =
-                    labelContainerRef[type].current.getBoundingClientRect()
-                        .width;
+                    labelButtonRef[type].current.getBoundingClientRect().width;
             }
             return StringHelper.truncateOneLine(value, widthOfElement, 120, 8);
         }
@@ -155,23 +155,62 @@ export const InputRangeSelect = <T, V>({
         return selected ? [selected] : [];
     }, [focusedInput, selectedFromValue, selectedToValue]);
 
+    const openDropdownFor = (rangeType: RangeType) => {
+        if (disabled || readOnly) return;
+
+        const nextFocusedInput =
+            rangeType === "to" && !selectedFromValue ? "from" : rangeType;
+
+        setFocusedInput(nextFocusedInput);
+        triggerOptionDisplayCallback(true);
+    };
+
+    const focusButton = (type: RangeType) => {
+        labelButtonRef[type].current?.focus();
+    };
+
+    const getButtonLabelledBy = (rangeType: RangeType) => {
+        const rangeLabelId = rangeType === "from" ? fromLabelId : toLabelId;
+        return concatIds(rangeLabelId, ariaLabelledBy);
+    };
+
+    const getDropdownAriaLabel = () => {
+        if (focusedInput === "from") {
+            return `Selecting for: ${placeholders?.from}`;
+        }
+
+        if (focusedInput === "to") {
+            return `Selecting for: ${placeholders?.to}`;
+        }
+
+        return undefined;
+    };
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handleSelectorClick =
-        (rangeType?: RangeType) => (event: React.MouseEvent) => {
+        (rangeType: RangeType) => (event: React.MouseEvent) => {
             event.stopPropagation();
             event.preventDefault();
+            openDropdownFor(rangeType);
+        };
 
+    const handleSelectorKeyDown =
+        (rangeType: RangeType) =>
+        (event: React.KeyboardEvent<HTMLButtonElement>) => {
             if (disabled || readOnly) return;
 
-            if (rangeType === "to" && selectedFromValue) {
-                setFocusedInput("to");
-            } else {
-                setFocusedInput("from");
+            switch (event.key) {
+                case "Enter":
+                case " ":
+                case "ArrowDown":
+                    event.preventDefault();
+                    openDropdownFor(rangeType);
+                    break;
+                default:
+                    break;
             }
-
-            triggerOptionDisplayCallback(true);
         };
 
     const handleListItemClick = (item: T, extractedValue: V) => {
@@ -184,6 +223,7 @@ export const InputRangeSelect = <T, V>({
             setSelectedToValue(undefined);
             setFocusedInput("to");
             triggerOptionDisplayCallback(true);
+            focusButton("to");
             return;
         }
 
@@ -192,16 +232,17 @@ export const InputRangeSelect = <T, V>({
 
         setFocusedInput("none");
         triggerOptionDisplayCallback(false);
-        nodeRef.current?.focus();
-        setIsFocused(true);
+        focusButton("to");
     };
 
     const handleDismiss = () => {
+        const last = focusedInput;
+
         setFocusedInput("none");
         triggerOptionDisplayCallback(false);
 
-        nodeRef.current?.focus();
-        setIsFocused(true);
+        if (last === "to") focusButton("to");
+        else focusButton("from");
 
         if (!selectedFromValue || !selectedToValue) {
             setSelectedFromValue(undefined);
@@ -217,12 +258,11 @@ export const InputRangeSelect = <T, V>({
             setSelectedFromValue(undefined);
             setSelectedToValue(undefined);
         }
-
-        setIsFocused(false);
     };
 
     const handleOpen = () => {
         if (disabled || readOnly) return;
+
         if (focusedInput === "none") {
             setFocusedInput("from");
             triggerOptionDisplayCallback(true);
@@ -236,39 +276,7 @@ export const InputRangeSelect = <T, V>({
         setSelectedToValue(undefined);
         onSelectOption?.({ from: undefined, to: undefined }, undefined);
 
-        nodeRef.current?.focus();
-        setIsFocused(true);
-    };
-
-    const handleNodeFocus = () => setIsFocused(true);
-
-    const handleNodeBlur = (e: React.FocusEvent) => {
-        if (
-            isFocused &&
-            !isOpen &&
-            nodeRef.current &&
-            !nodeRef.current.contains(e.relatedTarget as Node)
-        ) {
-            setIsFocused(false);
-        }
-    };
-
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (disabled || readOnly) return;
-        if (isOpen) return;
-        if (event.currentTarget !== event.target) return;
-
-        switch (event.key) {
-            case "Enter":
-            case " ":
-            case "ArrowDown":
-                event.preventDefault();
-                setFocusedInput("from");
-                triggerOptionDisplayCallback(true);
-                break;
-            default:
-                break;
-        }
+        focusButton("from");
     };
 
     // =============================================================================
@@ -298,13 +306,22 @@ export const InputRangeSelect = <T, V>({
     };
 
     const renderSelectorContent = (rangeType: RangeType) => (
-        <LabelContainer
+        <RangeSelectorButton
+            type="button"
+            role="combobox"
+            aria-labelledby={getButtonLabelledBy(rangeType)}
+            aria-describedby={ariaDescribedBy}
+            aria-expanded={isOpen && focusedInput === rangeType}
+            aria-controls={listboxId}
+            aria-disabled={disabled}
+            aria-readonly={readOnly}
             onClick={handleSelectorClick(rangeType)}
-            ref={labelContainerRef[rangeType]}
-            $disabled={disabled}
+            onKeyDown={handleSelectorKeyDown(rangeType)}
+            ref={labelButtonRef[rangeType]}
+            tabIndex={0}
         >
             {renderLabel(rangeType)}
-        </LabelContainer>
+        </RangeSelectorButton>
     );
 
     const renderElement = () => {
@@ -312,16 +329,18 @@ export const InputRangeSelect = <T, V>({
             <StyledInputWrapper
                 className={className}
                 data-testid={testId}
-                ref={nodeRef}
-                tabIndex={0}
-                onFocus={handleNodeFocus}
-                onBlur={handleNodeBlur}
-                $focused={isFocused || isOpen}
                 $disabled={disabled}
                 $readOnly={readOnly}
                 $error={error}
-                onKeyDown={handleKeyDown}
+                $focused={isOpen}
             >
+                <VisuallyHidden id={fromLabelId}>
+                    {placeholders?.from || "Select From"}
+                </VisuallyHidden>
+                <VisuallyHidden id={toLabelId}>
+                    {placeholders?.to || "Select To"}
+                </VisuallyHidden>
+
                 <RangeInputInnerContainer
                     currentActive={getCurrentFocused()}
                     error={error}
@@ -353,6 +372,7 @@ export const InputRangeSelect = <T, V>({
                 ref={dropdownRef}
                 data-testid={`${testId}-dropdown`}
                 listboxId={listboxId}
+                ariaLabel={getDropdownAriaLabel()}
                 listItems={currentOptions}
                 onSelectItem={handleListItemClick}
                 onDismiss={handleDismiss}
