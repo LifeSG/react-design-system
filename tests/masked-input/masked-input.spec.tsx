@@ -107,7 +107,7 @@ describe("MaskedInput", () => {
             expect(blurFn).toBeCalled();
         });
 
-        it("should fire the onMask and onUnmask callbacks when the masked or unmasked icon is clicked", () => {
+        it("should fire onMask and onUnmask when readonly button is clicked", () => {
             const maskFn = jest.fn();
             const unmaskFn = jest.fn();
 
@@ -117,18 +117,35 @@ describe("MaskedInput", () => {
                     onMask={maskFn}
                     onUnmask={unmaskFn}
                     readOnly
+                    loadState="success"
                 />
             );
 
-            act(() => {
-                fireEvent.click(screen.getByTestId("icon-masked"));
-                expect(unmaskFn).toBeCalled();
-            });
+            fireEvent.click(screen.getByTestId("masked-input-readonly-button"));
+            expect(unmaskFn).toHaveBeenCalledTimes(1);
 
-            act(() => {
-                fireEvent.click(screen.getByTestId("icon-unmasked"));
-                expect(maskFn).toBeCalled();
-            });
+            fireEvent.click(screen.getByTestId("masked-input-readonly-button"));
+            expect(maskFn).toHaveBeenCalledTimes(1);
+        });
+
+        it("should fire onMask and onUnmask when the icon is clicked (editable)", () => {
+            const maskFn = jest.fn();
+            const unmaskFn = jest.fn();
+
+            render(
+                <MaskedInput
+                    value="S1234567D"
+                    onMask={maskFn}
+                    onUnmask={unmaskFn}
+                    readOnly={false}
+                />
+            );
+
+            fireEvent.click(screen.getByTestId("icon-masked"));
+            expect(unmaskFn).toHaveBeenCalledTimes(1);
+
+            fireEvent.click(screen.getByTestId("icon-unmasked"));
+            expect(maskFn).toHaveBeenCalledTimes(1);
         });
 
         it("should fire the onTryAgain callback when the try again button is clicked", () => {

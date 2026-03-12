@@ -28,12 +28,14 @@ export const renderDescriptionWithProps =
                 const seconds = descriptionAttrs.secondsLeft % 60;
                 return (
                     <>
-                        You&rsquo;ve been inactive for a while. To protect your
-                        privacy, you&rsquo;ll be logged out in {minutes} minutes{" "}
-                        {seconds} seconds.
-                        <br />
-                        <br />
-                        If you wish to stay on this page, let us know now.
+                        <p>
+                            You&rsquo;ve been inactive for a while. To protect
+                            your privacy, you&rsquo;ll be logged out in{" "}
+                            {minutes} minutes {seconds} seconds.
+                        </p>
+                        <p>
+                            If you wish to stay on this page, let us know now.
+                        </p>
                     </>
                 );
             }

@@ -265,6 +265,7 @@ export const Toggle = ({
                                 data-testid={`toggle-label`}
                                 id={`${generatedId}-label`}
                                 $maxLines={childrenMaxLines}
+                                $selected={selected}
                             >
                                 {children}
                             </Label>

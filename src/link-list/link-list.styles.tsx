@@ -3,7 +3,7 @@ import { MinusIcon } from "@lifesg/react-icons/minus";
 import { PlusIcon } from "@lifesg/react-icons/plus";
 import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
-import { V3_Border, V3_Colour, V3_Font, V3_Spacing } from "../v3_theme";
+import { V3_Border, V3_Colour } from "../v3_theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -12,6 +12,10 @@ import { Typography } from "../typography";
 // =============================================================================
 interface ExpandableChildStyleProps {
     $border?: boolean;
+}
+
+interface ToggleButtonStyleProps {
+    $loading?: boolean;
 }
 
 // =============================================================================
@@ -99,7 +103,7 @@ export const ViewLessIcon = styled(MinusIcon)`
     ${iconStyle}
 `;
 
-export const ToggleButton = styled.button`
+export const ToggleButton = styled.button<ToggleButtonStyleProps>`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -109,26 +113,32 @@ export const ToggleButton = styled.button`
     background: none;
     cursor: pointer;
     border-top: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour.border};
+    gap: 1rem;
 
-    &:hover {
-        ${ToggleButtonLabel},
-        ${ViewMoreIcon},
-        ${ViewLessIcon} {
-            color: ${V3_Colour["text-hover"]};
-            text-decoration: underline;
-        }
-    }
-`;
+    ${(props) =>
+        props.$loading &&
+        css`
+            cursor: default;
+            flex-direction: row-reverse;
 
-export const LoadingContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
+            ${ToggleButtonLabel},
+            ${ViewMoreIcon},
+            ${ViewLessIcon} {
+                color: ${V3_Colour["text-disabled"]};
+                text-decoration: none;
+            }
+        `}
 
-    padding: ${V3_Spacing["spacing-16"]} 0;
-    border-top: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour.border};
-
-    color: ${V3_Colour["text-disabled"]};
-    ${V3_Font["body-md-semibold"]};
+    ${(props) =>
+        !props.$loading &&
+        css`
+            &:hover {
+                ${ToggleButtonLabel},
+                ${ViewMoreIcon},
+                ${ViewLessIcon} {
+                    color: ${V3_Colour["text-hover"]};
+                    text-decoration: underline;
+                }
+            }
+        `}
 `;

@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+    forwardRef,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from "react";
 import { FormErrorMessage } from "src/form/form-label";
 import { VisuallyHidden } from "../shared/accessibility";
 import { SimpleIdGenerator, StringHelper } from "../util";
@@ -9,24 +15,29 @@ import {
     Prefix,
     Wrapper,
 } from "./otp-input.styles";
-import { OtpInputProps } from "./types";
+import { OtpInputProps, OtpInputRef } from "./types";
 import { stripOtpFromAutofill, validateUserInput } from "./utils";
 
-export const OtpInput = ({
-    id,
-    value = [],
-    "data-testid": dataTestId,
-    className,
-    cooldownDuration,
-    actionButtonProps,
-    errorMessage,
-    numOfInput,
-    prefix,
-    onChange,
-    onCooldownStart,
-    onCooldownEnd,
-    ...otherProps
-}: OtpInputProps) => {
+const Component = (
+    {
+        id,
+        value = [],
+        "data-testid": dataTestId,
+        className,
+        cooldownDuration,
+        actionButtonProps,
+        errorMessage,
+        numOfInput,
+        prefix,
+        onChange,
+        onCooldownStart,
+        onCooldownEnd,
+        otpOnly,
+        onCountdownChange,
+        ...otherProps
+    }: OtpInputProps,
+    ref: React.Ref<OtpInputRef>
+) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
@@ -68,6 +79,13 @@ export const OtpInput = ({
             return () => cleanup();
         }
     }, [lastCtaTimestamp]);
+
+    useImperativeHandle(ref, () => ({
+        startCooldown: () => {
+            setLastCtaTimestamp(new Date());
+            setCountDown(cooldownDuration);
+        },
+    }));
 
     useEffect(() => {
         onChangeRef.current = onChange;
@@ -206,6 +224,8 @@ export const OtpInput = ({
             if (timer <= 0) {
                 if (onCooldownEnd) onCooldownEnd();
                 clearInterval(interval);
+            } else if (onCountdownChange) {
+                onCountdownChange(timer);
             }
         }, 1000);
 
@@ -301,14 +321,18 @@ export const OtpInput = ({
             <VisuallyHidden aria-live="polite">
                 {countDown > 0 ? "" : "Ready to resend OTP"}
             </VisuallyHidden>
-            <CTAButton
-                styleType={styleType}
-                type="button"
-                {...otherCtaProps}
-                onClick={handleClick}
-                disabled={disabled || isWithinCooldown()}
-                {...getCTALabelProps()}
-            />
+            {!otpOnly && (
+                <CTAButton
+                    styleType={styleType}
+                    type="button"
+                    {...otherCtaProps}
+                    onClick={handleClick}
+                    disabled={disabled || isWithinCooldown()}
+                    {...getCTALabelProps()}
+                />
+            )}
         </Wrapper>
     );
 };
+
+export const OtpInput = forwardRef(Component);

@@ -50,6 +50,19 @@ const DATA: ApiTableSectionProps[] = [
                     "The test identifier of the component's indicators",
                 propTypes: ["string"],
             },
+            {
+                name: "counterOffset",
+                description: (
+                    <>
+                        The offset for the numeric indicators
+                        <br />
+                        <b>Note:</b> If <code>offset = 2</code>, the start of
+                        the timeline will be <code>index + 1 + offset = 3</code>
+                    </>
+                ),
+                propTypes: ["number"],
+                defaultValue: "0",
+            },
         ],
     },
     {

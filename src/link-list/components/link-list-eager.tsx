@@ -15,6 +15,8 @@ import {
     ViewMoreIcon,
 } from "../link-list.styles";
 import { LinkListItems } from "./common";
+import { SimpleIdGenerator } from "../../util";
+import { inertValue } from "../../shared/accessibility";
 
 type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
     Omit<LinkListEagerProps, "loadMode">;
@@ -36,6 +38,8 @@ export const EagerLinkList = <T,>({
 
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
+
+    const [id] = useState(() => SimpleIdGenerator.generate());
 
     // =============================================================================
     // EVENT HANDLERS
@@ -71,6 +75,8 @@ export const EagerLinkList = <T,>({
             type="button"
             onClick={handleToggleButtonClick}
             data-testid="toggle-button"
+            aria-expanded={showMinimised}
+            aria-controls={id}
         >
             <ToggleButtonLabel
                 forwardedAs="span"
@@ -81,7 +87,11 @@ export const EagerLinkList = <T,>({
                     ? customLabels?.viewLess || "View less"
                     : customLabels?.viewMore || "View more"}
             </ToggleButtonLabel>
-            {showMinimised ? <ViewLessIcon /> : <ViewMoreIcon />}
+            {showMinimised ? (
+                <ViewLessIcon aria-hidden />
+            ) : (
+                <ViewMoreIcon aria-hidden />
+            )}
         </ToggleButton>
     );
 
@@ -100,8 +110,10 @@ export const EagerLinkList = <T,>({
             />
             {itemsMinimised.length > 0 && (
                 <Expandable
+                    id={id}
                     style={expandableStyles}
                     data-testid="minimised-content"
+                    inert={inertValue(!showMinimised)}
                 >
                     <ExpandableChild ref={childRef} $border>
                         <LinkListItems
