@@ -30,7 +30,7 @@ export const FormTimepicker = ({
 
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
             label={label}
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
@@ -48,10 +48,9 @@ export const FormTimepicker = ({
             xxlCols={xxlCols}
         >
             <Timepicker
-                id={`${id}-base`}
+                id={`${inputId}-base`}
                 data-testid={testId ? `${testId}-base` : undefined}
                 error={!!errorMessage}
-                aria-labelledby={inputId}
                 {...otherProps}
             />
         </FormWrapper>
