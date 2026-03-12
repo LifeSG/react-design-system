@@ -47,13 +47,15 @@ const subExports = subDirs.reduce((acc, name) => {
     return acc;
 }, {});
 
-export const plugins = [
+const basePlugins = [
     peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
     nodeResolve({ browser: true }), // Locates modules in the project's node_modules directory
     commonjs(), // converts CommonJS to ES6 modules
-    wyw({
-        sourcemap: true,
-    }),
+    json(), // converts JSON files to ES6 modules
+];
+
+const plugins = [
+    ...basePlugins,
     typescript({
         useTsconfigDeclarationDir: true,
         tsconfig: "tsconfig.json",
@@ -71,35 +73,7 @@ export const plugins = [
             ],
         },
     }),
-    image(),
-    json(),
     terser(), // Helps remove comments, whitespace or logging codes
-    libStylePlugin({
-        exclude: ["**/node_modules/**"],
-        customCSSInjectedPath: (id) => {
-            const filename = path.basename(id);
-            return "/" + filename;
-        },
-        customCSSPath: (id) => {
-            const relative = path.relative(process.cwd(), id);
-            const outputPath = relative.replace("src/", "");
-            return "/" + outputPath;
-        },
-        scopedName: "[local]",
-    }),
-    libStylePlugin({
-        include: ["node_modules/@govtechsg/sgds-web-component/**/*.css"],
-        postCssPlugins: [postcssImports()],
-        customCSSInjectedPath: () => {
-            return "/sgds.css";
-        },
-        customCSSPath: () => {
-            return "/masthead/sgds.css";
-        },
-    }),
-    copy({
-        targets: [{ src: "src/theme/styles/*", dest: "dist/theme/styles" }],
-    }),
     generatePackageJson({
         outputFolder: "dist",
         baseContents: (pkg) => ({
@@ -123,6 +97,45 @@ export const plugins = [
             peerDependencies: pkg.peerDependencies,
         }),
     }),
+
+    // =========================================================================
+    // COMPONENT-SPECIFIC PLUGINS
+    // =========================================================================
+    image(),
+    // Handles local component CSS modules (excludes node_modules).
+    // Ensures custom CSS is injected and output paths are mapped for local components.
+    libStylePlugin({
+        exclude: ["**/node_modules/**"],
+        customCSSInjectedPath: (id) => {
+            const filename = path.basename(id);
+            return "/" + filename;
+        },
+        customCSSPath: (id) => {
+            const relative = path.relative(process.cwd(), id);
+            const outputPath = relative.replace("src/", "");
+            return "/" + outputPath;
+        },
+        scopedName: "[local]",
+    }),
+    // Handles external SGDS web component CSS from node_modules.
+    // Ensures SGDS styles are bundled and output to a fixed path for masthead usage.
+    libStylePlugin({
+        include: ["node_modules/@govtechsg/sgds-web-component/**/*.css"],
+        postCssPlugins: [postcssImports()],
+        customCSSInjectedPath: () => {
+            return "/sgds.css";
+        },
+        customCSSPath: () => {
+            return "/masthead/sgds.css";
+        },
+    }),
+    wyw({
+        sourcemap: true,
+    }),
+    // Copies static assets to the build output
+    copy({
+        targets: [{ src: "src/theme/styles/*", dest: "dist/theme/styles" }],
+    }),
 ];
 
 const codemodBuildConfigs = [
@@ -136,9 +149,7 @@ const codemodBuildConfigs = [
             format: "cjs",
         },
         plugins: [
-            peerDepsExternal(), // Exclude peer deps
-            nodeResolve(), // Locates modules in the project's node_modules directory
-            commonjs(), // Converts CommonJS to ES6 modules
+            ...basePlugins,
             typescript({
                 useTsconfigDeclarationDir: true,
                 tsconfig: "tsconfig.json",
@@ -152,7 +163,6 @@ const codemodBuildConfigs = [
                     ],
                 },
             }),
-            json(),
             copy({
                 targets: [{ src: "codemods/**/*", dest: "dist/codemods" }],
             }),

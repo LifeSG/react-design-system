@@ -18,7 +18,7 @@
     },
     "scripts": {
         "build": "npm run rollup",
-        "rollup": "rm -rf dist && node node_modules/rollup/dist/bin/rollup -c",
+        "rollup": "rm -rf dist && node --max-old-space-size=4096 node_modules/rollup/dist/bin/rollup -c",
         "pack-package": "cd dist && npm pack",
         "publish-lib": "npm publish ./dist",
         "start": "rollup -c -w",
@@ -48,8 +48,6 @@
     },
     "homepage": "https://github.com/LifeSG/react-design-system#readme",
     "dependencies": {
-        "@linaria/core": "^7.0.0",
-        "@linaria/react": "^7.0.1",
         "@react-spring/web": "^10.0.1",
         "clsx": "^2.1.1",
         "fabric": "^7.2.0",
@@ -132,7 +130,6 @@
         "lodash": "^4.17.21",
         "lottie-colorify": "^0.8.0",
         "lottie-react": "^2.3.1",
-        "mini-css-extract-plugin": "^2.10.0",
         "postcss": "^8.4.38",
         "postcss-import": "^16.1.0",
         "prettier": "^2.6.1",
@@ -166,6 +163,12 @@
         "react": "^17.0.2 || ^18.0.0 || ^19.0.0",
         "react-dom": "^17.0.2 || ^18.0.0 || ^19.0.0",
         "styled-components": "^6.1.19"
+    },
+    "overrides": {
+        "react-resize-detector": {
+            "react": "$react",
+            "react-dom": "$react-dom"
+        }
     },
     "lint-staged": {
         "*.{tsx,ts}": [
