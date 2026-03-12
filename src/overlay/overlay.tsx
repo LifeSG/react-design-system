@@ -52,9 +52,13 @@ const OverlayComponent = ({
 
         return () => {
             removeOverlay();
+
             if (getOverlayOrder().length < 1) {
-                applyScrollLockClass("remove");
-                scrollToLastScrollPosition();
+                if (isIOS()) {
+                    applyScrollLockClass("remove");
+                    scrollToLastScrollPosition();
+                }
+
                 applyBodyStyleClass("remove");
             }
         };
