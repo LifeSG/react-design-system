@@ -39,7 +39,7 @@ export const HiddenInput = styled.input`
     display: none;
 `;
 
-export const DragOverlay = styled(DashedBorder)`
+export const DragOverlay = styled.div`
     position: absolute;
     top: 0;
     left: 0;

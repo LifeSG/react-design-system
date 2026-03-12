@@ -7,6 +7,7 @@ import {
 
 export interface DashedBorderProps
     extends Omit<React.HTMLAttributes<HTMLDivElement>, "color"> {
+    enabled?: boolean;
     thickness?: ValueOf<typeof BorderThickness>;
     radius?: RadiusCSSVariableString;
     colour?: ColourCSSVariableString;
