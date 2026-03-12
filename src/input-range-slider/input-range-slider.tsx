@@ -13,7 +13,7 @@ import {
 } from "./input-range-slider.styles";
 import { InputRangeSliderProps } from "./types";
 import { SimpleIdGenerator } from "../util";
-import { VisuallyHidden } from "../shared/accessibility";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 
 export const InputRangeSlider = ({
     id,
@@ -36,7 +36,6 @@ export const InputRangeSlider = ({
     indicatorLabelPrefix,
     indicatorLabelSuffix,
     renderSliderLabel,
-    getAriaValueText,
     onChange,
     onChangeEnd,
     ...otherProps
@@ -48,6 +47,7 @@ export const InputRangeSlider = ({
     const [internalId] = useState(() => SimpleIdGenerator.generate());
     const trackColors = getTrackColors();
     const indicatorTextId = `${internalId}-indicator`;
+    const instructionTextId = `${internalId}-instruction`;
     const resolvedAriaLabels = getResolvedAriaLabels();
 
     // =========================================================================
@@ -75,6 +75,7 @@ export const InputRangeSlider = ({
         }
 
         if (index > -1 && selection[index] === value[index]) {
+            // skip unnecessary update when dragging the start thumb across the end thumb
             return;
         }
 
@@ -143,12 +144,6 @@ export const InputRangeSlider = ({
             return "Slider";
         }
 
-        if (numOfThumbs === 2) {
-            return index === 0
-                ? "Minimum value slider"
-                : "Maximum value slider";
-        }
-
         if (index === 0) {
             return "Minimum value slider";
         }
@@ -160,14 +155,8 @@ export const InputRangeSlider = ({
         return "Indeterminate value slider";
     }
 
-    function getThumbInstruction(label: string) {
-        const lowerCasedLabel = label.charAt(0).toLowerCase() + label.slice(1);
-        return `Use left and right arrow keys to adjust the ${lowerCasedLabel}.`;
-    }
-
     function getThumbAccessibleLabel(index: number) {
-        const label = resolvedAriaLabels[index];
-        return `${label}. ${getThumbInstruction(label)}`;
+        return resolvedAriaLabels[index];
     }
 
     function getTrackColors() {
@@ -201,23 +190,18 @@ export const InputRangeSlider = ({
         return defaultColors;
     }
 
-    function getValueText(currentValue: number, index: number) {
-        if (getAriaValueText) {
-            return getAriaValueText(currentValue, index);
-        }
-
+    function getValueText(currentValue: number) {
         return `${sliderLabelPrefix || ""}${currentValue}${
             sliderLabelSuffix || ""
         }`;
     }
 
     function getThumbDescriptionIds() {
-        return [
+        return concatIds(
             showIndicatorLabel ? indicatorTextId : undefined,
             ariaErrorMessage,
-        ]
-            .filter(Boolean)
-            .join(" ");
+            instructionTextId
+        );
     }
 
     function isIncreaseKey(key: string) {
@@ -227,6 +211,7 @@ export const InputRangeSlider = ({
     function isDecreaseKey(key: string) {
         return ["ArrowLeft", "ArrowDown", "PageDown", "Home"].includes(key);
     }
+
     function getSliderTypeText(label?: string) {
         if (!label) {
             return "slider";
@@ -358,7 +343,7 @@ export const InputRangeSlider = ({
                     state
                 ) => {
                     const thumbLabelTextId = `${internalId}-thumb-label-${state.index}`;
-                    const thumbValue = selection[state.index] ?? min;
+                    const thumbValue = selection[state.index];
 
                     return (
                         <SliderThumb
@@ -367,10 +352,7 @@ export const InputRangeSlider = ({
                             tabIndex={thumbProps.tabIndex}
                             aria-labelledby={thumbLabelTextId}
                             aria-describedby={getThumbDescriptionIds()}
-                            aria-valuetext={getValueText(
-                                thumbValue,
-                                state.index
-                            )}
+                            aria-valuetext={getValueText(thumbValue)}
                             aria-valuemin={min}
                             aria-valuemax={max}
                             aria-valuenow={thumbValue}
@@ -382,6 +364,10 @@ export const InputRangeSlider = ({
                                 thumbProps.onKeyDown?.(event);
                             }}
                         >
+                            <VisuallyHidden id={instructionTextId}>
+                                Use left and right arrow keys to adjust the
+                                slider.
+                            </VisuallyHidden>
                             <VisuallyHidden id={thumbLabelTextId}>
                                 {getThumbAccessibleLabel(state.index)}
                             </VisuallyHidden>

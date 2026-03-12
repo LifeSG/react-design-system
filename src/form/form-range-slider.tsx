@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { InputRangeSlider } from "../input-range-slider";
+import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormRangeSliderProps } from "./types";
 
@@ -21,11 +23,15 @@ export const FormRangeSlider = ({
     xxlCols,
     ...otherProps
 }: FormRangeSliderProps): JSX.Element => {
-    const errorId = `${id}-error-message`;
+    const [internalId] = useState(
+        () => `form-field-${SimpleIdGenerator.generate()}`
+    );
+    const inputId = id ?? internalId;
+    const errorId = `${inputId}-error-message`;
 
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
@@ -43,8 +49,8 @@ export const FormRangeSlider = ({
             xxlCols={xxlCols}
         >
             <InputRangeSlider
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 ariaErrorMessage={errorMessage ? errorId : undefined}
                 ariaInvalid={!!errorMessage}
                 {...otherProps}

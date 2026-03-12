@@ -21,7 +21,6 @@ export interface BaseSliderProps {
     indicatorLabelPrefix?: string | undefined;
     indicatorLabelSuffix?: string | undefined;
     renderSliderLabel?: ((value: number) => React.ReactNode) | undefined;
-    getAriaValueText?: ((value: number, index: number) => string) | undefined;
 }
 
 export interface InputRangeSliderProps extends BaseSliderProps {
