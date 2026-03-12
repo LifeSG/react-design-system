@@ -8,7 +8,9 @@ export interface TimepickerProps {
     className?: string | undefined;
     id?: string | undefined;
     style?: React.CSSProperties | undefined;
-
+    // Accessibility
+    "aria-labelledby"?: string | undefined;
+    "aria-describedby"?: string | undefined;
     // Input-specific attributes
     "data-testid"?: string | undefined;
     /**

@@ -23,6 +23,8 @@ export const Timepicker = ({
     alignment,
     dropdownZIndex,
     dropdownRootNode,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
     ...otherProps
 }: TimepickerProps) => {
     // =============================================================================
@@ -87,7 +89,9 @@ export const Timepicker = ({
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (disabled || readOnly) return;
+        if (disabled || readOnly) {
+            return;
+        }
 
         if (e.key === "Enter" || e.key === " " || e.key === "ArrowDown") {
             e.preventDefault();
@@ -101,7 +105,7 @@ export const Timepicker = ({
     const renderElement = () => (
         <InputWrapper
             ref={wrapperRef}
-            id={id}
+            role="group"
             $readOnly={readOnly}
             $disabled={disabled}
             $focused={isOpen}
@@ -113,7 +117,13 @@ export const Timepicker = ({
                 readOnly
                 placeholder={placeholder || getPlaceholderValue()}
                 value={TimeHelper.formatDisplayValue(value, format)}
-                disabled={disabled}
+                role="combobox"
+                aria-invalid={error || undefined}
+                aria-disabled={disabled || undefined}
+                aria-readonly={readOnly || undefined}
+                aria-labelledby={ariaLabelledBy}
+                aria-describedby={ariaDescribedBy}
+                aria-expanded={!disabled && !readOnly ? isOpen : false}
                 data-testid={
                     id ? `${id}-timepicker-selector` : "timepicker-selector"
                 }
@@ -130,7 +140,13 @@ export const Timepicker = ({
         setFloatingRef,
         getFloatingProps,
     }: DropdownRenderProps) => (
-        <div ref={setFloatingRef} style={styles} {...getFloatingProps()}>
+        <div
+            ref={setFloatingRef}
+            style={styles}
+            role="dialog"
+            aria-label="Time picker"
+            {...getFloatingProps()}
+        >
             <TimepickerDropdown
                 id={id}
                 show={isOpen}
@@ -153,7 +169,6 @@ export const Timepicker = ({
             onDismiss={handleDismiss}
             offset={8}
             alignment={alignment}
-            fitAvailableHeight
             customZIndex={dropdownZIndex}
             rootNode={dropdownRootNode}
         />
