@@ -1,15 +1,15 @@
 import { RefObject } from "react";
 import { useIsomorphicLayoutEffect } from "../../util";
+import { CSSVariableKey } from "../types";
 
 type StyleValue = string | number | null | undefined;
-
-// TODO: Update to FDSVariableName once 9839 merged
-type CSSVariableKey = `--${string}`;
 
 export type ApplyStyleMap = {
     [K in keyof React.CSSProperties]?: StyleValue;
 } & {
-    [key in CSSVariableKey]?: StyleValue;
+    [K in CSSVariableKey]?: StyleValue;
+} & {
+    [K in `--${string}`]?: StyleValue;
 };
 
 export function useApplyStyle<TElement extends HTMLElement>(

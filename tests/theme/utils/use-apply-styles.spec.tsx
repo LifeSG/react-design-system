@@ -49,26 +49,26 @@ describe("useApplyStyle Hooks", () => {
 
     it("applies CSS variable", () => {
         const { getByTestId } = render(
-            <TestComponent styles={{ "--block-bg": "green" }} />
+            <TestComponent styles={{ "--fds-colour-bg": "green" }} />
         );
 
         const element = getByTestId("target");
 
-        expect(element.style.getPropertyValue("--block-bg")).toBe("green");
+        expect(element.style.getPropertyValue("--fds-colour-bg")).toBe("green");
     });
 
-    it("removes CSS variable when null", () => {
+    it("removes CSS variable when undefined", () => {
         const { getByTestId, rerender } = render(
-            <TestComponent styles={{ "--block-bg": "green" }} />
+            <TestComponent styles={{ "--fds-colour-bg": "green" }} />
         );
 
         const element = getByTestId("target");
 
-        expect(element.style.getPropertyValue("--block-bg")).toBe("green");
+        expect(element.style.getPropertyValue("--fds-colour-bg")).toBe("green");
 
-        rerender(<TestComponent styles={{ "--block-bg": null }} />);
+        rerender(<TestComponent styles={{ "--fds-colour-bg": undefined }} />);
 
-        expect(element.style.getPropertyValue("--block-bg")).toBe("");
+        expect(element.style.getPropertyValue("--fds-colour-bg")).toBe("");
     });
 
     it("does not crash when ref is null", () => {
