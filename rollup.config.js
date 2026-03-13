@@ -108,7 +108,7 @@ const plugins = [
     // =========================================================================
     image(),
     // Handles local component CSS modules (excludes node_modules).
-    // Ensures custom CSS is injected and output paths are mapped for local components.
+    // Injects an import statement in the source style file and outputs CSS in the same location.
     libStylePlugin({
         exclude: ["**/node_modules/**"],
         customCSSInjectedPath: (id) => {
@@ -143,87 +143,80 @@ const plugins = [
     }),
 ];
 
-const codemodBuildConfigs = [
-    {
-        input: `codemods/run-codemod.ts`,
-        output: {
-            banner: "#!/usr/bin/env node",
-            file: `dist/codemods/run-codemod.js`,
+const libraryBuildConfig = {
+    input,
+    output: [
+        {
+            dir: "dist",
+            format: "esm",
             sourcemap: true,
             exports: "named",
-            format: "cjs",
+            interop: "compat",
+            preserveModules: true,
+            preserveModulesRoot: "src",
+            chunkFileNames: "chunks/[name].[hash].js",
+            entryFileNames: (chunkInfo) => {
+                if (chunkInfo.name.includes("node_modules")) {
+                    return (
+                        chunkInfo.name.replace(/node_modules/g, "external") +
+                        ".js"
+                    );
+                }
+                return "[name].js";
+            },
         },
-        plugins: [
-            ...basePlugins,
-            typescript({
-                useTsconfigDeclarationDir: true,
-                tsconfig: "tsconfig.json",
-                tsconfigOverride: {
-                    exclude: [
-                        "tests",
-                        "**/stories/**",
-                        "**/__mocks__/**",
-                        "**/custom-types/**",
-                        "src/**",
-                    ],
-                },
-            }),
-            copy({
-                targets: [{ src: "codemods/**/*", dest: "dist/codemods" }],
-            }),
-        ],
-    },
-];
+        {
+            dir: "dist/cjs",
+            format: "cjs",
+            sourcemap: true,
+            exports: "named",
+            interop: "compat",
+            chunkFileNames: "chunks/[name].[hash].js",
+            preserveModules: true,
+            preserveModulesRoot: "src",
+            entryFileNames: (chunkInfo) => {
+                if (chunkInfo.name.includes("node_modules")) {
+                    return (
+                        chunkInfo.name.replace(/node_modules/g, "external") +
+                        ".js"
+                    );
+                }
+                return "[name].js";
+            },
+        },
+    ],
+    plugins,
+    external: ["react", "react-dom", "styled-components"],
+};
 
-export default [
-    {
-        input,
-        output: [
-            {
-                dir: "dist",
-                format: "esm",
-                sourcemap: true,
-                exports: "named",
-                interop: "compat",
-                preserveModules: true,
-                preserveModulesRoot: "src",
-                chunkFileNames: "chunks/[name].[hash].js",
-                entryFileNames: (chunkInfo) => {
-                    if (chunkInfo.name.includes("node_modules")) {
-                        return (
-                            chunkInfo.name.replace(
-                                /node_modules/g,
-                                "external"
-                            ) + ".js"
-                        );
-                    }
-                    return "[name].js";
-                },
-            },
-            {
-                dir: "dist/cjs",
-                format: "cjs",
-                sourcemap: true,
-                exports: "named",
-                interop: "compat",
-                chunkFileNames: "chunks/[name].[hash].js",
-                preserveModules: true,
-                preserveModulesRoot: "src",
-                entryFileNames: (chunkInfo) => {
-                    if (chunkInfo.name.includes("node_modules")) {
-                        return (
-                            chunkInfo.name.replace(
-                                /node_modules/g,
-                                "external"
-                            ) + ".js"
-                        );
-                    }
-                    return "[name].js";
-                },
-            },
-        ],
-        plugins,
-        external: ["react", "react-dom", "styled-components"],
+const codemodBuildConfig = {
+    input: `codemods/run-codemod.ts`,
+    output: {
+        banner: "#!/usr/bin/env node",
+        file: `dist/codemods/run-codemod.js`,
+        sourcemap: true,
+        exports: "named",
+        format: "cjs",
     },
-    ...codemodBuildConfigs,
-];
+    plugins: [
+        ...basePlugins,
+        typescript({
+            useTsconfigDeclarationDir: true,
+            tsconfig: "tsconfig.json",
+            tsconfigOverride: {
+                exclude: [
+                    "tests",
+                    "**/stories/**",
+                    "**/__mocks__/**",
+                    "**/custom-types/**",
+                    "src/**",
+                ],
+            },
+        }),
+        copy({
+            targets: [{ src: "codemods/**/*", dest: "dist/codemods" }],
+        }),
+    ],
+};
+
+export default [libraryBuildConfig, codemodBuildConfig];
