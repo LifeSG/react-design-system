@@ -31,6 +31,8 @@ export interface InputRangeSliderProps extends BaseSliderProps {
     minRange?: number | undefined;
     ariaLabels?: string[] | undefined;
     "aria-invalid"?: boolean | undefined;
+    "aria-labelledby"?: string | undefined;
+    "aria-describedby"?: string | undefined;
     /** Called on every selection change */
     onChange?: ((value: number[]) => void) | undefined;
     /** Called when a thumb is released after selection is complete */

@@ -34,6 +34,8 @@ export const InputRangeSlider = ({
     indicatorLabelSuffix,
     ariaLabels,
     "aria-invalid": ariaInvalid,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
     renderSliderLabel,
     onChange,
     onChangeEnd,
@@ -197,8 +199,9 @@ export const InputRangeSlider = ({
 
     function getThumbDescriptionIds() {
         return concatIds(
+            ariaDescribedBy,
             showIndicatorLabel ? indicatorTextId : undefined,
-            instructionTextId
+            disabled || readOnly ? undefined : instructionTextId
         );
     }
 
@@ -318,9 +321,12 @@ export const InputRangeSlider = ({
             id={id}
             role="group"
             aria-disabled={disabled || undefined}
-            aria-readonly={readOnly || undefined}
-            aria-invalid={ariaInvalid || undefined}
         >
+            {!disabled && !readOnly && (
+                <VisuallyHidden id={instructionTextId}>
+                    Use left and right arrow keys to adjust the slider.
+                </VisuallyHidden>
+            )}
             {showIndicatorLabel && (
                 <IndicatorLabelContainer id={indicatorTextId}>
                     {formatIndicationLabel()}
@@ -349,7 +355,7 @@ export const InputRangeSlider = ({
                             {...thumbProps}
                             tabIndex={thumbProps.tabIndex}
                             aria-labelledby={concatIds(
-                                thumbProps["aria-labelledby"],
+                                ariaLabelledBy,
                                 thumbLabelTextId
                             )}
                             aria-describedby={getThumbDescriptionIds()}
@@ -364,10 +370,6 @@ export const InputRangeSlider = ({
                                 thumbProps.onKeyDown?.(event);
                             }}
                         >
-                            <VisuallyHidden id={instructionTextId}>
-                                Use left and right arrow keys to adjust the
-                                slider.
-                            </VisuallyHidden>
                             <VisuallyHidden id={thumbLabelTextId}>
                                 {getThumbAccessibleLabel(state.index)}
                             </VisuallyHidden>
