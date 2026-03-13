@@ -71,7 +71,11 @@ const Component = (
     // RENDER FUNCTIONS
     // =========================================================================
     const renderDragOverlay = () => (
-        <DragOverlay>
+        <DragOverlay
+            colour={Colour["border-primary"]}
+            thickness={Border["width-020"]}
+            radius={Radius["sm"]}
+        >
             <OverlayIcon />
             <OverlayText weight="semibold">Drop files here</OverlayText>
         </DragOverlay>

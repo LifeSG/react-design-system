@@ -2,6 +2,14 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { FileItemProps } from "src/file-upload";
 import { FileUpload } from "src/file-upload";
 
+jest.mock("../../src/theme", () => {
+    const actual = jest.requireActual("../../src/theme");
+    return {
+        ...actual,
+        useDesignToken: (token: string) => token, // passthrough
+    };
+});
+
 describe("FileUpload", () => {
     beforeEach(() => {
         jest.resetAllMocks();

@@ -2,34 +2,28 @@
 import {
     DashedBorder,
     DashedBorderProps,
-} from "@lifesg/react-design-system/dashed-border";
-import {
     Border,
     Colour,
     Radius,
-    Spacing,
-} from "@lifesg/react-design-system/theme";
+} from "@lifesg/react-design-system";
 import { ComponentType } from "react";
+// Temporary workaround to bypass Linaria's handling of the DashedBorder component,
+// which causes styles not to be applied in this story.
+// This allows us to test the basic functionality of the component while we wait
+// for a proper way to implement Linaria.
+import "../../../../../../src/dashed-border/dashed-border.css";
 
 const DashedBorderComponent =
     DashedBorder as unknown as ComponentType<DashedBorderProps>;
 
 export default function Story() {
     return (
-        <div
-            style={{
-                display: "grid",
-                gap: Spacing["spacing-16"],
-                width: "320px",
-            }}
-        >
+        <div>
             <DashedBorderComponent
                 data-testid="dashed-border-enabled"
                 thickness={Border["width-020"]}
                 radius={Radius.sm}
                 colour={Colour["border-primary"]}
-                backgroundColor={Colour["bg-primary-subtlest"]}
-                style={{ padding: Spacing["spacing-16"] }}
             >
                 Enabled dashed border
             </DashedBorderComponent>
@@ -40,7 +34,6 @@ export default function Story() {
                 thickness={Border["width-020"]}
                 radius={Radius.sm}
                 colour={Colour["border-primary"]}
-                style={{ padding: Spacing["spacing-16"] }}
             >
                 Disabled dashed border
             </DashedBorderComponent>
