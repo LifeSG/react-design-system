@@ -42,12 +42,6 @@ const IconButton = styled(ClickableIcon)`
         outline: ${Border["width-020"]} solid ${Colour["border-selected"]};
         outline-offset: 2px;
     }
-
-    ${MediaQuery.MaxWidth.sm} {
-        &:focus-visible {
-            outline-width: ${Border["width-020"]};
-        }
-    }
 `;
 
 export const CloseButton = styled(IconButton)<InsetStyleProps>`
@@ -73,7 +67,9 @@ export const MagnifierButton = styled(IconButton)<InsetStyleProps>`
     right: ${(props) =>
         css`calc(2.5rem + ${Spacing["spacing-48"]} + ${
             Spacing["spacing-16"]
-        } + ${props.$insetRight || 0}px)`};
+        } + ${
+            props.$insetRight || 0
+        }px)`}; // close button + space from screen + gap between buttons
 
     z-index: 5;
 
@@ -83,7 +79,9 @@ export const MagnifierButton = styled(IconButton)<InsetStyleProps>`
         right: ${(props) =>
             css`calc(2.5rem + ${Spacing["spacing-20"]} + ${
                 Spacing["spacing-16"]
-            } + ${props.$insetRight || 0}px)`};
+            } + ${
+                props.$insetRight || 0
+            }px)`}; // close button + space from screen + gap between buttons
     }
 `;
 
@@ -121,7 +119,9 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
 export const CarouselModalContent = styled.div`
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 `;
 
 export const ImageGalleryContainer = styled.div`

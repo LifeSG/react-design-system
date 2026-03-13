@@ -9,10 +9,6 @@ interface Props {
     $offsetTop?: number;
 }
 
-interface ScrollContainerStyleProps {
-    $fullscreen?: boolean;
-}
-
 export const Container = styled.div<Props>`
     position: relative;
     width: 100%;
@@ -55,31 +51,16 @@ export const Container = styled.div<Props>`
     `}
 `;
 
-export const ScrollContainer = styled.div<ScrollContainerStyleProps>`
+export const ScrollContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
     pointer-events: none;
-
-    ${(props) =>
-        props.$fullscreen
-            ? css`
-                  height: 100%;
-                  min-height: 100%;
-              `
-            : css`
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  min-height: 100%;
-              `}
 `;
 
-export const ModalContainer = styled.div<ScrollContainerStyleProps>`
+export const ModalContainer = styled.div`
     pointer-events: auto;
     width: 100%;
     outline: none;
-
-    ${(props) =>
-        props.$fullscreen &&
-        css`
-            height: 100%;
-        `}
 `;

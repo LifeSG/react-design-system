@@ -237,8 +237,6 @@ export const Component = (
                             <FocusableImageRegion
                                 ref={isActive ? imageRef : null}
                                 tabIndex={isActive ? 0 : -1}
-                                role="img"
-                                aria-label={getImageAriaLabel(index)}
                             >
                                 <TransformWrapper
                                     ref={(el) => (zoomRefs.current[index] = el)}
@@ -253,9 +251,7 @@ export const Component = (
                                     <TransformComponent>
                                         <SlideImage
                                             src={item.src}
-                                            alt={
-                                                item.alt ?? `Image ${index + 1}`
-                                            }
+                                            alt={getImageAriaLabel(index)}
                                             placeholder={
                                                 <SlidePlaceholderImage />
                                             }
@@ -312,8 +308,7 @@ export const Component = (
             data-testid="image-carousel-modal"
             onClose={onClose}
             aria-label="Image carousel"
-            initialFocus={imageRef}
-            fullscreen
+            disableInitialFocus={false}
         >
             <CarouselModalContent>
                 <ImageGalleryContainer>
