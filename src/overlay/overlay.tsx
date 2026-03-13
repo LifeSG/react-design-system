@@ -52,9 +52,13 @@ const OverlayComponent = ({
 
         return () => {
             removeOverlay();
+
             if (getOverlayOrder().length < 1) {
-                applyScrollLockClass("remove");
-                scrollToLastScrollPosition();
+                if (isIOS()) {
+                    applyScrollLockClassForIOS("remove");
+                    scrollToLastScrollPositionForIOS();
+                }
+
                 applyBodyStyleClass("remove");
             }
         };
@@ -69,7 +73,7 @@ const OverlayComponent = ({
 
             if (isIOS() && getOverlayOrder().length === 1) {
                 saveScrollPosition();
-                applyScrollLockClass("add");
+                applyScrollLockClassForIOS("add");
             }
 
             const timerId = setTimeout(() => {
@@ -81,8 +85,8 @@ const OverlayComponent = ({
             removeOverlay();
 
             if (isIOS() && getOverlayOrder().length < 1) {
-                applyScrollLockClass("remove");
-                scrollToLastScrollPosition();
+                applyScrollLockClassForIOS("remove");
+                scrollToLastScrollPositionForIOS();
             }
 
             const timerId = setTimeout(() => {
@@ -200,7 +204,7 @@ const OverlayComponent = ({
      * as a side effect this causes the scroll position to reset, so additional
      * logic to restore the scroll on close is required
      */
-    const applyScrollLockClass = (action: "add" | "remove") => {
+    const applyScrollLockClassForIOS = (action: "add" | "remove") => {
         if (!isIOS()) {
             return;
         }
@@ -223,7 +227,11 @@ const OverlayComponent = ({
         document.body.style.setProperty(SCROLL_POSITION_VAR, scrollY);
     };
 
-    const scrollToLastScrollPosition = () => {
+    const scrollToLastScrollPositionForIOS = () => {
+        if (!isIOS()) {
+            return;
+        }
+
         const scrollY =
             document.body.style.getPropertyValue(SCROLL_POSITION_VAR);
         requestAnimationFrame(() => {
