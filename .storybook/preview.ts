@@ -22,12 +22,12 @@ const preview: Preview = {
             storySort: {
                 order: [
                     "Getting started",
-                    ["Installation", "Themes", "Media Query", "Layout"],
+                    "Installation",
                     "Foundations",
                     [
                         "Introduction",
-                        "Themes",
-                        ["Introduction", "Advanced Usage", "Dark Mode", "*"],
+                        "Basics",
+                        "Advanced",
                         "Colours",
                         "Font",
                         "Breakpoint",
