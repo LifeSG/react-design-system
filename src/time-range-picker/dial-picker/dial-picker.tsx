@@ -38,6 +38,18 @@ export const DialPicker = ({
     const enabled = !readOnly && !disabled;
     const nodeRef = useRef<HTMLDivElement>(null);
 
+    const getDropdownAriaLabel = () => {
+        if (active === "start") {
+            return "Selecting for: Start time";
+        }
+
+        if (active === "end") {
+            return "Selecting for: End time";
+        }
+
+        return undefined;
+    };
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -122,6 +134,7 @@ export const DialPicker = ({
             tabIndex={-1}
             onBlur={handleContainerBlur}
             data-testid="timepicker-container"
+            role="group"
             {...otherProps}
         >
             <TimeContainer
@@ -140,7 +153,7 @@ export const DialPicker = ({
                             startTimeVal,
                             format
                         )}
-                        disabled={disabled}
+                        aria-label="Start time"
                         data-testid={
                             otherProps["data-testid"]
                                 ? `${otherProps["data-testid"]}-timepicker-selector-from`
@@ -155,7 +168,7 @@ export const DialPicker = ({
                             endTimeVal,
                             format
                         )}
-                        disabled={disabled}
+                        aria-label="End time"
                         data-testid={
                             otherProps["data-testid"]
                                 ? `${otherProps["data-testid"]}-timepicker-selector-to`
@@ -175,10 +188,17 @@ export const DialPicker = ({
         if (!isOpen) return null;
 
         return (
-            <div ref={setFloatingRef} style={styles} {...getFloatingProps()}>
+            <div
+                ref={setFloatingRef}
+                style={styles}
+                role="dialog"
+                key={active}
+                aria-label={getDropdownAriaLabel()}
+                {...getFloatingProps()}
+            >
                 {active === "start" && (
                     <TimepickerDropdown
-                        id={id}
+                        id={id ? `${id}-start` : undefined}
                         show
                         value={startTimeVal}
                         format={format}
@@ -188,7 +208,7 @@ export const DialPicker = ({
                 )}
                 {active === "end" && (
                     <TimepickerDropdown
-                        id={id}
+                        id={id ? `${id}-end` : undefined}
                         show
                         value={endTimeVal}
                         format={format}
