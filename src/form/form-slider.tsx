@@ -7,7 +7,7 @@ import { FormSliderProps } from "./types";
 export const FormSlider = ({
     label,
     errorMessage,
-    id = "form-slider",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
