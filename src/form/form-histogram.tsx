@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { HistogramSlider } from "../histogram-slider";
+import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormHistogramSliderProps } from "./types";
 
@@ -21,9 +23,12 @@ export const FormHistogramSlider = ({
     xxlCols,
     ...otherProps
 }: FormHistogramSliderProps): JSX.Element => {
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const inputId = id ?? `form-field-masked-input-${internalId}`;
+
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
@@ -41,8 +46,8 @@ export const FormHistogramSlider = ({
             xxlCols={xxlCols}
         >
             <HistogramSlider
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 {...otherProps}
             />
         </FormWrapper>

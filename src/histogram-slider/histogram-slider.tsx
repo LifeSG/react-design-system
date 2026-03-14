@@ -8,6 +8,7 @@ import {
     Slider,
 } from "./histogram-slider.styles";
 import { HistogramSliderProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 
 export const HistogramSlider = ({
     bins = [],
@@ -38,6 +39,8 @@ export const HistogramSlider = ({
     const [selection, setSelection] = useState<[number, number]>(
         initSelection()
     );
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const rangeLabelId = `${internalId}-range-label`;
 
     const items = useMemo(() => {
         const sorted = [...bins].sort((a, b) => a.minValue - b.minValue);
@@ -139,6 +142,9 @@ export const HistogramSlider = ({
                     disabled={disabled}
                     readOnly={readOnly}
                     ariaLabels={ariaLabels}
+                    aria-describedby={
+                        showRangeLabels ? rangeLabelId : undefined
+                    }
                     onChange={handleChange}
                     onChangeEnd={handleChangeEnd}
                 />
@@ -147,9 +153,9 @@ export const HistogramSlider = ({
     };
 
     return (
-        <div {...otherProps}>
+        <div role="group" {...otherProps}>
             {showRangeLabels && (
-                <Label>
+                <Label id={rangeLabelId}>
                     {renderRangeItem(selection[0])}
                     <Separator>-</Separator>
                     {renderRangeItem(selection[1])}
