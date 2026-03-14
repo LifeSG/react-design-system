@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { InputSlider } from "../input-slider";
+import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormSliderProps } from "./types";
 
@@ -21,9 +23,12 @@ export const FormSlider = ({
     xxlCols,
     ...otherProps
 }: FormSliderProps): JSX.Element => {
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const inputId = id ?? `form-field-masked-input-${internalId}`;
+
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
@@ -41,8 +46,8 @@ export const FormSlider = ({
             xxlCols={xxlCols}
         >
             <InputSlider
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 {...otherProps}
             />
         </FormWrapper>
