@@ -7,7 +7,7 @@ import { FormHistogramSliderProps } from "./types";
 export const FormHistogramSlider = ({
     label,
     errorMessage,
-    id = "form-histogram-slider",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
