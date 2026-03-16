@@ -96,15 +96,11 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "Calendar props (variant=\u201csingle\u201d or default)",
+        name: "Calendar props (variant=\u201csingle\u201d)",
         attributes: [
             {
                 name: "value",
-                description: (
-                    <>
-                        The controlled selected date in the&nbsp;{STRING_FORMAT}
-                    </>
-                ),
+                description: <>The selected date in the&nbsp;{STRING_FORMAT}</>,
                 propTypes: ["string"],
             },
             {
@@ -126,8 +122,8 @@ const DATA: ApiTableSectionProps[] = [
                 name: "values",
                 description: (
                     <>
-                        The controlled array of selected dates in
-                        the&nbsp;{STRING_FORMAT}
+                        The array of selected dates in the&nbsp;
+                        {STRING_FORMAT}
                     </>
                 ),
                 propTypes: ["string[]"],
@@ -176,4 +172,3 @@ const DATA: ApiTableSectionProps[] = [
 ];
 
 export const PropsTable = () => <ApiTable sections={DATA} />;
-

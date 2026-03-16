@@ -23,7 +23,10 @@ export interface CalendarSingleProps extends CalendarBaseProps {
     value?: string | undefined;
     /** Called when the selected date changes. Returns the selected date in `YYYY-MM-DD` format */
     onChange?: ((value: string) => void) | undefined;
-    /** Called when the selected date changes. Returns the selected date in `YYYY-MM-DD` format */
+    /**
+     * Called when the selected date changes. Returns the selected date in `YYYY-MM-DD` format
+     * @deprecated Use `onChange` instead
+     */
     onSelect?: ((value: string) => void) | undefined;
 }
 
