@@ -240,6 +240,42 @@ describe("ErrorDisplay", () => {
             ).toBe(errorDescription);
         });
     });
+
+    describe("inactivity timer accessibility", () => {
+        it("should render hidden live reminder text when secondsLeft is provided", () => {
+            render(
+                <ThemeProvider theme={V3_LifeSGTheme}>
+                    <ErrorDisplay
+                        type="inactivity"
+                        additionalProps={{ secondsLeft: 65 }}
+                    />
+                </ThemeProvider>
+            );
+
+            const liveRegion = document.querySelector('[aria-live="polite"]');
+            expect(liveRegion).toBeInTheDocument();
+            expect(liveRegion).toHaveAttribute("aria-atomic", "true");
+            expect(liveRegion).toHaveTextContent(
+                "You've been inactive for a while. To protect your privacy, you'll be logged out in 1 minutes 5 seconds."
+            );
+        });
+
+        it("should not render live reminder text when custom description is provided", () => {
+            render(
+                <ThemeProvider theme={V3_LifeSGTheme}>
+                    <ErrorDisplay
+                        type="inactivity"
+                        description="custom inactivity description"
+                        additionalProps={{ secondsLeft: 65 }}
+                    />
+                </ThemeProvider>
+            );
+
+            expect(
+                document.querySelector('[aria-live="polite"]')
+            ).not.toBeInTheDocument();
+        });
+    });
 });
 
 // =============================================================================

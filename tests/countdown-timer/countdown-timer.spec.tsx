@@ -86,4 +86,20 @@ describe("CountdownTimer", () => {
         expect(mockOnNotify).toHaveBeenCalledTimes(1);
         expect(mockOnFinish).toHaveBeenCalledTimes(1);
     });
+
+    it("should announce remaining time in hidden live region at notify threshold", async () => {
+        render(<CountdownTimer show timer={5} notifyTimer={4} />);
+
+        await act(async () => {
+            jest.advanceTimersByTime(1000);
+        });
+
+        const announcement = screen.getByText("Time left: 4 seconds");
+        expect(
+            announcement.closest('[aria-live="assertive"]')
+        ).toBeInTheDocument();
+        expect(
+            announcement.closest('[aria-atomic="true"]')
+        ).toBeInTheDocument();
+    });
 });

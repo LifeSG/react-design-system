@@ -401,13 +401,12 @@ describe("FileUpload", () => {
 
             render(<FileUpload fileItems={fileItems} />);
 
-            const announcement = screen.getByText(
+            const liveRegion = document.querySelector('[aria-live="polite"]');
+            expect(liveRegion).toBeInTheDocument();
+            expect(liveRegion).toHaveAttribute("aria-atomic", "true");
+            expect(liveRegion).toHaveTextContent(
                 "Starting upload of bugs-bunny.pdf"
             );
-            expect(announcement).toBeInTheDocument();
-            expect(
-                announcement.closest('[aria-live="polite"]')
-            ).toBeInTheDocument();
         });
 
         it("should announce when file upload is complete", () => {
@@ -420,13 +419,11 @@ describe("FileUpload", () => {
 
             render(<FileUpload fileItems={fileItems} />);
 
-            const announcement = screen.getByText(
+            const liveRegion = document.querySelector('[aria-live="polite"]');
+            expect(liveRegion).toBeInTheDocument();
+            expect(liveRegion).toHaveTextContent(
                 "bugs-bunny.pdf upload is complete"
             );
-            expect(announcement).toBeInTheDocument();
-            expect(
-                announcement.closest('[aria-live="polite"]')
-            ).toBeInTheDocument();
         });
 
         it("should announce errors when file upload fails", () => {
@@ -440,13 +437,11 @@ describe("FileUpload", () => {
 
             render(<FileUpload fileItems={fileItems} />);
 
-            const announcement = screen.getByText(
+            const liveRegion = document.querySelector('[aria-live="polite"]');
+            expect(liveRegion).toBeInTheDocument();
+            expect(liveRegion).toHaveTextContent(
                 `Error uploading bugs-bunny.pdf: ${errorMessage}`
             );
-            expect(announcement).toBeInTheDocument();
-            expect(
-                announcement.closest('[aria-live="polite"]')
-            ).toBeInTheDocument();
         });
 
         it("should announce multiple file uploads correctly", () => {
@@ -474,11 +469,11 @@ describe("FileUpload", () => {
 
             render(<FileUpload fileItems={fileItems} />);
 
-            // Should announce all three states in one message
-            const announcementText = screen.getByText(
-                /Starting upload of document1.pdf, image1.png upload is complete, Error uploading document2.pdf: Network error/
+            const liveRegion = document.querySelector('[aria-live="polite"]');
+            expect(liveRegion).toBeInTheDocument();
+            expect(liveRegion).toHaveTextContent(
+                "Starting upload of document1.pdf, image1.png upload is complete, Error uploading document2.pdf: Network error"
             );
-            expect(announcementText).toBeInTheDocument();
         });
     });
 });

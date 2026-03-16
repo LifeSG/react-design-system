@@ -50,6 +50,56 @@ describe("InputGroup - List addon", () => {
         expect(screen.queryByTestId(DROPDOWN_TESTID)).not.toBeInTheDocument();
     });
 
+    it("should wire selector aria-describedby to the hidden instruction", () => {
+        const { container } = render(
+            <InputGroup
+                data-testid={FIELD_TESTID}
+                addon={{
+                    type: "list",
+                    attributes: {
+                        options: OPTIONS,
+                    },
+                }}
+            />
+        );
+
+        const instruction = screen.getByText(DROPDOWN_INSTRUCTION);
+        expect(instruction.id).toBeTruthy();
+        expect(
+            container.querySelector(`[aria-describedby~="${instruction.id}"]`)
+        ).toBeInTheDocument();
+    });
+
+    it("should wire hidden combobox and textbox labels to their respective controls", () => {
+        const comboboxLabel = "Choose option";
+        const textboxLabel = "Enter value";
+        const { container } = render(
+            <InputGroup
+                data-testid={FIELD_TESTID}
+                aria-label={textboxLabel}
+                addon={{
+                    type: "list",
+                    attributes: {
+                        options: OPTIONS,
+                        "aria-label": comboboxLabel,
+                    },
+                }}
+            />
+        );
+
+        const comboboxLabelEl = screen.getByText(comboboxLabel);
+        const textboxLabelEl = screen.getByText(textboxLabel);
+        const selectorControl = container.querySelector(
+            `[aria-haspopup="listbox"][aria-labelledby~="${comboboxLabelEl.id}"]`
+        );
+
+        expect(selectorControl).toBeInTheDocument();
+        expect(screen.getByTestId(INPUT_TESTID)).toHaveAttribute(
+            "aria-labelledby",
+            expect.stringContaining(textboxLabelEl.id)
+        );
+    });
+
     it("should render the component with initial value", () => {
         render(
             <InputGroup

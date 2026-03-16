@@ -101,6 +101,26 @@ describe("Alert", () => {
 
         expect(screen.getByText(CUSTOM_TEXT)).toBeInTheDocument();
     });
+
+    describe("collapsed content accessibility", () => {
+        it("should set inert when maxCollapsedHeight is provided", () => {
+            render(
+                <Alert type="success" maxCollapsedHeight={40}>
+                    {DEFAULT_TEXT}
+                </Alert>
+            );
+
+            const content = screen.getByText(DEFAULT_TEXT);
+            expect(content.closest("[inert]")).toBeInTheDocument();
+        });
+
+        it("should not set inert when maxCollapsedHeight is not provided", () => {
+            render(<Alert type="success">{DEFAULT_TEXT}</Alert>);
+
+            const content = screen.getByText(DEFAULT_TEXT);
+            expect(content.closest("[inert]")).toBeNull();
+        });
+    });
 });
 
 // =============================================================================
