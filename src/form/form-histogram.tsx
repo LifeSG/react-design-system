@@ -24,7 +24,7 @@ export const FormHistogramSlider = ({
     ...otherProps
 }: FormHistogramSliderProps): JSX.Element => {
     const [internalId] = useState(() => SimpleIdGenerator.generate());
-    const inputId = id ?? `form-field-masked-input-${internalId}`;
+    const inputId = id ?? `form-histogram-slider-${internalId}`;
 
     return (
         <FormWrapper
