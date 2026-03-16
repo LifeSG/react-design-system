@@ -80,10 +80,12 @@ const plugins = [
             name: pkg.name,
             version: pkg.version,
             description: pkg.description,
-            type: "module",
             main: "./cjs/index.js",
             module: "./index.js",
             types: "./index.d.ts",
+            bin: {
+                "lifesg-react-design-system": "./codemods/run-codemod.js",
+            },
             exports: {
                 ".": {
                     types: "./index.d.ts",
@@ -94,6 +96,7 @@ const plugins = [
                 },
                 ...subExports,
             },
+            dependencies: pkg.dependencies,
             peerDependencies: pkg.peerDependencies,
         }),
     }),
