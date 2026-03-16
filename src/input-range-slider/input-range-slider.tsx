@@ -142,7 +142,7 @@ export const InputRangeSlider = ({
 
     function getDefaultAriaLabel(index: number) {
         if (numOfThumbs === 1) {
-            return "Slider";
+            return "";
         }
 
         if (index === 0) {

@@ -23,10 +23,8 @@ export const FormRangeSlider = ({
     xxlCols,
     ...otherProps
 }: FormRangeSliderProps): JSX.Element => {
-    const [internalId] = useState(
-        () => `form-field-${SimpleIdGenerator.generate()}`
-    );
-    const inputId = id ?? internalId;
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const inputId = id ?? `form-range-slider-${internalId}`;
 
     return (
         <FormWrapper
