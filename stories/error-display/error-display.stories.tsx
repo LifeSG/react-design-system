@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { useEffect, useState } from "react";
 import { ErrorDisplay } from "src/error-display";
 
 type Component = typeof ErrorDisplay;
@@ -47,10 +48,20 @@ export const Maintenance: StoryObj<Component> = {
 export const Inactivity: StoryObj<Component> = {
     name: "Custom attributes - Inactivity",
     render: (_args) => {
+        const [secondsLeft, setSecondsLeft] = useState(300);
+
+        useEffect(() => {
+            const id = window.setInterval(() => {
+                setSecondsLeft((s) => Math.max(0, s - 1));
+            }, 1000);
+
+            return () => window.clearInterval(id);
+        }, []);
+
         return (
             <ErrorDisplay
                 type="inactivity"
-                additionalProps={{ secondsLeft: 300 }}
+                additionalProps={{ secondsLeft, reminderInterval: 60 }}
             />
         );
     },

@@ -86,7 +86,13 @@ export const RenderingInGridLayout: StoryObj<Component> = {
 
 export const StandaloneUsage: StoryObj<StandaloneComponent> = {
     render: (_args) => {
-        return <Timepicker />;
+        const [time, setTime] = useState("");
+        return (
+            <Form.Timepicker
+                value={time}
+                onChange={(value) => setTime(value)}
+            />
+        );
     },
     decorators: [StoryDecorator({ maxWidth: true })],
 };

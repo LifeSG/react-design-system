@@ -115,3 +115,39 @@ export const ClickableErrorWrapper = styled(BasicButton)`
         }
     }
 `;
+
+// -----------------------------------------------------------------------------
+// READONLY MASKED DISPLAY
+// -----------------------------------------------------------------------------
+
+export const ReadOnlyClickable = styled.button`
+    ${V3_Font["body-baseline-regular"]}
+    color: ${V3_Colour["text"]};
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    justify-content: space-between;
+    min-height: 3rem;
+`;
+
+export const ReadOnlyValueText = styled.span`
+    overflow-wrap: anywhere;
+`;
+
+export const ReadOnlyIconContainer = styled.span`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: ${V3_Colour["icon-primary"]};
+    padding: 0 1rem;
+    flex-shrink: 0;
+
+    svg {
+        width: ${V3_Font.Spec["body-size-baseline"]};
+        height: ${V3_Font.Spec["body-size-baseline"]};
+    }
+`;

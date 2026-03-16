@@ -26,4 +26,5 @@ export interface TimelineProps {
     "data-testid"?: string | undefined;
     "data-base-indicator-testid"?: string | undefined;
     headingLevel?: number | undefined;
+    counterOffset?: number | undefined;
 }

@@ -128,7 +128,7 @@ export const PopoverTrigger = ({
         }
 
         const refEl = nodeRef.current;
-        const floatingEl = popoverRef.current;
+        const floatingEl = popoverRef.current?.parentElement;
 
         return (
             (!!refEl && refEl.contains(node)) ||

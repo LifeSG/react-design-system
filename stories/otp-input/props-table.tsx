@@ -44,6 +44,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "otpOnly",
+                description:
+                    "When enabled, OTP inputs will be rendered without the action button",
+                propTypes: ["boolean"],
+            },
+            {
                 name: "numOfInput",
                 description: "The number of input fields to display",
                 propTypes: ["number"],
@@ -69,12 +75,18 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "onCooldownStart",
                 description: "Called when the cooldown begins",
-                propTypes: ["(value: string) => void"],
+                propTypes: ["() => void"],
             },
             {
                 name: "onCooldownEnd",
                 description: "Called when the cooldown ends",
-                propTypes: ["(value: string) => void"],
+                propTypes: ["() => void"],
+            },
+            {
+                name: "onCountdownChange",
+                description:
+                    "Called when the countdown changes. Returns the remaining time in seconds",
+                propTypes: ["(remaining: number) => void"],
             },
         ],
     },

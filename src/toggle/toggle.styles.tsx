@@ -264,8 +264,11 @@ export const TextContainer = styled.div<StyleProps>`
     }}
 `;
 
-export const Label = styled.label<LabelStyleProps>`
-    ${V3_Font["body-baseline-regular"]}
+export const Label = styled.label<LabelStyleProps & { $selected?: boolean }>`
+    ${(props) =>
+        props.$selected
+            ? V3_Font["body-baseline-semibold"]
+            : V3_Font["body-baseline-regular"]};
     overflow: hidden;
     display: -webkit-box;
     text-overflow: ellipsis;

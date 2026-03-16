@@ -38,6 +38,7 @@ export const ComboboxPicker = ({
     startLimit,
     endLimit,
     interval = 15,
+    dropdownRootNode,
     ...otherProps
 }: TimeRangePickerProps) => {
     // =============================================================================
@@ -431,6 +432,7 @@ export const ComboboxPicker = ({
                     alignment={alignment}
                     fitAvailableHeight
                     customZIndex={dropdownZIndex}
+                    rootNode={dropdownRootNode}
                 />
             </DropdownListState>
             {renderError()}

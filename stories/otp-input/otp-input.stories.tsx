@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import { useEffect, useState } from "react";
-import { OtpInput } from "src/otp-input";
+import { useEffect, useRef, useState } from "react";
+import { OtpInput, OtpInputRef } from "src/otp-input";
 import { StoryDecorator } from "stories/storybook-common";
+import { CustomContent } from "./doc-elements";
 
 type Component = typeof OtpInput;
 
@@ -97,6 +98,32 @@ export const WithCustomActionButtonSelfHandle: StoryObj<Component> = {
                     },
                 }}
             />
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const WithoutButton: StoryObj<Component> = {
+    render: (_args) => {
+        const ref = useRef<OtpInputRef>(null);
+        const [countdown, setCountdown] = useState(5);
+
+        return (
+            <>
+                <OtpInput
+                    ref={ref}
+                    numOfInput={6}
+                    cooldownDuration={5}
+                    otpOnly
+                    onCooldownEnd={() => setCountdown(0)}
+                    onCooldownStart={() => setCountdown(5)}
+                    onCountdownChange={(remaining) => setCountdown(remaining)}
+                />
+                <CustomContent
+                    onClick={() => ref.current?.startCooldown()}
+                    countdown={countdown}
+                />
+            </>
         );
     },
     decorators: [StoryDecorator({ maxWidth: true })],

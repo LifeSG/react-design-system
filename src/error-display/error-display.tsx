@@ -10,6 +10,7 @@ import {
     TextContainer,
     Title,
 } from "./error-display.style";
+import { InactivityTimer } from "./inactivity-timer";
 import {
     ErrorDisplayProps,
     InactivityAdditionalAttributes,
@@ -36,7 +37,13 @@ export const ErrorDisplay = ({
         illustrationScheme || (theme || V3_LifeSGTheme).resourceScheme,
         theme
     );
+    const inactivityAttrs =
+        type === "inactivity"
+            ? (additionalProps as InactivityAdditionalAttributes | undefined)
+            : undefined;
 
+    const secondsLeft = inactivityAttrs?.secondsLeft;
+    const reminderInterval = inactivityAttrs?.reminderInterval;
     const testId = otherProps["data-testid"] || "error-display";
 
     // =============================================================================
@@ -123,6 +130,14 @@ export const ErrorDisplay = ({
 
     return (
         <Container {...otherProps} data-testid={testId}>
+            {type === "inactivity" && (
+                <InactivityTimer
+                    secondsLeft={secondsLeft}
+                    reminderInterval={reminderInterval}
+                    imageOnly={imageOnly}
+                    hasCustomDescription={!!description}
+                />
+            )}
             <Img {...updatedAssets.img} alt="" data-id="error-display-image" />
             {!imageOnly && renderContentDisplay()}
             {actionButton && renderActionButton()}
