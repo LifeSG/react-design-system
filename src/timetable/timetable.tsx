@@ -7,7 +7,8 @@ import {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { PopoverV2TriggerProps } from "../popover-v2";
+
+import type { PopoverV2TriggerProps } from "../popover-v2";
 import { TimeHelper } from "../util/time-helper";
 import {
     MIN_INTERVAL_WIDTH,
@@ -16,8 +17,6 @@ import {
     ROW_HEADER_WIDTH,
     ROW_INTERVAL,
 } from "./const";
-import { TimeTableHeader } from "./timetable-header/timetable-header";
-import { RowBar } from "./timetable-row/row-bar";
 import {
     ClickableRowHeaderTitle,
     ColumnHeader,
@@ -38,7 +37,9 @@ import {
     StyledPopoverTrigger,
     TimeTableContainer,
 } from "./timetable.style";
-import { TimeTableProps, TimeTableRef, TimeTableRowData } from "./types";
+import { TimeTableHeader } from "./timetable-header/timetable-header";
+import { RowBar } from "./timetable-row/row-bar";
+import type { TimeTableProps, TimeTableRef, TimeTableRowData } from "./types";
 
 const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
     // =============================================================================

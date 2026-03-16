@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { ImagePlaceholder } from "../shared/image-placeholder";
 
 interface ImageStyleProps {

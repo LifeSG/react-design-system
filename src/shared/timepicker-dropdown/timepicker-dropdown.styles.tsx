@@ -1,5 +1,8 @@
 import styled from "styled-components";
+
 import { Button } from "../../button";
+import { Toggle } from "../../toggle";
+import { Typography } from "../../typography";
 import {
     V3_Border,
     V3_Colour,
@@ -7,8 +10,6 @@ import {
     V3_Radius,
     V3_Spacing,
 } from "../../v3_theme";
-import { Toggle } from "../../toggle";
-import { Typography } from "../../typography";
 import { ClickableIcon } from "../clickable-icon";
 import { BasicInput, InputBox } from "../input-wrapper/input-wrapper";
 

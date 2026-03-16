@@ -1,5 +1,5 @@
 import { StyledOrderedList } from "./text-list.styles";
-import { OrderedListProps } from "./types";
+import type { OrderedListProps } from "./types";
 
 export const OrderedList = ({
     size,

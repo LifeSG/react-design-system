@@ -1,4 +1,4 @@
-import { PillProps } from "../pill";
+import type { PillProps } from "../pill";
 
 export type Variant =
     | "completed"

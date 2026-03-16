@@ -4,11 +4,12 @@ import { BinIcon } from "@lifesg/react-icons/bin";
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
 import { memo, useContext, useEffect, useRef, useState } from "react";
+
 import { ProgressBar } from "../../shared/progress-bar";
 import { StringHelper } from "../../util";
 import { FileUploadContext } from "../context";
 import { FileUploadHelper } from "../helper";
-import { FileListItemThumbnail } from "./file-list-item-thumbnail";
+import type { ItemFocusType } from "./file-list-item.styles";
 import {
     ActionContainer,
     Box,
@@ -22,12 +23,12 @@ import {
     IconButton,
     Item,
     ItemDescriptionText,
-    ItemFocusType,
     ItemText,
     MobileErrorMessage,
     NameSection,
 } from "./file-list-item.styles";
-import { FileListItemProps } from "./types";
+import { FileListItemThumbnail } from "./file-list-item-thumbnail";
+import type { FileListItemProps } from "./types";
 
 interface Props extends FileListItemProps {
     readOnly?: boolean | undefined;

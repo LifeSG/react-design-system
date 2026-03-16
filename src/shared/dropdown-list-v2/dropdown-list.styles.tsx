@@ -4,6 +4,7 @@ import { SquareFillIcon } from "@lifesg/react-icons/square-fill";
 import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
+
 import {
     V3_Border,
     V3_Breakpoint,
@@ -16,7 +17,7 @@ import {
 import { ComponentLoadingSpinner } from "../component-loading-spinner";
 import { applyHtmlContentStyle } from "../html-content/html-content";
 import { BasicButton } from "../input-wrapper/input-wrapper";
-import { DropdownVariantType } from "./types";
+import type { DropdownVariantType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE

@@ -1,9 +1,10 @@
 import styled from "styled-components";
+
 import { Card } from "../card";
 import { ModalBox } from "../modal/modal-box";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { V3_Colour, V3_MediaQuery, V3_Radius } from "../v3_theme";
-import { PopoverOverflowType } from "./types";
+import type { PopoverOverflowType } from "./types";
 // =============================================================================
 // STYLES INTERFACE
 // =============================================================================

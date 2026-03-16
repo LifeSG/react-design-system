@@ -1,6 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
+import type { InViewHookResponse } from "react-intersection-observer";
+import { useInView } from "react-intersection-observer";
 import { CountdownTimer } from "src/countdown-timer";
-import { InViewHookResponse, useInView } from "react-intersection-observer";
 
 jest.mock("react-intersection-observer");
 

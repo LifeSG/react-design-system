@@ -1,8 +1,9 @@
 import { css } from "styled-components";
+
 import { lineClampCss } from "../shared/styles";
 import { V3_Colour, V3_Font } from "../v3_theme";
-import { V3_FontSet, V3_TypographySizeType } from "../v3_theme/font/types";
-import { TypographyWeight } from "./types";
+import type { V3_FontSet, V3_TypographySizeType } from "../v3_theme/font/types";
+import type { TypographyWeight } from "./types";
 
 export const getTextStyle = (
     type: V3_TypographySizeType,

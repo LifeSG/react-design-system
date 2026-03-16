@@ -3,7 +3,7 @@ import {
     AvatarBodySmallText,
     AvatarDisplay,
 } from "./avatar.style";
-import { AvatarProps } from "./types";
+import type { AvatarProps } from "./types";
 
 export const Avatar = ({
     children,

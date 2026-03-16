@@ -50,12 +50,7 @@ const sharedJsRules = {
     "max-classes-per-file": "off",
     "no-multiple-empty-lines": "off",
     "linebreak-style": ["error", "unix"],
-    "sort-imports": [
-        "warn",
-        {
-            ignoreDeclarationSort: true,
-        },
-    ],
+    "sort-imports": "off",
 };
 
 const sharedTsRules = {

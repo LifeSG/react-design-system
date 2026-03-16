@@ -1,5 +1,5 @@
-import { ButtonProps } from "../button";
-import { V3_ResourceScheme } from "../v3_theme/types";
+import type { ButtonProps } from "../button";
+import type { V3_ResourceScheme } from "../v3_theme/types";
 
 export type ErrorDisplayType =
     | "400"

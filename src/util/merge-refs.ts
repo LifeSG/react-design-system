@@ -1,4 +1,5 @@
-import { MutableRefObject, Ref } from "react";
+import type { MutableRefObject, Ref } from "react";
+
 import { isReact19 } from "./version";
 
 export const mergeRefs = <T>(...refs: Ref<T>[]) => {

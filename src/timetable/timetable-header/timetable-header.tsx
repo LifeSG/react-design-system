@@ -1,5 +1,6 @@
 import { RefreshIcon } from "@lifesg/react-icons";
-import { RefObject } from "react";
+import type { RefObject } from "react";
+
 import {
     NavigationHeaderSubtitleWrapper,
     NavigationHeaderWrapper,

@@ -1,7 +1,7 @@
-import styled, { css } from "styled-components";
 import { V2_Color } from "src/v2_color";
 import { V2_Layout } from "src/v2_layout";
 import { V2_Text } from "src/v2_text";
+import styled, { css } from "styled-components";
 
 interface LabelProps {
     children: string;

@@ -1,7 +1,8 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
-import { V3_Colour, V3_Font, V3_MediaQuery, V3_Spacing } from "../v3_theme";
+
 import { Typography } from "../typography";
+import { V3_Colour, V3_Font, V3_MediaQuery, V3_Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLE TYPES, transient props are denoted with $

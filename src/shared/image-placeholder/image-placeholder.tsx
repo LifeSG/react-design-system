@@ -1,4 +1,5 @@
 import { PlaceholderImageIcon } from "@lifesg/react-icons";
+
 import { Placeholder } from "./image-placeholder.style";
 
 export interface ImagePlaceholderProps {

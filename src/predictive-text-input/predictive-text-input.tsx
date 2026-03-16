@@ -1,13 +1,15 @@
 import debounce from "lodash/debounce";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import type React from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import { Input } from "../input";
+import { concatIds, VisuallyHidden } from "../shared/accessibility";
+import type { ItemsLoadStateType } from "../shared/dropdown-list/types";
 import { DropdownList, DropdownListState } from "../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
-import { Input } from "../input";
 import { SimpleIdGenerator } from "../util";
-import { PredictiveTextInputProps } from "./types";
-import { ItemsLoadStateType } from "../shared/dropdown-list/types";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
+import type { PredictiveTextInputProps } from "./types";
 
 export const PredictiveTextInput = <T, V>({
     className,

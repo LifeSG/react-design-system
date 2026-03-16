@@ -1,8 +1,10 @@
-import dayjs, { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import { CalendarHelper } from "../../../util/calendar-helper";
 import { HeaderCell, RowDayCell, Wrapper } from "../standard";
-import { CommonCalendarProps } from "../types";
+import type { CommonCalendarProps } from "../types";
 import { FixedRangeDayCell } from "./fixed-range-cell";
 
 interface FixedRangeCalendarDayViewProps extends CommonCalendarProps {

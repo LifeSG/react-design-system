@@ -1,4 +1,4 @@
-import { TypographyLinkProps } from "../typography";
+import type { TypographyLinkProps } from "../typography";
 
 type DisclaimerTextLinkProps = Omit<TypographyLinkProps, "children">;
 

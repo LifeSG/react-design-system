@@ -1,6 +1,7 @@
 import { CaretRightIcon } from "@lifesg/react-icons/caret-right";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
+
 import { Spinner } from "../../button/button.style";
 import {
     mergeRefs,
@@ -25,16 +26,6 @@ import {
 } from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
 import {
-    expandFirstSubtree,
-    expandMatchedSubtrees,
-    expandSelectedSubtrees,
-    findItemFromEnd,
-    findItemFromStart,
-    flattenList,
-    toggleSubtree,
-    updateSelectedState,
-} from "./nested-dropdown-list-helpers";
-import {
     CheckboxMixedIndicator,
     ExpandButton,
     Indent,
@@ -44,6 +35,16 @@ import {
     UnexpandableIndicator,
 } from "./nested-dropdown-list.styles";
 import {
+    expandFirstSubtree,
+    expandMatchedSubtrees,
+    expandSelectedSubtrees,
+    findItemFromEnd,
+    findItemFromStart,
+    flattenList,
+    toggleSubtree,
+    updateSelectedState,
+} from "./nested-dropdown-list-helpers";
+import type {
     NestedDropdownListItemProps,
     NestedDropdownListLocalItem,
     NestedDropdownListProps,

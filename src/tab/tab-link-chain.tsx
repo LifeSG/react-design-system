@@ -1,9 +1,10 @@
 import { useContext, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
-import { ResizeCallbackParams } from "../shared/fade-wrapper";
-import { V3_Breakpoint } from "../v3_theme";
+
+import type { ResizeCallbackParams } from "../shared/fade-wrapper";
 import { Typography } from "../typography";
+import { V3_Breakpoint } from "../v3_theme";
 import { TabContext } from "./tab-context";
 import {
     BoldLabel,
@@ -14,7 +15,7 @@ import {
     Label,
     LabelContainer,
 } from "./tab-link-chain.style";
-import { TabProps } from "./types";
+import type { TabProps } from "./types";
 
 interface Props
     extends Pick<

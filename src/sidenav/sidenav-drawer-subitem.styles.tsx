@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { V3_Colour, V3_Font, V3_Radius } from "../v3_theme";
+
 import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
+import { V3_Colour, V3_Font, V3_Radius } from "../v3_theme";
 
 //=============================================================================
 // STYLING

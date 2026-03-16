@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
-import { V3_Colour } from "src/v3_theme";
 import { Toggle } from "src/toggle";
 import { Typography } from "src/typography";
+import { V3_Colour } from "src/v3_theme";
 import styled from "styled-components";
 
 type Component = typeof Toggle;

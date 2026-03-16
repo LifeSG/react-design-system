@@ -1,4 +1,5 @@
-import dayjs, { Dayjs, OpUnitType } from "dayjs";
+import type { Dayjs, OpUnitType } from "dayjs";
+import dayjs from "dayjs";
 
 const MONTHS_WITH_31_DAYS = [1, 3, 5, 7, 8, 10, 12];
 const MONTHS_WITH_30_DAYS = [4, 6, 9, 11];

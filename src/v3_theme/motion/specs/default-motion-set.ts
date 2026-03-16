@@ -1,4 +1,4 @@
-import { V3_MotionSet } from "../types";
+import type { V3_MotionSet } from "../types";
 
 export const V3_DefaultMotionSet: V3_MotionSet = {
     "duration-150": "150ms",

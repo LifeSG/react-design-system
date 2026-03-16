@@ -1,5 +1,5 @@
 import { PopoverTrigger } from "../popover-trigger";
-import { PopoverInlineProps } from "../types";
+import type { PopoverInlineProps } from "../types";
 import { StyledIcon, StyledText } from "./popover-inline.styles";
 
 export const PopoverInline = ({

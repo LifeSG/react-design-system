@@ -1,10 +1,12 @@
 import { cloneElement } from "react";
-import { PopoverRenderProps, PopoverTrigger } from "../popover-v2";
+
+import type { PopoverRenderProps } from "../popover-v2";
+import { PopoverTrigger } from "../popover-v2";
 import { MenuContent } from "./menu-content";
 import { MenuItem } from "./menu-item";
 import { MenuLink } from "./menu-link";
 import { MenuSection } from "./menu-section";
-import { MenuContentProps, MenuProps } from "./types";
+import type { MenuContentProps, MenuProps } from "./types";
 
 export const MenuTrigger = ({
     children,

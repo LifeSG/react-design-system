@@ -1,8 +1,9 @@
-import { useDarkMode } from "@storybook-community/storybook-dark-mode";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { useDarkMode } from "@storybook-community/storybook-dark-mode";
 import { Avatar } from "src/avatar";
 import { Badge } from "src/badge";
 import { GridDecorator, RowDecorator } from "stories/storybook-common";
+
 import { Icon } from "./doc-elements";
 
 type Component = typeof Badge;

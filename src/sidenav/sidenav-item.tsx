@@ -1,7 +1,7 @@
+import type { OpenChangeReason } from "@floating-ui/react";
 import {
     FloatingFocusManager,
     FloatingPortal,
-    OpenChangeReason,
     safePolygon,
     size,
     useClick,
@@ -12,7 +12,10 @@ import {
     useInteractions,
     useTransitionStyles,
 } from "@floating-ui/react";
-import { HTMLAttributes, useContext, useEffect, useState } from "react";
+import type { HTMLAttributes } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
+
 import { SidenavContext } from "./sidenav-context";
 import {
     Container,
@@ -21,8 +24,7 @@ import {
     IconContainer,
     TitleText,
 } from "./sidenav-item.styles";
-import { SidenavItemProps } from "./types";
-import { useResizeDetector } from "react-resize-detector";
+import type { SidenavItemProps } from "./types";
 
 export const SidenavItem = ({
     children,

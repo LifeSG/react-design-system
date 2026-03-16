@@ -1,6 +1,7 @@
 import { flatten, getColors } from "lottie-colorify";
 import { useLottie } from "lottie-react";
-import { CustomisedProps } from "../types";
+
+import type { CustomisedProps } from "../types";
 import animationData from "./data.json";
 
 export const LottieLoadingDotsSpinner = ({

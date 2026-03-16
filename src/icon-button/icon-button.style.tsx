@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
-import { SizeType, StyleType } from "./types";
+
 import { V3_Border, V3_Colour, V3_Radius } from "../v3_theme";
+import type { SizeType, StyleType } from "./types";
+
 interface StyleProps {
     $styleType: StyleType | "disabled";
     $sizeType: SizeType;

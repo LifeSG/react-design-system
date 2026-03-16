@@ -1,6 +1,7 @@
 import reduce from "lodash/reduce";
+
 import { CountryData } from "./data/country-code";
-import { CountryValue } from "./types";
+import type { CountryValue } from "./types";
 
 // Format stucture: prefix+countryCode+' '+defaultMask
 const defaultMask = "... ... ... ... ..";

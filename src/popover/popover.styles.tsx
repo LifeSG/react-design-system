@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
-import { V2_MediaQuery } from "../v2_media";
+
 import { ModalBox } from "../modal/modal-box";
+import { V2_MediaQuery } from "../v2_media";
 import { V2_Transition } from "../v2_transition";
 
 // =============================================================================

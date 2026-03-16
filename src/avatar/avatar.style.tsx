@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
-import { V3_Colour } from "../v3_theme";
+
 import { Typography } from "../typography";
-import { AvatarSize } from "./types";
+import { V3_Colour } from "../v3_theme";
+import type { AvatarSize } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES

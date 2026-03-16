@@ -1,10 +1,11 @@
-import {
+import type {
     API,
     ASTPath,
     FileInfo,
     JSCodeshift,
     MemberExpression,
 } from "jscodeshift";
+
 import { CodemodUtils } from "../codemod-utils";
 import { textComponentMap, textStyleFontMap, weightMap } from "./data";
 

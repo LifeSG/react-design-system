@@ -1,6 +1,7 @@
 import { useState } from "react";
+
 import { OtpVerification } from "../otp-verification";
-import { FormOtpVerificationProps } from "../otp-verification/types";
+import type { FormOtpVerificationProps } from "../otp-verification/types";
 import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 

@@ -1,6 +1,7 @@
 import { css } from "@linaria/core";
 import { useLayoutEffect, useRef, useState } from "react";
-import { ExampleProps } from "./types";
+
+import type { ExampleProps } from "./types";
 
 // TODO: remove after v4 migration is complete
 export const Example = ({

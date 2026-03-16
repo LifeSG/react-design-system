@@ -1,4 +1,4 @@
-import { PopoverV2TriggerType } from "../popover-v2";
+import type { PopoverV2TriggerType } from "../popover-v2";
 
 export type ScheduleCellType = "booked" | "available" | "blocked" | "pending";
 

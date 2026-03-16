@@ -1,8 +1,9 @@
 import { useState } from "react";
+
 import { SelectHistogram } from "../select-histogram/select-histogram";
-import { FormWrapper } from "./form-wrapper";
-import { FormSelectHistogramProps } from "./types";
 import { SimpleIdGenerator } from "../util";
+import { FormWrapper } from "./form-wrapper";
+import type { FormSelectHistogramProps } from "./types";
 
 export const FormSelectHistogram = ({
     label,

@@ -1,8 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import {
-    UneditableSection,
-    UneditableSectionItemProps,
-} from "src/uneditable-section";
+import type { UneditableSectionItemProps } from "src/uneditable-section";
+import { UneditableSection } from "src/uneditable-section";
 
 describe("UneditableSection", () => {
     beforeEach(() => {

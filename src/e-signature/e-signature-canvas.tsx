@@ -1,6 +1,6 @@
 import { Canvas as FabricCanvas, FabricImage, PencilBrush } from "fabric";
+import type { Ref } from "react";
 import {
-    Ref,
     forwardRef,
     useCallback,
     useContext,
@@ -9,6 +9,7 @@ import {
     useRef,
 } from "react";
 import { ThemeContext } from "styled-components";
+
 import { V3_Colour } from "../v3_theme";
 import {
     SignatureCanvas,

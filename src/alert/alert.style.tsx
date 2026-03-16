@@ -1,7 +1,8 @@
 import { ChevronDownIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
+
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
-import { AlertSizeType, AlertType } from "./types";
+import { Typography } from "../typography";
 import {
     V3_Border,
     V3_Colour,
@@ -9,7 +10,7 @@ import {
     V3_Motion,
     V3_Spacing,
 } from "../v3_theme";
-import { Typography } from "../typography";
+import type { AlertSizeType, AlertType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $

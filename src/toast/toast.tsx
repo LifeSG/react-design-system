@@ -9,7 +9,8 @@ import { easings, useSpring } from "@react-spring/web";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
-import { VisuallyHidden, inertValue } from "../shared/accessibility";
+
+import { inertValue, VisuallyHidden } from "../shared/accessibility";
 import { V3_Breakpoint } from "../v3_theme";
 import {
     ActionButton,
@@ -22,7 +23,7 @@ import {
     Title,
     Wrapper,
 } from "./toast.styles";
-import { ToastProps } from "./types";
+import type { ToastProps } from "./types";
 
 const DEFAULT_AUTO_DISMISS_TIME = 4000;
 

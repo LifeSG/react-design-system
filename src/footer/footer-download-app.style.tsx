@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { V3_MediaQuery, V3_Spacing } from "../v3_theme";
+
 import { Typography } from "../typography";
+import { V3_MediaQuery, V3_Spacing } from "../v3_theme";
 import { V3_ThemeFooter } from "../v3_theme/components/theme-helper";
 
 export const Wrapper = styled.div`

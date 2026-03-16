@@ -7,6 +7,7 @@ import {
     FullWidthStoryDecorator,
     StoryDecorator,
 } from "stories/storybook-common";
+
 import { BIN_DATA, LARGE_BIN_DATA } from "./histogram-data";
 
 type Component = typeof Form.HistogramSlider;

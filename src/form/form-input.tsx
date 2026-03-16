@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+
 import { Input } from "../input";
-import { InputRef } from "../input/types";
-import { FormWrapper } from "./form-wrapper";
-import { FormInputProps } from "./types";
+import type { InputRef } from "../input/types";
 import { SimpleIdGenerator } from "../util";
+import { FormWrapper } from "./form-wrapper";
+import type { FormInputProps } from "./types";
 
 const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
     const {

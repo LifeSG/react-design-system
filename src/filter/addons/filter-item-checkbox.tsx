@@ -1,5 +1,5 @@
+import type { AriaAttributes } from "react";
 import {
-    AriaAttributes,
     useCallback,
     useContext,
     useEffect,
@@ -8,18 +8,12 @@ import {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
+
 import { FilterContext } from "../filter-context";
-import {
+import type {
     FilterItemCheckboxOptionProps,
     FilterItemCheckboxProps,
 } from "../types";
-import {
-    buildKeyPath,
-    flattenNestedOptions,
-    getAllDescendantChildren,
-    getAllDescendantKeyPaths,
-    hasNestedOptions,
-} from "./filter-item-checkbox-helpers";
 import {
     Group,
     Item,
@@ -28,7 +22,14 @@ import {
     StyledFilterItem,
     StyledToggle,
 } from "./filter-item-checkbox.styles";
-import { FlattenedFilterOption } from "./types";
+import {
+    buildKeyPath,
+    flattenNestedOptions,
+    getAllDescendantChildren,
+    getAllDescendantKeyPaths,
+    hasNestedOptions,
+} from "./filter-item-checkbox-helpers";
+import type { FlattenedFilterOption } from "./types";
 
 export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
     selectedOptions,

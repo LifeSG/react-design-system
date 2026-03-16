@@ -1,22 +1,23 @@
 import { GearIcon } from "@lifesg/react-icons/gear";
 import { InboxIcon } from "@lifesg/react-icons/inbox";
+import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useRef, useState } from "react";
 import { IconButton } from "src/icon-button";
-import {
-    NavItemLinkProps,
-    NavItemProps,
-    Navbar,
+import type {
     NavbarButtonProps,
     NavbarDrawerHandle,
+    NavItemLinkProps,
+    NavItemProps,
 } from "src/navbar";
+import { Navbar } from "src/navbar";
 import { FullWidthStoryDecorator } from "stories/storybook-common";
+
 import {
     DesktopCustomComponent,
     MobileCustomComponent,
     NavbarAvatar,
 } from "./doc-elements";
-import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 
 type Component = typeof Navbar;
 

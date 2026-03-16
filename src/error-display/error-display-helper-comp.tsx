@@ -1,4 +1,4 @@
-import {
+import type {
     InactivityAdditionalAttributes,
     MaintenanceAdditionalAttributes,
 } from "./types";

@@ -1,6 +1,7 @@
 import { css } from "styled-components";
+
 import { V3_Colour, V3_Font } from "../../v3_theme";
-import { V3_TypographySizeType } from "../../v3_theme/font/types";
+import type { V3_TypographySizeType } from "../../v3_theme/font/types";
 
 export interface HtmlContentStyleOptions {
     textSize?: V3_TypographySizeType | undefined;

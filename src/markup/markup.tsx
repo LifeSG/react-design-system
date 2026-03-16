@@ -1,6 +1,8 @@
-import React, { forwardRef } from "react";
+import type React from "react";
+import { forwardRef } from "react";
+
 import { Container } from "./markup.style";
-import { MarkupProps } from "./types";
+import type { MarkupProps } from "./types";
 
 const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
     // =========================================================================

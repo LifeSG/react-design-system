@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { useState } from "react";
-
-import { FeedbackRating, FeedbackRatingProps } from "src";
+import type { FeedbackRatingProps } from "src";
+import { FeedbackRating } from "src";
 import { FeedbackRatingData } from "src/feedback-rating/feedback-rating-data";
 
 // =============================================================================

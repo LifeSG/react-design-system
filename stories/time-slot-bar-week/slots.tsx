@@ -1,8 +1,9 @@
 import dayjs from "dayjs";
-import { TimeSlot } from "src/time-slot-bar";
+import type { TimeSlot } from "src/time-slot-bar";
 import { CalendarHelper } from "src/util/calendar-helper";
-import slotsDataMin from "./slots-data-minimum.json";
+
 import slotsData from "./slots-data.json";
+import slotsDataMin from "./slots-data-minimum.json";
 
 export const getSlots = () => {
     const weekdays = CalendarHelper.generateDaysForCurrentWeek(dayjs());

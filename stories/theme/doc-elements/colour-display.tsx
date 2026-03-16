@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { ThemeMode, ThemeProvider, ThemeType } from "src/theme";
+import type React from "react";
+import { useState } from "react";
+import type { ThemeMode, ThemeType } from "src/theme";
+import { ThemeProvider } from "src/theme";
 import styled from "styled-components";
 
 interface ColourModeSwitcherProps {

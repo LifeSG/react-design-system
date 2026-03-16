@@ -1,13 +1,17 @@
-import { OpenChangeReason } from "@floating-ui/react";
+import type { OpenChangeReason } from "@floating-ui/react";
 import isEmpty from "lodash/isEmpty";
-import React, { useEffect, useRef, useState } from "react";
-import {
-    ExpandableElement,
-    NestedDropdownList,
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+
+import type {
     NestedDropdownListItemProps,
     NestedDropdownListLocalItem,
+} from "../shared/dropdown-list-v2";
+import {
     buildKeyPathToSet,
+    ExpandableElement,
     findItemByKeyPath,
+    NestedDropdownList,
 } from "../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
@@ -17,7 +21,7 @@ import {
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { SimpleIdGenerator, StringHelper } from "../util";
-import {
+import type {
     InputNestedSelectProps,
     L1OptionProps,
     L2OptionProps,

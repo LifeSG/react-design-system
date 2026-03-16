@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import { Typography } from "src/typography";
 import { Accordion } from "src";
+import { Typography } from "src/typography";
 
 type Component = typeof Accordion;
 

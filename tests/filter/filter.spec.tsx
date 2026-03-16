@@ -2,9 +2,9 @@ import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { useMediaQuery } from "react-responsive";
 import { Filter } from "src";
 import { FilterContext } from "src/filter/filter-context";
-import { FilterItemCheckboxOptionProps } from "src/filter/types";
 import { FilterModal } from "src/filter/filter-modal";
 import { FilterSidebar } from "src/filter/filter-sidebar";
+import type { FilterItemCheckboxOptionProps } from "src/filter/types";
 
 jest.mock("react-responsive");
 

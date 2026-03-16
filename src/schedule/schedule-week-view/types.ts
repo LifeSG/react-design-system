@@ -1,5 +1,7 @@
-import { ScheduleEntityProps, ScheduleSlotProps } from "../types";
-import { RefObject } from "react";
+import type { RefObject } from "react";
+
+import type { ScheduleEntityProps, ScheduleSlotProps } from "../types";
+
 export interface ScheduleWeekViewProps {
     date: string;
     serviceData: ScheduleEntityProps[];

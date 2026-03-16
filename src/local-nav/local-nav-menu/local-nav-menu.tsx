@@ -1,6 +1,7 @@
 import React from "react";
-import { LocalNavMenuItemComponentProps } from "../internal-types";
-import { LocalNavMenuProps } from "../types";
+
+import type { LocalNavMenuItemComponentProps } from "../internal-types";
+import type { LocalNavMenuProps } from "../types";
 import {
     Nav,
     NavItem,

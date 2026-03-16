@@ -1,5 +1,5 @@
-import { V3_MediaQuery } from "src/v3_theme";
 import { Typography } from "src/typography";
+import { V3_MediaQuery } from "src/v3_theme";
 import styled from "styled-components";
 
 export const Page = styled.div`

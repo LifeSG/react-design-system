@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
+
 import { InputGroup } from "../input-group/input-group";
-import { AddonProps, LabelAddon, ListAddon } from "../input-group/types";
+import type { AddonProps, LabelAddon, ListAddon } from "../input-group/types";
 import { useNextInputState } from "../util";
 import { PhoneNumberInputHelper } from "./phone-number-input-helper";
-import { CountryValue, PhoneNumberInputProps } from "./types";
+import type { CountryValue, PhoneNumberInputProps } from "./types";
 
 export const PhoneNumberInput = ({
     onChange,

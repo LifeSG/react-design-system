@@ -1,12 +1,12 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { DisclaimerLinks, Footer, FooterLinkProps } from "src/footer";
-import {
-    FooterHelper,
-    InternalDisclaimerLinks,
-} from "src/footer/footer-helper";
-import { V3_ResourceScheme } from "src/v3_theme";
-import { KeyOf } from "src/util/utility-types";
+import type { DisclaimerLinks, FooterLinkProps } from "src/footer";
+import { Footer } from "src/footer";
+import type { InternalDisclaimerLinks } from "src/footer/footer-helper";
+import { FooterHelper } from "src/footer/footer-helper";
+import type { KeyOf } from "src/util/utility-types";
+import type { V3_ResourceScheme } from "src/v3_theme";
 import { ThemeProvider } from "styled-components";
+
 import { MOCK_THEME } from "../v3_theme/mock-theme-data";
 
 // =============================================================================

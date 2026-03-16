@@ -1,5 +1,6 @@
 import get from "lodash/get";
-import { V2_ThemeCollectionSpec } from "./types";
+
+import type { V2_ThemeCollectionSpec } from "./types";
 
 /**
  *

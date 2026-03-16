@@ -1,4 +1,4 @@
-import { V3_SpacingSet } from "../types";
+import type { V3_SpacingSet } from "../types";
 
 export const V3_DefaultSpacingSet: V3_SpacingSet = {
     "spacing-0": 0,

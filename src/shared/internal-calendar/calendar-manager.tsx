@@ -1,5 +1,7 @@
-import dayjs, { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+
 import { DateHelper } from "../../util";
 import { CalendarHelper } from "../../util/calendar-helper";
 import { inertValue } from "../accessibility";
@@ -22,7 +24,7 @@ import {
 } from "./calendar-manager.style";
 import { InternalCalendarMonth } from "./internal-calendar-month";
 import { InternalCalendarYear } from "./internal-calendar-year";
-import {
+import type {
     CalendarAction,
     CalendarManagerProps,
     CalendarManagerRef,

@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+
 import { HistogramSlider } from "../histogram-slider";
 import {
     DropdownListState,
     ExpandableElement,
 } from "../shared/dropdown-list-v2";
-import {
-    DropdownRenderProps,
-    ElementWithDropdown,
-} from "../shared/dropdown-wrapper";
+import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { LabelContainer } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { Typography } from "../typography";
@@ -18,7 +17,7 @@ import {
     PlaceholderLabel,
     Separator,
 } from "./select-histogram.styles";
-import { SelectHistogramProps } from "./types";
+import type { SelectHistogramProps } from "./types";
 
 export const SelectHistogram = ({
     alignment = "left",

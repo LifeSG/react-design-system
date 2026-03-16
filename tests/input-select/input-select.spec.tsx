@@ -1,6 +1,7 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { InputSelect } from "src";
+
 import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
 
 const FIELD_TESTID = "test";

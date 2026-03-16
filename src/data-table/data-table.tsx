@@ -2,6 +2,7 @@ import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useResizeDetector } from "react-resize-detector";
+
 import { LoadingDotsSpinner } from "../animations";
 import { Checkbox } from "../checkbox";
 import { ErrorDisplay } from "../error-display";
@@ -26,7 +27,7 @@ import {
     TableWrapper,
     TextButton,
 } from "./data-table.styles";
-import { DataTableProps, HeaderProps, RowProps } from "./types";
+import type { DataTableProps, HeaderProps, RowProps } from "./types";
 
 export const DataTable = ({
     id,

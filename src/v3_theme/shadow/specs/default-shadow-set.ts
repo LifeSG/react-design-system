@@ -1,8 +1,8 @@
 import { getPrimitiveColour } from "../../colour-primitive/theme-helper";
 import { getSemanticColour } from "../../colour-semantic/theme-helper";
-import { V3_StyledComponentProps } from "../../helpers";
-import { V3_PrimitiveColourSet, V3_SemanticColourSet } from "../../types";
-import { V3_ShadowSet } from "../types";
+import type { V3_StyledComponentProps } from "../../helpers";
+import type { V3_PrimitiveColourSet, V3_SemanticColourSet } from "../../types";
+import type { V3_ShadowSet } from "../types";
 
 const createShadow =
     (

@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
+
 import { V3_Breakpoint, V3_MediaQuery } from "../v3_theme";
-import { ContainerType } from "./types";
+import type { ContainerType } from "./types";
 
 interface StyleProps {
     $type: ContainerType;

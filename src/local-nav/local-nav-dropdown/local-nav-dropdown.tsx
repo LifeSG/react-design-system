@@ -1,7 +1,9 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
-import { LocalNavDropdownItemComponentProps } from "../internal-types";
-import { LocalNavDropdownProps, LocalNavItemProps } from "../types";
+
+import { Typography } from "../../typography";
 import { SimpleIdGenerator } from "../../util";
+import type { LocalNavDropdownItemComponentProps } from "../internal-types";
+import type { LocalNavDropdownProps, LocalNavItemProps } from "../types";
 import {
     Backdrop,
     NavItem,
@@ -12,7 +14,6 @@ import {
     NavWrapper,
     StyledTickIcon,
 } from "./local-nav-dropdown.styles";
-import { Typography } from "../../typography";
 
 const Component = (
     {

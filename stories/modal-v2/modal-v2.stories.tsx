@@ -6,6 +6,7 @@ import { ButtonWithIcon } from "src/button-with-icon";
 import { ModalV2 } from "src/modal-v2";
 import { Typography } from "src/typography";
 import styled from "styled-components";
+
 import { SlotPlayground } from "./doc-elements";
 
 type Component = typeof ModalV2;

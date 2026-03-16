@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce";
+import { useEffect, useRef, useState } from "react";
+
 import { V2_Text } from "../v2_text/text";
 import { Arrow, Bubble, BubbleWrap } from "./tooltip.styles";
-import { TooltipPosition, TooltipProps } from "./types";
+import type { TooltipPosition, TooltipProps } from "./types";
 
 /** @deprecated Use `PopoverV2` */
 export const Tooltip = ({

@@ -1,8 +1,10 @@
-import styled, { css } from "styled-components";
 import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import styled, { css } from "styled-components";
+
 import { IconButton as DSIconButton } from "../../icon-button";
 import { ClickableIcon } from "../../shared/clickable-icon";
+import { Typography } from "../../typography";
 import {
     V3_Border,
     V3_Colour,
@@ -11,7 +13,6 @@ import {
     V3_Shadow,
     V3_Spacing,
 } from "../../v3_theme";
-import { Typography } from "../../typography";
 
 // =============================================================================
 // STYLE INTERFACES

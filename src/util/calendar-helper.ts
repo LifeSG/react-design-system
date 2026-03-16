@@ -1,4 +1,5 @@
-import dayjs, { Dayjs, OpUnitType } from "dayjs";
+import type { Dayjs, OpUnitType } from "dayjs";
+import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import isBetween from "dayjs/plugin/isBetween";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";

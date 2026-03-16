@@ -1,12 +1,13 @@
 import styled, { css } from "styled-components";
+
 import {
     V3_Border,
     V3_Colour,
     V3_Font,
+    V3_MediaQuery,
     V3_Motion,
     V3_Radius,
 } from "../v3_theme";
-import { V3_MediaQuery } from "../v3_theme";
 
 export const Main = styled.button<{
     $selected?: boolean;

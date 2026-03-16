@@ -1,8 +1,11 @@
-import { render } from "@testing-library/react";
 import "jest-styled-components";
-import { ThemeProvider } from "styled-components";
+
+import { render } from "@testing-library/react";
 import { ColDiv } from "src/layout/col-div";
+import { ThemeProvider } from "styled-components";
+
 import { MOCK_THEME } from "./mock-theme-data";
+
 describe("ColDiv Component", () => {
     it("should render with default settings (spanning 1 column)", () => {
         const { container } = render(

@@ -1,17 +1,14 @@
 import debounce from "lodash/debounce";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+
 import { Card } from "../card";
 import { Modal } from "../modal/modal";
 import { MediaWidths } from "../v2_spec/media-spec";
 import { V2_Text } from "../v2_text/text";
-import {
-    BubbleWrap,
-    ContentWrapper,
-    MobileModalBox,
-    OffsetPosition,
-} from "./popover.styles";
-import { PopoverProps } from "./types";
+import type { OffsetPosition } from "./popover.styles";
+import { BubbleWrap, ContentWrapper, MobileModalBox } from "./popover.styles";
+import type { PopoverProps } from "./types";
 
 /**
  * @deprecated Use `PopoverV2` for improved positioning behaviour. This component will be removed in DS v3.

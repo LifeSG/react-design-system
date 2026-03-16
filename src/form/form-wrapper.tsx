@@ -4,7 +4,9 @@
  *
  */
 
-import { Children, ComponentType, cloneElement, useState } from "react";
+import type { ComponentType } from "react";
+import { Children, cloneElement, useState } from "react";
+
 import { SimpleIdGenerator } from "../util";
 import { FormLabel } from "./form-label";
 import {
@@ -17,7 +19,7 @@ import {
     Container,
     V2_ColDivContainer,
 } from "./form-wrapper.style";
-import { FormElementLayoutType, FormWrapperProps } from "./types";
+import type { FormElementLayoutType, FormWrapperProps } from "./types";
 
 export const FormWrapper = ({
     label,

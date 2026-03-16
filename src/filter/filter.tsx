@@ -1,13 +1,14 @@
 import { useContext, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
+
 import { V3_Breakpoint } from "../v3_theme";
 import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
 import { FilterItem } from "./filter-item";
 import { FilterItemPage } from "./filter-item-page";
-import { FilterProps } from "./types";
 import { FilterModal } from "./filter-modal";
 import { FilterSidebar } from "./filter-sidebar";
+import type { FilterProps } from "./types";
 
 export const Filter = ({
     children,

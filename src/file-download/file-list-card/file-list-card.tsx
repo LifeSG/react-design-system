@@ -2,9 +2,10 @@ import { DownloadIcon } from "@lifesg/react-icons";
 import { memo, useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
+
 import { FileUploadHelper } from "../../file-upload/helper";
-import { V3_Breakpoint } from "../../v3_theme";
 import { StringHelper } from "../../util";
+import { V3_Breakpoint } from "../../v3_theme";
 import {
     ActionContainer,
     Box,
@@ -22,7 +23,7 @@ import {
     Thumbnail,
     ThumbnailContainer,
 } from "./file-list-card.styles";
-import { FileListItemProps } from "./types";
+import type { FileListItemProps } from "./types";
 
 const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     // =========================================================================

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+
 import { InputGroup } from "../input-group";
-import { FormWrapper } from "./form-wrapper";
-import { FormInputGroupProps } from "./types";
 import { SimpleIdGenerator } from "../util";
+import { FormWrapper } from "./form-wrapper";
+import type { FormInputGroupProps } from "./types";
 
 const Component = <T, V>(
     props: FormInputGroupProps<T, V>,

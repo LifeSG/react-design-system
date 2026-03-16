@@ -1,7 +1,8 @@
-import { V3_ResourceScheme, V3_ThemeSpec } from "../v3_theme/types";
+import type { V3_ResourceScheme, V3_ThemeSpec } from "../v3_theme/types";
 import { renderDescriptionWithProps } from "./error-display-helper-comp";
-import { ErrorDisplayHelper, ErrorDisplayImagePathAttributes } from "./helper";
-import {
+import type { ErrorDisplayImagePathAttributes } from "./helper";
+import { ErrorDisplayHelper } from "./helper";
+import type {
     ErrorDisplayType,
     InactivityAdditionalAttributes,
     MaintenanceAdditionalAttributes,

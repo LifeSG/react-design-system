@@ -1,6 +1,6 @@
+import type { PropertiesToType } from "../util/utility-types";
 import { getThemeColors } from "../v2_theme/color-theme-helper";
-import { PropertiesToType } from "../util/utility-types";
-import { V2_ColorSet } from "./types";
+import type { V2_ColorSet } from "./types";
 
 /** @deprecated */
 export const V2_Color: PropertiesToType<

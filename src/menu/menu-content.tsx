@@ -1,6 +1,7 @@
-import React from "react";
+import type React from "react";
+
 import { MenuPanel } from "./menu-content.styles";
-import { MenuContentProps } from "./types";
+import type { MenuContentProps } from "./types";
 
 // =============================================================================
 // HELPERS

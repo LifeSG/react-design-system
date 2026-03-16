@@ -1,18 +1,18 @@
 import { EraserIcon, PencilIcon } from "@lifesg/react-icons";
-import { Suspense, lazy, useContext, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
+
 import { Button } from "../button";
 import { ButtonWithIcon } from "../button-with-icon";
 import { ProgressBar } from "../shared/progress-bar";
-import { V3_Breakpoint } from "../v3_theme";
 import { Typography } from "../typography";
-import { ESignatureCanvasRef } from "./e-signature-canvas";
+import { V3_Breakpoint } from "../v3_theme";
 import {
     AddSignatureButton,
+    EditSignatureButton,
     ESignatureContainer,
     ESignatureDrawable,
-    EditSignatureButton,
     GrowContainer,
     Instructions,
     ModalActionButton,
@@ -25,7 +25,8 @@ import {
     SignatureLine,
     SignaturePreviewImage,
 } from "./e-signature.styles";
-import { EsignatureProps } from "./types";
+import type { ESignatureCanvasRef } from "./e-signature-canvas";
+import type { EsignatureProps } from "./types";
 
 // lazy load to fix next.js SSR errors
 const ESignatureCanvas = lazy(async () => ({

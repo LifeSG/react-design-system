@@ -1,6 +1,6 @@
+import { PlusCircleFillIcon } from "@lifesg/react-icons";
 import { render, screen } from "@testing-library/react";
 import { Pill } from "src/pill";
-import { PlusCircleFillIcon } from "@lifesg/react-icons";
 
 // =============================================================================
 // UNIT TESTS

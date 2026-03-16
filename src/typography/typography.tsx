@@ -1,7 +1,9 @@
-import React, { RefObject } from "react";
-import { IStyledComponent } from "styled-components";
-import { V3_TypographySizeType } from "../v3_theme/font/types";
-import { TypographyLinkProps, TypographyProps } from "./types";
+import type { RefObject } from "react";
+import React from "react";
+import type { IStyledComponent } from "styled-components";
+
+import type { V3_TypographySizeType } from "../v3_theme/font/types";
+import type { TypographyLinkProps, TypographyProps } from "./types";
 import {
     HyperlinkBase,
     StyledExternalIcon,

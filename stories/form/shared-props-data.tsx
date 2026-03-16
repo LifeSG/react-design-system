@@ -1,4 +1,5 @@
-import { ApiTableSectionProps } from "stories/storybook-common/api-table/types";
+import type { ApiTableSectionProps } from "stories/storybook-common/api-table/types";
+
 import {
     FORM_LABEL_ADDON_PROPS_DATA,
     FORM_LABEL_USED_WITH_WRAPPER_PROPS_DATA,

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { TimeSlotBar } from "src/time-slot-bar/time-slot-bar";
-import { TimeSlot } from "src/time-slot-bar/types";
 import { V3_Colour } from "src";
+import { TimeSlotBar } from "src/time-slot-bar/time-slot-bar";
+import type { TimeSlot } from "src/time-slot-bar/types";
 
 describe("TimeSlotBar", () => {
     const mockSlots: TimeSlot[] = [

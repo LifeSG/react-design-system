@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import React from "react";
+import type React from "react";
 import { V2_Layout } from "src/v2_layout";
 import { V2_Text } from "src/v2_text";
 

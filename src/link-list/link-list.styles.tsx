@@ -3,8 +3,9 @@ import { MinusIcon } from "@lifesg/react-icons/minus";
 import { PlusIcon } from "@lifesg/react-icons/plus";
 import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
-import { V3_Border, V3_Colour } from "../v3_theme";
+
 import { Typography } from "../typography";
+import { V3_Border, V3_Colour } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

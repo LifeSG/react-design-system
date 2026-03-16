@@ -1,7 +1,9 @@
+import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
 import { useMemo, useRef } from "react";
-import { ScheduleDayViewProps } from "./types";
-import { TimeHelper } from "../../util/time-helper";
+
+import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
 import { DateHelper } from "../../util/date-helper";
+import { TimeHelper } from "../../util/time-helper";
 import {
     calculateSlotOffset,
     findSlotsStartingInTimeRange,
@@ -11,7 +13,8 @@ import {
     useTimelineOffset,
 } from "../shared";
 import { WithOptionalPopover } from "../shared/with-optional-popover";
-import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
+import { TimeIndicator } from "../time-indicator/time-indicator";
+import type { ScheduleEntityProps, ScheduleSlotProps } from "../types";
 import {
     ArrowButton,
     ArrowContainer,
@@ -34,9 +37,7 @@ import {
     Timeline,
     Title,
 } from "./schedule-day-view.styles";
-import { TimeIndicator } from "../time-indicator/time-indicator";
-import { ScheduleEntityProps, ScheduleSlotProps } from "../types";
-import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
+import type { ScheduleDayViewProps } from "./types";
 
 export const ScheduleDayView = ({
     serviceData,

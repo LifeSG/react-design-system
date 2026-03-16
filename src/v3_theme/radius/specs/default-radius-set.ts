@@ -1,4 +1,4 @@
-import { V3_RadiusSet } from "../types";
+import type { V3_RadiusSet } from "../types";
 
 export const V3_DefaultRadiusSet: V3_RadiusSet = {
     none: 0,

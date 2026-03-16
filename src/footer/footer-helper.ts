@@ -1,8 +1,9 @@
 import dayjs from "dayjs";
-import { V3_ResourceScheme } from "../v3_theme/types";
-import { TypographyLinkProps } from "../typography";
+
+import type { TypographyLinkProps } from "../typography";
+import type { V3_ResourceScheme } from "../v3_theme/types";
 import { getDefaultDisclaimerLinks } from "./footer-disclaimer-links-data";
-import { DisclaimerLinks } from "./types";
+import type { DisclaimerLinks } from "./types";
 
 /* Internally used.  Not to be exported */
 export interface InternalDisclaimerLinks {

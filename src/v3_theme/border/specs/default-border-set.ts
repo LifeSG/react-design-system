@@ -1,4 +1,4 @@
-import { V3_BorderSet } from "../types";
+import type { V3_BorderSet } from "../types";
 
 export const V3_DefaultBorderSet: V3_BorderSet = {
     "width-005": 0.5,

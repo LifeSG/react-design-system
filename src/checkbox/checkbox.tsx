@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { CheckboxProps } from "./types";
+
 import {
     Container,
     Input,
@@ -8,6 +8,7 @@ import {
     StyledUncheckedDisabledIcon,
     StyledUncheckedIcon,
 } from "./checkbox.style";
+import type { CheckboxProps } from "./types";
 
 export const Checkbox = ({
     className,

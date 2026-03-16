@@ -1,13 +1,14 @@
-import {
+import type {
     AnchorHTMLAttributes,
     FunctionComponentElement,
     HTMLAttributes,
     ReactElement,
 } from "react";
-import { PopoverRenderProps, PopoverV2TriggerProps } from "../popover-v2";
-import { MenuItem } from "./menu-item";
-import { MenuLink } from "./menu-link";
-import { MenuSection } from "./menu-section";
+
+import type { PopoverRenderProps, PopoverV2TriggerProps } from "../popover-v2";
+import type { MenuItem } from "./menu-item";
+import type { MenuLink } from "./menu-link";
+import type { MenuSection } from "./menu-section";
 
 export interface MenuProps
     extends Omit<PopoverV2TriggerProps, "popoverContent"> {

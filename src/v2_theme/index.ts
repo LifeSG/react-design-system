@@ -1,4 +1,5 @@
-import { V2_ThemeContextKeys, V2_ThemeSpec } from "./types";
+import type { V2_ThemeSpec } from "./types";
+import { V2_ThemeContextKeys } from "./types";
 
 export const V2_BaseTheme: V2_ThemeSpec = {
     [V2_ThemeContextKeys.colorScheme]: "base",

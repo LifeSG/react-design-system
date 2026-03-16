@@ -1,6 +1,7 @@
 import React from "react";
+
 import { GridContainer, TileContainer } from "./masonry.style";
-import { MasonryGridProps, MasonryTileProps } from "./types";
+import type { MasonryGridProps, MasonryTileProps } from "./types";
 
 // =============================================================================
 // GRID

@@ -1,6 +1,7 @@
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
+
 import { Checkbox } from "../../checkbox";
 import {
     V3_Colour,
@@ -10,7 +11,7 @@ import {
     V3_Spacing,
 } from "../../v3_theme";
 import { ComponentLoadingSpinner } from "../component-loading-spinner";
-import {
+import type {
     DropdownVariantType,
     IconProps,
     LabelDisplayType,

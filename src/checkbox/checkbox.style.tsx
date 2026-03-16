@@ -5,8 +5,9 @@ import {
     SquareTickFillIcon,
 } from "@lifesg/react-icons";
 import styled, { css, keyframes } from "styled-components";
+
 import { V3_Colour, V3_Motion } from "../v3_theme";
-import { CheckboxProps, CheckboxSize } from "./types";
+import type { CheckboxProps, CheckboxSize } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $

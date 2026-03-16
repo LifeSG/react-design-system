@@ -1,21 +1,18 @@
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
-import {
-    DropdownRenderProps,
-    ElementWithDropdown,
-} from "../shared/dropdown-wrapper";
-import {
+
+import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import type {
     CalendarAction,
-    CalendarDropdown,
     InternalCalendarRef,
 } from "../shared/internal-calendar";
-import {
-    StandaloneDateInput,
-    StandaloneDateInputRef,
-} from "../shared/standalone-date-input/standalone-date-input";
+import { CalendarDropdown } from "../shared/internal-calendar";
+import type { StandaloneDateInputRef } from "../shared/standalone-date-input/standalone-date-input";
+import { StandaloneDateInput } from "../shared/standalone-date-input/standalone-date-input";
 import { DateInputHelper } from "../util";
 import { Container } from "./date-input.style";
-import { DateInputProps } from "./types";
+import type { DateInputProps } from "./types";
 
 export const DateInput = ({
     minDate,

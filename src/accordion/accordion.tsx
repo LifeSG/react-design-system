@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { AccordionContext } from "./accordion-context";
-import { AccordionItem } from "./accordion-item";
+import type React from "react";
+import { useEffect, useState } from "react";
+
 import {
     Content,
     ExpandCollapseLink,
     Title,
     TitleWrapper,
 } from "./accordion.style";
-import { AccordionProps } from "./types";
+import { AccordionContext } from "./accordion-context";
+import { AccordionItem } from "./accordion-item";
+import type { AccordionProps } from "./types";
 
 const AccordionBase = ({
     children,

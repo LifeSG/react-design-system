@@ -1,4 +1,5 @@
-import { Border, ThemeProvider, ThemeType, useDesignToken } from "src/theme";
+import type { ThemeType } from "src/theme";
+import { Border, ThemeProvider, useDesignToken } from "src/theme";
 import styled from "styled-components";
 
 interface BorderDisplayProps {

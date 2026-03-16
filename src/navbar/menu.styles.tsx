@@ -1,7 +1,8 @@
 import styled from "styled-components";
+
 import { lineClampCss } from "../shared/styles";
-import { V3_Border, V3_Colour, V3_Radius, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
+import { V3_Border, V3_Colour, V3_Radius, V3_Spacing } from "../v3_theme";
 
 export const MobileWrapper = styled.ul`
     list-style: none;

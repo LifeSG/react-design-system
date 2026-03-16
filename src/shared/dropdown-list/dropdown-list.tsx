@@ -1,7 +1,9 @@
+import { useSpring } from "@react-spring/web";
 import find from "lodash/find";
 import isEqual from "lodash/isEqual";
-import React, { useEffect, useRef, useState } from "react";
-import { useSpring } from "@react-spring/web";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+
 import { StringHelper } from "../../util/string-helper";
 import {
     Container,
@@ -21,7 +23,7 @@ import {
     TruncateSecondLine,
 } from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
-import { DropdownListProps, ListItemDisplayProps } from "./types";
+import type { DropdownListProps, ListItemDisplayProps } from "./types";
 
 /**
  * NOTE: This component is not directly exportables

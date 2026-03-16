@@ -1,6 +1,10 @@
-import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
+import { isEmpty } from "lodash";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+
+import { concatIds, VisuallyHidden } from "../shared/accessibility";
+import { SimpleIdGenerator, StringHelper } from "../util";
 import {
     ClickableErrorWrapper,
     ErrorIcon,
@@ -16,10 +20,7 @@ import {
     Spinner,
     TryAgainLabel,
 } from "./masked-input.style";
-import { MaskedInputProps } from "./types";
-import { isEmpty } from "lodash";
-import { SimpleIdGenerator, StringHelper } from "../util";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
+import type { MaskedInputProps } from "./types";
 
 const Component = (
     {

@@ -5,7 +5,8 @@ import {
     Section,
     Table,
 } from "stories/storybook-common/api-table";
-import { TabAttribute, Tabs } from "stories/storybook-common/tabs";
+import type { TabAttribute } from "stories/storybook-common/tabs";
+import { Tabs } from "stories/storybook-common/tabs";
 
 export const HOCTable = () => (
     <Table>

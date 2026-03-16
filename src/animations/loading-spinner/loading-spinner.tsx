@@ -1,7 +1,8 @@
-import { Suspense, lazy } from "react";
+import { lazy, Suspense } from "react";
 import styled from "styled-components";
+
 import { V3_Spacing } from "../../v3_theme";
-import { BaseAnimationProps } from "../types";
+import type { BaseAnimationProps } from "../types";
 
 // lazy load to fix next.js SSR errors
 const LottieSpinner = lazy(async () => ({

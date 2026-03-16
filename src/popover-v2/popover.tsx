@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
-import { V3_Breakpoint } from "../v3_theme";
-import { Typography } from "../typography";
-import { PopoverCard, PopoverContainer } from "./popover.styles";
-import { PopoverV2Props } from "./types";
+
 import { ModalV2 } from "../modal-v2";
+import { Typography } from "../typography";
+import { V3_Breakpoint } from "../v3_theme";
+import { PopoverCard, PopoverContainer } from "./popover.styles";
+import type { PopoverV2Props } from "./types";
 
 export const PopoverV2 = ({
     children,

@@ -1,13 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import {
-    LocalNavDropdown,
-    LocalNavItemProps,
-    LocalNavMenu,
-} from "src/local-nav";
+import type { LocalNavItemProps } from "src/local-nav";
+import { LocalNavDropdown, LocalNavMenu } from "src/local-nav";
 import { V3_Breakpoint, V3_LifeSGTheme } from "src/v3_theme";
 import { ThemeProvider, useTheme } from "styled-components";
+
 import { Content, Page, TopContent } from "./doc-elements";
 
 type MenuComponent = typeof LocalNavMenu;

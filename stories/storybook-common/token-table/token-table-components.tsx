@@ -1,9 +1,11 @@
-import React from "react";
-import { V3_StyledComponentProps } from "src/v3_theme/helpers";
-import styled, { DefaultTheme, useTheme } from "styled-components";
+import type React from "react";
+import type { V3_StyledComponentProps } from "src/v3_theme/helpers";
+import type { DefaultTheme } from "styled-components";
+import styled, { useTheme } from "styled-components";
+
 import { DocTable, DocTextStyle } from "../doc-table";
 import { ColourTokenInspector } from "../token-inspector";
-import {
+import type {
     TokenTableDefaultValueColourTokenProps,
     TokenTableDefaultValueDefaultProps,
 } from "./types";

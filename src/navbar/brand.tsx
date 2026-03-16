@@ -1,7 +1,8 @@
-import React from "react";
-import { Container } from "./brand.styles";
-import { BrandType, NavbarBrandingProps } from "./types";
+import type React from "react";
+
 import { ImageWithFallback } from "../shared/image-with-fallback/image-with-fallback";
+import { Container } from "./brand.styles";
+import type { BrandType, NavbarBrandingProps } from "./types";
 
 interface Props {
     resources: NavbarBrandingProps;

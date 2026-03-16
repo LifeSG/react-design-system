@@ -1,9 +1,11 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import styled, { css } from "styled-components";
+
 import { V3_Colour, V3_Font, V3_Radius, V3_Spacing } from "../../v3_theme";
 import { ClickableIcon } from "../clickable-icon";
-import { DropdownVariantType } from "../dropdown-list/types";
-import { BasicInput, InputStyleProps } from "../input-wrapper/input-wrapper";
+import type { DropdownVariantType } from "../dropdown-list/types";
+import type { InputStyleProps } from "../input-wrapper/input-wrapper";
+import { BasicInput } from "../input-wrapper/input-wrapper";
 
 //=============================================================================
 // STYLE INTERFACE

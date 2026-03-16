@@ -1,5 +1,5 @@
 import { V2_StyledOrderedList } from "./text-list.styles";
-import { V2_OrderedListProps } from "./types";
+import type { V2_OrderedListProps } from "./types";
 
 /** @deprecated */
 export const V2_OrderedList = ({

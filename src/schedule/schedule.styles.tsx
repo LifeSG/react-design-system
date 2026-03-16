@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
-import { MIN_COLUMN_WIDTH } from "./const";
+
 import { ErrorDisplay } from "../error-display";
 import { V3_Border, V3_Colour, V3_Radius, V3_Spacing } from "../v3_theme";
+import { MIN_COLUMN_WIDTH } from "./const";
 
 // =============================================================================
 // STYLING

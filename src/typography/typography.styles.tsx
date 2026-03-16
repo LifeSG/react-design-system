@@ -1,9 +1,10 @@
 import { ExternalIcon } from "@lifesg/react-icons/external";
 import styled, { css } from "styled-components";
+
 import { V3_Colour } from "../v3_theme";
-import { V3_TypographySizeType } from "../v3_theme/font/types";
+import type { V3_TypographySizeType } from "../v3_theme/font/types";
 import { createTypographyStyles, getTextStyle } from "./helper";
-import { TypographyWeight } from "./types";
+import type { TypographyWeight } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $

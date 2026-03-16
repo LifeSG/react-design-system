@@ -1,7 +1,9 @@
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
 import { useEffect, useState } from "react";
+
 import { FormLabel } from "../form/form-label";
+import { VisuallyHidden } from "../shared/accessibility";
 import { Typography } from "../typography";
 import { StringHelper } from "../util/string-helper";
 import {
@@ -15,11 +17,10 @@ import {
     StyledAlert,
     TryAgainLabel,
 } from "./section-item.styles";
-import {
+import type {
     UneditableSectionItemMaskState,
     UneditableSectionItemProps,
 } from "./types";
-import { VisuallyHidden } from "../shared/accessibility";
 
 export interface UneditableSectionItemComponentProps
     extends UneditableSectionItemProps {

@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
+
 import { Input } from "../input";
 import { ClickableIcon } from "../shared/clickable-icon";
+import { Typography } from "../typography";
 import {
     V3_Border,
     V3_Colour,
@@ -9,7 +11,6 @@ import {
     V3_Radius,
     V3_Spacing,
 } from "../v3_theme";
-import { Typography } from "../typography";
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props

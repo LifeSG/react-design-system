@@ -1,8 +1,9 @@
 import styled, { css } from "styled-components";
+
 import { Input } from "../input";
 import { LabelAddonContainer } from "../input-group/input-group.style";
-import { V3_Colour } from "../v3_theme";
 import { Typography } from "../typography";
+import { V3_Colour } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

@@ -7,7 +7,8 @@ import {
     within,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { InputNestedMultiSelect, L1OptionProps } from "src";
+import type { L1OptionProps } from "src";
+import { InputNestedMultiSelect } from "src";
 
 const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";

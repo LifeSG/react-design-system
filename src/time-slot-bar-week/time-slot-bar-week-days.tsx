@@ -1,16 +1,20 @@
 import { useSpring } from "@react-spring/web";
-import dayjs, { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import isEmpty from "lodash/isEmpty";
 import maxBy from "lodash/maxBy";
 import minBy from "lodash/minBy";
-import React, { useMemo, useState } from "react";
+import type React from "react";
+import { useMemo, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { InternalCalendarProps } from "../shared/internal-calendar";
-import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
-import { V3_Colour } from "../v3_theme";
-import { TimeSlot } from "../time-slot-bar/types";
+
+import type { InternalCalendarProps } from "../shared/internal-calendar";
+import type { CellStyleProps } from "../shared/internal-calendar/day-cell";
+import { DayCell } from "../shared/internal-calendar/day-cell";
+import type { TimeSlot } from "../time-slot-bar/types";
 import { DateHelper } from "../util";
 import { CalendarHelper } from "../util/calendar-helper";
+import { V3_Colour } from "../v3_theme";
 import {
     CellWeekText,
     ChevronIcon,
@@ -27,7 +31,7 @@ import {
     TimeSlotWrapper,
     Wrapper,
 } from "./time-slot-bar-week-days.style";
-import { TimeSlotCellsVariant } from "./types";
+import type { TimeSlotCellsVariant } from "./types";
 
 export type DayVariant = "default" | "other-month" | "today";
 interface TimeSlotWeekDaysProps

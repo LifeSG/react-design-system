@@ -1,6 +1,8 @@
 import React from "react";
-import { V2_ColDivProps, V2_DivRef } from "./types";
-import { StyledDiv, StyledDivStyleProps } from "./col-div.style";
+
+import type { StyledDivStyleProps } from "./col-div.style";
+import { StyledDiv } from "./col-div.style";
+import type { V2_ColDivProps, V2_DivRef } from "./types";
 
 const Component = (props: V2_ColDivProps, ref: V2_DivRef): JSX.Element => {
     const { mobileCols, tabletCols, desktopCols, ...otherProps } = props;

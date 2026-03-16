@@ -1,7 +1,9 @@
 import styled, { css } from "styled-components";
+
 import { Button } from "../button";
 import { IconButton } from "../icon-button";
 import { Modal } from "../modal";
+import { Typography } from "../typography";
 import {
     V3_Border,
     V3_Breakpoint,
@@ -11,7 +13,6 @@ import {
     V3_Radius,
     V3_Spacing,
 } from "../v3_theme";
-import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACES

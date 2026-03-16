@@ -7,9 +7,9 @@ import {
     FullWidthStoryDecorator,
     StoryDecorator,
 } from "stories/storybook-common";
+
+import type { Option, OptionWithSecondaryLabel } from "./mock-fetch-options";
 import {
-    Option,
-    OptionWithSecondaryLabel,
     mockFetchOptions,
     mockFetchOptionsWithSecondaryLabel,
 } from "./mock-fetch-options";

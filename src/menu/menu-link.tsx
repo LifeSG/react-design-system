@@ -1,5 +1,5 @@
 import { Link, MenuLinkDiv } from "./menu-link.styles";
-import { MenuLinkProps } from "./types";
+import type { MenuLinkProps } from "./types";
 
 export const MenuLink = ({
     children,

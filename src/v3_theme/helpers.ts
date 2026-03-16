@@ -1,6 +1,7 @@
 import get from "lodash/get";
-import { V3_ThemeCollectionSpec } from "./internal-types";
-import { V3_ThemeSpec } from "./types";
+
+import type { V3_ThemeCollectionSpec } from "./internal-types";
+import type { V3_ThemeSpec } from "./types";
 
 export interface V3_StyledComponentProps {
     theme?: V3_ThemeSpec;

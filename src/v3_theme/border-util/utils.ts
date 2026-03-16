@@ -1,7 +1,8 @@
 import { css } from "styled-components";
+
 import { V3_BorderValues } from "../border/theme-helper";
 import { V3_ColourSemantic } from "../colour-semantic/theme-helper";
-import { V3_StyledComponentProps } from "../helpers";
+import type { V3_StyledComponentProps } from "../helpers";
 
 export const solidBorderStyle =
     (options?: {

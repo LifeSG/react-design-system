@@ -7,7 +7,11 @@ import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { ThemeContext } from "styled-components";
+
 import { InputSelect } from "../input-select";
+import { VisuallyHidden } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 import { V3_Breakpoint } from "../v3_theme";
 import {
     EllipsisButton,
@@ -24,10 +28,7 @@ import {
     PaginationMobileInput,
     PaginationWrapper,
 } from "./pagination.styles";
-import { PageSizeItemProps, PaginationProps } from "./types";
-import { ThemeContext } from "styled-components";
-import { VisuallyHidden } from "../shared/accessibility";
-import { SimpleIdGenerator } from "../util";
+import type { PageSizeItemProps, PaginationProps } from "./types";
 
 const Component = (
     {

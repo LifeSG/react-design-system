@@ -1,11 +1,13 @@
-import {
-    FloatingFocusManager,
-    FloatingPortal,
+import type {
     Middleware,
     OpenChangeReason,
     Placement,
+} from "@floating-ui/react";
+import {
     autoUpdate,
     flip,
+    FloatingFocusManager,
+    FloatingPortal,
     limitShift,
     offset,
     shift,
@@ -16,18 +18,14 @@ import {
     useInteractions,
     useTransitionStyles,
 } from "@floating-ui/react";
-import {
-    CSSProperties,
-    RefObject,
-    createContext,
-    useContext,
-    useRef,
-} from "react";
+import type { CSSProperties, RefObject } from "react";
+import { createContext, useContext, useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
+
 import { useFloatingChild } from "../../overlay/use-floating-context";
 import { V3_Breakpoint } from "../../v3_theme";
-import { DropdownAlignmentType } from "./types";
+import type { DropdownAlignmentType } from "./types";
 
 export interface DropdownRenderProps {
     elementWidth: number;

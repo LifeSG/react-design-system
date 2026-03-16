@@ -1,4 +1,6 @@
 import styled, { css } from "styled-components";
+
+import { Typography } from "../../typography";
 import {
     V3_Border,
     V3_Colour,
@@ -6,7 +8,6 @@ import {
     V3_Radius,
     V3_Spacing,
 } from "../../v3_theme";
-import { Typography } from "../../typography";
 import { CELL_HEIGHT } from "../const";
 
 // =============================================================================

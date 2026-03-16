@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Toggle } from "src/toggle";
+
 import { SimpleStoryWrapper, VariantDecorator } from "./doc-elements";
 
 type Component = typeof Toggle;

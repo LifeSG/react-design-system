@@ -1,4 +1,4 @@
-import { css } from "styled-components";
+import type { css } from "styled-components";
 
 /** @deprecated */
 export type CssValue = ReturnType<typeof css> | string | number;

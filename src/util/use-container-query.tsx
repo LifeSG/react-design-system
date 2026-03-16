@@ -1,4 +1,5 @@
-import { RefObject, useCallback, useState } from "react";
+import type { RefObject } from "react";
+import { useCallback, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 interface Options<T> {

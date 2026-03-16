@@ -1,5 +1,6 @@
-import { DefaultTheme } from "styled-components";
-import { AddOne, Range } from "../util/utility-types";
+import type { DefaultTheme } from "styled-components";
+
+import type { AddOne, Range } from "../util/utility-types";
 
 interface CommonLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;

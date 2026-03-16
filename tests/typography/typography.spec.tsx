@@ -1,7 +1,9 @@
-import { render } from "@testing-library/react";
 import "jest-styled-components";
+
+import { render } from "@testing-library/react";
 import { Typography } from "src/typography";
 import { ThemeProvider } from "styled-components";
+
 import { MOCK_THEME } from "./mock-theme-data";
 
 describe("Typography Components", () => {

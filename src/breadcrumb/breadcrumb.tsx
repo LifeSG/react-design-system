@@ -1,6 +1,9 @@
 import { useContext, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { ThemeContext } from "styled-components";
+
 import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
+import { V3_Breakpoint } from "../v3_theme";
 import {
     Caret,
     Content,
@@ -11,9 +14,7 @@ import {
     Slash,
     Wrapper,
 } from "./breadcrumb.style";
-import { BreadcrumbProps, FadeColorSet } from "./types";
-import { ThemeContext } from "styled-components";
-import { V3_Breakpoint } from "../v3_theme";
+import type { BreadcrumbProps, FadeColorSet } from "./types";
 
 export const Breadcrumb = ({
     links,

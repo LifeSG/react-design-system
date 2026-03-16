@@ -2,6 +2,7 @@ import kebabCase from "lodash/kebabCase";
 import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
+
 import { VisuallyHidden } from "../shared/accessibility";
 import { V3_Breakpoint } from "../v3_theme";
 import {
@@ -12,7 +13,7 @@ import {
     IndicatorTitleTablet,
     Wrapper,
 } from "./progress-indicator.style";
-import { ProgressIndicatorProps } from "./types";
+import type { ProgressIndicatorProps } from "./types";
 
 export const ProgressIndicator = <T,>({
     steps,

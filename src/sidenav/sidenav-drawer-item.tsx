@@ -1,6 +1,8 @@
-import { HTMLAttributes, useContext, useState } from "react";
-import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "@react-spring/web";
+import type { HTMLAttributes } from "react";
+import { useContext, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
+
 import { SidenavContext } from "./sidenav-context";
 import {
     ChevronIcon,
@@ -10,7 +12,7 @@ import {
     LinkButton,
     TextElement,
 } from "./sidenav-drawer-item.styles";
-import { SidenavDrawerItemProps } from "./types";
+import type { SidenavDrawerItemProps } from "./types";
 
 export const SidenavDrawerItem = ({
     id,

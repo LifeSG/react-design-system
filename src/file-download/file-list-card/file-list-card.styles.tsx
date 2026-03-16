@@ -1,5 +1,6 @@
-import styled, { css } from "styled-components";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import styled, { css } from "styled-components";
+
 import { IconButton as DSIconButton } from "../../icon-button";
 import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";

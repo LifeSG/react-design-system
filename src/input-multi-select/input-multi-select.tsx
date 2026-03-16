@@ -1,6 +1,8 @@
-import { OpenChangeReason } from "@floating-ui/react";
+import type { OpenChangeReason } from "@floating-ui/react";
 import findIndex from "lodash/findIndex";
-import React, { useEffect, useRef, useState } from "react";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+
 import {
     DropdownList,
     DropdownListState,
@@ -14,7 +16,7 @@ import {
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { SimpleIdGenerator } from "../util";
-import { InputMultiSelectProps } from "./types";
+import type { InputMultiSelectProps } from "./types";
 
 export const InputMultiSelect = <T, V>({
     selectedOptions,

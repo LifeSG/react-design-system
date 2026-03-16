@@ -1,4 +1,5 @@
-import { API, FileInfo, JSCodeshift } from "jscodeshift";
+import type { API, FileInfo, JSCodeshift } from "jscodeshift";
+
 import { CodemodUtils } from "../codemod-utils";
 import { sizePropMapping } from "./data";
 

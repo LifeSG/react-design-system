@@ -1,5 +1,6 @@
 import { ApiTable } from "stories/storybook-common/api-table";
-import { ApiTableSectionProps } from "stories/storybook-common/api-table/types";
+import type { ApiTableSectionProps } from "stories/storybook-common/api-table/types";
+
 import { COMMON_POPOVER_ATTRIBUTES } from "../props-table";
 
 const DATA: ApiTableSectionProps[] = [

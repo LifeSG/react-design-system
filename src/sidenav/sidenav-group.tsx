@@ -1,5 +1,5 @@
 import { Container, Divider } from "./sidenav-group.styles";
-import { SidenavGroupProps } from "./types";
+import type { SidenavGroupProps } from "./types";
 
 export const SidenavGroup = ({
     separator,

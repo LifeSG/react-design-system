@@ -1,7 +1,8 @@
-import styled, { css } from "styled-components";
-import { RadioButtonProps, RadioButtonSize } from "./types";
-import { V3_Colour, V3_Motion } from "../v3_theme";
 import { CircleDotIcon, CircleIcon } from "@lifesg/react-icons";
+import styled, { css } from "styled-components";
+
+import { V3_Colour, V3_Motion } from "../v3_theme";
+import type { RadioButtonProps, RadioButtonSize } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

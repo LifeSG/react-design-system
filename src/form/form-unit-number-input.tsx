@@ -1,8 +1,9 @@
 import { useState } from "react";
+
 import { UnitNumberInput } from "../unit-number";
 import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormUnitNumberInputProps } from "./types";
+import type { FormUnitNumberInputProps } from "./types";
 
 export const FormUnitNumberInput = ({
     label,

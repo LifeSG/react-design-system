@@ -1,16 +1,12 @@
-import {
-    Children,
-    ReactElement,
-    cloneElement,
-    useEffect,
-    useMemo,
-    useState,
-} from "react";
-import { TabContext, TabLinkProps } from "./tab-context";
+import type { ReactElement } from "react";
+import { Children, cloneElement, useEffect, useMemo, useState } from "react";
+
+import { Wrapper } from "./tab.style";
+import type { TabLinkProps } from "./tab-context";
+import { TabContext } from "./tab-context";
 import { TabItem } from "./tab-item";
 import { TabLinkChain } from "./tab-link-chain";
-import { Wrapper } from "./tab.style";
-import { TabItemProps, TabProps } from "./types";
+import type { TabItemProps, TabProps } from "./types";
 
 // =============================================================================
 // COMPONENT

@@ -1,10 +1,11 @@
 import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
 import styled from "styled-components";
+
 import { InputGroup } from "../input-group";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
-import { V3_Colour, V3_Font, V3_Spacing } from "../v3_theme";
-import { Typography } from "../typography";
 import { BasicButton } from "../shared/input-wrapper";
+import { Typography } from "../typography";
+import { V3_Colour, V3_Font, V3_Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACES

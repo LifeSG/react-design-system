@@ -1,4 +1,4 @@
-import { V3_MotionScheme } from "../types";
+import type { V3_MotionScheme } from "../types";
 
 export type V3_MotionSet = {
     "duration-150": string;

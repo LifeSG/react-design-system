@@ -1,4 +1,5 @@
-import React, {
+import type React from "react";
+import {
     forwardRef,
     useContext,
     useEffect,
@@ -7,16 +8,13 @@ import React, {
     useState,
 } from "react";
 import { ThemeContext } from "styled-components";
+
 import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
 import { V3_Breakpoint } from "../v3_theme";
 import { Brand } from "./brand";
 import { Drawer } from "./drawer";
-import { NavbarActionButtons } from "./navbar-action-buttons";
-import { NavbarHelper } from "./navbar-helper";
-import { NavbarItems } from "./navbar-items";
-import { getDefaultResourceLogo } from "./navbar-logo-data";
 import {
     MobileMenuButton,
     MobileMenuIcon,
@@ -26,16 +24,20 @@ import {
     NavSeparator,
     Wrapper,
 } from "./navbar.styles";
-import {
+import { NavbarActionButtons } from "./navbar-action-buttons";
+import { NavbarHelper } from "./navbar-helper";
+import { NavbarItems } from "./navbar-items";
+import { getDefaultResourceLogo } from "./navbar-logo-data";
+import type {
     BrandType,
     DrawerDismissalMethod,
-    NavItemCommonProps,
-    NavItemProps,
     NavbarActionButtonsProps,
     NavbarButtonProps,
     NavbarDrawerApi,
     NavbarDrawerHandle,
     NavbarProps,
+    NavItemCommonProps,
+    NavItemProps,
 } from "./types";
 
 const Component = <T,>(

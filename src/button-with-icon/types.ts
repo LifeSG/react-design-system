@@ -1,4 +1,4 @@
-import { ButtonProps, ButtonRef } from "../button/types";
+import type { ButtonProps, ButtonRef } from "../button/types";
 
 export interface ButtonWithIconProps extends ButtonProps {
     /** The icon to be rendered in the button */

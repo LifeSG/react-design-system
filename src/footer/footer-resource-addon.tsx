@@ -1,4 +1,5 @@
 import { useTheme } from "styled-components";
+
 import { Typography } from "../typography";
 import { Img, Items } from "./footer-resource-addon.styles";
 

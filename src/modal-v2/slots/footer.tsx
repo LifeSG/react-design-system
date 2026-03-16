@@ -1,4 +1,4 @@
-import { ModalFooterProps } from "../types";
+import type { ModalFooterProps } from "../types";
 import { FooterContainer } from "./slot-styles";
 
 export const Footer = ({

@@ -1,15 +1,16 @@
-import { RefObject } from "react";
-import {
+import type { RefObject } from "react";
+
+import type {
     InputSelectOptionsProps,
     InputSelectSharedProps,
 } from "../input-select";
-import {
+import type {
     DropdownCustomLabelProps,
     DropdownSearchProps,
     DropdownVariantType,
     ExpandMode,
 } from "../shared/dropdown-list-v2/types";
-import { DropdownAlignmentType } from "../shared/dropdown-wrapper/types";
+import type { DropdownAlignmentType } from "../shared/dropdown-wrapper/types";
 
 // =============================================================================
 // SHARED PROPS

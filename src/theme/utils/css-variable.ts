@@ -1,4 +1,4 @@
-import { CSSVariableString } from "../types";
+import type { CSSVariableString } from "../types";
 
 const DEFAULT_FONT_SIZE_PX = 16;
 

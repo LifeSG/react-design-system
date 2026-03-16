@@ -1,20 +1,17 @@
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
-import {
-    DropdownRenderProps,
-    ElementWithDropdown,
-} from "../shared/dropdown-wrapper";
-import {
+
+import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import type {
     CalendarAction,
-    CalendarDropdown,
     FocusType,
     InternalCalendarRef,
 } from "../shared/internal-calendar";
+import { CalendarDropdown } from "../shared/internal-calendar";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
-import {
-    StandaloneDateInput,
-    StandaloneDateInputRef,
-} from "../shared/standalone-date-input/standalone-date-input";
+import type { StandaloneDateInputRef } from "../shared/standalone-date-input/standalone-date-input";
+import { StandaloneDateInput } from "../shared/standalone-date-input/standalone-date-input";
 import { DateHelper, DateInputHelper, useContainerQuery } from "../util";
 import { useStateActions } from "../util/use-state-actions";
 import {
@@ -22,7 +19,7 @@ import {
     InputContainer,
     MOBILE_WRAP_WIDTH,
 } from "./date-range-input.style";
-import { DateRangeInputProps } from "./types";
+import type { DateRangeInputProps } from "./types";
 
 interface DateRangeInputState {
     initialStart: string;

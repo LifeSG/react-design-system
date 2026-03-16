@@ -1,8 +1,9 @@
 import styled, { css } from "styled-components";
+
 import { Button } from "../../button";
 import { Checkbox } from "../../checkbox";
-import { V3_Colour, V3_Font, V3_MediaQuery, V3_Spacing } from "../../v3_theme";
 import { Toggle } from "../../toggle";
+import { V3_Colour, V3_Font, V3_MediaQuery, V3_Spacing } from "../../v3_theme";
 import { FilterItem } from "../filter-item";
 
 export const StyledFilterItem = styled(FilterItem)`

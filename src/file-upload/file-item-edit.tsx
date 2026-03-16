@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+
 import { Form } from "../form";
 import { StringHelper } from "../util";
 import {
@@ -13,7 +14,7 @@ import {
 } from "./file-item-edit.styles";
 import { FileListItemThumbnail } from "./file-list-item/file-list-item-thumbnail";
 import { FileUploadHelper } from "./helper";
-import { FileItemProps } from "./types";
+import type { FileItemProps } from "./types";
 
 interface Props {
     fileItem: FileItemProps;

@@ -1,4 +1,3 @@
-import { PopoverAddon } from "./form-label-addon";
 import {
     ErrorIcon,
     ErrorMessage,
@@ -7,7 +6,8 @@ import {
     LabelContainer,
     Subtitle,
 } from "./form-label.style";
-import { FormLabelProps } from "./types";
+import { PopoverAddon } from "./form-label-addon";
+import type { FormLabelProps } from "./types";
 
 export const FormLabel = ({
     id,

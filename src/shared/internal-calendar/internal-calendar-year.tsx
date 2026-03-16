@@ -1,8 +1,10 @@
-import dayjs, { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { useEffect, useMemo, useRef, useState } from "react";
+
 import { CalendarHelper } from "../../util/calendar-helper";
 import { Wrapper, YearCell } from "./internal-calendar-year.style";
-import { FocusType, InternalCalendarProps } from "./types";
+import type { FocusType, InternalCalendarProps } from "./types";
 
 export type YearVariant =
     | "default"

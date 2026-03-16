@@ -1,12 +1,13 @@
-import { OpenChangeReason } from "@floating-ui/react";
+import type { OpenChangeReason } from "@floating-ui/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import {
     ErrorIcon,
     ErrorMessage,
     ErrorMessageContainer,
 } from "../../form/form-label.style";
-import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
 import { ClearIcon } from "../../input/input.style";
+import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
 import { DropdownListState } from "../../shared/dropdown-list-v2";
 import { DropdownList } from "../../shared/dropdown-list-v2/dropdown-list";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
@@ -14,7 +15,7 @@ import { RangeInputInnerContainer } from "../../shared/range-input-inner-contain
 import { SimpleIdGenerator } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
 import { SelectorInput, Wrapper } from "../common.styles";
-import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
+import type { TimeRangePickerProps, TimeRangePickerValue } from "../types";
 import { TimeFieldContainer } from "./combobox-picker.styles";
 
 type TimeRangeInputType = "start" | "end";

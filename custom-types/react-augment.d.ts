@@ -1,6 +1,6 @@
 // https://stackoverflow.com/questions/58469229/react-with-typescript-generics-while-using-react-forwardref/58473012
 
-import React from "react";
+import type React from "react";
 
 declare module "react" {
     function forwardRef<T, P = Record<string, never>>(

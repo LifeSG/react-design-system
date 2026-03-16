@@ -3,6 +3,9 @@ import { useContext, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
+
+import { inertValue, VisuallyHidden } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 import { V3_Breakpoint } from "../v3_theme";
 import {
     AlertIcon,
@@ -18,9 +21,7 @@ import {
     LabelWrapper,
     NonExpandable,
 } from "./box-container.styles";
-import { BoxContainerProps } from "./types";
-import { SimpleIdGenerator } from "../util";
-import { VisuallyHidden, inertValue } from "../shared/accessibility";
+import type { BoxContainerProps } from "./types";
 
 export const BoxContainer = ({
     children,

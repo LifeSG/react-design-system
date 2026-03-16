@@ -1,9 +1,5 @@
-import {
-    Breakpoint,
-    ThemeProvider,
-    ThemeType,
-    useDesignToken,
-} from "src/theme";
+import type { ThemeType } from "src/theme";
+import { Breakpoint, ThemeProvider, useDesignToken } from "src/theme";
 import styled from "styled-components";
 
 interface BreakpointDisplayProps {

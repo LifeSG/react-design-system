@@ -1,12 +1,18 @@
 import React from "react";
-import { InputGroupListAddon } from "./input-group-list-addon";
+
 import {
     AddonWrapper,
     LabelAddonContainer,
     MainInput,
     NoAddonWrapper,
 } from "./input-group.style";
-import { CustomAddon, InputGroupProps, LabelAddon, ListAddon } from "./types";
+import { InputGroupListAddon } from "./input-group-list-addon";
+import type {
+    CustomAddon,
+    InputGroupProps,
+    LabelAddon,
+    ListAddon,
+} from "./types";
 
 const Component = <T, V>(
     { addon, error, className, ...otherProps }: InputGroupProps<T, V>,

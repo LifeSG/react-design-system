@@ -1,5 +1,6 @@
-import { CSSProp } from "styled-components";
-import { V3_FontScheme } from "../types";
+import type { CSSProp } from "styled-components";
+
+import type { V3_FontScheme } from "../types";
 
 export type V3_FontCollectionMap = {
     [key in V3_FontScheme]: V3_FontSet;

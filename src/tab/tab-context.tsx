@@ -1,5 +1,7 @@
-import React, { Dispatch, SetStateAction } from "react";
-import { TabItemProps } from "./types";
+import type { Dispatch, SetStateAction } from "react";
+import React from "react";
+
+import type { TabItemProps } from "./types";
 
 export type TabLinkProps = Pick<TabItemProps, "title" | "width" | "titleAddon">;
 

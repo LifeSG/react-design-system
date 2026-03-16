@@ -1,10 +1,11 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import isEmpty from "lodash/isEmpty";
 import { useState } from "react";
-import { Filter, Mode } from "src/filter";
+import type { Mode } from "src/filter";
+import { Filter } from "src/filter";
 import { Form } from "src/form";
-import { V3_Colour } from "src/v3_theme";
 import { Typography } from "src/typography";
+import { V3_Colour } from "src/v3_theme";
 import styled from "styled-components";
 
 interface Props<T> {

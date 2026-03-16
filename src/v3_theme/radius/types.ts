@@ -1,4 +1,4 @@
-import { V3_RadiusScheme } from "../types";
+import type { V3_RadiusScheme } from "../types";
 
 export type V3_RadiusSet = {
     none: number;

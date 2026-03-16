@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
+
 import { V3_Colour, V3_Motion, V3_Spacing } from "../v3_theme";
 import { V3_ThemeButton } from "../v3_theme/components/theme-helper";
-import { SingpassButtonStyleType } from "./types";
+import type { SingpassButtonStyleType } from "./types";
 
 export type MainButtonSize = "default" | "small" | "large";
 

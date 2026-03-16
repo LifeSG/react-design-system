@@ -1,9 +1,11 @@
-import { CSSProp } from "styled-components";
-import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
-import { V3_ThemeCollectionSpec } from "../internal-types";
-import { V3_ShadowScheme } from "../types";
+import type { CSSProp } from "styled-components";
+
+import type { V3_StyledComponentProps } from "../helpers";
+import { getCollection, getValue } from "../helpers";
+import type { V3_ThemeCollectionSpec } from "../internal-types";
+import type { V3_ShadowScheme } from "../types";
 import { V3_DefaultShadowSet } from "./specs/default-shadow-set";
-import { V3_ShadowCollectionsMap, V3_ShadowSet } from "./types";
+import type { V3_ShadowCollectionsMap, V3_ShadowSet } from "./types";
 
 const V3_ShadowSpec: V3_ThemeCollectionSpec<
     V3_ShadowCollectionsMap,

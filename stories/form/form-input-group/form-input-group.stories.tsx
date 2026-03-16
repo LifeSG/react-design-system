@@ -2,7 +2,8 @@ import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Form } from "src/form";
-import { InputGroup, ListAddon as ListAddonProps } from "src/input-group";
+import type { ListAddon as ListAddonProps } from "src/input-group";
+import { InputGroup } from "src/input-group";
 import { Layout } from "src/layout";
 import {
     FullWidthStoryDecorator,

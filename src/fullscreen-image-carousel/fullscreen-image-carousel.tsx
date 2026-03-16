@@ -12,12 +12,12 @@ import {
     useRef,
     useState,
 } from "react";
-import {
+import type {
     ReactZoomPanPinchContentRef,
     ReactZoomPanPinchRef,
-    TransformComponent,
-    TransformWrapper,
 } from "react-zoom-pan-pinch";
+import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+
 import { Modal } from "../modal";
 import { useEventListener } from "../util";
 import {
@@ -39,7 +39,7 @@ import {
     ThumbnailItemContainer,
     ThumbnailWrapper,
 } from "./fullscreen-image-carousel.style";
-import {
+import type {
     FullscreenImageCarouselProps,
     FullscreenImageCarouselRef,
     ImageDimension,

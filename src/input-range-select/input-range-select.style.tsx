@@ -1,7 +1,8 @@
 import styled from "styled-components";
+
 import { ClearButton } from "../input/input.style";
-import { V3_Spacing } from "../v3_theme";
 import { InputWrapper } from "../shared/input-wrapper";
+import { V3_Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLING

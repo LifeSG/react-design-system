@@ -1,8 +1,11 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import type React from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import { StringHelper } from "../../util/string-helper";
-import { EPeriod, TimeFormat, TimeHelper } from "../../util/time-helper";
+import type { TimeFormat } from "../../util/time-helper";
+import { EPeriod, TimeHelper } from "../../util/time-helper";
 import { inertValue } from "../accessibility";
 import {
     Container,

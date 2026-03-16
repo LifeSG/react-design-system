@@ -1,7 +1,8 @@
-import { Suspense, lazy, useContext } from "react";
+import { lazy, Suspense, useContext } from "react";
 import styled, { ThemeContext } from "styled-components";
-import { CustomisableAnimationProps } from "../types";
+
 import { V3_ThemeAnimation } from "../../v3_theme/components/theme-helper";
+import type { CustomisableAnimationProps } from "../types";
 
 // lazy load to fix next.js SSR errors
 const LottieLoadingDotsSpinner = lazy(async () => ({

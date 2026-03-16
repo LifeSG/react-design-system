@@ -3,9 +3,10 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
-import { VisuallyHidden, inertValue } from "../shared/accessibility";
-import { V3_Breakpoint } from "../v3_theme";
+
+import { inertValue, VisuallyHidden } from "../shared/accessibility";
 import { TimeHelper } from "../util/time-helper";
+import { V3_Breakpoint } from "../v3_theme";
 import {
     Countdown,
     FixedCountdown,
@@ -14,7 +15,7 @@ import {
     TimerIcon,
     Wrapper,
 } from "./countdown-timer.style";
-import { CountdownTimerProps } from "./types";
+import type { CountdownTimerProps } from "./types";
 import { useTimer } from "./use-timer";
 
 export const CountdownTimer = ({

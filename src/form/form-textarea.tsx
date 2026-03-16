@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+
 import { TextareaBase } from "../input-textarea/textarea";
 import { TextareaCounter } from "../input-textarea/textarea-counter";
-import { TextareaRef } from "../input-textarea/types";
+import type { TextareaRef } from "../input-textarea/types";
 import { ErrorIcon } from "./form-label.style";
 import {
     ErrorMessageContainer,
@@ -9,7 +10,7 @@ import {
     LabelContainer,
 } from "./form-textarea.style";
 import { FormWrapper } from "./form-wrapper";
-import { FormTextareaProps } from "./types";
+import type { FormTextareaProps } from "./types";
 
 const FormTextareaComponent = (
     props: FormTextareaProps,

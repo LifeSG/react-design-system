@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
+
 import { Button } from "../button/button";
-import { V3_Border, V3_Colour, V3_MediaQuery, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
+import { V3_Border, V3_Colour, V3_MediaQuery, V3_Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACE

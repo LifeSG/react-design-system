@@ -1,4 +1,4 @@
-import { V3_ThemeStyleProps } from "../v3_theme/types";
+import type { V3_ThemeStyleProps } from "../v3_theme/types";
 
 type CustomColor = string | ((props: V3_ThemeStyleProps) => string);
 

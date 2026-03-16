@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+
 import { Brand } from "./brand";
 import {
     CloseButton,
@@ -9,7 +10,7 @@ import {
     Wrapper,
 } from "./drawer.styles";
 import { NavBrandContainer, NavSeparator } from "./navbar.styles";
-import { NavbarDrawerProps } from "./types";
+import type { NavbarDrawerProps } from "./types";
 
 const Component = (
     props: NavbarDrawerProps,

@@ -5,8 +5,9 @@ import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
 import { useCallback, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { SimpleIdGenerator } from "../util";
+
 import { inertValue } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 import {
     ActionLinkText,
     AlertIconWrapper,
@@ -17,7 +18,7 @@ import {
     TextWrapperContainer,
     Wrapper,
 } from "./alert.style";
-import { AlertProps } from "./types";
+import type { AlertProps } from "./types";
 
 export const Alert = ({
     type,

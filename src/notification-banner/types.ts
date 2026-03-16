@@ -1,4 +1,4 @@
-import { TypographyLinkProps, TypographyProps } from "../typography";
+import type { TypographyLinkProps, TypographyProps } from "../typography";
 
 export interface NotificationBannerProps
     extends React.HTMLAttributes<HTMLDivElement> {

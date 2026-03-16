@@ -1,7 +1,8 @@
-import { CSSProperties, ReactNode } from "react";
-import { ButtonStyleType } from "../button/types";
-import { FormLabelAddonProps } from "../form/types";
-import { Insets } from "../shared/types";
+import type { CSSProperties, ReactNode } from "react";
+
+import type { ButtonStyleType } from "../button/types";
+import type { FormLabelAddonProps } from "../form/types";
+import type { Insets } from "../shared/types";
 
 export type Mode = "default" | "mobile";
 

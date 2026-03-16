@@ -1,8 +1,13 @@
 import { ExternalIcon } from "@lifesg/react-icons/external";
 import styled, { css } from "styled-components";
+
 import { V2_Color } from "../v2_color/color";
 import { V2_TextStyleHelper } from "./helper";
-import { V2_TextLinkProps, V2_TextLinkStyleProps, V2_TextProps } from "./types";
+import type {
+    V2_TextLinkProps,
+    V2_TextLinkStyleProps,
+    V2_TextProps,
+} from "./types";
 
 /** @deprecated */
 export namespace V2_Text {

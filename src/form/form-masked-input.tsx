@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { FormWrapper } from "./form-wrapper";
-import { FormMaskedInputProps } from "./types";
+
 import { MaskedInput } from "../masked-input/masked-input";
 import { SimpleIdGenerator } from "../util";
+import { FormWrapper } from "./form-wrapper";
+import type { FormMaskedInputProps } from "./types";
 
 const Component = (
     props: FormMaskedInputProps,

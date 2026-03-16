@@ -8,7 +8,7 @@ import {
     TitleContainer,
 } from "./file-download.styles";
 import { FileListCard } from "./file-list-card";
-import { FileDownloadProps, FileItemDownloadProps } from "./types";
+import type { FileDownloadProps, FileItemDownloadProps } from "./types";
 
 export const FileDownload = ({
     id,

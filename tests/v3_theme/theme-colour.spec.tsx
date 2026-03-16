@@ -1,14 +1,15 @@
-import { render } from "@testing-library/react";
-import { act } from "@testing-library/react";
 import "jest-styled-components";
-import styled, { ThemeProvider } from "styled-components";
+
+import { act, render } from "@testing-library/react";
 import {
+    useDSTheme,
     V3_Colour,
     V3_DSThemeProvider,
     V3_LifeSGTheme,
-    useDSTheme,
 } from "src/v3_theme";
-import { V3_ThemeSpec } from "src/v3_theme/types";
+import type { V3_ThemeSpec } from "src/v3_theme/types";
+import styled, { ThemeProvider } from "styled-components";
+
 import { MOCK_THEME } from "./mock-theme-data";
 
 // Mock window.matchMedia

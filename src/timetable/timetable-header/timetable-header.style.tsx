@@ -1,8 +1,9 @@
 import styled, { css, keyframes } from "styled-components";
+
 import { DateNavigator } from "../../date-navigator";
 import { IconButton } from "../../icon-button";
-import { V3_Colour, V3_Spacing } from "../../v3_theme";
 import { Typography } from "../../typography";
+import { V3_Colour, V3_Spacing } from "../../v3_theme";
 
 const spin = keyframes`
     100% {

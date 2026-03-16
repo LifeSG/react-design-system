@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { CounterLabel } from "./textara-counter.style";
 
 interface Props {

@@ -2,7 +2,10 @@ import { useSpring } from "@react-spring/web";
 import isNil from "lodash/isNil";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+
 import { PopoverAddon } from "../form/form-label-addon";
+import { inertValue, VisuallyHidden } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 import { FilterContext } from "./filter-context";
 import {
     ChevronIcon,
@@ -16,9 +19,7 @@ import {
     FilterItemWrapper,
     MinimisableContent,
 } from "./filter-item.styles";
-import { FilterItemProps } from "./types";
-import { VisuallyHidden, inertValue } from "../shared/accessibility";
-import { SimpleIdGenerator } from "../util";
+import type { FilterItemProps } from "./types";
 
 export const FilterItem = ({
     collapsible: desktopCollapsible = true,

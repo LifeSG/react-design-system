@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
+
 import { V3_Colour } from "../v3_theme";
 import {
     IndicatorLabelContainer,
@@ -10,7 +12,7 @@ import {
     SliderTrack,
     Wrapper,
 } from "./input-range-slider.styles";
-import { InputRangeSliderProps } from "./types";
+import type { InputRangeSliderProps } from "./types";
 
 export const InputRangeSlider = ({
     value,

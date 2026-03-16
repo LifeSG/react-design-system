@@ -1,5 +1,6 @@
 import { ArrowRightIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
+
 import { V3_Colour, V3_Font, V3_Motion, V3_Spacing } from "../../v3_theme";
 
 // =============================================================================

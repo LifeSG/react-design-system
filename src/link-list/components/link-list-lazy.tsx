@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "@react-spring/web";
+import type React from "react";
+import { useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
+
 import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
-import {
+import type {
     BaseProps,
     LinkListItemProps,
     LinkListLazyProps,

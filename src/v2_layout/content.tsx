@@ -1,7 +1,8 @@
 import React from "react";
+
 import { V2_Container } from "./container";
 import { V2_Section } from "./section";
-import { V2_ContentProps, V2_DivRef } from "./types";
+import type { V2_ContentProps, V2_DivRef } from "./types";
 
 const Component = (props: V2_ContentProps, ref: V2_DivRef): JSX.Element => {
     const {

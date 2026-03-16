@@ -1,5 +1,6 @@
-import styled from "styled-components";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import styled from "styled-components";
+
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { V3_Colour, V3_Font, V3_Spacing } from "../v3_theme";
 

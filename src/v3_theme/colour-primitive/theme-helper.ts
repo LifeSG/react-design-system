@@ -1,18 +1,19 @@
-import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
-import { V3_ThemeCollectionSpec } from "../internal-types";
-import { V3_ColourScheme, V3_PrimitiveColourSet } from "../types";
+import type { V3_StyledComponentProps } from "../helpers";
+import { getCollection, getValue } from "../helpers";
+import type { V3_ThemeCollectionSpec } from "../internal-types";
+import type { V3_ColourScheme, V3_PrimitiveColourSet } from "../types";
+import { V3_A11yPlaygroundColourSet } from "./specs/a11yplayground-colour-set";
 import { V3_BookingSgColourSet } from "./specs/bookingsg-colour-set";
 import { V3_CCubeColourSet } from "./specs/ccube-colour-set";
+import { V3_IMDAColourSet } from "./specs/imda-colour-set";
 import { V3_LifeSgColourSet } from "./specs/lifesg-colour-set";
 import { V3_MyLegacyColourSet } from "./specs/mylegacy-colour-set";
 import { V3_OneServiceColourSet } from "./specs/oneservice-colour-set";
 import { V3_PAColourSet } from "./specs/pa-colour-set";
 import { V3_RBSColourSet } from "./specs/rbs-colour-set";
-import { V3_A11yPlaygroundColourSet } from "./specs/a11yplayground-colour-set";
-import { V3_SupportGoWhereColourSet } from "./specs/supportgowhere-colour-set";
-import { V3_IMDAColourSet } from "./specs/imda-colour-set";
 import { V3_SPFColourSet } from "./specs/spf-colour-set";
-import { V3_ColourCollectionsMap } from "./types";
+import { V3_SupportGoWhereColourSet } from "./specs/supportgowhere-colour-set";
+import type { V3_ColourCollectionsMap } from "./types";
 
 export const V3_ColourSpec: V3_ThemeCollectionSpec<
     V3_ColourCollectionsMap,

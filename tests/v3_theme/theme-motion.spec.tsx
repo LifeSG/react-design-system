@@ -1,8 +1,10 @@
 import "jest-styled-components";
-import styled, { ThemeProvider } from "styled-components";
+
 import { render } from "@testing-library/react";
 import { V3_Motion } from "src";
-import { V3_ThemeSpec } from "src/v3_theme/types";
+import type { V3_ThemeSpec } from "src/v3_theme/types";
+import styled, { ThemeProvider } from "styled-components";
+
 import { MOCK_THEME } from "./mock-theme-data";
 
 const StyledMotionTest = styled.div`

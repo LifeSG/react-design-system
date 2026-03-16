@@ -1,14 +1,15 @@
-import {
+import type { RefObject } from "react";
+
+import type {
     InputSelectOptionsProps,
     InputSelectSharedProps,
 } from "../input-select/types";
-import {
+import type {
     DropdownDisplayProps,
     DropdownSearchProps,
     ItemsLoadStateType,
 } from "../shared/dropdown-list-v2/types";
-import { RefObject } from "react";
-import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
+import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export interface InputRangeSelectOptionsProps<T>
     extends Omit<InputSelectOptionsProps<T>, "options" | "optionsLoadState"> {

@@ -1,8 +1,9 @@
-import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
-import { V3_ThemeCollectionSpec } from "../internal-types";
-import { V3_BreakpointScheme } from "../types";
+import type { V3_StyledComponentProps } from "../helpers";
+import { getCollection, getValue } from "../helpers";
+import type { V3_ThemeCollectionSpec } from "../internal-types";
+import type { V3_BreakpointScheme } from "../types";
 import { V3_DefaultBreakpointSet } from "./specs/default-breakpoint-set";
-import { V3_BreakpointCollectionsMap, V3_BreakpointSet } from "./types";
+import type { V3_BreakpointCollectionsMap, V3_BreakpointSet } from "./types";
 
 const V3_BreakpointSpec: V3_ThemeCollectionSpec<
     V3_BreakpointCollectionsMap,

@@ -1,8 +1,15 @@
 import { FloatingFocusManager, useFloating } from "@floating-ui/react";
 import { CrossIcon, FilterIcon } from "@lifesg/react-icons";
 import { useEffect, useRef, useState } from "react";
+
 import { Overlay } from "../overlay";
 import { inertValue } from "../shared/accessibility";
+import {
+    FilterBody,
+    FilterDoneButton,
+    FilterFooter,
+    FilterHeaderButton,
+} from "./filter.styles";
 import { FilterContext } from "./filter-context";
 import {
     FilterButton,
@@ -13,13 +20,7 @@ import {
     MobileContainer,
     MobileOverlayContainer,
 } from "./filter-modal.styles";
-import { FilterModalProps } from "./types";
-import {
-    FilterBody,
-    FilterDoneButton,
-    FilterFooter,
-    FilterHeaderButton,
-} from "./filter.styles";
+import type { FilterModalProps } from "./types";
 
 export const FilterModal = ({
     customLabels,

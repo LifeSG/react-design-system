@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { applyHtmlContentStyle } from "../shared/html-content/html-content";
+
 import { Button } from "../button";
-import { V3_Colour, V3_MediaQuery, V3_Spacing } from "../v3_theme";
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Typography } from "../typography";
+import { V3_Colour, V3_MediaQuery, V3_Spacing } from "../v3_theme";
 
 export const Container = styled.div`
     display: flex;

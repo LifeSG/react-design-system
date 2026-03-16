@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import type React from "react";
+import { useContext } from "react";
 import { ThemeContext } from "styled-components";
+
 import { V3_LifeSGTheme } from "../v3_theme";
-import { getErrorDisplayData } from "./error-display-data";
 import {
     ActionButton,
     Container,
@@ -10,8 +11,9 @@ import {
     TextContainer,
     Title,
 } from "./error-display.style";
+import { getErrorDisplayData } from "./error-display-data";
 import { InactivityTimer } from "./inactivity-timer";
-import {
+import type {
     ErrorDisplayProps,
     InactivityAdditionalAttributes,
     MaintenanceAdditionalAttributes,

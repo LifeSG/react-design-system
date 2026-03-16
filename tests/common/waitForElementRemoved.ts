@@ -1,7 +1,5 @@
-import {
-    waitForElementToBeRemoved as waitForElementToBeRemovedOriginal,
-    waitForOptions,
-} from "@testing-library/react";
+import type { waitForOptions } from "@testing-library/react";
+import { waitForElementToBeRemoved as waitForElementToBeRemovedOriginal } from "@testing-library/react";
 
 const isRemoved = <T>(result: T) =>
     !result || (Array.isArray(result) && !result.length);

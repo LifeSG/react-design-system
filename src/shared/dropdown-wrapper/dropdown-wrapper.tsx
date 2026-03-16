@@ -1,7 +1,8 @@
 import { useRef } from "react";
+
 import { useEventListener } from "../../util/use-event-listener";
 import { ElementBoundary, Wrapper } from "./dropdown-wrapper.styles";
-import { DropdownSelectorProps } from "./types";
+import type { DropdownSelectorProps } from "./types";
 
 export const DropdownWrapper = ({
     children,

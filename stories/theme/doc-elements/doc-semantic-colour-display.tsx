@@ -1,5 +1,7 @@
-import { SemanticColours, ThemeType, useDesignToken } from "src/theme";
+import type { ThemeType } from "src/theme";
+import { SemanticColours, useDesignToken } from "src/theme";
 import styled from "styled-components";
+
 import { ColourDisplay } from "./colour-display";
 
 interface ColourSwatchProps {

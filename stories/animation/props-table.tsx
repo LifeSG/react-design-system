@@ -1,8 +1,8 @@
-import {
-    ApiTable,
+import type {
     ApiTableAttributeRowProps,
     ApiTableSectionProps,
 } from "stories/storybook-common";
+import { ApiTable } from "stories/storybook-common";
 
 const BASE_ATTRIBUTES: ApiTableAttributeRowProps[] = [
     {

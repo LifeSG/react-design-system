@@ -1,13 +1,12 @@
 import { useCallback, useRef, useState } from "react";
-import {
-    DropdownRenderProps,
-    ElementWithDropdown,
-} from "../shared/dropdown-wrapper";
+
+import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
 import { TimeHelper } from "../util/time-helper";
 import { InputSelectorElement } from "./timepicker.styles";
-import { TimepickerProps } from "./types";
+import type { TimepickerProps } from "./types";
 
 export const Timepicker = ({
     id,

@@ -1,4 +1,5 @@
 import { useLottie } from "lottie-react";
+
 import animationData from "./data.json";
 
 export const LottieLoadingDots = () => {

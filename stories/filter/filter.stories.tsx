@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Filter } from "src/filter";
 import { Typography } from "src/typography";
 import { StoryDecorator } from "stories/storybook-common";
+
 import { ComponentWithFloatingElement } from "./doc-elements/example-dropdown";
 import {
     DateFilter,

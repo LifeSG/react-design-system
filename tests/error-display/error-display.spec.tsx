@@ -1,14 +1,9 @@
 import { render, screen } from "@testing-library/react";
-
-import {
-    ErrorDisplay,
-    ErrorDisplayType,
-    V3_BookingSGTheme,
-    V3_LifeSGTheme,
-} from "src";
+import React from "react";
+import type { ErrorDisplayType } from "src";
+import { ErrorDisplay, V3_BookingSGTheme, V3_LifeSGTheme } from "src";
 import { getErrorDisplayData } from "src/error-display/error-display-data";
 import { ThemeProvider } from "styled-components";
-import React from "react";
 
 // =============================================================================
 // UNIT TESTS

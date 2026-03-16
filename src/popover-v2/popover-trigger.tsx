@@ -1,8 +1,8 @@
 import {
-    FloatingFocusManager,
-    FloatingPortal,
     autoUpdate,
     flip,
+    FloatingFocusManager,
+    FloatingPortal,
     limitShift,
     offset,
     shift,
@@ -14,15 +14,17 @@ import {
     useHover,
     useInteractions,
 } from "@floating-ui/react";
-import React, { useContext, useRef, useState } from "react";
+import type React from "react";
+import { useContext, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
+
 import { useFloatingChild } from "../overlay/use-floating-context";
-import { V3_Breakpoint } from "../v3_theme";
 import { SimpleIdGenerator } from "../util";
+import { V3_Breakpoint } from "../v3_theme";
 import { PopoverV2 } from "./popover";
 import { TriggerContainer } from "./popover-trigger.styles";
-import { PopoverV2TriggerProps, PopoverV2TriggerType } from "./types";
+import type { PopoverV2TriggerProps, PopoverV2TriggerType } from "./types";
 
 export const PopoverTrigger = ({
     children,

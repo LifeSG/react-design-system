@@ -1,10 +1,10 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import styled, { css } from "styled-components";
+
 import { ClickableIcon } from "../shared/clickable-icon";
-import { V3_Font, V3_MediaQuery } from "../v3_theme";
-import { V3_Colour } from "../v3_theme";
+import type { TypographyWeight } from "../typography";
+import { V3_Colour, V3_Font, V3_MediaQuery } from "../v3_theme";
 import { V3_ThemeNavbar } from "../v3_theme/components/theme-helper";
-import { TypographyWeight } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

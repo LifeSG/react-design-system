@@ -1,4 +1,4 @@
-import { V3_BreakpointScheme } from "../types";
+import type { V3_BreakpointScheme } from "../types";
 
 export interface V3_BreakpointSet {
     "xxs-min": number;

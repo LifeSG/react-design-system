@@ -1,7 +1,8 @@
 import { css } from "styled-components";
-import { V3_FontSet, V3_FontSpecSet } from "../types";
+
 import { getFontSpec } from "../font-spec/theme-helper";
-import { V3_FontSetAdditionalOptions } from "./types";
+import type { V3_FontSet, V3_FontSpecSet } from "../types";
+import type { V3_FontSetAdditionalOptions } from "./types";
 
 export const generateFontCSS = (
     fontSizeKey: keyof V3_FontSpecSet,

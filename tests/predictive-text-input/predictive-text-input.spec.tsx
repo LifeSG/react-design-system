@@ -2,6 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { PredictiveTextInput } from "src/predictive-text-input";
+
 import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
 
 const FIELD_TESTID = "test";

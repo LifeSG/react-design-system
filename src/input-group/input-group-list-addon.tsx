@@ -1,6 +1,7 @@
-import { OpenChangeReason } from "@floating-ui/react";
+import type { OpenChangeReason } from "@floating-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
+
+import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { DropdownList, DropdownListState } from "../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
@@ -17,7 +18,7 @@ import {
     SelectorReadOnly,
     StyledExpandableElement,
 } from "./input-group-list-addon.style";
-import { InputGroupProps, ListAddon } from "./types";
+import type { InputGroupProps, ListAddon } from "./types";
 
 export const Component = <T, V>(
     {

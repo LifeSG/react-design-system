@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+
 import {
     V3_Border,
     V3_Colour,
@@ -6,7 +7,7 @@ import {
     V3_Motion,
     V3_Radius,
 } from "../../v3_theme";
-import { MonthVariant } from "./internal-calendar-month";
+import type { MonthVariant } from "./internal-calendar-month";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $

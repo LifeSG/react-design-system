@@ -1,9 +1,11 @@
 import "@govtechsg/sgds-web-component/themes/day.css";
 import "@govtechsg/sgds-web-component/themes/night.css";
+
 import { useContext, useEffect } from "react";
 import { ThemeContext } from "styled-components";
+
 import { Wrapper } from "./masthead.style";
-import { MastheadProps } from "./types";
+import type { MastheadProps } from "./types";
 
 export const Masthead = ({ stretch = false }: MastheadProps): JSX.Element => {
     const theme = useContext(ThemeContext);

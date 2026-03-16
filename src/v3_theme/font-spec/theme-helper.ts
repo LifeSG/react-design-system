@@ -1,6 +1,7 @@
-import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
-import { V3_ThemeCollectionSpec } from "../internal-types";
-import { V3_FontScheme } from "../types";
+import type { V3_StyledComponentProps } from "../helpers";
+import { getCollection, getValue } from "../helpers";
+import type { V3_ThemeCollectionSpec } from "../internal-types";
+import type { V3_FontScheme } from "../types";
 import { V3_A11yPlaygroundFontSpecSet } from "./specs/a11yplayground-font-spec-set";
 import { V3_BookingSgFontSpecSet } from "./specs/bookingsg-font-spec-set";
 import { V3_DefaultFontSpecSet } from "./specs/default-font-spec-set";
@@ -11,7 +12,7 @@ import { V3_PAFontSpecSet } from "./specs/pa-font-spec-set";
 import { V3_SGWDigitalLobbyFontSpecSet } from "./specs/sgw-digital-lobby-font-spec-set";
 import { V3_SPFFontSpecSet } from "./specs/spf-font-spec-set";
 import { V3_SupportGoWhereFontSpecSet } from "./specs/supportgowhere-font-spec-set";
-import { V3_FontSpecCollectionMap, V3_FontSpecSet } from "./types";
+import type { V3_FontSpecCollectionMap, V3_FontSpecSet } from "./types";
 
 const V3_FontSpec: V3_ThemeCollectionSpec<
     V3_FontSpecCollectionMap,

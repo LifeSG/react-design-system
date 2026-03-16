@@ -1,7 +1,9 @@
-import { RefObject } from "react";
+import type { RefObject } from "react";
 import styled from "styled-components";
-import { PopoverTrigger, PopoverV2TriggerProps } from "../../popover-v2";
-import { SchedulePopoverProps } from "../types";
+
+import type { PopoverV2TriggerProps } from "../../popover-v2";
+import { PopoverTrigger } from "../../popover-v2";
+import type { SchedulePopoverProps } from "../types";
 
 interface ConditionalCellWrapperProps {
     containerRef: RefObject<HTMLDivElement>;

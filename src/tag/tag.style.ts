@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { TagColorType, TagType } from "./types";
+
 import {
     V3_Border,
     V3_Colour,
@@ -7,6 +7,7 @@ import {
     V3_MediaQuery,
     V3_Radius,
 } from "../v3_theme";
+import type { TagColorType, TagType } from "./types";
 
 // =============================================================================
 // STYLING

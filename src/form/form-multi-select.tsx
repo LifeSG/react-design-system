@@ -1,8 +1,9 @@
 import { useState } from "react";
+
 import { InputMultiSelect } from "../input-multi-select/input-multi-select";
-import { FormWrapper } from "./form-wrapper";
-import { FormMultiSelectProps } from "./types";
 import { SimpleIdGenerator } from "../util";
+import { FormWrapper } from "./form-wrapper";
+import type { FormMultiSelectProps } from "./types";
 
 export const FormMultiSelect = <T, V>({
     label,

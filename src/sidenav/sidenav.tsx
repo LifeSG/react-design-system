@@ -1,12 +1,14 @@
 import { useRef, useState } from "react";
+
 import { SimpleIdGenerator } from "../util";
-import { SidenavContext, SidenavContextItem } from "./sidenav-context";
+import { DesktopContainer, MobileContainer, Wrapper } from "./sidenav.styles";
+import type { SidenavContextItem } from "./sidenav-context";
+import { SidenavContext } from "./sidenav-context";
 import { SidenavDrawerItem } from "./sidenav-drawer-item";
 import { SidenavDrawerSubitem } from "./sidenav-drawer-subitem";
 import { SidenavGroup } from "./sidenav-group";
 import { SidenavItem } from "./sidenav-item";
-import { DesktopContainer, MobileContainer, Wrapper } from "./sidenav.styles";
-import { SidenavProps } from "./types";
+import type { SidenavProps } from "./types";
 
 const SidenavBase = ({
     fixed = true,

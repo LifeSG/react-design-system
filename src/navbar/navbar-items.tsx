@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { TypographyWeight } from "../typography";
-import { Menu as DesktopMenu } from "../menu";
-import { Menu as MobileMenu } from "./menu";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
 
+import { Menu as DesktopMenu } from "../menu";
+import type { TypographyWeight } from "../typography";
+import { SimpleIdGenerator } from "../util";
+import { Menu as MobileMenu } from "./menu";
 import {
     ChevronIcon,
     ExpandCollapseButton,
@@ -15,8 +17,11 @@ import {
     MobileWrapper,
     Wrapper,
 } from "./navbar-items.styles";
-import { NavItemCommonProps, NavItemLinkProps, NavItemProps } from "./types";
-import { SimpleIdGenerator } from "../util";
+import type {
+    NavItemCommonProps,
+    NavItemLinkProps,
+    NavItemProps,
+} from "./types";
 
 interface Props<T> {
     items: NavItemProps<T>[];

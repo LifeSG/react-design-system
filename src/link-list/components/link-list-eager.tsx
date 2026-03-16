@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { useResizeDetector } from "react-resize-detector";
 import { useSpring } from "@react-spring/web";
-import {
+import type React from "react";
+import { useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
+
+import type {
     BaseProps,
     LinkListEagerProps,
     LinkListItemProps,

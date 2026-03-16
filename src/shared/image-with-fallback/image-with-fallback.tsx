@@ -1,4 +1,5 @@
 import image from "./default.png";
+
 export interface ImageWithFallbackProps {
     src: string;
     alt?: string | undefined;

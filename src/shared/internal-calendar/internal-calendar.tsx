@@ -1,11 +1,12 @@
-import { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
 import React, { useImperativeHandle, useRef } from "react";
+
 import { CalendarManager } from "./calendar-manager";
 import { FixedRangeCalendarDayView } from "./fixed-range";
 import { Container } from "./internal-calendar.style";
 import { SingleCalendarDayView } from "./single";
 import { StandardCalendarDayView } from "./standard";
-import {
+import type {
     CalendarManagerRef,
     InternalCalendarProps,
     InternalCalendarRef,

@@ -1,4 +1,6 @@
+import { InputSelect } from "../../input-select";
 import { DateHelper } from "../../util";
+import type { ScheduleView } from "../types";
 import {
     DROPDOWN_WIDTH,
     LeftSection,
@@ -8,8 +10,6 @@ import {
     StyledDateNavigator,
     StyledText,
 } from "./schedule-header.style";
-import { ScheduleView } from "../types";
-import { InputSelect } from "../../input-select";
 
 export interface ScheduleHeaderProps {
     id?: string | undefined;

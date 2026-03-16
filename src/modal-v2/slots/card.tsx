@@ -1,6 +1,7 @@
 import React from "react";
 import { isStyledComponent } from "styled-components";
-import { ModalCardProps } from "../types";
+
+import type { ModalCardProps } from "../types";
 import { CloseButton } from "./close-button";
 import { Content } from "./content";
 import { Footer } from "./footer";

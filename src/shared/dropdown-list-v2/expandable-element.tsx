@@ -1,7 +1,9 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
-import { AriaAttributes, Ref, forwardRef } from "react";
+import type { AriaAttributes, Ref } from "react";
+import { forwardRef } from "react";
+
 import { IconContainer, Selector } from "./expandable-element.styles";
-import { DropdownVariantType } from "./types";
+import type { DropdownVariantType } from "./types";
 
 export interface ExpandableElementProps
     extends Pick<
