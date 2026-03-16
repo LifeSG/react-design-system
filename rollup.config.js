@@ -8,9 +8,9 @@ import fs from "fs";
 import path from "path";
 import postcssImports from "postcss-import";
 import copy from "rollup-plugin-copy";
+import excludeDependenciesFromBundle from "rollup-plugin-exclude-dependencies-from-bundle";
 import generatePackageJson from "rollup-plugin-generate-package-json";
 import { libStylePlugin } from "rollup-plugin-lib-style";
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import typescript from "rollup-plugin-typescript2";
 
 const dirsToIgnore = ["custom-types", "shared", "util", "v2_spec", "__mocks__"];
@@ -48,7 +48,7 @@ const subExports = subDirs.reduce((acc, name) => {
 }, {});
 
 const basePlugins = [
-    peerDepsExternal(), // Add the externals for me. [react, react-dom, styled-components]
+    excludeDependenciesFromBundle(), // Exclude dependencies and peer dependencies from the bundle
     nodeResolve({ browser: true }), // Locates modules in the project's node_modules directory
     commonjs(), // converts CommonJS to ES6 modules
     json(), // converts JSON files to ES6 modules
