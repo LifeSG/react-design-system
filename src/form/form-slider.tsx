@@ -24,7 +24,7 @@ export const FormSlider = ({
     ...otherProps
 }: FormSliderProps): JSX.Element => {
     const [internalId] = useState(() => SimpleIdGenerator.generate());
-    const inputId = id ?? `form-field-masked-input-${internalId}`;
+    const inputId = id ?? `form-slider-${internalId}`;
 
     return (
         <FormWrapper
