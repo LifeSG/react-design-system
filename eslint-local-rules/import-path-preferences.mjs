@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import path from "node:path";
 
 const SRC_PREFIX = "src/";
@@ -25,8 +26,42 @@ function getQuote(rawSource) {
     return quote === "'" || quote === '"' ? quote : '"';
 }
 
-function relativeSrcToAlias(importSource) {
-    if (/^(?:\.\.\/)+src$/.test(importSource)) return "src";
+function toKebabCase(value) {
+    return value
+        .replaceAll(/([a-z0-9])([A-Z])/g, "$1-$2")
+        .replaceAll("_", "-")
+        .toLowerCase();
+}
+
+function hasSrcModule(cwd, modulePath) {
+    const basePath = path.join(cwd, modulePath);
+    const extensions = [".ts", ".tsx", ".js", ".jsx"];
+
+    if (fs.existsSync(basePath) && fs.statSync(basePath).isDirectory()) {
+        return extensions.some((ext) =>
+            fs.existsSync(path.join(basePath, `index${ext}`))
+        );
+    }
+
+    return extensions.some((ext) => fs.existsSync(`${basePath}${ext}`));
+}
+
+function inferSrcPathFromBareImport(node, cwd) {
+    if (node.type !== "ImportDeclaration") return null;
+    if (node.specifiers.length !== 1) return null;
+
+    const specifier = node.specifiers[0];
+    if (specifier.type !== "ImportSpecifier") return null;
+    if (specifier.imported.type !== "Identifier") return null;
+
+    const inferredPath = `src/${toKebabCase(specifier.imported.name)}`;
+    return hasSrcModule(cwd, inferredPath) ? inferredPath : null;
+}
+
+function relativeSrcToAlias(node, cwd, importSource) {
+    if (/^(?:\.\.\/)+src$/.test(importSource)) {
+        return inferSrcPathFromBareImport(node, cwd) || "src";
+    }
 
     const match = importSource.match(/^(?:\.\.\/)+src\/(.+)$/);
     if (!match) return null;
@@ -73,20 +108,20 @@ function relativeSrcToPackage(importSource) {
     return `${PACKAGE_PREFIX}/${match[1]}`;
 }
 
-function getReplacement(zone, filename, importSource) {
+function getReplacement(zone, context, node, importSource) {
     if (zone === "stories") {
         return (
-            relativeSrcToAlias(importSource) ||
+            relativeSrcToAlias(node, context.cwd, importSource) ||
             relativeStorybookCommonToAlias(importSource)
         );
     }
 
     if (zone === "tests") {
-        return relativeSrcToAlias(importSource);
+        return relativeSrcToAlias(node, context.cwd, importSource);
     }
 
     if (zone === "src") {
-        return srcAliasToRelative(filename, importSource);
+        return srcAliasToRelative(context.filename, importSource);
     }
 
     if (zone === "nextjs") {
@@ -153,7 +188,8 @@ const importPathPreferencesRule = {
 
             const replacement = getReplacement(
                 zone,
-                context.filename,
+                context,
+                node,
                 importSource
             );
             if (!replacement || replacement === importSource) return;

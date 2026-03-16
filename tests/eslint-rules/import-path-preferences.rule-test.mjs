@@ -1,4 +1,5 @@
 import { RuleTester } from "eslint";
+
 import localRules from "../../eslint-local-rules/import-path-preferences.mjs";
 
 const rule = localRules.rules["import-path-preferences"];
@@ -48,10 +49,17 @@ ruleTester.run("import-path-preferences", rule, {
             errors: [{ messageId: "storiesSrc" }],
         },
         {
-            name: "stories bare relative src is fixed to bare src",
+            name: "stories bare relative src infers component path",
             filename: "/repo/stories/accordion/accordion.stories.tsx",
             code: 'import { Accordion } from "../../src";',
-            output: 'import { Accordion } from "src";',
+            output: 'import { Accordion } from "src/accordion";',
+            errors: [{ messageId: "storiesSrc" }],
+        },
+        {
+            name: "stories bare relative src falls back to src when ambiguous",
+            filename: "/repo/stories/unknown/unknown.stories.tsx",
+            code: 'import { DefinitelyMissingComponent } from "../../src";',
+            output: 'import { DefinitelyMissingComponent } from "src";',
             errors: [{ messageId: "storiesSrc" }],
         },
         {
