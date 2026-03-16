@@ -13,11 +13,11 @@ import {
     useTransitionStyles,
 } from "@floating-ui/react";
 import type { HTMLAttributes } from "react";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 import { ThemeContext as FDSThemeContext } from "../theme/theme-provider/context";
-import { getInheritedInlineCssVariables } from "../theme/utils/css-variable";
+import { useInheritedThemeVariables } from "../theme/theme-provider/hooks";
 import { SidenavContext } from "./sidenav-context";
 import {
     Container,
@@ -121,13 +121,7 @@ export const SidenavItem = ({
     ]);
 
     const { isMounted, styles } = useTransitionStyles(context);
-    const themeVariables = useMemo(() => {
-        if (!isMounted) return {};
-
-        return getInheritedInlineCssVariables(
-            themeContext?.themeElement ?? null
-        );
-    }, [isMounted, themeContext?.themeElement]);
+    const themeVariables = useInheritedThemeVariables(isMounted);
 
     // =========================================================================
     // EFFECTS

@@ -19,13 +19,13 @@ import {
     useTransitionStyles,
 } from "@floating-ui/react";
 import type { CSSProperties, RefObject } from "react";
-import { createContext, useContext, useMemo, useRef } from "react";
+import { createContext, useContext, useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
 
 import { useFloatingChild } from "../../overlay/use-floating-context";
 import { ThemeContext as FDSThemeContext } from "../../theme/theme-provider/context";
-import { getInheritedInlineCssVariables } from "../../theme/utils/css-variable";
+import { useInheritedThemeVariables } from "../../theme/theme-provider/hooks";
 import { V3_Breakpoint } from "../../v3_theme";
 import type { DropdownAlignmentType } from "./types";
 
@@ -210,13 +210,7 @@ export const ElementWithDropdown = ({
         open: { opacity: 1 },
         duration: 300,
     });
-    const themeVariables = useMemo(() => {
-        if (!isMounted) return {};
-
-        return getInheritedInlineCssVariables(
-            themeContext?.themeElement ?? null
-        );
-    }, [isMounted, themeContext?.themeElement]);
+    const themeVariables = useInheritedThemeVariables(isMounted);
 
     const click = useClick(context, {
         enabled,

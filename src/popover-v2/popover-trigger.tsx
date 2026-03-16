@@ -15,13 +15,13 @@ import {
     useInteractions,
 } from "@floating-ui/react";
 import type React from "react";
-import { useContext, useMemo, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 
 import { useFloatingChild } from "../overlay/use-floating-context";
 import { ThemeContext as FDSThemeContext } from "../theme/theme-provider/context";
-import { getInheritedInlineCssVariables } from "../theme/utils/css-variable";
+import { useInheritedThemeVariables } from "../theme/theme-provider/hooks";
 import { SimpleIdGenerator } from "../util";
 import { V3_Breakpoint } from "../v3_theme";
 import { PopoverV2 } from "./popover";
@@ -88,13 +88,7 @@ export const PopoverTrigger = ({
         },
     });
     const parentZIndex = useFloatingChild();
-    const themeVariables = useMemo(() => {
-        if (!visible) return {};
-
-        return getInheritedInlineCssVariables(
-            themeContext?.themeElement ?? null
-        );
-    }, [visible, themeContext?.themeElement]);
+    const themeVariables = useInheritedThemeVariables(visible);
 
     const trigger: PopoverV2TriggerType = isMobile ? "click" : _trigger;
     const isTooltip = trigger === "hover";
