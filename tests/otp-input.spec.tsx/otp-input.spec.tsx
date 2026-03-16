@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { OtpInput, OtpInputRef } from "src/otp-input";
+import type { OtpInputRef } from "src/otp-input";
+import { OtpInput } from "src/otp-input";
 
 // =============================================================================
 // UNIT TESTS

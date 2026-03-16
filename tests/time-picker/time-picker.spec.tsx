@@ -1,6 +1,7 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Timepicker } from "../../src/timepicker/timepicker";
+import { Timepicker } from "src/timepicker/timepicker";
+
 import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
 
 describe("Timepicker (Floating UI)", () => {

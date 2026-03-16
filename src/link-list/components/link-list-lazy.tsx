@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
+import { Colour } from "../../theme";
 import type {
     BaseProps,
     LinkListItemProps,
@@ -17,7 +18,6 @@ import {
     ViewMoreIcon,
 } from "../link-list.styles";
 import { LinkListItems } from "./common";
-import { Colour } from "../../theme";
 
 type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
     Omit<LinkListLazyProps, "loadMode">;

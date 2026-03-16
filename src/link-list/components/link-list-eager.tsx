@@ -3,6 +3,8 @@ import type React from "react";
 import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { inertValue } from "../../shared/accessibility";
+import { SimpleIdGenerator } from "../../util";
 import type {
     BaseProps,
     LinkListEagerProps,
@@ -17,8 +19,6 @@ import {
     ViewMoreIcon,
 } from "../link-list.styles";
 import { LinkListItems } from "./common";
-import { SimpleIdGenerator } from "../../util";
-import { inertValue } from "../../shared/accessibility";
 
 type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
     Omit<LinkListEagerProps, "loadMode">;

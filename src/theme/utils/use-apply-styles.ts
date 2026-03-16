@@ -1,7 +1,7 @@
 import type { RefObject } from "react";
 
 import { useIsomorphicLayoutEffect } from "../../util";
-import { CSSVariableKey } from "../types";
+import type { CSSVariableKey } from "../types";
 
 type StyleValue = string | number | null | undefined;
 

@@ -31,7 +31,7 @@ export const useCountdown = ({
 }: UseCountdownOptions): UseCountdownReturn => {
     const [timeLeft, setTimeLeft] = useState(duration);
     const [isRunning, setIsRunning] = useState(false);
-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const startTimeRef = useRef<number | null>(null);
 
     const formatTime = (time?: number) => {

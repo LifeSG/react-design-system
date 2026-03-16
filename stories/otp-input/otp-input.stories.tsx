@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useEffect, useRef, useState } from "react";
-import { OtpInput, OtpInputRef } from "src/otp-input";
+import type { OtpInputRef } from "src/otp-input";
+import { OtpInput } from "src/otp-input";
 import { StoryDecorator } from "stories/storybook-common";
+
 import { CustomContent } from "./doc-elements";
 
 type Component = typeof OtpInput;
