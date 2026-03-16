@@ -5,15 +5,21 @@
     "main": "dist/cjs/index.js",
     "module": "dist/index.js",
     "typings": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/cjs/index.js",
+            "default": "./dist/index.js"
+        }
+    },
     "bin": {
         "lifesg-react-design-system": "./codemods/run-codemod.js"
     },
     "scripts": {
-        "build": "npm run rollup && npm run post:build",
-        "build-check": "npm run rollup rollup.check.config.js",
-        "rollup": "rm -rf dist && node --max-old-space-size=4096 node_modules/rollup/dist/bin/rollup --bundleConfigAsCjs -c",
+        "build": "npm run rollup",
+        "rollup": "rm -rf dist && rollup -c",
         "pack-package": "cd dist && npm pack",
-        "post:build": "node ./scripts/post-build.js",
         "publish-lib": "npm publish ./dist",
         "start": "rollup -c -w",
         "test": "jest --coverage",
@@ -134,14 +140,14 @@
         "react-dom": "^17.0.2",
         "react-dropzone": "^14.2.3",
         "react-intersection-observer": "^9.5.2",
-        "react-resize-detector": "^7.0.0",
+        "react-resize-detector": "^10.0.1",
         "react-responsive": "^9.0.0-beta.10",
         "remark-gfm": "^4.0.0",
-        "rollup": "^3.29.4",
+        "rollup": "^4.34.9",
         "rollup-plugin-copy": "^3.5.0",
+        "rollup-plugin-exclude-dependencies-from-bundle": "^1.1.24",
         "rollup-plugin-generate-package-json": "^3.2.0",
-        "rollup-plugin-peer-deps-external": "^2.2.4",
-        "rollup-plugin-postcss": "^4.0.2",
+        "rollup-plugin-lib-style": "^2.4.7",
         "rollup-plugin-typescript2": "^0.36.0",
         "storybook": "^10.2.10",
         "style-loader": "^2.0.0",
@@ -157,6 +163,12 @@
         "react": "^17.0.2 || ^18.0.0 || ^19.0.0",
         "react-dom": "^17.0.2 || ^18.0.0 || ^19.0.0",
         "styled-components": "^6.1.19"
+    },
+    "overrides": {
+        "react-resize-detector": {
+            "react": "$react",
+            "react-dom": "$react-dom"
+        }
     },
     "lint-staged": {
         "*.{tsx,ts}": [
