@@ -72,6 +72,35 @@ describe("Filter", () => {
             expect(screen.getByText(ITEM_CONTENT)).toBeInTheDocument();
         });
 
+        it("should expose the title as the expand button accessible name", () => {
+            render(
+                <Filter.Item title={ITEM_TITLE}>{ITEM_CONTENT}</Filter.Item>
+            );
+
+            expect(
+                screen.getByRole("button", { name: ITEM_TITLE })
+            ).toBeInTheDocument();
+        });
+
+        it("should toggle inert on expandable content when collapsed and expanded", () => {
+            render(
+                <Filter.Item title={ITEM_TITLE}>{ITEM_CONTENT}</Filter.Item>
+            );
+
+            const expandButton = screen.getByTestId("expand-collapse-button");
+            const expandableContainer = screen.getByTestId(
+                "expandable-container"
+            );
+
+            expect(expandableContainer).toHaveAttribute("inert");
+
+            act(() => {
+                fireEvent.click(expandButton);
+            });
+
+            expect(expandableContainer).not.toHaveAttribute("inert");
+        });
+
         it("should render children specified as render prop correctly", () => {
             const mockRender = jest.fn(() => (
                 <div data-testid="item1">{ITEM_CONTENT}</div>

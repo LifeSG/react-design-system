@@ -44,6 +44,26 @@ describe("PredictiveTextInput", () => {
         expect(screen.queryByTestId(DROPDOWN_TESTID)).not.toBeInTheDocument();
     });
 
+    it("should wire input aria-describedby to hidden instruction text", () => {
+        render(
+            <PredictiveTextInput
+                data-testid={FIELD_TESTID}
+                fetchOptions={jest.fn()}
+            />
+        );
+
+        const input = screen.getByRole("combobox");
+        const instruction = screen.getByText(
+            "Type in 3 or more characters for suggested results."
+        );
+
+        expect(instruction.id).toBeTruthy();
+        expect(input).toHaveAttribute(
+            "aria-describedby",
+            expect.stringContaining(instruction.id)
+        );
+    });
+
     it("should not fetch options when input length is less than minimum characters", async () => {
         const user = userEvent.setup({
             advanceTimers: jest.advanceTimersByTime,
@@ -101,6 +121,47 @@ describe("PredictiveTextInput", () => {
         expect(screen.getByText("Option 1")).toBeVisible();
         expect(screen.getByText("Option 2")).toBeVisible();
         expect(screen.getByText("Option 3")).toBeVisible();
+    });
+
+    it("should announce loading and result count in live region", async () => {
+        const user = userEvent.setup({
+            advanceTimers: jest.advanceTimersByTime,
+        });
+        const mockFetchOptions = jest.fn().mockImplementation(
+            () =>
+                new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(OPTIONS);
+                    }, FETCH_DELAY);
+                })
+        );
+
+        render(
+            <PredictiveTextInput
+                data-testid={FIELD_TESTID}
+                fetchOptions={mockFetchOptions}
+            />
+        );
+
+        await user.type(screen.getByPlaceholderText("Enter here..."), "abc");
+        jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
+
+        const loadingAnnouncement = screen.getByText(
+            "Loading suggested results"
+        );
+        expect(
+            loadingAnnouncement.closest('[aria-live="polite"]')
+        ).toBeInTheDocument();
+
+        await act(async () => {
+            jest.advanceTimersByTime(FETCH_DELAY);
+        });
+
+        expect(
+            screen.getByText(
+                "3 results found. Press down arrow to scroll through the list."
+            )
+        ).toBeInTheDocument();
     });
 
     it("should select option correctly", async () => {

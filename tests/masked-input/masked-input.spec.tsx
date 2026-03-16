@@ -57,6 +57,23 @@ describe("MaskedInput", () => {
             expect(screen.getByText("Try again?")).toBeInTheDocument();
         });
 
+        it("should link readonly button label to hidden value description", () => {
+            render(
+                <MaskedInput value="S1234567D" maskRange={[2, 5]} readOnly />
+            );
+
+            const button = screen.getByTestId("masked-input-readonly-button");
+            const labelIds = button.getAttribute("aria-labelledby");
+            expect(labelIds).toBeTruthy();
+
+            const hiddenValueDescription = document.getElementById(
+                (labelIds as string).split(" ")[0]
+            );
+            expect(hiddenValueDescription).toHaveTextContent(
+                "Starting with S1 and ending with 67D"
+            );
+        });
+
         it("should not render the loading display if the component is in loading state but not in readOnly mode", () => {
             render(<MaskedInput value="S1234567D" loadState="loading" />);
 

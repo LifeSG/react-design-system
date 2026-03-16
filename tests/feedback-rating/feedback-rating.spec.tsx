@@ -38,6 +38,24 @@ describe("FeedbackRating", () => {
         expect(screen.getByText(description)).toBeInTheDocument();
     });
 
+    it("should wire slider description to hidden accessibility guidance text", () => {
+        render(
+            <FeedbackRating
+                rating={0}
+                onRatingChange={NO_OP}
+                onSubmit={NO_OP}
+            />
+        );
+
+        const slider = getRatingSlider();
+        const descriptionId = slider.getAttribute("aria-describedby");
+
+        expect(descriptionId).toBeTruthy();
+        expect(
+            document.getElementById(descriptionId as string)
+        ).toHaveTextContent("Minimum, 1 star. Maximum, 5 stars.");
+    });
+
     it("should be able to render custom button label", () => {
         const buttonLabel = "custom label";
         render(

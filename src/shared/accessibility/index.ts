@@ -1,8 +1,10 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
+import clsx from "clsx";
+import React from "react";
 
 import { isReact19 } from "../../util";
 
-export const VisuallyHidden = styled.span`
+const visuallyHidden = css`
     clip-path: inset(50%);
     height: 1px;
     width: 1px;
@@ -10,6 +12,17 @@ export const VisuallyHidden = styled.span`
     position: absolute;
     white-space: nowrap;
 `;
+
+export const VisuallyHidden = React.forwardRef<
+    HTMLSpanElement,
+    React.HTMLAttributes<HTMLSpanElement>
+>(function VisuallyHidden({ className, ...otherProps }, ref) {
+    return React.createElement("span", {
+        ...otherProps,
+        ref,
+        className: clsx(visuallyHidden, className),
+    });
+});
 
 /**
  * Handle compatibility of `inert` across React versions.

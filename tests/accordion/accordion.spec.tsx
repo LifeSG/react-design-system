@@ -233,6 +233,35 @@ describe("Accordion", () => {
             });
         });
 
+        it("should toggle inert on accordion content when collapsed and expanded", () => {
+            render(
+                <Accordion>
+                    <Accordion.Item data-testid="item1" title="Item title">
+                        <Typography.BodyBL>
+                            {DEFAULT_TEXT_CONTENT}
+                        </Typography.BodyBL>
+                    </Accordion.Item>
+                </Accordion>
+            );
+
+            const button = screen.getByTestId("item1-expand-collapse-button");
+            const expandableContainer = screen.getByTestId(
+                "item1-expandable-container"
+            );
+
+            expect(expandableContainer).not.toHaveAttribute("inert");
+
+            act(() => {
+                fireEvent.click(button);
+            });
+            expect(expandableContainer).toHaveAttribute("inert");
+
+            act(() => {
+                fireEvent.click(button);
+            });
+            expect(expandableContainer).not.toHaveAttribute("inert");
+        });
+
         it("should disable expand/collapse functionality if collapsible=false specified", () => {
             const ACCORDION_TITLE = "Accordion Title";
             const ITEM_TITLE = "Item title";

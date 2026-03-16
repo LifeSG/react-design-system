@@ -54,6 +54,17 @@ describe("OtpInput", () => {
         expect(screen.queryByTestId("otp-prefix")).toHaveTextContent(
             prefixValue + " " + separator
         );
+        expect(screen.getByText("O T P prefix")).toBeInTheDocument();
+    });
+
+    it("should expose countdown through a timer live description", () => {
+        render(<OtpInput numOfInput={3} cooldownDuration={10} />);
+
+        const timer = screen.getByRole("timer");
+        expect(timer).toHaveTextContent("10 seconds remaining");
+        expect(
+            screen.getByRole("button", { name: "Resend OTP in 10 seconds" })
+        ).toHaveAttribute("aria-describedby", timer.id);
     });
 
     it("should invoke onChange with the correct value", () => {
