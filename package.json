@@ -18,7 +18,7 @@
     },
     "scripts": {
         "build": "npm run rollup",
-        "rollup": "rm -rf dist && node --max-old-space-size=4096 node_modules/rollup/dist/bin/rollup -c",
+        "rollup": "rm -rf dist && rollup -c",
         "pack-package": "cd dist && npm pack",
         "publish-lib": "npm publish ./dist",
         "start": "rollup -c -w",
