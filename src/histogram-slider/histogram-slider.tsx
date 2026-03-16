@@ -100,6 +100,25 @@ export const HistogramSlider = ({
         return value ?? [minValue, minValue + interval];
     }
 
+    function getRangePercentageDescription() {
+        const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+
+        if (totalCount === 0) {
+            return "0% of results available in the range you specified.";
+        }
+
+        const selectedCount = items.reduce((sum, item) => {
+            const isSelected =
+                item.minValue >= selection[0] && item.minValue < selection[1];
+
+            return isSelected ? sum + item.count : sum;
+        }, 0);
+
+        const percentage = Math.round((selectedCount / totalCount) * 100);
+
+        return `${percentage}% of results available in the range you specified.`;
+    }
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -117,6 +136,8 @@ export const HistogramSlider = ({
     };
 
     const renderHistogramSlider = () => {
+        const selectionDescription = getRangePercentageDescription();
+
         return (
             <>
                 <Histogram>
@@ -149,6 +170,10 @@ export const HistogramSlider = ({
                     disabled={disabled}
                     readOnly={readOnly}
                     ariaLabels={ariaLabels}
+                    ariaDescriptions={[
+                        selectionDescription,
+                        selectionDescription,
+                    ]}
                     aria-describedby={sliderDescribedBy}
                     aria-labelledby={ariaLabelledBy}
                     onChange={handleChange}

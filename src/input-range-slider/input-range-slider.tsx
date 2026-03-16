@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import { Colour } from "../theme";
 import {
@@ -14,6 +14,8 @@ import {
 import { InputRangeSliderProps } from "./types";
 import { SimpleIdGenerator } from "../util";
 import { VisuallyHidden, concatIds } from "../shared/accessibility";
+
+const ANNOUNCEMENT_DEBOUNCE_MS = 500;
 
 export const InputRangeSlider = ({
     id,
@@ -33,6 +35,7 @@ export const InputRangeSlider = ({
     indicatorLabelPrefix,
     indicatorLabelSuffix,
     ariaLabels,
+    ariaDescriptions,
     "aria-invalid": ariaInvalid,
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
@@ -50,6 +53,9 @@ export const InputRangeSlider = ({
     const indicatorTextId = `${internalId}-indicator`;
     const instructionTextId = `${internalId}-instruction`;
     const resolvedAriaLabels = getResolvedAriaLabels();
+    const announcementTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+        null
+    );
 
     // =========================================================================
     // EFFECTS
@@ -59,6 +65,12 @@ export const InputRangeSlider = ({
             setSelection(initialiseSelection());
         }
     }, [value]);
+
+    useEffect(() => {
+        return () => {
+            clearPendingAnnouncement();
+        };
+    }, []);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -71,6 +83,7 @@ export const InputRangeSlider = ({
         if (typeof value === "number") {
             const nextValue = [value];
             setSelection(nextValue);
+            scheduleRangePercentageAnnouncement(index > -1 ? index : 0);
             onChange?.(nextValue);
             return;
         }
@@ -82,6 +95,9 @@ export const InputRangeSlider = ({
 
         const nextValue = [...value];
         setSelection(nextValue);
+        if (index > -1) {
+            scheduleRangePercentageAnnouncement(index);
+        }
         onChange?.(nextValue);
     };
 
@@ -115,6 +131,7 @@ export const InputRangeSlider = ({
             return;
         }
 
+        clearPendingAnnouncement();
         clearAnnouncer("assertive");
         announce(message, "assertive");
     };
@@ -132,6 +149,32 @@ export const InputRangeSlider = ({
             values.push(min + step * i);
         }
         return values;
+    }
+
+    function clearPendingAnnouncement() {
+        if (announcementTimeoutRef.current) {
+            clearTimeout(announcementTimeoutRef.current);
+            announcementTimeoutRef.current = null;
+        }
+    }
+
+    function scheduleRangePercentageAnnouncement(index: number) {
+        if (disabled || readOnly) {
+            return;
+        }
+
+        const announcement = getThumbDescriptionText(index);
+
+        if (!announcement) {
+            return;
+        }
+
+        clearPendingAnnouncement();
+
+        announcementTimeoutRef.current = setTimeout(() => {
+            clearAnnouncer("polite");
+            announce(announcement, "polite");
+        }, ANNOUNCEMENT_DEBOUNCE_MS);
     }
 
     function getResolvedAriaLabels() {
@@ -158,6 +201,10 @@ export const InputRangeSlider = ({
 
     function getThumbAccessibleLabel(index: number) {
         return resolvedAriaLabels[index];
+    }
+
+    function getThumbDescriptionText(index: number) {
+        return ariaDescriptions?.[index];
     }
 
     function getTrackColors() {
@@ -197,11 +244,12 @@ export const InputRangeSlider = ({
         }`;
     }
 
-    function getThumbDescriptionIds() {
+    function getThumbDescriptionIds(thumbDescriptionId?: string) {
         return concatIds(
             ariaDescribedBy,
             showIndicatorLabel ? indicatorTextId : undefined,
-            disabled || readOnly ? undefined : instructionTextId
+            disabled || readOnly ? undefined : instructionTextId,
+            thumbDescriptionId
         );
     }
 
@@ -347,34 +395,52 @@ export const InputRangeSlider = ({
                     state
                 ) => {
                     const thumbLabelTextId = `${internalId}-thumb-label-${state.index}`;
+                    const thumbDescriptionText = getThumbDescriptionText(
+                        state.index
+                    );
+                    const thumbDescriptionTextId = thumbDescriptionText
+                        ? `${internalId}-thumb-description-${state.index}`
+                        : undefined;
                     const thumbValue = selection[state.index];
 
                     return (
-                        <SliderThumb
-                            data-testid={`slider-thumb-${state.index}`}
-                            {...thumbProps}
-                            tabIndex={thumbProps.tabIndex}
-                            aria-labelledby={concatIds(
-                                ariaLabelledBy,
-                                thumbLabelTextId
+                        <div key={state.index}>
+                            {thumbDescriptionTextId && (
+                                <VisuallyHidden id={thumbDescriptionTextId}>
+                                    {thumbDescriptionText}
+                                </VisuallyHidden>
                             )}
-                            aria-describedby={getThumbDescriptionIds()}
-                            aria-valuetext={getValueText(thumbValue)}
-                            aria-valuemin={min}
-                            aria-valuemax={max}
-                            aria-valuenow={thumbValue}
-                            aria-readonly={readOnly || undefined}
-                            aria-invalid={ariaInvalid || undefined}
-                            onKeyDown={(event) => {
-                                handleThumbKeyDown(event, state.index);
-                                thumbProps.onKeyDown?.(event);
-                            }}
-                        >
-                            <VisuallyHidden id={thumbLabelTextId}>
-                                {getThumbAccessibleLabel(state.index)}
-                            </VisuallyHidden>
-                            <Knob $disabled={disabled} $readOnly={readOnly} />
-                        </SliderThumb>
+                            <SliderThumb
+                                data-testid={`slider-thumb-${state.index}`}
+                                {...thumbProps}
+                                tabIndex={thumbProps.tabIndex}
+                                aria-labelledby={concatIds(
+                                    ariaLabelledBy,
+                                    thumbLabelTextId
+                                )}
+                                aria-describedby={getThumbDescriptionIds(
+                                    thumbDescriptionTextId
+                                )}
+                                aria-valuetext={getValueText(thumbValue)}
+                                aria-valuemin={min}
+                                aria-valuemax={max}
+                                aria-valuenow={thumbValue}
+                                aria-readonly={readOnly || undefined}
+                                aria-invalid={ariaInvalid || undefined}
+                                onKeyDown={(event) => {
+                                    handleThumbKeyDown(event, state.index);
+                                    thumbProps.onKeyDown?.(event);
+                                }}
+                            >
+                                <VisuallyHidden id={thumbLabelTextId}>
+                                    {getThumbAccessibleLabel(state.index)}
+                                </VisuallyHidden>
+                                <Knob
+                                    $disabled={disabled}
+                                    $readOnly={readOnly}
+                                />
+                            </SliderThumb>
+                        </div>
                     );
                 }}
                 renderTrack={(
