@@ -93,7 +93,6 @@ export const ExpandableChild = styled.div<ExpandableChildStyleProps>`
 
 export const ToggleButtonLabel = styled(Typography.BodyMD)`
     color: ${V3_Colour["text-primary"]};
-    margin-right: 1rem;
 `;
 
 export const ViewMoreIcon = styled(PlusIcon)`

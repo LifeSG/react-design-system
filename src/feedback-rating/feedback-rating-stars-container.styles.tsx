@@ -20,12 +20,6 @@ const starStyle = css`
     width: 2.75rem;
     height: 2.75rem;
     color: ${V3_Colour["icon-primary"]};
-    ${Input}:focus-visible + & {
-        outline: ${V3_Border["width-020"]} ${V3_Border["solid"]}
-            ${V3_Colour["icon-primary"]};
-        outline-offset: -1px;
-        border-radius: ${V3_Radius["sm"]};
-    }
 `;
 
 export const StarUnfilled = styled(StarIcon)`
