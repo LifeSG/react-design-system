@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { PopoverOverflowType } from "../popover-v2/types";
+
+import type { PopoverOverflowType } from "../popover-v2/types";
 import {
     V3_Border,
     V3_Breakpoint,

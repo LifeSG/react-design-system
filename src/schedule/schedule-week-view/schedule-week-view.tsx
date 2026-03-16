@@ -1,15 +1,13 @@
-import { useMemo } from "react";
 import dayjs from "dayjs";
-import { ScheduleWeekViewProps } from "./types";
-import { TimeIndicator } from "../time-indicator/time-indicator";
+import { useMemo } from "react";
+
+import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
+import type { CellStyleProps } from "../../shared/internal-calendar/day-cell";
+import { DayCell } from "../../shared/internal-calendar/day-cell";
 import { TimeHelper } from "../../util/time-helper";
-import { useInitialScroll, useTimelineOffset } from "../shared";
-import { calculateSlotWidths } from "./week-view-utils";
 import { ScheduleContainer } from "../schedule-day-view/schedule-day-view.styles";
-import {
-    CellStyleProps,
-    DayCell,
-} from "../../shared/internal-calendar/day-cell";
+import { useInitialScroll, useTimelineOffset } from "../shared";
+import { TimeIndicator } from "../time-indicator/time-indicator";
 import {
     BlankCell,
     BodyContainer,
@@ -22,8 +20,9 @@ import {
     SlotGrid,
     Timeline,
 } from "./schedule-week-view.styles";
-import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
 import { TimeCell } from "./time-cell";
+import type { ScheduleWeekViewProps } from "./types";
+import { calculateSlotWidths } from "./week-view-utils";
 
 // =============================================================================
 // MAIN COMPONENT

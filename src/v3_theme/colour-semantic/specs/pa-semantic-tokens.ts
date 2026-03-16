@@ -1,5 +1,5 @@
 import { getPrimitiveColour } from "../../colour-primitive/theme-helper";
-import { V3_SemanticColourSet } from "../../types";
+import type { V3_SemanticColourSet } from "../../types";
 
 // ============================================================================
 // LIGHT MODE COLOURS

@@ -1,6 +1,6 @@
-import { DialPicker } from "./dial-picker/dial-picker";
 import { ComboboxPicker } from "./combobox-picker/combobox-picker";
-import { TimeRangePickerProps } from "./types";
+import { DialPicker } from "./dial-picker/dial-picker";
+import type { TimeRangePickerProps } from "./types";
 
 export const TimeRangePicker = ({
     variant = "dial",

@@ -1,8 +1,6 @@
-import { CSSVariableString } from "../../../src/theme/types";
-import {
-    parseCSSVariableValue,
-    parsePxOrRemValue,
-} from "../../../src/theme/utils";
+import type { CSSVariableString } from "src/theme/types";
+import { parseCSSVariableValue, parsePxOrRemValue } from "src/theme/utils";
+
 import { setupThemeVariables } from "../setup";
 
 describe("parseCSSVariableValue", () => {

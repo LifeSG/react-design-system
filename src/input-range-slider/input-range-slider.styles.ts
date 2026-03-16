@@ -1,5 +1,7 @@
 import ReactSlider from "react-slider";
 import styled, { css } from "styled-components";
+
+import { Typography } from "../typography";
 import {
     V3_Border,
     V3_Colour,
@@ -7,8 +9,7 @@ import {
     V3_Shadow,
     V3_Spacing,
 } from "../v3_theme";
-import { V3_ThemeStyleProps } from "../v3_theme/types";
-import { Typography } from "../typography";
+import type { V3_ThemeStyleProps } from "../v3_theme/types";
 
 // =============================================================================
 // STYLE INTERFACES

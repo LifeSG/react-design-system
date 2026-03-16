@@ -1,4 +1,4 @@
-import { ButtonProps } from "src/button";
+import type { ButtonProps } from "../button";
 
 export interface OtpInputProps extends React.AriaAttributes {
     id?: string | undefined;

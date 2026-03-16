@@ -1,7 +1,11 @@
 import { ChevronUpIcon } from "@lifesg/react-icons";
 import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
+
 import { Button } from "../button";
+import type { TimeSlotStyleProps } from "../time-slot-bar/time-slot-bar.styles";
+import { TimeSlot } from "../time-slot-bar/time-slot-bar.styles";
+import { Typography } from "../typography";
 import {
     V3_Colour,
     V3_Font,
@@ -9,11 +13,6 @@ import {
     V3_Radius,
     V3_Spacing,
 } from "../v3_theme";
-import {
-    TimeSlot,
-    TimeSlotStyleProps,
-} from "../time-slot-bar/time-slot-bar.styles";
-import { Typography } from "../typography";
 
 interface TimeSlotCellProps extends TimeSlotStyleProps {
     $height: number;

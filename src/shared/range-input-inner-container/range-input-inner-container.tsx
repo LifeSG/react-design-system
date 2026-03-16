@@ -5,7 +5,7 @@ import {
     Indicator,
     Wrapper,
 } from "./range-input-inner-container.styles";
-import { RangeInputInnerContainerProps } from "./types";
+import type { RangeInputInnerContainerProps } from "./types";
 
 /**
  * This component allows for input fields to be added within the containers

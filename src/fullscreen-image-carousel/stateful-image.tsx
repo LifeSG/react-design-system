@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
+
 import { LoadingDots } from "../animations";
 import {
     DefaultPlaceholder,

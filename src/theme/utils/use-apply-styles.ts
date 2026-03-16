@@ -1,4 +1,5 @@
-import { RefObject } from "react";
+import type { RefObject } from "react";
+
 import { useIsomorphicLayoutEffect } from "../../util";
 import { CSSVariableKey } from "../types";
 

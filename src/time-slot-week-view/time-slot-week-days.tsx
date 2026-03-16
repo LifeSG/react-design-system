@@ -1,12 +1,15 @@
-import dayjs, { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import { useMemo, useState } from "react";
-import { InternalCalendarProps } from "../shared/internal-calendar";
-import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
-import { V3_Colour } from "../v3_theme";
+
+import type { InternalCalendarProps } from "../shared/internal-calendar";
+import type { CellStyleProps } from "../shared/internal-calendar/day-cell";
+import { DayCell } from "../shared/internal-calendar/day-cell";
 import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.styles";
-import { TimeSlot } from "../time-slot-bar/types";
+import type { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";
+import { V3_Colour } from "../v3_theme";
 import {
     ColumnWeekCell,
     DayLabel,
@@ -15,6 +18,7 @@ import {
     TimeSlotWrapper,
     Wrapper,
 } from "./time-slot-week-days.style";
+
 dayjs.extend(isBetween);
 
 export type DayVariant = "default" | "other-month" | "today";

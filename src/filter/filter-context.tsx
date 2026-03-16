@@ -1,5 +1,7 @@
-import React, { RefObject } from "react";
-import { Mode } from "./types";
+import type { RefObject } from "react";
+import React from "react";
+
+import type { Mode } from "./types";
 
 interface IFilterContext {
     mode: Mode;

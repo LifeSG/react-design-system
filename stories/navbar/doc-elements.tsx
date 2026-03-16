@@ -1,15 +1,15 @@
 import { InboxIcon } from "@lifesg/react-icons/inbox";
 import { useEffect, useState } from "react";
+import { Avatar } from "src/avatar";
+import { Badge } from "src/badge";
 import { Button } from "src/button";
 import { Divider } from "src/divider";
 import { IconButton } from "src/icon-button";
+import { Menu } from "src/menu";
 import { PopoverTrigger } from "src/popover-v2";
-import { V3_Breakpoint, V3_Colour } from "src/v3_theme";
 import { Typography } from "src/typography";
+import { V3_Breakpoint, V3_Colour } from "src/v3_theme";
 import styled, { useTheme } from "styled-components";
-import { Avatar } from "../../src/avatar";
-import { Badge } from "../../src/badge";
-import { Menu } from "../../src/menu";
 
 // =============================================================================
 // STYLING

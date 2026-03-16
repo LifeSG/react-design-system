@@ -1,11 +1,12 @@
-import { V3_StyledComponentProps, getCollection } from "../helpers";
-import { V3_ThemeStyleProps } from "../types";
+import type { V3_StyledComponentProps } from "../helpers";
+import { getCollection } from "../helpers";
+import type { V3_ThemeStyleProps } from "../types";
 import { V3_A11yPlaygroundComponentTokenSet } from "./specs/a11yplayground-component-token-set";
 import { V3_DefaultComponentTokenSet } from "./specs/default-component-token-set";
 import { V3_LifeSGComponentTokenSet } from "./specs/lifesg-component-token-set";
 import { V3_PAComponentTokenSet } from "./specs/pa-component-token-set";
 import { V3_SPFComponentTokenSet } from "./specs/spf-component-token-set";
-import {
+import type {
     V3_AnimationTokens,
     V3_ButtonTokens,
     V3_ComponentTokenSet,

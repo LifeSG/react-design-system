@@ -1,12 +1,13 @@
-import dayjs from "dayjs";
+import type dayjs from "dayjs";
+
 import { TimeHelper } from "../../util/time-helper";
-import { ScheduleEntityProps } from "../types";
-import { SlotLayoutMap, SlotWithService } from "./types";
 import {
     findSlotsInTimeRange,
     findSlotsStartingInTimeRange,
     minutesToTime,
 } from "../shared";
+import type { ScheduleEntityProps } from "../types";
+import type { SlotLayoutMap, SlotWithService } from "./types";
 
 /**
  * Get all slots that START in a specific time cell

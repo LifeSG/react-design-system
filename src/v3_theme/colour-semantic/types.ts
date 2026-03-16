@@ -1,4 +1,4 @@
-import { V3_ColourScheme } from "../types";
+import type { V3_ColourScheme } from "../types";
 
 export type V3_SemanticColourCollectionMap = {
     [key in V3_ColourScheme]: V3_SemanticColourSet;

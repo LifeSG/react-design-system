@@ -1,9 +1,9 @@
-import {
+import type {
     InputNestedSelectOptionsProps,
     InputNestedSelectSharedProps,
     L1OptionProps,
 } from "../input-nested-select";
-import {
+import type {
     DropdownCustomLabelProps,
     DropdownSearchProps,
 } from "../shared/dropdown-list-v2/types";

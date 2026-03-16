@@ -4,7 +4,8 @@ import { Button } from "src/button";
 import { Form } from "src/form";
 import { Modal } from "src/modal";
 import { PopoverTrigger, PopoverV2 } from "src/popover-v2";
-import { GridDecorator } from "../storybook-common";
+import { GridDecorator } from "stories/storybook-common";
+
 import { CustomPopover, POPOVER_CONTENT } from "./doc-elements";
 
 type Component = typeof PopoverV2;

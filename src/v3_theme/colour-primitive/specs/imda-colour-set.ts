@@ -1,4 +1,4 @@
-import { V3_PrimitiveColourSet } from "../../types";
+import type { V3_PrimitiveColourSet } from "../../types";
 
 export const V3_IMDAColourSet: V3_PrimitiveColourSet = {
     "brand-10": "#370009",

@@ -5,9 +5,10 @@ import {
 } from "@floating-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
+
 import { SimpleIdGenerator } from "../util";
 import { Root, Wrapper } from "./overlay.styles";
-import { OverlayProps } from "./types";
+import type { OverlayProps } from "./types";
 import { useFloatingParent } from "./use-floating-context";
 
 const OverlayComponent = ({

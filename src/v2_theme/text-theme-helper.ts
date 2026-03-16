@@ -1,15 +1,15 @@
-import { BaseTextStyleSet } from "../v2_spec/text-spec/base-text-style-set";
 import { BasePlusSansJakartaStyleSet } from "../v2_spec/text-spec/base-plus-jakarta-sans-text-style-set";
+import { BaseTextStyleSet } from "../v2_spec/text-spec/base-text-style-set";
 import { OneServiceTextStyleSet } from "../v2_spec/text-spec/oneservice-text-style-set";
-import { V2_TextStyleSetType } from "../v2_text/types";
+import type { V2_TextStyleSetType } from "../v2_text/types";
 import { getCollection, getValue } from "./helper";
-import {
+import type {
     V2_FontStyleCollectionsMap,
     V2_TextStyleScheme,
     V2_ThemeCollectionSpec,
-    V2_ThemeContextKeys,
     V2_ThemeSpec,
 } from "./types";
+import { V2_ThemeContextKeys } from "./types";
 
 // =============================================================================
 // THEME SPECIFICATION

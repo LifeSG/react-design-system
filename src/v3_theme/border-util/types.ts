@@ -1,6 +1,7 @@
-import { CSSProp } from "styled-components";
-import { V3_BorderScheme } from "../types";
-import { V3_StyledComponentProps } from "../helpers";
+import type { CSSProp } from "styled-components";
+
+import type { V3_StyledComponentProps } from "../helpers";
+import type { V3_BorderScheme } from "../types";
 
 export interface V3_BorderUtilSet {
     solid: (options?: {

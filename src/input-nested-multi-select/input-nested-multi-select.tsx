@@ -1,13 +1,17 @@
-import { OpenChangeReason } from "@floating-ui/react";
+import type { OpenChangeReason } from "@floating-ui/react";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
-import React, { useEffect, useRef, useState } from "react";
-import {
-    ExpandableElement,
-    NestedDropdownList,
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+
+import type {
     NestedDropdownListItemProps,
     NestedDropdownListLocalItem,
+} from "../shared/dropdown-list-v2";
+import {
     buildKeyPathToSet,
+    ExpandableElement,
+    NestedDropdownList,
 } from "../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
@@ -17,8 +21,9 @@ import {
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { SimpleIdGenerator, StringHelper } from "../util";
-import { SelectedItem, getSelectedItems, getSelectedSubItems } from "./helpers";
-import { InputNestedMultiSelectProps } from "./types";
+import type { SelectedItem } from "./helpers";
+import { getSelectedItems, getSelectedSubItems } from "./helpers";
+import type { InputNestedMultiSelectProps } from "./types";
 
 export const InputNestedMultiSelect = <V1, V2, V3>({
     placeholder = "Select",

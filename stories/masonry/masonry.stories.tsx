@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Masonry } from "src/masonry";
-import { FullWidthStoryDecorator } from "../storybook-common";
+import { FullWidthStoryDecorator } from "stories/storybook-common";
+
 import { DemoContainer } from "./doc-elements";
 
 const meta: Meta = {

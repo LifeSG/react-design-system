@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
+
 import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
+import { Typography } from "../typography";
 import {
     V3_Border,
     V3_Colour,
@@ -9,7 +11,6 @@ import {
     V3_Radius,
     V3_Shadow,
 } from "../v3_theme";
-import { Typography } from "../typography";
 
 //=============================================================================
 // STYLE INTERFACE

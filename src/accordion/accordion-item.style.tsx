@@ -1,6 +1,7 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
+
 import {
     V3_Border,
     V3_Colour,
@@ -10,7 +11,7 @@ import {
     V3_Radius,
     V3_Spacing,
 } from "../v3_theme";
-import { AccordionItemType } from "./types";
+import type { AccordionItemType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

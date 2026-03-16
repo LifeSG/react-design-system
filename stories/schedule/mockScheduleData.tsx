@@ -1,4 +1,4 @@
-import { ScheduleEntityProps } from "src/schedule";
+import type { ScheduleEntityProps } from "src/schedule";
 
 const getRelativeDate = (daysFromToday: number): string => {
     const date = new Date();

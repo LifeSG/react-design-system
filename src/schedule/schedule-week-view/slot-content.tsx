@@ -1,11 +1,12 @@
-import React from "react";
+import type React from "react";
+
 import { TimeHelper } from "../../util/time-helper";
-import { PositionedSlot } from "./types";
 import {
     SlotAvailability,
     SlotContentContainer,
     SlotServiceName,
 } from "./slot-content.styles";
+import type { PositionedSlot } from "./types";
 
 interface SlotContentProps {
     positionedSlot: PositionedSlot;

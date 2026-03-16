@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
-import { DownloadApp } from "./footer-download-app";
-import { FooterHelper, InternalDisclaimerLinks } from "./footer-helper";
+import type React from "react";
+import { useContext } from "react";
+import { ThemeContext } from "styled-components";
+
 import {
     AddonSection,
     BaseFooter,
@@ -16,9 +17,11 @@ import {
     StyledFooterLink,
     TopSection,
 } from "./footer.style";
+import { DownloadApp } from "./footer-download-app";
+import type { InternalDisclaimerLinks } from "./footer-helper";
+import { FooterHelper } from "./footer-helper";
 import { ResourceAddon } from "./footer-resource-addon";
-import { FooterLinkProps, FooterProps } from "./types";
-import { ThemeContext } from "styled-components";
+import type { FooterLinkProps, FooterProps } from "./types";
 
 export const Footer = <T,>({
     children,

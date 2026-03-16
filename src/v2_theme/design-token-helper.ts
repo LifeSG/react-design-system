@@ -1,15 +1,14 @@
-import { CssValue, V2_DesignTokenSet } from "../v2_design-token/types";
-
+import type { CssValue, V2_DesignTokenSet } from "../v2_design-token/types";
 import { BaseDesignTokenSet } from "../v2_spec/design-token-spec/base-design-token-set";
 import { RBSDesignTokenSet } from "../v2_spec/design-token-spec/rbs-design-token-set";
 import { getCollection, getValue } from "./helper";
-import {
+import type {
     V2_DesignTokenCollectionsMap,
     V2_DesignTokenScheme,
     V2_ThemeCollectionSpec,
-    V2_ThemeContextKeys,
     V2_ThemeSpec,
 } from "./types";
+import { V2_ThemeContextKeys } from "./types";
 
 // =============================================================================
 // THEME SPECIFICATION

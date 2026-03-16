@@ -1,7 +1,7 @@
-import { ReactRenderer } from "@storybook/react-webpack5";
-import { V3_Colour } from "src/v3_theme";
+import type { ReactRenderer } from "@storybook/react-webpack5";
 import { Typography } from "src/typography";
-import { DecoratorFunction } from "storybook/internal/types";
+import { V3_Colour } from "src/v3_theme";
+import type { DecoratorFunction } from "storybook/internal/types";
 import styled from "styled-components";
 
 // =============================================================================

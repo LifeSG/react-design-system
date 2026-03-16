@@ -1,4 +1,4 @@
-import { V3_FontSpecSet } from "../types";
+import type { V3_FontSpecSet } from "../types";
 
 export const V3_BookingSgFontSpecSet: V3_FontSpecSet = {
     "heading-size-xxl": "3rem",

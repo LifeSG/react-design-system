@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { V3_Colour, V3_MediaQuery, V3_Radius, V3_Spacing } from "../v3_theme";
+
 import { Typography } from "../typography";
+import { V3_Colour, V3_MediaQuery, V3_Radius, V3_Spacing } from "../v3_theme";
 
 // Units in rem
 export const INDICATOR_BAR_MARGIN_RIGHT_TABLET = 0.5;

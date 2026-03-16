@@ -3,12 +3,11 @@ import { useState } from "react";
 import { Alert } from "src/alert";
 import { BoxContainer } from "src/box-container";
 import { Button } from "src/button";
+import type { UneditableSectionItemProps } from "src/uneditable-section";
+import { UneditableSection } from "src/uneditable-section";
 import { V2_Text } from "src/v2_text";
 import { V2_TextList } from "src/v2_text-list";
-import {
-    UneditableSection,
-    UneditableSectionItemProps,
-} from "src/uneditable-section";
+
 import { SAMPLE_ITEMS } from "./doc-elements";
 
 type Component = typeof UneditableSection;

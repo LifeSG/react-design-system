@@ -1,8 +1,9 @@
 import React from "react";
+
 import { useDropdownRender } from "../dropdown-wrapper";
 import { CalendarWrapper } from "./calendar-dropdown.style";
 import { InternalCalendar } from "./internal-calendar";
-import { CalendarDropdownProps, InternalCalendarRef } from "./types";
+import type { CalendarDropdownProps, InternalCalendarRef } from "./types";
 
 const Component = (
     props: CalendarDropdownProps,

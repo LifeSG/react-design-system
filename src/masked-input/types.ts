@@ -1,4 +1,4 @@
-import { InputProps } from "../input/types";
+import type { InputProps } from "../input/types";
 
 export type MaskedInputLoadState = "loading" | "fail" | "success";
 

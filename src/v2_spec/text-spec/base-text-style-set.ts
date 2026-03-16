@@ -1,5 +1,5 @@
+import type { V2_TextStyleSetType } from "../../v2_text/types";
 import { FontFamily } from "./font-spec";
-import { V2_TextStyleSetType } from "../../v2_text/types";
 
 // In rem unit
 export const BaseTextStyleSet: V2_TextStyleSetType = {

@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { DateNavigator } from "../../date-navigator";
-import { V3_Colour, V3_Spacing } from "../../v3_theme";
-import { Typography } from "../../typography";
+
 import { Button } from "../../button";
-import { V3_MediaQuery } from "../../v3_theme";
+import { DateNavigator } from "../../date-navigator";
+import { Typography } from "../../typography";
+import { V3_Colour, V3_MediaQuery, V3_Spacing } from "../../v3_theme";
 
 // =============================================================================
 // STYLING

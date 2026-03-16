@@ -6,7 +6,7 @@ import {
     waitForElementToBeRemoved,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { PopoverInline } from "../../src/popover-v2";
+import { PopoverInline } from "src/popover-v2";
 
 const TEXT_CONTENT = "Text";
 const TOOLTIP_CONTENT = "Tooltip";

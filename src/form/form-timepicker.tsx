@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Timepicker } from "../timepicker";
 import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormTimepickerProps } from "./types";
+import type { FormTimepickerProps } from "./types";
 
 export const FormTimepicker = ({
     label,

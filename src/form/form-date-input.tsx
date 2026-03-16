@@ -1,8 +1,9 @@
 import { useState } from "react";
+
 import { DateInput } from "../date-input";
-import { FormWrapper } from "./form-wrapper";
-import { FormDateInputProps } from "./types";
 import { SimpleIdGenerator } from "../util";
+import { FormWrapper } from "./form-wrapper";
+import type { FormDateInputProps } from "./types";
 
 export const FormDateInput = ({
     label,

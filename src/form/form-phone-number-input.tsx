@@ -1,8 +1,9 @@
 import { useState } from "react";
+
 import { PhoneNumberInput } from "../phone-number-input/phone-number-input";
 import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormPhoneNumberInputProps } from "./types";
+import type { FormPhoneNumberInputProps } from "./types";
 
 export const FormPhoneNumberInput = ({
     label,

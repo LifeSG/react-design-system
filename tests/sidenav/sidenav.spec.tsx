@@ -2,6 +2,7 @@ import { Person2Icon, Square2x2Icon } from "@lifesg/react-icons";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Sidenav } from "src/sidenav";
+
 import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
 
 const SIDENAV_DRAWER_TEST_ID = "sidenav-drawer";

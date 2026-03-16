@@ -1,6 +1,8 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
-import React, { forwardRef } from "react";
-import { DropdownVariantType } from "../dropdown-list/types";
+import type React from "react";
+import { forwardRef } from "react";
+
+import type { DropdownVariantType } from "../dropdown-list/types";
 import {
     ClearButton,
     Container,

@@ -1,6 +1,7 @@
 import styled from "styled-components";
+
 import { V3_Colour } from "../../v3_theme";
-import { PopoverInlineStyle } from "../types";
+import type { PopoverInlineStyle } from "../types";
 
 // =============================================================================
 // STYLE INTERFACE

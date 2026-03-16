@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
+
 import { V3_Colour, V3_Font, V3_MediaQuery } from "../v3_theme";
-import { V3_TypographySizeType } from "../v3_theme/font/types";
-import { BulletType, CounterType } from "./types";
+import type { V3_TypographySizeType } from "../v3_theme/font/types";
+import type { BulletType, CounterType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE

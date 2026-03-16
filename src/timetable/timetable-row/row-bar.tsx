@@ -1,9 +1,14 @@
 import dayjs from "dayjs";
-import { RefObject, useMemo } from "react";
+import type { RefObject } from "react";
+import { useMemo } from "react";
+
 import { TimeHelper } from "../../util/time-helper";
 import { ROW_INTERVAL } from "../const";
-import { InternalTimeTableRowCellData, RowBarColors } from "../internal-types";
-import { TimeTableRowData } from "../types";
+import type {
+    InternalTimeTableRowCellData,
+    RowBarColors,
+} from "../internal-types";
+import type { TimeTableRowData } from "../types";
 import { RowCellContainer } from "./row-bar.style";
 import { RowCell } from "./row-cell";
 

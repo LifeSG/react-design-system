@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Badge } from "src/badge";
 import { Tab } from "src/tab";
+
 import { ContentA, ContentB, ContentC, ContentD } from "./doc-elements";
 
 type Component = typeof Tab;

@@ -1,9 +1,10 @@
 import styled, { css } from "styled-components";
+
 import { V2_Color } from "../v2_color";
 import { V2_MediaQuery } from "../v2_media";
 import { V2_TextStyleHelper } from "../v2_text/helper";
-import { V2_TextSizeType } from "../v2_text/types";
-import { V2_OrderedListProps, V2_UnorderedListProps } from "./types";
+import type { V2_TextSizeType } from "../v2_text/types";
+import type { V2_OrderedListProps, V2_UnorderedListProps } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE

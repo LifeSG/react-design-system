@@ -1,4 +1,4 @@
-import { FadeColorSet } from "../shared/fade-wrapper";
+import type { FadeColorSet } from "../shared/fade-wrapper";
 
 export interface TabProps {
     children: JSX.Element | JSX.Element[];

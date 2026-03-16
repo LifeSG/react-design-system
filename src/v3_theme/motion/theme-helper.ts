@@ -1,8 +1,9 @@
-import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
-import { V3_ThemeCollectionSpec } from "../internal-types";
-import { V3_MotionScheme } from "../types";
+import type { V3_StyledComponentProps } from "../helpers";
+import { getCollection, getValue } from "../helpers";
+import type { V3_ThemeCollectionSpec } from "../internal-types";
+import type { V3_MotionScheme } from "../types";
 import { V3_DefaultMotionSet } from "./specs/default-motion-set";
-import { V3_MotionCollectionsMap, V3_MotionSet } from "./types";
+import type { V3_MotionCollectionsMap, V3_MotionSet } from "./types";
 
 const V3_MotionSpec: V3_ThemeCollectionSpec<
     V3_MotionCollectionsMap,

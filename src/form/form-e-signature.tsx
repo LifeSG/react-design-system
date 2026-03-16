@@ -1,6 +1,6 @@
 import { ESignature } from "../e-signature";
 import { FormWrapper } from "./form-wrapper";
-import { FormESignatureProps } from "./types";
+import type { FormESignatureProps } from "./types";
 
 export const FormESignature = (props: FormESignatureProps) => {
     const {

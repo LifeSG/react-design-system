@@ -1,4 +1,4 @@
-import { V3_FontScheme } from "../types";
+import type { V3_FontScheme } from "../types";
 
 export type V3_FontSpecCollectionMap = {
     [key in V3_FontScheme]: V3_FontSpecSet;

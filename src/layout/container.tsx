@@ -1,6 +1,7 @@
 import React from "react";
-import { ContainerProps } from "./types";
+
 import { StyledContainer } from "./container.styles";
+import type { ContainerProps } from "./types";
 
 const Component = (
     props: ContainerProps,

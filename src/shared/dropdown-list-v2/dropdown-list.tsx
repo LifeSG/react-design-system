@@ -1,6 +1,7 @@
 import find from "lodash/find";
 import isEqual from "lodash/isEqual";
-import React, {
+import type React from "react";
+import {
     forwardRef,
     useCallback,
     useContext,
@@ -9,7 +10,9 @@ import React, {
     useRef,
     useState,
 } from "react";
-import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
+import type { VirtuosoHandle } from "react-virtuoso";
+import { Virtuoso } from "react-virtuoso";
+
 import {
     mergeRefs,
     useCompare,
@@ -19,7 +22,6 @@ import {
 } from "../../util";
 import { useDropdownRender } from "../dropdown-wrapper";
 import { DropdownLabel } from "./dropdown-label";
-import { DropdownListStateContext } from "./dropdown-list-state";
 import {
     CheckboxDisabledIndicator,
     CheckboxSelectedIndicator,
@@ -27,8 +29,8 @@ import {
     Container,
     LabelIcon,
     List,
-    ListItem,
     Listbox,
+    ListItem,
     NoResultDescContainer,
     ResultStateContainer,
     SelectAllButton,
@@ -38,8 +40,9 @@ import {
     TryAgainButton,
     UnselectedIndicator,
 } from "./dropdown-list.styles";
+import { DropdownListStateContext } from "./dropdown-list-state";
 import { DropdownSearch } from "./dropdown-search";
-import {
+import type {
     DropdownListApi,
     DropdownListProps,
     ListItemDisplayProps,

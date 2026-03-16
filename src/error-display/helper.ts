@@ -1,5 +1,5 @@
 import { V3_Breakpoint } from "../v3_theme";
-import { V3_ThemeSpec } from "../v3_theme/types";
+import type { V3_ThemeSpec } from "../v3_theme/types";
 
 export interface ErrorDisplayImagePathAttributes {
     /** base sized image path */

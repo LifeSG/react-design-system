@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 /** @deprecated consider switching to `Layout.ColDiv` to manage grids */
 export interface ColumnCountAttribute {

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useEffect, useState } from "react";
-import { FileItemProps, FileUpload } from "src/file-upload";
+import type { FileItemProps } from "src/file-upload";
+import { FileUpload } from "src/file-upload";
 import { SimpleIdGenerator } from "src/util/simple-id-generator";
 
 type Component = typeof FileUpload;
@@ -109,7 +110,7 @@ export const WithLoadingIndicator: StoryObj<Component> = {
                     name: file.name,
                     size: file.size,
                     type: file.type,
-                    progress: 0, 
+                    progress: 0,
                 };
             });
             setFileItems((prevItems) => {

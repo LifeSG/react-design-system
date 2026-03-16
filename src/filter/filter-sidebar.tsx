@@ -1,4 +1,6 @@
 import { useRef } from "react";
+
+import { FilterBody } from "./filter.styles";
 import { FilterContext } from "./filter-context";
 import {
     DesktopContainer,
@@ -6,8 +8,7 @@ import {
     FilterHeader,
     FilterTitle,
 } from "./filter-sidebar.styles";
-import { FilterSidebarProps } from "./types";
-import { FilterBody } from "./filter.styles";
+import type { FilterSidebarProps } from "./types";
 
 export const FilterSidebar = ({
     customLabels,

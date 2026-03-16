@@ -1,9 +1,8 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import {
-    DropdownRenderProps,
-    ElementWithDropdown,
-} from "../shared/dropdown-wrapper";
+
+import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { CalendarDropdown } from "../shared/internal-calendar";
 import {
     ArrowLeft,
@@ -15,7 +14,7 @@ import {
     HeaderArrowButton,
     StyledDateTextButton,
 } from "./date-navigator.style";
-import { DateNavigatorProps } from "./types";
+import type { DateNavigatorProps } from "./types";
 
 export const DateNavigator = ({
     selectedDate,

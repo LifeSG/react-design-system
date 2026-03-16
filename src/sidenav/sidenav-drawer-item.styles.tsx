@@ -1,6 +1,7 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
+
 import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
 import { V3_Colour, V3_Font, V3_Motion, V3_Radius } from "../v3_theme";

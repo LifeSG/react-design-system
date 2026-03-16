@@ -1,7 +1,8 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ToggleIconType } from "../shared/toggle-icon/toggle-icon";
+
+import type { ToggleIconType } from "../shared/toggle-icon/toggle-icon";
 import { SimpleIdGenerator } from "../util";
 import {
     AlertContainer,
@@ -21,7 +22,7 @@ import {
     SubLabel,
     TextContainer,
 } from "./toggle.styles";
-import { ToggleProps } from "./types";
+import type { ToggleProps } from "./types";
 
 export const Toggle = ({
     type = "checkbox",

@@ -1,4 +1,4 @@
-import { TimeHelper } from "../../src/util/time-helper";
+import { TimeHelper } from "src/util/time-helper";
 
 describe("parseInput tests", () => {
     it("should parse regex matching strings", async () => {

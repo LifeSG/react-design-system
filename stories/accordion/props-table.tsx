@@ -1,10 +1,8 @@
-import {
-    ApiTable,
+import type {
     ApiTableSectionProps,
     TabAttribute,
-    Tabs,
-    code,
 } from "stories/storybook-common";
+import { ApiTable, code, Tabs } from "stories/storybook-common";
 
 const ACCORDION_DATA: ApiTableSectionProps[] = [
     {

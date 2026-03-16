@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+
+import type { DropdownRenderProps } from "../../shared/dropdown-wrapper";
+import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
-import { SelectorInput, TimeContainer, Wrapper } from "../common.styles";
-import { TimeHelper } from "../../util/time-helper";
-import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
 import { TimepickerDropdown } from "../../shared/timepicker-dropdown/timepicker-dropdown";
-import {
-    DropdownRenderProps,
-    ElementWithDropdown,
-} from "../../shared/dropdown-wrapper";
+import { TimeHelper } from "../../util/time-helper";
+import { SelectorInput, TimeContainer, Wrapper } from "../common.styles";
+import type { TimeRangePickerProps, TimeRangePickerValue } from "../types";
 
 type Active = "start" | "end" | "none";
 

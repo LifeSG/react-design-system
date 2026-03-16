@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
 import { FullscreenImageCarousel } from "src/fullscreen-image-carousel";
+
 import { getImages } from "./doc-elements";
 
 type Component = typeof FullscreenImageCarousel;

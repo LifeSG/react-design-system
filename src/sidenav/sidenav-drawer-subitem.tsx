@@ -1,7 +1,8 @@
-import { SidenavDrawerSubitemProps } from "./types";
-import { Container, LinkButton } from "./sidenav-drawer-subitem.styles";
-import { SidenavContext } from "./sidenav-context";
 import { useContext } from "react";
+
+import { SidenavContext } from "./sidenav-context";
+import { Container, LinkButton } from "./sidenav-drawer-subitem.styles";
+import type { SidenavDrawerSubitemProps } from "./types";
 
 export const SidenavDrawerSubitem = ({
     id,

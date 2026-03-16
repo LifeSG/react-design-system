@@ -1,6 +1,7 @@
 import { TickCircleFillIcon } from "@lifesg/react-icons";
+
 import { FormErrorMessage } from "../form/form-label";
-import { PhoneNumberInputValue } from "../phone-number-input";
+import type { PhoneNumberInputValue } from "../phone-number-input";
 import {
     ContactButton,
     ContactInputSectionWrapper,
@@ -10,7 +11,7 @@ import {
     PhoneContactInput,
     VerifiedIconWrapper,
 } from "./contact-input-section-styles";
-import { ContactInputSectionProps } from "./internal-types";
+import type { ContactInputSectionProps } from "./internal-types";
 
 export const ContactInputSection = ({
     id,

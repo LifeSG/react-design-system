@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
+
 import { DocTable } from "../doc-table";
-import { DefaultColProps, DescriptionColProps } from "./types";
+import type { DefaultColProps, DescriptionColProps } from "./types";
 
 // =============================================================================
 // TABLE

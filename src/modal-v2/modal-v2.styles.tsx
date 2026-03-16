@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
+
 import { V3_MediaQuery, V3_Motion } from "../v3_theme";
-import { ModalAnimationDirection } from "./types";
+import type { ModalAnimationDirection } from "./types";
 
 interface Props {
     $show: boolean;

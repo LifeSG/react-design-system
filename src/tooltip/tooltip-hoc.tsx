@@ -1,7 +1,8 @@
-import React from "react";
+import type React from "react";
+
 import { Tooltip } from "./tooltip";
 import { HOCWrapper } from "./tooltip.styles";
-import { TooltipHOCOptionsProps, TooltipHOCProps } from "./types";
+import type { TooltipHOCOptionsProps, TooltipHOCProps } from "./types";
 
 export const withTooltip =
     <T extends object>(

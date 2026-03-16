@@ -1,8 +1,9 @@
 import styled from "styled-components";
+
 import { Button } from "../button";
 import { Input } from "../input";
-import { V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
+import { V3_Spacing } from "../v3_theme";
 
 export const Wrapper = styled.div`
     display: flex;

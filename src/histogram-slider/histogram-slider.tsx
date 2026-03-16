@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+
 import { Typography } from "../typography";
 import {
     Bar,
@@ -7,7 +8,7 @@ import {
     Separator,
     Slider,
 } from "./histogram-slider.styles";
-import { HistogramSliderProps } from "./types";
+import type { HistogramSliderProps } from "./types";
 
 export const HistogramSlider = ({
     bins = [],

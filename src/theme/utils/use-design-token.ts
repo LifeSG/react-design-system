@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+
 import { useTheme } from "../theme-provider/hooks";
-import { CSSVariableString } from "../types";
+import type { CSSVariableString } from "../types";
 import { parseCSSVariableValue } from "./css-variable";
 
 export const useDesignToken = (

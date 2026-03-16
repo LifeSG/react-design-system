@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Button } from "src/button";
 import { Checkbox } from "src/checkbox";
 import { ModalV2 } from "src/modal-v2";
-import { V3_Colour, V3_Font } from "src/v3_theme";
 import { Typography } from "src/typography";
+import { V3_Colour, V3_Font } from "src/v3_theme";
 import styled from "styled-components";
 
 const Options = styled.div`

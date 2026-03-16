@@ -1,4 +1,4 @@
-import { V3_ThemeStyleProps } from "../v3_theme/types";
+import type { V3_ThemeStyleProps } from "../v3_theme/types";
 
 export type SlotStyle = "default" | "stripes";
 

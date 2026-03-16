@@ -1,6 +1,7 @@
 import { DocIcon } from "@lifesg/react-icons/doc";
 import { Unstyled } from "@storybook/addon-docs/blocks";
 import { Fragment } from "react";
+
 import { StorybookLink } from "../storybook-link";
 import {
     DefaultCol,
@@ -10,7 +11,7 @@ import {
     Table,
     Usage,
 } from "./token-table-components";
-import { TokenTableAttributeRowProps, TokenTableProps } from "./types";
+import type { TokenTableAttributeRowProps, TokenTableProps } from "./types";
 
 export const TokenTable = (props: TokenTableProps): JSX.Element => {
     const renderSection = (

@@ -1,6 +1,7 @@
 import React from "react";
-import { PillProps } from "./types";
+
 import { Label, Wrapper } from "./pill.style";
+import type { PillProps } from "./types";
 
 export const Pill = ({
     type,

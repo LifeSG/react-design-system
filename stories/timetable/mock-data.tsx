@@ -1,6 +1,7 @@
 import { Person2Icon } from "@lifesg/react-icons";
-import { TimeTableCellType, TimeTableRowData } from "src/timetable";
+import type { TimeTableCellType, TimeTableRowData } from "src/timetable";
 import styled from "styled-components";
+
 import { timetableDefaultData } from "./timetable-default-data";
 import lazyLoadData from "./timetable-lazy-load-data.json";
 

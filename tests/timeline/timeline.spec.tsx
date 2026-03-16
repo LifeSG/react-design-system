@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Timeline } from "../../src/timeline";
+import { Timeline } from "src/timeline";
 
 // =============================================================================
 // UNIT TESTS

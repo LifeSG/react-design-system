@@ -3,20 +3,21 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Card } from "src/card";
-import { V3_Colour } from "src/v3_theme";
-import {
-    TimeTable,
+import type {
     TimeTablePopoverProps,
     TimeTableRowCellData,
     TimeTableRowData,
 } from "src/timetable";
+import { TimeTable } from "src/timetable";
 import { Typography } from "src/typography";
+import { V3_Colour } from "src/v3_theme";
 import styled from "styled-components";
+
 import {
-    StyledHoverContent,
     buildTimeTableData,
     fetchTimeTableData,
     lazyLoadTimeTableData,
+    StyledHoverContent,
 } from "./mock-data";
 import { timetableDefaultData } from "./timetable-default-data";
 

@@ -1,8 +1,9 @@
 import styled, { css } from "styled-components";
+
 import { Pill } from "../pill";
-import { V3_Colour, V3_Font, V3_MediaQuery, V3_Radius } from "../v3_theme";
 import { Typography } from "../typography";
-import { Variant } from "./types";
+import { V3_Colour, V3_Font, V3_MediaQuery, V3_Radius } from "../v3_theme";
+import type { Variant } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $

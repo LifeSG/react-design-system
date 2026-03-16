@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { Navbar } from "src/navbar";
 import userEvent from "@testing-library/user-event";
+import { Navbar } from "src/navbar";
 
 describe("Navbar", () => {
     describe("Basic functions", () => {

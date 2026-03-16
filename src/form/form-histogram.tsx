@@ -1,6 +1,6 @@
 import { HistogramSlider } from "../histogram-slider";
 import { FormWrapper } from "./form-wrapper";
-import { FormHistogramSliderProps } from "./types";
+import type { FormHistogramSliderProps } from "./types";
 
 export const FormHistogramSlider = ({
     label,

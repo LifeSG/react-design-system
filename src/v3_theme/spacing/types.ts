@@ -1,4 +1,4 @@
-import { V3_SpacingScheme } from "../types";
+import type { V3_SpacingScheme } from "../types";
 
 export type V3_SpacingSet = {
     "spacing-0": number;

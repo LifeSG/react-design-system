@@ -1,6 +1,6 @@
+import type { PropertiesToType } from "../util/utility-types";
 import { getThemeTextStyles } from "../v2_theme/text-theme-helper";
-import { PropertiesToType } from "../util/utility-types";
-import { V2_TextStyleSetType } from "./types";
+import type { V2_TextStyleSetType } from "./types";
 
 /** @deprecated */
 export const V2_TextStyle: PropertiesToType<

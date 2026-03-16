@@ -1,8 +1,9 @@
 import { useState } from "react";
+
 import { InputNestedSelect } from "../input-nested-select";
-import { FormWrapper } from "./form-wrapper";
-import { FormNestedSelectProps } from "./types";
 import { SimpleIdGenerator } from "../util";
+import { FormWrapper } from "./form-wrapper";
+import type { FormNestedSelectProps } from "./types";
 
 export const FormNestedSelect = <V1, V2, V3>({
     label,

@@ -1,7 +1,9 @@
 import React from "react";
+
 import { getSpLogo } from "./singpass-assets";
-import { Main, MainStyleProps, SvgContainer } from "./singpass-button.style";
-import { SingpassButtonProps, SingpassButtonRef } from "./types";
+import type { MainStyleProps } from "./singpass-button.style";
+import { Main, SvgContainer } from "./singpass-button.style";
+import type { SingpassButtonProps, SingpassButtonRef } from "./types";
 
 /**
  * NOTE: Due to the way we intend to customise both components, with forwardRef behaviour

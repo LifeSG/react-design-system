@@ -1,5 +1,5 @@
 import { V2_StyledUnorderedList } from "./text-list.styles";
-import { V2_UnorderedListProps } from "./types";
+import type { V2_UnorderedListProps } from "./types";
 
 /** @deprecated */
 export const V2_UnorderedList = ({

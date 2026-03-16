@@ -1,8 +1,9 @@
 import { useEffect } from "react";
+
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
 import { Container } from "./modal.styles";
-import { ModalProps } from "./types";
+import type { ModalProps } from "./types";
 
 export const Modal = ({
     id = "modal",

@@ -1,6 +1,6 @@
 import { TimeRangePicker } from "../time-range-picker";
 import { FormWrapper } from "./form-wrapper";
-import { FormTimeRangePickerProps } from "./types";
+import type { FormTimeRangePickerProps } from "./types";
 
 export const FormTimeRangePicker = ({
     label,

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { ThemeContext } from "styled-components";
-import { V3_ColourMode, V3_DSTheme, V3_ThemeSpec } from "./types";
+
+import type { V3_ColourMode, V3_DSTheme, V3_ThemeSpec } from "./types";
 
 // Hook to access the current theme mode and theme object
 export const useDSTheme = (): V3_DSTheme => {

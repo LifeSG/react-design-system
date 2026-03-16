@@ -1,7 +1,8 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
-import React from "react";
+import type React from "react";
+
 import { Box, CloseButton } from "./modal-box.styles";
-import { ModalBoxProps } from "./types";
+import type { ModalBoxProps } from "./types";
 
 export const ModalBox = ({
     id = "modal-box",

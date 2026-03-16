@@ -1,4 +1,4 @@
-import { V3_BorderScheme } from "../types";
+import type { V3_BorderScheme } from "../types";
 
 export interface V3_BorderSet {
     "width-005": number;

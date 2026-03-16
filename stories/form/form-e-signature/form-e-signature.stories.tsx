@@ -6,6 +6,7 @@ import {
     FullWidthStoryDecorator,
     StoryDecorator,
 } from "stories/storybook-common";
+
 import { signatureDataURL } from "./doc-elements";
 
 type Component = typeof Form.ESignature;

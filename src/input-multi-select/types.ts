@@ -1,15 +1,16 @@
-import { RefObject } from "react";
-import {
+import type { RefObject } from "react";
+
+import type {
     InputSelectOptionsProps,
     InputSelectSharedProps,
 } from "../input-select/types";
-import {
+import type {
     DropdownCustomLabelProps,
     DropdownDisplayProps,
     DropdownSearchProps,
     DropdownVariantType,
 } from "../shared/dropdown-list-v2/types";
-import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
+import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export interface InputMultiSelectProps<T, V>
     extends React.HTMLAttributes<HTMLElement>,

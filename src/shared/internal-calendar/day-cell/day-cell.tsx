@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
+
 import {
     Cell,
     Indicator,
@@ -10,7 +11,7 @@ import {
     RightCircle,
     RightHalf,
 } from "./day-cell.style";
-import { DayCellProps } from "./types";
+import type { DayCellProps } from "./types";
 
 export const DayCell = ({
     bgLeft,

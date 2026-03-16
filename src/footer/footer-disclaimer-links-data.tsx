@@ -1,5 +1,5 @@
-import { V3_ResourceScheme } from "../v3_theme/types";
-import { InternalDisclaimerLinks } from "./footer-helper";
+import type { V3_ResourceScheme } from "../v3_theme/types";
+import type { InternalDisclaimerLinks } from "./footer-helper";
 
 const BaseDisclaimerLinks: InternalDisclaimerLinks = {
     privacy: {

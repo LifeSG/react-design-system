@@ -1,8 +1,9 @@
-import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
-import { V3_ThemeCollectionSpec } from "../internal-types";
-import { V3_BorderScheme } from "../types";
+import type { V3_StyledComponentProps } from "../helpers";
+import { getCollection, getValue } from "../helpers";
+import type { V3_ThemeCollectionSpec } from "../internal-types";
+import type { V3_BorderScheme } from "../types";
 import { V3_DefaultBorderSet } from "./specs/default-border-set";
-import { V3_BorderCollectionMap, V3_BorderSet } from "./types";
+import type { V3_BorderCollectionMap, V3_BorderSet } from "./types";
 
 const V3_BorderSpec: V3_ThemeCollectionSpec<
     V3_BorderCollectionMap,

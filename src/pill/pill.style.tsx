@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
+
 import { V3_Border, V3_Colour, V3_Font, V3_Radius } from "../v3_theme";
-import { V3_ThemeStyleProps } from "../v3_theme/types";
-import { PillColorType, PillType } from "./types";
+import type { V3_ThemeStyleProps } from "../v3_theme/types";
+import type { PillColorType, PillType } from "./types";
 
 // =============================================================================
 // STYLING

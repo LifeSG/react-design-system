@@ -1,4 +1,4 @@
-import { V3_StyledComponentProps } from "../helpers";
+import type { V3_StyledComponentProps } from "../helpers";
 
 export type V3_ComponentTokenSet = {
     Button: V3_ButtonTokens;

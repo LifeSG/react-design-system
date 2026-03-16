@@ -1,4 +1,4 @@
-import { Pill } from "../../src/pill";
+import { Pill } from "src/pill";
 
 export const generateRows = (size: number) => {
     return new Array(size).fill(0).map((_, i) => {

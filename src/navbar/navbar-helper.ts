@@ -1,4 +1,8 @@
-import { NavItemCommonProps, NavItemLinkProps, NavItemProps } from "./types";
+import type {
+    NavItemCommonProps,
+    NavItemLinkProps,
+    NavItemProps,
+} from "./types";
 
 export class NavbarHelper {
     public static isNavItemCommon<T>(

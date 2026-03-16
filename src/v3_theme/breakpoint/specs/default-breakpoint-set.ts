@@ -1,4 +1,4 @@
-import { V3_BreakpointSet } from "../types";
+import type { V3_BreakpointSet } from "../types";
 
 export const V3_DefaultBreakpointSet: V3_BreakpointSet = {
     "xxs-min": 0,

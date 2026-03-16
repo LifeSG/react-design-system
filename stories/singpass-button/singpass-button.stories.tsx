@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { SingpassButton } from "src/singpass-button";
+
 import { Container } from "./doc-elements";
 import { TokensTable } from "./tokens-table";
 

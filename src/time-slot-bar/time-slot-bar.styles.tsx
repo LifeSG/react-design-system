@@ -1,11 +1,12 @@
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
+
 import { ClickableIcon } from "../shared/clickable-icon";
-import { V3_Border, V3_Colour, V3_Shadow } from "../v3_theme";
-import { V3_ThemeStyleProps } from "../v3_theme/types";
 import { Typography } from "../typography";
-import { Direction, SlotStyle, TimeSlotBarVariant } from "./types";
+import { V3_Border, V3_Colour, V3_Shadow } from "../v3_theme";
+import type { V3_ThemeStyleProps } from "../v3_theme/types";
+import type { Direction, SlotStyle, TimeSlotBarVariant } from "./types";
 
 const MAX_LINE_HEIGHT = 1.25; // NOTE in rem
 

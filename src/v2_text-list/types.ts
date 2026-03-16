@@ -1,4 +1,4 @@
-import { V2_TextSizeType } from "../v2_text/types";
+import type { V2_TextSizeType } from "../v2_text/types";
 
 interface BaseListProps {
     children: JSX.Element | JSX.Element[];

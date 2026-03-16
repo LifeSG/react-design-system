@@ -2,6 +2,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
+
 import {
     V3_Border,
     V3_Colour,
@@ -11,7 +12,7 @@ import {
     V3_Radius,
     V3_Spacing,
 } from "../v3_theme";
-import { BoxContainerDisplayState } from "./types";
+import type { BoxContainerDisplayState } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

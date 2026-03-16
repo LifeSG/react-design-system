@@ -1,5 +1,5 @@
-import { CommonCalendarProps } from "../shared/internal-calendar/types";
-import { TimeSlot } from "../time-slot-bar/types";
+import type { CommonCalendarProps } from "../shared/internal-calendar/types";
+import type { TimeSlot } from "../time-slot-bar/types";
 
 export interface TimeSlotWeekViewProps extends CommonCalendarProps {
     // Basic component props

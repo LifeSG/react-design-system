@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { V3_Colour, V3_Spacing } from "../v3_theme";
+
 import { Typography } from "../typography";
+import { V3_Colour, V3_Spacing } from "../v3_theme";
 
 // =============================================================================
 // MENU ITEM STYLES

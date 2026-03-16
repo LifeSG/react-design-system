@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { Avatar } from "src";
 import { Menu } from "src/menu";
-import { GridDecorator } from "../storybook-common";
-import { Avatar } from "../../src";
+import { GridDecorator } from "stories/storybook-common";
 
 type Component = typeof Menu;
 

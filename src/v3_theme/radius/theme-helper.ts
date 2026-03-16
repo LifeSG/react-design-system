@@ -1,9 +1,10 @@
-import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
-import { V3_ThemeCollectionSpec } from "../internal-types";
-import { V3_RadiusScheme } from "../types";
+import type { V3_StyledComponentProps } from "../helpers";
+import { getCollection, getValue } from "../helpers";
+import type { V3_ThemeCollectionSpec } from "../internal-types";
+import type { V3_RadiusScheme } from "../types";
 import { V3_DefaultRadiusSet } from "./specs/default-radius-set";
 import { V3_SPFRadiusSet } from "./specs/spf-radius-set";
-import { V3_RadiusCollectionsMap, V3_RadiusSet } from "./types";
+import type { V3_RadiusCollectionsMap, V3_RadiusSet } from "./types";
 
 const V3_RadiusSpec: V3_ThemeCollectionSpec<
     V3_RadiusCollectionsMap,

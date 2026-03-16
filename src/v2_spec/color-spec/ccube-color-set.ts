@@ -1,4 +1,4 @@
-import { V2_ColorSet, V2_ValidationTypes } from "../../v2_color";
+import type { V2_ColorSet, V2_ValidationTypes } from "../../v2_color";
 
 export const CCubeColorSet: V2_ColorSet = {
     Brand: {

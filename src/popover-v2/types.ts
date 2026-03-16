@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import type { RefObject } from "react";
 
 export interface PopoverV2Props extends PopoverRenderProps {
     children: string | JSX.Element;

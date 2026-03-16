@@ -1,5 +1,5 @@
-import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import {
     forwardRef,
     useEffect,
@@ -8,6 +8,7 @@ import {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
+
 import { TimeHelper } from "../util/time-helper";
 import { TimeSlotBarHelper } from "./helper";
 import {
@@ -16,6 +17,7 @@ import {
     ArrowIconRight,
     CellText,
     Container,
+    getCellWidth,
     TimeLabel,
     TimeMarker,
     TimeMarkerWrapper,
@@ -23,9 +25,8 @@ import {
     TimeSlotBarContainer,
     TimeSlotBorder,
     TimeSlotWrapper,
-    getCellWidth,
 } from "./time-slot-bar.styles";
-import {
+import type {
     Direction,
     TimeSlotBarProps,
     TimeSlotBarRef,

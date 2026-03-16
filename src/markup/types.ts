@@ -1,5 +1,5 @@
-import { V3_TypographySizeType } from "../v3_theme/font/types";
-import { V3_ThemeStyleProps } from "../v3_theme/types";
+import type { V3_TypographySizeType } from "../v3_theme/font/types";
+import type { V3_ThemeStyleProps } from "../v3_theme/types";
 
 export interface MarkupProps extends React.HTMLAttributes<HTMLDivElement> {
     /** The default font size. If not specified, inherited from the parent */

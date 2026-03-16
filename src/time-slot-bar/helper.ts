@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { DateHelper } from "src/util";
+
+import { DateHelper } from "../util";
 // Load plugins
 dayjs.extend(customParseFormat);
 

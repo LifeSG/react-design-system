@@ -1,7 +1,8 @@
 import { useState } from "react";
+
 import { SimpleIdGenerator } from "../util";
 import { Label, Section } from "./menu-section.styles";
-import { MenuSectionProps } from "./types";
+import type { MenuSectionProps } from "./types";
 
 export const MenuSection = ({
     children,

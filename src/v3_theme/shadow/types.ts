@@ -1,6 +1,7 @@
-import { CSSProp } from "styled-components";
-import { V3_ShadowScheme } from "../types";
-import { V3_StyledComponentProps } from "../helpers";
+import type { CSSProp } from "styled-components";
+
+import type { V3_StyledComponentProps } from "../helpers";
+import type { V3_ShadowScheme } from "../types";
 
 type V3_ShadowValue = string | ((props: V3_StyledComponentProps) => CSSProp);
 

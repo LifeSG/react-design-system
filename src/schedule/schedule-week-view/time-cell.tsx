@@ -1,17 +1,19 @@
-import React, { RefObject } from "react";
-import { ScheduleEntityProps } from "../types";
-import { SlotLayoutMap, SlotWithService } from "./types";
+import type { RefObject } from "react";
+import type React from "react";
+
+import { TimeHelper } from "../../util/time-helper";
 import { calculateSlotOffset, minutesToTime } from "../shared";
 import { WithOptionalPopover } from "../shared/with-optional-popover";
-import { HiddenColumns, SlotCell, SlotColumnOverlay } from "./time-cell.styles";
+import type { ScheduleEntityProps } from "../types";
 import { SlotContent } from "./slot-content";
+import { HiddenColumns, SlotCell, SlotColumnOverlay } from "./time-cell.styles";
+import type { SlotLayoutMap, SlotWithService } from "./types";
 import {
     calculateCellServiceLayout,
     getMinimumWidthForCell,
     getSlotsInTimeCell,
     getSlotsStartingInTimeCell,
 } from "./week-view-utils";
-import { TimeHelper } from "../../util/time-helper";
 
 interface TimeCellProps {
     dayDate: string;

@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useMemo, useState } from "react";
-import { DataTable, SortIndicatorsProps } from "src/data-table";
+import type { SortIndicatorsProps } from "src/data-table";
+import { DataTable } from "src/data-table";
 import { Pill } from "src/pill";
+
 import { DataTableWithCustomHeight } from "./doc-elements";
 import { DATA_HEADERS, DATA_ROWS, generateRows } from "./row-data";
 

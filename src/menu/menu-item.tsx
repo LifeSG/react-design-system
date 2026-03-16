@@ -1,6 +1,6 @@
 import { Typography } from "../typography";
 import { MenuItemDiv, SubLabel } from "./menu-item.styles";
-import { MenuItemProps } from "./types";
+import type { MenuItemProps } from "./types";
 
 export const MenuItem = ({
     label,

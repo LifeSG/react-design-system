@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Card } from "../../src";
+import { Card } from "src";
 
 // =============================================================================
 // UNIT TESTS

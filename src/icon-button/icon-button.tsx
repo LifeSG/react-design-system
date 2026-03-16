@@ -1,7 +1,8 @@
 import React from "react";
-import { ButtonRef } from "../button/types";
+
+import type { ButtonRef } from "../button/types";
 import { Main } from "./icon-button.style";
-import { IconButtonProps } from "./types";
+import type { IconButtonProps } from "./types";
 
 const Component = (
     {

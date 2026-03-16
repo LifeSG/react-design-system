@@ -1,4 +1,4 @@
-import { V3_PrimitiveColourSet, V3_SemanticColourSet } from "src/v3_theme";
+import type { V3_PrimitiveColourSet, V3_SemanticColourSet } from "src/v3_theme";
 import {
     V3_ColourSpec as PrimitiveColourSpec,
     V3_DarkColourSpec as PrimitiveDarkColourSpec,
@@ -7,7 +7,7 @@ import {
     V3_ColourSpec as SemanticColourSpec,
     V3_DarkColourSpec as SemanticDarkColourSpec,
 } from "src/v3_theme/colour-semantic/theme-helper";
-import { DefaultTheme } from "styled-components";
+import type { DefaultTheme } from "styled-components";
 
 /**
  * Inspect the name of the colour token that was accessed

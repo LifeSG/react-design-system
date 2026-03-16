@@ -1,5 +1,6 @@
 import { useSpring } from "@react-spring/web";
-import React, {
+import type React from "react";
+import {
     forwardRef,
     useContext,
     useEffect,
@@ -8,6 +9,7 @@ import React, {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
+
 import { inertValue } from "../shared/accessibility";
 import { SimpleIdGenerator } from "../util";
 import { AccordionContext } from "./accordion-context";
@@ -15,12 +17,12 @@ import {
     ChevronIcon,
     Container,
     ContentContainer,
-    ExpandCollapseButton,
     Expandable,
+    ExpandCollapseButton,
     IconContainer,
     Title,
 } from "./accordion-item.style";
-import {
+import type {
     AccordionItemApi,
     AccordionItemHandle,
     AccordionItemProps,

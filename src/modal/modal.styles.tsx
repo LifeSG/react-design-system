@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { ModalAnimationDirection } from "../modal-v2/types";
+
+import type { ModalAnimationDirection } from "../modal-v2/types";
 import { V3_MediaQuery } from "../v3_theme";
 
 interface Props {

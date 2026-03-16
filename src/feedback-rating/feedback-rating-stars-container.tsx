@@ -1,12 +1,14 @@
-import { ChangeEvent, useRef, useState } from "react";
+import type { ChangeEvent } from "react";
+import { useRef, useState } from "react";
+
 import { VisuallyHidden } from "../shared/accessibility";
-import { StarContainerData } from "./feedback-rating-stars-container-data";
 import {
     Container,
     Label,
     StarFilled,
     StarUnfilled,
 } from "./feedback-rating-stars-container.styles";
+import { StarContainerData } from "./feedback-rating-stars-container-data";
 
 interface FeedbackRatingStarsContainerProps {
     ariaLabelledBy: string;

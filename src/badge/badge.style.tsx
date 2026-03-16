@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
+
 import { V3_Border, V3_Colour, V3_Font, V3_Radius } from "../v3_theme";
-import { BadgeProps } from "./types";
+import type { BadgeProps } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

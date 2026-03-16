@@ -1,5 +1,6 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css, keyframes } from "styled-components";
+
 import {
     V3_Border,
     V3_Colour,
@@ -8,7 +9,7 @@ import {
     V3_Radius,
     V3_Spacing,
 } from "../../v3_theme";
-import { DropdownVariantType, TruncateType } from "../dropdown-list/types";
+import type { DropdownVariantType, TruncateType } from "../dropdown-list/types";
 import { lineClampCss } from "../styles";
 
 // =============================================================================

@@ -1,4 +1,8 @@
 import styled, { css } from "styled-components";
+
+import { IconButton } from "../../icon-button";
+import { lineClampCss } from "../../shared/styles";
+import { Typography } from "../../typography";
 import {
     V3_Border,
     V3_Colour,
@@ -6,15 +10,12 @@ import {
     V3_Radius,
     V3_Spacing,
 } from "../../v3_theme";
-import { Typography } from "../../typography";
 import {
     CELL_HEIGHT,
     HEADER_HEIGHT,
     MIN_COLUMN_WIDTH,
     TIME_INDICATOR_WIDTH,
 } from "../const";
-import { IconButton } from "../../icon-button";
-import { lineClampCss } from "../../shared/styles";
 
 // =============================================================================
 // STYLE INTERFACES

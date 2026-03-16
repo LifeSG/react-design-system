@@ -1,6 +1,7 @@
 import findIndex from "lodash/findIndex";
-import React from "react";
-import { ButtonProps } from "../button/types";
+import type React from "react";
+
+import type { ButtonProps } from "../button/types";
 import {
     ActionButton,
     ButtonItem,
@@ -12,7 +13,7 @@ import {
     MobileWrapper,
     Wrapper,
 } from "./navbar-action-buttons.styles";
-import { NavbarActionButtonsProps, NavbarButtonProps } from "./types";
+import type { NavbarActionButtonsProps, NavbarButtonProps } from "./types";
 
 const APP_STORE_ICON =
     "https://assets.life.gov.sg/react-design-system/img/download/apple-app-store.png";

@@ -1,9 +1,10 @@
-import {
+import type { RefObject } from "react";
+
+import type {
     ScheduleEmptySlotProps,
     ScheduleEntityProps,
     SchedulePopoverProps,
 } from "../types";
-import { RefObject } from "react";
 
 export interface ScheduleDayViewProps {
     date: string;

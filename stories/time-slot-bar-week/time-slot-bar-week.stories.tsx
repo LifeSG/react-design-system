@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { TimeSlotBarWeek } from "src/time-slot-bar-week";
 import { FullWidthStoryDecorator } from "stories/storybook-common";
+
 import { getSlots, getSlotsMin } from "./slots";
 
 type Component = typeof TimeSlotBarWeek;

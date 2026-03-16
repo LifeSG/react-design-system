@@ -1,5 +1,3 @@
-import { CrossIcon } from "@lifesg/react-icons/cross";
-import { useEffect, useRef, useState } from "react";
 import {
     FloatingFocusManager,
     useDismiss,
@@ -7,6 +5,9 @@ import {
     useInteractions,
     useTransitionStatus,
 } from "@floating-ui/react";
+import { CrossIcon } from "@lifesg/react-icons/cross";
+import { useEffect, useRef, useState } from "react";
+
 import { Overlay } from "../overlay";
 import { SimpleIdGenerator } from "../util";
 import {
@@ -16,7 +17,7 @@ import {
     Header,
     Heading,
 } from "./drawer.styles";
-import { DrawerProps } from "./types";
+import type { DrawerProps } from "./types";
 
 export const Drawer = ({
     children,

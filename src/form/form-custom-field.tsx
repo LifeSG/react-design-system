@@ -1,5 +1,5 @@
 import { FormWrapper } from "./form-wrapper";
-import { FormCustomFieldProps } from "./types";
+import type { FormCustomFieldProps } from "./types";
 
 export const FormCustomField = ({
     id = "form-custom-field",

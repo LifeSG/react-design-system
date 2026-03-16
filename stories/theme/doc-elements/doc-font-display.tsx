@@ -1,10 +1,5 @@
-import {
-    Font,
-    FontSpec,
-    ThemeProvider,
-    ThemeType,
-    useDesignToken,
-} from "src/theme";
+import type { ThemeType } from "src/theme";
+import { Font, FontSpec, ThemeProvider, useDesignToken } from "src/theme";
 import styled from "styled-components";
 
 interface FontCollectionProps {

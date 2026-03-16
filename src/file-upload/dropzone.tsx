@@ -1,5 +1,7 @@
-import React, { forwardRef, useImperativeHandle, useRef } from "react";
+import type React from "react";
+import { forwardRef, useImperativeHandle, useRef } from "react";
 import { useDropzone } from "react-dropzone";
+
 import {
     Container,
     DragOverlay,
@@ -7,7 +9,7 @@ import {
     OverlayIcon,
     OverlayText,
 } from "./dropzone.styles";
-import { FileInputProps } from "./types";
+import type { FileInputProps } from "./types";
 
 export interface DropzoneElement extends HTMLInputElement {
     openFileDialog: () => void;

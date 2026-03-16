@@ -1,11 +1,13 @@
-import React, {
+import type React from "react";
+import {
     forwardRef,
     useEffect,
     useImperativeHandle,
     useRef,
     useState,
 } from "react";
-import { FormErrorMessage } from "src/form/form-label";
+
+import { FormErrorMessage } from "../form/form-label";
 import { VisuallyHidden } from "../shared/accessibility";
 import { SimpleIdGenerator, StringHelper } from "../util";
 import {
@@ -15,7 +17,7 @@ import {
     Prefix,
     Wrapper,
 } from "./otp-input.styles";
-import { OtpInputProps, OtpInputRef } from "./types";
+import type { OtpInputProps, OtpInputRef } from "./types";
 import { stripOtpFromAutofill, validateUserInput } from "./utils";
 
 const Component = (

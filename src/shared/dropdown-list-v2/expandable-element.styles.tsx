@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
+
 import { V3_Colour, V3_Font, V3_Motion, V3_Spacing } from "../../v3_theme";
 import { BasicButton } from "../input-wrapper/input-wrapper";
-import { DropdownVariantType } from "./types";
+import type { DropdownVariantType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE

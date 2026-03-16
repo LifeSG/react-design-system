@@ -1,4 +1,5 @@
 import React, { useImperativeHandle, useRef } from "react";
+
 import { StringHelper, useNextInputState } from "../util";
 import {
     ClearButton,
@@ -7,7 +8,7 @@ import {
     InputElement,
     NoBorderWrapper,
 } from "./input.style";
-import { InputProps, InputRef } from "./types";
+import type { InputProps, InputRef } from "./types";
 
 const shouldAllowSpacing = (
     type: string | undefined,

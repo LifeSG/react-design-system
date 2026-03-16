@@ -1,8 +1,9 @@
-import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
-import { V3_ThemeCollectionSpec } from "../internal-types";
-import { V3_SpacingScheme } from "../types";
+import type { V3_StyledComponentProps } from "../helpers";
+import { getCollection, getValue } from "../helpers";
+import type { V3_ThemeCollectionSpec } from "../internal-types";
+import type { V3_SpacingScheme } from "../types";
 import { V3_DefaultSpacingSet } from "./specs/default-spacing-set";
-import { V3_SpacingCollectionsMap, V3_SpacingSet } from "./types";
+import type { V3_SpacingCollectionsMap, V3_SpacingSet } from "./types";
 
 const V3_SpacingSpec: V3_ThemeCollectionSpec<
     V3_SpacingCollectionsMap,

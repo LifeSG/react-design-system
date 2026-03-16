@@ -1,5 +1,5 @@
+import type { V3_StyledComponentProps } from "../helpers";
 import { V3_BreakpointValues } from "./theme-helper";
-import { V3_StyledComponentProps } from "../helpers";
 
 // Typings for MediaQuery
 type MaxWidthBreakpoints = "xxs" | "xs" | "sm" | "md" | "lg" | "xl";

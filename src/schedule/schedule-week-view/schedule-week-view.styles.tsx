@@ -1,4 +1,6 @@
 import styled from "styled-components";
+
+import { Typography } from "../../typography";
 import {
     V3_Border,
     V3_Colour,
@@ -6,7 +8,6 @@ import {
     V3_Radius,
     V3_Spacing,
 } from "../../v3_theme";
-import { Typography } from "../../typography";
 import { HEADER_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
 // =============================================================================

@@ -1,7 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { V2_DivRef, V2_SectionProps } from "./types";
+
 import { V2_MediaQuery } from "../v2_media";
+import type { V2_DivRef, V2_SectionProps } from "./types";
 
 const Component = (props: V2_SectionProps, ref: V2_DivRef): JSX.Element => {
     const {

@@ -4,6 +4,7 @@ import { CrossIcon } from "@lifesg/react-icons/cross";
 import { SquareIcon } from "@lifesg/react-icons/square";
 import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
 import { TickIcon } from "@lifesg/react-icons/tick";
+
 import { Wrapper } from "./toggle-icon.styles";
 
 export type ToggleIconType = "checkbox" | "radio" | "tick" | "cross";

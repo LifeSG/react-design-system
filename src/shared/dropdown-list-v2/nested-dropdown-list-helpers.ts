@@ -1,7 +1,8 @@
 import { produce } from "immer";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
-import {
+
+import type {
     NestedDropdownListItemProps,
     NestedDropdownListLocalItem,
 } from "./types";

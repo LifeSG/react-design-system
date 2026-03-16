@@ -1,5 +1,5 @@
-import { V2_UnorderedList } from "./unordered-list";
 import { V2_OrderedList } from "./ordered-list";
+import { V2_UnorderedList } from "./unordered-list";
 
 /** @deprecated */
 export const V2_TextList = {

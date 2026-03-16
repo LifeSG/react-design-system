@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { BoxContainer, V3_Colour, V3_LifeSGTheme } from "../../src";
+import { BoxContainer, V3_Colour, V3_LifeSGTheme } from "src";
 
 // =============================================================================
 // UNIT TESTS

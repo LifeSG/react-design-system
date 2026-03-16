@@ -1,19 +1,19 @@
+import type { DragEndEvent, DragStartEvent } from "@dnd-kit/core";
 import {
     DndContext,
-    DragEndEvent,
-    DragStartEvent,
     KeyboardSensor,
     TouchSensor,
     useSensor,
     useSensors,
 } from "@dnd-kit/core";
 import {
-    SortableContext,
     arrayMove,
+    SortableContext,
     sortableKeyboardCoordinates,
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import React, {
+import type React from "react";
+import {
     forwardRef,
     useContext,
     useEffect,
@@ -22,14 +22,15 @@ import React, {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
+
+import { VisuallyHidden } from "../shared/accessibility";
 import { FileUploadContext } from "./context";
 import { MouseSensor } from "./custom-sensors";
 import { FileItemEdit } from "./file-item-edit";
-import { FileListItem } from "./file-list-item";
 import { EditableItemsContainer, ListWrapper } from "./file-list.styles";
+import { FileListItem } from "./file-list-item";
 import { FileUploadHelper } from "./helper";
-import { FileItemProps } from "./types";
-import { VisuallyHidden } from "../shared/accessibility";
+import type { FileItemProps } from "./types";
 
 // =============================================================================
 // INTERFACES

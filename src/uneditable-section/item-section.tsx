@@ -1,5 +1,6 @@
 import React from "react";
-import { UneditableSectionItemSectionProps } from "./types";
+
+import type { UneditableSectionItemSectionProps } from "./types";
 import { GridUl } from "./uneditable-section.styles";
 
 export const Component = (

@@ -1,8 +1,13 @@
 import { css } from "styled-components";
+
 import { FontFamily } from "../v2_spec/text-spec/font-spec";
-import { FontWeightSpec } from "../v2_spec/text-spec/types";
-import { V2_TextLinkSizeType, V2_TextSizeType, V2_TextWeight } from "./types";
+import type { FontWeightSpec } from "../v2_spec/text-spec/types";
 import { V2_TextStyle } from "./text-style";
+import type {
+    V2_TextLinkSizeType,
+    V2_TextSizeType,
+    V2_TextWeight,
+} from "./types";
 
 // =============================================================================
 // FONT STYLE

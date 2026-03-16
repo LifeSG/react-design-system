@@ -1,7 +1,8 @@
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import throttle from "lodash/throttle";
-import React, {
+import type React from "react";
+import {
     forwardRef,
     useEffect,
     useImperativeHandle,
@@ -9,13 +10,14 @@ import React, {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
+
 import {
     Content,
     Fade,
     FadeIndicatorButton,
     Wrapper,
 } from "./fade-wrapper.style";
-import { FadeColorSet, FadeWrapperProps, FadeWrapperRef } from "./types";
+import type { FadeColorSet, FadeWrapperProps, FadeWrapperRef } from "./types";
 
 const Component = (
     {

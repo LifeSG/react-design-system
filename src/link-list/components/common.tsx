@@ -1,5 +1,6 @@
-import React from "react";
-import { LinkListItemProps, LinkListStyle } from "../internal-types";
+import type React from "react";
+
+import type { LinkListItemProps, LinkListStyle } from "../internal-types";
 import {
     Description,
     ItemContainer,

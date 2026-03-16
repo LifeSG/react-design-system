@@ -1,8 +1,10 @@
 import styled, { css } from "styled-components";
+
 import { Input } from "../input/input";
-import { InputBox, InputWrapperStyleProps } from "../shared/input-wrapper";
+import type { InputWrapperStyleProps } from "../shared/input-wrapper";
+import { InputBox } from "../shared/input-wrapper";
 import { V3_Colour, V3_Font, V3_Spacing } from "../v3_theme";
-import { InputGroupAddonPosition } from "./types";
+import type { InputGroupAddonPosition } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

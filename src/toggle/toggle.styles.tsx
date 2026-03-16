@@ -1,11 +1,12 @@
 import styled, { css } from "styled-components";
+
 import { Alert } from "../alert";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { ToggleIcon } from "../shared/toggle-icon/toggle-icon";
 import { TextList } from "../text-list";
-import { V3_Colour, V3_Font, V3_MediaQuery, V3_Radius } from "../v3_theme";
 import { Typography } from "../typography";
-import { ToggleStyleType } from "./types";
+import { V3_Colour, V3_Font, V3_MediaQuery, V3_Radius } from "../v3_theme";
+import type { ToggleStyleType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $

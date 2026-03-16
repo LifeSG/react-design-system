@@ -1,8 +1,10 @@
-import dayjs, { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import { CalendarHelper } from "../../../util/calendar-helper";
-import { CommonCalendarProps, FocusType } from "../types";
+import type { CommonCalendarProps, FocusType } from "../types";
 import {
     HeaderCell,
     RowDayCell,

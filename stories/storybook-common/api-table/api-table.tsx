@@ -1,6 +1,7 @@
 import { Unstyled } from "@storybook/addon-docs/blocks";
 import orderBy from "lodash/orderBy";
 import { Fragment } from "react";
+
 import {
     DefaultCol,
     DescriptionCol,
@@ -8,7 +9,7 @@ import {
     Section,
     Table,
 } from "./api-table-components";
-import { ApiTableAttributeRowProps, ApiTableProps } from "./types";
+import type { ApiTableAttributeRowProps, ApiTableProps } from "./types";
 
 export const ApiTable = (props: ApiTableProps): JSX.Element => {
     const renderSection = (

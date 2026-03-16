@@ -1,6 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { LinkList, LinkListItemProps } from "src/link-list";
+import type { LinkListItemProps } from "src/link-list";
+import { LinkList } from "src/link-list";
 
 const MOCK_ITEMS: LinkListItemProps<object>[] = [
     { title: "Title 1", description: "Description 1", href: "/item1" },

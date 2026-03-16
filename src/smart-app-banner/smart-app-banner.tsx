@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
     BannerIcon,
     ButtonContainer,
@@ -16,7 +17,7 @@ import {
     TextContainer,
     Title,
 } from "./smart-app-banner.styles";
-import { SmartAppBannerProps } from "./types";
+import type { SmartAppBannerProps } from "./types";
 
 const APP_ICON =
     "https://assets.life.gov.sg/react-design-system/img/app-icon/app-icon.png";

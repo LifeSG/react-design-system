@@ -1,4 +1,4 @@
-import { ModalAnimationDirection } from "../modal-v2/types";
+import type { ModalAnimationDirection } from "../modal-v2/types";
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     show: boolean;

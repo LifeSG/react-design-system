@@ -1,4 +1,4 @@
-import {
+import type {
     CommonCalendarProps,
     YearMonthDisplay,
 } from "../shared/internal-calendar/types";

@@ -1,5 +1,5 @@
-import { V3_ResourceScheme } from "../v3_theme/types";
-import { NavbarResourcesProps } from "./types";
+import type { V3_ResourceScheme } from "../v3_theme/types";
+import type { NavbarResourcesProps } from "./types";
 
 const DEFAULT_RESOURCES_LOGO: NavbarResourcesProps = {
     primary: {

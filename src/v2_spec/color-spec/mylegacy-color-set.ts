@@ -1,4 +1,4 @@
-import { V2_ColorSet, V2_ValidationTypes } from "../../v2_color/types";
+import type { V2_ColorSet, V2_ValidationTypes } from "../../v2_color/types";
 
 export const MyLegacyColorSet: V2_ColorSet = {
     Brand: {

@@ -1,6 +1,6 @@
 import { InputRangeSelect } from "../input-range-select/input-range-select";
 import { FormWrapper } from "./form-wrapper";
-import { FormInputRangeSelectProps } from "./types";
+import type { FormInputRangeSelectProps } from "./types";
 
 export const FormRangeSelect = <T, V>({
     label,

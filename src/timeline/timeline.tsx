@@ -1,5 +1,7 @@
 import { ExclamationCircleFillIcon, TickIcon } from "@lifesg/react-icons";
-import { PillProps } from "../pill";
+
+import type { PillProps } from "../pill";
+import { VisuallyHidden } from "../shared/accessibility";
 import { Typography } from "../typography";
 import {
     CircleIndicator,
@@ -13,8 +15,7 @@ import {
     TimelineTitle,
     TimelineWrapper,
 } from "./timeline.style";
-import { TimelineItemProps, TimelineProps, Variant } from "./types";
-import { VisuallyHidden } from "src/shared/accessibility";
+import type { TimelineItemProps, TimelineProps, Variant } from "./types";
 
 export const Timeline = ({
     items,

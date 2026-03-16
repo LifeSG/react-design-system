@@ -1,3 +1,4 @@
+import { isEmpty } from "lodash";
 import {
     useCallback,
     useContext,
@@ -6,21 +7,20 @@ import {
     useRef,
     useState,
 } from "react";
-import { ThemeContext } from "styled-components";
 import { useMediaQuery } from "react-responsive";
-import { ScheduleProps } from "./types";
-import { ScheduleHeader } from "./schedule-header/schedule-header";
+import { ThemeContext } from "styled-components";
 
-import { ScheduleWeekView } from "./schedule-week-view/schedule-week-view";
-import { ScheduleDayView } from "./schedule-day-view/schedule-day-view";
 import { V3_Breakpoint } from "../v3_theme";
-import { isEmpty } from "lodash";
 import {
     Container,
     EmptyTableContainer,
     NoResultsFound,
     ScheduleBodyContainer,
 } from "./schedule.styles";
+import { ScheduleDayView } from "./schedule-day-view/schedule-day-view";
+import { ScheduleHeader } from "./schedule-header/schedule-header";
+import { ScheduleWeekView } from "./schedule-week-view/schedule-week-view";
+import type { ScheduleProps } from "./types";
 
 export const Schedule = ({
     id,

@@ -1,12 +1,14 @@
-import React, { forwardRef } from "react";
+import { CrossIcon } from "@lifesg/react-icons";
+import type React from "react";
+import { forwardRef } from "react";
+
 import {
     CancelButton,
     Container,
     SearchIcon,
     SearchInput,
 } from "./dropdown-search.styles";
-import { DropdownVariantType } from "./types";
-import { CrossIcon } from "@lifesg/react-icons";
+import type { DropdownVariantType } from "./types";
 
 interface Props extends React.HTMLAttributes<HTMLInputElement> {
     value: string /** override to cast type */;

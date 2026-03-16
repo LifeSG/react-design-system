@@ -1,4 +1,5 @@
-import { Motion, ThemeProvider, ThemeType, useDesignToken } from "src/theme";
+import type { ThemeType } from "src/theme";
+import { Motion, ThemeProvider, useDesignToken } from "src/theme";
 import styled, { keyframes } from "styled-components";
 
 interface MotionDisplayProps {

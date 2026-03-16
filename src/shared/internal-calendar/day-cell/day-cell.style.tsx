@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+
 import {
     V3_Border,
     V3_Colour,
@@ -6,7 +7,7 @@ import {
     V3_Motion,
     V3_Radius,
 } from "../../../v3_theme";
-import { CellType, LabelType } from "./types";
+import type { CellType, LabelType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES

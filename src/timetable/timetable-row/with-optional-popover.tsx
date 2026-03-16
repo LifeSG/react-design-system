@@ -1,6 +1,8 @@
-import { RefObject } from "react";
-import { PopoverTrigger, PopoverV2TriggerProps } from "../../popover-v2";
-import { TimeTablePopoverProps } from "../types";
+import type { RefObject } from "react";
+
+import type { PopoverV2TriggerProps } from "../../popover-v2";
+import { PopoverTrigger } from "../../popover-v2";
+import type { TimeTablePopoverProps } from "../types";
 
 interface ConditionalCellWrapperProps {
     containerRef: RefObject<HTMLDivElement>;

@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Example } from "../../src/example/example";
+import { Example } from "src/example/example";
 
 // =============================================================================
 // UNIT TESTS

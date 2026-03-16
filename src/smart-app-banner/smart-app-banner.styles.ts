@@ -3,8 +3,10 @@ import { StarIcon } from "@lifesg/react-icons/star";
 import { StarFillIcon } from "@lifesg/react-icons/star-fill";
 import { StarHalfIcon } from "@lifesg/react-icons/star-half";
 import styled, { css, keyframes } from "styled-components";
+
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
+import { Typography } from "../typography";
 import {
     V3_Border,
     V3_Colour,
@@ -13,7 +15,6 @@ import {
     V3_Radius,
     V3_Shadow,
 } from "../v3_theme";
-import { Typography } from "../typography";
 
 const slideDown = keyframes`
 	from {

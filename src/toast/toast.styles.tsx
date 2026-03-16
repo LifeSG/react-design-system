@@ -1,11 +1,12 @@
 import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
+
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { V3_Colour, V3_Font, V3_MediaQuery, V3_Radius } from "../v3_theme";
-import { V3_SemanticColourSet } from "../v3_theme/types";
 import { Typography } from "../typography";
-import { ToastType } from "./types";
+import { V3_Colour, V3_Font, V3_MediaQuery, V3_Radius } from "../v3_theme";
+import type { V3_SemanticColourSet } from "../v3_theme/types";
+import type { ToastType } from "./types";
 
 //=============================================================================
 // STYLE INTERFACE

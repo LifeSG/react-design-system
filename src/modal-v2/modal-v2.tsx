@@ -6,11 +6,12 @@ import {
     useTransitionStatus,
 } from "@floating-ui/react";
 import { useEffect } from "react";
+
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
 import { ModalContext } from "./modal-context";
 import { Container, ModalContainer, ScrollContainer } from "./modal-v2.styles";
-import { ModalV2Props } from "./types";
+import type { ModalV2Props } from "./types";
 
 export const ModalV2 = ({
     id,

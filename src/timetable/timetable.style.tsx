@@ -1,9 +1,10 @@
 import styled, { css, keyframes } from "styled-components";
+
 import { LoadingDotsSpinner } from "../animations";
 import { ErrorDisplay } from "../error-display";
 import { PopoverTrigger } from "../popover-v2";
-import { V3_Border, V3_Colour, V3_Shadow, V3_Spacing } from "../v3_theme";
 import { Typography } from "../typography";
+import { V3_Border, V3_Colour, V3_Shadow, V3_Spacing } from "../v3_theme";
 import {
     MIN_HOURLY_INTERVAL_WIDTH,
     ROW_HEADER_WIDTH,

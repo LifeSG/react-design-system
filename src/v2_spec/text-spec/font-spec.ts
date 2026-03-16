@@ -1,4 +1,4 @@
-import { TFontFamily } from "./types";
+import type { TFontFamily } from "./types";
 
 export const FontFamily = {
     OpenSans: {

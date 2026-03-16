@@ -1,6 +1,7 @@
 import React from "react";
+
 import { Main } from "./clickable-icon.style";
-import { ClickableIconProps } from "./types";
+import type { ClickableIconProps } from "./types";
 
 const Component = (
     {

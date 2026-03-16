@@ -1,5 +1,6 @@
-import React from "react";
-import { ComponentLoadingSpinnerProps } from "../shared/component-loading-spinner";
+import type React from "react";
+
+import type { ComponentLoadingSpinnerProps } from "../shared/component-loading-spinner";
 
 export type ButtonStyleType = "default" | "secondary" | "light" | "link";
 

@@ -1,12 +1,13 @@
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
-import { FilterItemPageContainer } from "./filter-item-page.styles";
+
 import {
     FilterBody,
     FilterDoneButton,
     FilterFooter,
     FilterHeaderButton,
 } from "./filter.styles";
-import { FilterPageProps } from "./types";
+import { FilterItemPageContainer } from "./filter-item-page.styles";
+import type { FilterPageProps } from "./types";
 
 export const FilterItemPage = ({
     onDismiss,

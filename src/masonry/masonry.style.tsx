@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
+
 import { V2_MediaQuery } from "../v2_media";
-import { MasonryGridProps, MasonryTileProps } from "./types";
+import type { MasonryGridProps, MasonryTileProps } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE

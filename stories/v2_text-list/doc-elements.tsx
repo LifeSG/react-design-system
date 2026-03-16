@@ -1,6 +1,6 @@
+import { V2_MediaQuery } from "src/v2_media";
+import { V2_TextList } from "src/v2_text-list";
 import styled from "styled-components";
-import { V2_MediaQuery } from "../../src/v2_media";
-import { V2_TextList } from "../../src/v2_text-list";
 
 // =============================================================================
 // STYLING

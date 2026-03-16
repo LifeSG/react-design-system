@@ -1,7 +1,9 @@
 import styled, { css } from "styled-components";
+
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ImagePlaceholder } from "../shared/image-placeholder";
-import { InsetStyleProps } from "../shared/types";
+import type { InsetStyleProps } from "../shared/types";
+import { Typography } from "../typography";
 import {
     V3_Border,
     V3_Colour,
@@ -10,7 +12,6 @@ import {
     V3_Shadow,
     V3_Spacing,
 } from "../v3_theme";
-import { Typography } from "../typography";
 import { StatefulImage } from "./stateful-image";
 
 // =============================================================================

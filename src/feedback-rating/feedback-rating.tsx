@@ -1,16 +1,17 @@
 import { useState } from "react";
+
 import { VisuallyHidden } from "../shared/accessibility";
 import { Typography } from "../typography";
 import { SimpleIdGenerator } from "../util";
-import { FeedbackRatingData } from "./feedback-rating-data";
-import { FeedbackRatingStarsContainer } from "./feedback-rating-stars-container";
 import {
     ChildContainer,
     Image,
     MainContainer,
     SubmitButton,
 } from "./feedback-rating.styles";
-import { FeedbackRatingProps } from "./types";
+import { FeedbackRatingData } from "./feedback-rating-data";
+import { FeedbackRatingStarsContainer } from "./feedback-rating-stars-container";
+import type { FeedbackRatingProps } from "./types";
 
 export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
     // =========================================================================

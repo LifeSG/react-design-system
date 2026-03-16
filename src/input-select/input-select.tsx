@@ -1,5 +1,7 @@
-import { OpenChangeReason } from "@floating-ui/react";
-import React, { useEffect, useRef, useState } from "react";
+import type { OpenChangeReason } from "@floating-ui/react";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+
 import {
     DropdownList,
     DropdownListState,
@@ -14,7 +16,7 @@ import {
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { SimpleIdGenerator } from "../util";
 import { StringHelper } from "../util/string-helper";
-import { InputSelectProps } from "./types";
+import type { InputSelectProps } from "./types";
 
 export const InputSelect = <T, V>({
     selectedOption,

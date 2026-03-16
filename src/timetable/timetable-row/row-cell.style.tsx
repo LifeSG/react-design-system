@@ -1,13 +1,9 @@
 import styled, { css } from "styled-components";
-import {
-    V3_Border,
-    V3_Colour,
-    V3_Radius,
-    V3_Spacing,
-    V3_ThemeStyleProps,
-} from "../../v3_theme";
+
 import { Typography } from "../../typography";
-import { TimeTableCellType } from "../types";
+import type { V3_ThemeStyleProps } from "../../v3_theme";
+import { V3_Border, V3_Colour, V3_Radius, V3_Spacing } from "../../v3_theme";
+import type { TimeTableCellType } from "../types";
 
 interface BlockStyleProps {
     $width: number;

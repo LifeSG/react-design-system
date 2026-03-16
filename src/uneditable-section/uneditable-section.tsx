@@ -1,5 +1,8 @@
 import { UneditableSectionItem } from "./section-item";
-import { UneditableSectionItemProps, UneditableSectionProps } from "./types";
+import type {
+    UneditableSectionItemProps,
+    UneditableSectionProps,
+} from "./types";
 import {
     CustomSection,
     Description,

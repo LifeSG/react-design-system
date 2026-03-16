@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { V3_MediaQuery, V3_Spacing } from "../v3_theme";
-import { Typography } from "../typography";
-import { Layout } from "../layout";
+
 import { Divider } from "../divider";
+import { Layout } from "../layout";
+import { Typography } from "../typography";
+import { V3_MediaQuery, V3_Spacing } from "../v3_theme";
 import { V3_ThemeFooter } from "../v3_theme/components/theme-helper";
 
 // =============================================================================

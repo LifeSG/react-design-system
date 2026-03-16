@@ -1,10 +1,9 @@
-import { V2_ColorSet, V2_ColorSetOptions } from "../v2_color/types";
-
-import {
+import type { V2_ColorSet, V2_ColorSetOptions } from "../v2_color/types";
+import type {
     V2_DesignTokenSet,
     V2_DesignTokenSetOptions,
 } from "../v2_design-token/types";
-import {
+import type {
     V2_TextStyleSetOptionsType,
     V2_TextStyleSetType,
 } from "../v2_text/types";

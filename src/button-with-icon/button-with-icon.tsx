@@ -1,10 +1,9 @@
 import React from "react";
+
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
-import {
-    MainButtonWithIcon,
-    MainStylePropsWithIcon,
-} from "./button-with-icon.style";
-import { ButtonWithIconProps, ButtonWithIconRef } from "./types";
+import type { MainStylePropsWithIcon } from "./button-with-icon.style";
+import { MainButtonWithIcon } from "./button-with-icon.style";
+import type { ButtonWithIconProps, ButtonWithIconRef } from "./types";
 
 /**
  * NOTE: Due to the way we intend to customise both components, with forwardRef behaviour

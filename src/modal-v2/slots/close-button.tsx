@@ -1,7 +1,8 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import { useContext } from "react";
+
 import { ModalContext } from "../modal-context";
-import { ModalCloseButtonProps } from "../types";
+import type { ModalCloseButtonProps } from "../types";
 import { CloseButtonContainer, StyledClickableIcon } from "./slot-styles";
 
 export const CloseButton = ({

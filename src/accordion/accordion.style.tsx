@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
+
 import { Button } from "../button";
 import { V3_Border, V3_Colour, V3_Font, V3_MediaQuery } from "../v3_theme";
-import { TitleStyleProps, TitleWrapperStyleProps } from "./types";
+import type { TitleStyleProps, TitleWrapperStyleProps } from "./types";
 
 // ============================================================================
 // STYLING

@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
-import { ColDivProps } from "./types";
-import { StyledDiv } from "./col-div.style";
-import { V3_BreakpointValues } from "../v3_theme/breakpoint/theme-helper";
 import { ThemeContext } from "styled-components";
+
+import { V3_BreakpointValues } from "../v3_theme/breakpoint/theme-helper";
+import { StyledDiv } from "./col-div.style";
+import type { ColDivProps } from "./types";
 
 const Component = (
     props: ColDivProps,

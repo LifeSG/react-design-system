@@ -1,4 +1,4 @@
-import { MediaQuery } from "../../src/theme/tokens";
+import { MediaQuery } from "src/theme/tokens";
 
 describe("Theme Tokens", () => {
     it("maps MaxWidth breakpoints to pseudo-media selectors", () => {

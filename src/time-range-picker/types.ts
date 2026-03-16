@@ -1,5 +1,6 @@
-import { RefObject } from "react";
-import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
+import type { RefObject } from "react";
+
+import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export type TimeRangePickerFormat = "12hr" | "24hr";
 export type TimeRangePickerVariant = "dial" | "combobox";

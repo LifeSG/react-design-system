@@ -1,5 +1,6 @@
 import { V3_ThemeButton } from "src/v3_theme/components/theme-helper";
-import { TokenTable, TokenTableSectionProps } from "../storybook-common";
+import type { TokenTableSectionProps } from "stories/storybook-common";
+import { TokenTable } from "stories/storybook-common";
 
 const DATA: TokenTableSectionProps[] = [
     {

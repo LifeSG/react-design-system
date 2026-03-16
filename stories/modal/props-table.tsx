@@ -3,8 +3,9 @@ import {
     DescriptionCol,
     NameCol,
     Table,
-} from "../storybook-common/api-table";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
+} from "stories/storybook-common/api-table";
+import type { TabAttribute } from "stories/storybook-common/tabs";
+import { Tabs } from "stories/storybook-common/tabs";
 
 export const ModalTable = () => (
     <Table>

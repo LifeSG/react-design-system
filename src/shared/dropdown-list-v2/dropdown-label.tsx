@@ -1,9 +1,13 @@
 import { useCallback, useContext, useMemo } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
-import { V3_Font } from "../../v3_theme";
+
 import { StringHelper } from "../../util/string-helper";
-import { DropdownVariantType, LabelDisplayType } from "../dropdown-list/types";
+import { V3_Font } from "../../v3_theme";
+import type {
+    DropdownVariantType,
+    LabelDisplayType,
+} from "../dropdown-list/types";
 import {
     Label,
     MatchedText,

@@ -1,4 +1,4 @@
-import { ModalContentProps } from "../types";
+import type { ModalContentProps } from "../types";
 import { ContentContainer } from "./slot-styles";
 
 export const Content = ({

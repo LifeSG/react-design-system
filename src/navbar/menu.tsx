@@ -1,6 +1,7 @@
-import React from "react";
+import type React from "react";
+
 import { Link, MenuItem, MobileWrapper } from "./menu.styles";
-import { NavItemCommonProps } from "./types";
+import type { NavItemCommonProps } from "./types";
 
 interface Props<T> {
     items: NavItemCommonProps<T>[];

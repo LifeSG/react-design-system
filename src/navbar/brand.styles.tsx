@@ -1,6 +1,7 @@
 import styled from "styled-components";
+
 import { V3_Motion } from "../v3_theme";
-import { BrandType } from "./types";
+import type { BrandType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

@@ -1,4 +1,5 @@
-import { API, FileInfo, JSCodeshift } from "jscodeshift";
+import type { API, FileInfo, JSCodeshift } from "jscodeshift";
+
 import { componentMap, pathMap } from "./data";
 
 export default function transformer(file: FileInfo, api: API) {

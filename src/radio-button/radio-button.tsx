@@ -1,11 +1,12 @@
-import React from "react";
+import type React from "react";
+
 import {
     Container,
     Input,
     StyledCheckedIcon,
     StyledUnCheckedIcon,
 } from "./radio-button.styles";
-import { RadioButtonProps } from "./types";
+import type { RadioButtonProps } from "./types";
 
 export const RadioButton = ({
     className,

@@ -1,6 +1,6 @@
 import { V3_ColourSemantic } from "../../colour-semantic/theme-helper";
 import { V3_RadiusValues } from "../../radius/theme-helper";
-import { V3_ComponentTokenSet } from "../types";
+import type { V3_ComponentTokenSet } from "../types";
 
 export const V3_PAComponentTokenSet: V3_ComponentTokenSet = {
     Button: {

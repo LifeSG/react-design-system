@@ -1,20 +1,22 @@
 import { CrossIcon } from "@lifesg/react-icons";
-import React, { NamedExoticComponent, useEffect, useState } from "react";
+import type { NamedExoticComponent } from "react";
+import React, { useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+
 import {
     AccessibleBannerButton,
     ActionButton,
     Container,
     Content,
     ContentContainer,
+    ContentLink as NBLink,
     ContentText,
     ContentWrapper,
     IconContainer,
-    ContentLink as NBLink,
     StyledIconButton,
     Wrapper,
 } from "./notification-banner.styles";
-import {
+import type {
     NotificationBannerProps,
     NotificationBannerWithForwardedRefProps,
 } from "./types";

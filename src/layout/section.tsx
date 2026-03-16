@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { SectionProps } from "./types";
+
+import type { SectionProps } from "./types";
 
 const Component = (
     props: SectionProps,

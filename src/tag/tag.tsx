@@ -1,6 +1,7 @@
 import React from "react";
+
 import { Label, Wrapper } from "./tag.style";
-import { TagProps } from "./types";
+import type { TagProps } from "./types";
 
 export const Tag = ({
     type,

@@ -1,9 +1,11 @@
-import { CSSProp } from "styled-components";
-import { V3_StyledComponentProps, getCollection } from "../helpers";
-import { V3_ThemeCollectionSpec } from "../internal-types";
-import { V3_BorderScheme } from "../types";
+import type { CSSProp } from "styled-components";
+
+import type { V3_StyledComponentProps } from "../helpers";
+import { getCollection } from "../helpers";
+import type { V3_ThemeCollectionSpec } from "../internal-types";
+import type { V3_BorderScheme } from "../types";
 import { V3_DefaultBorderUtilSet } from "./specs/default-border-util-set";
-import { V3_BorderUtilCollectionMap, V3_BorderUtilSet } from "./types";
+import type { V3_BorderUtilCollectionMap, V3_BorderUtilSet } from "./types";
 
 const V3_BorderUtilSpec: V3_ThemeCollectionSpec<
     V3_BorderUtilCollectionMap,

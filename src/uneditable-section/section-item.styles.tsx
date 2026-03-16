@@ -1,9 +1,10 @@
 import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
 import styled, { css } from "styled-components";
+
 import { Alert } from "../alert";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
 import { V3_Colour, V3_Font, V3_MediaQuery } from "../v3_theme";
-import { UneditableSectionItemDisplayWidth } from "./types";
+import type { UneditableSectionItemDisplayWidth } from "./types";
 
 // =============================================================================
 // STYLING INTERFACES

@@ -1,5 +1,5 @@
 import { MediaWidths as MediaWidthsSpec } from "../v2_spec/media-spec";
-import { V2_MediaType, V2_MediaWidth } from "./types";
+import type { V2_MediaType, V2_MediaWidth } from "./types";
 
 // =============================================================================
 // HELPER FUNCTION

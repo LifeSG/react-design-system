@@ -1,4 +1,4 @@
-import { V2_ColorSet } from "../v2_color/types";
+import type { V2_ColorSet } from "../v2_color/types";
 import { BaseColorSet } from "../v2_spec/color-spec/base-color-set";
 import { BookingSGColorSet } from "../v2_spec/color-spec/bookingsg-color-set";
 import { CCubeColorSet } from "../v2_spec/color-spec/ccube-color-set";
@@ -6,13 +6,13 @@ import { MyLegacyColorSet } from "../v2_spec/color-spec/mylegacy-color-set";
 import { OneServiceColorSet } from "../v2_spec/color-spec/oneservice-color-set";
 import { RBSColorSet } from "../v2_spec/color-spec/rbs-color-set";
 import { getCollection, getValue } from "./helper";
-import {
+import type {
     V2_ColorCollectionsMap,
     V2_ColorScheme,
     V2_ThemeCollectionSpec,
-    V2_ThemeContextKeys,
     V2_ThemeSpec,
 } from "./types";
+import { V2_ThemeContextKeys } from "./types";
 
 // =============================================================================
 // THEME SPECIFICATION

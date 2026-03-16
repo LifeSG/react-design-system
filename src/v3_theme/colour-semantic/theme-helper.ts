@@ -1,16 +1,17 @@
-import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
-import { V3_ThemeCollectionSpec } from "../internal-types";
-import { V3_ColourScheme, V3_SemanticColourSet } from "../types";
+import type { V3_StyledComponentProps } from "../helpers";
+import { getCollection, getValue } from "../helpers";
+import type { V3_ThemeCollectionSpec } from "../internal-types";
+import type { V3_ColourScheme, V3_SemanticColourSet } from "../types";
+import {
+    V3_A11yPlaygroundColourSet,
+    V3_A11yPlaygroundDarkColourSet,
+} from "./specs/a11yplayground-semantic-tokens";
 import {
     V3_LifeSGColourSet,
     V3_LifeSGDarkColourSet,
 } from "./specs/lifesg-semantic-tokens";
 import { V3_PAColourSet } from "./specs/pa-semantic-tokens";
-import {
-    V3_A11yPlaygroundColourSet,
-    V3_A11yPlaygroundDarkColourSet,
-} from "./specs/a11yplayground-semantic-tokens";
-import { V3_SemanticColourCollectionMap } from "./types";
+import type { V3_SemanticColourCollectionMap } from "./types";
 
 export const V3_ColourSpec: V3_ThemeCollectionSpec<
     V3_SemanticColourCollectionMap,

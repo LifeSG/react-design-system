@@ -1,7 +1,8 @@
 import styled from "styled-components";
+
+import { Button } from "../button";
 import { Typography } from "../typography";
 import { V3_Colour, V3_MediaQuery, V3_Spacing } from "../v3_theme";
-import { Button } from "../button";
 
 export const VerificationSectionWrapper = styled.div`
     display: flex;

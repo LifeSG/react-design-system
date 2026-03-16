@@ -1,16 +1,15 @@
+import { ClockIcon } from "@lifesg/react-icons";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import dayjs from "dayjs";
 import { useState } from "react";
-import {
-    Schedule,
-    ScheduleEntityProps,
-    SchedulePopoverProps,
-} from "src/schedule";
-import styled from "styled-components";
-type Component = typeof Schedule;
-import { mockScheduleData } from "./mockScheduleData";
-import { ClockIcon } from "@lifesg/react-icons";
+import type { ScheduleEntityProps, SchedulePopoverProps } from "src/schedule";
+import { Schedule } from "src/schedule";
 import { V3_Colour } from "src/v3_theme";
+import styled from "styled-components";
+
+import { mockScheduleData } from "./mockScheduleData";
+
+type Component = typeof Schedule;
 
 const meta: Meta<Component> = {
     title: "Selection and input/Schedule",

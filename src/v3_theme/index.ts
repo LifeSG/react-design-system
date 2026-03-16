@@ -1,20 +1,20 @@
-import { V3_BorderUtilValues } from "./border-util/theme-helper";
 import { V3_BorderValues } from "./border/theme-helper";
+import { V3_BorderUtilValues } from "./border-util/theme-helper";
 import { V3_MediaQuery as V3_MediaQueryValues } from "./breakpoint/media-query-helper";
 import { V3_BreakpointValues } from "./breakpoint/theme-helper";
 import { V3_PrimitiveColour } from "./colour-primitive/theme-helper";
 import { V3_ColourSemantic } from "./colour-semantic/theme-helper";
-import { V3_FontSpecValues } from "./font-spec/theme-helper";
 import { V3_FontValues } from "./font/theme-helper";
+import { V3_FontSpecValues } from "./font-spec/theme-helper";
 import { V3_MotionValues } from "./motion/theme-helper";
 import { V3_RadiusValues } from "./radius/theme-helper";
 import { V3_ShadowValues } from "./shadow/theme-helper";
 import { V3_SpacingValues } from "./spacing/theme-helper";
-import { V3_ThemeSpec } from "./types";
+import type { V3_ThemeSpec } from "./types";
 import { createThemeWithColourMode } from "./use-theme-mode";
 
-export * from "./types";
 export * from "./ds-theme-provider";
+export * from "./types";
 export * from "./use-theme-mode";
 
 // =============================================================================

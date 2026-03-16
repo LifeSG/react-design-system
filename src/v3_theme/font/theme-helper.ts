@@ -1,16 +1,18 @@
-import { CSSProp } from "styled-components";
-import { V3_StyledComponentProps, getCollection, getValue } from "../helpers";
-import { V3_ThemeCollectionSpec } from "../internal-types";
-import { V3_FontScheme } from "../types";
+import type { CSSProp } from "styled-components";
+
+import type { V3_StyledComponentProps } from "../helpers";
+import { getCollection, getValue } from "../helpers";
+import type { V3_ThemeCollectionSpec } from "../internal-types";
+import type { V3_FontScheme } from "../types";
+import { V3_A11yPlaygroundFontSet } from "./specs/a11yplayground-font-set";
 import { V3_BookingSgFontSet } from "./specs/bookingsg-font-set";
 import { V3_DefaultFontSet } from "./specs/default-font-set";
-import { V3_PAFontSet } from "./specs/pa-font-set";
-import { V3_A11yPlaygroundFontSet } from "./specs/a11yplayground-font-set";
-import { V3_SupportGoWhereFontSet } from "./specs/supportgowhere-font-set";
 import { V3_IMDAFontSet } from "./specs/imda-font-set";
-import { V3_SPFFontSet } from "./specs/spf-font-set";
-import { V3_FontCollectionMap, V3_FontSet } from "./types";
 import { V3_OneServiceFontSet } from "./specs/oneservice-font-set";
+import { V3_PAFontSet } from "./specs/pa-font-set";
+import { V3_SPFFontSet } from "./specs/spf-font-set";
+import { V3_SupportGoWhereFontSet } from "./specs/supportgowhere-font-set";
+import type { V3_FontCollectionMap, V3_FontSet } from "./types";
 
 const FontSpec: V3_ThemeCollectionSpec<V3_FontCollectionMap, V3_FontScheme> = {
     collections: {

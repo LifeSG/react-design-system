@@ -1,5 +1,5 @@
 import { BadgeOverlay, BadgeWrapper, StyledBadge } from "./badge.style";
-import { BadgeProps, BadgeVariant } from "./types";
+import type { BadgeProps, BadgeVariant } from "./types";
 
 export const Badge = ({
     children,

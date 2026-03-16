@@ -1,6 +1,6 @@
 import { InputSlider } from "../input-slider";
 import { FormWrapper } from "./form-wrapper";
-import { FormSliderProps } from "./types";
+import type { FormSliderProps } from "./types";
 
 export const FormSlider = ({
     label,

@@ -1,6 +1,7 @@
 import React from "react";
+
 import { StyledUnorderedList } from "./text-list.styles";
-import { BulletType, UnorderedListProps } from "./types";
+import type { BulletType, UnorderedListProps } from "./types";
 
 export const UnorderedList = ({
     size,

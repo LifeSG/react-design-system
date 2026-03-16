@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { SimpleIdGenerator } from "src/util";
+
 import { PredictiveTextInput } from "../predictive-text-input";
+import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormPredictiveTextInputProps } from "./types";
+import type { FormPredictiveTextInputProps } from "./types";
 
 export const FormPredictiveTextInput = <T, V>({
     label,

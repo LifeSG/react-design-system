@@ -1,6 +1,6 @@
 import { InputRangeSlider } from "../input-range-slider";
 import { FormWrapper } from "./form-wrapper";
-import { FormRangeSliderProps } from "./types";
+import type { FormRangeSliderProps } from "./types";
 
 export const FormRangeSlider = ({
     label,

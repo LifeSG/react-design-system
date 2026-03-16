@@ -1,5 +1,5 @@
 import { Person2Icon } from "@lifesg/react-icons/person-2";
-import { TimeTableRowCellData, TimeTableRowData } from "src/timetable";
+import type { TimeTableRowCellData, TimeTableRowData } from "src/timetable";
 
 export const timetableDefaultData: TimeTableRowData[] = [
     {

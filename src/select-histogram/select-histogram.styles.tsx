@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
-import { ValueLabelStyleProps } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+
+import type { ValueLabelStyleProps } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { lineClampCss } from "../shared/styles";
 import {
     V3_Border,

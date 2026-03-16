@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { DateNavigator } from "../../src";
+import { DateNavigator } from "src";
 
 describe("DateNavigator", () => {
     const today = "2024-09-05";

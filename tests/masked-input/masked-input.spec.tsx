@@ -1,5 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { MaskedInput } from "../../src/masked-input";
+import { MaskedInput } from "src/masked-input";
 
 describe("MaskedInput", () => {
     describe("Renders", () => {

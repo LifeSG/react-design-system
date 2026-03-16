@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import type React from "react";
+import { useEffect, useState } from "react";
+
+import { useIsomorphicLayoutEffect } from "../../util";
+import { setupBreakpointListener } from "./breakpoint";
 import { ThemeContext } from "./context";
-import type { ThemeProviderProps } from "./types";
 import {
     getSystemColourMode,
     listenToSystemColourMode,
 } from "./system-colour-mode";
-import { useIsomorphicLayoutEffect } from "../../util";
-import { setupBreakpointListener } from "./breakpoint";
+import type { ThemeProviderProps } from "./types";
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     children,
