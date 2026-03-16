@@ -1,18 +1,12 @@
+import clsx from "clsx";
 import { forwardRef } from "react";
 import { Border, Colour, Radius, useDesignToken } from "../theme";
+import {
+    overlayClassName,
+    radiusClassMap,
+    rootClassName,
+} from "./dashed-border.styles";
 import { DashedBorderProps } from "./types";
-
-// Temporary fix until we support Linaria css.
-import "./dashed-border.css";
-
-const radiusClassMap = {
-    [Radius.none]: "fds-dashed-border-radius-none",
-    [Radius.xs]: "fds-dashed-border-radius-xs",
-    [Radius.sm]: "fds-dashed-border-radius-sm",
-    [Radius.md]: "fds-dashed-border-radius-md",
-    [Radius.lg]: "fds-dashed-border-radius-lg",
-    [Radius.full]: "fds-dashed-border-radius-full",
-} as const;
 
 const STROKE_INSET_BY_THICKNESS = {
     [Border["width-005"]]: 0.25,
@@ -20,6 +14,10 @@ const STROKE_INSET_BY_THICKNESS = {
     [Border["width-020"]]: 1,
     [Border["width-040"]]: 2,
 } as const;
+
+const getResolvedValue = (resolved: string | undefined, fallback: string) => {
+    return resolved && resolved.trim().length > 0 ? resolved : fallback;
+};
 
 const Component = (
     props: DashedBorderProps,
@@ -42,30 +40,31 @@ const Component = (
     const resolvedBackgroundColor = useDesignToken(
         backgroundColor ?? Colour.bg
     );
-    const effectiveThickness = resolvedThickness ?? thickness;
-    const effectiveRadius = resolvedRadius ?? radius;
-    const effectiveColour = resolvedColour ?? colour;
-    const effectiveBackgroundColor =
-        resolvedBackgroundColor ?? backgroundColor ?? "none";
+    const effectiveThickness = getResolvedValue(resolvedThickness, thickness);
+    const effectiveRadius = getResolvedValue(resolvedRadius, radius);
+    const effectiveColour = getResolvedValue(resolvedColour, colour);
+    const effectiveBackgroundColor = getResolvedValue(
+        resolvedBackgroundColor,
+        backgroundColor ?? "none"
+    );
 
     const strokeInset =
         STROKE_INSET_BY_THICKNESS[thickness] ??
         STROKE_INSET_BY_THICKNESS[Border["width-040"]];
-    const showSvg = enabled || Boolean(backgroundColor);
+    const showSvg = enabled || !!backgroundColor;
 
     const radiusClassName = radiusClassMap[radius] || radiusClassMap[Radius.sm];
+
     return (
         <div
             ref={ref}
-            className={["fds-dashed-border", radiusClassName, className]
-                .filter(Boolean)
-                .join(" ")}
+            className={clsx(rootClassName, radiusClassName, className)}
             {...otherProps}
         >
             {showSvg && (
                 <svg
                     aria-hidden="true"
-                    className="fds-dashed-border-overlay"
+                    className={overlayClassName}
                     xmlns="http://www.w3.org/2000/svg"
                     width="100%"
                     height="100%"

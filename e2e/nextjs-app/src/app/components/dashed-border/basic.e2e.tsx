@@ -7,11 +7,6 @@ import {
     Radius,
 } from "@lifesg/react-design-system";
 import { ComponentType } from "react";
-// Temporary workaround to bypass Linaria's handling of the DashedBorder component,
-// which causes styles not to be applied in this story.
-// This allows us to test the basic functionality of the component while we wait
-// for a proper way to implement Linaria.
-import "../../../../../../src/dashed-border/dashed-border.css";
 
 const DashedBorderComponent =
     DashedBorder as unknown as ComponentType<DashedBorderProps>;
