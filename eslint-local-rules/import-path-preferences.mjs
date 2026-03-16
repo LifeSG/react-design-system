@@ -4,11 +4,24 @@ import path from "node:path";
 const SRC_PREFIX = "src/";
 const STORYBOOK_COMMON_PREFIX = "stories/storybook-common";
 const PACKAGE_PREFIX = "@lifesg/react-design-system";
+const SOURCE_EXTENSIONS = [".ts", ".tsx", ".js", ".jsx"];
+
+const RELATIVE_SRC_BARE_PATTERN = /^(?:\.\.\/)+src$/;
+const RELATIVE_SRC_PATTERN = /^(?:\.\.\/)+src\/(.+)$/;
+const RELATIVE_STORYBOOK_COMMON_PATTERN =
+    /^(?:(?:\.\.\/)+|\.\/)storybook-common(?:\/(.*))?$/;
+const SRC_IN_STORIES_OR_TESTS_PATTERN = /^(?:\.\.\/)+src(?:\/|$)/;
+const STORYBOOK_COMMON_IN_STORIES_PATTERN =
+    /^(?:(?:\.\.\/)+|\.\/)storybook-common(?:\/|$)/;
 
 function normalizePath(filePath) {
     return filePath.replaceAll("\\", "/");
 }
 
+/**
+ * Identify which folder policy applies to a given file.
+ * The rule intentionally uses filename paths to decide behavior.
+ */
 function detectZone(filename) {
     const normalizedFilename = normalizePath(filename);
 
@@ -33,19 +46,26 @@ function toKebabCase(value) {
         .toLowerCase();
 }
 
+/**
+ * Check whether a `src/<module>` path exists either as:
+ * - a directory with index file
+ * - a direct module file
+ */
 function hasSrcModule(cwd, modulePath) {
     const basePath = path.join(cwd, modulePath);
-    const extensions = [".ts", ".tsx", ".js", ".jsx"];
 
     if (fs.existsSync(basePath) && fs.statSync(basePath).isDirectory()) {
-        return extensions.some((ext) =>
+        return SOURCE_EXTENSIONS.some((ext) =>
             fs.existsSync(path.join(basePath, `index${ext}`))
         );
     }
 
-    return extensions.some((ext) => fs.existsSync(`${basePath}${ext}`));
+    return SOURCE_EXTENSIONS.some((ext) => fs.existsSync(`${basePath}${ext}`));
 }
 
+/**
+ * Infer module path when there is exactly one named import and module exists.
+ */
 function inferSrcPathFromBareImport(node, cwd) {
     if (node.type !== "ImportDeclaration") return null;
     if (node.specifiers.length !== 1) return null;
@@ -59,20 +79,19 @@ function inferSrcPathFromBareImport(node, cwd) {
 }
 
 function relativeSrcToAlias(node, cwd, importSource) {
-    if (/^(?:\.\.\/)+src$/.test(importSource)) {
+    if (RELATIVE_SRC_BARE_PATTERN.test(importSource)) {
         return inferSrcPathFromBareImport(node, cwd) || "src";
     }
 
-    const match = importSource.match(/^(?:\.\.\/)+src\/(.+)$/);
+    const match = importSource.match(RELATIVE_SRC_PATTERN);
     if (!match) return null;
     return `${SRC_PREFIX}${match[1]}`;
 }
 
 function relativeStorybookCommonToAlias(importSource) {
-    const match = importSource.match(
-        /^(?:(?:\.\.\/)+|\.\/)storybook-common(?:\/(.*))?$/
-    );
+    const match = importSource.match(RELATIVE_STORYBOOK_COMMON_PATTERN);
     if (!match) return null;
+
     const suffix = match[1];
     return suffix
         ? `${STORYBOOK_COMMON_PREFIX}/${suffix}`
@@ -101,14 +120,16 @@ function srcAliasToRelative(filename, importSource) {
 }
 
 function relativeSrcToPackage(importSource) {
-    if (/^(?:\.\.\/)+src$/.test(importSource)) return PACKAGE_PREFIX;
+    if (RELATIVE_SRC_BARE_PATTERN.test(importSource)) return PACKAGE_PREFIX;
 
-    const match = importSource.match(/^(?:\.\.\/)+src\/(.+)$/);
+    const match = importSource.match(RELATIVE_SRC_PATTERN);
     if (!match) return null;
     return `${PACKAGE_PREFIX}/${match[1]}`;
 }
 
 function getReplacement(zone, context, node, importSource) {
+    // Policy: in stories, prefer `src/*` for components and
+    // `stories/storybook-common/*` for shared Storybook helpers.
     if (zone === "stories") {
         return (
             relativeSrcToAlias(node, context.cwd, importSource) ||
@@ -116,14 +137,17 @@ function getReplacement(zone, context, node, importSource) {
         );
     }
 
+    // Policy: in tests, prefer `src/*` for component imports.
     if (zone === "tests") {
         return relativeSrcToAlias(node, context.cwd, importSource);
     }
 
+    // Policy: inside src, prefer relative imports over `src/*`.
     if (zone === "src") {
         return srcAliasToRelative(context.filename, importSource);
     }
 
+    // Policy: in nextjs-app, prefer package imports over direct relative src paths.
     if (zone === "nextjs") {
         return relativeSrcToPackage(importSource);
     }
@@ -133,15 +157,18 @@ function getReplacement(zone, context, node, importSource) {
 
 function getMessageId(zone, importSource) {
     if (zone === "stories") {
-        if (/^(?:\.\.\/)+src(?:\/|$)/.test(importSource)) return "storiesSrc";
-        if (
-            /^(?:(?:\.\.\/)+|\.\/)storybook-common(?:\/|$)/.test(importSource)
-        ) {
+        if (SRC_IN_STORIES_OR_TESTS_PATTERN.test(importSource)) {
+            return "storiesSrc";
+        }
+        if (STORYBOOK_COMMON_IN_STORIES_PATTERN.test(importSource)) {
             return "storiesStorybookCommon";
         }
     }
 
-    if (zone === "tests" && /^(?:\.\.\/)+src(?:\/|$)/.test(importSource)) {
+    if (
+        zone === "tests" &&
+        SRC_IN_STORIES_OR_TESTS_PATTERN.test(importSource)
+    ) {
         return "testsSrc";
     }
 
@@ -149,7 +176,10 @@ function getMessageId(zone, importSource) {
         return "srcRelative";
     }
 
-    if (zone === "nextjs" && /^(?:\.\.\/)+src(?:\/|$)/.test(importSource)) {
+    if (
+        zone === "nextjs" &&
+        SRC_IN_STORIES_OR_TESTS_PATTERN.test(importSource)
+    ) {
         return "nextjsPackage";
     }
 
@@ -181,11 +211,10 @@ const importPathPreferencesRule = {
         const zone = detectZone(context.filename);
         if (!zone) return {};
 
-        function validateSourceNode(node) {
+        function validateImportSource(node) {
             if (!node?.source || typeof node.source.value !== "string") return;
 
             const importSource = node.source.value;
-
             const replacement = getReplacement(
                 zone,
                 context,
@@ -211,7 +240,7 @@ const importPathPreferencesRule = {
         }
 
         return {
-            ImportDeclaration: validateSourceNode,
+            ImportDeclaration: validateImportSource,
         };
     },
 };
