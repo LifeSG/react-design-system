@@ -9,6 +9,7 @@ import {
 } from "./histogram-slider.styles";
 import { HistogramSliderProps } from "./types";
 import { SimpleIdGenerator } from "../util";
+import { concatIds } from "../shared/accessibility";
 
 export const HistogramSlider = ({
     bins = [],
@@ -20,6 +21,8 @@ export const HistogramSlider = ({
     rangeLabelPrefix,
     rangeLabelSuffix,
     ariaLabels,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
     onChange,
     onChangeEnd,
     renderEmptyView,
@@ -41,6 +44,10 @@ export const HistogramSlider = ({
     );
     const [internalId] = useState(() => SimpleIdGenerator.generate());
     const rangeLabelId = `${internalId}-range-label`;
+    const sliderDescribedBy = concatIds(
+        ariaDescribedBy,
+        showRangeLabels ? rangeLabelId : undefined
+    );
 
     const items = useMemo(() => {
         const sorted = [...bins].sort((a, b) => a.minValue - b.minValue);
@@ -142,9 +149,8 @@ export const HistogramSlider = ({
                     disabled={disabled}
                     readOnly={readOnly}
                     ariaLabels={ariaLabels}
-                    aria-describedby={
-                        showRangeLabels ? rangeLabelId : undefined
-                    }
+                    aria-describedby={sliderDescribedBy}
+                    aria-labelledby={ariaLabelledBy}
                     onChange={handleChange}
                     onChangeEnd={handleChangeEnd}
                 />
