@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import { Colour } from "../theme";
 import {
@@ -14,8 +14,6 @@ import {
 import { InputRangeSliderProps } from "./types";
 import { SimpleIdGenerator } from "../util";
 import { VisuallyHidden, concatIds } from "../shared/accessibility";
-
-const ANNOUNCEMENT_DEBOUNCE_MS = 500;
 
 export const InputRangeSlider = ({
     id,
@@ -53,9 +51,6 @@ export const InputRangeSlider = ({
     const indicatorTextId = `${internalId}-indicator`;
     const instructionTextId = `${internalId}-instruction`;
     const resolvedAriaLabels = getResolvedAriaLabels();
-    const announcementTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-        null
-    );
 
     // =========================================================================
     // EFFECTS
@@ -65,12 +60,6 @@ export const InputRangeSlider = ({
             setSelection(initialiseSelection());
         }
     }, [value]);
-
-    useEffect(() => {
-        return () => {
-            clearPendingAnnouncement();
-        };
-    }, []);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -83,7 +72,6 @@ export const InputRangeSlider = ({
         if (typeof value === "number") {
             const nextValue = [value];
             setSelection(nextValue);
-            scheduleRangePercentageAnnouncement(index > -1 ? index : 0);
             onChange?.(nextValue);
             return;
         }
@@ -95,9 +83,6 @@ export const InputRangeSlider = ({
 
         const nextValue = [...value];
         setSelection(nextValue);
-        if (index > -1) {
-            scheduleRangePercentageAnnouncement(index);
-        }
         onChange?.(nextValue);
     };
 
@@ -131,7 +116,6 @@ export const InputRangeSlider = ({
             return;
         }
 
-        clearPendingAnnouncement();
         clearAnnouncer("assertive");
         announce(message, "assertive");
     };
@@ -149,32 +133,6 @@ export const InputRangeSlider = ({
             values.push(min + step * i);
         }
         return values;
-    }
-
-    function clearPendingAnnouncement() {
-        if (announcementTimeoutRef.current) {
-            clearTimeout(announcementTimeoutRef.current);
-            announcementTimeoutRef.current = null;
-        }
-    }
-
-    function scheduleRangePercentageAnnouncement(index: number) {
-        if (disabled || readOnly) {
-            return;
-        }
-
-        const announcement = getThumbDescriptionText(index);
-
-        if (!announcement) {
-            return;
-        }
-
-        clearPendingAnnouncement();
-
-        announcementTimeoutRef.current = setTimeout(() => {
-            clearAnnouncer("polite");
-            announce(announcement, "polite");
-        }, ANNOUNCEMENT_DEBOUNCE_MS);
     }
 
     function getResolvedAriaLabels() {

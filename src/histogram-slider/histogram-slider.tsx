@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import { Typography } from "../typography";
 import {
     Bar,
@@ -10,6 +11,8 @@ import {
 import { HistogramSliderProps } from "./types";
 import { SimpleIdGenerator } from "../util";
 import { concatIds } from "../shared/accessibility";
+
+const ANNOUNCEMENT_DEBOUNCE_MS = 500;
 
 export const HistogramSlider = ({
     bins = [],
@@ -43,6 +46,9 @@ export const HistogramSlider = ({
         initSelection()
     );
     const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const announcementTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+        null
+    );
     const rangeLabelId = `${internalId}-range-label`;
     const sliderDescribedBy = concatIds(
         ariaDescribedBy,
@@ -76,6 +82,12 @@ export const HistogramSlider = ({
         }
     }, [value]);
 
+    useEffect(() => {
+        return () => {
+            clearPendingAnnouncement();
+        };
+    }, []);
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
@@ -83,6 +95,7 @@ export const HistogramSlider = ({
         const [val1, val2] = values;
         const newSelection: [number, number] = [val1, val2];
         setSelection(newSelection);
+        scheduleRangePercentageAnnouncement(newSelection);
         onChange?.(newSelection);
     };
 
@@ -90,6 +103,7 @@ export const HistogramSlider = ({
         const [val1, val2] = values;
         const newSelection: [number, number] = [val1, val2];
         setSelection(newSelection);
+        scheduleRangePercentageAnnouncement(newSelection);
         onChangeEnd?.(newSelection);
     };
 
@@ -100,7 +114,14 @@ export const HistogramSlider = ({
         return value ?? [minValue, minValue + interval];
     }
 
-    function getRangePercentageDescription() {
+    function clearPendingAnnouncement() {
+        if (announcementTimeoutRef.current) {
+            clearTimeout(announcementTimeoutRef.current);
+            announcementTimeoutRef.current = null;
+        }
+    }
+
+    function getRangePercentageDescription(currentSelection: [number, number]) {
         const totalCount = items.reduce((sum, item) => sum + item.count, 0);
 
         if (totalCount === 0) {
@@ -109,7 +130,8 @@ export const HistogramSlider = ({
 
         const selectedCount = items.reduce((sum, item) => {
             const isSelected =
-                item.minValue >= selection[0] && item.minValue < selection[1];
+                item.minValue >= currentSelection[0] &&
+                item.minValue < currentSelection[1];
 
             return isSelected ? sum + item.count : sum;
         }, 0);
@@ -117,6 +139,23 @@ export const HistogramSlider = ({
         const percentage = Math.round((selectedCount / totalCount) * 100);
 
         return `${percentage}% of results available in the range you specified.`;
+    }
+
+    function scheduleRangePercentageAnnouncement(
+        currentSelection: [number, number]
+    ) {
+        if (disabled || readOnly) {
+            return;
+        }
+
+        const announcement = getRangePercentageDescription(currentSelection);
+
+        clearPendingAnnouncement();
+
+        announcementTimeoutRef.current = setTimeout(() => {
+            clearAnnouncer("polite");
+            announce(announcement, "polite");
+        }, ANNOUNCEMENT_DEBOUNCE_MS);
     }
 
     // =========================================================================
@@ -136,7 +175,7 @@ export const HistogramSlider = ({
     };
 
     const renderHistogramSlider = () => {
-        const selectionDescription = getRangePercentageDescription();
+        const selectionDescription = getRangePercentageDescription(selection);
 
         return (
             <>
