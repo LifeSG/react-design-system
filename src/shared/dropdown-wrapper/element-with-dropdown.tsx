@@ -24,8 +24,7 @@ import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
 
 import { useFloatingChild } from "../../overlay/use-floating-context";
-import { ThemeContext as FDSThemeContext } from "../../theme/theme-provider/context";
-import { useInheritedThemeVariables } from "../../theme/theme-provider/hooks";
+import { useInheritedThemeScope } from "../../theme/theme-provider/hooks";
 import { V3_Breakpoint } from "../../v3_theme";
 import type { DropdownAlignmentType } from "./types";
 
@@ -139,7 +138,6 @@ export const ElementWithDropdown = ({
     // CONST, STATE, REF
     // =============================================================================
     const theme = useContext(ThemeContext);
-    const themeContext = useContext(FDSThemeContext);
     const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
     const elementRef = useRef<HTMLDivElement | null>(null);
     const { width: referenceWidth = 0 } = useResizeDetector({
@@ -210,7 +208,7 @@ export const ElementWithDropdown = ({
         open: { opacity: 1 },
         duration: 300,
     });
-    const themeVariables = useInheritedThemeVariables(isMounted);
+    const { themeProps, themeStyle } = useInheritedThemeScope(isMounted);
 
     const click = useClick(context, {
         enabled,
@@ -260,11 +258,7 @@ export const ElementWithDropdown = ({
                         <DropdownRenderContext.Provider
                             value={dropdownRenderProps}
                         >
-                            <div
-                                data-fds-theme={themeContext?.theme}
-                                data-fds-theme-mode={themeContext?.mode}
-                                style={themeVariables}
-                            >
+                            <div {...themeProps} style={themeStyle}>
                                 {renderDropdown(dropdownRenderProps)}
                             </div>
                         </DropdownRenderContext.Provider>

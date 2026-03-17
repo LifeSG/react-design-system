@@ -16,8 +16,7 @@ import type { HTMLAttributes } from "react";
 import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
-import { ThemeContext as FDSThemeContext } from "../theme/theme-provider/context";
-import { useInheritedThemeVariables } from "../theme/theme-provider/hooks";
+import { useInheritedThemeScope } from "../theme/theme-provider/hooks";
 import { SidenavContext } from "./sidenav-context";
 import {
     Container,
@@ -51,7 +50,6 @@ export const SidenavItem = ({
     } = useContext(SidenavContext);
 
     const id = otherProps.id || title.toLowerCase().replaceAll(" ", "-");
-    const themeContext = useContext(FDSThemeContext);
     const drawerId = `${internalId}-drawer`;
     const isSelected = !!selectedItem && selectedItem.itemId === id;
     const isCurrent = !!currentItem && currentItem.itemId === id;
@@ -121,7 +119,7 @@ export const SidenavItem = ({
     ]);
 
     const { isMounted, styles } = useTransitionStyles(context);
-    const themeVariables = useInheritedThemeVariables(isMounted);
+    const { themeProps, themeStyle } = useInheritedThemeScope(isMounted);
 
     // =========================================================================
     // EFFECTS
@@ -222,11 +220,10 @@ export const SidenavItem = ({
                         <div
                             id={drawerId}
                             data-testid="sidenav-drawer"
-                            data-fds-theme={themeContext?.theme}
-                            data-fds-theme-mode={themeContext?.mode}
                             ref={setDrawerRef}
+                            {...themeProps}
                             style={{
-                                ...themeVariables,
+                                ...themeStyle,
                                 ...floatingStyles,
                             }}
                             {...getFloatingProps()}

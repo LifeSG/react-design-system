@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useIsomorphicLayoutEffect } from "../../util";
 import { setupBreakpointListener } from "./breakpoint";
@@ -28,9 +28,9 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({
 
     const themeMode = isModeControlled ? mode : computedMode;
 
-    const setThemeElementRef = useCallback((node: HTMLDivElement | null) => {
+    const setThemeElementRef = (node: HTMLDivElement | null) => {
         setThemeElement(node);
-    }, []);
+    };
 
     useIsomorphicLayoutEffect(() => {
         const cleanup = setupBreakpointListener();

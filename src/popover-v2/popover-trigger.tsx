@@ -20,8 +20,7 @@ import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 
 import { useFloatingChild } from "../overlay/use-floating-context";
-import { ThemeContext as FDSThemeContext } from "../theme/theme-provider/context";
-import { useInheritedThemeVariables } from "../theme/theme-provider/hooks";
+import { useInheritedThemeScope } from "../theme/theme-provider/hooks";
 import { SimpleIdGenerator } from "../util";
 import { V3_Breakpoint } from "../v3_theme";
 import { PopoverV2 } from "./popover";
@@ -54,7 +53,6 @@ export const PopoverTrigger = ({
     const nodeRef = useRef<HTMLElement | null>(null);
     const popoverRef = useRef<HTMLElement | null>(null);
     const theme = useContext(ThemeContext);
-    const themeContext = useContext(FDSThemeContext);
     const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const [availableHeight, setAvailableHeight] = useState(0);
@@ -88,7 +86,7 @@ export const PopoverTrigger = ({
         },
     });
     const parentZIndex = useFloatingChild();
-    const themeVariables = useInheritedThemeVariables(visible);
+    const { themeProps, themeStyle } = useInheritedThemeScope(visible);
 
     const trigger: PopoverV2TriggerType = isMobile ? "click" : _trigger;
     const isTooltip = trigger === "hover";
@@ -223,11 +221,10 @@ export const PopoverTrigger = ({
                                 popoverRef.current = node;
                                 refs.setFloating(node);
                             }}
-                            data-fds-theme={themeContext?.theme}
-                            data-fds-theme-mode={themeContext?.mode}
+                            {...themeProps}
                             onBlur={handleBlur}
                             style={{
-                                ...themeVariables,
+                                ...themeStyle,
                                 ...floatingStyles,
                                 outline: "none",
                                 zIndex: zIndex ?? parentZIndex,
