@@ -1,4 +1,4 @@
-import { Colour } from "src/theme";
+import { PrimitiveColour } from "../../colour-primitive/theme-helper";
 import { ColourSemantic } from "../../colour-semantic/theme-helper";
 import { RadiusValues } from "../../radius/theme-helper";
 import { ComponentTokenSet } from "../types";
@@ -15,7 +15,7 @@ export const LifeSGComponentTokenSet: ComponentTokenSet = {
         "button-link-colour-text": ColourSemantic["text-primary"],
     },
     Animation: {
-        "loading-dots-spinner-colour": Colour.Primitive["brand-50"],
+        "loading-dots-spinner-colour": PrimitiveColour["brand-50"],
     },
     Navbar: {
         "navbar-full-height": "6rem",
