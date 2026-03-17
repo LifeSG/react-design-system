@@ -163,7 +163,10 @@ export default defineConfig([
         plugins: {
             "@typescript-eslint": pluginTypescriptEslint,
         },
-        rules: sharedTsRules,
+        rules: {
+            ...sharedTsRules,
+            "react/prop-types": "off",
+        },
     },
     {
         files: reactSourceFileGlobs,

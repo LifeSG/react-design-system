@@ -1,5 +1,5 @@
-import { ValueOf } from "../util/utility-types";
-import {
+import type { ValueOf } from "../util/utility-types";
+import type {
     Border,
     Breakpoint,
     ComponentToken,

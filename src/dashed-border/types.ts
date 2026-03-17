@@ -1,9 +1,9 @@
-import {
+import type {
     BorderThickness,
     ColourCSSVariableString,
     RadiusCSSVariableString,
 } from "../theme";
-import { ValueOf } from "../util/utility-types";
+import type { ValueOf } from "../util/utility-types";
 
 type CustomCssValue = number | (string & {});
 type CustomCssString = string & {};

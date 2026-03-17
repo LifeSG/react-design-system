@@ -1,17 +1,19 @@
+import type {
+    ColourCSSVariableString,
+    RadiusCSSVariableString,
+} from "../theme";
 import {
     BorderThickness,
     Colour,
-    ColourCSSVariableString,
-    Radius,
-    RadiusCSSVariableString,
     getEffectiveTokenOrCustom,
     getTokenOrDefault,
     isTokenFromSet,
     isTokenWithPrefix,
+    Radius,
     toCssValue,
 } from "../theme";
-import { ValueOf } from "../util/utility-types";
-import { DashedBorderProps } from "./types";
+import type { ValueOf } from "../util/utility-types";
+import type { DashedBorderProps } from "./types";
 
 const radiusTokenSet = new Set<string>(Object.values(Radius));
 const thicknessTokenSet = new Set<string>(Object.values(BorderThickness));

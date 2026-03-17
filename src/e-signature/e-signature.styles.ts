@@ -4,8 +4,8 @@ import { Button } from "../button";
 import { DashedBorder } from "../dashed-border";
 import { IconButton } from "../icon-button";
 import { Modal } from "../modal";
-import { Typography } from "../typography";
 import { Border, Colour, Radius } from "../theme";
+import { Typography } from "../typography";
 import {
     V3_Border,
     V3_Breakpoint,

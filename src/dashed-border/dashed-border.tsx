@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { forwardRef, useRef } from "react";
+
 import {
     BorderThickness,
     Colour,
@@ -20,7 +21,7 @@ import {
     getRadiusToken,
     getThicknessToken,
 } from "./dashed-border.utils";
-import { DashedBorderProps } from "./types";
+import type { DashedBorderProps } from "./types";
 
 const Component = (
     props: DashedBorderProps,

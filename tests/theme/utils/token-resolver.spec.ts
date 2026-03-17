@@ -5,7 +5,7 @@ import {
     isTokenFromSet,
     isTokenWithPrefix,
     toCssValue,
-} from "../../../src/theme/utils";
+} from "src/theme/utils";
 
 describe("token-resolver utils", () => {
     describe("getResolvedValue", () => {
