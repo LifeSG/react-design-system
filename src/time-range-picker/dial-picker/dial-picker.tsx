@@ -28,6 +28,7 @@ export const DialPicker = ({
     dropdownRootNode,
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
     ...otherProps
 }: TimeRangePickerProps) => {
     // =============================================================================
@@ -173,6 +174,7 @@ export const DialPicker = ({
                     }
                     role="combobox"
                     aria-expanded={!disabled && !readOnly ? isOpen : false}
+                    aria-invalid={error || ariaInvalid || undefined}
                     aria-disabled={disabled || undefined}
                     aria-readonly={readOnly || undefined}
                     aria-labelledby={getInputLabelledBy("start")}
@@ -190,6 +192,7 @@ export const DialPicker = ({
                     }
                     role="combobox"
                     aria-expanded={!disabled && !readOnly ? isOpen : false}
+                    aria-invalid={error || ariaInvalid || undefined}
                     aria-disabled={disabled || undefined}
                     aria-readonly={readOnly || undefined}
                     aria-labelledby={getInputLabelledBy("end")}

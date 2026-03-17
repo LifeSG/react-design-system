@@ -42,6 +42,7 @@ export const ComboboxPicker = ({
     dropdownRootNode,
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
     ...otherProps
 }: TimeRangePickerProps) => {
     // =============================================================================
@@ -417,6 +418,9 @@ export const ComboboxPicker = ({
                     }
                     aria-controls={listboxId}
                     aria-autocomplete="list"
+                    aria-invalid={
+                        error || ariaInvalid || !!validationError || undefined
+                    }
                     aria-disabled={disabled || undefined}
                     aria-readonly={readOnly || undefined}
                 />
@@ -443,6 +447,9 @@ export const ComboboxPicker = ({
                     aria-expanded={dropdownOpen && activeTimeSelector === "end"}
                     aria-controls={listboxId}
                     aria-autocomplete="list"
+                    aria-invalid={
+                        error || ariaInvalid || !!validationError || undefined
+                    }
                     aria-disabled={disabled || undefined}
                     aria-readonly={readOnly || undefined}
                 />
