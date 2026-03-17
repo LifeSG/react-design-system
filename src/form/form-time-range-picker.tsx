@@ -24,7 +24,7 @@ export const FormTimeRangePicker = ({
     ...otherProps
 }: FormTimeRangePickerProps): JSX.Element => {
     const [internalId] = useState(
-        () => `form-field-${SimpleIdGenerator.generate()}`
+        () => `form-time-range-picker-${SimpleIdGenerator.generate()}`
     );
     const inputId = id ?? internalId;
     return (

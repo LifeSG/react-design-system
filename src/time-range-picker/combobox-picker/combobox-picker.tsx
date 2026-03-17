@@ -65,6 +65,7 @@ export const ComboboxPicker = ({
     const listboxId = `${internalId}-listbox`;
     const startLabelId = `${internalId}-start-label`;
     const endLabelId = `${internalId}-end-label`;
+    const errorId = `${internalId}-error-message`;
 
     const startOptions = useMemo(
         () =>
@@ -166,11 +167,7 @@ export const ComboboxPicker = ({
     const getInputDescribedBy = () => {
         return concatIds(
             ariaDescribedBy,
-            !error && validationError
-                ? id
-                    ? `${id}-error-message`
-                    : "error-message"
-                : undefined
+            !error && validationError ? errorId : undefined
         );
     };
 
@@ -412,6 +409,7 @@ export const ComboboxPicker = ({
                     onKeyDown={handleKeyDownEvent}
                     autoComplete="off"
                     type="text"
+                    role="combobox"
                     aria-labelledby={getInputLabelledBy("start")}
                     aria-describedby={getInputDescribedBy()}
                     aria-expanded={
@@ -439,6 +437,7 @@ export const ComboboxPicker = ({
                     onKeyDown={handleKeyDownEvent}
                     autoComplete="off"
                     type="text"
+                    role="combobox"
                     aria-labelledby={getInputLabelledBy("end")}
                     aria-describedby={getInputDescribedBy()}
                     aria-expanded={dropdownOpen && activeTimeSelector === "end"}
@@ -459,7 +458,7 @@ export const ComboboxPicker = ({
             <ErrorMessageContainer>
                 <ErrorIcon aria-hidden />
                 <ErrorMessage
-                    id={id ? `${id}-error-message` : "error-message"}
+                    id={errorId}
                     tabIndex={0}
                     data-testid={id ? `${id}-error-message` : "error-message"}
                 >

@@ -216,6 +216,8 @@ describe("TimeRangePicker", () => {
 
                 expect(screen.getByLabelText(START_LABEL)).toHaveValue("");
                 expect(mockOnChange).toHaveBeenCalledTimes(0);
+
+                // Remain at start if both fields are empty
                 expect(screen.getByLabelText(START_LABEL)).toHaveFocus();
             });
 

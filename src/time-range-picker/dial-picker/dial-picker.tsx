@@ -8,6 +8,8 @@ import {
     DropdownRenderProps,
     ElementWithDropdown,
 } from "../../shared/dropdown-wrapper";
+import { SimpleIdGenerator } from "../../util";
+import { concatIds } from "../../shared/accessibility";
 
 type Active = "start" | "end" | "none";
 
@@ -24,6 +26,8 @@ export const DialPicker = ({
     alignment = "left",
     dropdownZIndex,
     dropdownRootNode,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
     ...otherProps
 }: TimeRangePickerProps) => {
     // =============================================================================
@@ -37,7 +41,13 @@ export const DialPicker = ({
 
     const enabled = !readOnly && !disabled;
     const nodeRef = useRef<HTMLDivElement>(null);
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const startLabelId = `${internalId}-start-label`;
+    const endLabelId = `${internalId}-end-label`;
 
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
     const getDropdownAriaLabel = () => {
         if (active === "start") {
             return "Selecting for: Start time";
@@ -50,6 +60,16 @@ export const DialPicker = ({
         return undefined;
     };
 
+    const getInputLabelledBy = (type: Exclude<Active, "none">) => {
+        return concatIds(
+            ariaLabelledBy,
+            type === "start" ? startLabelId : endLabelId
+        );
+    };
+
+    const getInputDescribedBy = () => {
+        return concatIds(ariaDescribedBy);
+    };
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -128,56 +148,55 @@ export const DialPicker = ({
     };
 
     const renderElement = () => (
-        <Wrapper
+        <TimeContainer
             ref={nodeRef}
-            id={id}
             tabIndex={-1}
             onBlur={handleContainerBlur}
             data-testid="timepicker-container"
             role="group"
-            {...otherProps}
+            $disabled={disabled}
+            $error={error}
+            $readOnly={readOnly}
+            $focused={focused}
         >
-            <TimeContainer
-                $disabled={disabled}
-                $error={error}
-                $readOnly={readOnly}
-                $focused={focused}
-            >
-                <RangeInputInnerContainer error={error} currentActive={active}>
-                    <SelectorInput
-                        onFocus={() => handleOpen("start")}
-                        onClick={() => handleOpen("start")}
-                        readOnly
-                        placeholder="From"
-                        value={TimeHelper.formatDisplayValue(
-                            startTimeVal,
-                            format
-                        )}
-                        aria-label="Start time"
-                        data-testid={
-                            otherProps["data-testid"]
-                                ? `${otherProps["data-testid"]}-timepicker-selector-from`
-                                : "timepicker-selector-from"
-                        }
-                    />
-                    <SelectorInput
-                        onClick={() => handleOpen("end")}
-                        readOnly
-                        placeholder="To"
-                        value={TimeHelper.formatDisplayValue(
-                            endTimeVal,
-                            format
-                        )}
-                        aria-label="End time"
-                        data-testid={
-                            otherProps["data-testid"]
-                                ? `${otherProps["data-testid"]}-timepicker-selector-to`
-                                : "timepicker-selector-to"
-                        }
-                    />
-                </RangeInputInnerContainer>
-            </TimeContainer>
-        </Wrapper>
+            <RangeInputInnerContainer error={error} currentActive={active}>
+                <SelectorInput
+                    onFocus={() => handleOpen("start")}
+                    onClick={() => handleOpen("start")}
+                    readOnly
+                    placeholder="From"
+                    value={TimeHelper.formatDisplayValue(startTimeVal, format)}
+                    data-testid={
+                        otherProps["data-testid"]
+                            ? `${otherProps["data-testid"]}-timepicker-selector-from`
+                            : "timepicker-selector-from"
+                    }
+                    role="combobox"
+                    aria-expanded={!disabled && !readOnly ? isOpen : false}
+                    aria-disabled={disabled || undefined}
+                    aria-readonly={readOnly || undefined}
+                    aria-labelledby={getInputLabelledBy("start")}
+                    aria-describedby={getInputDescribedBy()}
+                />
+                <SelectorInput
+                    onClick={() => handleOpen("end")}
+                    readOnly
+                    placeholder="To"
+                    value={TimeHelper.formatDisplayValue(endTimeVal, format)}
+                    data-testid={
+                        otherProps["data-testid"]
+                            ? `${otherProps["data-testid"]}-timepicker-selector-to`
+                            : "timepicker-selector-to"
+                    }
+                    role="combobox"
+                    aria-expanded={!disabled && !readOnly ? isOpen : false}
+                    aria-disabled={disabled || undefined}
+                    aria-readonly={readOnly || undefined}
+                    aria-labelledby={getInputLabelledBy("end")}
+                    aria-describedby={getInputDescribedBy()}
+                />
+            </RangeInputInnerContainer>
+        </TimeContainer>
     );
 
     const renderDropdown = ({
