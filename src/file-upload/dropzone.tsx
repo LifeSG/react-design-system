@@ -73,8 +73,9 @@ const Component = (
     const renderDragOverlay = () => (
         <DragOverlay
             colour={Colour["border-primary"]}
-            thickness={Border["width-020"]}
+            thickness={Border["width-040"]}
             radius={Radius["sm"]}
+            enabled={border}
         >
             <OverlayIcon />
             <OverlayText weight="semibold">Drop files here</OverlayText>
@@ -87,7 +88,7 @@ const Component = (
             data-testid={testId || "dropzone"}
             enabled={border}
             $showDashedBorder={border}
-            thickness={Border["width-020"]}
+            thickness={Border["width-040"]}
             radius={Radius["sm"]}
             colour={isDragActive ? Colour["border-primary"] : Colour["border"]}
             backgroundColor={

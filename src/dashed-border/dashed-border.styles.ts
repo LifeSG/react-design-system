@@ -1,41 +1,20 @@
 import { css } from "@linaria/core";
-import { Radius } from "../theme";
 
-export const rootClassName = css`
+export const root = css`
     position: relative;
+    overflow: hidden;
+    border-radius: var(--dashed-border-radius, 0);
 `;
 
-export const overlayClassName = css`
+export const overlay = css`
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+    background-color: var(--dashed-border-bg-color, transparent);
+    background-image: var(--dashed-border-bg-image, none);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
     pointer-events: none;
 `;
-
-export const radiusClassMap = {
-    [Radius.none]: css`
-        overflow: hidden;
-        border-radius: ${Radius.none};
-    `,
-    [Radius.xs]: css`
-        overflow: hidden;
-        border-radius: ${Radius.xs};
-    `,
-    [Radius.sm]: css`
-        overflow: hidden;
-        border-radius: ${Radius.sm};
-    `,
-    [Radius.md]: css`
-        overflow: hidden;
-        border-radius: ${Radius.md};
-    `,
-    [Radius.lg]: css`
-        overflow: hidden;
-        border-radius: ${Radius.lg};
-    `,
-    [Radius.full]: css`
-        overflow: hidden;
-        border-radius: ${Radius.full};
-    `,
-} as const;
