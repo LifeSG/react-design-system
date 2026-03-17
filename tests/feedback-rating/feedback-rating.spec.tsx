@@ -38,7 +38,7 @@ describe("FeedbackRating", () => {
         expect(screen.getByText(description)).toBeInTheDocument();
     });
 
-    it("should wire slider description to hidden accessibility guidance text", () => {
+    it("should expose a hidden accessibility guidance text", () => {
         render(
             <FeedbackRating
                 rating={0}
@@ -48,12 +48,9 @@ describe("FeedbackRating", () => {
         );
 
         const slider = getRatingSlider();
-        const descriptionId = slider.getAttribute("aria-describedby");
-
-        expect(descriptionId).toBeTruthy();
-        expect(
-            document.getElementById(descriptionId as string)
-        ).toHaveTextContent("Minimum, 1 star. Maximum, 5 stars.");
+        expect(slider).toHaveAccessibleDescription(
+            "Minimum, 1 star. Maximum, 5 stars."
+        );
     });
 
     it("should be able to render custom button label", () => {

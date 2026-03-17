@@ -61,10 +61,14 @@ describe("OtpInput", () => {
         render(<OtpInput numOfInput={3} cooldownDuration={10} />);
 
         const timer = screen.getByRole("timer");
+        const resendButton = screen.getByRole("button", {
+            name: "Resend OTP in 10 seconds",
+        });
+
         expect(timer).toHaveTextContent("10 seconds remaining");
-        expect(
-            screen.getByRole("button", { name: "Resend OTP in 10 seconds" })
-        ).toHaveAttribute("aria-describedby", timer.id);
+        expect(resendButton).toHaveAccessibleDescription(
+            "10 seconds remaining"
+        );
     });
 
     it("should invoke onChange with the correct value", () => {

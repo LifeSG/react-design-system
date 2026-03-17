@@ -93,16 +93,19 @@ describe("Accordion", () => {
                     </Accordion>
                 );
 
-                // Checking if the same button did indeed change it's label
-                const button = screen.getByTestId(ACCORDION_BUTTON_ID);
-                expect(button).toBeInTheDocument();
-                expect(button.innerHTML).toBe("<span>Hide all</span>");
+                const button = screen.getByRole("button", { name: "Hide all" });
+                expect(button).toHaveAccessibleName("Hide all");
 
                 act(() => {
                     fireEvent.click(button);
                 });
 
-                expect(button.innerHTML).toBe("<span>Show all</span>");
+                expect(
+                    screen.getByRole("button", { name: "Show all" })
+                ).toBeInTheDocument();
+                expect(
+                    screen.queryByRole("button", { name: "Hide all" })
+                ).not.toBeInTheDocument();
             });
 
             it("should minimise all the children items if the button has been clicked", () => {

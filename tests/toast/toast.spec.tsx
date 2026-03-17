@@ -15,7 +15,9 @@ describe("Toast", () => {
         render(<Toast type="warning" title="Toast title" label="Toast body" />);
 
         expect(screen.getByText("warning")).toBeInTheDocument();
-        expect(screen.getByText("Close notification")).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", { name: "Close notification" })
+        ).toBeInTheDocument();
     });
 
     it("should toggle inert when toast is auto dismissed", () => {

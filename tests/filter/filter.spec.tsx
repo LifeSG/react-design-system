@@ -65,21 +65,9 @@ describe("Filter", () => {
             );
 
             expect(
-                within(screen.getByTestId("filter-item-title")).getByText(
-                    ITEM_TITLE
-                )
-            ).toBeInTheDocument();
-            expect(screen.getByText(ITEM_CONTENT)).toBeInTheDocument();
-        });
-
-        it("should expose the title as the expand button accessible name", () => {
-            render(
-                <Filter.Item title={ITEM_TITLE}>{ITEM_CONTENT}</Filter.Item>
-            );
-
-            expect(
                 screen.getByRole("button", { name: ITEM_TITLE })
             ).toBeInTheDocument();
+            expect(screen.getByText(ITEM_CONTENT)).toBeInTheDocument();
         });
 
         it("should toggle inert on expandable content when collapsed and expanded", () => {

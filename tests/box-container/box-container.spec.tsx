@@ -23,6 +23,9 @@ describe("BoxContainer", () => {
         );
 
         expect(screen.getByText(DEFAULT_TITLE)).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", { name: DEFAULT_TITLE })
+        ).toHaveAccessibleName(DEFAULT_TITLE);
     });
 
     it("should not render the expand/collapse button if disabled", () => {

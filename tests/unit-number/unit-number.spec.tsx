@@ -31,24 +31,21 @@ describe("UnitNumberInput", () => {
         expect(screen.queryByTestId("unit-input")).toHaveValue("03");
     });
 
-    it("should wire hidden labels and live region to both inputs", () => {
+    it("should have accessible labels and live region to both inputs", () => {
         render(<UnitNumberInput />);
 
-        const floorInput = screen.getByTestId("floor-input");
-        const unitInput = screen.getByTestId("unit-input");
-
-        const floorLabel = document.getElementById(
-            floorInput.getAttribute("aria-labelledby") as string
-        );
-        const unitLabel = document.getElementById(
-            unitInput.getAttribute("aria-labelledby") as string
-        );
+        const floorInput = screen.getByRole("textbox", {
+            name: "Enter floor number",
+        });
+        const unitInput = screen.getByRole("textbox", {
+            name: "Enter unit number",
+        });
         const liveRegion = document.getElementById(
             floorInput.getAttribute("aria-describedby") as string
         );
 
-        expect(floorLabel).toHaveTextContent("Enter floor number");
-        expect(unitLabel).toHaveTextContent("Enter unit number");
+        expect(floorInput).toHaveAccessibleName("Enter floor number");
+        expect(unitInput).toHaveAccessibleName("Enter unit number");
         expect(liveRegion).toHaveAttribute("aria-live", "polite");
         expect(unitInput).toHaveAttribute(
             "aria-describedby",
