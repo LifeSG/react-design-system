@@ -418,11 +418,9 @@ export const ComboboxPicker = ({
                     }
                     aria-controls={listboxId}
                     aria-autocomplete="list"
-                    aria-invalid={
-                        error || ariaInvalid || !!validationError || undefined
-                    }
-                    aria-disabled={disabled || undefined}
-                    aria-readonly={readOnly || undefined}
+                    aria-invalid={error || ariaInvalid || !!validationError}
+                    aria-disabled={disabled}
+                    aria-readonly={readOnly}
                 />
                 {/* To */}
                 <SelectorInput

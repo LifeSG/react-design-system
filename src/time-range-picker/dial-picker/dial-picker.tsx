@@ -174,9 +174,9 @@ export const DialPicker = ({
                     }
                     role="combobox"
                     aria-expanded={!disabled && !readOnly ? isOpen : false}
-                    aria-invalid={error || ariaInvalid || undefined}
-                    aria-disabled={disabled || undefined}
-                    aria-readonly={readOnly || undefined}
+                    aria-invalid={error || ariaInvalid}
+                    aria-disabled={disabled}
+                    aria-readonly={readOnly}
                     aria-labelledby={getInputLabelledBy("start")}
                     aria-describedby={getInputDescribedBy()}
                 />
