@@ -58,7 +58,7 @@ test.describe("Accessibility smoke", () => {
 
         await expect(page.getByRole("heading", { level: 2 })).toBeVisible();
         await expect(page.locator('[aria-live="polite"]')).toContainText(
-            "you'll be logged out in 1 minutes 5 seconds"
+            "you’ll be logged out in 1 minutes 5 seconds"
         );
     });
 

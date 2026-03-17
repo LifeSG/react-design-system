@@ -27,7 +27,7 @@ export const InactivityTimer = ({
     const buildReminderSentence = (s: number): string => {
         const min = Math.floor(s / 60);
         const sec = s % 60;
-        return `You've been inactive for a while. To protect your privacy, you'll be logged out in ${min} minutes ${sec} seconds.`;
+        return `You’ve been inactive for a while. To protect your privacy, you’ll be logged out in ${min} minutes ${sec} seconds.`;
     };
 
     useEffect(() => {

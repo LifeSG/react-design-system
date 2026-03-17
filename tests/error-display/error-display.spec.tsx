@@ -253,7 +253,7 @@ describe("ErrorDisplay", () => {
             );
 
             const message =
-                "You've been inactive for a while. To protect your privacy, you'll be logged out in 1 minutes 5 seconds.";
+                "You’ve been inactive for a while. To protect your privacy, you’ll be logged out in 1 minutes 5 seconds.";
             const liveAnnouncement = screen.getByText(message);
             const liveRegion = liveAnnouncement.closest('[aria-live="polite"]');
             expect(liveRegion).toBeInTheDocument();
