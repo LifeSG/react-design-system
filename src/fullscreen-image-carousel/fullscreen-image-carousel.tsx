@@ -5,6 +5,7 @@ import {
     MagnifierMinusIcon,
     MagnifierPlusIcon,
 } from "@lifesg/react-icons";
+import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import {
     forwardRef,
     useCallback,
@@ -78,7 +79,17 @@ export const Component = (
     const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
     const zoomRefs = useRef<(ReactZoomPanPinchContentRef | null)[]>([]);
     const imageRef = useRef<HTMLDivElement>(null);
+    const shouldAnnounceImageRef = useRef(false);
     const diff = startX && endX ? startX - endX : 0;
+
+    const getImageAriaLabel = useCallback(
+        (index: number) => {
+            const item = items[index];
+            const altText = item.alt?.trim() || `Image ${index + 1}`;
+            return `${altText}. Image ${index + 1} of ${items.length}.`;
+        },
+        [items]
+    );
 
     useImperativeHandle<FullscreenImageCarouselRef, FullscreenImageCarouselRef>(
         ref,
@@ -101,8 +112,13 @@ export const Component = (
             inline: "center",
         });
         setZoom(1);
-    }, [currentSlide]);
 
+        if (shouldAnnounceImageRef.current) {
+            clearAnnouncer("polite");
+            announce(getImageAriaLabel(currentSlide), "polite");
+            shouldAnnounceImageRef.current = false;
+        }
+    }, [currentSlide, getImageAriaLabel]);
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -194,11 +210,13 @@ export const Component = (
     // HELPER FUNCTIONS
     // =============================================================================
     const goToPrevSlide = () => {
+        shouldAnnounceImageRef.current = true;
         zoomRefs.current?.[currentSlide]?.resetTransform();
         setCurrentSlide((prev) => (prev === 0 ? items.length - 1 : prev - 1));
     };
 
     const goToNextSlide = () => {
+        shouldAnnounceImageRef.current = true;
         zoomRefs.current?.[currentSlide]?.resetTransform();
         setCurrentSlide((prev) => (prev === items.length - 1 ? 0 : prev + 1));
     };
@@ -207,15 +225,6 @@ export const Component = (
         zoomRefs.current?.[currentSlide]?.resetTransform();
         setCurrentSlide(index);
     };
-
-    const getImageAriaLabel = useCallback(
-        (index: number) => {
-            const item = items[index];
-            const altText = item.alt?.trim() || `Image ${index + 1}`;
-            return `${altText}. Image ${index + 1} of ${items.length}.`;
-        },
-        [items]
-    );
 
     // =============================================================================
     // RENDER FUNCTIONS
