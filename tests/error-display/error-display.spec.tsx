@@ -42,9 +42,9 @@ describe("ErrorDisplay", () => {
             </ThemeProvider>
         );
 
-        expect(
-            screen.getByRole("button", { name: buttonLabel })
-        ).toBeInTheDocument();
+        const action = screen.getByRole("button", { name: buttonLabel });
+        expect(action).toBeInTheDocument();
+        expect(action).toHaveAccessibleName(buttonLabel);
     });
 
     it("should be able to render custom title if specified", () => {
@@ -252,12 +252,13 @@ describe("ErrorDisplay", () => {
                 </ThemeProvider>
             );
 
-            const liveRegion = document.querySelector('[aria-live="polite"]');
+            const message =
+                "You've been inactive for a while. To protect your privacy, you'll be logged out in 1 minutes 5 seconds.";
+            const liveAnnouncement = screen.getByText(message);
+            const liveRegion = liveAnnouncement.closest('[aria-live="polite"]');
             expect(liveRegion).toBeInTheDocument();
             expect(liveRegion).toHaveAttribute("aria-atomic", "true");
-            expect(liveRegion).toHaveTextContent(
-                "You've been inactive for a while. To protect your privacy, you'll be logged out in 1 minutes 5 seconds."
-            );
+            expect(liveAnnouncement).toHaveTextContent(message);
         });
 
         it("should not render live reminder text when custom description is provided", () => {

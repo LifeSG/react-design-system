@@ -63,13 +63,7 @@ describe("MaskedInput", () => {
             );
 
             const button = screen.getByTestId("masked-input-readonly-button");
-            const labelIds = button.getAttribute("aria-labelledby");
-            expect(labelIds).toBeTruthy();
-
-            const hiddenValueDescription = document.getElementById(
-                (labelIds as string).split(" ")[0]
-            );
-            expect(hiddenValueDescription).toHaveTextContent(
+            expect(button).toHaveAccessibleName(
                 "Starting with S1 and ending with 67D"
             );
         });
