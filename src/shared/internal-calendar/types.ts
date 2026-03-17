@@ -25,6 +25,12 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     value?: string | undefined;
     /** Selected end date in `YYYY-MM-DD` format */
     endValue?: string | undefined;
+    /** Selected dates in `YYYY-MM-DD` format, used with variant="multi" */
+    values?: string[] | undefined;
+    /** Minimum number of dates that must be selected before the selection is valid, used with variant="multi" */
+    minSelectable?: number | undefined;
+    /** Maximum number of dates that can be selected at once, used with variant="multi" */
+    maxSelectable?: number | undefined;
     /** Specifies if done/cancel buttons are visible */
     withButton?: boolean | undefined;
     /** Indicate current focus in the date-input component. */
@@ -41,6 +47,8 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     onYearMonthDisplayChange?: ((value: YearMonthDisplay) => void) | undefined;
     /** Called when date is selected, returns value in `YYYY-MM-DD` format */
     onSelect?: ((value: string) => void) | undefined;
+    /** Called when multi-select changes, returns all selected dates */
+    onChange?: ((values: string[]) => void) | undefined;
     /** Called when day cell is hovered, returns value in `YYYY-MM-DD` */
     onHover?: ((value: string) => void) | undefined;
     /** Indicate the number of days used in fixed-range variant */
@@ -54,7 +62,7 @@ export interface CalendarDropdownProps extends InternalCalendarProps {
 }
 
 export type CalendarAction = "reset" | "confirmed";
-export type Variant = "single" | "range" | "week" | "fixed-range";
+export type Variant = "single" | "range" | "week" | "fixed-range" | "multi";
 export type FocusType = "start" | "end" | "none";
 export type View = "default" | "month-options" | "year-options";
 

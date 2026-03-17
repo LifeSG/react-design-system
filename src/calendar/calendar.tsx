@@ -4,39 +4,101 @@ import { InternalCalendar } from "../shared/internal-calendar";
 import { Border, Colour, Radius, Spacing } from "../theme";
 import { CalendarProps } from "./types";
 
-export const Calendar = ({
-    className,
-    styleType = "bordered",
-    value,
-    onSelect,
-    ...otherProps
-}: CalendarProps) => {
+export const Calendar = (props: CalendarProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [selectedDate, setSelectedDate] = useState<string | undefined>(value); // YYYY-MM-DD
+    const {
+        className,
+        styleType = "bordered",
+        variant,
+        id,
+        minDate,
+        maxDate,
+        disabledDates,
+        allowDisabledSelection,
+        showActiveMonthDaysOnly,
+        onHover,
+        onYearMonthDisplayChange,
+        "data-testid": dataTestId,
+    } = props;
+
+    const controlledValue =
+        props.variant !== "multi" ? props.value : undefined;
+    const controlledValues =
+        props.variant === "multi" ? props.values : undefined;
+    const minSelectable =
+        props.variant === "multi" ? props.minSelectable : undefined;
+    const maxSelectable =
+        props.variant === "multi" ? props.maxSelectable : undefined;
+
+    const resolveValues = (): string[] => {
+        if (controlledValues !== undefined) return controlledValues;
+        if (controlledValue !== undefined) return [controlledValue];
+        return [];
+    };
+
+    const [selectedValues, setSelectedValues] =
+        useState<string[]>(resolveValues);
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        setSelectedDate(value);
-    }, [value]);
+        if (controlledValues !== undefined) {
+            setSelectedValues(controlledValues);
+        } else if (controlledValue !== undefined) {
+            setSelectedValues([controlledValue]);
+        } else {
+            setSelectedValues([]);
+        }
+    }, [controlledValue, controlledValues]);
+
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleSelect = (date: string) => {
+        setSelectedValues([date]);
+        if (props.variant !== "multi") {
+            props.onChange?.(date);
+            props.onSelect?.(date);
+        }
+    };
+
+    const handleMultiSelect = (nextValues: string[]) => {
+        setSelectedValues(nextValues);
+        if (props.variant === "multi") {
+            props.onChange?.(nextValues);
+        }
+    };
 
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
     return (
-        <Wrapper className={className} $hasBorder={styleType === "bordered"}>
+        <Wrapper
+            className={className}
+            id={id}
+            data-testid={dataTestId}
+            $hasBorder={styleType === "bordered"}
+        >
             <InternalCalendar
-                value={selectedDate}
-                initialCalendarDate={selectedDate}
+                value={selectedValues[0]}
+                values={selectedValues}
+                initialCalendarDate={selectedValues[0]}
                 isFocusable={true}
-                onSelect={(value) => {
-                    setSelectedDate(value);
-                    onSelect?.(value);
-                }}
-                {...otherProps}
+                variant={variant}
+                minDate={minDate}
+                maxDate={maxDate}
+                disabledDates={disabledDates}
+                allowDisabledSelection={allowDisabledSelection}
+                showActiveMonthDaysOnly={showActiveMonthDaysOnly}
+                onHover={onHover}
+                onYearMonthDisplayChange={onYearMonthDisplayChange}
+                onSelect={handleSelect}
+                onChange={handleMultiSelect}
+                minSelectable={minSelectable}
+                maxSelectable={maxSelectable}
             />
         </Wrapper>
     );

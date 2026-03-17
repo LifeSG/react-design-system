@@ -8,28 +8,8 @@ const STRING_FORMAT = (
 
 const DATA: ApiTableSectionProps[] = [
     {
-        name: "Calendar specific props",
+        name: "Calendar props (shared)",
         attributes: [
-            {
-                name: "minDate",
-                description: (
-                    <>
-                        Specifies the minimum date allowed for selection in
-                        the&nbsp;{STRING_FORMAT}&nbsp;{`(Inclusive)`}
-                    </>
-                ),
-                propTypes: ["string"],
-            },
-            {
-                name: "maxDate",
-                description: (
-                    <>
-                        Specifies the maximum date allowed for selection in
-                        the&nbsp;{STRING_FORMAT}&nbsp;{`(Inclusive)`}
-                    </>
-                ),
-                propTypes: ["string"],
-            },
             {
                 name: "className",
                 description: "Class selector for the component",
@@ -57,11 +37,21 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "value",
+                name: "minDate",
                 description: (
                     <>
-                        The value of the selected date in the&nbsp;
-                        {STRING_FORMAT}
+                        Specifies the minimum date allowed for selection in
+                        the&nbsp;{STRING_FORMAT}&nbsp;{`(Inclusive)`}
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
+                name: "maxDate",
+                description: (
+                    <>
+                        Specifies the maximum date allowed for selection in
+                        the&nbsp;{STRING_FORMAT}&nbsp;{`(Inclusive)`}
                     </>
                 ),
                 propTypes: ["string"],
@@ -74,10 +64,10 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `"bordered"`,
             },
             {
-                name: "onYearMonthDisplayChange",
-                description:
-                    "Called when there is a change in the current visible month and year",
-                propTypes: ["(value: YearMonthDisplay) => void"],
+                name: "variant",
+                description: "Specifies the calendar selection mode",
+                propTypes: [`"single"`, `"multi"`],
+                defaultValue: `"single"`,
             },
             {
                 name: "showActiveMonthDaysOnly",
@@ -98,14 +88,67 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(value: string) => void"],
             },
             {
-                name: "onSelect",
+                name: "onYearMonthDisplayChange",
+                description:
+                    "Called when there is a change in the current visible month and year",
+                propTypes: ["(value: YearMonthDisplay) => void"],
+            },
+        ],
+    },
+    {
+        name: "Calendar props (variant=\u201csingle\u201d)",
+        attributes: [
+            {
+                name: "value",
+                description: <>The selected date in the&nbsp;{STRING_FORMAT}</>,
+                propTypes: ["string"],
+            },
+            {
+                name: "onChange",
                 description: (
                     <>
-                        Called when the user selected a value from the calendar.
-                        Returns value in the&nbsp;{STRING_FORMAT}
+                        Called when the selected date changes. Returns the
+                        selected date in the&nbsp;{STRING_FORMAT}
                     </>
                 ),
                 propTypes: ["(value: string) => void"],
+            },
+        ],
+    },
+    {
+        name: "Calendar props (variant=\u201cmulti\u201d)",
+        attributes: [
+            {
+                name: "values",
+                description: (
+                    <>
+                        The array of selected dates in the&nbsp;
+                        {STRING_FORMAT}
+                    </>
+                ),
+                propTypes: ["string[]"],
+            },
+            {
+                name: "minSelectable",
+                description:
+                    "Minimum number of dates that must be selected before the selection is considered valid.",
+                propTypes: ["number"],
+            },
+            {
+                name: "maxSelectable",
+                description:
+                    "Maximum number of dates that can be selected at once.",
+                propTypes: ["number"],
+            },
+            {
+                name: "onChange",
+                description: (
+                    <>
+                        Called when the selection changes. Returns all selected
+                        dates in the&nbsp;{STRING_FORMAT}
+                    </>
+                ),
+                propTypes: ["(values: string[]) => void"],
             },
         ],
     },
