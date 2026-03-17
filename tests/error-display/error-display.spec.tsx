@@ -254,11 +254,20 @@ describe("ErrorDisplay", () => {
 
             const message =
                 "You’ve been inactive for a while. To protect your privacy, you’ll be logged out in 1 minutes 5 seconds.";
-            const liveAnnouncement = screen.getByText(message);
-            const liveRegion = liveAnnouncement.closest('[aria-live="polite"]');
-            expect(liveRegion).toBeInTheDocument();
-            expect(liveRegion).toHaveAttribute("aria-atomic", "true");
-            expect(liveAnnouncement).toHaveTextContent(message);
+
+            const component = screen.getByTestId("error-display");
+            const liveRegions = component.querySelectorAll(
+                '[aria-live="polite"][aria-atomic="true"]'
+            );
+            expect(liveRegions).toHaveLength(1);
+            expect(liveRegions[0]).toHaveTextContent(message);
+
+            const visibleDescription = screen.getByTestId(
+                ERROR_DESCRIPTION_TEST_ID
+            );
+            expect(visibleDescription).toHaveTextContent(
+                "you’ll be logged out in 1 minutes 5 seconds"
+            );
         });
 
         it("should not render live reminder text when custom description is provided", () => {
