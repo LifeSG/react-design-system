@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { TimeRangePicker } from "../time-range-picker";
+import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormTimeRangePickerProps } from "./types";
 
 export const FormTimeRangePicker = ({
     label,
     errorMessage,
-    id = "form-timepicker",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
@@ -21,9 +23,13 @@ export const FormTimeRangePicker = ({
     xxlCols,
     ...otherProps
 }: FormTimeRangePickerProps): JSX.Element => {
+    const [internalId] = useState(
+        () => `form-time-range-picker-${SimpleIdGenerator.generate()}`
+    );
+    const inputId = id ?? internalId;
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
             label={label}
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
@@ -41,8 +47,8 @@ export const FormTimeRangePicker = ({
             xxlCols={xxlCols}
         >
             <TimeRangePicker
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 error={!!errorMessage}
                 {...otherProps}
             />
