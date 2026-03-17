@@ -38,17 +38,14 @@ describe("Pagination", () => {
         ).toHaveAttribute("aria-current", "page");
     });
 
-    it("should wire an internal hidden label via aria-labelledby", () => {
+    it("should expose pagination landmark accessible name", () => {
         render(<Pagination totalItems={30} activePage={1} />);
 
-        const wrapper = screen.getByTestId("pagination");
-        const labelId = wrapper.getAttribute("aria-labelledby");
-
-        expect(labelId).toBeTruthy();
-
-        const hiddenLabel = document.getElementById(labelId as string);
-        expect(hiddenLabel).toHaveTextContent("pagination");
-        expect(hiddenLabel).toHaveAttribute("aria-hidden", "true");
+        const navigation = screen.getByRole("navigation", {
+            name: "pagination",
+        });
+        expect(navigation).toBeInTheDocument();
+        expect(navigation).toHaveAccessibleName("pagination");
     });
 
     it("should enable the previous and next buttons", async () => {

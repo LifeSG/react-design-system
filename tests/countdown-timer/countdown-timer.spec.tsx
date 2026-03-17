@@ -31,6 +31,9 @@ describe("CountdownTimer", () => {
             render(<CountdownTimer show timer={seconds} />);
 
             expect(screen.getByText(expectedDisplay)).toBeInTheDocument();
+            expect(
+                screen.getByRole("timer", { name: "Countdown timer" })
+            ).toBeInTheDocument();
         }
     );
 
@@ -87,19 +90,38 @@ describe("CountdownTimer", () => {
         expect(mockOnFinish).toHaveBeenCalledTimes(1);
     });
 
-    it("should announce remaining time in hidden live region at notify threshold", async () => {
-        render(<CountdownTimer show timer={5} notifyTimer={4} />);
+    it("should transition announcement from polite to assertive at notify threshold", async () => {
+        render(
+            <CountdownTimer
+                show
+                timer={10}
+                notifyTimer={4}
+                reminderInterval={2}
+            />
+        );
 
         await act(async () => {
-            jest.advanceTimersByTime(1000);
+            jest.advanceTimersByTime(2000);
         });
 
-        const announcement = screen.getByText("Time left: 4 seconds");
+        const politeAnnouncement = screen.getByText("Time left: 8 seconds");
         expect(
-            announcement.closest('[aria-live="assertive"]')
+            politeAnnouncement.closest('[aria-live="polite"]')
         ).toBeInTheDocument();
         expect(
-            announcement.closest('[aria-atomic="true"]')
+            politeAnnouncement.closest('[aria-atomic="true"]')
+        ).toBeInTheDocument();
+
+        await act(async () => {
+            jest.advanceTimersByTime(4000);
+        });
+
+        const assertiveAnnouncement = screen.getByText("Time left: 4 seconds");
+        expect(
+            assertiveAnnouncement.closest('[aria-live="assertive"]')
+        ).toBeInTheDocument();
+        expect(
+            assertiveAnnouncement.closest('[aria-atomic="true"]')
         ).toBeInTheDocument();
     });
 });
