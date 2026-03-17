@@ -4,6 +4,7 @@ export const root = css`
     position: relative;
     overflow: hidden;
     border-radius: var(--dashed-border-radius, 0);
+    background-color: var(--dashed-border-bg-color, transparent);
 `;
 
 export const overlay = css`
@@ -11,7 +12,6 @@ export const overlay = css`
     inset: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--dashed-border-bg-color, transparent);
     background-image: var(--dashed-border-bg-image, none);
     background-repeat: no-repeat;
     background-position: center;

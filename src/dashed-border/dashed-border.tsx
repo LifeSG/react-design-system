@@ -65,22 +65,19 @@ const Component = (
         thickness: effectiveThickness,
         enabled,
     });
-    const overlayBackgroundColor = backgroundColor
-        ? effectiveBackgroundColor
-        : "transparent";
     const rootRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
     const mergedRootRef = ref ? mergeRefs(rootRef, ref) : rootRef;
 
     useApplyStyle(rootRef, {
         "--dashed-border-radius": effectiveRadius,
+        "--dashed-border-bg-color": backgroundColor
+            ? effectiveBackgroundColor
+            : "transparent",
     });
 
     useApplyStyle(overlayRef, {
         "--dashed-border-bg-image": showSvg ? overlayBackgroundImage : "none",
-        "--dashed-border-bg-color": showSvg
-            ? overlayBackgroundColor
-            : "transparent",
     });
 
     return (

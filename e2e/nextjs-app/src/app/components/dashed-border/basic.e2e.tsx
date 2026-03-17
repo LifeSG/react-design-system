@@ -24,6 +24,7 @@ export default function Story() {
                 thickness={Border["width-020"]}
                 radius={Radius.sm}
                 colour={Colour["border-primary"]}
+                backgroundColor={Colour["bg-inverse"]}
             >
                 Disabled dashed border
             </DashedBorder>
