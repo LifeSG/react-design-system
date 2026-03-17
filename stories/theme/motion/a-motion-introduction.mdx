@@ -28,9 +28,8 @@ Apply the `Motion` tokens when defining a transition or animation.
 
 ```tsx
 import { Motion } from "@lifesg/react-design-system/theme";
-import styled, { css } from "styled-components";
 
-const Container = styled.div`
+const container = css`
     color: lightgrey;
 
     &:hover {
@@ -44,6 +43,9 @@ const Container = styled.div`
 
 ## Overriding
 
+Refer to [this section](/docs/foundations-advanced--docs#theme-customisation) to
+find out how to apply theme customisation.
+
 The token values are based on CSS animation and transition properties, which are
 documented here:
 
@@ -51,15 +53,8 @@ documented here:
 -   [easing](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function)
 
 ```tsx
-import { LifeSGTheme } from "@lifesg/react-design-system/theme";
-
-const customTheme: ThemeSpec = {
-    ...LifeSGTheme,
-    overrides: {
-        motion: {
-            "duration-150": "1s", // specify a custom time-based value
-            "ease-default": "steps(10, jump-both)", // specify a custom easing
-        },
-    },
-};
+useApplyStyle(themeElementRef, {
+    [Motion["duration-150"]]: "1s", // specify a custom time-based value
+    [Motion["ease-default"]]: "steps(10, jump-both)", // specify a custom easing
+});
 ```

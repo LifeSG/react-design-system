@@ -35,6 +35,7 @@ const preview: Preview = {
                         "Motion",
                         "Radius",
                         "Border",
+                        "Shadow",
                     ],
                     "Core",
                     ["Typography", "Layout", "Icon", "DashedBorder"],
