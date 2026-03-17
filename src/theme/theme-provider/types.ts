@@ -1,5 +1,6 @@
-import type { ThemeMode, ThemeType } from "../types";
 import type { CSSProperties } from "react";
+
+import type { ThemeMode, ThemeType } from "../types";
 
 export interface ThemeContextValue {
     theme: ThemeType;

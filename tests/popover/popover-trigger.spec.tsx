@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useMemo, useRef } from "react";
-import { PopoverTrigger } from "../../src/popover-v2";
-import { ThemeProvider, useTheme } from "../../src/theme";
-import { useApplyStyle } from "../../src/theme/utils";
-import { V3_LifeSGTheme } from "../../src/v3_theme";
+import { PopoverTrigger } from "src/popover-v2";
+import { ThemeProvider, useTheme } from "src/theme";
+import { useApplyStyle } from "src/theme/utils";
+import { V3_LifeSGTheme } from "src/v3_theme";
 import { ThemeProvider as StyledComponentsThemeProvider } from "styled-components";
 
 const Wrapper = () => {

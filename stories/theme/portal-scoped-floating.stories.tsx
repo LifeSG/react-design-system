@@ -1,14 +1,15 @@
+import "src/theme/styles/lifesg.css";
+import "src/theme/styles/oneservice.css";
+
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { type CSSProperties, useMemo } from "react";
 import { Button } from "src/button";
 import { PopoverTrigger } from "src/popover-v2";
-import { ThemeMode, ThemeProvider, useTheme } from "src/theme";
+import type { ThemeMode } from "src/theme";
+import { ThemeProvider, useTheme } from "src/theme";
 import { useApplyStyle } from "src/theme/utils/use-apply-styles";
 import { V3_LifeSGTheme, V3_OneServiceTheme, V3_RBSTheme } from "src/v3_theme";
 import { ThemeProvider as StyledComponentsThemeProvider } from "styled-components";
-
-import "../../src/theme/styles/lifesg.css";
-import "../../src/theme/styles/oneservice.css";
 
 type ShowcaseTheme = "lifesg" | "oneservice" | "rbs";
 
