@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { DashedBorder } from "src/dashed-border";
 import { Border, Colour, Radius, Spacing } from "src/theme";
-import styled from "styled-components";
 
 type Component = typeof DashedBorder;
 
-const PreviewContent = styled.div`
-    padding: ${Spacing["spacing-20"]};
-`;
+const previewContentStyle: React.CSSProperties = {
+    padding: Spacing["spacing-20"],
+};
 
 const semanticColourEntries = Object.entries(Colour).filter(
     ([key, value]) => key !== "Primitive" && typeof value === "string"
@@ -130,7 +129,7 @@ export default meta;
 export const Playground: StoryObj<Component> = {
     render: (args) => (
         <DashedBorder {...args}>
-            <PreviewContent>Dashed border container</PreviewContent>
+            <div style={previewContentStyle}>Dashed border container</div>
         </DashedBorder>
     ),
 };
