@@ -2,7 +2,6 @@
 
 const fs = require("fs");
 const path = require("path");
-const crypto = require("crypto");
 const ts = require("typescript");
 
 const ROOT_DIR = path.resolve(__dirname, "..");
@@ -10,55 +9,8 @@ const SRC_DIR = path.join(ROOT_DIR, "src");
 const STORIES_DIR = path.join(ROOT_DIR, "stories");
 const OUTPUT_PATH = path.join(ROOT_DIR, "component-catalog.json");
 
-function parseArgs(argv) {
-    const options = {
-        mode: "update",
-        only: null,
-        light: false,
-        maxExamples: 3,
-        verbose: false,
-    };
-
-    for (let i = 0; i < argv.length; i += 1) {
-        const arg = argv[i];
-
-        if (arg === "--check") {
-            options.mode = "check";
-            continue;
-        }
-
-        if (arg === "--update") {
-            options.mode = "update";
-            continue;
-        }
-
-        if (arg === "--light") {
-            options.light = true;
-            continue;
-        }
-
-        if (arg === "--verbose") {
-            options.verbose = true;
-            continue;
-        }
-
-        if (arg === "--only") {
-            options.only = argv[i + 1] || null;
-            i += 1;
-            continue;
-        }
-
-        if (arg === "--max-examples") {
-            const value = Number(argv[i + 1]);
-            if (!Number.isNaN(value) && value > 0) {
-                options.maxExamples = value;
-            }
-            i += 1;
-        }
-    }
-
-    return options;
-}
+// Max number of code examples to extract per component from MDX files
+const MAX_EXAMPLES = 3;
 
 function toPosixPath(filePath) {
     return path.relative(ROOT_DIR, filePath).split(path.sep).join("/");
@@ -115,10 +67,6 @@ function stableSortObject(value) {
 
 function stableStringify(value) {
     return JSON.stringify(stableSortObject(value), null, 2);
-}
-
-function hashText(value) {
-    return crypto.createHash("sha256").update(value).digest("hex");
 }
 
 function parseExportedModules(indexPath) {
@@ -210,75 +158,6 @@ function parseNamedExports(moduleIndexPath) {
     }
 
     return [...names].sort((left, right) => left.localeCompare(right));
-}
-
-function extractJsDocFirstLine(node) {
-    const jsDocNodes = node.jsDoc || [];
-    if (jsDocNodes.length === 0) {
-        return "";
-    }
-
-    const text = String(jsDocNodes[0].comment || "").trim();
-    if (!text) {
-        return "";
-    }
-
-    const firstLine = text.split(/\r?\n/)[0].trim();
-    return firstLine;
-}
-
-function parsePropsInterfaces(typesPath) {
-    if (!fileExists(typesPath)) {
-        return [];
-    }
-
-    const sourceFile = createSourceFile(typesPath);
-    const interfaces = [];
-
-    for (const statement of sourceFile.statements) {
-        if (!ts.isInterfaceDeclaration(statement)) {
-            continue;
-        }
-
-        const interfaceName = statement.name.text;
-        if (!interfaceName.endsWith("Props")) {
-            continue;
-        }
-
-        const properties = [];
-        for (const member of statement.members) {
-            if (!ts.isPropertySignature(member) || !member.name) {
-                continue;
-            }
-
-            const propertyName = ts.isIdentifier(member.name)
-                ? member.name.text
-                : member.name.getText(sourceFile);
-
-            const typeText = member.type
-                ? member.type.getText(sourceFile)
-                : "unknown";
-
-            properties.push({
-                name: propertyName,
-                type: typeText,
-                optional: Boolean(member.questionToken),
-                description: extractJsDocFirstLine(member),
-            });
-        }
-
-        interfaces.push({
-            name: interfaceName,
-            description: extractJsDocFirstLine(statement),
-            properties: properties.sort((left, right) =>
-                left.name.localeCompare(right.name)
-            ),
-        });
-    }
-
-    return interfaces.sort((left, right) =>
-        left.name.localeCompare(right.name)
-    );
 }
 
 function cleanupText(value) {
@@ -523,21 +402,6 @@ function extractMarkdownCodeExamples(mdxText, maxExamples) {
     return examples;
 }
 
-function extractListMarker(mdxText, markerName) {
-    const regex = new RegExp(`${markerName}\\s*:\\s*([^\\n\\r]+)`, "i");
-    const match = mdxText.match(regex);
-
-    if (!match) {
-        return [];
-    }
-
-    return match[1]
-        .split(",")
-        .map((value) => value.trim())
-        .filter(Boolean)
-        .sort((left, right) => left.localeCompare(right));
-}
-
 function getMdxFilesForModule(moduleName) {
     const moduleStoriesDir = path.join(STORIES_DIR, moduleName);
     if (!fileExists(moduleStoriesDir)) {
@@ -569,13 +433,11 @@ function getPrimaryStoriesFile(moduleName) {
     return path.join(STORIES_DIR, moduleName, `${moduleName}.stories.tsx`);
 }
 
-function parseModuleStories(moduleName, maxExamples, lightMode) {
+function parseModuleStories(moduleName) {
     const mdxFiles = getMdxFilesForModule(moduleName);
     const primaryStoriesFile = getPrimaryStoriesFile(moduleName);
 
     let description = "";
-    let descriptionSource = "none";
-    const related = new Set();
     const examples = [];
 
     for (const mdxPath of mdxFiles) {
@@ -585,20 +447,14 @@ function parseModuleStories(moduleName, maxExamples, lightMode) {
             const overview = extractOverviewDescription(mdxText);
             if (overview) {
                 description = overview;
-                descriptionSource = "story";
             }
         }
 
-        for (const value of extractListMarker(mdxText, "Related")) {
-            related.add(value);
-        }
-
-        if (!lightMode && examples.length < maxExamples) {
+        if (examples.length < MAX_EXAMPLES) {
             const foundExamples = extractMarkdownCodeExamples(
                 mdxText,
-                maxExamples - examples.length
+                MAX_EXAMPLES - examples.length
             );
-
             for (const sample of foundExamples) {
                 examples.push(sample);
             }
@@ -611,14 +467,8 @@ function parseModuleStories(moduleName, maxExamples, lightMode) {
 
     return {
         description,
-        descriptionSource,
         searchKeys,
-        related: [...related].sort((left, right) => left.localeCompare(right)),
-        examples,
-        storyFiles: mdxFiles.map(toPosixPath),
-        primaryStoriesFile: fileExists(primaryStoriesFile)
-            ? toPosixPath(primaryStoriesFile)
-            : "",
+        examples: examples.filter((ex) => ex.includes("\n")),
     };
 }
 
@@ -654,8 +504,6 @@ function parseDesignTokens() {
             category: tokenName.includes(".")
                 ? tokenName.split(".")[0]
                 : "global",
-            source: toPosixPath(tokenFilePath),
-            hash: hashText(tokenName),
         }));
 }
 
@@ -672,20 +520,15 @@ function inferMainName(moduleName, exportedSymbols) {
     return fromModule;
 }
 
-function buildCatalog(options) {
+function buildCatalog() {
     const srcIndexPath = path.join(SRC_DIR, "index.ts");
-    const allModules = parseExportedModules(srcIndexPath);
-    const modules = options.only
-        ? allModules.filter((moduleName) => moduleName === options.only)
-        : allModules;
-
+    const modules = parseExportedModules(srcIndexPath);
     const components = [];
     const warnings = [];
 
     for (const moduleName of modules) {
         const moduleDir = path.join(SRC_DIR, moduleName);
         const moduleIndexPath = path.join(moduleDir, "index.ts");
-        const moduleTypesPath = path.join(moduleDir, "types.ts");
         const modulePropsTablePath = path.join(
             STORIES_DIR,
             moduleName,
@@ -693,115 +536,54 @@ function buildCatalog(options) {
         );
 
         const exportedSymbols = parseNamedExports(moduleIndexPath);
-        const propsInterfaces = parsePropsInterfaces(moduleTypesPath);
-        const storyData = parseModuleStories(
-            moduleName,
-            options.maxExamples,
-            options.light
-        );
+        const storyData = parseModuleStories(moduleName);
         const propTableSections = parsePropsTable(modulePropsTablePath);
 
         if (!storyData.description) {
             warnings.push(`Missing story overview for module: ${moduleName}`);
         }
-
         if (storyData.searchKeys.length === 0) {
             warnings.push(
                 `Missing tags in stories file for module: ${moduleName}`
             );
         }
 
-        const sourceParts = [
-            readFileSafe(moduleIndexPath),
-            readFileSafe(moduleTypesPath),
-            ...storyData.storyFiles.map((relativePath) =>
-                readFileSafe(path.join(ROOT_DIR, relativePath))
-            ),
-            readFileSafe(
-                storyData.primaryStoriesFile
-                    ? path.join(ROOT_DIR, storyData.primaryStoriesFile)
-                    : ""
-            ),
-            readFileSafe(modulePropsTablePath),
-        ];
-
-        const sourceHash = hashText(sourceParts.join("\n"));
-
         components.push({
             name: inferMainName(moduleName, exportedSymbols),
-            module: moduleName,
             importPath: `@lifesg/react-design-system/${moduleName}`,
-            exportedSymbols,
             description: storyData.description,
-            descriptionSource: storyData.descriptionSource,
             searchKeys: storyData.searchKeys,
-            related: options.light ? [] : storyData.related,
-            examples: options.light ? [] : storyData.examples,
-            propsInterfaces,
+            examples: storyData.examples,
             propTableSections,
-            sources: {
-                moduleIndex: toPosixPath(moduleIndexPath),
-                types: fileExists(moduleTypesPath)
-                    ? toPosixPath(moduleTypesPath)
-                    : "",
-                stories: storyData.storyFiles,
-                storiesFile: storyData.primaryStoriesFile,
-                propsTable: fileExists(modulePropsTablePath)
-                    ? toPosixPath(modulePropsTablePath)
-                    : "",
-            },
-            hash: sourceHash,
         });
     }
 
     const designTokens = parseDesignTokens();
 
-    const catalog = {
-        meta: {
-            packageName: "@lifesg/react-design-system",
-            totalModules: components.length,
-            totalTokens: designTokens.length,
-            lightMode: options.light,
-        },
-        components: components.sort((left, right) =>
-            left.module.localeCompare(right.module)
-        ),
-        designTokens,
-    };
-
     return {
-        catalog,
-        warnings: [...new Set(warnings)].sort((left, right) =>
-            left.localeCompare(right)
-        ),
+        catalog: {
+            meta: {
+                packageName: "@lifesg/react-design-system",
+                totalModules: components.length,
+                totalTokens: designTokens.length,
+            },
+            components: components.sort((left, right) =>
+                left.name.localeCompare(right.name)
+            ),
+            designTokens,
+        },
+        warnings: [...new Set(warnings)].sort(),
     };
 }
 
 function run() {
-    const options = parseArgs(process.argv.slice(2));
-    const { catalog, warnings } = buildCatalog(options);
-    const output = `${stableStringify(catalog)}\n`;
-    const existing = readFileSafe(OUTPUT_PATH);
+    const { catalog, warnings } = buildCatalog();
 
-    if (options.verbose && warnings.length > 0) {
-        for (const warning of warnings) {
-            console.warn(`[catalog] ${warning}`);
-        }
+    for (const warning of warnings) {
+        console.warn(`[catalog] ${warning}`);
     }
 
-    if (options.mode === "check") {
-        if (existing !== output) {
-            console.error(
-                "component-catalog.json is stale. Run: npm run catalog:generate"
-            );
-            process.exit(1);
-        }
-
-        console.log("component-catalog.json is up to date.");
-        return;
-    }
-
-    fs.writeFileSync(OUTPUT_PATH, output, "utf8");
+    fs.writeFileSync(OUTPUT_PATH, `${stableStringify(catalog)}\n`, "utf8");
     console.log(
         `Generated ${toPosixPath(OUTPUT_PATH)} (${
             catalog.components.length

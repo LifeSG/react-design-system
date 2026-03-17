@@ -6,7 +6,7 @@
     "module": "dist/index.js",
     "typings": "dist/index.d.ts",
     "scripts": {
-        "build": "npm run rollup && npm run catalog:generate && npm run post:build",
+        "build": "npm run rollup && npm run post:build",
         "build-check": "npm run rollup rollup.check.config.js",
         "rollup": "rm -rf dist && rollup --bundleConfigAsCjs -c",
         "pack-package": "cd dist && npm pack",
@@ -21,8 +21,7 @@
         "prepare": "(test -d ./.git && npx husky install) || true",
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
-        "catalog:generate": "node ./scripts/generate-component-catalog.js --update",
-        "catalog:check": "node ./scripts/generate-component-catalog.js --check"
+        "catalog:generate": "node ./scripts/generate-component-catalog.js"
     },
     "repository": {
         "type": "git",

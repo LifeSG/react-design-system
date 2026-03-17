@@ -31,8 +31,6 @@ Add a JSDoc block **above the main exported interface**:
  *
  * [2-3 sentences: when to use this component, key capabilities, important behaviours]
  *
- * Keywords: [3-6 search terms developers might use, not in the component name]
- *
  * @example
  * ```tsx
  * <ComponentName prop="value">content</ComponentName>
@@ -123,8 +121,7 @@ children: React.ReactNode;
 ## After Writing JSDoc
 
 1. Run `npm run catalog:generate` to refresh the catalog with the new JSDoc
-2. Run `npm run catalog:instructions` to regenerate the Copilot instruction file
-3. Commit both `component-catalog.json` and `.github/instructions/design-system-components.instructions.md`
+2. Commit `component-catalog.json`
 
 ## Output Requirements
 

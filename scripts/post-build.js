@@ -1,10 +1,6 @@
-/**
- * Referenced from SGDS Post build
- * https://github.com/GovTechSG/sgds-govtech-react/blob/v2/scripts/frankBuild.js
- *
- */
 const { resolve, join, basename } = require("path");
 const { readFile, writeFile, copy, pathExists } = require("fs-extra");
+
 const packagePath = process.cwd();
 const distPath = join(packagePath, "./dist");
 
@@ -33,7 +29,6 @@ async function createPackageFile() {
     };
 
     const targetPath = resolve(distPath, "./package.json");
-
     await writeJson(targetPath, newPackageData);
     console.log(`Created package.json in ${targetPath}`);
 }
@@ -45,39 +40,24 @@ async function includeFileInBuild(file) {
     console.log(`Copied ${sourcePath} to ${targetPath}`);
 }
 
+// Only copy files that are present — catalog and instructions are optional
+async function includeFileIfExists(file) {
+    if (await pathExists(resolve(packagePath, file))) {
+        await includeFileInBuild(file);
+    }
+}
+
 async function run() {
     try {
         await createPackageFile();
         await includeFileInBuild("./README.md");
-        if (
-            await pathExists(resolve(packagePath, "./component-catalog.json"))
-        ) {
-            await includeFileInBuild("./component-catalog.json");
-        }
-        if (
-            await pathExists(
-                resolve(
-                    packagePath,
-                    "./scripts/generate-component-instructions.js"
-                )
-            )
-        ) {
-            await includeFileInBuild(
-                "./scripts/generate-component-instructions.js"
-            );
-        }
-        if (
-            await pathExists(
-                resolve(
-                    packagePath,
-                    "./.github/instructions/design-system-components.instructions.md"
-                )
-            )
-        ) {
-            await includeFileInBuild(
-                "./.github/instructions/design-system-components.instructions.md"
-            );
-        }
+        await includeFileIfExists("./component-catalog.json");
+        await includeFileIfExists(
+            "./scripts/generate-component-instructions.js"
+        );
+        await includeFileIfExists(
+            "./.github/instructions/design-system-components.instructions.md"
+        );
     } catch (err) {
         console.error(err);
         process.exit(1);
