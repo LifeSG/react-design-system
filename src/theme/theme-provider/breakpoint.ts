@@ -1,41 +1,53 @@
 import { Breakpoint } from "../tokens/breakpoint";
+import type { CSSVariableString } from "../types";
 import { parseCSSVariableValue, parsePxOrRemValue } from "../utils";
 
 function getBreakpointRanges(sourceElement: HTMLElement) {
+    const getBreakpointValue = (token: CSSVariableString) => {
+        const scopedValue = parseCSSVariableValue(token, sourceElement);
+        if (scopedValue) return scopedValue;
+
+        if (sourceElement !== document.documentElement) {
+            return parseCSSVariableValue(token, document.documentElement);
+        }
+
+        return scopedValue;
+    };
+
     return [
         {
             key: "xxs",
-            min: parseCSSVariableValue(Breakpoint["xxs-min"], sourceElement),
-            max: parseCSSVariableValue(Breakpoint["xxs-max"], sourceElement),
+            min: getBreakpointValue(Breakpoint["xxs-min"]),
+            max: getBreakpointValue(Breakpoint["xxs-max"]),
         },
         {
             key: "xs",
-            min: parseCSSVariableValue(Breakpoint["xs-min"], sourceElement),
-            max: parseCSSVariableValue(Breakpoint["xs-max"], sourceElement),
+            min: getBreakpointValue(Breakpoint["xs-min"]),
+            max: getBreakpointValue(Breakpoint["xs-max"]),
         },
         {
             key: "sm",
-            min: parseCSSVariableValue(Breakpoint["sm-min"], sourceElement),
-            max: parseCSSVariableValue(Breakpoint["sm-max"], sourceElement),
+            min: getBreakpointValue(Breakpoint["sm-min"]),
+            max: getBreakpointValue(Breakpoint["sm-max"]),
         },
         {
             key: "md",
-            min: parseCSSVariableValue(Breakpoint["md-min"], sourceElement),
-            max: parseCSSVariableValue(Breakpoint["md-max"], sourceElement),
+            min: getBreakpointValue(Breakpoint["md-min"]),
+            max: getBreakpointValue(Breakpoint["md-max"]),
         },
         {
             key: "lg",
-            min: parseCSSVariableValue(Breakpoint["lg-min"], sourceElement),
-            max: parseCSSVariableValue(Breakpoint["lg-max"], sourceElement),
+            min: getBreakpointValue(Breakpoint["lg-min"]),
+            max: getBreakpointValue(Breakpoint["lg-max"]),
         },
         {
             key: "xl",
-            min: parseCSSVariableValue(Breakpoint["xl-min"], sourceElement),
-            max: parseCSSVariableValue(Breakpoint["xl-max"], sourceElement),
+            min: getBreakpointValue(Breakpoint["xl-min"]),
+            max: getBreakpointValue(Breakpoint["xl-max"]),
         },
         {
             key: "xxl",
-            min: parseCSSVariableValue(Breakpoint["xxl-min"], sourceElement),
+            min: getBreakpointValue(Breakpoint["xxl-min"]),
             max: Infinity,
         },
     ] as const;
@@ -43,7 +55,7 @@ function getBreakpointRanges(sourceElement: HTMLElement) {
 
 const BREAKPOINT_CLASS_PREFIX = "fds-breakpoint-";
 
-export function applyBreakpointClasses() {
+export function applyBreakpointClasses(sourceElement: HTMLElement) {
     const body = document.body;
     const width = window.innerWidth;
 
@@ -53,7 +65,7 @@ export function applyBreakpointClasses() {
         }
     });
 
-    const BREAKPOINT_RANGES = getBreakpointRanges(document.documentElement);
+    const BREAKPOINT_RANGES = getBreakpointRanges(sourceElement);
 
     BREAKPOINT_RANGES.forEach((range) => {
         const minValue = parsePxOrRemValue(range.min);
@@ -81,13 +93,17 @@ export function applyBreakpointClasses() {
     });
 }
 
-export function setupBreakpointListener() {
+export function setupBreakpointListener(sourceElement: HTMLElement) {
     if (!globalThis.window) return;
 
-    applyBreakpointClasses();
-    globalThis.window.addEventListener("resize", applyBreakpointClasses);
+    const handleBreakpointChange = () => {
+        applyBreakpointClasses(sourceElement);
+    };
+
+    handleBreakpointChange();
+    globalThis.window.addEventListener("resize", handleBreakpointChange);
 
     return () => {
-        globalThis.window.removeEventListener("resize", applyBreakpointClasses);
+        globalThis.window.removeEventListener("resize", handleBreakpointChange);
     };
 }

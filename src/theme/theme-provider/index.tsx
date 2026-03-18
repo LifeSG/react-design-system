@@ -32,10 +32,14 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({
         setThemeElement(node);
     };
 
+    // Re-subscribe when the source node or token set changes:
+    // - `themeElement`: scoped breakpoint tokens may live on this element
+    // - `theme` / `themeMode`: breakpoint token values can differ across theme/mode
     useIsomorphicLayoutEffect(() => {
-        const cleanup = setupBreakpointListener();
+        const sourceElement = themeElement ?? document.documentElement;
+        const cleanup = setupBreakpointListener(sourceElement);
         return cleanup;
-    }, []);
+    }, [themeElement, theme, themeMode]);
 
     useEffect(() => {
         if (isModeControlled) return;

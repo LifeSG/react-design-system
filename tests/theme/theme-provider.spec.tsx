@@ -1,4 +1,5 @@
 import { act, render, screen } from "@testing-library/react";
+import type { CSSProperties } from "react";
 import { ThemeProvider, useTheme } from "src/theme";
 import * as breakpoint from "src/theme/theme-provider/breakpoint";
 import * as systemMode from "src/theme/theme-provider/system-colour-mode";
@@ -294,6 +295,42 @@ describe("ThemeProvider", () => {
             expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
             expect(body.classList.contains("fds-breakpoint-md-min")).toBe(true);
             expect(body.classList.contains("fds-breakpoint-md-max")).toBe(true);
+        });
+
+        it("falls back to root token value when a breakpoint token is missing on theme node", () => {
+            setWindowWidth(1000);
+
+            document.documentElement.style.setProperty(
+                "--fds-breakpoint-md-max",
+                "1000px"
+            );
+
+            render(
+                <ThemeProvider
+                    style={
+                        {
+                            "--fds-breakpoint-xl-min": "1201px",
+                            "--fds-breakpoint-xl-max": "1440px",
+                            "--fds-breakpoint-xxl-min": "1441px",
+                        } as CSSProperties
+                    }
+                >
+                    <TestComponent />
+                </ThemeProvider>
+            );
+
+            const body = document.body;
+            expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md-max")).toBe(true);
+
+            // Validate exact fallback boundary value from root token
+            setWindowWidth(1001);
+            expect(body.classList.contains("fds-breakpoint-md")).toBe(false);
+            expect(body.classList.contains("fds-breakpoint-md-max")).toBe(
+                false
+            );
+            expect(body.classList.contains("fds-breakpoint-lg")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-lg-max")).toBe(true);
         });
 
         it("does not remove non-breakpoint classes", () => {
