@@ -6,7 +6,23 @@ jest.mock("../../src/theme", () => {
     const actual = jest.requireActual("../../src/theme");
     return {
         ...actual,
-        useDesignToken: (token: string) => token, // passthrough
+        useResolvedTokenValue: ({
+            value,
+            fallback,
+            isToken,
+            normalizeCustom,
+        }: {
+            value: unknown;
+            fallback: unknown;
+            isToken: (candidate: unknown) => boolean;
+            normalizeCustom: (candidate: unknown) => string;
+        }) => {
+            const effectiveValue =
+                value == null || value === "" ? fallback : value;
+            return isToken(effectiveValue)
+                ? String(effectiveValue)
+                : normalizeCustom(effectiveValue);
+        },
     };
 });
 

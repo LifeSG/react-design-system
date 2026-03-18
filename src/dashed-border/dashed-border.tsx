@@ -5,21 +5,17 @@ import {
     BorderThickness,
     Colour,
     Radius,
+    toCssValue,
     useApplyStyle,
-    useDesignToken,
+    useResolvedTokenValue,
 } from "../theme";
 import { mergeRefs } from "../util";
 import * as styles from "./dashed-border.styles";
 import {
     createSvgBackgroundImage,
-    getBackgroundColorToken,
-    getColourToken,
-    getEffectiveBackgroundColor,
-    getEffectiveColour,
-    getEffectiveRadius,
-    getEffectiveThickness,
-    getRadiusToken,
-    getThicknessToken,
+    isColourToken,
+    isRadiusToken,
+    isThicknessToken,
 } from "./dashed-border.utils";
 import type { DashedBorderProps } from "./types";
 
@@ -38,24 +34,32 @@ const Component = (
         ...otherProps
     } = props;
 
-    const thicknessToken = getThicknessToken(thickness);
-    const radiusToken = getRadiusToken(radius);
-    const colourToken = getColourToken(colour);
-    const backgroundColorToken = getBackgroundColorToken(backgroundColor);
-
-    const resolvedThickness = useDesignToken(thicknessToken);
-    const resolvedRadius = useDesignToken(radiusToken);
-    const resolvedColour = useDesignToken(colourToken);
-    const resolvedBackgroundColor = useDesignToken(backgroundColorToken);
-    const effectiveThickness = getEffectiveThickness({
-        thickness,
-        resolvedThickness,
+    const effectiveThickness = useResolvedTokenValue({
+        value: thickness,
+        fallback: BorderThickness["width-010"],
+        isToken: isThicknessToken,
+        normalizeCustom: toCssValue,
     });
-    const effectiveRadius = getEffectiveRadius({ radius, resolvedRadius });
-    const effectiveColour = getEffectiveColour({ colour, resolvedColour });
-    const effectiveBackgroundColor = getEffectiveBackgroundColor({
-        backgroundColor,
-        resolvedBackgroundColor,
+
+    const effectiveRadius = useResolvedTokenValue({
+        value: radius,
+        fallback: Radius["none"],
+        isToken: isRadiusToken,
+        normalizeCustom: toCssValue,
+    });
+
+    const effectiveColour = useResolvedTokenValue({
+        value: colour,
+        fallback: Colour["border"],
+        isToken: isColourToken,
+        normalizeCustom: String,
+    });
+
+    const effectiveBackgroundColor = useResolvedTokenValue({
+        value: backgroundColor,
+        fallback: "none",
+        isToken: isColourToken,
+        normalizeCustom: String,
     });
 
     const showSvg = enabled || !!backgroundColor;
