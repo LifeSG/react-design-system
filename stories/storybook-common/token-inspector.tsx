@@ -1,101 +1,109 @@
-import type { V3_PrimitiveColourSet, V3_SemanticColourSet } from "src/v3_theme";
-import {
-    V3_ColourSpec as PrimitiveColourSpec,
-    V3_DarkColourSpec as PrimitiveDarkColourSpec,
-} from "src/v3_theme/colour-primitive/theme-helper";
-import {
-    V3_ColourSpec as SemanticColourSpec,
-    V3_DarkColourSpec as SemanticDarkColourSpec,
-} from "src/v3_theme/colour-semantic/theme-helper";
-import type { DefaultTheme } from "styled-components";
+import { memoize } from "lodash";
+import { useEffect, useState } from "react";
+import { useTheme } from "src/theme";
 
-/**
- * Inspect the name of the colour token that was accessed
- *
- * Usage:
- * ```
- * ColourTokenInspector.from(theme).inspect(callback)
- * ```
- */
-export class ColourTokenInspector {
-    private primitiveOriginal!: V3_PrimitiveColourSet;
-    private primitiveColourToken!: string | undefined;
-    private semanticOriginal!: V3_SemanticColourSet;
-    private semanticColourToken!: string | undefined;
+const collectFDSVariablesFromCSS = (cssRules: CSSStyleRule[]) => {
+    const cssVariables = cssRules
+        .map((cssRule) => cssRule.cssText)
+        // parse the raw CSS rule block to get the property value pairs
+        .map((cssText) => cssText.split("{")[1].split("}")[0].trim().split(";"))
+        .flat()
+        .map((text) => text.trim())
+        // get only the FDS variables which are namespaced with this prefix
+        .filter((text) => text.startsWith("--fds-"))
+        .map((text) => {
+            const [key, value] = text.split(":", 2);
+            return { key: key.trim(), value: value.trim() };
+        });
 
-    private constructor(private theme: DefaultTheme) {}
+    const result = Object.fromEntries(
+        cssVariables.map(({ key, value }) => [key, value])
+    );
 
-    public static from(theme: DefaultTheme) {
-        return new ColourTokenInspector(theme);
-    }
+    return result;
+};
 
-    public inspect<T>(fn: () => T) {
-        this.setup();
-        const result = fn();
-        const { primitive, semantic } = this.get();
-        this.cleanup();
+const extractFDSVariables = memoize(
+    (theme, mode) => {
+        const cssRules = Array.from(document.styleSheets)
+            // only access same-origin stylesheets to avoid a thrown error
+            .filter(
+                (sheet) =>
+                    sheet.href === null ||
+                    sheet.href.startsWith(window.location.origin)
+            )
+            .flatMap((styleSheet) => Array.from(styleSheet.cssRules))
+            .filter(
+                (cssRule): cssRule is CSSStyleRule =>
+                    cssRule instanceof CSSStyleRule
+            );
 
-        return { primitive, semantic, result };
-    }
+        const defaultCssRules = cssRules.filter((cssRule: CSSStyleRule) => {
+            return cssRule.selectorText === ":root";
+        });
+        const defaultVariables = defaultCssRules
+            ? collectFDSVariablesFromCSS(defaultCssRules)
+            : {};
 
-    public setup() {
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        const self = this;
+        const lightModeCssRules = cssRules.filter((cssRule: CSSStyleRule) => {
+            return cssRule.selectorText === `[data-fds-theme="${theme}"]`;
+        });
+        const lightModeVariables = lightModeCssRules
+            ? collectFDSVariablesFromCSS(lightModeCssRules)
+            : {};
 
-        const scheme = this.theme.colourScheme;
-        const mode = this.theme.colourMode;
-        const primitiveSpec =
-            mode === "dark" ? PrimitiveDarkColourSpec : PrimitiveColourSpec;
-        const semanticSpec =
-            mode === "dark" ? SemanticDarkColourSpec : SemanticColourSpec;
+        const darkModeCssRules = cssRules.filter((cssRule: CSSStyleRule) => {
+            return (
+                cssRule.selectorText ===
+                `[data-fds-theme="${theme}"][data-fds-theme-mode="dark"]`
+            );
+        });
+        const darkModeVariables = darkModeCssRules
+            ? collectFDSVariablesFromCSS(darkModeCssRules)
+            : {};
 
-        this.primitiveOriginal = primitiveSpec.collections[scheme];
-        const primitiveProxy = {
-            get(
-                target: V3_PrimitiveColourSet,
-                prop: keyof V3_PrimitiveColourSet
-            ) {
-                self.primitiveColourToken = prop;
-                return target[prop];
-            },
-        };
-        primitiveSpec.collections[scheme] = new Proxy(
-            this.primitiveOriginal,
-            primitiveProxy
-        );
-
-        this.semanticOriginal = semanticSpec.collections[scheme];
-        const semanticProxy = {
-            get(
-                target: V3_SemanticColourSet,
-                prop: keyof V3_SemanticColourSet
-            ) {
-                self.semanticColourToken = prop;
-                return target[prop];
-            },
-        };
-        semanticSpec.collections[scheme] = new Proxy(
-            this.semanticOriginal,
-            semanticProxy
-        );
-    }
-
-    public get() {
         return {
-            primitive: this.primitiveColourToken,
-            semantic: this.semanticColourToken,
+            ...defaultVariables,
+            ...lightModeVariables,
+            ...(mode === "dark" ? darkModeVariables : {}),
         };
-    }
+    },
+    (theme, mode) => `${theme},${mode}`
+);
 
-    public cleanup() {
-        const scheme = this.theme.colourScheme;
-        const mode = this.theme.colourMode;
-        const primitiveSpec =
-            mode === "dark" ? PrimitiveDarkColourSpec : PrimitiveColourSpec;
-        const semanticSpec =
-            mode === "dark" ? SemanticDarkColourSpec : SemanticColourSpec;
+/** strip the `var()` wrapper from a CSS variable */
+const normaliseTokenVariable = (token: string) =>
+    token.match(/^var\((--fds-[\w-]+)\)$/)?.[1] || token;
 
-        primitiveSpec.collections[scheme] = this.primitiveOriginal;
-        semanticSpec.collections[scheme] = this.semanticOriginal;
-    }
-}
+/** strip the `--fds-colour-` prefix from a colour token */
+const normaliseColourToken = (token: string) =>
+    token.match(/--fds-colour-([\w-]+)/)?.[1] || token;
+
+export const useInspectColour = (token: string | undefined) => {
+    const [stylesheet, setStylesheet] = useState<Record<string, string>>({});
+    const { theme, mode } = useTheme();
+
+    useEffect(() => {
+        setStylesheet(extractFDSVariables(theme, mode));
+    }, [theme, mode]);
+
+    const getColour = () => {
+        if (!token) return { value: "N/A" };
+
+        const normalisedToken = normaliseTokenVariable(token);
+        if (!normalisedToken) return { value: "N/A" };
+
+        const tokenValue = stylesheet[normalisedToken];
+        if (!tokenValue) return { value: "N/A" };
+
+        if (tokenValue.startsWith("var(--fds-")) {
+            const cssVar = normaliseTokenVariable(tokenValue);
+            const cssValue = normaliseColourToken(tokenValue);
+            const value = stylesheet[cssVar];
+            return { value: value, reference: cssValue };
+        }
+        return { value: tokenValue };
+    };
+
+    return getColour();
+};

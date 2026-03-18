@@ -1,4 +1,4 @@
-import { V3_ThemeAnimation } from "src/v3_theme/components/theme-helper";
+import { ComponentToken } from "src/theme";
 import type { TokenTableSectionProps } from "stories/storybook-common";
 import { TokenTable } from "stories/storybook-common";
 
@@ -14,7 +14,9 @@ const DATA: TokenTableSectionProps[] = [
                 ),
                 defaultValue: {
                     type: "colour-token",
-                    token: V3_ThemeAnimation["loading-dots-spinner-colour"],
+                    token: ComponentToken.Animation[
+                        "loading-dots-spinner-colour"
+                    ],
                 },
             },
         ],

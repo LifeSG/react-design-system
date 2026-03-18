@@ -1,10 +1,9 @@
 import type React from "react";
-import type { V3_StyledComponentProps } from "src/v3_theme/helpers";
-import type { DefaultTheme } from "styled-components";
-import styled, { useTheme } from "styled-components";
+import { useDesignToken } from "src/theme";
+import styled from "styled-components";
 
 import { DocTable, DocTextStyle } from "../doc-table";
-import { ColourTokenInspector } from "../token-inspector";
+import { useInspectColour } from "../token-inspector";
 import type {
     TokenTableDefaultValueColourTokenProps,
     TokenTableDefaultValueDefaultProps,
@@ -134,9 +133,34 @@ interface SwatchColourProps {
     $colour: string;
 }
 
-export const DefaultCol = ({ attributes }: DefaultColProps) => {
-    const theme = useTheme();
+const ColourDisplay = ({
+    attributes,
+}: {
+    attributes: TokenTableDefaultValueColourTokenProps;
+}) => {
+    const { value, reference } = useInspectColour(attributes.token);
+    return (
+        <Default>
+            <SwatchColour $colour={value} />
+            <code>{reference || value}</code>
+        </Default>
+    );
+};
 
+const DefaultDisplay = ({
+    attributes,
+}: {
+    attributes: TokenTableDefaultValueDefaultProps;
+}) => {
+    const value = useDesignToken(attributes.token);
+    return (
+        <Default>
+            <code>{value}</code>
+        </Default>
+    );
+};
+
+export const DefaultCol = ({ attributes }: DefaultColProps) => {
     if (!attributes) {
         return (
             <td>
@@ -148,53 +172,18 @@ export const DefaultCol = ({ attributes }: DefaultColProps) => {
     }
 
     if (attributes.type === "colour-token") {
-        const {
-            primitive,
-            semantic,
-            result: value,
-        } = ColourTokenInspector.from(theme).inspect(
-            () => getTokenValue(attributes.token, theme) as string
-        );
-
-        const display = semantic
-            ? `Colour["${semantic}"]`
-            : primitive
-            ? `Colour.Primitive["${primitive}"]`
-            : value;
-
         return (
             <td>
-                <Default>
-                    <SwatchColour $colour={value} />
-                    <code>{display}</code>
-                </Default>
+                <ColourDisplay attributes={attributes} />
             </td>
         );
     } else {
-        const value = getTokenValue(attributes.token, theme);
-
         return (
             <td>
-                <Default>
-                    <code>{value}</code>
-                </Default>
+                <DefaultDisplay attributes={attributes} />
             </td>
         );
     }
-};
-
-const getTokenValue = (
-    token:
-        | string
-        | number
-        | ((props: V3_StyledComponentProps) => string | number),
-    theme: DefaultTheme
-): string | number => {
-    if (typeof token === "function") {
-        return getTokenValue(token({ theme }), theme);
-    }
-
-    return token;
 };
 
 const Default = styled.div`
