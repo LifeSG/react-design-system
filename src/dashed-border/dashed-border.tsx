@@ -70,14 +70,16 @@ const Component = (
     const mergedRootRef = ref ? mergeRefs(rootRef, ref) : rootRef;
 
     useApplyStyle(rootRef, {
-        "--dashed-border-radius": effectiveRadius,
-        "--dashed-border-bg-color": backgroundColor
+        [styles.tokens.rootRadius]: effectiveRadius,
+        [styles.tokens.rootBackgroundColor]: backgroundColor
             ? effectiveBackgroundColor
-            : "transparent",
+            : null,
     });
 
     useApplyStyle(overlayRef, {
-        "--dashed-border-bg-image": showSvg ? overlayBackgroundImage : "none",
+        [styles.tokens.overlayBackgroundImage]: showSvg
+            ? overlayBackgroundImage
+            : null,
     });
 
     return (
