@@ -13,6 +13,17 @@ import type { ValueOf } from "../util/utility-types";
 const radiusTokenSet = new Set<string>(Object.values(Radius));
 const thicknessTokenSet = new Set<string>(Object.values(BorderThickness));
 
+export interface CreateSvgBackgroundImageOptions {
+    /** Resolved stroke color for the dashed border. */
+    colour: string;
+    /** Whether dashed stroke should be rendered. */
+    enabled: boolean;
+    /** Resolved CSS border radius for the SVG rect. */
+    radius: string;
+    /** Resolved stroke width for the dashed border. */
+    thickness: string;
+}
+
 export const isRadiusToken = (
     value: unknown
 ): value is RadiusCSSVariableString => {
@@ -39,23 +50,15 @@ export const isColourToken = (
 
 /**
  * Builds a data-URI SVG used as the dashed border background image.
- * @param args.radius Resolved CSS border radius for the SVG rect.
- * @param args.colour Resolved stroke color.
- * @param args.thickness Resolved stroke width.
- * @param args.enabled Whether border stroke should be rendered.
+ * @param options SVG background image options.
  * @returns Encoded SVG as CSS `url(...)` string.
  */
 export const createSvgBackgroundImage = ({
-    radius,
     colour,
-    thickness,
     enabled,
-}: {
-    radius: string;
-    colour: string;
-    thickness: string;
-    enabled: boolean;
-}) => {
+    radius,
+    thickness,
+}: CreateSvgBackgroundImageOptions) => {
     const svg = `
     <svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'>
         <rect

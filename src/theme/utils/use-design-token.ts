@@ -27,26 +27,41 @@ export const useDesignToken = (
     return value;
 };
 
+export interface UseResolvedTokenValueOptions<
+    TToken extends CSSVariableString,
+    TCustom
+> {
+    /** Value used when `value` is empty. */
+    fallback: TToken | TCustom;
+    /** Type guard to identify token values. */
+    isToken: (value: unknown) => value is TToken;
+    /** Normalizer for non-token values. */
+    normalizeCustom: (value: TCustom) => string;
+    /** Candidate token or custom value. */
+    value: TToken | TCustom | null | undefined;
+}
+
+/**
+ * Resolves token-aware values with consistent fallback behavior.
+ * - Empty values (`null`, `undefined`, `""`) use `fallback`.
+ * - Token values are resolved through `useDesignToken`.
+ * - Non-token values are returned via `normalizeCustom`.
+ * @param options Resolution options for token/custom values.
+ * @returns Resolved token value or normalized custom/fallback value.
+ */
 export const useResolvedTokenValue = <
     TToken extends CSSVariableString,
     TCustom
->({
-    value,
-    fallback,
-    isToken,
-    normalizeCustom,
-}: {
-    value: TToken | TCustom | null | undefined;
-    fallback: TToken | TCustom;
-    isToken: (value: unknown) => value is TToken;
-    normalizeCustom: (value: TCustom) => string;
-}) => {
+>(
+    options: UseResolvedTokenValueOptions<TToken, TCustom>
+) => {
+    const { value, fallback, isToken, normalizeCustom } = options;
     const effectiveValue = isEmptyValue(value) ? fallback : value;
-    const tokenValue = isToken(effectiveValue) ? effectiveValue : undefined;
-    const resolvedTokenValue = useDesignToken(tokenValue);
+    const tokenString = isToken(effectiveValue) ? effectiveValue : undefined;
+    const resolvedTokenValue = useDesignToken(tokenString);
 
-    if (tokenValue) {
-        return getResolvedValue(resolvedTokenValue, tokenValue);
+    if (tokenString) {
+        return getResolvedValue(resolvedTokenValue, tokenString);
     }
 
     return normalizeCustom(effectiveValue as TCustom);
