@@ -53,7 +53,7 @@ const mobileLandscapeMediaQuery = css`
 
 export const SignatureArea = styled(DashedBorder).attrs<SignatureAreaProps>(
     (props) => ({
-        thickness: Border["width-020"],
+        thickness: Border["width-040"],
         radius: Radius["sm"],
         colour: props.$disabled ? Colour["border-disabled"] : Colour["border"],
         backgroundColor: props.$disabled ? Colour["bg-disabled"] : Colour["bg"],

@@ -5,16 +5,20 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "dashed-border";
 
     public readonly locators: {
-        enabled: Locator;
-        disabled: Locator;
+        defaultEnabled: Locator;
+        defaultDisabled: Locator;
+        customEnabled: Locator;
+        customDisabled: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
         this.locators = {
-            enabled: page.getByTestId("dashed-border-enabled"),
-            disabled: page.getByTestId("dashed-border-disabled"),
+            defaultEnabled: page.getByTestId("dashed-border-default-enabled"),
+            defaultDisabled: page.getByTestId("dashed-border-default-disabled"),
+            customEnabled: page.getByTestId("dashed-border-custom-enabled"),
+            customDisabled: page.getByTestId("dashed-border-custom-disabled"),
         };
     }
 }
@@ -34,8 +38,10 @@ test.describe("DashedBorder", () => {
 
         test("Basic", async ({ story }) => {
             await test.step("Component mounts", async () => {
-                await expect(story.locators.enabled).toBeVisible();
-                await expect(story.locators.disabled).toBeVisible();
+                await expect(story.locators.defaultEnabled).toBeVisible();
+                await expect(story.locators.defaultDisabled).toBeVisible();
+                await expect(story.locators.customEnabled).toBeVisible();
+                await expect(story.locators.customDisabled).toBeVisible();
 
                 await compareScreenshot(story, "mount");
             });
@@ -49,8 +55,10 @@ test.describe("DashedBorder", () => {
 
         test("Basic (mobile)", async ({ story }) => {
             await test.step("Component mounts", async () => {
-                await expect(story.locators.enabled).toBeVisible();
-                await expect(story.locators.disabled).toBeVisible();
+                await expect(story.locators.defaultEnabled).toBeVisible();
+                await expect(story.locators.defaultDisabled).toBeVisible();
+                await expect(story.locators.customEnabled).toBeVisible();
+                await expect(story.locators.customDisabled).toBeVisible();
 
                 await compareScreenshot(story, "mount");
             });
@@ -64,8 +72,10 @@ test.describe("DashedBorder", () => {
 
         test("Basic (dark mode)", async ({ story }) => {
             await test.step("Component mounts", async () => {
-                await expect(story.locators.enabled).toBeVisible();
-                await expect(story.locators.disabled).toBeVisible();
+                await expect(story.locators.defaultEnabled).toBeVisible();
+                await expect(story.locators.defaultDisabled).toBeVisible();
+                await expect(story.locators.customEnabled).toBeVisible();
+                await expect(story.locators.customDisabled).toBeVisible();
 
                 await compareScreenshot(story, "mount");
             });
