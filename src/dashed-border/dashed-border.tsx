@@ -29,8 +29,8 @@ const Component = (
 ) => {
     const {
         enabled = true,
-        thickness = BorderThickness["width-040"],
-        radius = Radius["sm"],
+        thickness = BorderThickness["width-010"],
+        radius = Radius["none"],
         colour = Colour["border"],
         backgroundColor,
         className,
