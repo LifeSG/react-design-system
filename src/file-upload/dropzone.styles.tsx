@@ -46,8 +46,6 @@ export const DragOverlay = styled(DashedBorder)`
     width: 100%;
     height: 100%;
 
-    background: ${V3_Colour["bg-primary-subtler"]};
-
     display: flex;
     flex-direction: column;
     justify-content: center;

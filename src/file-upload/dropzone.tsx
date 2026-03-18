@@ -77,6 +77,7 @@ const Component = (
             thickness={Border["width-040"]}
             radius={Radius["sm"]}
             enabled={border}
+            backgroundColor={Colour["bg-primary-subtler"]}
         >
             <OverlayIcon />
             <OverlayText weight="semibold">Drop files here</OverlayText>
@@ -91,10 +92,7 @@ const Component = (
             $showDashedBorder={border}
             thickness={Border["width-040"]}
             radius={Radius["sm"]}
-            colour={isDragActive ? Colour["border-primary"] : Colour["border"]}
-            backgroundColor={
-                isDragActive ? Colour["bg-primary-subtler"] : undefined
-            }
+            colour={Colour["border"]}
             className={className}
             {...getRootProps()}
         >
