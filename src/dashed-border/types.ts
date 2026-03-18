@@ -10,9 +10,9 @@ type CustomCssString = string & {};
 
 export interface DashedBorderProps
     extends Omit<React.HTMLAttributes<HTMLDivElement>, "color" | "style"> {
-    enabled?: boolean;
-    thickness?: ValueOf<typeof BorderThickness> | CustomCssValue;
-    radius?: RadiusCSSVariableString | CustomCssValue;
-    colour?: ColourCSSVariableString | CustomCssString;
-    backgroundColor?: ColourCSSVariableString | CustomCssString;
+    backgroundColor?: ColourCSSVariableString | CustomCssString | undefined;
+    colour?: ColourCSSVariableString | CustomCssString | undefined;
+    enabled?: boolean | undefined;
+    radius?: RadiusCSSVariableString | CustomCssValue | undefined;
+    thickness?: ValueOf<typeof BorderThickness> | CustomCssValue | undefined;
 }
