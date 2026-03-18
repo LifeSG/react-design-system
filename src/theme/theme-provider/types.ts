@@ -13,8 +13,8 @@ export interface ThemeContextValue {
 
 export interface ThemeProviderProps {
     children: React.ReactNode;
-    theme?: ThemeType | undefined;
+    className?: string | undefined;
     mode?: ThemeMode | undefined;
-    className?: string;
-    style?: CSSProperties;
+    style?: CSSProperties | undefined;
+    theme?: ThemeType | undefined;
 }
