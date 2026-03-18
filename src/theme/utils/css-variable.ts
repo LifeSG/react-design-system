@@ -9,10 +9,21 @@ const DEFAULT_FONT_SIZE_PX = 16;
 /**
  * Parse a CSS variable string and return its computed value.
  * @param cssVarString CSS variable string (e.g., "var(--fds-breakpoint-xxs-min)")
+ * @param sourceElement Element to compute the CSS variable value from
  * @returns The CSS variable value, or an empty string if not found or invalid
  */
-export function parseCSSVariableValue(cssVarString: CSSVariableString): string {
-    if (!globalThis.window) return "";
+export function parseCSSVariableValue(
+    cssVarString: CSSVariableString | undefined,
+    sourceElement: HTMLElement | null
+): string {
+    if (!cssVarString) return "";
+
+    if (!globalThis.window || !sourceElement) {
+        console.warn(
+            `Cannot parse CSS variable value for "${cssVarString}" because window or sourceElement is not available.`
+        );
+        return "";
+    }
 
     const variableName = /--fds-[\w-]+/.exec(cssVarString as string)?.[0];
     if (!variableName) {
@@ -22,7 +33,7 @@ export function parseCSSVariableValue(cssVarString: CSSVariableString): string {
         return "";
     }
 
-    return getComputedStyle(document.documentElement)
+    return getComputedStyle(sourceElement)
         .getPropertyValue(variableName)
         .trim();
 }

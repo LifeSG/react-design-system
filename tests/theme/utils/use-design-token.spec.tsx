@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import type { CSSProperties } from "react";
 import type { CSSVariableString } from "src/theme";
 import { ThemeProvider } from "src/theme";
 import {
@@ -7,7 +8,7 @@ import {
     useResolvedTokenValue,
 } from "src/theme/utils";
 
-import { setupThemeVariables } from "../setup";
+import { getThemeVariablesStyle, setupThemeVariables } from "../setup";
 
 const TestComponent = ({ tokenName }: { tokenName: CSSVariableString }) => {
     const value = useDesignToken(tokenName);
@@ -21,7 +22,7 @@ describe("useDesignToken", () => {
 
     it("fetches and returns the CSS variable value", async () => {
         render(
-            <ThemeProvider>
+            <ThemeProvider style={getThemeVariablesStyle()}>
                 <TestComponent tokenName="var(--fds-breakpoint-md-min)" />
             </ThemeProvider>
         );
@@ -33,9 +34,25 @@ describe("useDesignToken", () => {
         });
     });
 
+    it("prefers scoped theme element token value over root value", async () => {
+        render(
+            <ThemeProvider
+                style={{ "--fds-breakpoint-md-min": "999px" } as CSSProperties}
+            >
+                <TestComponent tokenName="var(--fds-breakpoint-md-min)" />
+            </ThemeProvider>
+        );
+
+        await waitFor(() => {
+            expect(screen.getByTestId("token-value")).toHaveTextContent(
+                "999px"
+            );
+        });
+    });
+
     it("updates value when tokenName changes", async () => {
         const { rerender } = render(
-            <ThemeProvider>
+            <ThemeProvider style={getThemeVariablesStyle()}>
                 <TestComponent tokenName="var(--fds-breakpoint-md-min)" />
             </ThemeProvider>
         );
@@ -47,7 +64,7 @@ describe("useDesignToken", () => {
         });
 
         rerender(
-            <ThemeProvider>
+            <ThemeProvider style={getThemeVariablesStyle()}>
                 <TestComponent tokenName="var(--fds-breakpoint-lg-min)" />
             </ThemeProvider>
         );
@@ -61,7 +78,11 @@ describe("useDesignToken", () => {
 
     it("updates value when theme changes", async () => {
         const { rerender } = render(
-            <ThemeProvider theme="lifesg" mode="light">
+            <ThemeProvider
+                theme="lifesg"
+                mode="light"
+                style={getThemeVariablesStyle()}
+            >
                 <TestComponent tokenName="var(--fds-breakpoint-md-min)" />
             </ThemeProvider>
         );
@@ -72,15 +93,14 @@ describe("useDesignToken", () => {
             );
         });
 
-        // Simulate theme change by updating the CSS variable value
-        document.documentElement.style.setProperty(
-            "--fds-breakpoint-md-min",
-            "482px",
-            "important"
-        );
-
         rerender(
-            <ThemeProvider theme="bookingsg" mode="light">
+            <ThemeProvider
+                theme="bookingsg"
+                mode="light"
+                style={getThemeVariablesStyle({
+                    "--fds-breakpoint-md-min": "482px",
+                } as CSSProperties)}
+            >
                 <TestComponent tokenName="var(--fds-breakpoint-md-min)" />
             </ThemeProvider>
         );
@@ -95,7 +115,11 @@ describe("useDesignToken", () => {
 
     it("updates value when mode changes", async () => {
         const { rerender } = render(
-            <ThemeProvider theme="lifesg" mode="light">
+            <ThemeProvider
+                theme="lifesg"
+                mode="light"
+                style={getThemeVariablesStyle()}
+            >
                 <TestComponent tokenName="var(--fds-breakpoint-md-min)" />
             </ThemeProvider>
         );
@@ -106,15 +130,14 @@ describe("useDesignToken", () => {
             );
         });
 
-        // Simulate mode change by updating the CSS variable value
-        document.documentElement.style.setProperty(
-            "--fds-breakpoint-md-min",
-            "482px",
-            "important"
-        );
-
         rerender(
-            <ThemeProvider theme="lifesg" mode="dark">
+            <ThemeProvider
+                theme="lifesg"
+                mode="dark"
+                style={getThemeVariablesStyle({
+                    "--fds-breakpoint-md-min": "482px",
+                } as CSSProperties)}
+            >
                 <TestComponent tokenName="var(--fds-breakpoint-md-min)" />
             </ThemeProvider>
         );
@@ -129,7 +152,7 @@ describe("useDesignToken", () => {
 
     it("returns different CSS variable values", async () => {
         const { rerender } = render(
-            <ThemeProvider>
+            <ThemeProvider style={getThemeVariablesStyle()}>
                 <TestComponent tokenName="var(--fds-breakpoint-xxs-min)" />
             </ThemeProvider>
         );
@@ -139,7 +162,7 @@ describe("useDesignToken", () => {
         });
 
         rerender(
-            <ThemeProvider>
+            <ThemeProvider style={getThemeVariablesStyle()}>
                 <TestComponent tokenName="var(--fds-breakpoint-md-max)" />
             </ThemeProvider>
         );

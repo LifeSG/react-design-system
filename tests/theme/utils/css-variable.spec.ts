@@ -8,65 +8,91 @@ import {
 import { setupThemeVariables } from "../setup";
 
 describe("parseCSSVariableValue", () => {
+    const root = document.documentElement;
+
     beforeEach(() => {
         setupThemeVariables();
     });
 
     it("returns a valid CSS variable with px unit", () => {
-        const value = parseCSSVariableValue("var(--fds-breakpoint-md-min)");
+        const value = parseCSSVariableValue(
+            "var(--fds-breakpoint-md-min)",
+            root
+        );
         expect(value).toBe("481px");
     });
 
     it("returns a valid CSS variable with rem unit", () => {
-        const root = document.documentElement;
         root.style.setProperty("--fds-navbar-full-height", "24rem");
         const value = parseCSSVariableValue(
-            "var(--fds-navbar-full-height)" as CSSVariableString
+            "var(--fds-navbar-full-height)" as CSSVariableString,
+            root
         );
         expect(value).toBe("24rem");
     });
 
     it("returns negative values correctly", () => {
-        const root = document.documentElement;
         root.style.setProperty("--fds-breakpoint-margin-lg", "-10px");
 
         const value = parseCSSVariableValue(
-            "var(--fds-breakpoint-margin-lg)" as CSSVariableString
+            "var(--fds-breakpoint-margin-lg)" as CSSVariableString,
+            root
         );
         expect(value).toBe("-10px");
     });
 
     it("returns unitless values as-is", () => {
-        const root = document.documentElement;
         root.style.setProperty("--fds-breakpoint-margin-lg", "100");
 
         const value = parseCSSVariableValue(
-            "var(--fds-breakpoint-margin-lg)" as CSSVariableString
+            "var(--fds-breakpoint-margin-lg)" as CSSVariableString,
+            root
         );
         expect(value).toBe("100");
     });
 
     it("returns decimal values as-is", () => {
-        const root = document.documentElement;
         root.style.setProperty("--fds-breakpoint-margin-lg", "42.5px");
 
         const value = parseCSSVariableValue(
-            "var(--fds-breakpoint-margin-lg)" as CSSVariableString
+            "var(--fds-breakpoint-margin-lg)" as CSSVariableString,
+            root
         );
         expect(value).toBe("42.5px");
     });
 
     it("returns empty string for non-existent CSS variable", () => {
-        const value = parseCSSVariableValue("var(--fds-spacing-8)");
+        const value = parseCSSVariableValue("var(--fds-spacing-8)", root);
+        expect(value).toBe("");
+    });
+
+    it("reads CSS variable from provided element", () => {
+        const themeElement = document.createElement("div");
+        themeElement.style.setProperty("--fds-breakpoint-md-min", "999px");
+
+        const value = parseCSSVariableValue(
+            "var(--fds-breakpoint-md-min)",
+            themeElement
+        );
+        expect(value).toBe("999px");
+    });
+
+    it("returns empty string when provided element has no value", () => {
+        const themeElement = document.createElement("div");
+
+        const value = parseCSSVariableValue(
+            "var(--fds-breakpoint-md-min)",
+            themeElement
+        );
         expect(value).toBe("");
     });
 
     it("returns non-numeric values", () => {
-        const root = document.documentElement;
         root.style.setProperty("--fds-breakpoint-margin-lg", "not-a-number");
 
         const value = parseCSSVariableValue(
-            "var(--fds-breakpoint-margin-lg)" as CSSVariableString
+            "var(--fds-breakpoint-margin-lg)" as CSSVariableString,
+            root
         );
         expect(value).toBe("not-a-number");
     });
@@ -77,7 +103,10 @@ describe("parseCSSVariableValue", () => {
         // @ts-ignore
         delete globalThis.window;
 
-        const value = parseCSSVariableValue("var(--fds-breakpoint-md-min)");
+        const value = parseCSSVariableValue(
+            "var(--fds-breakpoint-md-min)",
+            root
+        );
         expect(value).toBe("");
 
         globalThis.window = originalWindow;

@@ -1,41 +1,41 @@
 import { Breakpoint } from "../tokens/breakpoint";
 import { parseCSSVariableValue, parsePxOrRemValue } from "../utils";
 
-function getBreakpointRanges() {
+function getBreakpointRanges(sourceElement: HTMLElement) {
     return [
         {
             key: "xxs",
-            min: parseCSSVariableValue(Breakpoint["xxs-min"]),
-            max: parseCSSVariableValue(Breakpoint["xxs-max"]),
+            min: parseCSSVariableValue(Breakpoint["xxs-min"], sourceElement),
+            max: parseCSSVariableValue(Breakpoint["xxs-max"], sourceElement),
         },
         {
             key: "xs",
-            min: parseCSSVariableValue(Breakpoint["xs-min"]),
-            max: parseCSSVariableValue(Breakpoint["xs-max"]),
+            min: parseCSSVariableValue(Breakpoint["xs-min"], sourceElement),
+            max: parseCSSVariableValue(Breakpoint["xs-max"], sourceElement),
         },
         {
             key: "sm",
-            min: parseCSSVariableValue(Breakpoint["sm-min"]),
-            max: parseCSSVariableValue(Breakpoint["sm-max"]),
+            min: parseCSSVariableValue(Breakpoint["sm-min"], sourceElement),
+            max: parseCSSVariableValue(Breakpoint["sm-max"], sourceElement),
         },
         {
             key: "md",
-            min: parseCSSVariableValue(Breakpoint["md-min"]),
-            max: parseCSSVariableValue(Breakpoint["md-max"]),
+            min: parseCSSVariableValue(Breakpoint["md-min"], sourceElement),
+            max: parseCSSVariableValue(Breakpoint["md-max"], sourceElement),
         },
         {
             key: "lg",
-            min: parseCSSVariableValue(Breakpoint["lg-min"]),
-            max: parseCSSVariableValue(Breakpoint["lg-max"]),
+            min: parseCSSVariableValue(Breakpoint["lg-min"], sourceElement),
+            max: parseCSSVariableValue(Breakpoint["lg-max"], sourceElement),
         },
         {
             key: "xl",
-            min: parseCSSVariableValue(Breakpoint["xl-min"]),
-            max: parseCSSVariableValue(Breakpoint["xl-max"]),
+            min: parseCSSVariableValue(Breakpoint["xl-min"], sourceElement),
+            max: parseCSSVariableValue(Breakpoint["xl-max"], sourceElement),
         },
         {
             key: "xxl",
-            min: parseCSSVariableValue(Breakpoint["xxl-min"]),
+            min: parseCSSVariableValue(Breakpoint["xxl-min"], sourceElement),
             max: Infinity,
         },
     ] as const;
@@ -53,7 +53,7 @@ export function applyBreakpointClasses() {
         }
     });
 
-    const BREAKPOINT_RANGES = getBreakpointRanges();
+    const BREAKPOINT_RANGES = getBreakpointRanges(document.documentElement);
 
     BREAKPOINT_RANGES.forEach((range) => {
         const minValue = parsePxOrRemValue(range.min);
