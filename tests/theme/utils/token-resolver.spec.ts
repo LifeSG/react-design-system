@@ -78,7 +78,7 @@ describe("token-resolver utils", () => {
         it("returns original value when guard passes", () => {
             expect(
                 getTokenOrDefault(
-                    "var(--fds-radius-sm)",
+                    "var(--fds-radius-lg",
                     guard,
                     "var(--fds-radius-sm)"
                 )
