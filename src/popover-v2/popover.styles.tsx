@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Card } from "../card";
 import { ModalBox } from "../modal/modal-box";
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
+import { Colour } from "../theme";
 import { V3_Colour, V3_MediaQuery, V3_Radius } from "../v3_theme";
 import type { PopoverOverflowType } from "./types";
 // =============================================================================
@@ -24,7 +25,7 @@ export const PopoverContainer = styled.div`
 `;
 
 export const PopoverCard = styled(Card)<PopoverCardStyleProps>`
-    color: ${V3_Colour.text};
+    color: ${Colour.text};
     ${applyHtmlContentStyle({ textSize: "body-md" })}
 
     ${V3_MediaQuery.MaxWidth.sm} {

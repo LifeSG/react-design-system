@@ -1,17 +1,11 @@
 "use client";
 
 import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
-import { ThemeProvider, useTheme } from "@lifesg/react-design-system/theme";
+import { useTheme } from "@lifesg/react-design-system/theme";
 import { useApplyStyle } from "@lifesg/react-design-system/theme/utils";
 import { useMemo, useRef } from "react";
 
-const PopoverWithCustomVariable = ({
-    markerTestId,
-    buttonLabel,
-}: {
-    markerTestId: string;
-    buttonLabel: string;
-}) => {
+export default function Story() {
     const { mode, themeElement } = useTheme();
     const rootNode = useRef<HTMLDivElement>(null);
     const themeElementRef = useMemo(
@@ -25,12 +19,15 @@ const PopoverWithCustomVariable = ({
     });
 
     return (
-        <div ref={rootNode} style={{ minHeight: "220px" }}>
+        <div
+            ref={rootNode}
+            style={{ minHeight: "260px", paddingBottom: "16px" }}
+        >
             <PopoverTrigger
                 rootNode={rootNode}
                 popoverContent={
                     <div
-                        data-testid={markerTestId}
+                        data-testid="custom-propagation-marker"
                         style={{
                             background: "var(--fds-colour-bg)",
                             color: "white",
@@ -43,28 +40,8 @@ const PopoverWithCustomVariable = ({
                     </div>
                 }
             >
-                <button type="button">{buttonLabel}</button>
+                <button type="button">Open popover</button>
             </PopoverTrigger>
-        </div>
-    );
-};
-
-export default function Story() {
-    return (
-        <div style={{ display: "grid", gap: "16px", paddingBottom: "16px" }}>
-            <ThemeProvider mode="light">
-                <PopoverWithCustomVariable
-                    markerTestId="custom-propagation-marker-light"
-                    buttonLabel="Open light popover"
-                />
-            </ThemeProvider>
-
-            <ThemeProvider mode="dark">
-                <PopoverWithCustomVariable
-                    markerTestId="custom-propagation-marker-dark"
-                    buttonLabel="Open dark popover"
-                />
-            </ThemeProvider>
         </div>
     );
 }

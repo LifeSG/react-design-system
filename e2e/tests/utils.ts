@@ -18,7 +18,7 @@ export abstract class AbstractStoryPage {
     ) {
         await this.page.setViewportSize(viewport[options?.size ?? "desktop"]);
 
-        if (options?.mode) {
+        if (options?.mode && options.mode !== "auto") {
             await this.page.emulateMedia({
                 colorScheme:
                     options.mode === "dark" || options.mode === "light"
@@ -27,7 +27,14 @@ export abstract class AbstractStoryPage {
             });
         }
 
-        await this.page.goto(`/components/${this.component}/${story}`);
+        const modeQuery =
+            options?.mode === "light" || options?.mode === "dark"
+                ? `?mode=${options.mode}`
+                : "";
+
+        await this.page.goto(
+            `/components/${this.component}/${story}${modeQuery}`
+        );
     }
 }
 

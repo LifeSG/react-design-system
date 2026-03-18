@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 
+import { Colour } from "../theme";
 import {
     V3_Border,
     V3_Colour,
@@ -13,7 +14,7 @@ import {
 // =============================================================================
 export const StyledCard = styled.div`
     border-radius: ${V3_Radius["md"]};
-    background: ${V3_Colour.bg};
+    background: ${Colour.bg};
     padding: ${V3_Spacing["spacing-16"]} ${V3_Spacing["spacing-32"]};
     ${(props) => {
         return props.theme?.colourMode === "dark"
