@@ -59,6 +59,7 @@ export const Component = (
         hideMagnifier = false,
         onClose,
         insets,
+        show,
         ...otherProps
     }: FullscreenImageCarouselProps,
     ref: React.Ref<FullscreenImageCarouselRef>
@@ -85,7 +86,7 @@ export const Component = (
     const getImageAriaLabel = useCallback(
         (index: number) => {
             const item = items[index];
-            const altText = item.alt?.trim() || `Image ${index + 1}`;
+            const altText = item.alt?.trim() || "";
             return `${altText}. Image ${index + 1} of ${items.length}.`;
         },
         [items]
@@ -105,6 +106,12 @@ export const Component = (
     // EFFECTS
     // =============================================================================
     useEventListener("keydown", handleKeyDown, "document");
+
+    useEffect(() => {
+        if (show) {
+            imageRef.current?.focus();
+        }
+    }, [show]);
 
     useEffect(() => {
         thumbnailRefs.current?.[currentSlide]?.scrollIntoView({
@@ -315,9 +322,9 @@ export const Component = (
         <ModalV2
             {...otherProps}
             data-testid="image-carousel-modal"
-            onClose={onClose}
             aria-label="Image carousel"
-            disableInitialFocus={false}
+            show={show}
+            disableInitialFocus
         >
             <CarouselModalContent>
                 <ImageGalleryContainer>

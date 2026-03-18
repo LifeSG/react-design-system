@@ -27,7 +27,7 @@ export const ModalV2 = ({
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
-    disableInitialFocus = true,
+    disableInitialFocus = false,
     ...otherProps
 }: ModalV2Props): JSX.Element => {
     // =========================================================================
@@ -92,7 +92,9 @@ export const ModalV2 = ({
                     {isMounted && (
                         <FloatingFocusManager
                             context={context}
-                            initialFocus={disableInitialFocus ? -1 : 0}
+                            initialFocus={
+                                disableInitialFocus ? -1 : refs.floating
+                            }
                         >
                             <ScrollContainer>
                                 <ModalContainer
