@@ -384,7 +384,7 @@ SEMANTIC COLOURS - DARK MODE
     --fds-button-link-colour-text: var(--fds-colour-text-primary);
 
     /* Animation: */
-    --fds-loading-dots-spinner-colour: var(--fds-colour-brand-50);
+    --fds-animation-loading-dots-spinner-colour: var(--fds-colour-brand-50);
 
     /* Navbar: */
     --fds-navbar-full-height: 6rem;
