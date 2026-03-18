@@ -26,6 +26,7 @@
         "test-watch": "jest --watch",
         "test-e2e": "playwright test --ui",
         "test-e2e-ci": "sh scripts/e2e-ci.sh",
+        "test-e2e:update-snapshots": "playwright test --update-snapshots",
         "prepare": "(test -d ./.git && npx husky install) || true",
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
