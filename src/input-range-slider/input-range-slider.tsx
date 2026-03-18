@@ -362,43 +362,38 @@ export const InputRangeSlider = ({
                     const thumbValue = selection[state.index];
 
                     return (
-                        <div key={state.index}>
+                        <SliderThumb
+                            data-testid={`slider-thumb-${state.index}`}
+                            {...thumbProps}
+                            tabIndex={thumbProps.tabIndex}
+                            aria-labelledby={concatIds(
+                                ariaLabelledBy,
+                                thumbLabelTextId
+                            )}
+                            aria-describedby={getThumbDescriptionIds(
+                                thumbDescriptionTextId
+                            )}
+                            aria-valuetext={getValueText(thumbValue)}
+                            aria-valuemin={min}
+                            aria-valuemax={max}
+                            aria-valuenow={thumbValue}
+                            aria-readonly={readOnly || undefined}
+                            aria-invalid={ariaInvalid || undefined}
+                            onKeyDown={(event) => {
+                                handleThumbKeyDown(event, state.index);
+                                thumbProps.onKeyDown?.(event);
+                            }}
+                        >
                             {thumbDescriptionTextId && (
                                 <VisuallyHidden id={thumbDescriptionTextId}>
                                     {thumbDescriptionText}
                                 </VisuallyHidden>
                             )}
-                            <SliderThumb
-                                data-testid={`slider-thumb-${state.index}`}
-                                {...thumbProps}
-                                tabIndex={thumbProps.tabIndex}
-                                aria-labelledby={concatIds(
-                                    ariaLabelledBy,
-                                    thumbLabelTextId
-                                )}
-                                aria-describedby={getThumbDescriptionIds(
-                                    thumbDescriptionTextId
-                                )}
-                                aria-valuetext={getValueText(thumbValue)}
-                                aria-valuemin={min}
-                                aria-valuemax={max}
-                                aria-valuenow={thumbValue}
-                                aria-readonly={readOnly || undefined}
-                                aria-invalid={ariaInvalid || undefined}
-                                onKeyDown={(event) => {
-                                    handleThumbKeyDown(event, state.index);
-                                    thumbProps.onKeyDown?.(event);
-                                }}
-                            >
-                                <VisuallyHidden id={thumbLabelTextId}>
-                                    {getThumbAccessibleLabel(state.index)}
-                                </VisuallyHidden>
-                                <Knob
-                                    $disabled={disabled}
-                                    $readOnly={readOnly}
-                                />
-                            </SliderThumb>
-                        </div>
+                            <VisuallyHidden id={thumbLabelTextId}>
+                                {getThumbAccessibleLabel(state.index)}
+                            </VisuallyHidden>
+                            <Knob $disabled={disabled} $readOnly={readOnly} />
+                        </SliderThumb>
                     );
                 }}
                 renderTrack={(
