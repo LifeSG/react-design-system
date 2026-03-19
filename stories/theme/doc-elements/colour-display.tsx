@@ -1,12 +1,12 @@
 import type React from "react";
 import { useState } from "react";
-import type { ThemeMode, ThemeType } from "src/theme";
+import type { ResolvedThemeMode, ThemeType } from "src/theme";
 import { ThemeProvider } from "src/theme";
 import styled from "styled-components";
 
 interface ColourModeSwitcherProps {
-    colourMode: ThemeMode;
-    onColourModeChange: (colourMode: ThemeMode) => void;
+    colourMode: ResolvedThemeMode;
+    onColourModeChange: (colourMode: ResolvedThemeMode) => void;
 }
 
 const ColourModeSwitcher = ({
@@ -35,7 +35,7 @@ interface ColourDisplayProps {
 }
 
 export const ColourDisplay = ({ theme, children }: ColourDisplayProps) => {
-    const [colourMode, setColourMode] = useState<ThemeMode>("light");
+    const [colourMode, setColourMode] = useState<ResolvedThemeMode>("light");
 
     return (
         <ThemeProvider theme={theme} mode={colourMode}>

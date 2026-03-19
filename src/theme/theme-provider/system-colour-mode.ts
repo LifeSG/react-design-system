@@ -1,6 +1,6 @@
-import type { ThemeMode } from "../types";
+import type { ResolvedThemeMode } from "../types";
 
-export function getSystemColourMode(): ThemeMode {
+export function getSystemColourMode(): ResolvedThemeMode {
     if (
         typeof window !== "undefined" &&
         window.matchMedia &&
@@ -12,7 +12,9 @@ export function getSystemColourMode(): ThemeMode {
     return "light";
 }
 
-export function listenToSystemColourMode(callback: (mode: ThemeMode) => void) {
+export function listenToSystemColourMode(
+    callback: (mode: ResolvedThemeMode) => void
+) {
     if (typeof window === "undefined" || !window.matchMedia) {
         return;
     }

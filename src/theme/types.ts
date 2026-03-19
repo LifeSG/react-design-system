@@ -26,7 +26,9 @@ export type ThemeType =
     | "spf"
     | "supportgowhere";
 
-export type ThemeMode = "light" | "dark";
+export type ThemeMode = "light" | "dark" | "auto";
+
+export type ResolvedThemeMode = "light" | "dark";
 
 export type FontSize =
     | "heading-xxl"

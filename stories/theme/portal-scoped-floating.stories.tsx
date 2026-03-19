@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { type CSSProperties, useMemo } from "react";
 import { Button } from "src/button";
 import { PopoverTrigger } from "src/popover-v2";
-import type { ThemeMode } from "src/theme";
+import type { ResolvedThemeMode } from "src/theme";
 import { ThemeProvider, useTheme } from "src/theme";
 import { useApplyStyle } from "src/theme/utils/use-apply-styles";
 import { V3_LifeSGTheme, V3_OneServiceTheme, V3_RBSTheme } from "src/v3_theme";
@@ -15,14 +15,14 @@ type ShowcaseTheme = "lifesg" | "oneservice" | "rbs";
 
 interface PortalScopedThemingStoryArgs {
     leftTheme: ShowcaseTheme;
-    leftMode: ThemeMode;
+    leftMode: ResolvedThemeMode;
     rightTheme: ShowcaseTheme;
-    rightMode: ThemeMode;
+    rightMode: ResolvedThemeMode;
 }
 
 interface InlineStylePortalStoryArgs {
     theme: ShowcaseTheme;
-    mode: ThemeMode;
+    mode: ResolvedThemeMode;
     primaryColor: string;
     inverseColor: string;
 }
@@ -47,7 +47,7 @@ const PreviewPopoverContent = ({
     mode,
 }: {
     theme: ShowcaseTheme;
-    mode: ThemeMode;
+    mode: ResolvedThemeMode;
 }) => {
     return (
         <div
@@ -129,7 +129,7 @@ const ScopedPortalDemo = ({
 }: {
     label: string;
     theme: ShowcaseTheme;
-    mode: ThemeMode;
+    mode: ResolvedThemeMode;
 }) => {
     return (
         <ThemeProvider theme={theme} mode={mode}>
