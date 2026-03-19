@@ -12,6 +12,7 @@ export * from "./calendar";
 export * from "./card";
 export * from "./checkbox";
 export * from "./countdown-timer";
+export * from "./dashed-border";
 export * from "./data-table";
 export * from "./date-input";
 export * from "./date-navigator";

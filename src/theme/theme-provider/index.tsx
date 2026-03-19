@@ -1,5 +1,4 @@
-import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useIsomorphicLayoutEffect } from "../../util";
 import { setupBreakpointListener } from "./breakpoint";
@@ -27,7 +26,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
     useIsomorphicLayoutEffect(() => {
         document.documentElement.dataset.fdsThemeMode = isModeControlled
-            ? mode!
+            ? mode
             : computedMode;
     }, [mode, computedMode, isModeControlled]);
 
@@ -42,13 +41,16 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
         return listenToSystemColourMode(setComputedMode);
     }, [isModeControlled]);
 
+    const contextValue = useMemo(
+        () => ({
+            theme,
+            mode: isModeControlled ? mode : computedMode,
+        }),
+        [theme, isModeControlled, mode, computedMode]
+    );
+
     return (
-        <ThemeContext.Provider
-            value={{
-                theme,
-                mode: isModeControlled ? mode! : computedMode,
-            }}
-        >
+        <ThemeContext.Provider value={contextValue}>
             {children}
         </ThemeContext.Provider>
     );

@@ -1,9 +1,9 @@
 "use client";
-import { ThemeProvider } from "@lifesg/react-design-system/theme";
 import {
+    ThemeProvider,
     V3_DSThemeProvider,
     V3_LifeSGTheme,
-} from "@lifesg/react-design-system/v3_theme";
+} from "@lifesg/react-design-system";
 import styles from "./layout.module.css";
 
 import "@lifesg/react-design-system/theme/styles/lifesg.css";

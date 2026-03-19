@@ -1,6 +1,30 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ESignature } from "src/e-signature";
 
+jest.mock("../../src/theme", () => {
+    const actual = jest.requireActual("../../src/theme");
+    return {
+        ...actual,
+        useResolvedTokenValue: ({
+            value,
+            fallback,
+            isToken,
+            normalizeCustom,
+        }: {
+            value: unknown;
+            fallback: unknown;
+            isToken: (candidate: unknown) => boolean;
+            normalizeCustom: (candidate: unknown) => string;
+        }) => {
+            const effectiveValue =
+                value == null || value === "" ? fallback : value;
+            return isToken(effectiveValue)
+                ? String(effectiveValue)
+                : normalizeCustom(effectiveValue);
+        },
+    };
+});
+
 // =============================================================================
 // UNIT TESTS
 // =============================================================================

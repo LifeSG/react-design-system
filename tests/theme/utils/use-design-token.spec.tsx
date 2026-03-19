@@ -1,7 +1,11 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import type { CSSVariableString } from "src/theme";
 import { ThemeProvider } from "src/theme";
-import { useDesignToken } from "src/theme/utils";
+import {
+    isTokenWithPrefix,
+    useDesignToken,
+    useResolvedTokenValue,
+} from "src/theme/utils";
 
 import { setupThemeVariables } from "../setup";
 
@@ -143,6 +147,70 @@ describe("useDesignToken", () => {
         await waitFor(() => {
             expect(screen.getByTestId("token-value")).toHaveTextContent(
                 "768px"
+            );
+        });
+    });
+});
+
+const ResolvedValueTestComponent = ({
+    value,
+}: {
+    value: CSSVariableString | string | number | undefined;
+}) => {
+    const resolved = useResolvedTokenValue({
+        value,
+        fallback: "var(--fds-breakpoint-md-min)",
+        isToken: (candidate): candidate is CSSVariableString =>
+            isTokenWithPrefix<CSSVariableString>(candidate, "var(--fds-"),
+        normalizeCustom: (custom) => String(custom),
+    });
+
+    return <div data-testid="resolved-value">{resolved}</div>;
+};
+
+describe("useResolvedTokenValue", () => {
+    beforeEach(() => {
+        setupThemeVariables();
+    });
+
+    it("resolves token values", async () => {
+        render(
+            <ThemeProvider>
+                <ResolvedValueTestComponent value="var(--fds-breakpoint-md-min)" />
+            </ThemeProvider>
+        );
+
+        await waitFor(() => {
+            expect(screen.getByTestId("resolved-value")).toHaveTextContent(
+                "481px"
+            );
+        });
+    });
+
+    it("returns fallback when value is empty", async () => {
+        render(
+            <ThemeProvider>
+                <ResolvedValueTestComponent value={undefined} />
+            </ThemeProvider>
+        );
+
+        await waitFor(() => {
+            expect(screen.getByTestId("resolved-value")).toHaveTextContent(
+                "481px"
+            );
+        });
+    });
+
+    it("returns custom values as-is after normalization", async () => {
+        render(
+            <ThemeProvider>
+                <ResolvedValueTestComponent value={12} />
+            </ThemeProvider>
+        );
+
+        await waitFor(() => {
+            expect(screen.getByTestId("resolved-value")).toHaveTextContent(
+                "12"
             );
         });
     });

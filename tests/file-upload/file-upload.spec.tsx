@@ -2,10 +2,34 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { FileItemProps } from "src/file-upload";
 import { FileUpload } from "src/file-upload";
 
+jest.mock("../../src/theme", () => {
+    const actual = jest.requireActual("../../src/theme");
+    return {
+        ...actual,
+        useResolvedTokenValue: ({
+            value,
+            fallback,
+            isToken,
+            normalizeCustom,
+        }: {
+            value: unknown;
+            fallback: unknown;
+            isToken: (candidate: unknown) => boolean;
+            normalizeCustom: (candidate: unknown) => string;
+        }) => {
+            const effectiveValue =
+                value == null || value === "" ? fallback : value;
+            return isToken(effectiveValue)
+                ? String(effectiveValue)
+                : normalizeCustom(effectiveValue);
+        },
+    };
+});
+
 describe("FileUpload", () => {
     beforeEach(() => {
         jest.resetAllMocks();
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
+        globalThis.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
             unobserve: jest.fn(),
             disconnect: jest.fn(),

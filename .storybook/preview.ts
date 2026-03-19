@@ -37,7 +37,7 @@ const preview: Preview = {
                         "Border",
                     ],
                     "Core",
-                    ["Typography", "Layout", "Icon"],
+                    ["Typography", "Layout", "Icon", "DashedBorder"],
                     "Content",
                     "Navigation",
                     "Selection and input",

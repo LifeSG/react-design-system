@@ -1,3 +1,4 @@
+import type { ValueOf } from "../util/utility-types";
 import type {
     Border,
     Breakpoint,
@@ -43,8 +44,6 @@ export type FontSize =
     | "form-description";
 
 export type FontWeight = "light" | "regular" | "semibold" | "bold";
-
-type ValueOf<T> = T[keyof T];
 
 export type BreakpointCSSVariableString = ValueOf<typeof Breakpoint>;
 export type BorderCSSVariableString = ValueOf<typeof Border>;
