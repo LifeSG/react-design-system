@@ -42,10 +42,7 @@ export const compareScreenshot = async (
     page: AbstractStoryPage,
     name: string
 ) => {
-    await expect(page.page.getByTestId("story-layout")).toHaveScreenshot(
-        `${name}.png`,
-        {
-            threshold: 0, // Strict colour matching
-        }
-    );
+    await expect(page.page.locator("body")).toHaveScreenshot(`${name}.png`, {
+        threshold: 0, // Strict colour matching
+    });
 };
