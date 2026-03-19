@@ -78,9 +78,9 @@ describe("token-resolver utils", () => {
         it("returns original value when guard passes", () => {
             expect(
                 getTokenOrDefault(
-                    "var(--fds-radius-lg",
+                    "var(--fds-radius-sm)",
                     guard,
-                    "var(--fds-radius-sm)"
+                    "var(--fds-radius-lg)"
                 )
             ).toBe("var(--fds-radius-sm)");
         });
@@ -88,6 +88,13 @@ describe("token-resolver utils", () => {
         it("returns fallback when guard fails", () => {
             expect(
                 getTokenOrDefault("12px", guard, "var(--fds-radius-sm)")
+            ).toBe("var(--fds-radius-sm)");
+            expect(
+                getTokenOrDefault(
+                    "var(--fds-radius-lg)",
+                    guard,
+                    "var(--fds-radius-sm)"
+                )
             ).toBe("var(--fds-radius-sm)");
         });
     });
