@@ -144,6 +144,9 @@ describe("LinkList", () => {
             expect(mockOnLoadMore).toHaveBeenCalledTimes(1);
             expect(screen.getByText("Loading...")).toBeVisible();
             expect(
+                screen.getByTestId("component-loading-spinner")
+            ).toBeInTheDocument();
+            expect(
                 screen.queryByRole("button", { name: "View more" })
             ).not.toBeInTheDocument();
 
