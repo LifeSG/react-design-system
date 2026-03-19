@@ -74,6 +74,28 @@ describe("InputMultiSelect", () => {
         });
     });
 
+    it("should render loading spinner when options are loading", async () => {
+        const user = userEvent.setup();
+
+        render(
+            <InputMultiSelect
+                data-testid={FIELD_TESTID}
+                options={OPTIONS}
+                optionsLoadState="loading"
+                onRetry={jest.fn()}
+            />
+        );
+
+        await user.click(screen.getByTestId(FIELD_TESTID));
+
+        await waitFor(() => {
+            expect(screen.getByTestId("list-loading")).toBeVisible();
+        });
+
+        expect(screen.getByText("Loading...")).toBeVisible();
+        expect(screen.getByTestId("component-loading-spinner")).toBeVisible();
+    });
+
     it("should select list item correctly", async () => {
         const user = userEvent.setup();
         const mockOnSelectOptions = jest.fn();
