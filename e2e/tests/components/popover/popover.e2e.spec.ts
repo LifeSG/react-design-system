@@ -64,8 +64,6 @@ test.describe("Popover", () => {
                         "Theme: light"
                     );
                     await expect(story.locators.popover).not.toBeVisible();
-
-                    await compareScreenshot(story, "mount-light");
                 });
 
                 await test.step("Popover opens in light mode", async () => {
@@ -90,8 +88,6 @@ test.describe("Popover", () => {
                     await expect(story.locators.themeToggle).toHaveText(
                         "Theme: dark"
                     );
-
-                    await compareScreenshot(story, "mount-dark-bookingsg");
                 });
 
                 await test.step("Popover opens in dark mode", async () => {

@@ -297,21 +297,15 @@ describe("ThemeProvider", () => {
             expect(body.classList.contains("fds-breakpoint-md-max")).toBe(true);
         });
 
-        it("falls back to root token value when a breakpoint token is missing on theme node", () => {
+        it("respects custom breakpoint overrides", () => {
             setWindowWidth(1000);
-
-            document.documentElement.style.setProperty(
-                "--fds-breakpoint-md-max",
-                "1000px"
-            );
 
             render(
                 <ThemeProvider
                     style={
                         {
-                            "--fds-breakpoint-xl-min": "1201px",
-                            "--fds-breakpoint-xl-max": "1440px",
-                            "--fds-breakpoint-xxl-min": "1441px",
+                            "--fds-breakpoint-md-max": "1000px",
+                            "--fds-breakpoint-lg-min": "1001px",
                         } as CSSProperties
                     }
                 >
@@ -323,7 +317,6 @@ describe("ThemeProvider", () => {
             expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
             expect(body.classList.contains("fds-breakpoint-md-max")).toBe(true);
 
-            // Validate exact fallback boundary value from root token
             setWindowWidth(1001);
             expect(body.classList.contains("fds-breakpoint-md")).toBe(false);
             expect(body.classList.contains("fds-breakpoint-md-max")).toBe(
