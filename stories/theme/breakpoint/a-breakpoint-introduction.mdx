@@ -65,15 +65,15 @@ const container = css`
 import { MediaQuery } from "@lifesg/react-design-system/theme";
 
 const container = css`
-    ${MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MinWidth.lg} {
         // styles
     }
 
-    ${MediaQuery.MaxWidth.md} {
+    ${MediaQuery.MinWidth.md} {
         // styles
     }
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MinWidth.sm} {
         // styles
     }
 `;
@@ -89,15 +89,13 @@ import {
 } from "@lifesg/react-design-system/theme";
 
 export const MyComponent = () => {
-    const theme = useTheme();
-    // TODO: fix this example
-    const tablet = parsePxOrRemValue(useDesignToken(Breakpoint["md-min"]));
+    const mobileWidth = parsePxOrRemValue(useDesignToken(Breakpoint["sm-max"]));
 
-    if (window.innerWidth > tablet) {
-        // render something
-    } else {
-        // render something else
-    }
+    // use this value in your resize listeners, useMediaQuery hooks etc.
+    const [mobile, setMobile] = useState(false);
+    useEffect(() => {
+        setMobile(window.innerWidth <= mobileWidth);
+    }, [mobileWidth]);
 };
 ```
 
