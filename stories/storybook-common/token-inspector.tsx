@@ -3,22 +3,20 @@ import { useEffect, useState } from "react";
 import { useTheme } from "src/theme";
 
 const collectFDSVariablesFromCSS = (cssRules: CSSStyleRule[]) => {
-    const cssVariables = cssRules
-        .map((cssRule) => cssRule.cssText)
-        // parse the raw CSS rule block to get the property value pairs
-        .map((cssText) => cssText.split("{")[1].split("}")[0].trim().split(";"))
-        .flat()
-        .map((text) => text.trim())
-        // get only the FDS variables which are namespaced with this prefix
-        .filter((text) => text.startsWith("--fds-"))
-        .map((text) => {
-            const [key, value] = text.split(":", 2);
-            return { key: key.trim(), value: value.trim() };
-        });
+    const result: Record<string, string> = {};
 
-    const result = Object.fromEntries(
-        cssVariables.map(({ key, value }) => [key, value])
-    );
+    cssRules.forEach((cssRule) => {
+        const style = cssRule.style;
+        for (let i = 0; i < style.length; i++) {
+            const propertyName = style.item(i);
+            if (!propertyName.startsWith("--fds-")) continue;
+
+            const value = style.getPropertyValue(propertyName).trim();
+            if (!value) continue;
+
+            result[propertyName] = value;
+        }
+    });
 
     return result;
 };
@@ -41,31 +39,22 @@ const extractFDSVariables = memoize(
         const defaultCssRules = cssRules.filter((cssRule: CSSStyleRule) => {
             return cssRule.selectorText === ":root";
         });
-        const defaultVariables = defaultCssRules
-            ? collectFDSVariablesFromCSS(defaultCssRules)
-            : {};
-
         const lightModeCssRules = cssRules.filter((cssRule: CSSStyleRule) => {
             return cssRule.selectorText === `[data-fds-theme="${theme}"]`;
         });
-        const lightModeVariables = lightModeCssRules
-            ? collectFDSVariablesFromCSS(lightModeCssRules)
-            : {};
-
         const darkModeCssRules = cssRules.filter((cssRule: CSSStyleRule) => {
             return (
                 cssRule.selectorText ===
                 `[data-fds-theme="${theme}"][data-fds-theme-mode="dark"]`
             );
         });
-        const darkModeVariables = darkModeCssRules
-            ? collectFDSVariablesFromCSS(darkModeCssRules)
-            : {};
 
         return {
-            ...defaultVariables,
-            ...lightModeVariables,
-            ...(mode === "dark" ? darkModeVariables : {}),
+            ...collectFDSVariablesFromCSS(defaultCssRules),
+            ...collectFDSVariablesFromCSS(lightModeCssRules),
+            ...(mode === "dark"
+                ? collectFDSVariablesFromCSS(darkModeCssRules)
+                : {}),
         };
     },
     (theme, mode) => `${theme},${mode}`
