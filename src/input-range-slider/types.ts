@@ -30,6 +30,7 @@ export interface InputRangeSliderProps extends BaseSliderProps {
     /** The minimum difference between values */
     minRange?: number | undefined;
     ariaLabels?: string[] | undefined;
+    ariaDescriptions?: string[] | undefined;
     "aria-invalid"?: boolean | undefined;
     "aria-labelledby"?: string | undefined;
     "aria-describedby"?: string | undefined;
