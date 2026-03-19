@@ -16,6 +16,8 @@ export const useDesignToken = (
     const [value, setValue] = useState<string | undefined>(undefined);
 
     useEffect(() => {
+        if (!themeElement) return;
+
         setValue(parseCSSVariableValue(tokenName, themeElement));
     }, [theme, mode, themeElement, tokenName]);
 

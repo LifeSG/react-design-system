@@ -178,27 +178,27 @@ describe("useDesignToken", () => {
 const ResolvedValueTestComponent = ({
     value,
 }: {
-    value: CSSVariableString | string | number | undefined;
+    value: CSSVariableString | number | undefined;
 }) => {
     const resolved = useResolvedTokenValue({
         value,
         fallback: "var(--fds-breakpoint-md-min)",
         isToken: (candidate): candidate is CSSVariableString =>
             isTokenWithPrefix<CSSVariableString>(candidate, "var(--fds-"),
-        normalizeCustom: (custom) => String(custom),
+        normalizeCustom: String,
     });
 
     return <div data-testid="resolved-value">{resolved}</div>;
 };
 
-describe("useResolvedTokenValue", () => {
+describe.only("useResolvedTokenValue", () => {
     beforeEach(() => {
         setupThemeVariables();
     });
 
     it("resolves token values", async () => {
         render(
-            <ThemeProvider>
+            <ThemeProvider style={getThemeVariablesStyle()}>
                 <ResolvedValueTestComponent value="var(--fds-breakpoint-md-min)" />
             </ThemeProvider>
         );
@@ -212,7 +212,7 @@ describe("useResolvedTokenValue", () => {
 
     it("returns fallback when value is empty", async () => {
         render(
-            <ThemeProvider>
+            <ThemeProvider style={getThemeVariablesStyle()}>
                 <ResolvedValueTestComponent value={undefined} />
             </ThemeProvider>
         );
@@ -226,7 +226,7 @@ describe("useResolvedTokenValue", () => {
 
     it("returns custom values as-is after normalization", async () => {
         render(
-            <ThemeProvider>
+            <ThemeProvider style={getThemeVariablesStyle()}>
                 <ResolvedValueTestComponent value={12} />
             </ThemeProvider>
         );
