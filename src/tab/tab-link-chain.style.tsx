@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { FadeWrapper } from "../shared/fade-wrapper";
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -116,6 +116,7 @@ const buttonBase = css`
 export const Label = styled.div<LabelStyleProps>`
     ${buttonBase}
     position: absolute;
+    ${Font["body-baseline-regular"]}
     color: ${Colour["text-subtler"]};
     opacity: 1;
 
@@ -130,6 +131,7 @@ export const Label = styled.div<LabelStyleProps>`
 
 export const BoldLabel = styled.button<LabelStyleProps>`
     ${buttonBase}
+    ${Font["body-baseline-semibold"]}
     color: ${Colour["text-primary"]};
     opacity: 0;
     outline: none;
