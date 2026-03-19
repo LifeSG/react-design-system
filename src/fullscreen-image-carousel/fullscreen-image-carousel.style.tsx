@@ -187,14 +187,8 @@ export const FocusableImageRegion = styled.div`
     }
 
     &:focus-visible {
-        outline: ${Border["width-040"]} solid ${Colour["border-selected"]};
+        outline: ${Border["width-020"]} solid ${Colour["border-selected"]};
         outline-offset: -2px;
-    }
-
-    ${MediaQuery.MaxWidth.sm} {
-        &:focus-visible {
-            outline-width: ${Border["width-020"]};
-        }
     }
 `;
 
