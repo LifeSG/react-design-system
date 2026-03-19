@@ -1,52 +1,74 @@
-import "jest-styled-components";
-
 import { render, screen } from "@testing-library/react";
 import { ComponentLoadingSpinner } from "src/shared/component-loading-spinner/component-loading-spinner";
+import {
+    innerRing,
+    innerRing2,
+    innerRing3,
+    innerRing4,
+    outerRing,
+} from "src/shared/component-loading-spinner/component-loading-spinner.style";
 
 describe("ComponentLoadingSpinner", () => {
     it("should render spinner root and 4 inner rings", () => {
         const { container } = render(<ComponentLoadingSpinner />);
 
         const spinner = screen.getByTestId("component-loading-spinner");
-        const innerRings = container.querySelectorAll(
-            "#inner1, #inner2, #inner3, #inner4"
-        );
-
-        expect(spinner).toBeInTheDocument();
-        expect(innerRings).toHaveLength(4);
-    });
-
-    it("should apply custom size and color", () => {
-        const { container } = render(
-            <ComponentLoadingSpinner size={24} color="#ff0000" />
-        );
-
-        expect(container.firstChild).toHaveStyleRule("width", "24px");
-        expect(container.firstChild).toHaveStyleRule("height", "24px");
-        expect(container.firstChild).toHaveStyleRule("color", "#ff0000");
-    });
-
-    it("should use default size and color when props are omitted", () => {
-        const { container } = render(<ComponentLoadingSpinner />);
-
-        expect(container.firstChild).toHaveStyleRule("width", "1em");
-        expect(container.firstChild).toHaveStyleRule("height", "1em");
-        expect(container.firstChild).toHaveStyleRule("color", "currentColor");
-    });
-
-    it("should apply animation configuration for all rings", () => {
-        const { container } = render(<ComponentLoadingSpinner />);
         const inner1 = container.querySelector("#inner1");
         const inner2 = container.querySelector("#inner2");
         const inner3 = container.querySelector("#inner3");
         const inner4 = container.querySelector("#inner4");
 
-        expect(inner1).toHaveStyleRule(
-            "animation",
-            expect.stringContaining("1.2s")
-        );
-        expect(inner2).toHaveStyleRule("animation-delay", "-0.45s");
-        expect(inner3).toHaveStyleRule("animation-delay", "-0.3s");
-        expect(inner4).toHaveStyleRule("animation-delay", "-0.15s");
+        expect(spinner).toBeInTheDocument();
+        expect(spinner).toHaveClass(outerRing);
+        expect(inner1).toHaveClass(innerRing);
+        expect(inner2).toHaveClass(innerRing, innerRing2);
+        expect(inner3).toHaveClass(innerRing, innerRing3);
+        expect(inner4).toHaveClass(innerRing, innerRing4);
+    });
+
+    it("should apply custom size and color", () => {
+        render(<ComponentLoadingSpinner size={24} color="#ff0000" />);
+
+        const spinner = screen.getByTestId("component-loading-spinner");
+
+        expect(
+            spinner.style.getPropertyValue(
+                "--fds-internal-componentLoadingSpinner-root-size"
+            )
+        ).toBe("24px");
+        expect(
+            spinner.style.getPropertyValue(
+                "--fds-internal-componentLoadingSpinner-root-colour"
+            )
+        ).toBe("#ff0000");
+    });
+
+    it("should use default class and no css variables when props are omitted", () => {
+        render(<ComponentLoadingSpinner />);
+
+        const spinner = screen.getByTestId("component-loading-spinner");
+
+        expect(spinner).toHaveClass(outerRing);
+        expect(
+            spinner.style.getPropertyValue(
+                "--fds-internal-componentLoadingSpinner-root-size"
+            )
+        ).toBe("");
+        expect(
+            spinner.style.getPropertyValue(
+                "--fds-internal-componentLoadingSpinner-root-colour"
+            )
+        ).toBe("");
+    });
+
+    it("should apply ring delay classes", () => {
+        const { container } = render(<ComponentLoadingSpinner />);
+        const inner2 = container.querySelector("#inner2");
+        const inner3 = container.querySelector("#inner3");
+        const inner4 = container.querySelector("#inner4");
+
+        expect(inner2).toHaveClass(innerRing2);
+        expect(inner3).toHaveClass(innerRing3);
+        expect(inner4).toHaveClass(innerRing4);
     });
 });
