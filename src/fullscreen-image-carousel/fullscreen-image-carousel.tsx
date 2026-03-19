@@ -48,6 +48,7 @@ import {
     FullscreenImageCarouselRef,
     ImageDimension,
 } from "./types";
+import { useStateCallback } from "../shared/hooks/useStateCallback";
 
 export const Component = (
     {
@@ -67,7 +68,7 @@ export const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [currentSlide, setCurrentSlide] = useState(
+    const [currentSlide, setCurrentSlide] = useStateCallback(
         initialActiveItemIndex ?? 0
     );
     const [imagesDimension, setImageDimension] = useState<
@@ -80,7 +81,6 @@ export const Component = (
     const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
     const zoomRefs = useRef<(ReactZoomPanPinchContentRef | null)[]>([]);
     const imageRef = useRef<HTMLDivElement>(null);
-    const shouldAnnounceImageRef = useRef(false);
     const diff = startX && endX ? startX - endX : 0;
 
     const getImageAriaLabel = useCallback(
@@ -119,13 +119,8 @@ export const Component = (
             inline: "center",
         });
         setZoom(1);
+    }, [currentSlide]);
 
-        if (shouldAnnounceImageRef.current) {
-            clearAnnouncer("polite");
-            announce(getImageAriaLabel(currentSlide), "polite");
-            shouldAnnounceImageRef.current = false;
-        }
-    }, [currentSlide, getImageAriaLabel]);
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -217,15 +212,25 @@ export const Component = (
     // HELPER FUNCTIONS
     // =============================================================================
     const goToPrevSlide = () => {
-        shouldAnnounceImageRef.current = true;
         zoomRefs.current?.[currentSlide]?.resetTransform();
-        setCurrentSlide((prev) => (prev === 0 ? items.length - 1 : prev - 1));
+        setCurrentSlide(
+            (prev) => (prev === 0 ? items.length - 1 : prev - 1),
+            (slide) => {
+                clearAnnouncer("polite");
+                announce(getImageAriaLabel(slide), "polite");
+            }
+        );
     };
 
     const goToNextSlide = () => {
-        shouldAnnounceImageRef.current = true;
         zoomRefs.current?.[currentSlide]?.resetTransform();
-        setCurrentSlide((prev) => (prev === items.length - 1 ? 0 : prev + 1));
+        setCurrentSlide(
+            (prev) => (prev === items.length - 1 ? 0 : prev + 1),
+            (slide) => {
+                clearAnnouncer("polite");
+                announce(getImageAriaLabel(slide), "polite");
+            }
+        );
     };
 
     const goToSlide = (index: number) => {
