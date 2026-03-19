@@ -3,7 +3,6 @@ import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { ResizeCallbackParams } from "../shared/fade-wrapper";
 import { Breakpoint } from "../theme";
-import { Typography } from "../typography/typography";
 import { TabContext } from "./tab-context";
 import {
     BoldLabel,
@@ -138,9 +137,7 @@ export const TabLinkChain = ({
                                         onClick={handleChainLinkClick(index)}
                                         aria-hidden="true"
                                     >
-                                        <Typography.BodyBL weight="regular">
-                                            {truncateText(title)}
-                                        </Typography.BodyBL>
+                                        {truncateText(title)}
                                     </Label>
                                     <BoldLabel
                                         role="tab"
@@ -155,9 +152,7 @@ export const TabLinkChain = ({
                                         }
                                         $active={isActive}
                                     >
-                                        <Typography.BodyBL weight="semibold">
-                                            {truncateText(title)}
-                                        </Typography.BodyBL>
+                                        {truncateText(title)}
                                     </BoldLabel>
                                 </LabelContainer>
                                 {titleAddon?.content}
