@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import { Button } from "../button";
-import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Typography } from "../typography";
 import { V3_Colour, V3_MediaQuery, V3_Spacing } from "../v3_theme";
 
@@ -50,8 +49,6 @@ export const Title = styled(Typography.HeadingMD).attrs(() => ({
 export const DescriptionContainer = styled.div`
     color: ${V3_Colour.text};
     text-align: center;
-
-    ${applyHtmlContentStyle({ textSize: "body-baseline" })}
 
     p + p {
         margin-top: ${V3_Spacing["spacing-16"]};

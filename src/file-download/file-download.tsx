@@ -1,3 +1,4 @@
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import {
     Container,
     Description,
@@ -41,7 +42,13 @@ export const FileDownload = ({
             return <Title>{title}</Title>;
         }
 
-        return <TitleContainer>{title}</TitleContainer>;
+        return (
+            <TitleContainer
+                className={applyHtmlContentStyle({ textSize: "heading-xs" })}
+            >
+                {title}
+            </TitleContainer>
+        );
     };
 
     const renderDescription = () => {
@@ -53,7 +60,13 @@ export const FileDownload = ({
             return <Description>{description}</Description>;
         }
 
-        return <DescriptionContainer>{description}</DescriptionContainer>;
+        return (
+            <DescriptionContainer
+                className={applyHtmlContentStyle({ textSize: "body-md" })}
+            >
+                {description}
+            </DescriptionContainer>
+        );
     };
 
     return (

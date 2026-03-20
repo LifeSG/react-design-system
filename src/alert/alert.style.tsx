@@ -1,7 +1,6 @@
 import { ChevronDownIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
 
-import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Typography } from "../typography";
 import {
     V3_Border,
@@ -173,13 +172,6 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
 
 export const TextWrapper = styled.div<StyleProps>`
     color: ${V3_Colour.text};
-
-    ${(props) => {
-        if (props.$sizeType === "small") {
-            return applyHtmlContentStyle({ textSize: "body-sm" });
-        }
-        return applyHtmlContentStyle({ textSize: "body-md" });
-    }}
 `;
 
 export const ShowMoreButton = styled.button<StyleProps>`

@@ -1,69 +1,122 @@
-import { css } from "styled-components";
+import { css } from "@linaria/core";
+import clsx from "clsx";
 
-import { V3_Colour, V3_Font } from "../../v3_theme";
-import type { V3_TypographySizeType } from "../../v3_theme/font/types";
+import type { FontSize } from "../../theme";
+import { Colour } from "../../theme/tokens/colour";
+import { Font } from "../../theme/tokens/font";
+import { generateFont } from "../../theme/utils/font";
 
 export interface HtmlContentStyleOptions {
-    textSize?: V3_TypographySizeType | undefined;
+    textSize?: FontSize | undefined;
 }
 
-export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
-    const { textSize } = options || {};
+const baseHtmlContent = css`
+    strong {
+        font-weight: ${Font.Spec["weight-semibold"]};
+    }
 
-    return css`
-        // Text styling
-        ${textSize && V3_Font[`${textSize}-regular`]}
+    p {
+        margin: 0;
+    }
 
-        strong {
-            font-weight: ${V3_Font.Spec["weight-semibold"]};
-            ${textSize && V3_Font[`${textSize}-semibold`]};
+    a {
+        font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour.hyperlink};
+        text-decoration: underline;
+
+        svg {
+            color: ${Colour["icon-primary"]};
+            height: 1lh;
+            width: 1em;
+            margin-left: 0.4rem;
+            vertical-align: middle;
         }
 
-        p {
-            margin: 0;
-        }
-
-        // Link styling
-        a {
-            font-weight: ${V3_Font.Spec["weight-semibold"]};
-            ${textSize && V3_Font[`${textSize}-semibold`]}
-            color: ${V3_Colour.hyperlink};
-            text-decoration: underline;
+        &:hover,
+        &:active,
+        &:visited,
+        &:focus {
+            color: ${Colour["hyperlink-hover"]};
 
             svg {
-                color: ${V3_Colour["icon-primary"]};
-                height: 1lh;
-                width: 1em;
-                margin-left: 0.4rem;
-                vertical-align: middle;
-            }
-
-            &:hover,
-            &:active,
-            &:visited,
-            &:focus {
-                color: ${V3_Colour["hyperlink-hover"]};
-
-                svg {
-                    color: ${V3_Colour["icon-hover"]};
-                }
+                color: ${Colour["icon-hover"]};
             }
         }
+    }
 
-        // List styling
-        ul,
-        ol {
-            margin: 0;
-            padding: 0;
-            margin-left: 2.5rem;
-        }
+    ul,
+    ol {
+        margin: 0;
+        padding: 0;
+        margin-left: 2.5rem;
+    }
 
-        ol {
-            list-style: decimal;
-        }
+    ol {
+        list-style: decimal;
+    }
 
-        ul {
-            list-style: disc;
-        }
-    `;
+    ul {
+        list-style: disc;
+    }
+`;
+
+const getTextSizeStyles = (textSize: FontSize): string => `
+    ${generateFont(textSize, "regular")}
+
+    strong {
+        ${generateFont(textSize, "semibold")}
+    }
+
+    a {
+        ${generateFont(textSize, "semibold")}
+    }
+`;
+
+const textSizeClassMap: Record<FontSize, string> = {
+    "heading-xxl": css`
+        ${getTextSizeStyles("heading-xxl")}
+    `,
+    "heading-xl": css`
+        ${getTextSizeStyles("heading-xl")}
+    `,
+    "heading-lg": css`
+        ${getTextSizeStyles("heading-lg")}
+    `,
+    "heading-md": css`
+        ${getTextSizeStyles("heading-md")}
+    `,
+    "heading-sm": css`
+        ${getTextSizeStyles("heading-sm")}
+    `,
+    "heading-xs": css`
+        ${getTextSizeStyles("heading-xs")}
+    `,
+    "body-baseline": css`
+        ${getTextSizeStyles("body-baseline")}
+    `,
+    "body-md": css`
+        ${getTextSizeStyles("body-md")}
+    `,
+    "body-sm": css`
+        ${getTextSizeStyles("body-sm")}
+    `,
+    "body-xs": css`
+        ${getTextSizeStyles("body-xs")}
+    `,
+    "form-label": css`
+        ${getTextSizeStyles("form-label")}
+    `,
+    "form-description": css`
+        ${getTextSizeStyles("form-description")}
+    `,
+};
+
+export const applyHtmlContentStyle = (
+    options?: HtmlContentStyleOptions
+): string => {
+    const textSizeClass = options?.textSize
+        ? textSizeClassMap[options.textSize]
+        : "";
+
+    return clsx(baseHtmlContent, textSizeClass);
 };
