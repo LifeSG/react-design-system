@@ -1,9 +1,14 @@
+import clsx from "clsx";
+import type { HTMLAttributes } from "react";
+import { useRef } from "react";
+
+import { useApplyStyle } from "../../theme/utils";
 import {
-    InnerRing1,
-    InnerRing2,
-    InnerRing3,
-    InnerRing4,
-    OuterRing,
+    innerRing,
+    innerRing2,
+    innerRing3,
+    innerRing4,
+    outerRing,
 } from "./component-loading-spinner.style";
 
 /**
@@ -11,40 +16,42 @@ import {
  * with the main loading spinner in animations/loading-spinner
  *
  * By default it inherits the font size and color of the parent container.
- *
- * The color can be customised via the prop or through styled-components.
- *
- * Example:
- * ```
- * styled(ComponentLoadingSpinner)`
- *   color: red;
- * `
- * ```
  */
-export interface ComponentLoadingSpinnerProps {
-    className?: string | undefined;
+type BaseProps = Omit<HTMLAttributes<HTMLDivElement>, "color">;
+
+export interface ComponentLoadingSpinnerProps extends BaseProps {
     /** Measurement in px */
     size?: number | undefined;
     /** rgb/hex value or Color token */
-    color?: string | ((props: any) => string) | undefined;
+    color?: string | undefined;
 }
 
 export const ComponentLoadingSpinner = ({
     color,
     className,
     size,
+    ...otherProps
 }: ComponentLoadingSpinnerProps): JSX.Element => {
+    const spinnerRef = useRef<HTMLDivElement>(null);
+    useApplyStyle(spinnerRef, {
+        "--fds-internal-componentLoadingSpinner-root-size": size
+            ? `${size}px`
+            : undefined,
+        "--fds-internal-componentLoadingSpinner-root-colour":
+            typeof color === "string" ? color : undefined,
+    });
+
     return (
-        <OuterRing
-            className={className}
-            $size={size}
-            $color={color}
+        <div
+            ref={spinnerRef}
+            className={clsx(outerRing, className)}
+            {...otherProps}
             data-testid={"component-loading-spinner"}
         >
-            <InnerRing1 id="inner1" />
-            <InnerRing2 id="inner2" />
-            <InnerRing3 id="inner3" />
-            <InnerRing4 id="inner4" />
-        </OuterRing>
+            <div id="inner1" className={innerRing} />
+            <div id="inner2" className={clsx(innerRing, innerRing2)} />
+            <div id="inner3" className={clsx(innerRing, innerRing3)} />
+            <div id="inner4" className={clsx(innerRing, innerRing4)} />
+        </div>
     );
 };

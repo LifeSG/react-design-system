@@ -134,6 +134,43 @@ describe("ButtonWithIcon", () => {
         expect(icon).not.toBeInTheDocument();
         expect(spinner).toBeInTheDocument();
     });
+
+    it("should toggle spinner based on loading state", () => {
+        const { rerender } = render(
+            <ButtonWithIcon.Default
+                icon={<PlaceholderIcon />}
+                iconPosition="left"
+                data-testid="test-button"
+                loading
+            >
+                {BUTTON_TEXT}
+            </ButtonWithIcon.Default>
+        );
+
+        expect(
+            screen.getByTestId("component-loading-spinner")
+        ).toBeInTheDocument();
+        expect(
+            screen.getByTestId("test-button").querySelector("svg")
+        ).not.toBeInTheDocument();
+
+        rerender(
+            <ButtonWithIcon.Default
+                icon={<PlaceholderIcon />}
+                iconPosition="left"
+                data-testid="test-button"
+            >
+                {BUTTON_TEXT}
+            </ButtonWithIcon.Default>
+        );
+
+        expect(
+            screen.queryByTestId("component-loading-spinner")
+        ).not.toBeInTheDocument();
+        expect(
+            screen.getByTestId("test-button").querySelector("svg")
+        ).toBeInTheDocument();
+    });
 });
 
 // =============================================================================
