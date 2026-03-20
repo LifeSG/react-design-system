@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 
-import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import {
     V3_Border,
     V3_Colour,
@@ -55,7 +54,6 @@ export const Title = styled.p`
 `;
 
 export const TitleContainer = styled.div`
-    ${applyHtmlContentStyle({ textSize: "heading-xs" })}
     color: ${V3_Colour["text"]};
 `;
 
@@ -65,7 +63,6 @@ export const Description = styled.p`
 `;
 
 export const DescriptionContainer = styled.div`
-    ${applyHtmlContentStyle({ textSize: "body-md" })}
     color: ${V3_Colour["text-subtler"]};
 `;
 

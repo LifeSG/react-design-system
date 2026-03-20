@@ -89,7 +89,7 @@ export const generateFont = (
         options?.fontVariant,
         options?.noCommonLigatures ? "no-common-ligatures" : "",
     ]
-        .filter((v) => Boolean(v))
+        .filter(Boolean)
         .join(" ");
 
     const fontVariant = `var(--fds-font-variant)${

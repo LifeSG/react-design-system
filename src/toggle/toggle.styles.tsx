@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 
 import { Alert } from "../alert";
-import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { ToggleIcon } from "../shared/toggle-icon/toggle-icon";
 import { TextList } from "../text-list";
 import { Typography } from "../typography";
@@ -369,7 +368,6 @@ export const Children = styled.div<ChildrenStyleProps>`
     padding-top: 0.6875rem;
     padding-bottom: ${(props) => (props.$isFinalItem ? "0.6875rem" : "0.5rem")};
     background-color: ${V3_Colour.bg};
-    ${applyHtmlContentStyle({ textSize: "body-md" })}
 
     ${(props) => {
         if (props.$disabled) {

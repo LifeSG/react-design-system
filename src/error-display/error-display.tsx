@@ -2,6 +2,7 @@ import type React from "react";
 import { useContext } from "react";
 import { ThemeContext } from "styled-components";
 
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { V3_LifeSGTheme } from "../v3_theme";
 import {
     ActionButton,
@@ -115,6 +116,9 @@ export const ErrorDisplay = ({
                         <DescriptionContainer
                             data-testid={`${testId}--description`}
                             data-id="error-display-description"
+                            className={applyHtmlContentStyle({
+                                textSize: "body-baseline",
+                            })}
                         >
                             {typeof updatedAssets.description === "string" ? (
                                 <p>{updatedAssets.description}</p>
