@@ -42,9 +42,9 @@ describe("ErrorDisplay", () => {
             </ThemeProvider>
         );
 
-        const action = screen.getByRole("button", { name: buttonLabel });
-        expect(action).toBeInTheDocument();
-        expect(action).toHaveAccessibleName(buttonLabel);
+        expect(
+            screen.getByRole("button", { name: buttonLabel })
+        ).toBeInTheDocument();
     });
 
     it("should be able to render custom title if specified", () => {

@@ -38,7 +38,7 @@ describe("FeedbackRating", () => {
         expect(screen.getByText(description)).toBeInTheDocument();
     });
 
-    it("should expose a hidden accessibility guidance text", () => {
+    it("should render slider with a user-friendly label and description", () => {
         render(
             <FeedbackRating
                 rating={0}

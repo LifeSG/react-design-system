@@ -11,7 +11,7 @@ describe("Toast", () => {
         jest.useRealTimers();
     });
 
-    it("should render visually hidden accessibility text", () => {
+    it("should render component", () => {
         render(<Toast type="warning" title="Toast title" label="Toast body" />);
 
         expect(screen.getByText("warning")).toBeInTheDocument();

@@ -10,6 +10,18 @@ describe("MaskedInput", () => {
             expect(screen.getByTestId("icon-masked")).toBeInTheDocument();
         });
 
+        it("should render the readonly state correctly", () => {
+            render(
+                <MaskedInput value="S1234567D" maskRange={[2, 5]} readOnly />
+            );
+
+            expect(
+                screen.getByRole("button", {
+                    name: "Starting with S1 and ending with 67D",
+                })
+            ).toBeInTheDocument();
+        });
+
         it("should render the unmasked value when the unmasked icon is clicked", () => {
             render(<MaskedInput value="S1234567D" maskRange={[2, 5]} />);
             const icon = screen.getByTestId("icon-masked");
@@ -55,17 +67,6 @@ describe("MaskedInput", () => {
             ).not.toBeInTheDocument();
             expect(screen.getByText("Error")).toBeInTheDocument();
             expect(screen.getByText("Try again?")).toBeInTheDocument();
-        });
-
-        it("should link readonly button label to hidden value description", () => {
-            render(
-                <MaskedInput value="S1234567D" maskRange={[2, 5]} readOnly />
-            );
-
-            const button = screen.getByTestId("masked-input-readonly-button");
-            expect(button).toHaveAccessibleName(
-                "Starting with S1 and ending with 67D"
-            );
         });
 
         it("should not render the loading display if the component is in loading state but not in readOnly mode", () => {

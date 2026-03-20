@@ -47,11 +47,9 @@ describe("FileUpload", () => {
 
             expect(screen.getByText(DEFAULT_TITLE)).toBeInTheDocument();
             expect(screen.getByText(DEFAULT_DESCRIPTION)).toBeInTheDocument();
-            const uploadButton = screen.getByRole("button", {
-                name: "Upload files",
-            });
-            expect(uploadButton).toBeInTheDocument();
-            expect(uploadButton).toHaveAccessibleName("Upload files");
+            expect(
+                screen.getByRole("button", { name: "Upload files" })
+            ).toBeInTheDocument();
         });
 
         it("should render the warning banner if specified", () => {

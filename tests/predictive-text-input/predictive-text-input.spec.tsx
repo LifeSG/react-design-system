@@ -44,7 +44,7 @@ describe("PredictiveTextInput", () => {
         expect(screen.queryByTestId(DROPDOWN_TESTID)).not.toBeInTheDocument();
     });
 
-    it("should expose accessible name when aria-label is provided", () => {
+    it("should associate the input with a user-friendly label and description", () => {
         render(
             <PredictiveTextInput
                 data-testid={FIELD_TESTID}
@@ -56,15 +56,6 @@ describe("PredictiveTextInput", () => {
         expect(screen.getByRole("combobox")).toHaveAccessibleName(
             "Search for options"
         );
-    });
-
-    it("should wire input aria-describedby to hidden instruction text", () => {
-        render(
-            <PredictiveTextInput
-                data-testid={FIELD_TESTID}
-                fetchOptions={jest.fn()}
-            />
-        );
 
         const input = screen.getByRole("combobox");
         const instruction = screen.getByText(
@@ -72,10 +63,6 @@ describe("PredictiveTextInput", () => {
         );
 
         expect(instruction.id).toBeTruthy();
-        expect(input).toHaveAttribute(
-            "aria-describedby",
-            expect.stringContaining(instruction.id)
-        );
         expect(input).toHaveAccessibleDescription(
             "Type in 3 or more characters for suggested results."
         );
