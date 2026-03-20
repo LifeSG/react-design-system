@@ -1,11 +1,13 @@
+import clsx from "clsx";
 import React from "react";
 
-import { Main } from "./clickable-icon.style";
+import { highlight, main, outlineNone } from "./clickable-icon.style";
 import type { ClickableIconProps } from "./types";
 
 const Component = (
     {
         children,
+        className,
         focusHighlight = true,
         focusOutline = "none",
         type = "button",
@@ -14,15 +16,19 @@ const Component = (
     ref: React.Ref<HTMLButtonElement>
 ) => {
     return (
-        <Main
+        <button
             ref={ref}
-            $outline={focusOutline}
-            $highlight={focusHighlight}
+            className={clsx(
+                main,
+                className,
+                focusOutline === "none" && outlineNone,
+                focusHighlight && highlight
+            )}
             type={type}
             {...otherProps}
         >
             {children}
-        </Main>
+        </button>
     );
 };
 
