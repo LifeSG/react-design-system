@@ -38,6 +38,21 @@ describe("FeedbackRating", () => {
         expect(screen.getByText(description)).toBeInTheDocument();
     });
 
+    it("should render slider with a user-friendly label and description", () => {
+        render(
+            <FeedbackRating
+                rating={0}
+                onRatingChange={NO_OP}
+                onSubmit={NO_OP}
+            />
+        );
+
+        const slider = getRatingSlider();
+        expect(slider).toHaveAccessibleDescription(
+            "Minimum, 1 star. Maximum, 5 stars."
+        );
+    });
+
     it("should be able to render custom button label", () => {
         const buttonLabel = "custom label";
         render(

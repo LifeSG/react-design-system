@@ -506,57 +506,38 @@ describe("InputGroup - List addon", () => {
     });
 
     describe("accessible names", () => {
-        it("should apply the correct label", () => {
+        it("should expose custom combobox/textbox labels and selector instruction", () => {
+            const comboboxLabel = "Choose option";
+            const textboxLabel = "Enter value";
             render(
-                <Form.InputGroup
-                    label={LABEL}
+                <InputGroup
+                    data-testid={FIELD_TESTID}
+                    aria-label={textboxLabel}
                     addon={{
                         type: "list",
                         attributes: {
                             options: OPTIONS,
+                            "aria-label": comboboxLabel,
                         },
                     }}
                 />
             );
 
             expect(
-                screen.getByRole("combobox", {
-                    name: LABEL,
-                    description: DROPDOWN_INSTRUCTION,
-                })
+                screen.getByRole("combobox", { name: comboboxLabel })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("textbox", {
-                    name: LABEL,
-                })
-            ).toBeInTheDocument();
-        });
-
-        it("should apply the correct label and description", () => {
-            render(
-                <Form.InputGroup
-                    label={{ children: LABEL, subtitle: DESCRIPTION }}
-                    addon={{
-                        type: "list",
-                        attributes: {
-                            options: OPTIONS,
-                        },
-                    }}
-                />
-            );
-
-            expect(
-                screen.getByRole("combobox", {
-                    name: LABEL,
-                    description: `${DESCRIPTION} ${DROPDOWN_INSTRUCTION}`,
-                })
+                screen.getByRole("textbox", { name: textboxLabel })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("textbox", {
-                    name: LABEL,
-                    description: DESCRIPTION,
-                })
-            ).toBeInTheDocument();
+                screen.getByRole("textbox", { name: textboxLabel })
+            ).toHaveAccessibleName(textboxLabel);
+            expect(
+                screen.getByRole("combobox", { name: comboboxLabel })
+            ).toHaveAccessibleName(comboboxLabel);
+            expect(
+                screen.getByRole("combobox", { name: comboboxLabel })
+            ).toHaveAccessibleDescription(DROPDOWN_INSTRUCTION);
         });
 
         it("should apply the error state and error description", () => {

@@ -240,6 +240,52 @@ describe("ErrorDisplay", () => {
             ).toBe(errorDescription);
         });
     });
+
+    describe("inactivity timer accessibility", () => {
+        it("should render hidden live reminder text when secondsLeft is provided", () => {
+            render(
+                <ThemeProvider theme={V3_LifeSGTheme}>
+                    <ErrorDisplay
+                        type="inactivity"
+                        additionalProps={{ secondsLeft: 65 }}
+                    />
+                </ThemeProvider>
+            );
+
+            const message =
+                "You’ve been inactive for a while. To protect your privacy, you’ll be logged out in 1 minutes 5 seconds.";
+
+            const component = screen.getByTestId("error-display");
+            const liveRegions = component.querySelectorAll(
+                '[aria-live="polite"][aria-atomic="true"]'
+            );
+            expect(liveRegions).toHaveLength(1);
+            expect(liveRegions[0]).toHaveTextContent(message);
+
+            const visibleDescription = screen.getByTestId(
+                ERROR_DESCRIPTION_TEST_ID
+            );
+            expect(visibleDescription).toHaveTextContent(
+                "you’ll be logged out in 1 minutes 5 seconds"
+            );
+        });
+
+        it("should not render live reminder text when custom description is provided", () => {
+            render(
+                <ThemeProvider theme={V3_LifeSGTheme}>
+                    <ErrorDisplay
+                        type="inactivity"
+                        description="custom inactivity description"
+                        additionalProps={{ secondsLeft: 65 }}
+                    />
+                </ThemeProvider>
+            );
+
+            expect(
+                document.querySelector('[aria-live="polite"]')
+            ).not.toBeInTheDocument();
+        });
+    });
 });
 
 // =============================================================================

@@ -10,6 +10,18 @@ describe("MaskedInput", () => {
             expect(screen.getByTestId("icon-masked")).toBeInTheDocument();
         });
 
+        it("should render the readonly state correctly", () => {
+            render(
+                <MaskedInput value="S1234567D" maskRange={[2, 5]} readOnly />
+            );
+
+            expect(
+                screen.getByRole("button", {
+                    name: "Starting with S1 and ending with 67D",
+                })
+            ).toBeInTheDocument();
+        });
+
         it("should render the unmasked value when the unmasked icon is clicked", () => {
             render(<MaskedInput value="S1234567D" maskRange={[2, 5]} />);
             const icon = screen.getByTestId("icon-masked");

@@ -65,11 +65,28 @@ describe("Filter", () => {
             );
 
             expect(
-                within(screen.getByTestId("filter-item-title")).getByText(
-                    ITEM_TITLE
-                )
+                screen.getByRole("button", { name: ITEM_TITLE })
             ).toBeInTheDocument();
             expect(screen.getByText(ITEM_CONTENT)).toBeInTheDocument();
+        });
+
+        it("should toggle inert on expandable content when collapsed and expanded", () => {
+            render(
+                <Filter.Item title={ITEM_TITLE}>{ITEM_CONTENT}</Filter.Item>
+            );
+
+            const expandButton = screen.getByTestId("expand-collapse-button");
+            const expandableContainer = screen.getByTestId(
+                "expandable-container"
+            );
+
+            expect(expandableContainer).toHaveAttribute("inert");
+
+            act(() => {
+                fireEvent.click(expandButton);
+            });
+
+            expect(expandableContainer).not.toHaveAttribute("inert");
         });
 
         it("should render children specified as render prop correctly", () => {
