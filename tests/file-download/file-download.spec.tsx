@@ -5,6 +5,14 @@ jest.mock("react-responsive", () => ({
     useMediaQuery: jest.fn().mockReturnValue(false),
 }));
 
+const MOCK_FILE_ITEM = {
+    id: "file-1",
+    name: "sample.pdf",
+    mimeType: "application/pdf",
+    size: 1024,
+    filePath: "/tmp/sample.pdf",
+};
+
 describe("FileDownload", () => {
     beforeEach(() => {
         jest.resetAllMocks();
@@ -28,11 +36,3 @@ describe("FileDownload", () => {
         ).toBeInTheDocument();
     });
 });
-
-const MOCK_FILE_ITEM = {
-    id: "file-1",
-    name: "sample.pdf",
-    mimeType: "application/pdf",
-    size: 1024,
-    filePath: "/tmp/sample.pdf",
-};
