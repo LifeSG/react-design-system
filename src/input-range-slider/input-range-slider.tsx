@@ -33,7 +33,6 @@ export const InputRangeSlider = ({
     indicatorLabelPrefix,
     indicatorLabelSuffix,
     ariaLabels,
-    ariaDescriptions,
     "aria-invalid": ariaInvalid,
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
@@ -124,10 +123,15 @@ export const InputRangeSlider = ({
         announce(message, "assertive");
     };
 
-    const handleNativeRangeChange = (nextRawValue: number, index: number) => {
+    const handleNativeRangeChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        index: number
+    ) => {
         if (disabled || readOnly) {
             return;
         }
+
+        const nextRawValue = Number(event.currentTarget.value);
 
         const nextSelection = [...selection];
         nextSelection[index] = clampValueForThumb(
@@ -140,7 +144,6 @@ export const InputRangeSlider = ({
         onChange?.(nextSelection);
         onChangeEnd?.(nextSelection);
     };
-
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -314,7 +317,7 @@ export const InputRangeSlider = ({
     function clampValueForThumb(
         nextValue: number,
         index: number,
-        values = selection
+        values: number[]
     ) {
         const minAllowed = getThumbMin(index, values);
         const maxAllowed = getThumbMax(index, values);
@@ -381,84 +384,90 @@ export const InputRangeSlider = ({
                 </IndicatorLabelContainer>
             )}
 
-            <div style={{ position: "relative" }}>
-                {selection.map((thumbValue, index) => (
-                    <VisuallyHidden key={`native-slider-${index}`}>
-                        <input
-                            type="range"
-                            min={getThumbMin(index)}
-                            max={getThumbMax(index)}
-                            step={step}
-                            value={thumbValue}
-                            disabled={disabled || readOnly}
-                            aria-label={resolvedAriaLabels[index]}
-                            aria-describedby={getThumbDescriptionIds()}
-                            aria-valuetext={getValueText(thumbValue)}
-                            aria-invalid={ariaInvalid}
-                            onFocus={() => setFocusedThumbIndex(index)}
-                            onBlur={() => setFocusedThumbIndex(null)}
-                            onChange={(event) =>
-                                handleNativeRangeChange(
-                                    Number(event.currentTarget.value),
-                                    index
-                                )
-                            }
-                            onKeyDown={(event) => {
-                                handleThumbKeyDown(event, index);
-                            }}
-                        />
-                    </VisuallyHidden>
-                ))}
+            {selection.map((thumbValue, index) => {
+                const thumbLabelTextId = `${internalId}-thumb-label-${index}`;
 
-                {/* Native range inputs provide the accessible interaction model.
-                    The visible react-slider is presentation-only. */}
-                <Slider
-                    step={step}
-                    min={min}
-                    max={max}
-                    value={selection}
-                    disabled={disabled || readOnly}
-                    onChange={handleChange}
-                    onAfterChange={handleChangeEnd}
-                    minDistance={minRange}
-                    aria-hidden={true}
-                    renderThumb={(
-                        thumbProps: React.HTMLAttributes<HTMLDivElement>,
-                        state
-                    ) => {
-                        return (
-                            <SliderThumb
-                                data-testid={`slider-thumb-${state.index}`}
-                                {...thumbProps}
-                                tabIndex={-1}
-                                aria-hidden={true}
-                                data-focused={
-                                    focusedThumbIndex === state.index
-                                        ? "true"
-                                        : undefined
+                return (
+                    <VisuallyHidden key={`native-slider-${index}`}>
+                        <>
+                            <span id={thumbLabelTextId}>
+                                {resolvedAriaLabels[index]}
+                            </span>
+
+                            <input
+                                type="range"
+                                min={getThumbMin(index)}
+                                max={getThumbMax(index)}
+                                step={step}
+                                value={thumbValue}
+                                aria-disabled={disabled || undefined}
+                                readOnly={readOnly}
+                                aria-labelledby={concatIds(
+                                    ariaLabelledBy,
+                                    thumbLabelTextId
+                                )}
+                                aria-describedby={getThumbDescriptionIds()}
+                                aria-valuetext={getValueText(thumbValue)}
+                                aria-invalid={ariaInvalid}
+                                onFocus={() => setFocusedThumbIndex(index)}
+                                onBlur={() => setFocusedThumbIndex(null)}
+                                onChange={(event) =>
+                                    handleNativeRangeChange(event, index)
                                 }
-                            >
-                                <Knob
-                                    $disabled={disabled}
-                                    $readOnly={readOnly}
-                                />
-                            </SliderThumb>
-                        );
-                    }}
-                    renderTrack={(
-                        trackProps: React.HTMLAttributes<HTMLDivElement>,
-                        state
-                    ) => {
-                        return (
-                            <SliderTrack
-                                data-testid={`slider-track-${state.index}`}
-                                {...trackProps}
-                                $color={trackColors[state.index]}
+                                onKeyDown={(event) => {
+                                    handleThumbKeyDown(event, index);
+                                }}
                             />
-                        );
-                    }}
-                />
-            </div>
+                        </>
+                    </VisuallyHidden>
+                );
+            })}
+
+            {/* Native range inputs provide the accessible interaction model.
+                    The visible react-slider is presentation-only. */}
+            <Slider
+                step={step}
+                min={min}
+                max={max}
+                value={selection}
+                disabled={disabled || readOnly}
+                onChange={handleChange}
+                onAfterChange={handleChangeEnd}
+                minDistance={minRange}
+                aria-hidden
+                renderThumb={(
+                    thumbProps: React.HTMLAttributes<HTMLDivElement>,
+                    state
+                ) => {
+                    return (
+                        <SliderThumb
+                            data-testid={`slider-thumb-${state.index}`}
+                            {...thumbProps}
+                            tabIndex={-1}
+                            aria-hidden={true}
+                            data-focused={
+                                focusedThumbIndex === state.index
+                                    ? "true"
+                                    : undefined
+                            }
+                        >
+                            <Knob $disabled={disabled} $readOnly={readOnly} />
+                        </SliderThumb>
+                    );
+                }}
+                renderTrack={(
+                    trackProps: React.HTMLAttributes<HTMLDivElement>,
+                    state
+                ) => {
+                    return (
+                        <SliderTrack
+                            data-testid={`slider-track-${state.index}`}
+                            {...trackProps}
+                            $color={trackColors[state.index]}
+                        />
+                    );
+                }}
+            />
 
             {showSliderLabels && (
                 <LabelContainer>
