@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 type SetStateAction<S> = S | ((prevState: S) => S);
-type StateCallback<S> = (state: S) => void;
-type SetStateWithCallback<S> = (
+type SetStateCallback<S> = (state: S) => void;
+type SetStateDispatch<S> = (
     state: SetStateAction<S>,
-    callback?: StateCallback<S>
+    callback?: SetStateCallback<S>
 ) => void;
 
 export const useStateCallback = <S>(
     initialState: S | (() => S)
-): [S, SetStateWithCallback<S>] => {
+): [S, SetStateDispatch<S>] => {
     const [state, setState] = useState<S>(initialState);
-    const callbackRef = useRef<StateCallback<S> | undefined>(undefined);
+    const callbackRef = useRef<SetStateCallback<S> | undefined>(undefined);
 
-    const setStateWithCallback = useCallback<SetStateWithCallback<S>>(
+    const setStateDispatch = useCallback<SetStateDispatch<S>>(
         (value, callback) => {
             callbackRef.current = callback;
             setState(value);
@@ -28,5 +28,5 @@ export const useStateCallback = <S>(
         }
     }, [state]);
 
-    return [state, setStateWithCallback];
+    return [state, setStateDispatch];
 };

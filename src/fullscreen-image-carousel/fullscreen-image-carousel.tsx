@@ -48,7 +48,7 @@ import {
     FullscreenImageCarouselRef,
     ImageDimension,
 } from "./types";
-import { useStateCallback } from "../shared/hooks/useStateCallback";
+import { useStateCallback } from "../shared/hooks";
 
 export const Component = (
     {
