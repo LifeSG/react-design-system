@@ -39,16 +39,14 @@ export const Container = styled.div<Props>`
         &[data-status="open"] {
             opacity: 1;
             ${props.$animationFrom}: 0;
-            transition: all ${Motion["duration-250"]}
-                ${Motion["ease-entrance"]}
+            transition: all ${Motion["duration-250"]} ${Motion["ease-entrance"]};
             transition-delay: ${Motion["duration-150"]};
         }
 
         &[data-status="close"] {
             opacity: 0;
             ${props.$animationFrom}: -3%;
-            transition: all ${Motion["duration-250"]}
-                ${Motion["ease-exit"]};
+            transition: all ${Motion["duration-250"]} ${Motion["ease-exit"]};
         }
     `}
 `;

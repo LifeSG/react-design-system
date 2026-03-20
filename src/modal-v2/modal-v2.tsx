@@ -24,6 +24,10 @@ export const ModalV2 = ({
     onOverlayClick,
     dismissKeyboardOnShow = true,
     "data-testid": testId = "modal",
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    disableInitialFocus = false,
     ...otherProps
 }: ModalV2Props): JSX.Element => {
     // =========================================================================
@@ -81,21 +85,25 @@ export const ModalV2 = ({
                 data-testid={testId}
                 $verticalHeight={verticalHeight}
                 $offsetTop={offsetTop}
-                {...otherProps}
                 data-status={status}
+                {...otherProps}
             >
                 <ModalContext.Provider value={{ onClose }}>
                     {isMounted && (
                         <FloatingFocusManager
                             context={context}
-                            initialFocus={refs.floating}
+                            initialFocus={
+                                disableInitialFocus ? -1 : refs.floating
+                            }
                         >
                             <ScrollContainer>
                                 <ModalContainer
                                     ref={refs.setFloating}
                                     {...getFloatingProps()}
-                                    aria-modal
                                     role="dialog"
+                                    aria-label={ariaLabel}
+                                    aria-labelledby={ariaLabelledBy}
+                                    aria-describedby={ariaDescribedBy}
                                 >
                                     {children}
                                 </ModalContainer>
