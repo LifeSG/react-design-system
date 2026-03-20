@@ -40,9 +40,13 @@ export abstract class AbstractStoryPage {
 
 export const compareScreenshot = async (
     page: AbstractStoryPage,
-    name: string
+    name: string,
+    options?: { fullscreen?: boolean }
 ) => {
-    await expect(page.page.locator("body")).toHaveScreenshot(`${name}.png`, {
+    const locator = options?.fullscreen ? page.page : page.page.locator("body");
+
+    await expect(locator).toHaveScreenshot(`${name}.png`, {
+        fullPage: options?.fullscreen ?? false,
         threshold: 0, // Strict colour matching
     });
 };

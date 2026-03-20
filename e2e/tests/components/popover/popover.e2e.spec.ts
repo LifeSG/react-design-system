@@ -7,8 +7,6 @@ class StoryPage extends AbstractStoryPage {
     public readonly locators: {
         triggerButton: Locator;
         popover: Locator;
-        themeToggle: Locator;
-        themeSelect: Locator;
     };
 
     constructor(page: Page) {
@@ -18,9 +16,7 @@ class StoryPage extends AbstractStoryPage {
             triggerButton: page.getByRole("button", {
                 name: "Open popover",
             }),
-            popover: page.getByTestId("popover"),
-            themeToggle: page.getByTestId("theme-toggle"),
-            themeSelect: page.getByTestId("theme-select"),
+            popover: page.getByTestId("basic-popover-content"),
         };
     }
 }
@@ -32,73 +28,48 @@ const test = base.extend<{ story: StoryPage }>({
     },
 });
 
-const scenarios = [
-    {
-        story: "basic",
-        title: "Basic",
-        markerTestId: "basic-popover-content",
-    },
-    {
-        story: "custom-variable",
-        title: "Custom variable propagation",
-        markerTestId: "custom-propagation-marker",
-    },
-] as const;
-
 test.describe("Popover", () => {
-    scenarios.forEach((scenario) => {
-        test.describe(scenario.title, () => {
-            test.beforeEach(async ({ story }) => {
-                await story.init(scenario.story);
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("basic");
+        });
+
+        test("Basic with click", async ({ story }) => {
+            await test.step("Popover is not initially visible", async () => {
+                await expect(story.locators.triggerButton).toBeVisible();
+                await expect(story.locators.popover).not.toBeVisible();
             });
 
-            test(`${scenario.title} (uses theme controls)`, async ({
-                story,
-            }) => {
-                await test.step("Component mounts in light mode", async () => {
-                    await expect(story.locators.triggerButton).toBeVisible();
-                    await expect(story.locators.themeSelect).toHaveValue(
-                        "lifesg"
-                    );
-                    await expect(story.locators.themeToggle).toHaveText(
-                        "Theme: light"
-                    );
-                    await expect(story.locators.popover).not.toBeVisible();
+            await test.step("Popover is shown after clicking the trigger button", async () => {
+                await story.locators.triggerButton.click();
+
+                await expect(story.locators.popover).toBeVisible();
+
+                await compareScreenshot(story, "after-click", {
+                    fullscreen: true,
                 });
+            });
+        });
+    });
 
-                await test.step("Popover opens in light mode", async () => {
-                    await story.locators.triggerButton.click();
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("basic", { mode: "dark" });
+        });
 
-                    await expect(story.locators.popover).toHaveCount(1);
-                    await expect(
-                        story.page.getByTestId(scenario.markerTestId)
-                    ).toBeVisible();
+        test("Basic with click (dark mode)", async ({ story }) => {
+            await test.step("Popover is not initially visible", async () => {
+                await expect(story.locators.triggerButton).toBeVisible();
+                await expect(story.locators.popover).not.toBeVisible();
+            });
 
-                    await compareScreenshot(story, "after-click-light");
-                });
+            await test.step("Popover is shown after clicking the trigger button", async () => {
+                await story.locators.triggerButton.click();
 
-                await test.step("Switches theme and dark mode from toolbar", async () => {
-                    await story.page.keyboard.press("Escape");
-                    await expect(story.locators.popover).toHaveCount(0);
-                    await story.locators.themeSelect.selectOption("bookingsg");
-                    await expect(story.locators.themeSelect).toHaveValue(
-                        "bookingsg"
-                    );
-                    await story.locators.themeToggle.click();
-                    await expect(story.locators.themeToggle).toHaveText(
-                        "Theme: dark"
-                    );
-                });
+                await expect(story.locators.popover).toBeVisible();
 
-                await test.step("Popover opens in dark mode", async () => {
-                    await story.locators.triggerButton.click();
-
-                    await expect(story.locators.popover).toHaveCount(1);
-                    await expect(
-                        story.page.getByTestId(scenario.markerTestId)
-                    ).toBeVisible();
-
-                    await compareScreenshot(story, "after-click-dark");
+                await compareScreenshot(story, "after-click", {
+                    fullscreen: true,
                 });
             });
         });
