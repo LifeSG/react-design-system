@@ -12,17 +12,14 @@ const isEmptyValue = (value: unknown) => {
 export const useDesignToken = (
     tokenName: CSSVariableString | undefined
 ): string | undefined => {
-    const { theme, mode } = useTheme();
+    const { theme, mode, themeElement } = useTheme();
     const [value, setValue] = useState<string | undefined>(undefined);
 
     useEffect(() => {
-        if (!tokenName) {
-            setValue(undefined);
-            return;
-        }
+        if (!themeElement) return;
 
-        setValue(parseCSSVariableValue(tokenName));
-    }, [theme, mode, tokenName]);
+        setValue(parseCSSVariableValue(tokenName, themeElement));
+    }, [theme, mode, themeElement, tokenName]);
 
     return value;
 };

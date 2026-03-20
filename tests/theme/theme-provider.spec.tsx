@@ -1,4 +1,5 @@
 import { act, render, screen } from "@testing-library/react";
+import type { CSSProperties } from "react";
 import { ThemeProvider, useTheme } from "src/theme";
 import * as breakpoint from "src/theme/theme-provider/breakpoint";
 import * as systemMode from "src/theme/theme-provider/system-colour-mode";
@@ -38,6 +39,9 @@ describe("ThemeProvider", () => {
         jest.restoreAllMocks();
     });
 
+    const getWrapper = () =>
+        document.querySelector<HTMLElement>("[data-fds-theme]");
+
     it("applies theme and mode", () => {
         render(
             <ThemeProvider theme="lifesg" mode="light">
@@ -48,8 +52,25 @@ describe("ThemeProvider", () => {
         expect(screen.getByTestId("theme")).toHaveTextContent("lifesg");
         expect(screen.getByTestId("mode")).toHaveTextContent("light");
 
-        expect(document.documentElement.dataset.fdsTheme).toBe("lifesg");
-        expect(document.documentElement.dataset.fdsThemeMode).toBe("light");
+        const wrapper = getWrapper();
+        expect(wrapper).toHaveAttribute("data-fds-theme", "lifesg");
+        expect(wrapper).toHaveAttribute("data-fds-theme-mode", "light");
+    });
+
+    it("passes className and style to theme wrapper", () => {
+        render(
+            <ThemeProvider
+                theme="lifesg"
+                className="custom-theme-root"
+                style={{ minHeight: "24px" }}
+            >
+                <TestComponent />
+            </ThemeProvider>
+        );
+
+        const wrapper = getWrapper();
+        expect(wrapper).toHaveClass("custom-theme-root");
+        expect(wrapper).toHaveStyle({ minHeight: "24px" });
     });
 
     it("respects theme prop", () => {
@@ -59,7 +80,7 @@ describe("ThemeProvider", () => {
             </ThemeProvider>
         );
 
-        expect(document.documentElement.dataset.fdsTheme).toBe("lifesg");
+        expect(getWrapper()).toHaveAttribute("data-fds-theme", "lifesg");
 
         act(() => {
             rerender(
@@ -69,7 +90,7 @@ describe("ThemeProvider", () => {
             );
         });
 
-        expect(document.documentElement.dataset.fdsTheme).toBe("bookingsg");
+        expect(getWrapper()).toHaveAttribute("data-fds-theme", "bookingsg");
     });
 
     it("respects mode prop", () => {
@@ -79,7 +100,7 @@ describe("ThemeProvider", () => {
             </ThemeProvider>
         );
 
-        expect(document.documentElement.dataset.fdsThemeMode).toBe("light");
+        expect(getWrapper()).toHaveAttribute("data-fds-theme-mode", "light");
 
         act(() => {
             rerender(
@@ -89,7 +110,26 @@ describe("ThemeProvider", () => {
             );
         });
 
-        expect(document.documentElement.dataset.fdsThemeMode).toBe("dark");
+        expect(getWrapper()).toHaveAttribute("data-fds-theme-mode", "dark");
+    });
+
+    it("supports nested theming", () => {
+        render(
+            <ThemeProvider theme="lifesg" mode="light">
+                <ThemeProvider theme="bookingsg" mode="dark">
+                    <TestComponent />
+                </ThemeProvider>
+            </ThemeProvider>
+        );
+
+        const wrappers = document.querySelectorAll("[data-fds-theme]");
+        expect(wrappers).toHaveLength(2);
+
+        expect(wrappers[0]).toHaveAttribute("data-fds-theme", "lifesg");
+        expect(wrappers[0]).toHaveAttribute("data-fds-theme-mode", "light");
+
+        expect(wrappers[1]).toHaveAttribute("data-fds-theme", "bookingsg");
+        expect(wrappers[1]).toHaveAttribute("data-fds-theme-mode", "dark");
     });
 
     describe("SYSTEM PREFERENCE", () => {
@@ -114,7 +154,7 @@ describe("ThemeProvider", () => {
                 mockListener("dark");
             });
 
-            expect(document.documentElement.dataset.fdsThemeMode).toBe("dark");
+            expect(getWrapper()).toHaveAttribute("data-fds-theme-mode", "dark");
         });
 
         it("does NOT react to system changes when controlled", () => {
@@ -136,7 +176,10 @@ describe("ThemeProvider", () => {
 
             mockListener("dark");
 
-            expect(document.documentElement.dataset.fdsThemeMode).toBe("light");
+            expect(getWrapper()).toHaveAttribute(
+                "data-fds-theme-mode",
+                "light"
+            );
         });
     });
 
@@ -252,6 +295,35 @@ describe("ThemeProvider", () => {
             expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
             expect(body.classList.contains("fds-breakpoint-md-min")).toBe(true);
             expect(body.classList.contains("fds-breakpoint-md-max")).toBe(true);
+        });
+
+        it("respects custom breakpoint overrides", () => {
+            setWindowWidth(1000);
+
+            render(
+                <ThemeProvider
+                    style={
+                        {
+                            "--fds-breakpoint-md-max": "1000px",
+                            "--fds-breakpoint-lg-min": "1001px",
+                        } as CSSProperties
+                    }
+                >
+                    <TestComponent />
+                </ThemeProvider>
+            );
+
+            const body = document.body;
+            expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-md-max")).toBe(true);
+
+            setWindowWidth(1001);
+            expect(body.classList.contains("fds-breakpoint-md")).toBe(false);
+            expect(body.classList.contains("fds-breakpoint-md-max")).toBe(
+                false
+            );
+            expect(body.classList.contains("fds-breakpoint-lg")).toBe(true);
+            expect(body.classList.contains("fds-breakpoint-lg-max")).toBe(true);
         });
 
         it("does not remove non-breakpoint classes", () => {

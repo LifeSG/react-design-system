@@ -1,68 +1,98 @@
 import type { CSSVariableString } from "src/theme/types";
-import { parseCSSVariableValue, parsePxOrRemValue } from "src/theme/utils";
+import {
+    getInheritedInlineCssVariables,
+    parseCSSVariableValue,
+    parsePxOrRemValue,
+} from "src/theme/utils";
 
 import { setupThemeVariables } from "../setup";
 
 describe("parseCSSVariableValue", () => {
+    const root = document.documentElement;
+
     beforeEach(() => {
         setupThemeVariables();
     });
 
     it("returns a valid CSS variable with px unit", () => {
-        const value = parseCSSVariableValue("var(--fds-breakpoint-md-min)");
+        const value = parseCSSVariableValue(
+            "var(--fds-breakpoint-md-min)",
+            root
+        );
         expect(value).toBe("481px");
     });
 
     it("returns a valid CSS variable with rem unit", () => {
-        const root = document.documentElement;
         root.style.setProperty("--fds-navbar-full-height", "24rem");
         const value = parseCSSVariableValue(
-            "var(--fds-navbar-full-height)" as CSSVariableString
+            "var(--fds-navbar-full-height)" as CSSVariableString,
+            root
         );
         expect(value).toBe("24rem");
     });
 
     it("returns negative values correctly", () => {
-        const root = document.documentElement;
         root.style.setProperty("--fds-breakpoint-margin-lg", "-10px");
 
         const value = parseCSSVariableValue(
-            "var(--fds-breakpoint-margin-lg)" as CSSVariableString
+            "var(--fds-breakpoint-margin-lg)" as CSSVariableString,
+            root
         );
         expect(value).toBe("-10px");
     });
 
     it("returns unitless values as-is", () => {
-        const root = document.documentElement;
         root.style.setProperty("--fds-breakpoint-margin-lg", "100");
 
         const value = parseCSSVariableValue(
-            "var(--fds-breakpoint-margin-lg)" as CSSVariableString
+            "var(--fds-breakpoint-margin-lg)" as CSSVariableString,
+            root
         );
         expect(value).toBe("100");
     });
 
     it("returns decimal values as-is", () => {
-        const root = document.documentElement;
         root.style.setProperty("--fds-breakpoint-margin-lg", "42.5px");
 
         const value = parseCSSVariableValue(
-            "var(--fds-breakpoint-margin-lg)" as CSSVariableString
+            "var(--fds-breakpoint-margin-lg)" as CSSVariableString,
+            root
         );
         expect(value).toBe("42.5px");
     });
 
     it("returns empty string for non-existent CSS variable", () => {
-        const value = parseCSSVariableValue("var(--fds-spacing-8)");
+        const value = parseCSSVariableValue("var(--fds-spacing-8)", root);
+        expect(value).toBe("");
+    });
+
+    it("reads CSS variable from provided element", () => {
+        const themeElement = document.createElement("div");
+        themeElement.style.setProperty("--fds-breakpoint-md-min", "999px");
+
+        const value = parseCSSVariableValue(
+            "var(--fds-breakpoint-md-min)",
+            themeElement
+        );
+        expect(value).toBe("999px");
+    });
+
+    it("returns empty string when provided element has no value", () => {
+        const themeElement = document.createElement("div");
+
+        const value = parseCSSVariableValue(
+            "var(--fds-breakpoint-md-min)",
+            themeElement
+        );
         expect(value).toBe("");
     });
 
     it("returns non-numeric values", () => {
-        const root = document.documentElement;
         root.style.setProperty("--fds-breakpoint-margin-lg", "not-a-number");
 
         const value = parseCSSVariableValue(
-            "var(--fds-breakpoint-margin-lg)" as CSSVariableString
+            "var(--fds-breakpoint-margin-lg)" as CSSVariableString,
+            root
         );
         expect(value).toBe("not-a-number");
     });
@@ -73,7 +103,10 @@ describe("parseCSSVariableValue", () => {
         // @ts-ignore
         delete globalThis.window;
 
-        const value = parseCSSVariableValue("var(--fds-breakpoint-md-min)");
+        const value = parseCSSVariableValue(
+            "var(--fds-breakpoint-md-min)",
+            root
+        );
         expect(value).toBe("");
 
         globalThis.window = originalWindow;
@@ -121,5 +154,74 @@ describe("parsePxOrRemValue", () => {
     it("falls back to 16px font size for rem conversion when font size is invalid", () => {
         document.documentElement.style.fontSize = "invalid-size";
         expect(parsePxOrRemValue("1.5rem")).toBe(24);
+    });
+});
+
+describe("getInheritedInlineCssVariables", () => {
+    it("returns empty object when themeElement is null", () => {
+        const result = getInheritedInlineCssVariables(null);
+
+        expect(result).toEqual({});
+    });
+
+    it("returns empty object when no inline styles are found", () => {
+        const themeElement = document.createElement("div");
+
+        expect(themeElement.style.length).toBe(0);
+        expect(getInheritedInlineCssVariables(themeElement)).toEqual({});
+    });
+
+    it("extracts only --fds* variables from the theme element", () => {
+        const themeElement = document.createElement("div");
+
+        themeElement.style.setProperty("--fds-color", "red");
+        themeElement.style.setProperty("--color", "blue");
+        themeElement.style.color = "green";
+
+        const result = getInheritedInlineCssVariables(themeElement);
+
+        expect(result).toEqual({
+            "--fds-color": "red",
+        });
+    });
+
+    it("ignores --fds variables with empty or whitespace-only values", () => {
+        const themeElement = document.createElement("div");
+
+        themeElement.style.setProperty("--fds-empty", "");
+        themeElement.style.setProperty("--fds-space", "   ");
+        themeElement.style.setProperty("--fds-valid", "16px");
+
+        expect(getInheritedInlineCssVariables(themeElement)).toEqual({
+            "--fds-valid": "16px",
+        });
+    });
+
+    it("only reads variables from the provided theme element", () => {
+        const root = document.createElement("div");
+        const themeElement = document.createElement("div");
+        const child = document.createElement("button");
+
+        root.style.setProperty("--fds-root", "root");
+        child.style.setProperty("--fds-ref", "ref");
+        themeElement.style.setProperty("--fds-theme", "theme");
+
+        root.appendChild(themeElement);
+        themeElement.appendChild(child);
+
+        const result = getInheritedInlineCssVariables(themeElement);
+
+        expect(result).toEqual({
+            "--fds-theme": "theme",
+        });
+    });
+
+    it("returns empty object when theme element has no inline --fds* variables", () => {
+        const themeElement = document.createElement("div");
+
+        themeElement.style.setProperty("--color", "red");
+        themeElement.style.color = "blue";
+
+        expect(getInheritedInlineCssVariables(themeElement)).toEqual({});
     });
 });

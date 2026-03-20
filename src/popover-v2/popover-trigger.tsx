@@ -20,6 +20,7 @@ import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 
 import { useFloatingChild } from "../overlay/use-floating-context";
+import { useInheritedThemeScope } from "../theme/theme-provider/hooks";
 import { SimpleIdGenerator } from "../util";
 import { V3_Breakpoint } from "../v3_theme";
 import { PopoverV2 } from "./popover";
@@ -85,6 +86,7 @@ export const PopoverTrigger = ({
         },
     });
     const parentZIndex = useFloatingChild();
+    const { themeProps, themeStyle } = useInheritedThemeScope(visible);
 
     const trigger: PopoverV2TriggerType = isMobile ? "click" : _trigger;
     const isTooltip = trigger === "hover";
@@ -219,8 +221,10 @@ export const PopoverTrigger = ({
                                 popoverRef.current = node;
                                 refs.setFloating(node);
                             }}
+                            {...themeProps}
                             onBlur={handleBlur}
                             style={{
+                                ...themeStyle,
                                 ...floatingStyles,
                                 outline: "none",
                                 zIndex: zIndex ?? parentZIndex,

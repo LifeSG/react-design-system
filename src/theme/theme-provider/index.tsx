@@ -1,3 +1,4 @@
+import type { FC } from "react";
 import { useEffect, useMemo, useState } from "react";
 
 import { useIsomorphicLayoutEffect } from "../../util";
@@ -9,31 +10,36 @@ import {
 } from "./system-colour-mode";
 import type { ThemeProviderProps } from "./types";
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({
+export const ThemeProvider: FC<ThemeProviderProps> = ({
     children,
     theme = "lifesg",
     mode,
+    className,
+    style,
 }) => {
     const isModeControlled = mode !== undefined;
 
     const [computedMode, setComputedMode] = useState(
         mode ?? getSystemColourMode()
     );
+    const [themeElement, setThemeElement] = useState<HTMLDivElement | null>(
+        null
+    );
 
-    useIsomorphicLayoutEffect(() => {
-        document.documentElement.dataset.fdsTheme = theme;
-    }, [theme]);
+    const themeMode = isModeControlled ? mode : computedMode;
 
-    useIsomorphicLayoutEffect(() => {
-        document.documentElement.dataset.fdsThemeMode = isModeControlled
-            ? mode
-            : computedMode;
-    }, [mode, computedMode, isModeControlled]);
+    const setThemeElementRef = (node: HTMLDivElement | null) => {
+        setThemeElement(node);
+    };
 
+    // Re-subscribe when the source node or token set changes:
+    // - `themeElement`: scoped breakpoint tokens may live on this element
+    // - `theme` / `themeMode`: breakpoint token values can differ across theme/mode
     useIsomorphicLayoutEffect(() => {
-        const cleanup = setupBreakpointListener();
+        const sourceElement = themeElement ?? document.documentElement;
+        const cleanup = setupBreakpointListener(sourceElement);
         return cleanup;
-    }, []);
+    }, [themeElement, theme, themeMode]);
 
     useEffect(() => {
         if (isModeControlled) return;
@@ -44,14 +50,23 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     const contextValue = useMemo(
         () => ({
             theme,
-            mode: isModeControlled ? mode : computedMode,
+            mode: themeMode,
+            themeElement,
         }),
-        [theme, isModeControlled, mode, computedMode]
+        [theme, themeMode, themeElement]
     );
 
     return (
         <ThemeContext.Provider value={contextValue}>
-            {children}
+            <div
+                ref={setThemeElementRef}
+                data-fds-theme={theme}
+                data-fds-theme-mode={themeMode}
+                className={className}
+                style={style}
+            >
+                {children}
+            </div>
         </ThemeContext.Provider>
     );
 };

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import { Colour } from "../theme";
 import { V3_Border, V3_Colour, V3_MediaQuery } from "../v3_theme";
 
 //=============================================================================
@@ -25,7 +26,7 @@ const Container = styled.nav`
     overflow-y: auto;
     width: 8.5rem;
     border: ${V3_Border["width-010"]} ${V3_Border["solid"]} ${V3_Colour.border};
-    background-color: ${V3_Colour["bg-primary-subtlest"]};
+    background-color: ${Colour["bg-primary-subtlest"]};
     padding: 0.5rem 0 1.5rem 0;
 `;
 

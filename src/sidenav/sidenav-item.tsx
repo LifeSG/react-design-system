@@ -16,6 +16,7 @@ import type { HTMLAttributes } from "react";
 import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { useInheritedThemeScope } from "../theme/theme-provider/hooks";
 import { SidenavContext } from "./sidenav-context";
 import {
     Container,
@@ -118,6 +119,7 @@ export const SidenavItem = ({
     ]);
 
     const { isMounted, styles } = useTransitionStyles(context);
+    const { themeProps, themeStyle } = useInheritedThemeScope(isMounted);
 
     // =========================================================================
     // EFFECTS
@@ -219,7 +221,11 @@ export const SidenavItem = ({
                             id={drawerId}
                             data-testid="sidenav-drawer"
                             ref={setDrawerRef}
-                            style={floatingStyles}
+                            {...themeProps}
+                            style={{
+                                ...themeStyle,
+                                ...floatingStyles,
+                            }}
                             {...getFloatingProps()}
                         >
                             <DesktopDrawer

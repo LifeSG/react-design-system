@@ -24,6 +24,7 @@ import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
 
 import { useFloatingChild } from "../../overlay/use-floating-context";
+import { useInheritedThemeScope } from "../../theme/theme-provider/hooks";
 import { V3_Breakpoint } from "../../v3_theme";
 import type { DropdownAlignmentType } from "./types";
 
@@ -207,6 +208,7 @@ export const ElementWithDropdown = ({
         open: { opacity: 1 },
         duration: 300,
     });
+    const { themeProps, themeStyle } = useInheritedThemeScope(isMounted);
 
     const click = useClick(context, {
         enabled,
@@ -256,7 +258,9 @@ export const ElementWithDropdown = ({
                         <DropdownRenderContext.Provider
                             value={dropdownRenderProps}
                         >
-                            {renderDropdown(dropdownRenderProps)}
+                            <div {...themeProps} style={themeStyle}>
+                                {renderDropdown(dropdownRenderProps)}
+                            </div>
                         </DropdownRenderContext.Provider>
                     </FloatingFocusManager>
                 </FloatingPortal>
