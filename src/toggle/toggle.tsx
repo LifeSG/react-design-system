@@ -2,6 +2,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import type { ToggleIconType } from "../shared/toggle-icon/toggle-icon";
 import { SimpleIdGenerator } from "../util";
 import {
@@ -192,6 +193,7 @@ export const Toggle = ({
                     data-id="toggle-composite-children"
                     $isFinalItem={!collapsible}
                     $disabled={disabled}
+                    className={applyHtmlContentStyle({ textSize: "body-md" })}
                 >
                     {compositeSectionChildren}
                 </Children>

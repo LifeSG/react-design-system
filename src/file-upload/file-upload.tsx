@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { FileUploadContext } from "./context";
 import type { DropzoneElement } from "./dropzone";
 import { FileUploadDropzone } from "./dropzone";
@@ -114,7 +115,13 @@ export const FileUpload = ({
             return <Title>{title}</Title>;
         }
 
-        return <TitleContainer>{title}</TitleContainer>;
+        return (
+            <TitleContainer
+                className={applyHtmlContentStyle({ textSize: "body-baseline" })}
+            >
+                {title}
+            </TitleContainer>
+        );
     };
 
     const renderDescription = () => {
@@ -126,7 +133,13 @@ export const FileUpload = ({
             return <Description>{description}</Description>;
         }
 
-        return <DescriptionContainer>{description}</DescriptionContainer>;
+        return (
+            <DescriptionContainer
+                className={applyHtmlContentStyle({ textSize: "body-md" })}
+            >
+                {description}
+            </DescriptionContainer>
+        );
     };
 
     return (
