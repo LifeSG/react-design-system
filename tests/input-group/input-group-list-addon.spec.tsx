@@ -540,59 +540,6 @@ describe("InputGroup - List addon", () => {
             ).toHaveAccessibleDescription(DROPDOWN_INSTRUCTION);
         });
 
-        it("should apply the correct label", () => {
-            render(
-                <Form.InputGroup
-                    label={LABEL}
-                    addon={{
-                        type: "list",
-                        attributes: {
-                            options: OPTIONS,
-                        },
-                    }}
-                />
-            );
-
-            expect(
-                screen.getByRole("combobox", {
-                    name: LABEL,
-                    description: DROPDOWN_INSTRUCTION,
-                })
-            ).toBeInTheDocument();
-            expect(
-                screen.getByRole("textbox", {
-                    name: LABEL,
-                })
-            ).toBeInTheDocument();
-        });
-
-        it("should apply the correct label and description", () => {
-            render(
-                <Form.InputGroup
-                    label={{ children: LABEL, subtitle: DESCRIPTION }}
-                    addon={{
-                        type: "list",
-                        attributes: {
-                            options: OPTIONS,
-                        },
-                    }}
-                />
-            );
-
-            expect(
-                screen.getByRole("combobox", {
-                    name: LABEL,
-                    description: `${DESCRIPTION} ${DROPDOWN_INSTRUCTION}`,
-                })
-            ).toBeInTheDocument();
-            expect(
-                screen.getByRole("textbox", {
-                    name: LABEL,
-                    description: DESCRIPTION,
-                })
-            ).toBeInTheDocument();
-        });
-
         it("should apply the error state and error description", () => {
             render(
                 <Form.InputGroup

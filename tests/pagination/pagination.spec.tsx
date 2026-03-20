@@ -36,10 +36,6 @@ describe("Pagination", () => {
         expect(
             screen.getByRole("button", { name: "page 1 of 3" })
         ).toHaveAttribute("aria-current", "page");
-    });
-
-    it("should expose pagination landmark accessible name", () => {
-        render(<Pagination totalItems={30} activePage={1} />);
 
         const navigation = screen.getByRole("navigation", {
             name: "pagination",

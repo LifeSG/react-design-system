@@ -189,10 +189,9 @@ describe("UneditableSection", () => {
 
             render(<UneditableSection items={ITEMS} title="Test" />);
 
-            const tryAgainText = screen.getByText("Try again?");
-            expect(tryAgainText.parentElement).toHaveTextContent(
-                "Try again?NRIC or FIN"
-            );
+            expect(
+                screen.getByRole("button", { name: /NRIC or FIN/ })
+            ).toBeInTheDocument();
         });
 
         it("should fire the onUnmask and onMask callbacks if specified", () => {

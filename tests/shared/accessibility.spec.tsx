@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import {
-    VisuallyHidden,
     concatIds,
     inertValue,
-} from "../../src/shared/accessibility";
-import { isReact19 } from "../../src/util";
+    VisuallyHidden,
+} from "src/shared/accessibility";
+import { isReact19 } from "src/util";
 
 jest.mock("../../src/util", () => ({
     ...jest.requireActual("../../src/util"),

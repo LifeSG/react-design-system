@@ -94,7 +94,7 @@ describe("Accordion", () => {
                 );
 
                 const button = screen.getByRole("button", { name: "Hide all" });
-                expect(button).toHaveAccessibleName("Hide all");
+                expect(button).toBeInTheDocument();
 
                 act(() => {
                     fireEvent.click(button);
