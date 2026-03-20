@@ -12,6 +12,7 @@ const ciConfig: NextConfig = {
 };
 
 const devConfig: LinariaConfig = withLinaria({
+    devIndicators: false,
     turbopack: {
         root: path.join(__dirname, "../../"),
         resolveAlias: {
