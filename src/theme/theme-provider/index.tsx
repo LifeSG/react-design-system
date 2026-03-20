@@ -1,7 +1,7 @@
-import type { FC } from "react";
-import { useEffect, useMemo, useState } from "react";
+import type { Ref } from "react";
+import { forwardRef, useEffect, useMemo, useState } from "react";
 
-import { useIsomorphicLayoutEffect } from "../../util";
+import { mergeRefs, useIsomorphicLayoutEffect } from "../../util";
 import { setupBreakpointListener } from "./breakpoint";
 import { ThemeContext } from "./context";
 import {
@@ -10,13 +10,16 @@ import {
 } from "./system-colour-mode";
 import type { ThemeProviderProps } from "./types";
 
-export const ThemeProvider: FC<ThemeProviderProps> = ({
-    children,
-    theme = "lifesg",
-    mode = "auto",
-    className,
-    style,
-}) => {
+const InnerThemeProvider = (
+    {
+        children,
+        theme = "lifesg",
+        mode = "auto",
+        className,
+        style,
+    }: ThemeProviderProps,
+    ref: Ref<HTMLDivElement>
+) => {
     const isModeControlled = mode !== "auto";
 
     const [computedMode, setComputedMode] = useState(() =>
@@ -27,10 +30,6 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({
     );
 
     const themeMode = isModeControlled ? mode : computedMode;
-
-    const setThemeElementRef = (node: HTMLDivElement | null) => {
-        setThemeElement(node);
-    };
 
     // Re-subscribe when the source node or token set changes:
     // - `themeElement`: scoped breakpoint tokens may live on this element
@@ -59,7 +58,7 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({
     return (
         <ThemeContext.Provider value={contextValue}>
             <div
-                ref={setThemeElementRef}
+                ref={mergeRefs(ref, setThemeElement)}
                 data-fds-theme={theme}
                 data-fds-theme-mode={themeMode}
                 className={className}
@@ -70,3 +69,7 @@ export const ThemeProvider: FC<ThemeProviderProps> = ({
         </ThemeContext.Provider>
     );
 };
+
+export const ThemeProvider = forwardRef<HTMLDivElement, ThemeProviderProps>(
+    InnerThemeProvider
+);
