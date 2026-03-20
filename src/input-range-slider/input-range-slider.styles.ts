@@ -80,9 +80,9 @@ export const Knob = styled.div<ThumbStyleProps>`
         box-shadow: ${Shadow["sm-subtle"]};
         border: ${Border["width-010"]} ${Border["solid"]}
             ${(props) =>
-        props.$disabled
-            ? Colour["border-selected-disabled"]
-            : Colour["border-strong"]};
+                props.$disabled
+                    ? Colour["border-selected-disabled"]
+                    : Colour["border-strong"]};
         border-radius: ${Radius["full"]};
     }
 `;
@@ -93,7 +93,7 @@ export const SliderThumb = styled.div`
     position: relative;
     outline: none;
 
-    &:focus ${Knob}:after {
+    &:focus ${Knob}:after, &[data-focused="true"] ${Knob}:after {
         outline-offset: -1px;
         outline: ${Border["width-040"]} ${Border["solid"]}
             ${Colour["border-selected"]};
