@@ -12,11 +12,11 @@ const ciConfig: NextConfig = {
 };
 
 const devConfig: LinariaConfig = withLinaria({
+    devIndicators: false,
     turbopack: {
         root: path.join(__dirname, "../../"),
         resolveAlias: {
-            "@lifesg/react-design-system": path.join(__dirname, "../../src"),
-            src: path.join(__dirname, "../../src"),
+            "@lifesg/react-design-system": "../../src",
         },
     },
     typescript: {
