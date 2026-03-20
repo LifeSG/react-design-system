@@ -2,12 +2,10 @@ import type { Ref } from "react";
 import { forwardRef, useEffect, useMemo, useState } from "react";
 
 import { mergeRefs, useIsomorphicLayoutEffect } from "../../util";
+import type { ResolvedThemeMode } from "../types";
 import { setupBreakpointListener } from "./breakpoint";
 import { ThemeContext } from "./context";
-import {
-    getSystemColourMode,
-    listenToSystemColourMode,
-} from "./system-colour-mode";
+import { listenToSystemColourMode } from "./system-colour-mode";
 import type { ThemeProviderProps } from "./types";
 
 const InnerThemeProvider = (
@@ -22,14 +20,12 @@ const InnerThemeProvider = (
 ) => {
     const isModeControlled = mode !== "auto";
 
-    const [computedMode, setComputedMode] = useState(() =>
-        isModeControlled ? mode : getSystemColourMode()
+    const [computedMode, setComputedMode] = useState<ResolvedThemeMode>(
+        isModeControlled ? mode : "light"
     );
     const [themeElement, setThemeElement] = useState<HTMLDivElement | null>(
         null
     );
-
-    const themeMode = isModeControlled ? mode : computedMode;
 
     // Re-subscribe when the source node or token set changes:
     // - `themeElement`: scoped breakpoint tokens may live on this element
@@ -38,21 +34,24 @@ const InnerThemeProvider = (
         const sourceElement = themeElement ?? document.documentElement;
         const cleanup = setupBreakpointListener(sourceElement);
         return cleanup;
-    }, [themeElement, theme, themeMode]);
+    }, [themeElement, theme, computedMode]);
 
     useEffect(() => {
-        if (isModeControlled) return;
+        if (isModeControlled) {
+            setComputedMode(mode);
+            return;
+        }
 
         return listenToSystemColourMode(setComputedMode);
-    }, [isModeControlled]);
+    }, [isModeControlled, mode]);
 
     const contextValue = useMemo(
         () => ({
             theme,
-            mode: themeMode,
+            mode: computedMode,
             themeElement,
         }),
-        [theme, themeMode, themeElement]
+        [theme, computedMode, themeElement]
     );
 
     return (
@@ -60,7 +59,7 @@ const InnerThemeProvider = (
             <div
                 ref={mergeRefs(ref, setThemeElement)}
                 data-fds-theme={theme}
-                data-fds-theme-mode={themeMode}
+                data-fds-theme-mode={computedMode}
                 className={className}
                 style={style}
             >
