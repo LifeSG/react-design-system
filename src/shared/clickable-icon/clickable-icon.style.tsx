@@ -1,17 +1,12 @@
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { V3_Colour, V3_Spacing } from "../../v3_theme";
+import { Colour, Spacing } from "../../theme";
 
-interface StyleProps {
-    $outline: "none" | "browser";
-    $highlight: boolean;
-}
-
-export const Main = styled.button<StyleProps>`
+export const main = css`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: ${V3_Spacing["spacing-24"]};
+    padding: ${Spacing["spacing-24"]};
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -25,15 +20,18 @@ export const Main = styled.button<StyleProps>`
         height: 1.125rem;
         width: 1.125rem;
     }
+`;
 
+export const outlineNone = css`
     &:active,
     &:focus {
-        ${({ $outline }) => $outline === "none" && "outline: none;"}
+        outline: none;
+    }
+`;
 
-        ${({ $highlight }) =>
-            $highlight &&
-            css`
-                background-color: ${V3_Colour["bg-hover-neutral"]};
-            `}
+export const highlight = css`
+    &:active,
+    &:focus {
+        background-color: ${Colour["bg-hover-neutral"]};
     }
 `;
