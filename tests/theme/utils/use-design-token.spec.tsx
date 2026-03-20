@@ -191,7 +191,7 @@ const ResolvedValueTestComponent = ({
     return <div data-testid="resolved-value">{resolved}</div>;
 };
 
-describe.only("useResolvedTokenValue", () => {
+describe("useResolvedTokenValue", () => {
     beforeEach(() => {
         setupThemeVariables();
     });
