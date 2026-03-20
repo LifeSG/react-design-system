@@ -1,5 +1,5 @@
 import { Meta } from "@storybook/addon-docs/blocks";
-import { DocInfo } from "stories/storybook-common";
+import { DocAlert, DocInfo } from "stories/storybook-common";
 
 <Meta title="Foundations/Breakpoint/Introduction" />
 
@@ -29,67 +29,87 @@ min width (mobile-first approach).
 
 ### Max width
 
+<DocAlert>
+    Max-width media queries should be arranged in{" "}
+    <strong>ascending order</strong>. The order matters as breakpoint detection
+    is achieved with classes instead of native media queries.
+</DocAlert>
+
 ```tsx
 import { MediaQuery } from "@lifesg/react-design-system/theme";
-import styled from "styled-components";
 
-const Container = styled.div`
-    ${MediaQuery.MaxWidth.xs} {
+const container = css`
+    ${MediaQuery.MaxWidth.sm} {
+        // styles
+    }
+
+    ${MediaQuery.MaxWidth.md} {
+        // styles
+    }
+
+    ${MediaQuery.MaxWidth.lg} {
         // styles
     }
 `;
-
-/* @media screen and (max-width: 375px) */
 ```
 
 ### Min width
 
+<DocAlert>
+    Min-width media queries should be arranged in{" "}
+    <strong>descending order</strong>. The order matters as breakpoint detection
+    is achieved with classes instead of native media queries.
+</DocAlert>
+
 ```tsx
 import { MediaQuery } from "@lifesg/react-design-system/theme";
-import styled from "styled-components";
 
-const Container = styled.div`
-    ${MediaQuery.MinWidth.xs} {
+const container = css`
+    ${MediaQuery.MinWidth.lg} {
+        // styles
+    }
+
+    ${MediaQuery.MinWidth.md} {
+        // styles
+    }
+
+    ${MediaQuery.MinWidth.sm} {
         // styles
     }
 `;
-
-/* @media screen and (min-width: 321px) */
 ```
 
 ### Width as constant
 
 ```tsx
-import { Breakpoint } from "@lifesg/react-design-system/theme";
-import styled from "styled-components";
+import {
+    Breakpoint,
+    parsePxOrRemValue,
+    useDesignToken,
+} from "@lifesg/react-design-system/theme";
 
 export const MyComponent = () => {
-    const theme = useTheme();
-    const tablet = Breakpoint["md-min"]({ theme });
+    const mobileWidth = parsePxOrRemValue(useDesignToken(Breakpoint["sm-max"]));
 
-    if (window.innerWidth > tablet) {
-        // render something
-    } else {
-        // render something else
-    }
+    // use this value in your resize listeners, useMediaQuery hooks etc.
+    const [mobile, setMobile] = useState(false);
+    useEffect(() => {
+        setMobile(window.innerWidth <= mobileWidth);
+    }, [mobileWidth]);
 };
 ```
 
 ## Overriding
 
-```tsx
-import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+Refer to [this section](/docs/foundations-advanced--docs#theme-customisation) to
+find out how to apply theme customisation.
 
-const customTheme: ThemeSpec = {
-    ...LifeSGTheme,
-    overrides: {
-        breakpoint: {
-            "sm-max": 430, // specify a custom pixel-based value
-            "md-min": 431,
-            "xxs-column": 4, // specify a custom integer value
-            "xxs-gutter": 8, // specify a custom pixel-based value
-            "xxs-margin": 20, // specify a custom pixel-based value
-        },
-    },
-};
+```tsx
+useApplyStyle(themeElementRef, {
+    [Breakpoint["sm-max"]]: "430px", // specify a custom length value
+    [Breakpoint["md-min"]]: "431px", // specify a custom length value
+    [Breakpoint["xxs-column"]]: 4, // specify a custom integer value
+    [Breakpoint["xxs-gutter"]]: "8px", // specify a custom length value
+    [Breakpoint["xxs-margin"]]: "20px", // specify a custom length value
+});
 ```

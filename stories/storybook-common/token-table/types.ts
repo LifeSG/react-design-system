@@ -1,4 +1,4 @@
-import type { V3_ThemeStyleProps } from "src/v3_theme";
+import type { CSSVariableString } from "src/theme";
 
 export interface TokenTableAttributeRowProps {
     name: string;
@@ -11,12 +11,12 @@ export interface TokenTableAttributeRowProps {
 
 export interface TokenTableDefaultValueColourTokenProps {
     type: "colour-token";
-    token: (props: V3_ThemeStyleProps) => string;
+    token: string;
 }
 
 export interface TokenTableDefaultValueDefaultProps {
     type: "default";
-    token: (props: V3_ThemeStyleProps) => string;
+    token: CSSVariableString;
 }
 
 export interface TokenTableSectionProps {

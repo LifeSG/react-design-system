@@ -13,14 +13,14 @@ import type { ThemeProviderProps } from "./types";
 export const ThemeProvider: FC<ThemeProviderProps> = ({
     children,
     theme = "lifesg",
-    mode,
+    mode = "auto",
     className,
     style,
 }) => {
-    const isModeControlled = mode !== undefined;
+    const isModeControlled = mode !== "auto";
 
-    const [computedMode, setComputedMode] = useState(
-        mode ?? getSystemColourMode()
+    const [computedMode, setComputedMode] = useState(() =>
+        isModeControlled ? mode : getSystemColourMode()
     );
     const [themeElement, setThemeElement] = useState<HTMLDivElement | null>(
         null

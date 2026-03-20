@@ -1,10 +1,10 @@
 import type { CSSProperties } from "react";
 
-import type { ThemeMode, ThemeType } from "../types";
+import type { ResolvedThemeMode, ThemeMode, ThemeType } from "../types";
 
 export interface ThemeContextValue {
     theme: ThemeType;
-    mode: ThemeMode;
+    mode: ResolvedThemeMode;
     /**
      * Element that hosts the current theme scope. Useful for scoped theming.
      */

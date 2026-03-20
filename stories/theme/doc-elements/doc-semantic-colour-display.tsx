@@ -1,5 +1,6 @@
 import type { ThemeType } from "src/theme";
-import { SemanticColours, useDesignToken } from "src/theme";
+import { SemanticColours } from "src/theme";
+import { useInspectColour } from "stories/storybook-common";
 import styled from "styled-components";
 
 import { ColourDisplay } from "./colour-display";
@@ -9,13 +10,15 @@ interface ColourSwatchProps {
 }
 
 const ColourSwatch = ({ token }: ColourSwatchProps) => {
-    const colour = useDesignToken(SemanticColours[token]) as string;
+    const { value, reference } = useInspectColour(SemanticColours[token]);
     return (
         <SwatchItem>
-            <SwatchColour $colour={colour} />
+            <SwatchColour $colour={value} />
             <div>
                 <SwatchLabel>{token}</SwatchLabel>
-                <SwatchReference>{colour}</SwatchReference>
+                <SwatchReference>
+                    {value} {reference && `(${reference})`}
+                </SwatchReference>
             </div>
         </SwatchItem>
     );
@@ -330,5 +333,4 @@ const SwatchReference = styled.div`
     border-radius: 4px;
     padding: 0 0.5rem;
     color: #787878;
-    text-transform: uppercase;
 `;

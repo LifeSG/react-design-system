@@ -13,7 +13,10 @@ There are two types of colour tokens: **primitive** and **semantic**. Primitive
 tokens define raw colour values. Semantic tokens are meaningful aliases of
 primitive tokens.
 
-<img src="./img/colour-tokens.png" style={{ maxWidth: "800px" }} />
+<img
+    src="./img/colour-tokens.png"
+    style={{ maxWidth: "800px", width: "100%" }}
+/>
 
 <DocInfo>
     Use semantic tokens whenever possible to maintain a consistent look and feel
@@ -42,15 +45,17 @@ escape hatch for primitive tokens can be accessed via `Colour.Primitive`.
 
 ```tsx
 import { Colour } from "@lifesg/react-design-system/theme";
-import styled, { css } from "styled-components";
 
-const Container = styled.div`
+const container = css`
     color: ${Colour["text"]};
-    color: ${Colour.Primitve["neutral-100"]};
+    color: ${Colour.Primitive["neutral-100"]};
 `;
 ```
 
 ## Overriding
+
+Refer to [this section](/docs/foundations-advanced--docs#theme-customisation) to
+find out how to apply theme customisation.
 
 Primitive and semantic tokens can be overriden separately.
 
@@ -58,37 +63,17 @@ When you modify a primitive token, any semantic token referring to it will also
 reflect the new colour.
 
 ```tsx
-import { Colour, LifeSGTheme } from "@lifesg/react-design-system/theme";
-
-const customTheme: ThemeSpec = {
-    ...LifeSGTheme,
-    overrides: {
-        primitiveColour: {
-            "primary-10": "#F3C85C", // specify a custom value
-        },
-        semanticColour: {
-            "text-warning": Colour.Primitive["warning-10"]; // use another primitive colour token
-            "text-error": "#A04747"; // or specify a custom value
-        }
-    },
-};
+useApplyStyle(themeElementRef, {
+    [Colour.Primitive["primary-10"]]: "#F3C85C", // specify a custom value
+    [Colour["text-warning"]]: Colour.Primitive["warning-10"]; // use another primitive colour token
+    [Colour["text-error"]]: "#A04747"; // or specify a custom value
+});
 ```
 
-If you use dark mode, specify the overrides for the dark colours instead.
+If you use dark mode, specify the override based on the current theme mode.
 
 ```tsx
-import { Colour, LifeSGTheme } from "@lifesg/react-design-system/theme";
-
-const customTheme: ThemeSpec = {
-    ...LifeSGTheme,
-    overrides: {
-        primitiveColourDark: {
-            "primary-10": "#F3C85C", // specify a custom value
-        },
-        semanticColourDark: {
-            "text-warning": Colour.Primitive["warning-10"]; // use another primitive colour token
-            "text-error": "#A04747"; // or specify a custom value
-        }
-    },
-};
+useApplyStyle(themeElementRef, {
+    [Colour["text"]]: darkMode ? "#EEEEEE" : "#111111";
+});
 ```
