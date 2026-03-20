@@ -150,6 +150,9 @@ describe("ButtonWithIcon", () => {
         expect(
             screen.getByTestId("component-loading-spinner")
         ).toBeInTheDocument();
+        expect(
+            screen.getByTestId("test-button").querySelector("svg")
+        ).not.toBeInTheDocument();
 
         rerender(
             <ButtonWithIcon.Default
@@ -161,12 +164,12 @@ describe("ButtonWithIcon", () => {
             </ButtonWithIcon.Default>
         );
 
-        const button = screen.getByTestId("test-button");
-
         expect(
             screen.queryByTestId("component-loading-spinner")
         ).not.toBeInTheDocument();
-        expect(button.querySelector("svg")).toBeInTheDocument();
+        expect(
+            screen.getByTestId("test-button").querySelector("svg")
+        ).toBeInTheDocument();
     });
 });
 
