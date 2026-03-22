@@ -2,22 +2,61 @@ import { FormLabelAddonProps } from "../form/types";
 
 export type Mode = "default" | "mobile";
 
+/**
+ * Props for the Filter component - collapsible filter panel.
+ *
+ * Renders a panel of `Filter.Item` children with a header title, clear
+ * button, and mobile-specific dismiss/done controls.
+ *
+ * @example
+ * ```tsx
+ * <Filter onClear={handleClear}>
+ *     <Filter.Item title="Category">
+ *         <CheckboxGroup ... />
+ *     </Filter.Item>
+ * </Filter>
+ * ```
+ * @keywords search filter, facet, refinement panel, sidebar filter, filter drawer
+ */
 export interface FilterProps {
     children: React.ReactNode | ((mode: Mode) => React.ReactNode);
     id?: string | undefined;
+    /**
+     * Disables the clear button when `true`.
+     *
+     * @default false
+     */
     clearButtonDisabled?: boolean | undefined;
+    /**
+     * The title displayed in the filter panel header.
+     *
+     * @default "Filters"
+     */
     headerTitle?: string | undefined;
+    /**
+     * The label on the mobile toggle button that opens the filter panel.
+     *
+     * @default "Filters"
+     */
     toggleFilterButtonLabel?: string | undefined;
+    /** CSS class selector for the component. */
     className?: string | undefined;
+    /** The test identifier for the component. */
     "data-testid"?: string | undefined;
-    /** Called when dismiss button is pressed (mobile mode only) */
+    /** Called when dismiss button is pressed (mobile mode only). */
     onDismiss?: (() => void) | undefined;
-    /** Called when done button is pressed (mobile mode only) */
+    /** Called when done button is pressed (mobile mode only). */
     onDone?: (() => void) | undefined;
-    /** Called when clear button is pressed */
+    /** Called when clear button is pressed. */
     onClear?: (() => void) | undefined;
 }
 
+/**
+ * Props for the Filter.Item component - single collapsible filter section.
+ *
+ * Wraps a filter control (e.g. checkboxes, sliders) in a collapsible panel
+ * with an optional header title and form label addon.
+ */
 export interface FilterItemProps {
     /** The content to render inside the filter item. Can be a React node or a render function receiving (mode, state) */
     children:

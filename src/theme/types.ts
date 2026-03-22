@@ -51,6 +51,11 @@ export interface ThemeSpecOptions {
     designToken?: DesignTokenSetOptions | undefined;
 }
 
+/**
+ * Configuration object passed to ThemeProvider to define the active design system theme.
+ *
+ * @keywords theming, color scheme, brand theme, ThemeProvider, design tokens config
+ */
 export interface ThemeSpec {
     /** Sets the color scheme of the theme */
     [ThemeContextKeys.colorScheme]: ColorScheme;

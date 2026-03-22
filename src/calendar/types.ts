@@ -3,6 +3,22 @@ import {
     YearMonthDisplay,
 } from "../shared/internal-calendar/types";
 
+/**
+ * Props for the Calendar component - standalone date picker.
+ *
+ * Renders a full calendar view for selecting a single date. Extends
+ * `CommonCalendarProps` which provides min/max dates, disabled dates,
+ * and locale settings.
+ *
+ * @example
+ * ```tsx
+ * <Calendar
+ *     value={selectedDate}
+ *     onSelect={(date) => setSelectedDate(date)}
+ * />
+ * ```
+ * @keywords date picker, monthly view, date selector, date grid, day picker
+ */
 export interface CalendarProps extends CommonCalendarProps {
     // Basic component props
     className?: string | undefined;

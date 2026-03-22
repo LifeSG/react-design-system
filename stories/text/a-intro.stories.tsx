@@ -4,6 +4,7 @@ import { DisplayContainer, LinkDiv, TextDisplay } from "./doc-elements";
 
 const meta: Meta = {
     title: "General/Text/Introduction",
+    tags: ["text", "typography", "heading", "paragraph", "display", "label"],
 };
 
 export default meta;

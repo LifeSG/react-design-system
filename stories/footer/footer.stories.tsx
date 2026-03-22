@@ -7,6 +7,7 @@ type Component = typeof Footer;
 const meta: Meta<Component> = {
     title: "Modules/Footer",
     component: Footer,
+    tags: ["navigation", "links", "bottom bar", "disclaimer", "site footer"],
 };
 
 export default meta;

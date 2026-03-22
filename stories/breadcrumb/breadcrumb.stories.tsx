@@ -6,6 +6,7 @@ type Component = typeof Breadcrumb;
 const meta: Meta<Component> = {
     title: "Modules/Breadcrumb",
     component: Breadcrumb,
+    tags: ["navigation", "nav", "path", "hierarchy", "trail"],
 };
 
 export default meta;

@@ -8,6 +8,7 @@ type Component = typeof Toggle;
 const meta: Meta<Component> = {
     title: "Data Input/Toggle",
     component: Toggle,
+    tags: ["switch", "on-off", "binary", "form"],
 };
 
 export default meta;

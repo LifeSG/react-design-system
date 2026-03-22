@@ -1,6 +1,25 @@
 export type ToggleType = "checkbox" | "radio" | "yes" | "no";
 export type ToggleStyleType = "default" | "no-border";
 
+/**
+ * Props for the Toggle component - checkbox/radio selection control.
+ *
+ * Renders a styled toggle button that acts as a checkbox (allows
+ * deselection) or radio button (no deselection). The `type` prop controls
+ * behaviour and indicator icon.
+ *
+ * @example
+ * ```tsx
+ * <Toggle
+ *     type="checkbox"
+ *     checked={agreed}
+ *     onChange={(e) => setAgreed(e.target.checked)}
+ * >
+ *     I agree to the terms and conditions
+ * </Toggle>
+ * ```
+ * @keywords toggle button, selection tile, yes no button, choice button, styled checkbox
+ */
 export interface ToggleProps
     extends React.AriaAttributes,
         React.DOMAttributes<HTMLInputElement> {

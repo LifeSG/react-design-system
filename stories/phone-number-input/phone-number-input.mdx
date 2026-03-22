@@ -1,0 +1,14 @@
+import { Meta, Secondary, Title } from "../storybook-common";
+import * as PhoneNumberInputStories from "./phone-number-input.stories";
+
+<Meta of={PhoneNumberInputStories} />
+
+<Title>Phone Number Input</Title>
+
+<Secondary>Overview</Secondary>
+
+A combined country code dropdown and phone number text field for structured international phone number entry. Supports a fixed country mode, clear button, and controlled value via a `{ countryCode, number }` object.
+
+```tsx
+import { PhoneNumberInput } from "@lifesg/react-design-system/phone-number-input";
+```

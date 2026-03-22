@@ -9,6 +9,7 @@ type Component = typeof FeedbackRating;
 const meta: Meta<Component> = {
     title: "Modules/FeedbackRating",
     component: FeedbackRating,
+    tags: ["rating", "stars", "review", "score", "feedback"],
 };
 
 export default meta;

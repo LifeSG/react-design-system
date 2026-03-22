@@ -8,6 +8,7 @@ type Component = typeof Checkbox;
 const meta: Meta<Component> = {
     title: "Data Input/Checkbox",
     component: Checkbox,
+    tags: ["check", "tick", "multi-select", "selection", "form"],
 };
 
 export default meta;

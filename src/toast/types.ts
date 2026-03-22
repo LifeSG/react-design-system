@@ -2,19 +2,52 @@ import React from "react";
 
 export type ToastType = "success" | "warning" | "error" | "info";
 
+/**
+ * Props for the Toast component - temporary notification message.
+ *
+ * Renders a status notification that can auto-dismiss after a configurable
+ * duration. Extends all `HTMLDivElement` attributes.
+ *
+ * @example
+ * ```tsx
+ * <Toast
+ *     type="success"
+ *     label="Your changes have been saved."
+ *     autoDismiss
+ *     onDismiss={() => setShowToast(false)}
+ * />
+ * ```
+ * @keywords snackbar, flash message, temporary notification, auto dismiss alert, status popup
+ */
 export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
-    /** The type of Toast. Control the display */
+    /** The severity style of the Toast. */
     type: ToastType;
-    /** The content of the Toast. If a `title` is provided, this will act as a description label  */
+    /**
+     * The main message text. When a `title` is also provided, this is
+     * rendered as a secondary description below the title.
+     */
     label: string;
-    /** The title of the Toast  */
+    /** An optional bold heading rendered above the `label`. */
     title?: string | undefined;
-    /** If specified, the Toast will be automatically dismissed after 4 seconds */
+    /**
+     * When `true`, the Toast auto-dismisses after `autoDismissTime` ms.
+     *
+     * @default false
+     */
     autoDismiss?: boolean | undefined;
-    /** Time until auto dismissal in milliseconds. Requires `autoDismiss` to be `true` */
+    /**
+     * The time in milliseconds before the Toast auto-dismisses.
+     * Requires `autoDismiss` to be `true`.
+     *
+     * @default 4000
+     */
     autoDismissTime?: number | undefined;
-    /** If given, the function will be called when the Toast is dismissed */
+    /** Called when the Toast is dismissed (by user action or auto-dismiss). */
     onDismiss?: () => void;
-    /** Specifies if Toast should be fixed to top. Defaults to true */
+    /**
+     * When `true`, the Toast is fixed to the top of the viewport on scroll.
+     *
+     * @default true
+     */
     fixed?: boolean | undefined;
 }

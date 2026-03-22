@@ -11,6 +11,7 @@ type Component = typeof Timeline;
 const meta: Meta<Component> = {
     title: "Modules/Timeline",
     component: Timeline,
+    tags: ["steps", "history", "events", "progress", "process"],
 };
 
 export default meta;

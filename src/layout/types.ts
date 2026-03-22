@@ -1,19 +1,30 @@
+/**
+ * Shared layout props for all layout container components.
+ */
 export interface CommonLayoutProps
     extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
+    /** The test identifier for the component. */
     "data-testid"?: string | undefined;
+    /** When `true`, the container content fills full width without a max-width cap. */
     stretch?: boolean;
 }
 
+/** Props for the Layout.Section component. */
 export interface SectionProps extends CommonLayoutProps {}
 
 export type ContainerType = "flex" | "flex-column" | "grid";
 
+/**
+ * Props for the Layout.Container component - flex or grid wrapper.
+ * @keywords grid container, flex layout, page wrapper, column layout, responsive container
+ */
 export interface ContainerProps extends CommonLayoutProps {
     /** The type of display style. Values: "flex" | "flex-column" | "grid" */
     type?: ContainerType | undefined;
 }
 
+/** Props for the Layout.Content component (same as ContainerProps). */
 export interface ContentProps extends ContainerProps {}
 
 export type DivRef = React.Ref<HTMLDivElement>;

@@ -6,6 +6,7 @@ type Component = typeof TimeSlotBar;
 const meta: Meta<Component> = {
     title: "Modules/TimeSlotBar",
     component: TimeSlotBar,
+    tags: ["booking", "availability", "schedule", "slots", "calendar"],
 };
 
 export default meta;

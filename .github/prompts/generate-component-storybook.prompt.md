@@ -43,16 +43,26 @@ Use the title `"Category/ComponentName"` format. Choose the category that fits t
 
 ## Step 3: Extract Tags from JSDoc
 
-Find the `Keywords:` line in the primary interface's JSDoc block. This line lists comma-separated search terms.
-
-Map it to the `tags` array in `Meta`. Do NOT include `"autodocs"` — only the keyword terms:
+Find the `@keywords` tag in the primary `*Props` interface JSDoc block in
+`src/[COMPONENT_NAME]/types.ts`. It contains comma-separated search terms:
 
 ```typescript
-// JSDoc: Keywords: filter, multi-select, dropdown, search, chips
+/**
+ * ...
+ * @keywords filter, multi-select, dropdown, search, chips
+ */
+export interface ComponentNameProps {
+```
+
+Map those terms to the `tags` array in `Meta`. Do NOT include `"autodocs"` — only
+the keyword terms:
+
+```typescript
+// @keywords: filter, multi-select, dropdown, search, chips
 tags: ["filter", "multi-select", "dropdown", "search", "chips"],
 ```
 
-Also populate `parameters.keywords` with the same terms as a string array for catalog search support:
+Also populate `parameters.keywords` with the same terms as a string array:
 
 ```typescript
 parameters: {
@@ -64,6 +74,9 @@ parameters: {
     keywords: ["filter", "multi-select", "dropdown", "search", "chips"],
 },
 ```
+
+If `@keywords` is absent from the interface JSDoc, add it before writing the story
+(follow the keyword guidelines in `generate-component-jsdoc.prompt.md` Section B2).
 
 ---
 

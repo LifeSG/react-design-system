@@ -1,0 +1,14 @@
+import { Meta, Secondary, Title } from "../storybook-common";
+import * as HistogramSliderStories from "./histogram-slider.stories";
+
+<Meta of={HistogramSliderStories} />
+
+<Title>Histogram Slider</Title>
+
+<Secondary>Overview</Secondary>
+
+A range slider overlaid on a histogram bar chart for filtering numeric data by a visual frequency distribution. Bins and their heights define the histogram; the selected range is returned via an `onChange` callback.
+
+```tsx
+import { HistogramSlider } from "@lifesg/react-design-system/histogram-slider";
+```

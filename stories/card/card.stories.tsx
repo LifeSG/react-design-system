@@ -9,6 +9,7 @@ type Component = typeof Card;
 const meta: Meta<Component> = {
     title: "Modules/Card",
     component: Card,
+    tags: ["panel", "surface", "tile", "container", "box"],
 };
 
 export default meta;

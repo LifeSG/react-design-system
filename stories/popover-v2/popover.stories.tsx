@@ -6,6 +6,7 @@ type Component = typeof PopoverV2;
 const meta: Meta<Component> = {
     title: "Modules/PopoverV2",
     component: PopoverV2,
+    tags: ["popover", "popover-v2", "floating", "tooltip", "overlay"],
 };
 
 export default meta;

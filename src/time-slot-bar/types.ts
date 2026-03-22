@@ -15,21 +15,45 @@ interface TimeSlotBarStyleAttributes {
     backgroundColor2?: string;
 }
 
+/**
+ * Props for the TimeSlotBar component - single-day time slot display.
+ *
+ * Renders a horizontal bar divided into selectable time slot cells between
+ * `startTime` and `endTime`. Each slot carries its own style attributes.
+ *
+ * @example
+ * ```tsx
+ * <TimeSlotBar
+ *     startTime="08:00"
+ *     endTime="20:00"
+ *     slots={timeSlots}
+ *     onSlotClick={(slot) => handleSelect(slot)}
+ * />
+ * ```
+ * @keywords booking slot, availability bar, time block, schedule bar, hourly cells
+ */
 export interface TimeSlotBarProps {
+    /** The test identifier for the component. */
     "data-testid"?: string;
+    /** CSS class selector for the component. */
     className?: string;
-    /** The display variant of the component. Values: "minified" | "default" */
+    /**
+     * The display variant of the component.
+     *
+     * @default "default"
+     */
     variant?: TimeSlotBarVariant;
-    /** The start time of time slot bar. Format in HH:mm. Note: Minutes can be 00, 15, 30, 45 */
+    /** The start time of the bar in `HH:mm` format. Minutes must be in 15-minute blocks (00, 15, 30, 45). */
     startTime: string;
-    /** The end time of time slot bar. Format in HH:mm. Note: Minutes can be 00, 15, 30, 45 */
+    /** The end time of the bar in `HH:mm` format. Minutes must be in 15-minute blocks (00, 15, 30, 45). */
     endTime: string;
+    /** The list of time slots to render within the bar. */
     slots: TimeSlot[];
-    /** Callback function when user clicks on the time slot */
+    /** Called when user clicks on a time slot cell. */
     onSlotClick: (timeSlot: TimeSlot) => void;
-    /** The default click behaviour when no time slot is specified for the time period */
+    /** Called when the bar is clicked outside of any defined slot. */
     onClick?: () => void;
-    /** The default styling attributes when no time slot is specified for the time period */
+    /** Default style attributes applied to periods not covered by any slot. */
     styleAttributes?: TimeSlotBarStyleAttributes;
 }
 

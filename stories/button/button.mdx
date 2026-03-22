@@ -1,0 +1,21 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import { Secondary, Title } from "../storybook-common";
+import * as ButtonStories from "./button.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={ButtonStories} />
+
+<Title>Button</Title>
+
+<Secondary>Overview</Secondary>
+
+Primary call-to-action component for triggering user actions. Supports multiple
+styles (`default`, `secondary`, `light`, `link`), loading states, and a danger
+variant for destructive actions. Available in two sizes via `Button.Default` and
+`Button.Small`.
+
+<Canvas of={ButtonStories.Default} />
+
+<Secondary>Component API</Secondary>
+
+<PropsTable />

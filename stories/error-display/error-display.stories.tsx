@@ -6,6 +6,7 @@ type Component = typeof ErrorDisplay;
 const meta: Meta<Component> = {
     title: "Modules/ErrorDisplay",
     component: ErrorDisplay,
+    tags: ["error", "404", "empty state", "not found", "exception"],
 };
 
 export default meta;

@@ -10,6 +10,7 @@ type Component = typeof FullscreenImageCarousel;
 const meta: Meta<Component> = {
     title: "Modules/FullscreenImageCarousel",
     component: FullscreenImageCarousel,
+    tags: ["lightbox", "carousel", "gallery", "image viewer", "zoom"],
 };
 
 export default meta;

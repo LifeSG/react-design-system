@@ -9,6 +9,7 @@ type Component = typeof IconButton;
 const meta: Meta<Component> = {
     title: "General/IconButton",
     component: IconButton,
+    tags: ["icon", "action", "cta", "clickable icon"],
 };
 
 export default meta;

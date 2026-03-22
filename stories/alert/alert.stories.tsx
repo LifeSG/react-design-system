@@ -6,6 +6,7 @@ type Component = typeof Alert;
 const meta: Meta<Component> = {
     title: "Modules/Alert",
     component: Alert,
+    tags: ["notification", "warning", "info", "danger", "message", "banner"],
 };
 
 export default meta;

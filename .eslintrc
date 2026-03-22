@@ -91,7 +91,7 @@
         "jsdoc/require-description": "warn",
         "jsdoc/require-param-description": "warn",
         "jsdoc/check-param-names": "error",
-        "jsdoc/check-tag-names": "error",
+        "jsdoc/check-tag-names": ["error", { "definedTags": ["keywords"] }],
         "jsdoc/check-types": "warn",
         "jsdoc/no-undefined-types": "off"
     }

@@ -8,6 +8,7 @@ type Component = typeof Overlay;
 const meta: Meta<Component> = {
     title: "Modules/Overlay",
     component: Overlay,
+    tags: ["backdrop", "dimmer", "background", "scrim"],
 };
 
 export default meta;

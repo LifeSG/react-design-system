@@ -14,6 +14,7 @@ type Component = typeof Tooltip;
 const meta: Meta<Component> = {
     title: "Modules/Tooltip",
     component: Tooltip,
+    tags: ["hint", "info", "floating", "contextual", "popover"],
 };
 
 export default meta;

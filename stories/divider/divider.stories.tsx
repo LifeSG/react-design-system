@@ -9,6 +9,7 @@ type Component = typeof Divider;
 const meta: Meta<Component> = {
     title: "General/Divider",
     component: Divider,
+    tags: ["separator", "hr", "horizontal rule", "line", "border"],
     parameters: {
         layout: "fullscreen",
     },

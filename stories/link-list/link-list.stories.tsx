@@ -7,6 +7,7 @@ type Component = typeof LinkList;
 const meta: Meta<Component> = {
     title: "Modules/LinkList",
     component: LinkList,
+    tags: ["links", "navigation", "directory", "list"],
 };
 
 export default meta;

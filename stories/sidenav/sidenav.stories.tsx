@@ -11,6 +11,7 @@ type Component = typeof Sidenav;
 const meta: Meta<Component> = {
     title: "Modules/Sidenav",
     component: Sidenav,
+    tags: ["side navigation", "sidebar", "nav menu"],
     parameters: {
         layout: "fullscreen",
     },

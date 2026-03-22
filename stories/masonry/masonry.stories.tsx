@@ -5,6 +5,7 @@ import { DemoContainer } from "./doc-elements";
 
 const meta: Meta = {
     title: "Modules/Masonry",
+    tags: ["grid", "cards", "responsive", "layout", "tile"],
 };
 
 export default meta;

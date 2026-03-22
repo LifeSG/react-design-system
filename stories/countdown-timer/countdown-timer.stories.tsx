@@ -9,6 +9,7 @@ type Component = typeof CountdownTimer;
 const meta: Meta<Component> = {
     title: "Modules/CountdownTimer",
     component: CountdownTimer,
+    tags: ["timer", "countdown", "clock", "time", "elapsed"],
 };
 
 export default meta;

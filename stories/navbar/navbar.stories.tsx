@@ -11,6 +11,7 @@ type Component = typeof Navbar;
 const meta: Meta<Component> = {
     title: "Modules/Navbar",
     component: Navbar,
+    tags: ["navigation", "header", "menu", "top bar", "app bar"],
 };
 
 export default meta;

@@ -5,6 +5,7 @@ import { Container, CustomOrderedList, SubContainer } from "./doc-elements";
 
 const meta: Meta = {
     title: "General/TextList",
+    tags: ["list", "bullet", "ordered", "unordered", "items"],
 };
 
 export default meta;

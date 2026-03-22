@@ -15,6 +15,7 @@ type Component = typeof UneditableSection;
 const meta: Meta<Component> = {
     title: "Modules/UneditableSection",
     component: UneditableSection,
+    tags: ["readonly", "display", "summary", "read-only", "fields"],
 };
 
 export default meta;

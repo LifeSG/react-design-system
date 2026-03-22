@@ -9,6 +9,7 @@ type Component = typeof Drawer;
 const meta: Meta<Component> = {
     title: "Modules/Drawer",
     component: Drawer,
+    tags: ["sidebar", "side panel", "overlay", "slide-in", "navigation"],
 };
 
 export default meta;

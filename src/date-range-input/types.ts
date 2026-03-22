@@ -4,6 +4,24 @@ import {
     YearMonthDisplay,
 } from "../shared/internal-calendar/types";
 
+/**
+ * Props for the DateRangeInput component - date range picker with calendar overlay.
+ *
+ * Displays two linked text inputs (start and end) that open a shared calendar
+ * for selecting a date range. Controlled via `"YYYY-MM-DD"` string values.
+ * Supports week, month, and fixed-day range variants in addition to the default
+ * free-range mode.
+ *
+ * @example
+ * ```tsx
+ * <DateRangeInput
+ *     value={startDate}
+ *     valueEnd={endDate}
+ *     onChange={(start, end) => { setStart(start); setEnd(end); }}
+ * />
+ * ```
+ * @keywords date range, from to date, date span, period picker, start end date
+ */
 export interface DateRangeInputProps extends CommonCalendarProps {
     // Standard HTML Attributes
     className?: string | undefined;

@@ -6,6 +6,13 @@ import { AnimationDisplay, AnimationItem } from "./doc-elements";
 
 const meta: Meta = {
     title: "General/Animations/Customisable Animations",
+    tags: [
+        "animation",
+        "loading",
+        "spinner",
+        "loading dots",
+        "loading spinner",
+    ],
 };
 
 export default meta;

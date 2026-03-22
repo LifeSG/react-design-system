@@ -1,0 +1,14 @@
+import { Meta, Secondary, Title } from "../storybook-common";
+import * as DateInputStories from "./date-input.stories";
+
+<Meta of={DateInputStories} />
+
+<Title>Date Input</Title>
+
+<Secondary>Overview</Secondary>
+
+A text input that opens an inline calendar overlay for selecting a single date. Controlled via a `"YYYY-MM-DD"` string value. Supports optional confirmation buttons, disabled and read-only modes.
+
+```tsx
+import { DateInput } from "@lifesg/react-design-system/date-input";
+```

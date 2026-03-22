@@ -8,6 +8,7 @@ type Component = typeof SmartAppBanner;
 const meta: Meta<Component> = {
     title: "Modules/SmartAppBanner",
     component: SmartAppBanner,
+    tags: ["app banner", "download", "deep link", "mobile"],
 };
 
 export default meta;

@@ -29,25 +29,55 @@ export interface UneditableSectionItemProps extends MaskAttributeProps {
     disableMaskUnmask?: boolean | undefined;
 }
 
+/**
+ * Props for the UneditableSection component - read-only data display panel.
+ *
+ * Renders a list of label–value pairs, optionally with masking controls
+ * for sensitive values. Supports custom top/bottom sections and full-body
+ * override via `children`.
+ *
+ * @example
+ * ```tsx
+ * <UneditableSection
+ *     title="Personal Information"
+ *     items={[
+ *         { label: "Name", value: "Jane Doe" },
+ *         { label: "NRIC", value: "S1234567A", maskState: "masked" },
+ *     ]}
+ *     onUnmask={handleUnmask}
+ * />
+ * ```
+ * @keywords read only panel, view mode, label value display, summary section, masked field display
+ */
 export interface UneditableSectionProps {
+    /** The list of label–value items to render. */
     items?: UneditableSectionItemProps[] | undefined;
+    /** An optional heading rendered as `Text.H3` above the items. */
     title?: string | undefined;
+    /** An optional description rendered as `Text.Body` below the title. */
     description?: string | undefined;
-    /** A custom section at the top of the main uneditable items section */
+    /** A custom element rendered above the items list. */
     topSection?: JSX.Element | undefined;
-    /** A custom section at the bottom of the main uneditable items section */
+    /** A custom element rendered below the items list. */
     bottomSection?: JSX.Element | undefined;
-    /** The body of the entire section */
+    /** Full body override — replaces the items list with custom content. */
     children?: JSX.Element | JSX.Element[] | undefined;
+    /** CSS class selector for the component. */
     className?: string | undefined;
+    /** The test identifier for the component. */
     "data-testid"?: string | undefined;
+    /** The unique id attribute of the component. */
     id?: string | undefined;
-    /** If specified false, the background will be transparent. Else it is grey by default */
+    /**
+     * When `false`, the background is transparent instead of the default grey.
+     *
+     * @default true
+     */
     background?: boolean | undefined;
-    /** The callback function when the mask icon is clicked */
+    /** Called when the mask icon is clicked on an item. */
     onMask?: ((item: UneditableSectionItemProps) => void) | undefined;
-    /** The callback function when the unmask icon is clicked */
+    /** Called when the unmask icon is clicked on an item. */
     onUnmask?: ((item: UneditableSectionItemProps) => void) | undefined;
-    /** The callback function when the "Try again" button is clicked in error state */
+    /** Called when the "Try again" button is pressed in an item's error state. */
     onTryAgain?: ((item: UneditableSectionItemProps) => void) | undefined;
 }

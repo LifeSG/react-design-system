@@ -8,6 +8,7 @@ type Component = typeof RadioButton;
 const meta: Meta<Component> = {
     title: "Data Input/RadioButton",
     component: RadioButton,
+    tags: ["radio", "single select", "choice", "form"],
 };
 
 export default meta;

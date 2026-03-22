@@ -7,6 +7,7 @@ type Component = typeof ProgressIndicator;
 const meta: Meta<Component> = {
     title: "Modules/ProgressIndicator",
     component: ProgressIndicator,
+    tags: ["stepper", "steps", "wizard", "progress"],
 };
 
 export default meta;

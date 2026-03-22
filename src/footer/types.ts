@@ -14,6 +14,21 @@ export interface FooterLinkProps<T = void> extends TextLinkProps {
     "data-testid"?: string | undefined;
 }
 
+/**
+ * Props for the Footer component - page footer with links and branding.
+ *
+ * Renders a standardised footer with configurable link columns, an optional
+ * app download section, logo, copyright text, and mandatory disclaimer links.
+ *
+ * @example
+ * ```tsx
+ * <Footer
+ *     links={[[{ children: "Privacy", href: "/privacy" }]]}
+ *     lastUpdated={new Date("2024-01-01")}
+ * />
+ * ```
+ * @keywords site footer, copyright bar, bottom bar, page footer links, footer nav
+ */
 export interface FooterProps<T = void> {
     /** The footer links. Multi array to present in different columns */
     links?: FooterLinkProps<T>[][] | undefined;
@@ -29,11 +44,19 @@ export interface FooterProps<T = void> {
     logoSrc?: string | undefined;
     /** Last updated date value that is displayed in the bottom of the Footer */
     lastUpdated?: Date | undefined;
+    /** Called when a footer link is clicked. */
     onFooterLinkClick?: ((link: FooterLinkProps<T>) => void) | undefined;
-    /** Determines if the content of the footer scales with the max width */
+    /**
+     * Determines if the footer content scales to full width.
+     *
+     * @default "default"
+     */
     layout?: "default" | "stretch" | undefined;
+    /** The unique id attribute of the component. */
     id?: string | undefined;
+    /** The test identifier for the component. */
     "data-testid"?: string | undefined;
+    /** CSS class selector for the component. */
     className?: string | undefined;
 }
 

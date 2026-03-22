@@ -8,6 +8,7 @@ type Component = typeof NotificationBanner;
 const meta: Meta<Component> = {
     title: "Modules/NotificationBanner",
     component: NotificationBanner,
+    tags: ["notification", "banner", "sticky", "announcement", "info bar"],
 };
 
 export default meta;

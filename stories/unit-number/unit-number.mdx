@@ -1,0 +1,14 @@
+import { Meta, Secondary, Title } from "../storybook-common";
+import * as UnitNumberStories from "./unit-number.stories";
+
+<Meta of={UnitNumberStories} />
+
+<Title>Unit Number Input</Title>
+
+<Secondary>Overview</Secondary>
+
+A structured input for Singapore-style unit numbers with separate floor and unit fields (e.g., `#12-345`). Supports controlled and uncontrolled modes with raw and formatted value callbacks.
+
+```tsx
+import { UnitNumberInput } from "@lifesg/react-design-system/unit-number";
+```

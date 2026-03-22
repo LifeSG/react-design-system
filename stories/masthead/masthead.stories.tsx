@@ -6,6 +6,7 @@ type Component = typeof Masthead;
 const meta: Meta<Component> = {
     title: "Modules/Masthead",
     component: Masthead,
+    tags: ["government banner", "branding", "header", "gov.sg"],
 };
 
 export default meta;

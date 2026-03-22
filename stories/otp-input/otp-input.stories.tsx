@@ -8,6 +8,13 @@ type Component = typeof OtpInput;
 const meta: Meta<Component> = {
     title: "Modules/OtpInput",
     component: OtpInput,
+    tags: [
+        "OTP",
+        "one-time password",
+        "verification code",
+        "MFA",
+        "authentication",
+    ],
 };
 
 export default meta;

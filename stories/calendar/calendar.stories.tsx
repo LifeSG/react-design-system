@@ -9,6 +9,7 @@ type Component = typeof Calendar;
 const meta: Meta<Component> = {
     title: "Modules/Calendar",
     component: Calendar,
+    tags: ["date", "picker", "datepicker", "schedule", "date-picker"],
 };
 
 export default meta;

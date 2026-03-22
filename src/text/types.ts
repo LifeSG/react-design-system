@@ -47,6 +47,11 @@ export enum RedirectScope {
     Domain, // Pages not in the project but under the same domain name
 }
 
+/**
+ * Props for the Text component - typography primitives for the design system.
+ *
+ * @keywords typography, heading, body text, text style, label text
+ */
 export interface TextProps extends React.HTMLAttributes<HTMLElement> {
     weight?: TextWeight | undefined;
     inline?: boolean | undefined;

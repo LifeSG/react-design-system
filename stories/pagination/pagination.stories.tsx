@@ -9,6 +9,7 @@ type Component = typeof Pagination;
 const meta: Meta<Component> = {
     title: "Modules/Pagination",
     component: Pagination,
+    tags: ["pages", "navigation", "pager", "page numbers"],
 };
 
 export default meta;

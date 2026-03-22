@@ -1,115 +1,14 @@
 {
+    "meta": {
+        "packageName": "@lifesg/react-design-system",
+        "totalModules": 75
+    },
     "components": [
         {
-            "description": "Displays expandable and collapsible content panels that can be toggled by the user.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/accordion",
             "name": "Accordion",
-            "propTableSections": [
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "The content of the Accordion",
-                            "mandatory": true,
-                            "name": "children",
-                            "propTypes": ["JSX.Element", "JSX.Element[]"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Class selector for the component",
-                            "mandatory": false,
-                            "name": "className",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "true",
-                            "description": "Specifies if the feature to expand/collapse all child items is enabled",
-                            "mandatory": false,
-                            "name": "enableExpandAll",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "expand-all",
-                            "description": "Specifies if the inital display of child items and parent state should be all collapsed or all expanded",
-                            "mandatory": false,
-                            "name": "initialDisplay",
-                            "propTypes": ["\"collapse-all\"", "\"expand-all\""]
-                        },
-                        {
-                            "defaultValue": "false",
-                            "description": "Specifies if the title should be shown in mobile viewports",
-                            "mandatory": false,
-                            "name": "showTitleInMobile",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The header text content for the Accordion",
-                            "mandatory": false,
-                            "name": "title",
-                            "propTypes": ["string"]
-                        }
-                    ],
-                    "title": "Accordion"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The content of the Accordion.Item </> )",
-                            "mandatory": true,
-                            "name": "children",
-                            "propTypes": ["JSX.Element", "JSX.Element[]"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Class selector for the component",
-                            "mandatory": false,
-                            "name": "className",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "true",
-                            "description": "Specifies if the item is collapsible.",
-                            "mandatory": false,
-                            "name": "collapsible",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The test identifier for the component",
-                            "mandatory": false,
-                            "name": "data-testid",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "( <> Specifies if the item is expanded. When set, this takes precedence over initialDisplay of the Accordion </> )",
-                            "mandatory": false,
-                            "name": "expanded",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The header text of the Accordion.Item   header </> )",
-                            "mandatory": false,
-                            "name": "title",
-                            "propTypes": ["string", "JSX.Element"]
-                        },
-                        {
-                            "defaultValue": "\"default\"",
-                            "description": "Sets the style type of the component",
-                            "mandatory": false,
-                            "name": "type",
-                            "propTypes": ["\"default\"", "\"small\""]
-                        }
-                    ],
-                    "title": "Accordion.Item"
-                }
-            ],
+            "importPath": "@lifesg/react-design-system/accordion",
+            "description": "Props for the Accordion component - collapsible content container. Wraps one or more `Accordion.Item` children in a panel that can be individually expanded or collapsed. Supports a header title and an expand/collapse-all control.",
             "searchKeys": [
-                "accordion",
                 "collapsible",
                 "disclosure",
                 "expand collapse",
@@ -118,1639 +17,844 @@
             ]
         },
         {
-            "description": "The primary call to action component.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/alert",
             "name": "Alert",
-            "propTableSections": [],
-            "searchKeys": []
-        },
-        {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/animations",
-            "name": "Animations",
-            "propTableSections": [],
-            "searchKeys": []
-        },
-        {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/theme",
-            "name": "BaseTheme",
-            "propTableSections": [],
-            "searchKeys": []
-        },
-        {
-            "description": "Displays contents in a box styling layout that can be collapsible if specified.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/box-container",
-            "name": "BoxContainer",
-            "propTableSections": [],
-            "searchKeys": []
-        },
-        {
-            "description": "Displays the current page location in a hierarchy of pages.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/breadcrumb",
-            "name": "Breadcrumb",
-            "propTableSections": [],
-            "searchKeys": []
-        },
-        {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/button",
-            "name": "Button",
-            "propTableSections": [],
-            "searchKeys": ["action", "cta", "forms", "general"]
-        },
-        {
-            "description": "Displays a calendar component.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/calendar",
-            "name": "Calendar",
-            "propTableSections": [],
-            "searchKeys": []
-        },
-        {
-            "description": "A component that has rounded corners and box shadow and can have any contents. Can be used stand-alone or as part of other components (e.g. Popover, Tooltip).",
-            "examples": [
-                "import { Card } from \"@lifesg/react-design-system/card\";\nimport styled from \"styled-components\";\n\nexport const StyledCard = styled(Card)`\n    border-radius: 4px;\n    padding: 1rem 2rem;\n    max-width: 30rem;\n    /* Other CSS properties... */\n`;"
-            ],
-            "importPath": "@lifesg/react-design-system/card",
-            "name": "Card",
-            "propTableSections": [],
-            "searchKeys": []
-        },
-        {
-            "description": "A field that allows a user to enter a response by clicking, and shown with a tick (checked) when activated.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/checkbox",
-            "name": "Checkbox",
-            "propTableSections": [],
-            "searchKeys": []
-        },
-        {
-            "description": "Colors provide a visual identity to the user interface in the LifeSG and BookingSG apps.",
-            "examples": [
-                "import { Color } from \"@lifesg/react-design-system/color\";\nimport styled, { css } from \"styled-components\";\n\nconst Container = styled.div`\n    background: ${Color.Primary};\n\n    // If you extract props, remember to wrap nested interpolations with the css helper\n    ${(props) => {\n        return css`\n            color: ${Color.Secondary};\n        `;\n    }}\n\n    // Otherwise, you have to pass the props down manually (not recommended)\n\t${(props) => {\n        return `\n\t\t\tcolor: ${Color.Secondary(props)};\n\t\t`;\n    }}\n`;",
-                "import { Color } from \"@lifesg/react-design-system/color\";\nimport { BaseTheme } from \"@lifesg/react-design-system/theme\";\n\nconst PrimaryColor = Color.Primary({ theme: BaseTheme });"
-            ],
-            "importPath": "@lifesg/react-design-system/color",
-            "name": "Color",
-            "propTableSections": [],
-            "searchKeys": []
-        },
-        {
-            "description": "Displays a countdown timer.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/countdown-timer",
-            "name": "CountdownTimer",
-            "propTableSections": [],
-            "searchKeys": []
-        },
-        {
-            "description": "Organises a collection of data into readable rows.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/data-table",
-            "name": "DataTable",
-            "propTableSections": [],
+            "importPath": "@lifesg/react-design-system/alert",
+            "description": "Props for the Alert component - contextual feedback banner. Displays an inline message with an optional icon, action link, and configurable severity type and size.",
             "searchKeys": [
-                "data-display",
-                "data-table",
-                "selectable",
-                "sortable",
+                "banner",
+                "info box",
+                "notification",
+                "status message",
+                "warning message"
+            ]
+        },
+        {
+            "name": "Animations",
+            "importPath": "@lifesg/react-design-system/animations",
+            "description": "",
+            "searchKeys": []
+        },
+        {
+            "name": "BaseTheme",
+            "importPath": "@lifesg/react-design-system/theme",
+            "description": "for color customisation, can specify subset of set",
+            "searchKeys": [
+                "brand theme",
+                "color scheme",
+                "design tokens config",
+                "ThemeProvider",
+                "theming"
+            ]
+        },
+        {
+            "name": "BoxContainer",
+            "importPath": "@lifesg/react-design-system/box-container",
+            "description": "Props for the BoxContainer component - collapsible titled card. Renders a bordered box with a header title and optionally a status icon, call-to-action element, and expand/collapse toggle.",
+            "searchKeys": [
+                "bordered box",
+                "collapsible card",
+                "expandable section",
+                "titled panel"
+            ]
+        },
+        {
+            "name": "Breadcrumb",
+            "importPath": "@lifesg/react-design-system/breadcrumb",
+            "description": "Props for the Breadcrumb component - horizontal navigation trail. Renders an ordered list of anchor links representing the current page hierarchy. When links overflow, a fade gradient is applied at the scrollable edges.",
+            "searchKeys": [
+                "crumb nav",
+                "hierarchy links",
+                "navigation trail",
+                "page path"
+            ]
+        },
+        {
+            "name": "Button",
+            "importPath": "@lifesg/react-design-system/button",
+            "description": "Props for the Button component - primary call-to-action element Use buttons to trigger immediate actions like form submissions, dialog confirmations, or navigation. Choose the appropriate style type based on action hierarchy. The button comes in two sizes: Default and Small, available via Button.Default and Button.Small.",
+            "searchKeys": [
+                "action trigger",
+                "click handler",
+                "CTA",
+                "primary button",
+                "submit"
+            ]
+        },
+        {
+            "name": "Calendar",
+            "importPath": "@lifesg/react-design-system/calendar",
+            "description": "Props for the Calendar component - standalone date picker. Renders a full calendar view for selecting a single date. Extends `CommonCalendarProps` which provides min/max dates, disabled dates, and locale settings.",
+            "searchKeys": [
+                "date grid",
+                "date picker",
+                "date selector",
+                "day picker",
+                "monthly view"
+            ]
+        },
+        {
+            "name": "Card",
+            "importPath": "@lifesg/react-design-system/card",
+            "description": "Props for the Card component - elevated content container. Renders a styled box with a white background and rounded corners. Inherits all `HTMLDivElement` attributes.",
+            "searchKeys": ["content box", "panel", "paper", "surface", "tile"]
+        },
+        {
+            "name": "Checkbox",
+            "importPath": "@lifesg/react-design-system/checkbox",
+            "description": "Props for the Checkbox component - binary selection control. Renders a styled checkbox with optional indeterminate state. Inherits all standard `HTMLInputElement` attributes.",
+            "searchKeys": [
+                "boolean input",
+                "check mark",
+                "multi-select control",
+                "tick box"
+            ]
+        },
+        {
+            "name": "Color",
+            "importPath": "@lifesg/react-design-system/color",
+            "description": "",
+            "searchKeys": []
+        },
+        {
+            "name": "CountdownTimer",
+            "importPath": "@lifesg/react-design-system/countdown-timer",
+            "description": "Props for the CountdownTimer component - floating sticky countdown display. Renders a countdown clock that sticks to the viewport edge as the user scrolls. When the remaining time falls below `notifyTimer`, the `onTick` and `onNotify` callbacks fire. Use `show` to start or pause the timer.",
+            "searchKeys": [
+                "clock",
+                "count down",
+                "expiry timer",
+                "session timeout",
+                "time remaining"
+            ]
+        },
+        {
+            "name": "DataTable",
+            "importPath": "@lifesg/react-design-system/data-table",
+            "description": "Props for the DataTable component - tabular data display with selection. DataTable organises row data into columns and supports sortable headers, optional row selection, loading states, sticky headers, and empty states. Use it when users need to scan, compare, and act on structured data.",
+            "searchKeys": [
+                "data grid",
+                "grid",
+                "sortable table",
+                "spreadsheet",
                 "table"
             ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/date-input",
             "name": "DateInput",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/date-input",
+            "description": "Props for the DateInput component - single date picker with calendar overlay. Displays a text input that opens an inline calendar for selecting a single date. Controlled via a `\"YYYY-MM-DD\"` string value. Supports optional confirmation buttons, disabled and read-only modes, and focus/blur callbacks.",
+            "searchKeys": [
+                "calendar input",
+                "date entry",
+                "date field",
+                "date selector",
+                "single date"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/date-range-input",
             "name": "DateRangeInput",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/date-range-input",
+            "description": "Props for the DateRangeInput component - date range picker with calendar overlay. Displays two linked text inputs (start and end) that open a shared calendar for selecting a date range. Controlled via `\"YYYY-MM-DD\"` string values. Supports week, month, and fixed-day range variants in addition to the default free-range mode.",
+            "searchKeys": [
+                "date range",
+                "date span",
+                "from to date",
+                "period picker",
+                "start end date"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/design-token",
             "name": "DesignToken",
-            "propTableSections": [],
+            "importPath": "@lifesg/react-design-system/design-token",
+            "description": "",
             "searchKeys": []
         },
         {
-            "description": "A component that renders a horizontal line.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/divider",
             "name": "Divider",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/divider",
+            "description": "Props for the Divider component - horizontal rule separator. Renders a styled horizontal rule with configurable thickness, line style, color, and optional grid column span (via `ColDiv` layout props).",
+            "searchKeys": [
+                "horizontal rule",
+                "hr",
+                "line break",
+                "section divider",
+                "separator"
+            ]
         },
         {
-            "description": "Displays content in a side panel overlay that slides in from the right.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/drawer",
             "name": "Drawer",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/drawer",
+            "description": "Props for the Drawer component - slide-in side panel. Renders a panel that slides in from the side of the screen, overlaying the page content. Toggled via the `show` prop and dismissed via the close button or overlay click callbacks.",
+            "searchKeys": [
+                "flyout",
+                "off-canvas",
+                "side panel",
+                "sidebar",
+                "slide out"
+            ]
         },
         {
-            "description": "A component that displays an error or issue that has occurred.",
-            "examples": [
-                "// If you are using Styled Components\n\nexport const CustomErrorDisplay = styled(ErrorDisplay)`\n    [data-id=\"error-display-image\"] {\n        /* Your styles here */\n    }\n`;"
-            ],
-            "importPath": "@lifesg/react-design-system/error-display",
             "name": "ErrorDisplay",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/error-display",
+            "description": "Base content attributes for the ErrorDisplay component. Shared between `ErrorDisplayProps` and the DataTable `emptyView` override.",
+            "searchKeys": [
+                "404 page",
+                "empty state",
+                "error page",
+                "maintenance screen",
+                "not found"
+            ]
         },
         {
-            "description": "A component that allows the user to indicate a star rating from 1-5. The submit button is only enabled when a rating is set.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/feedback-rating",
             "name": "FeedbackRating",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/feedback-rating",
+            "description": "Props for the FeedbackRating component - star-rating survey widget. Renders an optional banner image, a description prompt, a row of star buttons, and a submit button. Controlled via the `rating` prop.",
+            "searchKeys": [
+                "NPS",
+                "rating widget",
+                "review",
+                "satisfaction score",
+                "star rating"
+            ]
         },
         {
-            "description": "A component that allows for uploading files.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/file-upload",
             "name": "FileUpload",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/file-upload",
+            "description": "Props for an individual file item displayed in the upload list.",
+            "searchKeys": [
+                "attachment",
+                "drag and drop",
+                "drop zone",
+                "file input",
+                "upload field"
+            ]
         },
         {
-            "description": "Collection of commonly used widgets for filters",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/filter",
             "name": "Filter",
-            "propTableSections": [
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The items in the Filter </> )",
-                            "mandatory": true,
-                            "name": "children",
-                            "propTypes": [
-                                "React.ReactNode",
-                                "(mode: Mode) => React.ReactNode"
-                            ]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Class selector for the component",
-                            "mandatory": false,
-                            "name": "className",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "false",
-                            "description": "Specifies if the feature to expand/collapse all child items is enabled",
-                            "mandatory": false,
-                            "name": "clearButtonDisabled",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The test identifier for the component",
-                            "mandatory": false,
-                            "name": "data-testid",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "\"Filters\"",
-                            "description": "The title of the filter header",
-                            "mandatory": false,
-                            "name": "headerTitle",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The unique identifier for the component",
-                            "mandatory": false,
-                            "name": "id",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Called when clear button is pressed",
-                            "mandatory": false,
-                            "name": "onClear",
-                            "propTypes": ["() => void"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Called when dismiss button is pressed (mobile only)",
-                            "mandatory": false,
-                            "name": "onDismiss",
-                            "propTypes": ["() => void"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Called when done button is pressed (mobile only)",
-                            "mandatory": false,
-                            "name": "onDone",
-                            "propTypes": ["() => void"]
-                        },
-                        {
-                            "defaultValue": "\"Filters\"",
-                            "description": "The display label of the filter toggle button (in mobile)",
-                            "mandatory": false,
-                            "name": "toggleFilterButtonLabel",
-                            "propTypes": ["string"]
-                        }
-                    ],
-                    "title": "Filter"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The content of the Filter.Item </> )",
-                            "mandatory": true,
-                            "name": "children",
-                            "propTypes": [
-                                "React.ReactNode",
-                                "(mode: Mode) => React.ReactNode"
-                            ]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Class selector for the component",
-                            "mandatory": false,
-                            "name": "className",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "true",
-                            "description": "Specifies if the contents can be collapsed or expanded",
-                            "mandatory": false,
-                            "name": "collapsible",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The test identifier for the component",
-                            "mandatory": false,
-                            "name": "data-testid",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Specifies the expand state for the controlled component",
-                            "mandatory": false,
-                            "name": "expanded",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The unique identifier for the component",
-                            "mandatory": false,
-                            "name": "id",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "false",
-                            "description": "Specifies the initial expand state for the uncontrolled component",
-                            "mandatory": false,
-                            "name": "initialExpanded",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Called when the expanded state changes (desktop only)",
-                            "mandatory": false,
-                            "name": "onExpandChange",
-                            "propTypes": ["(expanded: boolean) => void)"]
-                        },
-                        {
-                            "defaultValue": "true",
-                            "description": "Specifies if header divider is visible in default mode",
-                            "mandatory": false,
-                            "name": "showDivider",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "true",
-                            "description": "Specifies if divider is visible in mobile mode",
-                            "mandatory": false,
-                            "name": "showMobileDivider",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The header text of the Filter.Item </> )",
-                            "mandatory": false,
-                            "name": "title",
-                            "propTypes": ["string"]
-                        }
-                    ],
-                    "title": "Filter.Item"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The content of the Filter.Page </> )",
-                            "mandatory": true,
-                            "name": "children",
-                            "propTypes": ["React.ReactNode"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Called when dismiss button is pressed",
-                            "mandatory": false,
-                            "name": "onDismiss",
-                            "propTypes": ["() => void"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Called when done button is pressed",
-                            "mandatory": false,
-                            "name": "onDone",
-                            "propTypes": ["() => void"]
-                        }
-                    ],
-                    "title": "Filter.Page"
-                }
-            ],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/filter",
+            "description": "Props for the Filter component - collapsible filter panel. Renders a panel of `Filter.Item` children with a header title, clear button, and mobile-specific dismiss/done controls.",
+            "searchKeys": [
+                "facet",
+                "filter drawer",
+                "refinement panel",
+                "search filter",
+                "sidebar filter"
+            ]
         },
         {
-            "description": "A component that holds the directory and disclaimer information at the bottom of the website.",
-            "examples": [
-                "import { DisclaimerLinks, Footer } from \"@lifesg/react-design-system/footer\";\n\nconst disclaimerLinks: DisclaimerLinks = {\n    reportVulnerability: {\n        href: \"https://tech.gov.sg/report_vulnerability\",\n        target: \"_blank\",\n        rel: \"noopener\",\n        external: true,\n    },\n};\n\nreturn (\n\t<Footer disclaimerLinks={disclaimerLinks} />;\n);"
-            ],
-            "importPath": "@lifesg/react-design-system/footer",
             "name": "Footer",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/footer",
+            "description": "Any custom attributes you would like to pass to the link",
+            "searchKeys": [
+                "bottom bar",
+                "copyright bar",
+                "footer nav",
+                "page footer links",
+                "site footer"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/form",
             "name": "Form",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/form",
+            "description": "Configuration for an informational addon attached to a Form label. Renders as a tooltip or popover triggered by an icon next to the label, providing supplementary context without cluttering the form field.",
+            "searchKeys": [
+                "field group",
+                "form field",
+                "form layout",
+                "input wrapper",
+                "label input pair"
+            ]
         },
         {
-            "description": "An overlay that display images in a carousel and offers the ability to zoom into the current image.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/fullscreen-image-carousel",
             "name": "FullscreenImageCarousel",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/fullscreen-image-carousel",
+            "description": "Props for the FullscreenImageCarousel component - fullscreen image gallery modal. Renders a modal overlay with a swipeable image carousel and optional thumbnail strip. Extends key `ModalProps` fields for visibility and animation.",
+            "searchKeys": [
+                "gallery modal",
+                "image gallery",
+                "image slider",
+                "lightbox",
+                "photo viewer"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/histogram-slider",
             "name": "HistogramSlider",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/histogram-slider",
+            "description": "Represents a single bin in the histogram distribution chart.",
+            "searchKeys": [
+                "bar chart slider",
+                "density slider",
+                "distribution chart",
+                "price range filter",
+                "range histogram"
+            ]
         },
         {
-            "description": "A call to action component with an icon in it.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/icon-button",
             "name": "IconButton",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/icon-button",
+            "description": "Props for the IconButton component - icon-only button. Renders a square button containing only an icon child. Extends all `HTMLButtonElement` attributes. Choose the style type based on hierarchy and the size type based on available space.",
+            "searchKeys": [
+                "ghost button",
+                "icon action",
+                "square button",
+                "symbol button",
+                "toolbar button"
+            ]
         },
         {
-            "description": "A call to action component with an image and label.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/image-button",
             "name": "ImageButton",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/image-button",
+            "description": "Props for the ImageButton component - image thumbnail button. Renders a clickable image tile with selected and error visual states. Extends all `HTMLButtonElement` attributes.",
+            "searchKeys": [
+                "image picker",
+                "image tile",
+                "photo button",
+                "picture button",
+                "thumbnail selector"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/input",
             "name": "Input",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/input",
+            "description": "Props for the Input component - single-line text entry field. Extends all standard HTML `<input>` attributes. Use for free-text, numeric, email, telephone, or search entry in forms. Supports optional clear button, error state, and a borderless style variant.",
+            "searchKeys": [
+                "search field",
+                "single line input",
+                "text box",
+                "text entry",
+                "text field"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/input-group",
             "name": "InputGroup",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/input-group",
+            "description": "The type of addon attached to the InputGroup. - `\"label\"`: Fixed text prefix or suffix (e.g., currency symbol, unit). - `\"list\"`: Selectable dropdown addon (e.g., country-code selector). - `\"custom\"`: Arbitrary JSX content as the addon.",
+            "searchKeys": [
+                "addon input",
+                "currency input",
+                "inline addon",
+                "prefixed input",
+                "suffixed input"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/input-multi-select",
             "name": "InputMultiSelect",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/input-multi-select",
+            "description": "Props for the InputMultiSelect component - multi-option dropdown selector. Allows the user to choose multiple options from a dropdown list with checkboxes. Supports async option loading, search, and controlled selected state. For single-option selection use `InputSelect`.",
+            "searchKeys": [
+                "checkbox dropdown",
+                "multi option picker",
+                "multi-select dropdown",
+                "multiple choice",
+                "tag select"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/input-nested-multi-select",
             "name": "InputNestedMultiSelect",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/input-nested-multi-select",
+            "description": "Props for the InputNestedMultiSelect component - multi-option hierarchical dropdown. Allows the user to drill into nested categories and select multiple values from a three-level hierarchy (L1 → L2 → L3). Use `InputNestedSelect` for single value selection. Supports search and async loading.",
+            "searchKeys": [
+                "cascading checklist",
+                "hierarchical multi-select",
+                "nested dropdown multiple",
+                "tree select multiple"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/input-nested-select",
             "name": "InputNestedSelect",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/input-nested-select",
+            "description": "Props for the InputNestedSelect component - single-option hierarchical dropdown. Allows the user to drill into nested categories to select a single value from a three-level hierarchy (L1 → L2 → L3). Use `InputNestedMultiSelect` for selecting multiple values. Supports search and async loading.",
+            "searchKeys": [
+                "cascading dropdown",
+                "category picker",
+                "hierarchical select",
+                "nested category",
+                "tree select"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/input-range-select",
             "name": "InputRangeSelect",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/input-range-select",
+            "description": "A generic from/to pair used by InputRangeSelect for options and selected values.",
+            "searchKeys": [
+                "dual select",
+                "from to dropdown",
+                "price range select",
+                "range selector",
+                "start end picker"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/input-range-slider",
             "name": "InputRangeSlider",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/input-range-slider",
+            "description": "Shared configuration props used by both `InputSlider` and `InputRangeSlider`.",
+            "searchKeys": [
+                "dual thumb slider",
+                "min max slider",
+                "price range slider",
+                "range slider",
+                "two handle slider"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/input-select",
             "name": "InputSelect",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/input-select",
+            "description": "The list of options to display in the dropdown.",
+            "searchKeys": [
+                "combobox",
+                "dropdown",
+                "option list",
+                "picker",
+                "select box"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/input-slider",
             "name": "InputSlider",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/input-slider",
+            "description": "Props for the InputSlider component - single-thumb numeric slider. Renders a horizontal slider with a single thumb for selecting a numeric value within a given range. Supports step intervals, track colour customisation, and value labels. For a dual-thumb range slider use `InputRangeSlider`.",
+            "searchKeys": [
+                "knob",
+                "numeric slider",
+                "range input",
+                "scrubber",
+                "single handle slider"
+            ]
         },
         {
-            "description": "A div that conforms to the grid layout of `Layout.Container`.",
-            "examples": [
-                "import { Layout } from \"@lifesg/react-design-system/layout\";\nimport styled from \"styled-components\";\n\n// Method 1: Using the data-id property\nexport const ModifiedContent = styled(Layout.Content)`\n    /* Modifying styles here will modify the Section component */\n\n    [data-id=\"container\"] {\n        /* Modifying styles here will modify the Container component */\n    }\n`;\n\n// Method 2: Using the component itself\nexport const ModifiedContent2 = styled(Layout.Content)`\n    /* Modifying styles here will modify the Section component */\n\n    ${Layout.Container} {\n        /* Modifying styles here will modify the Container component */\n    }\n`;"
-            ],
-            "importPath": "@lifesg/react-design-system/layout",
             "name": "Layout",
-            "propTableSections": [
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <> This component also inherits props from&nbsp; HTMLDivElement </> )",
-                            "mandatory": false,
-                            "name": "",
-                            "propTypes": []
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The test identifier of the component",
-                            "mandatory": false,
-                            "name": "data-testid",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "false",
-                            "description": "Specifies if the layout container should stretch to the \n                    maximum width of the screen, with a fixed padding",
-                            "mandatory": false,
-                            "name": "stretch",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "\"flex\"",
-                            "description": "The display type to be rendered",
-                            "mandatory": false,
-                            "name": "type",
-                            "propTypes": [
-                                "\"flex\"",
-                                "\"flex-column\"",
-                                "\"grid\""
-                            ]
-                        }
-                    ],
-                    "title": "Layout.Container"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <> This component also inherits props from&nbsp; HTMLDivElement </> )",
-                            "mandatory": false,
-                            "name": "",
-                            "propTypes": []
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The test identifier of the component",
-                            "mandatory": false,
-                            "name": "data-testid",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "false",
-                            "description": "Specifies if the layout container should stretch to the \n                    maximum width of the screen, with a fixed padding",
-                            "mandatory": false,
-                            "name": "stretch",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "\"flex\"",
-                            "description": "The display type to be rendered",
-                            "mandatory": false,
-                            "name": "type",
-                            "propTypes": [
-                                "\"flex\"",
-                                "\"flex-column\"",
-                                "\"grid\""
-                            ]
-                        }
-                    ],
-                    "title": "Layout.Content"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <> This component also inherits props from&nbsp; HTMLDivElement </> )",
-                            "mandatory": false,
-                            "name": "",
-                            "propTypes": []
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The test identifier of the component",
-                            "mandatory": false,
-                            "name": "data-testid",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "false",
-                            "description": "Specifies if the layout container should stretch to the \n                    maximum width of the screen, with a fixed padding",
-                            "mandatory": false,
-                            "name": "stretch",
-                            "propTypes": ["boolean"]
-                        }
-                    ],
-                    "title": "Layout.Section"
-                }
-            ],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/layout",
+            "description": "Shared layout props for all layout container components.",
+            "searchKeys": [
+                "column layout",
+                "flex layout",
+                "grid container",
+                "page wrapper",
+                "responsive container"
+            ]
         },
         {
-            "description": "A component that displays a continuous group of link elements.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/link-list",
             "name": "LinkList",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/link-list",
+            "description": "Props for the LinkList component - list of labelled hyperlinks. Renders a vertical list of titled link items with optional descriptions. If `maxShown` is set, extra items collapse behind a \"Show more\" toggle.",
+            "searchKeys": [
+                "hyperlink list",
+                "link group",
+                "nav list",
+                "resource links",
+                "show more list"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/masked-input",
             "name": "MaskedInput",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/masked-input",
+            "description": "The async load state for a MaskedInput in read-only mode. - `\"loading\"`: Shows a loading indicator. - `\"fail\"`: Shows an error state with a retry action. - `\"success\"`: Value is loaded and displayed.",
+            "searchKeys": [
+                "hide value",
+                "mask unmask",
+                "redacted input",
+                "reveal toggle",
+                "sensitive field"
+            ]
         },
         {
-            "description": "The component that produces a masonry-tile like layout.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/masonry",
             "name": "Masonry",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/masonry",
+            "description": "number of columns on desktop resolutions",
+            "searchKeys": [
+                "brick layout",
+                "pinterest grid",
+                "responsive columns",
+                "variable height grid",
+                "waterfall layout"
+            ]
         },
         {
-            "description": "A mandatory banner to be displayed at the top of the page on every .gov.sg digital services. For more info, visit the [Singapore Government Design System](https://designsystem.tech.gov.sg/components/official-government-banner).",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/masthead",
             "name": "Masthead",
-            "propTableSections": [],
+            "importPath": "@lifesg/react-design-system/masthead",
+            "description": "Note: Had to use this method because we had to create a custom type to handle Web Components (refer to this guide https://blog.devgenius.io/how-to-use-web-components-in-react-54c951399bfd) But we are having troubles exporting the custom type definition via rollup",
             "searchKeys": []
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/media",
             "name": "Media",
-            "propTableSections": [],
+            "importPath": "@lifesg/react-design-system/media",
+            "description": "",
             "searchKeys": []
         },
         {
-            "description": "A window or pop up that displays over other page contents and provides information or actions that a user can perform.",
-            "examples": [
-                "<Modal.Box onClose={closeModal}>\n    <ScrollableContent>\n        <span>I am a Modal</span>\n    </ScrollableContent>\n</Modal.Box>"
-            ],
-            "importPath": "@lifesg/react-design-system/modal",
             "name": "Modal",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/modal",
+            "description": "Props for the Modal component - animated overlay dialog. Renders content inside a portal injected into the DOM. Supports directional slide-in animation, optional overlay-click dismissal, and custom z-index for stacked modals. Toggle visibility with the `show` prop.",
+            "searchKeys": [
+                "confirmation dialog",
+                "dialog",
+                "lightbox",
+                "overlay dialog",
+                "popup"
+            ]
         },
         {
-            "description": "A component that displays navigation links, action buttons and a brand at the top of the web page.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/navbar",
             "name": "NavbarHeight",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/navbar",
+            "description": "Navbar action buttons for mobile drawer. Takes desktop if not specified",
+            "searchKeys": [
+                "app bar",
+                "header nav",
+                "menu bar",
+                "navigation header",
+                "top navigation"
+            ]
         },
         {
-            "description": "A component that remains sticky at the top of the page and provides the user of important notification or notices.",
-            "examples": [
-                "import { withNotificationBanner } from \"@lifesg/react-design-system/notification-banner\";\n\nconst HOCElement = withNotificationBanner([\n    {\n        type: \"text\",\n        content: \"This is rendered using the HOC, and it contains a&nbsp;\",\n    },\n    {\n        type: \"link\",\n        content: \"hyperlink\",\n        otherAttributes: {\n            href: \"https://www.google.com\",\n            external: true,\n            target: \"_blank\",\n        },\n    },\n    {\n        type: \"text\",\n        content:\n            \"&nbsp;and text with styles like <strong>bold</strong> and <em>italics</em>.\",\n    },\n]);",
-                "const MainRender = () => {\n    return (\n        <StyledContainer>\n            <HOCElement dismissable={false} />\n            other content renders...\n        </StyledContainer>\n    );\n};"
-            ],
-            "importPath": "@lifesg/react-design-system/notification-banner",
             "name": "NotificationBanner",
-            "propTableSections": [
-                {
-                    "attributes": [],
-                    "title": "NotificationBanner"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <> This component also inherits props from&nbsp; TextLinkProps </> )",
-                            "mandatory": false,
-                            "name": "",
-                            "propTypes": []
-                        }
-                    ],
-                    "title": "NotificationBanner.Link"
-                }
-            ],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/notification-banner",
+            "description": "Props for the NotificationBanner component - dismissible top-of-page banner. Renders a full-width banner with optional sticky positioning and a dismiss button. Toggle visibility with the `visible` prop.",
+            "searchKeys": [
+                "alert banner",
+                "announcement bar",
+                "info bar",
+                "system message",
+                "top banner"
+            ]
         },
         {
-            "description": "A component to handle the entry of the one-time password (OTP) for multi-factored authentication methods.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/otp-input",
             "name": "OtpInput",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/otp-input",
+            "description": "Props for the OtpInput component - one-time password entry field. Renders a row of individual character inputs for OTP entry, with a configurable submit button and a cooldown timer that re-disables the button after each submission.",
+            "searchKeys": [
+                "6-digit input",
+                "one-time password",
+                "PIN entry",
+                "SMS code",
+                "verification code"
+            ]
         },
         {
-            "description": "Adds a dimmed layer over the application.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/overlay",
             "name": "Overlay",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/overlay",
+            "description": "Props for the Overlay component - backdrop overlay portal. Renders a semi-transparent backdrop injected into the DOM that can optionally blur the content behind it. Used as a layer beneath modals, drawers, and other floating UI elements.",
+            "searchKeys": [
+                "backdrop",
+                "background layer",
+                "darkened background",
+                "dimmer",
+                "scrim"
+            ]
         },
         {
-            "description": "A component to provide navigation between pages.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/pagination",
             "name": "Pagination",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/pagination",
+            "description": "Props for the Pagination component - page navigation control. Renders page number buttons and optional first/last navigation, with an optional page-size dropdown. Requires `totalItems` and `activePage` to be controlled by the parent.",
+            "searchKeys": [
+                "next previous",
+                "page numbers",
+                "pager",
+                "paging control",
+                "results navigation"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/phone-number-input",
             "name": "PhoneNumberInput",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/phone-number-input",
+            "description": "A country entry used to populate the country-code dropdown.",
+            "searchKeys": [
+                "country code input",
+                "dialling code",
+                "international phone",
+                "mobile number",
+                "telephone field"
+            ]
         },
         {
-            "description": "A static element that is used to communicate selections, statuses and categories.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/pill",
             "name": "Pill",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/pill",
+            "description": "Props for the Pill component - compact label badge. Renders a small pill-shaped tag with a configurable display style (solid fill or outline) and color scheme. Inherits all `HTMLDivElement` attributes.",
+            "searchKeys": [
+                "badge",
+                "chip",
+                "colored label",
+                "label tag",
+                "status badge"
+            ]
         },
         {
-            "description": "A component which appears when hovering or clicking on a target element and displays information about a certain element in the page.",
-            "examples": [
-                "import { Text } from \"@lifesg/react-design-system/text\";\n\nconst Trigger = () => (\n    <CustomDiv>\n        <Text.Body>Hover me</Text.Body>\n    </CustomDiv>\n);",
-                "const PopoverHOC = withPopover(Trigger, {\n    content: \"This is the popover content\",\n    trigger: \"hover\",\n});"
-            ],
-            "importPath": "@lifesg/react-design-system/popover",
             "name": "Popover",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/popover",
+            "description": "Props for the Popover component - floating content bubble. Renders a floating tooltip-style bubble positioned relative to its trigger element. Controlled via the `visible` prop.",
+            "searchKeys": [
+                "contextual overlay",
+                "floating hint",
+                "help popup",
+                "hover card",
+                "info bubble"
+            ]
         },
         {
-            "description": "A component which appears when hovering or clicking on a target element and displays information about a certain element in the page.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/popover-v2",
             "name": "PopoverV2",
-            "propTableSections": [
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The content of the Popover </> )",
-                            "mandatory": true,
-                            "name": "children",
-                            "propTypes": ["string", "JSX.Element"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Class selector for the component",
-                            "mandatory": false,
-                            "name": "className",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The test identifier for the component",
-                            "mandatory": false,
-                            "name": "data-testid",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The unique identifier for the component",
-                            "mandatory": false,
-                            "name": "id",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The callback when the user dismisses the   Popover (modal form) in mobile viewports </> )",
-                            "mandatory": false,
-                            "name": "onMobileClose",
-                            "propTypes": ["() => void"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The visibility state of the Popover </> )",
-                            "mandatory": false,
-                            "name": "visible",
-                            "propTypes": ["string", "JSX.Element"]
-                        }
-                    ],
-                    "title": "Popover"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The item to interact with to trigger the   Popover </> )",
-                            "mandatory": true,
-                            "name": "children",
-                            "propTypes": ["React.ReactNode"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Class selector for the component",
-                            "mandatory": false,
-                            "name": "className",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The test identifier for the component",
-                            "mandatory": false,
-                            "name": "data-testid",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The unique identifier for the component",
-                            "mandatory": false,
-                            "name": "id",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The callback when the Popover appears </> )",
-                            "mandatory": false,
-                            "name": "onPopoverAppear",
-                            "propTypes": ["() => void"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The callback when the Popover dismisses </> )",
-                            "mandatory": false,
-                            "name": "onPopoverDismiss",
-                            "propTypes": ["() => void"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The content of the Popover </> )",
-                            "mandatory": true,
-                            "name": "popoverContent",
-                            "propTypes": [
-                                "string",
-                                "JSX.Element",
-                                "() => React.ReactNode"
-                            ]
-                        },
-                        {
-                            "defaultValue": "\"top\"",
-                            "description": "( <> The visual position of the Popover in relation to it&rsquo;s trigger </> )",
-                            "mandatory": false,
-                            "name": "position",
-                            "propTypes": [
-                                "\"top\"",
-                                "\"top-start\"",
-                                "\"top-end\"",
-                                "\"bottom\"",
-                                "\"bottom-start\"",
-                                "\"bottom-end\"",
-                                "\"left\"",
-                                "\"left-start\"",
-                                "\"left-end\"",
-                                "\"right\"",
-                                "\"right-start\"",
-                                "\"right-end\""
-                            ]
-                        },
-                        {
-                            "defaultValue": "( <> document body </> )",
-                            "description": "( <> The root element that hosts the popover element. Try specifying this if you encounter z-index conflicts. For example, if the parent of the trigger element has a higher z-index than the popover, the popover may not be visible. Specify the parent here instead so that they share the same stacking context. </> )",
-                            "mandatory": false,
-                            "name": "rootNode",
-                            "propTypes": ["RefObject<HTMLElement>"]
-                        },
-                        {
-                            "defaultValue": "\"click\"",
-                            "description": "( <> The trigger for the appearance of the   Popover </> )",
-                            "mandatory": false,
-                            "name": "trigger",
-                            "propTypes": ["\"click\"", "\"hover\""]
-                        }
-                    ],
-                    "title": "PopoverTrigger"
-                }
-            ],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/popover-v2",
+            "description": "Props for the PopoverV2 component - floating content bubble (v2). The base popover bubble controlled via `visible`. For most use cases prefer `PopoverV2.Trigger` which handles positioning automatically.",
+            "searchKeys": [
+                "anchored tooltip",
+                "floating popover",
+                "floating-ui popover",
+                "info bubble v2",
+                "positioned overlay"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/predictive-text-input",
             "name": "PredictiveTextInput",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/predictive-text-input",
+            "description": "Props for the PredictiveTextInput component - autocomplete text input. Displays suggestions fetched asynchronously as the user types. The suggestions list appears after a configurable minimum number of characters have been entered. Selecting a suggestion calls `onSelectOption`. Used for location search, name lookup, and other typeahead scenarios.",
+            "searchKeys": [
+                "autocomplete",
+                "autosuggest",
+                "live search",
+                "search suggestions",
+                "typeahead"
+            ]
         },
         {
-            "description": "A component that displays an indication of the current progress in a step process.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/progress-indicator",
             "name": "ProgressIndicator",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/progress-indicator",
+            "description": "Props for the ProgressIndicator component - step progress tracker. Renders a horizontal row of step labels with the current step highlighted. Supports a custom display extractor for non-string step items.",
+            "searchKeys": [
+                "form progress",
+                "multi-step progress",
+                "step tracker",
+                "stepper",
+                "wizard steps"
+            ]
         },
         {
-            "description": "A field that allows a user to enter a response by clicking, and shown with a graphical component when activated. Usually Radio Buttons are used to allow selection of a predefined set of mutually exclusive options.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/radio-button",
             "name": "RadioButton",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/radio-button",
+            "description": "Props for the RadioButton component - single-choice input control. Renders a styled radio button. Inherits all standard `HTMLInputElement` attributes including `checked`, `disabled`, `value`, and `onChange`.",
+            "searchKeys": [
+                "choice input",
+                "exclusive select",
+                "option button",
+                "radio",
+                "single choice"
+            ]
         },
         {
-            "description": "A component that renders navigation buttons on the side of a page.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/sidenav",
             "name": "Sidenav",
-            "propTableSections": [
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "<>One or more Sidenav.Group elements</>",
-                            "mandatory": true,
-                            "name": "children",
-                            "propTypes": ["React.ReactNode"]
-                        },
-                        {
-                            "defaultValue": "true",
-                            "description": "( <> Specifies if the Sidenav position is to be fixed at the left </> )",
-                            "mandatory": false,
-                            "name": "fixed",
-                            "propTypes": ["boolean"]
-                        }
-                    ],
-                    "title": "Sidenav"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <>One or more Sidenav.DrawerSubitem elements</> )",
-                            "mandatory": false,
-                            "name": "children",
-                            "propTypes": ["React.ReactNode"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "( <> Called when the item is clicked Note : only applies if the item does not have subitems </> )",
-                            "mandatory": false,
-                            "name": "onClick",
-                            "propTypes": ["(id: string) => void"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Display title of the item",
-                            "mandatory": true,
-                            "name": "title",
-                            "propTypes": ["string"]
-                        }
-                    ],
-                    "title": "Sidenav.DrawerItem"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "Called when the item is clicked",
-                            "mandatory": false,
-                            "name": "onClick",
-                            "propTypes": ["(id: string) => void"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Display title of the item",
-                            "mandatory": true,
-                            "name": "title",
-                            "propTypes": ["string"]
-                        }
-                    ],
-                    "title": "Sidenav.DrawerSubitem"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "<>One or more Sidenav.Item elements</>",
-                            "mandatory": true,
-                            "name": "children",
-                            "propTypes": ["React.ReactNode"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Specifies if bottom divider will be rendered",
-                            "mandatory": false,
-                            "name": "separator",
-                            "propTypes": ["boolean"]
-                        }
-                    ],
-                    "title": "Sidenav.Group"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <>One or more Sidenav.DrawerItem elements</> )",
-                            "mandatory": false,
-                            "name": "children",
-                            "propTypes": ["React.ReactNode"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Display icon of the item",
-                            "mandatory": true,
-                            "name": "icon",
-                            "propTypes": ["React.ReactNode"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "( <> Called when the item is clicked Note : only applies if the item does not have subitems </> )",
-                            "mandatory": false,
-                            "name": "onClick",
-                            "propTypes": ["(id: string) => void"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Specifies if the item is initially selected",
-                            "mandatory": false,
-                            "name": "selected",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Display title of the item",
-                            "mandatory": true,
-                            "name": "title",
-                            "propTypes": ["string"]
-                        }
-                    ],
-                    "title": "Sidenav.Item"
-                }
-            ],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/sidenav",
+            "description": "Props for the Sidenav component - vertical side navigation panel. Renders a fixed-left sidebar containing `Sidenav.Group` children with icon-labelled items and optional drawer sub-items.",
+            "searchKeys": [
+                "left navigation",
+                "navigation panel",
+                "side menu",
+                "sidebar menu",
+                "vertical nav"
+            ]
         },
         {
-            "description": "A sticky banner that displays a summary of information and allows for a redirection to a specific destination when clicked on.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/smart-app-banner",
             "name": "SmartAppBanner",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/smart-app-banner",
+            "description": "Props for the SmartAppBanner component - mobile app download prompt. Renders a banner that prompts users to download the mobile app. Supports optional slide-down animation and a dismiss callback.",
+            "searchKeys": [
+                "app download prompt",
+                "app store banner",
+                "install banner",
+                "mobile app CTA",
+                "open in app"
+            ]
         },
         {
-            "description": "Used to organise content into multiple panes. Users can toggle between the different tabs to view different categories of information.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/tab",
             "name": "Tab",
-            "propTableSections": [
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "The tab contents. The tab order is determined by the specification of the child items",
-                            "mandatory": true,
-                            "name": "children",
-                            "propTypes": ["JSX.Element", "JSX.Element[]"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Class selector for the component",
-                            "mandatory": false,
-                            "name": "className",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Specify the current tab index that is to be displayed. By specifying this prop, the tab rendering will be manually controlled by you",
-                            "mandatory": false,
-                            "name": "currentActive",
-                            "propTypes": ["number"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The test identifier for the component",
-                            "mandatory": false,
-                            "name": "data-testid",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The unique id of the component",
-                            "mandatory": false,
-                            "name": "id",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "0",
-                            "description": "Specify the initial tab index that is to be displayed",
-                            "mandatory": false,
-                            "name": "initialActive",
-                            "propTypes": ["number"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Called when a tab item selector is clicked",
-                            "mandatory": false,
-                            "name": "onTabClick",
-                            "propTypes": [
-                                "(title: string, index: number) => void"
-                            ]
-                        }
-                    ],
-                    "title": "Tab"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "<>The content of the Tab.Item</>",
-                            "mandatory": true,
-                            "name": "children",
-                            "propTypes": ["JSX.Element", "JSX.Element[]"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Class selector for the component",
-                            "mandatory": false,
-                            "name": "className",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The test identifier for the component",
-                            "mandatory": false,
-                            "name": "data-testid",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The unique id of the component",
-                            "mandatory": false,
-                            "name": "id",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The tab selector label",
-                            "mandatory": true,
-                            "name": "title",
-                            "propTypes": ["string"]
-                        }
-                    ],
-                    "title": "Tab.Item"
-                }
-            ],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/tab",
+            "description": "Props for the Tab component - tabbed content panel. Renders a row of tab selectors and shows the content of the active tab. Can be used in uncontrolled mode (`initialActive`) or controlled mode (`currentActive`).",
+            "searchKeys": [
+                "content switcher",
+                "segmented view",
+                "tab strip",
+                "tabbed interface",
+                "tabbed panel"
+            ]
         },
         {
-            "description": "A static or interactive element that is used to communicate selections, statuses and categories.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/tag",
             "name": "Tag",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/tag",
+            "description": "Props for the Tag component - interactive label badge. Like `Pill` but supports an interactive state with pointer cursor and press effects. Inherits all `HTMLElement` attributes.",
+            "searchKeys": [
+                "category tag",
+                "chip",
+                "clickable badge",
+                "label badge",
+                "status chip"
+            ]
         },
         {
-            "description": "The component that is used for headings, body text, links and more.",
-            "examples": [
-                "const theme: ThemeSpec = {\n    textStyleScheme: \"base\",\n    // ...other specifications\n};"
-            ],
-            "importPath": "@lifesg/react-design-system/text",
             "name": "Text",
-            "propTableSections": [
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <> This component also inherits props from&nbsp; HTMLAnchorElement </> )",
-                            "mandatory": false,
-                            "name": "",
-                            "propTypes": []
-                        },
-                        {
-                            "defaultValue": "false",
-                            "description": "It is an indication if the link is external to the domain. Adds an extra indicator at the end of the link",
-                            "mandatory": false,
-                            "name": "external",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "false",
-                            "description": "Sets the hyperlink text to an inline display to allow a combination of components in a single line",
-                            "mandatory": false,
-                            "name": "inline",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "\"regular\"",
-                            "description": "The weight of the hyperlink component",
-                            "mandatory": false,
-                            "name": "weight",
-                            "propTypes": [
-                                "\"regular\"",
-                                "\"semibold\"",
-                                "\"bold\"",
-                                "\"light\""
-                            ]
-                        }
-                    ],
-                    "title": "Hyperlink"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <> This component also inherits props from&nbsp; HTMLElement </> )",
-                            "mandatory": false,
-                            "name": "",
-                            "propTypes": []
-                        },
-                        {
-                            "defaultValue": "false",
-                            "description": "Sets the text to an inline display to allow a combination of components in a single line",
-                            "mandatory": false,
-                            "name": "inline",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Specifies the number of lines visible, the additional lines will be truncated",
-                            "mandatory": false,
-                            "name": "maxLines",
-                            "propTypes": ["number"]
-                        },
-                        {
-                            "defaultValue": "false",
-                            "description": "Adds an extra bottom margin to non header text to allow a better separation of blocks of text",
-                            "mandatory": false,
-                            "name": "paragraph",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "( <> Display and Headers: `bold` General: `regular` </> )",
-                            "description": "The weight of the text component",
-                            "mandatory": false,
-                            "name": "weight",
-                            "propTypes": [
-                                "\"regular\"",
-                                "\"semibold\"",
-                                "\"bold\"",
-                                "\"light\""
-                            ]
-                        }
-                    ],
-                    "title": "Text"
-                }
-            ],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/text",
+            "description": "Props for the Text component - typography primitives for the design system.",
+            "searchKeys": [
+                "body text",
+                "heading",
+                "label text",
+                "text style",
+                "typography"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/input-textarea",
             "name": "Textarea",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/input-textarea",
+            "description": "Props for the InputTextarea component - multi-line text entry field. Extends all standard HTML `<textarea>` attributes. Use when the user needs to enter more than one line of text, such as comments, descriptions, or messages. Supports character count display and error state.",
+            "searchKeys": [
+                "comment box",
+                "description field",
+                "multiline",
+                "paragraph input",
+                "text area"
+            ]
         },
         {
-            "description": "Renders a group of related contents within a list format.",
-            "examples": [
-                "export const CustomOrderedList = styled(TextList.Ol)`\n    margin-left: 2rem;\n\n    li {\n        margin-left: 1rem;\n    }\n\n    li:before {\n        content: counters(list, \".\") \".\";\n        left: -3rem;\n    }\n\n    ${MediaQuery.MaxWidth.mobileL} {\n        li {\n            margin-left: 1rem;\n        }\n        li:before {\n            left: -3rem;\n        }\n    }\n`;"
-            ],
-            "importPath": "@lifesg/react-design-system/text-list",
             "name": "TextList",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/text-list",
+            "description": "Ordered list component props - numbered or lettered list. Renders an `<ol>` with configurable counter style, separator, start value, and optional reverse counting.",
+            "searchKeys": [
+                "bullet list",
+                "list component",
+                "numbered list",
+                "ordered list",
+                "unordered list"
+            ]
         },
         {
-            "description": "A component that displays upcoming steps of a process in a timeline presentation.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/timeline",
             "name": "Timeline",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/timeline",
+            "description": "",
+            "searchKeys": [
+                "event history",
+                "process tracker",
+                "progress steps",
+                "status history",
+                "vertical stepper"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/timepicker",
             "name": "Timepicker",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/timepicker",
+            "description": "The time display format used by the Timepicker. - `\"12hr\"`: 12-hour clock with AM/PM suffix (e.g., `\"01:00PM\"`). - `\"24hr\"`: 24-hour clock (e.g., `\"13:00\"`).",
+            "searchKeys": [
+                "AM PM picker",
+                "clock picker",
+                "hour minute input",
+                "time picker",
+                "time selector"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/time-range-picker",
             "name": "TimeRangePicker",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/time-range-picker",
+            "description": "The time display format used by TimeRangePicker. - `\"12hr\"`: 12-hour clock with AM/PM suffix. - `\"24hr\"`: 24-hour clock.",
+            "searchKeys": [
+                "dual time input",
+                "from to time",
+                "start end time",
+                "time interval",
+                "time span picker"
+            ]
         },
         {
-            "description": "A component that displays time slots for a specified time range.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/time-slot-bar",
             "name": "TimeSlotBar",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/time-slot-bar",
+            "description": "The type of style of the time slot. Values: \"default\" | \"stripes\"",
+            "searchKeys": [
+                "availability bar",
+                "booking slot",
+                "hourly cells",
+                "schedule bar",
+                "time block"
+            ]
         },
         {
-            "description": "Displays a calendar component to view available time slots in a week.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/time-slot-bar-week",
             "name": "TimeSlotBarWeek",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/time-slot-bar-week",
+            "description": "Props for the TimeSlotBarWeek component - week-view time slot calendar. Renders a week calendar with per-day `TimeSlotBar` columns and an optional navigation header. Extends `CommonCalendarProps` for min/max date and locale settings.",
+            "searchKeys": [
+                "availability calendar week",
+                "week view booking",
+                "weekly schedule",
+                "weekly time slots"
+            ]
         },
         {
-            "description": "Displays a calendar component to view available time slots in a week.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/time-slot-week-view",
             "name": "TimeSlotWeekView",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/time-slot-week-view",
+            "description": "Props for the TimeSlotWeekView component - week-view availability grid. Renders a calendar week grid that overlays time slot availability on each day. Unlike `TimeSlotBarWeek`, slots are optional and the component focuses on date selection. Extends `CommonCalendarProps`.",
+            "searchKeys": [
+                "availability week grid",
+                "date availability",
+                "schedule week view",
+                "weekly calendar"
+            ]
         },
         {
-            "description": "Component used to inform users of updates or changes in system status.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/toast",
             "name": "Toast",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/toast",
+            "description": "Props for the Toast component - temporary notification message. Renders a status notification that can auto-dismiss after a configurable duration. Extends all `HTMLDivElement` attributes.",
+            "searchKeys": [
+                "auto dismiss alert",
+                "flash message",
+                "snackbar",
+                "status popup",
+                "temporary notification"
+            ]
         },
         {
-            "description": "A button that allows a user to enter a response by clicking, and shown with a different state when activated.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/toggle",
             "name": "Toggle",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/toggle",
+            "description": "Props for the Toggle component - checkbox/radio selection control. Renders a styled toggle button that acts as a checkbox (allows deselection) or radio button (no deselection). The `type` prop controls behaviour and indicator icon.",
+            "searchKeys": [
+                "choice button",
+                "selection tile",
+                "styled checkbox",
+                "toggle button",
+                "yes no button"
+            ]
         },
         {
-            "description": "A component which appears when hovering or clicking on a target element and displays information about a certain element in the page.",
-            "examples": [
-                "import { Button, ButtonProps } from \"@lifesg/react-design-system/button\";\n\nconst TriggerComponent = (props: ButtonProps) => (\n    <Button.Default {...props}>Click on me</Button.Default>\n);",
-                "const WrappedComponent = withTooltip(TriggerComponent, {\n    content: \"This is my tooltip\",\n});"
-            ],
-            "importPath": "@lifesg/react-design-system/tooltip",
             "name": "Tooltip",
-            "propTableSections": [],
-            "searchKeys": []
+            "importPath": "@lifesg/react-design-system/tooltip",
+            "description": "Props for the Tooltip component - floating informational bubble. Renders a small floating label positioned relative to its trigger element. Controlled via the `visible` prop.",
+            "searchKeys": [
+                "help text",
+                "hover hint",
+                "hover label",
+                "info popup",
+                "withTooltip HOC"
+            ]
         },
         {
-            "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/transition",
             "name": "Transition",
-            "propTableSections": [],
-            "searchKeys": []
-        },
-        {
-            "description": "A component that renders uneditable data fields and information.",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/uneditable-section",
-            "name": "UneditableSection",
-            "propTableSections": [
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "true",
-                            "description": "Specifies if a background should be rendered",
-                            "mandatory": false,
-                            "name": "background",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "A custom section that can be rendered on the bottom of the main uneditable items section",
-                            "mandatory": false,
-                            "name": "bottomSection",
-                            "propTypes": ["JSX.Element"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The body of the entire section. Gives flexibility for custom composition of the component",
-                            "mandatory": false,
-                            "name": "children",
-                            "propTypes": ["JSX.Element[]", "JSX.Element"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The class selector of the component",
-                            "mandatory": false,
-                            "name": "className",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The test identifier for the component",
-                            "mandatory": false,
-                            "name": "data-testid",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The description of the section (Will be rendered as   Text.Body ) </> )",
-                            "mandatory": false,
-                            "name": "description",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "If specified, the value will be masked or unmasked but no indicator will be rendered",
-                            "mandatory": false,
-                            "name": "disableMaskUnmask",
-                            "propTypes": ["boolean"]
-                        },
-                        {
-                            "defaultValue": "\"full\"",
-                            "description": "The width that the item can span across the entire section",
-                            "mandatory": false,
-                            "name": "displayWidth",
-                            "propTypes": ["\"half\"", "\"full\""]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The unique id of the component",
-                            "mandatory": false,
-                            "name": "id",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The unique identifier of the uneditable item",
-                            "mandatory": false,
-                            "name": "id",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The uneditable items to be displayed. Items are displayed in a label and value format.",
-                            "mandatory": false,
-                            "name": "items",
-                            "propTypes": ["UneditableSectionItemProps[]"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The label of the uneditable item",
-                            "mandatory": true,
-                            "name": "label",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "•",
-                            "description": "The character to mask with",
-                            "mandatory": false,
-                            "name": "maskChar",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Specifies the state of the component when there is a loading behaviour from a mask/unmask action. If undefined, the value will be displayed.",
-                            "mandatory": false,
-                            "name": "maskLoadingState",
-                            "propTypes": ["\"loading\"", "\"fail\""]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The range (start and end index) to mask",
-                            "mandatory": false,
-                            "name": "maskRange",
-                            "propTypes": ["number[]"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The regular expression to be replaced / masked with <maskChar>",
-                            "mandatory": false,
-                            "name": "maskRegex",
-                            "propTypes": ["RegExp"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Specifies if value is masked or unmasked. If undefined, no masking or unmasking controls will be rendered.",
-                            "mandatory": false,
-                            "name": "maskState",
-                            "propTypes": ["\"masked\"", "\"unmasked\""]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The function to transform the value",
-                            "mandatory": false,
-                            "name": "maskTransformer",
-                            "propTypes": ["(value) => string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Called when the mask icon is clicked",
-                            "mandatory": false,
-                            "name": "onMask",
-                            "propTypes": [
-                                "(item: UneditableSectionItemProps) => void"
-                            ]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Called when there is an error state with a Try again? indicator",
-                            "mandatory": false,
-                            "name": "onTryAgain",
-                            "propTypes": [
-                                "(item: UneditableSectionItemProps) => void"
-                            ]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "Called when the unmask icon is clicked",
-                            "mandatory": false,
-                            "name": "onUnmask",
-                            "propTypes": [
-                                "(item: UneditableSectionItemProps) => void"
-                            ]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "( <> The title of the section (Will be rendered as   Text.H3 ) </> )",
-                            "mandatory": false,
-                            "name": "title",
-                            "propTypes": ["string"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "A custom section that can be rendered on top of the main uneditable items section",
-                            "mandatory": false,
-                            "name": "topSection",
-                            "propTypes": ["JSX.Element"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The range (start and end index) to NOT mask",
-                            "mandatory": false,
-                            "name": "unmaskRange",
-                            "propTypes": ["number[]"]
-                        },
-                        {
-                            "defaultValue": "",
-                            "description": "The value of the uneditable item",
-                            "mandatory": true,
-                            "name": "value",
-                            "propTypes": ["string"]
-                        }
-                    ],
-                    "title": "UneditableSection"
-                },
-                {
-                    "attributes": [],
-                    "title": "UneditableSection.Item"
-                },
-                {
-                    "attributes": [
-                        {
-                            "defaultValue": "",
-                            "description": "( <> This component also inherits props from&nbsp; HTMLUListElement </> )",
-                            "mandatory": false,
-                            "name": "",
-                            "propTypes": []
-                        }
-                    ],
-                    "title": "UneditableSection.ItemSection"
-                }
-            ],
-            "searchKeys": []
-        },
-        {
+            "importPath": "@lifesg/react-design-system/transition",
             "description": "",
-            "examples": [],
-            "importPath": "@lifesg/react-design-system/unit-number",
-            "name": "UnitNumber",
-            "propTableSections": [],
             "searchKeys": []
+        },
+        {
+            "name": "UneditableSection",
+            "importPath": "@lifesg/react-design-system/uneditable-section",
+            "description": "The width that the item can span across. Values: \"half\", \"full\"",
+            "searchKeys": [
+                "label value display",
+                "masked field display",
+                "read only panel",
+                "summary section",
+                "view mode"
+            ]
+        },
+        {
+            "name": "UnitNumber",
+            "importPath": "@lifesg/react-design-system/unit-number",
+            "description": "Props for the UnitNumberInput component - Singapore-style unit number entry. A specialised input pair for entering a floor-unit combination in the format commonly used in Singapore addresses (e.g., `#12-345`). Emits the combined string value and optionally the raw `[floor, unit]` array.",
+            "searchKeys": [
+                "apartment number",
+                "flat number",
+                "floor unit",
+                "Singapore address",
+                "unit field"
+            ]
         }
-    ],
-    "designTokens": [
-        {
-            "category": "Button",
-            "name": "Button.Danger.BackgroundColor"
-        },
-        {
-            "category": "Button",
-            "name": "Button.Danger.Border"
-        },
-        {
-            "category": "Button",
-            "name": "Button.Danger.Hover"
-        },
-        {
-            "category": "Button",
-            "name": "Button.Danger.Primary"
-        },
-        {
-            "category": "global",
-            "name": "ElevationBoxShadow"
-        },
-        {
-            "category": "global",
-            "name": "InputBoxShadow"
-        },
-        {
-            "category": "global",
-            "name": "InputErrorBoxShadow"
-        },
-        {
-            "category": "Table",
-            "name": "Table.Cell.Hover"
-        },
-        {
-            "category": "Table",
-            "name": "Table.Cell.Primary"
-        },
-        {
-            "category": "Table",
-            "name": "Table.Cell.Secondary"
-        },
-        {
-            "category": "Table",
-            "name": "Table.Cell.Selected"
-        },
-        {
-            "category": "Table",
-            "name": "Table.Header"
-        }
-    ],
-    "meta": {
-        "packageName": "@lifesg/react-design-system",
-        "totalModules": 75,
-        "totalTokens": 12
-    }
+    ]
 }

@@ -11,6 +11,7 @@ type Component = typeof Pill;
 const meta: Meta<Component> = {
     title: "Modules/Pill",
     component: Pill,
+    tags: ["badge", "status", "chip", "label"],
 };
 
 export default meta;

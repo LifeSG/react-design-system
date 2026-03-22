@@ -92,25 +92,65 @@ export type NavbarDrawerHandle = HTMLDivElement & {
     dismissDrawer: () => void;
 };
 
+/**
+ * Props for the Navbar component - top navigation bar.
+ *
+ * Renders a full-width header navigation bar with desktop links, mobile
+ * drawer, optional action buttons, and brand logos. Supports fixed
+ * positioning and a compressed height variant.
+ *
+ * @example
+ * ```tsx
+ * <Navbar
+ *     items={{
+ *         desktop: [{ id: "home", href: "/", children: "Home" }]
+ *     }}
+ *     selectedId="home"
+ * />
+ * ```
+ * @keywords top navigation, header nav, app bar, menu bar, navigation header
+ */
 export interface NavbarProps<T = void> extends NavbarSharedProps {
+    /** The nav link items for desktop and optional mobile drawer. */
     items: NavItemsProps<T>;
+    /** CSS class selector for the component. */
     className?: string | undefined;
+    /** The unique id attribute of the component. */
     id?: string | undefined;
+    /** The test identifier for the component. */
     "data-testid"?: string | undefined;
+    /** The id of the currently active nav item (highlights that item). */
     selectedId?: string | undefined;
-    /** Specifies if the Navbar should be compressed */
+    /**
+     * When `true`, reduces the Navbar height to a compact size.
+     *
+     * @default false
+     */
     compress?: boolean | undefined;
-    /** Specifies if Navbar should be fixed to top */
+    /**
+     * When `true`, the Navbar is positioned fixed at the top of the viewport.
+     *
+     * @default true
+     */
     fixed?: boolean | undefined;
-    /** Specifies which methods will not dismiss the drawer */
+    /** Specifies which interaction methods should not close the mobile drawer. */
     drawerDismissalExclusions?: DrawerDismissalMethod[] | undefined;
+    /** When `true`, hides nav links and action buttons (e.g., during loading). */
     hideNavElements?: boolean | undefined;
-    onBrandClick?: ((type: BrandType) => void) | undefined; // override
+    /** Called when a brand logo is clicked. Overrides the shared `onBrandClick`. */
+    onBrandClick?: ((type: BrandType) => void) | undefined;
+    /** Called when a navigation item is clicked. */
     onItemClick?: ((item: NavItemProps<T>) => void) | undefined;
+    /** Called when an action button is clicked. */
     onActionButtonClick?:
         | ((actionButton: NavbarButtonProps) => void)
         | undefined;
-    /** Specifies if masthead should be rendered */
+    /** When `true`, renders the government masthead above the navbar. */
     masthead?: boolean | undefined;
+    /**
+     * Controls whether the navbar content fills full width.
+     *
+     * @default "default"
+     */
     layout?: "default" | "stretch" | undefined;
 }

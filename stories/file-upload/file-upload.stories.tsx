@@ -8,6 +8,7 @@ type Component = typeof FileUpload;
 const meta: Meta<Component> = {
     title: "Modules/FileUpload",
     component: FileUpload,
+    tags: ["upload", "file", "attachment", "drag-drop", "import"],
 };
 
 export default meta;

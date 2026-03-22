@@ -4,6 +4,7 @@ import { Text } from "src/text";
 
 const meta: Meta = {
     title: "Getting Started/Layout",
+    tags: ["container", "grid", "section", "responsive", "wrapper"],
     parameters: {
         layout: "fullscreen",
     },

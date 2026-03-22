@@ -11,6 +11,7 @@ type Component = typeof TimeSlotBarWeek;
 const meta: Meta<Component> = {
     title: "Modules/TimeSlotBarWeek",
     component: TimeSlotBarWeek,
+    tags: ["booking", "weekly", "schedule", "slots", "calendar"],
     parameters: {
         layout: "fullscreen",
     },

@@ -8,6 +8,7 @@ type Component = typeof Modal;
 const meta: Meta<Component> = {
     title: "Modules/Modal",
     component: Modal,
+    tags: ["dialog", "popup", "overlay", "lightbox"],
 };
 
 export default meta;

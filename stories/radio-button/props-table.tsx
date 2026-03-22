@@ -1,26 +1,23 @@
 import React from "react";
-import {
-    DefaultCol,
-    DescriptionCol,
-    NameCol,
-    Table,
-} from "../storybook-common/api-table";
+import { ApiTable } from "../storybook-common/api-table";
+import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
-export const PropsTable = () => (
-    <Table>
-        <tr>
-            <NameCol>checked</NameCol>
-            <DescriptionCol propTypes={["boolean"]}>
-                The selection state of the component
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-        <tr>
-            <NameCol>disabled</NameCol>
-            <DescriptionCol propTypes={["boolean"]}>
-                The state in which an action is allowed to be executed
-            </DescriptionCol>
-            <DefaultCol />
-        </tr>
-    </Table>
-);
+const DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "checked",
+                description: "The selection state of the component",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "disabled",
+                description:
+                    "The state in which an action is allowed to be executed",
+                propTypes: ["boolean"],
+            },
+        ],
+    },
+];
+
+export const PropsTable = () => <ApiTable sections={DATA} />;

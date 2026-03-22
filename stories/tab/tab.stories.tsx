@@ -9,6 +9,7 @@ type Component = typeof Tab;
 const meta: Meta<Component> = {
     title: "Modules/Tab",
     component: Tab,
+    tags: ["tabs", "tabbed", "navigation", "panels", "switcher"],
     parameters: {
         layout: "fullscreen",
     },

@@ -11,6 +11,7 @@ type Component = typeof Tag;
 const meta: Meta<Component> = {
     title: "Modules/Tag",
     component: Tag,
+    tags: ["badge", "chip", "label", "category", "status"],
 };
 
 export default meta;

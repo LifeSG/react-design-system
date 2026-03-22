@@ -18,6 +18,7 @@ type Component = typeof Filter;
 const meta: Meta<Component> = {
     title: "Modules/Filter",
     component: Filter,
+    tags: ["search", "facet", "query", "sort", "refine"],
     argTypes: {
         children: {
             // completely custom since 'children' is always ignored

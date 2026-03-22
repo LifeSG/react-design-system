@@ -3,6 +3,23 @@ import {
     YearMonthDisplay,
 } from "../shared/internal-calendar/types";
 
+/**
+ * Props for the DateInput component - single date picker with calendar overlay.
+ *
+ * Displays a text input that opens an inline calendar for selecting a single
+ * date. Controlled via a `"YYYY-MM-DD"` string value. Supports optional
+ * confirmation buttons, disabled and read-only modes, and focus/blur callbacks.
+ *
+ * @example
+ * ```tsx
+ * <DateInput
+ *     value={selectedDate}
+ *     onChange={(date) => setSelectedDate(date)}
+ *     withButton
+ * />
+ * ```
+ * @keywords date field, calendar input, date entry, date selector, single date
+ */
 export interface DateInputProps extends CommonCalendarProps {
     // Standard HTML Attributes
     className?: string | undefined;

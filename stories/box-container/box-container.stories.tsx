@@ -8,6 +8,7 @@ type Component = typeof BoxContainer;
 const meta: Meta<Component> = {
     title: "Modules/BoxContainer",
     component: BoxContainer,
+    tags: ["box", "panel", "container", "collapsible", "section"],
 };
 
 export default meta;

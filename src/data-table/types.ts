@@ -1,55 +1,243 @@
 import { CSSProperties, ReactNode } from "react";
 import { ErrorDisplayAttributes } from "../error-display/types";
 
+/**
+ * Props for the DataTable component - tabular data display with selection.
+ *
+ * DataTable organises row data into columns and supports sortable headers,
+ * optional row selection, loading states, sticky headers, and empty states.
+ * Use it when users need to scan, compare, and act on structured data.
+ *
+ * @example
+ * ```tsx
+ * <DataTable
+ *   headers={[
+ *     { fieldKey: "name", label: "Name" },
+ *     { fieldKey: "status", label: "Status", clickable: true },
+ *   ]}
+ *   rows={[
+ *     { id: "1", name: "Jane", status: "Active" },
+ *     { id: "2", name: "John", status: "Pending" },
+ *   ]}
+ *   onHeaderClick={(fieldKey) => {
+ *     console.log("Sort by", fieldKey);
+ *   }}
+ * />
+ * ```
+ * @keywords table, grid, spreadsheet, sortable table, data grid
+ */
 export interface DataTableProps {
-    /** The unique identifier of the component */
+    /**
+     * Sets the HTML id attribute on the table wrapper element.
+     *
+     * Use this to target the component for anchors, analytics, or integration
+     * tests that rely on deterministic DOM identifiers.
+     *
+     * @default undefined
+     */
     id?: string | undefined;
-    /** The test identifier of the component */
+    /**
+     * Sets the base test id used for the table and generated sub-elements.
+     *
+     * Child test ids are derived from this value (for example,
+     * `header-<fieldKey>` and `row-<rowId>`).
+     *
+     * @default undefined
+     */
     "data-testid"?: string | undefined;
-    /** The configuration for each header column */
+    /**
+     * Defines the table columns and header cell behaviour.
+     *
+     * Each entry can be:
+     * - A string, used as both the `fieldKey` and visible label.
+     * - A `HeaderItemProps` object for custom label, click handling, and style.
+     *
+     * @see HeaderProps for supported header formats.
+     */
     headers: HeaderProps[];
-    /** The list of data */
+    /**
+     * Supplies the row data rendered in the table body.
+     *
+     * Each row must contain an `id` and keys that match the configured header
+     * `fieldKey` values.
+     *
+     * @default undefined
+     */
     rows?: RowProps[] | undefined;
-    /** The class selector of the component */
+    /**
+     * Appends one or more class names to the table wrapper element.
+     *
+     * Use this for layout-level overrides or integration with external style
+     * hooks.
+     *
+     * @default undefined
+     */
     className?: string | undefined;
-    /** The ids of selected items */
+    /**
+     * Controls which row ids are currently selected.
+     *
+     * This prop works with `enableMultiSelect` and is typically managed as a
+     * controlled state from the parent component.
+     *
+     * @default undefined
+     */
     selectedIds?: string[] | undefined;
-    /** The ids of disabled items */
+    /**
+     * Prevents specific row ids from being selected.
+     *
+     * Disabled rows keep their checkbox visible but non-interactive.
+     *
+     * @default undefined
+     */
     disabledIds?: string[] | undefined;
-    /** Enables a checkbox in each row for multi-selection */
+    /**
+     * Shows a selection checkbox in each row.
+     *
+     * Enable this when users need to select multiple rows for batch actions.
+     *
+     * @default false
+     */
     enableMultiSelect?: boolean | undefined;
-    /** Enables a checkbox in the header to select all rows or clear the current selection */
+    /**
+     * Shows a header checkbox to select or clear all rows.
+     *
+     * This is only meaningful when `enableMultiSelect` is enabled.
+     *
+     * @default false
+     */
     enableSelectAll?: boolean | undefined;
-    /** Specifies if an action bar is visible when one or more rows are selected */
+    /**
+     * Displays the action bar when one or more rows are selected.
+     *
+     * The action bar appears at the bottom of the table and can show custom
+     * actions through `actionBarContent`.
+     *
+     * @default false
+     */
     enableActionBar?: boolean | undefined;
-    /** Specifies if the header is fixed to the top */
+    /**
+     * Keeps the table header fixed while scrolling.
+     *
+     * Use this for long tables to preserve column context during vertical
+     * navigation.
+     *
+     * @default false
+     */
     enableStickyHeader?: boolean | undefined;
-    /** Custom content to be rendered within the action bar */
+    /**
+     * Renders custom content inside the action bar area.
+     *
+     * Use this to add contextual actions such as bulk operations.
+     *
+     * @default undefined
+     */
     actionBarContent?: ReactNode | undefined;
-    /** Specifies the table load state. Displays an animation when the table is loading. (default: "success") */
+    /**
+     * Controls whether table rows or loading feedback is shown.
+     *
+     * - `success`: Renders table rows or the empty state.
+     * - `loading`: Renders a loading spinner row.
+     *
+     * @default "success"
+     */
     loadState?: LoadStateType | undefined;
-    /** Called when a row is selected */
+    /**
+     * Called when a row selection checkbox is toggled.
+     *
+     * Use this to update controlled `selectedIds` state in the parent.
+     *
+     * @param rowId - The id of the row that was toggled.
+     * @param isSelected - Whether the row should be considered selected.
+     *
+     * @example
+     * ```tsx
+     * <DataTable
+     *   enableMultiSelect
+     *   selectedIds={selectedIds}
+     *   onSelect={(rowId, isSelected) => {
+     *     setSelectedIds((prev) =>
+     *       isSelected
+     *         ? [...prev, rowId]
+     *         : prev.filter((id) => id !== rowId)
+     *     );
+     *   }}
+     * />
+     * ```
+     */
     onSelect?: ((rowId: string, isSelected: boolean) => void) | undefined;
-    /** Called when all rows are selected, with the current selection state */
+    /**
+     * Called when the header select-all checkbox is toggled.
+     *
+     * @param isAllSelected - Whether all rows are currently selected before
+     * applying the next state.
+     *
+     * @default undefined
+     */
     onSelectAll?: ((isAllSelected: boolean) => void) | undefined;
-    /** Called with the corresponding column field key when a header is clicked */
+    /**
+     * Called when a clickable header cell is clicked.
+     *
+     * @param fieldKey - The field key for the clicked column.
+     *
+     * @default undefined
+     */
     onHeaderClick?: ((fieldKey: string) => void) | undefined;
-    /** Called when clear button in the action bar is clicked */
+    /**
+     * Called when the action bar clear selection button is clicked.
+     *
+     * Use this to reset `selectedIds` in controlled selection mode.
+     *
+     * @default undefined
+     */
     onClearSelectionClick?: (() => void) | undefined;
-    /** The sort indicator display state for each column */
+    /**
+     * Maps a column `fieldKey` to its sort direction indicator.
+     *
+     * @see SortIndicatorsProps for value structure.
+     * @default undefined
+     */
     sortIndicators?: SortIndicatorsProps | undefined;
-    /** Specifies if every alternate row has a different background colour */
+    /**
+     * Applies alternating background colours to body rows.
+     *
+     * Use this to improve readability in dense data sets.
+     *
+     * @default false
+     */
     alternatingRows?: boolean | undefined;
-    /** Override props for the empty view display */
+    /**
+     * Overrides the default empty-state error display content.
+     *
+     * Provide this when you need custom empty-state title, description, or
+     * related attributes.
+     *
+     * @see ErrorDisplayAttributes for available options.
+     * @default undefined
+     */
     emptyView?: ErrorDisplayAttributes | undefined;
-    /** Returns a custom view to be rendered when the table is empty */
+    /**
+     * Returns a fully custom empty-state view.
+     *
+     * When provided, this takes precedence over `emptyView`.
+     *
+     * @default undefined
+     */
     renderCustomEmptyView?: (() => ReactNode) | undefined;
 }
 
+/**
+ * Available table load states.
+ */
 export type LoadStateType = "loading" | "success";
 
+/**
+ * Available sort indicator directions for a column.
+ */
 export type SortIndicatorType = "asc" | "desc";
 
+/**
+ * Sort indicator state keyed by table column field key.
+ */
 export interface SortIndicatorsProps {
     [fieldKey: string]: SortIndicatorType;
 }
@@ -62,21 +250,59 @@ export interface SortIndicatorsProps {
  */
 export type HeaderProps = string | HeaderItemProps;
 
+/**
+ * Configuration for a DataTable header item.
+ */
 export interface HeaderItemProps {
-    /** The name of the corresponding key in the row item object */
+    /**
+     * Identifies the row field rendered in this column.
+     *
+     * This value must match a key on each row object.
+     */
     fieldKey: string;
-    /** The display label for the column header (string or custom React node) */
+    /**
+     * Sets the visible header content for the column.
+     *
+     * Use a string for standard text headers or a custom node for advanced
+     * formatting.
+     */
     label: string | ReactNode;
-    /** Specifies if the column header is clickable. When true, `onHeaderClick` will be called when the cell is clicked */
+    /**
+     * Makes the header cell interactive and clickable.
+     *
+     * When enabled, clicking the header calls `onHeaderClick` with this
+     * column's `fieldKey`.
+     *
+     * @default false
+     */
     clickable?: boolean | undefined;
-    /** Specifies custom styles for the column header cell */
+    /**
+     * Applies inline styles to header and corresponding body cells.
+     *
+     * Use this mainly for sizing and layout adjustments such as fixed widths.
+     *
+     * @default undefined
+     */
     style?: CSSProperties | undefined;
 }
 
+/**
+ * Data model for a rendered table row.
+ *
+ * Each row must have a unique `id`. Additional keys should correspond to the
+ * `fieldKey` values from `headers`.
+ */
 export interface RowProps {
-    /** Row id */
+    /**
+     * Uniquely identifies the row.
+     */
     id: string | number;
-    /** Other properties on the row item object. Keys should match `fieldKey` in `HeaderProps`. Values can be primitive, ReactNode, or a render function receiving (row, renderProps). */
+    /**
+     * Provides column values by `fieldKey`.
+     *
+     * Values can be primitives, React nodes, or a render function for dynamic
+     * cell content.
+     */
     [fieldKey: string]:
         | string
         | number

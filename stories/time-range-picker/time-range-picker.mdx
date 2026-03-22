@@ -1,0 +1,14 @@
+import { Meta, Secondary, Title } from "../storybook-common";
+import * as TimeRangePickerStories from "./time-range-picker.stories";
+
+<Meta of={TimeRangePickerStories} />
+
+<Title>Time Range Picker</Title>
+
+<Secondary>Overview</Secondary>
+
+Linked start and end time inputs for selecting a time range. Supports both 12-hour (AM/PM) and 24-hour formats. Controlled via a `{ start, end }` value object using formatted time strings.
+
+```tsx
+import { TimeRangePicker } from "@lifesg/react-design-system/time-range-picker";
+```

@@ -8,6 +8,7 @@ type Component = typeof ImageButton;
 const meta: Meta<Component> = {
     title: "General/ImageButton",
     component: ImageButton,
+    tags: ["image", "cta", "visual button", "card"],
 };
 
 export default meta;

@@ -8,6 +8,7 @@ type Component = typeof Toast;
 const meta: Meta<Component> = {
     title: "Modules/Toast",
     component: Toast,
+    tags: ["snackbar", "notification", "message", "alert"],
 };
 
 export default meta;
