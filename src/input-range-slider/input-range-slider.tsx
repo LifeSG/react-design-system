@@ -370,7 +370,7 @@ export const InputRangeSlider = ({
             id={id}
             role="group"
             aria-labelledby={ariaLabelledBy}
-            aria-disabled={disabled || undefined}
+            aria-disabled={disabled}
         >
             {!disabled && !readOnly && (
                 <VisuallyHidden id={instructionTextId}>
@@ -444,7 +444,7 @@ export const InputRangeSlider = ({
                             data-testid={`slider-thumb-${state.index}`}
                             {...thumbProps}
                             tabIndex={-1}
-                            aria-hidden={true}
+                            aria-hidden
                             data-focused={
                                 focusedThumbIndex === state.index
                                     ? "true"
