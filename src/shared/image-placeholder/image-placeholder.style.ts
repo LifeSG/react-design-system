@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-export const Placeholder = styled.div`
+export const placeholder = css`
     background-color: var(--fds-colour-bg-stronger);
     display: flex;
     align-items: center;

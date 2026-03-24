@@ -1,7 +1,7 @@
 import { PlaceholderImageIcon } from "@lifesg/react-icons";
 import clsx from "clsx";
 
-import { Placeholder } from "./image-placeholder.style";
+import * as styles from "./image-placeholder.style";
 
 export interface ImagePlaceholderProps {
     className?: string | undefined;
@@ -9,8 +9,8 @@ export interface ImagePlaceholderProps {
 
 export const ImagePlaceholder = ({ className }: ImagePlaceholderProps) => {
     return (
-        <Placeholder className={clsx(className)}>
+        <div className={clsx(styles.placeholder, className)}>
             <PlaceholderImageIcon />
-        </Placeholder>
+        </div>
     );
 };
