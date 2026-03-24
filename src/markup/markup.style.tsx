@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
 
+import { getHtmlContentStyle } from "../shared/html-content/html-content";
+import type { FontSize } from "../theme";
 import type { V3_ThemeStyleProps } from "../v3_theme/types";
 
 // =============================================================================
@@ -7,12 +9,15 @@ import type { V3_ThemeStyleProps } from "../v3_theme/types";
 // =============================================================================
 interface ContainerStyleProps {
     $textColor?: string | ((props: V3_ThemeStyleProps) => string) | undefined;
+    $baseTextSize?: FontSize | undefined;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
 export const Container = styled.div<ContainerStyleProps>`
+    ${(props) => getHtmlContentStyle({ textSize: props.$baseTextSize })}
+
     ${(props) =>
         props.$textColor &&
         css`

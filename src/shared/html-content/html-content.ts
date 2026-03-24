@@ -10,7 +10,7 @@ export interface HtmlContentStyleOptions {
     textSize?: FontSize | undefined;
 }
 
-const baseHtmlContent = css`
+const baseHtmlContentStyles = `
     strong {
         font-weight: ${Font.Spec["weight-semibold"]};
     }
@@ -60,6 +60,10 @@ const baseHtmlContent = css`
     }
 `;
 
+const baseHtmlContent = css`
+    ${baseHtmlContentStyles}
+`;
+
 const getTextSizeStyles = (textSize: FontSize): string => `
     ${generateFont(textSize, "regular")}
 
@@ -70,6 +74,13 @@ const getTextSizeStyles = (textSize: FontSize): string => `
     a {
         ${generateFont(textSize, "semibold")}
     }
+`;
+
+export const getHtmlContentStyle = (
+    options?: HtmlContentStyleOptions
+): string => `
+    ${baseHtmlContentStyles}
+    ${options?.textSize ? getTextSizeStyles(options.textSize) : ""}
 `;
 
 const textSizeClassMap: Record<FontSize, string> = {
