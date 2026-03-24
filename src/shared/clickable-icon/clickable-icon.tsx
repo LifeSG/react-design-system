@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
-import { highlight, main, outlineNone } from "./clickable-icon.style";
+import * as styles from "./clickable-icon.style";
 import type { ClickableIconProps } from "./types";
 
 const Component = (
@@ -19,10 +19,10 @@ const Component = (
         <button
             ref={ref}
             className={clsx(
-                main,
+                styles.main,
                 className,
-                focusOutline === "none" && outlineNone,
-                focusHighlight && highlight
+                focusOutline === "none" && styles.outlineNone,
+                focusHighlight && styles.highlight
             )}
             type={type}
             {...otherProps}
