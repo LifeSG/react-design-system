@@ -19,6 +19,9 @@
             }
         ],
         "paths": {
+            // Temporary v4 workaround
+            // Alias the package to local source until a proper v4 release includes DashedBorder in published typings.
+            "@lifesg/react-design-system": ["../../src"],
             "@lifesg/react-design-system/*": ["../../src/*"],
             "@/*": ["./src/*"],
             "react": ["./node_modules/@types/react"],
