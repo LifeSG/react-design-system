@@ -28,10 +28,8 @@ export const ComponentLoadingSpinner = ({
 }: ComponentLoadingSpinnerProps): JSX.Element => {
     const spinnerRef = useRef<HTMLDivElement>(null);
     useApplyStyle(spinnerRef, {
-        "--fds-internal-componentLoadingSpinner-root-size": size
-            ? `${size}px`
-            : undefined,
-        "--fds-internal-componentLoadingSpinner-root-colour": color,
+        [styles.tokens.rootSize]: size ? `${size}px` : undefined,
+        [styles.tokens.rootColour]: color,
     });
 
     return (

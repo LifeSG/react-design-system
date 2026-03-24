@@ -1,14 +1,16 @@
 import { css } from "@linaria/core";
 
+export const tokens = {
+    rootSize: "--fds-internal-componentLoadingSpinner-root-size",
+    rootColour: "--fds-internal-componentLoadingSpinner-root-colour",
+} as const;
+
 export const outerRing = css`
     display: inline-block;
     position: relative;
-    width: var(--fds-internal-componentLoadingSpinner-root-size, 1em);
-    height: var(--fds-internal-componentLoadingSpinner-root-size, 1em);
-    color: var(
-        --fds-internal-componentLoadingSpinner-root-colour,
-        currentColor
-    );
+    width: var(${tokens.rootSize}, 1em);
+    height: var(${tokens.rootSize}, 1em);
+    color: var(${tokens.rootColour}, currentColor);
 `;
 
 export const innerRing = css`
