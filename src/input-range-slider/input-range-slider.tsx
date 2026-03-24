@@ -33,6 +33,7 @@ export const InputRangeSlider = ({
     indicatorLabelPrefix,
     indicatorLabelSuffix,
     ariaLabels,
+    ariaDescriptions,
     "aria-invalid": ariaInvalid,
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
@@ -144,6 +145,7 @@ export const InputRangeSlider = ({
         onChange?.(nextSelection);
         onChangeEnd?.(nextSelection);
     };
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -179,6 +181,10 @@ export const InputRangeSlider = ({
         }
 
         return "Indeterminate value slider";
+    }
+
+    function getThumbDescriptionText(index: number) {
+        return ariaDescriptions?.[index];
     }
 
     function getTrackColors() {
@@ -386,45 +392,54 @@ export const InputRangeSlider = ({
 
             {selection.map((thumbValue, index) => {
                 const thumbLabelTextId = `${internalId}-thumb-label-${index}`;
+                const thumbDescriptionText = getThumbDescriptionText(index);
+                const thumbDescriptionTextId = thumbDescriptionText
+                    ? `${internalId}-thumb-description-${index}`
+                    : undefined;
 
                 return (
                     <VisuallyHidden key={`native-slider-${index}`}>
-                        <>
-                            <span id={thumbLabelTextId}>
-                                {resolvedAriaLabels[index]}
+                        {thumbDescriptionTextId && (
+                            <span id={thumbDescriptionTextId}>
+                                {thumbDescriptionText}
                             </span>
+                        )}
+                        <span id={thumbLabelTextId}>
+                            {resolvedAriaLabels[index]}
+                        </span>
 
-                            <input
-                                type="range"
-                                min={getThumbMin(index)}
-                                max={getThumbMax(index)}
-                                step={step}
-                                value={thumbValue}
-                                aria-disabled={disabled || undefined}
-                                readOnly={readOnly}
-                                aria-labelledby={concatIds(
-                                    ariaLabelledBy,
-                                    thumbLabelTextId
-                                )}
-                                aria-describedby={getThumbDescriptionIds()}
-                                aria-valuetext={getValueText(thumbValue)}
-                                aria-invalid={ariaInvalid}
-                                onFocus={() => setFocusedThumbIndex(index)}
-                                onBlur={() => setFocusedThumbIndex(null)}
-                                onChange={(event) =>
-                                    handleNativeRangeChange(event, index)
-                                }
-                                onKeyDown={(event) => {
-                                    handleThumbKeyDown(event, index);
-                                }}
-                            />
-                        </>
+                        <input
+                            type="range"
+                            min={getThumbMin(index)}
+                            max={getThumbMax(index)}
+                            step={step}
+                            value={thumbValue}
+                            aria-disabled={disabled || undefined}
+                            readOnly={readOnly}
+                            aria-labelledby={concatIds(
+                                ariaLabelledBy,
+                                thumbLabelTextId
+                            )}
+                            aria-describedby={getThumbDescriptionIds(
+                                thumbDescriptionTextId
+                            )}
+                            aria-valuetext={getValueText(thumbValue)}
+                            aria-invalid={ariaInvalid}
+                            onFocus={() => setFocusedThumbIndex(index)}
+                            onBlur={() => setFocusedThumbIndex(null)}
+                            onChange={(event) =>
+                                handleNativeRangeChange(event, index)
+                            }
+                            onKeyDown={(event) => {
+                                handleThumbKeyDown(event, index);
+                            }}
+                        />
                     </VisuallyHidden>
                 );
             })}
 
             {/* Native range inputs provide the accessible interaction model.
-                    The visible react-slider is presentation-only. */}
+                The visible react-slider is presentation-only. */}
             <Slider
                 step={step}
                 min={min}
