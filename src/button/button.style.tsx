@@ -7,39 +7,60 @@ import {
     V3_Font,
     V3_MediaQuery,
     V3_Motion,
+    V3_Radius,
     V3_Spacing,
 } from "../v3_theme";
 import { V3_ThemeButton } from "../v3_theme/components/theme-helper";
-
-export type MainButtonStyle =
-    | "default"
-    | "disabled"
-    | "secondary"
-    | "light"
-    | "link";
-
-export type MainButtonSize = "default" | "small" | "large";
+import type { ButtonIconPosition, ButtonSize, ButtonStyleType } from "./types";
 
 export interface MainStyleProps {
-    $buttonStyle: MainButtonStyle;
-    $buttonSizeStyle?: MainButtonSize | undefined;
+    $buttonStyle: ButtonStyleType | "disabled";
+    $buttonSize: ButtonSize;
     $buttonIsDanger?: boolean;
+    $hasIcon?: boolean;
+    $iconOnly?: boolean;
+    $iconPosition?: ButtonIconPosition;
 }
 
 export const Main = styled.button<MainStyleProps>`
-    padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-16"]};
-    min-width: 4rem;
     border: ${V3_Border["width-010"]} ${V3_Border["solid"]} transparent;
     transition: all ${V3_Motion["duration-250"]} ${V3_Motion["ease-default"]};
-    border-radius: ${V3_ThemeButton["button-radius"]};
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    // -----------------------------------------------------------------------------
+    ${(props) =>
+        props.$iconOnly
+            ? css`
+                  border-radius: ${V3_Radius["sm"]};
+              `
+            : css`
+                  border-radius: ${V3_ThemeButton["button-radius"]};
+                  padding: ${V3_Spacing["spacing-8"]}
+                      ${V3_Spacing["spacing-16"]};
+                  min-width: 4rem;
+              `}
+
+    ${(props) =>
+        props.$hasIcon &&
+        !props.$iconOnly &&
+        css`
+            gap: 0.5rem;
+            flex-direction: ${props.$iconPosition === "right"
+                ? "row-reverse"
+                : "row"};
+
+            svg {
+                flex-shrink: 0;
+                height: 1em;
+                width: 1em;
+            }
+        `}
+
+    // -------------------------------------------------------------------------
     // BUTTON STYLE + TEXT COLOR
-    // -----------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     ${(props) => {
         switch (props.$buttonStyle) {
             case "secondary":
@@ -76,7 +97,6 @@ export const Main = styled.button<MainStyleProps>`
                         }
                     }
                 `;
-
             case "link":
                 return css`
                     background-color: transparent;
@@ -84,6 +104,7 @@ export const Main = styled.button<MainStyleProps>`
                     color: ${props.$buttonIsDanger
                         ? V3_Colour["text-error"]
                         : V3_ThemeButton["button-link-colour-text"]};
+
                     &:hover,
                     &:active {
                         @media (pointer: fine) {
@@ -94,24 +115,22 @@ export const Main = styled.button<MainStyleProps>`
             case "disabled":
                 return css`
                     background-color: ${V3_Colour["bg-disabled"]};
-
+                    ${props.$iconOnly &&
+                    css`
+                        border-color: ${V3_Colour["border-disabled"]};
+                    `}
                     cursor: not-allowed;
+                    color: ${V3_Colour["text-disabled"]};
 
                     &:hover {
                         box-shadow: none;
                     }
-
-                    color: ${V3_Colour["text-disabled"]};
                 `;
             default:
                 return css`
                     background-color: ${props.$buttonIsDanger
                         ? V3_Colour["bg-error-strong"]
                         : V3_ThemeButton["button-default-colour-bg"]};
-
-                    ${V3_MediaQuery.MaxWidth.sm} {
-                        width: 100%;
-                    }
 
                     color: ${V3_ThemeButton["button-default-colour-text"]};
 
@@ -129,11 +148,49 @@ export const Main = styled.button<MainStyleProps>`
         }
     }}
 
-    // -----------------------------------------------------------------------------
-	// BUTTON SIZE + TEXT SIZE
-	// -----------------------------------------------------------------------------
-	${(props) => {
-        switch (props.$buttonSizeStyle) {
+    // -------------------------------------------------------------------------
+    // BUTTON SIZE
+    // -------------------------------------------------------------------------
+    ${(props) => {
+        if (props.$iconOnly) {
+            switch (props.$buttonSize) {
+                case "large":
+                    return css`
+                        height: 4rem;
+                        width: 4rem;
+
+                        img,
+                        svg {
+                            height: 1.625rem;
+                            width: 1.625rem;
+                        }
+                    `;
+                case "small":
+                    return css`
+                        height: 2.5rem;
+                        width: 2.5rem;
+
+                        img,
+                        svg {
+                            height: 1rem;
+                            width: 1rem;
+                        }
+                    `;
+                default:
+                    return css`
+                        height: 3rem;
+                        width: 3rem;
+
+                        img,
+                        svg {
+                            height: 1.125rem;
+                            width: 1.125rem;
+                        }
+                    `;
+            }
+        }
+
+        switch (props.$buttonSize) {
             case "small":
                 return css`
                     height: 2.5rem;
@@ -143,7 +200,6 @@ export const Main = styled.button<MainStyleProps>`
                         height: auto;
                     }
                 `;
-
             case "large":
                 return css`
                     height: 4rem;
@@ -153,7 +209,6 @@ export const Main = styled.button<MainStyleProps>`
                         height: auto;
                     }
                 `;
-
             default:
                 return css`
                     height: 3rem;

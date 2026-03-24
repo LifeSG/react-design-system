@@ -1,42 +1,30 @@
 import type React from "react";
 
-import type { ComponentLoadingSpinnerProps } from "../shared/component-loading-spinner";
-
 export type ButtonStyleType = "default" | "secondary" | "light" | "link";
+export type ButtonSize = "large" | "default" | "small";
+export type ButtonIconPosition = "left" | "right";
 
-export interface ButtonBaseProps
+export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     "data-testid"?: string | undefined;
     /** The style type of the button. Values: "default" | "secondary" | "light" | "link" */
     styleType?: ButtonStyleType | undefined;
+    /** The size of the button. Values: "large" | "default" | "small" */
+    size?: ButtonSize | undefined;
     /** If specified, the component will have a red color scheme being applied */
     danger?: boolean | undefined;
-    /** If true, the button remains focusable when disabled. Defaults to false. */
-    focusableWhenDisabled?: boolean | undefined;
-}
-
-export interface ButtonProps extends ButtonBaseProps {
     /** Indicates if a loading spinner is to be displayed */
     loading?: boolean | undefined;
+    /** If true, the button remains focusable when disabled. Defaults to false. */
+    focusableWhenDisabled?: boolean | undefined;
+    /**
+     * The icon to be rendered in the button. When provided without children, the
+     * button renders in icon-only mode (square). Requires aria-label on the button
+     * for accessibility in icon-only mode.
+     */
+    icon?: JSX.Element | undefined;
+    /** Specifies where the icon will be positioned relative to the label. */
+    iconPosition?: ButtonIconPosition | undefined;
 }
 
 export type ButtonRef = React.Ref<HTMLButtonElement>;
-
-/** @deprecated For internal use only */
-export type MainButtonStyle =
-    | "default"
-    | "disabled"
-    | "secondary"
-    | "light"
-    | "link";
-
-/** @deprecated For internal use only */
-export type MainButtonSize = "default" | "small" | "large";
-
-/** @deprecated For internal use only */
-export interface MainStyleProps extends ComponentLoadingSpinnerProps {
-    $buttonStyle: MainButtonStyle;
-    $buttonSizeStyle?: MainButtonSize | undefined;
-    $buttonIsDanger?: boolean;
-    $buttonWithIcon?: boolean;
-}
