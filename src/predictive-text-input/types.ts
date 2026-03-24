@@ -1,93 +1,42 @@
+import { RefObject } from "react";
+import { DropdownAlignmentType } from "src/shared/dropdown-wrapper";
 import { ListItemDisplayProps } from "../shared/dropdown-list/types";
 
-/**
- * Props for the PredictiveTextInput component - autocomplete text input.
- *
- * Displays suggestions fetched asynchronously as the user types. The
- * suggestions list appears after a configurable minimum number of characters
- * have been entered. Selecting a suggestion calls `onSelectOption`. Used for
- * location search, name lookup, and other typeahead scenarios.
- *
- * @example
- * ```tsx
- * <PredictiveTextInput
- *     fetchOptions={async (input) => await searchLocations(input)}
- *     listExtractor={(item) => item.name}
- *     onSelectOption={(option, value) => setLocation(value)}
- *     minimumCharacters={2}
- * />
- * ```
- * @keywords typeahead, autocomplete, autosuggest, live search, search suggestions
- */
-export interface PredictiveTextInputProps<T, V> {
-    /** The HTML `id` attribute for the root element. */
+export interface PredictiveTextInputProps<T, V> extends React.AriaAttributes {
     id?: string | undefined;
-    /** Additional CSS class name. */
     className?: string | undefined;
-    /**
-     * Sets the `data-testid` attribute for targeting the element in automated tests.
-     */
     "data-testid"?: string | undefined;
-    /**
-     * The minimum number of characters to type before the suggestions list appears.
-     *
-     * @default 1
-     */
+    /** Minimum number of characters, before options are shown */
     minimumCharacters?: number | undefined;
-    /** Placeholder text shown in the input when it is empty. */
     placeholder?: string | undefined;
-    /**
-     * Makes the input read-only, displaying the selected option without allowing changes.
-     *
-     * @default false
-     */
     readOnly?: boolean | undefined;
-    /**
-     * Disables the input and prevents interaction.
-     *
-     * @default false
-     */
     disabled?: boolean | undefined;
-    /**
-     * Applies error styling to indicate an invalid value.
-     *
-     * @default false
-     */
     error?: boolean | undefined;
-    /** The currently selected option object. */
     selectedOption?: T | undefined;
+    alignment?: DropdownAlignmentType | undefined;
+    dropdownZIndex?: number | undefined;
     /**
-     * Async function that fetches autocomplete suggestions for the typed input.
+     * The root element that contains the dropdown element. Defaults to the document body.
      *
-     * @param input - The current text entered by the user.
-     * @returns A promise resolving to an array of suggestion items.
+     * If the parent that contains the trigger element has a higher z-index than the dropdown,
+     * the dropdown may not be visible. Specify the parent element here instead
      */
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
+    /**
+     * Custom width for the dropdown in pixels. When specified, the dropdown will use this
+     * width instead of matching the input element width.
+     */
+    dropdownWidth?: string | undefined;
+    /** Async Function to populate options */
     fetchOptions: (input: string) => Promise<T[]>;
-    /**
-     * Extracts the value from a suggestion item.
-     *
-     * @param item - A suggestion item from `fetchOptions`.
-     */
-    valueExtractor?: (item: T) => V | undefined;
-    /**
-     * Extracts the display text shown in the dropdown list for a suggestion item.
-     *
-     * Return a `ListItemDisplayProps` to render a two-line list row with a subtitle.
-     *
-     * @param item - A suggestion item from `fetchOptions`.
-     */
+    /** Function to derive value from an item */
+    valueExtractor?: ((item: T) => V) | undefined;
+    /** Function to derive options display value from an item */
     listExtractor?: ((item: T) => string | ListItemDisplayProps) | undefined;
-    /**
-     * Derives the display string shown in the input field for the selected option.
-     *
-     * @param option - The currently selected item object.
-     */
+    /** Function to derive display value for selected option */
     displayValueExtractor?: ((option: T) => string) | undefined;
-    /**
-     * Called when the user selects a suggestion from the dropdown.
-     *
-     * @param option - The selected suggestion item.
-     * @param extractedValue - The value extracted by `valueExtractor`.
-     */
-    onSelectOption?: ((option: T, extractedValue: V) => void) | undefined;
+    /** Callback function when option is selected */
+    onSelectOption?:
+        | ((option: T | undefined, extractedValue: V | undefined) => void)
+        | undefined;
 }

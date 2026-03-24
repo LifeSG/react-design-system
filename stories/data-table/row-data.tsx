@@ -1,4 +1,3 @@
-import React from "react";
 import { Pill } from "../../src/pill";
 
 export const generateRows = (size: number) => {

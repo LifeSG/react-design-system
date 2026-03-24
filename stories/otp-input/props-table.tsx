@@ -1,6 +1,8 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+} from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -9,9 +11,9 @@ const DATA: ApiTableSectionProps[] = [
                 name: "actionButtonProps",
                 description: "The call to action custom button props",
                 propTypes: (
-                    <a href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-button--docs#component-api">
+                    <StorybookLink path="/docs/selection-and-input-button-base--docs#component-api">
                         ButtonProps
-                    </a>
+                    </StorybookLink>
                 ),
             },
             {
@@ -42,10 +44,22 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
+                name: "otpOnly",
+                description:
+                    "When enabled, OTP inputs will be rendered without the action button",
+                propTypes: ["boolean"],
+            },
+            {
                 name: "numOfInput",
                 description: "The number of input fields to display",
                 propTypes: ["number"],
                 mandatory: true,
+            },
+            {
+                name: "prefix",
+                description:
+                    "Optional prefix to be displayed. When the OTP is autofilled or pasted from clipboard, the prefix value and separator will be stripped",
+                propTypes: ["{ value: string; separator: string; };"],
             },
             {
                 name: "value",
@@ -61,12 +75,18 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "onCooldownStart",
                 description: "Called when the cooldown begins",
-                propTypes: ["(value: string) => void"],
+                propTypes: ["() => void"],
             },
             {
                 name: "onCooldownEnd",
                 description: "Called when the cooldown ends",
-                propTypes: ["(value: string) => void"],
+                propTypes: ["() => void"],
+            },
+            {
+                name: "onCountdownChange",
+                description:
+                    "Called when the countdown changes. Returns the remaining time in seconds",
+                propTypes: ["(remaining: number) => void"],
             },
         ],
     },

@@ -1,33 +1,18 @@
-import { TextLinkProps, TextProps } from "../text/types";
+import { TypographyLinkProps, TypographyProps } from "../typography";
 
-/**
- * Props for the NotificationBanner component - dismissible top-of-page banner.
- *
- * Renders a full-width banner with optional sticky positioning and a dismiss
- * button. Toggle visibility with the `visible` prop.
- *
- * @example
- * ```tsx
- * <NotificationBanner visible={showBanner} sticky dismissible onDismiss={() => setShowBanner(false)}>
- *     System maintenance on 1 Jan. <NotificationBanner.Link href="/info">Learn more</NotificationBanner.Link>
- * </NotificationBanner>
- * ```
- * @keywords announcement bar, system message, info bar, top banner, alert banner
- */
 export interface NotificationBannerProps
     extends React.HTMLAttributes<HTMLDivElement> {
-    /** The content to display inside the banner. */
-    children?: JSX.Element | JSX.Element[] | string | undefined;
-    /** When `true`, a dismiss (×) button is rendered. */
+    children?: React.ReactNode | undefined;
     dismissible?: boolean | undefined;
-    /** Controls the visibility of the banner. */
     visible?: boolean | undefined;
-    /** When `true`, the banner sticks to the top of the viewport on scroll. */
     sticky?: boolean | undefined;
-    /** Called when the user dismisses the banner. */
+    icon?: JSX.Element | undefined;
     onDismiss?: (() => void) | undefined;
-    /** The test identifier for the component. */
     "data-testid"?: string | undefined;
+    /** Specifies the maximum height of content, after which it is collapsed */
+    maxCollapsedHeight?: number | undefined;
+    /** Action button that will be displayed */
+    actionButton?: React.ButtonHTMLAttributes<HTMLButtonElement> | undefined;
 }
 
 export interface NotificationBannerWithForwardedRefProps
@@ -37,11 +22,11 @@ export interface NotificationBannerWithForwardedRefProps
 
 export type ContentType = "text" | "link";
 
-export interface ContentLinkAttributes extends TextLinkProps {}
-export interface ContentTextAttributes extends TextProps {}
+export interface ContentLinkAttributes extends TypographyLinkProps {}
+export interface ContentTextAttributes extends TypographyProps {}
 
 export interface NotificationContentAttributes {
     type: ContentType;
     content: string;
-    otherAttributes?: TextLinkProps | TextProps | undefined;
+    otherAttributes?: TypographyLinkProps | TypographyProps | undefined;
 }

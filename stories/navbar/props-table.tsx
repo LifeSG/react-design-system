@@ -1,6 +1,8 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+} from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -85,6 +87,12 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
+                name: "hideLinkIndicator",
+                description: "Specifies if selected link indicator is hidden",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "onBrandClick",
                 description: "Called when the brand icon is clicked",
                 propTypes: ["(type: BrandType) => void"],
@@ -112,6 +120,20 @@ const DATA: ApiTableSectionProps[] = [
                     "Specifies the layout type of the content in the navbar",
                 propTypes: ["stretch | default"],
                 defaultValue: "default",
+            },
+            {
+                name: "headerLabel",
+                description:
+                    "Specifies the accessible label for the main navigation header",
+                propTypes: ["string"],
+                defaultValue: "Main navigation menu",
+            },
+            {
+                name: "drawerLabel",
+                description:
+                    "Specifies the accessible label for the mobile navigation drawer",
+                propTypes: ["string"],
+                defaultValue: "Mobile navigation menu",
             },
         ],
     },
@@ -182,13 +204,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         This also inherits props from&nbsp;
-                        <a
-                            href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-text-introduction--docs#component-api"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            TextLinkProps
-                        </a>
+                        <StorybookLink path="/docs/core-typography--docs#component-api">
+                            TypographyLinkProps
+                        </StorybookLink>
                     </>
                 ),
             },
@@ -258,9 +276,9 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The props for the action button",
                 propTypes: (
                     <>
-                        <a href="https://designsystem.life.gov.sg/react/index.html?path=/docs/general-button--docs#component-api">
+                        <StorybookLink path="/docs/selection-and-input-button-base--docs#component-api">
                             <code>ButtonProps</code>
-                        </a>
+                        </StorybookLink>
                         &nbsp;
                         <code>NavbarButtonComponentProps</code>
                     </>
@@ -296,7 +314,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "primary",
                 description: "The primary branding",
                 propTypes: ["NavbarBrandingProps"],
-                defaultValue: "<LifeSG branding>",
+                defaultValue: "<theme service branding>",
             },
             {
                 name: "secondary",

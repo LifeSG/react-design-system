@@ -1,6 +1,6 @@
-import { TextLinkProps } from "../text/types";
+import { TypographyLinkProps } from "../typography";
 
-type DisclaimerTextLinkProps = Omit<TextLinkProps, "children">;
+type DisclaimerTextLinkProps = Omit<TypographyLinkProps, "children">;
 
 export interface DisclaimerLinks {
     privacy?: DisclaimerTextLinkProps | undefined;
@@ -8,7 +8,7 @@ export interface DisclaimerLinks {
     reportVulnerability?: DisclaimerTextLinkProps | undefined;
 }
 
-export interface FooterLinkProps<T = void> extends TextLinkProps {
+export interface FooterLinkProps<T = void> extends TypographyLinkProps {
     /** Any custom attributes you would like to pass to the link */
     "data-options"?: T | undefined;
     "data-testid"?: string | undefined;
@@ -34,6 +34,8 @@ export interface FooterProps<T = void> {
     links?: FooterLinkProps<T>[][] | undefined;
     /** Indicates if the download app icons are to be present */
     showDownloadAddon?: boolean | undefined;
+    /** Indicates if additional app resources should be displayed */
+    showResourceAddon?: boolean | undefined;
     /** Custom component. This overrides the logo, links and download section */
     children?: JSX.Element | JSX.Element[] | undefined;
     /** Custom disclaimer link attributes */
@@ -58,6 +60,7 @@ export interface FooterProps<T = void> {
     "data-testid"?: string | undefined;
     /** CSS class selector for the component. */
     className?: string | undefined;
+    hideLogo?: boolean | undefined;
 }
 
 // TODO: Update component and migration

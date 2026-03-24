@@ -1,18 +1,24 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import { Button, PopoverTrigger, PopoverV2 } from "../../src";
+import { useState } from "react";
+import { Button } from "src/button";
+import { Form } from "src/form";
+import { Modal } from "src/modal";
+import { PopoverTrigger, PopoverV2 } from "src/popover-v2";
+import { GridDecorator } from "../storybook-common";
+import { CustomPopover, POPOVER_CONTENT } from "./doc-elements";
 
 type Component = typeof PopoverV2;
+type TriggerComponent = typeof PopoverTrigger;
 
 const meta: Meta<Component> = {
-    title: "Modules/PopoverV2",
+    title: "Overlays/PopoverV2",
     component: PopoverV2,
-    tags: ["popover", "popover-v2", "floating", "tooltip", "overlay"],
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <PopoverTrigger popoverContent="This is the popover content">
                 <Button.Default>Click me</Button.Default>
@@ -22,7 +28,7 @@ export const Default: StoryObj<Component> = {
 };
 
 export const HoverInteraction: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <PopoverTrigger
                 popoverContent="This is the popover content"
@@ -35,7 +41,7 @@ export const HoverInteraction: StoryObj<Component> = {
 };
 
 export const DefaultStyling: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <PopoverTrigger
                 popoverContent={
@@ -63,15 +69,9 @@ export const DefaultStyling: StoryObj<Component> = {
 };
 
 export const Appearance: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-around",
-                    padding: "3rem 0",
-                }}
-            >
+            <>
                 <PopoverTrigger popoverContent="Remains aligned to the left of the screen when screen width is reduced">
                     <Button.Default>Left</Button.Default>
                 </PopoverTrigger>
@@ -88,12 +88,25 @@ export const Appearance: StoryObj<Component> = {
                 <PopoverTrigger popoverContent="Remains aligned to the right of the screen when screen width is reduced">
                     <Button.Default>Right</Button.Default>
                 </PopoverTrigger>
-            </div>
+            </>
         );
     },
     parameters: {
         layout: "fullscreen",
     },
+    decorators: [
+        (Story) => (
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    padding: "3rem 0",
+                }}
+            >
+                <Story />
+            </div>
+        ),
+    ],
 };
 
 export const Customisation: StoryObj<Component> = {
@@ -105,6 +118,158 @@ export const Customisation: StoryObj<Component> = {
                         A custom popover!
                     </div>
                 )}
+            >
+                <Button.Default>Click me</Button.Default>
+            </PopoverTrigger>
+        );
+    },
+};
+
+export const UsageInOverlay: StoryObj<Component> = {
+    render: () => {
+        const [show, setShow] = useState(false);
+        const [showNested, setShowNested] = useState(false);
+
+        return (
+            <>
+                <Button.Default
+                    onClick={() => {
+                        setShow(true);
+                        setTimeout(() => {
+                            setShowNested(true);
+                        }, 3000);
+                    }}
+                >
+                    Show modal
+                </Button.Default>
+                <Modal show={show} onOverlayClick={() => setShow(false)}>
+                    <PopoverTrigger popoverContent="I'm a tooltip!">
+                        <Button.Default>Toggle tooltip</Button.Default>
+                    </PopoverTrigger>
+                </Modal>
+                <Modal
+                    show={showNested}
+                    onOverlayClick={() => setShowNested(false)}
+                >
+                    <PopoverTrigger popoverContent="I'm a nested tooltip!">
+                        <Button.Default>Toggle nested tooltip</Button.Default>
+                    </PopoverTrigger>
+                </Modal>
+            </>
+        );
+    },
+};
+
+export const ResizeAndFlip: StoryObj<TriggerComponent> = {
+    args: {
+        popoverContent: POPOVER_CONTENT,
+        zIndex: 10,
+    },
+    render: (args) => {
+        return (
+            <>
+                <PopoverTrigger {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger enableResize={true} {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger
+                    enableResize={true}
+                    enableFlip={false}
+                    {...args}
+                >
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger enableFlip={false} {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+            </>
+        );
+    },
+    decorators: [
+        GridDecorator({
+            columns: 4,
+            columnHeaders: [
+                "Resize disabled, Flip enabled (Default)",
+                "Resize and Flip enabled",
+                "Resize enabled, Flip disabled",
+                "Resize and Flip disabled",
+            ],
+        }),
+    ],
+};
+
+export const ResizeAndFlipWithCustomContent: StoryObj<Component> = {
+    render: () => {
+        return (
+            <PopoverTrigger
+                enableResize
+                popoverContent={({ maxHeight, overflow }) => (
+                    <CustomPopover style={{ maxHeight, overflow }} />
+                )}
+            >
+                <Button.Default>Click me</Button.Default>
+            </PopoverTrigger>
+        );
+    },
+};
+
+export const Overflow: StoryObj<TriggerComponent> = {
+    args: {
+        enableResize: true,
+        popoverContent: POPOVER_CONTENT,
+        zIndex: 10,
+    },
+    render: (args) => {
+        return (
+            <>
+                <PopoverTrigger overflow="visible" {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger overflow="hidden" {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger overflow="clip" {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger overflow="scroll" {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+                <PopoverTrigger overflow="auto" {...args}>
+                    <Button.Default>Click me</Button.Default>
+                </PopoverTrigger>
+            </>
+        );
+    },
+    decorators: [
+        GridDecorator({
+            columns: 5,
+            columnHeaders: ["Visible", "Hidden", "Clip", "Scroll", "Auto"],
+        }),
+    ],
+};
+
+export const NestedOverlays: StoryObj<Component> = {
+    render: (_args) => {
+        const options = [
+            { label: "Option 1", value: "option1" },
+            { label: "Option 2", value: "option2" },
+            { label: "Option 3", value: "option3" },
+        ];
+
+        return (
+            <PopoverTrigger
+                popoverContent={() => (
+                    <Form.MultiSelect
+                        data-testid="multiselect-filter"
+                        options={options}
+                        listExtractor={(opt) => opt.label}
+                        valueExtractor={(opt) => opt.value}
+                        enableSearch
+                    />
+                )}
+                position="bottom-start"
             >
                 <Button.Default>Click me</Button.Default>
             </PopoverTrigger>

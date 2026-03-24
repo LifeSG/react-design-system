@@ -1,14 +1,4 @@
-**Changes**
-Description of changes...
+Please go to the `Preview` tab and select the appropriate sub-template:
 
-- [keep | delete] branch
-
-<!-- Remove if not required -->
-**Changelog entry**
-
-- [BREAKING | WARNING | remove if none] Description of change in `Component-name`
-
-**Additional information**
-
-- You may refer to this [ticket](url)
-- Any other information you would like to include
+-   **[Default](?expand=1&template=default.md)** - for general enhancements or changes
+-   **[V4 Component Migration](?expand=1&template=v4_component.md)** - for component-level Linaria migration in V4

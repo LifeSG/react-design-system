@@ -12,11 +12,12 @@ export const DropdownWrapper = ({
     onBlur,
     readOnly,
     className,
+    variant,
 }: DropdownSelectorProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const nodeRef = useRef<HTMLDivElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // EFFECTS
@@ -43,13 +44,13 @@ export const DropdownWrapper = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <Wrapper className={className}>
+        <Wrapper className={className} $variant={variant}>
             <ElementBoundary
                 ref={nodeRef}
-                error={error && !show}
-                disabled={disabled}
+                $error={error && !show}
+                $disabled={disabled}
                 $readOnly={readOnly}
-                expanded={show}
+                $expanded={show}
                 data-testid={testId}
             >
                 {children}

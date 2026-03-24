@@ -8,7 +8,7 @@
         "isolatedModules": true, // warns if code can’t be correctly interpreted by a single-file transpilation process
         "noEmit": true, // declares that tsc is only used for type checking and compiler to not output transpiled code
         /** Module settings **/
-        "moduleResolution": "node", // use Nodejs module resolution strategy (else uses classic TS strategy)
+        "moduleResolution": "bundler", // for use with modern bundler-based projects
         "baseUrl": "./", // for absolute file resolution
         "paths": {
             "@storybook/addon-docs/blocks": [
@@ -23,6 +23,7 @@
         "sourceMap": true, // generate a .js.map files for compilers to display original Typescript source
         "preserveConstEnums": true, // do not erase const enum declarations, allow enums to exist at runtime
         /** Compiler settings **/
+        "strict": true,
         "allowJs": true, // allow JS files to be imported
         "skipLibCheck": true, // type check code specifically referring to rather than all d.ts files for libs
         "forceConsistentCasingInFileNames": true, // issue error if file import is of different case
@@ -31,6 +32,12 @@
         "alwaysStrict": true, // ensures files are parsed in ECMAScript strict mode
         "noFallthroughCasesInSwitch": true // report error for fallthrough cases
     },
-    "include": ["src/**/*", "tests/**/*", "custom-types/*", "stories"],
+    "include": [
+        "src/**/*",
+        "tests/**/*",
+        "custom-types/*",
+        "stories",
+        "codemods"
+    ],
     "exclude": ["node_modules", "rollup.config.js"]
 }

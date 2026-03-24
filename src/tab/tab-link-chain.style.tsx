@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
 import { FadeWrapper } from "../shared/fade-wrapper";
-import { Text } from "../text";
-import { MediaQuery } from "../media";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -12,51 +10,114 @@ interface LabelStyleProps {
 }
 
 interface ChainStyleProps {
+    $fullWidthIndicatorLine?: boolean;
+}
+
+interface ChainItemStyleProps {
     $active?: boolean;
+    $width?: string;
+}
+
+interface ChainLinkStyleProps {
+    $reversed: boolean;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Chain = styled.ul`
+export const Chain = styled.ul<ChainStyleProps>`
     display: inline-flex;
     width: 100%;
     list-style-type: none;
-`;
-
-export const ChainItem = styled.li<ChainStyleProps>`
-    display: flex;
-    flex-shrink: 0;
-    border-bottom: 4px solid ${Color.Neutral[5]};
 
     ${(props) => {
-        if (props.$active) {
+        if (props.$fullWidthIndicatorLine) {
             return css`
-                border-bottom: 4px solid ${Color.Primary};
+                &::after {
+                    content: "";
+                    height: inherit;
+                    flex-grow: 1;
+                    /* follows the border in ChainItem */
+                    border-bottom: ${Border["width-040"]} ${Border.solid}
+                        ${Colour.border};
+                }
+            `;
+        }
+    }}
+`;
+
+export const ChainItem = styled.li<ChainItemStyleProps>`
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+    border-bottom: ${Border["width-040"]} ${Border.solid} ${Colour.border};
+
+    ${(props) => {
+        if (props.$width) {
+            return css`
+                width: ${props.$width};
             `;
         }
     }}
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${(props) => {
+        if (props.$active) {
+            return css`
+                border-color: ${Colour["border-primary"]};
+            `;
+        }
+    }}
+
+    ${MediaQuery.MaxWidth.sm} {
         flex: 1;
         justify-content: center;
     }
 `;
 
-export const ChainLink = styled.button`
-    position: relative;
-    padding: 1rem 1rem 1.25rem;
-    border: none;
-    background: none;
-    cursor: pointer;
+/* keep this separate to contain the ts-styled error */
+const padding = css`
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-16"]}
+        ${Spacing["spacing-20"]};
 `;
 
-export const Label = styled(Text.Body)<LabelStyleProps>`
+const flexRow = css`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+
+export const ChainLink = styled.div<ChainLinkStyleProps>`
+    /* position: relative; */
+    ${flexRow}
+    flex-direction: ${(props) => (props.$reversed ? "row-reverse" : "row")};
+    gap: 0.5rem;
+    ${padding}
+    cursor: pointer;
+    width: 100%;
+    justify-content: center;
+
+    &:has(button:focus-visible) {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: -2px;
+        border-radius: ${Radius.sm};
+    }
+`;
+
+export const LabelContainer = styled.div`
+    position: relative;
+`;
+
+const buttonBase = css`
+    ${flexRow}
+    border: none;
+    background: none;
+`;
+
+export const Label = styled.div<LabelStyleProps>`
+    ${buttonBase}
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, calc(-50% - 0.125rem)); // Based on testing
-    color: ${Color.Neutral[3]};
+    ${Font["body-baseline-regular"]}
+    color: ${Colour["text-subtler"]};
     opacity: 1;
 
     ${(props) => {
@@ -68,9 +129,13 @@ export const Label = styled(Text.Body)<LabelStyleProps>`
     }}
 `;
 
-export const BoldLabel = styled(Text.Body)<LabelStyleProps>`
-    color: ${Color.Primary};
+export const BoldLabel = styled.button<LabelStyleProps>`
+    ${buttonBase}
+    ${Font["body-baseline-semibold"]}
+    color: ${Colour["text-primary"]};
     opacity: 0;
+    outline: none;
+
     ${(props) => {
         if (props.$active) {
             return css`
@@ -83,6 +148,6 @@ export const BoldLabel = styled(Text.Body)<LabelStyleProps>`
 export const CustomFadeWrapper = styled(FadeWrapper)`
     [data-id="left-fade-indicator-button"],
     [data-id="right-fade-indicator-button"] {
-        margin-bottom: 4px;
+        margin-bottom: ${Spacing["spacing-4"]};
     }
 `;

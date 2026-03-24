@@ -51,9 +51,3 @@ export interface FeedbackRatingProps {
     /** Called when the user clicks the submit button. */
     onSubmit: () => void;
 }
-
-export interface FeedbackRatingStarsContainerProps {
-    description: string;
-    rating: number;
-    onRatingChange: (value: number) => void;
-}

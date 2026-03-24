@@ -4,15 +4,24 @@
  *
  */
 
-import { Children, cloneElement } from "react";
+import { Children, ComponentType, cloneElement, useState } from "react";
+import { SimpleIdGenerator } from "../util";
 import { FormLabel } from "./form-label";
-import { ErrorMessage } from "./form-label.style";
-import { ColDivContainer, Container } from "./form-wrapper.style";
+import {
+    ErrorIcon,
+    ErrorMessage,
+    ErrorMessageContainer,
+} from "./form-label.style";
+import {
+    ColDivContainer,
+    Container,
+    V2_ColDivContainer,
+} from "./form-wrapper.style";
 import { FormElementLayoutType, FormWrapperProps } from "./types";
 
 export const FormWrapper = ({
     label,
-    errorMessage,
+    errorMessage: eRaw,
     id,
     disabled,
     children,
@@ -20,27 +29,62 @@ export const FormWrapper = ({
     mobileCols,
     tabletCols,
     desktopCols,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
+    "data-testid": testId,
     "data-error-testid": errorTestId,
 }: FormWrapperProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
     const updatedLayoutType = getLayoutType();
+    const errorMessage = typeof eRaw === "string" ? eRaw.trim() : eRaw;
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const labelId = `${id ?? internalId}-label`; // matches FormLabel
+    const subtitleId = `${id ?? internalId}-label-subtitle`; // matches FormLabel
+    const errorMessageId = `${id ?? internalId}-error-message`;
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
 
-    const getErrorTestMessageId = (): string => {
-        return errorTestId || (id ? `${id}-error-message` : "error-message");
+    const isInvalidState = (): boolean => {
+        return !!eRaw;
     };
 
-    const isInvalidState = (): boolean => {
-        return !!errorMessage;
+    const hasSubtitleLabel = (): boolean => {
+        return typeof label === "object" && !!label?.subtitle;
+    };
+
+    const getAriaDescribedBy = (): string | undefined => {
+        return (
+            [
+                errorMessage ? errorMessageId : undefined,
+                hasSubtitleLabel() ? subtitleId : undefined,
+            ]
+                .filter(Boolean)
+                .join(" ") || undefined
+        );
     };
 
     function getLayoutType(): FormElementLayoutType {
         if (!layoutType && (mobileCols || tabletCols || desktopCols)) {
+            return "v2-grid";
+        } else if (
+            !layoutType &&
+            (xxsCols ||
+                xsCols ||
+                smCols ||
+                mdCols ||
+                lgCols ||
+                xlCols ||
+                xxlCols)
+        ) {
             return "grid";
         } else if (!layoutType) {
             return "flex";
@@ -51,14 +95,37 @@ export const FormWrapper = ({
 
     const getContainerLayoutProps = (layoutType: FormElementLayoutType) => {
         switch (layoutType) {
-            case "grid":
+            case "v2-grid":
                 return {
                     mobileCols,
                     tabletCols,
                     desktopCols,
                 };
+            case "grid":
+                return {
+                    xxsCols,
+                    xsCols,
+                    smCols,
+                    mdCols,
+                    lgCols,
+                    xlCols,
+                    xxlCols,
+                };
             case "flex":
                 return undefined;
+        }
+    };
+
+    const getContainerComponent = (
+        layoutType: FormElementLayoutType
+    ): ComponentType => {
+        switch (layoutType) {
+            case "v2-grid":
+                return V2_ColDivContainer;
+            case "grid":
+                return ColDivContainer;
+            case "flex":
+                return Container;
         }
     };
 
@@ -71,7 +138,10 @@ export const FormWrapper = ({
             return (
                 <FormLabel
                     htmlFor={`${id}-base`}
+                    // FIXME: kept for backwards-compatibility
+                    // in most cases data-testid should be separate from id
                     data-testid={id ? `${id}-label` : "form-label"}
+                    id={labelId}
                     disabled={disabled}
                 >
                     {label}
@@ -82,6 +152,7 @@ export const FormWrapper = ({
             <FormLabel
                 htmlFor={`${id}-base`}
                 data-testid={id ? `${id}-label` : "form-label"}
+                id={labelId}
                 disabled={disabled}
                 {...label}
             />
@@ -91,29 +162,39 @@ export const FormWrapper = ({
     const renderChildren = (): JSX.Element | JSX.Element[] => {
         const ariaState = {
             "aria-invalid": isInvalidState(),
-            "aria-describedby": isInvalidState() && getErrorTestMessageId(),
+            "aria-describedby": getAriaDescribedBy(),
+            "aria-labelledby": label ? labelId : undefined,
         };
         return Children.map(children, (child) =>
             cloneElement(child, ariaState)
         );
     };
 
-    const ContainerComponent =
-        updatedLayoutType === "grid" ? ColDivContainer : Container;
+    const ContainerComponent = getContainerComponent(updatedLayoutType);
 
     return (
-        <ContainerComponent {...getContainerLayoutProps(updatedLayoutType)}>
+        <ContainerComponent
+            data-testid={testId}
+            {...getContainerLayoutProps(updatedLayoutType)}
+        >
             {label && renderFormLabel()}
             {renderChildren()}
             {errorMessage && (
-                <ErrorMessage
-                    id={getErrorTestMessageId()}
-                    weight="semibold"
-                    tabIndex={0}
-                    data-testid={getErrorTestMessageId()}
-                >
-                    {errorMessage}
-                </ErrorMessage>
+                <ErrorMessageContainer>
+                    <ErrorIcon aria-hidden />
+                    <ErrorMessage
+                        id={errorMessageId}
+                        tabIndex={0}
+                        data-testid={
+                            errorTestId ??
+                            // FIXME: kept for backwards-compatibility
+                            // in most cases data-testid should be separate from id
+                            (id ? `${id}-error-message` : "error-message")
+                        }
+                    >
+                        {errorMessage}
+                    </ErrorMessage>
+                </ErrorMessageContainer>
             )}
         </ContainerComponent>
     );

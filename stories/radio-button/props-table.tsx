@@ -1,13 +1,17 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "../storybook-common/api-table";
 
 const DATA: ApiTableSectionProps[] = [
     {
         attributes: [
             {
+                name: "displaySize",
+                description: "The display size of the component",
+                propTypes: [`"default"`, `"small"`],
+                defaultValue: `"default"`,
+            },
+            {
                 name: "checked",
-                description: "The selection state of the component",
+                description: "The selected state of the component",
                 propTypes: ["boolean"],
             },
             {

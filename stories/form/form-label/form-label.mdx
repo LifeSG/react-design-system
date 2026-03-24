@@ -1,13 +1,12 @@
-import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as FormLabelStories from "./form-label.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormLabelStories} />
 
-<Title>Form.Label</Title>
+# Form.Label
 
-<Secondary>Overview</Secondary>
+## Overview
 
 This component is also available for use individually if you require to construct customised layouts.
 
@@ -17,24 +16,18 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormLabelStories.Default} />
 
-<Heading3>With addon</Heading3>
+## Real world usage
 
-Form labels come with an optional addon that you can use by specifying the `addon` prop.
+Given its standalone nature, the `Form.Label` can be used in any layouts or structures.
 
-<Canvas of={FormLabelStories.WithAddon} />
+<Canvas of={FormLabelStories.RealWorldUsage} />
 
-<Heading3>With subtitle</Heading3>
-
-Form labels come with an optional subtitle that you can use by specifying the `subtitle` prop.
-
-<Canvas of={FormLabelStories.WithSubtitle} />
-
-<Heading3>With custom child elements</Heading3>
+## With custom child elements
 
 You can also add other HTML elements within the form label.
 
 <Canvas of={FormLabelStories.NestedChildren} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

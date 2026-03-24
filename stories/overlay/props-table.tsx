@@ -1,68 +1,97 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import {
+    DefaultCol,
+    DescriptionCol,
+    NameCol,
+    Table,
+} from "../storybook-common/api-table";
 
-const DATA: ApiTableSectionProps[] = [
-    {
-        attributes: [
-            {
-                name: "show",
-                mandatory: true,
-                description: "Toggles the visibility of the Overlay",
-                propTypes: ["boolean"],
-            },
-            {
-                name: "id",
-                description: "The unique identifier of the Overlay",
-                propTypes: ["string"],
-            },
-            {
-                name: "rootId",
-                description:
-                    "The identifier of the element to inject the Overlay into. " +
-                    "Not specifying the root element will make body the root element.",
-                propTypes: ["string"],
-            },
-            {
-                name: "backgroundOpacity",
-                description: "The opacity value of the Overlay",
-                propTypes: ["number"],
-                defaultValue: "0.8",
-            },
-            {
-                name: "backgroundBlur",
-                description: "Specifies if the background should be blurred",
-                propTypes: ["boolean"],
-                defaultValue: "true",
-            },
-            {
-                name: "disableTransition",
-                description:
-                    "Toggle the animation of the appearance and dismissal",
-                propTypes: ["boolean"],
-                defaultValue: "false",
-            },
-            {
-                name: "zIndex",
-                description:
-                    "Allows a custom z-index to be specified (useful for overlay stacking)",
-                propTypes: ["number"],
-            },
-            {
-                name: "enableOverlayClick",
-                description:
-                    "Toggles whether child contents can be dismissed by clicking on the overlay",
-                propTypes: ["boolean"],
-            },
-            {
-                name: "onOverlayClick",
-                description:
-                    "The callback when the overlay is being clicked on. " +
-                    "Will be triggered if enableOverlayClick is specified to true",
-                propTypes: ["() => void"],
-            },
-        ],
-    },
-];
-
-export const PropsTable = () => <ApiTable sections={DATA} />;
+export const PropsTable = () => (
+    <Table>
+        <tr>
+            <NameCol mandatory>show</NameCol>
+            <DescriptionCol propTypes={["boolean"]}>
+                <>
+                    Toggles the visibility of the <code>Overlay</code>
+                </>
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
+        <tr>
+            <NameCol>id</NameCol>
+            <DescriptionCol propTypes={["string"]}>
+                <>
+                    The unique identifier of the <code>Overlay</code>
+                </>
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
+        <tr>
+            <NameCol>rootId</NameCol>
+            <DescriptionCol propTypes={["string"]}>
+                <>
+                    The identifier of the element to inject the{" "}
+                    <code>Overlay</code> into. Not specifying the root element
+                    will make <code>{`<body>`}</code> the root element.
+                </>
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
+        <tr>
+            <NameCol>backgroundOpacity (deprecated)</NameCol>
+            <DescriptionCol propTypes={["number"]}>
+                <>
+                    The opacity value of the <code>Overlay</code>
+                    <br />
+                    <strong>Note:</strong> This attribute has no effect and will
+                    be removed in a future version
+                </>
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
+        <tr>
+            <NameCol>backgroundBlur</NameCol>
+            <DescriptionCol propTypes={["boolean"]}>
+                Specifies if the background should be blurred
+            </DescriptionCol>
+            <DefaultCol>{["true"]}</DefaultCol>
+        </tr>
+        <tr>
+            <NameCol>disableTransition</NameCol>
+            <DescriptionCol propTypes={["boolean"]}>
+                Toggle the animation of the appearance and dismissal
+            </DescriptionCol>
+            <DefaultCol>{["false"]}</DefaultCol>
+        </tr>
+        <tr>
+            <NameCol>zIndex</NameCol>
+            <DescriptionCol propTypes={["number"]}>
+                <>
+                    Allows a custom <code>z-index</code> to be specified (useful
+                    for overlay stacking)
+                </>
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
+        <tr>
+            <NameCol>enableOverlayClick</NameCol>
+            <DescriptionCol propTypes={["boolean"]}>
+                <>
+                    Toggles whether child contents can be dismissed by clicking
+                    on the overlay
+                </>
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
+        <tr>
+            <NameCol>onOverlayClick</NameCol>
+            <DescriptionCol propTypes={["() => void"]}>
+                <>
+                    The callback when the overlay is being clicked on. Will be
+                    triggered if <code>enableOverlayClick</code>
+                    is specified to <code>true</code>
+                </>
+            </DescriptionCol>
+            <DefaultCol />
+        </tr>
+    </Table>
+);

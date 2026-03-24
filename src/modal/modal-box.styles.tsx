@@ -1,39 +1,48 @@
-import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
 import { ClickableIcon } from "../shared/clickable-icon";
+import { Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
 
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+interface CloseButtonProps {
+    $insetTop?: string | undefined;
+    $insetRight?: string | undefined;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
 export const Box = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
     width: 40rem;
     max-height: 70%;
-    background: ${Color.Neutral[8]};
-    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.45);
-    border-radius: 0.75rem;
+    background: ${Colour.bg};
+    box-shadow: ${Shadow["lg-strong"]};
+    border-radius: ${Radius["lg"]};
     overflow: hidden;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.md} {
         width: 90%;
         max-height: 70%;
     }
 `;
 
-export const CloseButton = styled(ClickableIcon)`
+export const CloseButton = styled(ClickableIcon)<CloseButtonProps>`
     position: absolute;
-    top: 0;
-    right: 0;
-    padding: 1rem 0.75rem;
-    border-top-right-radius: 0.75rem;
-    :focus-visible {
-        outline: 4px solid ${Color.Accent.Light[1]};
-    }
-`;
+    top: var(--close-button-top-inset, ${Spacing["spacing-16"]});
+    right: var(--close-button-right-inset, ${Spacing["spacing-16"]});
+    padding: 0;
+    color: ${Colour.icon};
 
-export const CloseIcon = styled(CrossIcon)`
-    height: 1.5rem;
-    width: 1.5rem;
-    color: ${Color.Neutral[3]};
+    svg {
+        height: 2rem;
+        width: 2rem;
+    }
+
+    ${MediaQuery.MaxWidth.sm} {
+        right: var(--close-button-right-inset, ${Spacing["spacing-20"]});
+    }
 `;

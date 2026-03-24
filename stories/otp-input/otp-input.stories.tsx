@@ -1,78 +1,80 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import { useEffect, useState } from "react";
-import { OtpInput } from "src/otp-input";
-import { StoryContainer } from "../storybook-common";
+import { useEffect, useRef, useState } from "react";
+import { OtpInput, OtpInputRef } from "src/otp-input";
+import { StoryDecorator } from "stories/storybook-common";
+import { CustomContent } from "./doc-elements";
 
 type Component = typeof OtpInput;
 
 const meta: Meta<Component> = {
-    title: "Modules/OtpInput",
+    title: "Selection and input/OtpInput",
     component: OtpInput,
-    tags: [
-        "OTP",
-        "one-time password",
-        "verification code",
-        "MFA",
-        "authentication",
-    ],
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
-        return (
-            <StoryContainer>
-                <OtpInput numOfInput={6} cooldownDuration={60} />
-            </StoryContainer>
-        );
+    render: (_args) => {
+        return <OtpInput numOfInput={6} cooldownDuration={60} />;
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const WithErrorMessage: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <OtpInput
-                    numOfInput={6}
-                    cooldownDuration={60}
-                    errorMessage="Invalid otp. Try again."
-                />
-            </StoryContainer>
+            <OtpInput
+                numOfInput={6}
+                cooldownDuration={60}
+                errorMessage="Invalid otp. Try again."
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const WithPrefix: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <OtpInput
+                numOfInput={6}
+                cooldownDuration={60}
+                prefix={{ value: "WGS", separator: "-" }}
+            />
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const WithCustomActionButton: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const numOfInput = 4;
         const [isInCooldown, setIsInCooldown] = useState(true);
         const [otpValues, setOtpValues] = useState(
             new Array(numOfInput).fill("")
         );
         return (
-            <StoryContainer>
-                <OtpInput
-                    numOfInput={numOfInput}
-                    value={otpValues}
-                    cooldownDuration={5}
-                    onCooldownStart={() => setIsInCooldown(true)}
-                    onCooldownEnd={() => setIsInCooldown(false)}
-                    onChange={(value) => setOtpValues(value)}
-                    actionButtonProps={{
-                        styleType: "light",
-                        children: isInCooldown
-                            ? "Cooling down..."
-                            : "My custom button label",
-                    }}
-                />
-            </StoryContainer>
+            <OtpInput
+                numOfInput={numOfInput}
+                value={otpValues}
+                cooldownDuration={5}
+                onCooldownStart={() => setIsInCooldown(true)}
+                onCooldownEnd={() => setIsInCooldown(false)}
+                onChange={(value) => setOtpValues(value)}
+                actionButtonProps={{
+                    styleType: "light",
+                    children: isInCooldown
+                        ? "Cooling down..."
+                        : "My custom button label",
+                }}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const WithCustomActionButtonSelfHandle: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [isInCooldown, setIsInCooldown] = useState(true);
         useEffect(() => {
             if (isInCooldown) {
@@ -82,22 +84,47 @@ export const WithCustomActionButtonSelfHandle: StoryObj<Component> = {
             }
         }, [isInCooldown]);
         return (
-            <StoryContainer>
-                <OtpInput
-                    numOfInput={6}
-                    cooldownDuration={0}
-                    actionButtonProps={{
-                        styleType: "light",
-                        children: isInCooldown
-                            ? "Cooling down..."
-                            : "My custom button label",
-                        disabled: isInCooldown,
-                        onClick: () => {
-                            setIsInCooldown(true);
-                        },
-                    }}
-                />
-            </StoryContainer>
+            <OtpInput
+                numOfInput={6}
+                cooldownDuration={0}
+                actionButtonProps={{
+                    styleType: "light",
+                    children: isInCooldown
+                        ? "Cooling down..."
+                        : "My custom button label",
+                    disabled: isInCooldown,
+                    onClick: () => {
+                        setIsInCooldown(true);
+                    },
+                }}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const WithoutButton: StoryObj<Component> = {
+    render: (_args) => {
+        const ref = useRef<OtpInputRef>(null);
+        const [countdown, setCountdown] = useState(5);
+
+        return (
+            <>
+                <OtpInput
+                    ref={ref}
+                    numOfInput={6}
+                    cooldownDuration={5}
+                    otpOnly
+                    onCooldownEnd={() => setCountdown(0)}
+                    onCooldownStart={() => setCountdown(5)}
+                    onCountdownChange={(remaining) => setCountdown(remaining)}
+                />
+                <CustomContent
+                    onClick={() => ref.current?.startCooldown()}
+                    countdown={countdown}
+                />
+            </>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };

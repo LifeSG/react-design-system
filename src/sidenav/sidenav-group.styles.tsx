@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Color } from "../color";
+import { Colour } from "../theme";
 
 //=============================================================================
 // STYLING
@@ -9,11 +9,12 @@ export const Container = styled.ul`
     flex-direction: column;
     align-items: center;
     width: 100%;
+    list-style: none;
 `;
 
-export const Divider = styled.div`
-    margin: 0.5rem 0;
+export const Divider = styled.li`
+    margin-top: 1rem;
     width: 6.5rem;
     height: 1px;
-    background-color: ${Color.Neutral[5]};
+    background-color: ${Colour.border};
 `;

@@ -1,27 +1,27 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { useState } from "react";
 import { Alert } from "src/alert";
+import { BoxContainer } from "src/box-container";
 import { Button } from "src/button";
-import { Text } from "src/text";
+import { V2_Text } from "src/v2_text";
+import { V2_TextList } from "src/v2_text-list";
 import {
     UneditableSection,
-    UneditableSectionItemMaskState,
     UneditableSectionItemProps,
 } from "src/uneditable-section";
 import { SAMPLE_ITEMS } from "./doc-elements";
-import { useState } from "react";
 
 type Component = typeof UneditableSection;
 
 const meta: Meta<Component> = {
-    title: "Modules/UneditableSection",
+    title: "Content/UneditableSection",
     component: UneditableSection,
-    tags: ["readonly", "display", "summary", "read-only", "fields"],
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <UneditableSection
                 title="Your personal information"
@@ -33,7 +33,7 @@ export const Default: StoryObj<Component> = {
 };
 
 export const NoBackground: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <UneditableSection
                 title="Your personal information"
@@ -46,7 +46,7 @@ export const NoBackground: StoryObj<Component> = {
 };
 
 export const WithMaskedItems: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const ITEMS: UneditableSectionItemProps[] = [
             {
                 label: "Plain value",
@@ -57,6 +57,20 @@ export const WithMaskedItems: StoryObj<Component> = {
                 label: "With mask range",
                 value: "S1234567D",
                 maskRange: [1, 4],
+                maskState: "masked",
+                displayWidth: "half",
+            },
+            {
+                label: "With mask range (start only)",
+                value: "S1234567D",
+                maskRange: [4, 9999],
+                maskState: "masked",
+                displayWidth: "half",
+            },
+            {
+                label: "With mask range (end only)",
+                value: "S1234567D",
+                maskRange: [0, 4],
                 maskState: "masked",
                 displayWidth: "half",
             },
@@ -102,7 +116,7 @@ export const WithMaskedItems: StoryObj<Component> = {
 };
 
 export const ControlledMaskUnmask: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [item, setItem] = useState<UneditableSectionItemProps>({
             id: "item1",
             label: "This has controlled masking/unmasking of values",
@@ -140,7 +154,7 @@ export const ControlledMaskUnmask: StoryObj<Component> = {
 };
 
 export const MaskUnmaskWithLoading: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [item, setItem] = useState<UneditableSectionItemProps>({
             id: "item1",
             label: "This has a loading display when unmasking",
@@ -189,7 +203,7 @@ export const MaskUnmaskWithLoading: StoryObj<Component> = {
 };
 
 export const MaskUnmaskWithError: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [item, setItem] = useState<UneditableSectionItemProps>({
             id: "item1",
             label: "This has an error display when unmasking",
@@ -237,8 +251,33 @@ export const MaskUnmaskWithError: StoryObj<Component> = {
     },
 };
 
+export const MaskUnmaskWithAlert: StoryObj<Component> = {
+    render: (_args) => {
+        const ITEMS: UneditableSectionItemProps[] = [
+            {
+                id: "item1",
+                label: "This has an error display when unmasking",
+                value: "S1••••67D",
+                maskState: "masked",
+                maskLoadingState: "fail",
+                alert: {
+                    type: "warning",
+                    children: "This is an alert message",
+                },
+            },
+        ];
+
+        return (
+            <UneditableSection
+                title="Your personal information"
+                items={ITEMS}
+            />
+        );
+    },
+};
+
 export const WithCustomContent: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <UneditableSection
                 title="Your personal information"
@@ -265,7 +304,7 @@ export const WithCustomContent: StoryObj<Component> = {
 };
 
 export const ComposingFromScratch: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <UneditableSection>
                 <div
@@ -283,7 +322,7 @@ export const ComposingFromScratch: StoryObj<Component> = {
                             marginBottom: "2rem",
                         }}
                     >
-                        <Text.H3>My custom content</Text.H3>
+                        <V2_Text.H3>My custom content</V2_Text.H3>
                         <Button.Default styleType="light">
                             Pull latest records
                         </Button.Default>
@@ -294,12 +333,12 @@ export const ComposingFromScratch: StoryObj<Component> = {
                             users.
                         </Alert>
                     </div>
-                    <Text.Body style={{ marginBottom: "2rem" }}>
+                    <V2_Text.Body style={{ marginBottom: "2rem" }}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Etiam pellentesque enim eu neque gravida, ut pulvinar
                         magna tristique. Aenean sed malesuada arcu. Integer
                         convallis dapibus suscipit.
-                    </Text.Body>
+                    </V2_Text.Body>
                     <UneditableSection.ItemSection>
                         <UneditableSection.Item
                             label="Name (as in NRIC or passport)"
@@ -316,17 +355,54 @@ export const ComposingFromScratch: StoryObj<Component> = {
                             value="Block 287, #05-11, Tampines street 22, Singapore 534788"
                         />
                     </UneditableSection.ItemSection>
-                    <Text.H3 style={{ marginBottom: "2rem" }}>
+                    <V2_Text.H3 style={{ marginBottom: "2rem" }}>
                         Another section
-                    </Text.H3>
+                    </V2_Text.H3>
                     <UneditableSection.ItemSection>
                         <UneditableSection.Item
                             label="Spoken languages"
-                            value="English, Mandarin, French"
+                            value={
+                                <V2_TextList.Ul>
+                                    <li>English</li>
+                                    <li>Mandarin</li>
+                                    <li>French</li>
+                                </V2_TextList.Ul>
+                            }
                         />
                     </UneditableSection.ItemSection>
                 </div>
             </UneditableSection>
+        );
+    },
+};
+
+export const Stretch: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <UneditableSection
+                title="Your personal information"
+                description="Retrieved on 27 Jun 2023"
+                items={SAMPLE_ITEMS}
+                stretch
+            />
+        );
+    },
+};
+
+export const FullWidth: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <BoxContainer title="Review" collapsible={false}>
+                <div style={{ padding: 32 }}>
+                    <UneditableSection
+                        title="Your personal information"
+                        description="Retrieved on 27 Jun 2023"
+                        items={SAMPLE_ITEMS}
+                        background={false}
+                        fullWidth
+                    />
+                </div>
+            </BoxContainer>
         );
     },
 };

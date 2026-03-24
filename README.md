@@ -8,6 +8,18 @@ A React component library for LifeSG and BookingSG related products.
 npm i @lifesg/react-design-system
 ```
 
+### Peer dependencies
+
+```json
+{
+    "@floating-ui/react": ">=0.26.23 <1.0.0",
+    "@lifesg/react-icons": "^1.5.0",
+    "react": "^17.0.2 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^17.0.2 || ^18.0.0 || ^19.0.0",
+    "styled-components": "^6.1.19"
+}
+```
+
 <br />
 
 ## Getting Started

@@ -1,6 +1,4 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -34,6 +32,7 @@ const DATA: ApiTableSectionProps[] = [
                     `"yellow"`,
                     `"red"`,
                     `"blue"`,
+                    `"primary"`,
                 ],
                 defaultValue: `"black"`,
             },
@@ -51,6 +50,13 @@ const DATA: ApiTableSectionProps[] = [
                 name: "icon",
                 description: "A component to be displayed as the icon",
                 propTypes: ["JSX.Element"],
+            },
+            {
+                name: "iconPosition",
+                description:
+                    "The position of the icon relative to the label text",
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"left"`,
             },
             {
                 name: "interactive",

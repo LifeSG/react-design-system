@@ -3,9 +3,17 @@ import { useState } from "react";
 import { Form } from "src/form";
 import { InputNestedSelect } from "src/input-nested-select";
 import { Layout } from "src/layout";
-import { StoryContainer } from "../../storybook-common";
-import { Container } from "../shared-doc-elements";
-import { options } from "./nested-data-list";
+import {
+    FullWidthStoryDecorator,
+    StoryDecorator,
+} from "stories/storybook-common";
+import {
+    bigOptions,
+    longLabelOptions,
+    options,
+    searchOptions,
+    twoTierOptions,
+} from "./nested-data-list";
 
 type Component = typeof Form.NestedSelect;
 type StandaloneComponent = typeof InputNestedSelect;
@@ -18,121 +26,190 @@ const meta: Meta<Component> = {
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
-        const [selectedKeyPath, setSelectedKeyPath] = useState([
-            "999",
-            "820",
-            "10001",
-        ]);
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.NestedSelect
-                        label="This is the nested select field"
-                        options={options}
-                    />
-                    <Form.NestedSelect
-                        label="This is prefilled with a selected option"
-                        options={options}
-                        selectedKeyPath={selectedKeyPath}
-                        onSelectOption={(keyPath, value) => {
-                            setSelectedKeyPath(keyPath);
-                        }}
-                    />
-                    <Form.NestedSelect
-                        label="This allows selection of categories"
-                        options={options}
-                        selectableCategory={true}
-                    />
-                    <Form.NestedSelect
-                        label="This is the disabled state"
-                        options={options}
-                        disabled
-                    />
-                    <Form.NestedSelect
-                        label="This is the readOnly state"
-                        options={options}
-                        readOnly
-                    />
-                    <Form.NestedSelect
-                        label="This is the error state"
-                        options={options}
-                        errorMessage="Selection is required"
-                    />
-                </Container>
-            </StoryContainer>
+            <>
+                <Form.NestedSelect
+                    label="This is the nested select field"
+                    options={options}
+                />
+                <Form.NestedSelect
+                    label="This contains a 2 tier option"
+                    options={twoTierOptions}
+                />
+                <Form.NestedSelect
+                    label="This is the disabled state"
+                    options={options}
+                    disabled
+                />
+                <Form.NestedSelect
+                    label="This is the readonly state"
+                    options={options}
+                    readOnly
+                />
+                <Form.NestedSelect
+                    label="This is the error state"
+                    options={options}
+                    errorMessage="Selection is required"
+                />
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const SpecifyingMode: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
+        const [selectedKeyPath, setSelectedKeyPath] = useState(["2", "22"]);
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.NestedSelect
-                        label="With all (sub)categories expanded "
-                        options={options}
-                        mode="expand"
-                    />
-                    <Form.NestedSelect
-                        label="With all (sub)categories collapsed "
-                        options={options}
-                        mode="collapse"
-                    />
-                </Container>
-            </StoryContainer>
+            <>
+                <Form.NestedSelect
+                    label="The selected option is expanded by default"
+                    options={options}
+                    selectedKeyPath={selectedKeyPath}
+                    onSelectOption={(keyPath) => {
+                        setSelectedKeyPath(keyPath);
+                    }}
+                />
+                <Form.NestedSelect
+                    label="With all (sub)categories expanded "
+                    options={options}
+                    mode="expand"
+                />
+                <Form.NestedSelect
+                    label="With all (sub)categories collapsed "
+                    options={options}
+                    mode="collapse"
+                />
+            </>
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
-export const WithSearch: StoryObj<Component> = {
-    render: () => {
+export const SelectableCategory: StoryObj<Component> = {
+    render: (_args) => {
         return (
-            <StoryContainer>
-                <Container>
-                    <Form.NestedSelect
-                        label="This has searchable options"
-                        options={options}
-                        enableSearch
-                    />
-                </Container>
-            </StoryContainer>
+            <Form.NestedSelect
+                label="This allows selection of categories"
+                options={options}
+                selectableCategory={true}
+            />
         );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+// NOTE: SB freezes with nested JSX, workaround is to declare outside of the CSF
+const _WithSearch = (
+    <>
+        <Form.NestedSelect
+            label="This has searchable options"
+            options={searchOptions}
+            enableSearch
+        />
+        <Form.NestedSelect
+            label="Custom label when no results are found"
+            options={searchOptions}
+            enableSearch
+            customLabels={{
+                noResultsLabel: "Custom no result found.",
+            }}
+        />
+        <Form.NestedSelect
+            label="Custom description when no results are found"
+            options={searchOptions}
+            enableSearch
+            customLabels={{
+                noResultsDescription: (
+                    <>
+                        Display additional information here when no results are
+                        found. There is default styling for commonly used markup
+                        such as <strong>bold text</strong> or <a>links</a>.
+                    </>
+                ),
+            }}
+        />
+    </>
+);
+
+export const WithSearch: StoryObj<Component> = {
+    render: (_args) => {
+        return _WithSearch;
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const Virtualisation: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Form.NestedSelect
+                label="The options are rendered using virtualisation"
+                options={bigOptions}
+                enableSearch
+            />
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+export const LabelTruncation: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Form.NestedSelect
+                    label="This has truncation at the end"
+                    options={longLabelOptions}
+                />
+                <Form.NestedSelect
+                    label="This has truncation in the middle"
+                    optionTruncationType="middle"
+                    options={longLabelOptions}
+                />
+            </>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const RenderingInGridLayout: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
-            <Layout.Content type="grid" style={{ padding: "2rem" }}>
+            <Layout.Content type="grid">
                 <Form.NestedSelect
                     label="A shorter form input"
                     options={options}
-                    mobileCols={[1, 5]}
+                    xxsCols={[1, 9]}
+                    lgCols={[1, 5]}
                 />
                 <Form.NestedSelect
                     label="A longer form input"
                     options={options}
-                    mobileCols={[1, 5]}
-                    tabletCols={[1, 9]}
+                    xxsCols={[1, 9]}
                 />
             </Layout.Content>
         );
     },
-    parameters: {
-        layout: "fullscreen",
+    decorators: [FullWidthStoryDecorator()],
+};
+
+export const SmallVariant: StoryObj<StandaloneComponent> = {
+    render: (_args) => {
+        return (
+            <Form.Select
+                variant="small"
+                label="This is the small variant"
+                options={options}
+                enableSearch
+            />
+        );
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };
 
 export const StandaloneUsage: StoryObj<StandaloneComponent> = {
-    render: () => {
-        return (
-            <StoryContainer>
-                <Container>
-                    <InputNestedSelect options={options} placeholder="Select" />
-                </Container>
-            </StoryContainer>
-        );
+    render: (_args) => {
+        return <InputNestedSelect options={options} placeholder="Select" />;
     },
+    decorators: [StoryDecorator({ maxWidth: true })],
 };

@@ -1,7 +1,10 @@
-import React from "react";
-import { ApiTable, code } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    TabAttribute,
+    Tabs,
+    code,
+} from "stories/storybook-common";
 
 const ACCORDION_DATA: ApiTableSectionProps[] = [
     {
@@ -39,9 +42,31 @@ const ACCORDION_DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
-                name: "className",
-                description: "Class selector for the component",
+                name: "id",
+                description: "The unique id of the component",
                 propTypes: ["string"],
+            },
+            {
+                name: "className",
+                description: "The class selector of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "headingLevel",
+                description:
+                    "Specify a custom heading level to match the component's position in the page",
+                propTypes: ["number"],
+                defaultValue: "2",
+            },
+            {
+                name: "onExpandCollapseChange",
+                description: `The callback invoked with the latest expanded state when the "Show all"/"Hide all" button is toggled`,
+                propTypes: ["(expanded: boolean) => void"],
             },
         ],
     },
@@ -88,8 +113,13 @@ const ACCORDION_ITEM_DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "id",
+                description: "The unique id of the component",
+                propTypes: ["string"],
+            },
+            {
                 name: "className",
-                description: "Class selector for the component",
+                description: "The class selector of the component",
                 propTypes: ["string"],
             },
             {

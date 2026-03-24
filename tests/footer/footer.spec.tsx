@@ -1,14 +1,30 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { DisclaimerLinks, Footer, FooterLinkProps } from "../../src";
-import { FooterHelper } from "../../src/footer/footer-helper";
+import { DisclaimerLinks, Footer, FooterLinkProps } from "src/footer";
+import {
+    FooterHelper,
+    InternalDisclaimerLinks,
+} from "src/footer/footer-helper";
+import { ResourceScheme } from "src/theme";
+import { KeyOf } from "src/util/utility-types";
+import { ThemeProvider } from "styled-components";
+import { MOCK_THEME } from "../theme/mock-theme-data";
 
 // =============================================================================
 // UNIT TESTS
 // =============================================================================
 describe("Footer", () => {
+    const defaultDisclaimerLinks = FooterHelper.getDisclaimerLinks(
+        undefined,
+        undefined
+    );
+
+    const linkTypes = Object.keys(
+        defaultDisclaimerLinks
+    ) as KeyOf<InternalDisclaimerLinks>[];
+
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.useFakeTimers("modern");
+        jest.useFakeTimers();
         jest.setSystemTime(new Date(2023, 0, 1));
     });
 
@@ -19,12 +35,9 @@ describe("Footer", () => {
     it("should be able to render the component", () => {
         render(<Footer />);
 
-        const defaultDisclaimerLinks = FooterHelper.getDisclaimerLinks();
-
-        for (const link in defaultDisclaimerLinks) {
-            expect(
-                screen.getByText(defaultDisclaimerLinks[link].children)
-            ).toBeInTheDocument();
+        for (const type of linkTypes) {
+            const text = defaultDisclaimerLinks[type]?.children as string;
+            expect(screen.getByText(text)).toBeInTheDocument();
         }
     });
 
@@ -61,10 +74,12 @@ describe("Footer", () => {
             render(<Footer />);
 
             expect(
-                screen.queryByRole("link", { name: "apple-app-store" })
+                screen.queryByRole("link", {
+                    name: "Download on the App Store",
+                })
             ).not.toBeInTheDocument();
             expect(
-                screen.queryByRole("link", { name: "google-play-store" })
+                screen.queryByRole("link", { name: "Get it on Google Play" })
             ).not.toBeInTheDocument();
         });
 
@@ -72,10 +87,10 @@ describe("Footer", () => {
             render(<Footer showDownloadAddon />);
 
             expect(
-                screen.getByRole("link", { name: "apple-app-store" })
+                screen.getByRole("link", { name: "Download on the App Store" })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("link", { name: "google-play-store" })
+                screen.getByRole("link", { name: "Get it on Google Play" })
             ).toBeInTheDocument();
         });
     });
@@ -102,14 +117,11 @@ describe("Footer", () => {
 
             render(<Footer disclaimerLinks={disclaimerLinks} />);
 
-            const defaultDisclaimerLinks = FooterHelper.getDisclaimerLinks();
+            for (const type of linkTypes) {
+                const text = defaultDisclaimerLinks[type]?.children as string;
+                const anchor = getAnchorElement(text);
 
-            for (const link in defaultDisclaimerLinks) {
-                const anchor = getAnchorElement(
-                    defaultDisclaimerLinks[link].children
-                );
-
-                expect(anchor.href).toBe(disclaimerLinks[link].href);
+                expect(anchor.href).toBe(disclaimerLinks[type]?.href);
             }
         });
 
@@ -138,7 +150,7 @@ describe("Footer", () => {
 
             expect(
                 screen.getByText(
-                    "© 2023 LifeSG, Government of Singapore. Last Updated 1 January 2023"
+                    "© 2023 Government of Singapore. Last updated 1 January 2023"
                 )
             ).toBeInTheDocument();
         });
@@ -155,18 +167,38 @@ describe("Footer", () => {
             render(<Footer copyrightInfo={copyrightInfo} />);
 
             const copyrightText = screen.getByTestId("copyright-text");
-            expect(copyrightText.textContent).not.toContain("Last Updated");
+            expect(copyrightText.textContent).not.toContain("Last updated");
         });
+
+        it.each<[ResourceScheme, string]>([
+            ["lifesg", "© 2023 LifeSG, Government of Singapore"],
+            ["bookingsg", "© 2023 BookingSG, Government of Singapore"],
+            ["mylegacy", "© 2023 MyLegacy@LifeSG, Government of Singapore"],
+            [
+                "ccube",
+                "© 2023 Citizen Collective Common, Government of Singapore",
+            ],
+            ["imda", "© 2023 IMDA, Government of Singapore"],
+        ])(
+            "should render the copyright information for %s resourceScheme by default",
+            (resourceScheme, expected) => {
+                render(
+                    <ThemeProvider theme={{ ...MOCK_THEME, resourceScheme }}>
+                        <Footer />
+                    </ThemeProvider>
+                );
+
+                const copyrightText = screen.getByTestId("copyright-text");
+                expect(copyrightText.textContent).toContain(expected);
+            }
+        );
     });
 
     describe("logoSrc", () => {
-        it("should render a logo by default", () => {
+        it("should not render a logo if the theme does not provides one", () => {
             render(<Footer links={CUSTOM_LINKS} />);
 
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                LIFESG_LOGO_SRC
-            );
+            expect(screen.queryByRole("img")).not.toBeInTheDocument();
         });
 
         it("should be able to render a custom logo", () => {
@@ -174,6 +206,18 @@ describe("Footer", () => {
             render(<Footer links={CUSTOM_LINKS} logoSrc={customLogo} />);
 
             expect(screen.getByRole("img")).toHaveAttribute("src", customLogo);
+        });
+
+        it("should render a logo if the theme provides one and no logoSrc provided", () => {
+            const themeLogo =
+                "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg";
+
+            render(
+                <ThemeProvider theme={MOCK_THEME}>
+                    <Footer links={CUSTOM_LINKS} />
+                </ThemeProvider>
+            );
+            expect(screen.getByRole("img")).toHaveAttribute("src", themeLogo);
         });
     });
 
@@ -184,7 +228,7 @@ describe("Footer", () => {
 
             expect(
                 screen.getByText(
-                    "© 2023 LifeSG, Government of Singapore. Last Updated 15 January 2023"
+                    "© 2023 Government of Singapore. Last updated 15 January 2023"
                 )
             ).toBeInTheDocument();
         });
@@ -219,8 +263,6 @@ describe("Footer", () => {
 // =============================================================================
 // CONSTANTS
 // =============================================================================
-const LIFESG_LOGO_SRC =
-    "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg";
 const CUSTOM_LINKS: FooterLinkProps[][] = [
     [
         {

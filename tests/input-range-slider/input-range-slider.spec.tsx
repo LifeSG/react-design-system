@@ -46,7 +46,7 @@ describe("InputRangeSlider", () => {
         const mockChange = jest.fn();
         render(<InputRangeSlider onChange={mockChange} numOfThumbs={2} />);
 
-        const thumb = screen.queryByTestId("slider-track-0").parentElement;
+        const thumb = screen.getByTestId("slider-track-0").parentElement!;
         fireEvent.mouseDown(thumb);
 
         expect(mockChange).toHaveBeenCalledWith([0, 1]);

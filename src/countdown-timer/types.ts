@@ -12,72 +12,39 @@ interface MobileOffset {
     top?: number | undefined;
 }
 
-/**
- * Props for the CountdownTimer component - floating sticky countdown display.
- *
- * Renders a countdown clock that sticks to the viewport edge as the user
- * scrolls. When the remaining time falls below `notifyTimer`, the `onTick`
- * and `onNotify` callbacks fire. Use `show` to start or pause the timer.
- *
- * @example
- * ```tsx
- * <CountdownTimer
- *     show={isActive}
- *     timer={300}
- *     notifyTimer={60}
- *     onTick={(s) => console.log(s + " seconds left")}
- *     onFinish={() => handleExpiry()}
- * />
- * ```
- * @keywords clock, expiry timer, session timeout, time remaining, count down
- */
-export interface CountdownTimerProps
-    extends React.HTMLAttributes<HTMLDivElement> {
-    /** The test identifier for the component. */
+interface CountdownTimerBaseProps extends React.HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;
-    /** Starts or pauses the countdown timer. Set to `true` to begin counting. */
+    /** To show/play the countdown timer */
     show: boolean;
-    /**
-     * Specifies if the component should stick to the viewport edge when
-     * scrolled out of view.
-     *
-     * @default true
-     */
     fixed?: boolean | undefined;
-    /** The total countdown duration in seconds. */
-    timer: number;
-    /** The notification threshold in seconds. Callbacks fire when remaining time falls below this value. */
+    /** Specifies a timer (in seconds) for notifications */
     notifyTimer?: number | undefined;
-    /**
-     * The sticky position for tablet and desktop viewports (pixel values).
-     *
-     * @default { top: 168 }
-     */
+    /** Allows customization of the sticky position in tablet/desktop view */
     offset?: Offset | undefined;
-    /**
-     * The sticky position for mobile viewports (pixel values).
-     *
-     * @default { top: 80 }
-     */
+    /** Allows customization of the sticky position in mobile only */
     mobileOffset?: MobileOffset | undefined;
-    /**
-     * The horizontal side the component is anchored to in its sticky position.
-     *
-     * @default "right"
-     */
+    /** Specifies if the component is aligned to its left or right in its sticky position */
     align?: AlignPosition | undefined;
-    /**
-     * Called every interval when the remaining time is at or below `notifyTimer`.
-     *
-     * Due to browser limitations this may not fire precisely every second.
-     *
-     * @param seconds - The remaining time in seconds.
-     */
+    /** Called every second with the remaining time left when the timer value falls below the `notifyTimer` threshold */
     onTick?: ((seconds: number) => void) | undefined;
-    /**
-     * Called once when the remaining time first falls below `notifyTimer`.
-     */
+    /** Called when the timer value falls below the specified `notifyTimer` threshold */
     onNotify?: (() => void) | undefined;
-    /** Called when the countdown reaches zero. */
+    /** Called when countdown reaches 0 */
     onFinish?: (() => void) | undefined;
+    /** Specifies the interval (in seconds) between polite announcements of the remaining time left */
+    reminderInterval?: number | undefined;
 }
+
+interface TimerProps extends CountdownTimerBaseProps {
+    /** Specifies the countdown timer (in seconds) */
+    timer: number;
+    timestamp?: number | undefined;
+}
+
+interface TimestampProps extends CountdownTimerBaseProps {
+    /** Specifies the timestamp at which the countdown ends (milliseconds since Jan 1, 1970) */
+    timestamp: number;
+    timer?: number | undefined;
+}
+
+export type CountdownTimerProps = TimerProps | TimestampProps;

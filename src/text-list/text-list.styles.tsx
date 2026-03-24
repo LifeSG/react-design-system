@@ -1,46 +1,71 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../media";
-import { Color } from "../color";
-import { TextStyleHelper } from "../text/helper";
-import { OrderedListProps, UnorderedListProps } from "./types";
-
-const baseListStyle = (bottomMargin: number) => `
-	margin-bottom: ${bottomMargin ? bottomMargin : 0}rem;
-`;
-
-const BASE_MARGIN = 3;
+import { Colour, Font, MediaQuery } from "../theme";
+import { TypographySizeType } from "../theme/font/types";
+import { BulletType, CounterType } from "./types";
 
 // =============================================================================
-// ORDERED LIST
-// ============================================================================
-export const StyledOrderedList = styled.ol<OrderedListProps>`
-    ${(props) => baseListStyle(props.bottomMargin)}
-    margin-left: ${BASE_MARGIN}rem;
+// STYLE INTERFACE
+// =============================================================================
+interface ListStyleProps {
+    $bottomMargin: number | undefined;
+    $size: TypographySizeType | undefined;
+}
 
-    ${MediaQuery.MaxWidth.tablet} {
-        margin-left: 2.5rem;
-    }
+interface OrderedListStyleProps extends ListStyleProps {
+    $counterType: CounterType | undefined;
+    $counterSeparator: string | undefined;
+}
+
+interface UnorderedListStyleProps extends ListStyleProps {
+    $bulletType: BulletType | undefined;
+    $hasCustomIcon: boolean | undefined;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
+const baseStyle = css<ListStyleProps>`
+    margin-bottom: ${(props) => props.$bottomMargin || 0}rem;
 
     // Counter matters
     counter-reset: list;
 
+    ${(props) => props.$size && Font[`${props.$size}-regular`]}
+    font-weight: ${Font.Spec["weight-regular"]};
+    color: ${Colour.text};
+
+    // nested lists styling
+    ol,
+    ul {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+`;
+
+export const StyledOrderedList = styled.ol<OrderedListStyleProps>`
+    ${baseStyle}
+
+    margin-left: 3em;
+
+    ${MediaQuery.MaxWidth.lg} {
+        margin-left: 2.5em;
+    }
+
     li {
-        ${(props) => TextStyleHelper.getTextStyle(props.size, "regular")}
         position: relative;
-        color: ${Color.Neutral[1]};
     }
 
     ${(props) => {
         const { reversed } = props;
-        const counterType = props.counterType || "decimal";
-        const counterSeparator = props.counterSeparator || ")";
+        const counterType = props.$counterType || "decimal";
+        const counterSeparator = props.$counterSeparator || ")";
 
         return css`
             li:before {
                 content: counter(list, ${counterType}) "${counterSeparator}";
                 counter-increment: ${reversed ? "list -1" : "list"};
                 position: absolute;
-                left: -2rem;
+                left: -2em;
             }
         `;
     }}
@@ -59,36 +84,25 @@ export const StyledOrderedList = styled.ol<OrderedListProps>`
     list-style-position: outside;
     list-style-type: none;
 
-    // nested lists styling
-    ol,
-    ul {
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
-    }
-
     ul > li:before {
         content: "";
     }
 `;
 
-// =============================================================================
-// UNORDERED LIST
-// =============================================================================
-export const StyledUnorderedList = styled.ul<UnorderedListProps>`
-    ${(props) => baseListStyle(props.bottomMargin)}
-    margin-left: 2.5rem;
-    list-style-type: ${(props) => props.bulletType || "disc"};
+export const StyledUnorderedList = styled.ul<UnorderedListStyleProps>`
+    ${baseStyle}
 
-    li {
-        ${(props) => TextStyleHelper.getTextStyle(props.size, "regular")}
-        color: ${Color.Neutral[1]};
-    }
+    margin-left: ${(props) => (props.$hasCustomIcon ? 0 : "2.5em")};
+    list-style-type: ${(props) =>
+        props.$hasCustomIcon ? "none" : props.$bulletType || "disc"};
 
-    counter-reset: list;
-
-    ol,
-    ul {
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
-    }
+    ${(props) =>
+        props.$hasCustomIcon &&
+        css`
+            & > li {
+                display: flex;
+                align-items: flex-start;
+                gap: 0.5em;
+            }
+        `}
 `;

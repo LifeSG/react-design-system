@@ -4,10 +4,10 @@ import { Content } from "./content";
 import { Section } from "./section";
 
 export const Layout = {
-    Section,
-    Container,
-    Content,
-    ColDiv,
+    Section: Section,
+    Container: Container,
+    Content: Content,
+    ColDiv: ColDiv,
 };
 
 export * from "./types";

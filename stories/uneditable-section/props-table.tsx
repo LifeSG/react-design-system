@@ -1,7 +1,11 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+    TabAttribute,
+    Tabs,
+    code,
+} from "stories/storybook-common";
 
 const MAIN_DATA: ApiTableSectionProps[] = [
     {
@@ -73,6 +77,12 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                 defaultValue: "true",
             },
             {
+                name: "stretch",
+                description:
+                    "Specifies if contents should take up the full width of the section",
+                propTypes: ["boolean"],
+            },
+            {
                 name: "onMask",
                 description: "Called when the mask icon is clicked",
                 propTypes: ["(item: UneditableSectionItemProps) => void"],
@@ -88,6 +98,17 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                     "Called when there is an error state with a Try again? indicator",
                 propTypes: ["(item: UneditableSectionItemProps) => void"],
             },
+            {
+                name: "fullWidth",
+                description: (
+                    <>
+                        If true, removes the default spacing and grid alignment
+                        from <code>Layout.Content</code>, allowing content to
+                        use the full width of the container
+                    </>
+                ),
+                propTypes: ["boolean"],
+            },
         ],
     },
     {
@@ -101,8 +122,13 @@ const MAIN_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "value",
-                description: "The value of the uneditable item",
-                propTypes: [`string`],
+                description: (
+                    <>
+                        The value of the uneditable item. <strong>Note:</strong>{" "}
+                        masking is only available for string values
+                    </>
+                ),
+                propTypes: [`string`, "React.ReactNode"],
                 mandatory: true,
             },
             {
@@ -162,6 +188,20 @@ const MAIN_DATA: ApiTableSectionProps[] = [
                     "If specified, the value will be masked or unmasked but no indicator will be rendered",
                 propTypes: ["boolean"],
             },
+            {
+                name: "alert",
+                description: (
+                    <>
+                        Specifies if an {code("Alert")} should be rendered under
+                        the section item
+                    </>
+                ),
+                propTypes: (
+                    <StorybookLink path="/docs/feedback-indicators-alert--docs#component-api">
+                        AlertProps
+                    </StorybookLink>
+                ),
+            },
         ],
     },
 ];
@@ -183,6 +223,16 @@ const SECTION_DATA: ApiTableSectionProps[] = [
                         </a>
                     </>
                 ),
+            },
+            {
+                name: "stretch",
+                description: (
+                    <>
+                        Specifies if contents should take up the full width of
+                        the <code>UneditableSection</code>
+                    </>
+                ),
+                propTypes: ["boolean"],
             },
         ],
     },

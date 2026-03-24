@@ -1,24 +1,24 @@
-import React from "react";
-import { Text } from "../text";
+import React, { useContext } from "react";
 import { DownloadApp } from "./footer-download-app";
-import { FooterHelper } from "./footer-helper";
+import { FooterHelper, InternalDisclaimerLinks } from "./footer-helper";
 import {
     AddonSection,
     BaseFooter,
     BottomSection,
     BottomSectionContent,
     CopyrightSection,
+    CopyrightText,
     DisclaimerTextLink,
+    FullWidthDivider,
     LinkSection,
+    LinkSectionWrapper,
     LogoSection,
-    MobileOnlyBorder,
     StyledFooterLink,
     TopSection,
 } from "./footer.style";
+import { ResourceAddon } from "./footer-resource-addon";
 import { FooterLinkProps, FooterProps } from "./types";
-
-const LIFESG_LOGO_SRC =
-    "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg";
+import { ThemeContext } from "styled-components";
 
 export const Footer = <T,>({
     children,
@@ -26,17 +26,19 @@ export const Footer = <T,>({
     lastUpdated,
     disclaimerLinks,
     showDownloadAddon,
+    showResourceAddon,
     logoSrc,
     copyrightInfo,
     onFooterLinkClick,
     layout = "default",
+    hideLogo,
     ...otherProps
 }: FooterProps<T>) => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
     const isStretch = layout === "stretch";
-
+    const theme = useContext(ThemeContext);
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -63,20 +65,32 @@ export const Footer = <T,>({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderDisclaimerLinks = () => {
-        const links = FooterHelper.getDisclaimerLinks(disclaimerLinks);
+        const links = FooterHelper.getDisclaimerLinks(
+            theme?.resourceScheme,
+            disclaimerLinks
+        );
 
-        return Object.keys(links).map((key) => {
-            return <DisclaimerTextLink key={key} {...links[key]} />;
-        });
+        return (Object.keys(links) as (keyof InternalDisclaimerLinks)[]).map(
+            (key) => {
+                return (
+                    <DisclaimerTextLink
+                        key={key}
+                        underlineStyle="none"
+                        {...links[key]}
+                    />
+                );
+            }
+        );
     };
 
     const renderFooterLinks = (links: FooterLinkProps<T>[]) => {
         return links.map((link, index) => {
-            const { "data-options": options, ...otherProps } = link;
+            const { "data-options": _options, ...otherProps } = link;
 
             return (
                 <li key={index}>
                     <StyledFooterLink
+                        underlineStyle="none"
                         {...otherProps}
                         onClick={(event) => handleLinkClick(event, link)}
                     />
@@ -86,35 +100,53 @@ export const Footer = <T,>({
     };
 
     const renderTopSection = () => {
-        let component: JSX.Element | JSX.Element[] = null;
+        let component: React.ReactNode = null;
 
         if (children) {
             return children;
         }
 
         if (links || showDownloadAddon) {
+            const { src, ...otherLogoAttributes } =
+                FooterHelper.getFooterLogoAttribute(theme?.resourceScheme);
             component = (
                 <>
-                    <LogoSection data-testid="logo-section">
-                        <img
-                            src={logoSrc || LIFESG_LOGO_SRC}
-                            alt="LifeSG"
-                            data-testid="logo"
-                        />
-                    </LogoSection>
-                    {links?.[0] && (
-                        <LinkSection key="link-col-1" data-testid="link-col-1">
-                            {renderFooterLinks(links[0])}
-                        </LinkSection>
+                    {(logoSrc || src) && !hideLogo && (
+                        <LogoSection data-testid="logo-section">
+                            <img
+                                src={logoSrc || src}
+                                data-testid="logo"
+                                {...otherLogoAttributes}
+                            />
+                        </LogoSection>
                     )}
-                    {links?.[1] && (
-                        <LinkSection key="link-col-2" data-testid="link-col-2">
-                            {renderFooterLinks(links[1])}
-                        </LinkSection>
-                    )}
+                    <LinkSectionWrapper>
+                        {links?.[0] && (
+                            <LinkSection
+                                key="link-col-1"
+                                data-testid="link-col-1"
+                            >
+                                {renderFooterLinks(links[0])}
+                            </LinkSection>
+                        )}
+                        {links?.[1] && (
+                            <LinkSection
+                                key="link-col-2"
+                                data-testid="link-col-2"
+                            >
+                                {renderFooterLinks(links[1])}
+                            </LinkSection>
+                        )}
+                    </LinkSectionWrapper>
                     {showDownloadAddon && (
                         <AddonSection>
                             <DownloadApp />
+                        </AddonSection>
+                    )}
+                    {/* when showDownloadAddon and showResourceAddon are enabled, showDownloadAddon should take priority to being rendered */}
+                    {!showDownloadAddon && showResourceAddon && (
+                        <AddonSection>
+                            <ResourceAddon />
                         </AddonSection>
                     )}
                 </>
@@ -123,32 +155,34 @@ export const Footer = <T,>({
 
         if (component) {
             return (
-                <TopSection type="grid" stretch={isStretch}>
-                    {component}
-                </TopSection>
+                <>
+                    <TopSection stretch={isStretch}>{component}</TopSection>
+                    <FullWidthDivider />
+                </>
             );
         }
 
         return null;
     };
-
     return (
         <BaseFooter {...otherProps}>
             {renderTopSection()}
-            <MobileOnlyBorder />
-            <BottomSection type="grid" stretch={isStretch}>
+            <BottomSection stretch={isStretch}>
                 <BottomSectionContent key="disclaimer">
                     {renderDisclaimerLinks()}
                 </BottomSectionContent>
                 <CopyrightSection key="copyright">
-                    <Text.XSmall data-testid={"copyright-text"}>
+                    <CopyrightText data-testid={"copyright-text"}>
                         {copyrightInfo || (
                             <>
                                 &copy;{" "}
-                                {FooterHelper.getCopyrightInfo(lastUpdated)}
+                                {FooterHelper.getCopyrightInfo(
+                                    lastUpdated,
+                                    theme?.resourceScheme
+                                )}
                             </>
                         )}
-                    </Text.XSmall>
+                    </CopyrightText>
                 </CopyrightSection>
             </BottomSection>
         </BaseFooter>

@@ -2,6 +2,179 @@ import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 import { TabAttribute, Tabs } from "../storybook-common/tabs";
 
+export const COMMON_POPOVER_ATTRIBUTES: ApiTableSectionProps["attributes"] = [
+    {
+        name: "popoverContent",
+        description: (
+            <>
+                The content of the <code>Popover</code>. Can be a{" "}
+                <code>string</code>, a <code>JSX.Element</code>, or a function
+                that receives <code>PopoverRenderProps</code>. When using the
+                function form, the returned content can be dynamically styled or
+                sized using the <code>PopoverRenderProps</code> (e.g.,{" "}
+                <code>maxHeight</code>, <code>overflow</code>).
+            </>
+        ),
+        propTypes: [
+            "string",
+            "JSX.Element",
+            "(renderProps: PopoverRenderProps) => React.ReactNode",
+        ],
+        mandatory: true,
+    },
+    {
+        name: "trigger",
+        description: (
+            <>
+                The trigger for the appearance of the <code>Popover</code>
+            </>
+        ),
+        propTypes: [`"click"`, `"hover"`],
+        defaultValue: `"click"`,
+    },
+    {
+        name: "position",
+        description: (
+            <>
+                The visual position of the <code>Popover</code> in relation to
+                its trigger
+            </>
+        ),
+        propTypes: [
+            `"top"`,
+            `"top-start"`,
+            `"top-end"`,
+            `"bottom"`,
+            `"bottom-start"`,
+            `"bottom-end"`,
+            `"left"`,
+            `"left-start"`,
+            `"left-end"`,
+            `"right"`,
+            `"right-start"`,
+            `"right-end"`,
+        ],
+        defaultValue: `"top"`,
+    },
+    {
+        name: "zIndex",
+        description: (
+            <>
+                The custom z-index of the <code>Popover</code>. Try specifying
+                this if you encounter z-index conflicts.
+            </>
+        ),
+        propTypes: ["number"],
+    },
+    {
+        name: "rootNode",
+        description: (
+            <>
+                The root element that hosts the popover element. Try specifying
+                this if <code>zIndex</code> does not work.
+                <br />
+                <br />
+                For example, if the parent of the trigger element has a higher
+                z-index than the popover, the popover may not be visible.
+                Specify the parent here instead so that they share the same
+                stacking context.
+            </>
+        ),
+        propTypes: ["RefObject<HTMLElement>"],
+        defaultValue: (
+            <>
+                document<code>body</code>
+            </>
+        ),
+    },
+    {
+        name: "onPopoverAppear",
+        description: (
+            <>
+                The callback when the <code>Popover</code> appears
+            </>
+        ),
+        propTypes: ["() => void"],
+    },
+    {
+        name: "onPopoverDismiss",
+        description: (
+            <>
+                The callback when the <code>Popover</code> dismisses
+            </>
+        ),
+        propTypes: ["() => void"],
+    },
+    {
+        name: "enableFlip",
+        description: (
+            <>
+                Enables the Popover&rsquo;s flip behavior (vertically) when
+                there is not enough space in the window&rsquo;s viewport for the
+                specified position.
+            </>
+        ),
+        propTypes: ["boolean"],
+        defaultValue: "true",
+    },
+    {
+        name: "overflow",
+        description: (
+            <>
+                Controls how overflow content behaves inside the popover
+                container. Used with <code>enableResize</code>
+            </>
+        ),
+        propTypes: ["visible", "hidden", "clip", "scroll", "auto"],
+        defaultValue: "auto",
+    },
+    {
+        name: "enableResize",
+        description: (
+            <>
+                Enables popover resize to fit the remaining vertical space of
+                the window and contents become scrollable.
+            </>
+        ),
+        propTypes: ["boolean"],
+        defaultValue: "false",
+    },
+    {
+        name: "popoverAriaLabel",
+        description: "The accessible label for the popover content",
+        propTypes: ["string"],
+        defaultValue: "More information",
+    },
+    {
+        name: "triggerOnFocus",
+        description: (
+            <>
+                Opens the popover when the trigger element receives keyboard
+                focus (e.g. via Tab), instead of requiring a click.
+            </>
+        ),
+        propTypes: ["boolean"],
+        defaultValue: "false",
+    },
+    {
+        name: "isModal",
+        description: (
+            <>
+                Controls whether the popover behaves as a modal.
+                <br />
+                <br />
+                When <code>true</code>, focus is trapped within the popover and
+                interaction outside is disabled until it is dismissed.
+                <br />
+                When <code>false</code>, focus may move outside the popover and
+                it behaves as a non-modal element (e.g. navigation menus).
+            </>
+        ),
+        propTypes: ["boolean"],
+        defaultValue: "true",
+    },
+];
+
 const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
     {
         attributes: [
@@ -32,88 +205,52 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
                 mandatory: true,
             },
             {
-                name: "popoverContent",
-                description: (
-                    <>
-                        The content of the <code>Popover</code>
-                    </>
-                ),
-                propTypes: ["string", "JSX.Element", "() => React.ReactNode"],
-                mandatory: true,
+                name: "offset",
+                description: "How much offset to apply for the popover (in px)",
+                propTypes: ["number"],
+                defaultValue: "16",
             },
             {
-                name: "trigger",
+                name: "delay",
                 description: (
                     <>
-                        The trigger for the appearance of the{" "}
-                        <code>Popover</code>
+                        How much delay for popover to appear/dismiss <br />
+                        <b>Note</b>: When trigger is of type <code>click</code>,
+                        delay is not applied.
                     </>
                 ),
-                propTypes: [`"click"`, `"hover"`],
-                defaultValue: `"click"`,
+                propTypes: ["{ open: number, close: number }"],
+                defaultValue: "{ open: 0, close: 500 }",
+            },
+            ...COMMON_POPOVER_ATTRIBUTES,
+        ],
+    },
+    {
+        name: "PopoverRenderProps",
+        attributes: [
+            {
+                name: "maxHeight",
+                mandatory: false,
+                description:
+                    "Maximum height (in pixels) allowed for the popover content.",
+                propTypes: ["number"],
             },
             {
-                name: "position",
+                name: "overflow",
+                mandatory: false,
                 description: (
                     <>
-                        The visual position of the <code>Popover</code> in
-                        relation to it&rsquo;s trigger
+                        Controls how overflow content is handled inside the
+                        popover.
                     </>
                 ),
                 propTypes: [
-                    `"top"`,
-                    `"top-start"`,
-                    `"top-end"`,
-                    `"bottom"`,
-                    `"bottom-start"`,
-                    `"bottom-end"`,
-                    `"left"`,
-                    `"left-start"`,
-                    `"left-end"`,
-                    `"right"`,
-                    `"right-start"`,
-                    `"right-end"`,
+                    '"auto"',
+                    '"scroll"',
+                    '"clip"',
+                    '"hidden"',
+                    '"visible"',
                 ],
-                defaultValue: `"top"`,
-            },
-            {
-                name: "rootNode",
-                description: (
-                    <>
-                        The root element that hosts the popover element. Try
-                        specifying this if you encounter z-index conflicts.
-                        <br />
-                        <br />
-                        For example, if the parent of the trigger element has a
-                        higher z-index than the popover, the popover may not be
-                        visible. Specify the parent here instead so that they
-                        share the same stacking context.
-                    </>
-                ),
-                propTypes: ["RefObject<HTMLElement>"],
-                defaultValue: (
-                    <>
-                        document<code>body</code>
-                    </>
-                ),
-            },
-            {
-                name: "onPopoverAppear",
-                description: (
-                    <>
-                        The callback when the <code>Popover</code> appears
-                    </>
-                ),
-                propTypes: ["() => void"],
-            },
-            {
-                name: "onPopoverDismiss",
-                description: (
-                    <>
-                        The callback when the <code>Popover</code> dismisses
-                    </>
-                ),
-                propTypes: ["() => void"],
             },
         ],
     },
@@ -166,6 +303,33 @@ const POPOVER_DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["() => void"],
+            },
+            {
+                name: "overflow",
+                description: (
+                    <>
+                        Controls how overflow content behaves inside the popover
+                        container (Desktop only).
+                    </>
+                ),
+                propTypes: ["visible", "hidden", "clip", "scroll", "auto"],
+            },
+            {
+                name: "maxHeight",
+                description: (
+                    <>
+                        Sets the maximum height of the popover container in
+                        pixels. If content exceeds this height, overflow
+                        behavior applies (Desktop only).
+                    </>
+                ),
+                propTypes: ["number"],
+            },
+            {
+                name: "ariaLabel",
+                description: "The accessible label for the popover content",
+                propTypes: ["string"],
+                defaultValue: "More information",
             },
         ],
     },

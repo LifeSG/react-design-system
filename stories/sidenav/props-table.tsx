@@ -1,10 +1,11 @@
-import React from "react";
-import { ApiTable, code } from "../storybook-common/api-table";
 import {
+    ApiTable,
     ApiTableAttributeRowProps,
     ApiTableSectionProps,
-} from "../storybook-common/api-table/types";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
+    TabAttribute,
+    Tabs,
+    code,
+} from "stories/storybook-common";
 
 const BASE_ATTRIBUTES: ApiTableAttributeRowProps[] = [
     {
@@ -45,6 +46,14 @@ const SIDENAV_DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
                 defaultValue: "true",
             },
+            {
+                name: "aria-label",
+                description: (
+                    <>The accessible label for the {code("Sidenav")}</>
+                ),
+                propTypes: ["string"],
+                defaultValue: `"Sidebar"`,
+            },
         ],
     },
 ];
@@ -63,6 +72,16 @@ const SIDENAV_GROUP_DATA: ApiTableSectionProps[] = [
                 name: "separator",
                 description: "Specifies if bottom divider will be rendered",
                 propTypes: ["boolean"],
+            },
+            {
+                name: "aria-label",
+                description: (
+                    <>
+                        The accessible label to describe the category of the{" "}
+                        {code("Sidenav.Item")} elements
+                    </>
+                ),
+                propTypes: ["string"],
             },
         ],
     },

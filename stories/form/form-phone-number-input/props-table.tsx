@@ -1,6 +1,4 @@
-import React from "react";
-import { ApiTable } from "../../storybook-common/api-table";
-import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
@@ -17,6 +15,12 @@ const DATA: ApiTableSectionProps[] = [
                 name: "className",
                 description: "The class selector of the component",
                 propTypes: ["string"],
+            },
+            {
+                name: "noBorder",
+                description: "Indicates if the border wrapper will be removed",
+                propTypes: ["boolean"],
+                defaultValue: "false",
             },
             {
                 name: "data-testid",
@@ -108,6 +112,23 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "The value containing the country code and phone number",
                 propTypes: ["PhoneNumberInputValue"],
+            },
+            {
+                name: "autoComplete",
+                description: (
+                    <>
+                        The{" "}
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            autoComplete
+                        </a>{" "}
+                        attribute of the input field
+                    </>
+                ),
+                propTypes: ["string"],
             },
             {
                 name: "onChange",

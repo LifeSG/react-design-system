@@ -1,18 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { LoadingDotsSpinner } from "src/animations";
-import { Color } from "src/color";
-import { BaseTheme } from "src/theme";
+import { Colour, LifeSGTheme } from "src/theme";
 import { AnimationDisplay, AnimationItem } from "./doc-elements";
+import { TokensTable } from "./tokens-table";
 
 const meta: Meta = {
-    title: "General/Animations/Customisable Animations",
-    tags: [
-        "animation",
-        "loading",
-        "spinner",
-        "loading dots",
-        "loading spinner",
-    ],
+    title: "Feedback indicators/Animations/Customisable Animations",
 };
 
 export default meta;
@@ -30,11 +23,18 @@ export const CustomLoadingDotsSpinner: StoryObj<typeof LoadingDotsSpinner> = {
                 </AnimationItem>
                 <AnimationItem>
                     <LoadingDotsSpinner
-                        id="custom-1"
-                        color={Color.Accent.Light[2]({ theme: BaseTheme })}
+                        id="custom-2"
+                        color={Colour["icon-primary-subtlest"]({
+                            theme: LifeSGTheme,
+                        })}
                     />
                 </AnimationItem>
             </AnimationDisplay>
         );
     },
+};
+
+export const TokenCustomisation: StoryObj = {
+    tags: ["!dev"],
+    render: () => <TokensTable />,
 };

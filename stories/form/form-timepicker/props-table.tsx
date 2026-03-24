@@ -1,6 +1,9 @@
-import React from "react";
-import { ApiTable, code, quote } from "../../storybook-common/api-table";
-import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    code,
+    quote,
+} from "stories/storybook-common";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const TIME_FORMAT = (
@@ -42,6 +45,42 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: [`"12hr"`, `"24hr"`],
                 defaultValue: `"24hr"`,
             },
+            {
+                name: "alignment",
+                description: (
+                    <>
+                        The alignment of the dropdown relative to the field.
+                        Defaults to left-aligned.
+                    </>
+                ),
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"left"`,
+            },
+            {
+                name: "dropdownZIndex",
+                description: (
+                    <>
+                        Sets the z-index of the dropdown popover. Useful when
+                        the dropdown is rendered under other overlays.
+                    </>
+                ),
+                propTypes: ["number"],
+            },
+            {
+                name: "dropdownRootNode",
+                description: (
+                    <>
+                        The root element that contains the dropdown popover.
+                        Defaults to the document body.
+                        <br />
+                        Use this when the parent that contains the trigger
+                        element has a higher z-index than the popover (e.g.
+                        within a modal), so that the popover remains visible.
+                    </>
+                ),
+                propTypes: ["React.RefObject<HTMLElement>"],
+            },
+
             {
                 name: "disabled",
                 description:

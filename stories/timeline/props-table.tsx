@@ -1,6 +1,8 @@
-import React from "react";
-import { ApiTable, code } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+} from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -48,6 +50,19 @@ const DATA: ApiTableSectionProps[] = [
                     "The test identifier of the component's indicators",
                 propTypes: ["string"],
             },
+            {
+                name: "counterOffset",
+                description: (
+                    <>
+                        The offset for the numeric indicators
+                        <br />
+                        <b>Note:</b> If <code>offset = 2</code>, the start of
+                        the timeline will be <code>index + 1 + offset = 3</code>
+                    </>
+                ),
+                propTypes: ["number"],
+                defaultValue: "0",
+            },
         ],
     },
     {
@@ -77,7 +92,11 @@ const DATA: ApiTableSectionProps[] = [
                         &nbsp; regardless how many statuses are specified
                     </>
                 ),
-                propTypes: ["TimelineStatusProps[]"],
+                propTypes: (
+                    <StorybookLink path="/docs/feedback-indicators-pill--docs#component-api">
+                        <code>PillProps[]</code>
+                    </StorybookLink>
+                ),
             },
             {
                 name: "variant",
@@ -93,81 +112,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: [
                     `"completed"`,
                     `"current"`,
-                    `"upcoming-active`,
+                    `"upcoming-active"`,
                     `"upcoming-inactive"`,
+                    `"numeric"`,
                     `"error"`,
+                    `"disabled"`,
                 ],
-            },
-        ],
-    },
-    {
-        name: "TimelineStatusProps",
-        attributes: [
-            {
-                name: "",
-                description: (
-                    <>
-                        This component also inherits props from&nbsp;
-                        <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            HTMLDivAttributes
-                        </a>
-                    </>
-                ),
-            },
-            {
-                name: "type",
-                mandatory: true,
-                description: (
-                    <>
-                        The color style of the {code("Pill")}. <br />
-                        <b>
-                            Note: from v2.4.0 onwards, values {code(`"dark"`)}{" "}
-                            and {code(`"light"`)}
-                            will no longer be supported in favour of{" "}
-                            {code(`"solid"`)} and
-                            {code(`"outline"`)} respectively.
-                        </b>
-                    </>
-                ),
-                propTypes: [`"dark"`, `"light"`, `"solid"`, `"outline"`],
-            },
-            {
-                name: "label (deprecated)",
-                mandatory: true,
-                description: (
-                    <>
-                        The text to be rendered on the {code("Pill")}.
-                        <br />
-                        <b>
-                            Note: from v2.4.0 onwards, this attribute will no
-                            longer be available.
-                        </b>
-                    </>
-                ),
-
-                propTypes: ["string"],
-            },
-            {
-                name: "colorType",
-                description: <>The color style of the {code("Pill")}</>,
-                propTypes: [
-                    `"black"`,
-                    `"grey"`,
-                    `"green"`,
-                    `"yellow"`,
-                    `"red"`,
-                    `"blue"`,
-                ],
-                defaultValue: `"black"`,
-            },
-            {
-                name: "icon",
-                description: "A component to be displayed as the icon",
-                propTypes: ["JSX.Element"],
             },
         ],
     },

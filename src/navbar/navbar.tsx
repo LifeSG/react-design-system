@@ -1,19 +1,22 @@
 import React, {
     forwardRef,
+    useContext,
     useEffect,
     useImperativeHandle,
     useRef,
     useState,
 } from "react";
-import { ButtonProps } from "../button/types";
+import { ThemeContext } from "styled-components";
 import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
-import { MediaWidths } from "../spec/media-spec";
+import { Breakpoint } from "../theme";
 import { Brand } from "./brand";
 import { Drawer } from "./drawer";
 import { NavbarActionButtons } from "./navbar-action-buttons";
+import { NavbarHelper } from "./navbar-helper";
 import { NavbarItems } from "./navbar-items";
+import { getDefaultResourceLogo } from "./navbar-logo-data";
 import {
     MobileMenuButton,
     MobileMenuIcon,
@@ -26,11 +29,13 @@ import {
 import {
     BrandType,
     DrawerDismissalMethod,
-    NavItemLinkProps,
+    NavItemCommonProps,
+    NavItemProps,
+    NavbarActionButtonsProps,
     NavbarButtonProps,
+    NavbarDrawerApi,
     NavbarDrawerHandle,
     NavbarProps,
-    NavbarResourcesProps,
 } from "./types";
 
 const Component = <T,>(
@@ -41,9 +46,10 @@ const Component = <T,>(
         selectedId,
         compress = false,
         fixed = true,
-        resources = DEFAULT_RESOURCES,
+        resources,
         hideNavElements = false,
         hideNavBranding = false,
+        hideLinkIndicator = false,
         drawerDismissalExclusions: blockDrawerDismissalMethods = [],
         actionButtons,
         onItemClick,
@@ -51,6 +57,8 @@ const Component = <T,>(
         onBrandClick,
         masthead = true,
         layout = "default",
+        headerLabel = "Main navigation menu",
+        drawerLabel,
         ...otherProps
     }: NavbarProps<T>,
     ref: React.Ref<NavbarDrawerHandle>
@@ -60,19 +68,27 @@ const Component = <T,>(
     // =============================================================================
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
     const [showOverlay, setShowOverlay] = useState<boolean>(false);
+    const mobileMenuRef = useRef<HTMLButtonElement>(null);
     const isStretch = layout === "stretch";
-    const elementRef = useRef<HTMLDivElement>();
+    const elementRef = useRef<HTMLDivElement>(null);
+    const theme = useContext(ThemeContext);
+    const defaultResource = getDefaultResourceLogo(theme?.resourceScheme);
+    const tabletWidth = Breakpoint["lg-max"]({ theme });
 
-    const { primary = DEFAULT_RESOURCES.primary, secondary } = resources;
+    const primary = resources?.primary || defaultResource.primary;
+    const secondary = resources?.secondary;
 
     useImperativeHandle(
         ref,
         () =>
-            Object.assign(elementRef.current, {
-                dismissDrawer: () => {
-                    dismissDrawer();
-                },
-            }),
+            Object.assign<HTMLDivElement, NavbarDrawerApi>(
+                elementRef.current!,
+                {
+                    dismissDrawer: () => {
+                        dismissDrawer();
+                    },
+                }
+            ),
         [showDrawer]
     );
 
@@ -105,26 +121,20 @@ const Component = <T,>(
         );
     };
 
-    const hasUncollapsibleActionButtons = () => {
-        if (actionButtons.mobile) {
-            const hasUncollapsibleItems = actionButtons.mobile.some(
-                (actionButton) => {
-                    return actionButton.uncollapsible;
-                }
+    const hasCollapsibleActionButtons = (
+        actionButtons: NavbarActionButtonsProps
+    ) => {
+        const drawerActionButtons =
+            actionButtons.mobile || actionButtons.desktop;
+        if (drawerActionButtons) {
+            return (
+                drawerActionButtons.length &&
+                drawerActionButtons.some(
+                    (actionButton) => !actionButton.uncollapsible
+                )
             );
-
-            if (hasUncollapsibleItems) return true;
         }
 
-        if (actionButtons.desktop) {
-            const hasUncollapsibleItems = actionButtons.desktop.some(
-                (actionButton) => {
-                    return actionButton.uncollapsible;
-                }
-            );
-
-            if (hasUncollapsibleItems) return true;
-        }
         return false;
     };
 
@@ -132,7 +142,7 @@ const Component = <T,>(
     // EVENT HANDLER
     // =============================================================================
     const handleResize = () => {
-        if (window.innerWidth <= MediaWidths.tablet && showDrawer) {
+        if (window.innerWidth <= tabletWidth && showDrawer) {
             dismissDrawer();
         }
     };
@@ -142,7 +152,6 @@ const Component = <T,>(
         type: BrandType
     ) => {
         if (onBrandClick) {
-            event.preventDefault();
             onBrandClick(type);
         }
 
@@ -153,16 +162,20 @@ const Component = <T,>(
 
     const handleNavItemClick = <K extends T>(
         event: React.MouseEvent<HTMLAnchorElement>,
-        item: NavItemLinkProps<K>
+        item: NavItemProps<K> | NavItemCommonProps<K>
     ) => {
-        if (item.onClick) {
+        if (NavbarHelper.isNavItemCommon(item) && item.onClick) {
             item.onClick(event);
         } else if (onItemClick) {
             event.preventDefault();
             onItemClick(item);
         }
 
-        if (!item?.subMenu && shouldDismissDrawer("item-click")) {
+        if (
+            NavbarHelper.isNavItemLink(item) &&
+            !item.subMenu &&
+            shouldDismissDrawer("item-click")
+        ) {
             dismissDrawer();
         }
     };
@@ -171,8 +184,12 @@ const Component = <T,>(
         event: React.MouseEvent<HTMLButtonElement> | React.MouseEvent<Element>,
         actionButton: NavbarButtonProps
     ) => {
-        if (actionButton.args && (actionButton.args as ButtonProps).onClick) {
-            (actionButton.args as ButtonProps).onClick(
+        if (
+            (actionButton.type === "button" ||
+                actionButton.type === "download") &&
+            actionButton.args?.onClick
+        ) {
+            actionButton.args.onClick(
                 event as React.MouseEvent<HTMLButtonElement>
             );
         } else if (onActionButtonClick) {
@@ -203,7 +220,7 @@ const Component = <T,>(
     const renderDrawer = () => (
         <Overlay
             show={showOverlay}
-            enableOverlayClick={true}
+            enableOverlayClick
             onOverlayClick={handleDrawerClose}
         >
             <Drawer
@@ -213,12 +230,15 @@ const Component = <T,>(
                 onBrandClick={handleBrandClick}
                 actionButtons={actionButtons}
                 hideNavBranding={hideNavBranding}
+                mobileMenuRef={mobileMenuRef}
+                drawerLabel={drawerLabel}
             >
                 <NavbarItems
                     items={items.mobile || items.desktop}
                     onItemClick={handleNavItemClick}
                     selectedId={selectedId}
                     mobile
+                    hideLinkIndicator={hideLinkIndicator}
                 />
                 <NavbarActionButtons
                     actionButtons={actionButtons}
@@ -231,13 +251,15 @@ const Component = <T,>(
 
     const renderBrand = () => (
         <NavBrandContainer $compress={compress} data-id="brand-container">
-            <Brand
-                resources={primary}
-                onClick={handleBrandClick}
-                data-id="brand-primary"
-                data-testid="main__brand"
-                type="primary"
-            />
+            {primary && (
+                <Brand
+                    resources={primary}
+                    onClick={handleBrandClick}
+                    data-id="brand-primary"
+                    data-testid="main__brand"
+                    type="primary"
+                />
+            )}
             {secondary && (
                 <>
                     <NavSeparator $compress={compress} />
@@ -254,14 +276,16 @@ const Component = <T,>(
     );
 
     const renderMobileMenuButton = () => {
+        const drawerItems = items.mobile || items.desktop;
         if (
-            (items.mobile && items.mobile.length > 0) ||
-            (items.desktop && items.desktop.length > 0) ||
-            (actionButtons && !hasUncollapsibleActionButtons())
+            (drawerItems && drawerItems.length > 0) ||
+            (actionButtons && hasCollapsibleActionButtons(actionButtons))
         ) {
             return (
                 <MobileMenuButton
-                    aria-label="Open nav menu"
+                    ref={mobileMenuRef}
+                    aria-label={showDrawer ? "Close nav menu" : "Open nav menu"}
+                    aria-expanded={showDrawer}
                     data-testid="button__mobile-menu"
                     onClick={handleMobileMenuButtonClick}
                     focusHighlight={false}
@@ -277,7 +301,7 @@ const Component = <T,>(
     const renderNavbar = () => {
         return (
             <Layout.Content stretch={isStretch}>
-                <Nav $compress={compress}>
+                <Nav $compress={compress} aria-label={headerLabel}>
                     {!hideNavBranding && renderBrand()}
                     {!hideNavElements && (
                         <NavElementsContainer
@@ -288,6 +312,7 @@ const Component = <T,>(
                                 onItemClick={handleNavItemClick}
                                 selectedId={selectedId}
                                 hideNavBranding={hideNavBranding}
+                                hideLinkIndicator={hideLinkIndicator}
                             />
                             <NavbarActionButtons
                                 actionButtons={actionButtons}
@@ -311,20 +336,10 @@ const Component = <T,>(
             id={id || "navbar-wrapper"}
             data-testid={otherProps["data-testid"] || "navbar-wrapper"}
         >
-            {masthead && <Masthead />}
+            {masthead && <Masthead stretch={isStretch} />}
             {renderNavbar()}
         </Wrapper>
     );
 };
 
 export const Navbar = forwardRef(Component);
-
-// =============================================================================
-// CONSTANTS
-// =============================================================================
-const DEFAULT_RESOURCES: NavbarResourcesProps = {
-    primary: {
-        brandName: "LifeSG",
-        logoSrc: "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
-    },
-};

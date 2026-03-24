@@ -1,28 +1,29 @@
+import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
-import { Modal } from "../modal/modal";
-import { MediaWidths } from "../spec/media-spec";
-import { Text } from "../text/text";
-import {
-    ContentWrapper,
-    MobileModalBox,
-    PopoverCard,
-    PopoverContainer,
-} from "./popover.styles";
+import { ThemeContext } from "styled-components";
+import { Breakpoint } from "../theme";
+import { Typography } from "../typography";
+import { PopoverCard, PopoverContainer } from "./popover.styles";
 import { PopoverV2Props } from "./types";
+import { ModalV2 } from "../modal-v2";
 
 export const PopoverV2 = ({
     children,
     visible,
     onMobileClose,
+    maxHeight,
+    overflow,
+    ariaLabel,
+    id,
     ...otherProps
 }: PopoverV2Props): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const testId = otherProps["data-testid"] || "popover";
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
+    const theme = useContext(ThemeContext);
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -38,7 +39,7 @@ export const PopoverV2 = ({
     // =============================================================================
     const renderContent = () =>
         typeof children === "string" ? (
-            <Text.BodySmall>{children}</Text.BodySmall>
+            <Typography.BodyMD>{children}</Typography.BodyMD>
         ) : (
             children
         );
@@ -46,16 +47,33 @@ export const PopoverV2 = ({
     return (
         <>
             {visible && (
-                <PopoverContainer data-testid={testId} {...otherProps}>
-                    <PopoverCard>{renderContent()}</PopoverCard>
+                <PopoverContainer
+                    tabIndex={0}
+                    data-testid={testId}
+                    {...otherProps}
+                    id={id}
+                    role="dialog"
+                    aria-label={ariaLabel ?? "More information"}
+                >
+                    <PopoverCard $maxHeight={maxHeight} $overflow={overflow}>
+                        {renderContent()}
+                    </PopoverCard>
                 </PopoverContainer>
             )}
             {isMobile && (
-                <Modal show={visible} onOverlayClick={handleMobileClose}>
-                    <MobileModalBox onClose={handleMobileClose}>
-                        <ContentWrapper>{renderContent()}</ContentWrapper>
-                    </MobileModalBox>
-                </Modal>
+                <ModalV2
+                    show={visible ?? false}
+                    onOverlayClick={handleMobileClose}
+                    onClose={handleMobileClose}
+                    id={id}
+                    role="dialog"
+                    aria-label={ariaLabel ?? "More information"}
+                >
+                    <ModalV2.Card>
+                        <ModalV2.Content>{renderContent()}</ModalV2.Content>
+                        <ModalV2.CloseButton />
+                    </ModalV2.Card>
+                </ModalV2>
             )}
         </>
     );

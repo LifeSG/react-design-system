@@ -1,42 +1,23 @@
-/**
- * The time display format used by TimeRangePicker.
- *
- * - `"12hr"`: 12-hour clock with AM/PM suffix.
- * - `"24hr"`: 24-hour clock.
- */
-export type TimeRangePickerFormat = "12hr" | "24hr";
+import { RefObject } from "react";
+import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
-/**
- * The controlled value shape for TimeRangePicker.
- */
+export type TimeRangePickerFormat = "12hr" | "24hr";
+export type TimeRangePickerVariant = "dial" | "combobox";
+
 export interface TimeRangePickerValue {
-    /** The start time as a formatted string (e.g., `"13:00"` or `"01:00PM"`). */
     start: string;
-    /** The end time as a formatted string (e.g., `"14:00"` or `"02:00PM"`). */
     end: string;
 }
 
-/**
- * Props for the TimeRangePicker component - dual time picker with clock overlays.
- *
- * Renders two linked time inputs (start and end) for selecting a time range.
- * Controlled via a `{ start, end }` value object using formatted time strings.
- * Supports both 12-hour and 24-hour formats.
- *
- * @example
- * ```tsx
- * <TimeRangePicker
- *     value={{ start: "09:00", end: "17:00" }}
- *     onChange={(range) => setRange(range)}
- * />
- * ```
- * @keywords from to time, start end time, dual time input, time span picker, time interval
- */
 export interface TimeRangePickerProps {
     // Standard HTML Attributes
     className?: string | undefined;
     id?: string | undefined;
     style?: React.CSSProperties | undefined;
+    // Accessibility
+    "aria-labelledby"?: string | undefined;
+    "aria-describedby"?: string | undefined;
+    "aria-invalid"?: boolean | undefined;
 
     // Input-specific attributes
     "data-testid"?: string | undefined;
@@ -47,6 +28,8 @@ export interface TimeRangePickerProps {
      * 24 hour uses "hh:mm" e.g. `{ start: "13:00", end: "14:00" }`
      *
      * 12 hour uses "hh:mmA" e.g. `{ start: "01:00PM", end: "02:00PM" }`
+     *
+     * Note: combobox variant uses "h:mma" instead.
      */
     value?: TimeRangePickerValue | undefined;
     /**
@@ -56,6 +39,28 @@ export interface TimeRangePickerProps {
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
     error?: boolean | undefined;
+    /** Specifies the variant for the time range picker */
+    variant?: TimeRangePickerVariant | undefined;
+
+    /**
+     * Combobox variant specific attributes
+     */
+    /** Specifies the interval (minutes) between each dropdown option */
+    interval?: number | undefined;
+    /** Specifies the starting time for the dropdown options */
+    startLimit?: string | undefined;
+    /** Specifies the ending time for the dropdown options */
+    endLimit?: string | undefined;
+    /** Specifies the alignment of the dropdown to the left or right of the reference element */
+    alignment?: DropdownAlignmentType | undefined;
+    /** Specifies the z-index of the dropdown element */
+    dropdownZIndex?: number | undefined;
+    /**
+     * Use this when the parent container has a higher z-index
+     * and the dropdown would otherwise be hidden.
+     */
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
+
     /**
      * Called when a selection is made. Returns an object with `start` and
      * `end` values as an empty string or a string based format.

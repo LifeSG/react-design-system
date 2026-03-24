@@ -1,9 +1,14 @@
+import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 import {
+    DropdownRenderProps,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
+import {
     CalendarAction,
+    CalendarDropdown,
     InternalCalendarRef,
 } from "../shared/internal-calendar";
-import { AnimatedInternalCalendar } from "../shared/internal-calendar/animated-internal-calendar";
 import {
     StandaloneDateInput,
     StandaloneDateInputRef,
@@ -18,6 +23,7 @@ export const DateInput = ({
     disabled,
     disabledDates,
     error,
+    hideInputKeyboard,
     value,
     onChange,
     onFocus,
@@ -27,6 +33,8 @@ export const DateInput = ({
     readOnly,
     id,
     allowDisabledSelection,
+    zIndex,
+    dropdownRootNode,
     ...otherProps
 }: DateInputProps) => {
     // =============================================================================
@@ -38,12 +46,16 @@ export const DateInput = ({
     const [selectedDate, setSelectedDate] = useState<string>(
         DateInputHelper.sanitizeInput(value)
     );
-    const [hoveredDate, setHoveredDate] = useState<string>(undefined);
+    const [hoveredDate, setHoveredDate] = useState<string | undefined>(
+        undefined
+    );
     const [calendarOpen, setCalendarOpen] = useState<boolean>(false);
+    const [focused, setFocused] = useState<boolean>(false);
 
     const nodeRef = useRef<HTMLDivElement>(null);
-    const calendarRef = useRef<InternalCalendarRef>();
-    const inputRef = useRef<StandaloneDateInputRef>();
+    const inputRef = useRef<StandaloneDateInputRef>(null);
+    const calendarRef = useRef<InternalCalendarRef>(null);
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -56,22 +68,24 @@ export const DateInput = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleContainerBlur = (event: React.FocusEvent<HTMLDivElement>) => {
-        if (nodeRef && !nodeRef.current.contains(event.relatedTarget)) {
-            inputRef.current.resetInput();
-            setSelectedDate(initialDate);
-            setCalendarOpen(false);
-            performOnBlurHandler();
-        }
+    const handleClose = () => {
+        inputRef.current?.resetInput();
+        setSelectedDate(initialDate);
+        setCalendarOpen(false);
+        setFocused(false);
+
+        performOnBlurHandler();
+
+        // clear hover value for mobile scrolling
+        setHoveredDate(undefined);
     };
 
-    function handleContainerKeyDown(event: React.KeyboardEvent) {
-        if (event.code === "Escape") {
-            inputRef.current.resetInput();
-            setSelectedDate(initialDate);
-            setCalendarOpen(false);
-        }
-    }
+    const handleDismiss = () => {
+        inputRef.current?.resetInput();
+        nodeRef.current?.focus();
+        setSelectedDate(initialDate);
+        setCalendarOpen(false);
+    };
 
     const handleChange = (val: string) => {
         if (
@@ -96,13 +110,64 @@ export const DateInput = ({
         }
     };
 
+    const handleSelect = (val: string) => {
+        setSelectedDate(val);
+
+        if (!withButton) {
+            performOnChangeHandler(val);
+            setInitialDate(val);
+            if (val) {
+                inputRef.current?.focusYearRef();
+                setCalendarOpen(false);
+            }
+
+            // clear hover value for mobile when onMouseLeave={handleMouseLeaveCell} is not triggered due to touch input
+            setHoveredDate(undefined);
+        }
+    };
+
     const handleFocus = () => {
-        if (readOnly) return;
+        if (readOnly || disabled) return;
 
         setCalendarOpen(true);
 
+        if (focused) return;
+
+        setFocused(true);
+
         if (onFocus) {
             onFocus();
+        }
+    };
+
+    const handleBlur = (e: React.FocusEvent) => {
+        const target = e.relatedTarget as HTMLElement;
+
+        const isInsideCalendar =
+            calendarRef.current && calendarRef.current.contains(target);
+        const isInsideNode =
+            nodeRef.current && nodeRef.current.contains(target);
+        const isFloatingElement =
+            target?.matches?.("[data-floating-ui-focusable]") ||
+            target?.matches?.("[data-floating-ui-focus-guard]");
+
+        // Condition when the calendar is closed and focus moved outside the component
+        const shouldBlurWhenClosed =
+            focused && !calendarOpen && !isInsideNode && !isFloatingElement;
+
+        // Condition when the calendar is open, and focus went outside both input and calendar
+        const shouldBlurWhenOpenOutside =
+            calendarOpen &&
+            !isInsideNode &&
+            !isInsideCalendar &&
+            !isFloatingElement;
+
+        if (shouldBlurWhenClosed || shouldBlurWhenOpenOutside) {
+            inputRef.current?.resetInput();
+            setSelectedDate(initialDate);
+            setFocused(false);
+            setCalendarOpen(false);
+            performOnBlurHandler();
         }
     };
 
@@ -122,13 +187,21 @@ export const DateInput = ({
                 break;
         }
 
+        const isValid = dayjs(selectedDate, "YYYY-MM-DD", true).isValid();
+
+        // Focus on year input if the selected date is valid to avoid restarting entire tab order
+        if (isValid) {
+            inputRef.current?.focusYearRef();
+        } else {
+            nodeRef.current?.focus();
+        }
         setCalendarOpen(false);
     };
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const performOnChangeHandler = (changeValue?: string) => {
+    const performOnChangeHandler = (changeValue: string) => {
         if (onChange) {
             onChange(changeValue);
         }
@@ -141,38 +214,46 @@ export const DateInput = ({
     };
 
     // =============================================================================
-    // RENDER FUNCTION
+    // RENDER FUNCTIONS
     // =============================================================================
-    return (
-        <Container
-            ref={nodeRef}
-            $disabled={disabled}
-            $readOnly={readOnly}
-            $error={error}
-            id={id}
-            data-testid={otherProps["data-testid"]}
-            tabIndex={-1}
-            onBlur={handleContainerBlur}
-            onKeyDown={handleContainerKeyDown}
-            {...otherProps}
-        >
-            <StandaloneDateInput
-                ref={inputRef}
-                disabled={disabled}
-                onChange={handleChange}
+    const renderInput = () => {
+        return (
+            <Container
+                role="group"
+                tabIndex={0}
+                ref={nodeRef}
+                onBlur={handleBlur}
                 onFocus={handleFocus}
-                readOnly={readOnly}
-                focused={calendarOpen}
-                names={["start-day", "start-month", "start-year"]}
-                value={selectedDate}
-                hoverValue={hoveredDate}
-            />
-            <AnimatedInternalCalendar
-                ref={calendarRef}
-                type="input"
+                $disabled={disabled}
+                $readOnly={readOnly}
+                $focused={focused}
+                $error={error}
+                id={id}
+                data-testid={otherProps["data-testid"]}
+                aria-disabled={disabled}
+                {...otherProps}
+            >
+                <StandaloneDateInput
+                    ref={inputRef}
+                    disabled={disabled}
+                    onChange={handleChange}
+                    readOnly={readOnly}
+                    focused={calendarOpen}
+                    names={["start-day", "start-month", "start-year"]}
+                    value={selectedDate}
+                    hoverValue={hoveredDate}
+                    hideInputKeyboard={hideInputKeyboard}
+                />
+            </Container>
+        );
+    };
+
+    const renderCalendar = ({ elementWidth }: DropdownRenderProps) => {
+        return (
+            <CalendarDropdown
                 variant="single"
+                ref={calendarRef}
                 initialCalendarDate={selectedDate}
-                isOpen={calendarOpen}
                 withButton={withButton}
                 value={selectedDate}
                 disabledDates={disabledDates}
@@ -180,10 +261,26 @@ export const DateInput = ({
                 maxDate={maxDate}
                 allowDisabledSelection={allowDisabledSelection}
                 onHover={handleHoverDayCell}
-                onSelect={handleChange}
+                onSelect={handleSelect}
                 onDismiss={handleCalendarAction}
                 onYearMonthDisplayChange={onYearMonthDisplayChange}
+                width={elementWidth}
+                isFocusable={!readOnly && !disabled}
             />
-        </Container>
+        );
+    };
+
+    return (
+        <ElementWithDropdown
+            enabled={!readOnly && !disabled}
+            isOpen={calendarOpen}
+            renderElement={renderInput}
+            renderDropdown={renderCalendar}
+            onClose={handleClose}
+            onDismiss={handleDismiss}
+            customZIndex={zIndex}
+            offset={16}
+            rootNode={dropdownRootNode}
+        />
     );
 };

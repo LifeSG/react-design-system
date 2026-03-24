@@ -1,6 +1,4 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -27,6 +25,18 @@ const DATA: ApiTableSectionProps[] = [
                     "Specifies the countdown timer duration (in seconds)",
                 propTypes: ["number"],
                 mandatory: true,
+            },
+            {
+                name: "timestamp",
+                description: (
+                    <>
+                        Specifies the timestamp at which the countdown ends
+                        (milliseconds since Jan 1, 1970),
+                        <br />
+                        <strong>Note:</strong> required if timer is not provided
+                    </>
+                ),
+                propTypes: ["number"],
             },
             {
                 name: "notifyTimer",
@@ -99,6 +109,13 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onFinish",
                 description: "Called when the timer value reaches zero",
                 propTypes: ["() => void"],
+            },
+            {
+                name: "reminderInterval",
+                description:
+                    "Specifies the interval (in seconds) for polite screen reader reminders (e.g. every 120s for polite reminders)",
+                propTypes: ["number"],
+                defaultValue: "120",
             },
         ],
     },

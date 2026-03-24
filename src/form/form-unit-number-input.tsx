@@ -1,22 +1,36 @@
+import { useState } from "react";
 import { UnitNumberInput } from "../unit-number";
+import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormUnitNumberInputProps } from "./types";
 
 export const FormUnitNumberInput = ({
     label,
     errorMessage,
-    id = "form-unit-number-input",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
     mobileCols,
     tabletCols,
     desktopCols,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
     ...otherProps
 }: FormUnitNumberInputProps): JSX.Element => {
+    const [internalId] = useState(
+        () => `form-unit-number-input-${SimpleIdGenerator.generate()}`
+    );
+    const inputId = id ?? internalId;
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
@@ -25,10 +39,18 @@ export const FormUnitNumberInput = ({
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <UnitNumberInput
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
+                aria-labelledby={`${inputId}-label`}
                 error={!!errorMessage}
                 {...otherProps}
             />

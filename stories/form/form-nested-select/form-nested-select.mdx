@@ -1,15 +1,14 @@
-import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../../storybook-common";
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as FormNestedSelectStories from "./form-nested-select.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={FormNestedSelectStories} />
 
-<Title>Form.NestedSelect</Title>
+# Form.NestedSelect
 
-<Secondary>Overview</Secondary>
+## Overview
 
-A field that provides a nested set of options for a user to select.
+A field that provides a hierarchical set of options for a user to select.
 
 ```tsx
 import { Form } from "@lifesg/react-design-system/form";
@@ -17,22 +16,65 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormNestedSelectStories.Default} />
 
-<Heading3>Specifying mode</Heading3>
+## Specifying mode
+
+In the default mode, if there is:
+
+-   No selection: the first subtree is expanded
+-   A selected option: the subtree containing the option is expanded
+
+Alternative behaviour is supported with the `mode` prop.
 
 <Canvas of={FormNestedSelectStories.SpecifyingMode} />
 
-<Heading3>With search capabilities</Heading3>
+## Selectable category
+
+<Canvas of={FormNestedSelectStories.SelectableCategory} />
+
+## With search capabilities
+
+Overview of the search behaviour:
+
+1. At least 3 characters to run the search
+2. The match is done against the item's label and is case-insensitive
+3. Matching subitems are included in the result. In the example below, searching
+   "banana" returns **Banana milk** and **Banana**
+4. If a subcategory matches, all of its subitems are also included in the
+   results. In the example below, searching "cheese" will return the **Cheese**
+   subtree
 
 <Canvas of={FormNestedSelectStories.WithSearch} />
 
-<Heading3>Rendering in grid layouts</Heading3>
+## With Virtualisation
 
-You can also specify [ColDiv's](/docs/getting-started-layout-column-divs--docs)
+The dropdown list displays large data sets using virtualised rendering to optimise performance.
+
+<Canvas of={FormNestedSelectStories.Virtualisation} />
+
+## Label truncation
+
+<Canvas of={FormNestedSelectStories.LabelTruncation} />
+
+## Rendering in grid layouts
+
+You can also specify [ColDiv's](/docs/core-layout-coldiv--docs)
 column props to span across the specified columns in grid layouts.
 
 <Canvas of={FormNestedSelectStories.RenderingInGridLayout} />
 
-<Heading3>Using the field as a standalone</Heading3>
+## Small variant
+
+<Canvas of={FormNestedSelectStories.SmallVariant} />
+
+## Z-index conflicts
+
+The dropdown uses z-index to display above elements. It is `Modal` and
+`Overlay`-aware by default; when rendered as a child of either component, it
+will automatically adjust its z-index to remain visible.
+
+If you still encounter z-index issues, try setting a custom `dropdownZIndex`.
+
+## Using the field as a standalone
 
 In the case that you require the nested select field as a standalone, you can do this.
 
@@ -42,6 +84,6 @@ import { InputNestedSelect } from "@lifesg/react-design-system/input-nested-sele
 
 <Canvas of={FormNestedSelectStories.StandaloneUsage} />
 
-<Secondary>Component API</Secondary>
+## Component API
 
 <PropsTable />

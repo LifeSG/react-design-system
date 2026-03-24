@@ -14,6 +14,13 @@ coverage
 # misc
 *.DS_Store
 
+# storybook artifacts
 storybook-static
+*storybook.log
 
+# test artifacts
 junit.xml
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

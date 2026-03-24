@@ -1,11 +1,19 @@
+import { useSpring } from "@react-spring/web";
 import dayjs, { Dayjs } from "dayjs";
+import isEmpty from "lodash/isEmpty";
+import maxBy from "lodash/maxBy";
+import minBy from "lodash/minBy";
 import React, { useMemo, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
+import { Colour } from "../theme";
 import { TimeSlot } from "../time-slot-bar/types";
+import { DateHelper } from "../util";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
     CellWeekText,
+    ChevronIcon,
     CollapseExpandAllButton,
     CollapseExpandAllWrapper,
     ColumnWeekCell,
@@ -19,14 +27,7 @@ import {
     TimeSlotWrapper,
     Wrapper,
 } from "./time-slot-bar-week-days.style";
-import { DateHelper } from "../util";
 import { TimeSlotCellsVariant } from "./types";
-import { ChevronIcon } from "./time-slot-bar-week-days.style";
-import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "react-spring";
-import isEmpty from "lodash/isEmpty";
-import minBy from "lodash/minBy";
-import maxBy from "lodash/maxBy";
 
 export type DayVariant = "default" | "other-month" | "today";
 interface TimeSlotWeekDaysProps
@@ -34,7 +35,7 @@ interface TimeSlotWeekDaysProps
         InternalCalendarProps,
         "disabledDates" | "minDate" | "maxDate"
     > {
-    selectedDate: string;
+    selectedDate: string | undefined;
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     slots: { [date: string]: TimeSlot[] };
@@ -88,7 +89,7 @@ export const TimeSlotBarWeekDays = ({
     );
 
     // React spring animation configuration
-    const { height: actualHeight, ref: cellsRef } = useResizeDetector();
+    const { height: actualHeight = 0, ref: cellsRef } = useResizeDetector();
     const height = maxVisibleCellHeight
         ? actualHeight < maxVisibleCellHeight || expandAll
             ? actualHeight
@@ -100,7 +101,7 @@ export const TimeSlotBarWeekDays = ({
         [date: string]: TimeSlotCell[];
     } => {
         if (daySlots) {
-            const transformedDaySlots = {};
+            const transformedDaySlots: Record<string, TimeSlotCell[]> = {};
             Object.entries(daySlots).forEach(([key, slots]) => {
                 const cellsArray = initializeAndFillSlots(slots);
                 transformedDaySlots[key] = populateEmptyCells(cellsArray);
@@ -128,7 +129,7 @@ export const TimeSlotBarWeekDays = ({
     };
 
     const handleSlotClick = (date: string, slot: TimeSlot) => {
-        onSlotClick && onSlotClick(date, slot);
+        onSlotClick?.(date, slot);
     };
 
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
@@ -167,17 +168,22 @@ export const TimeSlotBarWeekDays = ({
             ? null
             : isHoverEnabled;
 
-        if (isHoverEnabled && hoverDay && day.isSame(hoverDay, "day")) {
-            dayCellStyleProps.circleLeft = "hover-current";
-            dayCellStyleProps.circleRight = "hover-current";
-            dayCellStyleProps.circleShadow = true;
-        }
+        const isHover =
+            isHoverEnabled && hoverDay && day.isSame(hoverDay, "day");
+        const isSelected = [selectedDate].includes(dateStartWithYear);
 
-        // Apply selected styles
-        if ([selectedDate].includes(dateStartWithYear)) {
+        if (isSelected && isHover) {
+            dayCellStyleProps.labelType = "selected-hover";
+            dayCellStyleProps.circleLeft = "selected-hover-outline";
+            dayCellStyleProps.circleRight = "selected-hover-outline";
+        } else if (isSelected) {
             dayCellStyleProps.labelType = "selected";
             dayCellStyleProps.circleLeft = "selected-outline";
             dayCellStyleProps.circleRight = "selected-outline";
+        } else if (isHover) {
+            dayCellStyleProps.labelType = "hover";
+            dayCellStyleProps.circleLeft = "hover-subtle";
+            dayCellStyleProps.circleRight = "hover-subtle";
         }
 
         return dayCellStyleProps;
@@ -193,7 +199,7 @@ export const TimeSlotBarWeekDays = ({
             endTime: "",
             clickable: false,
             styleAttributes: {
-                backgroundColor: "#E0E4E5",
+                backgroundColor: Colour["bg-stronger"],
             },
             cellLength,
         };

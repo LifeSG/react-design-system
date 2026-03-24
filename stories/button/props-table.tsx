@@ -1,4 +1,3 @@
-import React from "react";
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
 
@@ -41,6 +40,13 @@ const DATA: ApiTableSectionProps[] = [
                 name: "danger",
                 description:
                     "If specified, the component will have a red color scheme being applied",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "focusableWhenDisabled",
+                description:
+                    "Allows the button to remain focusable when disabled",
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },

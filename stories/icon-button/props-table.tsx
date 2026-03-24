@@ -1,6 +1,4 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -37,6 +35,13 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The size of the button",
                 propTypes: [`"large"`, `"default"`, `"small"`],
                 defaultValue: `"default"`,
+            },
+            {
+                name: "focusableWhenDisabled",
+                description:
+                    "Allows the button to remain focusable when disabled",
+                propTypes: ["boolean"],
+                defaultValue: "false",
             },
         ],
     },

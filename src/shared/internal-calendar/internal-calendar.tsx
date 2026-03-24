@@ -1,8 +1,9 @@
 import { Dayjs } from "dayjs";
 import React, { useImperativeHandle, useRef } from "react";
 import { CalendarManager } from "./calendar-manager";
-import { FixedRangeCalendarDayView } from "./fixed-range/fixed-range-calendar-day-view";
+import { FixedRangeCalendarDayView } from "./fixed-range";
 import { Container } from "./internal-calendar.style";
+import { SingleCalendarDayView } from "./single";
 import { StandardCalendarDayView } from "./standard";
 import {
     CalendarManagerRef,
@@ -10,6 +11,7 @@ import {
     InternalCalendarRef,
 } from "./types";
 import { WeekCalendarDayView } from "./week";
+import { MultiCalendarDayView } from "./multi";
 
 export const Component = (
     {
@@ -20,24 +22,30 @@ export const Component = (
         onDismiss,
         value: selectedStartDate,
         endValue: selectedEndDate,
+        values: selectedDates = [],
+        minSelectable,
+        maxSelectable,
         currentFocus,
         withButton,
         variant,
         minDate,
         maxDate,
         allowDisabledSelection,
-        type = "standalone",
         selectWithinRange = true,
         initialCalendarDate,
         numberOfDays,
+        onChange,
+        showActiveMonthDaysOnly = false,
+        isFocusable = false,
     }: InternalCalendarProps,
     ref: React.ForwardedRef<InternalCalendarRef>
 ) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const calendarManagerRef = useRef<CalendarManagerRef>();
-    const previousCalendarDate = useRef<Dayjs>(undefined);
+    const calendarManagerRef = useRef<CalendarManagerRef>(null);
+    const previousCalendarDate = useRef<Dayjs | undefined>(undefined);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // HOOKS
@@ -45,10 +53,13 @@ export const Component = (
     useImperativeHandle(ref, () => {
         return {
             reset() {
-                calendarManagerRef.current.resetView();
+                calendarManagerRef.current?.resetView();
             },
             setCalendarDate(value?: string) {
-                calendarManagerRef.current.setCalendarDate(value);
+                calendarManagerRef.current?.setCalendarDate(value);
+            },
+            contains(node: Node) {
+                return containerRef.current?.contains(node) || false;
             },
         };
     });
@@ -58,13 +69,32 @@ export const Component = (
     // =============================================================================
     const handleDateSelect = (value: Dayjs) => {
         const stringValue = value.format("YYYY-MM-DD");
-
-        calendarManagerRef.current.setCalendarDate(stringValue);
-        performOnSelectHandler(stringValue);
+        calendarManagerRef.current?.setCalendarDate(stringValue);
+        onSelect?.(stringValue);
     };
 
     const handleDateHover = (value: string) => {
-        performOnHoverHandler(value);
+        onHover?.(value);
+    };
+
+    const handleMultiDateSelect = (value: Dayjs) => {
+        const stringValue = value.format("YYYY-MM-DD");
+        if (selectedDates.includes(stringValue)) {
+            const updatedValues = selectedDates.filter(
+                (date) => date !== stringValue
+            );
+            // Intentionally omit setCalendarDate — toggling a date should not
+            // navigate the calendar view, unlike single/range selection.
+            onChange?.(updatedValues);
+        } else {
+            if (
+                maxSelectable !== undefined &&
+                selectedDates.length >= maxSelectable
+            ) {
+                return;
+            }
+            onChange?.([...selectedDates, stringValue]);
+        }
     };
 
     const handleCalendarDateChange = (value: Dayjs) => {
@@ -72,7 +102,13 @@ export const Component = (
             !previousCalendarDate.current ||
             !previousCalendarDate.current.isSame(value, "month")
         ) {
-            performDisplayChangeHandler(value);
+            calendarManagerRef.current?.setCalendarDate(
+                value.format("YYYY-MM-DD")
+            );
+            onYearMonthDisplayChange?.({
+                month: value.month() + 1,
+                year: value.year(),
+            });
         }
         previousCalendarDate.current = value;
     };
@@ -80,29 +116,6 @@ export const Component = (
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const performOnSelectHandler = (changeValue: string) => {
-        if (onSelect) {
-            onSelect(changeValue);
-        }
-    };
-
-    const performOnHoverHandler = (value: string) => {
-        if (onHover) {
-            onHover(value);
-        }
-    };
-
-    const performDisplayChangeHandler = (value: Dayjs) => {
-        if (onYearMonthDisplayChange) {
-            const returnValue = {
-                month: value.month() + 1,
-                year: value.year(),
-            };
-
-            onYearMonthDisplayChange(returnValue);
-        }
-    };
-
     const isDoneButtonDisabled = () => {
         if (!withButton) return;
 
@@ -120,6 +133,12 @@ export const Component = (
             case "week":
                 isDisabled = !selectedStartDate && !selectedEndDate;
                 break;
+            case "multi":
+                isDisabled =
+                    selectedDates.length === 0 ||
+                    (minSelectable !== undefined &&
+                        selectedDates.length < minSelectable);
+                break;
         }
 
         return isDisabled;
@@ -129,6 +148,7 @@ export const Component = (
     // RENDER FUNCTIONS
     // =============================================================================
     const renderCalendarDay = (calendarDate: Dayjs) => {
+        const setCalendarDate = calendarManagerRef.current?.setCalendarDate;
         switch (variant) {
             case "week":
                 return (
@@ -141,6 +161,7 @@ export const Component = (
                         allowDisabledSelection={allowDisabledSelection}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
+                        setCalendarDate={setCalendarDate}
                     />
                 );
             case "fixed-range":
@@ -155,9 +176,39 @@ export const Component = (
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
                         numberOfDays={numberOfDays}
+                        setCalendarDate={setCalendarDate}
                     />
                 );
             case "single":
+                return (
+                    <SingleCalendarDayView
+                        calendarDate={calendarDate}
+                        disabledDates={disabledDates}
+                        selectedDate={selectedStartDate}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        allowDisabledSelection={allowDisabledSelection}
+                        showActiveMonthDaysOnly={showActiveMonthDaysOnly}
+                        onSelect={handleDateSelect}
+                        onHover={handleDateHover}
+                        setCalendarDate={setCalendarDate}
+                    />
+                );
+            case "multi":
+                return (
+                    <MultiCalendarDayView
+                        calendarDate={calendarDate}
+                        disabledDates={disabledDates}
+                        selectedDates={selectedDates}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        allowDisabledSelection={allowDisabledSelection}
+                        showActiveMonthDaysOnly={showActiveMonthDaysOnly}
+                        onSelect={handleMultiDateSelect}
+                        onHover={handleDateHover}
+                        setCalendarDate={setCalendarDate}
+                    />
+                );
             case "range":
             default: // standalone type
                 return (
@@ -171,17 +222,18 @@ export const Component = (
                         maxDate={maxDate}
                         isNewSelection={selectWithinRange}
                         allowDisabledSelection={allowDisabledSelection}
+                        showActiveMonthDaysOnly={showActiveMonthDaysOnly}
                         onSelect={handleDateSelect}
                         onHover={handleDateHover}
+                        setCalendarDate={setCalendarDate}
                     />
                 );
         }
     };
 
     return (
-        <Container $type={type}>
+        <Container ref={containerRef}>
             <CalendarManager
-                type={type}
                 ref={calendarManagerRef}
                 withButton={withButton}
                 doneButtonDisabled={isDoneButtonDisabled()}
@@ -195,6 +247,7 @@ export const Component = (
                 allowDisabledSelection={allowDisabledSelection}
                 onCalendarDateChange={handleCalendarDateChange}
                 initialCalendarDate={initialCalendarDate}
+                isFocusable={isFocusable}
             >
                 {({ calendarDate }) => renderCalendarDay(calendarDate)}
             </CalendarManager>

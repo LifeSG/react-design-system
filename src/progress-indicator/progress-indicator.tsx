@@ -1,29 +1,34 @@
-import { MediaWidths } from "../media";
+import kebabCase from "lodash/kebabCase";
+import { useContext } from "react";
+import { useMediaQuery } from "react-responsive";
+import { ThemeContext } from "styled-components";
+import { VisuallyHidden } from "../shared/accessibility";
+import { Breakpoint } from "../theme";
 import {
     Content,
     Indicator,
     IndicatorBar,
     IndicatorTitleDesktop,
-    IndicatorTitleMobile,
+    IndicatorTitleTablet,
     Wrapper,
 } from "./progress-indicator.style";
 import { ProgressIndicatorProps } from "./types";
-import kebabCase from "lodash/kebabCase";
-import { useMediaQuery } from "react-responsive";
 
 export const ProgressIndicator = <T,>({
     steps,
     currentIndex,
     displayExtractor,
-    fadeColor,
-    fadePosition = "both",
+    fadeColor: _fadeColor,
+    fadePosition: _fadePosition,
     ...otherProps
 }: ProgressIndicatorProps<T>) => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.tablet,
+    const theme = useContext(ThemeContext);
+    const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
+    const isTablet = useMediaQuery({
+        maxWidth: tabletBreakpoint,
     });
 
     // =============================================================================
@@ -37,23 +42,26 @@ export const ProgressIndicator = <T,>({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const getDisplayValue = (item: T) => {
-        return displayExtractor ? displayExtractor(item) : item.toString();
+    const getDisplayValue = (item: T): string => {
+        if (displayExtractor) {
+            return displayExtractor(item);
+        }
+        return item?.toString() ?? "";
     };
 
-    const getAriaLabel = (stepIndex: number, currentIndex: number) => {
+    const getStepAriaLabel = (stepIndex: number, currentIndex: number) => {
         if (stepIndex < currentIndex) {
             return "Completed step";
         } else if (stepIndex === currentIndex) {
             return "Current step";
         } else {
-            return "Uncompleted step";
+            return "Upcoming step";
         }
     };
 
     const getId = (stepIndex: number, currentIndex: number) => {
         return kebabCase(
-            `${getAriaLabel(stepIndex, currentIndex)} ${stepIndex}`
+            `${getStepAriaLabel(stepIndex, currentIndex)} ${stepIndex}`
         );
     };
 
@@ -68,12 +76,8 @@ export const ProgressIndicator = <T,>({
             const highlighted = stepIndex <= currentIndex;
 
             return (
-                <Indicator
-                    key={stepIndex}
-                    aria-label={getAriaLabel(stepIndex, currentIndex)}
-                    id={getId(stepIndex, currentIndex)}
-                >
-                    <IndicatorBar highlighted={highlighted}></IndicatorBar>
+                <Indicator key={stepIndex} id={getId(stepIndex, currentIndex)}>
+                    <IndicatorBar $highlighted={highlighted}></IndicatorBar>
                 </Indicator>
             );
         });
@@ -82,38 +86,47 @@ export const ProgressIndicator = <T,>({
     const renderStepTitleDesktop = () => {
         return steps.map((step: T, stepIndex: number) => {
             const highlighted = stepIndex <= currentIndex;
-            const fontWeight = stepIndex === currentIndex ? "bold" : "regular";
+            const current = stepIndex === currentIndex;
+            const fontWeight = current ? "bold" : "regular";
 
             return (
                 <Indicator
                     key={stepIndex}
-                    aria-label={getAriaLabel(stepIndex, currentIndex)}
                     id={`${getId(stepIndex, currentIndex)}-title`}
                 >
                     <IndicatorTitleDesktop
-                        highlighted={highlighted}
+                        $highlighted={highlighted}
                         weight={fontWeight}
+                        aria-current={current}
                     >
                         {getDisplayValue(step)}
+                        <VisuallyHidden>
+                            {getStepAriaLabel(stepIndex, currentIndex)}
+                        </VisuallyHidden>
                     </IndicatorTitleDesktop>
                 </Indicator>
             );
         });
     };
 
-    const renderStepTitleMobile = () => {
+    const renderStepTitleTablet = () => {
         return (
             <Indicator
                 key={currentIndex}
-                aria-label={getAriaLabel(currentIndex, currentIndex)}
                 id={getId(currentIndex, currentIndex)}
             >
-                <IndicatorTitleMobile weight={"semibold"}>
+                <IndicatorTitleTablet
+                    weight={"semibold"}
+                    id={`${getId(currentIndex, currentIndex)}-counter`}
+                >
                     Step {currentIndex + 1} of {steps.length}
-                </IndicatorTitleMobile>
-                <IndicatorTitleMobile weight={"regular"}>
+                </IndicatorTitleTablet>
+                <IndicatorTitleTablet
+                    weight={"regular"}
+                    id={`${getId(currentIndex, currentIndex)}-title`}
+                >
                     {getDisplayValue(steps[currentIndex])}
-                </IndicatorTitleMobile>
+                </IndicatorTitleTablet>
             </Indicator>
         );
     };
@@ -122,7 +135,7 @@ export const ProgressIndicator = <T,>({
         <Wrapper {...otherProps}>
             <Content>{renderBars()}</Content>
             <Content>
-                {isMobile ? renderStepTitleMobile() : renderStepTitleDesktop()}
+                {isTablet ? renderStepTitleTablet() : renderStepTitleDesktop()}
             </Content>
         </Wrapper>
     );

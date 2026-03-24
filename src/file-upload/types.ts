@@ -14,7 +14,7 @@ export interface FileItemProps {
     /** The upload progress display. Values from 0 to 1 */
     progress?: number | undefined;
     /** The error message display to indicate file upload error */
-    errorMessage?: string | undefined;
+    errorMessage?: string | React.ReactNode | undefined;
     /** The thumbnail of the file that will be rendered */
     thumbnailImageDataUrl?: string | undefined;
     /** Indicates if text should be truncated */
@@ -78,9 +78,11 @@ export interface FileUploadProps extends FileInputProps {
     /** Specifies if sorting is enabled for the file items */
     sortable?: boolean | undefined;
     /** The general error message for the component */
-    errorMessage?: string | undefined;
+    errorMessage?: string | JSX.Element | undefined;
     /** Indicates if the component is in the readonly state */
     readOnly?: boolean | undefined;
+    /** Specify custom label text for elements within the component */
+    customLabels?: { uploadButtonLabel?: string | undefined } | undefined;
     /** Called when an upload happens via drag drop or click */
     onChange?: ((files: File[]) => void) | undefined;
     /** Called when an update to the description happens */

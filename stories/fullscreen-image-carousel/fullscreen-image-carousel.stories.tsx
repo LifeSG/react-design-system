@@ -2,13 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
 import { FullscreenImageCarousel } from "src/fullscreen-image-carousel";
-import { FullWidthStoryContainer } from "../storybook-common";
 import { getImages } from "./doc-elements";
 
 type Component = typeof FullscreenImageCarousel;
 
 const meta: Meta<Component> = {
-    title: "Modules/FullscreenImageCarousel",
+    title: "Content/FullscreenImageCarousel",
     component: FullscreenImageCarousel,
     tags: ["lightbox", "carousel", "gallery", "image viewer", "zoom"],
 };
@@ -16,10 +15,10 @@ const meta: Meta<Component> = {
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [show, setShow] = useState(false);
         return (
-            <FullWidthStoryContainer>
+            <>
                 <Button.Default
                     onClick={() => {
                         setShow((old) => !old);
@@ -37,16 +36,16 @@ export const Default: StoryObj<Component> = {
                     show={show}
                     onClose={() => setShow(false)}
                 />
-            </FullWidthStoryContainer>
+            </>
         );
     },
 };
 
 export const LoadingAndErrorStates: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [show, setShow] = useState(false);
         return (
-            <FullWidthStoryContainer>
+            <>
                 <Button.Default
                     onClick={() => {
                         setShow((old) => !old);
@@ -62,16 +61,16 @@ export const LoadingAndErrorStates: StoryObj<Component> = {
                     show={show}
                     onClose={() => setShow(false)}
                 />
-            </FullWidthStoryContainer>
+            </>
         );
     },
 };
 
 export const WithManyImages: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [show, setShow] = useState(false);
         return (
-            <FullWidthStoryContainer>
+            <>
                 <Button.Default
                     onClick={() => {
                         setShow((old) => !old);
@@ -84,7 +83,33 @@ export const WithManyImages: StoryObj<Component> = {
                     show={show}
                     onClose={() => setShow(false)}
                 />
-            </FullWidthStoryContainer>
+            </>
+        );
+    },
+};
+
+export const Configurable: StoryObj<Component> = {
+    render: (_args) => {
+        const [show, setShow] = useState(false);
+        return (
+            <>
+                <Button.Default
+                    onClick={() => {
+                        setShow((old) => !old);
+                    }}
+                >
+                    Show carousel
+                </Button.Default>
+                <FullscreenImageCarousel
+                    items={[{ src: "https://picsum.photos/id/157/1600/900" }]}
+                    show={show}
+                    hideNavigation
+                    hideCounter
+                    hideMagnifier
+                    hideThumbnail
+                    onClose={() => setShow(false)}
+                />
+            </>
         );
     },
 };

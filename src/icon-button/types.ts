@@ -29,6 +29,7 @@ export interface IconButtonProps
      * @default "default"
      */
     sizeType?: SizeType;
+    focusableWhenDisabled?: boolean | undefined;
 }
 
 export type StyleType = "primary" | "secondary" | "light";

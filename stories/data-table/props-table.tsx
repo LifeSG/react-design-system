@@ -1,12 +1,8 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
-import { createDocsComponent } from "../storybook-common/create-docs-component";
 import {
-    DataTableProps,
-    HeaderItemProps,
-    RowProps,
-} from "../../src/data-table/types";
+    ApiTable,
+    ApiTableSectionProps,
+    StorybookLink,
+} from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -75,9 +71,9 @@ const DATA: ApiTableSectionProps[] = [
                 name: "emptyView",
                 description: "Override props for the empty view display",
                 propTypes: (
-                    <a href="https://designsystem.life.gov.sg/react/index.html?path=/docs/modules-errordisplay--docs">
-                        ErrorDisplayAttributes
-                    </a>
+                    <StorybookLink path="/docs/core-errordisplay--docs#component-api">
+                        <code>ErrorDisplayAttributes</code>
+                    </StorybookLink>
                 ),
             },
             {
@@ -193,7 +189,3 @@ const DATA: ApiTableSectionProps[] = [
 ];
 
 export const PropsTable = () => <ApiTable sections={DATA} />;
-
-export const DataTableDocs = createDocsComponent<DataTableProps>();
-export const HeaderItemDocs = createDocsComponent<HeaderItemProps>();
-export const RowDocs = createDocsComponent<RowProps>();

@@ -1,6 +1,4 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -9,7 +7,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "title",
                 mandatory: true,
                 description: "The label text for the header",
-                propTypes: ["string"],
+                propTypes: ["string", "JSX.Element"],
             },
             {
                 name: "children",
@@ -67,6 +65,12 @@ const DATA: ApiTableSectionProps[] = [
                 name: "data-testid",
                 description: "The test identifier for the component",
                 propTypes: ["string"],
+            },
+            {
+                name: "clickableHeader",
+                description:
+                    "Specifies if clicking on any part of the header expands or closes the contents",
+                propTypes: ["boolean"],
             },
         ],
     },

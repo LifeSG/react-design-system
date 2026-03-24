@@ -1,7 +1,14 @@
-import { useEffect } from "react";
+import "@govtechsg/sgds-web-component/themes/day.css";
+import "@govtechsg/sgds-web-component/themes/night.css";
+import { useContext, useEffect } from "react";
+import { ThemeContext } from "styled-components";
 import { Wrapper } from "./masthead.style";
+import { MastheadProps } from "./types";
 
-export const Masthead = (): JSX.Element => {
+export const Masthead = ({ stretch = false }: MastheadProps): JSX.Element => {
+    const theme = useContext(ThemeContext);
+    const isDarkMode = theme?.colourMode === "dark";
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -10,6 +17,17 @@ export const Masthead = (): JSX.Element => {
             addAssets();
         }
     }, []);
+
+    useEffect(() => {
+        // SGDS dark mode only takes effect when this class is set on the :root element
+        if (isDarkMode) {
+            document.documentElement.classList.add(SGDS_THEME_NIGHT_CLASSNAME);
+        } else {
+            document.documentElement.classList.remove(
+                SGDS_THEME_NIGHT_CLASSNAME
+            );
+        }
+    }, [isDarkMode]);
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -44,7 +62,9 @@ export const Masthead = (): JSX.Element => {
     // RENDER FUNCTIONS
     // =============================================================================
 
-    return <Wrapper dangerouslySetInnerHTML={createContent()} />;
+    return (
+        <Wrapper dangerouslySetInnerHTML={createContent()} $stretch={stretch} />
+    );
 };
 
 // =============================================================================
@@ -52,4 +72,5 @@ export const Masthead = (): JSX.Element => {
 // =============================================================================
 const SCRIPT_ID = "lifesg-ds-masthead-script";
 const SCRIPT_SRC =
-    "https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component/Masthead/index.js";
+    "https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3/components/Masthead/index.umd.js";
+const SGDS_THEME_NIGHT_CLASSNAME = "sgds-night-theme";

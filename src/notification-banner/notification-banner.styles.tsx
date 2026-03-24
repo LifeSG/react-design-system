@@ -1,10 +1,8 @@
-import { CrossIcon } from "@lifesg/react-icons/cross";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
 import { Layout } from "../layout";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text, TextStyleHelper } from "../text";
-import { Transition } from "../transition";
+import { Colour, Font, Motion, Radius, Spacing } from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -12,25 +10,30 @@ import { Transition } from "../transition";
 // =============================================================================
 interface WrapperStyleProps {
     $sticky: boolean;
+    $clickable: boolean;
+}
+
+interface ContentStyleProps {
+    $maxCollapsedHeight?: number;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
 const commonLinkStyle = css`
-    color: ${Color.Validation.Orange.Icon};
+    color: ${Colour["hyperlink-inverse"]};
 
     svg {
-        color: ${Color.Validation.Orange.Icon};
+        color: ${Colour["icon-primary-inverse"]};
     }
 
-    :hover,
-    :active,
-    :visited,
-    :focus {
-        color: ${Color.Validation.Orange.Icon};
+    &:hover,
+    &:active,
+    &:visited,
+    &:focus {
+        color: ${Colour["hyperlink-inverse"]};
         svg {
-            color: ${Color.Validation.Orange.Icon};
+            color: ${Colour["icon-primary-inverse"]};
         }
     }
 `;
@@ -40,57 +43,119 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     left: 0;
     top: 0;
     width: 100%;
-    transition: ${Transition.Base};
-    background: ${Color.Neutral[2]};
+    transition: all ${Motion["duration-800"]} ${Motion["ease-default"]};
+    background: ${Colour["bg-inverse-subtle"]};
+    border-radius: ${Radius["none"]};
     z-index: 25;
+    cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
 `;
 
-export const Container = styled(Layout.Content)`
-    display: flex;
+export const Container = styled(Layout.Content)``;
+
+export const ContentContainer = styled.div`
+    flex: 1;
+    align-items: flex-start;
+    padding: ${Spacing["spacing-24"]} 0;
 `;
 
-export const TextContainer = styled.div`
+export const Content = styled.div<ContentStyleProps>`
     display: flex;
     flex: 1;
-    padding: 1.5rem 0;
-`;
+    align-items: flex-start;
 
-export const Content = styled.div`
-    display: inline-block;
-    width: 100%;
-
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[8]};
+    ${Font["body-baseline-regular"]}
+    color: ${Colour["text-inverse"]};
 
     p {
         display: inline-block;
     }
 
     strong {
-        ${TextStyleHelper.getFontFamily("Body", "semibold")}
-        color: ${Color.Neutral[8]};
+        ${Font["body-baseline-semibold"]}
+        color: ${Colour["text-inverse"]};
     }
 
     a {
-        ${TextStyleHelper.getTextStyle("Body", "regular")}
+        ${Font["body-baseline-regular"]}
         ${commonLinkStyle}
     }
 `;
 
-export const ContentLink = styled(Text.Hyperlink.Default)`
+export const ContentWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+`;
+
+export const ContentText = styled.div<{ $maxCollapsedHeight?: number }>`
+    flex: 1;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    ${(props) => {
+        const gradient =
+            "linear-gradient(to bottom, black 50%, transparent 100%)";
+        if (props.$maxCollapsedHeight) {
+            return css`
+                max-height: ${props.$maxCollapsedHeight}px;
+                overflow: hidden;
+                -webkit-mask-image: ${gradient};
+                mask-image: ${gradient};
+            `;
+        }
+    }}
+`;
+
+export const ContentLink = styled(Typography.LinkBL)`
     position: relative;
 
     ${commonLinkStyle}
 `;
 
 export const StyledIconButton = styled(ClickableIcon)`
-    margin-right: -1.5rem;
-    padding-left: 1rem;
+    margin-right: -${Spacing["spacing-24"]};
+    padding-left: ${Spacing["spacing-16"]};
     height: max-content;
+    svg {
+        height: 1.5rem;
+        width: 1.5rem;
+        color: ${Colour["icon-inverse"]};
+    }
 `;
 
-export const StyledIcon = styled(CrossIcon)`
-    height: 1.875rem;
-    width: 1.875rem;
-    color: ${Color.Neutral[8]};
+export const ActionButton = styled.button`
+    display: flex;
+    align-items: center;
+    gap: ${Spacing["spacing-4"]};
+    align-self: flex-start;
+    margin-top: ${Spacing["spacing-8"]};
+
+    border: none;
+    background: transparent;
+    color: ${Colour["hyperlink-inverse"]};
+    ${Font["body-md-semibold"]};
+
+    cursor: pointer;
+`;
+
+export const AccessibleBannerButton = styled.button`
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+`;
+
+export const IconContainer = styled.div`
+    height: 1.5rem;
+    width: 1.5rem;
+    margin: ${Spacing["spacing-24"]} ${Spacing["spacing-24"]} 0 0;
+    flex-shrink: 0;
+
+    svg {
+        height: 100%;
+        width: 100%;
+        color: ${Colour["hyperlink-inverse"]};
+    }
 `;

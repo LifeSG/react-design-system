@@ -69,6 +69,7 @@ export interface PhoneNumberInputProps extends React.AriaAttributes {
     "data-testid"?: string | undefined;
     /** Additional CSS class name. */
     className?: string | undefined;
+    noBorder?: boolean | undefined;
     /**
      * Locks the country code selector, preventing the user from changing the country.
      *
@@ -107,4 +108,5 @@ export interface PhoneNumberInputProps extends React.AriaAttributes {
     placeholder?: string | undefined;
     readOnly?: boolean | undefined;
     id?: string | undefined;
+    autoComplete?: string | undefined;
 }

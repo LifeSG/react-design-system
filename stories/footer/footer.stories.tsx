@@ -1,19 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Footer } from "src/footer";
 import { Layout } from "src/layout";
+import { MyLegacyTheme } from "src/theme";
+import { ThemeProvider } from "styled-components";
 
 type Component = typeof Footer;
 
 const meta: Meta<Component> = {
-    title: "Modules/Footer",
+    title: "Navigation/Footer",
     component: Footer,
-    tags: ["navigation", "links", "bottom bar", "disclaimer", "site footer"],
+    parameters: { layout: "fullscreen" },
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Footer
                 lastUpdated={new Date()}
@@ -59,13 +61,69 @@ export const Default: StoryObj<Component> = {
 };
 
 export const MinimalVersion: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return <Footer lastUpdated={new Date()} />;
     },
 };
 
+export const WithResourceAddOn: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Footer
+                lastUpdated={new Date()}
+                showResourceAddon
+                links={[
+                    [
+                        {
+                            children: "Home",
+                            href: "https://www.life.gov.sg",
+                        },
+                        {
+                            children: "How it works",
+                            href: "https://www.life.gov.sg/#how-it-works",
+                        },
+                        {
+                            children: "Ways we help",
+                            href: "https://www.life.gov.sg/#ways-we-help",
+                        },
+                        {
+                            children: "Campaigns",
+                            href: "https://www.life.gov.sg/#campaigns",
+                        },
+                        {
+                            children: "News and media",
+                            href: "https://www.life.gov.sg/#newsandmedia",
+                        },
+                    ],
+                    [
+                        {
+                            children: "About us",
+                            href: "https://www.life.gov.sg/about-us",
+                        },
+                        {
+                            children: "Help & Support",
+                            href: "https://www.life.gov.sg/help-support",
+                        },
+                        {
+                            children: "Get in touch with us",
+                            href: "https://www.life.gov.sg/get-in-touch",
+                        },
+                    ],
+                ]}
+            />
+        );
+    },
+    decorators: [
+        (Story) => (
+            <ThemeProvider theme={MyLegacyTheme}>
+                <Story />
+            </ThemeProvider>
+        ),
+    ],
+};
+
 export const WithCustomContent: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Footer lastUpdated={new Date()}>
                 <Layout.Content>
@@ -88,7 +146,7 @@ export const WithCustomContent: StoryObj<Component> = {
 };
 
 export const OtherCustomisations: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Footer
                 lastUpdated={new Date()}
@@ -142,12 +200,60 @@ export const OtherCustomisations: StoryObj<Component> = {
 };
 
 export const StretchedLayout: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Footer
+                // style={{ width: "1200px" }}
                 layout={"stretch"}
                 lastUpdated={new Date()}
                 showDownloadAddon
+                links={[
+                    [
+                        { children: "Home", href: "https://www.life.gov.sg" },
+                        {
+                            children: "How it works",
+                            href: "https://www.life.gov.sg/#how-it-works",
+                        },
+                        {
+                            children: "Ways we help",
+                            href: "https://www.life.gov.sg/#ways-we-help",
+                        },
+                        {
+                            children: "Campaigns",
+                            href: "https://www.life.gov.sg/#campaigns",
+                        },
+                        {
+                            children: "News and media",
+                            href: "https://www.life.gov.sg/#newsandmedia",
+                        },
+                    ],
+                    [
+                        {
+                            children: "About us",
+                            href: "https://www.life.gov.sg/about-us",
+                        },
+                        {
+                            children: "Help & Support",
+                            href: "https://www.life.gov.sg/help-support",
+                        },
+                        {
+                            children: "Get in touch with us",
+                            href: "https://www.life.gov.sg/get-in-touch",
+                        },
+                    ],
+                ]}
+            />
+        );
+    },
+};
+
+export const HiddenLogo: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Footer
+                lastUpdated={new Date()}
+                showDownloadAddon
+                hideLogo
                 links={[
                     [
                         { children: "Home", href: "https://www.life.gov.sg" },

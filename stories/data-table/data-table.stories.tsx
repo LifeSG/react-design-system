@@ -8,7 +8,7 @@ import { DATA_HEADERS, DATA_ROWS, generateRows } from "./row-data";
 type Component = typeof DataTable;
 
 const meta: Meta<Component> = {
-    title: "Modules/DataTable",
+    title: "Content/DataTable",
     component: DataTable,
     tags: [
         "autodocs",
@@ -196,7 +196,7 @@ export const SortIndicators: StoryObj<Component> = {
                     : b.colA.localeCompare(a.colA);
             });
         }, [sortState]);
-        const handleHeaderClick = (fieldKey) => {
+        const handleHeaderClick = (fieldKey: string) => {
             if (fieldKey === "colA") {
                 setSortState({
                     colA: sortState.colA === "asc" ? "desc" : "asc",
@@ -218,8 +218,8 @@ export const SortIndicators: StoryObj<Component> = {
 
 export const MultiSelectionOfRows: StoryObj<Component> = {
     render: () => {
-        const [selected, setSelected] = useState([]);
-        const handleOnClickSelect = (rowId, isSelected) => {
+        const [selected, setSelected] = useState<string[]>([]);
+        const handleOnClickSelect = (rowId: string, isSelected: boolean) => {
             if (isSelected) {
                 setSelected((selected) => [...selected, rowId]);
             } else {
@@ -230,7 +230,7 @@ export const MultiSelectionOfRows: StoryObj<Component> = {
                 );
             }
         };
-        const handleOnClickSelectAll = (selected) => {
+        const handleOnClickSelectAll = (selected: boolean) => {
             setSelected(selected ? [] : DATA_ROWS.map(({ id }) => id));
         };
         return (
@@ -248,15 +248,13 @@ export const MultiSelectionOfRows: StoryObj<Component> = {
 };
 
 export const DisabledCheckboxes: StoryObj<Component> = {
-    render: () => {
-        const [selected, setSelected] = useState(["1", "3"]);
-        const [disabled, setDisabled] = useState(["1", "2"]);
+    render: (_args) => {
         return (
             <DataTable
                 headers={DATA_HEADERS}
                 rows={DATA_ROWS}
-                selectedIds={selected}
-                disabledIds={disabled}
+                selectedIds={["1", "3"]}
+                disabledIds={["1", "2"]}
                 enableMultiSelect
             />
         );
@@ -264,7 +262,7 @@ export const DisabledCheckboxes: StoryObj<Component> = {
 };
 
 export const AlternatingRows: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <DataTable
                 headers={DATA_HEADERS}
@@ -281,8 +279,7 @@ export const ActionBar: StoryObj<Component> = {
     render: () => {
         const [selected, setSelected] = useState(["1"]);
         const [rowCount, setRowCount] = useState(5);
-        const [height, setHeight] = useState("default");
-        const handleOnClickSelect = (rowId, isSelected) => {
+        const handleOnClickSelect = (rowId: string, isSelected: boolean) => {
             if (isSelected) {
                 setSelected((selected) => [...selected, rowId]);
             } else {
@@ -299,7 +296,6 @@ export const ActionBar: StoryObj<Component> = {
                 onRowCountChange={setRowCount}
             >
                 <DataTable
-                    key={height}
                     headers={DATA_HEADERS}
                     rows={generateRows(rowCount)}
                     alternatingRows
@@ -317,13 +313,13 @@ export const ActionBar: StoryObj<Component> = {
 };
 
 export const NoRows: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return <DataTable headers={DATA_HEADERS} />;
     },
 };
 
 export const LoadingState: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return <DataTable headers={DATA_HEADERS} loadState="loading" />;
     },
 };

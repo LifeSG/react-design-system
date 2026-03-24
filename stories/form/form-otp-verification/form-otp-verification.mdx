@@ -1,0 +1,32 @@
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
+import { DocAlert } from "stories/storybook-common";
+import * as FormOtpVerificationStories from "./form-otp-verification.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={FormOtpVerificationStories} />
+
+# Form.OtpVerification
+
+## Overview
+
+A field that allows users to verify their identity through phone number or email OTP verification.
+
+## Phone Number
+
+<Canvas of={FormOtpVerificationStories.PhoneNumberDefault} />
+
+## Phone Number Variants
+
+<Canvas of={FormOtpVerificationStories.PhoneNumberVariants} />
+
+## Email
+
+<Canvas of={FormOtpVerificationStories.EmailDefault} />
+
+## Email Variants
+
+<Canvas of={FormOtpVerificationStories.EmailVariants} />
+
+## Component API
+
+<PropsTable />

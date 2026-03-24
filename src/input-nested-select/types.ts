@@ -1,94 +1,63 @@
+import { RefObject } from "react";
 import {
     InputSelectOptionsProps,
     InputSelectSharedProps,
 } from "../input-select";
 import {
+    DropdownCustomLabelProps,
     DropdownSearchProps,
-    DropdownStyleProps,
-    Mode,
-} from "../shared/nested-dropdown-list/types";
+    DropdownVariantType,
+    ExpandMode,
+} from "../shared/dropdown-list-v2/types";
+import { DropdownAlignmentType } from "../shared/dropdown-wrapper/types";
 
+// =============================================================================
+// SHARED PROPS
+// =============================================================================
 export interface InputNestedSelectOptionsProps<V1, V2, V3>
     extends Omit<InputSelectOptionsProps<V1>, "options"> {
     options: L1OptionProps<V1, V2, V3>[];
 }
 
-// =============================================================================
-// INPUT SELECT PROPS
-// =============================================================================
-/**
- * Props for the InputNestedSelect component - single-option hierarchical dropdown.
- *
- * Allows the user to drill into nested categories to select a single value from
- * a three-level hierarchy (L1 → L2 → L3). Use `InputNestedMultiSelect` for
- * selecting multiple values. Supports search and async loading.
- *
- * @example
- * ```tsx
- * <InputNestedSelect
- *     options={locationTree}
- *     selectedKeyPath={["sg", "central"]}
- *     onSelectOption={(keyPath, value) => setValue(value)}
- * />
- * ```
- */
-export interface InputNestedSelectSharedProps<V1, V2, V3> {
-    /**
-     * Makes the input read-only, displaying the current value without allowing changes.
-     *
-     * @default false
-     */
+export interface InputNestedSelectSharedProps<V1, V2, V3>
+    extends Omit<InputSelectSharedProps<V1>, "options"> {
     readOnly?: boolean | undefined;
+    /** Specifies if items are expanded or collapsed when the dropdown is opened */
+    mode?: ExpandMode | undefined;
+    variant?: DropdownVariantType | undefined;
+    alignment?: DropdownAlignmentType | undefined;
+    dropdownZIndex?: number | undefined;
     /**
-     * Controls the initial expand/collapse state of category items when the dropdown opens.
+     * The root element that contains the dropdown element. Defaults to the document body.
      *
-     * @see Mode for available values
-     * @default undefined
+     * If the parent that contains the trigger element has a higher z-index than the dropdown,
+     * the dropdown may not be visible. Specify the parent element here instead
      */
-    mode?: Mode | undefined;
-    /**
-     * Converts the selected value (any level) to a display string for the trigger label.
-     *
-     * @param value - The selected value at any hierarchy level.
-     */
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
+    /** Function to convert selected value into a string */
     valueToStringFunction?: ((value: V1 | V2 | V3) => string) | undefined;
 }
 
-/**
- * Props for the InputNestedSelect component - single-option hierarchical dropdown.
- *
- * @keywords cascading dropdown, hierarchical select, tree select, category picker, nested category
- */
+// =============================================================================
+// INPUT SELECT PROPS
+// =============================================================================
 export interface InputNestedSelectProps<V1, V2, V3>
     extends React.HTMLAttributes<HTMLElement>,
         InputNestedSelectOptionsProps<V1, V2, V3>,
         InputNestedSelectSharedProps<V1, V2, V3>,
-        Omit<InputSelectSharedProps<V1>, "options">,
-        DropdownSearchProps,
-        DropdownStyleProps {
-    /**
-     * The key path of the currently selected option, e.g., `["country", "region", "city"]`.
-     *
-     * Each string is the `key` property of the option at that hierarchy level.
-     *
-     * @default undefined
-     */
+        DropdownSearchProps<L1OptionProps<V1, V2, V3>> {
+    /** Specifies key path of the selected option */
     selectedKeyPath?: string[] | undefined;
-    /**
-     * Allows users to select a category (L1 or L2) node, not just leaf (L3) nodes.
-     *
-     * @default false
-     */
+    /** If specified, the category label is selectable */
     selectableCategory?: boolean | undefined;
-    /**
-     * Called when the user selects an option from any level of the hierarchy.
-     *
-     * @param keyPath - The key path of the selected option (e.g., `["sg", "central", "toa-payoh"]`).
-     * @param value - The value of the selected option at the appropriate hierarchy level.
-     */
+    /** Called when an option is selected. Returns the option's key path and value */
     onSelectOption?:
         | ((keyPath: string[], value: V1 | V2 | V3) => void)
         | undefined;
+    /** Custom width for the dropdown  */
+    dropdownWidth?: string | undefined;
+    onBlur?: (() => void) | undefined;
+    customLabels?: DropdownCustomLabelProps | undefined;
 }
 
 /** To be exposed for Form component inheritance */
@@ -98,46 +67,23 @@ export type InputNestedSelectPartialProps<V1, V2, V3> = Omit<
 >;
 
 // =============================================================================
-// Recursive Types
+// OPTION PROPS
 // =============================================================================
 interface BaseOptionProps {
-    /** The display label shown in the dropdown list for this item. */
     label: string;
-    /** A unique string key for this item within its parent's `subItems` list. */
     key: string;
 }
 
-/**
- * An L1 (top-level) option in a three-level nested dropdown hierarchy.
- *
- * May contain `subItems` of type `L2OptionProps` to form the second level.
- */
 export interface L1OptionProps<V1, V2, V3> extends BaseOptionProps {
-    /** The value held by this L1 option. */
     value: V1;
-    /** The second-level options nested under this L1 item. */
     subItems?: L2OptionProps<V2, V3>[] | undefined;
 }
 
-/**
- * An L2 (second-level) option nested under an `L1OptionProps`.
- *
- * May contain `subItems` of type `L3OptionProps` to form the third level.
- */
 export interface L2OptionProps<V2, V3> extends BaseOptionProps {
-    /** The value held by this L2 option. */
     value: V2;
-    /** The third-level options nested under this L2 item. */
     subItems?: L3OptionProps<V3>[] | undefined;
 }
-
-/**
- * An L3 (leaf-level) option nested under an `L2OptionProps`.
- *
- * This is the deepest level; it has no `subItems`.
- */
 export interface L3OptionProps<V3> extends BaseOptionProps {
-    /** The value held by this L3 option. */
     value: V3;
     subItems?: undefined;
 }

@@ -1,5 +1,4 @@
-import { ApiTable, code } from "../../storybook-common/api-table";
-import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps, code } from "stories/storybook-common";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
@@ -77,6 +76,11 @@ const DATA: ApiTableSectionProps[] = [
                 name: "renderRangeLabel",
                 description: "Function to render custom selection range labels",
                 propTypes: ["(value: number) => React.ReactNode"],
+            },
+            {
+                name: "ariaLabels",
+                description: "The user-friendly description of each thumb",
+                propTypes: ["[string, string]"],
             },
             {
                 name: "onChange",

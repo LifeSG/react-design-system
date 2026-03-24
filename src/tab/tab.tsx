@@ -3,13 +3,14 @@ import {
     ReactElement,
     cloneElement,
     useEffect,
+    useMemo,
     useState,
 } from "react";
-import { TabContext } from "./tab-context";
+import { TabContext, TabLinkProps } from "./tab-context";
 import { TabItem } from "./tab-item";
 import { TabLinkChain } from "./tab-link-chain";
 import { Wrapper } from "./tab.style";
-import { TabItemProps, TabLinkProps, TabProps } from "./types";
+import { TabItemProps, TabProps } from "./types";
 
 // =============================================================================
 // COMPONENT
@@ -20,6 +21,8 @@ const TabBase = ({
     initialActive = 0,
     onTabClick,
     "data-testid": testId,
+    fullWidthIndicatorLine,
+    fadeColor,
     ...otherProps
 }: TabProps) => {
     // =========================================================================
@@ -28,34 +31,29 @@ const TabBase = ({
     const [currentActive, setCurrentActive] = useState<number>(
         currentActiveIndex || initialActive
     );
-    const [tabLinks, setTabLinks] = useState<TabLinkProps[]>([]);
 
-    // =========================================================================
-    // EFFECTS
-    // =========================================================================
-    useEffect(() => {
+    const tabLinks = useMemo(() => {
         const validChildren = Children.toArray(children).filter(
             Boolean
         ) as ReactElement<TabItemProps>[];
-        updateTabLinks(validChildren);
+
+        return validChildren.map((child) => {
+            return {
+                title: child.props.title,
+                width: child.props.width,
+                titleAddon: child.props.titleAddon,
+            };
+        }) as TabLinkProps[];
     }, [children]);
 
+    // =========================================================================
+    // Effects
+    // =========================================================================
     useEffect(() => {
         if (typeof currentActiveIndex === "number") {
             setCurrentActive(currentActiveIndex);
         }
     }, [currentActiveIndex]);
-
-    // =========================================================================
-    // HELPER FUNCTIONS
-    // =========================================================================
-    const updateTabLinks = (children: ReactElement<TabItemProps>[]) => {
-        const tabLinks: TabLinkProps[] = children.map((child) => {
-            return { title: child.props.title };
-        });
-
-        setTabLinks(tabLinks);
-    };
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -64,6 +62,7 @@ const TabBase = ({
         const validChildren = Children.toArray(children).filter(Boolean);
 
         return validChildren.map((child, index) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             return cloneElement(child as ReactElement<any>, {
                 key: index,
                 index,
@@ -84,12 +83,16 @@ const TabBase = ({
                     controlledMode={typeof currentActiveIndex === "number"}
                     onTabClick={onTabClick}
                     data-testid={`${testId}-tabs`}
+                    fullWidthIndicatorLine={fullWidthIndicatorLine}
+                    fadeColor={fadeColor}
                 />
                 {renderChildren()}
             </TabContext.Provider>
         </Wrapper>
     );
 };
+
+TabBase.displayName = "Tab";
 
 // =============================================================================
 // EXPORTS

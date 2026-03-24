@@ -1,6 +1,4 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -36,7 +34,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         When the breadcrumbs are too long, there will be a fade
                         effect at the ends of the breadcrumb. This will control
-                        the color of the fade.
+                        if the fade is shown.
                     </>
                 ),
                 propTypes: [`"left"`, `"right"`, `"both"`],
@@ -51,6 +49,12 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["CSS-JS string"],
+            },
+            {
+                name: "separatorStyle",
+                description: <>Separator style between breadcrumb items</>,
+                propTypes: [`"chevron"`, `"slash"`],
+                defaultValue: `"chevron"`,
             },
             {
                 name: "id",

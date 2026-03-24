@@ -1,64 +1,72 @@
+import { CSSProperties, ReactNode } from "react";
+import { ButtonStyleType } from "../button/types";
 import { FormLabelAddonProps } from "../form/types";
+import { Insets } from "../shared/types";
 
 export type Mode = "default" | "mobile";
 
-/**
- * Props for the Filter component - collapsible filter panel.
- *
- * Renders a panel of `Filter.Item` children with a header title, clear
- * button, and mobile-specific dismiss/done controls.
- *
- * @example
- * ```tsx
- * <Filter onClear={handleClear}>
- *     <Filter.Item title="Category">
- *         <CheckboxGroup ... />
- *     </Filter.Item>
- * </Filter>
- * ```
- * @keywords search filter, facet, refinement panel, sidebar filter, filter drawer
- */
-export interface FilterProps {
-    children: React.ReactNode | ((mode: Mode) => React.ReactNode);
+interface FilterSidebarCustomLabelProps {
+    headerTitle?: string | undefined;
+    clearButtonLabel?: string | undefined;
+}
+interface FilterModalCustomLabelProps {
+    headerTitle?: string | undefined;
+    toggleFilterButtonLabel?: string | undefined;
+    doneButtonLabel?: string | undefined;
+    clearButtonLabel?: string | undefined;
+}
+
+export interface FilterBaseProps {
     id?: string | undefined;
-    /**
-     * Disables the clear button when `true`.
-     *
-     * @default false
-     */
+    "data-testid"?: string | undefined;
+    className?: string | undefined;
+    style?: CSSProperties | undefined;
     clearButtonDisabled?: boolean | undefined;
+    /** Called when clear button is pressed */
+    onClear?: (() => void) | undefined;
+    children?: ReactNode | ((mode: Mode) => ReactNode);
     /**
-     * The title displayed in the filter panel header.
-     *
-     * @default "Filters"
+     * @deprecated
+     * use customLabels instead
      */
     headerTitle?: string | undefined;
     /**
-     * The label on the mobile toggle button that opens the filter panel.
-     *
-     * @default "Filters"
+     * @deprecated
+     * use customLabels instead
      */
     toggleFilterButtonLabel?: string | undefined;
-    /** CSS class selector for the component. */
-    className?: string | undefined;
-    /** The test identifier for the component. */
-    "data-testid"?: string | undefined;
-    /** Called when dismiss button is pressed (mobile mode only). */
-    onDismiss?: (() => void) | undefined;
-    /** Called when done button is pressed (mobile mode only). */
-    onDone?: (() => void) | undefined;
-    /** Called when clear button is pressed. */
-    onClear?: (() => void) | undefined;
+    /**
+     * @deprecated
+     * use customLabels instead
+     */
+    doneButtonLabel?: string | undefined;
 }
 
-/**
- * Props for the Filter.Item component - single collapsible filter section.
- *
- * Wraps a filter control (e.g. checkboxes, sliders) in a collapsible panel
- * with an optional header title and form label addon.
- */
+export interface FilterSidebarProps extends FilterBaseProps {
+    customLabels?: FilterSidebarCustomLabelProps | undefined;
+}
+
+export interface FilterModalProps extends FilterBaseProps {
+    /** Called when dismiss button is pressed (mobile mode only) */
+    onDismiss?: (() => void) | undefined;
+    /** Called when done button is pressed (mobile mode only) */
+    onDone?: (() => void) | undefined;
+    onModalOpen?: () => void;
+    toggleFilterButtonStyle?: ButtonStyleType | undefined;
+    customLabels?: FilterModalCustomLabelProps | undefined;
+    insets?: Insets | undefined;
+}
+
+export interface FilterProps
+    extends Omit<FilterSidebarProps, "customLabels">,
+        Omit<FilterModalProps, "customLabels"> {
+    customLabels?:
+        | FilterModalCustomLabelProps
+        | FilterSidebarCustomLabelProps
+        | undefined;
+}
+
 export interface FilterItemProps {
-    /** The content to render inside the filter item. Can be a React node or a render function receiving (mode, state) */
     children:
         | React.ReactNode
         | ((mode: Mode, state: { minimised: boolean }) => React.ReactNode);
@@ -84,7 +92,6 @@ export interface FilterItemProps {
 }
 
 export interface FilterPageProps {
-    /** The content to render inside the filter page */
     children: React.ReactNode;
     /** Called when dismiss button is pressed */
     onDismiss?: (() => void) | undefined;
@@ -92,7 +99,13 @@ export interface FilterPageProps {
     onDone?: (() => void) | undefined;
 }
 
-export interface FilterItemCheckboxProps<T>
+export interface FilterItemCheckboxOptionProps {
+    value: any;
+    label: string;
+    options?: FilterItemCheckboxOptionProps[] | undefined;
+}
+
+export interface FilterItemCheckboxProps<T = FilterItemCheckboxOptionProps>
     extends Omit<FilterItemProps, "children"> {
     options: T[];
     selectedOptions?: T[] | undefined;
@@ -101,4 +114,10 @@ export interface FilterItemCheckboxProps<T>
     labelExtractor?: ((item: T) => React.ReactNode) | undefined;
     /** Function to derive value from an item. If not set, checks `item.value`. */
     valueExtractor?: ((item: T) => string) | undefined;
+    /** Changes min-width of toggle in mobile view to fit content */
+    useToggleContentWidth?: boolean | undefined;
+    /** Display checkbox list for mobile view */
+    showAsCheckboxInMobile?: boolean | undefined;
+    /** Whether to allow minimising (show "View more" button) */
+    minimisableOptions?: boolean | undefined;
 }

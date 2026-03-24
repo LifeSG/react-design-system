@@ -1,6 +1,4 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -95,7 +93,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "errorMessage",
                 description: "The general error message for the component",
-                propTypes: ["string"],
+                propTypes: ["string", "JSX.Element"],
             },
             {
                 name: "readOnly",
@@ -124,6 +122,23 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onSort",
                 description: "Called when a drag sort is made",
                 propTypes: ["(fileItems: FileItemProps[]) => void"],
+            },
+            {
+                name: "customLabels",
+                description: `Specifies custom labels. See the "Custom labels" section below for more details`,
+                propTypes: ["object"],
+            },
+        ],
+    },
+    {
+        name: "Custom labels",
+        attributes: [
+            {
+                name: "uploadButtonLabel",
+                description:
+                    "The label of the button that triggers the file dialog",
+                propTypes: ["string"],
+                defaultValue: `"Upload files"`,
             },
         ],
     },
@@ -168,7 +183,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "errorMessage",
                 description:
                     "The error message display to indicate file upload error",
-                propTypes: ["string"],
+                propTypes: ["string", "React.ReactNode"],
             },
             {
                 name: "thumbnailImageDataUrl",

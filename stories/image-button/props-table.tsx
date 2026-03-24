@@ -1,6 +1,4 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -34,6 +32,13 @@ const DATA: ApiTableSectionProps[] = [
                 name: "error",
                 description: "Specifies to show error state or not",
                 propTypes: ["boolean"],
+            },
+            {
+                name: "focusableWhenDisabled",
+                description:
+                    "Allows the button to remain focusable when disabled",
+                propTypes: ["boolean"],
+                defaultValue: "false",
             },
         ],
     },

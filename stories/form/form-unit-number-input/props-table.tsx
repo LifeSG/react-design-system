@@ -1,6 +1,4 @@
-import React from "react";
-import { ApiTable } from "../../storybook-common/api-table";
-import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
@@ -85,6 +83,23 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "data-testid",
                 description: "The test identifier of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "autoComplete",
+                description: (
+                    <>
+                        The{" "}
+                        <a
+                            href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete"
+                            rel="noreferrer"
+                            target="_blank"
+                        >
+                            autoComplete
+                        </a>{" "}
+                        attribute of the input field
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {

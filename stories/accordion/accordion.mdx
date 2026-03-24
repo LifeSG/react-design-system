@@ -1,13 +1,12 @@
-import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as AccordionStories from "./accordion.stories";
 import { PropsTable } from "./props-table";
 
 <Meta of={AccordionStories} />
 
-<Title>Accordion</Title>
+# Accordion
 
-<Secondary>Overview</Secondary>
+## Overview
 
 Displays expandable and collapsible content panels that can be toggled by the user.
 
@@ -19,25 +18,60 @@ import { Accordion } from "@lifesg/react-design-system/accordion";
 
 <Canvas of={AccordionStories.Default} />
 
-<Heading3>Smaller Accordion item titles</Heading3>
+## Smaller Accordion item titles
 
 Specifying the type in the `Accordion.Item` produces a smaller text size for each item's title.
 
 <Canvas of={AccordionStories.SmallAccordionItemTitle} />
 
-<Heading3>Showing title in mobile view</Heading3>
+## Showing title in mobile view
 
 By default, the `Accordion` will not render the title in mobile views. However if you require, you may
 use the `showTitleInMobile` prop to enable the title to be visible in mobile view.
 
 <Canvas of={AccordionStories.TitleShownInMobile} />
 
-<Heading3>No title</Heading3>
+## No title
 
 If you do not require a title in the `Accordion`, simply omit the `title` prop.
 
 <Canvas of={AccordionStories.NoTitle} />
 
-<Secondary>Component API</Secondary>
+## No Expand/Collapse All
+
+If you do not require a expand/collapse all button in the `Accordion`, use `enableExpandAll={false}`.
+
+<Canvas of={AccordionStories.NoExpandCollapseAll} />
+
+## Accessibility
+
+Depending on where the `Accordion` is used, set a custom `headingLevel` to
+ensure a logical hierarchy of headings in your page.
+
+```tsx
+<Accordion title="Accordion title" headingLevel={3}>
+    <Accordion.Item title="Item title">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    </Accordion.Item>
+</Accordion>
+```
+
+The `Accordion.Item` title is a `<button>` element, so if you are specifying
+custom JSX, make sure to render a valid child such as `<span>`.
+
+```tsx
+<Accordion title="Accordion title">
+    <Accordion.Item title={<span>Item title</span>}>
+        With custom JSX
+    </Accordion.Item>
+    <Accordion.Item title={<Typography.XL inline>Item title</Typography.XL>}>
+        Using Typography component
+    </Accordion.Item>
+</Accordion>
+```
+
+<Canvas of={AccordionStories.Accessibility} />
+
+## Component API
 
 <PropsTable />

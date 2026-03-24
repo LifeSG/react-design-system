@@ -1,10 +1,20 @@
 {
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "eslint.options": {
-        "extensions": [".md", ".mdx"]
+        "overrideConfigFile": "eslint.config.mjs"
     },
-    "eslint.validate": ["markdown", "mdx"],
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "markdown",
+        "mdx",
+        "typescript",
+        "typescriptreact"
+    ],
     "auto-close-tag.activationOnLanguage": [
         "html",
         "javascriptreact",
@@ -12,5 +22,9 @@
         "mdx"
     ],
     "editor.rulers": [80],
-    "typescript.preferences.importModuleSpecifier": "relative"
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
 }

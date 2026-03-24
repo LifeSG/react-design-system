@@ -1,4 +1,3 @@
-import React from "react";
 import { ApiTable } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
 
@@ -67,6 +66,11 @@ export const FORM_LABEL_ADDON_PROPS_DATA: ApiTableSectionProps = {
             name: "id",
             description: "The unique identifier of the addon",
             propTypes: ["string"],
+        },
+        {
+            name: "zIndex",
+            description: "The custom z-index of the popover addon",
+            propTypes: ["number"],
         },
         {
             name: "data-testid",

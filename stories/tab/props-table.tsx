@@ -1,7 +1,10 @@
-import React from "react";
-import { ApiTable, code } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    TabAttribute,
+    Tabs,
+    code,
+} from "stories/storybook-common";
 
 const TAB_DATA: ApiTableSectionProps[] = [
     {
@@ -46,6 +49,40 @@ const TAB_DATA: ApiTableSectionProps[] = [
                 description: "Called when a tab item selector is clicked",
                 propTypes: ["(title: string, index: number) => void"],
             },
+            {
+                name: "fullWidthIndicatorLine",
+                description:
+                    "Extends the bottom border to the full width of the container",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "fadeColor",
+                description:
+                    "The color of the fade effect when the tab is too long",
+                propTypes: ["string[]", "FadeColorSet"],
+            },
+            {
+                name: "headingLevel",
+                description:
+                    "Specify a custom heading level to match the component's position in the page",
+                propTypes: ["number"],
+                defaultValue: "2",
+            },
+        ],
+    },
+    {
+        name: "FadeColorSet",
+        attributes: [
+            {
+                name: "left",
+                description: "The color of the left fade",
+                propTypes: ["string[]"],
+            },
+            {
+                name: "right",
+                description: "The color of the right fade",
+                propTypes: ["string[]"],
+            },
         ],
     },
 ];
@@ -79,6 +116,33 @@ const TAB_ITEM_DATA: ApiTableSectionProps[] = [
                 name: "data-testid",
                 description: "The test identifier for the component",
                 propTypes: ["string"],
+            },
+            {
+                name: "width",
+                description: "The tab selector width",
+                propTypes: ["string"],
+            },
+            {
+                name: "titleAddon",
+                description:
+                    "Custom addon content displayed next to the tab title",
+                propTypes: ["TitleAddonProps"],
+            },
+        ],
+    },
+    {
+        name: "TitleAddonProps",
+        attributes: [
+            {
+                name: "content",
+                description: "The addon content",
+                propTypes: ["JSX.Element"],
+            },
+            {
+                name: "position",
+                description: "The position of the addon",
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"right"`,
             },
         ],
     },

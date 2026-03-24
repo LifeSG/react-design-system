@@ -58,6 +58,6 @@ export interface PaginationProps {
 }
 
 export interface PageSizeItemProps {
-    value?: number | undefined;
-    label?: string | undefined;
+    value: number;
+    label: string;
 }

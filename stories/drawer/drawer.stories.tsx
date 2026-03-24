@@ -2,12 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Drawer } from "src/drawer";
-import { Text } from "src/text";
+import { Typography } from "src/typography";
 
 type Component = typeof Drawer;
 
 const meta: Meta<Component> = {
-    title: "Modules/Drawer",
+    title: "Overlays/Drawer",
     component: Drawer,
     tags: ["sidebar", "side panel", "overlay", "slide-in", "navigation"],
 };
@@ -30,13 +30,17 @@ export const Default: StoryObj<Component> = {
                     onOverlayClick={closeDrawer}
                     heading="Header text"
                 >
-                    <Text.Body style={{ padding: "1rem" }}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
-                    </Text.Body>
+                    <div style={{ padding: "1rem" }}>
+                        <Typography.BodyBL style={{ marginBottom: "1rem" }}>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut enim ad minim veniam, quis
+                            nostrud exercitation ullamco laboris nisi ut aliquip
+                            ex ea commodo consequat.
+                        </Typography.BodyBL>
+
+                        <Button.Default>Some content</Button.Default>
+                    </div>
                 </Drawer>
             </>
         );
@@ -64,7 +68,7 @@ export const HandlingContentOverflow: StoryObj<Component> = {
                             padding: "1rem",
                         }}
                     >
-                        <Text.Body
+                        <Typography.BodyBL
                             style={{
                                 height: "100vh",
                             }}
@@ -72,10 +76,10 @@ export const HandlingContentOverflow: StoryObj<Component> = {
                             Drawer content is scrollable when its height is
                             taller than the current screen. The header remains
                             at the top when scrolling down.
-                        </Text.Body>
-                        <Text.Body>
+                        </Typography.BodyBL>
+                        <Typography.BodyBL>
                             This line marks the end of content.
-                        </Text.Body>
+                        </Typography.BodyBL>
                     </div>
                 </Drawer>
             </>

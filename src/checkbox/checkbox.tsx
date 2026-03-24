@@ -1,72 +1,73 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { CheckboxProps } from "./types";
-import { Container, Input } from "./checkbox.style";
 import {
-    MinusSquareFillIcon,
-    SquareFillIcon,
-    SquareIcon,
-    SquareTickFillIcon,
-} from "@lifesg/react-icons";
+    Container,
+    Input,
+    StyledCheckedIcon,
+    StyledInteremediateIcon,
+    StyledUncheckedDisabledIcon,
+    StyledUncheckedIcon,
+} from "./checkbox.style";
 
 export const Checkbox = ({
     className,
     checked,
     disabled,
     indeterminate,
-    onChange,
-    onKeyPress, // will still need this for now else keyboard events are not handled
     displaySize = "default",
+    id,
     ...otherProps
 }: CheckboxProps): JSX.Element => {
     // =============================================================================
     // REFS, EFFECTS
     // =============================================================================
-    const checkRef = useRef<HTMLInputElement>();
+    const checkRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        checkRef.current.indeterminate = indeterminate;
-    }, [indeterminate]);
-
-    // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
-    const handleOnCheck = (
-        event:
-            | React.ChangeEvent<HTMLInputElement>
-            | React.KeyboardEvent<HTMLDivElement>
-    ) => {
-        if (!disabled) {
-            const keyboardEvent =
-                event as React.KeyboardEvent<HTMLInputElement>;
-            const isValid =
-                keyboardEvent.key === " " || event.type === "change";
-
-            if (!isValid) {
-                return;
-            }
-
-            if (onChange) {
-                onChange(event as React.ChangeEvent<HTMLInputElement>);
-            }
-
-            if (onKeyPress) {
-                onKeyPress(keyboardEvent);
-            }
+        if (checkRef.current) {
+            checkRef.current.indeterminate = indeterminate ?? false;
         }
-    };
+    }, [indeterminate]);
 
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
     const renderIcon = () => {
-        return indeterminate ? (
-            <MinusSquareFillIcon data-testid="indeterminate" />
-        ) : checked ? (
-            <SquareTickFillIcon data-testid="checkmark" />
-        ) : disabled ? (
-            <SquareFillIcon data-testid="disabled-empty-checkbox" />
-        ) : (
-            <SquareIcon data-testid="empty-checkbox" />
+        if (indeterminate) {
+            return (
+                <StyledInteremediateIcon
+                    $disabled={disabled}
+                    data-testid="indeterminate"
+                    aria-hidden
+                />
+            );
+        }
+
+        if (checked) {
+            return (
+                <StyledCheckedIcon
+                    $disabled={disabled}
+                    data-testid="checkmark"
+                    aria-hidden
+                />
+            );
+        }
+
+        if (disabled) {
+            return (
+                <StyledUncheckedDisabledIcon
+                    data-testid="empty-disabled-checkbox"
+                    aria-hidden
+                />
+            );
+        }
+
+        return (
+            <StyledUncheckedIcon
+                $disabled={disabled}
+                data-testid="empty-checkbox"
+                aria-hidden
+            />
         );
     };
 
@@ -74,25 +75,17 @@ export const Checkbox = ({
         <Container
             className={className}
             data-testid="checkbox"
-            role="checkbox"
-            aria-checked={indeterminate ? "mixed" : checked}
-            aria-labelledby="checkbox-input"
-            tabIndex={disabled ? -1 : 0}
-            onKeyDown={handleOnCheck}
             $displaySize={displaySize}
-            $disabled={disabled}
-            $unchecked={!(indeterminate || checked || disabled)}
         >
             <Input
-                id="checkbox-input"
+                id={id}
                 data-testid="checkbox-input"
-                aria-hidden="true"
                 type="checkbox"
                 checked={checked}
                 ref={checkRef}
-                tabIndex={-1}
-                onChange={handleOnCheck}
+                tabIndex={disabled ? -1 : 0}
                 disabled={disabled}
+                aria-checked={indeterminate ? "mixed" : checked}
                 {...otherProps}
             />
             {renderIcon()}

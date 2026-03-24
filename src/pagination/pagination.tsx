@@ -5,12 +5,12 @@ import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
-
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { InputSelect } from "../input-select";
-import { MediaWidths } from "../spec/media-spec";
+import { Breakpoint } from "../theme";
 import {
+    EllipsisButton,
     EllipsisContainer,
     Hover,
     InputSelectWrapper,
@@ -18,7 +18,6 @@ import {
     Label,
     LabelDivider,
     NavigationButton,
-    NavigationItem,
     PageItem,
     PaginationList,
     PaginationMenu,
@@ -26,6 +25,9 @@ import {
     PaginationWrapper,
 } from "./pagination.styles";
 import { PageSizeItemProps, PaginationProps } from "./types";
+import { ThemeContext } from "styled-components";
+import { VisuallyHidden } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 
 const Component = (
     {
@@ -46,17 +48,20 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+
+    const theme = useContext(ThemeContext);
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
+        maxWidth: mobileBreakpoint,
     });
-    const options: PageSizeItemProps[] = pageSizeOptions;
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const [inputText, setInputText] = useState<string>("");
 
-    const [selectedOption, setSelectedOption] = useState<PageSizeItemProps>(
-        options && options.length >= 1 ? options[0] : null
-    );
+    const [selectedOption, setSelectedOption] = useState<
+        PageSizeItemProps | undefined
+    >(pageSizeOptions[0]);
     const [pageSizeLocal, setPageSize] = useState<number>(
         !isMobile && showPageSizeChanger
             ? selectedOption
@@ -67,6 +72,9 @@ const Component = (
 
     const boundaryRange = 1;
     const siblingRange = 1;
+
+    const internalId = useRef(SimpleIdGenerator.generate());
+    const paginationId = `${internalId.current}-pagination`;
 
     const totalPages = Math.ceil(totalItems / pageSizeLocal);
     const isFirstPage = activePage === 1;
@@ -87,10 +95,6 @@ const Component = (
             ? () =>
                   handlePaginationItemClick(parseInt(activePage.toString()) + 1)
             : undefined;
-    const hoverAction = (isStart: boolean) =>
-        isStart ? () => onHoverLeftButton() : () => onHoverRightButton();
-    const blurAction = (isStart: boolean) =>
-        isStart ? () => onBlurLeftButton() : () => onBlurRightButton();
 
     // =============================================================================
     // EFFECTS
@@ -104,7 +108,7 @@ const Component = (
     useEffect(() => {
         setPageSize(pageSize);
         setSelectedOption(
-            options.find((option) => option.value === pageSize) ?? null
+            pageSizeOptions.find((option) => option.value === pageSize)
         );
     }, [pageSize]);
 
@@ -162,7 +166,7 @@ const Component = (
     const handleInputSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         if (inputText) {
-            onPageChange(parseInt(inputText));
+            onPageChange?.(parseInt(inputText));
         }
     };
 
@@ -195,6 +199,7 @@ const Component = (
             onPageSizeChange(page, pagesize);
         }
     };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -211,7 +216,7 @@ const Component = (
                         key={pageIndex}
                         onClick={() => handlePaginationItemClick(pageIndex)}
                         $selected={active}
-                        aria-label={"Page " + pageIndex}
+                        aria-label={`page ${pageIndex} of ${totalPages}`}
                         aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltips}
                         onFocus={closeAllTooltips}
@@ -224,12 +229,15 @@ const Component = (
             const ellipsisStart =
                 activePage + siblingRange > startRange &&
                 pageIndex === boundaryRange + 1;
+            if (ellipsisStart) {
+                return renderStartEllipsis(pageIndex);
+            }
+
             const ellipsisEnd =
                 activePage - siblingRange <= endRange &&
                 pageIndex === totalPages - boundaryRange - 1;
-
-            if (ellipsisStart || ellipsisEnd) {
-                return renderEllipsis(ellipsisStart, ellipsisEnd, pageIndex);
+            if (ellipsisEnd) {
+                return renderEndEllipsis(pageIndex);
             }
 
             const paginationStart =
@@ -250,7 +258,7 @@ const Component = (
                         key={pageIndex}
                         onClick={() => handlePaginationItemClick(pageIndex)}
                         $selected={active}
-                        aria-label={"Page " + pageIndex}
+                        aria-label={`page ${pageIndex} of ${totalPages}`}
                         aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltips}
                         onFocus={closeAllTooltips}
@@ -263,38 +271,48 @@ const Component = (
             return null;
         });
     };
-    const renderEllipsis = (
-        ellipsisStart: boolean,
-        ellipsisEnd: boolean,
-        pageIndex: number
-    ) => (
+
+    const renderStartEllipsis = (pageIndex: number) => (
         <EllipsisContainer key={pageIndex}>
-            <NavigationItem
+            <EllipsisButton
                 focusHighlight={false}
                 focusOutline="browser"
-                aria-label={ellipsisStart ? "Previous 5 pages" : "Next 5 pages"}
-                onMouseOver={hoverAction(ellipsisStart)}
-                onMouseOut={blurAction(ellipsisStart)}
-                onFocus={hoverAction(ellipsisStart)}
-                onBlur={blurAction(ellipsisStart)}
-                onClick={
-                    ellipsisStart
-                        ? handleFastBackwardClick
-                        : handleFastForwardClick
-                }
+                aria-label={"Previous 5 pages"}
+                onMouseEnter={onHoverLeftButton}
+                onMouseLeave={onBlurLeftButton}
+                onFocus={onHoverLeftButton}
+                onBlur={onBlurLeftButton}
+                onClick={handleFastBackwardClick}
             >
-                {ellipsisStart && hoverLeftButton ? (
+                {hoverLeftButton ? (
                     <Chevron2LeftIcon aria-hidden />
-                ) : ellipsisEnd && hoverRightButton ? (
+                ) : (
+                    <EllipsisHorizontalIcon aria-hidden />
+                )}
+            </EllipsisButton>
+            {hoverLeftButton && <Hover>Previous 5 pages</Hover>}
+        </EllipsisContainer>
+    );
+
+    const renderEndEllipsis = (pageIndex: number) => (
+        <EllipsisContainer key={pageIndex}>
+            <EllipsisButton
+                focusHighlight={false}
+                focusOutline="browser"
+                aria-label={"Next 5 pages"}
+                onMouseEnter={onHoverRightButton}
+                onMouseLeave={onBlurRightButton}
+                onFocus={onHoverRightButton}
+                onBlur={onBlurRightButton}
+                onClick={handleFastForwardClick}
+            >
+                {hoverRightButton ? (
                     <Chevron2RightIcon aria-hidden />
                 ) : (
                     <EllipsisHorizontalIcon aria-hidden />
                 )}
-            </NavigationItem>
-            {ellipsisStart && hoverLeftButton && (
-                <Hover>Previous 5 pages</Hover>
-            )}
-            {ellipsisEnd && hoverRightButton && <Hover>Next 5 pages</Hover>}
+            </EllipsisButton>
+            {hoverRightButton && <Hover>Next 5 pages</Hover>}
         </EllipsisContainer>
     );
 
@@ -308,6 +326,7 @@ const Component = (
                     type="numeric"
                     id={(id || "pagination") + "-input"}
                     data-testid={(dataTestId || "pagination") + "-input"}
+                    aria-label={`Page ${activePage} of ${totalPages}`}
                 />
             </form>
             <LabelDivider>/</LabelDivider>
@@ -321,8 +340,11 @@ const Component = (
             ref={ref}
             id={id || "pagination-wrapper"}
             data-testid={dataTestId || "pagination"}
-            aria-label="Pagination"
+            aria-labelledby={paginationId}
         >
+            <VisuallyHidden id={paginationId} aria-hidden>
+                pagination
+            </VisuallyHidden>
             <PaginationList>
                 <PaginationMenu>
                     {showFirstAndLastNav && (
@@ -375,7 +397,7 @@ const Component = (
             {showPageSizeChanger && !isMobile && (
                 <InputSelectWrapper>
                     <InputSelect
-                        options={options}
+                        options={pageSizeOptions}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
                         displayValueExtractor={(item) => item.label}
@@ -390,7 +412,7 @@ const Component = (
 export const Pagination = React.forwardRef(Component);
 
 const DEFAULT_OPTIONS: PageSizeItemProps[] = [
-    { value: 10, label: "10 / page" },
-    { value: 20, label: "20 / page" },
-    { value: 30, label: "30 / page" },
+    { value: 10, label: "10 per page" },
+    { value: 20, label: "20 per page" },
+    { value: 30, label: "30 per page" },
 ];

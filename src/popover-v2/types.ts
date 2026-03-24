@@ -1,21 +1,18 @@
 import { RefObject } from "react";
 
-/**
- * Props for the PopoverV2 component - floating content bubble (v2).
- *
- * The base popover bubble controlled via `visible`. For most use cases
- * prefer `PopoverV2.Trigger` which handles positioning automatically.
- *
- * @see PopoverV2TriggerProps for the recommended usage via the Trigger wrapper.
- * @keywords floating popover, anchored tooltip, positioned overlay, info bubble v2, floating-ui popover
- */
-export interface PopoverV2Props {
+export interface PopoverV2Props extends PopoverRenderProps {
     children: string | JSX.Element;
     visible?: boolean | undefined;
     id?: string | undefined;
     className?: string | undefined;
     "data-testid"?: string | undefined;
     onMobileClose?: (() => void) | undefined;
+    ariaLabel?: string | undefined;
+}
+
+export interface PopoverRenderProps {
+    overflow?: PopoverOverflowType | undefined;
+    maxHeight?: number | undefined;
 }
 
 export type PopoverV2TriggerType = "click" | "hover";
@@ -24,53 +21,57 @@ type Position = "top" | "right" | "bottom" | "left";
 type Alignment = "start" | "end";
 type AlignedPosition = `${Position}-${Alignment}`;
 
+export type PopoverOverflowType =
+    | "visible"
+    | "hidden"
+    | "clip"
+    | "scroll"
+    | "auto";
+
 export type PopoverV2Position = Position | AlignedPosition;
 
-/**
- * Props for the PopoverV2.Trigger component - positioning wrapper with popover.
- *
- * Wraps any trigger element and positions a floating popover next to it.
- * Uses `@floating-ui` for accurate placement and supports 12 position options.
- *
- * @example
- * ```tsx
- * <PopoverV2.Trigger popoverContent="More info" trigger="hover">
- *     <InfoIcon />
- * </PopoverV2.Trigger>
- * ```
- */
 export interface PopoverV2TriggerProps {
-    /** The trigger element the popover is anchored to. */
     children: React.ReactNode;
-    /** The content to display inside the popover. */
-    popoverContent: string | JSX.Element | (() => React.ReactNode);
-    /**
-     * The interaction that opens the popover.
-     *
-     * @default "click"
-     */
+    popoverContent:
+        | string
+        | JSX.Element
+        | ((renderProps: PopoverRenderProps) => React.ReactNode);
     trigger?: PopoverV2TriggerType | undefined;
-    /**
-     * The position of the popover relative to its trigger.
-     *
-     * @default "top"
-     */
     position?: PopoverV2Position | undefined;
-    /** Unique id attribute forwarded to the popover element. */
     id?: string | undefined;
-    /** CSS class selector for the trigger wrapper. */
+    zIndex?: number | undefined;
     className?: string | undefined;
-    /** The test identifier for the component. */
     "data-testid"?: string | undefined;
     /**
-     * The container element used as the portal root for the popover.
+     * The root element that contains the popover element. Defaults to the document body.
      *
-     * Specify a parent with a higher stacking context if the popover is
-     * obscured by sibling elements. Defaults to `document.body`.
+     * If the parent that contains the trigger element has a higher z-index than the popover,
+     * the popover may not be visible. Specify the parent element here instead
      */
     rootNode?: RefObject<HTMLElement> | undefined;
-    /** Called when the popover becomes visible. */
+    customOffset?: number | undefined;
+    // in milliseconds
+    delay?:
+        | { open?: number | undefined; close?: number | undefined }
+        | undefined;
+    enableFlip?: boolean | undefined;
+    /* if the popover will resize to fit the remaining vertical space and contents become scrollable */
+    enableResize?: boolean | undefined;
+    overflow?: PopoverOverflowType | undefined;
+    popoverAriaLabel?: string | undefined;
+    triggerOnFocus?: boolean | undefined;
+    isModal?: boolean | undefined;
     onPopoverAppear?: (() => void) | undefined;
-    /** Called when the popover is dismissed. */
     onPopoverDismiss?: (() => void) | undefined;
+}
+
+export type PopoverInlineStyle = "default" | "underline" | "underline-dashed";
+
+export interface PopoverInlineProps
+    extends Omit<PopoverV2TriggerProps, "children"> {
+    ariaLabel?: string | undefined;
+    content?: React.ReactNode | undefined;
+    icon?: JSX.Element | undefined;
+    underlineStyle?: PopoverInlineStyle | undefined;
+    underlineHoverStyle?: PopoverInlineStyle | undefined;
 }

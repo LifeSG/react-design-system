@@ -1,3 +1,4 @@
+import { RefObject } from "react";
 import {
     CommonCalendarProps,
     YearMonthDisplay,
@@ -24,10 +25,18 @@ export interface DateInputProps extends CommonCalendarProps {
     // Standard HTML Attributes
     className?: string | undefined;
     id?: string | undefined;
+    /**
+     * The root element that contains the dropdown element. Defaults to the document body.
+     *
+     * If the parent that contains the trigger element has a higher z-index than the dropdown,
+     * the dropdown may not be visible. Specify the parent element here instead
+     */
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
 
     // Input-specific Attributes
     "data-testid"?: string | undefined;
     readOnly?: boolean | undefined;
+    hideInputKeyboard?: boolean | undefined;
     /**
      * The value of the date input in "YYYY-MM-DD" or "YYYY-M-D" string format.
      */
@@ -39,6 +48,8 @@ export interface DateInputProps extends CommonCalendarProps {
      * Is restricted to `true` on mobile viewports
      */
     withButton?: boolean | undefined;
+    /** The z-index of the calendar dropdown */
+    zIndex?: number | undefined;
     /**
      * Function that returns when a valid selection is made. Returns the start
      * date in "YYYY-MM-DD" string format.

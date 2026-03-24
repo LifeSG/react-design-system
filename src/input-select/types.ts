@@ -1,135 +1,79 @@
+import { RefObject } from "react";
 import {
+    DropdownCustomLabelProps,
     DropdownDisplayProps,
     DropdownSearchProps,
-    DropdownStyleProps,
+    DropdownVariantType,
     ItemsLoadStateType,
     TruncateType,
-} from "../shared/dropdown-list/types";
+} from "../shared/dropdown-list-v2/types";
+import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 // =============================================================================
 // SHARED PROPS
 // =============================================================================
 export interface InputSelectOptionsProps<T> {
-    /** The list of options to display in the dropdown. */
     options: T[];
     /**
-     * The async load state of the options list.
-     *
-     * - `"loading"`: Shows a loading spinner.
-     * - `"fail"`: Shows an error state with a retry action.
-     * - `"success"`: Options are loaded and displayed.
-     *
-     * @default undefined
+     * Used when options are loaded from an api call.
+     * Values: "loading" | "fail" | "success"
      */
     optionsLoadState?: ItemsLoadStateType | undefined;
-    /**
-     * Controls how long option labels are truncated.
-     *
-     * - `"middle"`: Truncates the middle of the text with an ellipsis.
-     * - `"end"`: Truncates the end of the text with an ellipsis.
-     *
-     * @default undefined
-     */
+    /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
     optionTruncationType?: TruncateType | undefined;
-    /** Called when the dropdown list is opened. */
+
     onShowOptions?: (() => void) | undefined;
-    /** Called when the dropdown list is closed. */
     onHideOptions?: (() => void) | undefined;
-    /** Called when the user triggers the retry action after a failed load. */
     onRetry?: (() => void) | undefined;
 }
 
-/**
- * Shared props used by both InputSelect and InputMultiSelect.
- */
 export interface InputSelectSharedProps<T> {
-    /** The HTML `name` attribute forwarded to the hidden form input. */
+    /** HTML button props */
     name?: string | undefined;
-    /** The list of options to display in the dropdown. */
+    /** Component specific props */
     options: T[];
-    /** Placeholder text shown in the trigger when no option is selected. */
     placeholder?: string | undefined;
-    /**
-     * Disables the input and prevents interaction.
-     *
-     * @default false
-     */
     disabled?: boolean | undefined;
-    /**
-     * Applies error styling to indicate an invalid selection.
-     *
-     * @default false
-     */
     error?: boolean | undefined;
-    /**
-     * Sets the `data-testid` attribute for targeting the element in automated tests.
-     */
     "data-testid"?: string | undefined;
 }
 
 // =============================================================================
 // INPUT SELECT PROPS
 // =============================================================================
-/**
- * Props for the InputSelect component - single-option dropdown selector.
- *
- * Allows the user to choose one option from a scrollable dropdown list.
- * Supports async option loading, search, custom rendering, and controlled or
- * uncontrolled selected state. For multi-option selection use `InputMultiSelect`.
- *
- * @example
- * ```tsx
- * <InputSelect
- *     options={countries}
- *     valueExtractor={(item) => item.code}
- *     listExtractor={(item) => item.name}
- *     onSelectOption={(option, value) => setValue(value)}
- * />
- * ```
- * @keywords dropdown, combobox, select box, picker, option list
- */
 export interface InputSelectProps<T, V>
     extends React.HTMLAttributes<HTMLElement>,
         InputSelectOptionsProps<T>,
         InputSelectSharedProps<T>,
         DropdownDisplayProps<T, V>,
-        DropdownSearchProps<T>,
-        DropdownStyleProps {
-    /**
-     * Makes the input read-only, preventing user changes while still displaying the current value.
-     *
-     * @default false
-     */
+        DropdownSearchProps<T> {
+    // TODO: should be a common state once all variants implement this
     readOnly?: boolean | undefined;
-    /** The currently selected option object. */
     selectedOption?: T | undefined;
-    /**
-     * Called when the user selects an option from the dropdown.
-     *
-     * @param option - The full selected item object.
-     * @param extractedValue - The extracted value derived by `valueExtractor`.
-     */
     onSelectOption?: ((option: T, extractedValue: V) => void) | undefined;
-    /**
-     * Derives the display string shown in the trigger for the selected option.
-     *
-     * @param option - The currently selected item object.
-     */
+    /** Function to derive display value for selected option */
     displayValueExtractor?: ((option: T) => string) | undefined;
-    /**
-     * Converts the extracted value to a human-readable string representation.
-     *
-     * @param value - The extracted value.
-     */
+    /** Function to convert value into a string */
     valueToStringFunction?: ((value: V) => string) | undefined;
-    /**
-     * Renders a custom component inside the dropdown trigger for the selected option.
-     *
-     * @param option - The currently selected item object.
-     */
+    /** Function to render selected custom component */
     renderCustomSelectedOption?: ((option: T) => JSX.Element) | undefined;
-    /** Called when the dropdown loses focus. */
     onBlur?: (() => void) | undefined;
+    variant?: DropdownVariantType | undefined;
+    alignment?: DropdownAlignmentType | undefined;
+    dropdownZIndex?: number | undefined;
+    /**
+     * The root element that contains the dropdown element. Defaults to the document body.
+     *
+     * If the parent that contains the trigger element has a higher z-index than the dropdown,
+     * the dropdown may not be visible. Specify the parent element here instead
+     */
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
+    /**
+     * Custom width for the dropdown in pixels. When specified, the dropdown will use this
+     * width instead of matching the input element width.
+     */
+    dropdownWidth?: string | undefined;
+    customLabels?: DropdownCustomLabelProps | undefined;
 }
 
 /** To be exposed for Form component inheritance */

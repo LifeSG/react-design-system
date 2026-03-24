@@ -7,7 +7,8 @@ export type PillColorType =
     | "green"
     | "yellow"
     | "red"
-    | "blue";
+    | "blue"
+    | "primary";
 
 /**
  * Props for the Pill component - compact label badge.

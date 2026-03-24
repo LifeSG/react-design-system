@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { CrossIcon } from "@lifesg/react-icons";
+import React, { NamedExoticComponent, useEffect, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 import {
+    AccessibleBannerButton,
+    ActionButton,
     Container,
     Content,
+    ContentContainer,
+    ContentText,
+    ContentWrapper,
+    IconContainer,
     ContentLink as NBLink,
-    StyledIcon,
     StyledIconButton,
-    TextContainer,
     Wrapper,
 } from "./notification-banner.styles";
 import {
@@ -21,14 +27,19 @@ export const NBComponent = ({
     onDismiss,
     id,
     forwardedRef,
+    maxCollapsedHeight,
+    onClick,
+    actionButton,
+    icon,
     ...otherProps
-}: NotificationBannerWithForwardedRefProps): JSX.Element => {
+}: NotificationBannerWithForwardedRefProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const testId = otherProps["data-testid"];
 
     const [isVisible, setVisible] = useState<boolean>(visible);
+    const { height: contentHeight = 0, ref: contentRef } = useResizeDetector();
 
     // =============================================================================
     // EFFECTS
@@ -40,10 +51,22 @@ export const NBComponent = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleDismiss = () => {
+    const handleDismiss = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.stopPropagation();
         setVisible(false);
 
         if (dismissible && onDismiss) onDismiss();
+    };
+
+    const handleActionButtonOnClick = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        if (!actionButton?.onClick) {
+            // let it bubble
+            return;
+        }
+        event.stopPropagation();
+        actionButton.onClick(event);
     };
 
     // =============================================================================
@@ -51,25 +74,73 @@ export const NBComponent = ({
     // =============================================================================
     if (!isVisible) return null;
 
+    const renderDismissButton = () => (
+        <StyledIconButton
+            tabIndex={0}
+            onClick={handleDismiss}
+            id={formatId("dismiss-button", id)}
+            data-testid={formatId("dismiss-button", testId)}
+            focusOutline="browser"
+            focusHighlight={false}
+            type="button"
+            aria-label="close"
+        >
+            <CrossIcon aria-hidden />
+        </StyledIconButton>
+    );
+
+    const renderActionButton = () => {
+        if (!actionButton) return null;
+
+        return (
+            <ActionButton
+                id={formatId("action-button", id)}
+                data-testid={formatId("action-button", testId)}
+                type="button"
+                {...actionButton}
+                onClick={handleActionButtonOnClick}
+            >
+                {actionButton.children}
+            </ActionButton>
+        );
+    };
+
+    const renderContent = () => (
+        <Content data-testid={formatId("text-content", testId)}>
+            <ContentWrapper>
+                <ContentText
+                    $maxCollapsedHeight={
+                        maxCollapsedHeight && contentHeight > maxCollapsedHeight
+                            ? maxCollapsedHeight
+                            : undefined
+                    }
+                >
+                    <div ref={contentRef}>{children}</div>
+                </ContentText>
+                {renderActionButton()}
+            </ContentWrapper>
+        </Content>
+    );
+
+    const renderAccessibleBannerButton = () => (
+        <AccessibleBannerButton aria-label={"Clickable banner"} type="button" />
+    );
+
     return (
-        <Wrapper ref={forwardedRef} $sticky={sticky} {...otherProps}>
+        <Wrapper
+            ref={forwardedRef}
+            $sticky={sticky}
+            $clickable={!!onClick}
+            onClick={onClick}
+            role="region"
+            {...otherProps}
+        >
             <Container id={formatId("container", id)}>
-                <TextContainer>
-                    <Content data-testid={formatId("text-content", testId)}>
-                        {children}
-                    </Content>
-                </TextContainer>
-                {dismissible && (
-                    <StyledIconButton
-                        onClick={handleDismiss}
-                        id={formatId("dismiss-button", id)}
-                        data-testid={formatId("dismiss-button", testId)}
-                        focusHighlight={false}
-                    >
-                        <StyledIcon />
-                    </StyledIconButton>
-                )}
+                {icon && <IconContainer aria-hidden>{icon}</IconContainer>}
+                <ContentContainer>{renderContent()}</ContentContainer>
+                {dismissible && renderDismissButton()}
             </Container>
+            {onClick && renderAccessibleBannerButton()}
         </Wrapper>
     );
 };
@@ -95,6 +166,7 @@ const formatId = (componentName: string, id = "wrapper"): string => {
 // EXPORTABLE
 // =============================================================================
 const Base = React.forwardRef(NBWithRef);
+(Base as NamedExoticComponent).displayName = "NotificationBanner";
 export const NotificationBanner = Object.assign(Base, {
     Link: NBLink,
 });

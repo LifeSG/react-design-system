@@ -1,7 +1,9 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    TabAttribute,
+    Tabs,
+} from "stories/storybook-common";
 
 const FILTER_CHECKBOX_DATA: ApiTableSectionProps[] = [
     {
@@ -33,9 +35,27 @@ const FILTER_CHECKBOX_DATA: ApiTableSectionProps[] = [
                 propTypes: ["T[]"],
             },
             {
+                name: "minimisableOptions",
+                description: "Whether the options can be minimised",
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
+            {
+                name: "showAsCheckboxInMobile",
+                description: "Display as checkbox list in mobile view",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
                 name: "onSelect",
                 description: "Called when selection changes",
                 propTypes: ["(options: T[]) => void"],
+            },
+            {
+                name: "useToggleContentWidth",
+                description:
+                    "Changes the minimum width of the checkbox toggle to fit its content (on mobile)",
+                propTypes: ["boolean"],
             },
             {
                 name: "labelExtractor",

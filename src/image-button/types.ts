@@ -24,4 +24,5 @@ export interface ImageButtonProps
     selected?: boolean | undefined;
     /** Shows the error border state when `true`. */
     error?: boolean | undefined;
+    focusableWhenDisabled?: boolean | undefined;
 }
