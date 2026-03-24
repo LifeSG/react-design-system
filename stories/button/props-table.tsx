@@ -21,7 +21,6 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "styleType",
-                mandatory: true,
                 description: (
                     <>
                         The style of the <code>Button</code>
@@ -29,6 +28,25 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: [`"default"`, `"secondary"`, `"light"`, `"link"`],
                 defaultValue: `"default"`,
+            },
+            {
+                name: "size",
+                description: "The size of the button",
+                propTypes: [`"large"`, `"default"`, `"small"`],
+                defaultValue: `"default"`,
+            },
+            {
+                name: "icon",
+                description:
+                    "An icon element rendered inside the button. When provided without children, the button renders in icon-only (square) mode. Provide aria-label on the button for accessibility when in icon-only mode.",
+                propTypes: ["JSX.Element"],
+            },
+            {
+                name: "iconPosition",
+                description:
+                    "Position of the icon relative to the label. Only applies when children are also provided.",
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"left"`,
             },
             {
                 name: "loading",

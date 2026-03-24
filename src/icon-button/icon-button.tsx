@@ -1,7 +1,7 @@
 import React from "react";
 
-import type { ButtonRef } from "../button/types";
-import { Main } from "./icon-button.style";
+import { Button } from "../button/button";
+import type { ButtonRef, ButtonStyleType } from "../button/types";
 import type { IconButtonProps } from "./types";
 
 const Component = (
@@ -11,27 +11,23 @@ const Component = (
         children,
         sizeType = "default",
         type = "button",
-        disabled = false,
-        focusableWhenDisabled = false,
-        onClick,
         ...otherProps
     }: IconButtonProps,
     ref: ButtonRef
 ) => {
+    const mappedStyleType: ButtonStyleType =
+        styleType === "primary" ? "default" : styleType;
+
     return (
-        <Main
+        <Button
             data-testid={dataTestId || "iconButton"}
             ref={ref}
             type={type}
-            $styleType={disabled ? "disabled" : styleType}
-            $sizeType={sizeType}
-            aria-disabled={disabled}
-            disabled={disabled && !focusableWhenDisabled}
-            onClick={disabled ? undefined : onClick}
+            styleType={mappedStyleType}
+            size={sizeType}
+            icon={children as JSX.Element}
             {...otherProps}
-        >
-            {children}
-        </Main>
+        />
     );
 };
 
