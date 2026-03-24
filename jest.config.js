@@ -12,7 +12,11 @@ module.exports = {
         "\\.(css|less)$": "identity-obj-proxy",
     },
     moduleDirectories: ["node_modules", "<rootDir>"],
-    setupFilesAfterEnv: ["jest-canvas-mock", "@testing-library/jest-dom"],
+    setupFilesAfterEnv: [
+        "jest-canvas-mock",
+        "@testing-library/jest-dom",
+        "<rootDir>/tests/setup.ts",
+    ],
     reporters: ["default", ["jest-junit", { outputName: "junit.xml" }]],
     maxWorkers: "50%",
 };
