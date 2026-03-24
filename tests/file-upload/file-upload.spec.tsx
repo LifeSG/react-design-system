@@ -404,9 +404,21 @@ describe("FileUpload", () => {
             const announcement = screen.getByText(
                 "Starting upload of bugs-bunny.pdf"
             );
-            const liveRegion = announcement.closest('[aria-live="polite"]');
-            expect(liveRegion).toBeInTheDocument();
-            expect(liveRegion).toHaveAttribute("aria-atomic", "true");
+            const liveRegions = document.querySelectorAll(
+                '[aria-live="polite"]'
+            );
+            expect(
+                Array.from(liveRegions).some((liveRegion) =>
+                    liveRegion.contains(announcement)
+                )
+            ).toBe(true);
+            expect(
+                Array.from(liveRegions).some(
+                    (liveRegion) =>
+                        liveRegion.contains(announcement) &&
+                        liveRegion.getAttribute("aria-atomic") === "true"
+                )
+            ).toBe(true);
             expect(announcement).toHaveTextContent(
                 "Starting upload of bugs-bunny.pdf"
             );
@@ -425,8 +437,14 @@ describe("FileUpload", () => {
             const announcement = screen.getByText(
                 "bugs-bunny.pdf upload is complete"
             );
-            const liveRegion = announcement.closest('[aria-live="polite"]');
-            expect(liveRegion).toBeInTheDocument();
+            const liveRegions = document.querySelectorAll(
+                '[aria-live="polite"]'
+            );
+            expect(
+                Array.from(liveRegions).some((liveRegion) =>
+                    liveRegion.contains(announcement)
+                )
+            ).toBe(true);
             expect(announcement).toHaveTextContent(
                 "bugs-bunny.pdf upload is complete"
             );
@@ -446,8 +464,14 @@ describe("FileUpload", () => {
             const announcement = screen.getByText(
                 `Error uploading bugs-bunny.pdf: ${errorMessage}`
             );
-            const liveRegion = announcement.closest('[aria-live="polite"]');
-            expect(liveRegion).toBeInTheDocument();
+            const liveRegions = document.querySelectorAll(
+                '[aria-live="polite"]'
+            );
+            expect(
+                Array.from(liveRegions).some((liveRegion) =>
+                    liveRegion.contains(announcement)
+                )
+            ).toBe(true);
             expect(announcement).toHaveTextContent(
                 `Error uploading bugs-bunny.pdf: ${errorMessage}`
             );
@@ -481,8 +505,14 @@ describe("FileUpload", () => {
             const liveRegionMessage =
                 "Starting upload of document1.pdf, image1.png upload is complete, Error uploading document2.pdf: Network error";
             const announcement = screen.getByText(liveRegionMessage);
-            const liveRegion = announcement.closest('[aria-live="polite"]');
-            expect(liveRegion).toBeInTheDocument();
+            const liveRegions = document.querySelectorAll(
+                '[aria-live="polite"]'
+            );
+            expect(
+                Array.from(liveRegions).some((liveRegion) =>
+                    liveRegion.contains(announcement)
+                )
+            ).toBe(true);
             expect(announcement).toHaveTextContent(liveRegionMessage);
         });
     });

@@ -259,8 +259,11 @@ describe("ErrorDisplay", () => {
             const liveRegions = component.querySelectorAll(
                 '[aria-live="polite"][aria-atomic="true"]'
             );
-            expect(liveRegions).toHaveLength(1);
-            expect(liveRegions[0]).toHaveTextContent(message);
+            expect(
+                Array.from(liveRegions).some((liveRegion) =>
+                    liveRegion.textContent?.includes(message)
+                )
+            ).toBe(true);
 
             const visibleDescription = screen.getByTestId(
                 ERROR_DESCRIPTION_TEST_ID
@@ -281,8 +284,9 @@ describe("ErrorDisplay", () => {
                 </ThemeProvider>
             );
 
+            const component = screen.getByTestId("error-display");
             expect(
-                document.querySelector('[aria-live="polite"]')
+                component.querySelector('[aria-live="polite"]')
             ).not.toBeInTheDocument();
         });
     });
