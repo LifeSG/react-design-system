@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import type React from "react";
 
 import { applyHtmlContentStyle } from "../shared/html-content/html-content";
@@ -23,10 +22,6 @@ export const FormLabel = ({
     style,
     ...otherProps
 }: FormLabelProps): JSX.Element => {
-    const labelClassName = (
-        otherProps as React.LabelHTMLAttributes<HTMLLabelElement>
-    ).className;
-
     // -------------------------------------------------------------------------
     // RENDER FUNCTIONS
     // -------------------------------------------------------------------------
@@ -47,7 +42,7 @@ export const FormLabel = ({
         >
             <Label
                 id={id}
-                className={clsx(labelClassName, applyHtmlContentStyle())}
+                className={applyHtmlContentStyle()}
                 {...otherProps}
             >
                 {children}
