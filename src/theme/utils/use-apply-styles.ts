@@ -14,7 +14,7 @@ export type ApplyStyleMap = {
 };
 
 export function useApplyStyle<TElement extends HTMLElement>(
-    ref: RefObject<TElement>,
+    ref: RefObject<TElement | null>,
     styles: ApplyStyleMap
 ) {
     useIsomorphicLayoutEffect(() => {
