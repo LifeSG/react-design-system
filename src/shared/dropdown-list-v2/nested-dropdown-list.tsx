@@ -2,7 +2,6 @@ import { CaretRightIcon } from "@lifesg/react-icons/caret-right";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 
-import { Spinner } from "../../button/button.style";
 import {
     mergeRefs,
     useEvent,
@@ -22,6 +21,7 @@ import {
     SelectAllButton,
     SelectAllContainer,
     SelectedIndicator,
+    Spinner,
     TryAgainButton,
 } from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
@@ -480,7 +480,7 @@ export const NestedDropdownList = <T,>({
         if (onRetry && itemsLoadState === "loading") {
             return (
                 <ResultStateContainer data-testid="list-loading">
-                    <Spinner $hasChildren={true} />
+                    <Spinner />
                     Loading...
                 </ResultStateContainer>
             );
