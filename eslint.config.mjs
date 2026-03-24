@@ -173,6 +173,7 @@ export default defineConfig([
         plugins: { "react-hooks": reactHooks, local: localRules },
         rules: {
             "local/import-path-preferences": "warn",
+            "local/style-namespace-import": "warn",
             "react-hooks/exhaustive-deps": [
                 "warn",
                 {

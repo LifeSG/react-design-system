@@ -1,10 +1,18 @@
+import tsParser from "@typescript-eslint/parser";
 import { RuleTester } from "eslint";
 
 import localRules from "../../eslint-local-rules/import-path-preferences.mjs";
 
 const rule = localRules.rules["import-path-preferences"];
+const styleNamespaceImportRule = localRules.rules["style-namespace-import"];
 
-const ruleTester = new RuleTester();
+const ruleTester = new RuleTester({
+    languageOptions: {
+        parser: tsParser,
+        ecmaVersion: 2020,
+        sourceType: "module",
+    },
+});
 
 ruleTester.run("import-path-preferences", rule, {
     valid: [
@@ -98,6 +106,55 @@ ruleTester.run("import-path-preferences", rule, {
             code: 'import * as DesignSystem from "../../../src";',
             output: 'import * as DesignSystem from "@lifesg/react-design-system";',
             errors: [{ messageId: "nextjsPackage" }],
+        },
+    ],
+});
+
+ruleTester.run("style-namespace-import", styleNamespaceImportRule, {
+    valid: [
+        {
+            name: "namespace import from .style path",
+            code: 'import * as styles from "./button.style";',
+        },
+        {
+            name: "namespace import from .styles path",
+            code: 'import * as styles from "./button.styles";',
+        },
+        {
+            name: "side-effect style import is allowed",
+            code: 'import "./button.style";',
+        },
+        {
+            name: "non-style import can use named import",
+            code: 'import { Button } from "./button";',
+        },
+        {
+            name: "type namespace import from .style path",
+            code: 'import type * as styles from "./button.style";',
+        },
+        {
+            name: "type named import from .style path is ignored",
+            code: 'import type { MainStyleProps } from "./button.style";',
+        },
+    ],
+    invalid: [
+        {
+            name: "named import from .style path is rejected",
+            code: 'import { Main } from "./button.style";',
+            output: 'import * as styles from "./button.style";',
+            errors: [{ messageId: "namespaceStyleImport" }],
+        },
+        {
+            name: "default import from .styles path is rejected",
+            code: 'import styles from "./button.styles";',
+            output: 'import * as styles from "./button.styles";',
+            errors: [{ messageId: "namespaceStyleImport" }],
+        },
+        {
+            name: "default + namespace import is reduced to namespace only",
+            code: 'import buttonStyle, * as styles from "./button.style";',
+            output: 'import * as styles from "./button.style";',
+            errors: [{ messageId: "namespaceStyleImport" }],
         },
     ],
 });
