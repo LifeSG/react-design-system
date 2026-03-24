@@ -62,7 +62,7 @@ describe("PredictiveTextInput", () => {
             "Type in 3 or more characters for suggested results."
         );
 
-        expect(instruction.id).toBeTruthy();
+        expect(instruction).toBeInTheDocument();
         expect(input).toHaveAccessibleDescription(
             "Type in 3 or more characters for suggested results."
         );

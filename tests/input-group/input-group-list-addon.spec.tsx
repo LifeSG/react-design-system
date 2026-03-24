@@ -530,12 +530,6 @@ describe("InputGroup - List addon", () => {
                 screen.getByRole("textbox", { name: textboxLabel })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("textbox", { name: textboxLabel })
-            ).toHaveAccessibleName(textboxLabel);
-            expect(
-                screen.getByRole("combobox", { name: comboboxLabel })
-            ).toHaveAccessibleName(comboboxLabel);
-            expect(
                 screen.getByRole("combobox", { name: comboboxLabel })
             ).toHaveAccessibleDescription(DROPDOWN_INSTRUCTION);
         });

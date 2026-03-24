@@ -10,7 +10,6 @@ export type AlertType =
 export type AlertSizeType = "default" | "small";
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
     type: AlertType;
-    children?: React.ReactNode;
     "data-testid"?: string | undefined;
     actionLink?: React.AnchorHTMLAttributes<HTMLAnchorElement> | undefined;
     showIcon?: boolean | undefined;
