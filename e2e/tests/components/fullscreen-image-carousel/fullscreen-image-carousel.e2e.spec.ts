@@ -29,7 +29,7 @@ const test = base.extend<{ story: StoryPage }>({
 test.describe("FullscreenImageCarousel", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("loading-and-error-states");
+            await story.init("error-state");
         });
 
         test("Placeholder (image error state)", async ({ story }) => {
@@ -49,7 +49,7 @@ test.describe("FullscreenImageCarousel", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("loading-and-error-states", { mode: "dark" });
+            await story.init("error-state", { mode: "dark" });
         });
 
         test("Placeholder (dark mode)", async ({ story }) => {
