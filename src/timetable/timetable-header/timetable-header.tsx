@@ -78,13 +78,12 @@ export const TimeTableHeader = ({
                     <StyledRefreshButton
                         data-testid="timetable-records-refresh-btn"
                         styleType="light"
-                        sizeType="small"
+                        size="small"
                         disabled={loading}
                         onClick={handleRefresh}
                         $loading={loading}
-                    >
-                        <RefreshIcon />
-                    </StyledRefreshButton>
+                        icon={<RefreshIcon />}
+                    />
                 )}
             </NavigationHeaderSubtitleWrapper>
         );

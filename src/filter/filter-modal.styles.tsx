@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import { Button } from "../button";
-import { ButtonWithIcon } from "../button-with-icon";
 import { V3_Colour, V3_Font, V3_Spacing } from "../v3_theme";
 
 // =============================================================================
@@ -61,6 +60,6 @@ export const FilterClearButton = styled(Button.Small)`
 // COMPONENT STYLES
 // =============================================================================
 
-export const FilterButton = styled(ButtonWithIcon.Default)`
+export const FilterButton = styled(Button)`
     width: 100%;
 `;

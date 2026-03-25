@@ -166,15 +166,16 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
                     data-testid={`${id}-download-button`}
                     type="button"
                     styleType="light"
-                    sizeType="small"
+                    size="small"
                     aria-label={`download ${name}`}
-                >
-                    {isLoading || !ready ? (
-                        <Spinner size={16} aria-hidden />
-                    ) : (
-                        <DownloadIcon aria-hidden />
-                    )}
-                </IconButton>
+                    icon={
+                        isLoading || !ready ? (
+                            <Spinner size={16} aria-hidden />
+                        ) : (
+                            <DownloadIcon aria-hidden />
+                        )
+                    }
+                />
             </ActionContainer>
         );
     };

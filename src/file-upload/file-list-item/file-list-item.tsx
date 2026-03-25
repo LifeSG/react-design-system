@@ -268,14 +268,13 @@ const Component = ({
                             data-no-dnd="true"
                             type="button"
                             styleType="light"
-                            sizeType="small"
+                            size="small"
                             aria-label={`edit ${name}`}
                             disabled={shouldDisable()}
                             onClick={handleEdit}
                             onKeyDown={handleKeyDown}
-                        >
-                            <PencilIcon aria-hidden />
-                        </IconButton>
+                            icon={<PencilIcon aria-hidden />}
+                        />
                     )}
                     <IconButton
                         key="delete"
@@ -283,14 +282,13 @@ const Component = ({
                         data-no-dnd="true"
                         type="button"
                         styleType="light"
-                        sizeType="small"
+                        size="small"
                         aria-label={`delete ${name}`}
                         disabled={shouldDisable()}
                         onClick={handleDelete}
                         onKeyDown={handleKeyDown}
-                    >
-                        <BinIcon aria-hidden />
-                    </IconButton>
+                        icon={<BinIcon aria-hidden />}
+                    />
                 </>
             );
         }

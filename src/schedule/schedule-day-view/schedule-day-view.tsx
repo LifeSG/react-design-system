@@ -171,12 +171,11 @@ export const ScheduleDayView = ({
                                 {showPrevArrow && onPrevService && (
                                     <ArrowButton
                                         styleType="light"
-                                        sizeType="small"
+                                        size="small"
                                         onClick={onPrevService}
                                         aria-label="Previous service"
-                                    >
-                                        <ChevronLeftIcon aria-hidden />
-                                    </ArrowButton>
+                                        icon={<ChevronLeftIcon aria-hidden />}
+                                    />
                                 )}
                             </ArrowContainer>
                         )}
@@ -197,12 +196,11 @@ export const ScheduleDayView = ({
                         {isMobile && showNextArrow && onNextService && (
                             <ArrowButton
                                 styleType="light"
-                                sizeType="small"
+                                size="small"
                                 onClick={onNextService}
                                 aria-label="Next service"
-                            >
-                                <ChevronRightIcon aria-hidden />
-                            </ArrowButton>
+                                icon={<ChevronRightIcon aria-hidden />}
+                            />
                         )}
                     </ServiceColumn>
                 ))}
