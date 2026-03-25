@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "react";
 import { useRef } from "react";
 
 import { useApplyStyle } from "../../theme/utils";
-import * as styles from "./component-loading-spinner.style";
+import * as styles from "./component-loading-spinner.styles";
 
 /**
  * This component is mainly used within components and is not to be confused
