@@ -3,7 +3,7 @@ import { InboxIcon } from "@lifesg/react-icons/inbox";
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useRef, useState } from "react";
-import { IconButton } from "src/icon-button";
+import { Button } from "src/button";
 import type {
     NavbarButtonProps,
     NavbarDrawerHandle,
@@ -210,14 +210,17 @@ export const CustomActionButtons: StoryObj<Component> = {
                             type: "component",
                             args: {
                                 render: (
-                                    <IconButton>
-                                        <GearIcon
-                                            style={{
-                                                width: "1.25rem",
-                                                height: "1.25rem",
-                                            }}
-                                        />
-                                    </IconButton>
+                                    <Button
+                                        icon={
+                                            <GearIcon
+                                                style={{
+                                                    width: "1.25rem",
+                                                    height: "1.25rem",
+                                                }}
+                                            />
+                                        }
+                                        aria-label="Settings"
+                                    />
                                 ),
                             },
                         },
