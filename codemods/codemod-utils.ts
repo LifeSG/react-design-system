@@ -7,6 +7,35 @@ import type {
 } from "jscodeshift";
 
 export class CodemodUtils {
+    public static hasLocalImport(
+        source: Collection,
+        api: API,
+        importPath: string,
+        importSpecifier: string
+    ) {
+        const j: JSCodeshift = api.jscodeshift;
+
+        let imported = false;
+        source.find(j.ImportDeclaration).forEach((path) => {
+            const currentImportPath = path.node.source.value as string;
+
+            if (!currentImportPath.endsWith(importPath)) {
+                return;
+            }
+
+            path.node.specifiers?.forEach((specifier) => {
+                if (
+                    j.ImportSpecifier.check(specifier) &&
+                    specifier.imported.name === importSpecifier
+                ) {
+                    imported = true;
+                }
+            });
+        });
+
+        return imported;
+    }
+
     public static hasImport(
         source: Collection,
         api: API,
