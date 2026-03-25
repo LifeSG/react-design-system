@@ -8,7 +8,7 @@ type Component = typeof Button.Default;
 const meta: Meta<Component> = {
     title: "Selection and input/Button/Base",
     component: Button.Default,
-    tags: ["autodocs", "general", "cta", "action", "forms"],
+    tags: ["general", "cta", "action", "forms"],
     parameters: {
         docs: {
             description: {

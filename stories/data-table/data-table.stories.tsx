@@ -11,7 +11,6 @@ const meta: Meta<Component> = {
     title: "Content/DataTable",
     component: DataTable,
     tags: [
-        "autodocs",
         "data-table",
         "table",
         "data-display",
