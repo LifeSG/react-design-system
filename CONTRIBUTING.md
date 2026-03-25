@@ -42,7 +42,7 @@ Components are to be added in the `src` directory in a structure like this
 ├── src
 │	├── component-name
 │	│	├── component-name.tsx
-│	│	├── component-name.style.ts
+│	│	├── component-name.styles.ts
 │	│	├── index.tsx
 │	│	└── types.ts
 │	└── index.ts
@@ -54,7 +54,7 @@ Components are to be added in the `src` directory in a structure like this
 Where
 
 -   `component-name.tsx` contains the component src
--   `component-name.style.tsx` contains the styled components of the component
+-   `component-name.styles.ts` contains the styled components of the component
 -   `types.ts` the type definitions
 -   `index.ts` to contain the exportable of the component and its typings. This is to be reexported to `src/index.ts`
 
