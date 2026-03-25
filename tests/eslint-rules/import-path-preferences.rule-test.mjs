@@ -122,28 +122,34 @@ ruleTester.run("style-namespace-import", styleNamespaceImportRule, {
         },
         {
             name: "side-effect style import is allowed",
-            code: 'import "./button.style";',
+            code: 'import "./button.styles";',
         },
         {
             name: "non-style import can use named import",
             code: 'import { Button } from "./button";',
         },
         {
-            name: "type namespace import from .style path",
-            code: 'import type * as styles from "./button.style";',
+            name: "type namespace import from .styles path",
+            code: 'import type * as styles from "./button.styles";',
         },
         {
-            name: "type named import from .style path is ignored",
-            code: 'import type { MainStyleProps } from "./button.style";',
+            name: "type named import from .styles path is ignored",
+            code: 'import type { MainStyleProps } from "./button.styles";',
+        },
+        {
+            name: "parent-dir style import is ignored",
+            code: 'import { Main } from "../button.styles";',
+        },
+        {
+            name: "nested style import is ignored",
+            code: 'import { Main } from "./styles/button.styles";',
+        },
+        {
+            name: "named import from .style path is ignored",
+            code: 'import { Main } from "./button.style";',
         },
     ],
     invalid: [
-        {
-            name: "named import from .style path is rejected",
-            code: 'import { Main } from "./button.style";',
-            output: 'import * as styles from "./button.style";',
-            errors: [{ messageId: "namespaceStyleImport" }],
-        },
         {
             name: "default import from .styles path is rejected",
             code: 'import styles from "./button.styles";',
@@ -152,8 +158,8 @@ ruleTester.run("style-namespace-import", styleNamespaceImportRule, {
         },
         {
             name: "default + namespace import is reduced to namespace only",
-            code: 'import buttonStyle, * as styles from "./button.style";',
-            output: 'import * as styles from "./button.style";',
+            code: 'import buttonStyle, * as styles from "./button.styles";',
+            output: 'import * as styles from "./button.styles";',
             errors: [{ messageId: "namespaceStyleImport" }],
         },
     ],

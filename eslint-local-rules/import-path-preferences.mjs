@@ -13,7 +13,7 @@ const RELATIVE_STORYBOOK_COMMON_PATTERN =
 const SRC_IN_STORIES_OR_TESTS_PATTERN = /^(?:\.\.\/)+src(?:\/|$)/;
 const STORYBOOK_COMMON_IN_STORIES_PATTERN =
     /^(?:(?:\.\.\/)+|\.\/)storybook-common(?:\/|$)/;
-const STYLE_MODULE_IMPORT_PATTERN = /\.styles?$/;
+const SAME_DIR_STYLE_MODULE_IMPORT_PATTERN = /^\.\/[^/]+\.styles$/;
 
 function normalizePath(filePath) {
     return filePath.replaceAll("\\", "/");
@@ -282,7 +282,7 @@ const styleNamespaceImportRule = {
                 }
 
                 const importSource = node.source.value;
-                if (!STYLE_MODULE_IMPORT_PATTERN.test(importSource)) {
+                if (!SAME_DIR_STYLE_MODULE_IMPORT_PATTERN.test(importSource)) {
                     return;
                 }
 
@@ -301,13 +301,13 @@ const styleNamespaceImportRule = {
                     node,
                     messageId: "namespaceStyleImport",
                     // Autofix is disabled until linaria migration is complete.
-                    //
-                    // fix(fixer) {
-                    //     const quote = getQuote(node.source.raw);
-                    //     const localName = getStyleNamespaceLocalName(node);
-                    //     const fixedImport = `import * as ${localName} from ${quote}${importSource}${quote};`;
-                    //     return fixer.replaceText(node, fixedImport);
-                    // },
+
+                    fix(fixer) {
+                        const quote = getQuote(node.source.raw);
+                        const localName = getStyleNamespaceLocalName(node);
+                        const fixedImport = `import * as ${localName} from ${quote}${importSource}${quote};`;
+                        return fixer.replaceText(node, fixedImport);
+                    },
                 });
             },
         };
