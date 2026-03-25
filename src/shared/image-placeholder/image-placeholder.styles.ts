@@ -1,7 +1,9 @@
 import { css } from "@linaria/core";
 
+import { Colour } from "../../theme";
+
 export const placeholder = css`
-    background-color: var(--fds-colour-bg-stronger);
+    background-color: ${Colour["bg-stronger"]};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -11,6 +13,6 @@ export const placeholder = css`
         min-width: 48px;
         width: 18%;
         height: auto;
-        color: var(--fds-colour-icon-subtle);
+        color: ${Colour["icon-subtle"]};
     }
 `;
