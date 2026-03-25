@@ -1,5 +1,10 @@
 export type TypographyWeight = "regular" | "semibold" | "bold" | "light";
 
+/**
+ * Props for headings, body text, and other typographic elements.
+ *
+ * @keywords typography, text, heading, body, font-weight
+ */
 export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
     /** The font weight */
     weight?: TypographyWeight | undefined;
@@ -13,6 +18,11 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
 
 export type TypographyUnderlineStyle = "none" | "underline";
 
+/**
+ * Props for typographic link (anchor) elements.
+ *
+ * @keywords typography, link, anchor, hyperlink, external
+ */
 export interface TypographyLinkProps
     extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
     /** The font weight */

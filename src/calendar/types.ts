@@ -6,8 +6,11 @@ import {
 export type { Variant as CalendarVariant } from "../shared/internal-calendar/types";
 
 interface CalendarBaseProps extends CommonCalendarProps {
+    /** CSS class name for custom styling. */
     className?: string | undefined;
+    /** Test identifier for automated testing. */
     "data-testid"?: string | undefined;
+    /** Unique identifier for the component. */
     id?: string | undefined;
     /** Specifies if the component should have a border around it. Values `no-border` | `bordered` */
     styleType?: "no-border" | "bordered" | undefined;
@@ -17,7 +20,13 @@ interface CalendarBaseProps extends CommonCalendarProps {
     onYearMonthDisplayChange?: ((value: YearMonthDisplay) => void) | undefined;
 }
 
+/**
+ * Calendar component for selecting a single date. Displays a calendar component.
+ *
+ * @keywords calendar, date-picker, date, selection, single
+ */
 export interface CalendarSingleProps extends CalendarBaseProps {
+    /** Specifies the calendar selection mode. @default "single" */
     variant?: "single" | undefined;
     /** Selected date in `YYYY-MM-DD` format */
     value?: string | undefined;
@@ -30,7 +39,13 @@ export interface CalendarSingleProps extends CalendarBaseProps {
     onSelect?: ((value: string) => void) | undefined;
 }
 
+/**
+ * Calendar component for selecting multiple dates. Displays a calendar component.
+ *
+ * @keywords calendar, date-picker, date, multi-select, multiple
+ */
 export interface CalendarMultiProps extends CalendarBaseProps {
+    /** Specifies the calendar selection mode. */
     variant: "multi";
     /** Selected dates in `YYYY-MM-DD` format */
     values?: string[] | undefined;

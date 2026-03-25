@@ -1,9 +1,16 @@
 import { ButtonProps, ButtonRef } from "../button/types";
 
+/**
+ * The primary call to action component with an icon.
+ *
+ * Extends `ButtonProps` with an icon slot that can be positioned on the left or right of the label.
+ *
+ * @keywords button, icon, action, call to action, interactive
+ */
 export interface ButtonWithIconProps extends ButtonProps {
-    /** The icon to be rendered in the button */
+    /** The icon component to be rendered */
     icon: JSX.Element;
-    /** Specifies where the icon will be positioned */
+    /** Specifies whether the icon is rendered on the left or right of the label. @default "left" */
     iconPosition?: "left" | "right";
 }
 

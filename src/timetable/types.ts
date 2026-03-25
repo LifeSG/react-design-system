@@ -8,6 +8,11 @@ export type TimeTableCellType =
     | "disabled"
     | "pending";
 
+/**
+ * Style attributes for customizing the appearance of a timetable cell.
+ *
+ * @keywords timetable, cell, style, color, background
+ */
 export interface TimeTableCellStyleAttributes {
     /** Main background color for the cell */
     backgroundColor?: string | ((props: ThemeStyleProps) => string) | undefined;
@@ -30,11 +35,21 @@ export interface TimeTableCellStyleAttributes {
     styleType?: "default" | "solid" | "stripes" | undefined;
 }
 
+/**
+ * Ref handle for the TimeTable component providing imperative actions.
+ *
+ * @keywords timetable, ref, scroll, imperative
+ */
 export interface TimeTableRef {
     /** Resets the scroll position to the initialScrollTime if provided */
     resetScroll: () => void;
 }
 
+/**
+ * Data configuration for a single row in the TimeTable.
+ *
+ * @keywords timetable, row, data, cells, schedule
+ */
 export interface TimeTableRowData {
     /** Unique identifier for the row */
     id?: string | undefined;
@@ -58,6 +73,11 @@ export interface TimeTableRowData {
         | undefined;
 }
 
+/**
+ * Configuration for a popover displayed within the TimeTable.
+ *
+ * @keywords timetable, popover, tooltip, overlay, trigger
+ */
 export interface TimeTablePopoverProps {
     /** The trigger type for showing the popover */
     trigger: PopoverV2TriggerType;
@@ -71,6 +91,11 @@ export interface TimeTablePopoverProps {
     offset?: number | undefined;
 }
 
+/**
+ * Displays a timetable to view a schedule for a specific day. Supports slots in 15-minute intervals.
+ *
+ * @keywords timetable, schedule, calendar, time-slots, day-view
+ */
 export interface TimeTableProps {
     /** Unique identifier for the timetable */
     id?: string | undefined;
@@ -116,6 +141,11 @@ export interface TimeTableProps {
     onCalendarDateSelect?: ((currentDate: string) => void) | undefined;
 }
 
+/**
+ * Data configuration for a single cell within a TimeTable row.
+ *
+ * @keywords timetable, cell, time-slot, status, schedule
+ */
 export interface TimeTableRowCellData {
     /** Unique identifier for the cell */
     id?: string | undefined;

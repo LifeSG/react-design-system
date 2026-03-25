@@ -25,8 +25,15 @@ interface TimeSlotBarStyleAttributes {
         | undefined;
 }
 
+/**
+ * A component that displays time slots for a specified time range.
+ *
+ * @keywords time slot, booking, schedule, calendar, availability
+ */
 export interface TimeSlotBarProps {
+    /** Test identifier for automated testing. */
     "data-testid"?: string | undefined;
+    /** CSS class name for custom styling. */
     className?: string | undefined;
     /** The display variant of the component. Values: "minified" | "default" */
     variant?: TimeSlotBarVariant;
@@ -36,6 +43,7 @@ export interface TimeSlotBarProps {
     endTime: string;
     /** Initial scroll position in HH:mm format (e.g., "09:00" will scroll to 9am on mount) */
     initialScrollTime?: string | undefined;
+    /** The time slots for the TimeSlotBar. */
     slots: TimeSlot[];
     /** Callback function when user clicks on the time slot */
     onSlotClick: (timeSlot: TimeSlot) => void;
@@ -47,7 +55,13 @@ export interface TimeSlotBarProps {
     roundInitialScrollTime?: boolean | undefined;
 }
 
+/**
+ * Represents a single time slot entry within a TimeSlotBar.
+ *
+ * @keywords time slot, booking slot, slot entry
+ */
 export interface TimeSlot {
+    /** The unique identifier of the slot. */
     id: string;
     /** The start time of time slot. Format in HH:mm. Note: Minutes can be 00, 15, 30, 45 */
     startTime: string;
@@ -57,5 +71,6 @@ export interface TimeSlot {
     label?: string | undefined;
     /** Specifies if the slot cell is clickable */
     clickable?: boolean | undefined;
+    /** The styling attributes for the time slot. */
     styleAttributes: TimeSlotBarStyleAttributes;
 }

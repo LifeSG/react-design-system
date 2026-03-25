@@ -2,11 +2,23 @@ import React, { HTMLAttributes } from "react";
 
 export type ToastType = "success" | "warning" | "error" | "info";
 
+/**
+ * Configuration for the action button rendered within a Toast.
+ *
+ * @keywords toast, action, button, callback
+ */
 export interface ToastActionButtonProps {
+    /** The label of the action button. */
     label: string;
+    /** Called when the action button is clicked. */
     onClick: () => void;
 }
 
+/**
+ * Component used to inform users of updates or changes in system status.
+ *
+ * @keywords toast, notification, alert, status, dismiss
+ */
 export interface ToastProps
     extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
     /** The type of Toast. Control the display */

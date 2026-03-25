@@ -11,20 +11,34 @@ import {
 } from "../shared/dropdown-list-v2/types";
 import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
+/**
+ * A multi-select dropdown input that allows users to pick multiple options from a list.
+ *
+ * @keywords multi-select, dropdown, checkbox, multiple-choice, form, select
+ */
 export interface InputMultiSelectProps<T, V>
     extends React.HTMLAttributes<HTMLElement>,
         InputSelectOptionsProps<T>,
         InputSelectSharedProps<T>,
         DropdownDisplayProps<T, V>,
         DropdownSearchProps<T> {
+    /** Makes the component read-only, preventing user input. */
     readOnly?: boolean | undefined;
+    /** The currently selected options. */
     selectedOptions?: T[] | undefined;
+    /** Callback fired when the selected options change. */
     onSelectOptions?: ((options: T[]) => void) | undefined;
+    /** Callback fired when the component loses focus. */
     onBlur?: (() => void) | undefined;
+    /** Visual variant for the dropdown list. */
     variant?: DropdownVariantType | undefined;
+    /** Alignment of the dropdown relative to the trigger element. */
     alignment?: DropdownAlignmentType | undefined;
+    /** Z-index override for the dropdown layer. */
     dropdownZIndex?: number | undefined;
+    /** Maximum number of options that can be selected. */
     maxSelectable?: number | undefined;
+    /** Custom labels for dropdown UI elements such as the search placeholder or empty state. */
     customLabels?: DropdownCustomLabelProps | undefined;
     /** Custom width for the dropdown. */
     dropdownWidth?: string | undefined;

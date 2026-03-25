@@ -11,7 +11,11 @@ import {
 // =============================================================================
 // INPUT SELECT PROPS
 // =============================================================================
-
+/**
+ * A multi-select dropdown that supports hierarchical (nested) option categories up to 3 levels deep.
+ *
+ * @keywords nested-multi-select, hierarchical, category, multi-select, tree-select, l1-l2-l3
+ */
 export interface InputNestedMultiSelectProps<V1, V2, V3>
     extends React.HTMLAttributes<HTMLElement>,
         InputNestedSelectOptionsProps<V1, V2, V3>,
@@ -25,7 +29,9 @@ export interface InputNestedMultiSelectProps<V1, V2, V3>
         | undefined;
     /** Custom width for the dropdown. */
     dropdownWidth?: string | undefined;
+    /** Callback fired when the component loses focus. */
     onBlur?: (() => void) | undefined;
+    /** Custom labels for dropdown UI elements such as the search placeholder or empty state. */
     customLabels?: DropdownCustomLabelProps | undefined;
 }
 

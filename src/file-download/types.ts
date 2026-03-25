@@ -1,4 +1,10 @@
+/**
+ * Represents a single file item available for download.
+ *
+ * @keywords file, download, item, attachment
+ */
 export interface FileItemDownloadProps {
+    /** The unique identifier of the file. */
     id: string;
     /** The name of the file */
     name: string;
@@ -20,15 +26,25 @@ export interface FileItemDownloadProps {
 
 export type FileDownloadStyle = "bordered" | "no-border";
 
+/**
+ * A component that allows for downloading files.
+ *
+ * @keywords file-download, download, attachment, file
+ */
 export interface FileDownloadProps {
-    /** Component specific */
+    /** A title to be displayed for the component. */
     title?: string | JSX.Element | undefined;
+    /** The description to be displayed. */
     description?: string | JSX.Element | undefined;
+    /** The files to be rendered. */
     fileItems: FileItemDownloadProps[];
-    /** The style type for the component. Values "bordered" | "no-border" */
+    /** The style type for the component. Values "bordered" | "no-border". @default "bordered" */
     styleType?: FileDownloadStyle | undefined;
+    /** CSS class name for custom styling. */
     className?: string | undefined;
+    /** Test identifier for automated testing. */
     "data-testid"?: string | undefined;
+    /** Unique identifier for the component. */
     id?: string | undefined;
     /** Called when file item is clicked  */
     onDownload: (file: FileItemDownloadProps) => void | Promise<void>;
