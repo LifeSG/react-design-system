@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { OtpVerification } from "src/otp-verification";
 
@@ -125,14 +125,19 @@ describe("OtpVerification", () => {
 
         it("should call onSendOtp when send button is clicked", async () => {
             const user = userEvent.setup();
-            render(<OtpVerification {...defaultEmailProps} />);
+            const onSendOtp = jest.fn().mockResolvedValue(undefined);
+            render(
+                <OtpVerification {...defaultEmailProps} onSendOtp={onSendOtp} />
+            );
 
             const sendButton = screen.getByRole("button", {
                 name: /send otp/i,
             });
-            await user.click(sendButton);
+            await act(async () => {
+                await user.click(sendButton);
+            });
 
-            expect(defaultEmailProps.onSendOtp).toHaveBeenCalled();
+            expect(onSendOtp).toHaveBeenCalled();
         });
 
         it("should call onPhoneNumberChange when phone input changes", async () => {

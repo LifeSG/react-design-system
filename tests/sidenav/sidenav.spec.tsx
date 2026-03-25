@@ -1,9 +1,11 @@
+import "../_common/mock-react-resize-detector";
+
 import { Person2Icon, Square2x2Icon } from "@lifesg/react-icons";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Sidenav } from "src/sidenav";
 
-import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
+import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
 
 const SIDENAV_DRAWER_TEST_ID = "sidenav-drawer";
 
@@ -12,7 +14,7 @@ const SIDENAV_DRAWER_TEST_ID = "sidenav-drawer";
 // =============================================================================
 describe("Sidenav", () => {
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
 
         global.requestAnimationFrame = (cb: FrameRequestCallback) => {
             cb(0);

@@ -1,3 +1,5 @@
+import "../_common/mock-react-resize-detector";
+
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SelectHistogram } from "src";
@@ -36,7 +38,7 @@ const expectRangeLabel = (
 
 describe("SelectHistogram", () => {
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
 
         global.requestAnimationFrame = (cb: FrameRequestCallback) => {
             cb(0);
@@ -112,6 +114,7 @@ describe("SelectHistogram", () => {
             fireEvent.mouseDown(thumb.parentElement!);
             expect(mockChange).toHaveBeenCalledWith([1, 2]);
         });
+        fireEvent.mouseUp(document);
     });
 
     it("should toggle dropdown list when selector is clicked", async () => {

@@ -1,3 +1,5 @@
+import "../_common/mock-react-resize-detector";
+
 import {
     act,
     render,
@@ -36,7 +38,7 @@ const OPTIONS: L1OptionProps<string, string, string>[] = [
 
 describe("InputNestedSelect", () => {
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
 
         global.requestAnimationFrame = (cb: FrameRequestCallback) => {
             cb(0);

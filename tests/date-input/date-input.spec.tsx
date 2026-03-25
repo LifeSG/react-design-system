@@ -1,3 +1,5 @@
+import "../_common/mock-react-resize-detector";
+
 import {
     act,
     render,

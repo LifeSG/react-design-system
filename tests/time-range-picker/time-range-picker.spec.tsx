@@ -1,9 +1,11 @@
+import "../_common/mock-react-resize-detector";
+
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FormTimeRangePicker } from "src/form/form-time-range-picker";
 import { TimeRangePicker } from "src/time-range-picker/time-range-picker";
 
-import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
+import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
 
 // =============================================================================
 // UNIT TESTS
@@ -14,7 +16,7 @@ const DROPDOWN_TESTID = "dropdown-list";
 
 describe("TimeRangePicker", () => {
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
 
         global.requestAnimationFrame = (cb: FrameRequestCallback) => {
             cb(0);
@@ -686,7 +688,9 @@ describe("TimeRangePicker", () => {
             await user.click(getFrom());
             await waitFor(() => expect(getTimepickerDropdown()).toBeVisible());
 
-            await user.click(document.body);
+            await act(async () => {
+                await user.click(document.body);
+            });
 
             await waitForElementToBeRemoved(() => getTimepickerDropdown());
             expect(mockOnBlur).toHaveBeenCalledTimes(1);

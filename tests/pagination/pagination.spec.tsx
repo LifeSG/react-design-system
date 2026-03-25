@@ -1,3 +1,5 @@
+import "../_common/mock-react-resize-detector";
+
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Pagination } from "src/pagination";
