@@ -119,26 +119,56 @@ argTypes: {
 
 Scan `types.ts` for all exported `*Props` interfaces beyond the primary one (e.g. `ItemProps`, `HeaderProps`, `RowProps`). These each become a separate tab in the API docs.
 
-For each sub-interface, you will:
+Exclude interfaces that are internal/style-only — skip those ending in `StyleProps`, `WrapperStyleProps`, `PartialProps`, `WithForwardedRefProps`, `RenderProps`, or starting with `Base`.
 
-1. Create a docs component in `props-table.tsx`
-2. Add an `ArgTypes` tab in the MDX
+For each public sub-interface, you will:
+
+1. Generate API data via `npm run props:generate` (or confirm `stories/[COMPONENT]/generated-props.ts` is already up to date)
+2. Import the generated data in `props-table.tsx` and render via `<ApiTable>`
 
 ---
 
 ## Step 6: Write `stories/[COMPONENT_NAME]/props-table.tsx`
 
-If the file does not exist, create it. If it does, add any missing docs components.
+If the file does not exist, create it. If it does, update it.
 
-```tsx
-import { createDocsComponent } from "../storybook-common/create-docs-component";
-import { ItemProps, SecondaryProps } from "../../src/[component-name]/types";
+First, run (or confirm already done):
 
-export const ItemDocs = createDocsComponent<ItemProps>();
-export const SecondaryDocs = createDocsComponent<SecondaryProps>();
+```bash
+npm run props:generate
 ```
 
-If there are no sub-interfaces, create the file with just the import (no exports needed for docs components, but the file must be referenced in the MDX).
+This writes `stories/[COMPONENT_NAME]/generated-props.ts` with a `<InterfaceName>Data` export for each sub-interface.
+
+Then write `props-table.tsx`:
+
+```tsx
+import { ArgTypes } from "@storybook/addon-docs/blocks";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { ComponentName } from "src/[component-name]";
+import { ItemPropsData, SecondaryPropsData } from "./generated-props";
+
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
+            {
+                label: "ComponentName",
+                content: <ArgTypes of={ComponentName} />,
+            },
+            {
+                label: "ItemProps",
+                content: <ApiTable sections={ItemPropsData} />,
+            },
+            {
+                label: "SecondaryProps",
+                content: <ApiTable sections={SecondaryPropsData} />,
+            },
+        ]}
+    />
+);
+```
+
+If there are no public sub-interfaces, omit `PropsTableTabs` and use `<ArgTypes of={ComponentName} />` directly in the MDX.
 
 ---
 
@@ -198,11 +228,10 @@ Use `render: () => (...)` instead of `args` when the story requires composition 
 Use this template:
 
 ````mdx
-import { Canvas, Meta, Controls, ArgTypes } from "@storybook/blocks";
+import { Canvas, Meta } from "@storybook/blocks";
 import { Heading3, Secondary, Title } from "../storybook-common";
 import * as ComponentNameStories from "./[component-name].stories";
-import { ItemDocs } from "./props-table";
-import { PropTableTabs } from "../storybook-common/prop-table-tabs";
+import { PropsTableTabs } from "./props-table";
 
 <Meta of={ComponentNameStories} />
 
@@ -214,11 +243,12 @@ One or two sentences from the interface JSDoc.
 
 ```tsx
 import { ComponentName } from "@lifesg/react-design-system/[component-name]";
-` ``
+```
 
 <Canvas of={ComponentNameStories.Default} />
 
 <!-- Add a Heading3 + Canvas block for each non-Default story -->
+
 <Heading3>Story title derived from export name</Heading3>
 
 Brief sentence explaining what this variant demonstrates.
@@ -227,26 +257,15 @@ Brief sentence explaining what this variant demonstrates.
 
 <Secondary>Component API</Secondary>
 
-<PropTableTabs
-    tabs={[
-        {
-            label: "ComponentName",
-            content: <Controls of={ComponentNameStories.Default} />,
-        },
-        {
-            label: "Item",
-            content: <ArgTypes of={ItemDocs} />,
-        },
-    ]}
-/>
-```
+<PropsTableTabs />
 ````
 
 Rules:
 
--   The first `PropTableTabs` tab always uses `<Controls of={...Default} />` (not `ArgTypes`) — this is the interactive controls panel.
--   Each sub-interface gets its own tab using `<ArgTypes of={SubDocs} />`.
--   If there are no sub-interfaces, omit `PropTableTabs` and use `<Controls of={...Default} />` directly.
+-   `<PropsTableTabs />` is defined in `props-table.tsx` (Step 6) and renders all tabs internally.
+-   The first tab always shows `<ArgTypes of={ComponentName} />` — the full prop reference for the primary component.
+-   Each public sub-interface gets its own tab via `<ApiTable sections={...Data} />` from `generated-props.ts`.
+-   If there are no sub-interfaces, omit `PropsTableTabs` from `props-table.tsx` and render `<ArgTypes of={ComponentName} />` directly in the MDX.
 -   The import path in the code snippet must use the published package path: `@lifesg/react-design-system/[component-name]`.
 
 ---
@@ -255,7 +274,8 @@ Rules:
 
 After creating the files, confirm:
 
--   `props-table.tsx` exports a `createDocsComponent` for each sub-interface
+-   `stories/[COMPONENT_NAME]/generated-props.ts` exists and has a `<InterfaceName>Data` export for each public sub-interface (run `npm run props:generate` if missing)
+-   `props-table.tsx` exports `PropsTableTabs` using `<ArgTypes of={ComponentName} />` for the primary tab and `<ApiTable sections={...Data} />` for each sub-interface tab
 -   `[component].stories.tsx` imports from `src/[component-name]` (webpack alias), not relative paths
 -   MDX `import` paths use relative paths (`./`, `../storybook-common`)
 -   Story export names are PascalCase and match the `Canvas` references in MDX

@@ -1,6 +1,7 @@
 import {
     ApiTable,
     ApiTableSectionProps,
+    PropTableTabs,
     TabAttribute,
     Tabs,
 } from "stories/storybook-common";
@@ -88,4 +89,10 @@ const PROPS_TABLE_DATA: TabAttribute[] = [
     },
 ];
 
-export const PropsTable = () => <Tabs tabs={PROPS_TABLE_DATA} />;
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
+            { label: "FilterAddon", content: <Tabs tabs={PROPS_TABLE_DATA} /> },
+        ]}
+    />
+);

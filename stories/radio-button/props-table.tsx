@@ -1,27 +1,11 @@
-import { ApiTable, ApiTableSectionProps } from "../storybook-common/api-table";
+import { ArgTypes } from "@storybook/addon-docs/blocks";
+import { PropTableTabs } from "stories/storybook-common";
+import { RadioButton } from "src/radio-button";
 
-const DATA: ApiTableSectionProps[] = [
-    {
-        attributes: [
-            {
-                name: "displaySize",
-                description: "The display size of the component",
-                propTypes: [`"default"`, `"small"`],
-                defaultValue: `"default"`,
-            },
-            {
-                name: "checked",
-                description: "The selected state of the component",
-                propTypes: ["boolean"],
-            },
-            {
-                name: "disabled",
-                description:
-                    "The state in which an action is allowed to be executed",
-                propTypes: ["boolean"],
-            },
-        ],
-    },
-];
-
-export const PropsTable = () => <ApiTable sections={DATA} />;
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
+            { label: "RadioButton", content: <ArgTypes of={RadioButton} /> },
+        ]}
+    />
+);

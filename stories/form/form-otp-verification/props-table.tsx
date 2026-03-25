@@ -1,4 +1,8 @@
-import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
+import {
+    ApiTable,
+    ApiTableSectionProps,
+    PropTableTabs,
+} from "stories/storybook-common";
 import {
     FORM_LABEL_ADDON_PROPS_DATA,
     FORM_LABEL_USED_WITH_WRAPPER_PROPS_DATA,
@@ -186,4 +190,13 @@ const DATA: ApiTableSectionProps[] = [
     FORM_LABEL_ADDON_PROPS_DATA,
 ];
 
-export const PropsTable = () => <ApiTable sections={DATA} />;
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
+            {
+                label: "Form.OtpVerification",
+                content: <ApiTable sections={DATA} />,
+            },
+        ]}
+    />
+);

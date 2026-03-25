@@ -1,7 +1,7 @@
 import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import { Alert } from "src/alert";
 import * as PopoverStories from "./popover.stories";
-import { PropsTable } from "./props-table";
+import { PropsTableTabs } from "./props-table";
 
 <Meta of={PopoverStories} />
 
@@ -128,4 +128,4 @@ withPopover(component: JSX.Element, options: PopoverHOCOptionsProps): (props: Po
 
 The derived HOC component has its own set of props that are typed under `PopoverHOCProps`
 
-<PropsTable />
+<PropsTableTabs />

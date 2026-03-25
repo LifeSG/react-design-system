@@ -1,5 +1,6 @@
 import { ApiTable } from "../storybook-common/api-table";
 import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { PropTableTabs } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -84,4 +85,13 @@ const DATA: ApiTableSectionProps[] = [
     },
 ];
 
-export const PropsTable = () => <ApiTable sections={DATA} />;
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
+            {
+                label: "V2_Layout.ColDiv",
+                content: <ApiTable sections={DATA} />,
+            },
+        ]}
+    />
+);

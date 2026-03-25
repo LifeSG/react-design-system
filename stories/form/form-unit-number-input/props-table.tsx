@@ -1,5 +1,6 @@
 import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
+import { PropTableTabs } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -156,4 +157,13 @@ const DATA: ApiTableSectionProps[] = [
     ...SHARED_FORM_PROPS_DATA,
 ];
 
-export const PropsTable = () => <ApiTable sections={DATA} />;
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
+            {
+                label: "Form.UnitNumberInput",
+                content: <ApiTable sections={DATA} />,
+            },
+        ]}
+    />
+);

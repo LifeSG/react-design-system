@@ -1,5 +1,6 @@
 import { ApiTable } from "../../storybook-common/api-table";
 import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import { PropTableTabs } from "stories/storybook-common";
 
 export const FORM_LABEL_USED_WITH_WRAPPER_PROPS_DATA: ApiTableSectionProps = {
     attributes: [
@@ -85,4 +86,13 @@ const FORM_LABEL_DATA: ApiTableSectionProps[] = [
     FORM_LABEL_ADDON_PROPS_DATA,
 ];
 
-export const PropsTable = () => <ApiTable sections={FORM_LABEL_DATA} />;
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
+            {
+                label: "Form.Label",
+                content: <ApiTable sections={FORM_LABEL_DATA} />,
+            },
+        ]}
+    />
+);

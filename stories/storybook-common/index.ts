@@ -1,6 +1,7 @@
 export * from "./api-table";
 export * from "./doc-alert";
 export * from "./preview-box";
+export * from "./prop-table-tabs";
 export * from "./story-container";
 export * from "./storybook-link";
 export * from "./tabs";

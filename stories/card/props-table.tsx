@@ -1,15 +1,9 @@
-import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
+import { ArgTypes } from "@storybook/addon-docs/blocks";
+import { PropTableTabs } from "stories/storybook-common";
+import { Card } from "src/card";
 
-const DATA: ApiTableSectionProps[] = [
-    {
-        attributes: [
-            {
-                name: "data-testid",
-                description: "The test identifier for the component",
-                propTypes: ["string"],
-            },
-        ],
-    },
-];
-
-export const PropsTable = () => <ApiTable sections={DATA} />;
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[{ label: "Card", content: <ArgTypes of={Card} /> }]}
+    />
+);

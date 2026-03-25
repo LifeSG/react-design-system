@@ -1,162 +1,20 @@
-import {
-    ApiTable,
-    ApiTableSectionProps,
-    TabAttribute,
-    Tabs,
-    code,
-} from "stories/storybook-common";
+import { ArgTypes } from "@storybook/addon-docs/blocks";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { Tab } from "src/tab";
+import { TabItemPropsData, TitleAddonPropsData } from "./generated-props";
 
-const TAB_DATA: ApiTableSectionProps[] = [
-    {
-        attributes: [
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
+            { label: "Tab", content: <ArgTypes of={Tab} /> },
             {
-                name: "children",
-                mandatory: true,
-                description:
-                    "The tab contents. The tab order is determined by the specification of the child items",
-                propTypes: ["JSX.Element", "JSX.Element[]"],
+                label: "TabItemProps",
+                content: <ApiTable sections={TabItemPropsData} />,
             },
             {
-                name: "currentActive",
-                description:
-                    "Specify the current tab index that is to be displayed. By specifying this prop, the tab rendering will be manually controlled by you",
-                propTypes: ["number"],
+                label: "TitleAddonProps",
+                content: <ApiTable sections={TitleAddonPropsData} />,
             },
-            {
-                name: "initialActive",
-                description:
-                    "Specify the initial tab index that is to be displayed",
-                propTypes: ["number"],
-                defaultValue: "0",
-            },
-            {
-                name: "className",
-                description: "Class selector for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "id",
-                description: "The unique id of the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "data-testid",
-                description: "The test identifier for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "onTabClick",
-                description: "Called when a tab item selector is clicked",
-                propTypes: ["(title: string, index: number) => void"],
-            },
-            {
-                name: "fullWidthIndicatorLine",
-                description:
-                    "Extends the bottom border to the full width of the container",
-                propTypes: ["boolean"],
-            },
-            {
-                name: "fadeColor",
-                description:
-                    "The color of the fade effect when the tab is too long",
-                propTypes: ["string[]", "FadeColorSet"],
-            },
-            {
-                name: "headingLevel",
-                description:
-                    "Specify a custom heading level to match the component's position in the page",
-                propTypes: ["number"],
-                defaultValue: "2",
-            },
-        ],
-    },
-    {
-        name: "FadeColorSet",
-        attributes: [
-            {
-                name: "left",
-                description: "The color of the left fade",
-                propTypes: ["string[]"],
-            },
-            {
-                name: "right",
-                description: "The color of the right fade",
-                propTypes: ["string[]"],
-            },
-        ],
-    },
-];
-
-const TAB_ITEM_DATA: ApiTableSectionProps[] = [
-    {
-        attributes: [
-            {
-                name: "children",
-                mandatory: true,
-                description: <>The content of the {code("Tab.Item")}</>,
-                propTypes: ["JSX.Element", "JSX.Element[]"],
-            },
-            {
-                name: "title",
-                mandatory: true,
-                description: "The tab selector label",
-                propTypes: ["string"],
-            },
-            {
-                name: "className",
-                description: "Class selector for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "id",
-                description: "The unique id of the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "data-testid",
-                description: "The test identifier for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "width",
-                description: "The tab selector width",
-                propTypes: ["string"],
-            },
-            {
-                name: "titleAddon",
-                description:
-                    "Custom addon content displayed next to the tab title",
-                propTypes: ["TitleAddonProps"],
-            },
-        ],
-    },
-    {
-        name: "TitleAddonProps",
-        attributes: [
-            {
-                name: "content",
-                description: "The addon content",
-                propTypes: ["JSX.Element"],
-            },
-            {
-                name: "position",
-                description: "The position of the addon",
-                propTypes: [`"left"`, `"right"`],
-                defaultValue: `"right"`,
-            },
-        ],
-    },
-];
-
-const PROPS_TABLE_DATA: TabAttribute[] = [
-    {
-        title: "Tab",
-        component: <ApiTable sections={TAB_DATA} />,
-    },
-    {
-        title: "Tab.Item",
-        component: <ApiTable sections={TAB_ITEM_DATA} />,
-    },
-];
-
-export const PropsTable = () => <Tabs tabs={PROPS_TABLE_DATA} />;
+        ]}
+    />
+);

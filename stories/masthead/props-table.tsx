@@ -1,17 +1,9 @@
-import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
+import { ArgTypes } from "@storybook/addon-docs/blocks";
+import { PropTableTabs } from "stories/storybook-common";
+import { Masthead } from "src/masthead";
 
-const DATA: ApiTableSectionProps[] = [
-    {
-        attributes: [
-            {
-                name: "stretch",
-                description:
-                    "Specifies if the masthead should stretch to the maximum width of the screen, with a fixed padding",
-                propTypes: ["boolean"],
-                defaultValue: "false",
-            },
-        ],
-    },
-];
-
-export const PropsTable = () => <ApiTable sections={DATA} />;
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[{ label: "Masthead", content: <ArgTypes of={Masthead} /> }]}
+    />
+);

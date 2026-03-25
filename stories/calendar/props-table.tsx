@@ -1,174 +1,23 @@
-import { ApiTable, ApiTableSectionProps, code } from "stories/storybook-common";
+import { ArgTypes } from "@storybook/addon-docs/blocks";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { Calendar } from "src/calendar";
+import {
+    CalendarMultiPropsData,
+    CalendarSinglePropsData,
+} from "./generated-props";
 
-const STRING_FORMAT = (
-    <>
-        string based format <code>YYYY-MM-DD</code>
-    </>
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
+            { label: "Calendar", content: <ArgTypes of={Calendar} /> },
+            {
+                label: "CalendarSingleProps",
+                content: <ApiTable sections={CalendarSinglePropsData} />,
+            },
+            {
+                label: "CalendarMultiProps",
+                content: <ApiTable sections={CalendarMultiPropsData} />,
+            },
+        ]}
+    />
 );
-
-const DATA: ApiTableSectionProps[] = [
-    {
-        name: "Calendar props (shared)",
-        attributes: [
-            {
-                name: "className",
-                description: "Class selector for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "data-testid",
-                description: "The test identifier for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "disabledDates",
-                description: (
-                    <>
-                        The dates to be disabled. To specify each date in
-                        the&nbsp;
-                        {STRING_FORMAT}
-                    </>
-                ),
-                propTypes: ["string[]"],
-            },
-            {
-                name: "id",
-                description: "The unique identifier for the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "minDate",
-                description: (
-                    <>
-                        Specifies the minimum date allowed for selection in
-                        the&nbsp;{STRING_FORMAT}&nbsp;{`(Inclusive)`}
-                    </>
-                ),
-                propTypes: ["string"],
-            },
-            {
-                name: "maxDate",
-                description: (
-                    <>
-                        Specifies the maximum date allowed for selection in
-                        the&nbsp;{STRING_FORMAT}&nbsp;{`(Inclusive)`}
-                    </>
-                ),
-                propTypes: ["string"],
-            },
-            {
-                name: "styleType",
-                description:
-                    "Specifies the style type of the component, particularly if a border is to be rendered",
-                propTypes: [`"bordered"`, `"no-border"`],
-                defaultValue: `"bordered"`,
-            },
-            {
-                name: "variant",
-                description: "Specifies the calendar selection mode",
-                propTypes: [`"single"`, `"multi"`],
-                defaultValue: `"single"`,
-            },
-            {
-                name: "showActiveMonthDaysOnly",
-                description:
-                    "Specifies if the calendar should display only dates for the selected month",
-                propTypes: ["boolean"],
-                defaultValue: `false`,
-            },
-            {
-                name: "onHover",
-                description: (
-                    <>
-                        Called with the current hovered date or empty string if
-                        the user leaves the calendar day view. Returns value in
-                        the&nbsp;{STRING_FORMAT}
-                    </>
-                ),
-                propTypes: ["(value: string) => void"],
-            },
-            {
-                name: "onYearMonthDisplayChange",
-                description:
-                    "Called when there is a change in the current visible month and year",
-                propTypes: ["(value: YearMonthDisplay) => void"],
-            },
-        ],
-    },
-    {
-        name: "Calendar props (variant=\u201csingle\u201d)",
-        attributes: [
-            {
-                name: "value",
-                description: <>The selected date in the&nbsp;{STRING_FORMAT}</>,
-                propTypes: ["string"],
-            },
-            {
-                name: "onChange",
-                description: (
-                    <>
-                        Called when the selected date changes. Returns the
-                        selected date in the&nbsp;{STRING_FORMAT}
-                    </>
-                ),
-                propTypes: ["(value: string) => void"],
-            },
-        ],
-    },
-    {
-        name: "Calendar props (variant=\u201cmulti\u201d)",
-        attributes: [
-            {
-                name: "values",
-                description: (
-                    <>
-                        The array of selected dates in the&nbsp;
-                        {STRING_FORMAT}
-                    </>
-                ),
-                propTypes: ["string[]"],
-            },
-            {
-                name: "minSelectable",
-                description:
-                    "Minimum number of dates that must be selected before the selection is considered valid.",
-                propTypes: ["number"],
-            },
-            {
-                name: "maxSelectable",
-                description:
-                    "Maximum number of dates that can be selected at once.",
-                propTypes: ["number"],
-            },
-            {
-                name: "onChange",
-                description: (
-                    <>
-                        Called when the selection changes. Returns all selected
-                        dates in the&nbsp;{STRING_FORMAT}
-                    </>
-                ),
-                propTypes: ["(values: string[]) => void"],
-            },
-        ],
-    },
-    {
-        name: "YearMonthDisplay",
-        attributes: [
-            {
-                name: "year",
-                description: (
-                    <>The current visible year in {code("YYYY")} format</>
-                ),
-                propTypes: ["number"],
-            },
-            {
-                name: "month",
-                description: "The current visible month, from 1 to 12",
-                propTypes: ["number"],
-            },
-        ],
-    },
-];
-
-export const PropsTable = () => <ApiTable sections={DATA} />;

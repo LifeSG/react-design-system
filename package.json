@@ -26,7 +26,9 @@
         "lint": "eslint src --ext .ts,.tsx",
         "lint:fix": "eslint src --ext .ts,.tsx --fix",
         "lint:docs": "eslint src --ext .ts,.tsx",
-        "catalog:generate": "node ./scripts/generate-component-catalog.js"
+        "catalog:generate": "node ./scripts/generate-component-catalog.js",
+        "props:generate": "node ./scripts/generate-props-data.js --all",
+        "props:generate:config": "node ./scripts/generate-props-data.js --write-config"
     },
     "repository": {
         "type": "git",
@@ -99,7 +101,6 @@
         "dompurify": "^3.2.5",
         "eslint": "^9.39.0",
         "eslint-config-prettier": "^10.1.8",
-        "eslint-plugin-jsdoc": "^62.5.4",
         "eslint-plugin-mdx": "^2.0.4",
         "eslint-plugin-react": "^7.37.5",
         "eslint-plugin-react-hooks": "^7.0.1",
@@ -124,9 +125,9 @@
         "prettier": "^2.6.1",
         "pretty": "^2.0.0",
         "pretty-quick": "^3.1.3",
-        "react": "^18.3.1",
+        "react": "^17.0.2",
         "react-docgen-typescript": "^2.2.2",
-        "react-dom": "^18.3.1",
+        "react-dom": "^17.0.2",
         "react-dropzone": "^14.2.3",
         "react-intersection-observer": "^9.5.2",
         "react-resize-detector": "^7.0.0",
@@ -141,7 +142,8 @@
         "storybook": "^10.2.10",
         "style-loader": "^2.0.0",
         "styled-components": "^6.1.19",
-        "typescript": "^5.7.3"
+        "typescript": "^5.7.3",
+        "eslint-plugin-jsdoc": "^62.5.4"
     },
     "peerDependencies": {
         "@floating-ui/react": ">=0.26.23 <1.0.0",
