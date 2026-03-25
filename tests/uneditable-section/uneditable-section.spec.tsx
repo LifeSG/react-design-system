@@ -177,6 +177,23 @@ describe("UneditableSection", () => {
             expect(screen.getByText("Try again?")).toBeInTheDocument();
         });
 
+        it("should include hidden label text in try again action content", () => {
+            const ITEMS: UneditableSectionItemProps[] = [
+                {
+                    label: "NRIC or FIN",
+                    value: "S••••534J",
+                    maskState: "masked",
+                    maskLoadingState: "fail",
+                },
+            ];
+
+            render(<UneditableSection items={ITEMS} title="Test" />);
+
+            expect(
+                screen.getByRole("button", { name: /NRIC or FIN/ })
+            ).toBeInTheDocument();
+        });
+
         it("should fire the onUnmask and onMask callbacks if specified", () => {
             const ITEMS: UneditableSectionItemProps[] = [
                 {

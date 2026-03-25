@@ -36,6 +36,12 @@ describe("Pagination", () => {
         expect(
             screen.getByRole("button", { name: "page 1 of 3" })
         ).toHaveAttribute("aria-current", "page");
+
+        const navigation = screen.getByRole("navigation", {
+            name: "pagination",
+        });
+        expect(navigation).toBeInTheDocument();
+        expect(navigation).toHaveAccessibleName("pagination");
     });
 
     it("should enable the previous and next buttons", async () => {

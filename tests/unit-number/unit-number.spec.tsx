@@ -31,6 +31,28 @@ describe("UnitNumberInput", () => {
         expect(screen.queryByTestId("unit-input")).toHaveValue("03");
     });
 
+    it("should have accessible labels and live region to both inputs", () => {
+        render(<UnitNumberInput />);
+
+        const floorInput = screen.getByRole("textbox", {
+            name: "Enter floor number",
+        });
+        const unitInput = screen.getByRole("textbox", {
+            name: "Enter unit number",
+        });
+        const liveRegion = document.getElementById(
+            floorInput.getAttribute("aria-describedby") as string
+        );
+
+        expect(floorInput).toHaveAccessibleName("Enter floor number");
+        expect(unitInput).toHaveAccessibleName("Enter unit number");
+        expect(liveRegion).toHaveAttribute("aria-live", "polite");
+        expect(unitInput).toHaveAttribute(
+            "aria-describedby",
+            liveRegion?.id as string
+        );
+    });
+
     describe("change handling", () => {
         it("should convert letters to uppercase and preserve caret position", async () => {
             render(<UnitNumberInput />);

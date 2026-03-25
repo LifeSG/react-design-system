@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { BoxContainer, V3_Colour, V3_LifeSGTheme } from "src";
 
 // =============================================================================
@@ -23,6 +23,9 @@ describe("BoxContainer", () => {
         );
 
         expect(screen.getByText(DEFAULT_TITLE)).toBeInTheDocument();
+        expect(
+            screen.getByRole("button", { name: DEFAULT_TITLE })
+        ).toBeInTheDocument();
     });
 
     it("should not render the expand/collapse button if disabled", () => {
@@ -53,6 +56,24 @@ describe("BoxContainer", () => {
         });
     });
 
+    it("should toggle inert on child content when expanded state changes", () => {
+        render(
+            <BoxContainer title={DEFAULT_TITLE} expanded={false}>
+                <p>{DEFAULT_TEXT}</p>
+            </BoxContainer>
+        );
+
+        const content = screen.getByText(DEFAULT_TEXT);
+        expect(content.closest("[inert]")).toBeInTheDocument();
+
+        const button = getExpandButton();
+        expect(button).toBeInTheDocument();
+
+        fireEvent.click(button!);
+
+        expect(content.closest("[inert]")).toBeNull();
+    });
+
     describe("Display state rendering", () => {
         it.each`
             state        | color
@@ -81,6 +102,16 @@ describe("BoxContainer", () => {
                 }
             }
         );
+
+        it("should include hidden text for non-default display states", () => {
+            render(
+                <BoxContainer title={DEFAULT_TITLE} displayState="warning">
+                    <p>{DEFAULT_TEXT}</p>
+                </BoxContainer>
+            );
+
+            expect(screen.getByText("warning")).toBeInTheDocument();
+        });
     });
 
     it("should render a custom call to action component if specified", () => {
