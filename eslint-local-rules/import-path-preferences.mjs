@@ -265,13 +265,13 @@ const styleNamespaceImportRule = {
         type: "suggestion",
         docs: {
             description:
-                "Enforce namespace imports for style modules (*.style, *.styles).",
+                "Enforce namespace imports for style modules (*.styles).",
         },
         fixable: "code",
         schema: [],
         messages: {
             namespaceStyleImport:
-                "Import style modules using a namespace import (e.g. import * as styles from './component.style').",
+                "Import style modules using a namespace import (e.g. import * as styles from './component.styles').",
         },
     },
     create(context) {
