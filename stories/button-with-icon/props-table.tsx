@@ -20,38 +20,44 @@ const DATA: ApiTableSectionProps[] = [
                 ),
             },
             {
-                name: "icon",
-                description: <>The icon component to be rendered</>,
-                propTypes: ["JSX.Element"],
-            },
-            {
-                name: "iconPosition",
-                description:
-                    "Specifies whether the icon is rendered on the left or right of the label",
-                propTypes: [`"left"`, `"right"`],
-                defaultValue: `"left"`,
-            },
-            {
                 name: "styleType",
-                mandatory: true,
                 description: (
                     <>
-                        The style of the <code>ButtonWithIcon</code>
+                        The style of the <code>Button</code>
                     </>
                 ),
                 propTypes: [`"default"`, `"secondary"`, `"light"`, `"link"`],
                 defaultValue: `"default"`,
             },
             {
-                name: "danger",
+                name: "size",
+                description: "The size of the button",
+                propTypes: [`"large"`, `"default"`, `"small"`],
+                defaultValue: `"default"`,
+            },
+            {
+                name: "icon",
                 description:
-                    "If specified, the component will have a red color scheme being applied",
+                    "An icon element rendered inside the button. When provided without children, the button renders in icon-only (square) mode. Provide aria-label on the button for accessibility when in icon-only mode.",
+                propTypes: ["JSX.Element"],
+            },
+            {
+                name: "iconPosition",
+                description:
+                    "Position of the icon relative to the label. Only applies when children are also provided.",
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"left"`,
+            },
+            {
+                name: "loading",
+                description: "Setting will display a loading spinner",
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },
             {
-                name: "loading",
-                description: "The icon will become a loading spinner",
+                name: "danger",
+                description:
+                    "If specified, the component will have a red color scheme being applied",
                 propTypes: ["boolean"],
                 defaultValue: "false",
             },

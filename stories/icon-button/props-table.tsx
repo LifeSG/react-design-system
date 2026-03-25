@@ -20,19 +20,19 @@ const DATA: ApiTableSectionProps[] = [
                 ),
             },
             {
-                name: "data-testid",
-                description: "The test identifier of the component",
-                propTypes: ["string"],
+                name: "icon",
+                description:
+                    "An icon element rendered inside the button. The icon is automatically marked aria-hidden.",
+                propTypes: ["JSX.Element"],
             },
-
             {
                 name: "styleType",
                 description: "The style of the button",
-                propTypes: [`"primary"`, `"secondary"`, `"light"`],
-                defaultValue: `"primary"`,
+                propTypes: [`"default"`, `"secondary"`, `"light"`, `"link"`],
+                defaultValue: `"default"`,
             },
             {
-                name: "sizeType",
+                name: "size",
                 description: "The size of the button",
                 propTypes: [`"large"`, `"default"`, `"small"`],
                 defaultValue: `"default"`,
