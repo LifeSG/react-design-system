@@ -5,9 +5,10 @@ import {
     useInteractions,
     useTransitionStatus,
 } from "@floating-ui/react";
-import { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
+import { useEvent } from "../util";
 import { ModalContext } from "./modal-context";
 import { Container, ModalContainer, ScrollContainer } from "./modal-v2.styles";
 import { ModalV2Props } from "./types";
@@ -34,6 +35,10 @@ export const ModalV2 = ({
     // CONST, STATE, REF
     // =========================================================================
     const { verticalHeight, offsetTop } = useViewport();
+    const childRef = useRef<HTMLDivElement>(null);
+    const childWithRef =
+        children &&
+        React.cloneElement(children as React.ReactElement, { ref: childRef });
 
     // =========================================================================
     // FLOATING UI CONFIG
@@ -59,12 +64,17 @@ export const ModalV2 = ({
     // =========================================================================
     // EFFECTS
     // =========================================================================
-    useEffect(() => {
-        if (show && dismissKeyboardOnShow) {
-            // dismiss software keyboard to put modal in fullscreen
+    const dismissKeyboard = useEvent(() => {
+        if (dismissKeyboardOnShow) {
             (document.activeElement as HTMLElement)?.blur?.();
         }
-    }, [dismissKeyboardOnShow, show]);
+    });
+
+    useEffect(() => {
+        if (show) {
+            dismissKeyboard();
+        }
+    }, [show, dismissKeyboard]);
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -77,6 +87,7 @@ export const ModalV2 = ({
             onOverlayClick={onOverlayClick}
             id={id}
             rootId={rootComponentId}
+            containerRef={childRef}
             zIndex={zIndex}
         >
             <Container
@@ -105,7 +116,7 @@ export const ModalV2 = ({
                                     aria-labelledby={ariaLabelledBy}
                                     aria-describedby={ariaDescribedBy}
                                 >
-                                    {children}
+                                    {childWithRef}
                                 </ModalContainer>
                             </ScrollContainer>
                         </FloatingFocusManager>
