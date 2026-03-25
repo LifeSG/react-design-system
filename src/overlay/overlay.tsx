@@ -42,7 +42,7 @@ const OverlayComponent = ({
         ? `lifesg-ds-overlay-root-${id}`
         : "lifesg-ds-overlay-root";
     const zIndex = customZIndex ?? (isStacked ? 99999 : 99998);
-    const { themeProps, themeStyle } = useInheritedThemeScope(true);
+    const { themeProps, themeStyle } = useInheritedThemeScope(show);
 
     useFloatingParent(zIndex);
 
