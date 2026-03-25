@@ -1,0 +1,2 @@
+import{getDefaultExportFromCjs as r}from"../../_virtual/_commonjsHelpers.js";import{__module as e}from"../../_virtual/index3.js";import{__require as o}from"./external/react-is/index.js";import{__require as s}from"./factoryWithTypeCheckers.js";import{__require as i}from"./factoryWithThrowingShims.js";if("production"!==process.env.NODE_ENV){var t=o();e.exports=s()(t.isElement,!0)}else e.exports=i()();var m=r(e.exports);export{m as default};
+//# sourceMappingURL=index.js.map

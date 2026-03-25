@@ -1,0 +1,2 @@
+import{__rest as t}from"../_virtual/_tslib.js";import{jsx as e}from"react/jsx-runtime";import{MenuLinkDiv as i,Link as n}from"./menu-link.styles.js";const r=r=>{var{children:s,"data-testid":a="menu-link"}=r,d=t(r,["children","data-testid"]);return e(i,{children:e(n,Object.assign({"data-testid":a,underlineStyle:"none"},d,{children:s}))})};r.displayName="Menu.Link";export{r as MenuLink};
+//# sourceMappingURL=menu-link.js.map

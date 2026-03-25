@@ -1,0 +1,2 @@
+"use strict";var e=require("./_MapCache.js")._MapCache;function r(t,a){if("function"!=typeof t||null!=a&&"function"!=typeof a)throw new TypeError("Expected a function");var c=function(){var e=arguments,r=a?a.apply(this,e):e[0],n=c.cache;if(n.has(r))return n.get(r);var i=t.apply(this,e);return c.cache=n.set(r,i)||n,i};return c.cache=new(r.Cache||e),c}r.Cache=e;var t=r;exports.memoize_1=t;
+//# sourceMappingURL=memoize.js.map

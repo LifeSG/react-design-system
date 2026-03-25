@@ -1,0 +1,2 @@
+"use strict";require("../../util/calendar-helper.js"),require("../../external/dayjs/dayjs.min.js"),require("react"),require("../../util/string-helper.js");var e=require("../../util/use-isomorphic-layout-effect.js");exports.useApplyStyle=function(r,t){e.useIsomorphicLayoutEffect((()=>{const e=null==r?void 0:r.current;e&&Object.entries(t).forEach((([r,t])=>{null!=t?e.style.setProperty(r,String(t)):e.style.setProperty(r,"")}))}),[r,t])};
+//# sourceMappingURL=use-apply-styles.js.map

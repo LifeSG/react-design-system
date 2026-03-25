@@ -1,0 +1,2 @@
+import{__rest as r}from"../_virtual/_tslib.js";import{jsx as t}from"react/jsx-runtime";import{FormWrapper as i}from"./form-wrapper.js";const e=e=>{var{id:o="form-custom-field","data-error-testid":d,children:a}=e,s=r(e,["id","data-error-testid","children"]);return t(i,Object.assign({id:o,"data-error-testid":d},s,{children:a}))};export{e as FormCustomField};
+//# sourceMappingURL=form-custom-field.js.map

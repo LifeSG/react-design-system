@@ -1,0 +1,2 @@
+import{V3_BreakpointValues as x}from"./theme-helper.js";const m=m=>("max-width"===m?["xxs","xs","sm","md","lg","xl"]:["xxs","xs","sm","md","lg","xl","xxl"]).reduce(((t,e)=>(t[e]=((m,t)=>{const e=x["max-width"===m?`${t}-max`:`${t}-min`];return x=>{const t=e(x);return`@media screen and (${m}: ${t}px)`}})(m,e),t)),{}),t={MaxWidth:m("max-width"),MinWidth:m("min-width")};export{t as V3_MediaQuery};
+//# sourceMappingURL=media-query-helper.js.map

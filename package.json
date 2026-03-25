@@ -1,186 +1,627 @@
 {
-    "name": "@lifesg/react-design-system",
-    "version": "4.0.0-alpha.1",
-    "description": "A component design system for LifeSG web apps",
-    "main": "dist/cjs/index.js",
-    "module": "dist/index.js",
-    "typings": "dist/index.d.ts",
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "import": "./dist/index.js",
-            "require": "./dist/cjs/index.js",
-            "default": "./dist/index.js"
-        }
+  "name": "@lifesg/react-design-system",
+  "version": "4.0.0-alpha.1",
+  "description": "A component design system for LifeSG web apps",
+  "main": "./cjs/index.js",
+  "module": "./index.js",
+  "types": "./index.d.ts",
+  "bin": {
+    "lifesg-react-design-system": "./codemods/run-codemod.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "require": "./cjs/index.js",
+      "default": "./index.js"
     },
-    "bin": {
-        "lifesg-react-design-system": "./codemods/run-codemod.js"
+    "./theme/styles/*.css": {
+      "import": "./theme/styles/*.css",
+      "require": "./theme/styles/*.css"
     },
-    "scripts": {
-        "build": "npm run rollup",
-        "rollup": "rm -rf dist && rollup -c",
-        "pack-package": "cd dist && npm pack",
-        "publish-lib": "npm publish ./dist",
-        "start": "rollup -c -w",
-        "test": "jest --coverage",
-        "test-watch": "jest --watch",
-        "test-e2e": "playwright test --ui",
-        "test-e2e-ci": "sh scripts/e2e-ci.sh",
-        "prepare": "(test -d ./.git && npx husky install) || true",
-        "storybook": "storybook dev -p 6006",
-        "build-storybook": "storybook build",
-        "codemod": "ENV=dev npx tsx codemods/run-codemod.ts",
-        "lint": "npm run lint:js && npm run lint:css",
-        "lint:js": "eslint '**/*.{ts,tsx,js,jsx}'",
-        "lint:js:fix": "eslint '**/*.{ts,tsx,js,jsx}' --fix",
-        "lint:css": "stylelint '**/*.css'",
-        "lint:css:fix": "stylelint '**/*.css' --fix",
-        "test:eslint-rules": "node tests/eslint-rules/import-path-preferences.rule-test.mjs"
+    "./accordion": {
+      "types": "./accordion/index.d.ts",
+      "import": "./accordion/index.js",
+      "require": "./cjs/accordion/index.js",
+      "default": "./accordion/index.js"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/LifeSG/react-design-system.git"
+    "./alert": {
+      "types": "./alert/index.d.ts",
+      "import": "./alert/index.js",
+      "require": "./cjs/alert/index.js",
+      "default": "./alert/index.js"
     },
-    "keywords": [
-        "design-system"
-    ],
-    "author": "LifeSG",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/LifeSG/react-design-system/issues"
+    "./animations": {
+      "types": "./animations/index.d.ts",
+      "import": "./animations/index.js",
+      "require": "./cjs/animations/index.js",
+      "default": "./animations/index.js"
     },
-    "homepage": "https://github.com/LifeSG/react-design-system#readme",
-    "dependencies": {
-        "@react-spring/web": "^10.0.1",
-        "clsx": "^2.1.1",
-        "fabric": "^7.2.0",
-        "immer": "^10.0.2",
-        "react-slider": "^2.0.6",
-        "react-virtuoso": "^4.12.5",
-        "react-zoom-pan-pinch": "^3.3.0"
+    "./avatar": {
+      "types": "./avatar/index.d.ts",
+      "import": "./avatar/index.js",
+      "require": "./cjs/avatar/index.js",
+      "default": "./avatar/index.js"
     },
-    "devDependencies": {
-        "@babel/core": "^7.25.2",
-        "@babel/preset-env": "^7.16.11",
-        "@babel/preset-react": "^7.24.7",
-        "@babel/preset-typescript": "^7.24.7",
-        "@dnd-kit/core": "^6.0.8",
-        "@dnd-kit/sortable": "^7.0.2",
-        "@eslint/compat": "^1.4.1",
-        "@eslint/eslintrc": "^3.3.1",
-        "@eslint/js": "^9.39.1",
-        "@floating-ui/dom": "^1.6.10",
-        "@floating-ui/react": "^0.26.23",
-        "@govtechsg/sgds-web-component": "^3.0.6",
-        "@inquirer/prompts": "^7.0.0",
-        "@lifesg/react-icons": "^1.12.0",
-        "@linaria/babel-preset": "^5.0.4",
-        "@linaria/core": "^7.0.0",
-        "@playwright/test": "^1.58.2",
-        "@rollup/plugin-commonjs": "^25.0.7",
-        "@rollup/plugin-image": "^3.0.3",
-        "@rollup/plugin-json": "^6.1.0",
-        "@rollup/plugin-node-resolve": "^15.2.3",
-        "@rollup/plugin-terser": "^0.4.4",
-        "@storybook-community/storybook-dark-mode": "^7.1.0",
-        "@storybook/addon-a11y": "^10.2.10",
-        "@storybook/addon-docs": "^10.2.10",
-        "@storybook/addon-links": "^10.2.10",
-        "@storybook/addon-themes": "^10.2.10",
-        "@storybook/addon-webpack5-compiler-swc": "^4.0.2",
-        "@storybook/react-webpack5": "^10.2.10",
-        "@stylistic/stylelint-config": "^4.0.0",
-        "@stylistic/stylelint-plugin": "^5.0.1",
-        "@testing-library/jest-dom": "^5.16.3",
-        "@testing-library/react": "^12.1.4",
-        "@testing-library/user-event": "^14.5.2",
-        "@types/jest": "^29.5.12",
-        "@types/jscodeshift": "^0.11.11",
-        "@types/lodash": "^4.14.180",
-        "@types/node": "^22.15.14",
-        "@types/react": "^17.0.43",
-        "@types/react-dom": "^17.0.14",
-        "@types/react-slider": "^1.3.6",
-        "@typescript-eslint/eslint-plugin": "^8.46.2",
-        "@typescript-eslint/parser": "^8.46.2",
-        "@wyw-in-js/babel-preset": "^1.0.6",
-        "@wyw-in-js/rollup": "^1.0.6",
-        "@wyw-in-js/webpack-loader": "^1.0.6",
-        "babel-loader": "^8.2.4",
-        "babel-plugin-styled-components": "^2.0.6",
-        "css-loader": "^5.2.7",
-        "dayjs": "^1.11.3",
-        "dedent": "^1.7.0",
-        "dompurify": "^3.2.5",
-        "eslint": "^9.39.0",
-        "eslint-config-prettier": "^10.1.8",
-        "eslint-plugin-import": "^2.32.0",
-        "eslint-plugin-mdx": "^2.0.4",
-        "eslint-plugin-react": "^7.37.5",
-        "eslint-plugin-react-hooks": "^7.0.1",
-        "eslint-plugin-simple-import-sort": "^12.1.1",
-        "eslint-plugin-storybook": "10.1.11",
-        "fs-extra": "^11.3.0",
-        "globals": "^16.5.0",
-        "html-react-parser": "^2.0.0",
-        "husky": "^7.0.4",
-        "identity-obj-proxy": "^3.0.0",
-        "jest": "^29.7.0",
-        "jest-canvas-mock": "^2.3.1",
-        "jest-environment-jsdom": "^29.7.0",
-        "jest-junit": "^16.0.0",
-        "jest-styled-components": "^7.2.0",
-        "jscodeshift": "^17.3.0",
-        "lint-staged": "^12.3.7",
-        "lodash": "^4.17.21",
-        "lottie-colorify": "^0.8.0",
-        "lottie-react": "^2.3.1",
-        "postcss": "^8.4.38",
-        "postcss-import": "^16.1.0",
-        "prettier": "^2.6.1",
-        "pretty": "^2.0.0",
-        "pretty-quick": "^3.1.3",
-        "react": "^17.0.2",
-        "react-docgen-typescript": "^2.2.2",
-        "react-dom": "^17.0.2",
-        "react-dropzone": "^14.2.3",
-        "react-intersection-observer": "^9.5.2",
-        "react-resize-detector": "^10.0.1",
-        "react-responsive": "^9.0.0-beta.10",
-        "remark-gfm": "^4.0.0",
-        "rollup": "^4.34.9",
-        "rollup-plugin-copy": "^3.5.0",
-        "rollup-plugin-exclude-dependencies-from-bundle": "^1.1.24",
-        "rollup-plugin-generate-package-json": "^3.2.0",
-        "rollup-plugin-lib-style": "^2.4.7",
-        "rollup-plugin-typescript2": "^0.36.0",
-        "storybook": "^10.2.10",
-        "style-loader": "^2.0.0",
-        "styled-components": "^6.1.19",
-        "stylelint": "^17.4.0",
-        "stylelint-config-recess-order": "^7.6.1",
-        "stylelint-config-standard": "^40.0.0",
-        "typescript": "^5.7.3"
+    "./badge": {
+      "types": "./badge/index.d.ts",
+      "import": "./badge/index.js",
+      "require": "./cjs/badge/index.js",
+      "default": "./badge/index.js"
     },
-    "peerDependencies": {
-        "@floating-ui/react": ">=0.26.23 <1.0.0",
-        "@lifesg/react-icons": "^1.5.0",
-        "react": "^17.0.2 || ^18.0.0 || ^19.0.0",
-        "react-dom": "^17.0.2 || ^18.0.0 || ^19.0.0",
-        "styled-components": "^6.1.19"
+    "./box-container": {
+      "types": "./box-container/index.d.ts",
+      "import": "./box-container/index.js",
+      "require": "./cjs/box-container/index.js",
+      "default": "./box-container/index.js"
     },
-    "overrides": {
-        "react-resize-detector": {
-            "react": "$react",
-            "react-dom": "$react-dom"
-        }
+    "./breadcrumb": {
+      "types": "./breadcrumb/index.d.ts",
+      "import": "./breadcrumb/index.js",
+      "require": "./cjs/breadcrumb/index.js",
+      "default": "./breadcrumb/index.js"
     },
-    "lint-staged": {
-        "*.{tsx,ts}": [
-            "eslint --fix"
-        ],
-        "*.{css,module.css}": [
-            "stylelint --fix"
-        ]
+    "./button": {
+      "types": "./button/index.d.ts",
+      "import": "./button/index.js",
+      "require": "./cjs/button/index.js",
+      "default": "./button/index.js"
+    },
+    "./button-with-icon": {
+      "types": "./button-with-icon/index.d.ts",
+      "import": "./button-with-icon/index.js",
+      "require": "./cjs/button-with-icon/index.js",
+      "default": "./button-with-icon/index.js"
+    },
+    "./calendar": {
+      "types": "./calendar/index.d.ts",
+      "import": "./calendar/index.js",
+      "require": "./cjs/calendar/index.js",
+      "default": "./calendar/index.js"
+    },
+    "./card": {
+      "types": "./card/index.d.ts",
+      "import": "./card/index.js",
+      "require": "./cjs/card/index.js",
+      "default": "./card/index.js"
+    },
+    "./checkbox": {
+      "types": "./checkbox/index.d.ts",
+      "import": "./checkbox/index.js",
+      "require": "./cjs/checkbox/index.js",
+      "default": "./checkbox/index.js"
+    },
+    "./countdown-timer": {
+      "types": "./countdown-timer/index.d.ts",
+      "import": "./countdown-timer/index.js",
+      "require": "./cjs/countdown-timer/index.js",
+      "default": "./countdown-timer/index.js"
+    },
+    "./dashed-border": {
+      "types": "./dashed-border/index.d.ts",
+      "import": "./dashed-border/index.js",
+      "require": "./cjs/dashed-border/index.js",
+      "default": "./dashed-border/index.js"
+    },
+    "./data-table": {
+      "types": "./data-table/index.d.ts",
+      "import": "./data-table/index.js",
+      "require": "./cjs/data-table/index.js",
+      "default": "./data-table/index.js"
+    },
+    "./date-input": {
+      "types": "./date-input/index.d.ts",
+      "import": "./date-input/index.js",
+      "require": "./cjs/date-input/index.js",
+      "default": "./date-input/index.js"
+    },
+    "./date-navigator": {
+      "types": "./date-navigator/index.d.ts",
+      "import": "./date-navigator/index.js",
+      "require": "./cjs/date-navigator/index.js",
+      "default": "./date-navigator/index.js"
+    },
+    "./date-range-input": {
+      "types": "./date-range-input/index.d.ts",
+      "import": "./date-range-input/index.js",
+      "require": "./cjs/date-range-input/index.js",
+      "default": "./date-range-input/index.js"
+    },
+    "./divider": {
+      "types": "./divider/index.d.ts",
+      "import": "./divider/index.js",
+      "require": "./cjs/divider/index.js",
+      "default": "./divider/index.js"
+    },
+    "./drawer": {
+      "types": "./drawer/index.d.ts",
+      "import": "./drawer/index.js",
+      "require": "./cjs/drawer/index.js",
+      "default": "./drawer/index.js"
+    },
+    "./e-signature": {
+      "types": "./e-signature/index.d.ts",
+      "import": "./e-signature/index.js",
+      "require": "./cjs/e-signature/index.js",
+      "default": "./e-signature/index.js"
+    },
+    "./error-display": {
+      "types": "./error-display/index.d.ts",
+      "import": "./error-display/index.js",
+      "require": "./cjs/error-display/index.js",
+      "default": "./error-display/index.js"
+    },
+    "./example": {
+      "types": "./example/index.d.ts",
+      "import": "./example/index.js",
+      "require": "./cjs/example/index.js",
+      "default": "./example/index.js"
+    },
+    "./feedback-rating": {
+      "types": "./feedback-rating/index.d.ts",
+      "import": "./feedback-rating/index.js",
+      "require": "./cjs/feedback-rating/index.js",
+      "default": "./feedback-rating/index.js"
+    },
+    "./file-download": {
+      "types": "./file-download/index.d.ts",
+      "import": "./file-download/index.js",
+      "require": "./cjs/file-download/index.js",
+      "default": "./file-download/index.js"
+    },
+    "./file-upload": {
+      "types": "./file-upload/index.d.ts",
+      "import": "./file-upload/index.js",
+      "require": "./cjs/file-upload/index.js",
+      "default": "./file-upload/index.js"
+    },
+    "./filter": {
+      "types": "./filter/index.d.ts",
+      "import": "./filter/index.js",
+      "require": "./cjs/filter/index.js",
+      "default": "./filter/index.js"
+    },
+    "./footer": {
+      "types": "./footer/index.d.ts",
+      "import": "./footer/index.js",
+      "require": "./cjs/footer/index.js",
+      "default": "./footer/index.js"
+    },
+    "./form": {
+      "types": "./form/index.d.ts",
+      "import": "./form/index.js",
+      "require": "./cjs/form/index.js",
+      "default": "./form/index.js"
+    },
+    "./fullscreen-image-carousel": {
+      "types": "./fullscreen-image-carousel/index.d.ts",
+      "import": "./fullscreen-image-carousel/index.js",
+      "require": "./cjs/fullscreen-image-carousel/index.js",
+      "default": "./fullscreen-image-carousel/index.js"
+    },
+    "./histogram-slider": {
+      "types": "./histogram-slider/index.d.ts",
+      "import": "./histogram-slider/index.js",
+      "require": "./cjs/histogram-slider/index.js",
+      "default": "./histogram-slider/index.js"
+    },
+    "./icon-button": {
+      "types": "./icon-button/index.d.ts",
+      "import": "./icon-button/index.js",
+      "require": "./cjs/icon-button/index.js",
+      "default": "./icon-button/index.js"
+    },
+    "./image-button": {
+      "types": "./image-button/index.d.ts",
+      "import": "./image-button/index.js",
+      "require": "./cjs/image-button/index.js",
+      "default": "./image-button/index.js"
+    },
+    "./input": {
+      "types": "./input/index.d.ts",
+      "import": "./input/index.js",
+      "require": "./cjs/input/index.js",
+      "default": "./input/index.js"
+    },
+    "./input-group": {
+      "types": "./input-group/index.d.ts",
+      "import": "./input-group/index.js",
+      "require": "./cjs/input-group/index.js",
+      "default": "./input-group/index.js"
+    },
+    "./input-multi-select": {
+      "types": "./input-multi-select/index.d.ts",
+      "import": "./input-multi-select/index.js",
+      "require": "./cjs/input-multi-select/index.js",
+      "default": "./input-multi-select/index.js"
+    },
+    "./input-nested-multi-select": {
+      "types": "./input-nested-multi-select/index.d.ts",
+      "import": "./input-nested-multi-select/index.js",
+      "require": "./cjs/input-nested-multi-select/index.js",
+      "default": "./input-nested-multi-select/index.js"
+    },
+    "./input-nested-select": {
+      "types": "./input-nested-select/index.d.ts",
+      "import": "./input-nested-select/index.js",
+      "require": "./cjs/input-nested-select/index.js",
+      "default": "./input-nested-select/index.js"
+    },
+    "./input-range-select": {
+      "types": "./input-range-select/index.d.ts",
+      "import": "./input-range-select/index.js",
+      "require": "./cjs/input-range-select/index.js",
+      "default": "./input-range-select/index.js"
+    },
+    "./input-range-slider": {
+      "types": "./input-range-slider/index.d.ts",
+      "import": "./input-range-slider/index.js",
+      "require": "./cjs/input-range-slider/index.js",
+      "default": "./input-range-slider/index.js"
+    },
+    "./input-select": {
+      "types": "./input-select/index.d.ts",
+      "import": "./input-select/index.js",
+      "require": "./cjs/input-select/index.js",
+      "default": "./input-select/index.js"
+    },
+    "./input-slider": {
+      "types": "./input-slider/index.d.ts",
+      "import": "./input-slider/index.js",
+      "require": "./cjs/input-slider/index.js",
+      "default": "./input-slider/index.js"
+    },
+    "./input-textarea": {
+      "types": "./input-textarea/index.d.ts",
+      "import": "./input-textarea/index.js",
+      "require": "./cjs/input-textarea/index.js",
+      "default": "./input-textarea/index.js"
+    },
+    "./layout": {
+      "types": "./layout/index.d.ts",
+      "import": "./layout/index.js",
+      "require": "./cjs/layout/index.js",
+      "default": "./layout/index.js"
+    },
+    "./link-list": {
+      "types": "./link-list/index.d.ts",
+      "import": "./link-list/index.js",
+      "require": "./cjs/link-list/index.js",
+      "default": "./link-list/index.js"
+    },
+    "./local-nav": {
+      "types": "./local-nav/index.d.ts",
+      "import": "./local-nav/index.js",
+      "require": "./cjs/local-nav/index.js",
+      "default": "./local-nav/index.js"
+    },
+    "./markup": {
+      "types": "./markup/index.d.ts",
+      "import": "./markup/index.js",
+      "require": "./cjs/markup/index.js",
+      "default": "./markup/index.js"
+    },
+    "./masked-input": {
+      "types": "./masked-input/index.d.ts",
+      "import": "./masked-input/index.js",
+      "require": "./cjs/masked-input/index.js",
+      "default": "./masked-input/index.js"
+    },
+    "./masonry": {
+      "types": "./masonry/index.d.ts",
+      "import": "./masonry/index.js",
+      "require": "./cjs/masonry/index.js",
+      "default": "./masonry/index.js"
+    },
+    "./masthead": {
+      "types": "./masthead/index.d.ts",
+      "import": "./masthead/index.js",
+      "require": "./cjs/masthead/index.js",
+      "default": "./masthead/index.js"
+    },
+    "./menu": {
+      "types": "./menu/index.d.ts",
+      "import": "./menu/index.js",
+      "require": "./cjs/menu/index.js",
+      "default": "./menu/index.js"
+    },
+    "./modal": {
+      "types": "./modal/index.d.ts",
+      "import": "./modal/index.js",
+      "require": "./cjs/modal/index.js",
+      "default": "./modal/index.js"
+    },
+    "./modal-v2": {
+      "types": "./modal-v2/index.d.ts",
+      "import": "./modal-v2/index.js",
+      "require": "./cjs/modal-v2/index.js",
+      "default": "./modal-v2/index.js"
+    },
+    "./navbar": {
+      "types": "./navbar/index.d.ts",
+      "import": "./navbar/index.js",
+      "require": "./cjs/navbar/index.js",
+      "default": "./navbar/index.js"
+    },
+    "./notification-banner": {
+      "types": "./notification-banner/index.d.ts",
+      "import": "./notification-banner/index.js",
+      "require": "./cjs/notification-banner/index.js",
+      "default": "./notification-banner/index.js"
+    },
+    "./otp-input": {
+      "types": "./otp-input/index.d.ts",
+      "import": "./otp-input/index.js",
+      "require": "./cjs/otp-input/index.js",
+      "default": "./otp-input/index.js"
+    },
+    "./otp-verification": {
+      "types": "./otp-verification/index.d.ts",
+      "import": "./otp-verification/index.js",
+      "require": "./cjs/otp-verification/index.js",
+      "default": "./otp-verification/index.js"
+    },
+    "./overlay": {
+      "types": "./overlay/index.d.ts",
+      "import": "./overlay/index.js",
+      "require": "./cjs/overlay/index.js",
+      "default": "./overlay/index.js"
+    },
+    "./pagination": {
+      "types": "./pagination/index.d.ts",
+      "import": "./pagination/index.js",
+      "require": "./cjs/pagination/index.js",
+      "default": "./pagination/index.js"
+    },
+    "./phone-number-input": {
+      "types": "./phone-number-input/index.d.ts",
+      "import": "./phone-number-input/index.js",
+      "require": "./cjs/phone-number-input/index.js",
+      "default": "./phone-number-input/index.js"
+    },
+    "./pill": {
+      "types": "./pill/index.d.ts",
+      "import": "./pill/index.js",
+      "require": "./cjs/pill/index.js",
+      "default": "./pill/index.js"
+    },
+    "./popover": {
+      "types": "./popover/index.d.ts",
+      "import": "./popover/index.js",
+      "require": "./cjs/popover/index.js",
+      "default": "./popover/index.js"
+    },
+    "./popover-v2": {
+      "types": "./popover-v2/index.d.ts",
+      "import": "./popover-v2/index.js",
+      "require": "./cjs/popover-v2/index.js",
+      "default": "./popover-v2/index.js"
+    },
+    "./predictive-text-input": {
+      "types": "./predictive-text-input/index.d.ts",
+      "import": "./predictive-text-input/index.js",
+      "require": "./cjs/predictive-text-input/index.js",
+      "default": "./predictive-text-input/index.js"
+    },
+    "./progress-indicator": {
+      "types": "./progress-indicator/index.d.ts",
+      "import": "./progress-indicator/index.js",
+      "require": "./cjs/progress-indicator/index.js",
+      "default": "./progress-indicator/index.js"
+    },
+    "./radio-button": {
+      "types": "./radio-button/index.d.ts",
+      "import": "./radio-button/index.js",
+      "require": "./cjs/radio-button/index.js",
+      "default": "./radio-button/index.js"
+    },
+    "./schedule": {
+      "types": "./schedule/index.d.ts",
+      "import": "./schedule/index.js",
+      "require": "./cjs/schedule/index.js",
+      "default": "./schedule/index.js"
+    },
+    "./select-histogram": {
+      "types": "./select-histogram/index.d.ts",
+      "import": "./select-histogram/index.js",
+      "require": "./cjs/select-histogram/index.js",
+      "default": "./select-histogram/index.js"
+    },
+    "./sidenav": {
+      "types": "./sidenav/index.d.ts",
+      "import": "./sidenav/index.js",
+      "require": "./cjs/sidenav/index.js",
+      "default": "./sidenav/index.js"
+    },
+    "./singpass-button": {
+      "types": "./singpass-button/index.d.ts",
+      "import": "./singpass-button/index.js",
+      "require": "./cjs/singpass-button/index.js",
+      "default": "./singpass-button/index.js"
+    },
+    "./smart-app-banner": {
+      "types": "./smart-app-banner/index.d.ts",
+      "import": "./smart-app-banner/index.js",
+      "require": "./cjs/smart-app-banner/index.js",
+      "default": "./smart-app-banner/index.js"
+    },
+    "./tab": {
+      "types": "./tab/index.d.ts",
+      "import": "./tab/index.js",
+      "require": "./cjs/tab/index.js",
+      "default": "./tab/index.js"
+    },
+    "./table": {
+      "types": "./table/index.d.ts",
+      "import": "./table/index.js",
+      "require": "./cjs/table/index.js",
+      "default": "./table/index.js"
+    },
+    "./tag": {
+      "types": "./tag/index.d.ts",
+      "import": "./tag/index.js",
+      "require": "./cjs/tag/index.js",
+      "default": "./tag/index.js"
+    },
+    "./text-list": {
+      "types": "./text-list/index.d.ts",
+      "import": "./text-list/index.js",
+      "require": "./cjs/text-list/index.js",
+      "default": "./text-list/index.js"
+    },
+    "./theme": {
+      "types": "./theme/index.d.ts",
+      "import": "./theme/index.js",
+      "require": "./cjs/theme/index.js",
+      "default": "./theme/index.js"
+    },
+    "./time-range-picker": {
+      "types": "./time-range-picker/index.d.ts",
+      "import": "./time-range-picker/index.js",
+      "require": "./cjs/time-range-picker/index.js",
+      "default": "./time-range-picker/index.js"
+    },
+    "./time-slot-bar": {
+      "types": "./time-slot-bar/index.d.ts",
+      "import": "./time-slot-bar/index.js",
+      "require": "./cjs/time-slot-bar/index.js",
+      "default": "./time-slot-bar/index.js"
+    },
+    "./time-slot-bar-week": {
+      "types": "./time-slot-bar-week/index.d.ts",
+      "import": "./time-slot-bar-week/index.js",
+      "require": "./cjs/time-slot-bar-week/index.js",
+      "default": "./time-slot-bar-week/index.js"
+    },
+    "./time-slot-week-view": {
+      "types": "./time-slot-week-view/index.d.ts",
+      "import": "./time-slot-week-view/index.js",
+      "require": "./cjs/time-slot-week-view/index.js",
+      "default": "./time-slot-week-view/index.js"
+    },
+    "./timeline": {
+      "types": "./timeline/index.d.ts",
+      "import": "./timeline/index.js",
+      "require": "./cjs/timeline/index.js",
+      "default": "./timeline/index.js"
+    },
+    "./timepicker": {
+      "types": "./timepicker/index.d.ts",
+      "import": "./timepicker/index.js",
+      "require": "./cjs/timepicker/index.js",
+      "default": "./timepicker/index.js"
+    },
+    "./timetable": {
+      "types": "./timetable/index.d.ts",
+      "import": "./timetable/index.js",
+      "require": "./cjs/timetable/index.js",
+      "default": "./timetable/index.js"
+    },
+    "./toast": {
+      "types": "./toast/index.d.ts",
+      "import": "./toast/index.js",
+      "require": "./cjs/toast/index.js",
+      "default": "./toast/index.js"
+    },
+    "./toggle": {
+      "types": "./toggle/index.d.ts",
+      "import": "./toggle/index.js",
+      "require": "./cjs/toggle/index.js",
+      "default": "./toggle/index.js"
+    },
+    "./tooltip": {
+      "types": "./tooltip/index.d.ts",
+      "import": "./tooltip/index.js",
+      "require": "./cjs/tooltip/index.js",
+      "default": "./tooltip/index.js"
+    },
+    "./typography": {
+      "types": "./typography/index.d.ts",
+      "import": "./typography/index.js",
+      "require": "./cjs/typography/index.js",
+      "default": "./typography/index.js"
+    },
+    "./uneditable-section": {
+      "types": "./uneditable-section/index.d.ts",
+      "import": "./uneditable-section/index.js",
+      "require": "./cjs/uneditable-section/index.js",
+      "default": "./uneditable-section/index.js"
+    },
+    "./unit-number": {
+      "types": "./unit-number/index.d.ts",
+      "import": "./unit-number/index.js",
+      "require": "./cjs/unit-number/index.js",
+      "default": "./unit-number/index.js"
+    },
+    "./v2_color": {
+      "types": "./v2_color/index.d.ts",
+      "import": "./v2_color/index.js",
+      "require": "./cjs/v2_color/index.js",
+      "default": "./v2_color/index.js"
+    },
+    "./v2_design-token": {
+      "types": "./v2_design-token/index.d.ts",
+      "import": "./v2_design-token/index.js",
+      "require": "./cjs/v2_design-token/index.js",
+      "default": "./v2_design-token/index.js"
+    },
+    "./v2_layout": {
+      "types": "./v2_layout/index.d.ts",
+      "import": "./v2_layout/index.js",
+      "require": "./cjs/v2_layout/index.js",
+      "default": "./v2_layout/index.js"
+    },
+    "./v2_media": {
+      "types": "./v2_media/index.d.ts",
+      "import": "./v2_media/index.js",
+      "require": "./cjs/v2_media/index.js",
+      "default": "./v2_media/index.js"
+    },
+    "./v2_text": {
+      "types": "./v2_text/index.d.ts",
+      "import": "./v2_text/index.js",
+      "require": "./cjs/v2_text/index.js",
+      "default": "./v2_text/index.js"
+    },
+    "./v2_text-list": {
+      "types": "./v2_text-list/index.d.ts",
+      "import": "./v2_text-list/index.js",
+      "require": "./cjs/v2_text-list/index.js",
+      "default": "./v2_text-list/index.js"
+    },
+    "./v2_theme": {
+      "types": "./v2_theme/index.d.ts",
+      "import": "./v2_theme/index.js",
+      "require": "./cjs/v2_theme/index.js",
+      "default": "./v2_theme/index.js"
+    },
+    "./v2_transition": {
+      "types": "./v2_transition/index.d.ts",
+      "import": "./v2_transition/index.js",
+      "require": "./cjs/v2_transition/index.js",
+      "default": "./v2_transition/index.js"
+    },
+    "./v3_theme": {
+      "types": "./v3_theme/index.d.ts",
+      "import": "./v3_theme/index.js",
+      "require": "./cjs/v3_theme/index.js",
+      "default": "./v3_theme/index.js"
     }
+  },
+  "dependencies": {
+    "@react-spring/web": "^10.0.1",
+    "clsx": "^2.1.1",
+    "fabric": "^7.2.0",
+    "immer": "^10.0.2",
+    "react-slider": "^2.0.6",
+    "react-virtuoso": "^4.12.5",
+    "react-zoom-pan-pinch": "^3.3.0"
+  },
+  "peerDependencies": {
+    "@floating-ui/react": ">=0.26.23 <1.0.0",
+    "@lifesg/react-icons": "^1.5.0",
+    "react": "^17.0.2 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^17.0.2 || ^18.0.0 || ^19.0.0",
+    "styled-components": "^6.1.19"
+  }
 }

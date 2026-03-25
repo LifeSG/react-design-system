@@ -1,0 +1,2 @@
+"use strict";var e=require("react/jsx-runtime"),n=require("react"),r=require("styled-components"),i=require("../loading-dots-spinner/loading-dots-spinner.js"),s=require("../loading-spinner/loading-spinner.js");exports.ThemedLoadingSpinner=t=>{const o=n.useContext(r.ThemeContext);return"lifesg"===(null==o?void 0:o.resourceScheme)?e.jsx(s.LoadingSpinner,Object.assign({},t)):e.jsx(i.LoadingDotsSpinner,Object.assign({},t))};
+//# sourceMappingURL=themed-loading-spinner.js.map

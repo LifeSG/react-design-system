@@ -1,0 +1,2 @@
+import type { FileUploadProps } from "./types";
+export declare const FileUpload: ({ styleType, fileItems, title, description, maxFiles, warning, className, name, id, "data-testid": testId, accept, capture, multiple, disabled, sortable, fileDescriptionMaxLength, editableFileItems, errorMessage, readOnly, customLabels, onChange, onDelete, onEdit, onSort, }: FileUploadProps) => import("react/jsx-runtime").JSX.Element;

@@ -1,0 +1,2 @@
+import{LinkSM as i,BodyBL as n,BodySM as d,BodyMD as o,LinkMD as L,HeadingMD as a,HeadingSM as e,BodyXS as g,LinkXS as y,HeadingXS as B,LinkBL as H,HeadingLG as M,HeadingXL as S,HeadingXXL as X}from"./typography.js";const k={HeadingXXL:X,HeadingXL:S,HeadingLG:M,HeadingMD:a,HeadingSM:e,HeadingXS:B,BodyBL:n,BodyMD:o,BodySM:d,BodyXS:g,LinkBL:H,LinkMD:L,LinkSM:i,LinkXS:y};export{k as Typography};
+//# sourceMappingURL=index.js.map

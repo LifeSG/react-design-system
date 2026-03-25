@@ -1,0 +1,1 @@
+{"version":3,"file":"default-font-set.js","sources":["../../../../src/v3_theme/font/specs/default-font-set.ts"],"sourcesContent":["import type { V3_FontSet } from \"../types\";\nimport { getFontSet } from \"../utils\";\n\nexport const V3_DefaultFontSet: V3_FontSet = getFontSet();\n"],"names":["V3_DefaultFontSet","getFontSet"],"mappings":"yCAGO,MAAMA,EAAgCC"}

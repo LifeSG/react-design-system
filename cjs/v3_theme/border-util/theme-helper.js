@@ -1,0 +1,2 @@
+"use strict";var e=require("../helpers.js");const t={collections:{default:require("./specs/default-border-util-set.js").V3_DefaultBorderUtilSet},defaultValue:"default"},l=e=>1===e.length&&"theme"in e[0],r=r=>(...d)=>s=>{const o=l(d)?[]:d,u=l(d)?d[0]:s,a=u.theme;return(0,e.getCollection(t,null==a?void 0:a.borderScheme)[r])(...o)(u)},d={solid:r("solid"),"dashed-default":r("dashed-default")};exports.V3_BorderUtilValues=d,exports.getBorderStyle=r;
+//# sourceMappingURL=theme-helper.js.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["../../src/modal/index.ts"],"sourcesContent":["import { Modal as Base } from \"./modal\";\nimport { ModalBox as Box } from \"./modal-box\";\n\nexport const Modal = Object.assign(Base, {\n    Box,\n});\n\nexport * from \"./types\";\n"],"names":["Modal","Object","assign","Base","Box"],"mappings":"mFAGaA,EAAQC,OAAOC,OAAOC,EAAM,KACrCC"}

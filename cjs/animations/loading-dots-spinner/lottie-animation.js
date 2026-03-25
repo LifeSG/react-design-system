@@ -1,0 +1,2 @@
+"use strict";var e=require("react/jsx-runtime"),t=require("../../external/lottie-colorify/lib/index.js"),r=require("../../external/lottie-react/build/index.umd.js"),i=require("./data.json.js");exports.LottieLoadingDotsSpinner=({color:o=t.getColors(i.default)[0]})=>{const a={animationData:t.flatten(o,i.default),loop:!0,autoplay:!0,style:{height:"200px",width:"200px"}},{View:n}=r.index_umdExports.useLottie(a);return e.jsx(e.Fragment,{children:n})};
+//# sourceMappingURL=lottie-animation.js.map

@@ -1,0 +1,2 @@
+"use strict";exports.FileUploadHelper=class{static formatFileSizeDisplay(e){if(!e||0===e)return"0 KB";const i=Math.floor(Math.log(e)/Math.log(1024));return`${Number(e/Math.pow(1024,i)).toFixed(0)} ${["B","KB","MB","GB","TB","PB","EB","ZB","YB"][i]}`}static isSupportedImageType(e){return["image/avif","image/gif","image/jpeg","image/png","image/svg+xml","image/webp"].includes(e)}};
+//# sourceMappingURL=helper.js.map

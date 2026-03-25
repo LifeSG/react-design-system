@@ -1,0 +1,2 @@
+"use strict";var e=require("./isFunction.js"),r=require("./_isMasked.js"),t=require("./isObject.js"),o=require("./_toSource.js"),s=e.isFunction_1,i=r._isMasked,c=t.isObject_1,n=o._toSource,u=/^\[object .+?Constructor\]$/,a=Function.prototype,p=Object.prototype,j=a.toString,_=p.hasOwnProperty,b=RegExp("^"+j.call(_).replace(/[\\^$.*+?()[\]{}|]/g,"\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g,"$1.*?")+"$");var O=function(e){return!(!c(e)||i(e))&&(s(e)?b:u).test(n(e))};exports._baseIsNative=O;
+//# sourceMappingURL=_baseIsNative.js.map

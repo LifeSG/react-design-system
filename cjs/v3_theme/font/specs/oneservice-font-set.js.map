@@ -1,0 +1,1 @@
+{"version":3,"file":"oneservice-font-set.js","sources":["../../../../../src/v3_theme/font/specs/oneservice-font-set.ts"],"sourcesContent":["import type { V3_FontSet } from \"../types\";\nimport { getFontSet } from \"../utils\";\n\nexport const V3_OneServiceFontSet: V3_FontSet = getFontSet();\n"],"names":["V3_OneServiceFontSet","getFontSet"],"mappings":"aAGO,MAAMA,yBAAmCC"}

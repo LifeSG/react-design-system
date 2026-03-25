@@ -1,0 +1,2 @@
+"use strict";var e=require("../_virtual/_tslib.js"),t=require("react/jsx-runtime"),r=require("../typography/index.js"),s=require("./menu-item.styles.js");const i=i=>{var{label:a,subLabel:l,children:u,"data-testid":d="menu-item"}=i,n=e.__rest(i,["label","subLabel","children","data-testid"]);return t.jsxs(s.MenuItemDiv,Object.assign({"data-testid":d},n,{children:[a&&t.jsx(r.Typography.BodyMD,{weight:"semibold",children:a}),l&&t.jsx(s.SubLabel,{children:l}),u]}))};i.displayName="Menu.Item",exports.MenuItem=i;
+//# sourceMappingURL=menu-item.js.map

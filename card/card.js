@@ -1,0 +1,2 @@
+import{__rest as r}from"../_virtual/_tslib.js";import{jsx as t}from"react/jsx-runtime";import{Typography as i}from"../typography/index.js";import{StyledCard as e}from"./card.style.js";const o=o=>{var{children:s}=o,d=r(o,["children"]);const a=d["data-testid"]||"card";return t(e,Object.assign({},d,{"data-testid":a,children:"string"==typeof s?t(i.BodyBL,{children:s}):s}))};export{o as Card};
+//# sourceMappingURL=card.js.map

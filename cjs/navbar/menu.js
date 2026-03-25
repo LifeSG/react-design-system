@@ -1,0 +1,2 @@
+"use strict";var e=require("../_virtual/_tslib.js"),n=require("react/jsx-runtime"),r=require("./menu.styles.js");exports.Menu=({items:t,onItemClick:i})=>{const s=e=>n=>{n.stopPropagation(),i(n,e)};return(null==t?void 0:t.length)?n.jsx(r.MobileWrapper,{children:t.map(((t,i)=>{const{children:l,options:o}=t,u=e.__rest(t,["children","options"]),c=`menu__mobile-${i+1}`;return n.jsx(r.MenuItem,{children:n.jsx(r.Link,Object.assign({"data-testid":c},u,o,{onClick:s(t),underlineStyle:"none",children:l}))},i)}))}):n.jsx(n.Fragment,{})};
+//# sourceMappingURL=menu.js.map

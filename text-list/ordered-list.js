@@ -1,0 +1,2 @@
+import{__rest as t}from"../_virtual/_tslib.js";import{jsx as r}from"react/jsx-runtime";import{StyledOrderedList as e}from"./text-list.styles.js";const o=o=>{var{size:i,counterType:n,counterSeparator:a,bottomMargin:s,children:c}=o,m=t(o,["size","counterType","counterSeparator","bottomMargin","children"]);return r(e,Object.assign({$size:i,$counterType:n,$counterSeparator:a,$bottomMargin:s},m,{children:c}))};o.displayName="TextList.Ol";export{o as OrderedList};
+//# sourceMappingURL=ordered-list.js.map

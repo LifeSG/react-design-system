@@ -1,0 +1,2 @@
+import{__rest as r}from"../_virtual/_tslib.js";import{jsxs as e,jsx as o}from"react/jsx-runtime";import t from"react";import{Wrapper as i,Label as c}from"./pill.style.js";const l=l=>{var{type:n,colorType:p="black",children:m,icon:a}=l,s=r(l,["type","colorType","children","icon"]);return e(i,Object.assign({$type:n,$color:p},s,{children:[a&&t.cloneElement(a,{"aria-hidden":!0}),o(c,{children:m})]}))};export{l as Pill};
+//# sourceMappingURL=pill.js.map

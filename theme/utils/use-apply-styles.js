@@ -1,0 +1,2 @@
+import"../../util/calendar-helper.js";import"../../external/dayjs/dayjs.min.js";import"react";import"../../util/string-helper.js";import{useIsomorphicLayoutEffect as t}from"../../util/use-isomorphic-layout-effect.js";function r(r,e){t((()=>{const t=null==r?void 0:r.current;t&&Object.entries(e).forEach((([r,e])=>{null!=e?t.style.setProperty(r,String(e)):t.style.setProperty(r,"")}))}),[r,e])}export{r as useApplyStyle};
+//# sourceMappingURL=use-apply-styles.js.map

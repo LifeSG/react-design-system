@@ -1,0 +1,5 @@
+import type React from "react";
+import type { AccordionProps } from "./types";
+export declare const Accordion: (({ children, title, enableExpandAll, initialDisplay, showTitleInMobile, id, "data-testid": testId, className, headingLevel, onExpandCollapseChange, }: AccordionProps) => JSX.Element) & {
+    Item: (props: import("./types").AccordionItemProps & React.RefAttributes<import("./types").AccordionItemHandle>) => React.ReactElement | null;
+};

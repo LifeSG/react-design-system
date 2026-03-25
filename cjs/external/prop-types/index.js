@@ -1,0 +1,2 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("../../_virtual/_commonjsHelpers.js"),r=require("../../_virtual/index3.js"),s=require("./external/react-is/index.js"),t=require("./factoryWithTypeCheckers.js"),i=require("./factoryWithThrowingShims.js");if("production"!==process.env.NODE_ENV){var o=s.__require();r.__module.exports=t.__require()(o.isElement,!0)}else r.__module.exports=i.__require()();var u=r.__module.exports,_=e.getDefaultExportFromCjs(u);exports.default=_;
+//# sourceMappingURL=index.js.map

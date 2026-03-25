@@ -1,0 +1,2 @@
+"use strict";var e=require("../v3_theme/index.js");exports.ErrorDisplayHelper=class{static imgAttributeHelper(t,r){const{base:i,md:s,lg:a,width:h,height:p}=t;return{srcSet:`${i} 400w, ${s} 800w, ${a} 1200w`,src:a,sizes:`(max-width: ${e.V3_Breakpoint["sm-max"]({theme:r})}px) 400px, (max-width: ${e.V3_Breakpoint["lg-max"]({theme:r})}px) 800px, 1200px`,width:h,height:p}}};
+//# sourceMappingURL=helper.js.map

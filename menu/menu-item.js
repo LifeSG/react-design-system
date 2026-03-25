@@ -1,0 +1,2 @@
+import{__rest as e}from"../_virtual/_tslib.js";import{jsxs as t,jsx as i}from"react/jsx-runtime";import{Typography as r}from"../typography/index.js";import{MenuItemDiv as a,SubLabel as s}from"./menu-item.styles.js";const l=l=>{var{label:m,subLabel:d,children:n,"data-testid":o="menu-item"}=l,b=e(l,["label","subLabel","children","data-testid"]);return t(a,Object.assign({"data-testid":o},b,{children:[m&&i(r.BodyMD,{weight:"semibold",children:m}),d&&i(s,{children:d}),n]}))};l.displayName="Menu.Item";export{l as MenuItem};
+//# sourceMappingURL=menu-item.js.map

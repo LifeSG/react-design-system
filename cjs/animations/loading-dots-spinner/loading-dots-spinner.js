@@ -1,0 +1,4 @@
+"use strict";var e=require("../../_virtual/_tslib.js"),t=require("react/jsx-runtime"),r=require("react"),i=require("styled-components"),n=require("../../v3_theme/components/theme-helper.js");function o(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var s=o(i);const a=r.lazy((()=>e.__awaiter(void 0,void 0,void 0,(function*(){return{default:(yield Promise.resolve().then((function(){return require("./lottie-animation.js")}))).LottieLoadingDotsSpinner}})))),u=()=>t.jsx("div",{style:{height:"200px",width:"200px"}}),l=s.default.div`
+    margin: 0 auto;
+`;exports.LoadingDotsSpinner=o=>{var{color:s}=o,c=e.__rest(o,["color"]);const d=r.useContext(i.ThemeContext),h=s||n.V3_ThemeAnimation["loading-dots-spinner-colour"]({theme:d});return t.jsx(l,Object.assign({},c,{children:t.jsx(r.Suspense,{fallback:t.jsx(u,{}),children:t.jsx(a,{color:h})})}))};
+//# sourceMappingURL=loading-dots-spinner.js.map

@@ -1,0 +1,2 @@
+const t=(t,e)=>t&&t.trim().length>0?t:e,e=t=>"number"==typeof t?`${t}px`:String(t),r=(t,e)=>"string"==typeof t&&e.has(t),o=(t,e)=>"string"==typeof t&&t.startsWith(e),s=(t,e,r)=>e(t)?t:r,n=({value:e,resolvedValue:r,guard:o,normalizeCustom:s})=>o(e)?t(r,e):s(e);export{n as getEffectiveTokenOrCustom,t as getResolvedValue,s as getTokenOrDefault,r as isTokenFromSet,o as isTokenWithPrefix,e as toCssValue};
+//# sourceMappingURL=token-resolver.js.map

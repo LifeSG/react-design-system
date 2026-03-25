@@ -1,0 +1,2 @@
+import{MouseSensor as e,KeyboardSensor as t}from"../external/@dnd-kit/core/dist/core.esm.js";class n extends e{}n.activators=[{eventName:"onMouseDown",handler:({nativeEvent:e})=>r(e.target)}];class a extends t{}function r(e){let t=e;for(;t;){if(t.dataset&&t.dataset.noDnd)return!1;t=t.parentElement}return!0}a.activators=[{eventName:"onKeyDown",handler:({nativeEvent:e})=>r(e.target)}];export{a as KeyboardSensor,n as MouseSensor};
+//# sourceMappingURL=custom-sensors.js.map

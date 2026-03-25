@@ -1,0 +1,21 @@
+export declare const Spacing: {
+    readonly "spacing-0": "var(--fds-spacing-0)";
+    readonly "spacing-4": "var(--fds-spacing-4)";
+    readonly "spacing-8": "var(--fds-spacing-8)";
+    readonly "spacing-12": "var(--fds-spacing-12)";
+    readonly "spacing-16": "var(--fds-spacing-16)";
+    readonly "spacing-20": "var(--fds-spacing-20)";
+    readonly "spacing-24": "var(--fds-spacing-24)";
+    readonly "spacing-32": "var(--fds-spacing-32)";
+    readonly "spacing-40": "var(--fds-spacing-40)";
+    readonly "spacing-48": "var(--fds-spacing-48)";
+    readonly "spacing-64": "var(--fds-spacing-64)";
+    readonly "spacing-72": "var(--fds-spacing-72)";
+    readonly "layout-xs": "var(--fds-layout-xs)";
+    readonly "layout-sm": "var(--fds-layout-sm)";
+    readonly "layout-md": "var(--fds-layout-md)";
+    readonly "layout-lg": "var(--fds-layout-lg)";
+    readonly "layout-xl": "var(--fds-layout-xl)";
+    readonly "layout-xxl": "var(--fds-layout-xxl)";
+    readonly "layout-xxxl": "var(--fds-layout-xxxl)";
+};

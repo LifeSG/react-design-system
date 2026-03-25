@@ -1,0 +1,2 @@
+import{__rest as e}from"../_virtual/_tslib.js";import{jsx as t}from"react/jsx-runtime";import{forwardRef as r}from"react";import{Container as o}from"./markup.style.js";const i=r(((r,i)=>{const{baseTextColor:s,baseTextSize:a,inline:m}=r,n=e(r,["baseTextColor","baseTextSize","inline"]);return t(o,Object.assign({ref:i,as:m?"span":"div",$textSize:a,$textColor:s},n))}));export{i as Markup};
+//# sourceMappingURL=markup.js.map

@@ -1,0 +1,12 @@
+{
+  "type": "commonjs",
+  "dependencies": {
+    "@react-spring/web": "^10.0.1",
+    "clsx": "^2.1.1",
+    "fabric": "^7.2.0",
+    "immer": "^10.0.2",
+    "react-slider": "^2.0.6",
+    "react-virtuoso": "^4.12.5",
+    "react-zoom-pan-pinch": "^3.3.0"
+  }
+}

@@ -1,0 +1,2 @@
+import{jsx as o}from"react/jsx-runtime";import{useContext as r}from"react";import{ThemeContext as n}from"styled-components";import{LoadingDotsSpinner as s}from"../loading-dots-spinner/loading-dots-spinner.js";import{LoadingSpinner as e}from"../loading-spinner/loading-spinner.js";const i=i=>{const t=r(n);return"lifesg"===(null==t?void 0:t.resourceScheme)?o(e,Object.assign({},i)):o(s,Object.assign({},i))};export{i as ThemedLoadingSpinner};
+//# sourceMappingURL=themed-loading-spinner.js.map
