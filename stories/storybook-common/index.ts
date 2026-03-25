@@ -4,5 +4,6 @@ export * from "./preview-box";
 export * from "./story-container";
 export * from "./storybook-link";
 export * from "./tabs";
+export * from "./text.style";
 export * from "./token-inspector";
 export * from "./token-table";
