@@ -172,6 +172,18 @@ const styledDiv = css`
 `;
 ```
 
+### Import
+
+Import styles under a namespace to avoid naming collisions.
+
+```tsx
+import * as styles from "./component.styles";
+
+const MyComponent = ({ description }) => {
+    <div className={styles.description} />;
+};
+```
+
 ### No `styled` helpers
 
 Do not use Linaria `styled` helpers to avoid accidental function interpolation,
@@ -184,14 +196,18 @@ Example:
 // Correct
 
 /** component.tsx */
-return <div className={clsx(defaultDiv, loading && loadingDiv)} />;
+return (
+    <div className={clsx(styles.defaultDiv, loading && styles.loadingDiv)} />
+);
 ```
 
 If you are working with complex conditional styles, you may use the object
 notation for `clsx` for readability
 
 ```tsx
-clsx(defaultDiv, { loadingDiv: loading && !disabled && !readOnly });
+clsx(styles.defaultDiv, {
+    [styles.loadingDiv]: loading && !disabled && !readOnly,
+});
 ```
 
 ### No nested classes
@@ -204,7 +220,7 @@ Example:
 ```tsx
 // Wrong
 
-/** component.styles.tsx */
+/** component.styles.ts */
 const wrapper = css`
     .label {
         // styles here...
@@ -227,7 +243,7 @@ return (
 ```tsx
 // Correct
 
-/** component.styles.tsx */
+/** component.styles.ts */
 const wrapper = css`
     // styles here...
 `;
@@ -242,18 +258,24 @@ const description = css`
 
 /** component.tsx */
 return (
-    <div className={wrapper}>
-        <label className={label}>This is the label</label>
-        <span className={description}>Lorem ipsum dolar sit amet...</span>
+    <div className={styles.wrapper}>
+        <label className={styles.label}>This is the label</label>
+        <span className={styles.description}>
+            Lorem ipsum dolar sit amet...
+        </span>
     </div>
 );
 ```
 
 ### Handling dynamic styles from props
 
-Avoid setting the `style` attribute as it could be blocked with strict CSP
-configs. Set CSS variables through Javascript. Variable names should be
-formatted as `fds-<componentName>-<element>-<propName>` to ensure uniqueness.
+Avoid setting the inline `style` attribute as it could be blocked with strict
+CSP configs. Set CSS variables through Javascript. Additionally,
+
+1.  Variable names should be formatted as
+    `fds-<componentName>-<element>-<propName>` to ensure uniqueness.
+2.  Declare the variables as constants to avoid magic strings.
+3.  Reset the variable to avoid unintended inheritance with nested components
 
 Example:
 
@@ -269,11 +291,15 @@ const MyComponent = ({ textColour, ...otherProps }) => {
 ```tsx
 // Correct
 
-/** component.styles.tsx */
+/** component.styles.ts */
+const tokens = {
+    wrapper: { textColour: "--fds-myComponent-wrapper-textColour" }
+}
+
 const wrapper = css`
   /* make sure to reset the variable */
-  --fds-myComponent-wrapper-textColour: initial;
-  color: var(--fds-myComponent-wrapper-textColour);
+  ${tokens.wrapper.textColour}: initial;
+  color: var(${tokens.wrapper.textColour});
 `
 
 /** component.tsx */
@@ -287,11 +313,24 @@ const MyComponent = ({
     const element = ref.current;
     if (!element) return;
 
-    element.style.setProperty("--fds-myComponent-wrapper-textColour", ...);
+    element.style.setProperty(tokens.wrapper.textColour, ...);
   }, [textColour]);
 
-  return <div ref={ref} className={wrapper} {...otherProps} />
+  return <div ref={ref} className={styles.wrapper} {...otherProps} />
 }
+```
+
+This can be simplified using the provided `useApplyStyle` hook:
+
+```tsx
+/** component.tsx */
+const MyComponent = ({ textColour, ...otherProps }) => {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(ref, { [tokens.wrapper.textColour]: textColour });
+
+    return <div ref={ref} className={styles.wrapper} {...otherProps} />;
+};
 ```
 
 ## Implementation logics

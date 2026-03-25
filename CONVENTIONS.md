@@ -140,7 +140,7 @@ Example:
 ```tsx
 // Wrong
 
-/** component.style.tsx */
+/** component.styles.tsx */
 const Wrapper = styled.div`
     .label {
         // styles here...
@@ -164,7 +164,7 @@ return (
 ```tsx
 // Correct
 
-/** component.style.tsx */
+/** component.styles.tsx */
 const Wrapper = styled.div`
     // styles here...
 `;

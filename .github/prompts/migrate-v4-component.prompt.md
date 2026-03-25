@@ -27,7 +27,7 @@ Before you begin, create the outline for a step-by-step plan you would have to t
 
 ### 1. Rename style file extension
 
--   Rename `<component>.style.tsx` or `<component>.styles.tsx` to `<component>.style.ts` to remain consistent with the project conventions
+-   Rename `<component>.style.tsx` or `<component>.styles.tsx` to `<component>.styles.ts` to remain consistent with the project conventions
 -   Update the import in the main component file to reflect the new path
 
 ### 2. Migrate V3 design tokens to V4 design tokens
