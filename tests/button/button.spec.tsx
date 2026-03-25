@@ -153,6 +153,40 @@ describe("Button", () => {
             fireEvent.click(screen.getByTestId("btn"));
             expect(onClickMock).not.toHaveBeenCalled();
         });
+
+        it("should remain focusable and not fire onClick when focusableWhenDisabled is set", () => {
+            const onClickMock = jest.fn();
+            render(
+                <Button
+                    icon={<PlaceholderIcon />}
+                    onClick={onClickMock}
+                    data-testid="btn"
+                    disabled
+                    focusableWhenDisabled
+                >
+                    {BUTTON_TEXT}
+                </Button>
+            );
+            const btn = screen.getByTestId("btn");
+            expect(btn).not.toBeDisabled();
+            fireEvent.click(btn);
+            expect(onClickMock).not.toHaveBeenCalled();
+        });
+
+        it("should render icon with iconPosition='right'", () => {
+            render(
+                <Button
+                    icon={<PlaceholderIcon />}
+                    iconPosition="right"
+                    data-testid="btn"
+                >
+                    {BUTTON_TEXT}
+                </Button>
+            );
+            const btn = screen.getByTestId("btn");
+            expect(btn.querySelector("svg")).toBeInTheDocument();
+            expect(screen.getByText(BUTTON_TEXT)).toBeInTheDocument();
+        });
     });
 
     // =========================================================================
@@ -228,6 +262,24 @@ describe("Button", () => {
             fireEvent.click(screen.getByTestId("btn"));
             expect(onClickMock).not.toHaveBeenCalled();
         });
+
+        it("should remain focusable and not fire onClick when focusableWhenDisabled is set", () => {
+            const onClickMock = jest.fn();
+            render(
+                <Button
+                    icon={<PlaceholderIcon />}
+                    aria-label={ARIA_LABEL}
+                    onClick={onClickMock}
+                    data-testid="btn"
+                    disabled
+                    focusableWhenDisabled
+                />
+            );
+            const btn = screen.getByTestId("btn");
+            expect(btn).not.toBeDisabled();
+            fireEvent.click(btn);
+            expect(onClickMock).not.toHaveBeenCalled();
+        });
     });
 
     // =========================================================================
@@ -259,6 +311,42 @@ describe("Button", () => {
                 </Button>
             );
             expect(screen.getByTestId("btn")).toBeInTheDocument();
+        });
+    });
+
+    // =========================================================================
+    // DANGER
+    // =========================================================================
+    describe("danger", () => {
+        it("should render with danger flag", () => {
+            render(
+                <Button danger data-testid="btn">
+                    {BUTTON_TEXT}
+                </Button>
+            );
+            expect(screen.getByTestId("btn")).toBeInTheDocument();
+        });
+
+        it("should render icon+label button with danger flag", () => {
+            render(
+                <Button icon={<PlaceholderIcon />} danger data-testid="btn">
+                    {BUTTON_TEXT}
+                </Button>
+            );
+            const btn = screen.getByTestId("btn");
+            expect(btn.querySelector("svg")).toBeInTheDocument();
+            expect(screen.getByText(BUTTON_TEXT)).toBeInTheDocument();
+        });
+
+        it("should show loading spinner when danger and loading are combined", () => {
+            render(
+                <Button danger loading data-testid="btn">
+                    {BUTTON_TEXT}
+                </Button>
+            );
+            expect(
+                screen.getByTestId("component-loading-spinner")
+            ).toBeInTheDocument();
         });
     });
 });
