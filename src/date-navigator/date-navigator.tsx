@@ -142,10 +142,9 @@ export const DateNavigator = ({
                         aria-label={ariaLabel.left}
                         onClick={navigatePrevious}
                         styleType="light"
-                        sizeType="small"
-                    >
-                        <ArrowLeft />
-                    </HeaderArrowButton>
+                        size="small"
+                        icon={<ArrowLeft />}
+                    />
                 }
                 <StyledDateTextButton
                     onClick={() =>
@@ -167,10 +166,9 @@ export const DateNavigator = ({
                         aria-label={ariaLabel.right}
                         onClick={navigateNext}
                         styleType="light"
-                        sizeType="small"
-                    >
-                        <ArrowRight />
-                    </HeaderArrowButton>
+                        size="small"
+                        icon={<ArrowRight />}
+                    />
                 }
             </Container>
         );

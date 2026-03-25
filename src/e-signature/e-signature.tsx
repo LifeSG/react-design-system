@@ -3,8 +3,6 @@ import { lazy, Suspense, useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 
-import { Button } from "../button";
-import { ButtonWithIcon } from "../button-with-icon";
 import { ProgressBar } from "../shared/progress-bar";
 import { Typography } from "../typography";
 import { V3_Breakpoint } from "../v3_theme";
@@ -107,11 +105,10 @@ export const ESignature = (props: EsignatureProps) => {
                     styleType="light"
                     onClick={() => setShowModal(true)}
                     id={id}
+                    icon={<PencilIcon />}
                     aria-label="Edit signature"
                     disabled={disabled}
-                >
-                    <PencilIcon />
-                </EditSignatureButton>
+                />
             </>
         );
     };
@@ -151,11 +148,7 @@ export const ESignature = (props: EsignatureProps) => {
                         </ESignatureContainer>
                         <ModalButtons>
                             <ModalActionButton
-                                as={
-                                    isMobileLandscape
-                                        ? ButtonWithIcon.Small
-                                        : ButtonWithIcon.Default
-                                }
+                                size={isMobileLandscape ? "small" : "default"}
                                 type="button"
                                 styleType={
                                     isMobile && !isMobileLandscape
@@ -168,11 +161,7 @@ export const ESignature = (props: EsignatureProps) => {
                                 Clear
                             </ModalActionButton>
                             <ModalActionButton
-                                as={
-                                    isMobileLandscape
-                                        ? Button.Small
-                                        : Button.Default
-                                }
+                                size={isMobileLandscape ? "small" : "default"}
                                 type="button"
                                 onClick={handleClickSave}
                             >
