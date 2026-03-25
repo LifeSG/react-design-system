@@ -54,12 +54,6 @@ export const Default: StoryObj<Component> = {
                     errorMessage="Selection is required"
                 />
                 <Form.NestedMultiSelect
-                    label="This is the loading state"
-                    options={options}
-                    optionsLoadState="loading"
-                    onRetry={() => {}}
-                />
-                <Form.NestedMultiSelect
                     label="This has custom multi selected label"
                     options={options}
                     customLabels={{
