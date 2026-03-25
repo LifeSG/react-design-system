@@ -4,27 +4,28 @@ import { PropsTable } from "./props-table";
 
 <Meta of={IconButtonStories} />
 
-# Icon Button
+# Button — Icon Only
 
 ## Overview
 
-A call to action component with an icon in it.
+A `Button` containing only an icon, rendered in a square format. Pass an icon
+via the `icon` prop and omit `children` to trigger icon-only mode.
 
 ```tsx
-import { IconButton } from "@lifesg/react-design-system/icon-button";
+import { Button } from "@lifesg/react-design-system/button";
 ```
 
 <Canvas of={IconButtonStories.Default} />
 
 ## Variations
 
-The `IconButton` component comes in 3 sizes, a large, small and default size.
+The button comes in 3 sizes: large, default, and small.
 
 <Canvas of={IconButtonStories.Variations} />
 
 ## Using custom components
 
-You can also pass in custom components to the `IconButton`. In this example, we will pass in an image.
+You can pass any React element as the `icon` prop, including images.
 
 <Canvas of={IconButtonStories.CustomComponents} />
 
@@ -32,25 +33,22 @@ You can also pass in custom components to the `IconButton`. In this example, we 
 
 ### Accessible name
 
-Make sure that the button function is clearly communicated to screen reader
-users by providing an accessible name.
-
-A common approach is to set `aria-label` for an svg-based icon or `alt` on an
-image.
+Since the button has no visible text label, you **must** provide an accessible name
+via `aria-label` on the `Button` so screen reader users understand its purpose.
+The icon is automatically marked `aria-hidden` by the component.
 
 ```tsx
-<IconButton>
-    <svg aria-label="Delete item" />
-</IconButton>
+<Button icon={<svg />} aria-label="Delete item" />
 
-<IconButton>
-    <img alt="Delete item" src="..." />
-</IconButton>
+<Button
+    icon={<img src="..." alt="" />}
+    aria-label="Delete item"
+/>
 ```
 
 ### Focus
 
-By default, a disabled `<IconButton>` cannot receive focus or events. In certain
+By default, a disabled `<button>` cannot receive focus or events. In certain
 modes across screen readers, it is excluded from the focus order, which can make
 detecting its presence more difficult.
 
@@ -77,9 +75,11 @@ const Page = () => {
                 // application logic here
             }}
         >
-            <IconButton disabled={disabled}>
-                <BoxIcon aria-label="Archive item" />
-            </IconButton>
+            <Button
+                icon={<BoxIcon />}
+                aria-label="Archive item"
+                disabled={disabled}
+            />
         </div>
     );
 };
