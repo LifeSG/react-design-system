@@ -1,11 +1,11 @@
-import "../_common/mock-react-resize-detector";
-
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { PredictiveTextInput } from "src/predictive-text-input";
 
 import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
+
+jest.mock("react-resize-detector");
 
 const FIELD_TESTID = "test";
 const OPTIONS = ["Option 1", "Option 2", "Option 3"];

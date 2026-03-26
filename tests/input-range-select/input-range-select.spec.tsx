@@ -1,11 +1,11 @@
-import "../_common/mock-react-resize-detector";
-
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { FormRangeSelect } from "src/form/form-range-select";
 import { InputRangeSelect } from "src/input-range-select";
 import styled from "styled-components";
+
+jest.mock("react-resize-detector");
 
 // TODO: act can be removed after upgrading react-testing-library
 // =============================================================================

@@ -1,5 +1,3 @@
-import "../_common/mock-react-resize-detector";
-
 import {
     act,
     render,
@@ -10,6 +8,8 @@ import {
 import userEvent from "@testing-library/user-event";
 import type { L1OptionProps } from "src";
 import { InputNestedSelect } from "src";
+
+jest.mock("react-resize-detector");
 
 const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";

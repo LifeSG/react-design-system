@@ -1,11 +1,11 @@
-import "../_common/mock-react-resize-detector";
-
 import { Person2Icon, Square2x2Icon } from "@lifesg/react-icons";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Sidenav } from "src/sidenav";
 
 import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
+
+jest.mock("react-resize-detector");
 
 const SIDENAV_DRAWER_TEST_ID = "sidenav-drawer";
 

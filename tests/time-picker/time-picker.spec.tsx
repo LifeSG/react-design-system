@@ -1,10 +1,10 @@
-import "../_common/mock-react-resize-detector";
-
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Timepicker } from "src/timepicker/timepicker";
 
 import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
+
+jest.mock("react-resize-detector");
 
 describe("Timepicker (Floating UI)", () => {
     beforeEach(() => {

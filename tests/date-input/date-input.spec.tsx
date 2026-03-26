@@ -1,5 +1,3 @@
-import "../_common/mock-react-resize-detector";
-
 import {
     act,
     render,
@@ -10,6 +8,8 @@ import {
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DateInput } from "src";
+
+jest.mock("react-resize-detector");
 
 const FIELD_TESTID = "e2e";
 const CALENDAR_TESTID = "calendar-dropdown";

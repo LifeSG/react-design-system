@@ -15,7 +15,7 @@ module.exports = {
     setupFilesAfterEnv: [
         "jest-canvas-mock",
         "@testing-library/jest-dom",
-        "<rootDir>/tests/setup.ts",
+        "<rootDir>/tests/jest-setup.ts",
     ],
     reporters: ["default", ["jest-junit", { outputName: "junit.xml" }]],
     maxWorkers: "50%",

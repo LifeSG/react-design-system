@@ -1,11 +1,11 @@
-import "../_common/mock-react-resize-detector";
-
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Form } from "src/form";
 import { InputGroup } from "src/input-group";
 
 import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
+
+jest.mock("react-resize-detector");
 
 const FIELD_TESTID = "test";
 const INPUT_TESTID = "input";

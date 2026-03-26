@@ -1,10 +1,10 @@
-import "../_common/mock-react-resize-detector";
-
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { InputMultiSelect } from "src/input-multi-select";
 
 import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
+
+jest.mock("react-resize-detector");
 
 const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";

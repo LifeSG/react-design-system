@@ -1,8 +1,8 @@
-import "../_common/mock-react-resize-detector";
-
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SelectHistogram } from "src";
+
+jest.mock("react-resize-detector");
 
 const SELECTOR_TESTID = "selector";
 const FIELD_TESTID = "select-histogram";
