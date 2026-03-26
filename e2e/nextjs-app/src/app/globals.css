@@ -1,2 +1,13 @@
 @import url("https://assets.life.gov.sg/react-design-system/v3/css/main.css");
 @import url("https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css");
+
+.story-row-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.story-column-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
