@@ -11,7 +11,7 @@ const Component = (props: ButtonProps, ref: ButtonRef) => {
         disabled = false,
         loading = false,
         styleType = "default",
-        size = "default",
+        sizeType = "default",
         danger = false,
         focusableWhenDisabled = false,
         icon,
@@ -25,7 +25,7 @@ const Component = (props: ButtonProps, ref: ButtonRef) => {
 
     const mainStyle: MainStyleProps = {
         $buttonStyle: disabled ? "disabled" : styleType,
-        $buttonSize: size,
+        $buttonSize: sizeType,
         $buttonIsDanger: danger,
         $hasIcon: !!icon,
         $iconOnly: iconOnly,
@@ -58,25 +58,25 @@ Component.displayName = "Button";
 const BaseButton = React.forwardRef(Component);
 
 const DefaultButtonComponent = (props: ButtonProps, ref: ButtonRef) => (
-    <BaseButton {...props} size={props.size ?? "default"} ref={ref} />
+    <BaseButton {...props} sizeType={props.sizeType ?? "default"} ref={ref} />
 );
 DefaultButtonComponent.displayName = "Button.Default";
 
 const SmallButtonComponent = (props: ButtonProps, ref: ButtonRef) => (
-    <BaseButton {...props} size="small" ref={ref} />
+    <BaseButton {...props} sizeType="small" ref={ref} />
 );
 SmallButtonComponent.displayName = "Button.Small";
 
 const LargeButtonComponent = (props: ButtonProps, ref: ButtonRef) => (
-    <BaseButton {...props} size="large" ref={ref} />
+    <BaseButton {...props} sizeType="large" ref={ref} />
 );
 LargeButtonComponent.displayName = "Button.Large";
 
 export const Button = Object.assign(BaseButton, {
-    /** @deprecated Use the `size` prop instead: `<Button>` or `<Button size="default">` */
+    /** @deprecated Use the `sizeType` prop instead: `<Button>` or `<Button sizeType="default">` */
     Default: React.forwardRef(DefaultButtonComponent),
-    /** @deprecated Use the `size` prop instead: `<Button size="small">` */
+    /** @deprecated Use the `sizeType` prop instead: `<Button sizeType="small">` */
     Small: React.forwardRef(SmallButtonComponent),
-    /** @deprecated Use the `size` prop instead: `<Button size="large">` */
+    /** @deprecated Use the `sizeType` prop instead: `<Button sizeType="large">` */
     Large: React.forwardRef(LargeButtonComponent),
 });

@@ -23,24 +23,24 @@ export const Variations: StoryObj<Component> = {
         return (
             <>
                 <Button
-                    size="large"
+                    sizeType="large"
                     icon={<BoxIcon />}
                     aria-label="Large primary"
                 />
                 <Button
-                    size="large"
+                    sizeType="large"
                     styleType="secondary"
                     icon={<BoxIcon />}
                     aria-label="Large secondary"
                 />
                 <Button
-                    size="large"
+                    sizeType="large"
                     styleType="light"
                     icon={<BoxIcon />}
                     aria-label="Large light"
                 />
                 <Button
-                    size="large"
+                    sizeType="large"
                     disabled
                     icon={<BoxIcon />}
                     aria-label="Large disabled"
@@ -62,24 +62,24 @@ export const Variations: StoryObj<Component> = {
                     aria-label="Default disabled"
                 />
                 <Button
-                    size="small"
+                    sizeType="small"
                     icon={<BoxIcon />}
                     aria-label="Small primary"
                 />
                 <Button
-                    size="small"
+                    sizeType="small"
                     styleType="secondary"
                     icon={<BoxIcon />}
                     aria-label="Small secondary"
                 />
                 <Button
-                    size="small"
+                    sizeType="small"
                     styleType="light"
                     icon={<BoxIcon />}
                     aria-label="Small light"
                 />
                 <Button
-                    size="small"
+                    sizeType="small"
                     disabled
                     icon={<BoxIcon />}
                     aria-label="Small disabled"

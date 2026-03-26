@@ -33,31 +33,35 @@ export const Default: StoryObj<Component> = {
                     </Button>
                 </Container>
                 <Container>
-                    <Button icon={<PlaceholderIcon />} size="small">
+                    <Button icon={<PlaceholderIcon />} sizeType="small">
                         Small
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         styleType="secondary"
                     >
                         Secondary
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         styleType="light"
                     >
                         Light
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         styleType="link"
                     >
                         Link
                     </Button>
-                    <Button icon={<PlaceholderIcon />} size="small" disabled>
+                    <Button
+                        icon={<PlaceholderIcon />}
+                        sizeType="small"
+                        disabled
+                    >
                         Disabled
                     </Button>
                 </Container>
@@ -106,14 +110,14 @@ export const RightPositioned: StoryObj<Component> = {
                 <Container>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         iconPosition="right"
                     >
                         Small
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         styleType="secondary"
                         iconPosition="right"
                     >
@@ -121,7 +125,7 @@ export const RightPositioned: StoryObj<Component> = {
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         styleType="light"
                         iconPosition="right"
                     >
@@ -129,7 +133,7 @@ export const RightPositioned: StoryObj<Component> = {
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         styleType="link"
                         iconPosition="right"
                     >
@@ -137,7 +141,7 @@ export const RightPositioned: StoryObj<Component> = {
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         iconPosition="right"
                         disabled
                     >
@@ -172,12 +176,12 @@ export const Danger: StoryObj<Component> = {
                     </Button>
                 </Container>
                 <Container>
-                    <Button icon={<PlaceholderIcon />} size="small" danger>
+                    <Button icon={<PlaceholderIcon />} sizeType="small" danger>
                         Small
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         styleType="secondary"
                         danger
                     >
@@ -185,7 +189,7 @@ export const Danger: StoryObj<Component> = {
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         styleType="light"
                         danger
                     >
@@ -193,7 +197,7 @@ export const Danger: StoryObj<Component> = {
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         styleType="link"
                         danger
                     >
@@ -235,12 +239,12 @@ export const LoadingState: StoryObj<Component> = {
                     </Button>
                 </Container>
                 <Container>
-                    <Button icon={<PlaceholderIcon />} size="small" loading>
+                    <Button icon={<PlaceholderIcon />} sizeType="small" loading>
                         Small
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         styleType="secondary"
                         loading
                     >
@@ -248,7 +252,7 @@ export const LoadingState: StoryObj<Component> = {
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         styleType="light"
                         loading
                     >
@@ -256,7 +260,7 @@ export const LoadingState: StoryObj<Component> = {
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         styleType="link"
                         loading
                     >
@@ -264,7 +268,7 @@ export const LoadingState: StoryObj<Component> = {
                     </Button>
                     <Button
                         icon={<PlaceholderIcon />}
-                        size="small"
+                        sizeType="small"
                         disabled
                         loading
                     >

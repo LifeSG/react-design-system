@@ -16,7 +16,15 @@ import { StringHelper } from "../../util";
 import { FileUploadContext } from "../context";
 import { FileUploadHelper } from "../helper";
 import type { ItemFocusType } from "./file-list-item.styles";
-import {
+import * as styles from "./file-list-item.styles";
+import { FileListItemThumbnail } from "./file-list-item-thumbnail";
+import type { FileListItemProps } from "./types";
+
+interface Props extends FileListItemProps {
+    readOnly?: boolean | undefined;
+}
+
+const {
     ActionContainer,
     Box,
     ContentSection,
@@ -32,13 +40,7 @@ import {
     ItemText,
     MobileErrorMessage,
     NameSection,
-} from "./file-list-item.styles";
-import { FileListItemThumbnail } from "./file-list-item-thumbnail";
-import type { FileListItemProps } from "./types";
-
-interface Props extends FileListItemProps {
-    readOnly?: boolean | undefined;
-}
+} = styles;
 
 const Component = ({
     fileItem,
@@ -268,7 +270,7 @@ const Component = ({
                             data-no-dnd="true"
                             type="button"
                             styleType="light"
-                            size="small"
+                            sizeType="small"
                             aria-label={`edit ${name}`}
                             disabled={shouldDisable()}
                             onClick={handleEdit}
@@ -282,7 +284,7 @@ const Component = ({
                         data-no-dnd="true"
                         type="button"
                         styleType="light"
-                        size="small"
+                        sizeType="small"
                         aria-label={`delete ${name}`}
                         disabled={shouldDisable()}
                         onClick={handleDelete}

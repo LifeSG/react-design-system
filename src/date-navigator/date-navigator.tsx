@@ -142,7 +142,7 @@ export const DateNavigator = ({
                         aria-label={ariaLabel.left}
                         onClick={navigatePrevious}
                         styleType="light"
-                        size="small"
+                        sizeType="small"
                         icon={<ArrowLeft />}
                     />
                 }
@@ -166,7 +166,7 @@ export const DateNavigator = ({
                         aria-label={ariaLabel.right}
                         onClick={navigateNext}
                         styleType="light"
-                        size="small"
+                        sizeType="small"
                         icon={<ArrowRight />}
                     />
                 }

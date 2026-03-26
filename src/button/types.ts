@@ -10,7 +10,7 @@ export interface ButtonProps
     /** The style type of the button. Values: "default" | "secondary" | "light" | "link" */
     styleType?: ButtonStyleType | undefined;
     /** The size of the button. Values: "large" | "default" | "small" */
-    size?: ButtonSize | undefined;
+    sizeType?: ButtonSize | undefined;
     /** If specified, the component will have a red color scheme being applied */
     danger?: boolean | undefined;
     /** Indicates if a loading spinner is to be displayed */

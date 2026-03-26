@@ -6,7 +6,16 @@ import { ThemeContext } from "styled-components";
 import { ProgressBar } from "../shared/progress-bar";
 import { Typography } from "../typography";
 import { V3_Breakpoint } from "../v3_theme";
-import {
+import * as styles from "./e-signature.styles";
+import type { ESignatureCanvasRef } from "./e-signature-canvas";
+import type { EsignatureProps } from "./types";
+
+// lazy load to fix next.js SSR errors
+const ESignatureCanvas = lazy(async () => ({
+    default: (await import("./e-signature-canvas")).ESignatureCanvas,
+}));
+
+const {
     AddSignatureButton,
     EditSignatureButton,
     ESignatureContainer,
@@ -22,14 +31,7 @@ import {
     SignatureArea,
     SignatureLine,
     SignaturePreviewImage,
-} from "./e-signature.styles";
-import type { ESignatureCanvasRef } from "./e-signature-canvas";
-import type { EsignatureProps } from "./types";
-
-// lazy load to fix next.js SSR errors
-const ESignatureCanvas = lazy(async () => ({
-    default: (await import("./e-signature-canvas")).ESignatureCanvas,
-}));
+} = styles;
 
 export const ESignature = (props: EsignatureProps) => {
     // =============================================================================
@@ -148,7 +150,9 @@ export const ESignature = (props: EsignatureProps) => {
                         </ESignatureContainer>
                         <ModalButtons>
                             <ModalActionButton
-                                size={isMobileLandscape ? "small" : "default"}
+                                sizeType={
+                                    isMobileLandscape ? "small" : "default"
+                                }
                                 type="button"
                                 styleType={
                                     isMobile && !isMobileLandscape
@@ -161,7 +165,9 @@ export const ESignature = (props: EsignatureProps) => {
                                 Clear
                             </ModalActionButton>
                             <ModalActionButton
-                                size={isMobileLandscape ? "small" : "default"}
+                                sizeType={
+                                    isMobileLandscape ? "small" : "default"
+                                }
                                 type="button"
                                 onClick={handleClickSave}
                             >

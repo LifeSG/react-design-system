@@ -286,27 +286,27 @@ describe("Button", () => {
     // SIZE VARIANTS
     // =========================================================================
     describe("size variants", () => {
-        it("should render with size='large'", () => {
+        it("should render with sizeType='large'", () => {
             render(
-                <Button size="large" data-testid="btn">
+                <Button sizeType="large" data-testid="btn">
                     {BUTTON_TEXT}
                 </Button>
             );
             expect(screen.getByTestId("btn")).toBeInTheDocument();
         });
 
-        it("should render with size='default'", () => {
+        it("should render with sizeType='default'", () => {
             render(
-                <Button size="default" data-testid="btn">
+                <Button sizeType="default" data-testid="btn">
                     {BUTTON_TEXT}
                 </Button>
             );
             expect(screen.getByTestId("btn")).toBeInTheDocument();
         });
 
-        it("should render with size='small'", () => {
+        it("should render with sizeType='small'", () => {
             render(
-                <Button size="small" data-testid="btn">
+                <Button sizeType="small" data-testid="btn">
                     {BUTTON_TEXT}
                 </Button>
             );

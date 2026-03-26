@@ -18,17 +18,17 @@ export const Default: StoryObj<Component> = {
         return (
             <>
                 <Container>
-                    <Button size="large">Large</Button>
-                    <Button size="large" styleType="secondary">
+                    <Button sizeType="large">Large</Button>
+                    <Button sizeType="large" styleType="secondary">
                         Secondary
                     </Button>
-                    <Button size="large" styleType="light">
+                    <Button sizeType="large" styleType="light">
                         Light
                     </Button>
-                    <Button size="large" styleType="link">
+                    <Button sizeType="large" styleType="link">
                         Link
                     </Button>
-                    <Button size="large" disabled>
+                    <Button sizeType="large" disabled>
                         Disabled
                     </Button>
                 </Container>
@@ -40,17 +40,17 @@ export const Default: StoryObj<Component> = {
                     <Button disabled>Disabled</Button>
                 </Container>
                 <Container>
-                    <Button size="small">Small</Button>
-                    <Button size="small" styleType="secondary">
+                    <Button sizeType="small">Small</Button>
+                    <Button sizeType="small" styleType="secondary">
                         Secondary
                     </Button>
-                    <Button size="small" styleType="light">
+                    <Button sizeType="small" styleType="light">
                         Light
                     </Button>
-                    <Button size="small" styleType="link">
+                    <Button sizeType="small" styleType="link">
                         Link
                     </Button>
-                    <Button size="small" disabled>
+                    <Button sizeType="small" disabled>
                         Disabled
                     </Button>
                 </Container>
@@ -64,19 +64,19 @@ export const LoadingState: StoryObj<Component> = {
         return (
             <>
                 <Container>
-                    <Button size="large" loading>
+                    <Button sizeType="large" loading>
                         Large
                     </Button>
-                    <Button size="large" styleType="secondary" loading>
+                    <Button sizeType="large" styleType="secondary" loading>
                         Loading
                     </Button>
-                    <Button size="large" styleType="light" loading>
+                    <Button sizeType="large" styleType="light" loading>
                         Loading
                     </Button>
-                    <Button size="large" styleType="link" loading>
+                    <Button sizeType="large" styleType="link" loading>
                         Loading
                     </Button>
-                    <Button size="large" disabled loading>
+                    <Button sizeType="large" disabled loading>
                         Loading
                     </Button>
                 </Container>
@@ -96,19 +96,19 @@ export const LoadingState: StoryObj<Component> = {
                     </Button>
                 </Container>
                 <Container>
-                    <Button size="small" loading>
+                    <Button sizeType="small" loading>
                         Small
                     </Button>
-                    <Button size="small" styleType="secondary" loading>
+                    <Button sizeType="small" styleType="secondary" loading>
                         Loading
                     </Button>
-                    <Button size="small" styleType="light" loading>
+                    <Button sizeType="small" styleType="light" loading>
                         Loading
                     </Button>
-                    <Button size="small" styleType="link" loading>
+                    <Button sizeType="small" styleType="link" loading>
                         Loading
                     </Button>
-                    <Button size="small" disabled loading>
+                    <Button sizeType="small" disabled loading>
                         Loading
                     </Button>
                 </Container>
@@ -122,16 +122,16 @@ export const Danger: StoryObj<Component> = {
         return (
             <>
                 <Container>
-                    <Button size="large" danger>
+                    <Button sizeType="large" danger>
                         Large
                     </Button>
-                    <Button size="large" styleType="secondary" danger>
+                    <Button sizeType="large" styleType="secondary" danger>
                         Secondary
                     </Button>
-                    <Button size="large" styleType="light" danger>
+                    <Button sizeType="large" styleType="light" danger>
                         Light
                     </Button>
-                    <Button size="large" styleType="link" danger>
+                    <Button sizeType="large" styleType="link" danger>
                         Link
                     </Button>
                 </Container>
@@ -148,16 +148,16 @@ export const Danger: StoryObj<Component> = {
                     </Button>
                 </Container>
                 <Container>
-                    <Button size="small" danger>
+                    <Button sizeType="small" danger>
                         Small
                     </Button>
-                    <Button size="small" styleType="secondary" danger>
+                    <Button sizeType="small" styleType="secondary" danger>
                         Secondary
                     </Button>
-                    <Button size="small" styleType="light" danger>
+                    <Button sizeType="small" styleType="light" danger>
                         Light
                     </Button>
-                    <Button size="small" styleType="link" danger>
+                    <Button sizeType="small" styleType="link" danger>
                         Link
                     </Button>
                 </Container>
@@ -171,16 +171,21 @@ export const DangerLoadingState: StoryObj<Component> = {
         return (
             <>
                 <Container>
-                    <Button size="large" loading danger>
+                    <Button sizeType="large" loading danger>
                         Large
                     </Button>
-                    <Button size="large" styleType="secondary" loading danger>
+                    <Button
+                        sizeType="large"
+                        styleType="secondary"
+                        loading
+                        danger
+                    >
                         Loading
                     </Button>
-                    <Button size="large" styleType="light" loading danger>
+                    <Button sizeType="large" styleType="light" loading danger>
                         Loading
                     </Button>
-                    <Button size="large" styleType="link" loading danger>
+                    <Button sizeType="large" styleType="link" loading danger>
                         Loading
                     </Button>
                 </Container>
@@ -199,16 +204,21 @@ export const DangerLoadingState: StoryObj<Component> = {
                     </Button>
                 </Container>
                 <Container>
-                    <Button size="small" loading danger>
+                    <Button sizeType="small" loading danger>
                         Small
                     </Button>
-                    <Button size="small" styleType="secondary" loading danger>
+                    <Button
+                        sizeType="small"
+                        styleType="secondary"
+                        loading
+                        danger
+                    >
                         Loading
                     </Button>
-                    <Button size="small" styleType="light" loading danger>
+                    <Button sizeType="small" styleType="light" loading danger>
                         Loading
                     </Button>
-                    <Button size="small" styleType="link" loading danger>
+                    <Button sizeType="small" styleType="link" loading danger>
                         Loading
                     </Button>
                 </Container>

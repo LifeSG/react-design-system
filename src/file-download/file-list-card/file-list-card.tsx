@@ -6,7 +6,10 @@ import { ThemeContext } from "styled-components";
 import { FileUploadHelper } from "../../file-upload/helper";
 import { StringHelper } from "../../util";
 import { V3_Breakpoint } from "../../v3_theme";
-import {
+import * as styles from "./file-list-card.styles";
+import type { FileListItemProps } from "./types";
+
+const {
     ActionContainer,
     Box,
     ContentSection,
@@ -22,8 +25,7 @@ import {
     Spinner,
     Thumbnail,
     ThumbnailContainer,
-} from "./file-list-card.styles";
-import type { FileListItemProps } from "./types";
+} = styles;
 
 const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     // =========================================================================
@@ -166,7 +168,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
                     data-testid={`${id}-download-button`}
                     type="button"
                     styleType="light"
-                    size="small"
+                    sizeType="small"
                     aria-label={`download ${name}`}
                     icon={
                         isLoading || !ready ? (

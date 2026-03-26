@@ -78,7 +78,7 @@ export const TimeTableHeader = ({
                     <StyledRefreshButton
                         data-testid="timetable-records-refresh-btn"
                         styleType="light"
-                        size="small"
+                        sizeType="small"
                         disabled={loading}
                         onClick={handleRefresh}
                         $loading={loading}

@@ -45,7 +45,7 @@ export const DesktopCustomComponent = () => {
         <DesktopCustomComponentWrapper>
             <PopoverTrigger popoverContent="Popover content" zIndex={100}>
                 <Button
-                    size="small"
+                    sizeType="small"
                     styleType="light"
                     icon={<InboxIcon />}
                     aria-label="Inbox"
