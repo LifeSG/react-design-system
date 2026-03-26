@@ -172,4 +172,33 @@ test.describe("ImageButton", () => {
             });
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("keyboard-activation");
+        });
+
+        test("Keyboard activation", async ({ story }) => {
+            await test.step("Button can receive focus", async () => {
+                await story.locators.focusStart.focus();
+                await story.page.keyboard.press("Tab");
+
+                await expect(story.locators.imageButton).toBeFocused();
+            });
+
+            await test.step("Enter key triggers onClick", async () => {
+                await expect(story.locators.clickCount).toHaveText("0");
+
+                await story.page.keyboard.press("Enter");
+
+                await expect(story.locators.clickCount).toHaveText("1");
+            });
+
+            await test.step("Space key triggers onClick", async () => {
+                await story.page.keyboard.press("Space");
+
+                await expect(story.locators.clickCount).toHaveText("2");
+            });
+        });
+    });
 });
