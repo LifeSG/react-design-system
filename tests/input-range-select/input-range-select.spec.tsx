@@ -5,6 +5,8 @@ import { FormRangeSelect } from "src/form/form-range-select";
 import { InputRangeSelect } from "src/input-range-select";
 import styled from "styled-components";
 
+jest.mock("react-resize-detector");
+
 // TODO: act can be removed after upgrading react-testing-library
 // =============================================================================
 // UNIT TESTS

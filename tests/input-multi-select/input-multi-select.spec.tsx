@@ -2,7 +2,9 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { InputMultiSelect } from "src/input-multi-select";
 
-import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
+import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
+
+jest.mock("react-resize-detector");
 
 const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";
@@ -11,7 +13,7 @@ const OPTIONS = ["Option 1", "Option 2", "Option 3"];
 
 describe("InputMultiSelect", () => {
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
 
         global.requestAnimationFrame = (cb: FrameRequestCallback) => {
             cb(0);

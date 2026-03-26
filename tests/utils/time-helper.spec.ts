@@ -394,6 +394,18 @@ describe("calculateScrollPosition tests", () => {
     });
 
     describe("Invalid input handling", () => {
+        let localConsoleWarnSpy: jest.SpyInstance;
+
+        beforeEach(() => {
+            localConsoleWarnSpy = jest
+                .spyOn(console, "warn")
+                .mockImplementation();
+        });
+
+        afterEach(() => {
+            localConsoleWarnSpy.mockRestore();
+        });
+
         it("should return null and warn for invalid time format", () => {
             const result = TimeHelper.calculateScrollPosition({
                 scrollTime: "invalid",
@@ -404,6 +416,9 @@ describe("calculateScrollPosition tests", () => {
             });
 
             expect(result).toBeNull();
+            expect(localConsoleWarnSpy).toHaveBeenCalledWith(
+                'Invalid scrollTime format: "invalid". Expected format: HH:mm.'
+            );
         });
 
         it("should return null for time with invalid hour", () => {
@@ -415,6 +430,9 @@ describe("calculateScrollPosition tests", () => {
                 intervalWidth: 50,
             });
 
+            expect(localConsoleWarnSpy).toHaveBeenCalledWith(
+                'Invalid scrollTime format: "25:00". Expected format: HH:mm.'
+            );
             expect(result).toBeNull();
         });
 
@@ -427,6 +445,9 @@ describe("calculateScrollPosition tests", () => {
                 intervalWidth: 50,
             });
 
+            expect(localConsoleWarnSpy).toHaveBeenCalledWith(
+                'Invalid scrollTime format: "08:60". Expected format: HH:mm.'
+            );
             expect(result).toBeNull();
         });
 
@@ -439,6 +460,9 @@ describe("calculateScrollPosition tests", () => {
                 intervalWidth: 50,
             });
 
+            expect(localConsoleWarnSpy).toHaveBeenCalledWith(
+                'Invalid scrollTime format: "8:0". Expected format: HH:mm.'
+            );
             expect(result).toBeNull();
         });
 
@@ -451,6 +475,9 @@ describe("calculateScrollPosition tests", () => {
                 intervalWidth: 50,
             });
 
+            expect(localConsoleWarnSpy).toHaveBeenCalledWith(
+                'Invalid scrollTime format: "". Expected format: HH:mm.'
+            );
             expect(result).toBeNull();
         });
     });

@@ -2,6 +2,8 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Pagination } from "src/pagination";
 
+jest.mock("react-resize-detector");
+
 const SELECTOR_TESTID = "selector";
 const DROPDOWN_TESTID = "dropdown-list";
 const NEXT_PAGE_LABEL = "Next page";

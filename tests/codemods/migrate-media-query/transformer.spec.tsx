@@ -1,6 +1,6 @@
-import { execSync } from "child_process";
-import * as fs from "fs";
-import * as path from "path";
+import { execSync } from "node:child_process";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 import { expectedOutputCode, inputCode } from "./test-data";
 
@@ -10,14 +10,18 @@ describe("Codemod Transformer for V2_MediaQuery to MediaQuery", () => {
 
     beforeAll(() => {
         // Create sample input file for testing
-        jest.resetAllMocks();
+        jest.clearAllMocks();
         fs.writeFileSync(inputPath, inputCode);
     });
 
     afterAll(() => {
         // Delete the files created for testing (comment this out to view files)
-        fs.unlinkSync(inputPath);
-        fs.unlinkSync(outputPath);
+        if (fs.existsSync(inputPath)) {
+            fs.unlinkSync(inputPath);
+        }
+        if (fs.existsSync(outputPath)) {
+            fs.unlinkSync(outputPath);
+        }
     });
 
     it("should transform V2_MediaQuery to MediaQuery and map the breakpoints correctly", () => {
@@ -25,7 +29,8 @@ describe("Codemod Transformer for V2_MediaQuery to MediaQuery", () => {
 
         // Execute the jscodeshift command for the codemod
         execSync(
-            `jscodeshift --parser=tsx -t ./codemods/migrate-media-query/index.ts ${outputPath}`
+            `jscodeshift --parser=tsx -t ./codemods/migrate-media-query/index.ts ${outputPath}`,
+            { stdio: "pipe" }
         );
 
         // Check the transformed code

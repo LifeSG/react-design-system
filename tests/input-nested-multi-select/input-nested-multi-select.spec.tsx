@@ -10,6 +10,8 @@ import userEvent from "@testing-library/user-event";
 import type { L1OptionProps } from "src";
 import { InputNestedMultiSelect } from "src";
 
+jest.mock("react-resize-detector");
+
 const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";
 const DROPDOWN_TESTID = "nested-dropdown-list";
@@ -42,7 +44,7 @@ const OPTIONS: L1OptionProps<string, string, string>[] = [
 
 describe("InputNestedMultiSelect", () => {
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
 
         global.requestAnimationFrame = (cb: FrameRequestCallback) => {
             cb(0);
