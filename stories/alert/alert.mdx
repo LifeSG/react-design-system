@@ -1,13 +1,12 @@
-import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as AlertStories from "./alert.stories";
-import { PropsTable } from "./props-table";
+import { PropsTableTabs } from "./props-table";
 
 <Meta of={AlertStories} />
 
-<Title>Alert</Title>
+# Alert
 
-<Secondary>Overview</Secondary>
+## Overview
 
 The primary call to action component.
 
@@ -17,11 +16,11 @@ import { Alert } from "@lifesg/react-design-system/alert";
 
 <Canvas of={AlertStories.Default} />
 
-<Heading3>With icon</Heading3>
+## With icon
 
 <Canvas of={AlertStories.WithIcon} />
 
-<Heading3>Advanced styling</Heading3>
+## Advanced styling
 
 If you require text of a bolder weight, you can make use of the `<strong>` tag.
 
@@ -31,16 +30,41 @@ Or if you require a custom display, you can construct your layout and pass it in
 
 <Canvas of={AlertStories.WithCustomDisplay} />
 
-<Heading3>With hyperlink</Heading3>
+## With hyperlink
 
 <Canvas of={AlertStories.WithHyperlink} />
 
-<Heading3>Small size</Heading3>
+## Small size
 
 <Canvas of={AlertStories.SmallSize} />
 
-<Secondary>Component API</Secondary>
+## With custom icon
 
-This component also inherits the [HTMLDivAttributes](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement)
+<Canvas of={AlertStories.WithCustomIcon} />
 
-<PropsTable />
+## With max collapsed height
+
+You can restrict the height of content by setting `maxCollapsedHeight` to a
+desired value in px. This also works with custom content.
+
+<Canvas of={AlertStories.WithMaxCollapsedHeight} />
+
+## Accessibility
+
+By default, the Alert component does not include `role="alert"` to avoid disruptive announcements. You can specify roles explicitly when needed:
+
+```tsx
+// For immediate announcement (use sparingly)
+<Alert type="error" role="alert">
+    Critical error message
+</Alert>
+
+// For status updates
+<Alert type="info" role="status">
+    Information update
+</Alert>
+```
+
+## Component API
+
+<PropsTableTabs />

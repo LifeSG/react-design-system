@@ -1,7 +1,22 @@
 import styled, { css } from "styled-components";
-import { StyleProps } from "./types";
+import { Colour } from "../theme";
 
-const getBackdropFilter = (blur: boolean) => {
+// =============================================================================
+// STYLE INTERFACE, transient props are denoted with $
+// See more https://styled-components.com/docs/api#transient-props
+// =============================================================================
+interface StyleProps {
+    $show: boolean;
+    $backgroundBlur?: boolean | undefined;
+    $disableTransition?: boolean | undefined;
+    $zIndex?: number | undefined;
+    $stacked?: boolean | undefined;
+}
+
+// =============================================================================
+// STYLING
+// =============================================================================
+const getBackdropFilter = (blur: boolean | undefined) => {
     let styleString = "";
 
     if (blur) {
@@ -18,9 +33,7 @@ export const Root = styled.div<StyleProps>`
     height: 0;
     width: 0;
     visibility: hidden;
-    z-index: ${(props) => {
-        return props.zIndex || (props.$stacked ? 99999 : 99998);
-    }};
+    z-index: ${(props) => props.$zIndex};
 
     ${(props) => {
         if (props.$show) {
@@ -37,7 +50,8 @@ export const Wrapper = styled.div<StyleProps>`
     position: absolute;
     left: 0;
     top: 0;
-    background-color: rgba(5, 1, 1, ${(props) => props.$backgroundOpacity});
+    background-color: ${(props) =>
+        props.$stacked ? Colour["overlay-subtle"] : Colour["overlay-strong"]};
     backdrop-filter: ${(props) => getBackdropFilter(props.$backgroundBlur)};
     transition: opacity 200ms ease;
 
@@ -68,5 +82,5 @@ export const Wrapper = styled.div<StyleProps>`
         }
 
         return customStyles;
-    }}
+    }};
 `;

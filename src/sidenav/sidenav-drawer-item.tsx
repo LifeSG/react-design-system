@@ -1,17 +1,16 @@
-import { useContext, useState } from "react";
-import { useSpring } from "react-spring";
+import { HTMLAttributes, useContext, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { useSpring } from "@react-spring/web";
+import { SidenavContext } from "./sidenav-context";
 import {
     ChevronIcon,
     Container,
     DrawerContent,
     DrawerSubitemContainer,
-    IconElement,
     LinkButton,
     TextElement,
 } from "./sidenav-drawer-item.styles";
 import { SidenavDrawerItemProps } from "./types";
-import { SidenavContext } from "./sidenav-context";
 
 export const SidenavDrawerItem = ({
     id,
@@ -31,6 +30,10 @@ export const SidenavDrawerItem = ({
         setPreviouslySelectedItemId,
         setCurrentItem,
     } = useContext(SidenavContext);
+
+    const [internalId] = useState<boolean>(true);
+    const subitemId = `${internalId}-submenu`;
+
     const containerAnimationProps = useSpring({
         from: { opacity: 0 },
         to: { opacity: 1 },
@@ -57,7 +60,7 @@ export const SidenavDrawerItem = ({
             setExpanded(!expanded);
             return;
         }
-        setSelectedItem({ itemId: currentItem.itemId, content: undefined });
+        setSelectedItem({ itemId: currentItem?.itemId, content: undefined });
         setCurrentItem(undefined);
         setPreviouslySelectedItemId(undefined);
         if (onClick) {
@@ -68,6 +71,13 @@ export const SidenavDrawerItem = ({
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
+    const ariaControlProps: HTMLAttributes<HTMLButtonElement> = children
+        ? {
+              "aria-controls": subitemId,
+              "aria-expanded": expanded,
+          }
+        : {};
+
     return (
         <Container
             onMouseEnter={handleMouseEnter}
@@ -76,21 +86,19 @@ export const SidenavDrawerItem = ({
             style={containerAnimationProps}
         >
             <LinkButton
-                styleType="link"
                 type="button"
                 onClick={handleOnClick}
                 $highlight={highlight && expanded}
                 $noChildren={!children}
+                {...ariaControlProps}
             >
                 <TextElement>{title}</TextElement>
-                {children && (
-                    <IconElement>
-                        <ChevronIcon aria-hidden $expanded={expanded} />
-                    </IconElement>
-                )}
+                {children && <ChevronIcon aria-hidden $expanded={expanded} />}
             </LinkButton>
             <DrawerSubitemContainer style={contentAnimationProps}>
-                <DrawerContent ref={childRef}>{children}</DrawerContent>
+                <DrawerContent id={subitemId} ref={childRef}>
+                    {children}
+                </DrawerContent>
             </DrawerSubitemContainer>
         </Container>
     );

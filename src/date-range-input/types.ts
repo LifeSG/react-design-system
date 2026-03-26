@@ -1,9 +1,28 @@
+import { RefObject } from "react";
 import {
     CommonCalendarProps,
     Variant,
     YearMonthDisplay,
 } from "../shared/internal-calendar/types";
 
+/**
+ * Props for the DateRangeInput component - date range picker with calendar overlay.
+ *
+ * Displays two linked text inputs (start and end) that open a shared calendar
+ * for selecting a date range. Controlled via `"YYYY-MM-DD"` string values.
+ * Supports week, month, and fixed-day range variants in addition to the default
+ * free-range mode.
+ *
+ * @example
+ * ```tsx
+ * <DateRangeInput
+ *     value={startDate}
+ *     valueEnd={endDate}
+ *     onChange={(start, end) => { setStart(start); setEnd(end); }}
+ * />
+ * ```
+ * @keywords date range, from to date, date span, period picker, start end date
+ */
 export interface DateRangeInputProps extends CommonCalendarProps {
     // Standard HTML Attributes
     className?: string | undefined;
@@ -11,6 +30,7 @@ export interface DateRangeInputProps extends CommonCalendarProps {
 
     // Input-specific Attributes
     "data-testid"?: string | undefined;
+    hideInputKeyboard?: boolean | undefined;
     /**
      * The value of the start date input in "YYYY-MM-DD" or "YYYY-M-D" string format.
      */
@@ -31,6 +51,15 @@ export interface DateRangeInputProps extends CommonCalendarProps {
      * Is restricted to `true` on mobile viewports
      */
     withButton?: boolean | undefined;
+    /** The z-index of the calendar dropdown */
+    zIndex?: number | undefined;
+    /**
+     * The root element that contains the dropdown element. Defaults to the document body.
+     *
+     * If the parent that contains the trigger element has a higher z-index than the dropdown,
+     * the dropdown may not be visible. Specify the parent element here instead
+     */
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
     /**
      * Function that returns when a valid selection is made. Returns the start and
      * end date in "YYYY-MM-DD" string format.

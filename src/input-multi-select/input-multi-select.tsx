@@ -1,48 +1,69 @@
+import { OpenChangeReason } from "@floating-ui/react";
 import findIndex from "lodash/findIndex";
 import React, { useEffect, useRef, useState } from "react";
-import { DropdownList } from "../shared/dropdown-list/dropdown-list";
-import { DropdownWrapper } from "../shared/dropdown-wrapper";
 import {
-    Divider,
-    IconContainer,
+    DropdownList,
+    DropdownListState,
+    ExpandableElement,
+} from "../shared/dropdown-list-v2";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import {
     LabelContainer,
     PlaceholderLabel,
-    Selector,
-    StyledChevronIcon,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import { InputBox } from "../shared/input-wrapper/input-wrapper";
+import { SimpleIdGenerator } from "../util";
 import { InputMultiSelectProps } from "./types";
 
 export const InputMultiSelect = <T, V>({
     selectedOptions,
     placeholder = "Select",
     options,
-    className,
     disabled,
     error,
+    className,
     "data-testid": testId,
+    id,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
     enableSearch = false,
     searchFunction,
     searchPlaceholder,
     valueExtractor,
     listExtractor,
     onSelectOptions,
-    listStyleWidth,
     onShowOptions,
     onHideOptions,
     onRetry,
-    onBlur,
     optionsLoadState = "success",
     optionTruncationType = "end",
-    ...otherProps
+    renderListItem,
+    hideNoResultsDisplay,
+    noResultsDescription,
+    customLabels,
+    renderCustomCallToAction,
+    onBlur,
+    variant = "default",
+    readOnly,
+    alignment,
+    dropdownZIndex,
+    maxSelectable,
+    dropdownRootNode,
+    dropdownWidth,
 }: InputMultiSelectProps<T, V>): JSX.Element => {
     // =============================================================================
     // CONST, STATE
     // =============================================================================
+    const { allSelectedLabel, multiSelectedLabel } = customLabels || {};
     const [selected, setSelected] = useState<T[]>(selectedOptions || []);
     const [showOptions, setShowOptions] = useState<boolean>(false);
+    const [focused, setFocused] = useState<boolean>(false);
+    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
 
-    const selectorRef = useRef<HTMLButtonElement>();
+    const nodeRef = useRef<HTMLDivElement>(null);
+    const selectorRef = useRef<HTMLButtonElement>(null);
 
     // =============================================================================
     // EFFECTS
@@ -54,17 +75,13 @@ export const InputMultiSelect = <T, V>({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleSelectorClick = (event: React.MouseEvent) => {
-        event.preventDefault();
-
-        if (!disabled) {
-            setShowOptions(!showOptions);
-            triggerOptionDisplayCallback(!showOptions);
-
-            // This is needed for Safari as it does not fire onBlur when dropdown wrapper is closed
-            if (showOptions) {
-                onBlur?.();
-            }
+    const handleSelectAllClick = () => {
+        if ((selected && selected.length > 0) || maxSelectable) {
+            setSelected([]);
+            performOnSelectOptions([]);
+        } else {
+            setSelected(options);
+            performOnSelectOptions(options);
         }
     };
 
@@ -86,12 +103,6 @@ export const InputMultiSelect = <T, V>({
         }
 
         setSelected(selectedCopy);
-        triggerOptionDisplayCallback(false);
-
-        if (selectorRef) {
-            selectorRef.current.focus();
-        }
-
         performOnSelectOptions(selectedCopy);
     };
 
@@ -100,24 +111,45 @@ export const InputMultiSelect = <T, V>({
             setShowOptions(false);
             triggerOptionDisplayCallback(false);
         }
+    };
 
-        if (selectorRef) {
-            selectorRef.current.focus();
+    const handleNodeFocus = () => {
+        if (!focused && !showOptions) {
+            setFocused(true);
         }
     };
 
-    const handleSelectAllClick = () => {
-        if (selected && selected.length > 0) {
-            setSelected([]);
-            performOnSelectOptions([]);
-        } else {
-            setSelected(options);
-            performOnSelectOptions(options);
+    const handleNodeBlur = (e: React.FocusEvent) => {
+        if (
+            focused &&
+            !showOptions &&
+            nodeRef.current &&
+            !nodeRef.current.contains(e.relatedTarget as Node)
+        ) {
+            setFocused(false);
+            onBlur?.();
         }
     };
 
-    const handleWrapperBlur = () => {
-        onBlur?.();
+    const handleOpen = () => {
+        setShowOptions(true);
+        triggerOptionDisplayCallback(true);
+        setFocused(true);
+    };
+
+    const handleClose = (reason: OpenChangeReason | undefined) => {
+        setShowOptions(false);
+        triggerOptionDisplayCallback(false);
+
+        // click to toggle should not blur the input
+        if (reason !== "click") {
+            setFocused(false);
+            onBlur?.();
+        }
+    };
+
+    const handleDismiss = () => {
+        selectorRef.current?.focus();
         setShowOptions(false);
         triggerOptionDisplayCallback(false);
     };
@@ -126,15 +158,11 @@ export const InputMultiSelect = <T, V>({
     // HELPER FUNCTION
     // =============================================================================
     const getDisplayValue = () => {
-        if (!selected || selected.length == 0) {
-            return placeholder;
-        }
-
         if (options && selected.length === options.length) {
-            return "All selected";
+            return allSelectedLabel || "All selected";
         }
 
-        return `${selected.length} selected`;
+        return multiSelectedLabel || `${selected.length} selected`;
     };
 
     const triggerOptionDisplayCallback = (show: boolean) => {
@@ -154,83 +182,110 @@ export const InputMultiSelect = <T, V>({
     };
 
     // =============================================================================
-    // RENDER FUNCTION
+    // RENDER FUNCTIONS
     // =============================================================================
     const renderLabel = () => {
         if (!selected || selected.length === 0) {
             return (
-                <PlaceholderLabel truncateType={optionTruncationType}>
+                <PlaceholderLabel
+                    $truncateType={optionTruncationType}
+                    $variant={variant}
+                >
                     {placeholder}
                 </PlaceholderLabel>
             );
         } else {
-            return <ValueLabel>{getDisplayValue()}</ValueLabel>;
+            return (
+                <ValueLabel $variant={variant}>{getDisplayValue()}</ValueLabel>
+            );
         }
     };
 
     const renderSelectorContent = () => (
-        <>
-            <LabelContainer>{renderLabel()}</LabelContainer>
-            <IconContainer expanded={showOptions}>
-                <StyledChevronIcon />
-            </IconContainer>
-        </>
+        <LabelContainer $disabled={disabled}>{renderLabel()}</LabelContainer>
     );
 
-    const renderOptionList = () => {
-        // Cater for sync and async load
-        if ((options && options.length > 0) || onRetry) {
-            return (
-                <DropdownList
-                    listItems={options}
-                    onSelectItem={handleListItemClick}
-                    onDismiss={handleListDismiss}
-                    valueExtractor={valueExtractor}
-                    listExtractor={listExtractor}
-                    listStyleWidth={listStyleWidth}
-                    visible={showOptions}
-                    enableSearch={enableSearch}
-                    searchFunction={searchFunction}
-                    searchPlaceholder={searchPlaceholder}
-                    data-testid="dropdown-list"
-                    multiSelect={true}
-                    selectedItems={selected}
-                    onSelectAll={handleSelectAllClick}
-                    onRetry={onRetry}
-                    itemsLoadState={optionsLoadState}
-                    itemTruncationType={optionTruncationType}
-                />
-            );
-        }
+    const renderElement = () => {
+        return (
+            <InputBox
+                className={className}
+                data-testid={testId}
+                id={id}
+                ref={nodeRef}
+                tabIndex={-1}
+                onFocus={handleNodeFocus}
+                onBlur={handleNodeBlur}
+                $focused={focused}
+                $disabled={disabled}
+                $readOnly={readOnly}
+                $error={error}
+            >
+                <ExpandableElement
+                    ref={selectorRef}
+                    disabled={disabled}
+                    expanded={showOptions}
+                    listboxId={internalId}
+                    popupRole="listbox"
+                    readOnly={readOnly}
+                    variant={variant}
+                    aria-labelledby={ariaLabelledBy}
+                    aria-describedby={ariaDescribedBy}
+                    aria-invalid={ariaInvalid}
+                >
+                    {renderSelectorContent()}
+                </ExpandableElement>
+            </InputBox>
+        );
+    };
 
-        return null;
+    const renderDropdown = () => {
+        return (
+            <DropdownList
+                listboxId={internalId}
+                listItems={options}
+                onSelectItem={handleListItemClick}
+                onDismiss={handleListDismiss}
+                valueExtractor={valueExtractor}
+                listExtractor={listExtractor}
+                enableSearch={enableSearch}
+                searchFunction={searchFunction}
+                searchPlaceholder={searchPlaceholder}
+                multiSelect
+                maxSelectable={maxSelectable}
+                selectedItems={selected}
+                onSelectAll={handleSelectAllClick}
+                onRetry={onRetry}
+                itemsLoadState={optionsLoadState}
+                itemTruncationType={optionTruncationType}
+                renderListItem={renderListItem}
+                hideNoResultsDisplay={hideNoResultsDisplay}
+                noResultsDescription={noResultsDescription}
+                customLabels={customLabels}
+                renderCustomCallToAction={renderCustomCallToAction}
+                variant={variant}
+                width={dropdownWidth}
+                matchElementWidth
+            />
+        );
     };
 
     return (
-        <DropdownWrapper
-            show={showOptions}
-            error={error && !showOptions}
-            disabled={disabled}
-            testId={testId}
-            className={className}
-            onBlur={handleWrapperBlur}
-        >
-            <Selector
-                ref={selectorRef}
-                type="button"
-                data-testid="selector"
-                onClick={handleSelectorClick}
-                onBlur={() => {
-                    if (!showOptions) {
-                        onBlur?.();
-                    }
-                }}
-                {...otherProps}
-            >
-                {renderSelectorContent()}
-            </Selector>
-            {showOptions && <Divider />}
-            {renderOptionList()}
-        </DropdownWrapper>
+        <DropdownListState>
+            <ElementWithDropdown
+                enabled={!readOnly && !disabled}
+                isOpen={showOptions}
+                renderElement={renderElement}
+                renderDropdown={renderDropdown}
+                onOpen={handleOpen}
+                onClose={handleClose}
+                onDismiss={handleDismiss}
+                clickToToggle
+                offset={8}
+                alignment={alignment}
+                fitAvailableHeight
+                customZIndex={dropdownZIndex}
+                rootNode={dropdownRootNode}
+            />
+        </DropdownListState>
     );
 };

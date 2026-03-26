@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
 import {
@@ -10,12 +10,16 @@ import {
     InputGroupWrapper,
     LoadingLabel,
     LoadingWrapper,
+    ReadOnlyClickable,
+    ReadOnlyIconContainer,
+    ReadOnlyValueText,
     Spinner,
     TryAgainLabel,
 } from "./masked-input.style";
 import { MaskedInputProps } from "./types";
 import { isEmpty } from "lodash";
-import { StringHelper } from "../util";
+import { SimpleIdGenerator, StringHelper } from "../util";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 
 const Component = (
     {
@@ -49,28 +53,49 @@ const Component = (
     // CONST, STATE, REFS
     // =============================================================================
     const isEmptyReadOnlyState = readOnly && isEmpty(value);
-    const [isMasked, setIsMasked] = useState(!disableMask);
-    const [updatedValue, setUpdatedValue] = useState(value || "");
+    const [isMasked, setIsMasked] = useState<boolean>(!disableMask);
+    const [updatedValue, setUpdatedValue] = useState<string>(value || "");
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const valueId = `${otherProps.id ?? internalId}-value`;
+
+    const inputRef = useRef<HTMLInputElement>(null);
+    const tryAgainRef = useRef<HTMLButtonElement>(null);
+    const readOnlyButtonRef = useRef<HTMLButtonElement>(null);
+    const isMaskedRef = useRef<boolean>(!disableMask);
+    const ariaLabelledBy = otherProps["aria-labelledby"];
+
+    useImperativeHandle(ref, () => inputRef.current as HTMLInputElement, []);
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        setUpdatedValue(value);
+        setUpdatedValue(value || "");
     }, [value]);
+
+    useEffect(() => {
+        if (!readOnly) return;
+
+        if (loadState === "fail") {
+            tryAgainRef.current?.focus();
+        }
+
+        if (loadState === "success") {
+            readOnlyButtonRef.current?.focus();
+        }
+    }, [readOnly, loadState]);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
         toggleMasking(false);
-        onFocus && onFocus(event);
+        onFocus?.(event);
     };
 
-    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    const handleBlur = (event?: React.FocusEvent<HTMLInputElement>) => {
         toggleMasking(true);
-        onBlur && onBlur(event);
+        onBlur?.(event!);
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,26 +114,43 @@ const Component = (
 
         setUpdatedValue(value);
         event.target.value = value;
-        onChange && onChange(event);
+        onChange?.(event);
     };
 
     const handleTryAgain = () => {
-        readOnly && onTryAgain && onTryAgain();
+        if (readOnly) {
+            onTryAgain?.();
+        }
+    };
+
+    const handleIconMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+        event.preventDefault();
     };
 
     const handleToggleMask = () => {
-        toggleMasking(!isMasked);
+        const nextMasked = !isMasked;
+
+        toggleMasking(nextMasked);
+
+        if (!nextMasked) {
+            inputRef.current?.focus();
+            return;
+        }
     };
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
     const toggleMasking = (mask: boolean) => {
+        if (isMaskedRef.current === mask) return;
+
+        isMaskedRef.current = mask;
         setIsMasked(mask);
+
         if (mask) {
-            onMask && onMask();
+            onMask?.();
         } else {
-            onUnmask && onUnmask();
+            onUnmask?.();
         }
     };
 
@@ -118,7 +160,7 @@ const Component = (
         }
 
         return isMasked && !disableMask
-            ? StringHelper.maskValue(updatedValue?.toString(), {
+            ? StringHelper.maskValue(updatedValue, {
                   maskChar,
                   maskRange,
                   unmaskRange,
@@ -131,25 +173,77 @@ const Component = (
     const shouldDisableMasking = () =>
         !updatedValue?.toString().length || disableMask;
 
+    const getValueDescription = () => {
+        if (isEmptyReadOnlyState) {
+            return "-";
+        }
+
+        if (isMasked && !disableMask) {
+            const desc = StringHelper.getMaskedDescription(
+                updatedValue,
+                "masked",
+                maskRange
+            );
+
+            return desc || "Masked value";
+        }
+
+        return updatedValue;
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-
     const renderIcon = () => {
+        if (isEmptyReadOnlyState) {
+            return <></>;
+        }
+
         const isDisabled = shouldDisableMasking();
 
         return (
-            !isEmptyReadOnlyState && (
-                <IconContainer
-                    data-testid={`icon-${isMasked ? "masked" : "unmasked"}`}
-                    onClick={!isDisabled ? handleToggleMask : undefined}
-                    $isDisabled={isDisabled}
-                    $inactiveColor={maskIconInactiveColor}
-                    $activeColor={maskIconActiveColor}
+            <IconContainer
+                data-testid={`icon-${isMasked ? "masked" : "unmasked"}`}
+                onMouseDown={!isDisabled ? handleIconMouseDown : undefined}
+                onClick={!isDisabled ? handleToggleMask : undefined}
+                $isDisabled={isDisabled}
+                $inactiveColor={maskIconInactiveColor}
+                $activeColor={maskIconActiveColor}
+                aria-hidden="true"
+            >
+                {isMasked ? iconUnmask : iconMask}
+            </IconContainer>
+        );
+    };
+
+    const renderReadOnlyButton = () => {
+        const isButtonDisabled = shouldDisableMasking() || isEmptyReadOnlyState;
+
+        return (
+            <>
+                <VisuallyHidden id={valueId}>
+                    {getValueDescription()}
+                </VisuallyHidden>
+                <ReadOnlyClickable
+                    ref={readOnlyButtonRef}
+                    data-testid="masked-input-readonly-button"
+                    onClick={!isButtonDisabled ? handleToggleMask : undefined}
+                    type="button"
+                    aria-labelledby={concatIds(valueId, ariaLabelledBy)}
+                    aria-disabled={isButtonDisabled}
                 >
-                    {isMasked ? iconUnmask : iconMask}
-                </IconContainer>
-            )
+                    <ReadOnlyValueText>{getValue()}</ReadOnlyValueText>
+                    {!isButtonDisabled && (
+                        <ReadOnlyIconContainer>
+                            {isMasked ? (
+                                <EyeIcon data-testid="masked-icon" />
+                            ) : (
+                                <EyeSlashIcon data-testid="unmasked-icon" />
+                            )}
+                        </ReadOnlyIconContainer>
+                    )}
+                </ReadOnlyClickable>
+            </>
         );
     };
 
@@ -159,16 +253,16 @@ const Component = (
                 case "fail":
                     return (
                         <ClickableErrorWrapper
+                            ref={tryAgainRef}
                             onClick={handleTryAgain}
                             data-testid="try-again-button"
+                            type="button"
                         >
                             <ErrorTextContainer>
                                 <ErrorIcon />
                                 <ErrorLabel>Error</ErrorLabel>
                             </ErrorTextContainer>
-                            <TryAgainLabel weight="semibold">
-                                Try again?
-                            </TryAgainLabel>
+                            <TryAgainLabel>Try again?</TryAgainLabel>
                         </ClickableErrorWrapper>
                     );
                 case "loading":
@@ -180,13 +274,13 @@ const Component = (
                     );
                 case "success":
                 default:
-                    break;
+                    return renderReadOnlyButton();
             }
         }
 
         return (
             <InputGroupWrapper
-                ref={ref}
+                ref={inputRef}
                 data-testid={`${dataTestId || "masked-input"}${
                     isMasked ? "-masked" : "-unmasked"
                 }`}
@@ -210,11 +304,7 @@ const Component = (
         );
     };
 
-    return (
-        <div aria-busy={loadState === "loading"} aria-live="polite">
-            {renderElement()}
-        </div>
-    );
+    return <div aria-busy={loadState === "loading"}>{renderElement()}</div>;
 };
 
 export const MaskedInput = React.forwardRef(Component);

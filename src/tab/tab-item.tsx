@@ -9,6 +9,7 @@ export interface TabItemComponentProps extends TabItemProps {
 export const TabItem = ({
     index,
     children,
+    titleAddon: _titleAddon, // destructure so it doesn't get passed into the dom
     ...otherProps
 }: TabItemComponentProps) => {
     // =========================================================================
@@ -20,8 +21,10 @@ export const TabItem = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return currentActiveIndex === index ? (
-        <div role="tabpanel" {...otherProps}>
+        <div role="tabpanel" tabIndex={0} {...otherProps}>
             {children}
         </div>
     ) : null;
 };
+
+TabItem.displayName = "Tab.Item";

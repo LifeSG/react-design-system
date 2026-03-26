@@ -1,17 +1,20 @@
-import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Heading4, Secondary, Title } from "../storybook-common";
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as PopoverStories from "./popover.stories";
-import { PropsTable } from "./props-table";
+import { PropsTableTabs } from "./props-table";
 
 <Meta of={PopoverStories} />
 
-<Title>PopoverV2</Title>
+# PopoverV2
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component which appears when hovering or clicking on a target element and displays information about a certain element in the page.
 
-> **It is recommended to use this if you have more content to display within the popover bubble. If the content is short, consider using the [Tooltip](/docs/modules-tooltip--docs) instead.**
+This module contains:
+
+-   PopoverV2 - the presentational component
+-   PopoverTrigger - a utility component that handles triggering of the popover
+-   [PopoverInline](/docs/overlays-popoverinline--docs) - a utility component that displays a text or icon-based trigger
 
 ```tsx
 import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
@@ -21,25 +24,79 @@ import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
 
 <Canvas of={PopoverStories.HoverInteraction} />
 
-<Heading4>Appearance information</Heading4>
+### Behaviour
+
+**Appearance**
 
 -   The `Popover` component automatically positions itself based on the amount of space available. It will always attempt to display itself at the preferred position by default
 -   The `Popover` appears as a modal in mobile viewports
 
-The example below illustrates the default behaviour.
+**Keyboard support**
+
+The trigger should be included in the page's tab sequence. This way, users who
+navigate via keyboard can open the popover with `Space`/`Enter`. On open, focus
+will move to the popover. Press `Escape` to dismiss the popover.
+
+The example below illustrates the positioning behaviour when viewed on desktop.
 
 <Canvas of={PopoverStories.Appearance} />
 
-<Heading3>Default styling</Heading3>
+## Default styling
 
 The component comes with basic styling for commonly used markup such as `<strong>` or `<a>`.
 
 <Canvas of={PopoverStories.DefaultStyling} />
 
-<Heading3>Customisation</Heading3>
+## Customisation
 
 You can opt out of the default appearance to display custom content such as menus and dialogs.
 
 <Canvas of={PopoverStories.Customisation} />
 
-<PropsTable />
+## Z-index conflicts
+
+The popover uses z-index to display above elements. It may end up rendering
+below another element with a higher z-index.
+
+The popover is `Modal` and `Overlay`-aware by default; when rendered as a child
+of either component, it will automatically adjust its z-index to remain visible.
+The story below illustrates the default behaviour.
+
+If you still encounter z-index issues, try setting a custom `zIndex` or
+`rootNode`.
+
+<Canvas of={PopoverStories.UsageInOverlay} />
+
+## Resize and Flip
+
+Use `enableResize` to enable resize of the `popoverContent` to fit the remaining
+vertical space of the window and become scrollable.
+
+Use `enableFlip` to disable flipping of the `popoverContent`.
+
+<Canvas of={PopoverStories.ResizeAndFlip} />
+
+With `enableResize`, when `popoverContent` is a render function, additional
+props are provided. You are responsible for applying the `maxHeight` and
+`overflow` values to your custom component to ensure correct sizing and scroll
+behavior.
+
+<Canvas of={PopoverStories.ResizeAndFlipWithCustomContent} />
+
+### Overflow
+
+Use `overflow` with `enableResize` to control the popover content&rsquo;s
+overflow behavior.
+
+<Canvas of={PopoverStories.Overflow} />
+
+## Nested overlays
+
+This popover contains a component with a dropdown. In most cases, the popover
+should be able to coexist with a nested floating element without issue.
+
+<Canvas of={PopoverStories.NestedOverlays} />
+
+## Component API
+
+<PropsTableTabs />

@@ -1,7 +1,7 @@
+import { useSpring } from "@react-spring/web";
 import isNil from "lodash/isNil";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "react-spring";
 import { PopoverAddon } from "../form/form-label-addon";
 import { FilterContext } from "./filter-context";
 import {
@@ -17,6 +17,8 @@ import {
     MinimisableContent,
 } from "./filter-item.styles";
 import { FilterItemProps } from "./types";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 
 export const FilterItem = ({
     collapsible: desktopCollapsible = true,
@@ -47,8 +49,12 @@ export const FilterItem = ({
         height: expanded ? itemResizeDetector.height : 0,
     });
     const contentHeight = contentMinimised
-        ? minimisedHeight ?? Math.min(contentResizeDetector.height * 0.5, 216)
+        ? minimisedHeight ??
+          Math.min((contentResizeDetector.height ?? 0) * 0.5, 216)
         : contentResizeDetector.height;
+    const internalId = useRef(SimpleIdGenerator.generate());
+    const contentId = `${internalId.current}-content`;
+    const titleId = `${internalId.current}-title`;
 
     // =============================================================================
     // EFFECTS
@@ -57,6 +63,9 @@ export const FilterItem = ({
         setExpanded(getInitialExpandState());
     }, [desktopCollapsible, controlledExpanded]);
 
+    useEffect(() => {
+        setContentMinimised(minimisable);
+    }, [minimisable]);
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -94,7 +103,7 @@ export const FilterItem = ({
     // =============================================================================
 
     const renderAddon = () => {
-        switch (addon.type) {
+        switch (addon?.type) {
             case "popover":
                 return (
                     <PopoverAddon
@@ -108,34 +117,49 @@ export const FilterItem = ({
     };
 
     return (
-        <FilterItemWrapper $collapsible={collapsible}>
+        <FilterItemWrapper
+            $isMobile={isMobile}
+            $collapsible={collapsible}
+            aria-labelledby={titleId}
+        >
             <Divider
+                $isMobile={isMobile}
                 $showDivider={showDivider}
                 $showMobileDivider={showMobileDivider}
             />
             {(title || collapsible) && (
-                <FilterItemHeader>
+                <FilterItemHeader $isMobile={isMobile}>
                     {title && (
-                        <FilterItemTitle weight="semibold">
+                        <FilterItemTitle
+                            id={titleId}
+                            data-testid="filter-item-title"
+                            $isMobile={isMobile}
+                        >
                             {title} {addon && renderAddon()}
                         </FilterItemTitle>
                     )}
                     {collapsible && (
                         <FilterItemExpandButton
+                            data-testid={"expand-collapse-button"}
                             focusHighlight={false}
                             focusOutline="browser"
                             onClick={handleExpandCollapse}
-                            aria-label={expanded ? "Collapse" : "Expand"}
+                            aria-expanded={expanded}
+                            aria-disabled={!collapsible}
+                            aria-controls={contentId}
                         >
-                            <ChevronIcon $expanded={expanded} />
+                            {title && <VisuallyHidden>{title}</VisuallyHidden>}
+                            <ChevronIcon $expanded={expanded} aria-hidden />
                         </FilterItemExpandButton>
                     )}
                 </FilterItemHeader>
             )}
             <ExpandableItem
-                data-testid="expandable-container"
+                id={contentId}
+                data-testid={"expandable-container"}
                 data-expanded={expanded}
                 style={itemAnimationStyles}
+                inert={inertValue(!expanded)}
             >
                 <div ref={itemResizeDetector.ref}>
                     <FilterItemBody {...otherProps}>
@@ -161,7 +185,12 @@ export const FilterItem = ({
                                 type="button"
                                 onClick={handleMinimise}
                             >
-                                View {contentMinimised ? "more" : "less"}
+                                <VisuallyHidden>{`view ${
+                                    contentMinimised ? "more" : "less"
+                                } in ${title}`}</VisuallyHidden>
+                                <span aria-hidden>
+                                    View {contentMinimised ? "more" : "less"}
+                                </span>
                             </FilterItemMinimiseButton>
                         )}
                     </FilterItemBody>
@@ -170,3 +199,5 @@ export const FilterItem = ({
         </FilterItemWrapper>
     );
 };
+
+FilterItem.displayName = "Filter.Item";

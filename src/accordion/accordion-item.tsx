@@ -1,3 +1,4 @@
+import { useSpring } from "@react-spring/web";
 import React, {
     forwardRef,
     useContext,
@@ -7,162 +8,181 @@ import React, {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "react-spring";
+import { inertValue } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 import { AccordionContext } from "./accordion-context";
 import {
     ChevronIcon,
     Container,
-    DescriptionContainer,
+    ContentContainer,
     ExpandCollapseButton,
     Expandable,
+    IconContainer,
     Title,
-    TitleContainer,
-    TitleH4,
 } from "./accordion-item.style";
-import { AccordionItemHandle, AccordionItemProps } from "./types";
+import {
+    AccordionItemApi,
+    AccordionItemHandle,
+    AccordionItemProps,
+} from "./types";
 
 function Component(
     {
         title,
         children,
-        expanded,
         type = "default",
         collapsible = true,
-        ...otherProps
+        className,
+        id,
+        expanded: expandedControlled,
+        "data-testid": testId = "accordion-item",
     }: AccordionItemProps,
     ref: React.Ref<AccordionItemHandle>
 ) {
-    // =============================================================================
+    // =========================================================================
     // CONST, STATE, REF
-    // =============================================================================
-    const elementRef = useRef<HTMLDivElement>();
-    const expandAll = useContext(AccordionContext);
-    const [expand, setExpand] = useState<boolean>(
-        collapsible ? expanded ?? expandAll : true
-    );
+    // =========================================================================
+    const elementRef = useRef<HTMLDivElement>(null);
+    const {
+        expandAll,
+        itemHeadingLevel,
+        onItemStateChange,
+        itemState,
+        onItemDeregister,
+    } = useContext(AccordionContext);
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
-
-    const testId = otherProps["data-testid"] || "accordion-item";
-
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const contentId = `${internalId}-content`;
     const resizeDetector = useResizeDetector();
-    const childRef = resizeDetector.ref;
+    const expanded =
+        itemState[internalId] ??
+        (collapsible ? expandedControlled ?? expandAll : true); // the initial value
 
     useImperativeHandle(
         ref,
         () =>
-            Object.assign(elementRef.current, {
-                expand(): void {
-                    setExpand(true);
-                },
-                collapse(): void {
-                    setExpand(false);
-                },
-                isExpanded() {
-                    return expand;
-                },
-            }),
-        [expand]
+            Object.assign<HTMLDivElement, AccordionItemApi>(
+                elementRef.current!,
+                {
+                    expand(): void {
+                        onItemStateChange(internalId, true);
+                    },
+                    collapse(): void {
+                        onItemStateChange(internalId, false);
+                    },
+                    isExpanded() {
+                        return expanded;
+                    },
+                }
+            ),
+        [expanded]
     );
 
-    // =============================================================================
+    // =========================================================================
     // EFFECTS
-    // =============================================================================
-
-    useEffect(() => {
-        if (hasFirstLoad) {
-            setExpand(collapsible ? expandAll : true);
-        }
-    }, [expandAll]);
-
-    useEffect(() => {
-        if (hasFirstLoad) {
-            setExpand(expanded);
-        }
-    }, [expanded]);
-
+    // =========================================================================
     useEffect(() => {
         setHasFirstLoad(true);
+
+        return () => onItemDeregister?.(internalId);
     }, []);
 
-    // =============================================================================
+    useEffect(() => {
+        onItemStateChange(
+            internalId,
+            collapsible ? expandedControlled ?? expandAll : true
+        );
+    }, [expandAll, expandedControlled, collapsible]);
+
+    // =========================================================================
     // EVENT HANDLERS
-    // =============================================================================
+    // =========================================================================
 
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();
-        setExpand((prevExpand) => !prevExpand);
+        onItemStateChange(internalId, !expanded);
     };
 
-    // =============================================================================
+    // =========================================================================
     // RENDER FUNCTIONS
-    // =============================================================================
+    // =========================================================================
     // React spring animation configuration
-    const resizeHeight = { height: expand ? resizeDetector.height : 0 };
+    const resizeHeight = {
+        height: expanded ? resizeDetector.height : 0,
+    };
     const expandableStyles = useSpring(resizeHeight);
 
     const renderContent = () => {
         return (
             <Expandable
+                id={contentId}
                 style={hasFirstLoad ? expandableStyles : resizeHeight}
-                $isCollapsed={expand}
                 data-testid={`${testId}-expandable-container`}
+                inert={inertValue(!expanded)}
             >
-                <DescriptionContainer ref={childRef} id="content-container">
+                <ContentContainer
+                    ref={resizeDetector.ref}
+                    data-testid="content-container"
+                >
                     {children}
-                </DescriptionContainer>
+                </ContentContainer>
             </Expandable>
         );
     };
 
-    const renderTitle = () => {
+    const renderTitleText = () => {
         if (typeof title !== "string") {
             return title;
         }
 
-        switch (type) {
-            case "small":
-                return (
-                    <TitleH4
-                        data-testid={`${testId}-title`}
-                        $isCollapsed={expand}
-                    >
-                        {title}
-                    </TitleH4>
-                );
-            default:
-                return (
-                    <Title
-                        data-testid={`${testId}-title`}
-                        $isCollapsed={expand}
-                    >
-                        {title}
-                    </Title>
-                );
-        }
+        return (
+            <Title
+                data-testid={`${testId}-title`}
+                $type={type}
+                $isCollapsed={expanded}
+            >
+                {title}
+            </Title>
+        );
+    };
+
+    const renderTitle = () => {
+        return (
+            <h3 aria-level={itemHeadingLevel}>
+                <ExpandCollapseButton
+                    data-testid={`${testId}-expand-collapse-button`}
+                    onClick={
+                        collapsible ? handleExpandCollapseClick : undefined
+                    }
+                    $expanded={expanded}
+                    $collapsible={collapsible}
+                    aria-controls={contentId}
+                    aria-disabled={!collapsible} // remains focusable
+                    aria-expanded={expanded}
+                >
+                    {renderTitleText()}
+                    {collapsible && (
+                        <IconContainer
+                            data-testid={`${testId}-expand-collapse-icon`}
+                            $expanded={expanded}
+                        >
+                            <ChevronIcon />
+                        </IconContainer>
+                    )}
+                </ExpandCollapseButton>
+            </h3>
+        );
     };
 
     return (
         <Container
             data-testid={testId}
-            className={otherProps.className}
-            $isCollapsed={expand}
+            className={className}
+            id={id}
+            $expanded={expanded}
             ref={elementRef}
         >
-            <TitleContainer>
-                {renderTitle()}
-                {collapsible && (
-                    <ExpandCollapseButton
-                        data-testid={`${testId}-expand-collapse-button`}
-                        onClick={handleExpandCollapseClick}
-                        $isCollapsed={expand}
-                        focusHighlight={false}
-                        focusOutline="browser"
-                        aria-label={expand ? "Collapse" : "Expand"}
-                    >
-                        <ChevronIcon />
-                    </ExpandCollapseButton>
-                )}
-            </TitleContainer>
+            {renderTitle()}
             {renderContent()}
         </Container>
     );

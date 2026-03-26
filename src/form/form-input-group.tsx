@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { InputGroup } from "../input-group";
 import { FormWrapper } from "./form-wrapper";
 import { FormInputGroupProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 
 const Component = <T, V>(
     props: FormInputGroupProps<T, V>,
@@ -10,32 +11,54 @@ const Component = <T, V>(
     const {
         label,
         errorMessage,
-        id = "form-field-group",
+        id,
         "data-error-testid": errorTestId,
         "data-testid": testId,
         layoutType,
         mobileCols,
         tabletCols,
         desktopCols,
+        xxsCols,
+        xsCols,
+        smCols,
+        mdCols,
+        lgCols,
+        xlCols,
+        xxlCols,
         ...otherProps
     } = props;
 
+    const [internalId] = useState(
+        () => `form-field-${SimpleIdGenerator.generate()}`
+    );
+
+    const inputId = id ?? internalId;
+
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
-            disabled={otherProps.disabled}
             data-error-testid={errorTestId}
+            disabled={otherProps.disabled}
             layoutType={layoutType}
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <InputGroup
                 ref={ref}
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
+                aria-labelledby={`${inputId}-label`}
                 error={!!errorMessage}
                 {...otherProps}
             />

@@ -1,15 +1,23 @@
-import { AlertProps } from "./types";
+import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import { ExclamationTriangleFillIcon } from "@lifesg/react-icons/exclamation-triangle-fill";
+import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
+import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
+import { useCallback, useEffect, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
+import { SimpleIdGenerator } from "../util";
+import { inertValue } from "../shared/accessibility";
 import {
     ActionLinkText,
     AlertIconWrapper,
-    TextContainer,
+    ChevronIcon,
+    ContentContainer,
+    ShowMoreButton,
+    TextWrapper,
+    TextWrapperContainer,
     Wrapper,
 } from "./alert.style";
-import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
-import { ExclamationTriangleFillIcon } from "@lifesg/react-icons/exclamation-triangle-fill";
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
-import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
+import { AlertProps } from "./types";
 
 export const Alert = ({
     type,
@@ -19,8 +27,83 @@ export const Alert = ({
     actionLinkIcon,
     sizeType = "default",
     showIcon = false,
+    customIcon,
+    maxCollapsedHeight,
+    role,
     ...otherProps
 }: AlertProps): JSX.Element => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
+    const [showHiddenContent, setShowHiddenContent] = useState<boolean>(false);
+    const [renderShowMore, setRenderShowMore] = useState<boolean>(false);
+    const { height: contentHeight, ref: contentRef } =
+        useResizeDetector<HTMLDivElement>();
+    const [contentId] = useState(() => SimpleIdGenerator.generate());
+
+    // =============================================================================
+    // HELPERS
+    // =============================================================================
+
+    const getAlertLabel = () => {
+        switch (type) {
+            case "success":
+                return "Success";
+            case "warning":
+                return "Warning";
+            case "error":
+                return "Error";
+            case "info":
+                return "Information";
+            case "description":
+                return "Description";
+            default:
+                return "Alert";
+        }
+    };
+
+    const setCollapsedState = useCallback(() => {
+        setShowHiddenContent(!maxCollapsedHeight);
+        setRenderShowMore(isContentOutsideCollapsibleZone());
+    }, [maxCollapsedHeight, contentHeight]);
+
+    const isContentOutsideCollapsibleZone = () => {
+        if (contentHeight && maxCollapsedHeight) {
+            return contentHeight > maxCollapsedHeight;
+        }
+        return false;
+    };
+
+    const isInert = () => {
+        return !!maxCollapsedHeight && !showHiddenContent;
+    };
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+
+    useEffect(() => {
+        setCollapsedState();
+    }, [maxCollapsedHeight, contentHeight, setCollapsedState]);
+
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
+
+    const renderShowMoreButton = () => (
+        <ShowMoreButton
+            $sizeType={sizeType}
+            $type={type}
+            type="button"
+            aria-expanded={showHiddenContent}
+            aria-controls={contentId}
+            onClick={() => setShowHiddenContent(!showHiddenContent)}
+        >
+            Show {showHiddenContent ? "less" : "more"}
+            <ChevronIcon $expanded={showHiddenContent} />
+        </ShowMoreButton>
+    );
+
     const renderLinkType = () => {
         if (actionLinkIcon) {
             return actionLinkIcon;
@@ -29,11 +112,14 @@ export const Alert = ({
     };
 
     const renderLink = () => {
+        if (!actionLink) return null;
+
         return (
             <ActionLinkText
                 data-testid="action-link"
                 $type={type}
                 $sizeType={sizeType}
+                underlineStyle="none"
                 {...actionLink}
             >
                 {actionLink.children}
@@ -43,38 +129,65 @@ export const Alert = ({
     };
 
     const renderIcon = () => {
+        if (type && customIcon) return customIcon;
         switch (type) {
             case "success":
-                return <TickCircleFillIcon />;
+                return <TickCircleFillIcon aria-hidden />;
             case "warning":
-                return <ExclamationTriangleFillIcon />;
+                return <ExclamationTriangleFillIcon aria-hidden />;
             case "error":
-                return <ExclamationCircleFillIcon />;
+                return <ExclamationCircleFillIcon aria-hidden />;
             case "info":
-                return <ICircleFillIcon />;
+                return <ICircleFillIcon aria-hidden />;
             case "description":
-                return <ICircleFillIcon />;
+                return <ICircleFillIcon aria-hidden />;
             default:
                 return null;
         }
     };
+
+    const renderContent = () => (
+        <TextWrapperContainer
+            id={contentId}
+            $maxCollapsedHeight={
+                isContentOutsideCollapsibleZone()
+                    ? maxCollapsedHeight
+                    : undefined
+            }
+            $showMore={showHiddenContent}
+            $hasActionLink={!!actionLink}
+            inert={inertValue(isInert())}
+        >
+            <TextWrapper ref={contentRef} $type={type} $sizeType={sizeType}>
+                {children}
+            </TextWrapper>
+            {renderLink()}
+        </TextWrapperContainer>
+    );
 
     return (
         <Wrapper
             className={className}
             $type={type}
             $sizeType={sizeType}
+            aria-label={`${getAlertLabel()}`}
             data-testid={otherProps["data-testid"]}
+            role={role}
         >
             {showIcon && (
                 <AlertIconWrapper $sizeType={sizeType} $type={type}>
                     {renderIcon()}
                 </AlertIconWrapper>
             )}
-            <TextContainer>
-                {children}
-                {actionLink && renderLink()}
-            </TextContainer>
+            <ContentContainer>
+                {/* 
+                    CSS-BASED TAB ORDER IMPLEMENTATION:
+                    - DOM order: button → link → content (natural tab order)
+                    - Visual order: content → button (via CSS order property)
+                */}
+                {renderShowMore && renderShowMoreButton()}
+                {renderContent()}
+            </ContentContainer>
         </Wrapper>
     );
 };

@@ -1,0 +1,860 @@
+{
+    "meta": {
+        "packageName": "@lifesg/react-design-system",
+        "totalModules": 75
+    },
+    "components": [
+        {
+            "name": "Accordion",
+            "importPath": "@lifesg/react-design-system/accordion",
+            "description": "Props for the Accordion component - collapsible content container. Wraps one or more `Accordion.Item` children in a panel that can be individually expanded or collapsed. Supports a header title and an expand/collapse-all control.",
+            "searchKeys": [
+                "collapsible",
+                "disclosure",
+                "expand collapse",
+                "expandable",
+                "panel"
+            ]
+        },
+        {
+            "name": "Alert",
+            "importPath": "@lifesg/react-design-system/alert",
+            "description": "Props for the Alert component - contextual feedback banner. Displays an inline message with an optional icon, action link, and configurable severity type and size.",
+            "searchKeys": [
+                "banner",
+                "info box",
+                "notification",
+                "status message",
+                "warning message"
+            ]
+        },
+        {
+            "name": "Animations",
+            "importPath": "@lifesg/react-design-system/animations",
+            "description": "",
+            "searchKeys": []
+        },
+        {
+            "name": "BaseTheme",
+            "importPath": "@lifesg/react-design-system/theme",
+            "description": "for color customisation, can specify subset of set",
+            "searchKeys": [
+                "brand theme",
+                "color scheme",
+                "design tokens config",
+                "ThemeProvider",
+                "theming"
+            ]
+        },
+        {
+            "name": "BoxContainer",
+            "importPath": "@lifesg/react-design-system/box-container",
+            "description": "Props for the BoxContainer component - collapsible titled card. Renders a bordered box with a header title and optionally a status icon, call-to-action element, and expand/collapse toggle.",
+            "searchKeys": [
+                "bordered box",
+                "collapsible card",
+                "expandable section",
+                "titled panel"
+            ]
+        },
+        {
+            "name": "Breadcrumb",
+            "importPath": "@lifesg/react-design-system/breadcrumb",
+            "description": "Props for the Breadcrumb component - horizontal navigation trail. Renders an ordered list of anchor links representing the current page hierarchy. When links overflow, a fade gradient is applied at the scrollable edges.",
+            "searchKeys": [
+                "crumb nav",
+                "hierarchy links",
+                "navigation trail",
+                "page path"
+            ]
+        },
+        {
+            "name": "Button",
+            "importPath": "@lifesg/react-design-system/button",
+            "description": "Props for the Button component - primary call-to-action element Use buttons to trigger immediate actions like form submissions, dialog confirmations, or navigation. Choose the appropriate style type based on action hierarchy. The button comes in two sizes: Default and Small, available via Button.Default and Button.Small.",
+            "searchKeys": [
+                "action trigger",
+                "click handler",
+                "CTA",
+                "primary button",
+                "submit"
+            ]
+        },
+        {
+            "name": "Calendar",
+            "importPath": "@lifesg/react-design-system/calendar",
+            "description": "Props for the Calendar component - standalone date picker. Renders a full calendar view for selecting a single date. Extends `CommonCalendarProps` which provides min/max dates, disabled dates, and locale settings.",
+            "searchKeys": [
+                "date grid",
+                "date picker",
+                "date selector",
+                "day picker",
+                "monthly view"
+            ]
+        },
+        {
+            "name": "Card",
+            "importPath": "@lifesg/react-design-system/card",
+            "description": "Props for the Card component - elevated content container. Renders a styled box with a white background and rounded corners. Inherits all `HTMLDivElement` attributes.",
+            "searchKeys": ["content box", "panel", "paper", "surface", "tile"]
+        },
+        {
+            "name": "Checkbox",
+            "importPath": "@lifesg/react-design-system/checkbox",
+            "description": "Props for the Checkbox component - binary selection control. Renders a styled checkbox with optional indeterminate state. Inherits all standard `HTMLInputElement` attributes.",
+            "searchKeys": [
+                "boolean input",
+                "check mark",
+                "multi-select control",
+                "tick box"
+            ]
+        },
+        {
+            "name": "Color",
+            "importPath": "@lifesg/react-design-system/color",
+            "description": "",
+            "searchKeys": []
+        },
+        {
+            "name": "CountdownTimer",
+            "importPath": "@lifesg/react-design-system/countdown-timer",
+            "description": "Props for the CountdownTimer component - floating sticky countdown display. Renders a countdown clock that sticks to the viewport edge as the user scrolls. When the remaining time falls below `notifyTimer`, the `onTick` and `onNotify` callbacks fire. Use `show` to start or pause the timer.",
+            "searchKeys": [
+                "clock",
+                "count down",
+                "expiry timer",
+                "session timeout",
+                "time remaining"
+            ]
+        },
+        {
+            "name": "DataTable",
+            "importPath": "@lifesg/react-design-system/data-table",
+            "description": "Props for the DataTable component - tabular data display with selection. DataTable organises row data into columns and supports sortable headers, optional row selection, loading states, sticky headers, and empty states. Use it when users need to scan, compare, and act on structured data.",
+            "searchKeys": [
+                "data grid",
+                "grid",
+                "sortable table",
+                "spreadsheet",
+                "table"
+            ]
+        },
+        {
+            "name": "DateInput",
+            "importPath": "@lifesg/react-design-system/date-input",
+            "description": "Props for the DateInput component - single date picker with calendar overlay. Displays a text input that opens an inline calendar for selecting a single date. Controlled via a `\"YYYY-MM-DD\"` string value. Supports optional confirmation buttons, disabled and read-only modes, and focus/blur callbacks.",
+            "searchKeys": [
+                "calendar input",
+                "date entry",
+                "date field",
+                "date selector",
+                "single date"
+            ]
+        },
+        {
+            "name": "DateRangeInput",
+            "importPath": "@lifesg/react-design-system/date-range-input",
+            "description": "Props for the DateRangeInput component - date range picker with calendar overlay. Displays two linked text inputs (start and end) that open a shared calendar for selecting a date range. Controlled via `\"YYYY-MM-DD\"` string values. Supports week, month, and fixed-day range variants in addition to the default free-range mode.",
+            "searchKeys": [
+                "date range",
+                "date span",
+                "from to date",
+                "period picker",
+                "start end date"
+            ]
+        },
+        {
+            "name": "DesignToken",
+            "importPath": "@lifesg/react-design-system/design-token",
+            "description": "",
+            "searchKeys": []
+        },
+        {
+            "name": "Divider",
+            "importPath": "@lifesg/react-design-system/divider",
+            "description": "Props for the Divider component - horizontal rule separator. Renders a styled horizontal rule with configurable thickness, line style, color, and optional grid column span (via `ColDiv` layout props).",
+            "searchKeys": [
+                "horizontal rule",
+                "hr",
+                "line break",
+                "section divider",
+                "separator"
+            ]
+        },
+        {
+            "name": "Drawer",
+            "importPath": "@lifesg/react-design-system/drawer",
+            "description": "Props for the Drawer component - slide-in side panel. Renders a panel that slides in from the side of the screen, overlaying the page content. Toggled via the `show` prop and dismissed via the close button or overlay click callbacks.",
+            "searchKeys": [
+                "flyout",
+                "off-canvas",
+                "side panel",
+                "sidebar",
+                "slide out"
+            ]
+        },
+        {
+            "name": "ErrorDisplay",
+            "importPath": "@lifesg/react-design-system/error-display",
+            "description": "Base content attributes for the ErrorDisplay component. Shared between `ErrorDisplayProps` and the DataTable `emptyView` override.",
+            "searchKeys": [
+                "404 page",
+                "empty state",
+                "error page",
+                "maintenance screen",
+                "not found"
+            ]
+        },
+        {
+            "name": "FeedbackRating",
+            "importPath": "@lifesg/react-design-system/feedback-rating",
+            "description": "Props for the FeedbackRating component - star-rating survey widget. Renders an optional banner image, a description prompt, a row of star buttons, and a submit button. Controlled via the `rating` prop.",
+            "searchKeys": [
+                "NPS",
+                "rating widget",
+                "review",
+                "satisfaction score",
+                "star rating"
+            ]
+        },
+        {
+            "name": "FileUpload",
+            "importPath": "@lifesg/react-design-system/file-upload",
+            "description": "Props for an individual file item displayed in the upload list.",
+            "searchKeys": [
+                "attachment",
+                "drag and drop",
+                "drop zone",
+                "file input",
+                "upload field"
+            ]
+        },
+        {
+            "name": "Filter",
+            "importPath": "@lifesg/react-design-system/filter",
+            "description": "Props for the Filter component - collapsible filter panel. Renders a panel of `Filter.Item` children with a header title, clear button, and mobile-specific dismiss/done controls.",
+            "searchKeys": [
+                "facet",
+                "filter drawer",
+                "refinement panel",
+                "search filter",
+                "sidebar filter"
+            ]
+        },
+        {
+            "name": "Footer",
+            "importPath": "@lifesg/react-design-system/footer",
+            "description": "Any custom attributes you would like to pass to the link",
+            "searchKeys": [
+                "bottom bar",
+                "copyright bar",
+                "footer nav",
+                "page footer links",
+                "site footer"
+            ]
+        },
+        {
+            "name": "Form",
+            "importPath": "@lifesg/react-design-system/form",
+            "description": "Configuration for an informational addon attached to a Form label. Renders as a tooltip or popover triggered by an icon next to the label, providing supplementary context without cluttering the form field.",
+            "searchKeys": [
+                "field group",
+                "form field",
+                "form layout",
+                "input wrapper",
+                "label input pair"
+            ]
+        },
+        {
+            "name": "FullscreenImageCarousel",
+            "importPath": "@lifesg/react-design-system/fullscreen-image-carousel",
+            "description": "Props for the FullscreenImageCarousel component - fullscreen image gallery modal. Renders a modal overlay with a swipeable image carousel and optional thumbnail strip. Extends key `ModalProps` fields for visibility and animation.",
+            "searchKeys": [
+                "gallery modal",
+                "image gallery",
+                "image slider",
+                "lightbox",
+                "photo viewer"
+            ]
+        },
+        {
+            "name": "HistogramSlider",
+            "importPath": "@lifesg/react-design-system/histogram-slider",
+            "description": "Represents a single bin in the histogram distribution chart.",
+            "searchKeys": [
+                "bar chart slider",
+                "density slider",
+                "distribution chart",
+                "price range filter",
+                "range histogram"
+            ]
+        },
+        {
+            "name": "IconButton",
+            "importPath": "@lifesg/react-design-system/icon-button",
+            "description": "Props for the IconButton component - icon-only button. Renders a square button containing only an icon child. Extends all `HTMLButtonElement` attributes. Choose the style type based on hierarchy and the size type based on available space.",
+            "searchKeys": [
+                "ghost button",
+                "icon action",
+                "square button",
+                "symbol button",
+                "toolbar button"
+            ]
+        },
+        {
+            "name": "ImageButton",
+            "importPath": "@lifesg/react-design-system/image-button",
+            "description": "Props for the ImageButton component - image thumbnail button. Renders a clickable image tile with selected and error visual states. Extends all `HTMLButtonElement` attributes.",
+            "searchKeys": [
+                "image picker",
+                "image tile",
+                "photo button",
+                "picture button",
+                "thumbnail selector"
+            ]
+        },
+        {
+            "name": "Input",
+            "importPath": "@lifesg/react-design-system/input",
+            "description": "Props for the Input component - single-line text entry field. Extends all standard HTML `<input>` attributes. Use for free-text, numeric, email, telephone, or search entry in forms. Supports optional clear button, error state, and a borderless style variant.",
+            "searchKeys": [
+                "search field",
+                "single line input",
+                "text box",
+                "text entry",
+                "text field"
+            ]
+        },
+        {
+            "name": "InputGroup",
+            "importPath": "@lifesg/react-design-system/input-group",
+            "description": "The type of addon attached to the InputGroup. - `\"label\"`: Fixed text prefix or suffix (e.g., currency symbol, unit). - `\"list\"`: Selectable dropdown addon (e.g., country-code selector). - `\"custom\"`: Arbitrary JSX content as the addon.",
+            "searchKeys": [
+                "addon input",
+                "currency input",
+                "inline addon",
+                "prefixed input",
+                "suffixed input"
+            ]
+        },
+        {
+            "name": "InputMultiSelect",
+            "importPath": "@lifesg/react-design-system/input-multi-select",
+            "description": "Props for the InputMultiSelect component - multi-option dropdown selector. Allows the user to choose multiple options from a dropdown list with checkboxes. Supports async option loading, search, and controlled selected state. For single-option selection use `InputSelect`.",
+            "searchKeys": [
+                "checkbox dropdown",
+                "multi option picker",
+                "multi-select dropdown",
+                "multiple choice",
+                "tag select"
+            ]
+        },
+        {
+            "name": "InputNestedMultiSelect",
+            "importPath": "@lifesg/react-design-system/input-nested-multi-select",
+            "description": "Props for the InputNestedMultiSelect component - multi-option hierarchical dropdown. Allows the user to drill into nested categories and select multiple values from a three-level hierarchy (L1 → L2 → L3). Use `InputNestedSelect` for single value selection. Supports search and async loading.",
+            "searchKeys": [
+                "cascading checklist",
+                "hierarchical multi-select",
+                "nested dropdown multiple",
+                "tree select multiple"
+            ]
+        },
+        {
+            "name": "InputNestedSelect",
+            "importPath": "@lifesg/react-design-system/input-nested-select",
+            "description": "Props for the InputNestedSelect component - single-option hierarchical dropdown. Allows the user to drill into nested categories to select a single value from a three-level hierarchy (L1 → L2 → L3). Use `InputNestedMultiSelect` for selecting multiple values. Supports search and async loading.",
+            "searchKeys": [
+                "cascading dropdown",
+                "category picker",
+                "hierarchical select",
+                "nested category",
+                "tree select"
+            ]
+        },
+        {
+            "name": "InputRangeSelect",
+            "importPath": "@lifesg/react-design-system/input-range-select",
+            "description": "A generic from/to pair used by InputRangeSelect for options and selected values.",
+            "searchKeys": [
+                "dual select",
+                "from to dropdown",
+                "price range select",
+                "range selector",
+                "start end picker"
+            ]
+        },
+        {
+            "name": "InputRangeSlider",
+            "importPath": "@lifesg/react-design-system/input-range-slider",
+            "description": "Shared configuration props used by both `InputSlider` and `InputRangeSlider`.",
+            "searchKeys": [
+                "dual thumb slider",
+                "min max slider",
+                "price range slider",
+                "range slider",
+                "two handle slider"
+            ]
+        },
+        {
+            "name": "InputSelect",
+            "importPath": "@lifesg/react-design-system/input-select",
+            "description": "The list of options to display in the dropdown.",
+            "searchKeys": [
+                "combobox",
+                "dropdown",
+                "option list",
+                "picker",
+                "select box"
+            ]
+        },
+        {
+            "name": "InputSlider",
+            "importPath": "@lifesg/react-design-system/input-slider",
+            "description": "Props for the InputSlider component - single-thumb numeric slider. Renders a horizontal slider with a single thumb for selecting a numeric value within a given range. Supports step intervals, track colour customisation, and value labels. For a dual-thumb range slider use `InputRangeSlider`.",
+            "searchKeys": [
+                "knob",
+                "numeric slider",
+                "range input",
+                "scrubber",
+                "single handle slider"
+            ]
+        },
+        {
+            "name": "Layout",
+            "importPath": "@lifesg/react-design-system/layout",
+            "description": "Shared layout props for all layout container components.",
+            "searchKeys": [
+                "column layout",
+                "flex layout",
+                "grid container",
+                "page wrapper",
+                "responsive container"
+            ]
+        },
+        {
+            "name": "LinkList",
+            "importPath": "@lifesg/react-design-system/link-list",
+            "description": "Props for the LinkList component - list of labelled hyperlinks. Renders a vertical list of titled link items with optional descriptions. If `maxShown` is set, extra items collapse behind a \"Show more\" toggle.",
+            "searchKeys": [
+                "hyperlink list",
+                "link group",
+                "nav list",
+                "resource links",
+                "show more list"
+            ]
+        },
+        {
+            "name": "MaskedInput",
+            "importPath": "@lifesg/react-design-system/masked-input",
+            "description": "The async load state for a MaskedInput in read-only mode. - `\"loading\"`: Shows a loading indicator. - `\"fail\"`: Shows an error state with a retry action. - `\"success\"`: Value is loaded and displayed.",
+            "searchKeys": [
+                "hide value",
+                "mask unmask",
+                "redacted input",
+                "reveal toggle",
+                "sensitive field"
+            ]
+        },
+        {
+            "name": "Masonry",
+            "importPath": "@lifesg/react-design-system/masonry",
+            "description": "number of columns on desktop resolutions",
+            "searchKeys": [
+                "brick layout",
+                "pinterest grid",
+                "responsive columns",
+                "variable height grid",
+                "waterfall layout"
+            ]
+        },
+        {
+            "name": "Masthead",
+            "importPath": "@lifesg/react-design-system/masthead",
+            "description": "Note: Had to use this method because we had to create a custom type to handle Web Components (refer to this guide https://blog.devgenius.io/how-to-use-web-components-in-react-54c951399bfd) But we are having troubles exporting the custom type definition via rollup",
+            "searchKeys": []
+        },
+        {
+            "name": "Media",
+            "importPath": "@lifesg/react-design-system/media",
+            "description": "",
+            "searchKeys": []
+        },
+        {
+            "name": "Modal",
+            "importPath": "@lifesg/react-design-system/modal",
+            "description": "Props for the Modal component - animated overlay dialog. Renders content inside a portal injected into the DOM. Supports directional slide-in animation, optional overlay-click dismissal, and custom z-index for stacked modals. Toggle visibility with the `show` prop.",
+            "searchKeys": [
+                "confirmation dialog",
+                "dialog",
+                "lightbox",
+                "overlay dialog",
+                "popup"
+            ]
+        },
+        {
+            "name": "NavbarHeight",
+            "importPath": "@lifesg/react-design-system/navbar",
+            "description": "Navbar action buttons for mobile drawer. Takes desktop if not specified",
+            "searchKeys": [
+                "app bar",
+                "header nav",
+                "menu bar",
+                "navigation header",
+                "top navigation"
+            ]
+        },
+        {
+            "name": "NotificationBanner",
+            "importPath": "@lifesg/react-design-system/notification-banner",
+            "description": "Props for the NotificationBanner component - dismissible top-of-page banner. Renders a full-width banner with optional sticky positioning and a dismiss button. Toggle visibility with the `visible` prop.",
+            "searchKeys": [
+                "alert banner",
+                "announcement bar",
+                "info bar",
+                "system message",
+                "top banner"
+            ]
+        },
+        {
+            "name": "OtpInput",
+            "importPath": "@lifesg/react-design-system/otp-input",
+            "description": "Props for the OtpInput component - one-time password entry field. Renders a row of individual character inputs for OTP entry, with a configurable submit button and a cooldown timer that re-disables the button after each submission.",
+            "searchKeys": [
+                "6-digit input",
+                "one-time password",
+                "PIN entry",
+                "SMS code",
+                "verification code"
+            ]
+        },
+        {
+            "name": "Overlay",
+            "importPath": "@lifesg/react-design-system/overlay",
+            "description": "Props for the Overlay component - backdrop overlay portal. Renders a semi-transparent backdrop injected into the DOM that can optionally blur the content behind it. Used as a layer beneath modals, drawers, and other floating UI elements.",
+            "searchKeys": [
+                "backdrop",
+                "background layer",
+                "darkened background",
+                "dimmer",
+                "scrim"
+            ]
+        },
+        {
+            "name": "Pagination",
+            "importPath": "@lifesg/react-design-system/pagination",
+            "description": "Props for the Pagination component - page navigation control. Renders page number buttons and optional first/last navigation, with an optional page-size dropdown. Requires `totalItems` and `activePage` to be controlled by the parent.",
+            "searchKeys": [
+                "next previous",
+                "page numbers",
+                "pager",
+                "paging control",
+                "results navigation"
+            ]
+        },
+        {
+            "name": "PhoneNumberInput",
+            "importPath": "@lifesg/react-design-system/phone-number-input",
+            "description": "A country entry used to populate the country-code dropdown.",
+            "searchKeys": [
+                "country code input",
+                "dialling code",
+                "international phone",
+                "mobile number",
+                "telephone field"
+            ]
+        },
+        {
+            "name": "Pill",
+            "importPath": "@lifesg/react-design-system/pill",
+            "description": "Props for the Pill component - compact label badge. Renders a small pill-shaped tag with a configurable display style (solid fill or outline) and color scheme. Inherits all `HTMLDivElement` attributes.",
+            "searchKeys": [
+                "badge",
+                "chip",
+                "colored label",
+                "label tag",
+                "status badge"
+            ]
+        },
+        {
+            "name": "Popover",
+            "importPath": "@lifesg/react-design-system/popover",
+            "description": "Props for the Popover component - floating content bubble. Renders a floating tooltip-style bubble positioned relative to its trigger element. Controlled via the `visible` prop.",
+            "searchKeys": [
+                "contextual overlay",
+                "floating hint",
+                "help popup",
+                "hover card",
+                "info bubble"
+            ]
+        },
+        {
+            "name": "PopoverV2",
+            "importPath": "@lifesg/react-design-system/popover-v2",
+            "description": "Props for the PopoverV2 component - floating content bubble (v2). The base popover bubble controlled via `visible`. For most use cases prefer `PopoverV2.Trigger` which handles positioning automatically.",
+            "searchKeys": [
+                "anchored tooltip",
+                "floating popover",
+                "floating-ui popover",
+                "info bubble v2",
+                "positioned overlay"
+            ]
+        },
+        {
+            "name": "PredictiveTextInput",
+            "importPath": "@lifesg/react-design-system/predictive-text-input",
+            "description": "Props for the PredictiveTextInput component - autocomplete text input. Displays suggestions fetched asynchronously as the user types. The suggestions list appears after a configurable minimum number of characters have been entered. Selecting a suggestion calls `onSelectOption`. Used for location search, name lookup, and other typeahead scenarios.",
+            "searchKeys": [
+                "autocomplete",
+                "autosuggest",
+                "live search",
+                "search suggestions",
+                "typeahead"
+            ]
+        },
+        {
+            "name": "ProgressIndicator",
+            "importPath": "@lifesg/react-design-system/progress-indicator",
+            "description": "Props for the ProgressIndicator component - step progress tracker. Renders a horizontal row of step labels with the current step highlighted. Supports a custom display extractor for non-string step items.",
+            "searchKeys": [
+                "form progress",
+                "multi-step progress",
+                "step tracker",
+                "stepper",
+                "wizard steps"
+            ]
+        },
+        {
+            "name": "RadioButton",
+            "importPath": "@lifesg/react-design-system/radio-button",
+            "description": "Props for the RadioButton component - single-choice input control. Renders a styled radio button. Inherits all standard `HTMLInputElement` attributes including `checked`, `disabled`, `value`, and `onChange`.",
+            "searchKeys": [
+                "choice input",
+                "exclusive select",
+                "option button",
+                "radio",
+                "single choice"
+            ]
+        },
+        {
+            "name": "Sidenav",
+            "importPath": "@lifesg/react-design-system/sidenav",
+            "description": "Props for the Sidenav component - vertical side navigation panel. Renders a fixed-left sidebar containing `Sidenav.Group` children with icon-labelled items and optional drawer sub-items.",
+            "searchKeys": [
+                "left navigation",
+                "navigation panel",
+                "side menu",
+                "sidebar menu",
+                "vertical nav"
+            ]
+        },
+        {
+            "name": "SmartAppBanner",
+            "importPath": "@lifesg/react-design-system/smart-app-banner",
+            "description": "Props for the SmartAppBanner component - mobile app download prompt. Renders a banner that prompts users to download the mobile app. Supports optional slide-down animation and a dismiss callback.",
+            "searchKeys": [
+                "app download prompt",
+                "app store banner",
+                "install banner",
+                "mobile app CTA",
+                "open in app"
+            ]
+        },
+        {
+            "name": "Tab",
+            "importPath": "@lifesg/react-design-system/tab",
+            "description": "Props for the Tab component - tabbed content panel. Renders a row of tab selectors and shows the content of the active tab. Can be used in uncontrolled mode (`initialActive`) or controlled mode (`currentActive`).",
+            "searchKeys": [
+                "content switcher",
+                "segmented view",
+                "tab strip",
+                "tabbed interface",
+                "tabbed panel"
+            ]
+        },
+        {
+            "name": "Tag",
+            "importPath": "@lifesg/react-design-system/tag",
+            "description": "Props for the Tag component - interactive label badge. Like `Pill` but supports an interactive state with pointer cursor and press effects. Inherits all `HTMLElement` attributes.",
+            "searchKeys": [
+                "category tag",
+                "chip",
+                "clickable badge",
+                "label badge",
+                "status chip"
+            ]
+        },
+        {
+            "name": "Text",
+            "importPath": "@lifesg/react-design-system/text",
+            "description": "Props for the Text component - typography primitives for the design system.",
+            "searchKeys": [
+                "body text",
+                "heading",
+                "label text",
+                "text style",
+                "typography"
+            ]
+        },
+        {
+            "name": "Textarea",
+            "importPath": "@lifesg/react-design-system/input-textarea",
+            "description": "Props for the InputTextarea component - multi-line text entry field. Extends all standard HTML `<textarea>` attributes. Use when the user needs to enter more than one line of text, such as comments, descriptions, or messages. Supports character count display and error state.",
+            "searchKeys": [
+                "comment box",
+                "description field",
+                "multiline",
+                "paragraph input",
+                "text area"
+            ]
+        },
+        {
+            "name": "TextList",
+            "importPath": "@lifesg/react-design-system/text-list",
+            "description": "Ordered list component props - numbered or lettered list. Renders an `<ol>` with configurable counter style, separator, start value, and optional reverse counting.",
+            "searchKeys": [
+                "bullet list",
+                "list component",
+                "numbered list",
+                "ordered list",
+                "unordered list"
+            ]
+        },
+        {
+            "name": "Timeline",
+            "importPath": "@lifesg/react-design-system/timeline",
+            "description": "",
+            "searchKeys": [
+                "event history",
+                "process tracker",
+                "progress steps",
+                "status history",
+                "vertical stepper"
+            ]
+        },
+        {
+            "name": "Timepicker",
+            "importPath": "@lifesg/react-design-system/timepicker",
+            "description": "The time display format used by the Timepicker. - `\"12hr\"`: 12-hour clock with AM/PM suffix (e.g., `\"01:00PM\"`). - `\"24hr\"`: 24-hour clock (e.g., `\"13:00\"`).",
+            "searchKeys": [
+                "AM PM picker",
+                "clock picker",
+                "hour minute input",
+                "time picker",
+                "time selector"
+            ]
+        },
+        {
+            "name": "TimeRangePicker",
+            "importPath": "@lifesg/react-design-system/time-range-picker",
+            "description": "The time display format used by TimeRangePicker. - `\"12hr\"`: 12-hour clock with AM/PM suffix. - `\"24hr\"`: 24-hour clock.",
+            "searchKeys": [
+                "dual time input",
+                "from to time",
+                "start end time",
+                "time interval",
+                "time span picker"
+            ]
+        },
+        {
+            "name": "TimeSlotBar",
+            "importPath": "@lifesg/react-design-system/time-slot-bar",
+            "description": "The type of style of the time slot. Values: \"default\" | \"stripes\"",
+            "searchKeys": [
+                "availability bar",
+                "booking slot",
+                "hourly cells",
+                "schedule bar",
+                "time block"
+            ]
+        },
+        {
+            "name": "TimeSlotBarWeek",
+            "importPath": "@lifesg/react-design-system/time-slot-bar-week",
+            "description": "Props for the TimeSlotBarWeek component - week-view time slot calendar. Renders a week calendar with per-day `TimeSlotBar` columns and an optional navigation header. Extends `CommonCalendarProps` for min/max date and locale settings.",
+            "searchKeys": [
+                "availability calendar week",
+                "week view booking",
+                "weekly schedule",
+                "weekly time slots"
+            ]
+        },
+        {
+            "name": "TimeSlotWeekView",
+            "importPath": "@lifesg/react-design-system/time-slot-week-view",
+            "description": "Props for the TimeSlotWeekView component - week-view availability grid. Renders a calendar week grid that overlays time slot availability on each day. Unlike `TimeSlotBarWeek`, slots are optional and the component focuses on date selection. Extends `CommonCalendarProps`.",
+            "searchKeys": [
+                "availability week grid",
+                "date availability",
+                "schedule week view",
+                "weekly calendar"
+            ]
+        },
+        {
+            "name": "Toast",
+            "importPath": "@lifesg/react-design-system/toast",
+            "description": "Props for the Toast component - temporary notification message. Renders a status notification that can auto-dismiss after a configurable duration. Extends all `HTMLDivElement` attributes.",
+            "searchKeys": [
+                "auto dismiss alert",
+                "flash message",
+                "snackbar",
+                "status popup",
+                "temporary notification"
+            ]
+        },
+        {
+            "name": "Toggle",
+            "importPath": "@lifesg/react-design-system/toggle",
+            "description": "Props for the Toggle component - checkbox/radio selection control. Renders a styled toggle button that acts as a checkbox (allows deselection) or radio button (no deselection). The `type` prop controls behaviour and indicator icon.",
+            "searchKeys": [
+                "choice button",
+                "selection tile",
+                "styled checkbox",
+                "toggle button",
+                "yes no button"
+            ]
+        },
+        {
+            "name": "Tooltip",
+            "importPath": "@lifesg/react-design-system/tooltip",
+            "description": "Props for the Tooltip component - floating informational bubble. Renders a small floating label positioned relative to its trigger element. Controlled via the `visible` prop.",
+            "searchKeys": [
+                "help text",
+                "hover hint",
+                "hover label",
+                "info popup",
+                "withTooltip HOC"
+            ]
+        },
+        {
+            "name": "Transition",
+            "importPath": "@lifesg/react-design-system/transition",
+            "description": "",
+            "searchKeys": []
+        },
+        {
+            "name": "UneditableSection",
+            "importPath": "@lifesg/react-design-system/uneditable-section",
+            "description": "The width that the item can span across. Values: \"half\", \"full\"",
+            "searchKeys": [
+                "label value display",
+                "masked field display",
+                "read only panel",
+                "summary section",
+                "view mode"
+            ]
+        },
+        {
+            "name": "UnitNumber",
+            "importPath": "@lifesg/react-design-system/unit-number",
+            "description": "Props for the UnitNumberInput component - Singapore-style unit number entry. A specialised input pair for entering a floor-unit combination in the format commonly used in Singapore addresses (e.g., `#12-345`). Emits the combined string value and optionally the raw `[floor, unit]` array.",
+            "searchKeys": [
+                "apartment number",
+                "flat number",
+                "floor unit",
+                "Singapore address",
+                "unit field"
+            ]
+        }
+    ]
+}

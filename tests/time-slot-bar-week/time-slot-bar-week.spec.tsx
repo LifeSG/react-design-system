@@ -7,13 +7,17 @@ describe("TimeSlotBarWeekCalendar", () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.useFakeTimers("modern").setSystemTime(new Date("2023-03-01"));
+        jest.useFakeTimers().setSystemTime(new Date("2023-03-01"));
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
             unobserve: jest.fn(),
             disconnect: jest.fn(),
         }));
+    });
+
+    afterEach(() => {
+        jest.useRealTimers();
     });
 
     it("should render without errors", () => {
@@ -265,8 +269,3 @@ describe("TimeSlotBarWeekCalendar", () => {
         expect(onChange).toHaveBeenCalledTimes(1);
     });
 });
-
-// =============================================================================
-// CONSTANTS
-// =============================================================================
-const EXPAND_COLLAPSE_BUTTON_ID = "time-bar-expand-collapse-button";

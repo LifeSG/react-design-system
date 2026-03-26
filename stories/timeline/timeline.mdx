@@ -1,13 +1,12 @@
-import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as TimelineStories from "./timeline.stories";
-import { PropsTable } from "./props-table";
+import { PropsTableTabs } from "./props-table";
 
 <Meta of={TimelineStories} />
 
-<Title>Timeline</Title>
+# Timeline
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that displays upcoming steps of a process in a timeline presentation.
 
@@ -19,12 +18,24 @@ There are a variety of contents available to be specified for each `Timeline` it
 
 <Canvas of={TimelineStories.Default} />
 
-<Heading3>Variations</Heading3>
+## Variations
 
-The `Timeline` component comes in 4 variants and each item can be styled individually.
+The `Timeline` component comes in 5 variants and each item can be styled individually.
 
 <Canvas of={TimelineStories.Variants} />
 
-<Secondary>Component API</Secondary>
+## Numeric variation
 
-<PropsTable />
+The `numeric` variant displays a numbered index for each item, useful for showing sequential steps in a process.
+
+<Canvas of={TimelineStories.Numeric} />
+
+### Numeric with offset
+
+The `counterOffset` prop allows you to start the numeric indicators at a specific number. For example, with `counterOffset={2}`, the numbering starts at 3 (following the formula: `index + 1 + offset`). This is useful when displaying a subset of steps from a larger process.
+
+<Canvas of={TimelineStories.NumericWithOffset} />
+
+## Component API
+
+<PropsTableTabs />

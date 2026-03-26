@@ -5,21 +5,33 @@ import {
     ICircleFillIcon,
     TickCircleFillIcon,
 } from "@lifesg/react-icons";
-import { useEffect, useState } from "react";
+import { easings, useSpring } from "@react-spring/web";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { easings, useSpring } from "react-spring";
-import { MediaWidths } from "../spec/media-spec";
-import { Text } from "../text";
+import { ThemeContext } from "styled-components";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
+import { Breakpoint } from "../theme";
 import {
-    Description,
+    ActionButton,
+    ContentWrapper,
+    DescriptionBL,
+    DescriptionMD,
     DismissButton,
     TextContainer,
+    TextIconWrapper,
     Title,
     Wrapper,
 } from "./toast.styles";
 import { ToastProps } from "./types";
 
 const DEFAULT_AUTO_DISMISS_TIME = 4000;
+
+const TOAST_ICON_MAP = {
+    success: TickCircleFillIcon,
+    warning: ExclamationTriangleFillIcon,
+    error: ExclamationCircleFillIcon,
+    info: ICircleFillIcon,
+};
 
 export const Toast = ({
     type = "success",
@@ -29,17 +41,22 @@ export const Toast = ({
     autoDismissTime = DEFAULT_AUTO_DISMISS_TIME,
     onDismiss,
     fixed = true,
+    actionButton,
     ...otherProps
 }: ToastProps) => {
     // =============================================================================
     // CONST, STATE
     // =============================================================================
-
+    const toastRef = useRef<HTMLDivElement>(null);
     const [isVisible, setVisible] = useState<boolean>(false);
 
+    const theme = useContext(ThemeContext);
+
+    const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.tablet,
+        maxWidth: mobileBreakpoint,
     });
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -56,6 +73,22 @@ export const Toast = ({
 
         return () => clearTimeout(timeout);
     }, [autoDismiss]);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (
+                event.key === "Escape" &&
+                toastRef.current?.contains(document.activeElement)
+            ) {
+                handleDismiss();
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+        return () => {
+            document.removeEventListener("keydown", handleKeyDown);
+        };
+    }, []);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -89,46 +122,66 @@ export const Toast = ({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderIcon = () => {
-        switch (type) {
-            case "success":
-                return <TickCircleFillIcon />;
-            case "warning":
-                return <ExclamationTriangleFillIcon />;
-            case "error":
-                return <ExclamationCircleFillIcon />;
-            case "info":
-                return <ICircleFillIcon />;
-            default:
-                return null;
+        const Icon = TOAST_ICON_MAP[type];
+        return Icon && <Icon aria-hidden />;
+    };
+
+    const renderTitle = () => {
+        if (React.isValidElement(title)) {
+            return title;
+        } else {
+            return (
+                <Title $type={type} role="presentation">
+                    {title}
+                </Title>
+            );
+        }
+    };
+
+    const renderDesc = () => {
+        if (React.isValidElement(label)) {
+            return label;
+        } else if (title) {
+            return <DescriptionMD $type={type}>{label}</DescriptionMD>;
+        } else {
+            return <DescriptionBL $type={type}>{label}</DescriptionBL>;
         }
     };
 
     return (
         <Wrapper
+            ref={toastRef}
             style={transitions}
             $type={type}
             $fixed={fixed}
+            role="alert"
+            inert={inertValue(!isVisible)}
             {...otherProps}
         >
-            {renderIcon()}
-            <TextContainer>
-                {title && (
-                    <Title $type={type} weight="semibold">
-                        {title}
-                    </Title>
+            <VisuallyHidden>{type}</VisuallyHidden>
+            <ContentWrapper>
+                <TextIconWrapper $type={type}>
+                    {renderIcon()}
+                    <TextContainer>
+                        {title && renderTitle()}
+                        {label && renderDesc()}
+                    </TextContainer>
+                </TextIconWrapper>
+
+                {actionButton && (
+                    <ActionButton
+                        styleType="light"
+                        onClick={actionButton.onClick}
+                    >
+                        {actionButton.label}
+                    </ActionButton>
                 )}
-                {label && (
-                    <Description $type={type}>
-                        {!title ? (
-                            <Text.Body>{label}</Text.Body>
-                        ) : (
-                            <Text.BodySmall>{label}</Text.BodySmall>
-                        )}
-                    </Description>
-                )}
-            </TextContainer>
+            </ContentWrapper>
             <DismissButton $type={type} onClick={handleDismiss}>
-                <CrossIcon />
+                <VisuallyHidden role="presentation">
+                    Close notification
+                </VisuallyHidden>
+                <CrossIcon aria-hidden />
             </DismissButton>
         </Wrapper>
     );

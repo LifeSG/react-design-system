@@ -1,17 +1,16 @@
 import styled from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
-import { Text } from "../text";
+import { Colour, MediaQuery, Radius, Spacing } from "../theme";
+import { Typography } from "../typography/typography";
 
 // Units in rem
-export const INDICATOR_BAR_MARGIN_RIGHT_MOBILE = 0.5;
+export const INDICATOR_BAR_MARGIN_RIGHT_TABLET = 0.5;
 
 // =============================================================================
 // STYLE TYPES
 // =============================================================================
 
 interface IndicatorProps {
-    highlighted: boolean;
+    $highlighted: boolean;
 }
 
 // =============================================================================
@@ -20,20 +19,19 @@ interface IndicatorProps {
 export const Wrapper = styled.div`
     position: relative;
     width: 100%;
-    z-index: 1;
 
     margin: 2rem 0;
 
-    ${MediaQuery.MaxWidth.desktopM} {
+    ${MediaQuery.MaxWidth.xl} {
         margin: 1.5rem 0;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin: 1rem 0;
     }
 `;
 
-export const Content = styled.nav`
+export const Content = styled.div`
     display: flex;
     flex-basis: 0;
     justify-content: space-between;
@@ -41,30 +39,34 @@ export const Content = styled.nav`
 `;
 
 export const IndicatorBar = styled.div<IndicatorProps>`
-    height: 0.25rem;
-    margin-bottom: 0.5rem;
-    border-radius: 0.25rem;
+    height: 4px;
+    margin-bottom: ${Spacing["spacing-8"]};
+    border-radius: ${Radius["full"]};
     ${(props) => {
-        const { highlighted } = props;
-        const color = highlighted ? Color.Accent.Light[1] : Color.Neutral[6];
+        const { $highlighted } = props;
+        const color = $highlighted
+            ? Colour["bg-primary-subtle"]
+            : Colour["bg-disabled"];
         return `
             background-color: ${color(props)};
         `;
     }};
 `;
 
-export const IndicatorTitleDesktop = styled(Text.BodySmall)<IndicatorProps>`
+export const IndicatorTitleDesktop = styled(Typography.BodyMD)<IndicatorProps>`
     overflow-wrap: anywhere;
     ${(props) => {
-        const { highlighted } = props;
-        const color = highlighted ? Color.Primary : Color.Neutral[3];
+        const { $highlighted } = props;
+        const color = $highlighted
+            ? Colour["text-primary"]
+            : Colour["text-disabled"];
         return `color: ${color(props)};`;
     }};
 `;
 
-export const IndicatorTitleMobile = styled(Text.BodySmall)`
+export const IndicatorTitleTablet = styled(Typography.BodyMD)`
     overflow-wrap: anywhere;
-    color: ${Color.Neutral[1]};
+    color: ${Colour.text};
 `;
 
 export const Indicator = styled.div`
@@ -73,6 +75,6 @@ export const Indicator = styled.div`
     flex: 1;
 
     &:not(:last-child) {
-        margin-right: ${INDICATOR_BAR_MARGIN_RIGHT_MOBILE + "rem"};
+        margin-right: ${INDICATOR_BAR_MARGIN_RIGHT_TABLET + "rem"};
     }
 `;

@@ -1,42 +1,13 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { ImageButtonPropsData } from "./generated-props";
 
-const DATA: ApiTableSectionProps[] = [
-    {
-        attributes: [
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
             {
-                name: "",
-                description: (
-                    <>
-                        This component also inherits props from&nbsp;
-                        <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            HTMLButtonElement
-                        </a>
-                    </>
-                ),
+                label: "ImageButtonProps",
+                content: <ApiTable sections={ImageButtonPropsData} />,
             },
-            {
-                name: "imgSrc",
-                description: "The image source to be rendered",
-                propTypes: ["string"],
-            },
-            {
-                name: "selected",
-                description: "Specifies to show selected state or not",
-                propTypes: ["boolean"],
-            },
-            {
-                name: "error",
-                description: "Specifies to show error state or not",
-                propTypes: ["boolean"],
-            },
-        ],
-    },
-];
-
-export const PropsTable = () => <ApiTable sections={DATA} />;
+        ]}
+    />
+);

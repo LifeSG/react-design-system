@@ -1,3 +1,4 @@
+/** @deprecated Use `PopoverV2` */
 export interface PopoverProps {
     children: string | JSX.Element;
     visible?: boolean | undefined;
@@ -7,11 +8,13 @@ export interface PopoverProps {
     onMobileClose?: (() => void) | undefined;
 }
 
+/** @deprecated Use `PopoverV2` */
 export interface PopoverHOCProps {
     onPopoverAppear?: (() => void) | undefined;
     onPopoverDismiss?: (() => void) | undefined;
 }
 
+/** @deprecated Use `PopoverV2` */
 export interface PopoverHOCOptionsProps {
     content: string | JSX.Element;
     trigger?: "click" | "hover" | undefined;

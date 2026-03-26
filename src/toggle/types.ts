@@ -1,6 +1,25 @@
 export type ToggleType = "checkbox" | "radio" | "yes" | "no";
 export type ToggleStyleType = "default" | "no-border";
 
+/**
+ * Props for the Toggle component - checkbox/radio selection control.
+ *
+ * Renders a styled toggle button that acts as a checkbox (allows
+ * deselection) or radio button (no deselection). The `type` prop controls
+ * behaviour and indicator icon.
+ *
+ * @example
+ * ```tsx
+ * <Toggle
+ *     type="checkbox"
+ *     checked={agreed}
+ *     onChange={(e) => setAgreed(e.target.checked)}
+ * >
+ *     I agree to the terms and conditions
+ * </Toggle>
+ * ```
+ * @keywords toggle button, selection tile, yes no button, choice button, styled checkbox
+ */
 export interface ToggleProps
     extends React.AriaAttributes,
         React.DOMAttributes<HTMLInputElement> {
@@ -21,8 +40,16 @@ export interface ToggleProps
     styleType?: ToggleStyleType | undefined;
     /** The Toggle label */
     children: React.ReactNode;
+    /** The number of lines visible. Additional lines will be truncated */
+    childrenMaxLines?:
+        | {
+              mobile?: number | undefined;
+              desktop?: number | undefined;
+              tablet?: number | undefined;
+          }
+        | undefined;
     // /** The description label displayed below the main label */
-    subLabel?: (() => JSX.Element) | string | undefined;
+    subLabel?: (() => JSX.Element) | JSX.Element | string | undefined;
     disabled?: boolean | undefined;
     /** Specifies if the error display should be present */
     error?: boolean | undefined;
@@ -33,4 +60,21 @@ export interface ToggleProps
     onChange?:
         | ((event: React.ChangeEvent<HTMLInputElement>) => void)
         | undefined;
+    /** The Toggle subsection */
+    compositeSection?: ToggleCompositeSectionProps | undefined;
+    /** Specifies if the remove button should be displayed */
+    removable?: boolean | undefined;
+    onRemove?: (() => void) | undefined;
+    /** Changes min-width to fit content */
+    useContentWidth?: boolean | undefined;
+}
+
+export interface ToggleCompositeSectionProps {
+    children: React.ReactNode;
+    /** Specifies if the subsection is collapsible */
+    collapsible?: boolean | undefined;
+    /** The initial expanded state. Only applicable if collapsible */
+    initialExpanded?: boolean | undefined;
+    /** Specifies errors to be displayed when the subsection is collapsed */
+    errors?: string[] | JSX.Element | undefined;
 }

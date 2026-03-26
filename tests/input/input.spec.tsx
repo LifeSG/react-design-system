@@ -32,7 +32,7 @@ describe("Input", () => {
             it("should format value and preserve caret position", async () => {
                 render(<Input type="tel" spacing={2} onChange={jest.fn()} />);
 
-                const input: HTMLInputElement = screen.queryByTestId("input");
+                const input: HTMLInputElement = screen.getByTestId("input");
                 const inputSpy = jest.spyOn(input, "setSelectionRange");
 
                 fireEvent.change(input, {
@@ -50,7 +50,7 @@ describe("Input", () => {
             it("should remove non-numeric characters and preserve caret position", async () => {
                 render(<Input type="tel" spacing={2} onChange={jest.fn()} />);
 
-                const input: HTMLInputElement = screen.queryByTestId("input");
+                const input: HTMLInputElement = screen.getByTestId("input");
                 const inputSpy = jest.spyOn(input, "setSelectionRange");
 
                 fireEvent.change(input, {

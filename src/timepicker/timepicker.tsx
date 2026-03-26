@@ -1,8 +1,11 @@
 import { useCallback, useRef, useState } from "react";
+import {
+    DropdownRenderProps,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
 import { TimeHelper } from "../util/time-helper";
-import { useEventListener } from "../util/use-event-listener";
 import { InputSelectorElement } from "./timepicker.styles";
 import { TimepickerProps } from "./types";
 
@@ -17,71 +20,24 @@ export const Timepicker = ({
     onChange,
     onFocus,
     onBlur,
+    alignment,
+    dropdownZIndex,
+    dropdownRootNode,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
     ...otherProps
 }: TimepickerProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [showSelector, setShowSelector] = useState<boolean>(false);
-
-    const nodeRef = useRef<HTMLDivElement>();
-
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
-    useEventListener("mousedown", handleMouseDownEvent, "document");
-    useEventListener("keyup", handleKeyUpEvent, "document");
-
-    // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
-    const handleInputFocus = () => {
-        if (!disabled && !readOnly && !showSelector) {
-            setShowSelector(true);
-            onFocus && onFocus();
-        }
-    };
-
-    function handleMouseDownEvent(event: MouseEvent) {
-        if (!disabled && !readOnly) {
-            runOutsideFocusHandler(event);
-        }
-    }
-
-    function handleKeyUpEvent(event: KeyboardEvent) {
-        switch (event.code) {
-            case "Tab":
-                runOutsideFocusHandler(event);
-                break;
-            default:
-                break;
-        }
-    }
-
-    const handleSelectionDropdownCancel = () => {
-        runOnBlurHandler();
-    };
-
-    const handleChange = (value: string) => {
-        onChange && onChange(value);
-        runOnBlurHandler();
-    };
+    const [isOpen, setIsOpen] = useState(false);
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const selectorRef = useRef<HTMLInputElement>(null);
 
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const runOnBlurHandler = () => {
-        setShowSelector(false);
-        onBlur && onBlur();
-    };
-
-    const runOutsideFocusHandler = (event: MouseEvent | KeyboardEvent) => {
-        if (nodeRef && !nodeRef.current.contains(event.target as any)) {
-            showSelector && runOnBlurHandler();
-        }
-    };
-
-    const getPlaceholderValue = useCallback((): string => {
+    const getPlaceholderValue = useCallback(() => {
         switch (format) {
             case "12hr":
                 return "HH:MMam";
@@ -89,43 +45,132 @@ export const Timepicker = ({
             default:
                 return "HH:MM";
         }
-    }, [format, placeholder]);
+    }, [format]);
+
+    const restoreFocusToSelector = () => {
+        selectorRef.current?.focus({ preventScroll: true });
+    };
 
     // =============================================================================
-    // RENDER FUNCTIONS
+    // EVENT LISTENERS
     // =============================================================================
-    const renderSelector = () => (
-        <InputSelectorElement
-            onFocus={handleInputFocus}
-            focused={showSelector}
-            readOnly
-            placeholder={placeholder || getPlaceholderValue()}
-            value={TimeHelper.formatDisplayValue(value, format)}
-            disabled={disabled}
-            data-testid={
-                id ? `${id}-timepicker-selector` : "timepicker-selector"
-            }
-        />
-    );
+    const handleOpen = () => {
+        if (disabled || readOnly) return;
+        setIsOpen(true);
+    };
 
-    return (
+    const handleClose = () => {
+        setIsOpen(false);
+        onBlur?.();
+    };
+
+    const handleDismiss = () => {
+        setIsOpen(false);
+        restoreFocusToSelector();
+    };
+
+    const handleChange = (v: string) => {
+        onChange?.(v);
+        setIsOpen(false);
+        restoreFocusToSelector();
+    };
+
+    const handleFocus = () => {
+        onFocus?.();
+    };
+
+    const handleSelectorBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        if (isOpen) return;
+
+        const next = e.relatedTarget as Node | null;
+        if (next && wrapperRef.current?.contains(next)) return;
+
+        onBlur?.();
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (disabled || readOnly) {
+            return;
+        }
+
+        if (e.key === "Enter" || e.key === " " || e.key === "ArrowDown") {
+            e.preventDefault();
+            handleOpen();
+        }
+    };
+
+    // =============================================================================
+    // RENDER
+    // =============================================================================
+    const renderElement = () => (
         <InputWrapper
-            ref={nodeRef}
-            id={id}
+            ref={wrapperRef}
+            role="group"
             $readOnly={readOnly}
             $disabled={disabled}
+            $focused={isOpen}
             $error={error}
             {...otherProps}
         >
-            {renderSelector()}
-            <TimepickerDropdown
-                id={id}
-                show={showSelector}
-                value={value}
-                format={format}
-                onCancel={handleSelectionDropdownCancel}
-                onChange={handleChange}
+            <InputSelectorElement
+                ref={selectorRef}
+                readOnly
+                placeholder={placeholder || getPlaceholderValue()}
+                value={TimeHelper.formatDisplayValue(value, format)}
+                role="combobox"
+                aria-invalid={error || undefined}
+                aria-disabled={disabled || undefined}
+                aria-readonly={readOnly || undefined}
+                aria-labelledby={ariaLabelledBy}
+                aria-describedby={ariaDescribedBy}
+                aria-expanded={!disabled && !readOnly ? isOpen : false}
+                data-testid={
+                    id ? `${id}-timepicker-selector` : "timepicker-selector"
+                }
+                onFocus={handleFocus}
+                onClick={handleOpen}
+                onKeyDown={handleKeyDown}
+                onBlur={handleSelectorBlur}
             />
         </InputWrapper>
+    );
+
+    const renderDropdown = ({
+        styles,
+        setFloatingRef,
+        getFloatingProps,
+    }: DropdownRenderProps) => (
+        <div
+            ref={setFloatingRef}
+            style={styles}
+            role="dialog"
+            aria-label="Time picker"
+            {...getFloatingProps()}
+        >
+            <TimepickerDropdown
+                id={id}
+                show={isOpen}
+                value={value}
+                format={format}
+                onCancel={handleDismiss}
+                onChange={handleChange}
+            />
+        </div>
+    );
+
+    return (
+        <ElementWithDropdown
+            enabled={!readOnly && !disabled}
+            isOpen={isOpen}
+            renderElement={renderElement}
+            renderDropdown={renderDropdown}
+            onOpen={handleOpen}
+            onClose={handleClose}
+            onDismiss={handleDismiss}
+            offset={8}
+            alignment={alignment}
+            customZIndex={dropdownZIndex}
+            rootNode={dropdownRootNode}
+        />
     );
 };

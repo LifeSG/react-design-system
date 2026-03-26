@@ -5,6 +5,15 @@ import {
 } from "src/uneditable-section";
 
 describe("UneditableSection", () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+        global.ResizeObserver = jest.fn().mockImplementation(() => ({
+            observe: jest.fn(),
+            unobserve: jest.fn(),
+            disconnect: jest.fn(),
+        }));
+    });
+
     it("should render the elements correctly", () => {
         render(
             <UneditableSection
@@ -19,8 +28,24 @@ describe("UneditableSection", () => {
 
         for (const item of MOCK_ITEMS) {
             expect(screen.getByText(item.label)).toBeInTheDocument();
-            expect(screen.getByText(item.value)).toBeInTheDocument();
+            expect(screen.getByText(item.value as string)).toBeInTheDocument();
         }
+    });
+
+    it("should render custom items correctly", () => {
+        render(
+            <UneditableSection
+                items={[
+                    {
+                        label: "Custom",
+                        value: <div data-testid="custom-item-value" />,
+                    },
+                ]}
+            />
+        );
+
+        expect(screen.getByText("Custom")).toBeInTheDocument();
+        expect(screen.getByTestId("custom-item-value")).toBeInTheDocument();
     });
 
     it("should render the custom top section and custom bottom section if specified", () => {
@@ -209,6 +234,24 @@ describe("UneditableSection", () => {
                 fireEvent.click(screen.getByTestId("clickable-label"));
             });
             expect(onTryAgainFn).toHaveBeenCalledWith(ITEMS[0]);
+        });
+    });
+
+    describe("With alert", () => {
+        it("should render the Alert in the section item if specified", () => {
+            const ITEMS: UneditableSectionItemProps[] = [
+                {
+                    label: "NRIC or FIN",
+                    value: "S••••534J",
+                    alert: {
+                        type: "warning",
+                        children: "This is an alert",
+                    },
+                },
+            ];
+
+            render(<UneditableSection items={ITEMS} title="Test" />);
+            expect(screen.getByText("This is an alert")).toBeInTheDocument();
         });
     });
 });

@@ -5,7 +5,7 @@ import { createContext } from "react";
 // FUM = File Upload Manager
 interface FileUploadContextValues {
     activeId?: string | undefined;
-    setActiveId: (id: string) => void;
+    setActiveId: (id: string | undefined) => void;
 }
 
 // =============================================================================
@@ -13,7 +13,9 @@ interface FileUploadContextValues {
 // =============================================================================
 const DEFAULT_VALUES: FileUploadContextValues = {
     activeId: undefined,
-    setActiveId: undefined,
+    setActiveId: () => {
+        /* no-op */
+    },
 };
 
 export const FileUploadContext = createContext(DEFAULT_VALUES);

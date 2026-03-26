@@ -1,7 +1,6 @@
-import React from "react";
-import { ApiTable } from "../../storybook-common/api-table";
-import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
+import { PropTableTabs } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -45,9 +44,25 @@ const DATA: ApiTableSectionProps[] = [
                     "(maxLength: number,currentValueLength: number) => JSX.Element",
                 ],
             },
+            {
+                name: "transformValue",
+                description: "Function to transform value",
+                propTypes: ["(value: string) => string"],
+            },
+            {
+                name: "prefix",
+                description: "The prefix to be displayed",
+                propTypes: ["string"],
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,
 ];
 
-export const PropsTable = () => <ApiTable sections={DATA} />;
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
+            { label: "Form.Textarea", content: <ApiTable sections={DATA} /> },
+        ]}
+    />
+);

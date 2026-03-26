@@ -1,17 +1,19 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { Colour } from "src/theme";
 import { TimeSlotBar } from "src/time-slot-bar";
+import { FullWidthStoryDecorator } from "stories/storybook-common";
 
 type Component = typeof TimeSlotBar;
 
 const meta: Meta<Component> = {
-    title: "Modules/TimeSlotBar",
+    title: "Selection and input/TimeSlotBar",
     component: TimeSlotBar,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <TimeSlotBar
                 startTime="08:00"
@@ -25,7 +27,7 @@ export const Default: StoryObj<Component> = {
                         startTime: "09:00",
                         endTime: "09:30",
                         styleAttributes: {
-                            backgroundColor: "#B2EAD2",
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -33,7 +35,7 @@ export const Default: StoryObj<Component> = {
                         startTime: "09:30",
                         endTime: "10:00",
                         styleAttributes: {
-                            backgroundColor: "#B2EAD2",
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -41,7 +43,7 @@ export const Default: StoryObj<Component> = {
                         startTime: "13:00",
                         endTime: "14:30",
                         styleAttributes: {
-                            backgroundColor: "#B2EAD2",
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -49,22 +51,23 @@ export const Default: StoryObj<Component> = {
                         startTime: "15:15",
                         endTime: "16:45",
                         styleAttributes: {
-                            backgroundColor: "#B2EAD2",
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                 ]}
                 styleAttributes={{
                     styleType: "stripes",
-                    backgroundColor: "#ECEFEF",
-                    backgroundColor2: "#E0E4E5",
+                    backgroundColor: Colour["bg-stronger"],
+                    backgroundColor2: Colour["bg-strongest"],
                 }}
             />
         );
     },
+    decorators: [FullWidthStoryDecorator()],
 };
 
-export const MinifiedVairant: StoryObj<Component> = {
-    render: () => {
+export const MinifiedVariant: StoryObj<Component> = {
+    render: (_args) => {
         return (
             <TimeSlotBar
                 variant="minified"
@@ -79,7 +82,7 @@ export const MinifiedVairant: StoryObj<Component> = {
                         startTime: "09:00",
                         endTime: "09:30",
                         styleAttributes: {
-                            backgroundColor: "#6DD0A1",
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -87,7 +90,7 @@ export const MinifiedVairant: StoryObj<Component> = {
                         startTime: "09:30",
                         endTime: "10:00",
                         styleAttributes: {
-                            backgroundColor: "#6DD0A1",
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -95,7 +98,7 @@ export const MinifiedVairant: StoryObj<Component> = {
                         startTime: "13:00",
                         endTime: "14:30",
                         styleAttributes: {
-                            backgroundColor: "#6DD0A1",
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -103,7 +106,7 @@ export const MinifiedVairant: StoryObj<Component> = {
                         startTime: "15:15",
                         endTime: "16:45",
                         styleAttributes: {
-                            backgroundColor: "#6DD0A1",
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -111,12 +114,12 @@ export const MinifiedVairant: StoryObj<Component> = {
                         startTime: "20:00",
                         endTime: "22:00",
                         styleAttributes: {
-                            backgroundColor: "#6DD0A1",
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                 ]}
                 styleAttributes={{
-                    backgroundColor: "#ECEFEF",
+                    backgroundColor: Colour["bg-strongest"],
                 }}
             />
         );
@@ -139,8 +142,8 @@ export const DifferentIndicators: StoryObj<Component> = {
                         endTime: "9:00",
                         styleAttributes: {
                             styleType: "stripes",
-                            backgroundColor: "#ECEFEF",
-                            backgroundColor2: "#E0E4E5",
+                            backgroundColor: Colour["bg-stronger"],
+                            backgroundColor2: Colour["bg-strongest"],
                         },
                         label: "Blocked",
                         clickable: false,
@@ -173,16 +176,73 @@ export const DifferentIndicators: StoryObj<Component> = {
                         startTime: "15:15",
                         endTime: "16:45",
                         styleAttributes: {
-                            backgroundColor: "#B2EAD2",
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                 ]}
                 styleAttributes={{
                     styleType: "stripes",
-                    backgroundColor: "#ECEFEF",
-                    backgroundColor2: "#E0E4E5",
+                    backgroundColor: Colour["bg-stronger"],
+                    backgroundColor2: Colour["bg-strongest"],
                 }}
             />
+        );
+    },
+    decorators: [FullWidthStoryDecorator()],
+};
+
+export const InitialScrollTime: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <div style={{ width: "400px" }}>
+                <TimeSlotBar
+                    startTime="00:00"
+                    endTime="24:00"
+                    initialScrollTime="08:00"
+                    onSlotClick={() => {
+                        /* empty arrow function */
+                    }}
+                    slots={[
+                        {
+                            id: "1",
+                            startTime: "09:00",
+                            endTime: "09:30",
+                            styleAttributes: {
+                                backgroundColor: Colour["bg-available"],
+                            },
+                        },
+                        {
+                            id: "2",
+                            startTime: "09:30",
+                            endTime: "10:00",
+                            styleAttributes: {
+                                backgroundColor: Colour["bg-available"],
+                            },
+                        },
+                        {
+                            id: "4",
+                            startTime: "13:00",
+                            endTime: "14:30",
+                            styleAttributes: {
+                                backgroundColor: Colour["bg-available"],
+                            },
+                        },
+                        {
+                            id: "5",
+                            startTime: "15:15",
+                            endTime: "16:45",
+                            styleAttributes: {
+                                backgroundColor: Colour["bg-available"],
+                            },
+                        },
+                    ]}
+                    styleAttributes={{
+                        styleType: "stripes",
+                        backgroundColor: Colour["bg-stronger"],
+                        backgroundColor2: Colour["bg-strongest"],
+                    }}
+                />
+            </div>
         );
     },
 };

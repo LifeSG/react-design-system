@@ -1,12 +1,12 @@
-import React, { MutableRefObject } from "react";
+import React, { RefObject } from "react";
 import { Mode } from "./types";
 
 interface IFilterContext {
     mode: Mode;
-    rootNode: MutableRefObject<HTMLDivElement> | null;
+    rootNode: RefObject<HTMLDivElement>;
 }
 
 export const FilterContext = React.createContext<IFilterContext>({
     mode: "default",
-    rootNode: null,
+    rootNode: { current: null },
 });

@@ -1,12 +1,21 @@
-import styled from "styled-components";
-import { Color } from "../color/color";
+import styled, { css } from "styled-components";
+import { Border, Colour, Radius, Shadow, Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
 export const StyledCard = styled.div`
-    border-radius: 0.5rem;
-    background: ${Color.Neutral[8]};
-    padding: 1rem 2rem;
-    box-shadow: 0 0.125rem 0.5rem rgba(104, 104, 104, 0.25);
+    border-radius: ${Radius["md"]};
+    background: ${Colour.bg};
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-32"]};
+    ${(props) => {
+        return props.theme?.colourMode === "dark"
+            ? css`
+                  border: ${Border["width-010"]} ${Border["solid"]}
+                      ${Colour["border"]};
+              `
+            : css`
+                  box-shadow: ${Shadow["md-subtle"]};
+              `;
+    }}
 `;

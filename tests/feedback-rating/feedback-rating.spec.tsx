@@ -42,7 +42,7 @@ describe("FeedbackRating", () => {
         const buttonLabel = "custom label";
         render(
             <FeedbackRating
-                rating={0}
+                rating={1}
                 buttonLabel={buttonLabel}
                 onRatingChange={NO_OP}
                 onSubmit={NO_OP}
@@ -65,16 +65,14 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            for (const label of RATING_BUTTON_ARIA_LABELS) {
-                if (label.includes(rating.toString())) {
-                    expect(getRatingButton(label)).toBeChecked();
-                } else {
-                    expect(getRatingButton(label)).not.toBeChecked();
-                }
-            }
+            const slider = getRatingSlider();
+            expect(slider).toHaveAttribute("min", "0");
+            expect(slider).toHaveAttribute("max", "5");
+            expect(slider).toHaveValue("3");
+            expect(slider).toHaveAttribute("aria-valuetext", "3 stars");
         });
 
-        it("should be able to change rating", () => {
+        it("should be able to change rating by clicking a star", () => {
             render(
                 <FeedbackRatingWithState
                     rating={0}
@@ -83,12 +81,16 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            const button = getRatingButton("1 star");
+            const firstStar = getStar(0);
             act(() => {
-                fireEvent.click(button);
+                fireEvent.click(firstStar);
             });
 
-            expect(getRatingButton("1 star")).toBeChecked();
+            expect(getRatingSlider()).toHaveValue("1");
+            expect(getRatingSlider()).toHaveAttribute(
+                "aria-valuetext",
+                "1 star"
+            );
         });
 
         it("should be able to reduce rating after selection", () => {
@@ -100,37 +102,32 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            const fiveStarButton = getRatingButton("5 stars");
+            const fiveStar = getStar(4);
             act(() => {
-                fireEvent.click(fiveStarButton);
+                fireEvent.click(fiveStar);
             });
 
-            const initialRating = "5";
-            for (const label of RATING_BUTTON_ARIA_LABELS) {
-                if (label.includes(initialRating)) {
-                    expect(getRatingButton(label)).toBeChecked();
-                } else {
-                    expect(getRatingButton(label)).not.toBeChecked();
-                }
-            }
+            expect(getRatingSlider()).toHaveValue("5");
+            expect(getRatingSlider()).toHaveAttribute(
+                "aria-valuetext",
+                "5 stars"
+            );
 
-            const oneStarButton = getRatingButton("1 star");
+            const oneStar = getStar(0);
             act(() => {
-                fireEvent.click(oneStarButton);
+                fireEvent.click(oneStar);
             });
 
-            const finalRating = "1";
-            for (const label of RATING_BUTTON_ARIA_LABELS) {
-                if (label.includes(finalRating)) {
-                    expect(getRatingButton(label)).toBeChecked();
-                } else {
-                    expect(getRatingButton(label)).not.toBeChecked();
-                }
-            }
+            expect(getRatingSlider()).toHaveValue("1");
+            expect(getRatingSlider()).toHaveAttribute(
+                "aria-valuetext",
+                "1 star"
+            );
         });
 
-        it("should be able to support onRatingChange callback", () => {
+        it("should be able to support onRatingChange callback when clicking a star", () => {
             const spy = jest.fn();
+
             render(
                 <FeedbackRating
                     rating={0}
@@ -139,12 +136,49 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            const button = getRatingButton("1 star");
+            const firstStar = getStar(0);
             act(() => {
-                fireEvent.click(button);
+                fireEvent.click(firstStar);
             });
 
             expect(spy).toHaveBeenCalledTimes(1);
+            expect(spy).toHaveBeenCalledWith(1);
+        });
+
+        it("should be able to increase rating with keyboard", () => {
+            render(
+                <FeedbackRatingWithState
+                    rating={1}
+                    onRatingChange={NO_OP}
+                    onSubmit={NO_OP}
+                />
+            );
+
+            const slider = getRatingSlider();
+            act(() => {
+                fireEvent.change(slider, { target: { value: "2" } });
+            });
+
+            expect(slider).toHaveValue("2");
+            expect(slider).toHaveAttribute("aria-valuetext", "2 stars");
+        });
+
+        it("should be able to decrease rating with keyboard", () => {
+            render(
+                <FeedbackRatingWithState
+                    rating={3}
+                    onRatingChange={NO_OP}
+                    onSubmit={NO_OP}
+                />
+            );
+
+            const slider = getRatingSlider();
+            act(() => {
+                fireEvent.change(slider, { target: { value: "2" } });
+            });
+
+            expect(slider).toHaveValue("2");
+            expect(slider).toHaveAttribute("aria-valuetext", "2 stars");
         });
     });
 
@@ -158,8 +192,8 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            const button = getSubmitButton();
-            expect(button).toBeDisabled();
+            const button = getSubmitButton("Submit");
+            expect(button).toHaveAttribute("aria-disabled", "true");
         });
 
         it("should not be disabled if rating is provided", () => {
@@ -171,8 +205,8 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            const button = getSubmitButton();
-            expect(button).not.toBeDisabled();
+            const button = getSubmitButton("Submit");
+            expect(button).not.toHaveAttribute("aria-disabled", "true");
         });
 
         it("should be able to support onSubmit callback", () => {
@@ -185,7 +219,7 @@ describe("FeedbackRating", () => {
                 />
             );
 
-            const button = getSubmitButton();
+            const button = getSubmitButton("Submit");
             act(() => {
                 fireEvent.click(button);
             });
@@ -229,29 +263,26 @@ describe("FeedbackRating", () => {
 // CONSTANTS
 // =============================================================================
 const DEFAULT_DESCRIPTION = "Rate your experience";
-// eslint-disable-next-line @typescript-eslint/no-empty-function
+
 const NO_OP = () => {};
-const RATING_BUTTON_ARIA_LABELS = [
-    "1 star",
-    "2 stars",
-    "3 stars",
-    "4 stars",
-    "5 stars",
-];
 
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
-const getRatingButton = (name: string): HTMLInputElement => {
-    return screen.getByRole("radio", { name });
+const getRatingSlider = (): HTMLInputElement => {
+    return screen.getByRole("slider", { hidden: true }) as HTMLInputElement;
 };
 
-const getSubmitButton = (label?: string): HTMLElement => {
-    return screen.getByRole("button", { name: label ? label : "Submit" });
+const getSubmitButton = (label: string): HTMLElement => {
+    return screen.getByRole("button", { name: label });
 };
 
 const getBannerImg = (): HTMLElement => {
-    return screen.getByRole("img", { name: "banner image" });
+    return screen.getByTestId("feedback-banner-image");
+};
+
+const getStar = (index: number): HTMLElement => {
+    return screen.getByTestId(`feedback-rating-star-${index + 1}`);
 };
 
 // =============================================================================
@@ -261,7 +292,7 @@ const FeedbackRatingWithState = (props?: Partial<FeedbackRatingProps>) => {
     const [rating, setRating] = useState<number>(props?.rating || 0);
 
     const handleOnChange = (value: number) => {
-        props?.onRatingChange && props?.onRatingChange(value);
+        props?.onRatingChange?.(value);
         setRating(value);
     };
 

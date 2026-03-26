@@ -1,147 +1,35 @@
-import React from "react";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
 import {
-    ApiTable,
-    DefaultCol,
-    DescriptionCol,
-    NameCol,
-    Table,
-} from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
-import { TabAttribute, Tabs } from "../storybook-common/tabs";
+    ColDivPropsData,
+    ColPropsData,
+    ContainerPropsData,
+    ContentPropsData,
+    SectionPropsData,
+} from "./generated-props";
 
-const CONTENT_DATA: ApiTableSectionProps[] = [
-    {
-        attributes: [
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
             {
-                name: "",
-                description: (
-                    <>
-                        This component also inherits props from&nbsp;
-                        <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            HTMLDivElement
-                        </a>
-                    </>
-                ),
+                label: "ColDivProps",
+                content: <ApiTable sections={ColDivPropsData} />,
             },
             {
-                name: "type",
-                description: "The display type to be rendered",
-                propTypes: [`"flex"`, `"flex-column"`, `"grid"`],
-                defaultValue: `"flex"`,
+                label: "ContainerProps",
+                content: <ApiTable sections={ContainerPropsData} />,
             },
             {
-                name: "data-testid",
-                description: "The test identifier of the component",
-                propTypes: ["string"],
+                label: "SectionProps",
+                content: <ApiTable sections={SectionPropsData} />,
             },
             {
-                name: "stretch",
-                description: `
-                    Specifies if the layout container should stretch to the 
-                    maximum width of the screen, with a fixed padding
-                `,
-                propTypes: ["boolean"],
-                defaultValue: "false",
-            },
-        ],
-    },
-];
-
-const SECTION_DATA: ApiTableSectionProps[] = [
-    {
-        attributes: [
-            {
-                name: "",
-                description: (
-                    <>
-                        This component also inherits props from&nbsp;
-                        <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            HTMLDivElement
-                        </a>
-                    </>
-                ),
+                label: "ContentProps",
+                content: <ApiTable sections={ContentPropsData} />,
             },
             {
-                name: "data-testid",
-                description: "The test identifier of the component",
-                propTypes: ["string"],
+                label: "ColProps",
+                content: <ApiTable sections={ColPropsData} />,
             },
-            {
-                name: "stretch",
-                description: `
-                    Specifies if the layout container should stretch to the 
-                    maximum width of the screen, with a fixed padding
-                `,
-                propTypes: ["boolean"],
-                defaultValue: "false",
-            },
-        ],
-    },
-];
-
-const CONTAINER_DATA: ApiTableSectionProps[] = [
-    {
-        attributes: [
-            {
-                name: "",
-                description: (
-                    <>
-                        This component also inherits props from&nbsp;
-                        <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
-                            rel="noreferrer"
-                            target="_blank"
-                        >
-                            HTMLDivElement
-                        </a>
-                    </>
-                ),
-            },
-            {
-                name: "type",
-                description: "The display type to be rendered",
-                propTypes: [`"flex"`, `"flex-column"`, `"grid"`],
-                defaultValue: `"flex"`,
-            },
-            {
-                name: "data-testid",
-                description: "The test identifier of the component",
-                propTypes: ["string"],
-            },
-            {
-                name: "stretch",
-                description: `
-                    Specifies if the layout container should stretch to the 
-                    maximum width of the screen, with a fixed padding
-                `,
-                propTypes: ["boolean"],
-                defaultValue: "false",
-            },
-        ],
-    },
-];
-
-const PROPS_TABLE_DATA: TabAttribute[] = [
-    {
-        title: "Layout.Content",
-        component: <ApiTable sections={CONTENT_DATA} />,
-    },
-    {
-        title: "Layout.Section",
-        component: <ApiTable sections={SECTION_DATA} />,
-    },
-    {
-        title: "Layout.Container",
-        component: <ApiTable sections={CONTAINER_DATA} />,
-    },
-];
-
-export const PropsTable = () => <Tabs tabs={PROPS_TABLE_DATA} />;
+        ]}
+    />
+);

@@ -1,13 +1,15 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Modal } from "src/modal";
+import { Typography } from "src/typography";
 
 type Component = typeof Modal;
 
 const meta: Meta<Component> = {
-    title: "Modules/Modal",
+    title: "Overlays/Modal",
     component: Modal,
+    tags: ["dialog", "popup", "overlay", "lightbox"],
 };
 
 export default meta;
@@ -26,12 +28,12 @@ export const Default: StoryObj<Component> = {
                     <Modal.Box onClose={closeModal}>
                         <div
                             style={{
-                                padding: "2rem",
+                                padding: "4rem 2rem",
                                 height: "10rem",
                                 overflow: "auto",
                             }}
                         >
-                            <span>I am a Modal</span>
+                            <Typography.BodyBL>I am a Modal</Typography.BodyBL>
                         </div>
                     </Modal.Box>
                 </Modal>
@@ -74,10 +76,10 @@ export const StackedModals: StoryObj<Component> = {
     render: () => {
         const [showFirst, setShowFirst] = useState(false);
         const [showStacked, setShowStacked] = useState(false);
-        const handleFirst = (show) => () => {
+        const handleFirst = (show: boolean) => () => {
             setShowFirst(show);
         };
-        const handleStacked = (show) => () => {
+        const handleStacked = (show: boolean) => () => {
             setShowStacked(show);
         };
         return (
@@ -89,10 +91,12 @@ export const StackedModals: StoryObj<Component> = {
                     <Modal.Box onClose={handleFirst(false)}>
                         <div
                             style={{
-                                padding: "2rem",
+                                padding: "4rem 2rem",
                             }}
                         >
-                            <span>I am the first Modal</span>
+                            <Typography.BodyBL>
+                                I am the first Modal
+                            </Typography.BodyBL>
                             <br />
                             <br />
                             <Button.Default onClick={handleStacked(true)}>
@@ -109,11 +113,12 @@ export const StackedModals: StoryObj<Component> = {
                     <Modal.Box onClose={handleStacked(false)}>
                         <div
                             style={{
-                                padding: "2rem",
-                                height: "10rem",
+                                padding: "4rem 2rem",
                             }}
                         >
-                            <span>I am the stacked Modal</span>
+                            <Typography.BodyBL>
+                                I am the stacked Modal
+                            </Typography.BodyBL>
                         </div>
                     </Modal.Box>
                 </Modal>

@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -6,6 +5,7 @@ interface Props {
     className?: string;
 }
 
+/** @deprecated */
 export const PreviewBox = ({ children, className }: Props) => {
     return (
         <Container className={className}>

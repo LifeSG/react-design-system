@@ -1,13 +1,19 @@
-import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
+import { DocInfo } from "stories/storybook-common";
 import * as ModalStories from "./modal.stories";
-import { PropsTable } from "./props-table";
+import { PropsTableTabs } from "./props-table";
+import { StyleTokensTable } from "./style-tokens-table";
 
 <Meta of={ModalStories} />
 
-<Title>Modal</Title>
+# Modal
 
-<Secondary>Overview</Secondary>
+<DocInfo>
+    Try out the new [ModalV2](/docs/overlays-modalv2--docs) which offers
+    improved scroll handling and accessibility
+</DocInfo>
+
+## Overview
 
 A window or pop up that displays over other page contents and provides information or actions
 that a user can perform.
@@ -25,19 +31,26 @@ There are 2 components that can be used:
 
 <Canvas of={ModalStories.Default} />
 
-<Heading3>Custom content</Heading3>
+## Custom content
 
 <Canvas of={ModalStories.CustomContent} />
 
-<Heading3>Stacked modals</Heading3>
+## Stacked modals
 
 In some cases, you would require a stacked modal layout. Here is how you can construct it.
 
 <Canvas of={ModalStories.StackedModals} />
 
-<Heading3>Modal.Box</Heading3>
+## Modal.Box
 
 This component holds the dialog box.
+
+You're recommended to apply this spacing around your content to avoid overlap with the close button:
+
+| Viewport       | Vertical | Horizontal |
+| -------------- | -------- | ---------- |
+| Desktop/tablet | 4rem     | 4rem       |
+| Mobile         | 4rem     | 1.25rem    |
 
 > **Note**: This component does not come with a scrollable container and it is the
 > onus on the child element to possess the scroll behaviour
@@ -50,8 +63,12 @@ This component holds the dialog box.
 </Modal.Box>
 ```
 
-<Secondary>Component API</Secondary>
+## Component API
 
 Both components also inherit the [HTMLDivElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement).
 
-<PropsTable />
+<PropsTableTabs />
+
+## Component style tokens
+
+<StyleTokensTable />

@@ -1,6 +1,7 @@
 import { FormCustomField } from "./form-custom-field";
 import { FormDateInput } from "./form-date-input";
 import { FormDateRangeInput } from "./form-date-range-input";
+import { FormESignature } from "./form-e-signature";
 import { FormHistogramSlider } from "./form-histogram";
 import { FormInput } from "./form-input";
 import { FormInputGroup } from "./form-input-group";
@@ -9,11 +10,13 @@ import { FormMaskedInput } from "./form-masked-input";
 import { FormMultiSelect } from "./form-multi-select";
 import { FormNestedMultiSelect } from "./form-nested-multi-select";
 import { FormNestedSelect } from "./form-nested-select";
+import { FormOtpVerification } from "./form-otp-verification";
 import { FormPhoneNumberInput } from "./form-phone-number-input";
 import { FormPredictiveTextInput } from "./form-predictive-text-input";
 import { FormRangeSelect } from "./form-range-select";
 import { FormRangeSlider } from "./form-range-slider";
 import { FormSelect } from "./form-select";
+import { FormSelectHistogram } from "./form-select-histogram";
 import { FormSlider } from "./form-slider";
 import { FormTextarea } from "./form-textarea";
 import { FormTimeRangePicker } from "./form-time-range-picker";
@@ -23,6 +26,7 @@ import { FormUnitNumberInput } from "./form-unit-number-input";
 export const Form = {
     DateInput: FormDateInput,
     DateRangeInput: FormDateRangeInput,
+    ESignature: FormESignature,
     HistogramSlider: FormHistogramSlider,
     Input: FormInput,
     InputGroup: FormInputGroup,
@@ -32,6 +36,7 @@ export const Form = {
     NestedSelect: FormNestedSelect,
     NestedMultiSelect: FormNestedMultiSelect,
     Select: FormSelect,
+    SelectHistogram: FormSelectHistogram,
     Slider: FormSlider,
     RangeSlider: FormRangeSlider,
     RangeSelect: FormRangeSelect,
@@ -42,4 +47,5 @@ export const Form = {
     UnitNumberInput: FormUnitNumberInput,
     PhoneNumberInput: FormPhoneNumberInput,
     PredictiveTextInput: FormPredictiveTextInput,
+    OtpVerification: FormOtpVerification,
 };

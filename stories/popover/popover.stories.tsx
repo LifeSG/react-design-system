@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Popover } from "src/popover";
@@ -7,8 +7,9 @@ import { Container, Item, PopoverHOCExample } from "./doc-elements";
 type Component = typeof Popover;
 
 const meta: Meta<Component> = {
-    title: "Modules/Popover",
+    title: "Deprecated/Popover",
     component: Popover,
+    tags: ["tooltip", "flyout", "overlay", "contextual info"],
 };
 
 export default meta;

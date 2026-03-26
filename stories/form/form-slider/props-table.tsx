@@ -1,7 +1,6 @@
-import React from "react";
-import { ApiTable } from "../../storybook-common/api-table";
-import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
+import { PropTableTabs } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -67,7 +66,7 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: [
-                    "(string | ((props: unknown) => string | undefined))[]",
+                    "(string | ((props: ThemeStyleProps) => string | undefined))[]",
                 ],
             },
             {
@@ -126,4 +125,8 @@ const DATA: ApiTableSectionProps[] = [
     ...SHARED_FORM_PROPS_DATA,
 ];
 
-export const PropsTable = () => <ApiTable sections={DATA} />;
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[{ label: "Form.Slider", content: <ApiTable sections={DATA} /> }]}
+    />
+);

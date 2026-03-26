@@ -13,18 +13,24 @@ export interface CommonCalendarProps {
     disabledDates?: string[] | undefined;
     /** Specifies if dates normally disabled by `minDate`, `maxDate` and `disabledDates` are still selectable */
     allowDisabledSelection?: boolean | undefined;
+    /** Specifies if the calendar should display only dates for the selected month */
+    showActiveMonthDaysOnly?: boolean | undefined;
 }
 
 // =============================================================================
 // Types used in InternalCalendarProps
 // =============================================================================
 export interface InternalCalendarProps extends CommonCalendarProps {
-    /** The display type of the component. Values `standalone` | `input` */
-    type: CalendarType;
     /** Selected start date in `YYYY-MM-DD` format */
     value?: string | undefined;
     /** Selected end date in `YYYY-MM-DD` format */
     endValue?: string | undefined;
+    /** Selected dates in `YYYY-MM-DD` format, used with variant="multi" */
+    values?: string[] | undefined;
+    /** Minimum number of dates that must be selected before the selection is valid, used with variant="multi" */
+    minSelectable?: number | undefined;
+    /** Maximum number of dates that can be selected at once, used with variant="multi" */
+    maxSelectable?: number | undefined;
     /** Specifies if done/cancel buttons are visible */
     withButton?: boolean | undefined;
     /** Indicate current focus in the date-input component. */
@@ -41,20 +47,22 @@ export interface InternalCalendarProps extends CommonCalendarProps {
     onYearMonthDisplayChange?: ((value: YearMonthDisplay) => void) | undefined;
     /** Called when date is selected, returns value in `YYYY-MM-DD` format */
     onSelect?: ((value: string) => void) | undefined;
+    /** Called when multi-select changes, returns all selected dates */
+    onChange?: ((values: string[]) => void) | undefined;
     /** Called when day cell is hovered, returns value in `YYYY-MM-DD` */
     onHover?: ((value: string) => void) | undefined;
     /** Indicate the number of days used in fixed-range variant */
     numberOfDays?: number | undefined;
+    /** Indicates whether calendar is focusable */
+    isFocusable?: boolean | undefined;
 }
 
-export interface AnimatedInternalCalendarProps extends InternalCalendarProps {
-    /** If calendar is visible. */
-    isOpen?: boolean | undefined;
+export interface CalendarDropdownProps extends InternalCalendarProps {
+    width: number;
 }
 
 export type CalendarAction = "reset" | "confirmed";
-export type CalendarType = "standalone" | "input";
-export type Variant = "single" | "range" | "week" | "fixed-range";
+export type Variant = "single" | "range" | "week" | "fixed-range" | "multi";
 export type FocusType = "start" | "end" | "none";
 export type View = "default" | "month-options" | "year-options";
 
@@ -66,6 +74,7 @@ export interface YearMonthDisplay {
 export interface InternalCalendarRef {
     reset: () => void;
     setCalendarDate: (value?: string) => void;
+    contains: (node: Node) => boolean;
 }
 
 // =============================================================================
@@ -74,7 +83,6 @@ export interface InternalCalendarRef {
 export interface CalendarManagerProps extends CommonCalendarProps {
     children: React.ReactNode | ((props: DefaultViewProps) => React.ReactNode);
     initialCalendarDate?: string | undefined;
-    type: CalendarType;
     currentFocus?: FocusType | undefined;
     selectedStartDate?: string | undefined;
     selectedEndDate?: string | undefined;
@@ -93,6 +101,7 @@ export interface CalendarManagerProps extends CommonCalendarProps {
     isRightArrowDisabled?: ((calendarDate: Dayjs) => boolean) | undefined;
     getMonthHeaderLabel?: ((calendarDate: Dayjs) => string) | undefined;
     getYearHeaderLabel?: ((calendarDate: Dayjs) => string) | undefined;
+    isFocusable?: boolean | undefined;
 }
 
 export interface DefaultViewProps {
@@ -103,5 +112,5 @@ export interface DefaultViewProps {
 export interface CalendarManagerRef {
     defaultView: () => void;
     resetView: () => void;
-    setCalendarDate: (date: string) => void;
+    setCalendarDate: (date: string | undefined) => void;
 }

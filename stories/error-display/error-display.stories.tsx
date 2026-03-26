@@ -1,23 +1,24 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { useEffect, useState } from "react";
 import { ErrorDisplay } from "src/error-display";
 
 type Component = typeof ErrorDisplay;
 
 const meta: Meta<Component> = {
-    title: "Modules/ErrorDisplay",
+    title: "Core/ErrorDisplay",
     component: ErrorDisplay,
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return <ErrorDisplay type="404" />;
     },
 };
 
 export const WithActionButton: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <ErrorDisplay
                 type="unsupported-browser"
@@ -34,7 +35,7 @@ export const WithActionButton: StoryObj<Component> = {
 
 export const Maintenance: StoryObj<Component> = {
     name: "Custom attributes - Maintenance",
-    render: () => {
+    render: (_args) => {
         return (
             <ErrorDisplay
                 type="maintenance"
@@ -46,18 +47,28 @@ export const Maintenance: StoryObj<Component> = {
 
 export const Inactivity: StoryObj<Component> = {
     name: "Custom attributes - Inactivity",
-    render: () => {
+    render: (_args) => {
+        const [secondsLeft, setSecondsLeft] = useState(300);
+
+        useEffect(() => {
+            const id = window.setInterval(() => {
+                setSecondsLeft((s) => Math.max(0, s - 1));
+            }, 1000);
+
+            return () => window.clearInterval(id);
+        }, []);
+
         return (
             <ErrorDisplay
                 type="inactivity"
-                additionalProps={{ secondsLeft: 300 }}
+                additionalProps={{ secondsLeft, reminderInterval: 60 }}
             />
         );
     },
 };
 
 export const CustomError: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <ErrorDisplay
                 type="404"
@@ -83,7 +94,14 @@ export const Variants: StoryObj<Component> = {
     argTypes: {
         illustrationScheme: {
             control: "select",
-            options: [undefined, "base", "bookingsg", "ccube", "rbs"],
+            options: [
+                undefined,
+                "base",
+                "bookingsg",
+                "ccube",
+                "rbs",
+                "mylegacy",
+            ],
         },
     },
     args: {

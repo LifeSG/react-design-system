@@ -1,41 +1,83 @@
 import { useEffect, useState } from "react";
 
-export const useTimer = (seconds: number, isPlaying: boolean) => {
+const getTimestamp = (
+    seconds: number | undefined,
+    endTime: number | undefined
+) => {
+    if (endTime) {
+        return endTime;
+    } else {
+        return Date.now() + (seconds ?? 0) * 1000;
+    }
+};
+
+const getSeconds = (ms: number) => {
+    return Math.max(Math.round(ms / 1000), 0);
+};
+
+export const useTimer = (
+    seconds: number | undefined,
+    endTime: number | undefined, // Takes precedence over seconds
+    isPlaying: boolean
+): [number, number] => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [remainingSeconds, setRemainingSeconds] = useState<number>(seconds);
+    const [initialSeconds, setInitialSeconds] = useState<number>(() => {
+        const timestamp = getTimestamp(seconds, endTime);
+        const msToEnd = timestamp - Date.now();
+        return getSeconds(msToEnd);
+    });
+
+    const [remainingSeconds, setRemainingSeconds] = useState<number>(() => {
+        const timestamp = getTimestamp(seconds, endTime);
+        const msToEnd = timestamp - Date.now();
+        return getSeconds(msToEnd);
+    });
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (!isPlaying) return;
-        const cleanup = start();
+        const timestamp = getTimestamp(seconds, endTime);
+        const msToEnd = timestamp - Date.now();
+        const newInitialSeconds = getSeconds(msToEnd);
 
-        return () => cleanup();
-    }, [isPlaying, seconds]);
+        setInitialSeconds(newInitialSeconds);
+        setRemainingSeconds(newInitialSeconds);
+    }, [seconds, endTime]);
+
+    useEffect(() => {
+        if (!isPlaying) return;
+
+        const targetTime = getTimestamp(seconds, endTime);
+        const timeoutId = runCountdown(targetTime);
+
+        return () => clearTimeout(timeoutId);
+    }, [endTime, isPlaying, seconds]);
 
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
-    const start = () => {
-        const timestamp = Date.now();
+    const runCountdown = (timestamp: number) => {
+        const updateCountdown = () => {
+            const msToEnd = timestamp - Date.now();
+            const driftTime = msToEnd % 1000;
+            const countdown = getSeconds(msToEnd);
 
-        const interval = setInterval(() => {
-            const currentTime = Date.now();
-            const milliseconds = seconds * 1000;
+            setRemainingSeconds(countdown);
 
-            const countdown = Math.ceil(
-                (timestamp + milliseconds - currentTime) / 1000
+            if (countdown === 0) return;
+
+            const timeoutId = setTimeout(
+                updateCountdown,
+                driftTime > 500 ? driftTime : driftTime + 1000
             );
 
-            setRemainingSeconds(Math.max(countdown, 0));
-            if (countdown <= 0) clearInterval(interval);
-        }, 1000);
-
-        return () => clearInterval(interval);
+            return timeoutId;
+        };
+        return updateCountdown();
     };
 
-    return [remainingSeconds] as const;
+    return [remainingSeconds, initialSeconds] as const;
 };

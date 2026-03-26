@@ -26,7 +26,7 @@ export const SidenavDrawerSubitem = ({
         if (onClick) {
             onClick(id);
         }
-        setSelectedItem({ itemId: currentItem.itemId, content: undefined });
+        setSelectedItem({ itemId: currentItem?.itemId, content: undefined });
         setCurrentItem(undefined);
         setPreviouslySelectedItemId(undefined);
     };
@@ -36,7 +36,7 @@ export const SidenavDrawerSubitem = ({
     // =========================================================================
     return (
         <Container {...otherProps}>
-            <LinkButton styleType="link" type="button" onClick={handleOnClick}>
+            <LinkButton type="button" onClick={handleOnClick}>
                 {title}
             </LinkButton>
         </Container>

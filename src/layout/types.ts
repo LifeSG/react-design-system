@@ -1,11 +1,11 @@
-export interface CommonLayoutProps
-    extends React.HTMLAttributes<HTMLDivElement> {
+import { DefaultTheme } from "styled-components";
+import { AddOne, Range } from "../util/utility-types";
+
+interface CommonLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
     "data-testid"?: string | undefined;
-    stretch?: boolean;
+    stretch?: boolean | undefined;
 }
-
-export interface SectionProps extends CommonLayoutProps {}
 
 export type ContainerType = "flex" | "flex-column" | "grid";
 
@@ -14,52 +14,37 @@ export interface ContainerProps extends CommonLayoutProps {
     type?: ContainerType | undefined;
 }
 
+export interface SectionProps extends CommonLayoutProps {}
+
 export interface ContentProps extends ContainerProps {}
 
-export type DivRef = React.Ref<HTMLDivElement>;
+export type ColSpan<Max extends number | undefined> = Max extends number
+    ? Range<Max> | [Range<AddOne<Max>>, Range<AddOne<Max>> | -1] | undefined
+    : number | [number, number] | undefined;
 
-type MobileCol = 1 | 2 | 3 | 4;
-type MobileColRange = MobileCol | 5;
-
-type TabletCol = MobileCol | 5 | 6 | 7 | 8;
-type TabletColRange = TabletCol | 9;
-
-type DesktopCol = TabletCol | 9 | 10 | 11 | 12;
-type DesktopColRange = DesktopCol | 13;
-
+export type BreakpointSpan<
+    Breakpoint extends keyof DefaultTheme["maxColumns"]
+> = DefaultTheme["maxColumns"] extends Record<
+    Breakpoint,
+    infer Max extends number
+>
+    ? ColSpan<Max>
+    : number | [number, number] | undefined;
 export interface ColProps {
     /**
-     * Specifies the number of columns to be span across in mobile viewports.
-     * If an array is specified, the format is as such [startCol, endCol].
-     * If `tabletCols` or `desktopCols` are not specified, this
-     * setting will be applied to tablet and desktop viewports.
-     *
-     * If all column props are not specified, the div will span across a single
-     * column.
+     * Specifies the number of columns to be spanned across for any breakpoint.
+     * If an array is specified, the format is [startCol, endCol].
      */
-    mobileCols?: MobileCol | [MobileColRange, MobileColRange] | undefined;
-    /**
-     * Specifies the number of columns to be span across in tablet viewports.
-     * If an array is specified, the format is as such [startCol, endCol].
-     * If `desktopCols` are not specified, this setting will be
-     * applied to desktop viewports as well.
-     *
-     * If all column props are not specified, the div will span across a single
-     * column.
-     */
-    tabletCols?: TabletCol | [TabletColRange, TabletColRange] | undefined;
-    /**
-     * Specifies the number of columns to be span across in desktop viewports.
-     * If an array is specified, the format is as such [startCol, endCol].
-     *
-     * If all column props are not specified, the div will span across a single
-     * column.
-     */
-    desktopCols?: DesktopCol | [DesktopColRange, DesktopColRange] | undefined;
+    xxlCols?: BreakpointSpan<"xxl">;
+    xlCols?: BreakpointSpan<"xl">;
+    lgCols?: BreakpointSpan<"lg">;
+    mdCols?: BreakpointSpan<"md">;
+    smCols?: BreakpointSpan<"sm">;
+    xsCols?: BreakpointSpan<"xs">;
+    xxsCols?: BreakpointSpan<"xxs">;
 }
-
 export interface ColDivProps
     extends React.HTMLAttributes<HTMLDivElement>,
         ColProps {
-    "data-testid"?: string | undefined;
+    "data-testid"?: string;
 }

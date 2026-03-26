@@ -1,23 +1,33 @@
 import React from "react";
-import { AddOnContainer, Container, MainInput } from "./input-group.style";
-import { CustomAddon, InputGroupProps, LabelAddon, ListAddon } from "./types";
 import { InputGroupListAddon } from "./input-group-list-addon";
-import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
+import {
+    AddonWrapper,
+    LabelAddonContainer,
+    MainInput,
+    NoAddonWrapper,
+} from "./input-group.style";
+import { CustomAddon, InputGroupProps, LabelAddon, ListAddon } from "./types";
 
 const Component = <T, V>(
     { addon, error, className, ...otherProps }: InputGroupProps<T, V>,
     ref: React.Ref<HTMLInputElement>
 ) => {
     const renderNoAddons = () => (
-        <Container
-            disabled={otherProps.disabled}
+        <NoAddonWrapper
+            $disabled={otherProps.disabled}
             $error={error}
             $readOnly={otherProps.readOnly}
             data-testid={otherProps["data-testid"]}
             className={className}
+            $noBorder={otherProps.noBorder}
         >
-            <MainInput ref={ref} {...otherProps} data-testid="input" />
-        </Container>
+            <MainInput
+                ref={ref}
+                {...otherProps}
+                data-testid="input"
+                styleType="no-border"
+            />
+        </NoAddonWrapper>
     );
 
     if (addon) {
@@ -34,6 +44,7 @@ const Component = <T, V>(
                             addon={addon}
                             error={error}
                             className={className}
+                            noBorder={otherProps.noBorder}
                             {...otherProps}
                         />
                     );
@@ -45,30 +56,32 @@ const Component = <T, V>(
                 const customAddon = addon.attributes as CustomAddon;
                 if (customAddon.children) {
                     return (
-                        <InputWrapper
+                        <AddonWrapper
                             $error={error}
                             $disabled={otherProps.disabled}
                             $readOnly={otherProps.readOnly}
                             data-testid={otherProps["data-testid"]}
                             $position={position}
                             className={className}
+                            $noBorder={otherProps.noBorder}
                         >
-                            <AddOnContainer
+                            <LabelAddonContainer
                                 data-testid="addon"
-                                disabled={otherProps.disabled}
+                                $disabled={otherProps.disabled}
                                 $readOnly={otherProps.readOnly}
                                 $position={position}
                             >
                                 {customAddon.children}
-                            </AddOnContainer>
+                            </LabelAddonContainer>
                             <MainInput
                                 ref={ref}
                                 {...otherProps}
                                 allowClear={allowClear && position !== "right"}
                                 error={error}
                                 data-testid="input"
+                                styleType="no-border"
                             />
-                        </InputWrapper>
+                        </AddonWrapper>
                     );
                 } else {
                     return renderNoAddons();
@@ -78,30 +91,32 @@ const Component = <T, V>(
                 const labelAddon = addon.attributes as LabelAddon;
                 if (labelAddon.value) {
                     return (
-                        <InputWrapper
+                        <AddonWrapper
                             $disabled={otherProps.disabled}
                             $error={error}
                             $readOnly={otherProps.readOnly}
                             data-testid={otherProps["data-testid"]}
                             $position={position}
                             className={className}
+                            $noBorder={otherProps.noBorder}
                         >
-                            <AddOnContainer
+                            <LabelAddonContainer
                                 data-testid="addon"
-                                disabled={otherProps.disabled}
+                                $disabled={otherProps.disabled}
                                 $readOnly={otherProps.readOnly}
                                 $position={position}
                             >
                                 {labelAddon.value}
-                            </AddOnContainer>
+                            </LabelAddonContainer>
                             <MainInput
                                 ref={ref}
                                 {...otherProps}
                                 allowClear={allowClear && position !== "right"}
                                 error={error}
                                 data-testid="input"
+                                styleType="no-border"
                             />
-                        </InputWrapper>
+                        </AddonWrapper>
                     );
                 } else {
                     return renderNoAddons();

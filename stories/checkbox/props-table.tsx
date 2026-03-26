@@ -1,28 +1,13 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { CheckboxPropsData } from "./generated-props";
 
-const DATA: ApiTableSectionProps[] = [
-    {
-        attributes: [
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
             {
-                name: "displaySize",
-                description: "The display size of the component",
-                propTypes: [`"default"`, `"small"`],
-                defaultValue: `"default"`,
+                label: "CheckboxProps",
+                content: <ApiTable sections={CheckboxPropsData} />,
             },
-            {
-                name: "checked",
-                description: "The selected state of the component",
-                propTypes: ["boolean"],
-            },
-            {
-                name: "indeterminate",
-                description: "The indeterminate state of the component",
-                propTypes: ["boolean"],
-            },
-        ],
-    },
-];
-
-export const PropsTable = () => <ApiTable sections={DATA} />;
+        ]}
+    />
+);

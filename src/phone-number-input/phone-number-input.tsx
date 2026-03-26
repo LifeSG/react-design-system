@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { InputGroup } from "../input-group/input-group";
 import { AddonProps, LabelAddon, ListAddon } from "../input-group/types";
 import { useNextInputState } from "../util";
@@ -19,6 +19,8 @@ export const PhoneNumberInput = ({
     onHideOptions,
     onShowOptions,
     placeholder,
+    autoComplete,
+    noBorder = false,
     ...otherProps
 }: PhoneNumberInputProps) => {
     // =============================================================================
@@ -33,7 +35,7 @@ export const PhoneNumberInput = ({
     >(undefined);
     const [inputValue, setInputValue] = useState<string>("");
 
-    const nodeRef = useRef<HTMLInputElement>();
+    const nodeRef = useRef<HTMLInputElement>(null);
 
     const getNextInputState = useNextInputState({
         ref: nodeRef,
@@ -71,7 +73,10 @@ export const PhoneNumberInput = ({
     };
 
     const handleInputChange = () => {
-        const { nextValue, updateCaretPosition } = getNextInputState();
+        const nextState = getNextInputState();
+        if (!nextState) return;
+
+        const { nextValue, updateCaretPosition } = nextState;
 
         updateCaretPosition();
         performLocalChangeHandler(nextValue, selectedCountry);
@@ -98,7 +103,7 @@ export const PhoneNumberInput = ({
             inputValue,
             selectedCountry
         );
-        onChange({
+        onChange?.({
             number: formatedInputValue.replace(/[\s()]+/g, ""), // strip formatted spaces
             countryCode:
                 selectedCountry && addPlusPrefix(selectedCountry.countryCode),
@@ -128,6 +133,7 @@ export const PhoneNumberInput = ({
             return {
                 type: "list",
                 attributes: {
+                    "aria-label": "Country code",
                     placeholder: optionPlaceholder,
                     options,
                     selectedOption: selectedCountry,
@@ -161,6 +167,9 @@ export const PhoneNumberInput = ({
             placeholder={placeholder}
             addon={getAddonProps()}
             inputMode="numeric"
+            autoComplete={autoComplete}
+            aria-label="Enter phone number"
+            noBorder={noBorder}
             {...otherProps}
         />
     );
@@ -173,7 +182,7 @@ export const PhoneNumberInput = ({
  * This strips the + off the specified country code if it
  * is present.
  */
-const normaliseCountryCode = (countryCode: string): string => {
+const normaliseCountryCode = (countryCode: string | undefined): string => {
     return countryCode ? countryCode.replace("+", "") : "";
 };
 

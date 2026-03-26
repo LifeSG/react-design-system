@@ -4,7 +4,11 @@ export interface AccordionProps {
     enableExpandAll?: boolean | undefined;
     initialDisplay?: "collapse-all" | "expand-all" | undefined;
     showTitleInMobile?: boolean | undefined;
+    id?: string | undefined;
+    "data-testid"?: string | undefined;
     className?: string | undefined;
+    headingLevel?: number | undefined;
+    onExpandCollapseChange?: ((expanded: boolean) => void) | undefined;
 }
 
 export type AccordionItemType = "default" | "small";
@@ -17,17 +21,20 @@ export interface AccordionItemProps {
      * for cases where we want the default expand behaviour
      */
     expanded?: boolean | undefined;
+    id?: string | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
     type?: AccordionItemType | undefined;
     collapsible?: boolean | undefined;
 }
 
-export type AccordionItemHandle = HTMLDivElement & {
+export interface AccordionItemApi {
     expand: () => void;
     collapse: () => void;
     isExpanded: () => boolean;
-};
+}
+
+export type AccordionItemHandle = HTMLDivElement & AccordionItemApi;
 
 /**
  * Transient props are denoted with $
@@ -39,5 +46,6 @@ export interface TitleStyleProps {
 }
 
 export interface TitleWrapperStyleProps {
-    $hasTitle: boolean;
+    $showTitleInMobile: boolean;
+    $hasExpandAll: boolean;
 }

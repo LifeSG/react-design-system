@@ -1,10 +1,9 @@
 import { Card } from "src/card";
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
-import { Transition } from "../transition";
+import { V2_Color } from "../v2_color";
+import { V2_MediaQuery } from "../v2_media";
+import { V2_Transition } from "../v2_transition";
 import { TooltipPosition } from "./types";
-
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
@@ -16,25 +15,25 @@ interface TooltipStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-const getVisibilityStyle = (visible: boolean) => {
+const getVisibilityStyle = (visible: boolean | undefined) => {
     if (visible) {
         return css`
             visibility: "visible";
             opacity: 1;
-            transition: ${Transition.Base};
+            transition: ${V2_Transition.Base};
             z-index: 2;
         `;
     } else {
         return css`
             visibility: "hidden";
             opacity: 0;
-            transition: ${Transition.Base};
+            transition: ${V2_Transition.Base};
             z-index: -1;
         `;
     }
 };
 
-const getBubblePositionStyle = (position: TooltipPosition) => {
+const getBubblePositionStyle = (position: TooltipPosition | undefined) => {
     switch (position) {
         case "left":
             return css`
@@ -46,7 +45,7 @@ const getBubblePositionStyle = (position: TooltipPosition) => {
                 -webkit-transform: translateY(-50%);
                 transform: translateY(-50%);
 
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     width: auto;
                 }
             `;
@@ -60,7 +59,7 @@ const getBubblePositionStyle = (position: TooltipPosition) => {
                 -webkit-transform: translateY(-50%);
                 transform: translateY(-50%);
 
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     width: auto;
                 }
             `;
@@ -74,7 +73,7 @@ const getBubblePositionStyle = (position: TooltipPosition) => {
                 -webkit-transform: translateX(-50%);
                 transform: translateX(-50%);
 
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     max-width: 80vw;
                 }
             `;
@@ -89,7 +88,7 @@ const getBubblePositionStyle = (position: TooltipPosition) => {
                 -webkit-transform: translateX(-50%);
                 transform: translateX(-50%);
 
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${V2_MediaQuery.MaxWidth.mobileL} {
                     max-width: 80vw;
                 }
             `;
@@ -124,7 +123,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                     top: 100%;
                     left: 25%;
 
-                    ::before {
+                    &::before {
                         content: "";
                         position: absolute;
                         background: transparent;
@@ -134,7 +133,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         box-shadow: 3px 2px 14px 3px rgba(91, 91, 91, 0.5);
                     }
 
-                    ::after {
+                    &::after {
                         content: "";
                         position: absolute;
                         width: 0;
@@ -143,7 +142,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         left: calc(50% - 10px);
                         border-style: solid;
                         border-width: 16px 8px 0 8px;
-                        border-color: ${Color.Neutral[8]} transparent
+                        border-color: ${V2_Color.Neutral[8]} transparent
                             transparent transparent;
                     }
                 `;
@@ -154,7 +153,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                     top: 0;
                     left: -30px;
 
-                    ::before {
+                    &::before {
                         content: "";
                         position: absolute;
                         background: red;
@@ -165,7 +164,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         box-shadow: 2px 3px 11px 3px rgba(91, 91, 91, 0.5);
                     }
 
-                    ::after {
+                    &::after {
                         content: "";
                         position: absolute;
                         width: 0;
@@ -174,7 +173,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         right: -10%;
                         border-style: solid;
                         border-width: 8px 16px 8px 0;
-                        border-color: transparent ${Color.Neutral[8]}
+                        border-color: transparent ${V2_Color.Neutral[8]}
                             transparent transparent;
                     }
                 `;
@@ -185,7 +184,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                     top: 0;
                     right: -30px;
 
-                    ::before {
+                    &::before {
                         content: "";
                         position: absolute;
                         background: red;
@@ -196,7 +195,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         box-shadow: 4px 0px 11px 3px rgba(91, 91, 91, 0.5);
                     }
 
-                    ::after {
+                    &::after {
                         content: "";
                         position: absolute;
                         width: 0;
@@ -206,7 +205,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         border-style: solid;
                         border-width: 8px 0 8px 16px;
                         border-color: transparent transparent transparent
-                            ${Color.Neutral[8]};
+                            ${V2_Color.Neutral[8]};
                     }
                 `;
             case "bottom":
@@ -216,7 +215,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                     bottom: 100%;
                     left: 25%;
 
-                    ::before {
+                    &::before {
                         content: "";
                         position: absolute;
                         background: transparent;
@@ -227,7 +226,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         box-shadow: 3px -9px 14px 3px rgba(91, 91, 91, 0.5);
                     }
 
-                    ::after {
+                    &::after {
                         content: "";
                         position: absolute;
                         width: 0;
@@ -237,7 +236,7 @@ export const Arrow = styled.div<TooltipStyleProps>`
                         border-style: solid;
                         border-width: 0 8px 16px 8px;
                         border-color: transparent transparent
-                            ${Color.Neutral[8]} transparent;
+                            ${V2_Color.Neutral[8]} transparent;
                     }
                 `;
         }
