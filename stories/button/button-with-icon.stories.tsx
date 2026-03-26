@@ -2,7 +2,7 @@ import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Button } from "src/button";
 
-import { Container } from "../button/doc-elements";
+import { Container } from "./doc-elements";
 
 type Component = typeof Button;
 
