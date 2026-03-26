@@ -80,6 +80,7 @@
         "@storybook/addon-themes": "^10.2.10",
         "@storybook/addon-webpack5-compiler-swc": "^4.0.2",
         "@storybook/react-webpack5": "^10.2.10",
+        "@testing-library/dom": "^10.4.1",
         "@testing-library/jest-dom": "^5.16.3",
         "@testing-library/react": "^12.1.4",
         "@testing-library/user-event": "^14.5.2",
@@ -101,6 +102,7 @@
         "dompurify": "^3.2.5",
         "eslint": "^9.39.0",
         "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-jsdoc": "^62.5.4",
         "eslint-plugin-mdx": "^2.0.4",
         "eslint-plugin-react": "^7.37.5",
         "eslint-plugin-react-hooks": "^7.0.1",
@@ -142,8 +144,7 @@
         "storybook": "^10.2.10",
         "style-loader": "^2.0.0",
         "styled-components": "^6.1.19",
-        "typescript": "^5.7.3",
-        "eslint-plugin-jsdoc": "^62.5.4"
+        "typescript": "^5.7.3"
     },
     "peerDependencies": {
         "@floating-ui/react": ">=0.26.23 <1.0.0",
