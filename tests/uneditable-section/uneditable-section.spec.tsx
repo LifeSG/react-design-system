@@ -159,6 +159,9 @@ describe("UneditableSection", () => {
             render(<UneditableSection items={ITEMS} title="Test" />);
 
             expect(screen.getByText("Retrieving...")).toBeInTheDocument();
+            expect(
+                screen.getByTestId("component-loading-spinner")
+            ).toBeInTheDocument();
         });
 
         it("should render the error display", () => {

@@ -57,6 +57,9 @@ describe("MaskedInput", () => {
                 screen.queryByTestId("masked-input-masked")
             ).not.toBeInTheDocument();
             expect(screen.getByText("Retrieving...")).toBeInTheDocument();
+            expect(
+                screen.getByTestId("component-loading-spinner")
+            ).toBeInTheDocument();
         });
 
         it("should render the error display if there is an error", () => {
