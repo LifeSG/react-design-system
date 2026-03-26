@@ -69,19 +69,6 @@ export const baseMarkup = css`
 `;
 
 export const sizedMarkup = css`
-    ${tokens.rootFontFamily}: initial;
-    ${tokens.rootFontVariant}: initial;
-    ${tokens.rootFontSize}: initial;
-    ${tokens.rootFontWeight}: initial;
-    ${tokens.rootLineHeight}: initial;
-    ${tokens.rootLetterSpacing}: initial;
-    ${tokens.emphasizedFontFamily}: initial;
-    ${tokens.emphasizedFontVariant}: initial;
-    ${tokens.emphasizedFontSize}: initial;
-    ${tokens.emphasizedFontWeight}: initial;
-    ${tokens.emphasizedLineHeight}: initial;
-    ${tokens.emphasizedLetterSpacing}: initial;
-
     font-family: var(${tokens.rootFontFamily}, inherit);
     font-variant: var(${tokens.rootFontVariant}, inherit);
     font-size: var(${tokens.rootFontSize}, inherit);
