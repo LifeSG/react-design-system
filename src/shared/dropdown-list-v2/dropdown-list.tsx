@@ -13,6 +13,7 @@ import {
 import type { VirtuosoHandle } from "react-virtuoso";
 import { Virtuoso } from "react-virtuoso";
 
+import { Markup } from "../../markup";
 import {
     mergeRefs,
     useCompare,
@@ -21,7 +22,6 @@ import {
     useIsMounted,
 } from "../../util";
 import { useDropdownRender } from "../dropdown-wrapper";
-import { applyHtmlContentStyle } from "../html-content/html-content";
 import { DropdownLabel } from "./dropdown-label";
 import {
     CheckboxDisabledIndicator,
@@ -535,11 +535,8 @@ const DropdownListInner = <T, V>(
                         {noResultsLabel}
                     </ResultStateContainer>
                     {noResultsDescription && (
-                        <NoResultDescContainer
-                            data-testid="no-result-desc"
-                            className={applyHtmlContentStyle()}
-                        >
-                            {noResultsDescription}
+                        <NoResultDescContainer data-testid="no-result-desc">
+                            <Markup>{noResultsDescription}</Markup>
                         </NoResultDescContainer>
                     )}
                 </>

@@ -1,6 +1,6 @@
 import type React from "react";
 
-import { applyHtmlContentStyle } from "../shared/html-content/html-content";
+import { Markup } from "../markup";
 import {
     ErrorIcon,
     ErrorMessage,
@@ -40,13 +40,11 @@ export const FormLabel = ({
             style={style}
             data-testid={testId}
         >
-            <Label
-                id={id}
-                className={applyHtmlContentStyle()}
-                {...otherProps}
-            >
-                {children}
-                {addon && addon.type && renderAddon()}
+            <Label id={id} {...otherProps}>
+                <Markup inline>
+                    {children}
+                    {addon && addon.type && renderAddon()}
+                </Markup>
             </Label>
             {typeof subtitle === "string" ? (
                 <Subtitle

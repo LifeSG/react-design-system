@@ -1,6 +1,8 @@
 import { StarIcon } from "@lifesg/react-icons/star";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import { Alert, V2_Color } from "src";
+
+import { renderWithV4Theme } from "../common";
 
 // =============================================================================
 // UNIT TESTS
@@ -16,7 +18,13 @@ describe("Alert", () => {
     });
 
     it("should render the component", () => {
-        render(<Alert type="success">{DEFAULT_TEXT}</Alert>);
+        renderWithV4Theme(<Alert type="success">{DEFAULT_TEXT}</Alert>);
+
+        expect(screen.getByText(DEFAULT_TEXT)).toBeInTheDocument();
+    });
+
+    it("should render with V4 theme helper", () => {
+        renderWithV4Theme(<Alert type="success">{DEFAULT_TEXT}</Alert>);
 
         expect(screen.getByText(DEFAULT_TEXT)).toBeInTheDocument();
     });
@@ -32,7 +40,7 @@ describe("Alert", () => {
         `(
             "should render background $backgroundColor with border $borderColor for $type type",
             ({ type, backgroundColor, borderColor }) => {
-                render(<Alert type={type}>{DEFAULT_TEXT}</Alert>);
+                renderWithV4Theme(<Alert type={type}>{DEFAULT_TEXT}</Alert>);
 
                 expect(screen.getByText(DEFAULT_TEXT)).toHaveStyle({
                     backgroundColor,
@@ -44,7 +52,7 @@ describe("Alert", () => {
 
     describe("actionLink", () => {
         it("should render if the prop is provided", () => {
-            render(
+            renderWithV4Theme(
                 <Alert type="success" actionLink={{ href: "www.google.com" }}>
                     {DEFAULT_TEXT}
                 </Alert>
@@ -56,7 +64,7 @@ describe("Alert", () => {
         it("should render custom children if the prop is specified", () => {
             const customText = "custom text";
 
-            render(
+            renderWithV4Theme(
                 <Alert
                     type="success"
                     actionLink={{
@@ -72,7 +80,7 @@ describe("Alert", () => {
         });
 
         it("should not render if the prop is not provided", () => {
-            render(<Alert type="success" />);
+            renderWithV4Theme(<Alert type="success" />);
 
             expect(getActionLink(true)).not.toBeInTheDocument();
         });
@@ -80,7 +88,7 @@ describe("Alert", () => {
 
     describe("customIcon", () => {
         it("should render a custom icon if specified", () => {
-            render(
+            renderWithV4Theme(
                 <Alert
                     type="success"
                     showIcon={true}
@@ -97,14 +105,14 @@ describe("Alert", () => {
     it("should render custom display if required", () => {
         const CUSTOM_TEXT = "this is a custom component";
 
-        render(<Alert type="success">{CUSTOM_TEXT}</Alert>);
+        renderWithV4Theme(<Alert type="success">{CUSTOM_TEXT}</Alert>);
 
         expect(screen.getByText(CUSTOM_TEXT)).toBeInTheDocument();
     });
 
     describe("collapsed content accessibility", () => {
         it("should set inert when maxCollapsedHeight is provided", () => {
-            render(
+            renderWithV4Theme(
                 <Alert type="success" maxCollapsedHeight={40}>
                     {DEFAULT_TEXT}
                 </Alert>
@@ -115,7 +123,7 @@ describe("Alert", () => {
         });
 
         it("should not set inert when maxCollapsedHeight is not provided", () => {
-            render(<Alert type="success">{DEFAULT_TEXT}</Alert>);
+            renderWithV4Theme(<Alert type="success">{DEFAULT_TEXT}</Alert>);
 
             const content = screen.getByText(DEFAULT_TEXT);
             expect(content.closest("[inert]")).toBeNull();

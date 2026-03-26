@@ -2,8 +2,8 @@ import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 
+import { Markup } from "../markup";
 import { ModalV2 } from "../modal-v2";
-import { applyHtmlContentStyle } from "../shared/html-content/html-content";
 import { Typography } from "../typography";
 import { V3_Breakpoint } from "../v3_theme";
 import { PopoverCard, PopoverContainer } from "./popover.styles";
@@ -57,14 +57,10 @@ export const PopoverV2 = ({
                     role="dialog"
                     aria-label={ariaLabel ?? "More information"}
                 >
-                    <PopoverCard
-                        $maxHeight={maxHeight}
-                        $overflow={overflow}
-                        className={applyHtmlContentStyle({
-                            textSize: "body-md",
-                        })}
-                    >
-                        {renderContent()}
+                    <PopoverCard $maxHeight={maxHeight} $overflow={overflow}>
+                        <Markup baseTextSize="body-md">
+                            {renderContent()}
+                        </Markup>
                     </PopoverCard>
                 </PopoverContainer>
             )}

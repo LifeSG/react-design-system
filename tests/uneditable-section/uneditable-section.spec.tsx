@@ -1,6 +1,8 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, screen } from "@testing-library/react";
 import type { UneditableSectionItemProps } from "src/uneditable-section";
 import { UneditableSection } from "src/uneditable-section";
+
+import { renderWithV4Theme } from "../common";
 
 describe("UneditableSection", () => {
     beforeEach(() => {
@@ -13,7 +15,7 @@ describe("UneditableSection", () => {
     });
 
     it("should render the elements correctly", () => {
-        render(
+        renderWithV4Theme(
             <UneditableSection
                 items={MOCK_ITEMS}
                 title="Test"
@@ -31,7 +33,7 @@ describe("UneditableSection", () => {
     });
 
     it("should render custom items correctly", () => {
-        render(
+        renderWithV4Theme(
             <UneditableSection
                 items={[
                     {
@@ -47,7 +49,7 @@ describe("UneditableSection", () => {
     });
 
     it("should render the custom top section and custom bottom section if specified", () => {
-        render(
+        renderWithV4Theme(
             <UneditableSection
                 items={MOCK_ITEMS}
                 title="Test"
@@ -62,7 +64,7 @@ describe("UneditableSection", () => {
     });
 
     it("should render only the children content if specified", () => {
-        render(
+        renderWithV4Theme(
             <UneditableSection title="Test">
                 <div data-testid="test">Test content</div>
             </UneditableSection>
@@ -82,7 +84,7 @@ describe("UneditableSection", () => {
                 },
             ];
 
-            render(<UneditableSection items={ITEMS} title="Test" />);
+            renderWithV4Theme(<UneditableSection items={ITEMS} title="Test" />);
 
             expect(screen.getByTestId("clickable-label")).toBeInTheDocument();
         });
@@ -95,7 +97,7 @@ describe("UneditableSection", () => {
                 },
             ];
 
-            render(<UneditableSection items={ITEMS} title="Test" />);
+            renderWithV4Theme(<UneditableSection items={ITEMS} title="Test" />);
 
             expect(screen.getByText("S••••534J")).toBeInTheDocument();
             expect(
@@ -112,7 +114,7 @@ describe("UneditableSection", () => {
                 },
             ];
 
-            render(<UneditableSection items={ITEMS} title="Test" />);
+            renderWithV4Theme(<UneditableSection items={ITEMS} title="Test" />);
 
             expect(screen.getByTestId("masked-icon")).toBeInTheDocument();
         });
@@ -126,7 +128,7 @@ describe("UneditableSection", () => {
                 },
             ];
 
-            render(<UneditableSection items={ITEMS} title="Test" />);
+            renderWithV4Theme(<UneditableSection items={ITEMS} title="Test" />);
 
             expect(screen.getByTestId("unmasked-icon")).toBeInTheDocument();
         });
@@ -141,7 +143,7 @@ describe("UneditableSection", () => {
                 },
             ];
 
-            render(<UneditableSection items={ITEMS} title="Test" />);
+            renderWithV4Theme(<UneditableSection items={ITEMS} title="Test" />);
 
             expect(screen.queryByTestId("masked-icon")).not.toBeInTheDocument();
         });
@@ -156,7 +158,7 @@ describe("UneditableSection", () => {
                 },
             ];
 
-            render(<UneditableSection items={ITEMS} title="Test" />);
+            renderWithV4Theme(<UneditableSection items={ITEMS} title="Test" />);
 
             expect(screen.getByText("Retrieving...")).toBeInTheDocument();
             expect(
@@ -174,7 +176,7 @@ describe("UneditableSection", () => {
                 },
             ];
 
-            render(<UneditableSection items={ITEMS} title="Test" />);
+            renderWithV4Theme(<UneditableSection items={ITEMS} title="Test" />);
 
             expect(screen.getByText("Error")).toBeInTheDocument();
             expect(screen.getByText("Try again?")).toBeInTheDocument();
@@ -190,7 +192,7 @@ describe("UneditableSection", () => {
                 },
             ];
 
-            render(<UneditableSection items={ITEMS} title="Test" />);
+            renderWithV4Theme(<UneditableSection items={ITEMS} title="Test" />);
 
             expect(
                 screen.getByRole("button", { name: /NRIC or FIN/ })
@@ -208,7 +210,7 @@ describe("UneditableSection", () => {
             const onUnmaskFn = jest.fn();
             const onMaskFn = jest.fn();
 
-            render(
+            renderWithV4Theme(
                 <UneditableSection
                     items={ITEMS}
                     title="Test"
@@ -240,7 +242,7 @@ describe("UneditableSection", () => {
 
             const onTryAgainFn = jest.fn();
 
-            render(
+            renderWithV4Theme(
                 <UneditableSection
                     items={ITEMS}
                     title="Test"
@@ -268,7 +270,7 @@ describe("UneditableSection", () => {
                 },
             ];
 
-            render(<UneditableSection items={ITEMS} title="Test" />);
+            renderWithV4Theme(<UneditableSection items={ITEMS} title="Test" />);
             expect(screen.getByText("This is an alert")).toBeInTheDocument();
         });
     });

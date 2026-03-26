@@ -1,6 +1,8 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import { Form } from "src/form";
 import { PhoneNumberInput } from "src/phone-number-input";
+
+import { renderWithV4Theme } from "../common";
 
 const INPUT_TESTID = "input";
 const SELECTOR_TESTID = "selector";
@@ -32,7 +34,7 @@ describe("PhoneNumberInput", () => {
     });
 
     it("should render default component", () => {
-        render(<PhoneNumberInput />);
+        renderWithV4Theme(<PhoneNumberInput />);
 
         expect(screen.queryByTestId(SELECTOR_TESTID)).toHaveTextContent(
             "Select"
@@ -41,7 +43,7 @@ describe("PhoneNumberInput", () => {
     });
 
     it("should render component with formatted value", () => {
-        render(
+        renderWithV4Theme(
             <PhoneNumberInput
                 value={{ countryCode: "994", number: "123456789" }}
             />
@@ -55,7 +57,9 @@ describe("PhoneNumberInput", () => {
 
     describe("change handling", () => {
         it("should format number and preserve caret position", async () => {
-            render(<PhoneNumberInput value={{ countryCode: "994" }} />);
+            renderWithV4Theme(
+                <PhoneNumberInput value={{ countryCode: "994" }} />
+            );
 
             const input: HTMLInputElement = screen.getByTestId("input");
             const inputSpy = jest.spyOn(input, "setSelectionRange");
@@ -73,7 +77,9 @@ describe("PhoneNumberInput", () => {
         });
 
         it("should remove non-numeric characters and preserve caret position", async () => {
-            render(<PhoneNumberInput value={{ countryCode: "994" }} />);
+            renderWithV4Theme(
+                <PhoneNumberInput value={{ countryCode: "994" }} />
+            );
 
             const input: HTMLInputElement = screen.getByTestId("input");
             const inputSpy = jest.spyOn(input, "setSelectionRange");
@@ -93,7 +99,7 @@ describe("PhoneNumberInput", () => {
 
     describe("accessible names", () => {
         it("should apply the correct label", () => {
-            render(<Form.PhoneNumberInput label={LABEL} />);
+            renderWithV4Theme(<Form.PhoneNumberInput label={LABEL} />);
 
             expect(
                 screen.getByRole("combobox", {
@@ -109,7 +115,7 @@ describe("PhoneNumberInput", () => {
         });
 
         it("should apply the correct label and description", () => {
-            render(
+            renderWithV4Theme(
                 <Form.PhoneNumberInput
                     label={{ children: LABEL, subtitle: DESCRIPTION }}
                 />
@@ -130,7 +136,7 @@ describe("PhoneNumberInput", () => {
         });
 
         it("should apply the error state and error description", () => {
-            render(
+            renderWithV4Theme(
                 <Form.PhoneNumberInput
                     label={{ children: LABEL, subtitle: DESCRIPTION }}
                     errorMessage={ERROR}

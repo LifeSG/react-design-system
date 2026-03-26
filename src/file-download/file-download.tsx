@@ -1,4 +1,4 @@
-import { applyHtmlContentStyle } from "../shared/html-content/html-content";
+import { Markup } from "../markup";
 import {
     Container,
     Description,
@@ -43,10 +43,8 @@ export const FileDownload = ({
         }
 
         return (
-            <TitleContainer
-                className={applyHtmlContentStyle({ textSize: "heading-xs" })}
-            >
-                {title}
+            <TitleContainer>
+                <Markup baseTextSize="heading-xs">{title}</Markup>
             </TitleContainer>
         );
     };
@@ -61,10 +59,8 @@ export const FileDownload = ({
         }
 
         return (
-            <DescriptionContainer
-                className={applyHtmlContentStyle({ textSize: "body-md" })}
-            >
-                {description}
+            <DescriptionContainer>
+                <Markup baseTextSize="body-md">{description}</Markup>
             </DescriptionContainer>
         );
     };

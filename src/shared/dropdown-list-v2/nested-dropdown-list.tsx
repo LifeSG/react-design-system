@@ -2,6 +2,7 @@ import { CaretRightIcon } from "@lifesg/react-icons/caret-right";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 
+import { Markup } from "../../markup";
 import {
     mergeRefs,
     useEvent,
@@ -9,7 +10,6 @@ import {
     useIsMounted,
 } from "../../util";
 import { useDropdownRender } from "../dropdown-wrapper";
-import { applyHtmlContentStyle } from "../html-content/html-content";
 import { DropdownLabel } from "./dropdown-label";
 import {
     CheckboxSelectedIndicator,
@@ -468,11 +468,8 @@ export const NestedDropdownList = <T,>({
                         {noResultsLabel}
                     </ResultStateContainer>
                     {noResultsDescription && (
-                        <NoResultDescContainer
-                            data-testid="no-result-desc"
-                            className={applyHtmlContentStyle()}
-                        >
-                            {noResultsDescription}
+                        <NoResultDescContainer data-testid="no-result-desc">
+                            <Markup>{noResultsDescription}</Markup>
                         </NoResultDescContainer>
                     )}
                 </>

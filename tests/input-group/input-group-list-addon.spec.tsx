@@ -1,11 +1,10 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Form } from "src/form";
 import { InputGroup } from "src/input-group";
 
+import { renderWithV4Theme } from "../_common";
 import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
-
-jest.mock("react-resize-detector");
 
 const FIELD_TESTID = "test";
 const INPUT_TESTID = "input";
@@ -36,7 +35,7 @@ describe("InputGroup - List addon", () => {
     });
 
     it("should render the component", () => {
-        render(
+        renderWithV4Theme(
             <InputGroup
                 data-testid={FIELD_TESTID}
                 addon={{
@@ -53,7 +52,7 @@ describe("InputGroup - List addon", () => {
     });
 
     it("should render the component with initial value", () => {
-        render(
+        renderWithV4Theme(
             <InputGroup
                 data-testid={FIELD_TESTID}
                 addon={{
@@ -76,7 +75,7 @@ describe("InputGroup - List addon", () => {
     it("should open dropdown list when selector is clicked", async () => {
         const user = userEvent.setup();
 
-        render(
+        renderWithV4Theme(
             <InputGroup
                 data-testid={FIELD_TESTID}
                 addon={{
@@ -102,7 +101,7 @@ describe("InputGroup - List addon", () => {
     it("should toggle dropdown list when selector is clicked", async () => {
         const user = userEvent.setup();
 
-        render(
+        renderWithV4Theme(
             <InputGroup
                 data-testid={FIELD_TESTID}
                 addon={{
@@ -133,7 +132,7 @@ describe("InputGroup - List addon", () => {
         const user = userEvent.setup();
         const mockOnSelectOption = jest.fn();
 
-        render(
+        renderWithV4Theme(
             <InputGroup
                 data-testid={FIELD_TESTID}
                 addon={{
@@ -167,7 +166,7 @@ describe("InputGroup - List addon", () => {
         const user = userEvent.setup();
         const mockOnChange = jest.fn();
 
-        render(
+        renderWithV4Theme(
             <InputGroup
                 data-testid={FIELD_TESTID}
                 addon={{
@@ -191,7 +190,7 @@ describe("InputGroup - List addon", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderWithV4Theme(
                 <InputGroup
                     data-testid={FIELD_TESTID}
                     addon={{
@@ -232,7 +231,7 @@ describe("InputGroup - List addon", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderWithV4Theme(
                 <InputGroup
                     data-testid={FIELD_TESTID}
                     addon={{
@@ -271,7 +270,7 @@ describe("InputGroup - List addon", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderWithV4Theme(
                 <InputGroup
                     data-testid={FIELD_TESTID}
                     addon={{
@@ -313,7 +312,7 @@ describe("InputGroup - List addon", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderWithV4Theme(
                 <InputGroup
                     data-testid={FIELD_TESTID}
                     addon={{
@@ -339,7 +338,7 @@ describe("InputGroup - List addon", () => {
             const user = userEvent.setup();
             const mockOnBlur = jest.fn();
 
-            render(
+            renderWithV4Theme(
                 <>
                     <button data-testid="before" />
                     <InputGroup
@@ -403,7 +402,7 @@ describe("InputGroup - List addon", () => {
 
     describe("readonly behaviour", () => {
         it("should render readonly state with selected option", () => {
-            render(
+            renderWithV4Theme(
                 <InputGroup
                     data-testid={FIELD_TESTID}
                     addon={{
@@ -426,7 +425,7 @@ describe("InputGroup - List addon", () => {
         });
 
         it("should not render readonly state without selected option", () => {
-            render(
+            renderWithV4Theme(
                 <InputGroup
                     data-testid={FIELD_TESTID}
                     addon={{
@@ -450,7 +449,7 @@ describe("InputGroup - List addon", () => {
         it("should not open dropdown when readonly", async () => {
             const user = userEvent.setup();
 
-            render(
+            renderWithV4Theme(
                 <InputGroup
                     data-testid={FIELD_TESTID}
                     addon={{
@@ -481,7 +480,7 @@ describe("InputGroup - List addon", () => {
         it("should not open dropdown when disabled", async () => {
             const user = userEvent.setup();
 
-            render(
+            renderWithV4Theme(
                 <InputGroup
                     data-testid={FIELD_TESTID}
                     addon={{
@@ -511,7 +510,7 @@ describe("InputGroup - List addon", () => {
         it("should expose custom combobox/textbox labels and selector instruction", () => {
             const comboboxLabel = "Choose option";
             const textboxLabel = "Enter value";
-            render(
+            renderWithV4Theme(
                 <InputGroup
                     data-testid={FIELD_TESTID}
                     aria-label={textboxLabel}
@@ -537,7 +536,7 @@ describe("InputGroup - List addon", () => {
         });
 
         it("should apply the error state and error description", () => {
-            render(
+            renderWithV4Theme(
                 <Form.InputGroup
                     label={{ children: LABEL, subtitle: DESCRIPTION }}
                     errorMessage={ERROR}
