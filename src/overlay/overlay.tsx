@@ -6,6 +6,7 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
+import { useInheritedThemeScope } from "../theme/theme-provider/hooks";
 import { SimpleIdGenerator } from "../util";
 import { Root, Wrapper } from "./overlay.styles";
 import type { OverlayProps } from "./types";
@@ -41,6 +42,7 @@ const OverlayComponent = ({
         ? `lifesg-ds-overlay-root-${id}`
         : "lifesg-ds-overlay-root";
     const zIndex = customZIndex ?? (isStacked ? 99999 : 99998);
+    const { themeProps, themeStyle } = useInheritedThemeScope(show);
 
     useFloatingParent(zIndex);
 
@@ -271,6 +273,8 @@ const OverlayComponent = ({
             data-testid={overlayRootId}
             $show={show}
             $zIndex={zIndex}
+            {...themeProps}
+            style={themeStyle}
         >
             {children && renderWrapper()}
         </Root>
