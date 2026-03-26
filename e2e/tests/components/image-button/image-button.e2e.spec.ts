@@ -112,4 +112,27 @@ test.describe("ImageButton", () => {
             });
         });
     });
+
+    test.describe(() => {
+        test.skip(
+            !process.env.CI,
+            "Does not work locally as NextJS loads the fallback image differently from rollup"
+        );
+
+        test.beforeEach(async ({ story }) => {
+            await story.init("image-fallback");
+        });
+
+        test("Image fallback renders when imgSrc fails to load", async ({
+            story,
+        }) => {
+            // wait for loading to complete and fallback to the placeholder
+            await expect(story.page.locator("img")).toHaveAttribute(
+                "src",
+                /data:image\/png/
+            );
+
+            await compareScreenshot(story, "image-fallback");
+        });
+    });
 });
