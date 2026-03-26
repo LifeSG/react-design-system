@@ -10,6 +10,9 @@ class StoryPage extends AbstractStoryPage {
         imageButtonError: Locator;
         imageButtonErrorSelected: Locator;
         imageButtonDisabled: Locator;
+        imageButton: Locator;
+        focusStart: Locator;
+        clickCount: Locator;
     };
 
     constructor(page: Page) {
@@ -23,6 +26,9 @@ class StoryPage extends AbstractStoryPage {
                 "image-button-error-selected"
             ),
             imageButtonDisabled: page.getByTestId("image-button-disabled"),
+            imageButton: page.getByTestId("image-button"),
+            focusStart: page.getByTestId("focus-start"),
+            clickCount: page.getByTestId("click-count"),
         };
     }
 }
@@ -133,6 +139,37 @@ test.describe("ImageButton", () => {
             );
 
             await compareScreenshot(story, "image-fallback");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("focusable-when-disabled");
+        });
+
+        test("Focusable when disabled", async ({ story }) => {
+            await test.step("Button remains disabled for ATs", async () => {
+                await expect(story.locators.imageButton).toMatchAriaSnapshot(`
+                      - button "Label" [disabled]
+                    `);
+            });
+
+            await test.step("Button can receive focus", async () => {
+                await story.locators.focusStart.focus();
+                await story.page.keyboard.press("Tab");
+
+                await expect(story.locators.imageButton).toBeFocused();
+            });
+
+            await test.step("Clicking the button does not fire the onClick handler", async () => {
+                await expect(story.locators.clickCount).toHaveText("0");
+
+                await story.locators.imageButton.click({
+                    force: true,
+                });
+
+                await expect(story.locators.clickCount).toHaveText("0");
+            });
         });
     });
 });
