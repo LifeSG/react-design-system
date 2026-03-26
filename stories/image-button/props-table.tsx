@@ -1,11 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { ImageButton } from "src/image-button";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { ImageButtonPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "ImageButton", content: <ArgTypes of={ImageButton} /> },
+            {
+                label: "ImageButtonProps",
+                content: <ApiTable sections={ImageButtonPropsData} />,
+            },
         ]}
     />
 );

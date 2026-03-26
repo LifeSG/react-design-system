@@ -1,13 +1,12 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { FeedbackRating } from "src/feedback-rating";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { FeedbackRatingPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
             {
-                label: "FeedbackRating",
-                content: <ArgTypes of={FeedbackRating} />,
+                label: "FeedbackRatingProps",
+                content: <ApiTable sections={FeedbackRatingPropsData} />,
             },
         ]}
     />

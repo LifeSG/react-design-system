@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { Avatar } from "src/avatar";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { AvatarPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "Avatar", content: <ArgTypes of={Avatar} /> }]}
+        tabs={[
+            {
+                label: "AvatarProps",
+                content: <ApiTable sections={AvatarPropsData} />,
+            },
+        ]}
     />
 );

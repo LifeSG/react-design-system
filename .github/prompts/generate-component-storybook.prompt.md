@@ -117,14 +117,16 @@ argTypes: {
 
 ## Step 5: Identify Sub-component Interfaces
 
-Scan `types.ts` for all exported `*Props` interfaces beyond the primary one (e.g. `ItemProps`, `HeaderProps`, `RowProps`). These each become a separate tab in the API docs.
+Scan `types.ts` for all exported `*Props` interfaces. The primary interface (e.g. `ComponentNameProps`) becomes the first tab; any additional public interfaces become further tabs.
 
 Exclude interfaces that are internal/style-only — skip those ending in `StyleProps`, `WrapperStyleProps`, `PartialProps`, `WithForwardedRefProps`, `RenderProps`, or starting with `Base`.
 
-For each public sub-interface, you will:
+For each public interface (including primary), you will:
 
-1. Generate API data via `npm run props:generate` (or confirm `stories/[COMPONENT]/generated-props.ts` is already up to date)
-2. Import the generated data in `props-table.tsx` and render via `<ApiTable>`
+1. Run `npm run props:generate` (or confirm `stories/[COMPONENT]/generated-props.ts` is already up to date)
+2. Import the generated `<InterfaceName>Data` in `props-table.tsx` and render via `<ApiTable>`
+
+Note: properties inherited from HTML elements (e.g. `React.HTMLAttributes`, `React.ButtonHTMLAttributes`) are **automatically filtered out** by the generator. Only component-specific props declared in the local `types.ts` are included.
 
 ---
 
@@ -138,37 +140,36 @@ First, run (or confirm already done):
 npm run props:generate
 ```
 
-This writes `stories/[COMPONENT_NAME]/generated-props.ts` with a `<InterfaceName>Data` export for each sub-interface.
+This writes `stories/[COMPONENT_NAME]/generated-props.ts` with a `<InterfaceName>Data` export for **every** public interface — including the primary one.
 
-Then write `props-table.tsx`:
+Then write `props-table.tsx` using `<ApiTable>` for all tabs:
 
 ```tsx
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { ComponentName } from "src/[component-name]";
-import { ItemPropsData, SecondaryPropsData } from "./generated-props";
+import { ComponentNamePropsData, ItemPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
             {
-                label: "ComponentName",
-                content: <ArgTypes of={ComponentName} />,
+                label: "ComponentNameProps",
+                content: <ApiTable sections={ComponentNamePropsData} />,
             },
             {
                 label: "ItemProps",
                 content: <ApiTable sections={ItemPropsData} />,
-            },
-            {
-                label: "SecondaryProps",
-                content: <ApiTable sections={SecondaryPropsData} />,
             },
         ]}
     />
 );
 ```
 
-If there are no public sub-interfaces, omit `PropsTableTabs` and use `<ArgTypes of={ComponentName} />` directly in the MDX.
+Key points:
+
+-   All tabs use `<ApiTable sections={...Data} />` — **no `<ArgTypes>`**.
+-   The first tab uses the primary interface data (e.g. `ComponentNamePropsData`).
+-   Tab labels are the interface names exactly as they appear in `types.ts`.
+-   HTML-inherited props are excluded automatically; only own props are shown.
 
 ---
 
@@ -263,9 +264,8 @@ Brief sentence explaining what this variant demonstrates.
 Rules:
 
 -   `<PropsTableTabs />` is defined in `props-table.tsx` (Step 6) and renders all tabs internally.
--   The first tab always shows `<ArgTypes of={ComponentName} />` — the full prop reference for the primary component.
--   Each public sub-interface gets its own tab via `<ApiTable sections={...Data} />` from `generated-props.ts`.
--   If there are no sub-interfaces, omit `PropsTableTabs` from `props-table.tsx` and render `<ArgTypes of={ComponentName} />` directly in the MDX.
+-   All tabs use `<ApiTable sections={...Data} />` sourced from `generated-props.ts` — **no `<ArgTypes>`**.
+-   HTML-inherited props (from React/DOM types) are excluded automatically by the generator.
 -   The import path in the code snippet must use the published package path: `@lifesg/react-design-system/[component-name]`.
 
 ---
@@ -274,8 +274,8 @@ Rules:
 
 After creating the files, confirm:
 
--   `stories/[COMPONENT_NAME]/generated-props.ts` exists and has a `<InterfaceName>Data` export for each public sub-interface (run `npm run props:generate` if missing)
--   `props-table.tsx` exports `PropsTableTabs` using `<ArgTypes of={ComponentName} />` for the primary tab and `<ApiTable sections={...Data} />` for each sub-interface tab
+-   `stories/[COMPONENT_NAME]/generated-props.ts` exists and has a `<InterfaceName>Data` export for the primary interface and each public sub-interface (run `npm run props:generate` if missing)
+-   `props-table.tsx` exports `PropsTableTabs` using `<ApiTable sections={...Data} />` for all tabs — no `ArgTypes` imports
 -   `[component].stories.tsx` imports from `src/[component-name]` (webpack alias), not relative paths
 -   MDX `import` paths use relative paths (`./`, `../storybook-common`)
 -   Story export names are PascalCase and match the `Canvas` references in MDX

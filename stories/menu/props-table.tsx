@@ -1,17 +1,19 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { Menu } from "src/menu";
 import {
     MenuContentPropsData,
     MenuItemPropsData,
     MenuLinkPropsData,
+    MenuPropsData,
     MenuSectionPropsData,
 } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "Menu", content: <ArgTypes of={Menu} /> },
+            {
+                label: "MenuProps",
+                content: <ApiTable sections={MenuPropsData} />,
+            },
             {
                 label: "MenuContentProps",
                 content: <ApiTable sections={MenuContentPropsData} />,

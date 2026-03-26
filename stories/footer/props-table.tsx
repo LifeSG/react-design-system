@@ -1,12 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { Footer } from "src/footer";
-import { FooterLinkPropsData } from "./generated-props";
+import { FooterLinkPropsData, FooterPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "Footer", content: <ArgTypes of={Footer} /> },
+            {
+                label: "FooterProps",
+                content: <ApiTable sections={FooterPropsData} />,
+            },
             {
                 label: "FooterLinkProps",
                 content: <ApiTable sections={FooterLinkPropsData} />,

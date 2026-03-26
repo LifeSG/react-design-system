@@ -4,6 +4,45 @@
 
 import { ApiTableSectionProps } from "stories/storybook-common";
 
+export const SidenavPropsData: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "fixed",
+                description:
+                    "Specifies if sidenav should be fixed to left. Defaults to true",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "children",
+                description: "<Sidenav.Group> ... </Sidenav.Group>",
+                propTypes: ["React.ReactNode"],
+                mandatory: true,
+            },
+            {
+                name: "aria-label",
+                description: "the accessible label",
+                propTypes: ["string"],
+            },
+            {
+                name: "id",
+                description: "Unique identifier for the component.",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "Test identifier for automated testing.",
+                propTypes: ["string"],
+            },
+            {
+                name: "className",
+                description: "CSS class name for custom styling.",
+                propTypes: ["string"],
+            },
+        ],
+    },
+];
+
 export const SidenavGroupPropsData: ApiTableSectionProps[] = [
     {
         attributes: [

@@ -1,6 +1,4 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { Form } from "src/form";
 import {
     FormCustomFieldPropsData,
     FormDateInputPropsData,
@@ -21,6 +19,7 @@ import {
     FormPhoneNumberInputPropsData,
     FormPredictiveTextInputPropsData,
     FormRangeSliderPropsData,
+    FormSelectHistogramPropsData,
     FormSliderPropsData,
     FormTextareaPropsData,
     FormTimeRangePickerPropsData,
@@ -32,7 +31,10 @@ import {
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "Form", content: <ArgTypes of={Form} /> },
+            {
+                label: "FormSelectHistogramProps",
+                content: <ApiTable sections={FormSelectHistogramPropsData} />,
+            },
             {
                 label: "FormLabelAddonTriggerProps",
                 content: <ApiTable sections={FormLabelAddonTriggerPropsData} />,

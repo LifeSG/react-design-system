@@ -4,6 +4,69 @@
 
 import { ApiTableSectionProps } from "stories/storybook-common";
 
+export const TimelinePropsData: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "items",
+                description: "The items to be displayed.",
+                propTypes: ["TimelineItemProps[]"],
+                mandatory: true,
+            },
+            {
+                name: "title",
+                description: "The text title of the Timeline.",
+                propTypes: ["string"],
+            },
+            {
+                name: "className",
+                description: "CSS class name for custom styling.",
+                propTypes: ["string"],
+            },
+            {
+                name: "id",
+                description: "Unique identifier for the component.",
+                propTypes: ["string"],
+            },
+            {
+                name: "startCol",
+                description:
+                    "The column at which the items should start at (useful if component is wrapped in a CSS grid div).",
+                propTypes: ["number"],
+            },
+            {
+                name: "colSpan",
+                description:
+                    "The number of columns that the component should span (useful if component is wrapped in a CSS grid div).",
+                propTypes: ["number"],
+            },
+            {
+                name: "data-testid",
+                description: "Test identifier for automated testing.",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-base-indicator-testid",
+                description: "Test identifier for the component's indicators.",
+                propTypes: ["string"],
+            },
+            {
+                name: "headingLevel",
+                description:
+                    "Specify a custom heading level to match the component's position in the page.",
+                propTypes: ["number"],
+            },
+            {
+                name: "counterOffset",
+                description:
+                    "The offset for the numeric indicators. If offset = 2, the start of the timeline will be index + 1 + offset = 3.",
+                propTypes: ["number"],
+                defaultValue: "0",
+            },
+        ],
+    },
+];
+
 export const TimelineItemPropsData: ApiTableSectionProps[] = [
     {
         attributes: [

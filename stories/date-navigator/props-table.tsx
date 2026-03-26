@@ -1,13 +1,12 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { DateNavigator } from "src/date-navigator";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { DateNavigatorPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
             {
-                label: "DateNavigator",
-                content: <ArgTypes of={DateNavigator} />,
+                label: "DateNavigatorProps",
+                content: <ApiTable sections={DateNavigatorPropsData} />,
             },
         ]}
     />

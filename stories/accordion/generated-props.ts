@@ -4,6 +4,64 @@
 
 import { ApiTableSectionProps } from "stories/storybook-common";
 
+export const AccordionPropsData: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "children",
+                description: "",
+                propTypes: ["JSX.Element", "JSX.Element[]"],
+                mandatory: true,
+            },
+            {
+                name: "title",
+                description: "",
+                propTypes: ["string"],
+            },
+            {
+                name: "enableExpandAll",
+                description: "",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "initialDisplay",
+                description: "",
+                propTypes: ['"collapse-all"', '"expand-all"'],
+            },
+            {
+                name: "showTitleInMobile",
+                description: "",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "id",
+                description: "",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "",
+                propTypes: ["string"],
+            },
+            {
+                name: "className",
+                description: "",
+                propTypes: ["string"],
+            },
+            {
+                name: "headingLevel",
+                description: "",
+                propTypes: ["number"],
+            },
+            {
+                name: "onExpandCollapseChange",
+                description: "",
+                propTypes: ["((expanded: boolean) => void) | undefined"],
+            },
+        ],
+    },
+];
+
 export const AccordionItemPropsData: ApiTableSectionProps[] = [
     {
         attributes: [

@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { Overlay } from "src/overlay";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { OverlayPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "Overlay", content: <ArgTypes of={Overlay} /> }]}
+        tabs={[
+            {
+                label: "OverlayProps",
+                content: <ApiTable sections={OverlayPropsData} />,
+            },
+        ]}
     />
 );

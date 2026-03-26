@@ -1,12 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { Accordion } from "src/accordion";
-import { AccordionItemPropsData } from "./generated-props";
+import { AccordionItemPropsData, AccordionPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "Accordion", content: <ArgTypes of={Accordion} /> },
+            {
+                label: "AccordionProps",
+                content: <ApiTable sections={AccordionPropsData} />,
+            },
             {
                 label: "AccordionItemProps",
                 content: <ApiTable sections={AccordionItemPropsData} />,

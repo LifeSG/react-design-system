@@ -1,6 +1,4 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { Navbar } from "src/navbar";
 import {
     NavItemCommonPropsData,
     NavItemComponentPropsData,
@@ -15,6 +13,7 @@ import {
     NavbarButtonComponentPropsData,
     NavbarButtonPropsData,
     NavbarDrawerPropsData,
+    NavbarPropsData,
     NavbarResourcesPropsData,
     NavbarSharedPropsData,
 } from "./generated-props";
@@ -22,7 +21,10 @@ import {
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "Navbar", content: <ArgTypes of={Navbar} /> },
+            {
+                label: "NavbarProps",
+                content: <ApiTable sections={NavbarPropsData} />,
+            },
             {
                 label: "NavItemLinkProps",
                 content: <ApiTable sections={NavItemLinkPropsData} />,

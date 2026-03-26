@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { Breadcrumb } from "src/breadcrumb";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { BreadcrumbPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "Breadcrumb", content: <ArgTypes of={Breadcrumb} /> }]}
+        tabs={[
+            {
+                label: "BreadcrumbProps",
+                content: <ApiTable sections={BreadcrumbPropsData} />,
+            },
+        ]}
     />
 );

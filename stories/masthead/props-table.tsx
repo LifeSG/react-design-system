@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { Masthead } from "src/masthead";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { MastheadPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "Masthead", content: <ArgTypes of={Masthead} /> }]}
+        tabs={[
+            {
+                label: "MastheadProps",
+                content: <ApiTable sections={MastheadPropsData} />,
+            },
+        ]}
     />
 );

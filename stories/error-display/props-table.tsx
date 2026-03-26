@@ -1,11 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { ErrorDisplay } from "src/error-display";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { ErrorDisplayPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "ErrorDisplay", content: <ArgTypes of={ErrorDisplay} /> },
+            {
+                label: "ErrorDisplayProps",
+                content: <ApiTable sections={ErrorDisplayPropsData} />,
+            },
         ]}
     />
 );

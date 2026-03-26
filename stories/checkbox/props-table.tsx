@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { Checkbox } from "src/checkbox";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { CheckboxPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "Checkbox", content: <ArgTypes of={Checkbox} /> }]}
+        tabs={[
+            {
+                label: "CheckboxProps",
+                content: <ApiTable sections={CheckboxPropsData} />,
+            },
+        ]}
     />
 );

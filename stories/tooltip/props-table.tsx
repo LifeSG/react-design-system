@@ -1,15 +1,17 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { Tooltip } from "src/tooltip";
 import {
     TooltipHOCOptionsPropsData,
     TooltipHOCPropsData,
+    TooltipPropsData,
 } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "Tooltip", content: <ArgTypes of={Tooltip} /> },
+            {
+                label: "TooltipProps",
+                content: <ApiTable sections={TooltipPropsData} />,
+            },
             {
                 label: "TooltipHOCProps",
                 content: <ApiTable sections={TooltipHOCPropsData} />,

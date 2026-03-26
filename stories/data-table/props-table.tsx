@@ -1,7 +1,6 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { DataTable } from "src/data-table";
 import {
+    DataTablePropsData,
     HeaderItemPropsData,
     HeaderPropsData,
     RowPropsData,
@@ -11,7 +10,10 @@ import {
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "DataTable", content: <ArgTypes of={DataTable} /> },
+            {
+                label: "DataTableProps",
+                content: <ApiTable sections={DataTablePropsData} />,
+            },
             {
                 label: "SortIndicatorsProps",
                 content: <ApiTable sections={SortIndicatorsPropsData} />,

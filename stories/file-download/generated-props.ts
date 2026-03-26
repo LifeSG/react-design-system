@@ -4,6 +4,59 @@
 
 import { ApiTableSectionProps } from "stories/storybook-common";
 
+export const FileDownloadPropsData: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "title",
+                description: "A title to be displayed for the component.",
+                propTypes: ["string", "JSX.Element"],
+            },
+            {
+                name: "description",
+                description: "The description to be displayed.",
+                propTypes: ["string", "JSX.Element"],
+            },
+            {
+                name: "fileItems",
+                description: "The files to be rendered.",
+                propTypes: ["FileItemDownloadProps[]"],
+                mandatory: true,
+            },
+            {
+                name: "styleType",
+                description:
+                    'The style type for the component. Values "bordered" | "no-border".',
+                propTypes: ["FileDownloadStyle"],
+                defaultValue: '"bordered"',
+            },
+            {
+                name: "className",
+                description: "CSS class name for custom styling.",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "Test identifier for automated testing.",
+                propTypes: ["string"],
+            },
+            {
+                name: "id",
+                description: "Unique identifier for the component.",
+                propTypes: ["string"],
+            },
+            {
+                name: "onDownload",
+                description: "Called when file item is clicked",
+                propTypes: [
+                    "(file: FileItemDownloadProps) => void | Promise<void>",
+                ],
+                mandatory: true,
+            },
+        ],
+    },
+];
+
 export const FileItemDownloadPropsData: ApiTableSectionProps[] = [
     {
         attributes: [

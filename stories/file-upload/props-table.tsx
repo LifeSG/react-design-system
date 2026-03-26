@@ -1,12 +1,17 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { FileUpload } from "src/file-upload";
-import { FileInputPropsData, FileItemPropsData } from "./generated-props";
+import {
+    FileInputPropsData,
+    FileItemPropsData,
+    FileUploadPropsData,
+} from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "FileUpload", content: <ArgTypes of={FileUpload} /> },
+            {
+                label: "FileUploadProps",
+                content: <ApiTable sections={FileUploadPropsData} />,
+            },
             {
                 label: "FileItemProps",
                 content: <ApiTable sections={FileItemPropsData} />,

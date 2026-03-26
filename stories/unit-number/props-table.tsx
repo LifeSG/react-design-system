@@ -1,13 +1,12 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { UnitNumberInput } from "src/unit-number";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { UnitNumberInputPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
             {
-                label: "UnitNumberInput",
-                content: <ArgTypes of={UnitNumberInput} />,
+                label: "UnitNumberInputProps",
+                content: <ApiTable sections={UnitNumberInputPropsData} />,
             },
         ]}
     />

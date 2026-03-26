@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { Drawer } from "src/drawer";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { DrawerPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "Drawer", content: <ArgTypes of={Drawer} /> }]}
+        tabs={[
+            {
+                label: "DrawerProps",
+                content: <ApiTable sections={DrawerPropsData} />,
+            },
+        ]}
     />
 );

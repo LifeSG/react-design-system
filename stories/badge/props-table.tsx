@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { Badge } from "src/badge";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { BadgePropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "Badge", content: <ArgTypes of={Badge} /> }]}
+        tabs={[
+            {
+                label: "BadgeProps",
+                content: <ApiTable sections={BadgePropsData} />,
+            },
+        ]}
     />
 );

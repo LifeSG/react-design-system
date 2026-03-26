@@ -4,6 +4,148 @@
 
 import { ApiTableSectionProps } from "stories/storybook-common";
 
+export const SchedulePropsData: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "id",
+                description: "Unique identifier for the component.",
+                propTypes: ["string"],
+            },
+            {
+                name: "className",
+                description: "CSS class name for custom styling.",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "Test identifier for automated testing.",
+                propTypes: ["string"],
+            },
+            {
+                name: "view",
+                description: "The view mode for the schedule component.",
+                propTypes: ["ScheduleView"],
+                defaultValue: '"day"',
+            },
+            {
+                name: "date",
+                description: "The current displayed date in YYYY-MM-DD format.",
+                propTypes: ["string"],
+                mandatory: true,
+            },
+            {
+                name: "emptyContentMessage",
+                description:
+                    "The message to render when there is no content (i.e. when `serviceData=[]`).",
+                propTypes: ["string"],
+            },
+            {
+                name: "serviceData",
+                description:
+                    "The data used to render each service with their time slots.",
+                propTypes: ["ScheduleEntityProps[]"],
+                mandatory: true,
+            },
+            {
+                name: "loading",
+                description:
+                    "The loading toggle to render the loading animation.",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "minTime",
+                description: "The start time of this schedule in HH:mm format.",
+                propTypes: ["string"],
+                defaultValue: '"00:00"',
+            },
+            {
+                name: "maxTime",
+                description: "The end time of this schedule in HH:mm format.",
+                propTypes: ["string"],
+                defaultValue: '"23:59"',
+            },
+            {
+                name: "initialScrollTime",
+                description:
+                    "The initial scroll position time in HH:mm format. Defaults to minTime if not provided.",
+                propTypes: ["string"],
+            },
+            {
+                name: "minDate",
+                description:
+                    "The minimum date allowed for navigation in YYYY-MM-DD format (inclusive).",
+                propTypes: ["string"],
+            },
+            {
+                name: "maxDate",
+                description:
+                    "The maximum date allowed for navigation in YYYY-MM-DD format (inclusive).",
+                propTypes: ["string"],
+            },
+            {
+                name: "onPreviousDayClick",
+                description:
+                    "The callback function to trigger when the left arrow has been clicked on the date navigator component.",
+                propTypes: ["(currentDate: string) => void"],
+                mandatory: true,
+            },
+            {
+                name: "onNextDayClick",
+                description:
+                    "The callback function to trigger when the right arrow has been clicked on the date navigator component.",
+                propTypes: ["(currentDate: string) => void"],
+                mandatory: true,
+            },
+            {
+                name: "onCalendarDateSelect",
+                description:
+                    "The callback function to trigger when a calendar date has been picked in the dropdown calendar.",
+                propTypes: ["(currentDate: string) => void"],
+                mandatory: true,
+            },
+            {
+                name: "onTodayClick",
+                description:
+                    "The callback function to trigger when the today button is clicked.",
+                propTypes: ["() => void"],
+                mandatory: true,
+            },
+            {
+                name: "onEmptySlotClick",
+                description:
+                    "The callback function to trigger when an empty slot has been clicked.",
+                propTypes: [
+                    "((slot: ScheduleEmptySlotProps) => void) | undefined",
+                ],
+            },
+            {
+                name: "emptySlotPopover",
+                description:
+                    "Provides a custom popover configuration for a given empty slot.",
+                propTypes: [
+                    "",
+                    "((slot: ScheduleEmptySlotProps) => SchedulePopoverProps)\n        | undefined",
+                ],
+            },
+            {
+                name: "blockedMessage",
+                description:
+                    'Custom message to display for blocked slots instead of the default "Unavailable" text.',
+                propTypes: ["string"],
+                defaultValue: '"Unavailable"',
+            },
+            {
+                name: "onClickHiddenSlots",
+                description:
+                    "The callback function to trigger when hidden slots button is clicked in week view. Provides the list of hidden service names for the clicked interval.",
+                propTypes: ["((hiddenServices: string[]) => void) | undefined"],
+            },
+        ],
+    },
+];
+
 export const ScheduleEntityPropsData: ApiTableSectionProps[] = [
     {
         attributes: [

@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { Card } from "src/card";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { CardPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "Card", content: <ArgTypes of={Card} /> }]}
+        tabs={[
+            {
+                label: "CardProps",
+                content: <ApiTable sections={CardPropsData} />,
+            },
+        ]}
     />
 );

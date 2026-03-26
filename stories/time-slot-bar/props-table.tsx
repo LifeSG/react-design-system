@@ -1,11 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { TimeSlotBar } from "src/time-slot-bar";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { TimeSlotBarPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "TimeSlotBar", content: <ArgTypes of={TimeSlotBar} /> },
+            {
+                label: "TimeSlotBarProps",
+                content: <ApiTable sections={TimeSlotBarPropsData} />,
+            },
         ]}
     />
 );

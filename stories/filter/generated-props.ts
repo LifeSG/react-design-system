@@ -4,6 +4,105 @@
 
 import { ApiTableSectionProps } from "stories/storybook-common";
 
+export const FilterPropsData: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "customLabels",
+                description: "Specifies custom labels.",
+                propTypes: [
+                    "",
+                    "FilterModalCustomLabelProps",
+                    "FilterSidebarCustomLabelProps",
+                ],
+            },
+            {
+                name: "id",
+                description: "Unique identifier for the component.",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "Test identifier for automated testing.",
+                propTypes: ["string"],
+            },
+            {
+                name: "className",
+                description: "CSS class name for custom styling.",
+                propTypes: ["string"],
+            },
+            {
+                name: "style",
+                description: "Inline styles for the component.",
+                propTypes: ["CSSProperties"],
+            },
+            {
+                name: "clearButtonDisabled",
+                description:
+                    "Specifies if the feature to expand/collapse all child items is enabled.",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "onClear",
+                description: "Called when clear button is pressed",
+                propTypes: ["(() => void) | undefined"],
+            },
+            {
+                name: "children",
+                description: "The items in the Filter.",
+                propTypes: ["ReactNode", "((mode: Mode) => ReactNode)"],
+            },
+            {
+                name: "headerTitle",
+                description: "",
+                propTypes: ["string"],
+            },
+            {
+                name: "toggleFilterButtonLabel",
+                description: "",
+                propTypes: ["string"],
+            },
+            {
+                name: "doneButtonLabel",
+                description: "",
+                propTypes: ["string"],
+            },
+            {
+                name: "onDismiss",
+                description:
+                    "Called when dismiss button is pressed (mobile mode only)",
+                propTypes: ["(() => void) | undefined"],
+            },
+            {
+                name: "onDone",
+                description:
+                    "Called when done button is pressed (mobile mode only)",
+                propTypes: ["(() => void) | undefined"],
+            },
+            {
+                name: "onModalOpen",
+                description:
+                    "Called when filter modal is opened (mobile only).",
+                propTypes: ["() => void"],
+            },
+            {
+                name: "toggleFilterButtonStyle",
+                description:
+                    "The style type of the filter toggle button (in mobile).",
+                propTypes: ["ButtonStyleType"],
+                defaultValue: '"light"',
+            },
+            {
+                name: "insets",
+                description:
+                    "The distance from the edge of the viewport, defining the safe area not covered by status bars, notches, or other navigation elements. The header and footer in mobile mode will be offset accordingly.",
+                propTypes: ["Insets"],
+            },
+        ],
+    },
+];
+
 export const FilterBasePropsData: ApiTableSectionProps[] = [
     {
         attributes: [

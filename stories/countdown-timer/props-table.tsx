@@ -1,13 +1,12 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { CountdownTimer } from "src/countdown-timer";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { CountdownTimerPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
             {
-                label: "CountdownTimer",
-                content: <ArgTypes of={CountdownTimer} />,
+                label: "CountdownTimerProps",
+                content: <ApiTable sections={CountdownTimerPropsData} />,
             },
         ]}
     />

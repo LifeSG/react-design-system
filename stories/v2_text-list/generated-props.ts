@@ -4,6 +4,34 @@
 
 import { ApiTableSectionProps } from "stories/storybook-common";
 
+export const V2_UnorderedListPropsData: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "bulletType",
+                description: 'Values: "disc" | "circle" | "square" | "none"',
+                propTypes: ["V2_BulletType"],
+            },
+            {
+                name: "children",
+                description: "",
+                propTypes: ["JSX.Element", "JSX.Element[]"],
+                mandatory: true,
+            },
+            {
+                name: "bottomMargin",
+                description: "",
+                propTypes: ["number"],
+            },
+            {
+                name: "size",
+                description: "",
+                propTypes: ["V2_TextSizeType"],
+            },
+        ],
+    },
+];
+
 export const V2_OrderedListPropsData: ApiTableSectionProps[] = [
     {
         attributes: [

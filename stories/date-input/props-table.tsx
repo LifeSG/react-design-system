@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { DateInput } from "src/date-input";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { DateInputPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "DateInput", content: <ArgTypes of={DateInput} /> }]}
+        tabs={[
+            {
+                label: "DateInputProps",
+                content: <ApiTable sections={DateInputPropsData} />,
+            },
+        ]}
     />
 );

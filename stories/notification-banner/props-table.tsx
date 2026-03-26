@@ -1,13 +1,12 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { NotificationBanner } from "src/notification-banner";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { NotificationBannerPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
             {
-                label: "NotificationBanner",
-                content: <ArgTypes of={NotificationBanner} />,
+                label: "NotificationBannerProps",
+                content: <ApiTable sections={NotificationBannerPropsData} />,
             },
         ]}
     />

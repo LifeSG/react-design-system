@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { LinkList } from "src/link-list";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { LinkListPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "LinkList", content: <ArgTypes of={LinkList} /> }]}
+        tabs={[
+            {
+                label: "LinkListProps",
+                content: <ApiTable sections={LinkListPropsData} />,
+            },
+        ]}
     />
 );

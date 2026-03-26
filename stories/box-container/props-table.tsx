@@ -1,11 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { BoxContainer } from "src/box-container";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { BoxContainerPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "BoxContainer", content: <ArgTypes of={BoxContainer} /> },
+            {
+                label: "BoxContainerProps",
+                content: <ApiTable sections={BoxContainerPropsData} />,
+            },
         ]}
     />
 );

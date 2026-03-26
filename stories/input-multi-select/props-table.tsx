@@ -1,13 +1,12 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { InputMultiSelect } from "src/input-multi-select";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { InputMultiSelectPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
             {
-                label: "InputMultiSelect",
-                content: <ArgTypes of={InputMultiSelect} />,
+                label: "InputMultiSelectProps",
+                content: <ApiTable sections={InputMultiSelectPropsData} />,
             },
         ]}
     />

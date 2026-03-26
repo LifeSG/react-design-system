@@ -1,13 +1,12 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { ProgressIndicator } from "src/progress-indicator";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { ProgressIndicatorPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
             {
-                label: "ProgressIndicator",
-                content: <ArgTypes of={ProgressIndicator} />,
+                label: "ProgressIndicatorProps",
+                content: <ApiTable sections={ProgressIndicatorPropsData} />,
             },
         ]}
     />

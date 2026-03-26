@@ -1,12 +1,16 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { Typography } from "src/typography";
-import { TypographyLinkPropsData } from "./generated-props";
+import {
+    TypographyLinkPropsData,
+    TypographyPropsData,
+} from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "Typography", content: <ArgTypes of={Typography} /> },
+            {
+                label: "TypographyProps",
+                content: <ApiTable sections={TypographyPropsData} />,
+            },
             {
                 label: "TypographyLinkProps",
                 content: <ApiTable sections={TypographyLinkPropsData} />,

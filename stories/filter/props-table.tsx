@@ -1,6 +1,4 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { Filter } from "src/filter";
 import {
     FilterBasePropsData,
     FilterItemCheckboxOptionPropsData,
@@ -8,13 +6,17 @@ import {
     FilterItemPropsData,
     FilterModalPropsData,
     FilterPagePropsData,
+    FilterPropsData,
     FilterSidebarPropsData,
 } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "Filter", content: <ArgTypes of={Filter} /> },
+            {
+                label: "FilterProps",
+                content: <ApiTable sections={FilterPropsData} />,
+            },
             {
                 label: "FilterBaseProps",
                 content: <ApiTable sections={FilterBasePropsData} />,

@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { Timepicker } from "src/timepicker";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { TimepickerPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "Timepicker", content: <ArgTypes of={Timepicker} /> }]}
+        tabs={[
+            {
+                label: "TimepickerProps",
+                content: <ApiTable sections={TimepickerPropsData} />,
+            },
+        ]}
     />
 );

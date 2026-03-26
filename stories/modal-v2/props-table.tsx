@@ -1,17 +1,19 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { ModalV2 } from "src/modal-v2";
 import {
     ModalCardPropsData,
     ModalCloseButtonPropsData,
     ModalContentPropsData,
     ModalFooterPropsData,
+    ModalV2PropsData,
 } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "ModalV2", content: <ArgTypes of={ModalV2} /> },
+            {
+                label: "ModalV2Props",
+                content: <ApiTable sections={ModalV2PropsData} />,
+            },
             {
                 label: "ModalCardProps",
                 content: <ApiTable sections={ModalCardPropsData} />,

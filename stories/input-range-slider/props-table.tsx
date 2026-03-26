@@ -1,13 +1,12 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { InputRangeSlider } from "src/input-range-slider";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { InputRangeSliderPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
             {
-                label: "InputRangeSlider",
-                content: <ArgTypes of={InputRangeSlider} />,
+                label: "InputRangeSliderProps",
+                content: <ApiTable sections={InputRangeSliderPropsData} />,
             },
         ]}
     />

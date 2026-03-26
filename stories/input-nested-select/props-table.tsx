@@ -1,8 +1,7 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { InputNestedSelect } from "src/input-nested-select";
 import {
     InputNestedSelectOptionsPropsData,
+    InputNestedSelectPropsData,
     InputNestedSelectSharedPropsData,
     L1OptionPropsData,
     L2OptionPropsData,
@@ -13,8 +12,8 @@ export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
             {
-                label: "InputNestedSelect",
-                content: <ArgTypes of={InputNestedSelect} />,
+                label: "InputNestedSelectProps",
+                content: <ApiTable sections={InputNestedSelectPropsData} />,
             },
             {
                 label: "InputNestedSelectOptionsProps",

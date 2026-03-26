@@ -4,6 +4,63 @@
 
 import { ApiTableSectionProps } from "stories/storybook-common";
 
+export const PopoverV2PropsData: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "children",
+                description: "The content of the Popover.",
+                propTypes: ["string", "JSX.Element"],
+                mandatory: true,
+            },
+            {
+                name: "visible",
+                description: "The visibility state of the Popover.",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "id",
+                description: "Unique identifier for the component.",
+                propTypes: ["string"],
+            },
+            {
+                name: "className",
+                description: "CSS class name for custom styling.",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "Test identifier for automated testing.",
+                propTypes: ["string"],
+            },
+            {
+                name: "onMobileClose",
+                description:
+                    "The callback when the user dismisses the Popover (modal form) in mobile viewports.",
+                propTypes: ["(() => void) | undefined"],
+            },
+            {
+                name: "ariaLabel",
+                description: "The accessible label for the popover content.",
+                propTypes: ["string"],
+                defaultValue: '"More information"',
+            },
+            {
+                name: "overflow",
+                description:
+                    "Controls how overflow content behaves inside the popover container.",
+                propTypes: ["PopoverOverflowType"],
+            },
+            {
+                name: "maxHeight",
+                description:
+                    "Maximum height (in pixels) allowed for the popover content.",
+                propTypes: ["number"],
+            },
+        ],
+    },
+];
+
 export const PopoverV2TriggerPropsData: ApiTableSectionProps[] = [
     {
         attributes: [

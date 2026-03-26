@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { Input } from "src/input";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { InputPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "Input", content: <ArgTypes of={Input} /> }]}
+        tabs={[
+            {
+                label: "InputProps",
+                content: <ApiTable sections={InputPropsData} />,
+            },
+        ]}
     />
 );

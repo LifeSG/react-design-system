@@ -1,13 +1,12 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { SingpassButton } from "src/singpass-button";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { SingpassButtonPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
             {
-                label: "SingpassButton",
-                content: <ArgTypes of={SingpassButton} />,
+                label: "SingpassButtonProps",
+                content: <ApiTable sections={SingpassButtonPropsData} />,
             },
         ]}
     />

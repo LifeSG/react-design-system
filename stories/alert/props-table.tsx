@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { Alert } from "src/alert";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { AlertPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "Alert", content: <ArgTypes of={Alert} /> }]}
+        tabs={[
+            {
+                label: "AlertProps",
+                content: <ApiTable sections={AlertPropsData} />,
+            },
+        ]}
     />
 );

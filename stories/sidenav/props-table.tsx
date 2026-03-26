@@ -1,17 +1,19 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { Sidenav } from "src/sidenav";
 import {
     SidenavDrawerItemPropsData,
     SidenavDrawerSubitemPropsData,
     SidenavGroupPropsData,
     SidenavItemPropsData,
+    SidenavPropsData,
 } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "Sidenav", content: <ArgTypes of={Sidenav} /> },
+            {
+                label: "SidenavProps",
+                content: <ApiTable sections={SidenavPropsData} />,
+            },
             {
                 label: "SidenavGroupProps",
                 content: <ApiTable sections={SidenavGroupPropsData} />,

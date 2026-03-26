@@ -1,11 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { RadioButton } from "src/radio-button";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { RadioButtonPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "RadioButton", content: <ArgTypes of={RadioButton} /> },
+            {
+                label: "RadioButtonProps",
+                content: <ApiTable sections={RadioButtonPropsData} />,
+            },
         ]}
     />
 );

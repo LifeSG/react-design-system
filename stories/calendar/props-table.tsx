@@ -1,15 +1,17 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { Calendar } from "src/calendar";
 import {
     CalendarMultiPropsData,
+    CalendarPropsData,
     CalendarSinglePropsData,
 } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "Calendar", content: <ArgTypes of={Calendar} /> },
+            {
+                label: "CalendarProps",
+                content: <ApiTable sections={CalendarPropsData} />,
+            },
             {
                 label: "CalendarSingleProps",
                 content: <ApiTable sections={CalendarSinglePropsData} />,

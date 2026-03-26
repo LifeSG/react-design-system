@@ -1,13 +1,12 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { PredictiveTextInput } from "src/predictive-text-input";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { PredictiveTextInputPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
             {
-                label: "PredictiveTextInput",
-                content: <ArgTypes of={PredictiveTextInput} />,
+                label: "PredictiveTextInputProps",
+                content: <ApiTable sections={PredictiveTextInputPropsData} />,
             },
         ]}
     />

@@ -1,9 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
-import { PropTableTabs } from "stories/storybook-common";
-import { Divider } from "src/divider";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { DividerPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
-        tabs={[{ label: "Divider", content: <ArgTypes of={Divider} /> }]}
+        tabs={[
+            {
+                label: "DividerProps",
+                content: <ApiTable sections={DividerPropsData} />,
+            },
+        ]}
     />
 );

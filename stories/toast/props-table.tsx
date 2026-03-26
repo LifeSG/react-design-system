@@ -1,12 +1,13 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { Toast } from "src/toast";
-import { ToastActionButtonPropsData } from "./generated-props";
+import { ToastActionButtonPropsData, ToastPropsData } from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "Toast", content: <ArgTypes of={Toast} /> },
+            {
+                label: "ToastProps",
+                content: <ApiTable sections={ToastPropsData} />,
+            },
             {
                 label: "ToastActionButtonProps",
                 content: <ApiTable sections={ToastActionButtonPropsData} />,

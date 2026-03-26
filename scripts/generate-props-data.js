@@ -161,6 +161,17 @@ function generateSectionAttributes(typesFile, interfaceName) {
         if (propName.startsWith("__")) continue;
 
         const propDecl = (sym.getDeclarations() || [])[0];
+
+        // Skip properties inherited from external libs (React HTML attrs, DOM, etc.)
+        if (propDecl) {
+            const fname = propDecl.getSourceFile().fileName;
+            if (
+                fname.includes("/node_modules/") ||
+                fname.includes("/typescript/lib/")
+            )
+                continue;
+        }
+
         const description = propDecl ? getJsDocText(propDecl) : "";
         const mandatory =
             propDecl && ts.isPropertySignature(propDecl)
@@ -261,9 +272,11 @@ function writeGeneratedProps(typesFile, outputFile, interfaceNames) {
             continue;
         }
         sections.push(
-            `export const ${name}Data: ApiTableSectionProps[] = [\n    {\n        attributes: [\n` +
-                attrs.join(",\n") +
-                `,\n        ],\n    },\n];`
+            `export const ${name}Data: ApiTableSectionProps[] = [\n    {\n        attributes: [` +
+                (attrs.length > 0
+                    ? `\n` + attrs.join(",\n") + `,\n        `
+                    : ``) +
+                `],\n    },\n];`
         );
     }
 
@@ -304,15 +317,16 @@ function writeConfig() {
             continue;
 
         const all = getExportedPropsInterfaces(typesFile);
-        if (all.length <= 1) continue;
+        if (all.length === 0) continue;
 
-        const { subs } = classifyInterfaces(dir, all);
-        if (subs.length === 0) continue;
+        const { primary, subs } = classifyInterfaces(dir, all);
+        const interfaces = primary ? [primary, ...subs] : subs;
+        if (interfaces.length === 0) continue;
 
         config[dir] = {
             typesFile: `src/${dir}/types.ts`,
             outputFile: `stories/${dir}/generated-props.ts`,
-            interfaces: subs,
+            interfaces,
         };
     }
 

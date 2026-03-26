@@ -1,12 +1,16 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { MaskedInput } from "src/masked-input";
-import { MaskAttributePropsData } from "./generated-props";
+import {
+    MaskAttributePropsData,
+    MaskedInputPropsData,
+} from "./generated-props";
 
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "MaskedInput", content: <ArgTypes of={MaskedInput} /> },
+            {
+                label: "MaskedInputProps",
+                content: <ApiTable sections={MaskedInputPropsData} />,
+            },
             {
                 label: "MaskAttributeProps",
                 content: <ApiTable sections={MaskAttributePropsData} />,

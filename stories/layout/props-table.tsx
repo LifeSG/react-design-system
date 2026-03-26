@@ -1,7 +1,6 @@
-import { ArgTypes } from "@storybook/addon-docs/blocks";
 import { ApiTable, PropTableTabs } from "stories/storybook-common";
-import { Layout } from "src/layout";
 import {
+    ColDivPropsData,
     ColPropsData,
     ContainerPropsData,
     ContentPropsData,
@@ -11,7 +10,10 @@ import {
 export const PropsTableTabs = () => (
     <PropTableTabs
         tabs={[
-            { label: "Layout", content: <ArgTypes of={Layout} /> },
+            {
+                label: "ColDivProps",
+                content: <ApiTable sections={ColDivPropsData} />,
+            },
             {
                 label: "ContainerProps",
                 content: <ApiTable sections={ContainerPropsData} />,
