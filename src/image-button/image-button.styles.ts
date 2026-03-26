@@ -1,12 +1,8 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Border, Colour, Font, MediaQuery, Motion, Radius } from "../theme";
 
-export const Main = styled.button<{
-    $selected?: boolean;
-    $error?: boolean;
-    $disabled?: boolean;
-}>`
+export const Main = styled.button`
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -21,8 +17,7 @@ export const Main = styled.button<{
     max-width: 13rem;
     transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
     ${Font["body-baseline-semibold"]}
-    color: ${({ $selected }) =>
-        $selected ? Colour["text-primary"] : Colour["text"]};
+    color: ${Colour["text"]};
     overflow-wrap: anywhere;
 
     img {
@@ -32,52 +27,48 @@ export const Main = styled.button<{
         object-fit: contain;
     }
 
+    &:hover {
+        border: ${Border["width-010"]} ${Border.solid}
+            ${Colour["border-hover-strong"]};
+    }
+
     ${MediaQuery.MaxWidth.sm} {
         padding: 0.5rem 0.25rem;
         gap: 0.25rem;
         ${Font["body-md-semibold"]}
     }
 
-    ${(props) => {
-        if (props.$error) {
-            return css`
-                background: ${Colour.bg};
-                border: ${Border["width-010"]} ${Border.solid}
-                    ${Colour["border-error"]};
-            `;
-        } else if (props.$selected) {
-            return css`
-                background: ${Colour["bg-selected"]};
-                border: ${Border["width-010"]} ${Border.solid}
-                    ${Colour["border-selected"]};
+    &.mainSelectedText {
+        color: ${Colour["text-primary"]};
+    }
 
-                &:hover {
-                    background: ${Colour["bg-selected-hover"]};
-                    border: ${Border["width-010"]} ${Border.solid}
-                        ${Colour["border-selected-hover"]};
-                }
-            `;
-        } else {
-            return css`
-                &:hover {
-                    border: ${Border["width-010"]} ${Border.solid}
-                        ${Colour["border-hover-strong"]};
-                }
-            `;
+    &.mainSelected {
+        background: ${Colour["bg-selected"]};
+        border: ${Border["width-010"]} ${Border.solid}
+            ${Colour["border-selected"]};
+
+        &:hover {
+            background: ${Colour["bg-selected-hover"]};
+            border: ${Border["width-010"]} ${Border.solid}
+                ${Colour["border-selected-hover"]};
         }
-    }}
+    }
 
-    ${(props) =>
-        props.$disabled &&
-        css`
-            &:hover {
-                border: ${Border["width-010"]} ${Border.solid} transparent;
-            }
-            box-shadow: none;
-            img {
-                filter: grayscale(100%);
-            }
-            color: ${Colour["text-disabled"]};
-            cursor: not-allowed;
-        `}
+    &.mainError {
+        background: ${Colour.bg};
+        border: ${Border["width-010"]} ${Border.solid} ${Colour["border-error"]};
+    }
+
+    &.mainDisabled {
+        color: ${Colour["text-disabled"]};
+        cursor: not-allowed;
+
+        img {
+            filter: grayscale(100%);
+        }
+
+        &:hover {
+            border: ${Border["width-010"]} ${Border.solid} transparent;
+        }
+    }
 `;

@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 import type { ButtonRef } from "../button/types";
@@ -8,6 +9,7 @@ import type { ImageButtonProps } from "./types";
 const Component = (
     {
         children,
+        className,
         imgSrc,
         selected,
         error,
@@ -22,13 +24,17 @@ const Component = (
     return (
         <Main
             ref={ref}
-            $disabled={disabled}
-            $selected={selected}
-            $error={error}
             type={type}
             aria-disabled={disabled}
             disabled={disabled && !focusableWhenDisabled}
             onClick={disabled ? undefined : onClick}
+            className={clsx(
+                selected && "mainSelectedText",
+                selected && "mainSelected",
+                error && "mainError",
+                disabled && "mainDisabled",
+                className
+            )}
             {...otherProps}
         >
             <ImageWithFallback src={imgSrc} />
