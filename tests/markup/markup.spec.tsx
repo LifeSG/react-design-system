@@ -9,7 +9,7 @@ describe("Markup", () => {
         expect(screen.getByTestId("markup")).toBeInTheDocument();
     });
 
-    it("resolves V4 color token when wrapped with V4 ThemeProvider", () => {
+    it("resolves V4 color token", () => {
         render(
             <Markup data-testid="markup" baseTextColor={Colour.text}>
                 content
