@@ -1,10 +1,8 @@
-import { fireEvent, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
 import { useMediaQuery } from "react-responsive";
 import type { ScheduleEntityProps, ScheduleProps } from "src/schedule";
 import { Schedule } from "src/schedule";
-
-import { renderWithV4Theme } from "../common";
 
 jest.mock("react-responsive", () => ({
     useMediaQuery: jest.fn(() => false),
@@ -43,7 +41,7 @@ describe("Schedule", () => {
     });
 
     it("should render default timeslot without errors", () => {
-        renderWithV4Theme(
+        render(
             <Schedule
                 date={scheduleMockProps.date}
                 minTime={scheduleMockProps.minTime}
@@ -66,7 +64,7 @@ describe("Schedule", () => {
     });
 
     it("should render empty timeslot without errors", () => {
-        renderWithV4Theme(
+        render(
             <Schedule
                 date={scheduleMockProps.date}
                 minTime={scheduleMockProps.minTime}
@@ -88,7 +86,7 @@ describe("Schedule", () => {
     });
 
     it("should render day view by default", () => {
-        renderWithV4Theme(
+        render(
             <Schedule
                 date={scheduleMockProps.date}
                 serviceData={buildMockRowData(1)}
@@ -104,7 +102,7 @@ describe("Schedule", () => {
     });
 
     it("should switch to week view when view selector is clicked and week is selected", async () => {
-        renderWithV4Theme(
+        render(
             <Schedule
                 date={scheduleMockProps.date}
                 serviceData={buildMockRowData(1)}
@@ -123,7 +121,7 @@ describe("Schedule", () => {
     });
 
     it("should display calendar dropdown when onCalendarDateSelect prop is specified and the date navigator date text is clicked", () => {
-        renderWithV4Theme(
+        render(
             <Schedule
                 date={scheduleMockProps.date}
                 minTime={scheduleMockProps.minTime}
@@ -147,7 +145,7 @@ describe("Schedule", () => {
     it("should trigger onTodayClick when today button is clicked", () => {
         const onTodayClick = jest.fn();
 
-        renderWithV4Theme(
+        render(
             <Schedule
                 date={scheduleMockProps.date}
                 serviceData={buildMockRowData(1)}
@@ -170,7 +168,7 @@ describe("Schedule", () => {
         const mockRowData = buildMockRowData(1);
         mockRowData[0].slots[1].onClick = mockSlotClick;
 
-        renderWithV4Theme(
+        render(
             <Schedule
                 date={scheduleMockProps.date}
                 minTime="08:00"
@@ -202,7 +200,7 @@ describe("Schedule", () => {
     it("should navigate between services on mobile", () => {
         (useMediaQuery as jest.Mock).mockReturnValue(true);
 
-        renderWithV4Theme(
+        render(
             <Schedule
                 date={scheduleMockProps.date}
                 serviceData={buildMockRowData(3)}
@@ -220,7 +218,7 @@ describe("Schedule", () => {
     });
 
     it("should respect initialScrollTime prop", () => {
-        renderWithV4Theme(
+        render(
             <Schedule
                 date={scheduleMockProps.date}
                 minTime="06:00"
@@ -241,7 +239,7 @@ describe("Schedule", () => {
         const customId = "custom-timeslot-id";
         const customClassName = "custom-timeslot-class";
 
-        renderWithV4Theme(
+        render(
             <Schedule
                 id={customId}
                 className={customClassName}
@@ -260,7 +258,7 @@ describe("Schedule", () => {
     });
 
     it("should show loading state", () => {
-        renderWithV4Theme(
+        render(
             <Schedule
                 date={scheduleMockProps.date}
                 serviceData={[]}
@@ -277,7 +275,7 @@ describe("Schedule", () => {
     });
 
     it("should handle date navigation", () => {
-        renderWithV4Theme(
+        render(
             <Schedule
                 date={scheduleMockProps.date}
                 serviceData={buildMockRowData(1)}
@@ -307,7 +305,7 @@ describe("Schedule", () => {
 
     describe("Week View", () => {
         it("should render week view when switching from day view", () => {
-            renderWithV4Theme(
+            render(
                 <Schedule
                     date={scheduleMockProps.date}
                     serviceData={buildMockRowDataForWeek()}
@@ -326,7 +324,7 @@ describe("Schedule", () => {
         });
 
         it("should display 7 days of the week in week view", () => {
-            renderWithV4Theme(
+            render(
                 <Schedule
                     date="2024-09-11" // Wednesday
                     serviceData={buildMockRowDataForWeek()}
@@ -346,7 +344,7 @@ describe("Schedule", () => {
         });
 
         it("should display correct dates for the week", () => {
-            renderWithV4Theme(
+            render(
                 <Schedule
                     date="2024-09-11" // Wednesday Sept 11, 2024
                     serviceData={buildMockRowDataForWeek()}
@@ -365,7 +363,7 @@ describe("Schedule", () => {
         });
 
         it("should show time slots in week view", () => {
-            renderWithV4Theme(
+            render(
                 <Schedule
                     date="2024-09-11"
                     minTime="08:00"
@@ -395,7 +393,7 @@ describe("Schedule", () => {
                 mockRowData[0].slots[0].onClick = mockSlotClick;
             }
 
-            renderWithV4Theme(
+            render(
                 <Schedule
                     date="2024-09-11"
                     minTime="08:00"
@@ -423,7 +421,7 @@ describe("Schedule", () => {
         });
 
         it("should show service initials in week view slots", () => {
-            renderWithV4Theme(
+            render(
                 <Schedule
                     date="2024-09-11"
                     minTime="08:00"
@@ -441,7 +439,7 @@ describe("Schedule", () => {
         });
 
         it("should show loading state in week view", () => {
-            renderWithV4Theme(
+            render(
                 <Schedule
                     date="2024-09-11"
                     serviceData={buildMockRowDataForWeek()}
@@ -462,7 +460,7 @@ describe("Schedule", () => {
         });
 
         it("should handle different slot statuses in week view", () => {
-            renderWithV4Theme(
+            render(
                 <Schedule
                     date="2024-09-11"
                     minTime="08:00"
@@ -482,7 +480,7 @@ describe("Schedule", () => {
         });
 
         it("should respect initialScrollTime in week view", () => {
-            renderWithV4Theme(
+            render(
                 <Schedule
                     date="2024-09-11"
                     minTime="06:00"
@@ -523,7 +521,7 @@ describe("Schedule", () => {
                 ],
             });
 
-            renderWithV4Theme(
+            render(
                 <Schedule
                     date="2024-09-11"
                     minTime="08:00"

@@ -1,9 +1,7 @@
-import { act, fireEvent, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
 import type { TimeTableProps, TimeTableRowData } from "src/timetable";
 import { TimeTable } from "src/timetable";
-
-import { renderWithV4Theme } from "../common";
 
 describe("TimeTable", () => {
     const date = dayjs("2024-09-11");
@@ -37,7 +35,7 @@ describe("TimeTable", () => {
     });
 
     it("should render default timetable without errors", () => {
-        renderWithV4Theme(
+        render(
             <TimeTable
                 date={timeTableMockProps.date}
                 minDate={timeTableMockProps.minTime}
@@ -60,7 +58,7 @@ describe("TimeTable", () => {
     });
 
     it("should render empty timetable without errors", () => {
-        renderWithV4Theme(
+        render(
             <TimeTable
                 date={timeTableMockProps.date}
                 minDate={timeTableMockProps.minTime}
@@ -82,7 +80,7 @@ describe("TimeTable", () => {
     it("should display calendar dropdown when onCalendarDateSelect prop is specified and the date navigator date text is clicked", () => {
         const onCalendarDateSelect = jest.fn();
 
-        renderWithV4Theme(
+        render(
             <TimeTable
                 date={timeTableMockProps.date}
                 minDate={timeTableMockProps.minTime}
@@ -103,7 +101,7 @@ describe("TimeTable", () => {
     });
 
     it("should not have have popover appear if there's no popover content", () => {
-        renderWithV4Theme(
+        render(
             <TimeTable
                 date={timeTableMockProps.date}
                 minTime="07:00:00"
@@ -141,7 +139,7 @@ describe("TimeTable", () => {
     });
 
     it("should have popover appear if there's popover content", () => {
-        renderWithV4Theme(
+        render(
             <TimeTable
                 date={timeTableMockProps.date}
                 minTime="07:00:00"
@@ -180,7 +178,7 @@ describe("TimeTable", () => {
     it("should trigger onRowNameClick if row header name are clicked", () => {
         const onRowNameClick = jest.fn();
 
-        renderWithV4Theme(
+        render(
             <TimeTable
                 date={timeTableMockProps.date}
                 rowData={[
@@ -213,7 +211,7 @@ describe("TimeTable", () => {
     });
 
     it("should have show empty content display if no rowData is passed into TimeTable", () => {
-        renderWithV4Theme(
+        render(
             <TimeTable
                 date={timeTableMockProps.date}
                 rowData={[]}
@@ -229,7 +227,7 @@ describe("TimeTable", () => {
     });
 
     it("should have lazy load and a lazy loader should appear when user scrolls to the bottom of the TimeTable", async () => {
-        renderWithV4Theme(
+        render(
             <TimeTable
                 date={timeTableMockProps.date}
                 minDate={timeTableMockProps.minTime}
@@ -256,7 +254,7 @@ describe("TimeTable", () => {
     });
 
     it("should render a full bar of blocked slot when row cells are empty and rowMinTime and rowMaxTime are omitted for that row", async () => {
-        renderWithV4Theme(
+        render(
             <TimeTable
                 date={timeTableMockProps.date}
                 rowData={[

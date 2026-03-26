@@ -1,13 +1,12 @@
 import { CircleIcon } from "@lifesg/react-icons";
 import {
+    render,
     screen,
     waitFor,
     waitForElementToBeRemoved,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { PopoverInline } from "src/popover-v2";
-
-import { renderWithV4Theme } from "../common";
 
 const TEXT_CONTENT = "Text";
 const TOOLTIP_CONTENT = "Tooltip";
@@ -26,7 +25,7 @@ describe("PopoverInline", () => {
     });
 
     it("should render the popover text and icon", () => {
-        renderWithV4Theme(
+        render(
             <PopoverInline
                 content={TEXT_CONTENT}
                 icon={<CircleIcon />}
@@ -48,7 +47,7 @@ describe("PopoverInline", () => {
 
     describe("trigger", () => {
         it("should display the popover when clicked", async () => {
-            renderWithV4Theme(
+            render(
                 <PopoverInline
                     content={TEXT_CONTENT}
                     popoverContent={TOOLTIP_CONTENT}
@@ -61,7 +60,7 @@ describe("PopoverInline", () => {
         });
 
         it("should display the popover when hovered", async () => {
-            renderWithV4Theme(
+            render(
                 <PopoverInline
                     content={TEXT_CONTENT}
                     popoverContent={TOOLTIP_CONTENT}
