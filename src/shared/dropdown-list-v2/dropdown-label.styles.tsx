@@ -6,7 +6,16 @@ import type {
     LabelDisplayType,
     TruncateType,
 } from "../dropdown-list/types";
-import { lineClampCss } from "../styles";
+import { lineClampDynamicCss } from "../styles";
+
+const tokens = {
+    primaryText: {
+        maxLines: "--fds-dropdownLabel-primaryText-maxLines",
+    },
+    secondaryText: {
+        maxLines: "--fds-dropdownLabel-secondaryText-maxLines",
+    },
+};
 
 // =============================================================================
 // STYLE INTERFACE
@@ -55,19 +64,23 @@ export const PrimaryText = styled.div<LabelTextStyleProps>`
         }
     }}
     width: 100%;
+    overflow-wrap: break-word;
 
     ${(props) =>
-        props.$truncateType === "end" && lineClampCss(props.$maxLines || 2)}
-    overflow-wrap: break-word;
+        props.$truncateType === "end" &&
+        lineClampDynamicCss(tokens.primaryText.maxLines)}
+    ${tokens.primaryText.maxLines}: ${(props) => props.$maxLines || 2};
 `;
 
 export const SecondaryText = styled.div<LabelTextStyleProps>`
     color: ${V3_Colour["text-subtlest"]};
     width: 100%;
+    overflow-wrap: break-word;
 
     ${(props) =>
-        props.$truncateType === "end" && lineClampCss(props.$maxLines || 2)}
-    overflow-wrap: break-word;
+        props.$truncateType === "end" &&
+        lineClampDynamicCss(tokens.secondaryText.maxLines)}
+    ${tokens.secondaryText.maxLines}: ${(props) => props.$maxLines || 2};
 
     ${(props) => {
         switch (props.$labelDisplayType) {
