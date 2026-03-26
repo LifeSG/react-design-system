@@ -28,8 +28,7 @@ export const main = css`
     }
 
     &:hover {
-        border: ${Border["width-010"]} ${Border.solid}
-            ${Colour["border-hover-strong"]};
+        border-color: ${Colour["border-hover-strong"]};
     }
 
     ${MediaQuery.MaxWidth.sm} {
@@ -45,18 +44,22 @@ export const mainSelectedText = css`
 
 export const mainSelected = css`
     background: ${Colour["bg-selected"]};
-    border: ${Border["width-010"]} ${Border.solid} ${Colour["border-selected"]};
+    border-color: ${Colour["border-selected"]};
 
     &:hover {
         background: ${Colour["bg-selected-hover"]};
-        border: ${Border["width-010"]} ${Border.solid}
-            ${Colour["border-selected-hover"]};
+        border-color: ${Colour["border-selected-hover"]};
     }
 `;
 
 export const mainError = css`
     background: ${Colour.bg};
-    border: ${Border["width-010"]} ${Border.solid} ${Colour["border-error"]};
+    border-color: ${Colour["border-error"]};
+
+    &:hover {
+        background: ${Colour.bg};
+        border-color: ${Colour["border-error"]};
+    }
 `;
 
 export const mainDisabled = css`
@@ -68,6 +71,6 @@ export const mainDisabled = css`
     }
 
     &:hover {
-        border: ${Border["width-010"]} ${Border.solid} transparent;
+        border-color: transparent;
     }
 `;
