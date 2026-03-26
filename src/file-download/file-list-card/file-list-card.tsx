@@ -22,7 +22,6 @@ const {
     ItemNameText,
     MobileErrorMessage,
     NameSection,
-    Spinner,
     Thumbnail,
     ThumbnailContainer,
 } = styles;
@@ -104,7 +103,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
             <ItemNameText ref={containerRef}>{displayText}</ItemNameText>
             {isError && (
                 <DesktopErrorMessage>
-                    <ErrorIcon aria-hidden />
+                    <ErrorIcon />
                     {errorMessage ? errorMessage : "Something went wrong"}
                 </DesktopErrorMessage>
             )}
@@ -124,7 +123,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
                 <FileSizeSection>{fileSize ? fileSize : "-"}</FileSizeSection>
                 {isError && (
                     <MobileErrorMessage>
-                        <ErrorIcon aria-hidden />
+                        <ErrorIcon />
                         {errorMessage ? errorMessage : "Something went wrong"}
                     </MobileErrorMessage>
                 )}
@@ -138,7 +137,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
             <FileSizeSection>{fileSize ? fileSize : "-"}</FileSizeSection>
             {isError && (
                 <MobileErrorMessage>
-                    <ErrorIcon aria-hidden />
+                    <ErrorIcon />
                     {errorMessage ? errorMessage : "Something went wrong"}
                 </MobileErrorMessage>
             )}
@@ -170,13 +169,8 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
                     styleType="light"
                     sizeType="small"
                     aria-label={`download ${name}`}
-                    icon={
-                        isLoading || !ready ? (
-                            <Spinner size={16} aria-hidden />
-                        ) : (
-                            <DownloadIcon aria-hidden />
-                        )
-                    }
+                    loading={isLoading || !ready}
+                    icon={<DownloadIcon />}
                 />
             </ActionContainer>
         );

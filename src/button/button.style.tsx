@@ -7,7 +7,6 @@ import {
     V3_Font,
     V3_MediaQuery,
     V3_Motion,
-    V3_Radius,
     V3_Spacing,
 } from "../v3_theme";
 import { V3_ThemeButton } from "../v3_theme/components/theme-helper";
@@ -29,35 +28,32 @@ export const Main = styled.button<MainStyleProps>`
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-16"]};
+    border-radius: 0;
+    gap: 0.5rem;
+
+    svg,
+    img {
+        flex-shrink: 0;
+        height: 1em;
+        width: 1em;
+    }
 
     ${(props) =>
-        props.$iconOnly
-            ? css`
-                  border-radius: ${V3_Radius["sm"]};
-              `
-            : css`
-                  border-radius: ${V3_ThemeButton["button-radius"]};
-                  padding: ${V3_Spacing["spacing-8"]}
-                      ${V3_Spacing["spacing-16"]};
-                  min-width: 4rem;
-              `}
+        props.$iconOnly &&
+        css`
+            border-radius: ${V3_ThemeButton["button-radius"]};
+            min-width: 4rem;
+        `}
 
     ${(props) =>
         props.$hasIcon &&
         !props.$iconOnly &&
         css`
-            gap: 0.5rem;
             flex-direction: ${props.$iconPosition === "right"
                 ? "row-reverse"
                 : "row"};
-
-            svg {
-                flex-shrink: 0;
-                height: 1em;
-                width: 1em;
-            }
         `}
-
     // -------------------------------------------------------------------------
     // BUTTON STYLE + TEXT COLOR
     // -------------------------------------------------------------------------
@@ -115,10 +111,6 @@ export const Main = styled.button<MainStyleProps>`
             case "disabled":
                 return css`
                     background-color: ${V3_Colour["bg-disabled"]};
-                    ${props.$iconOnly &&
-                    css`
-                        border-color: ${V3_Colour["border-disabled"]};
-                    `}
                     cursor: not-allowed;
                     color: ${V3_Colour["text-disabled"]};
 
@@ -152,44 +144,6 @@ export const Main = styled.button<MainStyleProps>`
     // BUTTON SIZE
     // -------------------------------------------------------------------------
     ${(props) => {
-        if (props.$iconOnly) {
-            switch (props.$buttonSize) {
-                case "large":
-                    return css`
-                        height: 4rem;
-                        width: 4rem;
-
-                        img,
-                        svg {
-                            height: 1.625rem;
-                            width: 1.625rem;
-                        }
-                    `;
-                case "small":
-                    return css`
-                        height: 2.5rem;
-                        width: 2.5rem;
-
-                        img,
-                        svg {
-                            height: 1rem;
-                            width: 1rem;
-                        }
-                    `;
-                default:
-                    return css`
-                        height: 3rem;
-                        width: 3rem;
-
-                        img,
-                        svg {
-                            height: 1.125rem;
-                            width: 1.125rem;
-                        }
-                    `;
-            }
-        }
-
         switch (props.$buttonSize) {
             case "small":
                 return css`
