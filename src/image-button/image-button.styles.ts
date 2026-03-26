@@ -1,13 +1,6 @@
 import styled, { css } from "styled-components";
 
-import {
-    V3_Border,
-    V3_Colour,
-    V3_Font,
-    V3_MediaQuery,
-    V3_Motion,
-    V3_Radius,
-} from "../v3_theme";
+import { Border, Colour, Font, MediaQuery, Motion, Radius } from "../theme";
 
 export const Main = styled.button<{
     $selected?: boolean;
@@ -21,15 +14,15 @@ export const Main = styled.button<{
     justify-content: center;
     align-items: center;
     padding: 1.5rem 1rem;
-    background-color: ${V3_Colour.bg};
-    border: ${V3_Border["width-010"]} ${V3_Border.solid} transparent;
-    border-radius: ${V3_Radius["md"]};
+    background-color: ${Colour.bg};
+    border: ${Border["width-010"]} ${Border.solid} transparent;
+    border-radius: ${Radius["md"]};
     cursor: pointer;
     max-width: 13rem;
-    transition: all ${V3_Motion["duration-250"]} ${V3_Motion["ease-default"]};
-    ${V3_Font["body-baseline-semibold"]}
+    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
+    ${Font["body-baseline-semibold"]}
     color: ${({ $selected }) =>
-        $selected ? V3_Colour["text-primary"] : V3_Colour["text"]};
+        $selected ? Colour["text-primary"] : Colour["text"]};
     overflow-wrap: anywhere;
 
     img {
@@ -39,36 +32,36 @@ export const Main = styled.button<{
         object-fit: contain;
     }
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         padding: 0.5rem 0.25rem;
         gap: 0.25rem;
-        ${V3_Font["body-md-semibold"]}
+        ${Font["body-md-semibold"]}
     }
 
     ${(props) => {
         if (props.$error) {
             return css`
-                background: ${V3_Colour.bg};
-                border: ${V3_Border["width-010"]} ${V3_Border.solid}
-                    ${V3_Colour["border-error"]};
+                background: ${Colour.bg};
+                border: ${Border["width-010"]} ${Border.solid}
+                    ${Colour["border-error"]};
             `;
         } else if (props.$selected) {
             return css`
-                background: ${V3_Colour["bg-selected"]};
-                border: ${V3_Border["width-010"]} ${V3_Border.solid}
-                    ${V3_Colour["border-selected"]};
+                background: ${Colour["bg-selected"]};
+                border: ${Border["width-010"]} ${Border.solid}
+                    ${Colour["border-selected"]};
 
                 &:hover {
-                    background: ${V3_Colour["bg-selected-hover"]};
-                    border: ${V3_Border["width-010"]} ${V3_Border.solid}
-                        ${V3_Colour["border-selected-hover"]};
+                    background: ${Colour["bg-selected-hover"]};
+                    border: ${Border["width-010"]} ${Border.solid}
+                        ${Colour["border-selected-hover"]};
                 }
             `;
         } else {
             return css`
                 &:hover {
-                    border: ${V3_Border["width-010"]} ${V3_Border.solid}
-                        ${V3_Colour["border-hover-strong"]};
+                    border: ${Border["width-010"]} ${Border.solid}
+                        ${Colour["border-hover-strong"]};
                 }
             `;
         }
@@ -78,13 +71,13 @@ export const Main = styled.button<{
         props.$disabled &&
         css`
             &:hover {
-                border: ${V3_Border["width-010"]} ${V3_Border.solid} transparent;
+                border: ${Border["width-010"]} ${Border.solid} transparent;
             }
             box-shadow: none;
             img {
                 filter: grayscale(100%);
             }
-            color: ${V3_Colour["text-disabled"]};
+            color: ${Colour["text-disabled"]};
             cursor: not-allowed;
         `}
 `;
