@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Border, Colour, Font, MediaQuery, Motion, Radius } from "../theme";
 
-export const Main = styled.button`
+export const main = css`
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -37,38 +37,37 @@ export const Main = styled.button`
         gap: 0.25rem;
         ${Font["body-md-semibold"]}
     }
+`;
 
-    &.mainSelectedText {
-        color: ${Colour["text-primary"]};
-    }
+export const mainSelectedText = css`
+    color: ${Colour["text-primary"]};
+`;
 
-    &.mainSelected {
-        background: ${Colour["bg-selected"]};
+export const mainSelected = css`
+    background: ${Colour["bg-selected"]};
+    border: ${Border["width-010"]} ${Border.solid} ${Colour["border-selected"]};
+
+    &:hover {
+        background: ${Colour["bg-selected-hover"]};
         border: ${Border["width-010"]} ${Border.solid}
-            ${Colour["border-selected"]};
+            ${Colour["border-selected-hover"]};
+    }
+`;
 
-        &:hover {
-            background: ${Colour["bg-selected-hover"]};
-            border: ${Border["width-010"]} ${Border.solid}
-                ${Colour["border-selected-hover"]};
-        }
+export const mainError = css`
+    background: ${Colour.bg};
+    border: ${Border["width-010"]} ${Border.solid} ${Colour["border-error"]};
+`;
+
+export const mainDisabled = css`
+    color: ${Colour["text-disabled"]};
+    cursor: not-allowed;
+
+    img {
+        filter: grayscale(100%);
     }
 
-    &.mainError {
-        background: ${Colour.bg};
-        border: ${Border["width-010"]} ${Border.solid} ${Colour["border-error"]};
-    }
-
-    &.mainDisabled {
-        color: ${Colour["text-disabled"]};
-        cursor: not-allowed;
-
-        img {
-            filter: grayscale(100%);
-        }
-
-        &:hover {
-            border: ${Border["width-010"]} ${Border.solid} transparent;
-        }
+    &:hover {
+        border: ${Border["width-010"]} ${Border.solid} transparent;
     }
 `;

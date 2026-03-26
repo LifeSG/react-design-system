@@ -3,7 +3,7 @@ import React from "react";
 
 import type { ButtonRef } from "../button/types";
 import { ImageWithFallback } from "../shared/image-with-fallback/image-with-fallback";
-import { Main } from "./image-button.styles";
+import * as styles from "./image-button.styles";
 import type { ImageButtonProps } from "./types";
 
 const Component = (
@@ -22,24 +22,25 @@ const Component = (
     ref: ButtonRef
 ) => {
     return (
-        <Main
+        <button
             ref={ref}
             type={type}
             aria-disabled={disabled}
             disabled={disabled && !focusableWhenDisabled}
             onClick={disabled ? undefined : onClick}
             className={clsx(
-                selected && "mainSelectedText",
-                selected && "mainSelected",
-                error && "mainError",
-                disabled && "mainDisabled",
+                styles.main,
+                selected && styles.mainSelectedText,
+                selected && styles.mainSelected,
+                error && styles.mainError,
+                disabled && styles.mainDisabled,
                 className
             )}
             {...otherProps}
         >
             <ImageWithFallback src={imgSrc} />
             {children}
-        </Main>
+        </button>
     );
 };
 
