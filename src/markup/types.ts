@@ -13,3 +13,12 @@ export interface MarkupProps extends React.HTMLAttributes<HTMLDivElement> {
      */
     inline?: boolean | undefined;
 }
+
+export interface ParsedFontDeclarations {
+    "font-family"?: string;
+    "font-variant"?: string;
+    "font-size"?: string;
+    "font-weight"?: string;
+    "line-height"?: string;
+    "letter-spacing"?: string;
+}

@@ -11,16 +11,7 @@ import {
 } from "../theme";
 import { mergeRefs } from "../util";
 import * as styles from "./markup.style";
-import type { MarkupProps } from "./types";
-
-interface ParsedFontDeclarations {
-    "font-family"?: string;
-    "font-variant"?: string;
-    "font-size"?: string;
-    "font-weight"?: string;
-    "line-height"?: string;
-    "letter-spacing"?: string;
-}
+import type { MarkupProps, ParsedFontDeclarations } from "./types";
 
 const parseFontDeclarations = (
     declarations: string
