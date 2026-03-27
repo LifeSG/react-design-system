@@ -154,6 +154,34 @@ describe("FileUpload", () => {
                 rendered.getByTestId("some-thumbnail-image")
             ).toHaveAttribute("src", MOCK_IMG_DATA_URL);
         });
+
+        it("should render PDF icon for PDF files without thumbnailImageDataUrl", () => {
+            const fileItems: FileItemProps[] = [MOCK_NON_IMAGE_FILE];
+
+            const rendered = render(<FileUpload fileItems={fileItems} />);
+
+            expect(rendered.getByTestId("some-thumbnail")).toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-thumbnail-image")
+            ).toHaveAttribute(
+                "src",
+                "https://assets.life.gov.sg/react-design-system/img/upload/pdf.svg"
+            );
+        });
+
+        it("should render delete bin icon button for error state", () => {
+            const fileItems: FileItemProps[] = [
+                { ...MOCK_IMAGE_ITEM, errorMessage: "Upload failed" },
+            ];
+
+            const rendered = render(<FileUpload fileItems={fileItems} />);
+
+            const deleteButton = rendered.getByTestId(
+                "some-error-delete-button"
+            );
+            expect(deleteButton).toBeInTheDocument();
+            expect(deleteButton.querySelector("svg")).toBeInTheDocument();
+        });
     });
 
     describe("Upload", () => {

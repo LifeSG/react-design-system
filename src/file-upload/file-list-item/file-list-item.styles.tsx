@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { IconButton as DSIconButton } from "../../icon-button";
-import { ClickableIcon } from "../../shared/clickable-icon";
 import {
     Border,
     Colour,
@@ -222,7 +221,12 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     }
 `;
 
+export const FileSizeText = styled(Typography.BodyMD)`
+    color: ${Colour["text-subtler"]};
+`;
+
 export const ItemText = styled(Typography.BodyMD)``;
+
 export const ItemDescriptionText = styled(ItemText)`
     margin-top: ${Spacing["spacing-4"]};
 `;
@@ -294,16 +298,5 @@ export const IconButton = styled(DSIconButton)`
 
     &:not(:last-child) {
         margin-right: ${Spacing["spacing-16"]};
-    }
-`;
-
-export const ErrorIconButton = styled(ClickableIcon)`
-    height: 2.5rem;
-    width: 2.5rem;
-    padding: unset;
-    svg {
-        height: 1.5rem;
-        width: 1.5rem;
-        color: ${Colour["icon"]};
     }
 `;

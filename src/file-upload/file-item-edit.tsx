@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Form } from "../form";
 import { StringHelper } from "../util";
 import {
@@ -39,6 +39,7 @@ export const FileItemEdit = ({
         id,
         name,
         size,
+        type,
         truncateText = true,
         thumbnailImageDataUrl,
     } = fileItem;
@@ -50,11 +51,34 @@ export const FileItemEdit = ({
     const nameSectionRef = useRef<HTMLDivElement>(null);
 
     // =========================================================================
+    // HELPER FUNCTIONS
+    // =========================================================================
+    const getTruncatedText = useCallback(
+        (value: string) => {
+            if (!truncateText) return value;
+
+            const widthOfElement =
+                nameSectionRef && nameSectionRef.current
+                    ? nameSectionRef.current.getBoundingClientRect().width
+                    : 0;
+
+            return StringHelper.truncateOneLine(
+                value,
+                widthOfElement,
+                widthOfElement / 2,
+                widthOfElement / 2 / 8, // Arbitrary
+                16 // Font size
+            );
+        },
+        [truncateText]
+    );
+
+    // =========================================================================
     // EFFECTS
     // =========================================================================
     useEffect(() => {
         setFormattedName(getTruncatedText(name));
-    }, [wrapperWidth]);
+    }, [wrapperWidth, getTruncatedText, name]);
 
     useEffect(() => {
         setCurrentDescription(fileItem.description || "");
@@ -77,30 +101,13 @@ export const FileItemEdit = ({
         onBlur(event.target.value);
     };
 
-    // =========================================================================
-    // HELPER FUNCTIONS
-    // =========================================================================
-    const getTruncatedText = (value: string) => {
-        if (!truncateText) return value;
-
-        const widthOfElement =
-            nameSectionRef && nameSectionRef.current
-                ? nameSectionRef.current.getBoundingClientRect().width
-                : 0;
-
-        return StringHelper.truncateOneLine(
-            value,
-            widthOfElement,
-            widthOfElement / 2,
-            widthOfElement / 2 / 8, // Arbitrary
-            16 // Font size
-        );
-    };
-
     const shouldDisableSave = () => {
         const trimmedDescription = currentDescription.trim();
         return trimmedDescription.length === 0;
     };
+
+    const shouldShowThumbnail =
+        !!thumbnailImageDataUrl || type === FileUploadHelper.PDF_MIME_TYPE;
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -117,9 +124,10 @@ export const FileItemEdit = ({
     return (
         <Item data-testid={`${id}-edit-display`}>
             <ContentSection>
-                {thumbnailImageDataUrl && (
+                {shouldShowThumbnail && (
                     <FileListItemThumbnail
                         thumbnailImageDataUrl={thumbnailImageDataUrl}
+                        fileType={type}
                     />
                 )}
                 <DetailsSection>
@@ -142,7 +150,7 @@ export const FileItemEdit = ({
                     />
                 </DetailsSection>
             </ContentSection>
-            <ActionButtonsSection $thumbnail={!!thumbnailImageDataUrl}>
+            <ActionButtonsSection $thumbnail={shouldShowThumbnail}>
                 <ActionButton
                     data-testid={`${id}-save-button`}
                     type="button"

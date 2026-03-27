@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
+import { FileUploadHelper } from "../helper";
 
 interface Props {
-    thumbnailImageDataUrl: string;
+    thumbnailImageDataUrl?: string | undefined;
+    fileType?: string | undefined;
     "data-testid"?: string | undefined;
     renderReplaceButton?: boolean | undefined;
     onReplaceClick?: (() => void) | undefined;
@@ -11,6 +13,7 @@ interface Props {
 
 export const FileListItemThumbnail = ({
     thumbnailImageDataUrl,
+    fileType,
     "data-testid": testId,
     renderReplaceButton,
     onReplaceClick,
@@ -21,11 +24,17 @@ export const FileListItemThumbnail = ({
         }
     };
 
+    const isPdf = fileType === FileUploadHelper.PDF_MIME_TYPE;
+    const displaySrc = isPdf
+        ? FileUploadHelper.PDF_ICON_URL
+        : thumbnailImageDataUrl || "";
+
     return (
         <Container data-testid={testId}>
             <Thumbnail
                 data-testid={testId ? `${testId}-image` : undefined}
-                src={thumbnailImageDataUrl}
+                src={displaySrc}
+                $isPdf={isPdf}
             />
             {renderReplaceButton && (
                 <ReplaceButton type="button" onClick={handleReplace}>
@@ -48,12 +57,15 @@ export const Container = styled.div`
     justify-content: center;
 `;
 
-export const Thumbnail = styled(ImageWithFallback)`
+export const Thumbnail = styled(ImageWithFallback)<{ $isPdf?: boolean }>`
     width: 96px;
     height: 96px;
     aspect-ratio: 1;
     border-radius: ${Radius["sm"]};
-    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border: ${(props) =>
+        props.$isPdf
+            ? "none"
+            : `${Border["width-010"]} ${Border["solid"]} ${Colour["border"]}`};
     object-fit: cover;
 
     ${MediaQuery.MaxWidth.md} {
