@@ -61,10 +61,10 @@ export const compareScreenshot = async (
         await expect(storyPage.page).toHaveScreenshot(`${name}.png`, {
             // Adding a 10px boundary around the element to capture any shadows or outlines
             clip: {
-                x: box?.x - 10,
-                y: box?.y - 10,
-                width: box?.width + 20,
-                height: box?.height + 20,
+                x: Math.max(0, box.x - 10),
+                y: Math.max(0, box.y - 10),
+                width: box.width + 20,
+                height: box.height + 20,
             },
             threshold: 0, // Strict colour matching
         });
