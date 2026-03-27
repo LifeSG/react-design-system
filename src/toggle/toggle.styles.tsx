@@ -33,10 +33,15 @@ interface LabelStyleProps {
 
 interface ExpandButtonStyleProps extends StyleProps {
     $paddingTopRequired?: boolean;
+    $disabledVisual?: boolean;
 }
 
 interface ChildrenStyleProps extends StyleProps {
     $isFinalItem?: boolean;
+}
+
+interface InteractiveStyleProps {
+    $disabledVisual?: boolean;
 }
 
 // =============================================================================
@@ -212,11 +217,11 @@ export const Container = styled.div<ContainerStyleProps>`
     }}
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<InteractiveStyleProps>`
     position: absolute;
     height: 100%;
     width: 100%;
-    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+    cursor: ${(props) => (props.$disabledVisual ? "not-allowed" : "pointer")};
     top: 0;
     left: 0;
 
@@ -225,6 +230,7 @@ export const Input = styled.input`
     background: transparent;
     border: none;
 `;
+
 export const InputContainer = styled.div`
     display: flex;
 `;
@@ -309,9 +315,9 @@ export const IndicatorLabelContainer = styled.div<IndicatorLabelContainerStylePr
         props.$addPadding ? "0.6875rem 0rem 0.6875rem 1rem" : "0.6875rem 1rem"};
 `;
 
-export const RemoveButton = styled.button<StyleProps>`
+export const RemoveButton = styled.button<InteractiveStyleProps>`
     color: ${(props) =>
-        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
+        props.$disabledVisual ? Colour["text-disabled"] : Colour["text-error"]};
     white-space: nowrap;
     ${Font["body-md-semibold"]}
     height: fit-content;
@@ -319,19 +325,21 @@ export const RemoveButton = styled.button<StyleProps>`
     border: none;
     background: none;
 
-    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+    cursor: ${(props) => (props.$disabledVisual ? "not-allowed" : "pointer")};
 `;
 
 export const ExpandButton = styled.button<ExpandButtonStyleProps>`
     color: ${(props) =>
-        props.disabled ? Colour["text-disabled"] : Colour["text-primary"]};
+        props.$disabledVisual
+            ? Colour["text-disabled"]
+            : Colour["text-primary"]};
     ${Font["body-baseline-semibold"]}
     display: flex;
     align-items: center;
     justify-content: flex-end;
     border: none;
     background-color: ${Colour.bg};
-    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+    cursor: ${(props) => (props.$disabledVisual ? "not-allowed" : "pointer")};
     padding: 0 1rem 0.6875rem 1rem;
     padding-top: ${(props) =>
         props.$paddingTopRequired ? "0.6875rem" : "0rem"};
@@ -344,13 +352,13 @@ export const ExpandButton = styled.button<ExpandButtonStyleProps>`
     }
 `;
 
-export const ErrorContainer = styled.div<StyleProps>`
+export const ErrorContainer = styled.div<InteractiveStyleProps>`
     width: 100%;
     color: ${(props) =>
-        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
+        props.$disabledVisual ? Colour["text-disabled"] : Colour["text-error"]};
     border: none;
     background: ${Colour.bg};
-    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+    cursor: ${(props) => (props.$disabledVisual ? "not-allowed" : "pointer")};
     padding: 0.6875rem 1rem 0.5rem 1rem;
 `;
 
