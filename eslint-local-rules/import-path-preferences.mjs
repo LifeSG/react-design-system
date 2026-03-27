@@ -300,14 +300,14 @@ const styleNamespaceImportRule = {
                 context.report({
                     node,
                     messageId: "namespaceStyleImport",
-                    // Autofix is disabled until linaria migration is complete.
+                    // TODO: Autofix is disabled until linaria migration is complete.
 
-                    fix(fixer) {
-                        const quote = getQuote(node.source.raw);
-                        const localName = getStyleNamespaceLocalName(node);
-                        const fixedImport = `import * as ${localName} from ${quote}${importSource}${quote};`;
-                        return fixer.replaceText(node, fixedImport);
-                    },
+                    // fix(fixer) {
+                    //     const quote = getQuote(node.source.raw);
+                    //     const localName = getStyleNamespaceLocalName(node);
+                    //     const fixedImport = `import * as ${localName} from ${quote}${importSource}${quote};`;
+                    //     return fixer.replaceText(node, fixedImport);
+                    // },
                 });
             },
         };
