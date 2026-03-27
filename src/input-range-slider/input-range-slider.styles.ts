@@ -100,7 +100,7 @@ export const SliderThumb = styled.div`
     position: relative;
     outline: none;
 
-    &:focus ${Knob}:after {
+    &:focus ${Knob}:after, &[data-focused="true"] ${Knob}:after {
         outline-offset: -1px;
         outline: ${V3_Border["width-040"]} ${V3_Border["solid"]}
             ${V3_Colour["border-selected"]};

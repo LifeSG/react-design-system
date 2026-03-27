@@ -4,6 +4,7 @@ import React, { useImperativeHandle, useRef } from "react";
 import { CalendarManager } from "./calendar-manager";
 import { FixedRangeCalendarDayView } from "./fixed-range";
 import { Container } from "./internal-calendar.style";
+import { MultiCalendarDayView } from "./multi";
 import { SingleCalendarDayView } from "./single";
 import { StandardCalendarDayView } from "./standard";
 import type {
@@ -22,6 +23,9 @@ export const Component = (
         onDismiss,
         value: selectedStartDate,
         endValue: selectedEndDate,
+        values: selectedDates = [],
+        minSelectable,
+        maxSelectable,
         currentFocus,
         withButton,
         variant,
@@ -31,6 +35,7 @@ export const Component = (
         selectWithinRange = true,
         initialCalendarDate,
         numberOfDays,
+        onChange,
         showActiveMonthDaysOnly = false,
         isFocusable = false,
     }: InternalCalendarProps,
@@ -65,13 +70,32 @@ export const Component = (
     // =============================================================================
     const handleDateSelect = (value: Dayjs) => {
         const stringValue = value.format("YYYY-MM-DD");
-
         calendarManagerRef.current?.setCalendarDate(stringValue);
-        performOnSelectHandler(stringValue);
+        onSelect?.(stringValue);
     };
 
     const handleDateHover = (value: string) => {
-        performOnHoverHandler(value);
+        onHover?.(value);
+    };
+
+    const handleMultiDateSelect = (value: Dayjs) => {
+        const stringValue = value.format("YYYY-MM-DD");
+        if (selectedDates.includes(stringValue)) {
+            const updatedValues = selectedDates.filter(
+                (date) => date !== stringValue
+            );
+            // Intentionally omit setCalendarDate — toggling a date should not
+            // navigate the calendar view, unlike single/range selection.
+            onChange?.(updatedValues);
+        } else {
+            if (
+                maxSelectable !== undefined &&
+                selectedDates.length >= maxSelectable
+            ) {
+                return;
+            }
+            onChange?.([...selectedDates, stringValue]);
+        }
     };
 
     const handleCalendarDateChange = (value: Dayjs) => {
@@ -82,7 +106,10 @@ export const Component = (
             calendarManagerRef.current?.setCalendarDate(
                 value.format("YYYY-MM-DD")
             );
-            performDisplayChangeHandler(value);
+            onYearMonthDisplayChange?.({
+                month: value.month() + 1,
+                year: value.year(),
+            });
         }
         previousCalendarDate.current = value;
     };
@@ -90,29 +117,6 @@ export const Component = (
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const performOnSelectHandler = (changeValue: string) => {
-        if (onSelect) {
-            onSelect(changeValue);
-        }
-    };
-
-    const performOnHoverHandler = (value: string) => {
-        if (onHover) {
-            onHover(value);
-        }
-    };
-
-    const performDisplayChangeHandler = (value: Dayjs) => {
-        if (onYearMonthDisplayChange) {
-            const returnValue = {
-                month: value.month() + 1,
-                year: value.year(),
-            };
-
-            onYearMonthDisplayChange(returnValue);
-        }
-    };
-
     const isDoneButtonDisabled = () => {
         if (!withButton) return;
 
@@ -129,6 +133,12 @@ export const Component = (
                 break;
             case "week":
                 isDisabled = !selectedStartDate && !selectedEndDate;
+                break;
+            case "multi":
+                isDisabled =
+                    selectedDates.length === 0 ||
+                    (minSelectable !== undefined &&
+                        selectedDates.length < minSelectable);
                 break;
         }
 
@@ -181,6 +191,21 @@ export const Component = (
                         allowDisabledSelection={allowDisabledSelection}
                         showActiveMonthDaysOnly={showActiveMonthDaysOnly}
                         onSelect={handleDateSelect}
+                        onHover={handleDateHover}
+                        setCalendarDate={setCalendarDate}
+                    />
+                );
+            case "multi":
+                return (
+                    <MultiCalendarDayView
+                        calendarDate={calendarDate}
+                        disabledDates={disabledDates}
+                        selectedDates={selectedDates}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        allowDisabledSelection={allowDisabledSelection}
+                        showActiveMonthDaysOnly={showActiveMonthDaysOnly}
+                        onSelect={handleMultiDateSelect}
                         onHover={handleDateHover}
                         setCalendarDate={setCalendarDate}
                     />

@@ -51,6 +51,7 @@
     },
     "homepage": "https://github.com/LifeSG/react-design-system#readme",
     "dependencies": {
+        "@react-aria/live-announcer": "^3.4.4",
         "@react-spring/web": "^10.0.1",
         "clsx": "^2.1.1",
         "fabric": "^7.2.0",

@@ -400,7 +400,6 @@ export const TimepickerDropdown = ({
                 </InputSection>
                 <ControlSection>
                     <ControlButton
-                        aria-label="close selector"
                         type="button"
                         styleType="secondary"
                         onClick={onCancel}
@@ -409,7 +408,6 @@ export const TimepickerDropdown = ({
                         Cancel
                     </ControlButton>
                     <ControlButton
-                        aria-label="confirm selection"
                         type="button"
                         onClick={handleConfirm}
                         disabled={hourValue === "" || minuteValue === ""}

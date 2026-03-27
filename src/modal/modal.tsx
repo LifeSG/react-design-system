@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
+import { useEvent } from "../util";
 import { Container } from "./modal.styles";
 import type { ModalProps } from "./types";
 
@@ -21,16 +22,25 @@ export const Modal = ({
     // CONST, STATE, REF
     // =============================================================================
     const { verticalHeight, offsetTop } = useViewport();
+    const childRef = useRef<HTMLDivElement>(null);
+    const childWithRef =
+        children &&
+        React.cloneElement(children as React.ReactElement, { ref: childRef });
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useEffect(() => {
-        if (show && dismissKeyboardOnShow) {
-            // dismiss software keyboard to put modal in fullscreen
+    const dismissKeyboard = useEvent(() => {
+        if (dismissKeyboardOnShow) {
             (document.activeElement as HTMLElement)?.blur?.();
         }
-    }, [show]);
+    });
+
+    useEffect(() => {
+        if (show) {
+            dismissKeyboard();
+        }
+    }, [show, dismissKeyboard]);
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -43,6 +53,7 @@ export const Modal = ({
             onOverlayClick={onOverlayClick}
             id={id}
             rootId={rootComponentId}
+            containerRef={childRef}
             zIndex={zIndex}
         >
             <Container
@@ -53,7 +64,7 @@ export const Modal = ({
                 $offsetTop={offsetTop}
                 {...otherProps}
             >
-                {children}
+                {childWithRef}
             </Container>
         </Overlay>
     );

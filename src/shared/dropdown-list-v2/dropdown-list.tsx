@@ -20,6 +20,7 @@ import {
     useEventListener,
     useIsMounted,
 } from "../../util";
+import { VisuallyHidden } from "../accessibility";
 import { useDropdownRender } from "../dropdown-wrapper";
 import { DropdownLabel } from "./dropdown-label";
 import {
@@ -64,6 +65,7 @@ const DropdownListInner = <T, V>(
         labelDisplayType = "inline",
         variant = "default",
         listboxId,
+        ariaLabel,
         matchElementWidth = false,
         width,
         topScrollItem,
@@ -600,7 +602,12 @@ const DropdownListInner = <T, V>(
 
     const renderList = () => {
         return (
-            <List ref={listRef} data-testid="dropdown-list">
+            <List
+                ref={listRef}
+                data-testid="dropdown-list"
+                role="group"
+                aria-label={ariaLabel}
+            >
                 {renderSearchInput()}
                 {renderSelectAll()}
                 {renderNoResults()}
@@ -634,6 +641,7 @@ const DropdownListInner = <T, V>(
             $customWidth={width}
             $variant={variant}
         >
+            <VisuallyHidden role="status">{ariaLabel}</VisuallyHidden>
             {renderList()}
             {renderBottomCta()}
         </Container>
