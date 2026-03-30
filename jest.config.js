@@ -18,5 +18,5 @@ module.exports = {
         "<rootDir>/tests/jest-setup.ts",
     ],
     reporters: ["default", ["jest-junit", { outputName: "junit.xml" }]],
-    maxWorkers: "50%",
+    maxWorkers: 1,
 };
