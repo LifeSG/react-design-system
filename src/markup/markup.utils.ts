@@ -1,7 +1,7 @@
 import type { ApplyStyleMap, FontDeclarationProperties } from "../theme";
 import { tokens } from "./markup.style";
 
-const rootFontTokenMap = {
+const rootFontTokenMap: Record<string, keyof FontDeclarationProperties> = {
     [tokens.rootFontFamily]: "font-family",
     [tokens.rootFontVariant]: "font-variant",
     [tokens.rootFontSize]: "font-size",
