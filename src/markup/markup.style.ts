@@ -10,12 +10,6 @@ export const tokens = {
     rootFontWeight: "--fds-internal-markup-root-fontWeight",
     rootLineHeight: "--fds-internal-markup-root-lineHeight",
     rootLetterSpacing: "--fds-internal-markup-root-letterSpacing",
-    emphasizedFontFamily: "--fds-internal-markup-emphasized-fontFamily",
-    emphasizedFontVariant: "--fds-internal-markup-emphasized-fontVariant",
-    emphasizedFontSize: "--fds-internal-markup-emphasized-fontSize",
-    emphasizedFontWeight: "--fds-internal-markup-emphasized-fontWeight",
-    emphasizedLineHeight: "--fds-internal-markup-emphasized-lineHeight",
-    emphasizedLetterSpacing: "--fds-internal-markup-emphasized-letterSpacing",
 } as const;
 
 export const baseMarkup = css`
@@ -75,17 +69,4 @@ export const sizedMarkup = css`
     font-weight: var(${tokens.rootFontWeight}, inherit);
     line-height: var(${tokens.rootLineHeight}, inherit);
     letter-spacing: var(${tokens.rootLetterSpacing}, inherit);
-
-    strong,
-    a {
-        font-family: var(${tokens.emphasizedFontFamily}, inherit);
-        font-variant: var(${tokens.emphasizedFontVariant}, inherit);
-        font-size: var(${tokens.emphasizedFontSize}, inherit);
-        font-weight: var(
-            ${tokens.emphasizedFontWeight},
-            ${Font.Spec["weight-semibold"]}
-        );
-        line-height: var(${tokens.emphasizedLineHeight}, inherit);
-        letter-spacing: var(${tokens.emphasizedLetterSpacing}, inherit);
-    }
 `;

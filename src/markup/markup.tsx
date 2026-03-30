@@ -26,10 +26,7 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
             return undefined;
         }
 
-        return {
-            regular: generateFontProperties(baseTextSize, "regular"),
-            semibold: generateFontProperties(baseTextSize, "semibold"),
-        };
+        return generateFontProperties(baseTextSize, "regular");
     }, [baseTextSize]);
 
     const appliedStyles = useMemo(

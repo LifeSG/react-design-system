@@ -1,11 +1,6 @@
 import type { ApplyStyleMap, FontDeclarationProperties } from "../theme";
 import { tokens } from "./markup.style";
 
-interface MarkupFontDeclarations {
-    regular?: FontDeclarationProperties;
-    semibold?: FontDeclarationProperties;
-}
-
 const rootFontTokenMap = {
     [tokens.rootFontFamily]: "font-family",
     [tokens.rootFontVariant]: "font-variant",
@@ -13,15 +8,6 @@ const rootFontTokenMap = {
     [tokens.rootFontWeight]: "font-weight",
     [tokens.rootLineHeight]: "line-height",
     [tokens.rootLetterSpacing]: "letter-spacing",
-} as const;
-
-const emphasizedFontTokenMap = {
-    [tokens.emphasizedFontFamily]: "font-family",
-    [tokens.emphasizedFontVariant]: "font-variant",
-    [tokens.emphasizedFontSize]: "font-size",
-    [tokens.emphasizedFontWeight]: "font-weight",
-    [tokens.emphasizedLineHeight]: "line-height",
-    [tokens.emphasizedLetterSpacing]: "letter-spacing",
 } as const;
 
 const mapFontDeclarationsToStyles = (
@@ -36,11 +22,6 @@ const mapFontDeclarationsToStyles = (
     );
 
 export const createMarkupFontStyles = (
-    fontDeclarations?: MarkupFontDeclarations
-): ApplyStyleMap => ({
-    ...mapFontDeclarationsToStyles(rootFontTokenMap, fontDeclarations?.regular),
-    ...mapFontDeclarationsToStyles(
-        emphasizedFontTokenMap,
-        fontDeclarations?.semibold
-    ),
-});
+    fontDeclarations?: FontDeclarationProperties
+): ApplyStyleMap =>
+    mapFontDeclarationsToStyles(rootFontTokenMap, fontDeclarations);
