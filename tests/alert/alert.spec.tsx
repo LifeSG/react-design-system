@@ -21,12 +21,6 @@ describe("Alert", () => {
         expect(screen.getByText(DEFAULT_TEXT)).toBeInTheDocument();
     });
 
-    it("should render with V4 theme helper", () => {
-        render(<Alert type="success">{DEFAULT_TEXT}</Alert>);
-
-        expect(screen.getByText(DEFAULT_TEXT)).toBeInTheDocument();
-    });
-
     describe("type", () => {
         it.each`
             type             | backgroundColor                          | borderColor

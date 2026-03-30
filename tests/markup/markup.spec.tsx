@@ -6,7 +6,20 @@ describe("Markup", () => {
     it("renders with base styles when text size is not provided", () => {
         render(<Markup data-testid="markup">content</Markup>);
 
-        expect(screen.getByTestId("markup")).toBeInTheDocument();
+        const markupElement = screen.getByTestId("markup");
+        expect(markupElement).toBeInTheDocument();
+        expect(markupElement.tagName).toBe("DIV");
+    });
+
+    it("renders as span when inline is true", () => {
+        render(
+            <Markup data-testid="markup" inline>
+                content
+            </Markup>
+        );
+
+        const markupElement = screen.getByTestId("markup");
+        expect(markupElement.tagName).toBe("SPAN");
     });
 
     it("resolves V4 color token", () => {
@@ -16,7 +29,8 @@ describe("Markup", () => {
             </Markup>
         );
 
-        expect(screen.getByTestId("markup")).toHaveStyle({
+        const markupElement = screen.getByTestId("markup");
+        expect(markupElement).toHaveStyle({
             color: Colour.text,
         });
     });
