@@ -1,16 +1,9 @@
+import { ExternalIcon } from "@lifesg/react-icons/external";
 import clsx from "clsx";
-import type { RefObject } from "react";
 import React from "react";
-import type { IStyledComponent } from "styled-components";
 
 import { useApplyStyle } from "../theme";
 import { mergeRefs } from "../util";
-import {
-    getTypographyTextClassName,
-    getTypographyUnderlineClassName,
-    tokens,
-    typographyClassNames,
-} from "./helper";
 import type {
     TypographyLinkProps,
     TypographyProps,
@@ -23,69 +16,90 @@ const getTextWeight = (
     weight: TypographyWeight | undefined
 ): TypographyWeight => weight || "regular";
 
+const getTypographyTextClassName = (textStyle: TypographySize) =>
+    styles.typographySize[textStyle];
+
+const getTypographyWeightClassName = (weight: TypographyWeight) =>
+    styles.typographyWeight[weight];
+
 const getTypographyDisplayClassName = (
     inline: boolean | undefined,
     paragraph: boolean | undefined
 ) => {
     if (paragraph) {
-        return typographyClassNames.paragraph;
+        return styles.paragraph;
     }
 
     if (inline) {
-        return typographyClassNames.displayInline;
+        return styles.displayInline;
     }
 
-    return typographyClassNames.displayBlock;
+    return styles.displayBlock;
 };
+
+const shouldLineClamp = (
+    maxLines: number | undefined,
+    inline: boolean | undefined,
+    paragraph: boolean | undefined
+) => !!maxLines && (paragraph || !inline);
 
 const createHeading = (
     tag: keyof JSX.IntrinsicElements,
     textStyle: TypographySize,
     displayName: string
 ) => {
-    const Header = (
-        {
-            weight,
-            inline,
-            paragraph,
-            maxLines,
-            className,
-            ...props
-        }: TypographyProps,
-        ref: React.Ref<HTMLHeadingElement>
-    ) => {
-        const typographyRef = React.useRef<HTMLHeadingElement>(null);
-        const textWeight = getTextWeight(weight);
-        const mergedRef = mergeRefs(typographyRef, ref);
+    const Header = React.forwardRef<HTMLHeadingElement, TypographyProps>(
+        (
+            { weight, inline, paragraph, maxLines, className, style, ...props },
+            ref
+        ) => {
+            const textWeight = getTextWeight(weight);
+            const headingRef = React.useRef<HTMLHeadingElement>(null);
+            const mergedRef = mergeRefs(headingRef, ref);
+            const shouldClamp = shouldLineClamp(maxLines, inline, paragraph);
 
-        useApplyStyle(typographyRef, {
-            [tokens.typographyBase.maxLines]:
-                maxLines && (paragraph || !inline) ? maxLines : null,
-        });
+            useApplyStyle(headingRef, {
+                [styles.tokens.typographyBase.maxLines]: shouldClamp
+                    ? maxLines
+                    : null,
+            });
 
-        return (
-            <styles.TypographyBase
-                ref={mergedRef}
-                as={inline ? "span" : tag}
-                className={clsx(
-                    getTypographyTextClassName(textStyle, textWeight),
+            if (inline) {
+                return (
+                    <span
+                        ref={mergedRef as React.Ref<HTMLSpanElement>}
+                        className={clsx(
+                            styles.typographyBase,
+                            getTypographyTextClassName(textStyle),
+                            getTypographyWeightClassName(textWeight),
+                            getTypographyDisplayClassName(inline, paragraph),
+                            shouldClamp && styles.lineClamp,
+                            className
+                        )}
+                        style={style}
+                        {...props}
+                    />
+                );
+            }
+
+            return React.createElement(tag, {
+                ...props,
+                ref: mergedRef,
+                className: clsx(
+                    styles.typographyBase,
+                    getTypographyTextClassName(textStyle),
+                    getTypographyWeightClassName(textWeight),
                     getTypographyDisplayClassName(inline, paragraph),
-                    maxLines && (paragraph || !inline)
-                        ? typographyClassNames.lineClamp
-                        : undefined,
+                    shouldClamp && styles.lineClamp,
                     className
-                )}
-                {...props}
-            />
-        );
-    };
-    Header.displayName = `Typography.${displayName}`;
-    return React.forwardRef(Header) as IStyledComponent<
-        "web",
-        TypographyProps & {
-            ref?: RefObject<HTMLHeadingElement> | undefined;
+                ),
+                style,
+            });
         }
-    >;
+    );
+
+    Header.displayName = `Typography.${displayName}`;
+    return Header;
 };
 
 export const HeadingXXL = createHeading("h1", "heading-xxl", "HeadingXXL");
@@ -96,49 +110,60 @@ export const HeadingSM = createHeading("h5", "heading-sm", "HeadingSM");
 export const HeadingXS = createHeading("h6", "heading-xs", "HeadingXS");
 
 const createBody = (textStyle: TypographySize, displayName: string) => {
-    const Body = (
-        {
-            weight,
-            inline,
-            paragraph,
-            maxLines,
-            className,
-            ...props
-        }: TypographyProps,
-        ref: React.Ref<HTMLParagraphElement>
-    ) => {
-        const typographyRef = React.useRef<HTMLParagraphElement>(null);
-        const textWeight = getTextWeight(weight);
-        const mergedRef = mergeRefs(typographyRef, ref);
+    const Body = React.forwardRef<HTMLParagraphElement, TypographyProps>(
+        (
+            { weight, inline, paragraph, maxLines, className, style, ...props },
+            ref
+        ) => {
+            const textWeight = getTextWeight(weight);
+            const paragraphRef = React.useRef<HTMLParagraphElement>(null);
+            const mergedRef = mergeRefs(paragraphRef, ref);
+            const shouldClamp = shouldLineClamp(maxLines, inline, paragraph);
 
-        useApplyStyle(typographyRef, {
-            [tokens.typographyBase.maxLines]:
-                maxLines && (paragraph || !inline) ? maxLines : null,
-        });
+            useApplyStyle(paragraphRef, {
+                [styles.tokens.typographyBase.maxLines]: shouldClamp
+                    ? maxLines
+                    : null,
+            });
 
-        return (
-            <styles.TypographyBase
-                ref={mergedRef}
-                as={inline ? "span" : "p"}
-                className={clsx(
-                    getTypographyTextClassName(textStyle, textWeight),
-                    getTypographyDisplayClassName(inline, paragraph),
-                    maxLines && (paragraph || !inline)
-                        ? typographyClassNames.lineClamp
-                        : undefined,
-                    className
-                )}
-                {...props}
-            />
-        );
-    };
-    Body.displayName = `Typography.${displayName}`;
-    return React.forwardRef(Body) as IStyledComponent<
-        "web",
-        TypographyProps & {
-            ref?: RefObject<HTMLParagraphElement> | undefined;
+            if (inline) {
+                return (
+                    <span
+                        ref={mergedRef as React.Ref<HTMLSpanElement>}
+                        className={clsx(
+                            styles.typographyBase,
+                            getTypographyTextClassName(textStyle),
+                            getTypographyWeightClassName(textWeight),
+                            getTypographyDisplayClassName(inline, paragraph),
+                            shouldClamp && styles.lineClamp,
+                            className
+                        )}
+                        style={style}
+                        {...props}
+                    />
+                );
+            }
+
+            return (
+                <p
+                    ref={mergedRef}
+                    className={clsx(
+                        styles.typographyBase,
+                        getTypographyTextClassName(textStyle),
+                        getTypographyWeightClassName(textWeight),
+                        getTypographyDisplayClassName(inline, paragraph),
+                        shouldClamp && styles.lineClamp,
+                        className
+                    )}
+                    style={style}
+                    {...props}
+                />
+            );
         }
-    >;
+    );
+
+    Body.displayName = `Typography.${displayName}`;
+    return Body;
 };
 
 export const BodyBL = createBody("body-baseline", "BodyBL");
@@ -150,41 +175,46 @@ const createLinkComponent = (
     textStyle: TypographySize,
     displayName: string
 ) => {
-    const Hyperlink = (
-        {
-            weight,
-            children,
-            external,
-            underlineStyle = "underline",
-            className,
-            ...props
-        }: TypographyLinkProps,
-        ref: React.Ref<HTMLAnchorElement>
-    ) => {
-        const textWeight = getTextWeight(weight);
+    const Hyperlink = React.forwardRef<HTMLAnchorElement, TypographyLinkProps>(
+        (
+            {
+                weight,
+                children,
+                external,
+                underlineStyle = "underline",
+                className,
+                ...props
+            },
+            ref
+        ) => {
+            const textWeight = getTextWeight(weight);
 
-        return (
-            <styles.HyperlinkBase
-                ref={ref}
-                className={clsx(
-                    getTypographyTextClassName(textStyle, textWeight),
-                    getTypographyUnderlineClassName(underlineStyle),
-                    className
-                )}
-                {...props}
-            >
-                {children}
-                {external && <styles.StyledExternalIcon />}
-            </styles.HyperlinkBase>
-        );
-    };
-    Hyperlink.displayName = `Typography.${displayName}`;
-    return React.forwardRef(Hyperlink) as IStyledComponent<
-        "web",
-        TypographyLinkProps & {
-            ref?: RefObject<HTMLAnchorElement> | undefined;
+            return (
+                <a
+                    ref={ref}
+                    className={clsx(
+                        styles.hyperlinkBase,
+                        styles.typographyBase,
+                        getTypographyTextClassName(textStyle),
+                        getTypographyWeightClassName(textWeight),
+                        underlineStyle === "none"
+                            ? styles.noUnderline
+                            : styles.underline,
+                        className
+                    )}
+                    {...props}
+                >
+                    {children}
+                    {external && (
+                        <ExternalIcon className={styles.externalIcon} />
+                    )}
+                </a>
+            );
         }
-    >;
+    );
+
+    Hyperlink.displayName = `Typography.${displayName}`;
+    return Hyperlink;
 };
 
 export const LinkBL = createLinkComponent("body-baseline", "LinkBL");
