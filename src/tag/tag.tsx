@@ -2,6 +2,9 @@ import React from "react";
 import { Label, Wrapper } from "./tag.style";
 import { TagProps } from "./types";
 
+/**
+ * A static or interactive element that is used to communicate selections, statuses and categories.
+ */
 export const Tag = ({
     type,
     colorType = "black",

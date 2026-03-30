@@ -15,6 +15,17 @@ import {
 type FieldType = "floor" | "unit" | "none";
 type ValueFieldTypes = Exclude<FieldType, "none">;
 
+/**
+ * Specialised input for Singapore-style floor and unit number entry (e.g. "#12-34").
+ *
+ * Renders two separate inputs for floor and unit, joined with a hyphen, and
+ * supports read-only display, error styling, and standard form attributes.
+ *
+ * @example
+ * ```tsx
+ * <UnitNumberInput value={{ floor: "12", unit: "34" }} onChange={handleChange} />
+ * ```
+ */
 export const UnitNumberInput = ({
     disabled,
     error,
@@ -355,7 +366,9 @@ export const UnitNumberInput = ({
                 autoComplete={autoComplete}
                 styleType="no-border"
             />
-            <VisuallyHidden aria-hidden id={unitLabelId}>Enter unit number</VisuallyHidden>
+            <VisuallyHidden aria-hidden id={unitLabelId}>
+                Enter unit number
+            </VisuallyHidden>
             {/** Live message for AT reader to read with the combination of prefix and current value for both floor input and unit input */}
             <VisuallyHidden id={liveMessageId} aria-live="polite">
                 {liveMessage}

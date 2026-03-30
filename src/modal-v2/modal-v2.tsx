@@ -12,6 +12,9 @@ import { ModalContext } from "./modal-context";
 import { Container, ModalContainer, ScrollContainer } from "./modal-v2.styles";
 import { ModalV2Props } from "./types";
 
+/**
+ * The styled card container within a ModalV2, wrapping the modal's visual surface.
+ */
 export const ModalV2 = ({
     id,
     show,

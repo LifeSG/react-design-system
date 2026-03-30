@@ -16,6 +16,9 @@ import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { SimpleIdGenerator } from "../util";
 import { InputMultiSelectProps } from "./types";
 
+/**
+ * A multi-select dropdown input that allows users to pick multiple options from a list.
+ */
 export const InputMultiSelect = <T, V>({
     selectedOptions,
     placeholder = "Select",

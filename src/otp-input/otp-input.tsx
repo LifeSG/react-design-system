@@ -335,4 +335,8 @@ const Component = (
     );
 };
 
+/**
+ * A component to handle the entry of the one-time password (OTP) for
+ * multi-factored authentication methods.
+ */
 export const OtpInput = forwardRef(Component);

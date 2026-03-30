@@ -9,6 +9,10 @@ import { TimeHelper } from "../util/time-helper";
 import { InputSelectorElement } from "./timepicker.styles";
 import { TimepickerProps } from "./types";
 
+/**
+ * A time entry field supporting dial-based selection
+ * in 12-hour or 24-hour formats.
+ */
 export const Timepicker = ({
     id,
     disabled = false,

@@ -4,6 +4,9 @@ import { useViewport } from "../shared/hooks";
 import { Container } from "./modal.styles";
 import { ModalProps } from "./types";
 
+/**
+ * A window or pop up that displays over other page content and provides information or actions.
+ */
 export const Modal = ({
     id = "modal",
     show,

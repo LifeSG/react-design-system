@@ -19,6 +19,10 @@ import {
     NotificationBannerWithForwardedRefProps,
 } from "./types";
 
+/**
+ * A component that remains sticky at the top of the page and provides the user
+ * with important notifications or notices.
+ */
 export const NBComponent = ({
     children,
     visible = true,

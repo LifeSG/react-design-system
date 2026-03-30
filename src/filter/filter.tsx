@@ -9,6 +9,9 @@ import { FilterProps } from "./types";
 import { FilterModal } from "./filter-modal";
 import { FilterSidebar } from "./filter-sidebar";
 
+/**
+ * Base props shared by all Filter variants. Displays widgets under collapsible panels to filter data results.
+ */
 export const Filter = ({
     children,
     className,

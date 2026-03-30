@@ -20,6 +20,9 @@ import {
 } from "./select-histogram.styles";
 import { SelectHistogramProps } from "./types";
 
+/**
+ * Subset of HistogramSlider props passed to the embedded histogram slider.
+ */
 export const SelectHistogram = ({
     alignment = "left",
     className,

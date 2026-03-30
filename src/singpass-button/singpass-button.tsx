@@ -84,6 +84,9 @@ const LargeComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
 };
 LargeComponent.displayName = "SingpassButton.Large";
 
+/**
+ * The call to action for Singpass login, following the official Singpass button guidelines.
+ */
 export const SingpassButton = {
     Default: React.forwardRef(DefaultComponent),
     Small: React.forwardRef(SmallComponent),

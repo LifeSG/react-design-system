@@ -18,6 +18,20 @@ import {
 } from "./drawer.styles";
 import { DrawerProps } from "./types";
 
+/**
+ * Slide-in side panel.
+ *
+ * Renders a panel that slides in from the side of the screen, overlaying
+ * the page content. Toggled via the `show` prop and dismissed via the
+ * close button or overlay click callbacks.
+ *
+ * @example
+ * ```tsx
+ * <Drawer show={isOpen} heading="Filters" onClose={() => setIsOpen(false)}>
+ *     <FilterForm />
+ * </Drawer>
+ * ```
+ */
 export const Drawer = ({
     children,
     heading,

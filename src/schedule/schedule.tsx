@@ -22,6 +22,9 @@ import {
     ScheduleBodyContainer,
 } from "./schedule.styles";
 
+/**
+ * Represents a service or resource entity with its associated time slots.
+ */
 export const Schedule = ({
     id,
     className,

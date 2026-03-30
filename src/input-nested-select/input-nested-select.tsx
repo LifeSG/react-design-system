@@ -34,6 +34,9 @@ interface SelectedItemType<V1, V2, V3> {
     value: V1 | V2 | V3;
 }
 
+/**
+ * Options props for nested select, replacing the flat options list with a hierarchical one.
+ */
 export const InputNestedSelect = <V1, V2, V3>({
     placeholder = "Select",
     options: _options,

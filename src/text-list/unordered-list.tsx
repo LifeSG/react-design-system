@@ -2,6 +2,18 @@ import React from "react";
 import { StyledUnorderedList } from "./text-list.styles";
 import { BulletType, UnorderedListProps } from "./types";
 
+/**
+ * An unordered list component that renders items with bullet points or custom icons.
+ *
+ * Supports `disc`, `circle`, `square`, `none`, or any custom React node as the bullet.
+ *
+ * @example
+ * ```tsx
+ * <UnorderedList bulletType="disc">
+ *   <li>First item</li>
+ * </UnorderedList>
+ * ```
+ */
 export const UnorderedList = ({
     size,
     bulletType,

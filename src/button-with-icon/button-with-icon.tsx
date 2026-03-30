@@ -101,6 +101,11 @@ const SmallComponent = (props: ButtonWithIconProps, ref: ButtonWithIconRef) => {
 };
 SmallComponent.displayName = "ButtonWithIcon.Small";
 
+/**
+ * The primary call to action component with an icon.
+ *
+ * Extends `ButtonProps` with an icon slot that can be positioned on the left or right of the label.
+ */
 export const ButtonWithIcon = {
     Default: React.forwardRef(DefaultComponent),
     Small: React.forwardRef(SmallComponent),

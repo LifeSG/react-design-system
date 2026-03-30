@@ -198,4 +198,14 @@ const TextareaComponent = (
     );
 };
 
+/**
+ * Multi-line text entry field extending standard HTML textarea attributes.
+ *
+ * Supports character counting, error styling, and value transformation.
+ *
+ * @example
+ * ```tsx
+ * <Textarea placeholder="Enter text" rows={4} />
+ * ```
+ */
 export const Textarea = React.forwardRef(TextareaComponent);

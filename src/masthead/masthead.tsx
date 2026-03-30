@@ -5,6 +5,9 @@ import { ThemeContext } from "styled-components";
 import { Wrapper } from "./masthead.style";
 import { MastheadProps } from "./types";
 
+/**
+ * A mandatory banner displayed at the top of .gov.sg digital service pages.
+ */
 export const Masthead = ({ stretch = false }: MastheadProps): JSX.Element => {
     const theme = useContext(ThemeContext);
     const isDarkMode = theme?.colourMode === "dark";

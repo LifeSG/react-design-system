@@ -17,6 +17,10 @@ import {
 } from "./date-navigator.style";
 import { DateNavigatorProps } from "./types";
 
+/**
+ * Displays the current date with left/right arrow navigation and an optional calendar dropdown.
+ * Supports day and week view modes.
+ */
 export const DateNavigator = ({
     selectedDate,
     minDate,

@@ -3,6 +3,11 @@ import { V2_ColDiv } from "../v2_layout/col-div";
 import { Line } from "./divider.style";
 import { DividerProps } from "./types";
 
+/**
+ * A component that renders a horizontal line.
+ *
+ * Supports both flex and grid layouts, with configurable thickness, color, and line style.
+ */
 export const Divider = ({
     thickness = 1,
     lineStyle = "solid",

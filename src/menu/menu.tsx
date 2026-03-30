@@ -6,6 +6,10 @@ import { MenuLink } from "./menu-link";
 import { MenuSection } from "./menu-section";
 import { MenuContentProps, MenuProps } from "./types";
 
+/**
+ * A popover-based dropdown menu component, commonly used with Avatar and Navbar.
+ * Extends PopoverV2TriggerProps (except `popoverContent`).
+ */
 export const MenuTrigger = ({
     children,
     position = "bottom-start",

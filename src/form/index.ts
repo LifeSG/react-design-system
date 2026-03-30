@@ -23,6 +23,19 @@ import { FormTimeRangePicker } from "./form-time-range-picker";
 import { FormTimepicker } from "./form-timepicker";
 import { FormUnitNumberInput } from "./form-unit-number-input";
 
+/**
+ * A collection of form field components that wrap input controls with labels,
+ * error messages, and responsive layout.
+ *
+ * Use `Form.Input`, `Form.Select`, `Form.DateInput` and other sub-components
+ * to build accessible, consistently styled forms with built-in validation display.
+ *
+ * @example
+ * ```tsx
+ * <Form.Input label="Name" errorMessage={error} />
+ * <Form.Select label="Country" options={options} />
+ * ```
+ */
 export const Form = {
     DateInput: FormDateInput,
     DateRangeInput: FormDateRangeInput,

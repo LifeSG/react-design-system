@@ -1,6 +1,9 @@
 import { BadgeOverlay, BadgeWrapper, StyledBadge } from "./badge.style";
 import { BadgeProps, BadgeVariant } from "./types";
 
+/**
+ * A visual indicator for notifications or status, displayed as a badge overlay.
+ */
 export const Badge = ({
     children,
     count = 0,

@@ -33,6 +33,9 @@ const TOAST_ICON_MAP = {
     info: ICircleFillIcon,
 };
 
+/**
+ * Configuration for the action button rendered within a Toast.
+ */
 export const Toast = ({
     type = "success",
     title,

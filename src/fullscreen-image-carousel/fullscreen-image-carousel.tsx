@@ -50,6 +50,9 @@ import {
 } from "./types";
 import { useStateCallback } from "../shared/hooks";
 
+/**
+ * An overlay that displays images in a carousel and offers the ability to zoom into the current image.
+ */
 export const Component = (
     {
         items,

@@ -9,6 +9,9 @@ import {
     Wrapper,
 } from "./uneditable-section.styles";
 
+/**
+ * Props for a single uneditable item within UneditableSection.
+ */
 export const UneditableSectionBase = ({
     items,
     title,

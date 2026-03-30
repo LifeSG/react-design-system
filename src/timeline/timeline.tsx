@@ -16,6 +16,9 @@ import {
 import { TimelineItemProps, TimelineProps, Variant } from "./types";
 import { VisuallyHidden } from "src/shared/accessibility";
 
+/**
+ * Represents a single step or item within a Timeline.
+ */
 export const Timeline = ({
     items,
     className,

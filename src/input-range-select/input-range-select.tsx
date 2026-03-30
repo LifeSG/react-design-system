@@ -24,6 +24,9 @@ import { VisuallyHidden, concatIds } from "../shared/accessibility";
 
 type RangeType = "from" | "to";
 
+/**
+ * Options props for the range select, providing separate from/to option lists and load states.
+ */
 export const InputRangeSelect = <T, V>({
     selectedOptions,
     placeholders = { from: "Select", to: "Select" },

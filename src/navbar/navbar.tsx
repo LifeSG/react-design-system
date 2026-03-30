@@ -342,4 +342,7 @@ const Component = <T,>(
     );
 };
 
+/**
+ * A standard navigation item rendered as a link, optionally with sub-menu items.
+ */
 export const Navbar = forwardRef(Component);

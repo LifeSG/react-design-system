@@ -5,6 +5,18 @@ import {
 } from "./avatar.style";
 import { AvatarProps } from "./types";
 
+/**
+ * Displays a visual representation of a user or entity.
+ *
+ * Renders an initial (letter) or a custom element in a circular container.
+ * Supports `"default"` and `"small"` sizes.
+ *
+ * @example
+ * ```tsx
+ * <Avatar>A</Avatar>
+ * <Avatar sizeType="small">B</Avatar>
+ * ```
+ */
 export const Avatar = ({
     children,
     sizeType = "default",

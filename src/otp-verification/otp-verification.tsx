@@ -5,6 +5,9 @@ import { OTPInputWrapper } from "./otp-verification-styles";
 import { OtpVerificationProps } from "./types";
 import { VerificationSection } from "./verification-section";
 
+/**
+ * Base props shared by all OTP verification variants.
+ */
 export const OtpVerification = (props: OtpVerificationProps) => {
     // =============================================================================
     // CONST, STATE, REF

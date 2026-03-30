@@ -22,4 +22,7 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
     );
 };
 
+/**
+ * Sets styling for commonly used HTML markup elements such as `<strong>` or `<a>`.
+ */
 export const Markup = forwardRef(Component);

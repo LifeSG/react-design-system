@@ -32,6 +32,10 @@ const ESignatureCanvas = lazy(async () => ({
     default: (await import("./e-signature-canvas")).ESignatureCanvas,
 }));
 
+/**
+ * A canvas-based electronic signature input
+ * that allows users to draw and submit their signature.
+ */
 export const ESignature = (props: EsignatureProps) => {
     // =============================================================================
     // CONST, STATE, REF

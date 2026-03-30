@@ -34,4 +34,18 @@ const Component = (
     );
 };
 
+/**
+ * Icon-only button.
+ *
+ * Renders a square button containing only an icon child. Extends all
+ * `HTMLButtonElement` attributes. Choose the style type based on hierarchy
+ * and the size type based on available space.
+ *
+ * @example
+ * ```tsx
+ * <IconButton styleType="secondary" sizeType="small" onClick={handleEdit}>
+ *     <EditIcon />
+ * </IconButton>
+ * ```
+ */
 export const IconButton = React.forwardRef(Component);

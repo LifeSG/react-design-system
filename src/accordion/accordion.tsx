@@ -144,6 +144,19 @@ const AccordionBase = ({
     );
 };
 
+/**
+ * A collapsible content container that groups related information into expandable sections.
+ *
+ * Supports a title bar with a global "Show all" / "Hide all" toggle via `Accordion.Item` sub-components.
+ * The initial expand/collapse state and heading level are configurable.
+ *
+ * @example
+ * ```tsx
+ * <Accordion title="FAQ">
+ *   <Accordion.Item title="Question 1">Answer 1</Accordion.Item>
+ * </Accordion>
+ * ```
+ */
 export const Accordion = Object.assign(AccordionBase, {
     Item: AccordionItem,
 });

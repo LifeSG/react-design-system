@@ -3,6 +3,10 @@ import { LazyLinkList } from "./components/link-list-lazy";
 import { Container } from "./link-list.styles";
 import { LinkListProps } from "./types";
 
+/**
+ * Which renders a grouped list of navigational
+ * anchor links with optional eager or lazy loading of items.
+ */
 export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
     if (!props.loadMode || props.loadMode === "eager") {
         const {

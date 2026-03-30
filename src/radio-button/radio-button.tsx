@@ -7,6 +7,10 @@ import {
 } from "./radio-button.styles";
 import { RadioButtonProps } from "./types";
 
+/**
+ * A field that allows a user to select from a predefined set of mutually
+ * exclusive options, shown with a graphical circle indicator when active.
+ */
 export const RadioButton = ({
     className,
     checked,

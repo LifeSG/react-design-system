@@ -10,6 +10,9 @@ import {
 import { FileListCard } from "./file-list-card";
 import { FileDownloadProps, FileItemDownloadProps } from "./types";
 
+/**
+ * Represents a single file item available for download.
+ */
 export const FileDownload = ({
     id,
     fileItems,

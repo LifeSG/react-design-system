@@ -19,6 +19,12 @@ import {
 } from "./alert.style";
 import { AlertProps } from "./types";
 
+/**
+ * The primary call to action component.
+ *
+ * Displays messages of different types (success, warning, error, info, description)
+ * with optional icons and action links.
+ */
 export const Alert = ({
     type,
     className,

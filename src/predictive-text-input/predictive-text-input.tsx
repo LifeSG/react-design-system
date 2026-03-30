@@ -9,6 +9,10 @@ import { PredictiveTextInputProps } from "./types";
 import { ItemsLoadStateType } from "../shared/dropdown-list/types";
 import { VisuallyHidden, concatIds } from "src/shared/accessibility";
 
+/**
+ * An async autocomplete input that fetches
+ * and displays matching suggestions as the user types.
+ */
 export const PredictiveTextInput = <T, V>({
     className,
     "data-testid": testId,

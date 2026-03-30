@@ -17,6 +17,17 @@ import {
 import { CountdownTimerProps } from "./types";
 import { useTimer } from "./use-timer";
 
+/**
+ * Displays a countdown timer that can be fixed/sticky when scrolled out of view.
+ *
+ * Accepts either a `timer` (duration in seconds) or a `timestamp` (Unix ms) to
+ * drive the countdown.
+ *
+ * @example
+ * ```tsx
+ * <CountdownTimer show timer={300} onFinish={() => {}} />
+ * ```
+ */
 export const CountdownTimer = ({
     className,
     align = "right",

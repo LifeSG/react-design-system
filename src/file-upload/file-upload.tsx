@@ -16,6 +16,9 @@ import {
 } from "./file-upload.styles";
 import { FileItemProps, FileUploadProps } from "./types";
 
+/**
+ * Props for an individual file item displayed in the upload list.
+ */
 export const FileUpload = ({
     styleType = "bordered",
     fileItems,

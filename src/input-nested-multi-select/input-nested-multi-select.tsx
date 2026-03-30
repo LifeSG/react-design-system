@@ -20,6 +20,9 @@ import { SimpleIdGenerator, StringHelper } from "../util";
 import { SelectedItem, getSelectedItems, getSelectedSubItems } from "./helpers";
 import { InputNestedMultiSelectProps } from "./types";
 
+/**
+ * A multi-select dropdown that supports hierarchical (nested) option categories up to 3 levels deep.
+ */
 export const InputNestedMultiSelect = <V1, V2, V3>({
     placeholder = "Select",
     options: _options,

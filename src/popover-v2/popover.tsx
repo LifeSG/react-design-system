@@ -7,6 +7,18 @@ import { PopoverCard, PopoverContainer } from "./popover.styles";
 import { PopoverV2Props } from "./types";
 import { ModalV2 } from "../modal-v2";
 
+/**
+ * Displays content in an overlay panel anchored to a trigger element.
+ *
+ * Renders as a floating card on desktop and a `ModalV2` bottom sheet on mobile.
+ *
+ * @example
+ * ```tsx
+ * <PopoverV2 visible={open} position="bottom" anchor={anchorRef}>
+ *   Popover content
+ * </PopoverV2>
+ * ```
+ */
 export const PopoverV2 = ({
     children,
     visible,

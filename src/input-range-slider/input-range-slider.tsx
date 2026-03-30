@@ -15,6 +15,9 @@ import { InputRangeSliderProps } from "./types";
 import { SimpleIdGenerator } from "../util";
 import { VisuallyHidden, concatIds } from "../shared/accessibility";
 
+/**
+ * Base props shared between all slider variants.
+ */
 export const InputRangeSlider = ({
     id,
     value,

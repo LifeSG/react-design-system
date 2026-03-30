@@ -16,6 +16,9 @@ import { SimpleIdGenerator } from "../util";
 import { StringHelper } from "../util/string-helper";
 import { InputSelectProps } from "./types";
 
+/**
+ * Options and loading state props shared across select components.
+ */
 export const InputSelect = <T, V>({
     selectedOption,
     placeholder = "Select",

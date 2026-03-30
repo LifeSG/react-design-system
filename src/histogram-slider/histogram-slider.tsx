@@ -14,6 +14,9 @@ import { concatIds } from "../shared/accessibility";
 
 const ANNOUNCEMENT_DEBOUNCE_MS = 500;
 
+/**
+ *  Describes a single histogram bin with its frequency count and lower boundary value.
+ */
 export const HistogramSlider = ({
     bins = [],
     interval,

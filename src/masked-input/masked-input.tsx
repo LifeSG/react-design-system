@@ -307,4 +307,7 @@ const Component = (
     return <div aria-busy={loadState === "loading"}>{renderElement()}</div>;
 };
 
+/**
+ * Configuration for masking behaviour applied to an input field.
+ */
 export const MaskedInput = React.forwardRef(Component);

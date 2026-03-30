@@ -36,30 +36,34 @@ not create the file. Still complete Section C.
    high-level feature headings
 2. `stories/[COMPONENT_NAME]/props-table.tsx` — parse the `DATA: ApiTableSectionProps[]`
    array for all property descriptions
-3. `src/[COMPONENT_NAME]/types.ts` (and any related type files if types are spread across
+3. `src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx` — locate the exported component function
+4. `src/[COMPONENT_NAME]/types.ts` (and any related type files if types are spread across
    multiple files — use grep if needed)
-4. `src/[COMPONENT_NAME]/[COMPONENT_NAME].style.tsx` (if present) — identify `$`-prefixed
+5. `src/[COMPONENT_NAME]/[COMPONENT_NAME].style.tsx` (if present) — identify `$`-prefixed
    transient props to skip
 
-### A2: Compose the Interface JSDoc
+### A2: Compose the Component JSDoc and Interface Keywords
 
-Combine the MDX overview and relevant high-level section headings into a concise
-description above the main `*Props` interface:
+The component-level description must be placed on the **component function** in
+`src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx` — not on the `*Props` interface. This
+ensures IntelliSense shows the description when consumers hover over the component in
+their IDE.
 
-```typescript
+Add a JSDoc block above the exported component function:
+
+````typescript
 /**
  * Primary description from the MDX overview.
  *
  * Additional capabilities, structure, or modes inferred from MDX section headings.
  *
- * @keywords keyword1, keyword2, keyword3
+ * @example
+ * ```tsx
+ * <ComponentName prop="value">content</ComponentName>
+ * ```
  */
-export interface ComponentNameProps {
-```
-
-For `@keywords`, provide 3–6 comma-separated terms a developer might search for (see
-Section B2 for keyword guidelines). These are read by the component catalog and
-Storybook — they must be present on the main `*Props` interface.
+export const ComponentName = ({
+````
 
 **Include** in the additional sentences:
 
@@ -67,7 +71,20 @@ Storybook — they must be present on the main `*Props` interface.
 -   Key feature capabilities (sort, multi-select, loading states, etc.)
 -   Controlled vs uncontrolled mode notes
 
-**Exclude**: code examples, step-by-step usage, edge-case warnings.
+**Exclude**: step-by-step usage, edge-case warnings.
+
+On the `*Props` interface in `types.ts`, retain only the `@keywords` tag — it is read
+by the component catalog and must remain on the interface:
+
+```typescript
+/**
+ * @keywords keyword1, keyword2, keyword3
+ */
+export interface ComponentNameProps {
+```
+
+For `@keywords`, provide 3–6 comma-separated terms a developer might search for (see
+Section B2 for keyword guidelines).
 
 ### A3: Write Property JSDoc from Props-Table
 
@@ -114,25 +131,38 @@ Process all sections, not just the first.
    transient props to skip
 4. `stories/[COMPONENT_NAME]/[COMPONENT_NAME].mdx` (if present) — extract overview
 
-### B2: Document the Main Interface
+### B2: Document the Component Function and Interface Keywords
 
-Add a JSDoc block above the main exported `*Props` interface:
+The component-level description must be placed on the **component function** in
+`src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx` — not on the `*Props` interface. This
+ensures IntelliSense shows the description when consumers hover over the component in
+their IDE.
+
+Add a JSDoc block above the exported component function:
 
 ````typescript
 /**
- * Props for the [Component] component - [one-line purpose]
+ * [One-line purpose of the component]
  *
  * [2-3 sentences: when to use this component, key capabilities, important behaviours]
- *
- * @keywords keyword1, keyword2, keyword3
  *
  * @example
  * ```tsx
  * <ComponentName prop="value">content</ComponentName>
  * ```
  */
-export interface ComponentNameProps {
+export const ComponentName = ({
 ````
+
+On the `*Props` interface in `types.ts`, retain only the `@keywords` tag — it is read
+by the component catalog and must remain on the interface:
+
+```typescript
+/**
+ * @keywords keyword1, keyword2, keyword3
+ */
+export interface ComponentNameProps {
+```
 
 For `@keywords`, provide 3–6 comma-separated terms that a developer might search for:
 
@@ -256,11 +286,18 @@ logical introductory paragraph in the MDX file and add the heading + description
 ### C2: JSDoc Keywords (`searchKeys` field)
 
 The component catalog reads `@keywords` from the `@keywords` tag on the main `*Props`
-interface in `src/[COMPONENT_NAME]/types.ts`. This is the same tag added in Section A2
-or B2 — no additional action is needed here if that step was completed.
+interface in `src/[COMPONENT_NAME]/types.ts`. This tag always lives on the interface —
+not on the component function — regardless of which approach was used.
 
-Verify the `@keywords` tag is present on the main interface before finishing. If it is
-missing (e.g. `types.ts` was not modified), add it now.
+Verify the `@keywords` tag is present on the interface before finishing. If it is
+missing, add it now as a standalone JSDoc block containing only `@keywords`:
+
+```typescript
+/**
+ * @keywords keyword1, keyword2, keyword3
+ */
+export interface ComponentNameProps {
+```
 
 ---
 
