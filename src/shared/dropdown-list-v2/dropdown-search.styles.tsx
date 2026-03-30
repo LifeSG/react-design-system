@@ -4,7 +4,6 @@ import styled, { css } from "styled-components";
 import { V3_Colour, V3_Font, V3_Radius, V3_Spacing } from "../../v3_theme";
 import { ClickableIcon } from "../clickable-icon";
 import type { DropdownVariantType } from "../dropdown-list/types";
-import type { InputStyleProps } from "../input-wrapper";
 import { BasicInput } from "../input-wrapper";
 
 //=============================================================================
@@ -43,7 +42,7 @@ export const SearchBox = styled.label<StyleProps>`
               css`10px ${V3_Spacing["spacing-8"]}`};
 `;
 
-export const SearchInput = styled(BasicInput)<InputStyleProps>`
+export const SearchInput = styled(BasicInput)`
     flex: 1;
 `;
 

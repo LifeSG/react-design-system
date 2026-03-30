@@ -508,11 +508,7 @@ const DropdownListInner = <T, V>(
         ) {
             return (
                 <SelectAllContainer>
-                    <SelectAllButton
-                        onClick={onSelectAll}
-                        type="button"
-                        $variant={variant}
-                    >
+                    <SelectAllButton onClick={onSelectAll} type="button">
                         {maxSelectable || selectedItems.length !== 0
                             ? clearAllButtonLabel
                             : selectAllButtonLabel}
@@ -562,11 +558,7 @@ const DropdownListInner = <T, V>(
                 <ResultStateContainer data-testid="list-fail">
                     <LabelIcon data-testid="load-error-icon" />
                     Failed to load.&nbsp;
-                    <TryAgainButton
-                        onClick={handleTryAgain}
-                        type="button"
-                        $variant={variant}
-                    >
+                    <TryAgainButton onClick={handleTryAgain} type="button">
                         Try again.
                     </TryAgainButton>
                 </ResultStateContainer>

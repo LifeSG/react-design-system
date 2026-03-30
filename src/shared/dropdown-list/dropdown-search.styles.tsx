@@ -3,7 +3,6 @@ import styled, { css } from "styled-components";
 
 import { V3_Colour, V3_Radius, V3_Spacing } from "../../v3_theme";
 import { ClickableIcon } from "../clickable-icon";
-import type { InputStyleProps } from "../input-wrapper";
 import { BasicInput } from "../input-wrapper";
 import type { DropdownVariantType, IconProps } from "./types";
 
@@ -24,7 +23,7 @@ export const Container = styled.li`
     align-items: center;
 `;
 
-export const SearchInput = styled(BasicInput)<InputStyleProps>`
+export const SearchInput = styled(BasicInput)`
     height: ${(props) => (props.$variant === "small" ? 2.5 : 3)}rem;
     flex: 1;
     padding: 0 ${V3_Spacing["spacing-8"]} 0 0;

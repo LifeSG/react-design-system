@@ -1,1 +1,2 @@
-export * from "./input-wrapper.styles";
+export * from "./input-wrapper";
+export * from "./types";

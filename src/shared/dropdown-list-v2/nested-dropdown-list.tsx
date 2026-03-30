@@ -439,11 +439,7 @@ export const NestedDropdownList = <T,>({
         ) {
             return (
                 <SelectAllContainer>
-                    <SelectAllButton
-                        onClick={handleOnSelectAll}
-                        type="button"
-                        $variant={variant}
-                    >
+                    <SelectAllButton onClick={handleOnSelectAll} type="button">
                         {selectedKeyPaths.size === 0
                             ? selectAllButtonLabel
                             : clearAllButtonLabel}
@@ -493,11 +489,7 @@ export const NestedDropdownList = <T,>({
                 <ResultStateContainer data-testid="list-fail">
                     <LabelIcon data-testid="load-error-icon" />
                     Failed to load.&nbsp;
-                    <TryAgainButton
-                        onClick={handleTryAgain}
-                        type="button"
-                        $variant={variant}
-                    >
+                    <TryAgainButton onClick={handleTryAgain} type="button">
                         Try again.
                     </TryAgainButton>
                 </ResultStateContainer>
