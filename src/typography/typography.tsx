@@ -1,5 +1,6 @@
 import { ExternalIcon } from "@lifesg/react-icons/external";
 import clsx from "clsx";
+import type { NamedExoticComponent } from "react";
 import React from "react";
 
 import { useApplyStyle } from "../theme";
@@ -49,10 +50,10 @@ const createHeading = (
     displayName: string
 ) => {
     const Header = React.forwardRef<HTMLHeadingElement, TypographyProps>(
-        (
+        function TypographyHeading(
             { weight, inline, paragraph, maxLines, className, style, ...props },
             ref
-        ) => {
+        ) {
             const textWeight = getTextWeight(weight);
             const headingRef = React.useRef<HTMLHeadingElement>(null);
             const mergedRef = mergeRefs(headingRef, ref);
@@ -98,7 +99,7 @@ const createHeading = (
         }
     );
 
-    Header.displayName = `Typography.${displayName}`;
+    (Header as NamedExoticComponent).displayName = `Typography.${displayName}`;
     return Header;
 };
 
@@ -111,10 +112,10 @@ export const HeadingXS = createHeading("h6", "heading-xs", "HeadingXS");
 
 const createBody = (textStyle: TypographySize, displayName: string) => {
     const Body = React.forwardRef<HTMLParagraphElement, TypographyProps>(
-        (
+        function TypographyBody(
             { weight, inline, paragraph, maxLines, className, style, ...props },
             ref
-        ) => {
+        ) {
             const textWeight = getTextWeight(weight);
             const paragraphRef = React.useRef<HTMLParagraphElement>(null);
             const mergedRef = mergeRefs(paragraphRef, ref);
@@ -162,7 +163,7 @@ const createBody = (textStyle: TypographySize, displayName: string) => {
         }
     );
 
-    Body.displayName = `Typography.${displayName}`;
+    (Body as NamedExoticComponent).displayName = `Typography.${displayName}`;
     return Body;
 };
 
@@ -176,7 +177,7 @@ const createLinkComponent = (
     displayName: string
 ) => {
     const Hyperlink = React.forwardRef<HTMLAnchorElement, TypographyLinkProps>(
-        (
+        function TypographyLink(
             {
                 weight,
                 children,
@@ -186,7 +187,7 @@ const createLinkComponent = (
                 ...props
             },
             ref
-        ) => {
+        ) {
             const textWeight = getTextWeight(weight);
 
             return (
@@ -213,7 +214,9 @@ const createLinkComponent = (
         }
     );
 
-    Hyperlink.displayName = `Typography.${displayName}`;
+    (
+        Hyperlink as NamedExoticComponent
+    ).displayName = `Typography.${displayName}`;
     return Hyperlink;
 };
 

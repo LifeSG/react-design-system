@@ -1,7 +1,8 @@
+import clsx from "clsx";
 import { useState } from "react";
 
 import { VisuallyHidden } from "../shared/accessibility";
-import { Typography } from "../typography";
+import * as typographyStyles from "../typography/typography.styles";
 import { SimpleIdGenerator } from "../util";
 import {
     ChildContainer,
@@ -52,9 +53,17 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                 />
             )}
             <ChildContainer>
-                <Typography.HeadingSM as="h2" id={internalId} weight="semibold">
+                <h2
+                    id={internalId}
+                    className={clsx(
+                        typographyStyles.typographyBase,
+                        typographyStyles.typographySize["heading-sm"],
+                        typographyStyles.typographyWeight.semibold,
+                        typographyStyles.displayBlock
+                    )}
+                >
                     {componentDescription}
-                </Typography.HeadingSM>
+                </h2>
                 <FeedbackRatingStarsContainer
                     ariaLabelledBy={internalId}
                     ariaDescribedBy={descriptionId}
