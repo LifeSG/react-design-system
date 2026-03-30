@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 
-import { Markup } from "../markup";
 import { FileUploadContext } from "./context";
 import type { DropzoneElement } from "./dropzone";
 import { FileUploadDropzone } from "./dropzone";
@@ -116,8 +115,8 @@ export const FileUpload = ({
         }
 
         return (
-            <TitleContainer>
-                <Markup baseTextSize="body-baseline">{title}</Markup>
+            <TitleContainer baseTextSize="body-baseline">
+                {title}
             </TitleContainer>
         );
     };
@@ -132,8 +131,8 @@ export const FileUpload = ({
         }
 
         return (
-            <DescriptionContainer>
-                <Markup baseTextSize="body-md">{description}</Markup>
+            <DescriptionContainer baseTextSize="body-md">
+                {description}
             </DescriptionContainer>
         );
     };

@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
 
+import { Markup } from "../markup";
 import { Typography } from "../typography";
 import {
     V3_Border,
@@ -170,7 +171,7 @@ export const TextWrapperContainer = styled.div<TextWrapperContainerStyleProps>`
     }}
 `;
 
-export const TextWrapper = styled.div<StyleProps>`
+export const TextWrapper = styled(Markup)`
     color: ${V3_Colour.text};
 `;
 

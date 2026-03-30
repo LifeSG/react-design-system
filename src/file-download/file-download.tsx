@@ -1,4 +1,3 @@
-import { Markup } from "../markup";
 import {
     Container,
     Description,
@@ -43,9 +42,7 @@ export const FileDownload = ({
         }
 
         return (
-            <TitleContainer>
-                <Markup baseTextSize="heading-xs">{title}</Markup>
-            </TitleContainer>
+            <TitleContainer baseTextSize="heading-xs">{title}</TitleContainer>
         );
     };
 
@@ -59,8 +56,8 @@ export const FileDownload = ({
         }
 
         return (
-            <DescriptionContainer>
-                <Markup baseTextSize="body-md">{description}</Markup>
+            <DescriptionContainer baseTextSize="body-md">
+                {description}
             </DescriptionContainer>
         );
     };

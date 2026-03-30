@@ -2,7 +2,6 @@ import { CaretRightIcon } from "@lifesg/react-icons/caret-right";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 
-import { Markup } from "../../markup";
 import {
     mergeRefs,
     useEvent,
@@ -469,7 +468,7 @@ export const NestedDropdownList = <T,>({
                     </ResultStateContainer>
                     {noResultsDescription && (
                         <NoResultDescContainer data-testid="no-result-desc">
-                            <Markup>{noResultsDescription}</Markup>
+                            {noResultsDescription}
                         </NoResultDescContainer>
                     )}
                 </>

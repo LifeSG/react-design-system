@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 
+import { Markup } from "../markup";
 import {
     V3_Border,
     V3_Colour,
@@ -53,7 +54,7 @@ export const Title = styled.p`
     margin-bottom: ${V3_Spacing["spacing-8"]};
 `;
 
-export const TitleContainer = styled.div`
+export const TitleContainer = styled(Markup)`
     color: ${V3_Colour["text"]};
 `;
 
@@ -62,7 +63,7 @@ export const Description = styled.p`
     color: ${V3_Colour["text-subtler"]};
 `;
 
-export const DescriptionContainer = styled.div`
+export const DescriptionContainer = styled(Markup)`
     color: ${V3_Colour["text-subtler"]};
 `;
 

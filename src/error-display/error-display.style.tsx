@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { Button } from "../button";
+import { Markup } from "../markup";
 import { Typography } from "../typography";
 import { V3_Colour, V3_MediaQuery, V3_Spacing } from "../v3_theme";
 
@@ -46,7 +47,7 @@ export const Title = styled(Typography.HeadingMD).attrs(() => ({
     text-align: center;
 `;
 
-export const DescriptionContainer = styled.div`
+export const DescriptionContainer = styled(Markup)`
     color: ${V3_Colour.text};
     text-align: center;
 

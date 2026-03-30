@@ -13,7 +13,6 @@ import {
 import type { VirtuosoHandle } from "react-virtuoso";
 import { Virtuoso } from "react-virtuoso";
 
-import { Markup } from "../../markup";
 import {
     mergeRefs,
     useCompare,
@@ -536,7 +535,7 @@ const DropdownListInner = <T, V>(
                     </ResultStateContainer>
                     {noResultsDescription && (
                         <NoResultDescContainer data-testid="no-result-desc">
-                            <Markup>{noResultsDescription}</Markup>
+                            {noResultsDescription}
                         </NoResultDescContainer>
                     )}
                 </>

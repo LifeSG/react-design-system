@@ -6,7 +6,6 @@ import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
 import { useCallback, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
-import { Markup } from "../markup";
 import { inertValue } from "../shared/accessibility";
 import { SimpleIdGenerator } from "../util";
 import {
@@ -160,12 +159,11 @@ export const Alert = ({
             $hasActionLink={!!actionLink}
             inert={inertValue(isInert())}
         >
-            <TextWrapper ref={contentRef} $type={type} $sizeType={sizeType}>
-                <Markup
-                    baseTextSize={sizeType === "small" ? "body-sm" : "body-md"}
-                >
-                    {children}
-                </Markup>
+            <TextWrapper
+                ref={contentRef}
+                baseTextSize={sizeType === "small" ? "body-sm" : "body-md"}
+            >
+                {children}
             </TextWrapper>
             {renderLink()}
         </TextWrapperContainer>

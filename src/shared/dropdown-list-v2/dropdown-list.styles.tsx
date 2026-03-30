@@ -5,6 +5,7 @@ import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
 
+import { Markup } from "../../markup";
 import {
     V3_Border,
     V3_Breakpoint,
@@ -214,7 +215,7 @@ export const Spinner = styled(ComponentLoadingSpinner)`
     color: ${V3_Colour["icon"]};
 `;
 
-export const NoResultDescContainer = styled.div`
+export const NoResultDescContainer = styled(Markup)`
     color: ${V3_Colour["text-subtle"]};
     padding: 0 ${V3_Spacing["spacing-16"]} ${V3_Spacing["spacing-12"]}
         ${V3_Spacing["spacing-16"]};
