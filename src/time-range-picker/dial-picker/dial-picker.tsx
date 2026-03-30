@@ -154,10 +154,10 @@ export const DialPicker = ({
             onBlur={handleContainerBlur}
             data-testid="timepicker-container"
             role="group"
-            $disabled={disabled}
-            $error={error}
-            $readOnly={readOnly}
-            $focused={focused}
+            disabled={disabled}
+            error={error}
+            readOnly={readOnly}
+            focused={focused}
         >
             <RangeInputInnerContainer error={error} currentActive={active}>
                 <SelectorInput

@@ -397,9 +397,9 @@ export const UnitNumberInput = ({
             {...otherProps}
             ref={nodeRef}
             onClick={handleNodeClick}
-            $disabled={disabled}
-            $error={error}
-            $readOnly={readOnly}
+            disabled={disabled}
+            error={error}
+            readOnly={readOnly}
             tabIndex={-1}
             onBlur={handleNodeBlur}
         >

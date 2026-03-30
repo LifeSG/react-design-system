@@ -176,10 +176,10 @@ export const SelectHistogram = ({
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                $focused={focused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
+                focused={focused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
             >
                 <ExpandableElement
                     ref={selectorRef}

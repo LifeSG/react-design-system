@@ -281,10 +281,10 @@ export const PredictiveTextInput = <T, V>({
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                $focused={isFocused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
+                focused={isFocused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
             >
                 <VisuallyHidden id={instructionId} aria-hidden>
                     Type in {minimumCharacters} or more characters for suggested

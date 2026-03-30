@@ -24,7 +24,7 @@ export const Container = styled.li`
 `;
 
 export const SearchInput = styled(BasicInput)`
-    height: ${(props) => (props.$variant === "small" ? 2.5 : 3)}rem;
+    height: ${(props) => (props.variant === "small" ? 2.5 : 3)}rem;
     flex: 1;
     padding: 0 ${V3_Spacing["spacing-8"]} 0 0;
     width: 100%;

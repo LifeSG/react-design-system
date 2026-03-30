@@ -20,8 +20,10 @@ const Component = <T, V>(
 ) => {
     const renderNoAddons = () => (
         <NoAddonWrapper
-            $disabled={otherProps.disabled}
-            $error={error}
+            disabled={otherProps.disabled}
+            error={error}
+            readOnly={otherProps.readOnly}
+            noBorder={noBorder}
             $readOnly={otherProps.readOnly}
             data-testid={otherProps["data-testid"]}
             className={className}
@@ -63,8 +65,10 @@ const Component = <T, V>(
                 if (customAddon.children) {
                     return (
                         <AddonWrapper
-                            $error={error}
-                            $disabled={otherProps.disabled}
+                            error={error}
+                            disabled={otherProps.disabled}
+                            readOnly={otherProps.readOnly}
+                            noBorder={noBorder}
                             $readOnly={otherProps.readOnly}
                             data-testid={otherProps["data-testid"]}
                             $position={position}
@@ -98,8 +102,10 @@ const Component = <T, V>(
                 if (labelAddon.value) {
                     return (
                         <AddonWrapper
-                            $disabled={otherProps.disabled}
-                            $error={error}
+                            disabled={otherProps.disabled}
+                            error={error}
+                            readOnly={otherProps.readOnly}
+                            noBorder={noBorder}
                             $readOnly={otherProps.readOnly}
                             data-testid={otherProps["data-testid"]}
                             $position={position}

@@ -105,10 +105,10 @@ export const Timepicker = ({
         <InputWrapper
             ref={wrapperRef}
             role="group"
-            $readOnly={readOnly}
-            $disabled={disabled}
-            $focused={isOpen}
-            $error={error}
+            readOnly={readOnly}
+            disabled={disabled}
+            focused={isOpen}
+            error={error}
             {...otherProps}
         >
             <InputSelectorElement

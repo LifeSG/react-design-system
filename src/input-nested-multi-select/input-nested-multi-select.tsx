@@ -282,10 +282,10 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                $focused={focused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
+                focused={focused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
             >
                 <ExpandableElement
                     ref={selectorRef}

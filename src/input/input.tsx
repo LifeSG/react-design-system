@@ -153,9 +153,9 @@ const Component = (
                 </NoBorderWrapper>
             ) : (
                 <DefaultWrapper
-                    $disabled={disabled}
-                    $error={error}
-                    $readOnly={readOnly}
+                    disabled={disabled}
+                    error={error}
+                    readOnly={readOnly}
                     className={className}
                 >
                     {renderInputElement()}

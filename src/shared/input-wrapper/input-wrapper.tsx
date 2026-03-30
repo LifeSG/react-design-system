@@ -19,7 +19,19 @@ import type {
  */
 export const InputBox = forwardRef<HTMLDivElement, InputBoxProps>(
     function InputBox(props, ref) {
-        return <InputBoxStyled ref={ref} {...props} />;
+        const { disabled, error, readOnly, focused, noBorder, ...otherProps } =
+            props;
+        return (
+            <InputBoxStyled
+                ref={ref}
+                $disabled={disabled}
+                $error={error}
+                $readOnly={readOnly}
+                $focused={focused}
+                $noBorder={noBorder}
+                {...otherProps}
+            />
+        );
     }
 );
 
@@ -28,7 +40,27 @@ export const InputBox = forwardRef<HTMLDivElement, InputBoxProps>(
  */
 export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
     function InputWrapper(props, ref) {
-        return <InputWrapperStyled ref={ref} {...props} />;
+        const {
+            disabled,
+            error,
+            readOnly,
+            focused,
+            noBorder,
+            position,
+            ...otherProps
+        } = props;
+        return (
+            <InputWrapperStyled
+                ref={ref}
+                $disabled={disabled}
+                $error={error}
+                $readOnly={readOnly}
+                $focused={focused}
+                $noBorder={noBorder}
+                $position={position}
+                {...otherProps}
+            />
+        );
     }
 );
 
@@ -38,7 +70,10 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
  */
 export const BasicInput = forwardRef<HTMLInputElement, BasicInputProps>(
     function BasicInput(props, ref) {
-        return <BasicInputStyled ref={ref} {...props} />;
+        const { variant, ...otherProps } = props;
+        return (
+            <BasicInputStyled ref={ref} $variant={variant} {...otherProps} />
+        );
     }
 );
 
