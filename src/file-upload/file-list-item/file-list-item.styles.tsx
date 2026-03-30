@@ -3,7 +3,6 @@ import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circl
 import styled, { css } from "styled-components";
 
 import { IconButton as DSIconButton } from "../../icon-button";
-import { ClickableIcon } from "../../shared/clickable-icon";
 import { Typography } from "../../typography";
 import {
     V3_Border,
@@ -224,7 +223,12 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     }
 `;
 
+export const FileSizeText = styled(Typography.BodyMD)`
+    color: ${V3_Colour["text-subtler"]};
+`;
+
 export const ItemText = styled(Typography.BodyMD)``;
+
 export const ItemDescriptionText = styled(ItemText)`
     margin-top: ${V3_Spacing["spacing-4"]};
 `;
@@ -296,16 +300,5 @@ export const IconButton = styled(DSIconButton)`
 
     &:not(:last-child) {
         margin-right: ${V3_Spacing["spacing-16"]};
-    }
-`;
-
-export const ErrorIconButton = styled(ClickableIcon)`
-    height: 2.5rem;
-    width: 2.5rem;
-    padding: unset;
-    svg {
-        height: 1.5rem;
-        width: 1.5rem;
-        color: ${V3_Colour["icon"]};
     }
 `;

@@ -1,4 +1,8 @@
 export class FileUploadHelper {
+    public static readonly PDF_MIME_TYPE = "application/pdf";
+    public static readonly PDF_ICON_URL =
+        "https://assets.life.gov.sg/react-design-system/img/upload/pdf.svg";
+
     // Adapted from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-size-to-kb-mb-gb-in-javascript
     public static formatFileSizeDisplay(size?: number) {
         if (!size || size === 0) return "0 KB";

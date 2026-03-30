@@ -9,9 +9,11 @@ import {
     V3_Radius,
     V3_Spacing,
 } from "../../v3_theme";
+import { FileUploadHelper } from "../helper";
 
 interface Props {
-    thumbnailImageDataUrl: string;
+    thumbnailImageDataUrl?: string | undefined;
+    fileType?: string | undefined;
     "data-testid"?: string | undefined;
     renderReplaceButton?: boolean | undefined;
     onReplaceClick?: (() => void) | undefined;
@@ -19,6 +21,7 @@ interface Props {
 
 export const FileListItemThumbnail = ({
     thumbnailImageDataUrl,
+    fileType,
     "data-testid": testId,
     renderReplaceButton,
     onReplaceClick,
@@ -29,11 +32,17 @@ export const FileListItemThumbnail = ({
         }
     };
 
+    const isPdf = fileType === FileUploadHelper.PDF_MIME_TYPE;
+    const displaySrc = isPdf
+        ? thumbnailImageDataUrl || FileUploadHelper.PDF_ICON_URL
+        : thumbnailImageDataUrl || "";
+
     return (
         <Container data-testid={testId}>
             <Thumbnail
                 data-testid={testId ? `${testId}-image` : undefined}
-                src={thumbnailImageDataUrl}
+                src={displaySrc}
+                $isPdf={isPdf}
             />
             {renderReplaceButton && (
                 <ReplaceButton type="button" onClick={handleReplace}>
@@ -56,13 +65,15 @@ export const Container = styled.div`
     justify-content: center;
 `;
 
-export const Thumbnail = styled(ImageWithFallback)`
+export const Thumbnail = styled(ImageWithFallback)<{ $isPdf?: boolean }>`
     width: 96px;
     height: 96px;
     aspect-ratio: 1;
     border-radius: ${V3_Radius["sm"]};
-    border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
+    border: ${(props) =>
+        props.$isPdf
+            ? "none"
+            : `${V3_Border["width-010"]} ${V3_Border["solid"]} ${V3_Colour["border"]}`};
     object-fit: cover;
 
     ${V3_MediaQuery.MaxWidth.md} {
