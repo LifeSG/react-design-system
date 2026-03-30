@@ -4,7 +4,7 @@ import { Markup } from "@lifesg/react-design-system/markup";
 
 export default function Story() {
     return (
-        <div data-testid="markup-root" style={{ width: "min(42rem, 100%)" }}>
+        <div data-testid="markup-root">
             <Markup baseTextSize="body-sm" data-testid="markup-markup">
                 <p>
                     This paragraph contains a <strong>bold phrase</strong> and
