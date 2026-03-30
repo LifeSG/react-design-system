@@ -41,6 +41,15 @@ const IconButton = styled(ClickableIcon)`
         height: 1.5rem;
         width: 1.5rem;
     }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: ${V3_Border["width-020"]} solid ${V3_Colour["border-selected"]};
+        outline-offset: 2px;
+    }
 `;
 
 export const CloseButton = styled(IconButton)<InsetStyleProps>`
@@ -65,24 +74,24 @@ export const MagnifierButton = styled(IconButton)<InsetStyleProps>`
     position: absolute;
     top: ${(props) =>
         css`calc(${V3_Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
-    right: ${
-        (props) =>
-            css`calc(2.5rem + ${V3_Spacing["spacing-48"]} + ${
-                V3_Spacing["spacing-16"]
-            } + ${props.$insetRight || 0}px)` // close button + space from screen + gap between buttons
-    };
+    right: ${(props) =>
+        css`calc(2.5rem + ${V3_Spacing["spacing-48"]} + ${
+            V3_Spacing["spacing-16"]
+        } + ${
+            props.$insetRight || 0
+        }px)`}; // close button + space from screen + gap between buttons
 
     z-index: 5;
 
     ${V3_MediaQuery.MaxWidth.sm} {
         top: ${(props) =>
             css`calc(${V3_Spacing["spacing-20"]} + ${props.$insetTop || 0}px)`};
-        right: ${
-            (props) =>
-                css`calc(2.5rem + ${V3_Spacing["spacing-20"]} + ${
-                    V3_Spacing["spacing-16"]
-                } + ${props.$insetRight || 0}px)` // close button + space from screen + gap between buttons
-        };
+        right: ${(props) =>
+            css`calc(2.5rem + ${V3_Spacing["spacing-20"]} + ${
+                V3_Spacing["spacing-16"]
+            } + ${
+                props.$insetRight || 0
+            }px)`}; // close button + space from screen + gap between buttons
     }
 `;
 
@@ -98,6 +107,7 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
             left: calc(
                 ${V3_Spacing["spacing-48"]} + ${props.$insetLeft || 0}px
             );
+
             ${V3_MediaQuery.MaxWidth.sm} {
                 left: calc(
                     ${V3_Spacing["spacing-20"]} + ${props.$insetLeft || 0}px
@@ -111,12 +121,21 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
             right: calc(
                 ${V3_Spacing["spacing-48"]} + ${props.$insetRight || 0}px
             );
+
             ${V3_MediaQuery.MaxWidth.sm} {
                 right: calc(
                     ${V3_Spacing["spacing-20"]} + ${props.$insetRight || 0}px
                 );
             }
         `}
+`;
+
+export const CarouselModalContent = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
 `;
 
 export const ImageGalleryContainer = styled.div`
@@ -132,7 +151,8 @@ export const ImageGalleryWrapper = styled.div`
     display: block;
     overflow: hidden;
     width: 100%;
-    height: 100%;
+    flex: 1;
+    min-height: 0;
 `;
 
 export const ImageGallerySwipe = styled.div`
@@ -159,13 +179,30 @@ export const ImageGallerySlide = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
     .react-transform-wrapper {
         height: 100%;
         width: 100%;
     }
+
     .react-transform-component {
         height: 100%;
         width: 100%;
+    }
+`;
+
+export const FocusableImageRegion = styled.div`
+    height: 100%;
+    width: 100%;
+    outline: none;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: ${V3_Border["width-020"]} solid ${V3_Colour["border-selected"]};
+        outline-offset: -2px;
     }
 `;
 

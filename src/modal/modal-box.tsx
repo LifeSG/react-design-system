@@ -1,16 +1,21 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import type React from "react";
+import type { NamedExoticComponent } from "react";
+import { forwardRef } from "react";
 
 import { Box, CloseButton } from "./modal-box.styles";
 import type { ModalBoxProps } from "./types";
 
-export const ModalBox = ({
-    id = "modal-box",
-    children,
-    onClose,
-    showCloseButton = true,
-    ...otherProps
-}: ModalBoxProps) => {
+function ModalBoxInner(
+    {
+        id = "modal-box",
+        children,
+        onClose,
+        showCloseButton = true,
+        ...otherProps
+    }: ModalBoxProps,
+    ref: React.ForwardedRef<HTMLDivElement>
+) {
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -35,9 +40,15 @@ export const ModalBox = ({
     };
 
     return (
-        <Box data-testid={id} {...otherProps} onClick={handleOnClick}>
+        <Box ref={ref} data-testid={id} {...otherProps} onClick={handleOnClick}>
             {showCloseButton && renderCloseButton()}
             {children}
         </Box>
     );
-};
+}
+
+export const ModalBox = forwardRef<HTMLDivElement, ModalBoxProps>(
+    ModalBoxInner
+);
+
+(ModalBox as NamedExoticComponent).displayName = "Modal.Box";

@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { ClearButton } from "../input/input.style";
 import { InputWrapper } from "../shared/input-wrapper";
-import { V3_Spacing } from "../v3_theme";
+import { V3_Colour, V3_Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLING
@@ -16,4 +16,27 @@ export const ClearIconContainer = styled(ClearButton)`
 
 export const StyledInputWrapper = styled(InputWrapper)`
     height: 3rem;
+`;
+
+export const RangeSelectorButton = styled.button`
+    appearance: none;
+    border: 0;
+    background: transparent;
+    display: flex;
+    flex: 1;
+    color: ${V3_Colour.text};
+
+    &:focus,
+    &:active {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: 2px solid ${V3_Colour["border-focus"]};
+        border-radius: 4px;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+    }
 `;

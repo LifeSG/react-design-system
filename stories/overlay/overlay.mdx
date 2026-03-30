@@ -16,6 +16,15 @@ import { Overlay } from "@lifesg/react-design-system/overlay";
 
 <Canvas of={OverlayStories.Default} />
 
+## Overlay click detection
+
+If your content's visual and actual boundaries differ, clicking on the overlay
+may not dismiss the overlay as expected.
+
+A `containerRef` can be provided to define the visual container.
+
+<Canvas of={OverlayStories.OverlayClick} />
+
 ## Component API
 
 <PropsTable />

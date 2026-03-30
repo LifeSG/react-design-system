@@ -8,6 +8,7 @@ import {
 } from "../../form/form-label.style";
 import { ClearIcon } from "../../input/input.style";
 import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
+import { concatIds,VisuallyHidden } from "../../shared/accessibility";
 import { DropdownListState } from "../../shared/dropdown-list-v2";
 import { DropdownList } from "../../shared/dropdown-list-v2/dropdown-list";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
@@ -40,6 +41,9 @@ export const ComboboxPicker = ({
     endLimit,
     interval = 15,
     dropdownRootNode,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
+    "aria-invalid": ariaInvalid,
     ...otherProps
 }: TimeRangePickerProps) => {
     // =============================================================================
@@ -59,6 +63,11 @@ export const ComboboxPicker = ({
     const nodeRef = useRef<HTMLDivElement>(null);
     const startInputRef = useRef<HTMLInputElement>(null);
     const endInputRef = useRef<HTMLInputElement>(null);
+
+    const listboxId = `${internalId}-listbox`;
+    const startLabelId = `${internalId}-start-label`;
+    const endLabelId = `${internalId}-end-label`;
+    const errorId = `${internalId}-error-message`;
 
     const startOptions = useMemo(
         () =>
@@ -134,6 +143,35 @@ export const ComboboxPicker = ({
         // Hide dropdown so error message is visible
         setDropdownOpen(false);
     }, [startTimeVal, endTimeVal, parseInput, error]);
+
+    // =============================================================================
+    // HELPERS
+    // =============================================================================
+    const getDropdownAriaLabel = () => {
+        if (activeTimeSelector === "start") {
+            return "Selecting for: Start time";
+        }
+
+        if (activeTimeSelector === "end") {
+            return "Selecting for: End time";
+        }
+
+        return undefined;
+    };
+
+    const getInputLabelledBy = (type: TimeRangeInputType) => {
+        return concatIds(
+            ariaLabelledBy,
+            type === "start" ? startLabelId : endLabelId
+        );
+    };
+
+    const getInputDescribedBy = () => {
+        return concatIds(
+            ariaDescribedBy,
+            !error && validationError ? errorId : undefined
+        );
+    };
 
     // =============================================================================
     // EVENT HANDLERS
@@ -311,7 +349,8 @@ export const ComboboxPicker = ({
                         parseInput(startTimeVal),
                         startOptions
                     )}
-                    listboxId={internalId}
+                    listboxId={listboxId}
+                    ariaLabel={getDropdownAriaLabel()}
                     disableItemFocus
                     matchElementWidth
                 />
@@ -326,7 +365,8 @@ export const ComboboxPicker = ({
                         parseInput(endTimeVal),
                         endOptions
                     )}
-                    listboxId={internalId}
+                    listboxId={listboxId}
+                    ariaLabel={getDropdownAriaLabel()}
                     disableItemFocus
                     matchElementWidth
                 />
@@ -341,7 +381,11 @@ export const ComboboxPicker = ({
             $error={error || !!validationError}
             $readOnly={readOnly}
             onBlur={handleBlur}
+            role="group"
         >
+            <VisuallyHidden id={startLabelId}>Start time</VisuallyHidden>
+            <VisuallyHidden id={endLabelId}>End time</VisuallyHidden>
+
             <RangeInputInnerContainer
                 error={error || !!validationError}
                 currentActive={
@@ -357,22 +401,27 @@ export const ComboboxPicker = ({
                     }
                     onChange={(e) => setStartTimeVal(e.target.value)}
                     value={startTimeVal}
-                    disabled={disabled}
                     readOnly={readOnly}
                     data-testid={
                         otherProps["data-testid"]
-                            ? `${otherProps["data-testid"]}-timepicker-selector`
-                            : "timepicker-selector"
+                            ? `${otherProps["data-testid"]}-timepicker-selector-start`
+                            : "timepicker-selector-start"
                     }
                     onClick={() => handleInputClick("start")}
                     onKeyDown={handleKeyDownEvent}
                     autoComplete="off"
-                    aria-label="Start time input"
                     type="text"
                     role="combobox"
-                    aria-expanded={dropdownOpen}
-                    aria-controls={internalId}
+                    aria-labelledby={getInputLabelledBy("start")}
+                    aria-describedby={getInputDescribedBy()}
+                    aria-expanded={
+                        dropdownOpen && activeTimeSelector === "start"
+                    }
+                    aria-controls={listboxId}
                     aria-autocomplete="list"
+                    aria-invalid={error || ariaInvalid || !!validationError}
+                    aria-disabled={disabled}
+                    aria-readonly={readOnly}
                 />
                 {/* To */}
                 <SelectorInput
@@ -381,22 +430,27 @@ export const ComboboxPicker = ({
                     placeholder={activeTimeSelector === "end" ? "hh:mm" : "To"}
                     onChange={(e) => setEndTimeVal(e.target.value)}
                     value={endTimeVal}
-                    disabled={disabled}
                     readOnly={readOnly}
                     data-testid={
                         otherProps["data-testid"]
-                            ? `${otherProps["data-testid"]}-timepicker-selector`
-                            : "timepicker-selector"
+                            ? `${otherProps["data-testid"]}-timepicker-selector-end`
+                            : "timepicker-selector-end"
                     }
                     onClick={() => handleInputClick("end")}
                     onKeyDown={handleKeyDownEvent}
                     autoComplete="off"
-                    aria-label="End time input"
                     type="text"
                     role="combobox"
-                    aria-expanded={dropdownOpen}
-                    aria-controls={internalId}
+                    aria-labelledby={getInputLabelledBy("end")}
+                    aria-describedby={getInputDescribedBy()}
+                    aria-expanded={dropdownOpen && activeTimeSelector === "end"}
+                    aria-controls={listboxId}
                     aria-autocomplete="list"
+                    aria-invalid={
+                        error || ariaInvalid || !!validationError || undefined
+                    }
+                    aria-disabled={disabled || undefined}
+                    aria-readonly={readOnly || undefined}
                 />
             </RangeInputInnerContainer>
             {renderClearButton()}
@@ -410,7 +464,7 @@ export const ComboboxPicker = ({
             <ErrorMessageContainer>
                 <ErrorIcon aria-hidden />
                 <ErrorMessage
-                    id={id ? `${id}-error-message` : "error-message"}
+                    id={errorId}
                     tabIndex={0}
                     data-testid={id ? `${id}-error-message` : "error-message"}
                 >

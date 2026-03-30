@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "src/button";
 import { Overlay } from "src/overlay";
 
@@ -27,6 +27,30 @@ export const Default: StoryObj<Component> = {
                     onOverlayClick={closeOverlay}
                     enableOverlayClick
                 >
+                    <div />
+                </Overlay>
+            </div>
+        );
+    },
+};
+
+export const OverlayClick: StoryObj<Component> = {
+    render: () => {
+        const contentRef = useRef<HTMLDivElement>(null);
+        const [show, setShow] = useState(false);
+        const openOverlay = () => setShow(true);
+        const closeOverlay = () => setShow(false);
+        return (
+            <div>
+                <Button.Default onClick={openOverlay}>
+                    Click to open
+                </Button.Default>
+                <Overlay
+                    containerRef={contentRef}
+                    show={show}
+                    onOverlayClick={closeOverlay}
+                    enableOverlayClick
+                >
                     <div
                         id="wrapper"
                         style={{
@@ -38,6 +62,7 @@ export const Default: StoryObj<Component> = {
                         }}
                     >
                         <div
+                            ref={contentRef}
                             style={{
                                 background: "white",
                                 padding: "2rem",

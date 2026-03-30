@@ -4,6 +4,7 @@ import { FadeWrapper } from "../shared/fade-wrapper";
 import {
     V3_Border,
     V3_Colour,
+    V3_Font,
     V3_MediaQuery,
     V3_Radius,
     V3_Spacing,
@@ -124,6 +125,7 @@ const buttonBase = css`
 export const Label = styled.div<LabelStyleProps>`
     ${buttonBase}
     position: absolute;
+    ${V3_Font["body-baseline-regular"]}
     color: ${V3_Colour["text-subtler"]};
     opacity: 1;
 
@@ -138,6 +140,7 @@ export const Label = styled.div<LabelStyleProps>`
 
 export const BoldLabel = styled.button<LabelStyleProps>`
     ${buttonBase}
+    ${V3_Font["body-baseline-semibold"]}
     color: ${V3_Colour["text-primary"]};
     opacity: 0;
     outline: none;

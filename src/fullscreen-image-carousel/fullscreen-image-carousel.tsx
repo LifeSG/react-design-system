@@ -5,8 +5,10 @@ import {
     MagnifierMinusIcon,
     MagnifierPlusIcon,
 } from "@lifesg/react-icons";
+import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import {
     forwardRef,
+    useCallback,
     useEffect,
     useImperativeHandle,
     useRef,
@@ -18,13 +20,16 @@ import type {
 } from "react-zoom-pan-pinch";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
-import { Modal } from "../modal";
+import { ModalV2 } from "../modal-v2";
+import { useStateCallback } from "../shared/hooks";
 import { useEventListener } from "../util";
 import {
     ArrowButton,
     BoxChip,
+    CarouselModalContent,
     Chip,
     CloseButton,
+    FocusableImageRegion,
     ImageGalleryContainer,
     ImageGallerySlide,
     ImageGallerySlides,
@@ -55,6 +60,7 @@ const Component = (
         hideMagnifier = false,
         onClose,
         insets,
+        show,
         ...otherProps
     }: FullscreenImageCarouselProps,
     ref: React.Ref<FullscreenImageCarouselRef>
@@ -62,7 +68,7 @@ const Component = (
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [currentSlide, setCurrentSlide] = useState(
+    const [currentSlide, setCurrentSlide] = useStateCallback(
         initialActiveItemIndex ?? 0
     );
     const [imagesDimension, setImageDimension] = useState<
@@ -74,7 +80,17 @@ const Component = (
     const containerRef = useRef<HTMLDivElement>(null);
     const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
     const zoomRefs = useRef<(ReactZoomPanPinchContentRef | null)[]>([]);
+    const imageRef = useRef<HTMLDivElement>(null);
     const diff = startX && endX ? startX - endX : 0;
+
+    const getImageAriaLabel = useCallback(
+        (index: number) => {
+            const item = items[index];
+            const altText = item.alt?.trim() || "";
+            return `${altText}. Image ${index + 1} of ${items.length}.`;
+        },
+        [items]
+    );
 
     useImperativeHandle<FullscreenImageCarouselRef, FullscreenImageCarouselRef>(
         ref,
@@ -90,6 +106,12 @@ const Component = (
     // EFFECTS
     // =============================================================================
     useEventListener("keydown", handleKeyDown, "document");
+
+    useEffect(() => {
+        if (show) {
+            imageRef.current?.focus();
+        }
+    }, [show]);
 
     useEffect(() => {
         thumbnailRefs.current?.[currentSlide]?.scrollIntoView({
@@ -191,12 +213,24 @@ const Component = (
     // =============================================================================
     const goToPrevSlide = () => {
         zoomRefs.current?.[currentSlide]?.resetTransform();
-        setCurrentSlide((prev) => (prev === 0 ? items.length - 1 : prev - 1));
+        setCurrentSlide(
+            (prev) => (prev === 0 ? items.length - 1 : prev - 1),
+            (slide) => {
+                clearAnnouncer("polite");
+                announce(getImageAriaLabel(slide), "polite");
+            }
+        );
     };
 
     const goToNextSlide = () => {
         zoomRefs.current?.[currentSlide]?.resetTransform();
-        setCurrentSlide((prev) => (prev === items.length - 1 ? 0 : prev + 1));
+        setCurrentSlide(
+            (prev) => (prev === items.length - 1 ? 0 : prev + 1),
+            (slide) => {
+                clearAnnouncer("polite");
+                announce(getImageAriaLabel(slide), "polite");
+            }
+        );
     };
 
     const goToSlide = (index: number) => {
@@ -217,29 +251,38 @@ const Component = (
                 }}
             >
                 {items.map((item, index) => {
+                    const isActive = index === currentSlide;
+
                     return (
                         <ImageGallerySlide key={index} data-testid="slide-item">
-                            <TransformWrapper
-                                ref={(el) => (zoomRefs.current[index] = el)}
-                                panning={{
-                                    disabled: zoom <= 1,
-                                }}
-                                initialScale={1}
-                                onZoom={handleZoom}
-                                onZoomStop={handleZoom}
-                                onWheel={handleZoom}
+                            <FocusableImageRegion
+                                ref={isActive ? imageRef : null}
+                                tabIndex={isActive ? 0 : -1}
                             >
-                                <TransformComponent>
-                                    <SlideImage
-                                        src={item.src}
-                                        alt={item.alt ?? `Image ${index + 1}`}
-                                        placeholder={<SlidePlaceholderImage />}
-                                        fit="scale-down"
-                                        retrieveImageDimension
-                                        setDimension={setDimension}
-                                    />
-                                </TransformComponent>
-                            </TransformWrapper>
+                                <TransformWrapper
+                                    ref={(el) => (zoomRefs.current[index] = el)}
+                                    panning={{
+                                        disabled: zoom <= 1,
+                                    }}
+                                    initialScale={1}
+                                    onZoom={handleZoom}
+                                    onZoomStop={handleZoom}
+                                    onWheel={handleZoom}
+                                >
+                                    <TransformComponent>
+                                        <SlideImage
+                                            src={item.src}
+                                            alt={getImageAriaLabel(index)}
+                                            placeholder={
+                                                <SlidePlaceholderImage />
+                                            }
+                                            fit="scale-down"
+                                            retrieveImageDimension
+                                            setDimension={setDimension}
+                                        />
+                                    </TransformComponent>
+                                </TransformWrapper>
+                            </FocusableImageRegion>
                         </ImageGallerySlide>
                     );
                 })}
@@ -249,7 +292,10 @@ const Component = (
 
     const renderThumbnails = () => {
         return (
-            <ThumbnailContainer $insetBottom={insets?.bottom}>
+            <ThumbnailContainer
+                $insetBottom={insets?.bottom}
+                aria-hidden="true"
+            >
                 <ThumbnailWrapper>
                     {items.map((item, index) => {
                         const src = item.thumbnailSrc ?? item.src;
@@ -278,76 +324,87 @@ const Component = (
     };
 
     return (
-        <Modal {...otherProps} data-testid="image-carousel-modal">
-            <CloseButton
-                aria-label="Close image carousel"
-                onClick={onClose}
-                focusHighlight={false}
-                $insetTop={insets?.top}
-                $insetRight={insets?.right}
-            >
-                <CrossIcon aria-hidden />
-            </CloseButton>
-            {!hideMagnifier && (
-                <MagnifierButton
-                    aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
-                    onClick={handleMagnifier}
-                    focusHighlight={false}
+        <ModalV2
+            {...otherProps}
+            data-testid="image-carousel-modal"
+            aria-label="Image carousel"
+            show={show}
+            disableInitialFocus
+        >
+            <CarouselModalContent>
+                <ImageGalleryContainer>
+                    <ImageGalleryWrapper>
+                        <ImageGallerySwipe
+                            ref={containerRef}
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
+                        >
+                            {renderSlides()}
+                        </ImageGallerySwipe>
+
+                        {!hideNavigation && (
+                            <>
+                                <ArrowButton
+                                    aria-label="Previous image"
+                                    data-testid="prev-btn"
+                                    $position="left"
+                                    onClick={goToPrevSlide}
+                                    $insetLeft={insets?.left}
+                                    $insetRight={insets?.right}
+                                >
+                                    <ChevronLeftIcon aria-hidden />
+                                </ArrowButton>
+                                <ArrowButton
+                                    aria-label="Next image"
+                                    data-testid="forward-btn"
+                                    $position="right"
+                                    onClick={goToNextSlide}
+                                    $insetLeft={insets?.left}
+                                    $insetRight={insets?.right}
+                                >
+                                    <ChevronRightIcon aria-hidden />
+                                </ArrowButton>
+                            </>
+                        )}
+
+                        {!hideCounter && (
+                            <BoxChip aria-hidden="true">
+                                <Chip weight="semibold">{`${currentSlide + 1}/${
+                                    items.length
+                                }`}</Chip>
+                            </BoxChip>
+                        )}
+                    </ImageGalleryWrapper>
+
+                    {!hideThumbnail && renderThumbnails()}
+                </ImageGalleryContainer>
+
+                {!hideMagnifier && (
+                    <MagnifierButton
+                        aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
+                        onClick={handleMagnifier}
+                        $insetTop={insets?.top}
+                        $insetRight={insets?.right}
+                    >
+                        {zoom === 1 ? (
+                            <MagnifierPlusIcon aria-hidden />
+                        ) : (
+                            <MagnifierMinusIcon aria-hidden />
+                        )}
+                    </MagnifierButton>
+                )}
+
+                <CloseButton
+                    aria-label="Close image carousel"
+                    onClick={onClose}
                     $insetTop={insets?.top}
                     $insetRight={insets?.right}
                 >
-                    {zoom === 1 ? (
-                        <MagnifierPlusIcon aria-hidden />
-                    ) : (
-                        <MagnifierMinusIcon aria-hidden />
-                    )}
-                </MagnifierButton>
-            )}
-            <ImageGalleryContainer>
-                <ImageGalleryWrapper>
-                    {!hideNavigation && (
-                        <>
-                            <ArrowButton
-                                aria-label="View previous image"
-                                data-testid="prev-btn"
-                                $position="left"
-                                onClick={goToPrevSlide}
-                                $insetLeft={insets?.left}
-                                $insetRight={insets?.right}
-                            >
-                                <ChevronLeftIcon aria-hidden />
-                            </ArrowButton>
-                            <ArrowButton
-                                aria-label="View next image"
-                                data-testid="forward-btn"
-                                $position="right"
-                                onClick={goToNextSlide}
-                                $insetLeft={insets?.left}
-                                $insetRight={insets?.right}
-                            >
-                                <ChevronRightIcon aria-hidden />
-                            </ArrowButton>
-                        </>
-                    )}
-                    <ImageGallerySwipe
-                        ref={containerRef}
-                        onTouchStart={handleTouchStart}
-                        onTouchMove={handleTouchMove}
-                        onTouchEnd={handleTouchEnd}
-                    >
-                        {renderSlides()}
-                    </ImageGallerySwipe>
-                    {!hideCounter && (
-                        <BoxChip>
-                            <Chip weight="semibold">{`${currentSlide + 1}/${
-                                items.length
-                            }`}</Chip>
-                        </BoxChip>
-                    )}
-                </ImageGalleryWrapper>
-                {!hideThumbnail && renderThumbnails()}
-            </ImageGalleryContainer>
-        </Modal>
+                    <CrossIcon aria-hidden />
+                </CloseButton>
+            </CarouselModalContent>
+        </ModalV2>
     );
 };
 

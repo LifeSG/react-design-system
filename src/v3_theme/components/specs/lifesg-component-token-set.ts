@@ -1,4 +1,4 @@
-import { V3_Colour } from "../..";
+import { V3_PrimitiveColour } from "../../colour-primitive/theme-helper";
 import { V3_ColourSemantic } from "../../colour-semantic/theme-helper";
 import { V3_RadiusValues } from "../../radius/theme-helper";
 import type { V3_ComponentTokenSet } from "../types";
@@ -15,7 +15,7 @@ export const V3_LifeSGComponentTokenSet: V3_ComponentTokenSet = {
         "button-link-colour-text": V3_ColourSemantic["text-primary"],
     },
     Animation: {
-        "loading-dots-spinner-colour": V3_Colour.Primitive["brand-50"],
+        "loading-dots-spinner-colour": V3_PrimitiveColour["brand-50"],
     },
     Navbar: {
         "navbar-full-height": "6rem",
