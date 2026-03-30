@@ -171,7 +171,8 @@
         "styled-components": "^6.1.19"
     },
     "optionalDependencies": {
-        "@rollup/rollup-linux-x64-gnu": "^4.54.0"
+        "@rollup/rollup-linux-x64-gnu": "^4.54.0",
+        "@swc/core-linux-arm64-gnu": "^1.15.11"
     },
     "overrides": {
         "react-resize-detector": {
