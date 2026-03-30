@@ -1,12 +1,7 @@
 import clsx from "clsx";
 import { forwardRef } from "react";
 
-import {
-    BasicButton as BasicButtonStyled,
-    BasicInput as BasicInputStyled,
-    InputBox as InputBoxStyled,
-    InputWrapper as InputWrapperStyled,
-} from "./input-wrapper.styles";
+import * as styles from "./input-wrapper.styles";
 import type {
     BasicButtonProps,
     BasicInputProps,
@@ -30,14 +25,15 @@ export const InputBox = forwardRef<HTMLDivElement, InputBoxProps>(
             ...otherProps
         } = props;
         return (
-            <InputBoxStyled
+            <div
                 ref={ref}
+                data-focused={focused}
                 className={clsx(
-                    disabled && "inputBoxDisabled",
-                    error && "inputBoxError",
-                    readOnly && "inputBoxReadOnly",
-                    focused && "inputBoxFocused",
-                    noBorder && "inputBoxNoBorder",
+                    styles.inputBox,
+                    disabled && styles.inputBoxDisabled,
+                    error && styles.inputBoxError,
+                    readOnly && styles.inputBoxReadOnly,
+                    noBorder && styles.inputBoxNoBorder,
                     className
                 )}
                 {...otherProps}
@@ -62,16 +58,18 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
             ...otherProps
         } = props;
         return (
-            <InputWrapperStyled
+            <div
                 ref={ref}
+                data-focused={focused}
                 className={clsx(
-                    disabled && "inputBoxDisabled",
-                    error && "inputBoxError",
-                    readOnly && "inputBoxReadOnly",
-                    focused && "inputBoxFocused",
-                    noBorder && "inputBoxNoBorder",
-                    readOnly && "inputWrapperReadOnly",
-                    position === "right" && "inputWrapperPositionRight",
+                    styles.inputBox,
+                    styles.inputWrapper,
+                    disabled && styles.inputBoxDisabled,
+                    error && styles.inputBoxError,
+                    readOnly && styles.inputBoxReadOnly,
+                    noBorder && styles.inputBoxNoBorder,
+                    readOnly && styles.inputWrapperReadOnly,
+                    position === "right" && styles.inputWrapperPositionRight,
                     className
                 )}
                 {...otherProps}
@@ -88,10 +86,11 @@ export const BasicInput = forwardRef<HTMLInputElement, BasicInputProps>(
     function BasicInput(props, ref) {
         const { variant, className, ...otherProps } = props;
         return (
-            <BasicInputStyled
+            <input
                 ref={ref}
                 className={clsx(
-                    variant === "small" && "basicInputSmall",
+                    styles.basicInput,
+                    variant === "small" && styles.basicInputSmall,
                     className
                 )}
                 {...otherProps}
@@ -104,7 +103,13 @@ export const BasicInput = forwardRef<HTMLInputElement, BasicInputProps>(
  * Standalone native button with stripped-down styles
  */
 export const BasicButton = forwardRef<HTMLButtonElement, BasicButtonProps>(
-    function BasicButton(props, ref) {
-        return <BasicButtonStyled ref={ref} {...props} />;
+    function BasicButton({ className, ...props }, ref) {
+        return (
+            <button
+                ref={ref}
+                className={clsx(styles.basicButton, className)}
+                {...props}
+            />
+        );
     }
 );
