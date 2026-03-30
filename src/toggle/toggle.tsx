@@ -82,7 +82,7 @@ export const Toggle = ({
         if (selected) {
             setExpanded(initialExpanded ?? true);
         }
-    }, [selected, initialExpanded]);
+    }, [selected]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -212,9 +212,7 @@ export const Toggle = ({
             collapsible && (
                 <ExpandButton
                     $paddingTopRequired={collapsedWithoutErrors}
-                    disabled={isNativeDisabled}
-                    aria-disabled={isFocusableWhenDisabled}
-                    $disabledVisual={disabled}
+                    disabled={disabled}
                     onClick={handleExpandCollapseClick}
                     data-testid={expanded ? "collapse-button" : "expand-button"}
                 >
@@ -290,9 +288,7 @@ export const Toggle = ({
                 {removable && (
                     <RemoveButton
                         type="button"
-                        $disabledVisual={disabled}
-                        disabled={isNativeDisabled}
-                        aria-disabled={isFocusableWhenDisabled}
+                        $disabled={disabled}
                         onClick={handleOnRemove}
                         id={`${generatedId}-remove-button`}
                     >

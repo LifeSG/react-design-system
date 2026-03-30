@@ -14,12 +14,10 @@ const Component = (
         disabled = false,
         focusableWhenDisabled = false,
         onClick,
-        tabIndex,
         ...otherProps
     }: ImageButtonProps,
     ref: ButtonRef
 ) => {
-    const isFocusableWhenDisabled = !!disabled && !!focusableWhenDisabled;
     const isNativeDisabled = !!disabled && !focusableWhenDisabled;
 
     return (
@@ -31,7 +29,6 @@ const Component = (
             type={type}
             aria-disabled={disabled}
             disabled={isNativeDisabled}
-            tabIndex={isFocusableWhenDisabled ? 0 : tabIndex}
             onClick={disabled ? undefined : onClick}
             {...otherProps}
         >

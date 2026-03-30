@@ -315,9 +315,9 @@ export const IndicatorLabelContainer = styled.div<IndicatorLabelContainerStylePr
         props.$addPadding ? "0.6875rem 0rem 0.6875rem 1rem" : "0.6875rem 1rem"};
 `;
 
-export const RemoveButton = styled.button<InteractiveStyleProps>`
+export const RemoveButton = styled.button<StyleProps>`
     color: ${(props) =>
-        props.$disabledVisual ? Colour["text-disabled"] : Colour["text-error"]};
+        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
     white-space: nowrap;
     ${Font["body-md-semibold"]}
     height: fit-content;
@@ -325,21 +325,19 @@ export const RemoveButton = styled.button<InteractiveStyleProps>`
     border: none;
     background: none;
 
-    cursor: ${(props) => (props.$disabledVisual ? "not-allowed" : "pointer")};
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
 `;
 
 export const ExpandButton = styled.button<ExpandButtonStyleProps>`
     color: ${(props) =>
-        props.$disabledVisual
-            ? Colour["text-disabled"]
-            : Colour["text-primary"]};
+        props.disabled ? Colour["text-disabled"] : Colour["text-primary"]};
     ${Font["body-baseline-semibold"]}
     display: flex;
     align-items: center;
     justify-content: flex-end;
     border: none;
     background-color: ${Colour.bg};
-    cursor: ${(props) => (props.$disabledVisual ? "not-allowed" : "pointer")};
+    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
     padding: 0 1rem 0.6875rem 1rem;
     padding-top: ${(props) =>
         props.$paddingTopRequired ? "0.6875rem" : "0rem"};
@@ -351,7 +349,6 @@ export const ExpandButton = styled.button<ExpandButtonStyleProps>`
         margin-left: 0.5rem;
     }
 `;
-
 export const ErrorContainer = styled.div<InteractiveStyleProps>`
     width: 100%;
     color: ${(props) =>
