@@ -1,9 +1,8 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { BinIcon } from "@lifesg/react-icons/bin";
-import { CrossIcon } from "@lifesg/react-icons/cross";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
-import { memo, useContext, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { ProgressBar } from "../../shared/progress-bar";
 import { StringHelper } from "../../util";
 import { FileUploadContext } from "../context";
@@ -16,9 +15,9 @@ import {
     DesktopErrorMessage,
     DragHandleIcon,
     ErrorIcon,
-    ErrorIconButton,
     ExtendedNameSection,
     FileSizeSection,
+    FileSizeText,
     IconButton,
     Item,
     ItemDescriptionText,
@@ -84,11 +83,34 @@ const Component = ({
         : "none";
 
     // =========================================================================
+    // HELPER FUNCTIONS
+    // =========================================================================
+    const getTruncatedText = useCallback(
+        (value: string) => {
+            if (!truncateText) return value;
+
+            const widthOfElement =
+                detailSectionRef && detailSectionRef.current
+                    ? detailSectionRef.current.getBoundingClientRect().width
+                    : 0;
+
+            return StringHelper.truncateOneLine(
+                value,
+                widthOfElement,
+                widthOfElement / 2,
+                widthOfElement / 2 / 8, // Arbitrary
+                16 // Font size
+            );
+        },
+        [truncateText]
+    );
+
+    // =========================================================================
     // EFFECTS
     // =========================================================================
     useEffect(() => {
         setFormattedName(getTruncatedText(name));
-    }, [wrapperWidth]);
+    }, [wrapperWidth, getTruncatedText, name]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -111,26 +133,6 @@ const Component = ({
         if (sortable) {
             event.stopPropagation();
         }
-    };
-
-    // =========================================================================
-    // HELPER FUNCTIONS
-    // =========================================================================
-    const getTruncatedText = (value: string) => {
-        if (!truncateText) return value;
-
-        const widthOfElement =
-            detailSectionRef && detailSectionRef.current
-                ? detailSectionRef.current.getBoundingClientRect().width
-                : 0;
-
-        return StringHelper.truncateOneLine(
-            value,
-            widthOfElement,
-            widthOfElement / 2,
-            widthOfElement / 2 / 8, // Arbitrary
-            16 // Font size
-        );
     };
 
     const shouldDisable = () => disabled || !!activeId;
@@ -163,7 +165,7 @@ const Component = ({
                 )}
             </NameSection>
             <FileSizeSection>
-                <ItemText>{fileSize}</ItemText>
+                <FileSizeText>{fileSize}</FileSizeText>
             </FileSizeSection>
             {errorMessage && (
                 <MobileErrorMessage weight="semibold">
@@ -178,6 +180,7 @@ const Component = ({
         <>
             <FileListItemThumbnail
                 thumbnailImageDataUrl={thumbnailImageDataUrl}
+                fileType={fileItem.type}
                 data-testid={`${id}-thumbnail`}
             />
             <ExtendedNameSection>
@@ -185,7 +188,7 @@ const Component = ({
                     {renderNameDescription()}
                 </NameSection>
                 <FileSizeSection>
-                    <ItemText>{fileSize}</ItemText>
+                    <FileSizeText>{fileSize}</FileSizeText>
                 </FileSizeSection>
             </ExtendedNameSection>
         </>
@@ -197,24 +200,27 @@ const Component = ({
                 {renderNameDescription()}
             </NameSection>
             <FileSizeSection $hideInMobile={isLoading}>
-                <ItemText>{fileSize}</ItemText>
+                <FileSizeText>{fileSize}</FileSizeText>
             </FileSizeSection>
         </>
     );
 
     const renderContents = () => {
         let content: JSX.Element;
+        const shouldShowThumbnail =
+            !!thumbnailImageDataUrl ||
+            fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
 
         if (errorMessage) {
             content = renderErrorState();
-        } else if (thumbnailImageDataUrl) {
-            content = renderWithThumbnail(thumbnailImageDataUrl);
+        } else if (shouldShowThumbnail) {
+            content = renderWithThumbnail(thumbnailImageDataUrl || "");
         } else {
             content = renderDefault();
         }
 
         return (
-            <ContentSection $hasThumbnail={!!thumbnailImageDataUrl}>
+            <ContentSection $hasThumbnail={shouldShowThumbnail}>
                 {content}
             </ContentSection>
         );
@@ -225,13 +231,17 @@ const Component = ({
 
         if (errorMessage) {
             content = (
-                <ErrorIconButton
-                    onClick={handleDelete}
+                <IconButton
                     data-testid={`${id}-error-delete-button`}
+                    data-no-dnd="true"
+                    type="button"
+                    styleType="light"
+                    sizeType="small"
                     aria-label={`delete ${name}, error: ${errorMessage}`}
+                    onClick={handleDelete}
                 >
-                    <CrossIcon aria-hidden />
-                </ErrorIconButton>
+                    <BinIcon aria-hidden />
+                </IconButton>
             );
         } else if (isLoading) {
             content = (

@@ -154,6 +154,38 @@ describe("FileUpload", () => {
                 rendered.getByTestId("some-thumbnail-image")
             ).toHaveAttribute("src", MOCK_IMG_DATA_URL);
         });
+
+        it("should render PDF icon for PDF files without thumbnailImageDataUrl", () => {
+            const fileItems: FileItemProps[] = [MOCK_NON_IMAGE_FILE];
+
+            const rendered = render(<FileUpload fileItems={fileItems} />);
+
+            expect(rendered.getByTestId("some-thumbnail")).toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-thumbnail-image")
+            ).toHaveAttribute(
+                "src",
+                "https://assets.life.gov.sg/react-design-system/img/upload/pdf.svg"
+            );
+        });
+
+        it("should render thumbnail for PDF files when thumbnailImageDataUrl is specified", () => {
+            const MOCK_PDF_THUMBNAIL_URL =
+                "https://picsum.photos/seed/pdf/200/300";
+            const fileItems: FileItemProps[] = [
+                {
+                    ...MOCK_NON_IMAGE_FILE,
+                    thumbnailImageDataUrl: MOCK_PDF_THUMBNAIL_URL,
+                },
+            ];
+
+            const rendered = render(<FileUpload fileItems={fileItems} />);
+
+            expect(rendered.getByTestId("some-thumbnail")).toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-thumbnail-image")
+            ).toHaveAttribute("src", MOCK_PDF_THUMBNAIL_URL);
+        });
     });
 
     describe("Upload", () => {
@@ -177,7 +209,7 @@ describe("FileUpload", () => {
                 })
             );
 
-            expect(onChangeCallback).toBeCalledWith([file]);
+            expect(onChangeCallback).toHaveBeenCalledWith([file]);
         });
     });
 
@@ -194,7 +226,20 @@ describe("FileUpload", () => {
 
             fireEvent.click(deleteButton);
 
-            expect(onDeleteCallback).toBeCalledWith(MOCK_NON_IMAGE_FILE);
+            expect(onDeleteCallback).toHaveBeenCalledWith(MOCK_NON_IMAGE_FILE);
+        });
+
+        it("should render delete bin icon button for error state", () => {
+            const fileItems: FileItemProps[] = [
+                { ...MOCK_IMAGE_ITEM, errorMessage: "Upload failed" },
+            ];
+
+            const rendered = render(<FileUpload fileItems={fileItems} />);
+
+            const deleteButton = rendered.getByTestId(
+                "some-error-delete-button"
+            );
+            expect(deleteButton).toBeInTheDocument();
         });
     });
 
@@ -252,7 +297,7 @@ describe("FileUpload", () => {
             const cancelButton = rendered.getByTestId("some-cancel-button");
             fireEvent.click(cancelButton);
 
-            expect(mockFn).toBeCalledWith(MOCK_IMAGE_ITEM);
+            expect(mockFn).toHaveBeenCalledWith(MOCK_IMAGE_ITEM);
         });
 
         it("should return the file item with the description via onEdit upon entering into the textarea", () => {
@@ -271,7 +316,7 @@ describe("FileUpload", () => {
             fireEvent.change(textarea, { target: { value: "Hello world" } });
             fireEvent.click(rendered.getByTestId("some-save-button"));
 
-            expect(mockFn).toBeCalledWith({
+            expect(mockFn).toHaveBeenCalledWith({
                 ...MOCK_IMAGE_ITEM,
                 description: "Hello world",
             });

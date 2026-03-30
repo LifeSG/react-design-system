@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FileItemProps, FileUpload } from "src/file-upload";
 import { SimpleIdGenerator } from "src/util/simple-id-generator";
 
@@ -97,31 +97,8 @@ export const WithErrorDisplay: StoryObj<Component> = {
 export const WithLoadingIndicator: StoryObj<Component> = {
     render: () => {
         const [fileItems, setFileItems] = useState<FileItemProps[]>([]);
-        useEffect(() => {
-            if (fileItems.length > 0) {
-                updateProgress();
-            }
-        }, [fileItems]);
-        const handleChange = (files: File[]) => {
-            const newFileItems = files.map((file) => {
-                return {
-                    id: SimpleIdGenerator.generate(),
-                    name: file.name,
-                    size: file.size,
-                    type: file.type,
-                    progress: 0, 
-                };
-            });
-            setFileItems((prevItems) => {
-                return prevItems.concat(newFileItems);
-            });
-        };
-        const handleDelete = (fileItem: FileItemProps) => {
-            const newArr = [...fileItems];
-            newArr.splice(newArr.indexOf(fileItem), 1);
-            setFileItems(newArr);
-        };
-        const updateProgress = () => {
+
+        const updateProgress = useCallback(() => {
             const hasInProgressItems = fileItems.some(
                 (item) => typeof item.progress === "number" && item.progress < 1
             );
@@ -145,7 +122,33 @@ export const WithLoadingIndicator: StoryObj<Component> = {
                     setFileItems(updatedFileItems);
                 }, 200);
             }
+        }, [fileItems]);
+
+        useEffect(() => {
+            if (fileItems.length > 0) {
+                updateProgress();
+            }
+        }, [fileItems, updateProgress]);
+        const handleChange = (files: File[]) => {
+            const newFileItems = files.map((file) => {
+                return {
+                    id: SimpleIdGenerator.generate(),
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    progress: 0,
+                };
+            });
+            setFileItems((prevItems) => {
+                return prevItems.concat(newFileItems);
+            });
         };
+        const handleDelete = (fileItem: FileItemProps) => {
+            const newArr = [...fileItems];
+            newArr.splice(newArr.indexOf(fileItem), 1);
+            setFileItems(newArr);
+        };
+
         return (
             <FileUpload
                 fileItems={fileItems}
@@ -366,6 +369,95 @@ export const TextStyling: StoryObj<Component> = {
                         <ol>
                             <li>List item</li>
                         </ol>
+                    </>
+                }
+            />
+        );
+    },
+};
+
+export const WithPDFFiles: StoryObj<Component> = {
+    render: () => {
+        const [fileItems, setFileItems] = useState<FileItemProps[]>([
+            {
+                id: "1",
+                name: "sample-document.pdf",
+                type: "application/pdf",
+                size: 524288, // 512 KB
+                description: "Sample PDF document",
+            },
+            {
+                id: "2",
+                name: "report-2024.pdf",
+                type: "application/pdf",
+                size: 1048576, // 1 MB
+                description: "Annual report",
+            },
+            {
+                id: "3",
+                name: "photo.jpg",
+                type: "image/jpeg",
+                size: 2097152, // 2 MB
+                description: "Sample image for comparison",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/pdf-demo/400/300",
+            },
+            {
+                id: "4",
+                name: "invoice.pdf",
+                type: "application/pdf",
+                size: 358400, // 350 KB
+            },
+        ]);
+
+        const handleChange = (files: File[]) => {
+            const newFileItems = files.map((file) => {
+                return {
+                    id: SimpleIdGenerator.generate(),
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                };
+            });
+            setFileItems((prevItems) => {
+                return prevItems.concat(newFileItems);
+            });
+        };
+
+        const handleDelete = (fileItem: FileItemProps) => {
+            const newArr = [...fileItems];
+            newArr.splice(newArr.indexOf(fileItem), 1);
+            setFileItems(newArr);
+        };
+
+        const handleEdit = (fileItem: FileItemProps) => {
+            setFileItems((prevItems) => {
+                return prevItems.map((item) => {
+                    if (item.id === fileItem.id) {
+                        return fileItem;
+                    } else {
+                        return item;
+                    }
+                });
+            });
+        };
+
+        return (
+            <FileUpload
+                fileItems={fileItems}
+                onChange={handleChange}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+                title="PDF Files Display"
+                description="This story demonstrates how PDF files are displayed with a PDF icon instead of thumbnail images. You can upload both PDF and image files to see the difference."
+                editableFileItems
+                fileDescriptionMaxLength={200}
+                accept=".pdf,.jpg,.jpeg,.png"
+                warning={
+                    <>
+                        Maximum size per file: 5 MB
+                        <br />
+                        Supported file types: .PDF, .JPG, .JPEG, .PNG
                     </>
                 }
             />
