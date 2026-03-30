@@ -168,6 +168,24 @@ describe("FileUpload", () => {
                 "https://assets.life.gov.sg/react-design-system/img/upload/pdf.svg"
             );
         });
+
+        it("should render thumbnail for PDF files when thumbnailImageDataUrl is specified", () => {
+            const MOCK_PDF_THUMBNAIL_URL =
+                "https://picsum.photos/seed/pdf/200/300";
+            const fileItems: FileItemProps[] = [
+                {
+                    ...MOCK_NON_IMAGE_FILE,
+                    thumbnailImageDataUrl: MOCK_PDF_THUMBNAIL_URL,
+                },
+            ];
+
+            const rendered = render(<FileUpload fileItems={fileItems} />);
+
+            expect(rendered.getByTestId("some-thumbnail")).toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-thumbnail-image")
+            ).toHaveAttribute("src", MOCK_PDF_THUMBNAIL_URL);
+        });
     });
 
     describe("Upload", () => {

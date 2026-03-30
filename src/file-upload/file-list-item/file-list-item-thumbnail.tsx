@@ -26,7 +26,7 @@ export const FileListItemThumbnail = ({
 
     const isPdf = fileType === FileUploadHelper.PDF_MIME_TYPE;
     const displaySrc = isPdf
-        ? FileUploadHelper.PDF_ICON_URL
+        ? thumbnailImageDataUrl || FileUploadHelper.PDF_ICON_URL
         : thumbnailImageDataUrl || "";
 
     return (
