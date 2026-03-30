@@ -31,7 +31,7 @@ export const ImageWithFallback = ({
             el.onerror = null;
             el.src = image;
         }
-    }, []);
+    }, [src]);
 
     const handleError = (
         event: React.SyntheticEvent<HTMLImageElement, Event>
