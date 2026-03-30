@@ -1,49 +1,52 @@
 import { ExternalIcon } from "@lifesg/react-icons/external";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
+import { lineClampDynamicCss } from "../shared/styles";
 import { Colour } from "../theme";
-import { createTypographyStyles, getTextStyle } from "./helper";
-import type { TypographySize, TypographyWeight } from "./types";
+import { tokens, typographyClassNames, typographyTextClasses } from "./helper";
 
-// =============================================================================
-// STYLE INTERFACES, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface StyledProps {
-    $textStyle: TypographySize;
-    $weight?: TypographyWeight | undefined;
-    $inline?: boolean | undefined;
-    $paragraph?: boolean | undefined;
-    $maxLines?: number | undefined;
-    $underlineStyle?: string | undefined;
-}
+export const TypographyBase = styled.div`
+    ${tokens.typographyBase.maxLines}: initial;
+    color: ${Colour.text};
+    ${typographyTextClasses}
 
-// =============================================================================
-// STYLING
-// =============================================================================
-export const TypographyBase = styled.div<StyledProps>`
-    ${(props) =>
-        createTypographyStyles(
-            props.$textStyle,
-            props.$weight,
-            props.$inline,
-            props.$paragraph,
-            props.$maxLines
-        )}
+    &.${typographyClassNames.displayInline} {
+        display: inline;
+        margin-bottom: 0;
+    }
+
+    &.${typographyClassNames.displayBlock} {
+        display: block;
+        margin-bottom: 0;
+    }
+
+    &.${typographyClassNames.paragraph} {
+        display: block;
+        margin-bottom: 1.05em;
+    }
+
+    &.${typographyClassNames.lineClamp} {
+        ${lineClampDynamicCss(tokens.typographyBase.maxLines)}
+    }
 `;
 
-export const HyperlinkBase = styled.a<StyledProps>`
-    ${(props) => css`
-        ${getTextStyle(props.$textStyle, props.$weight || "regular")}
-        color: ${Colour.hyperlink};
-        text-decoration: ${props.$underlineStyle ?? "underline"};
+export const HyperlinkBase = styled.a`
+    ${typographyTextClasses}
+    color: ${Colour.hyperlink};
 
-        &:hover,
-        &:active,
-        &:focus {
-            color: ${Colour["text-hover"]};
-        }
-    `}
+    &.${typographyClassNames.underline} {
+        text-decoration: underline;
+    }
+
+    &.${typographyClassNames.noUnderline} {
+        text-decoration: none;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: ${Colour["text-hover"]};
+    }
 `;
 
 export const StyledExternalIcon = styled(ExternalIcon)`

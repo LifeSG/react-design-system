@@ -1,17 +1,42 @@
+import clsx from "clsx";
 import type { RefObject } from "react";
 import React from "react";
 import type { IStyledComponent } from "styled-components";
 
+import { useApplyStyle } from "../theme";
+import { mergeRefs } from "../util";
+import {
+    getTypographyTextClassName,
+    getTypographyUnderlineClassName,
+    tokens,
+    typographyClassNames,
+} from "./helper";
 import type {
     TypographyLinkProps,
     TypographyProps,
     TypographySize,
+    TypographyWeight,
 } from "./types";
-import {
-    HyperlinkBase,
-    StyledExternalIcon,
-    TypographyBase,
-} from "./typography.styles";
+import * as styles from "./typography.styles";
+
+const getTextWeight = (
+    weight: TypographyWeight | undefined
+): TypographyWeight => weight || "regular";
+
+const getTypographyDisplayClassName = (
+    inline: boolean | undefined,
+    paragraph: boolean | undefined
+) => {
+    if (paragraph) {
+        return typographyClassNames.paragraph;
+    }
+
+    if (inline) {
+        return typographyClassNames.displayInline;
+    }
+
+    return typographyClassNames.displayBlock;
+};
 
 const createHeading = (
     tag: keyof JSX.IntrinsicElements,
@@ -19,18 +44,37 @@ const createHeading = (
     displayName: string
 ) => {
     const Header = (
-        { weight, inline, paragraph, maxLines, ...props }: TypographyProps,
+        {
+            weight,
+            inline,
+            paragraph,
+            maxLines,
+            className,
+            ...props
+        }: TypographyProps,
         ref: React.Ref<HTMLHeadingElement>
     ) => {
+        const typographyRef = React.useRef<HTMLHeadingElement>(null);
+        const textWeight = getTextWeight(weight);
+        const mergedRef = mergeRefs(typographyRef, ref);
+
+        useApplyStyle(typographyRef, {
+            [tokens.typographyBase.maxLines]:
+                maxLines && (paragraph || !inline) ? maxLines : null,
+        });
+
         return (
-            <TypographyBase
-                ref={ref}
+            <styles.TypographyBase
+                ref={mergedRef}
                 as={inline ? "span" : tag}
-                $textStyle={textStyle}
-                $weight={weight}
-                $inline={inline}
-                $paragraph={paragraph}
-                $maxLines={maxLines}
+                className={clsx(
+                    getTypographyTextClassName(textStyle, textWeight),
+                    getTypographyDisplayClassName(inline, paragraph),
+                    maxLines && (paragraph || !inline)
+                        ? typographyClassNames.lineClamp
+                        : undefined,
+                    className
+                )}
                 {...props}
             />
         );
@@ -53,18 +97,37 @@ export const HeadingXS = createHeading("h6", "heading-xs", "HeadingXS");
 
 const createBody = (textStyle: TypographySize, displayName: string) => {
     const Body = (
-        { weight, inline, paragraph, maxLines, ...props }: TypographyProps,
+        {
+            weight,
+            inline,
+            paragraph,
+            maxLines,
+            className,
+            ...props
+        }: TypographyProps,
         ref: React.Ref<HTMLParagraphElement>
     ) => {
+        const typographyRef = React.useRef<HTMLParagraphElement>(null);
+        const textWeight = getTextWeight(weight);
+        const mergedRef = mergeRefs(typographyRef, ref);
+
+        useApplyStyle(typographyRef, {
+            [tokens.typographyBase.maxLines]:
+                maxLines && (paragraph || !inline) ? maxLines : null,
+        });
+
         return (
-            <TypographyBase
-                ref={ref}
+            <styles.TypographyBase
+                ref={mergedRef}
                 as={inline ? "span" : "p"}
-                $textStyle={textStyle}
-                $weight={weight}
-                $inline={inline}
-                $paragraph={paragraph}
-                $maxLines={maxLines}
+                className={clsx(
+                    getTypographyTextClassName(textStyle, textWeight),
+                    getTypographyDisplayClassName(inline, paragraph),
+                    maxLines && (paragraph || !inline)
+                        ? typographyClassNames.lineClamp
+                        : undefined,
+                    className
+                )}
                 {...props}
             />
         );
@@ -93,21 +156,26 @@ const createLinkComponent = (
             children,
             external,
             underlineStyle = "underline",
+            className,
             ...props
         }: TypographyLinkProps,
         ref: React.Ref<HTMLAnchorElement>
     ) => {
+        const textWeight = getTextWeight(weight);
+
         return (
-            <HyperlinkBase
+            <styles.HyperlinkBase
                 ref={ref}
-                $textStyle={textStyle}
-                $weight={weight}
-                $underlineStyle={underlineStyle}
+                className={clsx(
+                    getTypographyTextClassName(textStyle, textWeight),
+                    getTypographyUnderlineClassName(underlineStyle),
+                    className
+                )}
                 {...props}
             >
                 {children}
-                {external && <StyledExternalIcon />}
-            </HyperlinkBase>
+                {external && <styles.StyledExternalIcon />}
+            </styles.HyperlinkBase>
         );
     };
     Hyperlink.displayName = `Typography.${displayName}`;
