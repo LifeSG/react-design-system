@@ -3,8 +3,8 @@ import styled, { css } from "styled-components";
 
 import { V3_Colour, V3_Radius, V3_Spacing } from "../../v3_theme";
 import { ClickableIcon } from "../clickable-icon";
-import type { InputStyleProps } from "../input-wrapper/input-wrapper";
-import { BasicInput } from "../input-wrapper/input-wrapper";
+import type { InputStyleProps } from "../input-wrapper";
+import { BasicInput } from "../input-wrapper";
 import type { DropdownVariantType, IconProps } from "./types";
 
 const getIconSize = (variant?: DropdownVariantType) => {

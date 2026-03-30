@@ -2,7 +2,7 @@ import type React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
-import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
+import { InputWrapper } from "../shared/input-wrapper";
 import { SimpleIdGenerator, StringHelper, useNextInputState } from "../util";
 import type { UnitNumberInputProps } from "./types";
 import {

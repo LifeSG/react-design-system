@@ -14,7 +14,7 @@ import {
     PlaceholderLabel,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
-import { InputBox } from "../shared/input-wrapper/input-wrapper";
+import { InputBox } from "../shared/input-wrapper";
 import { SimpleIdGenerator } from "../util";
 import type { InputMultiSelectProps } from "./types";
 

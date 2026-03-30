@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { BasicInput } from "../shared/input-wrapper/input-wrapper";
+import { BasicInput } from "../shared/input-wrapper";
 
 // =============================================================================
 // STYLING
