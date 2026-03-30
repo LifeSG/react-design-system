@@ -22,12 +22,10 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
         props;
 
     const containerRef = useRef<HTMLDivElement | HTMLSpanElement>(null);
-    const mergedRef = ref
-        ? mergeRefs(
-              containerRef,
-              ref as React.Ref<HTMLDivElement | HTMLSpanElement>
-          )
-        : containerRef;
+    const mergedRef = mergeRefs(
+        containerRef,
+        ref as React.Ref<HTMLDivElement | HTMLSpanElement>
+    );
     const resolvedTextColor = useResolvedTokenValue<
         ColourCSSVariableString,
         string
