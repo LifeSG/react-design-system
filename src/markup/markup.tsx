@@ -2,13 +2,7 @@ import clsx from "clsx";
 import type React from "react";
 import { forwardRef, useMemo, useRef } from "react";
 
-import {
-    type ColourCSSVariableString,
-    generateFontProperties,
-    isTokenWithPrefix,
-    useApplyStyle,
-    useResolvedTokenValue,
-} from "../theme";
+import { generateFontProperties, useApplyStyle } from "../theme";
 import { mergeRefs } from "../util";
 import * as styles from "./markup.style";
 import { createMarkupFontStyles } from "./markup.utils";
@@ -26,19 +20,6 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
         containerRef,
         ref as React.Ref<HTMLDivElement | HTMLSpanElement>
     );
-    const resolvedTextColor = useResolvedTokenValue<
-        ColourCSSVariableString,
-        string
-    >({
-        value: baseTextColor,
-        fallback: "",
-        isToken: (value): value is ColourCSSVariableString =>
-            isTokenWithPrefix<ColourCSSVariableString>(
-                value,
-                "var(--fds-colour-"
-            ),
-        normalizeCustom: String,
-    });
 
     const fontDeclarations = useMemo(() => {
         if (!baseTextSize) {
@@ -53,10 +34,10 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
 
     const appliedStyles = useMemo(
         () => ({
-            color: resolvedTextColor || null,
+            color: baseTextColor || null,
             ...createMarkupFontStyles(fontDeclarations),
         }),
-        [resolvedTextColor, fontDeclarations]
+        [baseTextColor, fontDeclarations]
     );
 
     useApplyStyle(containerRef, appliedStyles);
