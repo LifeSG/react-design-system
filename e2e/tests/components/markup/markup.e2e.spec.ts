@@ -5,7 +5,6 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "markup";
 
     public readonly locators: {
-        root: Locator;
         markup: Locator;
         link: Locator;
         strong: Locator;
@@ -15,7 +14,6 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            root: page.getByTestId("markup-root"),
             markup: page.getByTestId("markup-markup"),
             link: page.getByRole("link", { name: /inline link/i }),
             strong: page.getByText("bold phrase"),
@@ -50,7 +48,6 @@ test.describe("Markup", () => {
 
             test(scenario.title, async ({ story }) => {
                 await test.step("Component mounts", async () => {
-                    await expect(story.locators.root).toBeVisible();
                     await expect(story.locators.markup).toBeVisible();
                     await expect(story.locators.link).toBeVisible();
                     await expect(story.locators.strong).toBeVisible();
