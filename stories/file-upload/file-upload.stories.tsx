@@ -97,7 +97,7 @@ export const WithErrorDisplay: StoryObj<Component> = {
 export const WithLoadingIndicator: StoryObj<Component> = {
     render: () => {
         const [fileItems, setFileItems] = useState<FileItemProps[]>([]);
-        
+
         const updateProgress = useCallback(() => {
             const hasInProgressItems = fileItems.some(
                 (item) => typeof item.progress === "number" && item.progress < 1
@@ -123,7 +123,7 @@ export const WithLoadingIndicator: StoryObj<Component> = {
                 }, 200);
             }
         }, [fileItems]);
-        
+
         useEffect(() => {
             if (fileItems.length > 0) {
                 updateProgress();
@@ -148,7 +148,7 @@ export const WithLoadingIndicator: StoryObj<Component> = {
             newArr.splice(newArr.indexOf(fileItem), 1);
             setFileItems(newArr);
         };
-        
+
         return (
             <FileUpload
                 fileItems={fileItems}
@@ -452,67 +452,6 @@ export const WithPDFFiles: StoryObj<Component> = {
                 description="This story demonstrates how PDF files are displayed with a PDF icon instead of thumbnail images. You can upload both PDF and image files to see the difference."
                 editableFileItems
                 fileDescriptionMaxLength={200}
-                accept=".pdf,.jpg,.jpeg,.png"
-                warning={
-                    <>
-                        Maximum size per file: 5 MB
-                        <br />
-                        Supported file types: .PDF, .JPG, .JPEG, .PNG
-                    </>
-                }
-            />
-        );
-    },
-};
-
-export const WithFileErrors: StoryObj<Component> = {
-    render: () => {
-        const [fileItems, setFileItems] = useState<FileItemProps[]>([
-            {
-                id: "1",
-                name: "corrupted-document.pdf",
-                type: "application/pdf",
-                size: 1048576, // 1 MB
-                errorMessage: "File is corrupted and cannot be uploaded",
-            },
-            {
-                id: "2",
-                name: "corrupted-image.jpg",
-                type: "image/jpeg",
-                size: 524288, // 512 KB
-                thumbnailImageDataUrl:
-                    "https://picsum.photos/seed/error-demo/400/300",
-                errorMessage: "Upload failed. Please try again.",
-            },
-        ]);
-
-        const handleChange = (files: File[]) => {
-            const newFileItems = files.map((file) => {
-                return {
-                    id: SimpleIdGenerator.generate(),
-                    name: file.name,
-                    size: file.size,
-                    type: file.type,
-                };
-            });
-            setFileItems((prevItems) => {
-                return prevItems.concat(newFileItems);
-            });
-        };
-
-        const handleDelete = (fileItem: FileItemProps) => {
-            const newArr = [...fileItems];
-            newArr.splice(newArr.indexOf(fileItem), 1);
-            setFileItems(newArr);
-        };
-
-        return (
-            <FileUpload
-                fileItems={fileItems}
-                onChange={handleChange}
-                onDelete={handleDelete}
-                title="File Upload Errors"
-                description="This story demonstrates the error state for file uploads. Files with errors show error messages and can be removed."
                 accept=".pdf,.jpg,.jpeg,.png"
                 warning={
                     <>
