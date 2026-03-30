@@ -104,7 +104,6 @@ export const ErrorDisplay = ({
                             <Title
                                 data-testid={`${testId}--title`}
                                 data-id="error-display-title"
-                                weight="semibold"
                             >
                                 {updatedAssets.title}
                             </Title>

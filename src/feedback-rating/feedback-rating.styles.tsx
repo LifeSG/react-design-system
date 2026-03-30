@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { Button } from "../button";
+import { Font } from "../theme";
 import { V3_Colour, V3_MediaQuery } from "../v3_theme";
 
 export const Image = styled.img`
@@ -40,6 +41,15 @@ export const ChildContainer = styled.div`
         margin: 1rem 1.25rem;
         max-width: calc(100% - 2.5rem);
     }
+`;
+
+export const Title = styled.h2`
+    font-size: ${Font.Spec["heading-size-sm"]};
+    line-height: ${Font.Spec["heading-lh-sm"]};
+    letter-spacing: ${Font.Spec["heading-ls-sm"]};
+    font-weight: ${Font.Spec["weight-semibold"]};
+    color: ${V3_Colour.text};
+    margin-bottom: 0;
 `;
 
 export const SubmitButton = styled(Button.Default)`

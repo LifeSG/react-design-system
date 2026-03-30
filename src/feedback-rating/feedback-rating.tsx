@@ -1,14 +1,13 @@
-import clsx from "clsx";
 import { useState } from "react";
 
 import { VisuallyHidden } from "../shared/accessibility";
-import * as typographyStyles from "../typography/typography.styles";
 import { SimpleIdGenerator } from "../util";
 import {
     ChildContainer,
     Image,
     MainContainer,
     SubmitButton,
+    Title,
 } from "./feedback-rating.styles";
 import { FeedbackRatingData } from "./feedback-rating-data";
 import { FeedbackRatingStarsContainer } from "./feedback-rating-stars-container";
@@ -53,17 +52,7 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                 />
             )}
             <ChildContainer>
-                <h2
-                    id={internalId}
-                    className={clsx(
-                        typographyStyles.typographyBase,
-                        typographyStyles.typographySize["heading-sm"],
-                        typographyStyles.typographyWeight.semibold,
-                        typographyStyles.displayBlock
-                    )}
-                >
-                    {componentDescription}
-                </h2>
+                <Title id={internalId}>{componentDescription}</Title>
                 <FeedbackRatingStarsContainer
                     ariaLabelledBy={internalId}
                     ariaDescribedBy={descriptionId}
