@@ -170,6 +170,9 @@
         "react-dom": "^17.0.2 || ^18.0.0 || ^19.0.0",
         "styled-components": "^6.1.19"
     },
+    "optionalDependencies": {
+        "@rollup/rollup-linux-x64-gnu": "^4.54.0"
+    },
     "overrides": {
         "react-resize-detector": {
             "react": "$react",
