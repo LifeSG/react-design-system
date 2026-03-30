@@ -1,4 +1,11 @@
+import type { FontSize } from "../theme";
+
 export type TypographyWeight = "regular" | "semibold" | "bold" | "light";
+export type TypographySize = Exclude<
+    FontSize,
+    "form-label" | "form-description"
+>;
+export type TypographyFontToken = `${TypographySize}-${TypographyWeight}`;
 
 export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
     /** The font weight */

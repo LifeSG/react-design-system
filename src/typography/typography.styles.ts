@@ -1,17 +1,16 @@
 import { ExternalIcon } from "@lifesg/react-icons/external";
 import styled, { css } from "styled-components";
 
-import { V3_Colour } from "../v3_theme";
-import type { V3_TypographySizeType } from "../v3_theme/font/types";
+import { Colour } from "../theme";
 import { createTypographyStyles, getTextStyle } from "./helper";
-import type { TypographyWeight } from "./types";
+import type { TypographySize, TypographyWeight } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 interface StyledProps {
-    $textStyle: V3_TypographySizeType;
+    $textStyle: TypographySize;
     $weight?: TypographyWeight | undefined;
     $inline?: boolean | undefined;
     $paragraph?: boolean | undefined;
@@ -36,13 +35,13 @@ export const TypographyBase = styled.div<StyledProps>`
 export const HyperlinkBase = styled.a<StyledProps>`
     ${(props) => css`
         ${getTextStyle(props.$textStyle, props.$weight || "regular")}
-        color: ${V3_Colour.hyperlink};
+        color: ${Colour.hyperlink};
         text-decoration: ${props.$underlineStyle ?? "underline"};
 
         &:hover,
         &:active,
         &:focus {
-            color: ${V3_Colour["text-hover"]};
+            color: ${Colour["text-hover"]};
         }
     `}
 `;

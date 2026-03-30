@@ -2,8 +2,11 @@ import type { RefObject } from "react";
 import React from "react";
 import type { IStyledComponent } from "styled-components";
 
-import type { V3_TypographySizeType } from "../v3_theme/font/types";
-import type { TypographyLinkProps, TypographyProps } from "./types";
+import type {
+    TypographyLinkProps,
+    TypographyProps,
+    TypographySize,
+} from "./types";
 import {
     HyperlinkBase,
     StyledExternalIcon,
@@ -12,7 +15,7 @@ import {
 
 const createHeading = (
     tag: keyof JSX.IntrinsicElements,
-    textStyle: V3_TypographySizeType,
+    textStyle: TypographySize,
     displayName: string
 ) => {
     const Header = (
@@ -48,7 +51,7 @@ export const HeadingMD = createHeading("h4", "heading-md", "HeadingMD");
 export const HeadingSM = createHeading("h5", "heading-sm", "HeadingSM");
 export const HeadingXS = createHeading("h6", "heading-xs", "HeadingXS");
 
-const createBody = (textStyle: V3_TypographySizeType, displayName: string) => {
+const createBody = (textStyle: TypographySize, displayName: string) => {
     const Body = (
         { weight, inline, paragraph, maxLines, ...props }: TypographyProps,
         ref: React.Ref<HTMLParagraphElement>
@@ -81,7 +84,7 @@ export const BodySM = createBody("body-sm", "BodySM");
 export const BodyXS = createBody("body-xs", "BodyXS");
 
 const createLinkComponent = (
-    textStyle: V3_TypographySizeType,
+    textStyle: TypographySize,
     displayName: string
 ) => {
     const Hyperlink = (
