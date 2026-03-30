@@ -38,9 +38,8 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         <StorybookLink path="/docs/foundations-colours-introduction--docs">
                             ColourCSSVariableString
-                        </StorybookLink>
-                        {", "}
-                        {"string"}
+                        </StorybookLink>{" "}
+                        <code>string</code>
                     </>
                 ),
             },
