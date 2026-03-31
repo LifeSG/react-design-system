@@ -25,9 +25,6 @@ export const ProgressBar = ({
 
     useApplyStyle(barRef, {
         [styles.tokens.barColour]: colourToUse,
-        [styles.tokens.progressColour]: colourToUse,
-        [styles.tokens.borderColour]: colourToUse,
-        [styles.tokens.progressWidth]: `${progress * 100}%`,
         [styles.tokens.barWidth]: `${progress * 100}%`,
     });
 

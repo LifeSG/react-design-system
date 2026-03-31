@@ -5,9 +5,6 @@ import { Border, Radius } from "../../theme";
 export const tokens = {
     barColour: "--fds-internal-progressBar-colour",
     barWidth: "--fds-internal-progressBar-width",
-    progressColour: "--fds-internal-progress-colour",
-    progressWidth: "--fds-internal-progress-width",
-    borderColour: "--fds-internal-progressBar-borderColor",
 };
 
 export const bar = css`
@@ -16,19 +13,18 @@ export const bar = css`
     height: 8px;
     background: transparent;
 
-    border-style: solid;
+    border-style: ${Border["solid"]};
     border-width: ${Border["width-010"]};
     border-radius: ${Radius["sm"]};
-    border-color: var(${tokens.borderColour});
+    border-color: var(${tokens.barColour});
 
     progress {
         position: absolute;
         top: 0;
         left: 0;
-        width: var(${tokens.progressWidth});
+        width: 100%;
         height: 100%;
         opacity: 0;
-        background: var(${tokens.progressColour});
     }
 
     &:after {
