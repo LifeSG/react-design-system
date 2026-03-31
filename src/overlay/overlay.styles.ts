@@ -1,87 +1,64 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Colour } from "../theme";
 
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface StyleProps {
-    $show: boolean;
-    $backgroundBlur?: boolean | undefined;
-    $disableTransition?: boolean | undefined;
-    $zIndex?: number | undefined;
-    $stacked?: boolean | undefined;
-}
+export const tokens = {
+    root: {
+        zIndex: "--fds-internal-overlay-root-zIndex",
+    },
+} as const;
 
-// =============================================================================
-// STYLING
-// =============================================================================
-const getBackdropFilter = (blur: boolean | undefined) => {
-    let styleString = "";
-
-    if (blur) {
-        styleString += "blur(10px)";
-    }
-
-    return styleString.length > 0 ? styleString : "none";
-};
-
-export const Root = styled.div<StyleProps>`
+export const Root = styled.div`
     position: fixed;
     left: 0;
     top: 0;
     height: 0;
     width: 0;
     visibility: hidden;
-    z-index: ${(props) => props.$zIndex};
+    z-index: var(${tokens.root.zIndex});
 
-    ${(props) => {
-        if (props.$show) {
-            return css`
-                height: 100%;
-                width: 100vw;
-                visibility: visible;
-            `;
-        }
-    }}
+    &.rootShow {
+        height: 100%;
+        width: 100vw;
+        visibility: visible;
+    }
 `;
 
-export const Wrapper = styled.div<StyleProps>`
+export const Wrapper = styled.div`
     position: absolute;
     left: 0;
     top: 0;
-    background-color: ${(props) =>
-        props.$stacked ? Colour["overlay-subtle"] : Colour["overlay-strong"]};
-    backdrop-filter: ${(props) => getBackdropFilter(props.$backgroundBlur)};
+    background-color: ${Colour["overlay-strong"]};
+    backdrop-filter: none;
     transition: opacity 200ms ease;
 
-    ${(props) => {
-        let customStyles = "";
-        if (props.$show) {
-            customStyles += css`
-                visibility: visible;
-                opacity: 1;
-                pointer-events: auto;
-                height: 100%;
-                width: 100vw;
-            `;
-        } else {
-            customStyles += css`
-                visibility: hidden;
-                opacity: 0;
-                transition-delay: ${props.$disableTransition ? "0ms" : "400ms"};
-                pointer-events: none;
-                height: 0;
-                width: 0;
-            `;
-        }
-        if (props.$disableTransition) {
-            customStyles += css`
-                transition: none;
-            `;
-        }
+    &.wrapperStacked {
+        background-color: ${Colour["overlay-subtle"]};
+    }
 
-        return customStyles;
-    }};
+    &.wrapperBackgroundBlur {
+        backdrop-filter: blur(10px);
+    }
+
+    &.wrapperShow {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+        height: 100%;
+        width: 100vw;
+    }
+
+    &.wrapperHide {
+        visibility: hidden;
+        opacity: 0;
+        transition-delay: 400ms;
+        pointer-events: none;
+        height: 0;
+        width: 0;
+    }
+
+    &.wrapperDisableTransition {
+        transition: none;
+        transition-delay: 0ms;
+    }
 `;

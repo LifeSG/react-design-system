@@ -3,13 +3,14 @@ import {
     FloatingTree,
     useFloatingNodeId,
 } from "@floating-ui/react";
+import clsx from "clsx";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
-import { useInheritedThemeScope } from "../theme/theme-provider/hooks";
+import { useApplyStyle, useInheritedThemeScope } from "../theme";
 import { SimpleIdGenerator } from "../util";
-import { Root, Wrapper } from "./overlay.styles";
+import { Root, tokens, Wrapper } from "./overlay.styles";
 import type { OverlayProps } from "./types";
 import { useFloatingParent } from "./use-floating-context";
 
@@ -37,6 +38,7 @@ const OverlayComponent = ({
     const stacked = useRef<boolean>();
     // Track where mousedown started to prevent closing drawer during text selection drag
     const mouseDownInsideModalRef = useRef(false);
+    const rootRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     const overlayRootId = id
@@ -46,6 +48,8 @@ const OverlayComponent = ({
     const { themeProps, themeStyle } = useInheritedThemeScope(show);
 
     useFloatingParent(zIndex);
+
+    useApplyStyle(rootRef, { [tokens.root.zIndex]: zIndex });
 
     // =============================================================================
     // EFFECTS
@@ -316,10 +320,12 @@ const OverlayComponent = ({
             <Wrapper
                 ref={wrapperRef}
                 data-testid="overlay-wrapper"
-                $show={show}
-                $stacked={isStacked}
-                $backgroundBlur={backgroundBlur}
-                $disableTransition={disableTransition}
+                className={clsx(
+                    show ? "wrapperShow" : "wrapperHide",
+                    isStacked && "wrapperStacked",
+                    backgroundBlur && "wrapperBackgroundBlur",
+                    disableTransition && "wrapperDisableTransition"
+                )}
                 onClick={handleWrapperClick}
             >
                 {children}
@@ -329,10 +335,10 @@ const OverlayComponent = ({
 
     const renderComponent = () => (
         <Root
+            ref={rootRef}
             id={overlayRootId}
             data-testid={overlayRootId}
-            $show={show}
-            $zIndex={zIndex}
+            className={clsx(show && "rootShow")}
             {...themeProps}
             style={themeStyle}
         >
