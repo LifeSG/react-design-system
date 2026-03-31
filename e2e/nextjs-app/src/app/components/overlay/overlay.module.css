@@ -1,0 +1,15 @@
+.page-content {
+    margin: auto;
+    text-align: center;
+    background: pink;
+}
+
+.overlay-modal-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    background: white;
+    border: 5px solid red;
+}
