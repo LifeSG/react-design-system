@@ -4,6 +4,18 @@ import { InternalCalendar } from "../shared/internal-calendar";
 import { Border, Colour, Radius, Spacing } from "../theme";
 import { CalendarProps } from "./types";
 
+/**
+ * A calendar picker for selecting one or more dates.
+ *
+ * Supports `"single"` and `"range"` selection variants via sub-components
+ * `Calendar.Day` (single) and `Calendar.DayRange` (range). Controlled via
+ * a `"YYYY-MM-DD"` string value.
+ *
+ * @example
+ * ```tsx
+ * <Calendar value={selectedDate} onSelect={(date) => setDate(date)} />
+ * ```
+ */
 export const Calendar = (props: CalendarProps) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -23,8 +35,7 @@ export const Calendar = (props: CalendarProps) => {
         "data-testid": dataTestId,
     } = props;
 
-    const controlledValue =
-        props.variant !== "multi" ? props.value : undefined;
+    const controlledValue = props.variant !== "multi" ? props.value : undefined;
     const controlledValues =
         props.variant === "multi" ? props.values : undefined;
     const minSelectable =

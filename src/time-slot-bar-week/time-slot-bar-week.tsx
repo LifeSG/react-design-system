@@ -10,6 +10,17 @@ import { TimeSlotBarWeekProps } from "./types";
 
 const DATE_FORMAT = "YYYY-MM-DD";
 
+/**
+ * A week-view calendar with per-day `TimeSlotBar` columns.
+ *
+ * Renders a navigable weekly grid of time slots. Extends `CommonCalendarProps`
+ * for min/max date and locale settings.
+ *
+ * @example
+ * ```tsx
+ * <TimeSlotBarWeek currentDate={date} onDateChange={setDate} onSlotClick={handleSlot} />
+ * ```
+ */
 export const TimeSlotBarWeek = ({
     disabledDates,
     onWeekDisplayChange,

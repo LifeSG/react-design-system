@@ -47,6 +47,20 @@ const Header = ({
 );
 Header.displayName = "Table.HeaderCell";
 
+/**
+ * A semantic HTML table with composable sub-components.
+ *
+ * Provides `Table.Head`, `Table.Body`, `Table.Row`, `Table.HeaderCell`,
+ * and `Table.DataCell` sub-components for building accessible data tables.
+ *
+ * @example
+ * ```tsx
+ * <Table>
+ *   <Table.Head><Table.Row><Table.HeaderCell>Name</Table.HeaderCell></Table.Row></Table.Head>
+ *   <Table.Body><Table.Row><Table.DataCell>Alice</Table.DataCell></Table.Row></Table.Body>
+ * </Table>
+ * ```
+ */
 export const Table = Object.assign(
     ({ children, ...props }: React.TableHTMLAttributes<HTMLTableElement>) => (
         <TableWrapper>

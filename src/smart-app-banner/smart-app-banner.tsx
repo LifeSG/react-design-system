@@ -130,4 +130,15 @@ function SmartAppBannerComponent(
     );
 }
 
+/**
+ * Renders a banner that prompts users to download the mobile app.
+ *
+ * Supports optional slide-down animation, a dismiss callback, and configurable
+ * app store links for iOS and Android.
+ *
+ * @example
+ * ```tsx
+ * <SmartAppBanner appName="MyApp" appStoreLink="https://..." playStoreLink="https://..." />
+ * ```
+ */
 export const SmartAppBanner = React.forwardRef(SmartAppBannerComponent);

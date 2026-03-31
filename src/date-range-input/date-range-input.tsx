@@ -48,6 +48,17 @@ const INITIAL_STATE: DateRangeInputState = {
     focused: false,
 };
 
+/**
+ * Displays two linked inputs (start and end) that open a shared calendar for selecting a date range.
+ *
+ * Controlled via `"YYYY-MM-DD"` string values. Supports optional confirmation
+ * buttons, disabled and read-only modes.
+ *
+ * @example
+ * ```tsx
+ * <DateRangeInput value={{ start: startDate, end: endDate }} onChange={(val) => setRange(val)} />
+ * ```
+ */
 export const DateRangeInput = ({
     minDate,
     maxDate,

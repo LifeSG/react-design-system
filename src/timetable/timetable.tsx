@@ -455,4 +455,15 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
     );
 };
 
+/**
+ * An interactive timetable that displays schedule data in a scrollable grid.
+ *
+ * Organises rows (resources) against time columns. Supports cell click callbacks,
+ * custom cell rendering, and an imperative `ref` for programmatic scrolling.
+ *
+ * @example
+ * ```tsx
+ * <TimeTable rows={rows} date="2024-03-15" onCellClick={(row, slot) => handleClick(row, slot)} />
+ * ```
+ */
 export const TimeTable = forwardRef<TimeTableRef, TimeTableProps>(Component);

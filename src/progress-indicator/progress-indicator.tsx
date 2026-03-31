@@ -14,6 +14,17 @@ import {
 } from "./progress-indicator.style";
 import { ProgressIndicatorProps } from "./types";
 
+/**
+ * A horizontal step progress tracker.
+ *
+ * Renders a row of step labels with the current step highlighted.
+ * Supports a custom display extractor for non-string step items.
+ *
+ * @example
+ * ```tsx
+ * <ProgressIndicator steps={["Details", "Review", "Confirm"]} currentIndex={1} />
+ * ```
+ */
 export const ProgressIndicator = <T,>({
     steps,
     currentIndex,

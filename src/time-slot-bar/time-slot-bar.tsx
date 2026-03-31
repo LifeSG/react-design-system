@@ -422,6 +422,21 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     );
 };
 
+/**
+ * Displays time slots for a specified time range.
+ *
+ * Renders a horizontal bar of bookable time slots. Supports blocked, available,
+ * and selected states. Exposes an imperative `ref` for scrolling to selected slots.
+ *
+ * @example
+ * ```tsx
+ * <TimeSlotBar
+ *   date="2024-03-15"
+ *   timeSlots={[{ startTime: "09:00", endTime: "10:00" }]}
+ *   onSlotClick={(slot) => handleSelect(slot)}
+ * />
+ * ```
+ */
 export const TimeSlotBar = forwardRef<TimeSlotBarRef, TimeSlotBarProps>(
     Component
 );

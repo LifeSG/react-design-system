@@ -20,6 +20,16 @@ import { ResourceAddon } from "./footer-resource-addon";
 import { FooterLinkProps, FooterProps } from "./types";
 import { ThemeContext } from "styled-components";
 
+/**
+ * Renders a standardised footer with configurable link columns, an optional disclaimer, and branding.
+ *
+ * Supports customisable link sets, a Masthead logo, and full theme integration.
+ *
+ * @example
+ * ```tsx
+ * <Footer links={footerLinks} disclaimerLinks={disclaimerLinks} />
+ * ```
+ */
 export const Footer = <T,>({
     children,
     links,

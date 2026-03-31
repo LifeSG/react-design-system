@@ -8,6 +8,19 @@ import {
     TypographyBase,
 } from "./typography.styles";
 
+/**
+ * A namespace of typographic components for headings, body text, and hyperlinks.
+ *
+ * Provides `Typography.HeadingXL` through `Typography.Body` and `Typography.Link`
+ * sub-components. All variants support `weight`, `inline`, `paragraph`, and
+ * `maxLines` props.
+ *
+ * @example
+ * ```tsx
+ * <Typography.HeadingLG>Page Title</Typography.HeadingLG>
+ * <Typography.Body>Paragraph text.</Typography.Body>
+ * ```
+ */
 export namespace Typography {
     const createHeading = (
         tag: keyof JSX.IntrinsicElements,

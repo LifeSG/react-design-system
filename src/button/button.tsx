@@ -117,6 +117,18 @@ const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
 };
 LargeComponent.displayName = "Button.Large";
 
+/**
+ * The primary call-to-action component.
+ *
+ * Provides `Button.Default`, `Button.Small`, and `Button.Large` variants.
+ * Supports `"default"`, `"secondary"`, `"light"`, and `"link"` style types,
+ * danger colour scheme, and a built-in loading spinner.
+ *
+ * @example
+ * ```tsx
+ * <Button.Default styleType="default" onClick={handleClick}>Submit</Button.Default>
+ * ```
+ */
 export const Button = {
     Default: React.forwardRef(DefaultComponent),
     Small: React.forwardRef(SmallComponent),

@@ -9,6 +9,19 @@ import {
     StyledUncheckedIcon,
 } from "./checkbox.style";
 
+/**
+ * A binary selection control that supports checked, unchecked, and indeterminate states.
+ *
+ * Renders a styled checkbox with a visible label. Inherits all standard
+ * `HTMLInputElement` attributes.
+ *
+ * @example
+ * ```tsx
+ * <Checkbox checked={checked} onChange={(e) => setChecked(e.target.checked)}>
+ *   Agree to terms
+ * </Checkbox>
+ * ```
+ */
 export const Checkbox = ({
     className,
     checked,

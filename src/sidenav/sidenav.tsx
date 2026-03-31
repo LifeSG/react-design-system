@@ -58,6 +58,21 @@ const SidenavBase = ({
     );
 };
 
+/**
+ * Renders vertical navigation buttons anchored to the side of the page.
+ *
+ * Composed of `Sidenav.Group` and `Sidenav.Item` sub-components.
+ * Items highlight the active route and support icon slots.
+ *
+ * @example
+ * ```tsx
+ * <Sidenav>
+ *   <Sidenav.Group>
+ *     <Sidenav.Item title="Home" icon={<HomeIcon />} />
+ *   </Sidenav.Group>
+ * </Sidenav>
+ * ```
+ */
 export const Sidenav = Object.assign(SidenavBase, {
     Group: SidenavGroup,
     Item: SidenavItem,

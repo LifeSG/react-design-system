@@ -28,6 +28,17 @@ import {
 } from "./data-table.styles";
 import { DataTableProps, HeaderProps, RowProps } from "./types";
 
+/**
+ * Tabular data display with sortable columns and optional row selection.
+ *
+ * Organises row data into columns and supports sortable headers, optional row
+ * selection, loading states, sticky headers, and empty states.
+ *
+ * @example
+ * ```tsx
+ * <DataTable headers={headers} rows={rows} />
+ * ```
+ */
 export const DataTable = ({
     id,
     headers,

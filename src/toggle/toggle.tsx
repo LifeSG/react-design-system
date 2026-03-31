@@ -23,6 +23,17 @@ import {
 } from "./toggle.styles";
 import { ToggleProps } from "./types";
 
+/**
+ * A styled toggle button that acts as a checkbox or radio button.
+ *
+ * The `type` prop controls behaviour: `"checkbox"` allows deselection;
+ * `"radio"` does not. Use in groups to implement exclusive or multi-select options.
+ *
+ * @example
+ * ```tsx
+ * <Toggle type="radio" checked={selected === "a"} onChange={() => setSelected("a")}>Option A</Toggle>
+ * ```
+ */
 export const Toggle = ({
     type = "checkbox",
     indicator,

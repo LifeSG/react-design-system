@@ -128,4 +128,17 @@ const Component = <T, V>(
     }
 };
 
+/**
+ * A text input decorated with a label, list dropdown, or custom addon.
+ *
+ * Combines an input field with a prefix or suffix addon (label, selectable list,
+ * or arbitrary JSX). Use `addon` and `addonPosition` to configure placement.
+ *
+ * @example
+ * ```tsx
+ * <InputGroup addon={{ type: "label", attributes: { value: "SGD" } }} addonPosition="left">
+ *   <Input placeholder="Amount" />
+ * </InputGroup>
+ * ```
+ */
 export const InputGroup = React.forwardRef(Component);

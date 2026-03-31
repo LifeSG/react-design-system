@@ -19,12 +19,6 @@ async function createPackageFile() {
         typings: "./index.d.ts",
         main: "./cjs/index.js",
         module: "./index.js",
-        scripts: {
-            postinstall: "node ./generate-component-instructions.js",
-        },
-        bin: {
-            "lifesg-ds-instructions": "./generate-component-instructions.js",
-        },
     };
 
     const targetPath = resolve(distPath, "./package.json");
@@ -51,12 +45,6 @@ async function run() {
         await createPackageFile();
         await includeFileInBuild("./README.md");
         await includeFileIfExists("./component-catalog.json");
-        await includeFileIfExists(
-            "./scripts/generate-component-instructions.js"
-        );
-        await includeFileIfExists(
-            "./.github/instructions/design-system-components.instructions.md"
-        );
     } catch (err) {
         console.error(err);
         process.exit(1);

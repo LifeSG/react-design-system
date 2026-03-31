@@ -17,6 +17,18 @@ import {
     MaintenanceAdditionalAttributes,
 } from "./types";
 
+/**
+ * Renders a pre-defined error page with an illustration, title, description, and optional action button.
+ *
+ * Supports standard HTTP error codes (`"400"`, `"403"`, `"404"`, `"408"`,
+ * `"500"`, `"502"`, `"503"`, `"504"`) plus a `"no-item"` empty state.
+ * Use `illustrationOnly` to render the image alone.
+ *
+ * @example
+ * ```tsx
+ * <ErrorDisplay type="404" />
+ * ```
+ */
 export const ErrorDisplay = ({
     type,
     img,

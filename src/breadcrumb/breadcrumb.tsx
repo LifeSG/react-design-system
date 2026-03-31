@@ -15,6 +15,17 @@ import { BreadcrumbProps, FadeColorSet } from "./types";
 import { ThemeContext } from "styled-components";
 import { Breakpoint } from "../theme";
 
+/**
+ * Displays the current page location in a hierarchy of pages.
+ *
+ * The last item is always unclickable as it represents the current location.
+ * Supports a configurable separator style and a fade effect for overflow.
+ *
+ * @example
+ * ```tsx
+ * <Breadcrumb links={[{ href: "/", children: "Home" }, { href: "/about", children: "About" }]} />
+ * ```
+ */
 export const Breadcrumb = ({
     links,
     fadeColor,

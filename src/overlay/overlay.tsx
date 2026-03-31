@@ -288,6 +288,17 @@ const OverlayComponent = ({
         : null;
 };
 
+/**
+ * A semi-transparent backdrop that blocks interaction with content behind it.
+ *
+ * Typically used in conjunction with modals, drawers, and sidebars.
+ * Supports an optional click callback and z-index override.
+ *
+ * @example
+ * ```tsx
+ * <Overlay enableOverlayClick onOverlayClick={() => setOpen(false)} />
+ * ```
+ */
 export const Overlay = (props: OverlayProps) => {
     return (
         <FloatingTree>

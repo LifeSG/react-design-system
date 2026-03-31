@@ -164,4 +164,15 @@ const Component = (
     );
 };
 
+/**
+ * A single-line text entry field extending standard HTML input attributes.
+ *
+ * Provides an optional clear button, error state, telephone spacing, and
+ * `"bordered"` / `"no-border"` style variants.
+ *
+ * @example
+ * ```tsx
+ * <Input placeholder="Enter name" value={name} onChange={(e) => setName(e.target.value)} />
+ * ```
+ */
 export const Input = React.forwardRef(Component);

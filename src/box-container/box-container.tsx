@@ -22,6 +22,19 @@ import { BoxContainerProps } from "./types";
 import { SimpleIdGenerator } from "../util";
 import { VisuallyHidden, inertValue } from "../shared/accessibility";
 
+/**
+ * Displays contents in a box styling layout that can be collapsible if specified.
+ *
+ * Supports a title bar with an expand/collapse handle, optional call-to-action slot,
+ * and configurable display states (`"default"`, `"error"`, `"warning"`).
+ *
+ * @example
+ * ```tsx
+ * <BoxContainer title="Details" collapsible expanded>
+ *   <p>Content here</p>
+ * </BoxContainer>
+ * ```
+ */
 export const BoxContainer = ({
     children,
     title,

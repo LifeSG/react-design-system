@@ -10,6 +10,18 @@ import { TimeSlotWeekViewProps } from "./types";
 
 const DATE_FORMAT = "YYYY-MM-DD";
 
+/**
+ * A week-view availability grid for date selection.
+ *
+ * Renders a calendar week grid that overlays time slot availability on each
+ * day. Unlike `TimeSlotBarWeek`, slots are optional and the component focuses
+ * on date selection. Extends `CommonCalendarProps`.
+ *
+ * @example
+ * ```tsx
+ * <TimeSlotWeekView currentDate={date} onDateChange={setDate} />
+ * ```
+ */
 export const TimeSlotWeekView = ({
     disabledDates,
     onWeekDisplayChange,

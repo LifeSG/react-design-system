@@ -5,6 +5,17 @@ import { useNextInputState } from "../util";
 import { PhoneNumberInputHelper } from "./phone-number-input-helper";
 import { CountryValue, PhoneNumberInputProps } from "./types";
 
+/**
+ * An international phone number field with a country-code dropdown.
+ *
+ * Combines a country selector with a formatted telephone number input.
+ * Emits a structured value object with `countryCode` and `number` fields.
+ *
+ * @example
+ * ```tsx
+ * <PhoneNumberInput value={{ countryCode: "+65", number: "91234567" }} onChange={setPhone} />
+ * ```
+ */
 export const PhoneNumberInput = ({
     onChange,
     value,

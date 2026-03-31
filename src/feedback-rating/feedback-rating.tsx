@@ -12,6 +12,17 @@ import {
 import { FeedbackRatingProps } from "./types";
 import { VisuallyHidden } from "../shared/accessibility";
 
+/**
+ * A star-rating survey widget for capturing user satisfaction.
+ *
+ * Renders an optional banner image, a description prompt, a row of star
+ * buttons, and a submit button. Controlled via the `rating` prop.
+ *
+ * @example
+ * ```tsx
+ * <FeedbackRating rating={rating} onRatingChange={setRating} onSubmit={handleSubmit} />
+ * ```
+ */
 export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
     // =========================================================================
     // CONST, STATE, REF

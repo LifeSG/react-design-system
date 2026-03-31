@@ -409,6 +409,18 @@ const Component = (
         </PaginationWrapper>
     );
 };
+/**
+ * Page navigation control for paginated data sets.
+ *
+ * Renders page number buttons and optional first/last navigation, with an
+ * optional page-size dropdown. Requires `totalItems` and `activePage` to
+ * be controlled by the parent.
+ *
+ * @example
+ * ```tsx
+ * <Pagination totalItems={200} activePage={page} onPageChange={(p) => setPage(p)} />
+ * ```
+ */
 export const Pagination = React.forwardRef(Component);
 
 const DEFAULT_OPTIONS: PageSizeItemProps[] = [

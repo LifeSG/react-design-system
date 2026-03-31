@@ -17,6 +17,17 @@ import { DateInputHelper } from "../util";
 import { Container } from "./date-input.style";
 import { DateInputProps } from "./types";
 
+/**
+ * A text input that opens an inline calendar for selecting a single date.
+ *
+ * Controlled via a `"YYYY-MM-DD"` string value. Supports optional confirmation
+ * buttons, disabled and read-only modes, and focus/blur callbacks.
+ *
+ * @example
+ * ```tsx
+ * <DateInput value={date} onChange={(val) => setDate(val)} placeholder="Select date" />
+ * ```
+ */
 export const DateInput = ({
     minDate,
     maxDate,

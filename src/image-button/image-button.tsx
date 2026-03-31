@@ -36,4 +36,15 @@ const Component = (
     );
 };
 
+/**
+ * A clickable image tile for visual selection options.
+ *
+ * Renders an image thumbnail button with selected and error visual states.
+ * Extends all `HTMLButtonElement` attributes.
+ *
+ * @example
+ * ```tsx
+ * <ImageButton imgSrc="/img/option.png" selected={selected} onClick={() => setSelected(true)} />
+ * ```
+ */
 export const ImageButton = React.forwardRef(Component);
