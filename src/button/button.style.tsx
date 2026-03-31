@@ -10,11 +10,15 @@ import {
     V3_Spacing,
 } from "../v3_theme";
 import { V3_ThemeButton } from "../v3_theme/components/theme-helper";
-import type { ButtonIconPosition, ButtonSize, ButtonStyleType } from "./types";
+import type {
+    ButtonIconPosition,
+    ButtonSizeType,
+    ButtonStyleType,
+} from "./types";
 
 export interface MainStyleProps {
     $buttonStyle: ButtonStyleType | "disabled";
-    $buttonSize: ButtonSize;
+    $buttonSize: ButtonSizeType;
     $buttonIsDanger?: boolean;
     $hasIcon?: boolean;
     $iconOnly?: boolean;
@@ -29,8 +33,11 @@ export const Main = styled.button<MainStyleProps>`
     align-items: center;
     justify-content: center;
     padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-16"]};
-    border-radius: 0;
     gap: 0.5rem;
+    flex-direction: ${(props) =>
+        props.$iconPosition === "right" ? "row-reverse" : "row"};
+    border-radius: ${V3_ThemeButton["button-radius"]};
+    ${(props) => !props.$iconOnly && "min-width: 4rem;"}
 
     svg,
     img {
@@ -39,21 +46,6 @@ export const Main = styled.button<MainStyleProps>`
         width: 1em;
     }
 
-    ${(props) =>
-        props.$iconOnly &&
-        css`
-            border-radius: ${V3_ThemeButton["button-radius"]};
-            min-width: 4rem;
-        `}
-
-    ${(props) =>
-        props.$hasIcon &&
-        !props.$iconOnly &&
-        css`
-            flex-direction: ${props.$iconPosition === "right"
-                ? "row-reverse"
-                : "row"};
-        `}
     // -------------------------------------------------------------------------
     // BUTTON STYLE + TEXT COLOR
     // -------------------------------------------------------------------------
