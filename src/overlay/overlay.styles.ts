@@ -3,6 +3,12 @@ import { css } from "@linaria/core";
 import { Colour } from "../theme";
 
 export const tokens = {
+    global: {
+        scrollY: "--fds-internal-overlay-body-scroll-y",
+        scrollbarWidth: "--fds-internal-overlay-body-scrollbarWidth",
+        overlayOpenClass: "lifesg-ds-overlay-open",
+        overlayScrollLockClass: "lifesg-ds-overlay-scroll-lock",
+    },
     root: {
         zIndex: "--fds-internal-overlay-root-zIndex",
     },
@@ -16,6 +22,25 @@ export const root = css`
     width: 0;
     visibility: hidden;
     z-index: var(${tokens.root.zIndex});
+
+    :global() {
+        .${tokens.global.overlayOpenClass} {
+            padding-right: var(${tokens.global.scrollbarWidth}, 0) !important;
+            overflow: hidden;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .${tokens.global.overlayOpenClass}::-webkit-scrollbar {
+            display: none;
+        }
+
+        .${tokens.global.overlayScrollLockClass} {
+            position: fixed;
+            top: var(${tokens.global.scrollY}, 0);
+            bottom: 0;
+        }
+    }
 `;
 
 export const rootShow = css`
