@@ -10,6 +10,7 @@ class StoryPage extends AbstractStoryPage {
         modalContentFirst: Locator;
         modalContentSecond: Locator;
         toggleOverlayButton: Locator;
+        dismissCount: Locator;
     };
 
     constructor(page: Page) {
@@ -23,6 +24,7 @@ class StoryPage extends AbstractStoryPage {
                 "overlay-modal-content-second"
             ),
             toggleOverlayButton: page.getByTestId("toggle-overlay-button"),
+            dismissCount: page.getByTestId("dismiss-count"),
         };
     }
 }
@@ -157,6 +159,55 @@ test.describe("Overlay", () => {
                 await test.step("Verify that page is on original scroll position", async () => {
                     expect(afterOpen).toEqual(beforeOpen);
                 });
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("backdrop-click");
+        });
+
+        test("Backdrop click behavior", async ({ story }) => {
+            const box = await story.locators.modalContent.boundingBox();
+            if (!box) {
+                throw new Error("Could not get bounding box");
+            }
+
+            await expect(story.locators.modalContent).toBeVisible();
+            await expect(story.locators.dismissCount).toHaveText("0");
+
+            await test.step("Click on modal content does not dismiss the overlay", async () => {
+                await story.locators.modalContent.click();
+                await expect(story.locators.dismissCount).toHaveText("0");
+            });
+
+            await test.step("Click originating from modal content does not dismiss the overlay", async () => {
+                // Mousedown inside modal content (simulates start of a text-selection drag)
+                await story.page.mouse.move(
+                    box.x + box.width / 2,
+                    box.y + box.height / 2
+                );
+                await story.page.mouse.down();
+
+                // Drag out to the backdrop and release
+                await story.page.mouse.move(
+                    box.x + box.width + 10,
+                    box.y + box.height + 10
+                );
+                await story.page.mouse.up();
+
+                await expect(story.locators.dismissCount).toHaveText("0");
+            });
+
+            await test.step("Click on backdrop dismisses the overlay", async () => {
+                await story.locators.overlayWrapper.click({
+                    position: {
+                        x: box.x + box.width + 10,
+                        y: box.y + box.height + 10,
+                    },
+                });
+                await expect(story.locators.dismissCount).toHaveText("1");
             });
         });
     });
