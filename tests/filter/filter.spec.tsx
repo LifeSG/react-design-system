@@ -540,9 +540,15 @@ describe("FilterModal", () => {
             </FilterModal>
         );
 
-        const child = screen.getByTestId("modal-child");
-        expect(child).toBeInTheDocument();
-        expect(child).not.toBeVisible();
+        const button = screen.getByRole("button", { name: "Filters" });
+
+        expect(button).toBeInTheDocument();
+
+        fireEvent.click(button);
+
+        expect(
+            screen.getByRole("heading", { name: "Filters" })
+        ).toBeInTheDocument();
     });
 
     it("calls onClear when Clear button is clicked", () => {
@@ -568,7 +574,7 @@ describe("FilterModal", () => {
             </FilterModal>
         );
 
-        fireEvent.click(screen.getByTestId("filter-show-button"));
+        fireEvent.click(screen.getByTestId(MOBILE_SHOW_BUTTON_TESTID));
 
         expect(screen.getByTestId("modal-item")).toBeInTheDocument();
         expect(screen.getByTestId("modal-item")).toBeVisible();
