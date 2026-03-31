@@ -22,26 +22,22 @@ export const ProgressBar = ({
     const colourToUse = colour ?? Colour["icon-primary-subtle"];
 
     const barRef = useRef<HTMLDivElement>(null);
-    const progressRef = useRef<HTMLProgressElement>(null);
 
     useApplyStyle(barRef, {
         [styles.tokens.barColour]: colourToUse,
+        [styles.tokens.progressColour]: colourToUse,
+        [styles.tokens.borderColour]: colourToUse,
+        [styles.tokens.progressWidth]: `${progress * 100}%`,
         [styles.tokens.barWidth]: `${progress * 100}%`,
-        borderColor: colourToUse,
-    });
-
-    useApplyStyle(progressRef, {
-        background: colourToUse,
-        width: `${progress * 100}%`,
     });
 
     return (
         <div
-            className={clsx(styles.bar, styles.dynamicBar, className)}
+            className={clsx(styles.bar, className)}
             data-testid={testId}
             ref={barRef}
         >
-            <progress value={progress * 100} max={100} ref={progressRef} />
+            <progress value={progress * 100} max={100} />
         </div>
     );
 };

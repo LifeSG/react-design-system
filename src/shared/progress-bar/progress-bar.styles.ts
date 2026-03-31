@@ -3,8 +3,11 @@ import { css } from "@linaria/core";
 import { Border, Radius } from "../../theme";
 
 export const tokens = {
-    barColour: "--fds-internal-progress-bar-colour",
-    barWidth: "--fds-internal-progress-bar-width",
+    barColour: "--fds-internal-progressBar-colour",
+    barWidth: "--fds-internal-progressBar-width",
+    progressColour: "--fds-internal-progress-colour",
+    progressWidth: "--fds-internal-progress-width",
+    borderColour: "--fds-internal-progressBar-borderColor",
 };
 
 export const bar = css`
@@ -16,17 +19,18 @@ export const bar = css`
     border-style: solid;
     border-width: ${Border["width-010"]};
     border-radius: ${Radius["sm"]};
+    border-color: var(${tokens.borderColour});
 
     progress {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
+        width: var(${tokens.progressWidth});
         height: 100%;
         opacity: 0;
+        background: var(${tokens.progressColour});
     }
-`;
-export const dynamicBar = css`
+
     &:after {
         content: "";
         position: absolute;
@@ -34,7 +38,7 @@ export const dynamicBar = css`
         bottom: 0;
         left: 0;
         border-radius: inherit;
-        background: var(--bar-colour);
-        width: var(--bar-width);
+        background: var(${tokens.barColour});
+        width: var(${tokens.barWidth});
     }
 `;
