@@ -145,6 +145,11 @@ export const Main = styled.button<MainStyleProps>`
                     ${V3_MediaQuery.MaxWidth.xxs} {
                         height: auto;
                     }
+
+                    ${props.$iconOnly &&
+                    css`
+                        width: 2.5rem;
+                    `}
                 `;
             case "large":
                 return css`
@@ -154,6 +159,11 @@ export const Main = styled.button<MainStyleProps>`
                     ${V3_MediaQuery.MaxWidth.xxs} {
                         height: auto;
                     }
+
+                    ${props.$iconOnly &&
+                    css`
+                        width: 4rem;
+                    `}
                 `;
             default:
                 return css`
@@ -163,6 +173,11 @@ export const Main = styled.button<MainStyleProps>`
                     ${V3_MediaQuery.MaxWidth.xxs} {
                         height: auto;
                     }
+
+                    ${props.$iconOnly &&
+                    css`
+                        width: 3rem;
+                    `}
                 `;
         }
     }}
