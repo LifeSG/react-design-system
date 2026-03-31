@@ -13,3 +13,8 @@
     background: white;
     border: 5px solid red;
 }
+
+.overlay-modal-content-large {
+    width: 200px;
+    height: 200px;
+}

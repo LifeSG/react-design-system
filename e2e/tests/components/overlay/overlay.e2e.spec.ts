@@ -6,6 +6,8 @@ class StoryPage extends AbstractStoryPage {
 
     public readonly locators: {
         modalContent: Locator;
+        modalContentFirst: Locator;
+        modalContentSecond: Locator;
     };
 
     constructor(page: Page) {
@@ -13,6 +15,10 @@ class StoryPage extends AbstractStoryPage {
 
         this.locators = {
             modalContent: page.getByTestId("overlay-modal-content"),
+            modalContentFirst: page.getByTestId("overlay-modal-content-first"),
+            modalContentSecond: page.getByTestId(
+                "overlay-modal-content-second"
+            ),
         };
     }
 }
@@ -48,6 +54,23 @@ test.describe("Overlay", () => {
             await expect(story.locators.modalContent).toBeVisible();
 
             await compareScreenshot(story, "blur-disabled", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("stacked");
+        });
+
+        test("Stacked overlays with background blur disabled", async ({
+            story,
+        }) => {
+            await expect(story.locators.modalContentFirst).toBeVisible();
+            await expect(story.locators.modalContentSecond).toBeVisible();
+
+            await compareScreenshot(story, "stacked", {
                 fullscreen: true,
             });
         });
