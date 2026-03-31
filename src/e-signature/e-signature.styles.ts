@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 
 import { Button } from "../button";
 import { DashedBorder } from "../dashed-border";
-import { IconButton } from "../icon-button";
 import { Modal } from "../modal";
 import { Border, Colour, Radius } from "../theme";
 import { Typography } from "../typography";
@@ -75,7 +74,7 @@ export const AddSignatureButton = styled(Button.Default)`
     }
 `;
 
-export const EditSignatureButton = styled(IconButton)`
+export const EditSignatureButton = styled(Button)`
     position: absolute;
     top: ${V3_Spacing["spacing-16"]};
     right: ${V3_Spacing["spacing-16"]};

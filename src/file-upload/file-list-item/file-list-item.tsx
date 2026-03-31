@@ -16,7 +16,15 @@ import { StringHelper } from "../../util";
 import { FileUploadContext } from "../context";
 import { FileUploadHelper } from "../helper";
 import type { ItemFocusType } from "./file-list-item.styles";
-import {
+import * as styles from "./file-list-item.styles";
+import { FileListItemThumbnail } from "./file-list-item-thumbnail";
+import type { FileListItemProps } from "./types";
+
+interface Props extends FileListItemProps {
+    readOnly?: boolean | undefined;
+}
+
+const {
     ActionContainer,
     Box,
     ContentSection,
@@ -32,13 +40,7 @@ import {
     ItemText,
     MobileErrorMessage,
     NameSection,
-} from "./file-list-item.styles";
-import { FileListItemThumbnail } from "./file-list-item-thumbnail";
-import type { FileListItemProps } from "./types";
-
-interface Props extends FileListItemProps {
-    readOnly?: boolean | undefined;
-}
+} = styles;
 
 const Component = ({
     fileItem,
@@ -273,9 +275,8 @@ const Component = ({
                             disabled={shouldDisable()}
                             onClick={handleEdit}
                             onKeyDown={handleKeyDown}
-                        >
-                            <PencilIcon aria-hidden />
-                        </IconButton>
+                            icon={<PencilIcon aria-hidden />}
+                        />
                     )}
                     <IconButton
                         key="delete"
@@ -288,9 +289,8 @@ const Component = ({
                         disabled={shouldDisable()}
                         onClick={handleDelete}
                         onKeyDown={handleKeyDown}
-                    >
-                        <BinIcon aria-hidden />
-                    </IconButton>
+                        icon={<BinIcon aria-hidden />}
+                    />
                 </>
             );
         }

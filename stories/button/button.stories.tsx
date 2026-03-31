@@ -4,11 +4,11 @@ import { Button } from "src/button";
 import { Container } from "./doc-elements";
 import { TokensTable } from "./tokens-table";
 
-type Component = typeof Button.Default;
+type Component = typeof Button;
 
 const meta: Meta<Component> = {
     title: "Selection and input/Button/Base",
-    component: Button.Default,
+    component: Button,
 };
 
 export default meta;
@@ -18,27 +18,41 @@ export const Default: StoryObj<Component> = {
         return (
             <>
                 <Container>
-                    <Button.Large>Large</Button.Large>
-                    <Button.Large styleType="secondary">Secondary</Button.Large>
-                    <Button.Large styleType="light">Light</Button.Large>
-                    <Button.Large styleType="link">Link</Button.Large>
-                    <Button.Large disabled>Disabled</Button.Large>
-                </Container>
-                <Container>
-                    <Button.Default>Default</Button.Default>
-                    <Button.Default styleType="secondary">
+                    <Button sizeType="large">Large</Button>
+                    <Button sizeType="large" styleType="secondary">
                         Secondary
-                    </Button.Default>
-                    <Button.Default styleType="light">Light</Button.Default>
-                    <Button.Default styleType="link">Link</Button.Default>
-                    <Button.Default disabled>Disabled</Button.Default>
+                    </Button>
+                    <Button sizeType="large" styleType="light">
+                        Light
+                    </Button>
+                    <Button sizeType="large" styleType="link">
+                        Link
+                    </Button>
+                    <Button sizeType="large" disabled>
+                        Disabled
+                    </Button>
                 </Container>
                 <Container>
-                    <Button.Small>Small</Button.Small>
-                    <Button.Small styleType="secondary">Secondary</Button.Small>
-                    <Button.Small styleType="light">Light</Button.Small>
-                    <Button.Small styleType="link">Link</Button.Small>
-                    <Button.Small disabled>Disabled</Button.Small>
+                    <Button>Default</Button>
+                    <Button styleType="secondary">Secondary</Button>
+                    <Button styleType="light">Light</Button>
+                    <Button styleType="link">Link</Button>
+                    <Button disabled>Disabled</Button>
+                </Container>
+                <Container>
+                    <Button sizeType="small">Small</Button>
+                    <Button sizeType="small" styleType="secondary">
+                        Secondary
+                    </Button>
+                    <Button sizeType="small" styleType="light">
+                        Light
+                    </Button>
+                    <Button sizeType="small" styleType="link">
+                        Link
+                    </Button>
+                    <Button sizeType="small" disabled>
+                        Disabled
+                    </Button>
                 </Container>
             </>
         );
@@ -50,49 +64,53 @@ export const LoadingState: StoryObj<Component> = {
         return (
             <>
                 <Container>
-                    <Button.Large loading>Large</Button.Large>
-                    <Button.Large styleType="secondary" loading>
+                    <Button sizeType="large" loading>
+                        Large
+                    </Button>
+                    <Button sizeType="large" styleType="secondary" loading>
                         Loading
-                    </Button.Large>
-                    <Button.Large styleType="light" loading>
+                    </Button>
+                    <Button sizeType="large" styleType="light" loading>
                         Loading
-                    </Button.Large>
-                    <Button.Large styleType="link" loading>
+                    </Button>
+                    <Button sizeType="large" styleType="link" loading>
                         Loading
-                    </Button.Large>
-                    <Button.Large disabled loading>
+                    </Button>
+                    <Button sizeType="large" disabled loading>
                         Loading
-                    </Button.Large>
+                    </Button>
                 </Container>
                 <Container>
-                    <Button.Default loading>Default</Button.Default>
-                    <Button.Default styleType="secondary" loading>
+                    <Button loading>Default</Button>
+                    <Button styleType="secondary" loading>
                         Loading
-                    </Button.Default>
-                    <Button.Default styleType="light" loading>
+                    </Button>
+                    <Button styleType="light" loading>
                         Loading
-                    </Button.Default>
-                    <Button.Default styleType="link" loading>
+                    </Button>
+                    <Button styleType="link" loading>
                         Loading
-                    </Button.Default>
-                    <Button.Default disabled loading>
+                    </Button>
+                    <Button disabled loading>
                         Loading
-                    </Button.Default>
+                    </Button>
                 </Container>
                 <Container>
-                    <Button.Small loading>Small</Button.Small>
-                    <Button.Small styleType="secondary" loading>
+                    <Button sizeType="small" loading>
+                        Small
+                    </Button>
+                    <Button sizeType="small" styleType="secondary" loading>
                         Loading
-                    </Button.Small>
-                    <Button.Small styleType="light" loading>
+                    </Button>
+                    <Button sizeType="small" styleType="light" loading>
                         Loading
-                    </Button.Small>
-                    <Button.Small styleType="link" loading>
+                    </Button>
+                    <Button sizeType="small" styleType="link" loading>
                         Loading
-                    </Button.Small>
-                    <Button.Small disabled loading>
+                    </Button>
+                    <Button sizeType="small" disabled loading>
                         Loading
-                    </Button.Small>
+                    </Button>
                 </Container>
             </>
         );
@@ -104,40 +122,44 @@ export const Danger: StoryObj<Component> = {
         return (
             <>
                 <Container>
-                    <Button.Large danger>Large</Button.Large>
-                    <Button.Large styleType="secondary" danger>
+                    <Button sizeType="large" danger>
+                        Large
+                    </Button>
+                    <Button sizeType="large" styleType="secondary" danger>
                         Secondary
-                    </Button.Large>
-                    <Button.Large styleType="light" danger>
+                    </Button>
+                    <Button sizeType="large" styleType="light" danger>
                         Light
-                    </Button.Large>
-                    <Button.Large styleType="link" danger>
+                    </Button>
+                    <Button sizeType="large" styleType="link" danger>
                         Link
-                    </Button.Large>
+                    </Button>
                 </Container>
                 <Container>
-                    <Button.Default danger>Default</Button.Default>
-                    <Button.Default styleType="secondary" danger>
+                    <Button danger>Default</Button>
+                    <Button styleType="secondary" danger>
                         Secondary
-                    </Button.Default>
-                    <Button.Default styleType="light" danger>
+                    </Button>
+                    <Button styleType="light" danger>
                         Light
-                    </Button.Default>
-                    <Button.Default styleType="link" danger>
+                    </Button>
+                    <Button styleType="link" danger>
                         Link
-                    </Button.Default>
+                    </Button>
                 </Container>
                 <Container>
-                    <Button.Small danger>Small</Button.Small>
-                    <Button.Small styleType="secondary" danger>
+                    <Button sizeType="small" danger>
+                        Small
+                    </Button>
+                    <Button sizeType="small" styleType="secondary" danger>
                         Secondary
-                    </Button.Small>
-                    <Button.Small styleType="light" danger>
+                    </Button>
+                    <Button sizeType="small" styleType="light" danger>
                         Light
-                    </Button.Small>
-                    <Button.Small styleType="link" danger>
+                    </Button>
+                    <Button sizeType="small" styleType="link" danger>
                         Link
-                    </Button.Small>
+                    </Button>
                 </Container>
             </>
         );
@@ -149,46 +171,56 @@ export const DangerLoadingState: StoryObj<Component> = {
         return (
             <>
                 <Container>
-                    <Button.Large loading danger>
+                    <Button sizeType="large" loading danger>
                         Large
-                    </Button.Large>
-                    <Button.Large styleType="secondary" loading danger>
+                    </Button>
+                    <Button
+                        sizeType="large"
+                        styleType="secondary"
+                        loading
+                        danger
+                    >
                         Loading
-                    </Button.Large>
-                    <Button.Large styleType="light" loading danger>
+                    </Button>
+                    <Button sizeType="large" styleType="light" loading danger>
                         Loading
-                    </Button.Large>
-                    <Button.Large styleType="link" loading danger>
+                    </Button>
+                    <Button sizeType="large" styleType="link" loading danger>
                         Loading
-                    </Button.Large>
+                    </Button>
                 </Container>
                 <Container>
-                    <Button.Default loading danger>
+                    <Button loading danger>
                         Default
-                    </Button.Default>
-                    <Button.Default styleType="secondary" loading danger>
+                    </Button>
+                    <Button styleType="secondary" loading danger>
                         Loading
-                    </Button.Default>
-                    <Button.Default styleType="light" loading danger>
+                    </Button>
+                    <Button styleType="light" loading danger>
                         Loading
-                    </Button.Default>
-                    <Button.Default styleType="link" loading danger>
+                    </Button>
+                    <Button styleType="link" loading danger>
                         Loading
-                    </Button.Default>
+                    </Button>
                 </Container>
                 <Container>
-                    <Button.Small loading danger>
+                    <Button sizeType="small" loading danger>
                         Small
-                    </Button.Small>
-                    <Button.Small styleType="secondary" loading danger>
+                    </Button>
+                    <Button
+                        sizeType="small"
+                        styleType="secondary"
+                        loading
+                        danger
+                    >
                         Loading
-                    </Button.Small>
-                    <Button.Small styleType="light" loading danger>
+                    </Button>
+                    <Button sizeType="small" styleType="light" loading danger>
                         Loading
-                    </Button.Small>
-                    <Button.Small styleType="link" loading danger>
+                    </Button>
+                    <Button sizeType="small" styleType="link" loading danger>
                         Loading
-                    </Button.Small>
+                    </Button>
                 </Container>
             </>
         );
@@ -197,13 +229,13 @@ export const DangerLoadingState: StoryObj<Component> = {
 
 export const FocusableWhenDisabled: StoryObj<Component> = {
     render: (_args) => (
-        <Button.Default
+        <Button
             disabled
             focusableWhenDisabled
             onClick={() => alert("I shouldn't be here!")}
         >
             Add to cart
-        </Button.Default>
+        </Button>
     ),
 };
 

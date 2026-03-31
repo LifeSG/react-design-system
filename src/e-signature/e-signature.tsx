@@ -3,12 +3,19 @@ import { lazy, Suspense, useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 
-import { Button } from "../button";
-import { ButtonWithIcon } from "../button-with-icon";
 import { ProgressBar } from "../shared/progress-bar";
 import { Typography } from "../typography";
 import { V3_Breakpoint } from "../v3_theme";
-import {
+import * as styles from "./e-signature.styles";
+import type { ESignatureCanvasRef } from "./e-signature-canvas";
+import type { EsignatureProps } from "./types";
+
+// lazy load to fix next.js SSR errors
+const ESignatureCanvas = lazy(async () => ({
+    default: (await import("./e-signature-canvas")).ESignatureCanvas,
+}));
+
+const {
     AddSignatureButton,
     EditSignatureButton,
     ESignatureContainer,
@@ -24,14 +31,7 @@ import {
     SignatureArea,
     SignatureLine,
     SignaturePreviewImage,
-} from "./e-signature.styles";
-import type { ESignatureCanvasRef } from "./e-signature-canvas";
-import type { EsignatureProps } from "./types";
-
-// lazy load to fix next.js SSR errors
-const ESignatureCanvas = lazy(async () => ({
-    default: (await import("./e-signature-canvas")).ESignatureCanvas,
-}));
+} = styles;
 
 export const ESignature = (props: EsignatureProps) => {
     // =============================================================================
@@ -107,11 +107,10 @@ export const ESignature = (props: EsignatureProps) => {
                     styleType="light"
                     onClick={() => setShowModal(true)}
                     id={id}
+                    icon={<PencilIcon />}
                     aria-label="Edit signature"
                     disabled={disabled}
-                >
-                    <PencilIcon />
-                </EditSignatureButton>
+                />
             </>
         );
     };
@@ -151,10 +150,8 @@ export const ESignature = (props: EsignatureProps) => {
                         </ESignatureContainer>
                         <ModalButtons>
                             <ModalActionButton
-                                as={
-                                    isMobileLandscape
-                                        ? ButtonWithIcon.Small
-                                        : ButtonWithIcon.Default
+                                sizeType={
+                                    isMobileLandscape ? "small" : "default"
                                 }
                                 type="button"
                                 styleType={
@@ -168,10 +165,8 @@ export const ESignature = (props: EsignatureProps) => {
                                 Clear
                             </ModalActionButton>
                             <ModalActionButton
-                                as={
-                                    isMobileLandscape
-                                        ? Button.Small
-                                        : Button.Default
+                                sizeType={
+                                    isMobileLandscape ? "small" : "default"
                                 }
                                 type="button"
                                 onClick={handleClickSave}

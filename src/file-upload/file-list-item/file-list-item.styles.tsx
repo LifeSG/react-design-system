@@ -2,7 +2,7 @@ import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-han
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import styled, { css } from "styled-components";
 
-import { IconButton as DSIconButton } from "../../icon-button";
+import { Button as DSIconButton } from "../../button";
 import { Typography } from "../../typography";
 import {
     V3_Border,

@@ -6,7 +6,10 @@ import { ThemeContext } from "styled-components";
 import { FileUploadHelper } from "../../file-upload/helper";
 import { StringHelper } from "../../util";
 import { V3_Breakpoint } from "../../v3_theme";
-import {
+import * as styles from "./file-list-card.styles";
+import type { FileListItemProps } from "./types";
+
+const {
     ActionContainer,
     Box,
     ContentSection,
@@ -19,11 +22,9 @@ import {
     ItemNameText,
     MobileErrorMessage,
     NameSection,
-    Spinner,
     Thumbnail,
     ThumbnailContainer,
-} from "./file-list-card.styles";
-import type { FileListItemProps } from "./types";
+} = styles;
 
 const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     // =========================================================================
@@ -102,7 +103,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
             <ItemNameText ref={containerRef}>{displayText}</ItemNameText>
             {isError && (
                 <DesktopErrorMessage>
-                    <ErrorIcon aria-hidden />
+                    <ErrorIcon />
                     {errorMessage ? errorMessage : "Something went wrong"}
                 </DesktopErrorMessage>
             )}
@@ -122,7 +123,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
                 <FileSizeSection>{fileSize ? fileSize : "-"}</FileSizeSection>
                 {isError && (
                     <MobileErrorMessage>
-                        <ErrorIcon aria-hidden />
+                        <ErrorIcon />
                         {errorMessage ? errorMessage : "Something went wrong"}
                     </MobileErrorMessage>
                 )}
@@ -136,7 +137,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
             <FileSizeSection>{fileSize ? fileSize : "-"}</FileSizeSection>
             {isError && (
                 <MobileErrorMessage>
-                    <ErrorIcon aria-hidden />
+                    <ErrorIcon />
                     {errorMessage ? errorMessage : "Something went wrong"}
                 </MobileErrorMessage>
             )}
@@ -168,13 +169,9 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
                     styleType="light"
                     sizeType="small"
                     aria-label={`download ${name}`}
-                >
-                    {isLoading || !ready ? (
-                        <Spinner size={16} aria-hidden />
-                    ) : (
-                        <DownloadIcon aria-hidden />
-                    )}
-                </IconButton>
+                    loading={isLoading || !ready}
+                    icon={<DownloadIcon />}
+                />
             </ActionContainer>
         );
     };

@@ -4,7 +4,6 @@ import { Avatar } from "src/avatar";
 import { Badge } from "src/badge";
 import { Button } from "src/button";
 import { Divider } from "src/divider";
-import { IconButton } from "src/icon-button";
 import { Menu } from "src/menu";
 import { PopoverTrigger } from "src/popover-v2";
 import { Typography } from "src/typography";
@@ -45,9 +44,12 @@ export const DesktopCustomComponent = () => {
     return (
         <DesktopCustomComponentWrapper>
             <PopoverTrigger popoverContent="Popover content" zIndex={100}>
-                <IconButton sizeType="small" styleType="light">
-                    <InboxIcon aria-label="Inbox" />
-                </IconButton>
+                <Button
+                    sizeType="small"
+                    styleType="light"
+                    icon={<InboxIcon />}
+                    aria-label="Inbox"
+                />
             </PopoverTrigger>
         </DesktopCustomComponentWrapper>
     );

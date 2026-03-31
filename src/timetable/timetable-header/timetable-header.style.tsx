@@ -1,7 +1,7 @@
 import styled, { css, keyframes } from "styled-components";
 
+import { Button } from "../../button";
 import { DateNavigator } from "../../date-navigator";
-import { IconButton } from "../../icon-button";
 import { Typography } from "../../typography";
 import { V3_Colour, V3_Spacing } from "../../v3_theme";
 
@@ -12,7 +12,7 @@ const spin = keyframes`
     }
 `;
 
-export const StyledRefreshButton = styled(IconButton)<{ $loading: boolean }>`
+export const StyledRefreshButton = styled(Button)<{ $loading: boolean }>`
     color: ${V3_Colour["icon"]};
     svg {
         ${(props) => {

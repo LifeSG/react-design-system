@@ -2,7 +2,6 @@ import { TickIcon } from "@lifesg/react-icons/tick";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
-import { ButtonWithIcon } from "src/button-with-icon";
 import { ModalV2 } from "src/modal-v2";
 import { Typography } from "src/typography";
 import styled from "styled-components";
@@ -91,13 +90,13 @@ export const Footer: StoryObj<Component> = {
                         <ModalV2.CloseButton />
                         <ModalV2.Footer
                             primaryButton={
-                                <ButtonWithIcon.Default
+                                <Button
                                     icon={<TickIcon />}
                                     iconPosition="right"
                                     styleType="light"
                                 >
                                     Okay
-                                </ButtonWithIcon.Default>
+                                </Button>
                             }
                         />
                     </ModalV2.Card>

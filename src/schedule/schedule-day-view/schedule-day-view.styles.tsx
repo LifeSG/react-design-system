@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { IconButton } from "../../icon-button";
+import { Button } from "../../button";
 import { lineClampCss } from "../../shared/styles";
 import { Typography } from "../../typography";
 import {
@@ -49,7 +49,7 @@ interface TimelineStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const ArrowButton = styled(IconButton)`
+export const ArrowButton = styled(Button)`
     color: ${V3_Colour["icon"]};
 `;
 export const ArrowContainer = styled.div`

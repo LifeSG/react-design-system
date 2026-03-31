@@ -82,9 +82,8 @@ export const TimeTableHeader = ({
                         disabled={loading}
                         onClick={handleRefresh}
                         $loading={loading}
-                    >
-                        <RefreshIcon />
-                    </StyledRefreshButton>
+                        icon={<RefreshIcon />}
+                    />
                 )}
             </NavigationHeaderSubtitleWrapper>
         );

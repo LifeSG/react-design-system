@@ -4,38 +4,50 @@ import { PropsTable } from "./props-table";
 
 <Meta of={ButtonWithIconStories} />
 
-# ButtonWithIcon
+# Button: With Icon
 
 ## Overview
 
-The primary call to action component with an icon.
+A `Button` with an icon alongside the label. Use the `icon` prop to pass an
+icon element and `iconPosition` to control whether it appears on the left or
+right of the text.
 
 ```tsx
-import { ButtonWithIcon } from "@lifesg/react-design-system/button-with-icon";
+import { Button } from "@lifesg/react-design-system/button";
 ```
 
-The `ButtonWithIcon` component comes in 2 sizes, a default and small size.
+The button comes in all three sizes: large, default, and small.
 
 <Canvas of={ButtonWithIconStories.Default} />
 
-By default, the icon will be rendered on the left of the component.
-You can also indicate to render on the right using the `iconPosition` prop.
+By default, the icon is rendered on the left. Pass `iconPosition="right"` to
+render it on the right instead.
 
 <Canvas of={ButtonWithIconStories.RightPositioned} />
 
 ## Danger
 
-In some cases, when there is a requirement to display an enhanced display for
-destructive or important actions, you can make use of the `danger` prop which will
-apply a red scheme over the buttons.
+When there is a requirement to display an enhanced display for destructive or
+important actions, you can use the `danger` prop which will apply a red scheme
+over the button.
 
 <Canvas of={ButtonWithIconStories.Danger} />
 
 ## Loading
 
+When `loading` is set, the icon is replaced by a spinner while the label
+remains visible.
+
 <Canvas of={ButtonWithIconStories.LoadingState} />
 
 ## Accessibility
+
+### Accessible name
+
+For buttons with both icon and label, the visible text serves as the accessible
+name. No additional `aria-label` is needed.
+
+### Focus
 
 By default, a disabled `<button>` cannot receive focus or events. In certain
 modes across screen readers, it is excluded from the focus order, which can make
@@ -64,12 +76,9 @@ const Page = () => {
                 // application logic here
             }}
         >
-            <ButtonWithIcon.Default
-                icon={<PlaceholderIcon />}
-                disabled={disabled}
-            >
+            <Button icon={<PlaceholderIcon />} disabled={disabled}>
                 Add to cart
-            </ButtonWithIcon.Default>
+            </Button>
         </div>
     );
 };

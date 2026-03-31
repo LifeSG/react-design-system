@@ -15,29 +15,31 @@ import {
 import { WithOptionalPopover } from "../shared/with-optional-popover";
 import { TimeIndicator } from "../time-indicator/time-indicator";
 import type { ScheduleEntityProps, ScheduleSlotProps } from "../types";
-import {
-    ArrowButton,
-    ArrowContainer,
-    BlankCell,
-    BodyContainer,
-    Description,
-    EmptySlot,
-    HeaderContainer,
-    LoadingContainer,
-    ScheduleContainer,
-    ServiceColumn,
+import * as styles from "./schedule-day-view.styles";
+import type { ScheduleDayViewProps } from "./types";
+
+const {
     ServiceContainer,
+    ServiceColumn,
+    ArrowContainer,
+    ArrowButton,
     ServiceHeaderContainer,
+    Title,
+    Description,
+    SlotContent,
+    SlotTime,
     SlotAvailability,
     SlotCell,
-    SlotColumn,
-    SlotContent,
+    EmptySlot,
     SlotGrid,
-    SlotTime,
     Timeline,
-    Title,
-} from "./schedule-day-view.styles";
-import type { ScheduleDayViewProps } from "./types";
+    SlotColumn,
+    ScheduleContainer,
+    LoadingContainer,
+    HeaderContainer,
+    BlankCell,
+    BodyContainer,
+} = styles;
 
 export const ScheduleDayView = ({
     serviceData,
@@ -174,9 +176,8 @@ export const ScheduleDayView = ({
                                         sizeType="small"
                                         onClick={onPrevService}
                                         aria-label="Previous service"
-                                    >
-                                        <ChevronLeftIcon aria-hidden />
-                                    </ArrowButton>
+                                        icon={<ChevronLeftIcon aria-hidden />}
+                                    />
                                 )}
                             </ArrowContainer>
                         )}
@@ -200,9 +201,8 @@ export const ScheduleDayView = ({
                                 sizeType="small"
                                 onClick={onNextService}
                                 aria-label="Next service"
-                            >
-                                <ChevronRightIcon aria-hidden />
-                            </ArrowButton>
+                                icon={<ChevronRightIcon aria-hidden />}
+                            />
                         )}
                     </ServiceColumn>
                 ))}

@@ -143,9 +143,8 @@ export const DateNavigator = ({
                         onClick={navigatePrevious}
                         styleType="light"
                         sizeType="small"
-                    >
-                        <ArrowLeft />
-                    </HeaderArrowButton>
+                        icon={<ArrowLeft />}
+                    />
                 }
                 <StyledDateTextButton
                     onClick={() =>
@@ -168,9 +167,8 @@ export const DateNavigator = ({
                         onClick={navigateNext}
                         styleType="light"
                         sizeType="small"
-                    >
-                        <ArrowRight />
-                    </HeaderArrowButton>
+                        icon={<ArrowRight />}
+                    />
                 }
             </Container>
         );
