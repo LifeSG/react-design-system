@@ -4,6 +4,11 @@
     background: pink;
 }
 
+.page-content-scrollable {
+    height: 200vh;
+    background-color: pink;
+}
+
 .overlay-modal-content {
     display: flex;
     align-items: center;

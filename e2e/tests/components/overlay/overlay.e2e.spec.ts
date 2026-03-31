@@ -5,20 +5,24 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "overlay";
 
     public readonly locators: {
+        overlayWrapper: Locator;
         modalContent: Locator;
         modalContentFirst: Locator;
         modalContentSecond: Locator;
+        toggleOverlayButton: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
         this.locators = {
+            overlayWrapper: page.getByTestId("overlay-wrapper"),
             modalContent: page.getByTestId("overlay-modal-content"),
             modalContentFirst: page.getByTestId("overlay-modal-content-first"),
             modalContentSecond: page.getByTestId(
                 "overlay-modal-content-second"
             ),
+            toggleOverlayButton: page.getByTestId("toggle-overlay-button"),
         };
     }
 }
@@ -72,6 +76,71 @@ test.describe("Overlay", () => {
 
             await compareScreenshot(story, "stacked", {
                 fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("scroll-lock");
+        });
+
+        test("Prevents scrolling on main page when overlay is open", async ({
+            story,
+        }) => {
+            const pageHeight = await story.page.evaluate(
+                () => document.body.scrollHeight
+            );
+
+            await test.step("Scroll to end of page", async () => {
+                await story.page.mouse.wheel(0, pageHeight);
+                await story.page.waitForTimeout(500); // Wait for scroll to complete
+
+                await expect(
+                    story.locators.toggleOverlayButton
+                ).toBeInViewport();
+            });
+
+            const beforeOpen = (await story.page.screenshot()).toString(
+                "base64"
+            );
+
+            await test.step("Open the overlay", async () => {
+                await story.locators.toggleOverlayButton.click();
+                await expect(story.locators.modalContent).toBeVisible();
+                await story.page.waitForTimeout(500); // Wait for modal animation to complete
+            });
+
+            await test.step("Verify that page cannot be scrolled while overlay is open", async () => {
+                const beforeScroll = (await story.page.screenshot()).toString(
+                    "base64"
+                );
+
+                await story.page.mouse.wheel(0, -pageHeight);
+                await story.page.waitForTimeout(500); // Wait for scroll to complete
+
+                const afterScroll = (await story.page.screenshot()).toString(
+                    "base64"
+                );
+                expect(afterScroll).toEqual(beforeScroll);
+            });
+
+            await test.step("Close the overlay", async () => {
+                await story.locators.overlayWrapper.click();
+                await expect(story.locators.modalContent).not.toBeVisible();
+                await story.page.waitForTimeout(500); // Wait for modal animation to complete
+
+                await expect(
+                    story.locators.toggleOverlayButton
+                ).toBeInViewport();
+            });
+
+            const afterOpen = (await story.page.screenshot()).toString(
+                "base64"
+            );
+
+            await test.step("Verify that page is on original scroll position", async () => {
+                expect(afterOpen).toEqual(beforeOpen);
             });
         });
     });
