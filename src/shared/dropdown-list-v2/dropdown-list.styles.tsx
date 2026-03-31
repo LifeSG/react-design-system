@@ -5,6 +5,7 @@ import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
 
+import { Markup } from "../../markup";
 import {
     V3_Border,
     V3_Breakpoint,
@@ -15,7 +16,6 @@ import {
     V3_Spacing,
 } from "../../v3_theme";
 import { ComponentLoadingSpinner } from "../component-loading-spinner";
-import { applyHtmlContentStyle } from "../html-content/html-content";
 import { BasicButton } from "../input-wrapper/input-wrapper";
 import type { DropdownVariantType } from "./types";
 
@@ -215,8 +215,7 @@ export const Spinner = styled(ComponentLoadingSpinner)`
     color: ${V3_Colour["icon"]};
 `;
 
-export const NoResultDescContainer = styled.div`
-    ${applyHtmlContentStyle()}
+export const NoResultDescContainer = styled(Markup)`
     color: ${V3_Colour["text-subtle"]};
     padding: 0 ${V3_Spacing["spacing-16"]} ${V3_Spacing["spacing-12"]}
         ${V3_Spacing["spacing-16"]};

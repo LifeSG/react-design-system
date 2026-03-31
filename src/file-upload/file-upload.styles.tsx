@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { Alert } from "../alert";
 import { Button } from "../button";
-import { applyHtmlContentStyle } from "../shared/html-content/html-content";
+import { Markup } from "../markup";
 import { Typography } from "../typography";
 import { V3_Colour, V3_MediaQuery, V3_Spacing } from "../v3_theme";
 
@@ -18,18 +18,16 @@ export const TextContainer = styled.div`
 
 export const Title = styled(Typography.BodyBL)``;
 
-export const TitleContainer = styled.div`
+export const TitleContainer = styled(Markup)`
     color: ${V3_Colour.text};
-    ${applyHtmlContentStyle({ textSize: "body-baseline" })}
 `;
 
 export const Description = styled(Typography.BodyMD)`
     color: ${V3_Colour["text-subtler"]};
 `;
 
-export const DescriptionContainer = styled.div`
+export const DescriptionContainer = styled(Markup)`
     color: ${V3_Colour.text};
-    ${applyHtmlContentStyle({ textSize: "body-md" })}
 `;
 
 export const WarningAlert = styled(Alert)`

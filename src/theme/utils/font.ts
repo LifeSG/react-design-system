@@ -1,5 +1,14 @@
 import type { FontSize, FontWeight } from "../types";
 
+export interface FontDeclarationProperties {
+    "font-family": string;
+    "font-variant": string;
+    "font-size": string;
+    "font-weight": string;
+    "line-height": string;
+    "letter-spacing": string;
+}
+
 const sizeVarMap: Record<FontSize, { size: string; lh: string; ls: string }> = {
     "heading-xxl": {
         size: "var(--fds-font-heading-size-xxl)",
@@ -71,7 +80,43 @@ const weightVarMap: Record<FontWeight, string> = {
 };
 
 /**
- * Generates a CSS font shorthand string using FDS CSS variables.
+ * Generates a CSS font declaration map using FDS CSS variables.
+ *
+ * @example
+ * generateFontProperties("heading-xxl", "light")
+ * // => { "font-family": "var(--fds-font-family)", ... }
+ */
+export const generateFontProperties = (
+    size: FontSize,
+    weight: FontWeight,
+    options?: { noCommonLigatures?: boolean; fontVariant?: string }
+): FontDeclarationProperties => {
+    const { size: s, lh, ls } = sizeVarMap[size];
+    const w = weightVarMap[weight];
+
+    const extraVariant = [
+        options?.fontVariant,
+        options?.noCommonLigatures ? "no-common-ligatures" : "",
+    ]
+        .filter(Boolean)
+        .join(" ");
+
+    const fontVariant = `var(--fds-font-variant)${
+        extraVariant ? ` ${extraVariant}` : ""
+    }`;
+
+    return {
+        "font-family": "var(--fds-font-family)",
+        "font-variant": fontVariant,
+        "font-size": s,
+        "font-weight": w,
+        "line-height": lh,
+        "letter-spacing": ls,
+    };
+};
+
+/**
+ * Generates a CSS declaration string using FDS CSS variables.
  *
  * @example
  * generateFont("heading-xxl", "light")
@@ -82,19 +127,9 @@ export const generateFont = (
     weight: FontWeight,
     options?: { noCommonLigatures?: boolean; fontVariant?: string }
 ): string => {
-    const { size: s, lh, ls } = sizeVarMap[size];
-    const w = weightVarMap[weight];
+    const declarations = generateFontProperties(size, weight, options);
 
-    const extraVariant = [
-        options?.fontVariant,
-        options?.noCommonLigatures ? "no-common-ligatures" : "",
-    ]
-        .filter((v) => Boolean(v))
+    return Object.entries(declarations)
+        .map(([key, value]) => `${key}: ${value};`)
         .join(" ");
-
-    const fontVariant = `var(--fds-font-variant)${
-        extraVariant ? ` ${extraVariant}` : ""
-    }`;
-
-    return `font-family: var(--fds-font-family); font-variant: ${fontVariant}; font-size: ${s}; font-weight: ${w}; line-height: ${lh}; letter-spacing: ${ls};`;
 };

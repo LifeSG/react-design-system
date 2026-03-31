@@ -3,7 +3,8 @@ import React from "react";
 import type { ErrorDisplayType } from "src";
 import { ErrorDisplay, V3_BookingSGTheme, V3_LifeSGTheme } from "src";
 import { getErrorDisplayData } from "src/error-display/error-display-data";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider as V4ThemeProvider } from "src/theme";
+import { ThemeProvider as StyledThemeProvider } from "styled-components";
 
 // =============================================================================
 // UNIT TESTS
@@ -14,11 +15,7 @@ describe("ErrorDisplay", () => {
     });
 
     it("should render the component", () => {
-        render(
-            <ThemeProvider theme={V3_LifeSGTheme}>
-                <ErrorDisplay type="404" />
-            </ThemeProvider>
-        );
+        renderErrorDisplay(<ErrorDisplay type="404" />);
 
         const title = getErrorDisplayData(
             "404",
@@ -36,10 +33,8 @@ describe("ErrorDisplay", () => {
             onClick: () => {},
         };
 
-        render(
-            <ThemeProvider theme={V3_LifeSGTheme}>
-                <ErrorDisplay type="404" actionButton={actionButton} />
-            </ThemeProvider>
+        renderErrorDisplay(
+            <ErrorDisplay type="404" actionButton={actionButton} />
         );
 
         expect(
@@ -48,11 +43,7 @@ describe("ErrorDisplay", () => {
     });
 
     it("should be able to render custom title if specified", () => {
-        render(
-            <ThemeProvider theme={V3_LifeSGTheme}>
-                <ErrorDisplay type="404" title={CUSTOM_TITLE} />
-            </ThemeProvider>
-        );
+        renderErrorDisplay(<ErrorDisplay type="404" title={CUSTOM_TITLE} />);
 
         expect(
             screen.getByRole("heading", { level: 2, name: CUSTOM_TITLE })
@@ -60,15 +51,13 @@ describe("ErrorDisplay", () => {
     });
 
     it("should not render any text content if the imageOnly prop is specified", () => {
-        render(
-            <ThemeProvider theme={V3_LifeSGTheme}>
-                <ErrorDisplay
-                    type="404"
-                    title={CUSTOM_TITLE}
-                    description={CUSTOM_DESCRIPTION}
-                    imageOnly
-                />
-            </ThemeProvider>
+        renderErrorDisplay(
+            <ErrorDisplay
+                type="404"
+                title={CUSTOM_TITLE}
+                description={CUSTOM_DESCRIPTION}
+                imageOnly
+            />
         );
 
         expect(
@@ -79,23 +68,19 @@ describe("ErrorDisplay", () => {
 
     describe("description", () => {
         it("should be able to render custom description", () => {
-            render(
-                <ThemeProvider theme={V3_LifeSGTheme}>
-                    <ErrorDisplay type="404" description={CUSTOM_DESCRIPTION} />
-                </ThemeProvider>
+            renderErrorDisplay(
+                <ErrorDisplay type="404" description={CUSTOM_DESCRIPTION} />
             );
 
             expect(screen.getByText(CUSTOM_DESCRIPTION)).toBeInTheDocument();
         });
 
         it("should be able to render JSX.Element", () => {
-            render(
-                <ThemeProvider theme={V3_LifeSGTheme}>
-                    <ErrorDisplay
-                        type="404"
-                        description={<div>{CUSTOM_DESCRIPTION}</div>}
-                    />
-                </ThemeProvider>
+            renderErrorDisplay(
+                <ErrorDisplay
+                    type="404"
+                    description={<div>{CUSTOM_DESCRIPTION}</div>}
+                />
             );
 
             expect(screen.getByText(CUSTOM_DESCRIPTION)).toBeInTheDocument();
@@ -129,11 +114,7 @@ describe("ErrorDisplay", () => {
         test.each(testData)(
             "should render %s error correctly",
             (type: ErrorDisplayType) => {
-                render(
-                    <ThemeProvider theme={V3_LifeSGTheme}>
-                        <ErrorDisplay type={type} />
-                    </ThemeProvider>
-                );
+                renderErrorDisplay(<ErrorDisplay type={type} />);
 
                 const error = getErrorDisplayData(
                     type,
@@ -159,11 +140,10 @@ describe("ErrorDisplay", () => {
         test.each(testData)(
             "should render bookingsg %s error correctly",
             (type: ErrorDisplayType) => {
-                render(
-                    <ThemeProvider theme={V3_BookingSGTheme}>
-                        <ErrorDisplay type={type} />
-                    </ThemeProvider>
-                );
+                renderErrorDisplay(<ErrorDisplay type={type} />, {
+                    styledTheme: V3_BookingSGTheme,
+                    v4Theme: "bookingsg",
+                });
 
                 const error = getErrorDisplayData(
                     type,
@@ -190,10 +170,9 @@ describe("ErrorDisplay", () => {
         );
 
         test("should use the specified illustration based on the illustrationScheme prop", () => {
-            render(
-                <ThemeProvider theme={V3_BookingSGTheme}>
-                    <ErrorDisplay type={"400"} illustrationScheme="lifesg" />
-                </ThemeProvider>
+            renderErrorDisplay(
+                <ErrorDisplay type={"400"} illustrationScheme="lifesg" />,
+                { styledTheme: V3_BookingSGTheme, v4Theme: "bookingsg" }
             );
 
             const error = getErrorDisplayData("400", "lifesg", V3_LifeSGTheme)!;
@@ -221,13 +200,8 @@ describe("ErrorDisplay", () => {
             const type = "maintenance";
             const additionalProps = { dateString: "01/01/2023" };
 
-            render(
-                <ThemeProvider theme={V3_LifeSGTheme}>
-                    <ErrorDisplay
-                        type={type}
-                        additionalProps={additionalProps}
-                    />
-                </ThemeProvider>
+            renderErrorDisplay(
+                <ErrorDisplay type={type} additionalProps={additionalProps} />
             );
 
             const error = getErrorDisplayData(type, "lifesg", V3_LifeSGTheme)!;
@@ -243,13 +217,11 @@ describe("ErrorDisplay", () => {
 
     describe("inactivity timer accessibility", () => {
         it("should render hidden live reminder text when secondsLeft is provided", () => {
-            render(
-                <ThemeProvider theme={V3_LifeSGTheme}>
-                    <ErrorDisplay
-                        type="inactivity"
-                        additionalProps={{ secondsLeft: 65 }}
-                    />
-                </ThemeProvider>
+            renderErrorDisplay(
+                <ErrorDisplay
+                    type="inactivity"
+                    additionalProps={{ secondsLeft: 65 }}
+                />
             );
 
             const message =
@@ -274,14 +246,12 @@ describe("ErrorDisplay", () => {
         });
 
         it("should not render live reminder text when custom description is provided", () => {
-            render(
-                <ThemeProvider theme={V3_LifeSGTheme}>
-                    <ErrorDisplay
-                        type="inactivity"
-                        description="custom inactivity description"
-                        additionalProps={{ secondsLeft: 65 }}
-                    />
-                </ThemeProvider>
+            renderErrorDisplay(
+                <ErrorDisplay
+                    type="inactivity"
+                    description="custom inactivity description"
+                    additionalProps={{ secondsLeft: 65 }}
+                />
             );
 
             const component = screen.getByTestId("error-display");
@@ -314,4 +284,20 @@ const transformJSXElementToString = (element: JSX.Element): string => {
     });
 
     return text;
+};
+
+const renderErrorDisplay = (
+    ui: React.ReactElement,
+    options?: {
+        styledTheme?: typeof V3_LifeSGTheme | typeof V3_BookingSGTheme;
+        v4Theme?: "lifesg" | "bookingsg";
+    }
+) => {
+    const { styledTheme = V3_LifeSGTheme, v4Theme = "lifesg" } = options || {};
+
+    return render(
+        <V4ThemeProvider theme={v4Theme}>
+            <StyledThemeProvider theme={styledTheme}>{ui}</StyledThemeProvider>
+        </V4ThemeProvider>
+    );
 };

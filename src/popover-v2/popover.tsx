@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 
+import { Markup } from "../markup";
 import { ModalV2 } from "../modal-v2";
 import { Typography } from "../typography";
 import { V3_Breakpoint } from "../v3_theme";
@@ -57,7 +58,9 @@ export const PopoverV2 = ({
                     aria-label={ariaLabel ?? "More information"}
                 >
                     <PopoverCard $maxHeight={maxHeight} $overflow={overflow}>
-                        {renderContent()}
+                        <Markup baseTextSize="body-md">
+                            {renderContent()}
+                        </Markup>
                     </PopoverCard>
                 </PopoverContainer>
             )}

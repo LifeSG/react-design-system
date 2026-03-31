@@ -159,7 +159,10 @@ export const Alert = ({
             $hasActionLink={!!actionLink}
             inert={inertValue(isInert())}
         >
-            <TextWrapper ref={contentRef} $type={type} $sizeType={sizeType}>
+            <TextWrapper
+                ref={contentRef}
+                baseTextSize={sizeType === "small" ? "body-sm" : "body-md"}
+            >
                 {children}
             </TextWrapper>
             {renderLink()}

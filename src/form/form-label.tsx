@@ -1,3 +1,6 @@
+import type React from "react";
+
+import { Markup } from "../markup";
 import {
     ErrorIcon,
     ErrorMessage,
@@ -38,8 +41,10 @@ export const FormLabel = ({
             data-testid={testId}
         >
             <Label id={id} {...otherProps}>
-                {children}
-                {addon && addon.type && renderAddon()}
+                <Markup inline>
+                    {children}
+                    {addon && addon.type && renderAddon()}
+                </Markup>
             </Label>
             {typeof subtitle === "string" ? (
                 <Subtitle

@@ -3,9 +3,9 @@ import { useState } from "react";
 import { Alert } from "src/alert";
 import { BoxContainer } from "src/box-container";
 import { Button } from "src/button";
+import { Typography } from "src/typography";
 import type { UneditableSectionItemProps } from "src/uneditable-section";
 import { UneditableSection } from "src/uneditable-section";
-import { V2_Text } from "src/v2_text";
 import { V2_TextList } from "src/v2_text-list";
 
 import { SAMPLE_ITEMS } from "./doc-elements";
@@ -321,7 +321,9 @@ export const ComposingFromScratch: StoryObj<Component> = {
                             marginBottom: "2rem",
                         }}
                     >
-                        <V2_Text.H3>My custom content</V2_Text.H3>
+                        <Typography.HeadingSM as="h3" weight="bold">
+                            My custom content
+                        </Typography.HeadingSM>
                         <Button.Default styleType="light">
                             Pull latest records
                         </Button.Default>
@@ -332,12 +334,12 @@ export const ComposingFromScratch: StoryObj<Component> = {
                             users.
                         </Alert>
                     </div>
-                    <V2_Text.Body style={{ marginBottom: "2rem" }}>
+                    <Typography.BodyBL style={{ marginBottom: "2rem" }}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Etiam pellentesque enim eu neque gravida, ut pulvinar
                         magna tristique. Aenean sed malesuada arcu. Integer
                         convallis dapibus suscipit.
-                    </V2_Text.Body>
+                    </Typography.BodyBL>
                     <UneditableSection.ItemSection>
                         <UneditableSection.Item
                             label="Name (as in NRIC or passport)"
@@ -354,9 +356,13 @@ export const ComposingFromScratch: StoryObj<Component> = {
                             value="Block 287, #05-11, Tampines street 22, Singapore 534788"
                         />
                     </UneditableSection.ItemSection>
-                    <V2_Text.H3 style={{ marginBottom: "2rem" }}>
+                    <Typography.HeadingSM
+                        as="h3"
+                        weight="bold"
+                        style={{ marginBottom: "2rem" }}
+                    >
                         Another section
-                    </V2_Text.H3>
+                    </Typography.HeadingSM>
                     <UneditableSection.ItemSection>
                         <UneditableSection.Item
                             label="Spoken languages"

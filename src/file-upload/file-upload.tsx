@@ -114,7 +114,11 @@ export const FileUpload = ({
             return <Title>{title}</Title>;
         }
 
-        return <TitleContainer>{title}</TitleContainer>;
+        return (
+            <TitleContainer baseTextSize="body-baseline">
+                {title}
+            </TitleContainer>
+        );
     };
 
     const renderDescription = () => {
@@ -126,7 +130,11 @@ export const FileUpload = ({
             return <Description>{description}</Description>;
         }
 
-        return <DescriptionContainer>{description}</DescriptionContainer>;
+        return (
+            <DescriptionContainer baseTextSize="body-md">
+                {description}
+            </DescriptionContainer>
+        );
     };
 
     return (

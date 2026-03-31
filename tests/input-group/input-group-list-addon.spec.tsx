@@ -5,8 +5,6 @@ import { InputGroup } from "src/input-group";
 
 import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
 
-jest.mock("react-resize-detector");
-
 const FIELD_TESTID = "test";
 const INPUT_TESTID = "input";
 const SELECTOR_TESTID = "selector";

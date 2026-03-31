@@ -115,6 +115,7 @@ export const ErrorDisplay = ({
                         <DescriptionContainer
                             data-testid={`${testId}--description`}
                             data-id="error-display-description"
+                            baseTextSize="body-baseline"
                         >
                             {typeof updatedAssets.description === "string" ? (
                                 <p>{updatedAssets.description}</p>
