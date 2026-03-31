@@ -10,7 +10,7 @@ import ReactDOM from "react-dom";
 
 import { useApplyStyle, useInheritedThemeScope } from "../theme";
 import { SimpleIdGenerator } from "../util";
-import { Root, tokens, Wrapper } from "./overlay.styles";
+import * as styles from "./overlay.styles";
 import type { OverlayProps } from "./types";
 import { useFloatingParent } from "./use-floating-context";
 
@@ -49,7 +49,7 @@ const OverlayComponent = ({
 
     useFloatingParent(zIndex);
 
-    useApplyStyle(rootRef, { [tokens.root.zIndex]: zIndex });
+    useApplyStyle(rootRef, { [styles.tokens.root.zIndex]: zIndex });
 
     // =============================================================================
     // EFFECTS
@@ -317,33 +317,34 @@ const OverlayComponent = ({
     // =============================================================================
     const renderWrapper = () => (
         <FloatingNode id={nodeId}>
-            <Wrapper
+            <div
                 ref={wrapperRef}
                 data-testid="overlay-wrapper"
                 className={clsx(
-                    show ? "wrapperShow" : "wrapperHide",
-                    isStacked && "wrapperStacked",
-                    backgroundBlur && "wrapperBackgroundBlur",
-                    disableTransition && "wrapperDisableTransition"
+                    styles.wrapper,
+                    show ? styles.wrapperShow : styles.wrapperHide,
+                    isStacked && styles.wrapperStacked,
+                    backgroundBlur && styles.wrapperBackgroundBlur,
+                    disableTransition && styles.wrapperDisableTransition
                 )}
                 onClick={handleWrapperClick}
             >
                 {children}
-            </Wrapper>
+            </div>
         </FloatingNode>
     );
 
     const renderComponent = () => (
-        <Root
+        <div
             ref={rootRef}
             id={overlayRootId}
             data-testid={overlayRootId}
-            className={clsx(show && "rootShow")}
+            className={clsx(styles.root, show && styles.rootShow)}
             {...themeProps}
             style={themeStyle}
         >
             {children && renderWrapper()}
-        </Root>
+        </div>
     );
 
     return rootElement

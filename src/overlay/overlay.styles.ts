@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Colour } from "../theme";
 
@@ -8,7 +8,7 @@ export const tokens = {
     },
 } as const;
 
-export const Root = styled.div`
+export const root = css`
     position: fixed;
     left: 0;
     top: 0;
@@ -16,49 +16,49 @@ export const Root = styled.div`
     width: 0;
     visibility: hidden;
     z-index: var(${tokens.root.zIndex});
-
-    &.rootShow {
-        height: 100%;
-        width: 100vw;
-        visibility: visible;
-    }
 `;
 
-export const Wrapper = styled.div`
+export const rootShow = css`
+    height: 100%;
+    width: 100vw;
+    visibility: visible;
+`;
+
+export const wrapper = css`
     position: absolute;
     left: 0;
     top: 0;
     background-color: ${Colour["overlay-strong"]};
     backdrop-filter: none;
     transition: opacity 200ms ease;
+`;
 
-    &.wrapperStacked {
-        background-color: ${Colour["overlay-subtle"]};
-    }
+export const wrapperStacked = css`
+    background-color: ${Colour["overlay-subtle"]};
+`;
 
-    &.wrapperBackgroundBlur {
-        backdrop-filter: blur(10px);
-    }
+export const wrapperBackgroundBlur = css`
+    backdrop-filter: blur(10px);
+`;
 
-    &.wrapperShow {
-        visibility: visible;
-        opacity: 1;
-        pointer-events: auto;
-        height: 100%;
-        width: 100vw;
-    }
+export const wrapperShow = css`
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    height: 100%;
+    width: 100vw;
+`;
 
-    &.wrapperHide {
-        visibility: hidden;
-        opacity: 0;
-        transition-delay: 400ms;
-        pointer-events: none;
-        height: 0;
-        width: 0;
-    }
+export const wrapperHide = css`
+    visibility: hidden;
+    opacity: 0;
+    transition-delay: 400ms;
+    pointer-events: none;
+    height: 0;
+    width: 0;
+`;
 
-    &.wrapperDisableTransition {
-        transition: none;
-        transition-delay: 0ms;
-    }
+export const wrapperDisableTransition = css`
+    transition: none;
+    transition-delay: 0ms;
 `;
