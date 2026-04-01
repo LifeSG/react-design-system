@@ -2,13 +2,7 @@ import clsx from "clsx";
 import React, { useRef } from "react";
 
 import { useApplyStyle } from "../theme";
-import {
-    bulletTypeClassNames,
-    listSizeClassNames,
-    StyledUnorderedList,
-    tokens,
-    unorderedListCustomIconClassName,
-} from "./text-list.styles";
+import * as styles from "./text-list.styles";
 import type { BulletType, UnorderedListProps } from "./types";
 
 const isBulletType = (value: unknown): value is BulletType =>
@@ -28,11 +22,11 @@ export const UnorderedList = ({
     const listRef = useRef<HTMLUListElement>(null);
     const isCustomIcon = bulletType !== undefined && !isBulletType(bulletType);
     const bulletTypeClassName = isBulletType(bulletType)
-        ? bulletTypeClassNames[bulletType]
-        : bulletTypeClassNames.disc;
+        ? styles.unorderedListBulletType[bulletType]
+        : styles.unorderedListBulletType.disc;
 
     useApplyStyle(listRef, {
-        [tokens.listBottomMargin]: `${bottomMargin ?? 0}rem`,
+        [styles.tokens.listBottomMargin]: `${bottomMargin ?? 0}rem`,
     });
 
     const renderChildren = () => {
@@ -57,18 +51,20 @@ export const UnorderedList = ({
     };
 
     return (
-        <StyledUnorderedList
+        <ul
             ref={listRef}
             className={clsx(
-                size && listSizeClassNames[size],
+                styles.listBase,
+                styles.unorderedList,
+                size && styles.listSize[size],
                 bulletTypeClassName,
-                isCustomIcon && unorderedListCustomIconClassName,
+                isCustomIcon && styles.unorderedListCustomIcon,
                 className
             )}
             {...otherProps}
         >
             {renderChildren()}
-        </StyledUnorderedList>
+        </ul>
     );
 };
 

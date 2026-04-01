@@ -2,14 +2,7 @@ import clsx from "clsx";
 import { useRef } from "react";
 
 import { useApplyStyle } from "../theme";
-import {
-    counterTypeClassNames,
-    listSizeClassNames,
-    orderedListCustomStartClassName,
-    orderedListReversedClassName,
-    StyledOrderedList,
-    tokens,
-} from "./text-list.styles";
+import * as styles from "./text-list.styles";
 import type { OrderedListProps } from "./types";
 
 const toCssString = (value: string) =>
@@ -30,11 +23,11 @@ export const OrderedList = ({
     const hasCustomStart = Boolean(start);
 
     useApplyStyle(listRef, {
-        [tokens.listBottomMargin]: `${bottomMargin ?? 0}rem`,
-        [tokens.orderedListCounterSeparator]: toCssString(
+        [styles.tokens.listBottomMargin]: `${bottomMargin ?? 0}rem`,
+        [styles.tokens.orderedListCounterSeparator]: toCssString(
             counterSeparator ?? ")"
         ),
-        [tokens.orderedListStartValue]: hasCustomStart
+        [styles.tokens.orderedListStartValue]: hasCustomStart
             ? reversed
                 ? (start as number) + 1
                 : (start as number) - 1
@@ -42,21 +35,23 @@ export const OrderedList = ({
     });
 
     return (
-        <StyledOrderedList
+        <ol
             ref={listRef}
             reversed={reversed}
             start={start}
             className={clsx(
-                size && listSizeClassNames[size],
-                counterTypeClassNames[counterType || "decimal"],
-                reversed && orderedListReversedClassName,
-                hasCustomStart && orderedListCustomStartClassName,
+                styles.listBase,
+                styles.orderedList,
+                styles.orderedListCounterType[counterType || "decimal"],
+                size && styles.listSize[size],
+                reversed && styles.orderedListReversed,
+                hasCustomStart && styles.orderedListCustomStart,
                 className
             )}
             {...otherProps}
         >
             {children}
-        </StyledOrderedList>
+        </ol>
     );
 };
 
