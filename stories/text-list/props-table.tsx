@@ -41,7 +41,7 @@ const DATA: ApiTableSectionProps[] = [
                     "Font size of the list. Inherited from the parent if not specified",
                 propTypes: (
                     <StorybookLink path="/docs/core-typography--docs">
-                        TypographySizeType
+                        TypographySize
                     </StorybookLink>
                 ),
             },
@@ -59,7 +59,7 @@ const DATA: ApiTableSectionProps[] = [
                     `"circle"`,
                     `"square"`,
                     `"none"`,
-                    "React.ReactNode",
+                    "React.ReactNode (excluding string)",
                 ],
             },
         ],

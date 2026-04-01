@@ -67,7 +67,10 @@ use case.
 You can do so by overriding the default styling.
 
 ```tsx
-export const CustomOrderedList = styled(TextList.Ol)`
+import { css } from "@linaria/core";
+import clsx from "clsx";
+
+const customOrderedList = css`
     margin-left: 2em;
 
     li {
@@ -79,6 +82,13 @@ export const CustomOrderedList = styled(TextList.Ol)`
         left: -3em;
     }
 `;
+
+export const CustomOrderedList = ({ className, ...otherProps }) => (
+    <TextList.Ol
+        className={clsx(customOrderedList, className)}
+        {...otherProps}
+    />
+);
 ```
 
 ## Component API
