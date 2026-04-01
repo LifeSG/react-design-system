@@ -51,7 +51,7 @@ const createHeading = (
 ) => {
     const Header = React.forwardRef<HTMLHeadingElement, TypographyProps>(
         function TypographyHeading(
-            { weight, inline, paragraph, maxLines, className, style, ...props },
+            { weight, inline, paragraph, maxLines, className, ...props },
             ref
         ) {
             const textWeight = getTextWeight(weight);
@@ -77,7 +77,6 @@ const createHeading = (
                             shouldClamp && styles.lineClamp,
                             className
                         )}
-                        style={style}
                         {...props}
                     />
                 );
@@ -94,7 +93,6 @@ const createHeading = (
                     shouldClamp && styles.lineClamp,
                     className
                 ),
-                style,
             });
         }
     );
@@ -113,7 +111,7 @@ export const HeadingXS = createHeading("h6", "heading-xs", "HeadingXS");
 const createBody = (textStyle: TypographySize, displayName: string) => {
     const Body = React.forwardRef<HTMLParagraphElement, TypographyProps>(
         function TypographyBody(
-            { weight, inline, paragraph, maxLines, className, style, ...props },
+            { weight, inline, paragraph, maxLines, className, ...props },
             ref
         ) {
             const textWeight = getTextWeight(weight);
@@ -139,7 +137,6 @@ const createBody = (textStyle: TypographySize, displayName: string) => {
                             shouldClamp && styles.lineClamp,
                             className
                         )}
-                        style={style}
                         {...props}
                     />
                 );
@@ -156,7 +153,6 @@ const createBody = (textStyle: TypographySize, displayName: string) => {
                         shouldClamp && styles.lineClamp,
                         className
                     )}
-                    style={style}
                     {...props}
                 />
             );
