@@ -1,6 +1,6 @@
 import { TickCircleFillIcon } from "@lifesg/react-icons";
 import { FormErrorMessage } from "../form/form-label";
-import { PhoneNumberInputValue } from "../phone-number-input";
+import { CountryValue, PhoneNumberInputValue } from "../phone-number-input";
 import {
     ContactButton,
     ContactInputSectionWrapper,
@@ -68,6 +68,13 @@ export const ContactInputSection = ({
         return "Send OTP";
     };
 
+    const getMobileAriaLabel = (country?: CountryValue) =>
+        `Enter your ${
+            country?.name ?? ""
+        } mobile number to receive a verification OTP`
+            .replace(/\s+/g, " ")
+            .trim();
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -101,6 +108,7 @@ export const ContactInputSection = ({
                 fixedCountry={fixedCountry}
                 aria-invalid={!!sendOtpError}
                 aria-required={true}
+                getAriaLabel={getMobileAriaLabel}
                 disabled={disabled}
                 readOnly={readOnly}
             />

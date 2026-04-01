@@ -9,7 +9,7 @@ import {
 import { CustomAddon, InputGroupProps, LabelAddon, ListAddon } from "./types";
 
 const Component = <T, V>(
-    { addon, error, className, ...otherProps }: InputGroupProps<T, V>,
+    { addon, error, className, id, ...otherProps }: InputGroupProps<T, V>,
     ref: React.Ref<HTMLInputElement>
 ) => {
     const renderNoAddons = () => (
@@ -67,6 +67,7 @@ const Component = <T, V>(
                         >
                             <LabelAddonContainer
                                 data-testid="addon"
+                                id={id ? `${id}-addon` : undefined}
                                 $disabled={otherProps.disabled}
                                 $readOnly={otherProps.readOnly}
                                 $position={position}
@@ -102,6 +103,7 @@ const Component = <T, V>(
                         >
                             <LabelAddonContainer
                                 data-testid="addon"
+                                id={id ? `${id}-addon` : undefined}
                                 $disabled={otherProps.disabled}
                                 $readOnly={otherProps.readOnly}
                                 $position={position}
